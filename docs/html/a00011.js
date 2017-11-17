@@ -1,6 +1,11 @@
 var a00011 =
 [
-    [ "next", "a00011.html#ad1d22d4f07d7a16e17076d97dfcf6b8b", null ],
-    [ "old_value", "a00011.html#a22eefe5979d9ff822eccf52dc57be1e8", null ],
-    [ "pointer", "a00011.html#ae6067d740982f25ff3cbd5ca68f0b0aa", null ]
+    [ "cfg_ateccx08a_i2c_default", "a00422.html#gafcb056718eb34ec3a612d550208e49cc", null ],
+    [ "cfg_ateccx08a_kitcdc_default", "a00422.html#ga8fb19127e7fc7cfbaa619ba41bccc4b3", null ],
+    [ "cfg_ateccx08a_kithid_default", "a00422.html#ga1f5e0890694189d4ce70f19b207eb070", null ],
+    [ "cfg_ateccx08a_swi_default", "a00422.html#ga5624aa554e1964981b794e2295b9432c", null ],
+    [ "cfg_atsha204a_i2c_default", "a00422.html#ga9fe83141d8e44bf623e624a72901832c", null ],
+    [ "cfg_atsha204a_kitcdc_default", "a00422.html#ga010430b93521c09efec9e5913ce769c1", null ],
+    [ "cfg_atsha204a_kithid_default", "a00422.html#gac6a0b1f7ea398eee53d1e4243a617c6c", null ],
+    [ "cfg_atsha204a_swi_default", "a00422.html#gae5e766a819c7920470b456238cbef70d", null ]
 ];

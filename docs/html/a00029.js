@@ -1,16 +1,8 @@
 var a00029 =
 [
-    [ "digest", "a00029.html#a0b448fbaa0c4f1770b7c3f53acf265c5", null ],
-    [ "for_invalidate", "a00029.html#ac3544274ceb4f8950b3a5fe6640be634", null ],
-    [ "is_slot_locked", "a00029.html#afaeb2ef8df7a105b7f93a9fdb82fd6e8", null ],
-    [ "key_config", "a00029.html#af209160ffa65b538728640eb34e4be75", null ],
-    [ "key_id", "a00029.html#ac21eed4200889cc115d16a781871d01c", null ],
-    [ "message", "a00029.html#a35f4a3225daf3021decdc4ecea74fa46", null ],
-    [ "mode", "a00029.html#a37e90f5e3bd99fac2021fb3a326607d4", null ],
-    [ "slot_config", "a00029.html#a547704fabd162cdaa3d5ce84a111a3fc", null ],
-    [ "sn", "a00029.html#aef45bac2efcd5394c4ed79f73ee16d23", null ],
-    [ "temp_key", "a00029.html#a714b07e0515fd9d20714a4fc2a16c03e", null ],
-    [ "update_count", "a00029.html#a4a25483bf435220f212cbe8f0327b0a6", null ],
-    [ "use_flag", "a00029.html#a0aea6a2aaa9c7c3368d6a394d4c9ae05", null ],
-    [ "verify_other_data", "a00029.html#a04c0e9b276020bed4ed3d7d670ed3881", null ]
+    [ "ATCADevice", "a00424.html#gaa94f7bb4af0a3d6735225cc85d92cb50", null ],
+    [ "atGetCommands", "a00424.html#gabf51c08f1928fc5ec44936f3117a9f7e", null ],
+    [ "atGetIFace", "a00424.html#ga3f98e29cffa06446fc91b329703606af", null ],
+    [ "deleteATCADevice", "a00424.html#gac087cf04cd5bd6ff2e026d89bfbf5e12", null ],
+    [ "newATCADevice", "a00424.html#gad5e12e12d3030e28d75164286df9e5e9", null ]
 ];

@@ -1,41 +1,34 @@
 /**
  * \file
- * \brief CryptoAuthLib Basic API methods - a simple crypto authentication api.
- * These methods manage a global ATCADevice object behind the scenes.  They also
+ * \brief CryptoAuthLib Basic API methods - a simple crypto authentication API.
+ * These methods manage a global ATCADevice object behind the scenes. They also
  * manage the wake/idle state transitions so callers don't need to.
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 #include "cryptoauthlib.h"
@@ -57,99 +50,167 @@
 extern "C" {
 #endif
 
-// basic global device object methods
-ATCA_STATUS atcab_version(char *verstr);
+#define BLOCK_NUMBER(a) (a / 32)
+#define WORD_OFFSET(a)  ((a % 32) / 4)
+
+extern ATCADevice _gDevice;
+
+// Basic global methods
+ATCA_STATUS atcab_version(char *ver_str);
 ATCA_STATUS atcab_init(ATCAIfaceCfg *cfg);
-ATCA_STATUS atcab_init_device(ATCADevice cadevice);
+ATCA_STATUS atcab_init_device(ATCADevice ca_device);
 ATCA_STATUS atcab_release(void);
 ATCADevice atcab_get_device(void);
-
+ATCA_STATUS _atcab_exit(void);
 ATCA_STATUS atcab_wakeup(void);
 ATCA_STATUS atcab_idle(void);
 ATCA_STATUS atcab_sleep(void);
-
-// discovery
-ATCA_STATUS atcab_cfg_discover(ATCAIfaceCfg cfgArray[], int max);
-
-// basic crypto API
-ATCA_STATUS atcab_info(uint8_t *revision);
-ATCA_STATUS atcab_challenge(const uint8_t *challenge);
-ATCA_STATUS atcab_challenge_seed_update(const uint8_t *seed, uint8_t* rand_out);
-ATCA_STATUS atcab_nonce_base(uint8_t mode, const uint8_t *num_in, uint8_t* rand_out);
-ATCA_STATUS atcab_nonce(const uint8_t *tempkey);
-ATCA_STATUS atcab_nonce_rand(const uint8_t *seed, uint8_t* rand_out);
-ATCA_STATUS atcab_random(uint8_t *rand_out);
-
-ATCA_STATUS atcab_is_locked(uint8_t zone, bool *is_locked);
-ATCA_STATUS atcab_is_slot_locked(uint8_t slot, bool *is_locked);
-
+ATCA_STATUS atcab_cfg_discover(ATCAIfaceCfg cfg_array[], int max);
 ATCA_STATUS atcab_get_addr(uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t* addr);
 ATCA_STATUS atcab_get_zone_size(uint8_t zone, uint16_t slot, size_t* size);
-ATCA_STATUS atcab_read_zone(uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint8_t *data, uint8_t len);
-ATCA_STATUS atcab_write(uint8_t zone, uint16_t address, const uint8_t *value, const uint8_t *mac);
-ATCA_STATUS atcab_write_zone(uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, const uint8_t *data, uint8_t len);
-ATCA_STATUS atcab_write_bytes_zone(uint8_t zone, uint16_t slot, size_t offset_bytes, const uint8_t *data, size_t length);
-ATCA_STATUS atcab_read_bytes_zone(uint8_t zone, uint16_t slot, size_t offset_bytes, uint8_t *data, size_t length);
+ATCA_STATUS atcab_execute_command(ATCAPacket* packet);
 
-ATCA_STATUS atcab_read_serial_number(uint8_t* serial_number);
-ATCA_STATUS atcab_read_pubkey(uint16_t slot8toF, uint8_t *pubkey);
-ATCA_STATUS atcab_write_pubkey(uint16_t slot8toF, const uint8_t *pubkey);
-ATCA_STATUS atcab_read_sig(uint8_t slot8toF, uint8_t *sig);
-ATCA_STATUS atcab_read_config_zone(uint8_t* config_data);
-ATCA_STATUS atcab_write_config_zone(const uint8_t* config_data);
-ATCA_STATUS atcab_cmp_config_zone(uint8_t* config_data, bool* same_config);
+// AES command functions
+ATCA_STATUS atcab_aes(uint8_t mode, uint16_t key_id, const uint8_t* aes_in, uint8_t* aes_out);
+ATCA_STATUS atcab_aes_encrypt(uint16_t key_id, uint8_t key_block, const uint8_t* plaintext, uint8_t* ciphertext);
+ATCA_STATUS atcab_aes_decrypt(uint16_t key_id, uint8_t key_block, const uint8_t* ciphertext, uint8_t* plaintext);
+ATCA_STATUS atcab_aes_gfm(const uint8_t* h, const uint8_t* input, uint8_t* output);
 
-ATCA_STATUS atcab_read_enc(uint16_t key_id, uint8_t block, uint8_t *data, const uint8_t* enckey, const uint16_t enckeyid);
-ATCA_STATUS atcab_write_enc(uint16_t key_id, uint8_t block, const uint8_t *data, const uint8_t* enckey, const uint16_t enckeyid);
+// CheckMAC command functions
+ATCA_STATUS atcab_checkmac(uint8_t mode, uint16_t key_id, const uint8_t *challenge, const uint8_t *response, const uint8_t *other_data);
 
+// Counter command functions
+ATCA_STATUS atcab_counter(uint8_t mode, uint16_t counter_id, uint32_t* counter_value);
+ATCA_STATUS atcab_counter_increment(uint16_t counter_id, uint32_t* counter_value);
+ATCA_STATUS atcab_counter_read(uint16_t counter_id, uint32_t* counter_value);
+
+// DeriveKey command functions
+ATCA_STATUS atcab_derivekey(uint8_t mode, uint16_t key_id, const uint8_t* mac);
+
+// ECDH command functions
+ATCA_STATUS atcab_ecdh_base(uint8_t mode, uint16_t key_id, const uint8_t* public_key, uint8_t* pms, uint8_t* out_nonce);
+ATCA_STATUS atcab_ecdh(uint16_t key_id, const uint8_t* public_key, uint8_t* pms);
+ATCA_STATUS atcab_ecdh_enc(uint16_t key_id, const uint8_t* public_key, uint8_t* pms, const uint8_t* read_key, uint16_t read_key_id);
+ATCA_STATUS atcab_ecdh_ioenc(uint16_t key_id, const uint8_t* public_key, uint8_t* pms, const uint8_t* io_key);
+ATCA_STATUS atcab_ecdh_tempkey(const uint8_t* public_key, uint8_t* pms);
+ATCA_STATUS atcab_ecdh_tempkey_ioenc(const uint8_t* public_key, uint8_t* pms, const uint8_t* io_key);
+
+// GenDig command functions
+ATCA_STATUS atcab_gendig(uint8_t zone, uint16_t key_id, const uint8_t *other_data, uint8_t other_data_size);
+
+// GenKey command functions
+ATCA_STATUS atcab_genkey_base(uint8_t mode, uint16_t key_id, const uint8_t* other_data, uint8_t* public_key);
+ATCA_STATUS atcab_genkey(uint16_t key_id, uint8_t* public_key);
+ATCA_STATUS atcab_get_pubkey(uint16_t key_id, uint8_t* public_key);
+
+// HMAC command functions
+ATCA_STATUS atcab_hmac(uint8_t mode, uint16_t key_id, uint8_t* digest);
+
+// Info command functions
+ATCA_STATUS atcab_info_base(uint8_t mode, uint16_t param2, uint8_t* out_data);
+ATCA_STATUS atcab_info(uint8_t* revision);
+ATCA_STATUS atcab_info_set_latch(bool state);
+ATCA_STATUS atcab_info_get_latch(bool* state);
+
+// KDF command functions
+ATCA_STATUS atcab_kdf(uint8_t mode, uint16_t key_id, const uint32_t details, const uint8_t* message, uint8_t* out_data, uint8_t* out_nonce);
+
+// Lock command functions
 ATCA_STATUS atcab_lock(uint8_t mode, uint16_t summary_crc);
 ATCA_STATUS atcab_lock_config_zone(void);
-ATCA_STATUS atcab_lock_config_zone_crc(uint16_t crc);
+ATCA_STATUS atcab_lock_config_zone_crc(uint16_t summary_crc);
 ATCA_STATUS atcab_lock_data_zone(void);
-ATCA_STATUS atcab_lock_data_zone_crc(uint16_t crc);
-ATCA_STATUS atcab_lock_data_slot(uint8_t slot);
+ATCA_STATUS atcab_lock_data_zone_crc(uint16_t summary_crc);
+ATCA_STATUS atcab_lock_data_slot(uint16_t slot);
 
-ATCA_STATUS atcab_priv_write(uint16_t key_id, const uint8_t priv_key[36], uint8_t write_key_slot, const uint8_t write_key[32]);
-ATCA_STATUS atcab_genkey_base(uint8_t mode, uint16_t key_id, const uint8_t* other_data, uint8_t* public_key);
-ATCA_STATUS atcab_genkey(uint16_t key_id, uint8_t *public_key);
-ATCA_STATUS atcab_get_pubkey(uint16_t key_id, uint8_t *public_key);
+// MAC command functions
+ATCA_STATUS atcab_mac(uint8_t mode, uint16_t key_id, const uint8_t* challenge, uint8_t* digest);
+
+// Nonce command functions
+ATCA_STATUS atcab_nonce_base(uint8_t mode, uint16_t zero, const uint8_t *num_in, uint8_t* rand_out);
+ATCA_STATUS atcab_nonce(const uint8_t *num_in);
+ATCA_STATUS atcab_nonce_load(uint8_t target, const uint8_t *num_in, uint16_t num_in_size);
+ATCA_STATUS atcab_nonce_rand(const uint8_t *num_in, uint8_t* rand_out);
+ATCA_STATUS atcab_challenge(const uint8_t *num_in);
+ATCA_STATUS atcab_challenge_seed_update(const uint8_t *num_in, uint8_t* rand_out);
+
+// PrivWrite command functions
+ATCA_STATUS atcab_priv_write(uint16_t key_id, const uint8_t priv_key[36], uint16_t write_key_id, const uint8_t write_key[32]);
+
+// Random command functions
+ATCA_STATUS atcab_random(uint8_t* rand_out);
+
+// Read command functions
+ATCA_STATUS atcab_read_zone(uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint8_t *data, uint8_t len);
+ATCA_STATUS atcab_is_locked(uint8_t zone, bool *is_locked);
+ATCA_STATUS atcab_is_slot_locked(uint16_t slot, bool *is_locked);
+ATCA_STATUS atcab_read_bytes_zone(uint8_t zone, uint16_t slot, size_t offset, uint8_t *data, size_t length);
+ATCA_STATUS atcab_read_serial_number(uint8_t* serial_number);
+ATCA_STATUS atcab_read_pubkey(uint16_t slot, uint8_t *public_key);
+ATCA_STATUS atcab_read_sig(uint16_t slot, uint8_t *sig);
+ATCA_STATUS atcab_read_config_zone(uint8_t* config_data);
+ATCA_STATUS atcab_cmp_config_zone(uint8_t* config_data, bool* same_config);
+ATCA_STATUS atcab_read_enc(uint16_t key_id, uint8_t block, uint8_t *data, const uint8_t* enc_key, const uint16_t enc_key_id);
+
+// SecureBoot command functions
+ATCA_STATUS atcab_secureboot(uint8_t mode, uint16_t param2, const uint8_t* digest, const uint8_t* signature, uint8_t* mac);
+ATCA_STATUS atcab_secureboot_mac(uint8_t mode, const uint8_t* digest, const uint8_t* signature, const uint8_t* num_in, const uint8_t* io_key, bool* is_verified);
+
+// SelfTest command functions
+ATCA_STATUS atcab_selftest(uint8_t mode, uint16_t param2, uint8_t* result);
+
+// SHA command functions
+typedef struct atca_sha256_ctx
+{
+    uint32_t total_msg_size;                     //!< Total number of message bytes processed
+    uint32_t block_size;                         //!< Number of bytes in current block
+    uint8_t  block[ATCA_SHA256_BLOCK_SIZE * 2];  //!< Unprocessed message storage
+} atca_sha256_ctx_t;
+
+typedef atca_sha256_ctx_t atca_hmac_sha256_ctx_t;
+
+ATCA_STATUS atcab_sha_base(uint8_t mode, uint16_t length, const uint8_t* data_in, uint8_t* data_out, uint16_t* data_out_size);
+ATCA_STATUS atcab_sha_start(void);
+ATCA_STATUS atcab_sha_update(const uint8_t* message);
+ATCA_STATUS atcab_sha_end(uint8_t *digest, uint16_t length, const uint8_t *message);
+ATCA_STATUS atcab_sha_read_context(uint8_t* context, uint16_t* context_size);
+ATCA_STATUS atcab_sha_write_context(const uint8_t* context, uint16_t context_size);
+ATCA_STATUS atcab_sha(uint16_t length, const uint8_t *message, uint8_t *digest);
+ATCA_STATUS atcab_hw_sha2_256(const uint8_t * data, size_t data_size, uint8_t* digest);
+ATCA_STATUS atcab_hw_sha2_256_init(atca_sha256_ctx_t* ctx);
+ATCA_STATUS atcab_hw_sha2_256_update(atca_sha256_ctx_t* ctx, const uint8_t* data, size_t data_size);
+ATCA_STATUS atcab_hw_sha2_256_finish(atca_sha256_ctx_t* ctx, uint8_t* digest);
+ATCA_STATUS atcab_sha_hmac_init(atca_hmac_sha256_ctx_t* ctx, uint16_t key_slot);
+ATCA_STATUS atcab_sha_hmac_update(atca_hmac_sha256_ctx_t* ctx, const uint8_t* data, size_t data_size);
+ATCA_STATUS atcab_sha_hmac_finish(atca_hmac_sha256_ctx_t* ctx, uint8_t* digest, uint8_t target);
+ATCA_STATUS atcab_sha_hmac(const uint8_t * data, size_t data_size, uint16_t key_slot, uint8_t* digest, uint8_t target);
+
+// Sign command functions
 ATCA_STATUS atcab_sign_base(uint8_t mode, uint16_t key_id, uint8_t *signature);
 ATCA_STATUS atcab_sign(uint16_t key_id, const uint8_t *msg, uint8_t *signature);
 ATCA_STATUS atcab_sign_internal(uint16_t key_id, bool is_invalidate, bool is_full_sn, uint8_t *signature);
-ATCA_STATUS atcab_verify(uint8_t mode, uint16_t key_id, const uint8_t* signature, const uint8_t* public_key, const uint8_t* other_data);
-ATCA_STATUS atcab_verify_extern(const uint8_t *message, const uint8_t *signature, const uint8_t *public_key, bool *is_verified);
-ATCA_STATUS atcab_verify_stored(const uint8_t *message, const uint8_t *signature, uint16_t key_id, bool *is_verified);
-ATCA_STATUS atcab_verify_validate(uint16_t key_id, const uint8_t *signature, const uint8_t *other_data, bool *is_verified);
-ATCA_STATUS atcab_verify_invalidate(uint16_t key_id, const uint8_t *signature, const uint8_t *other_data, bool *is_verified);
-ATCA_STATUS atcab_ecdh(uint16_t key_id, const uint8_t* pubkey, uint8_t* pms);
-ATCA_STATUS atcab_ecdh_enc(uint16_t key_id, const uint8_t* pubkey, uint8_t* pms, const uint8_t* enckey, uint16_t enckeyid);
-ATCA_STATUS atcab_gendig(uint8_t zone, uint16_t key_id, const uint8_t *other_data, uint8_t other_data_size);
-ATCA_STATUS atcab_mac(uint8_t mode, uint16_t key_id, const uint8_t* challenge, uint8_t* digest);
-ATCA_STATUS atcab_checkmac(uint8_t mode, uint16_t key_id, const uint8_t *challenge, const uint8_t *response, const uint8_t *other_data);
-ATCA_STATUS atcab_hmac(uint8_t mode, uint16_t key_id, uint8_t* digest);
-ATCA_STATUS atcab_derivekey(uint8_t random, uint16_t key_id, uint8_t* mac);
 
-
-ATCA_STATUS atcab_sha_base(uint8_t mode, uint16_t length, const uint8_t* message, uint8_t* digest);
-ATCA_STATUS atcab_sha_start(void);
-ATCA_STATUS atcab_sha_update(const uint8_t *message);
-ATCA_STATUS atcab_sha_end(uint8_t *digest, uint16_t length, const uint8_t *message);
-ATCA_STATUS atcab_sha(uint16_t length, const uint8_t *message, uint8_t *digest);
-
+// UpdateExtra command functions
 ATCA_STATUS atcab_updateextra(uint8_t mode, uint16_t new_value);
 
-typedef struct atca_sha256_ctx
-{
-    uint32_t total_msg_size;  //!< Total number of message bytes processed
-    uint32_t block_size;      //!< Number of bytes in current block
-    uint8_t  block[64 * 2];   //!< Unprocessed message storage
-    uint32_t hash[8];         //!< Hash state
-} atca_sha256_ctx_t;
+// Verify command functions
+ATCA_STATUS atcab_verify(uint8_t mode, uint16_t key_id, const uint8_t* signature, const uint8_t* public_key, const uint8_t* other_data, uint8_t* mac);
+ATCA_STATUS atcab_verify_extern(const uint8_t *message, const uint8_t *signature, const uint8_t *public_key, bool *is_verified);
+ATCA_STATUS atcab_verify_extern_mac(const uint8_t *message, const uint8_t* signature, const uint8_t* public_key, const uint8_t* num_in, const uint8_t* io_key, bool* is_verified);
+ATCA_STATUS atcab_verify_stored(const uint8_t *message, const uint8_t *signature, uint16_t key_id, bool *is_verified);
+ATCA_STATUS atcab_verify_stored_mac(const uint8_t *message, const uint8_t *signature, uint16_t key_id, const uint8_t* num_in, const uint8_t* io_key, bool* is_verified);
 
-ATCA_STATUS atcab_hw_sha2_256_init(atca_sha256_ctx_t* ctx);
-ATCA_STATUS atcab_hw_sha2_256_update(atca_sha256_ctx_t* ctx, const uint8_t* data, size_t data_size);
-ATCA_STATUS atcab_hw_sha2_256_finish(atca_sha256_ctx_t * ctx, uint8_t digest[ATCA_SHA2_256_DIGEST_SIZE]);
-ATCA_STATUS atcab_hw_sha2_256(const uint8_t * data, size_t data_size, uint8_t digest[ATCA_SHA2_256_DIGEST_SIZE]);
+ATCA_STATUS atcab_verify_validate(uint16_t key_id, const uint8_t *signature, const uint8_t *other_data, bool *is_verified);
+ATCA_STATUS atcab_verify_invalidate(uint16_t key_id, const uint8_t *signature, const uint8_t *other_data, bool *is_verified);
+
+// Write command functions
+ATCA_STATUS atcab_write(uint8_t zone, uint16_t address, const uint8_t *value, const uint8_t *mac);
+ATCA_STATUS atcab_write_zone(uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, const uint8_t *data, uint8_t len);
+ATCA_STATUS atcab_write_bytes_zone(uint8_t zone, uint16_t slot, size_t offset_bytes, const uint8_t *data, size_t length);
+ATCA_STATUS atcab_write_pubkey(uint16_t slot, const uint8_t *public_key);
+ATCA_STATUS atcab_write_config_zone(const uint8_t* config_data);
+ATCA_STATUS atcab_write_enc(uint16_t key_id, uint8_t block, const uint8_t *data, const uint8_t* enc_key, const uint16_t enc_key_id);
+ATCA_STATUS atcab_write_config_counter(uint16_t counter_id, uint32_t counter_value);
 
 #ifdef __cplusplus
 }

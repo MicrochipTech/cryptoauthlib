@@ -1,40 +1,33 @@
 /**
  * \file
  *
- * \brief  Atmel Crypto Auth hardware interface object
+ * \brief  Microchip Crypto Auth hardware interface object
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 #include <stdlib.h>
@@ -54,7 +47,7 @@
 
 /** \brief HAL implementation of kit protocol init.  This function calls back to the physical protocol to send the bytes
  *  \param[in] iface  instance
- *  \return ATCA_STATUS
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS kit_init(ATCAIface iface)
 {
@@ -79,16 +72,22 @@ ATCA_STATUS kit_init(ATCAIface iface)
     memset(reply, 0, replysize);
     status = kit_phy_receive(iface, reply, &replysize);
     if (status != ATCA_SUCCESS)
+    {
         return ATCA_GEN_FAIL;
+    }
 
     if (replysize == 4)
     {
         // Probably an error
         status = kit_parse_rsp(reply, replysize, &kitstatus, rxdata, &rxsize);
         if (status != ATCA_SUCCESS)
+        {
             return status;
+        }
         if (kitstatus != 0)
+        {
             return ATCA_NO_DEVICES;
+        }
     }
     rxsize = 2;
     memcpy(rxdata, strchr(reply, '(') + 1, rxsize);
@@ -107,7 +106,9 @@ ATCA_STATUS kit_init(ATCAIface iface)
     memset(reply, 0, replysize);
     status = kit_phy_receive(iface, reply, &replysize);
     if (status != ATCA_SUCCESS)
+    {
         return ATCA_GEN_FAIL;
+    }
 
     return status;
 }
@@ -116,7 +117,7 @@ ATCA_STATUS kit_init(ATCAIface iface)
  *  \param[in] iface     instance
  *  \param[in] txdata    pointer to bytes to send
  *  \param[in] txlength  number of bytes to send
- *  \return ATCA_STATUS
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS kit_send(ATCAIface iface, const uint8_t* txdata, int txlength)
 {
@@ -126,7 +127,9 @@ ATCA_STATUS kit_send(ATCAIface iface, const uint8_t* txdata, int txlength)
 
     // Check the pointers
     if ((txdata == NULL))
+    {
         return ATCA_BAD_PARAM;
+    }
     // Wrap in kit protocol
     pkitbuf = malloc(nkitbuf);
     memset(pkitbuf, 0, nkitbuf);
@@ -154,7 +157,7 @@ ATCA_STATUS kit_send(ATCAIface iface, const uint8_t* txdata, int txlength)
  * \param[in]    iface   instance
  * \param[in]    rxdata  pointer to space to receive the data
  * \param[inout] rxsize  ptr to expected number of receive bytes to request
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS kit_receive(ATCAIface iface, uint8_t* rxdata, uint16_t* rxsize)
 {
@@ -166,7 +169,9 @@ ATCA_STATUS kit_receive(ATCAIface iface, uint8_t* rxdata, uint16_t* rxsize)
 
     // Check the pointers
     if ((rxdata == NULL) || (rxsize == NULL))
+    {
         return ATCA_BAD_PARAM;
+    }
 
     // Adjust the read buffer size
     dataSize = *rxsize;
@@ -200,7 +205,7 @@ ATCA_STATUS kit_receive(ATCAIface iface, uint8_t* rxdata, uint16_t* rxsize)
 
 /** \brief Call the wake for kit protocol
  * \param[in] iface  the interface object to send the bytes over
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS kit_wake(ATCAIface iface)
 {
@@ -225,7 +230,9 @@ ATCA_STATUS kit_wake(ATCAIface iface)
     memset(reply, 0, replysize);
     status = kit_phy_receive(iface, reply, &replysize);
     if (status != ATCA_SUCCESS)
+    {
         return ATCA_GEN_FAIL;
+    }
 
 #ifdef KIT_DEBUG
     // Print the bytes
@@ -241,7 +248,7 @@ ATCA_STATUS kit_wake(ATCAIface iface)
 
 /** \brief Call the idle for kit protocol
  * \param[in] iface  the interface object to send the bytes over
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS kit_idle(ATCAIface iface)
 {
@@ -266,7 +273,9 @@ ATCA_STATUS kit_idle(ATCAIface iface)
     memset(reply, 0, replysize);
     status = kit_phy_receive(iface, reply, &replysize);
     if (status != ATCA_SUCCESS)
+    {
         return ATCA_GEN_FAIL;
+    }
 
 #ifdef KIT_DEBUG
     // Print the bytes
@@ -282,7 +291,7 @@ ATCA_STATUS kit_idle(ATCAIface iface)
 
 /** \brief Call the sleep for kit protocol
  * \param[in] iface  the interface object to send the bytes over
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS kit_sleep(ATCAIface iface)
 {
@@ -308,7 +317,9 @@ ATCA_STATUS kit_sleep(ATCAIface iface)
     memset(reply, 0, replysize);
     status = kit_phy_receive(iface, reply, &replysize);
     if (status != ATCA_SUCCESS)
+    {
         return ATCA_GEN_FAIL;
+    }
 
 #ifdef KIT_DEBUG
     // Print the bytes
@@ -327,7 +338,7 @@ ATCA_STATUS kit_sleep(ATCAIface iface)
  * \param[in] txlen length of the binary data to wrap
  * \param[out] pkitcmd pointer to binary data converted to ascii kit protocol
  * \param[inout] nkitcmd pointer to the size of the binary data converted to ascii kit protocol
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlen, char* pkitcmd, int* nkitcmd)
 {
@@ -342,9 +353,13 @@ ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlen, char* pkitcmd, int* n
 
     // Check the variables
     if (txdata == NULL || pkitcmd == NULL || nkitcmd == NULL)
+    {
         return ATCA_BAD_PARAM;
+    }
     if (*nkitcmd > cmdlen)
+    {
         return ATCA_BAD_PARAM;
+    }
 
     // Wrap in kit protocol
     memset(pkitcmd, 0, *nkitcmd);
@@ -357,7 +372,9 @@ ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlen, char* pkitcmd, int* n
     // Copy the ascii binary bytes
     status = atcab_bin2hex_(txdata, txlen, &pkitcmd[cpyindex], &cmdAsciiLen, false);
     if (status != ATCA_SUCCESS)
+    {
         return status;
+    }
     cpyindex += cmdAsciiLen;
 
     // Copy the postfix
@@ -373,9 +390,10 @@ ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlen, char* pkitcmd, int* n
 /** \brief Parse the response ascii from the kit
  * \param[out] pkitbuf pointer to ascii kit protocol data to parse
  * \param[in] nkitbuf length of the ascii kit protocol data
+ * \param[in] kitstatus status of the ascii device
  * \param[in] rxdata pointer to the binary data buffer
  * \param[in] datasize size of the pointer to the binary data buffer
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS kit_parse_rsp(const char* pkitbuf, int nkitbuf, uint8_t* kitstatus, uint8_t* rxdata, int* datasize)
 {
@@ -389,16 +407,22 @@ ATCA_STATUS kit_parse_rsp(const char* pkitbuf, int nkitbuf, uint8_t* kitstatus, 
     // First get the kit status
     status = atcab_hex2bin(&pkitbuf[statusId], 2, kitstatus, &binSize);
     if (status != ATCA_SUCCESS)
+    {
         return status;
+    }
 
     // Next get the binary data bytes
     endDataPtr = strchr((char*)pkitbuf, ')');
     if (endDataPtr < (&pkitbuf[dataId]))
+    {
         return ATCA_GEN_FAIL;
+    }
     asciiDataSize = (int)(endDataPtr - (&pkitbuf[dataId]));
     status = atcab_hex2bin(&pkitbuf[dataId], asciiDataSize, rxdata, datasize);
     if (status != ATCA_SUCCESS)
+    {
         return status;
+    }
 
     return ATCA_SUCCESS;
 }

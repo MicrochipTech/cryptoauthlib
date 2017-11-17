@@ -46,3 +46,5 @@ local.properties
 
 .DS_Store
 *.o
+
+.vs

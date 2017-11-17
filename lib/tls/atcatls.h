@@ -1,38 +1,31 @@
 /**
  * \file
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 #ifndef ATCATLS_H
@@ -68,42 +61,42 @@ ATCA_STATUS atcatls_init(ATCAIfaceCfg *pCfg);
 ATCA_STATUS atcatls_finish(void);
 
 // Core TLS definitions
-ATCA_STATUS atcatls_sign(uint8_t slotid, const uint8_t *message, uint8_t *signature);
-ATCA_STATUS atcatls_verify(const uint8_t *message, const uint8_t *signature, const uint8_t *pubkey, bool *verified);
-ATCA_STATUS atcatls_ecdh(uint8_t slotid, const uint8_t* pubkey, uint8_t* pmk);
-ATCA_STATUS atcatls_ecdh_enc(uint8_t slotid, uint8_t enckeyId, const uint8_t* pubkey, uint8_t* pmk);
-ATCA_STATUS atcatls_ecdhe(uint8_t slotid, const uint8_t* pubkey, uint8_t* pubkeyret, uint8_t* pmk);
-ATCA_STATUS atcatls_create_key(uint8_t slotid, uint8_t *pubkey);
-ATCA_STATUS atcatls_calc_pubkey(uint8_t slotid, uint8_t *pubkey);
-ATCA_STATUS atcatls_write_pubkey(uint8_t slotid, uint8_t pubkey[ATCA_PUB_KEY_SIZE], bool lock);
-ATCA_STATUS atcatls_read_pubkey(uint8_t slotid, uint8_t *pubkey);
+ATCA_STATUS atcatls_sign(uint8_t slot_id, const uint8_t *message, uint8_t *signature);
+ATCA_STATUS atcatls_verify(const uint8_t *message, const uint8_t *signature, const uint8_t *public_key, bool *verified);
+ATCA_STATUS atcatls_ecdh(uint8_t slot_id, const uint8_t* public_key, uint8_t* pmk);
+ATCA_STATUS atcatls_ecdh_enc(uint8_t slot_id, uint8_t enckeyId, const uint8_t* public_key, uint8_t* pmk);
+ATCA_STATUS atcatls_ecdhe(uint8_t slot_id, const uint8_t* public_key, uint8_t* public_key_return, uint8_t* pmk);
+ATCA_STATUS atcatls_create_key(uint8_t slot_id, uint8_t *public_key);
+ATCA_STATUS atcatls_calc_pubkey(uint8_t slot_id, uint8_t *public_key);
+ATCA_STATUS atcatls_write_pubkey(uint8_t slot_id, uint8_t public_key[ATCA_PUB_KEY_SIZE], bool lock);
+ATCA_STATUS atcatls_read_pubkey(uint8_t slot_id, uint8_t *public_key);
 ATCA_STATUS atcatls_random(uint8_t* randout);
 ATCA_STATUS atcatls_get_sn(uint8_t sn_out[ATCA_SERIAL_NUM_SIZE]);
 
 // Certificate Handling
-ATCA_STATUS atcatls_get_cert(const atcacert_def_t* cert_def, const uint8_t *ca_public_key, uint8_t *certout, size_t* certsize);
-ATCA_STATUS atcatls_get_ca_cert(uint8_t *certout, size_t* certsize);
+ATCA_STATUS atcatls_get_cert(const atcacert_def_t* cert_def, const uint8_t *ca_public_key, uint8_t *cert_out, size_t* cert_size);
+ATCA_STATUS atcatls_get_ca_cert(uint8_t *cert_out, size_t* cert_size);
 ATCA_STATUS atcatls_verify_cert(const atcacert_def_t* cert_def, const uint8_t* cert, size_t cert_size, const uint8_t* ca_public_key);
-ATCA_STATUS atcatls_read_ca_pubkey(uint8_t slotid, uint8_t caPubkey[ATCA_PUB_KEY_SIZE]);
+ATCA_STATUS atcatls_read_ca_pubkey(uint8_t slot_id, uint8_t ca_public_key[ATCA_PUB_KEY_SIZE]);
 
 // CSR Handling
-ATCA_STATUS atcatls_create_csr(const atcacert_def_t* csr_def, char *csrout, size_t* csrsize);
+ATCA_STATUS atcatls_create_csr(const atcacert_def_t* csr_def, char *csr_out, size_t* csr_size);
 
 // Test Certificates
-ATCA_STATUS atcatls_get_device_cert(uint8_t *certout, size_t* certsize);
-ATCA_STATUS atcatls_get_signer_cert(uint8_t *certout, size_t* certsize);
+ATCA_STATUS atcatls_get_device_cert(uint8_t *cert_out, size_t* cert_size);
+ATCA_STATUS atcatls_get_signer_cert(uint8_t *cert_out, size_t* cert_size);
 
 // Encrypted Read/Write
-ATCA_STATUS atcatls_init_enckey(uint8_t* enckeyout, uint8_t enckeyId, bool lock);
-ATCA_STATUS atcatls_set_enckey(uint8_t* enckeyin, uint8_t enckeyId, bool lock);
-ATCA_STATUS atcatls_get_enckey(uint8_t* enckeyout);
-ATCA_STATUS atcatls_enc_read(uint8_t slotid, uint8_t block, uint8_t enckeyId, uint8_t* data, int16_t* bufsize);
-ATCA_STATUS atcatls_enc_write(uint8_t slotid, uint8_t block, uint8_t enckeyId, uint8_t* data, int16_t bufsize);
-ATCA_STATUS atcatls_enc_rsakey_read(uint8_t enckeyId, uint8_t* rsakey, int16_t* keysize);
-ATCA_STATUS atcatls_enc_rsakey_write(uint8_t enckeyId, uint8_t* rsakey, int16_t keysize);
+ATCA_STATUS atcatls_init_enckey(uint8_t* enc_key_out, uint8_t enckeyId, bool lock);
+ATCA_STATUS atcatls_set_enckey(uint8_t* enc_key_in, uint8_t enckeyId, bool lock);
+ATCA_STATUS atcatls_get_enckey(uint8_t* enc_key_out);
+ATCA_STATUS atcatls_enc_read(uint8_t slot_id, uint8_t block, uint8_t enc_key_id, uint8_t* data, int16_t* buf_size);
+ATCA_STATUS atcatls_enc_write(uint8_t slot_id, uint8_t block, uint8_t enc_key_id, uint8_t* data, int16_t buf_size);
+ATCA_STATUS atcatls_enc_rsakey_read(uint8_t enckeyId, uint8_t* rsa_key, int16_t* key_size);
+ATCA_STATUS atcatls_enc_rsakey_write(uint8_t enckeyId, uint8_t* rsa_key, int16_t key_size);
 
 // Interface to get the encryption key from the platform
-typedef ATCA_STATUS (atcatlsfn_get_enckey)(uint8_t* enckey, int16_t keysize);
+typedef ATCA_STATUS (atcatlsfn_get_enckey)(uint8_t* enckey, int16_t key_size);
 ATCA_STATUS atcatlsfn_set_get_enckey(atcatlsfn_get_enckey* fn_get_enckey);
 
 /** @} */

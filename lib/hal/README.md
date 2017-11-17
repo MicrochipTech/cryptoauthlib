@@ -47,7 +47,7 @@ Files are then broken out by uController Family and or Operating System Interfac
 |samd21          |   I2C      | hal_samd21_i2c_asf.c/h       | ASF         |                                    |
 |                |            | hal_samd21_timer_asf.c       | ASF         | For all samd21 ASF projects        |
 |samd21          |   I2C      | hal_samd21_i2c_start.c/h     | START       |                                    |
-                 |            | hal_samd21_timer_start.c     | START       | For samd21 START projects          |
+|                |            | hal_samd21_timer_start.c     | START       | For all samd21 START projects          |
 |samd21          |   I2C      | i2c_bitbang_samd21.c/h       | ASF         | For samd21 I2C bitbang projects    |
 |samd21          |   SWI      | swi_bitbang_samd21.c/h       | ASF         | For samd21 SWI bitbang projects    |
 |samd21          |   SWI      | swi_uart_samd21.c/h          | ASF         | For samd21 SWI uart projects       |
@@ -58,10 +58,10 @@ Files are then broken out by uController Family and or Operating System Interfac
 |                |            | hal_samv71_timer_asf.c       | ASF         |                                    |
 
 
-|PIC Micros      | Interface  | Files                        | API         | Notes                              |
-|----------------|------------|------------------------------|-------------|------------------------------------|
-|pic32mx695f512h |   I2C      | hal_pic32mx695f512h.c/h      | plib.h      |                                    |
-|                |            | hal_pic32mx695f512h_timer.c  | plib.h      |                                    |
+|PIC Micros      | Interface  | Files                        | API         | Notes                             			     |
+|----------------|------------|------------------------------|-------------|-------------------------------------------------|
+|pic32mx695f512h |   I2C      | hal_pic32mx695f512h.c/h      | plib.h      |  For pic32mx695f512h Standalone Mplab projects  |
+|                |            | hal_pic32mx695f512h_timer.c  | plib.h      |  For pic32mx695f512h Standalone Mplab projects  |
 
 
 
@@ -75,6 +75,6 @@ Files are then broken out by uController Family and or Operating System Interfac
 | Linux          |  kit-cdc   | hal_linux_kit_cdc.c/h        | fopen       | For USB Linux CDC projects         |
 | Linux          |  kit-hid   | hal_linux_kit_hid.c/h        | udev        | For USB Linux HID Projects         |
 | Linux          |            | hal_linux_timer.c            |             | For all Linux projects             |
-|                |            | hal_linux_timer_userspace.c  |             | For all Linux projects             |
+|                |            | 			 			     |             | 						            |
 
                   

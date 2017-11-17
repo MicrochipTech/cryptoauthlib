@@ -1,6 +1,6 @@
 /**
  * \file
- * \brief Atmel CryptoAuthentication device command builder - this is the main object that builds the command
+ * \brief Microchip CryptoAuthentication device command builder - this is the main object that builds the command
  * byte strings for the given device.  It does not execute the command.  The basic flow is to call
  * a command method to build the command you want given the parameters and then send that byte string
  * through the device interface.
@@ -9,38 +9,31 @@
  * The caller should first fill in the parameters required in the ATCAPacket parameter given to the command.
  * The command builder will deal with the mechanics of creating a valid packet using the parameter information.
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 #include <stdlib.h>
@@ -48,50 +41,157 @@
 #include "atca_command.h"
 #include "atca_devtypes.h"
 
-/** \defgroup command ATCACommand (atca_)
-    \brief CryptoAuthLib command builder object, ATCACommand.  Member functions for the ATCACommand object.
-   @{ */
-
-/** \brief atca_command is the C object backing ATCACommand.  See the atca_command.h file for
- * details on the ATCACommand methods
- */
-struct atca_command
-{
-    ATCADeviceType dt;
-    uint16_t *     execution_times;
+/*Execution times for ATSHA204A supported commands...*/
+static const device_execution_time_t device_execution_time_204[] = {
+    { ATCA_CHECKMAC,     38},
+    { ATCA_DERIVE_KEY,   62},
+    { ATCA_GENDIG,       43},
+    { ATCA_HMAC,         69},
+    { ATCA_INFO,         2},
+    { ATCA_LOCK,         24},
+    { ATCA_MAC,          35},
+    { ATCA_NONCE,        60},
+    { ATCA_PAUSE,        2},
+    { ATCA_RANDOM,       50},
+    { ATCA_READ,         5},
+    { ATCA_SHA,          22},
+    { ATCA_UPDATE_EXTRA, 12},
+    { ATCA_WRITE,        42}
 };
 
+/*Execution times for ATECC108A supported commands...*/
+static const device_execution_time_t device_execution_time_108[] = {
+    { ATCA_CHECKMAC,     13},
+    { ATCA_COUNTER,      20},
+    { ATCA_DERIVE_KEY,   50},
+    { ATCA_GENDIG,       11},
+    { ATCA_GENKEY,       115},
+    { ATCA_HMAC,         23},
+    { ATCA_INFO,         2},
+    { ATCA_LOCK,         32},
+    { ATCA_MAC,          14},
+    { ATCA_NONCE,        29},
+    { ATCA_PAUSE,        3},
+    { ATCA_PRIVWRITE,    48},
+    { ATCA_RANDOM,       23},
+    { ATCA_READ,         5},
+    { ATCA_SHA,          9},
+    { ATCA_SIGN,         60},
+    { ATCA_UPDATE_EXTRA, 10},
+    { ATCA_VERIFY,       72},
+    { ATCA_WRITE,        26}
+};
 
-/** \brief constructor for ATCACommand
- * \param[in] device_type - specifies which set of commands and execution times should be associated with this command object
- * \return ATCACommand instance
- */
-ATCACommand newATCACommand(ATCADeviceType device_type)    // constructor
-{
-    ATCA_STATUS status = ATCA_SUCCESS;
-    ATCACommand cacmd = (ATCACommand)malloc(sizeof(struct atca_command));
+/*Execution times for ATECC508A supported commands...*/
+static const device_execution_time_t device_execution_time_508[] = {
+    { ATCA_CHECKMAC,     13},
+    { ATCA_COUNTER,      20},
+    { ATCA_DERIVE_KEY,   50},
+    { ATCA_ECDH,         58},
+    { ATCA_GENDIG,       11},
+    { ATCA_GENKEY,       115},
+    { ATCA_HMAC,         23},
+    { ATCA_INFO,         2},
+    { ATCA_LOCK,         32},
+    { ATCA_MAC,          14},
+    { ATCA_NONCE,        29},
+    { ATCA_PAUSE,        3},
+    { ATCA_PRIVWRITE,    48},
+    { ATCA_RANDOM,       23},
+    { ATCA_READ,         5},
+    { ATCA_SHA,          9},
+    { ATCA_SIGN,         60},
+    { ATCA_UPDATE_EXTRA, 10},
+    { ATCA_VERIFY,       72},
+    { ATCA_WRITE,        26}
+};
 
-    cacmd->dt = device_type;
-    status = atInitExecTimes(cacmd, device_type);  // setup typical execution times for this device type
+/*Execution times for ATECC608A-M0 supported commands...*/
+static const device_execution_time_t device_execution_time_608_m0[] = {
+    { ATCA_AES,          27},
+    { ATCA_CHECKMAC,     40},
+    { ATCA_COUNTER,      25},
+    { ATCA_DERIVE_KEY,   50},
+    { ATCA_ECDH,         60},
+    { ATCA_GENDIG,       25},
+    { ATCA_GENKEY,       115},
+    { ATCA_INFO,         5},
+    { ATCA_KDF,          165},
+    { ATCA_LOCK,         35},
+    { ATCA_MAC,          55},
+    { ATCA_NONCE,        20},
+    { ATCA_PRIVWRITE,    50},
+    { ATCA_RANDOM,       23},
+    { ATCA_READ,         5},
+    { ATCA_SECUREBOOT,   80},
+    { ATCA_SELFTEST,     250},
+    { ATCA_SHA,          36},
+    { ATCA_SIGN,         115},
+    { ATCA_UPDATE_EXTRA, 10},
+    { ATCA_VERIFY,       105},
+    { ATCA_WRITE,        45}
+};
 
-    if (status != ATCA_SUCCESS)
-    {
-        free(cacmd);
-        cacmd = NULL;
-    }
+/*Execution times for ATECC608A-M1 supported commands...*/
+static const device_execution_time_t device_execution_time_608_m1[] = {
+    { ATCA_AES,          27},
+    { ATCA_CHECKMAC,     40},
+    { ATCA_COUNTER,      25},
+    { ATCA_DERIVE_KEY,   50},
+    { ATCA_ECDH,         140},
+    { ATCA_GENDIG,       35},
+    { ATCA_GENKEY,       215},
+    { ATCA_INFO,         5},
+    { ATCA_KDF,          165},
+    { ATCA_LOCK,         35},
+    { ATCA_MAC,          55},
+    { ATCA_NONCE,        20},
+    { ATCA_PRIVWRITE,    50},
+    { ATCA_RANDOM,       23},
+    { ATCA_READ,         5},
+    { ATCA_SECUREBOOT,   151},
+    { ATCA_SELFTEST,     590},
+    { ATCA_SHA,          42},
+    { ATCA_SIGN,         220},
+    { ATCA_UPDATE_EXTRA, 10},
+    { ATCA_VERIFY,       295},
+    { ATCA_WRITE,        45}
+};
 
-    return cacmd;
-}
-
+/*Execution times for ATECC608A-M2 supported commands...*/
+static const device_execution_time_t device_execution_time_608_m2[] = {
+    { ATCA_AES,          27},
+    { ATCA_CHECKMAC,     40},
+    { ATCA_COUNTER,      25},
+    { ATCA_DERIVE_KEY,   50},
+    { ATCA_ECDH,         455},
+    { ATCA_GENDIG,       35},
+    { ATCA_GENKEY,       630},
+    { ATCA_INFO,         5},
+    { ATCA_KDF,          165},
+    { ATCA_LOCK,         35},
+    { ATCA_MAC,          55},
+    { ATCA_NONCE,        20},
+    { ATCA_PRIVWRITE,    50},
+    { ATCA_RANDOM,       23},
+    { ATCA_READ,         5},
+    { ATCA_SECUREBOOT,   451},
+    { ATCA_SELFTEST,     2200},
+    { ATCA_SHA,          75},
+    { ATCA_SIGN,         665},
+    { ATCA_UPDATE_EXTRA, 10},
+    { ATCA_VERIFY,       1085},
+    { ATCA_WRITE,        45}
+};
 
 // full superset of commands goes here
 
 /** \brief ATCACommand CheckMAC method
- * \param[in] cacmd   instance
+ * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS
  */
-ATCA_STATUS atCheckMAC(ATCACommand cacmd, ATCAPacket *packet)
+ATCA_STATUS atCheckMAC(ATCACommand ca_cmd, ATCAPacket *packet)
 {
     // Set the opcode & parameters
     packet->opcode = ATCA_CHECKMAC;
@@ -103,14 +203,16 @@ ATCA_STATUS atCheckMAC(ATCACommand cacmd, ATCAPacket *packet)
 }
 
 /** \brief ATCACommand Counter method
- * \param[in] cacmd   instance
+ * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atCounter(ATCACommand cacmd, ATCAPacket *packet)
+ATCA_STATUS atCounter(ATCACommand ca_cmd, ATCAPacket *packet)
 {
-    if (!atIsECCFamily(cacmd->dt) )
+    if (!atIsECCFamily(ca_cmd->dt) )
+    {
         return ATCA_BAD_OPCODE;
+    }
 
     // Set the opcode & parameters
     packet->opcode = ATCA_COUNTER;
@@ -122,22 +224,26 @@ ATCA_STATUS atCounter(ATCACommand cacmd, ATCAPacket *packet)
 }
 
 /** \brief ATCACommand DeriveKey method
- * \param[in] cacmd   instance
- * \param[in] packet  pointer to the packet containing the command being built
- * \param[in] hasMAC  hasMAC determines if MAC data is present in the packet input
- * \return ATCA_STATUS
+ * \param[in] ca_cmd   instance
+ * \param[in] packet   pointer to the packet containing the command being built
+ * \param[in] has_mac  hasMAC determines if MAC data is present in the packet input
+ * \return ATCA_SUCCESS
  */
-ATCA_STATUS atDeriveKey(ATCACommand cacmd, ATCAPacket *packet, bool hasMAC)
+ATCA_STATUS atDeriveKey(ATCACommand ca_cmd, ATCAPacket *packet, bool has_mac)
 {
     // Set the opcode & parameters
     packet->opcode = ATCA_DERIVE_KEY;
 
     // hasMAC must be given since the packet does not have any implicit information to
     // know if it has a mac or not unless the size is preset
-    if (hasMAC)
+    if (has_mac)
+    {
         packet->txsize = DERIVE_KEY_COUNT_LARGE;
+    }
     else
+    {
         packet->txsize = DERIVE_KEY_COUNT_SMALL;
+    }
 
     packet->rxsize = DERIVE_KEY_RSP_SIZE;
     atCalcCrc(packet);
@@ -145,11 +251,11 @@ ATCA_STATUS atDeriveKey(ATCACommand cacmd, ATCAPacket *packet, bool hasMAC)
 }
 
 /** \brief ATCACommand ECDH method
- * \param[in] cacmd   instance
+ * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS
  */
-ATCA_STATUS atECDH(ATCACommand cacmd, ATCAPacket *packet)
+ATCA_STATUS atECDH(ATCACommand ca_cmd, ATCAPacket *packet)
 {
 
     // Set the opcode & parameters
@@ -162,22 +268,28 @@ ATCA_STATUS atECDH(ATCACommand cacmd, ATCAPacket *packet)
 }
 
 /** \brief ATCACommand Generate Digest method
- * \param[in] cacmd     instance
- * \param[in] packet    pointer to the packet containing the command being built
- * \param[in] isNoMacKey Should be true if GenDig is being run on a slot that has its SlotConfig.NoMac bit set
+ * \param[in] ca_cmd         instance
+ * \param[in] packet         pointer to the packet containing the command being built
+ * \param[in] is_no_mac_key  Should be true if GenDig is being run on a slot that has its SlotConfig.NoMac bit set
  * \return ATCA_SUCCESS
  */
-ATCA_STATUS atGenDig(ATCACommand cacmd, ATCAPacket *packet, bool isNoMacKey)
+ATCA_STATUS atGenDig(ATCACommand ca_cmd, ATCAPacket *packet, bool is_no_mac_key)
 {
     // Set the opcode & parameters
     packet->opcode = ATCA_GENDIG;
 
     if (packet->param1 == GENDIG_ZONE_SHARED_NONCE) // shared nonce mode
+    {
         packet->txsize = GENDIG_COUNT + 32;
-    else if (isNoMacKey)
+    }
+    else if (is_no_mac_key)
+    {
         packet->txsize = GENDIG_COUNT + 4;  // noMac keys use 4 bytes of OtherData in calculation
+    }
     else
+    {
         packet->txsize = GENDIG_COUNT;
+    }
 
     packet->rxsize = GENDIG_RSP_SIZE;
 
@@ -186,11 +298,11 @@ ATCA_STATUS atGenDig(ATCACommand cacmd, ATCAPacket *packet, bool isNoMacKey)
 }
 
 /** \brief ATCACommand Generate Key method
- * \param[in] cacmd     instance
+ * \param[in] ca_cmd     instance
  * \param[in] packet    pointer to the packet containing the command being built
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS
  */
-ATCA_STATUS atGenKey(ATCACommand cacmd, ATCAPacket *packet)
+ATCA_STATUS atGenKey(ATCACommand ca_cmd, ATCAPacket *packet)
 {
     // Set the opcode & parameters
     packet->opcode = ATCA_GENKEY;
@@ -211,11 +323,11 @@ ATCA_STATUS atGenKey(ATCACommand cacmd, ATCAPacket *packet)
 }
 
 /** \brief ATCACommand HMAC method
- * \param[in] cacmd   instance
+ * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS
  */
-ATCA_STATUS atHMAC(ATCACommand cacmd, ATCAPacket *packet)
+ATCA_STATUS atHMAC(ATCACommand ca_cmd, ATCAPacket *packet)
 {
 
     // Set the opcode & parameters
@@ -228,11 +340,11 @@ ATCA_STATUS atHMAC(ATCACommand cacmd, ATCAPacket *packet)
 }
 
 /** \brief ATCACommand Info method
- * \param[in] cacmd   instance
+ * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS
  */
-ATCA_STATUS atInfo(ATCACommand cacmd, ATCAPacket *packet)
+ATCA_STATUS atInfo(ATCACommand ca_cmd, ATCAPacket *packet)
 {
 
     // Set the opcode & parameters
@@ -245,11 +357,11 @@ ATCA_STATUS atInfo(ATCACommand cacmd, ATCAPacket *packet)
 }
 
 /** \brief ATCACommand Lock method
- * \param[in] cacmd   instance
+ * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS
  */
-ATCA_STATUS atLock(ATCACommand cacmd, ATCAPacket *packet)
+ATCA_STATUS atLock(ATCACommand ca_cmd, ATCAPacket *packet)
 {
 
     // Set the opcode & parameters
@@ -262,20 +374,24 @@ ATCA_STATUS atLock(ATCACommand cacmd, ATCAPacket *packet)
 }
 
 /** \brief ATCACommand MAC method
- * \param[in] cacmd   instance
+ * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS
  */
-ATCA_STATUS atMAC(ATCACommand cacmd, ATCAPacket *packet)
+ATCA_STATUS atMAC(ATCACommand ca_cmd, ATCAPacket *packet)
 {
 
     // Set the opcode & parameters
     // variable packet size
     packet->opcode = ATCA_MAC;
     if (!(packet->param1 & MAC_MODE_BLOCK2_TEMPKEY))
+    {
         packet->txsize = MAC_COUNT_LONG;
+    }
     else
+    {
         packet->txsize = MAC_COUNT_SHORT;
+    }
 
     packet->rxsize = MAC_RSP_SIZE;
 
@@ -284,27 +400,38 @@ ATCA_STATUS atMAC(ATCACommand cacmd, ATCAPacket *packet)
 }
 
 /** \brief ATCACommand Nonce method
- * \param[in] cacmd   instance
- * \param[in] packet  pointer to the packet containing the command being built
- * \return ATCA_STATUS
+ * \param[in] ca_cmd   instance
+ * \param[in] packet   pointer to the packet containing the command being built
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atNonce(ATCACommand cacmd, ATCAPacket *packet)
+ATCA_STATUS atNonce(ATCACommand ca_cmd, ATCAPacket *packet)
 {
     // Set the opcode & parameters
     // variable packet size
-    int mode = packet->param1 & 0x03;
+    uint8_t calc_mode = packet->param1 & NONCE_MODE_MASK;
 
     packet->opcode = ATCA_NONCE;
 
-    if ( (mode == 0 || mode == 1) )         // mode[0:1] == 0 | 1 then NumIn is 20 bytes
+    if ((calc_mode == NONCE_MODE_SEED_UPDATE || calc_mode == NONCE_MODE_NO_SEED_UPDATE))
     {
-        packet->txsize = NONCE_COUNT_SHORT; // 20 byte challenge
-        packet->rxsize = NONCE_RSP_SIZE_LONG;
+        // Calculated nonce mode, 20 byte NumInm
+        packet->txsize = NONCE_COUNT_SHORT;
+        packet->rxsize = NONCE_RSP_SIZE_LONG; // 32-byte output
     }
-    else if (mode == 0x03)                  // NumIn is 32 bytes
+    else if (calc_mode == NONCE_MODE_PASSTHROUGH)
     {
-        packet->txsize = NONCE_COUNT_LONG;  // 32 byte challenge
-        packet->rxsize = NONCE_RSP_SIZE_SHORT;
+        // PAss-through nonce mode
+        if ((packet->param1 & NONCE_MODE_INPUT_LEN_MASK) == NONCE_MODE_INPUT_LEN_64)
+        {
+            // 64 byte NumIn
+            packet->txsize = NONCE_COUNT_LONG_64;
+        }
+        else
+        {
+            // 32 byte NumIn
+            packet->txsize = NONCE_COUNT_LONG;
+        }
+        packet->rxsize = NONCE_RSP_SIZE_SHORT; // Status-only output
     }
     else
     {
@@ -316,11 +443,11 @@ ATCA_STATUS atNonce(ATCACommand cacmd, ATCAPacket *packet)
 }
 
 /** \brief ATCACommand Pause method
- * \param[in] cacmd   instance
+ * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS
  */
-ATCA_STATUS atPause(ATCACommand cacmd, ATCAPacket *packet)
+ATCA_STATUS atPause(ATCACommand ca_cmd, ATCAPacket *packet)
 {
     // Set the opcode & parameters
     packet->opcode = ATCA_PAUSE;
@@ -332,11 +459,11 @@ ATCA_STATUS atPause(ATCACommand cacmd, ATCAPacket *packet)
 }
 
 /** \brief ATCACommand PrivWrite method
- * \param[in] cacmd   instance
+ * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS
  */
-ATCA_STATUS atPrivWrite(ATCACommand cacmd, ATCAPacket *packet)
+ATCA_STATUS atPrivWrite(ATCACommand ca_cmd, ATCAPacket *packet)
 {
     // Set the opcode & parameters
     packet->opcode = ATCA_PRIVWRITE;
@@ -348,11 +475,11 @@ ATCA_STATUS atPrivWrite(ATCACommand cacmd, ATCAPacket *packet)
 }
 
 /** \brief ATCACommand Random method
- * \param[in] cacmd   instance
+ * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS
  */
-ATCA_STATUS atRandom(ATCACommand cacmd, ATCAPacket *packet)
+ATCA_STATUS atRandom(ATCACommand ca_cmd, ATCAPacket *packet)
 {
 
     // Set the opcode & parameters
@@ -365,11 +492,11 @@ ATCA_STATUS atRandom(ATCACommand cacmd, ATCAPacket *packet)
 }
 
 /** \brief ATCACommand Read method
- * \param[in] cacmd   instance
+ * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS
  */
-ATCA_STATUS atRead(ATCACommand cacmd, ATCAPacket *packet)
+ATCA_STATUS atRead(ATCACommand ca_cmd, ATCAPacket *packet)
 {
 
     // Set the opcode & parameters
@@ -378,49 +505,111 @@ ATCA_STATUS atRead(ATCACommand cacmd, ATCAPacket *packet)
 
     // variable response size based on read type
     if ((packet->param1 & 0x80) == 0)
+    {
         packet->rxsize = READ_4_RSP_SIZE;
+    }
     else
+    {
         packet->rxsize = READ_32_RSP_SIZE;
+    }
+
+    atCalcCrc(packet);
+    return ATCA_SUCCESS;
+}
+
+/** \brief ATCACommand SecureBoot method
+ * \param[in] ca_cmd   instance
+ * \param[in] packet  pointer to the packet containing the command being built
+ * \return ATCA_SUCCESS
+ */
+ATCA_STATUS atSecureBoot(ATCACommand ca_cmd, ATCAPacket *packet)
+{
+    packet->opcode = ATCA_SECUREBOOT;
+    packet->txsize = ATCA_CMD_SIZE_MIN;
+
+    //variable transmit size based on mode encoding
+    switch (packet->param1 & SECUREBOOT_MODE_MASK)
+    {
+    case SECUREBOOT_MODE_FULL:
+    case SECUREBOOT_MODE_FULL_COPY:
+        packet->txsize += (SECUREBOOT_DIGEST_SIZE + SECUREBOOT_SIGNATURE_SIZE);
+        break;
+
+    case SECUREBOOT_MODE_FULL_STORE:
+        packet->txsize += SECUREBOOT_DIGEST_SIZE;
+        break;
+
+    default:
+        return ATCA_BAD_PARAM;
+        break;
+    }
+    ;
+
+    //variable response size based on MAC setting
+    if (packet->param1 & SECUREBOOT_MODE_ENC_MAC_FLAG)
+    {
+        packet->rxsize = SECUREBOOT_RSP_SIZE_MAC;
+    }
+    else
+    {
+        packet->rxsize = SECUREBOOT_RSP_SIZE_NO_MAC;
+    }
 
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
 
 /** \brief ATCACommand SHA method
- * \param[in] cacmd   instance
+ * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
- * \return ATCA_STATUS
+ * \param[in] write_context_size  the length of the sha write_context data
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atSHA(ATCACommand cacmd, ATCAPacket *packet)
+ATCA_STATUS atSHA(ATCACommand ca_cmd, ATCAPacket *packet, uint16_t write_context_size)
 {
-    if (packet->param2 >  ATCA_SHA256_BLOCK_SIZE)
-        return ATCA_BAD_PARAM;
 
     // Set the opcode & parameters
     packet->opcode = ATCA_SHA;
 
-    switch (packet->param1)
+    switch (packet->param1 & SHA_MODE_MASK)
     {
-    case SHA_MODE_SHA256_START: // START
+    case SHA_MODE_SHA256_START:     // START
     case SHA_MODE_HMAC_START:
     case SHA_MODE_SHA256_PUBLIC:
         packet->rxsize = SHA_RSP_SIZE_SHORT;
-        packet->txsize = SHA_COUNT_LONG;
+        packet->txsize = ATCA_CMD_SIZE_MIN;
         break;
-    case SHA_MODE_SHA256_UPDATE:                          // UPDATE
-        if (cacmd->dt == ATSHA204A)
-            packet->rxsize = (ATCA_SHA_DIGEST_SIZE + 3);  // ATSHA devices return the digest with this command
+
+    case SHA_MODE_SHA256_UPDATE:                                           // UPDATE
+        if (ca_cmd->dt == ATSHA204A)
+        {
+            packet->rxsize = ATCA_SHA_DIGEST_SIZE + ATCA_PACKET_OVERHEAD;  // ATSHA devices return the digest with this command
+        }
         else
+        {
             packet->rxsize = SHA_RSP_SIZE_SHORT;
-        packet->txsize = SHA_COUNT_LONG + packet->param2;
+        }
+        packet->txsize = ATCA_CMD_SIZE_MIN + packet->param2;
         break;
-    case SHA_MODE_SHA256_END: // END
+
+    case SHA_MODE_SHA256_END:     // END
     case SHA_MODE_HMAC_END:
         packet->rxsize = SHA_RSP_SIZE_LONG;
         // check the given packet for a size variable in param2.  If it is > 0, it should
         // be 0-63, incorporate that size into the packet
-        packet->txsize = SHA_COUNT_LONG + packet->param2;
+        packet->txsize = ATCA_CMD_SIZE_MIN + packet->param2;
         break;
+
+    case SHA_MODE_READ_CONTEXT:
+        packet->rxsize = SHA_CONTEXT_MAX_SIZE + ATCA_PACKET_OVERHEAD;
+        packet->txsize = ATCA_CMD_SIZE_MIN;
+        break;
+
+    case SHA_MODE_WRITE_CONTEXT:
+        packet->rxsize = SHA_RSP_SIZE_SHORT;
+        packet->txsize = ATCA_CMD_SIZE_MIN + write_context_size;
+        break;
+
     default:
         return ATCA_BAD_PARAM;
     }
@@ -430,11 +619,11 @@ ATCA_STATUS atSHA(ATCACommand cacmd, ATCAPacket *packet)
 }
 
 /** \brief ATCACommand Sign method
- * \param[in] cacmd   instance
+ * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS
  */
-ATCA_STATUS atSign(ATCACommand cacmd, ATCAPacket *packet)
+ATCA_STATUS atSign(ATCACommand ca_cmd, ATCAPacket *packet)
 {
 
     // Set the opcode & parameters
@@ -449,11 +638,11 @@ ATCA_STATUS atSign(ATCACommand cacmd, ATCAPacket *packet)
 }
 
 /** \brief ATCACommand UpdateExtra method
- * \param[in] cacmd   instance
+ * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS
  */
-ATCA_STATUS atUpdateExtra(ATCACommand cacmd, ATCAPacket *packet)
+ATCA_STATUS atUpdateExtra(ATCACommand ca_cmd, ATCAPacket *packet)
 {
 
     // Set the opcode & parameters
@@ -466,167 +655,354 @@ ATCA_STATUS atUpdateExtra(ATCACommand cacmd, ATCAPacket *packet)
 }
 
 /** \brief ATCACommand ECDSA Verify method
- * \param[in] cacmd   instance
+ * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atVerify(ATCACommand cacmd, ATCAPacket *packet)
+ATCA_STATUS atVerify(ATCACommand ca_cmd, ATCAPacket *packet)
 {
 
     // Set the opcode & parameters
     packet->opcode = ATCA_VERIFY;
 
     // variable packet size based on mode
-    switch (packet->param1)
+    switch (packet->param1 & VERIFY_MODE_MASK)
     {
-    case 0:  // Stored mode
+    case VERIFY_MODE_STORED:
         packet->txsize = VERIFY_256_STORED_COUNT;
+        if (packet->param1 & VERIFY_MODE_MAC_FLAG)
+        {
+            packet->rxsize = VERIFY_RSP_SIZE_MAC;
+        }
+        else
+        {
+            packet->rxsize = VERIFY_RSP_SIZE;
+        }
         break;
-    case 1:  // ValidateExternal mode
+
+    case VERIFY_MODE_VALIDATE_EXTERNAL:
         packet->txsize = VERIFY_256_EXTERNAL_COUNT;
+        packet->rxsize = VERIFY_RSP_SIZE;
         break;
-    case 2:  // External mode
+
+    case VERIFY_MODE_EXTERNAL:
         packet->txsize = VERIFY_256_EXTERNAL_COUNT;
+        if (packet->param1 & VERIFY_MODE_MAC_FLAG)
+        {
+            packet->rxsize = VERIFY_RSP_SIZE_MAC;
+        }
+        else
+        {
+            packet->rxsize = VERIFY_RSP_SIZE;
+        }
         break;
-    case 3:     // Validate mode
-    case 7:     // Invalidate mode
+
+    case VERIFY_MODE_VALIDATE:
+    case VERIFY_MODE_INVALIDATE:
         packet->txsize = VERIFY_256_VALIDATE_COUNT;
+        packet->rxsize = VERIFY_RSP_SIZE;
         break;
+
     default:
         return ATCA_BAD_PARAM;
     }
-    packet->rxsize = VERIFY_RSP_SIZE;
 
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
 
 /** \brief ATCACommand Write method
- * \param[in] cacmd   instance
+ * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
- * \return ATCA_STATUS
+ * \param[in] has_mac  Flag to indicate whether a mac is present or not
+ * \return ATCA_SUCCESS
  */
-ATCA_STATUS atWrite(ATCACommand cacmd, ATCAPacket *packet, bool hasMAC)
+ATCA_STATUS atWrite(ATCACommand ca_cmd, ATCAPacket *packet, bool has_mac)
 {
     // Set the opcode & parameters
     packet->opcode = ATCA_WRITE;
 
     packet->txsize = 7;
     if (packet->param1 & ATCA_ZONE_READWRITE_32)
+    {
         packet->txsize += ATCA_BLOCK_SIZE;
+    }
     else
+    {
         packet->txsize += ATCA_WORD_SIZE;
-    if (hasMAC)
+    }
+    if (has_mac)
+    {
         packet->txsize += WRITE_MAC_SIZE;
+    }
 
     packet->rxsize = WRITE_RSP_SIZE;
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
 
-
-/** \brief ATCACommand destructor
- * \param[in] cacmd instance of a command object
+/** \brief ATCACommand AES method
+ * \param[in] ca_cmd   instance
+ * \param[in] packet  pointer to the packet containing the command being built
+ * \return ATCA_SUCCESS
  */
-
-void deleteATCACommand(ATCACommand *cacmd)    // destructor
+ATCA_STATUS atAES(ATCACommand ca_cmd, ATCAPacket *packet)
 {
-    if (*cacmd)
-        free((void*)*cacmd);
+    // Set the opcode & parameters
+    packet->opcode = ATCA_AES;
+    packet->txsize = ATCA_CMD_SIZE_MIN;
 
-    *cacmd = NULL;
-}
-
-
-/** \brief execution times for x08a family, these are based on the typical value from the datasheet
- */
-uint16_t exectimes_x08a[] = {   // in milleseconds
-    1,                          // WAKE_TWHI
-    13,                         // CMD_CHECKMAC
-    20,                         // CMD_COUNTER
-    50,                         // CMD_DERIVEKEY
-    58,                         // CMD_ECDH
-    11,                         // CMD_GENDIG
-    115,                        // CMD_GENKEY
-    23,                         // CMD_HMAC
-    2,                          // CMD_INFO
-    32,                         // CMD_LOCK
-    14,                         // CMD_MAC
-    29,                         // CMD_NONCE
-    3,                          // CMD_PAUSE
-    48,                         // CMD_PRIVWRITE
-    23,                         // CMD_RANDOM with SEED Update mode takes ~21ms, high side of range
-    5,                          // CMD_READMEM
-    9,                          // CMD_SHA
-    60,                         // CMD_SIGN
-    10,                         // CMD_UPDATEEXTRA
-    72,                         // CMD_VERIFY
-    26                          // CMD_WRITE
-};
-
-
-/** \brief execution times for 204a, these are based on the typical value from the datasheet
- */
-uint16_t exectimes_204a[] = {
-    3,  // WAKE_TWHI
-    38, // CMD_CHECKMAC
-    0,
-    62, // CMD_DERIVEKEY
-    0,
-    43, // CMD_GENDIG
-    0,
-    69, // CMD_HMAC
-    2,  // CMD_DevRev
-    24, // CMD_LOCK
-    35, // CMD_MAC
-    60, // CMD_NONCE
-    2,  // CMD_PAUSE
-    0,
-    50, // CMD_RANDOM
-    5,  // CMD_READMEM
-    22, // CMD_SHA
-    0,
-    12, // CMD_UPDATEEXTRA
-    0,
-    42  // CMD_WRITEMEM
-};
-
-/** \brief initialize the execution times for a given device type
- *
- * \param[in] cacmd - the command containing the list of execution times for the device
- * \param[in] device_type - the device type - execution times vary by device type
- * \return ATCA_STATUS
- */
-
-ATCA_STATUS atInitExecTimes(ATCACommand cacmd, ATCADeviceType device_type)
-{
-    switch (device_type)
+    if ((packet->param1 & AES_MODE_OP_MASK) == AES_MODE_GFM)
     {
-    case ATECC108A:
-    case ATECC508A:
-        cacmd->execution_times = exectimes_x08a;
-        break;
-    case ATSHA204A:
-        cacmd->execution_times = exectimes_204a;
-        break;
-    default:
-        return ATCA_BAD_PARAM;
-        break;
+        packet->txsize += ATCA_AES_GFM_SIZE;
     }
-
+    else
+    {
+        packet->txsize += AES_DATA_SIZE;
+    }
+    packet->rxsize = AES_RSP_SIZE;
+    atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
 
-/** \brief return the typical execution type for the given command
- *
- * \param[in] cacmd the command object for which the execution times are associated
- * \param[in] cmd - the specific command for which to lookup the execution time
- * \return typical execution time in milleseconds for the given command
+/** \brief ATCACommand AES method
+ * \param[in] ca_cmd   instance
+ * \param[in] packet  pointer to the packet containing the command being built
+ * \return ATCA_SUCCESS
  */
-
-uint16_t atGetExecTime(ATCACommand cacmd, ATCA_CmdMap cmd)
+ATCA_STATUS atSelfTest(ATCACommand ca_cmd, ATCAPacket *packet)
 {
-    return cacmd->execution_times[cmd];
+    // Set the opcode & parameters
+    packet->opcode = ATCA_SELFTEST;
+    packet->txsize = ATCA_CMD_SIZE_MIN;
+    packet->rxsize = SELFTEST_RSP_SIZE;
+
+    atCalcCrc(packet);
+    return ATCA_SUCCESS;
+}
+
+
+
+/** \brief ATCACommand KDF method
+ * \param[in]  ca_cmd          Instance
+ * \param[in]  packet          Pointer to the packet containing the command
+ *                             being built.
+ * \param[out] out_data_size   Expected size of OutData is returned here. Can be
+ *                             NULL if not required.
+ * \param[out] out_nonce_size  Expected size of OutNonce is returned here. Can
+ *                             be NULL if not required.
+ * \return ATCA_SUCCESS
+ */
+ATCA_STATUS atKDF(ATCACommand ca_cmd, ATCAPacket *packet, uint16_t* out_data_size, uint16_t* out_nonce_size)
+{
+    uint8_t target;
+    uint32_t details;
+
+    // Set the opcode & parameters
+    packet->opcode = ATCA_KDF;
+
+    // Set TX size
+    if ((packet->param1 & KDF_MODE_ALG_MASK) == KDF_MODE_ALG_AES)
+    {
+        // AES algorithm has a fixed message size
+        packet->txsize = ATCA_CMD_SIZE_MIN + KDF_DETAILS_SIZE + AES_DATA_SIZE;
+    }
+    else
+    {
+        // All other algorithms encode message size in the last byte of details
+        packet->txsize = ATCA_CMD_SIZE_MIN + KDF_DETAILS_SIZE + packet->data[3];
+    }
+
+    target = (packet->param1 & KDF_MODE_TARGET_MASK);
+    details = ((uint32_t)packet->data[0] <<  0) |
+              ((uint32_t)packet->data[1] <<  8) |
+              ((uint32_t)packet->data[2] << 16) |
+              ((uint32_t)packet->data[3] << 24);
+
+    // Set RX size
+    packet->rxsize = ATCA_PACKET_OVERHEAD;
+    switch (packet->param1 & KDF_MODE_ALG_MASK)
+    {
+    case KDF_MODE_ALG_PRF:
+        if (target == KDF_MODE_TARGET_OUTPUT || target == KDF_MODE_TARGET_OUTPUT_ENC)
+        {
+            // KDF result will be returned in the command response
+            // Check TargetLen in the Details parameter to find how big the response will be
+            if ((details & KDF_DETAILS_PRF_TARGET_LEN_MASK) == KDF_DETAILS_PRF_TARGET_LEN_64)
+            {
+                packet->rxsize += 64;
+            }
+            else
+            {
+                packet->rxsize += 32;
+            }
+        }
+        else if ((details & KDF_DETAILS_PRF_AEAD_MASK) == KDF_DETAILS_PRF_AEAD_MODE3)
+        {
+            // This AEAD processing mode will return 32 bytes even when the
+            // output buffer isn't the target
+            packet->rxsize += 32;
+        }
+        else
+        {
+            // Only a status message returned
+            packet->rxsize += 1;
+        }
+        break;
+
+    case KDF_MODE_ALG_AES:
+    case KDF_MODE_ALG_HKDF:
+        if (target == KDF_MODE_TARGET_OUTPUT || target == KDF_MODE_TARGET_OUTPUT_ENC)
+        {
+            packet->rxsize += 32;  // AES and HKDF always return 32 bytes
+        }
+        else
+        {
+            packet->rxsize += 1;   // Only a status message returned
+        }
+        break;
+
+    default:
+        return ATCA_BAD_PARAM;
+    }
+
+    if (out_data_size != NULL)
+    {
+        if (packet->rxsize > ATCA_RSP_SIZE_MIN)
+        {
+            *out_data_size = packet->rxsize - ATCA_PACKET_OVERHEAD;
+        }
+        else
+        {
+            *out_data_size = 0;
+        }
+    }
+
+    if (target == KDF_MODE_TARGET_OUTPUT_ENC)
+    {
+        packet->rxsize += OUTNONCE_SIZE; // Encrypted output also supplies OutNonce
+
+        if (out_nonce_size != NULL)
+        {
+            *out_nonce_size = OUTNONCE_SIZE;
+        }
+    }
+    else if (out_nonce_size != NULL)
+    {
+        *out_nonce_size = 0;
+    }
+
+    atCalcCrc(packet);
+    return ATCA_SUCCESS;
+}
+
+/** \brief constructor for ATCACommand
+ * \param[in] device_type - specifies which set of commands and execution times should be associated with this command object
+ * \return ATCACommand instance
+ */
+ATCACommand newATCACommand(ATCADeviceType device_type)    // constructor
+{
+    ATCA_STATUS status = ATCA_SUCCESS;
+    ATCACommand ca_cmd;
+
+    ca_cmd = (ATCACommand)malloc(sizeof(atca_command));
+    ca_cmd->dt = device_type;
+    ca_cmd->clock_divider = 0;
+    if (status != ATCA_SUCCESS)
+    {
+        free(ca_cmd);
+        ca_cmd = NULL;
+    }
+
+    return ca_cmd;
+}
+
+/** \brief ATCACommand destructor
+ * \param[in] ca_cmd instance of a command object
+ */
+void deleteATCACommand(ATCACommand *ca_cmd)    // destructor
+{
+    if (*ca_cmd)
+    {
+        free((void*)*ca_cmd);
+    }
+
+    *ca_cmd = NULL;
+}
+
+
+
+/** \brief return the typical execution type for the given command
+ *  \param[in] opcode  Opcode value of the command
+ *  \param[in] ca_cmd  Command object for which the execution times are associated
+ *  \return ATCA_SUCCESS
+ */
+ATCA_STATUS atGetExecTime(uint8_t opcode, ATCACommand ca_cmd)
+{
+    ATCA_STATUS status = ATCA_SUCCESS;
+    const device_execution_time_t *execution_times;
+    uint8_t i, no_of_commands;
+
+
+    switch (ca_cmd->dt)
+    {
+    case ATSHA204A:
+        execution_times = device_execution_time_204;
+        no_of_commands = sizeof(device_execution_time_204) / sizeof(device_execution_time_t);
+        break;
+
+    case ATECC108A:
+        execution_times = device_execution_time_108;
+        no_of_commands = sizeof(device_execution_time_108) / sizeof(device_execution_time_t);
+        break;
+
+    case ATECC508A:
+        execution_times = device_execution_time_508;
+        no_of_commands = sizeof(device_execution_time_508) / sizeof(device_execution_time_t);
+        break;
+
+    case ATECC608A:
+        if (ca_cmd->clock_divider == ATCA_CHIPMODE_CLOCK_DIV_M1)
+        {
+            execution_times = device_execution_time_608_m1;
+            no_of_commands = sizeof(device_execution_time_608_m1) / sizeof(device_execution_time_t);
+        }
+        else if (ca_cmd->clock_divider == ATCA_CHIPMODE_CLOCK_DIV_M2)
+        {
+            execution_times = device_execution_time_608_m2;
+            no_of_commands = sizeof(device_execution_time_608_m2) / sizeof(device_execution_time_t);
+        }
+        else
+        {
+            // Assume default M0 clock divider
+            execution_times = device_execution_time_608_m0;
+            no_of_commands = sizeof(device_execution_time_608_m0) / sizeof(device_execution_time_t);
+        }
+        break;
+
+    default:
+        no_of_commands = 0;
+        execution_times = NULL;
+        break;
+    }
+
+    ca_cmd->execution_time_msec = UNSUPPORTED;
+
+    for (i = 0; i < no_of_commands; i++)
+    {
+        if (execution_times[i].opcode == opcode)
+        {
+            ca_cmd->execution_time_msec = execution_times[i].execution_time_msec;
+            break;
+        }
+    }
+
+    if (ca_cmd->execution_time_msec == UNSUPPORTED)
+    {
+        status = ATCA_BAD_OPCODE;
+    }
+
+    return status;
 }
 
 
@@ -654,7 +1030,9 @@ void atCRC(size_t length, const uint8_t *data, uint8_t *crc_le)
             crc_bit = crc_register >> 15;
             crc_register <<= 1;
             if (data_bit != crc_bit)
+            {
                 crc_register ^= polynom;
+            }
         }
     }
     crc_le[0] = (uint8_t)(crc_register & 0x00FF);
@@ -681,36 +1059,34 @@ void atCalcCrc(ATCAPacket *packet)
 
 /** \brief This function checks the consistency of a response.
  * \param[in] response pointer to response
- * \return status of the consistency check
+ * \return ATCA_SUCCESS on success, otherwise ATCA_RX_CRC_ERROR
  */
 
-uint8_t atCheckCrc(const uint8_t *response)
+ATCA_STATUS atCheckCrc(const uint8_t *response)
 {
     uint8_t crc[ATCA_CRC_SIZE];
     uint8_t count = response[ATCA_COUNT_IDX];
 
-    if (count < ATCA_CRC_SIZE)
-        return ATCA_BAD_PARAM;
-
     count -= ATCA_CRC_SIZE;
     atCRC(count, response, crc);
 
-    return (crc[0] == response[count] && crc[1] == response[count + 1]) ? ATCA_SUCCESS : ATCA_BAD_CRC;
+    return (crc[0] == response[count] && crc[1] == response[count + 1]) ? ATCA_SUCCESS : ATCA_RX_CRC_ERROR;
 }
 
 
 /** \brief determines if a given device type is a SHA device or a superset of a SHA device
- * \param[in] deviceType - the type of device to check for family type
+ * \param[in] device_type  Type of device to check for family type
  * \return boolean indicating whether the given device is a SHA family device.
  */
 
-bool atIsSHAFamily(ATCADeviceType deviceType)
+bool atIsSHAFamily(ATCADeviceType device_type)
 {
-    switch (deviceType)
+    switch (device_type)
     {
     case ATSHA204A:
     case ATECC108A:
     case ATECC508A:
+    case ATECC608A:
         return true;
         break;
     default:
@@ -720,16 +1096,16 @@ bool atIsSHAFamily(ATCADeviceType deviceType)
 }
 
 /** \brief determines if a given device type is an ECC device or a superset of a ECC device
- * \param[in] deviceType - the type of device to check for family type
+ * \param[in] device_type  Type of device to check for family type
  * \return boolean indicating whether the given device is an ECC family device.
  */
-
-bool atIsECCFamily(ATCADeviceType deviceType)
+bool atIsECCFamily(ATCADeviceType device_type)
 {
-    switch (deviceType)
+    switch (device_type)
     {
     case ATECC108A:
     case ATECC508A:
+    case ATECC608A:
         return true;
         break;
     default:
@@ -740,7 +1116,7 @@ bool atIsECCFamily(ATCADeviceType deviceType)
 
 /** \brief checks for basic error frame in data
  * \param[in] data pointer to received data - expected to be in the form of a CA device response frame
- * \return ATCA_STATUS indicating type of error or no error
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
 ATCA_STATUS isATCAError(uint8_t *data)
@@ -748,17 +1124,25 @@ ATCA_STATUS isATCAError(uint8_t *data)
     uint8_t good[4] = { 0x04, 0x00, 0x03, 0x40 };
 
     if (memcmp(data, good, 4) == 0)
+    {
         return ATCA_SUCCESS;
+    }
 
     if (data[0] == 0x04)        // error packets are always 4 bytes long
     {
         switch (data[1])
         {
-        case 0x01:              // checkmac or verify failed
+        case 0x01: // checkmac or verify failed
             return ATCA_CHECKMAC_VERIFY_FAILED;
             break;
         case 0x03: // command received byte length, opcode or parameter was illegal
             return ATCA_PARSE_ERROR;
+            break;
+        case 0x05: // computation error during ECC processing causing invalid results
+            return ATCA_STATUS_ECC;
+            break;
+        case 0x07: // chip is in self test failure mode
+            return ATCA_STATUS_SELFTEST_ERROR;
             break;
         case 0x0f: // chip can't execute the command
             return ATCA_EXECUTION_ERROR;
@@ -766,7 +1150,7 @@ ATCA_STATUS isATCAError(uint8_t *data)
         case 0x11: // chip was successfully woken up
             return ATCA_WAKE_SUCCESS;
             break;
-        case 0xff: // bad crc found or other comm error
+        case 0xff: // bad crc found (command not properly received by device) or other comm error
             return ATCA_STATUS_CRC;
             break;
         default:

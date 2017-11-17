@@ -3,38 +3,31 @@
  * \brief Host side methods using software implementations.  host-side, the one authenticating
  *        a client, of the authentication process. Crypto functions are performed using a software library.
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 #ifndef ATCACERT_HOST_SOFT_H
@@ -49,6 +42,7 @@
 extern "C" {
 #endif
 
+
 /** \defgroup atcacert_ Certificate manipulation methods (atcacert_)
  *
  * \brief
@@ -59,7 +53,7 @@ extern "C" {
 
 /**
  * \brief Verify a certificate against its certificate authority's public key using software crypto
- *        functions.
+ *        functions.The function is currently not implemented.
  *
  * \param[in] cert_def       Certificate definition describing how to extract the TBS and signature
  *                           components from the certificate specified.
@@ -69,24 +63,29 @@ extern "C" {
  *                           certificate. Formatted as the 32 byte X and Y integers concatenated
  *                           together (64 bytes total).
  *
- * \return 0 if the verify succeeds, ATCACERT_VERIFY_FAILED if it fails to verify.
+ * \return ATCA_UNIMPLEMENTED , as the function is currently not implemented.
  */
 int atcacert_verify_cert_sw(const atcacert_def_t* cert_def,
                             const uint8_t*        cert,
                             size_t                cert_size,
                             const uint8_t         ca_public_key[64]);
 
+
+
 /**
- * \brief Generate a random challenge to be sent to the client using a software PRNG.
+ * \brief Generate a random challenge to be sent to the client using a software PRNG.The function is currently not implemented.
  *
  * \param[out] challenge  Random challenge is return here. 32 bytes.
  *
- * \return 0 on success
+ * \return ATCA_UNIMPLEMENTED , as the function is currently not implemented.
  */
 int atcacert_gen_challenge_sw(uint8_t challenge[32]);
 
+
+
+
 /**
- * \brief Verify a client's response to a challenge using software crypto functions.
+ * \brief Verify a client's response to a challenge using software crypto functions.The function is currently not implemented.
  *
  * The challenge-response protocol is an ECDSA Sign and Verify. This performs an ECDSA verify on the
  * response returned by the client, verifying the client has the private key counter-part to the
@@ -97,7 +96,7 @@ int atcacert_gen_challenge_sw(uint8_t challenge[32]);
  * \param[in] challenge          Challenge that was sent to the client. 32 bytes.
  * \param[in] response           Response returned from the client to be verified. 64 bytes.
  *
- * \return 0 if the verify succeeds. ATCACERT_BAD_RESPONSE if the verify fails.
+ * \return ATCA_UNIMPLEMENTED , as the function is currently not implemented.
  */
 int atcacert_verify_response_sw(const uint8_t device_public_key[64],
                                 const uint8_t challenge[32],

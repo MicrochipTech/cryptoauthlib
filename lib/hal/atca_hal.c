@@ -5,38 +5,31 @@
  * low-level physical interfaces.  Its main goal is to keep low-level details from bleeding into
  * the logical interface implemetation.
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 
@@ -48,7 +41,8 @@
 
 /** \brief Standard HAL API for ATCA to initialize a physical interface
  * \param[in] cfg pointer to ATCAIfaceCfg object
- * \param[in] hal pointer to ATCAHAL_t intermediate datastructure
+ * \param[in] hal pointer to ATCAHAL_t intermediate data structure
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
 ATCA_STATUS hal_iface_init(ATCAIfaceCfg *cfg, ATCAHAL_t *hal)
@@ -129,16 +123,16 @@ ATCA_STATUS hal_iface_init(ATCAIfaceCfg *cfg, ATCAHAL_t *hal)
         status = ATCA_SUCCESS;
         #endif
         break;
-    case ATCA_SIM_IFACE:
-        #ifdef ATCA_HAL_SIM
-        hal->halinit = &hal_sim_init;
-        hal->halpostinit = &hal_sim_post_init;
-        hal->halreceive = &hal_sim_receive;
-        hal->halsend = &hal_sim_send;
-        hal->halsleep = &hal_sim_sleep;
-        hal->halwake = &hal_sim_wake;
-        hal->halidle = &hal_sim_idle;
-        hal->halrelease = &hal_sim_release;
+    case ATCA_CUSTOM_IFACE:
+        #ifdef ATCA_HAL_CUSTOM
+        hal->halinit = cfg->atcacustom.halinit;
+        hal->halpostinit = cfg->atcacustom.halpostinit;
+        hal->halreceive = cfg->atcacustom.halreceive;
+        hal->halsend = cfg->atcacustom.halsend;
+        hal->halsleep = cfg->atcacustom.halsleep;
+        hal->halwake = cfg->atcacustom.halwake;
+        hal->halidle = cfg->atcacustom.halidle;
+        hal->halrelease = cfg->atcacustom.halrelease;
         hal->hal_data = NULL;
 
         status = ATCA_SUCCESS;
@@ -151,47 +145,47 @@ ATCA_STATUS hal_iface_init(ATCAIfaceCfg *cfg, ATCAHAL_t *hal)
 }
 
 /** \brief releases a physical interface, HAL knows how to interpret hal_data
- * \param[in] ifacetype - the type of physical interface to release
+ * \param[in] iface_type - the type of physical interface to release
  * \param[in] hal_data - pointer to opaque hal data maintained by HAL implementation for this interface type
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
-ATCA_STATUS hal_iface_release(ATCAIfaceType ifacetype, void *hal_data)
+ATCA_STATUS hal_iface_release(ATCAIfaceType iface_type, void *hal_data)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
-    switch (ifacetype)
+    switch (iface_type)
     {
     case ATCA_I2C_IFACE:
-            #ifdef ATCA_HAL_I2C
+#ifdef ATCA_HAL_I2C
         status = hal_i2c_release(hal_data);
-            #endif
+#endif
         break;
     case ATCA_SWI_IFACE:
-            #ifdef ATCA_HAL_SWI
+ #ifdef ATCA_HAL_SWI
         status = hal_swi_release(hal_data);
-            #endif
+#endif
         break;
     case ATCA_UART_IFACE:
-            #ifdef ATCA_HAL_UART
+ #ifdef ATCA_HAL_UART
         // TODO - release HAL UART
-            #endif
-            #ifdef ATCA_HAL_KIT_CDC
+#endif
+#ifdef ATCA_HAL_KIT_CDC
         status = hal_kit_cdc_release(hal_data);
-            #endif
+#endif
         break;
     case ATCA_SPI_IFACE:
-            #ifdef ATCA_HAL_SPI
+#ifdef ATCA_HAL_SPI
         // TODO - release HAL SPI
-            #endif
+#endif
         break;
     case ATCA_HID_IFACE:
-            #ifdef ATCA_HAL_KIT_HID
+#ifdef ATCA_HAL_KIT_HID
         status = hal_kit_hid_release(hal_data);
-            #endif
+#endif
         break;
-    case ATCA_SIM_IFACE:
-#ifdef ATCA_HAL_SIM
-        status = hal_sim_release(hal_data);
+    case ATCA_CUSTOM_IFACE:
+#ifdef ATCA_HAL_CUSTOM
 #endif
         break;
     default:

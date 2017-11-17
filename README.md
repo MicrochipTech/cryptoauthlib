@@ -1,58 +1,76 @@
-CryptoAuthLib - Atmel CryptoAuthentication Library       {#mainpage}
+CryptoAuthLib - Microchip CryptoAuthentication Library       {#mainpage}
 ====================================================
 
 Introduction
 ------------------------
 This code base implements an object-oriented C library which supports
-Atmel CryptoAuth devices.  The family of devices supported currently are:
+Microchip CryptoAuth devices.  The family of devices supported currently are:
 
-- [ATECCx08A (ATECC108A, ATECC508A)](http://www.atmel.com/devices/ATECC508A.aspx)
-- [ATSHA204A](http://www.atmel.com/products/security-ics/cryptoauthentication/sha-256.aspx)
+- [ATSHA204A](http://www.microchip.com/ATSHA204A)
+- [ATECC108A](http://www.microchip.com/ATECC108A)
+- [ATECC508A](http://www.microchip.com/ATECC508A)
+- [ATECC608A](http://www.microchip.com/ATECC608A)
+
+Latest software and examples can be found at:
+  - http://www.microchip.com/SWLibraryWeb/product.aspx?product=CryptoAuthLib
 
 Prerequisite skills:
   - strong C programming and code reading
   - Atmel Studio familiarity
   - Knowledge of flashing microcontrollers with new code
-  - Familiarity with Atmel CryptoAuth device functionality
+  - Familiarity with Microchip CryptoAuth device functionality
 
 Prerequisite hardware to run CryptoAuthLib examples:
-  - [ATSAMR21 Xplained Pro](http://www.atmel.com/tools/ATSAMR21-XPRO.aspx)
-or
-  - [ATSAMD21 Xplained Pro](http://www.atmel.com/tools/ATSAMD21-XPRO.aspx)
+  - [ATSAMR21 Xplained Pro]( http://www.microchip.com/atsamr21-xpro )
+    or [ATSAMD21 Xplained Pro]( http://www.microchip.com/ATSAMD21-XPRO )
+  - [CryptoAuth Xplained Pro Extension](http://www.microchip.com/developmenttools/productdetails.aspx?partno=atcryptoauth-xpro-b )
+    or [CryptoAuthentication SOIC Socket Board](http://www.microchip.com/developmenttools/productdetails.aspx?partno=at88ckscktsoic-xpro )
+    to accept SOIC parts
 
-  - [CryptoAuth Xplained Pro Extension](http://www.atmel.com/tools/CryptoAuthXplainedPro.aspx)
-or 
-  - [socketed top-board for ATCK101](http://www.atmel.com/tools/at88ck101.aspx) to accept chip packages of your choice 
-
-For most development, using socketed top-boards is preferable until your configuration 
-is well tested, then you can commit it to a CryptoAuth Xplained Pro Extension, for example.
-Keep in mind that once you lock a device, it will not be changeable.
+For most development, using socketed top-boards is preferable until your
+configuration is well tested, then you can commit it to a CryptoAuth Xplained
+Pro Extension, for example. Keep in mind that once you lock a device, it will
+not be changeable.
 
 Examples
 -----------
 
-  - watch [CryptoAuthLib Documents](http://www.atmel.com/tools/CryptoAuthLib.aspx?tab=documents) for
-new examples coming online.  
-  - ATECC508A Node Authentication Example Using Asymmetric PKI is a complete,
-all-in-one example demonstrating all the stages of crypto authentication starting from provisioning
-the Crypto Authentication device with keys and certificates to demonstrating an authentication 
-sequence using asymmetric techniques.
+  - Watch [CryptoAuthLib Documents](http://www.microchip.com/design-centers/security-ics/cryptoauthentication/overview )
+    for new examples coming online.
+  - Node Authentication Example Using Asymmetric PKI is a complete, all-in-one
+    example demonstrating all the stages of crypto authentication starting from
+    provisioning the Crypto Authentication device ATECC608A/ATECC508A with keys
+    and certificates to demonstrating an authentication sequence using
+    asymmetric techniques.
+    http://www.microchip.com/SWLibraryWeb/product.aspx?product=CryptoAuthLib
 
 Release notes
 -----------
+11/17/2017
+  - Added library support for the ATECC608A device
+  - Added support for Counter command
+  - atca_basic functions and tests now split into multiple files based on
+    command
+  - Added support for multiple base64 encoding rules
+  - Added support for JSON Web Tokens (jwt)
+  - Fixed atcab_write_enc() function to encrypt the data even when the device
+    is unlocked
+  - Fixed atcab_base64encode_() for the extra newline
+  - Updated atcab_ecdh_enc() to work more consistently
+
 07/01/2017
   - Removed assumption of SN[0:1]=0123, SN[8]=EE. SN now needs to be passed in
-for functions in atca_host and atca_basic functions will now read the config
-zone for the SN if needed.
+    for functions in atca_host and atca_basic functions will now read the
+    config zone for the SN if needed.
   - Renamed atcab_gendig_host() to atcab_gendig() since it's not a host
-function. Removed original atcab_gendig(), which had limited scope.
+    function. Removed original atcab_gendig(), which had limited scope.
   - Fixed atcah_hmac() for host side HMAC calculations. Added atcab_hmac().
   - Removed unnecessary ATCADeviceType parameters from some atca_basic
-functions.
+    functions.
   - Added atcacert_create_csr() to create a signed CSR.
-  - New HAL implementation for Kit protocol over HID on Linux
-    Please see the Incorporating CryptoAuthLib in a Linux project using USB HID devices section
-    in this file for more information.
+  - New HAL implementation for Kit protocol over HID on Linux. Please see the
+    Incorporating CryptoAuthLib in a Linux project using USB HID devices
+    section in this file for more information.
   - Added atcacert_write_cert() for writing certificates to the device.
   - Added support for dynamic length certificate serial numbers in atcacert.
   - Added atcab_write() for lower level write commands.
@@ -60,7 +78,8 @@ functions.
   - Added atcab_verify() command for lower level verify commands.
   - Added atcab_verify_stored() for verifying data with a stored public key.
   - Removed atcab_write_bytes_slot(). Use atcab_write_bytes_zone() instead.
-  - Modified atcab_write_bytes_zone() and atcab_read_bytes_zone() to specify a slot.
+  - Modified atcab_write_bytes_zone() and atcab_read_bytes_zone() to specify a
+    slot
   - Added atcab_verify_validate() and atcab_verify_invalidate()
   - Improvements to host functions to handle more cases.
   - Added atcab_updateextra(), atcab_derive_key()
@@ -69,7 +88,8 @@ functions.
   - Removed device specific config read/write. Generic now handles both.
   - Removed unnecessary response parameter from lock commands.
   - Enhanced and added unit tests.
-  - Encrypted read and write functions now handle keys with SlotConfig.NoMac set.
+  - Encrypted read and write functions now handle keys with SlotConfig.NoMac
+    set
   - atcab_cmp_config_zone() handles all devices now.
   - Fixed some edge cases in atcab_read_bytes_zone().
   - Updated atSHA() to work with all devices.
@@ -80,17 +100,20 @@ functions.
     - Single Wire interface for SAMD21 / SAMR21
     - SAMV71 I2C HAL implementation
     - XMega A3Bu HAL implementation
-  - added atcab_version() method to return current version string of libary to application
+  - Added atcab_version() method to return current version string of libary to
+    application
   - New Bus and Discovery API 
-    - returns a list of ATCA device configurations for each CryptoAuth device found
+    - returns a list of ATCA device configurations for each CryptoAuth device
+      found
     - currently implemented on SAMD21/R21 I2C, SAMV71
     - additional discovery implementations to come
   - TLS APIs solidified and documented
   - Added missing doxygen documentation for some CryptoAuthLib methods 
-  - Stubs for HAL SPI removed as they are unused for SHA204A and ECC508A support
+  - Stubs for HAL SPI removed as they are unused for SHA204A and ECC508A
+    support
   - bug fixes
-  - updated atcab_sha() to accept a variable length message that is > 64 bytes and
-not a multiple of 64 bytes (the SHA block size).
+  - updated atcab_sha() to accept a variable length message that is > 64 bytes
+    and not a multiple of 64 bytes (the SHA block size).
   - refactored Cert I/O and Cert Data tests to be smaller
   - 'uncrustify' source formatting
   - published on GitHub
@@ -107,23 +130,30 @@ not a multiple of 64 bytes (the SHA block size).
 Host Device Support
 ---------------
 
-CryptoAuthLib will run on a variety of platforms from small micro-controllers to
-desktop host systems.  The current list of hardware abstraction layer support includes:
+CryptoAuthLib will run on a variety of platforms from small micro-controllers
+to desktop host systems.  The current list of hardware abstraction layer
+support includes:
 
 Rich OS Hosts:
   - Linux Kit Protocol over CDC USB
+  - Linux Kit Protocol over HID USB
+  - Linux I2C protocol.
   - Windows Kit Protocol over CDC USB
   - Windows Kit Protocol over HID USB
 
 Microcontrollers:
-  - SAMD21 (I2C and SWI)
+  - SAMD21 (I2C, SWI, and Bit Banging)
   - SAMR21 (I2C and SWI)
-  - SAM4S (I2C)
-  - AVR XMEGA A3BU (I2C and SWI)
-  - SAMV71
+  - SAM4S  (I2C)
+  - SAMV71 (I2C)
+  - SAMB11 (I2C)
+  - SAMG55 (I2C)
+  - AVR XMEGA A3BU  (I2C and SWI)
+  - AVR AT90USB1287 (I2C and SWI)
+  - PIC32MX695F512H (I2C)
 
-If you have specific microcontrollers or Rich OS platforms you need support for,
-please contact us through the Atmel support portal with your request.
+If you have specific microcontrollers or Rich OS platforms you need support
+for, please contact us through the Microchip portal with your request.
 
 CryptoAuthLib Architecture
 ----------------------------
@@ -135,7 +165,8 @@ The library is structured to support portability to:
   - multiple environments including bare-metal, Windows, and Linux OS
   - multiple chip communication protocols (I2C, SPI, UART, and SWI)
 
-All platform dependencies are contained within the HAL (hardware abstraction layer).
+All platform dependencies are contained within the HAL (hardware abstraction
+layer).
 
 ![CryptoAuthLib Architecture](../CryptoAuthLib-Architecture.png "CryptoAuthLib Architecture" )
 
@@ -152,34 +183,35 @@ ATCADevice is a composite object made up of ATCACommand ATCAIface.
 
 Currently, the vast majority of testing has been performed on:
 
-  - ATSAMR21 Xplained Pro (cryptoauth-r21-host firmware)
-  - ATSAMD21 Xplained Pro (cryptoauth-d21-host firmware)
-  - ATSAMV71 Xplained Pro (cryptoauth-v71-host firmware)
-  - Windows (cryptoauthlib-win-host)
+  - ATSAMR21 Xplained Pro
+  - ATSAMD21 Xplained Pro
+  - ATSAMV71 Xplained Pro
+  - Windows (kit protocol HID)
 
 These host containers implement a host test environment and
 test console to exercise tests.  They presume that a CryptoAuth Xplained Pro
-or other I2C socket for an ATECC508A are connected to the I2C pins of the
-host Xplained Pro development board or in the case of windows is using a 
-HID connection to an  ATCK101 or ATCK590.
+or other I2C socket for an ATECC608A/ATECC508A/ATECC108A/ATSHA204A are
+connected to the I2C pins of the host Xplained Pro development board or in the
+case of windows is using a HID connection to an  ATCK101 or ATCK590.
 
 The unit tests and basic tests exercise the core datasheet commands of
 the device as well as the more convenient, basic API methods.
 
-If you need an example of how to use a command, these hosts and tests are a good
-place to reference.
+If you need an example of how to use a command, these hosts and tests are a
+good place to reference.
 
 Object Architecture
 --------------------------
 Even though this is a C library, it follows object-oriented design patterns.
 
-An object is minimally defined to be data and the actions which operate on that data.
+An object is minimally defined to be data and the actions which operate on that
+data.
 
 Each CryptoAuth device is a composite object, a structure which includes
 the command table (list of commands) which are valid for the device, and the
 data used to hold the state of that device.
 
-ATCADevice is the object which represents the Atmel CryptAuth device
+ATCADevice is the object which represents the Microchip CryptAuth device
 
 ATCACommand is the object which represents the valid methods of the Device.
 
@@ -198,19 +230,20 @@ MCUs with I2C using the ASF low-level driver support.)
 Directory Structure
 -----------------------
 ```bash
-./lib - The primary library source code
-./lib/docs - AppNotes and Doxygen HTML documentation for the library API. Load "index.html" in your browser
-./lib/basic - the Basic API way to access the core classes
-./lib/atcacert - cert data and cert i/o methods
-./lib/hal - hardware abstraction layer code for supporting specific platforms
-./lib/crypto - software implementation of crypto algorithms 
+docs - AppNotes and Doxygen HTML documentation for the library API. Load "docs/html/index.html" in your browser
+lib - primary library source code
+lib/atcacert - certificate data and i/o methods
+lib/basic - the Basic API way to access the core classes
+lib/crypto - Software crypto implementations (primarily SHA1 and SHA256)
+lib/hal - hardware abstraction layer code for supporting specific platforms
+lib/host - support functions for common host-side calculations
+lib/jwt - json web token functions
+test - unit tests. See test/cmd-processor.c for main() implementation.
 
-./test - Unity test code to exercise unit tests for datasheet commands and Basic API methods
-./lib/atcacert/test - Unity test code to exercise all CryptoAuthLib certificate features
-
-For production code, test directories should be excluded by not compiling it into
-a project, so it is up to the developer to include or not as needed.  Test code adds
-significant bulk to an application - it's not intended to be included in production code.
+For production code, test directories should be excluded by not compiling it
+into a project, so it is up to the developer to include or not as needed.  Test
+code adds significant bulk to an application - it's not intended to be included
+in production code.
 ```
 
 Tests
@@ -221,7 +254,47 @@ partially demonstrate the use of the objects.  Some tests may depend upon a
 certain device being configured in a certain way and may not work for all
 devices or specific configurations of the device.
 
-Using CryptoAuthLib (Atmel CryptoAuth Library)
+The test/cmd-processor.c file contains a main() function for running the tests.
+It implements a command-line interface. Typing help will bring up the list of
+commands available.
+
+One first selects a device type, with one of the following commands:
+  - 204 (ATSHA204A)
+  - 108 (ATECC108A)
+  - 508 (ATECC508A)
+  - 608 (ATECC608A)
+  
+From there the following unit test sweets are available:
+  - unit (test command builder functions)
+  - basic (test basic API functions)
+  - cio (test certification i/o functions)
+  - cd (test certificate data functions)
+  - util (test utility functions)
+  - crypto (test software crypto functions)
+  
+Unit tests available depend on the lock level of the device. The unit tests
+won't lock the config or data zones automatically to allow retesting at desired
+lock levels. Therefore, some commands will need to be repeated after locking
+to exercise all available tests.
+
+Starting from a blank device, the sequence of commands to exercise all unit
+tests is:
+```text
+unit
+basic
+lockcfg
+unit
+basic
+lockdata
+unit
+basic
+cio
+cd
+util
+crypto
+```
+
+Using CryptoAuthLib (Microchip CryptoAuth Library)
 ===========================================
 
 Using a new library is often easier when you can load an example and see how 
@@ -229,30 +302,28 @@ it works.  We've provided examples in the form of "host containers" which are
 host projects that incorporate CryptoAuthLib and target various processors
 or communication APIs.
 
-We maintain host test containers for each of the HAL layers we support.  
+We maintain host test containers for each of the HAL layers we support.
 We've published the host container for SAMD21 which demonstrates a simple
 console interface to invoke test runners.
 
-Look for:
-  - cryptoauth-d21-host
-
-at the Atmel CryptoAuthentication web pages or in GitHub.
+Look for SAMD21 Unit Tests CryptoAuthLib at
+http://www.microchip.com/SWLibraryWeb/product.aspx?product=CryptoAuthLib
 
 The best way to learn how to use CryptoAuthLib is to study the host test
 projects that exercise the library and ATECC and ATSHA devices.
 
 New examples will be forthcoming as the software matures.  Continue checking 
-the [CryptoAuthentication](http://www.atmel.com/products/security-ics/cryptoauthentication/default.aspx?tab=documents) 
+the [CryptoAuthentication](http://www.microchip.com/design-centers/security-ics/cryptoauthentication/overview) 
 web page for new updates.
 
 Using Git to Incorporate CryptoAuthLib as a Submodule
 -----------------------------------
 You can include this project in your own project under git.
 
-Using CryptoAuthLib as a git submodule, you can maintain your application separately 
-from CryptoAuthLib.
+Using CryptoAuthLib as a git submodule, you can maintain your application
+separately from CryptoAuthLib.
 
-If your project is already in in git but you haven't yet intergrated 
+If your project is already in git but you haven't yet intergrated 
 CryptoAuthLib, change to the directory where you want to put CryptoAuthLib
 
 ```bash
@@ -263,9 +334,10 @@ This adds CryptoAuthLib as a subdirectory and separate git repo within your
 own project.  Changes and commits to your project vs CryptoAuthLib will remain
 separated into each respective repository.
 
-If there is a project you want to checkout that already incorporates CryptoAuthLib
-as a submodule if you clone the repo that incorporates CryptoAuthLib, after cloning, 
-you'll still need to fill out the CryptoAuthLib submodule after cloning:
+If there is a project you want to checkout that already incorporates
+CryptoAuthLib as a submodule if you clone the repo that incorporates
+CryptoAuthLib, after cloning, you'll still need to fill out the CryptoAuthLib
+submodule after cloning:
 ```bash
 git submodule init
 git submodule update --remote
@@ -273,43 +345,46 @@ cd cryptoauthlib
 git checkout master
 ```
 
-Now that CryptoAuthLib is a full-fledged submodule in your git project, in order to 
-easily add it to your project within Atmel Studio, please see this [tip](
-http://avrstudio5.wordpress.com/2011/07/12/tip-add-existing-multiple-files-and-folders-to-an-avr-studio-project-quickly/)
+Now that CryptoAuthLib is a full-fledged submodule in your git project, in
+order to easily add it to your project within Atmel Studio, please see this
+[tip](http://avrstudio5.wordpress.com/2011/07/12/tip-add-existing-multiple-files-and-folders-to-an-avr-studio-project-quickly/)
 
 Incorporating CryptoAuthLib in a project
 -----------------------------------------
-1) In your Makefile or IDE, choose the HAL support you need from the HAL directory and exclude other 
-HAL files from your project.
+1) In your Makefile or IDE, choose the HAL support you need from the HAL
+   directory and exclude other HAL files from your project.
 
-2) For I2C interfaces, define the symbol ATCA_HAL_I2C in your compiler's symbol definitions.  This will
-hook up the CryptoAuthLib interface class with your HAL implementation of I2C methods.
+2) For I2C interfaces, define the symbol ATCA_HAL_I2C in your compiler's symbol
+   definitions.  This will hook up the CryptoAuthLib interface class with your
+   HAL implementation of I2C methods.
 
-3) HAL implementations for CDC and HID interfaces to the ATCK101 are also included for
-use with Windows or Linux versions of the test host.
+3) HAL implementations for CDC and HID interfaces to the ATCK101 are also
+   included for use with Windows or Linux versions of the test host.
 
 Incorporating CryptoAuthLib in a Linux project using USB HID devices
 -----------------------------------------
 The Linux HID HAL files use the Linux udev development software package.
 
-To install the udev development package under Ubuntu Linux, please type the following
-command at the terminaLlwindow:
+To install the udev development package under Ubuntu Linux, please type the
+following command at the terminal window:
 
 ```bash
 sudo apt-get install libudev-dev
 ```
 
-This adds the udev development development software package to the Ubuntu Linux installation.
+This adds the udev development development software package to the Ubuntu Linux
+installation.
 
-
-The Linux HID HAL files also require a udev rule to be added to change the permissions of the 
-USB HID Devices.  Please add a new udev rule for the Atmel CryptoAuth USB devices.
+The Linux HID HAL files also require a udev rule to be added to change the
+permissions of the USB HID Devices.  Please add a new udev rule for the
+Microchip CryptoAuth USB devices.
 
 ```bash
 cd /etc/udev/rules.d
-sudo touch atmel-cryptoauth.rules
+sudo touch mchp-cryptoauth.rules
 ```
 
-Edit the atmel-cryptoauth.rules file and add the following line to the file:
-
+Edit the mchp-cryptoauth.rules file and add the following line to the file:
+```text
 SUBSYSTEM=="hidraw", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2312", MODE="0666"
+```

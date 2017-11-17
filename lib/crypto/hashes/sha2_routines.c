@@ -2,38 +2,31 @@
  * \file
  * \brief Software implementation of the SHA256 algorithm.
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 #include <string.h>
@@ -44,7 +37,7 @@
 /**
  * \brief Processes whole blocks (64 bytes) of data.
  *
- * \param[in] ctx          SAH256 hash context
+ * \param[in] ctx          SHA256 hash context
  * \param[in] blocks       Raw blocks to be processed
  * \param[in] block_count  Number of 64-byte blocks to process
  */
@@ -107,7 +100,9 @@ static void sw_sha256_process(sw_sha256_ctx* ctx, const uint8_t* blocks, uint32_
 
         // Initialize hash value for this chunk.
         for (i = 0; i < 8; i++)
+        {
             rotate_register[i] = ctx->hash[i];
+        }
 
         // hash calculation loop
         for (i = 0; i < SHA256_BLOCK_SIZE; i++)
@@ -138,9 +133,17 @@ static void sw_sha256_process(sw_sha256_ctx* ctx, const uint8_t* blocks, uint32_
 
         // Add the hash of this block to current result.
         for (i = 0; i < 8; i++)
+        {
             ctx->hash[i] += rotate_register[i];
+        }
     }
 }
+
+/**
+ * \brief Intialize the software SHA256.
+ *
+ * \param[in] ctx          SHA256 hash context
+ */
 
 void sw_sha256_init(sw_sha256_ctx* ctx)
 {
@@ -152,9 +155,19 @@ void sw_sha256_init(sw_sha256_ctx* ctx)
 
     memset(ctx, 0, sizeof(*ctx));
     for (i = 0; i < 8; i++)
+    {
         ctx->hash[i] = hash_init[i];
+    }
 }
 
+/**
+ * \brief updates the running hash with the next block of data, called iteratively for the entire
+ *  stream of data to be hashed using the SHA256 software
+ *
+ * \param[in] ctx          SHA256 hash context
+ * \param[in] msg          Raw blocks to be processed
+ * \param[in] msg_size     The size of the message passed
+ */
 void sw_sha256_update(sw_sha256_ctx* ctx, const uint8_t* msg, uint32_t msg_size)
 {
     uint32_t block_count;
@@ -185,6 +198,11 @@ void sw_sha256_update(sw_sha256_ctx* ctx, const uint8_t* msg, uint32_t msg_size)
     memcpy(ctx->block, &msg[copy_size + block_count * SHA256_BLOCK_SIZE], ctx->block_size);
 }
 
+
+/** \brief completes the final SHA256 calculation and returns the final digest/hash
+ * \param[in]  ctx     ptr to context data structure
+ * \param[out] digest  receives the computed digest of the SHA 256
+ */
 void sw_sha256_final(sw_sha256_ctx* ctx, uint8_t digest[SHA256_DIGEST_SIZE])
 {
     int i, j;
@@ -217,9 +235,19 @@ void sw_sha256_final(sw_sha256_ctx* ctx, uint8_t digest[SHA256_DIGEST_SIZE])
     // All blocks have been processed.
     // Concatenate the hashes to produce digest, MSB of every hash first.
     for (i = 0; i < 8; i++)
+    {
         for (j = sizeof(int32_t) - 1; j >= 0; j--, ctx->hash[i] >>= 8)
+        {
             digest[i * sizeof(int32_t) + j] = ctx->hash[i] & 0xFF;
+        }
+    }
 }
+
+/** \brief single call convenience function which computes Hash of given data using SHA256 software
+ * \param[in]  message       pointer to stream of data to hash
+ * \param[in]  len           size of data stream to hash
+ * \param[out] digest        result
+ */
 
 void sw_sha256(const uint8_t* message, unsigned int len, uint8_t digest[SHA256_DIGEST_SIZE])
 {

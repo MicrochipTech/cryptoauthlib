@@ -2,38 +2,31 @@
  * \file
  * \brief cert definition tests
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 
@@ -4983,47 +4976,47 @@ TEST(atcacert_get_device_locs, device)
         }
     };
     static const atcacert_device_loc_t ref_device_locs[] = {
-        {
-            .zone = DEVZONE_DATA,
-            .slot = 8,
-            .is_genkey = FALSE,
-            .offset = 0,
-            .count = 67
-        },
-        {
-            .zone = DEVZONE_DATA,
-            .slot = 0,
-            .is_genkey = 1,
-            .offset = 0,
-            .count = 64
-        },
-        {
-            .zone = DEVZONE_DATA,
-            .slot = 10,
+        {   //compressed cert
+            .zone      = DEVZONE_DATA,
+            .slot      = 10,
             .is_genkey = 0,
-            .offset = 0,
-            .count = 72
+            .offset    = 0,
+            .count     = 72
+        },
+        {   //device serial number
+            .zone      = DEVZONE_DATA,
+            .slot      = 8,
+            .is_genkey = FALSE,
+            .offset    = 0,
+            .count     = 67
+        },
+        {   //public key
+            .zone      = DEVZONE_DATA,
+            .slot      = 0,
+            .is_genkey = 1,
+            .offset    = 0,
+            .count     = 64
         },
         {
-            .zone = DEVZONE_OTP,
-            .slot = 0,
+            .zone      = DEVZONE_OTP,
+            .slot      = 0,
             .is_genkey = FALSE,
-            .offset = 10,
-            .count = 100
+            .offset    = 10,
+            .count     = 100
         },
         {
-            .zone = DEVZONE_DATA,
-            .slot = 15,
+            .zone      = DEVZONE_DATA,
+            .slot      = 15,
             .is_genkey = FALSE,
-            .offset = 0,
-            .count = 45
+            .offset    = 0,
+            .count     = 45
         },
         {
-            .zone = DEVZONE_CONFIG,
-            .slot = 0,
+            .zone      = DEVZONE_CONFIG,
+            .slot      = 0,
             .is_genkey = FALSE,
-            .offset = 0,
-            .count = 13
+            .offset    = 0,
+            .count     = 13
         },
     };
 
@@ -5089,20 +5082,7 @@ TEST(atcacert_get_device_locs, signer_device)
     };
     static const atcacert_device_loc_t ref_device_locs[] = {
         {
-            .zone = DEVZONE_DATA,
-            .slot = 8,
-            .is_genkey = FALSE,
-            .offset = 0,
-            .count = 67
-        },
-        {
-            .zone = DEVZONE_DATA,
-            .slot = 11,
-            .is_genkey = 0,
-            .offset = 0,
-            .count = 72
-        },
-        {
+            //signer compressed cert loc
             .zone = DEVZONE_DATA,
             .slot = 12,
             .is_genkey = 0,
@@ -5110,13 +5090,23 @@ TEST(atcacert_get_device_locs, signer_device)
             .count = 72
         },
         {
+            //signer serial number loc
             .zone = DEVZONE_DATA,
-            .slot = 0,
-            .is_genkey = 1,
+            .slot = 8,
+            .is_genkey = FALSE,
             .offset = 0,
-            .count = 64
+            .count = 67
         },
         {
+            //signer public key loc
+            .zone = DEVZONE_DATA,
+            .slot = 11,
+            .is_genkey = 0,
+            .offset = 0,
+            .count = 72
+        },
+        {
+            //device compressed cert loc
             .zone = DEVZONE_DATA,
             .slot = 10,
             .is_genkey = 0,
@@ -5124,6 +5114,15 @@ TEST(atcacert_get_device_locs, signer_device)
             .count = 72
         },
         {
+            //device public key loc
+            .zone = DEVZONE_DATA,
+            .slot = 0,
+            .is_genkey = 1,
+            .offset = 0,
+            .count = 64
+        },
+        {
+            //device extra element 1
             .zone = DEVZONE_OTP,
             .slot = 0,
             .is_genkey = FALSE,
@@ -5131,6 +5130,7 @@ TEST(atcacert_get_device_locs, signer_device)
             .count = 100
         },
         {
+            //device extra element 2
             .zone = DEVZONE_DATA,
             .slot = 15,
             .is_genkey = FALSE,
@@ -5138,6 +5138,7 @@ TEST(atcacert_get_device_locs, signer_device)
             .count = 45
         },
         {
+            //device serial number loc (in device config)
             .zone = DEVZONE_CONFIG,
             .slot = 0,
             .is_genkey = FALSE,
@@ -5219,61 +5220,61 @@ TEST(atcacert_get_device_locs, 32block_signer_device)
         }
     };
     static const atcacert_device_loc_t ref_device_locs[] = {
+        {   //
+            .zone      = DEVZONE_DATA,
+            .slot      = 12,
+            .is_genkey = 0,
+            .offset    = 0,
+            .count     = 96
+        },
         {
-            .zone = DEVZONE_DATA,
-            .slot = 8,
+            .zone      = DEVZONE_DATA,
+            .slot      = 8,
             .is_genkey = FALSE,
-            .offset = 0,
-            .count = 96
+            .offset    = 0,
+            .count     = 96
         },
         {
-            .zone = DEVZONE_DATA,
-            .slot = 11,
+            .zone      = DEVZONE_DATA,
+            .slot      = 11,
             .is_genkey = 0,
-            .offset = 0,
-            .count = 96
+            .offset    = 0,
+            .count     = 96
         },
         {
-            .zone = DEVZONE_DATA,
-            .slot = 12,
+            .zone      = DEVZONE_DATA,
+            .slot      = 10,
             .is_genkey = 0,
-            .offset = 0,
-            .count = 96
+            .offset    = 0,
+            .count     = 96
         },
         {
-            .zone = DEVZONE_DATA,
-            .slot = 0,
+            .zone      = DEVZONE_DATA,
+            .slot      = 0,
             .is_genkey = 1,
-            .offset = 0,
-            .count = 64
+            .offset    = 0,
+            .count     = 64
         },
         {
-            .zone = DEVZONE_DATA,
-            .slot = 10,
-            .is_genkey = 0,
-            .offset = 0,
-            .count = 96
-        },
-        {
-            .zone = DEVZONE_OTP,
-            .slot = 0,
+            .zone      = DEVZONE_OTP,
+            .slot      = 0,
             .is_genkey = FALSE,
-            .offset = 0,
-            .count = 128
+            .offset    = 0,
+            .count     = 128
         },
         {
-            .zone = DEVZONE_DATA,
-            .slot = 15,
+            .zone      = DEVZONE_DATA,
+            .slot      = 15,
             .is_genkey = FALSE,
-            .offset = 0,
-            .count = 64
+            .offset    = 0,
+            .count     = 64
         },
         {
-            .zone = DEVZONE_CONFIG,
-            .slot = 0,
+            .zone      = DEVZONE_CONFIG,
+            .slot      = 0,
             .is_genkey = FALSE,
-            .offset = 0,
-            .count = 32
+            .offset    = 0,
+            .count     = 32
         },
     };
 

@@ -2,43 +2,42 @@
  * \file
  * \brief Software implementation of the SHA1 algorithm.
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 #include "sha1_routines.h"
 #include <string.h>
 
+
+/**
+ * \brief Initialize context for performing SHA1 hash in software.
+ *
+ * \param[in] ctx  Hash context
+ */
 void CL_hashInit(CL_HashContext *ctx)
 {
     static const U32 hashContext_h_init[] = {
@@ -53,6 +52,16 @@ void CL_hashInit(CL_HashContext *ctx)
     memset(ctx, 0, sizeof(*ctx));
     memcpy_P(ctx->h, hashContext_h_init, sizeof(ctx->h));
 }
+
+
+
+/**
+ * \brief Add arbitrary data to a SHA1 hash.
+ *
+ * \param[in] ctx     Hash context
+ * \param[in] src     Data to be added to the hash
+ * \param[in] nbytes  Data size in bytes
+ */
 
 void CL_hashUpdate(CL_HashContext *ctx, const U8 *src, int nbytes)
 {
@@ -87,15 +96,21 @@ void CL_hashUpdate(CL_HashContext *ctx, const U8 *src, int nbytes)
         // Get i, number of bytes to transfer from src
         i = freeBytes;
         if (nbytes < i)
+        {
             i = (U8)nbytes;
+        }
 
         // Copy src bytes to buf
         if (i == 64)
+        {
             // This seems to be much faster on IAR than memcpy().
             *(Buf64*)(ctx->buf) = *(Buf64*)src;
+        }
         else
+        {
             // Have to use memcpy, size is other than 64 bytes.
             memcpy(((U8*)ctx->buf) + 64 - freeBytes, src, i);
+        }
 
         // Adjust for transferred bytes
         src += i;
@@ -104,18 +119,28 @@ void CL_hashUpdate(CL_HashContext *ctx, const U8 *src, int nbytes)
 
         // Do SHA crunch if buf is full
         if (freeBytes == 0)
+        {
             shaEngine(ctx->buf, ctx->h);
+        }
 
         // Update 64-bit byte count
         temp32 = (ctx->byteCount += i);
         if (temp32 == 0)
+        {
             ++ctx->byteCountHi;
+        }
 
         // Set up for next iteration
         freeBytes = 64;
     }
 }
 
+
+
+/** \brief Complete the SHA1 hash in software and return the digest.
+ * \param[in]  ctx   Hash context
+ * \param[out] dest  Digest is returned here (20 bytes)
+ */
 void CL_hashFinal(CL_HashContext *ctx, U8 *dest)
 {
 
@@ -132,7 +157,9 @@ void CL_hashFinal(CL_HashContext *ctx, U8 *dest)
     nbytes = (U8)(ctx->byteCount) & 63;
     ((U8*)ctx->buf)[nbytes] = 0x80;
     for (i = (nbytes + 1); i < 64; i++)
+    {
         ((U8*)ctx->buf)[i] = 0;
+    }
 
     /*
        If no room for an 8-byte count at end of buf, digest the buf,
@@ -181,6 +208,12 @@ void CL_hashFinal(CL_HashContext *ctx, U8 *dest)
 }
 
 
+
+/** \brief Perform SHA1 hash of data in software.
+ * \param[in]  msg       Data to be hashed
+ * \param[in]  msgBytes  Data size in bytes
+ * \param[out] dest      Digest is returned here (20 bytes)
+ */
 void CL_hash(U8 *msg, int msgBytes, U8 *dest)
 {
     CL_HashContext ctx;

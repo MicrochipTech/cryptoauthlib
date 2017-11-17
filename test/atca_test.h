@@ -2,38 +2,31 @@
  * \file
  * \brief Tests for the Cryptoauthlib Basic API
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 #ifndef ATCA_TEST_H_
@@ -47,5 +40,105 @@
 
 extern ATCAIfaceCfg *gCfg;
 extern const uint8_t g_slot4_key[];
+
+#define AES_CONFIG_ENABLE_BIT_MASK   (uint8_t)0x01
+
+
+typedef void (*fp_test_case)(void);
+
+typedef struct
+{
+    fp_test_case fp_test;
+    uint8_t      support_device_mask;
+}t_test_case_info;
+
+#define DEVICE_MASK(device) \
+    ((uint8_t)1 << device)
+#define REGISTER_TEST_CASE(group, name) \
+    TEST_ ## group ## _ ## name ## _run
+
+void RunAllTests(t_test_case_info** tests_list);
+
+extern t_test_case_info startup_basic_test_info[];
+extern t_test_case_info aes_basic_test_info[];
+extern t_test_case_info verify_basic_test_info[];
+extern t_test_case_info derivekey_basic_test_info[];
+extern t_test_case_info sha_basic_test_info[];
+extern t_test_case_info hmac_basic_test_info[];
+extern t_test_case_info sign_basic_test_info[];
+extern t_test_case_info mac_basic_test_info[];
+extern t_test_case_info ecdh_basic_test_info[];
+extern t_test_case_info write_basic_test_info[];
+extern t_test_case_info read_basic_test_info[];
+extern t_test_case_info genkey_basic_test_info[];
+extern t_test_case_info privwrite_basic_test_info[];
+extern t_test_case_info lock_basic_test_info[];
+extern t_test_case_info kdf_basic_test_info[];
+extern t_test_case_info selftest_basic_test_info[];
+extern t_test_case_info gendig_basic_test_info[];
+extern t_test_case_info random_basic_test_info[];
+extern t_test_case_info nonce_basic_test_info[];
+extern t_test_case_info pause_basic_test_info[];
+extern t_test_case_info updateextra_basic_test_info[];
+extern t_test_case_info counter_basic_test_info[];
+extern t_test_case_info sboot_basic_test_info[];
+
+extern t_test_case_info helper_basic_test_info[];
+extern t_test_case_info otpzero_basic_test_info[];
+
+extern t_test_case_info startup_unit_test_info[];
+extern t_test_case_info aes_unit_test_info[];
+extern t_test_case_info verify_unit_test_info[];
+extern t_test_case_info derivekey_unit_test_info[];
+extern t_test_case_info sha_unit_test_info[];
+extern t_test_case_info hmac_unit_test_info[];
+extern t_test_case_info sign_unit_test_info[];
+extern t_test_case_info mac_unit_test_info[];
+extern t_test_case_info ecdh_unit_test_info[];
+extern t_test_case_info write_unit_test_info[];
+extern t_test_case_info read_unit_test_info[];
+extern t_test_case_info genkey_unit_test_info[];
+extern t_test_case_info privwrite_unit_test_info[];
+extern t_test_case_info lock_unit_test_info[];
+extern t_test_case_info kdf_unit_test_info[];
+extern t_test_case_info selftest_unit_test_info[];
+extern t_test_case_info gendig_unit_test_info[];
+extern t_test_case_info random_unit_test_info[];
+extern t_test_case_info nonce_unit_test_info[];
+extern t_test_case_info pause_unit_test_info[];
+extern t_test_case_info updateextra_unit_test_info[];
+extern t_test_case_info counter_unit_test_info[];
+extern t_test_case_info sboot_unit_test_info[];
+extern t_test_case_info jwt_unit_test_info[];
+extern ATCADevice gDevice;
+extern ATCACommand gCommandObj;
+extern ATCAIface gIface;
+extern ATCAIfaceCfg* gIfaceCfg;
+
+void test_assert_interface_init(void);
+void test_assert_interface_deinit(void);
+
+extern uint8_t test_ecc608_configdata[ATCA_ECC_CONFIG_SIZE];
+extern const uint8_t test_ecc_configdata[ATCA_ECC_CONFIG_SIZE];
+extern const uint8_t sha204_default_config[ATCA_SHA_CONFIG_SIZE];
+
+void unit_test_assert_config_is_locked(void);
+void unit_test_assert_config_is_unlocked(void);
+void unit_test_assert_data_is_locked(void);
+void unit_test_assert_data_is_unlocked(void);
+
+void test_assert_config_is_unlocked(void);
+void test_assert_config_is_locked(void);
+void test_assert_data_is_unlocked(void);
+void test_assert_data_is_locked(void);
+void check_config_aes_enable(void);
+
+ATCA_STATUS send_command(ATCACommand commandObj, ATCAIface iface, ATCAPacket* packet);
+
+// Helper tests
+void RunAllHelperTests(void);
+void RunBasicOtpZero(void);
+void RunAllBasicTests(void);
+void RunAllFeatureTests(void);
 
 #endif /* ATCA_TEST_H_ */

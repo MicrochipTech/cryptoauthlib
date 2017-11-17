@@ -1,10 +1,6 @@
 var a00107 =
 [
-    [ "atcacert_der_adjust_length", "a00223.html#ga165018175f52421ea26fb33ccf335108", null ],
-    [ "atcacert_der_dec_ecdsa_sig_value", "a00223.html#gac3f22b75f15e8508f35d99b95d955842", null ],
-    [ "atcacert_der_dec_integer", "a00223.html#ga3b095e11adc55a61e3cfb2957d0c6c77", null ],
-    [ "atcacert_der_dec_length", "a00223.html#gaeee4091e249b8fc202d5126a8374eeb1", null ],
-    [ "atcacert_der_enc_ecdsa_sig_value", "a00223.html#ga3583ada6da51d31cfe819894e8a9deeb", null ],
-    [ "atcacert_der_enc_integer", "a00223.html#gaf156257cda87df879f54c07e80bc0e8d", null ],
-    [ "atcacert_der_enc_length", "a00223.html#gaafc9ef8e0164226481b670fde0223e13", null ]
+    [ "atcab_genkey", "a00427.html#ga617bdbdce7b5736351d93214d44c5b8f", null ],
+    [ "atcab_genkey_base", "a00427.html#gaa8b6953ad2c7f749e61566fd38fe6903", null ],
+    [ "atcab_get_pubkey", "a00427.html#gad2096a4618dd37c48ed48847fe63d844", null ]
 ];

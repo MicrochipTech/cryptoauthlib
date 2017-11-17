@@ -1,11 +1,10 @@
 var a00065 =
 [
-    [ "cfg_atecc508a_kitcdc_default", "a00219.html#gaa2b64ab02931bf57ba2818c790611a79", null ],
-    [ "cfg_atecc508a_kithid_default", "a00219.html#gaaa63e33d7f2b3ec23218bde299c5c063", null ],
-    [ "cfg_ateccx08a_i2c_default", "a00219.html#gafcb056718eb34ec3a612d550208e49cc", null ],
-    [ "cfg_ateccx08a_swi_default", "a00219.html#ga5624aa554e1964981b794e2295b9432c", null ],
-    [ "cfg_atsha204a_i2c_default", "a00219.html#ga9fe83141d8e44bf623e624a72901832c", null ],
-    [ "cfg_atsha204a_kitcdc_default", "a00219.html#ga010430b93521c09efec9e5913ce769c1", null ],
-    [ "cfg_atsha204a_kithid_default", "a00219.html#gac6a0b1f7ea398eee53d1e4243a617c6c", null ],
-    [ "cfg_atsha204a_swi_default", "a00219.html#gae5e766a819c7920470b456238cbef70d", null ]
+    [ "atcacert_der_adjust_length", "a00426.html#ga165018175f52421ea26fb33ccf335108", null ],
+    [ "atcacert_der_dec_ecdsa_sig_value", "a00426.html#gac3f22b75f15e8508f35d99b95d955842", null ],
+    [ "atcacert_der_dec_integer", "a00426.html#ga3b095e11adc55a61e3cfb2957d0c6c77", null ],
+    [ "atcacert_der_dec_length", "a00426.html#gaeee4091e249b8fc202d5126a8374eeb1", null ],
+    [ "atcacert_der_enc_ecdsa_sig_value", "a00426.html#ga3583ada6da51d31cfe819894e8a9deeb", null ],
+    [ "atcacert_der_enc_integer", "a00426.html#gaf156257cda87df879f54c07e80bc0e8d", null ],
+    [ "atcacert_der_enc_length", "a00426.html#gaafc9ef8e0164226481b670fde0223e13", null ]
 ];

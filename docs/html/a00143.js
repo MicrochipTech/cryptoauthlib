@@ -1,16 +1,19 @@
 var a00143 =
 [
-    [ "change_i2c_speed", "a00226.html#gab7f613b378e0d01b80703df3ac662d6d", null ],
-    [ "hal_i2c_discover_buses", "a00226.html#ga05700385437884cc7b28c38d33e84f8c", null ],
-    [ "hal_i2c_discover_devices", "a00226.html#gad927b28b795eac9f9592fc9f9739bc0a", null ],
-    [ "hal_i2c_idle", "a00226.html#ga9317303ada721ff3f97e7aad69437a30", null ],
-    [ "hal_i2c_init", "a00226.html#ga09e7f465a040fbd19ea136269571de3c", null ],
-    [ "hal_i2c_post_init", "a00226.html#gafbe53519362f18c2688d10da6f7c618f", null ],
-    [ "hal_i2c_receive", "a00226.html#ga7785bcc305c14e2dc188bb1b9a77814a", null ],
-    [ "hal_i2c_release", "a00226.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
-    [ "hal_i2c_send", "a00226.html#gacd0fb31f0f88ef3762665e26b5aa784b", null ],
-    [ "hal_i2c_sleep", "a00226.html#ga3f89bae6a625d5f37abdcc99408def27", null ],
-    [ "hal_i2c_wake", "a00226.html#gad4df1b6755e2d5b5d9e810371e45ca8c", null ],
-    [ "i2c_bus_ref_ct", "a00226.html#gaa7deec7f5d89dfb4f9746d050b0926f9", null ],
-    [ "i2c_hal_data", "a00226.html#ga95dac4460cd54b4b073285ebc79d215b", null ]
+    [ "hw_sha256_ctx", "a00513.html", "a00513" ],
+    [ "atcab_hw_sha2_256", "a00427.html#ga4bf8b665fe1712626a480742c2daa16b", null ],
+    [ "atcab_hw_sha2_256_finish", "a00427.html#ga6ed7e645262fcc32b00d8a9facf09e91", null ],
+    [ "atcab_hw_sha2_256_init", "a00427.html#gade49e7746864105730fa7d531645ff62", null ],
+    [ "atcab_hw_sha2_256_update", "a00427.html#ga67f2ce6224651d9cc65e9915e35558bd", null ],
+    [ "atcab_sha", "a00427.html#ga31d269ccdafd08519a899a8aebf53df1", null ],
+    [ "atcab_sha_base", "a00427.html#gab3a32e171ca1c30bd31a216b32c9b5a4", null ],
+    [ "atcab_sha_end", "a00427.html#ga1db86704035048066a370815b657234d", null ],
+    [ "atcab_sha_hmac", "a00427.html#gae655ce06583c08169170102fbb0b55c9", null ],
+    [ "atcab_sha_hmac_finish", "a00427.html#gaa4be9972396b7cadb08dd8e2199daf08", null ],
+    [ "atcab_sha_hmac_init", "a00427.html#ga310a017cddce9ef05071cb619b4b6db9", null ],
+    [ "atcab_sha_hmac_update", "a00427.html#gae3343c160e80365b7e96bdfdc9b6365c", null ],
+    [ "atcab_sha_read_context", "a00427.html#ga74d1db50562642ce511fa7cbd384c2ab", null ],
+    [ "atcab_sha_start", "a00427.html#gae0a7ef89fce4cbd0ee1c76759cd93b9a", null ],
+    [ "atcab_sha_update", "a00427.html#ga39bd70baa7a4c7f4849fcf8b94d4d949", null ],
+    [ "atcab_sha_write_context", "a00427.html#ga070fa80ac0d76f6816d9f7affbcfb120", null ]
 ];

@@ -2,53 +2,61 @@
  * \file
  * \brief Wrapper API for SHA 1 routines
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 
 #include "atca_crypto_sw_sha1.h"
 #include "hashes/sha1_routines.h"
 
+
+/** \brief Initialize context for performing SHA1 hash in software.
+ * \param[in] ctx  Hash context
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+
 int atcac_sw_sha1_init(atcac_sha1_ctx* ctx)
 {
     if (sizeof(CL_HashContext) > sizeof(atcac_sha1_ctx))
+    {
         return ATCA_ASSERT_FAILURE;  // atcac_sha1_ctx isn't large enough for this implementation
+    }
     CL_hashInit((CL_HashContext*)ctx);
 
     return ATCA_SUCCESS;
 }
 
+
+/** \brief Add arbitrary data to a SHA1 hash.
+    \param[in] ctx        Hash context
+    \param[in] data       Data to be added to the hash
+    \param[in] data_size  Data size in bytes
+    \return ATCA_SUCCESS
+ */
 int atcac_sw_sha1_update(atcac_sha1_ctx* ctx, const uint8_t* data, size_t data_size)
 {
     CL_hashUpdate((CL_HashContext*)ctx, data, (int)data_size);
@@ -56,6 +64,11 @@ int atcac_sw_sha1_update(atcac_sha1_ctx* ctx, const uint8_t* data, size_t data_s
     return ATCA_SUCCESS;
 }
 
+/** \brief Complete the SHA1 hash in software and return the digest.
+ * \param[in]  ctx     Hash context
+ * \param[out] digest  Digest is returned here (20 bytes)
+ * \return ATCA_SUCCESS
+ */
 int atcac_sw_sha1_finish(atcac_sha1_ctx* ctx, uint8_t digest[ATCA_SHA1_DIGEST_SIZE])
 {
     CL_hashFinal((CL_HashContext*)ctx, digest);
@@ -63,6 +76,13 @@ int atcac_sw_sha1_finish(atcac_sha1_ctx* ctx, uint8_t digest[ATCA_SHA1_DIGEST_SI
     return ATCA_SUCCESS;
 }
 
+
+/** \brief Perform SHA1 hash of data in software.
+ * \param[in]  data       Data to be hashed
+ * \param[in]  data_size  Data size in bytes
+ * \param[out] digest     Digest is returned here (20 bytes)
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
 int atcac_sw_sha1(const uint8_t* data, size_t data_size, uint8_t digest[ATCA_SHA1_DIGEST_SIZE])
 {
     int ret;
@@ -70,15 +90,21 @@ int atcac_sw_sha1(const uint8_t* data, size_t data_size, uint8_t digest[ATCA_SHA
 
     ret = atcac_sw_sha1_init(&ctx);
     if (ret != ATCA_SUCCESS)
+    {
         return ret;
+    }
 
     ret = atcac_sw_sha1_update(&ctx, data, data_size);
     if (ret != ATCA_SUCCESS)
+    {
         return ret;
+    }
 
     ret = atcac_sw_sha1_finish(&ctx, digest);
     if (ret != ATCA_SUCCESS)
+    {
         return ret;
+    }
 
     return ATCA_SUCCESS;
 }

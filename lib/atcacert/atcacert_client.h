@@ -4,38 +4,31 @@
  *        of the authentication process. It is assumed the client has an ECC CryptoAuthentication device
  *        (e.g. ATECC508A) and the certificates are stored on that device.
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 
@@ -88,7 +81,7 @@ extern "C" {
  * \param[inout] cert_size      As input, the size of the cert buffer in bytes.
  *                              As output, the size of the certificate returned in cert in bytes.
  *
- * \return 0 on success
+ * \return On successful execution it returns ATCACERT_E_SUCCESS otherwise it returns error code.
  */
 int atcacert_read_cert(const atcacert_def_t* cert_def,
                        const uint8_t         ca_public_key[64],
@@ -104,7 +97,7 @@ int atcacert_read_cert(const atcacert_def_t* cert_def,
  * \param[in] cert       Full certificate to be stored.
  * \param[in] cert_size  Size of the full certificate in bytes.
  *
- * \return 0 on success
+ * \return On successful execution it returns ATCACERT_E_SUCCESS otherwise it returns error code.
  */
 int atcacert_write_cert(const atcacert_def_t* cert_def,
                         const uint8_t*        cert,
@@ -119,7 +112,7 @@ int atcacert_write_cert(const atcacert_def_t* cert_def,
  * \param[out]   csr       Buffer to receive the CSR.
  * \param[inout] csr_size  As input, the size of the CSR buffer in bytes.
  *                         As output, the size of the CSR returned in cert in bytes.
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 int atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, size_t* csr_size);
 
@@ -132,7 +125,7 @@ int atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, size_t* csr
  * \param[out]   csr_pem   Buffer to received the CSR formatted as PEM.
  * \param[inout] csr_size  As input, the size of the CSR buffer in bytes.
  *                         As output, the size of the CSR as PEM returned in cert in bytes.
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 int atcacert_create_csr_pem(const atcacert_def_t* csr_def, char* csr_pem, size_t* csr_size);
 
@@ -143,7 +136,7 @@ int atcacert_create_csr_pem(const atcacert_def_t* csr_def, char* csr_pem, size_t
  * \param[out] pem_cert			Buffer to receive the certificate formatted as PEM.
  * \param[inout] pem_cert_size	As input, the size of the certificate buffer in bytes.
  *								As output, the size of the certificate as PEM returned in cert in bytes.
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 int atcacert_encode_pem_cert(const uint8_t* cert_bytes, size_t cert_bytes_size, char* pem_cert, size_t* pem_cert_size);
 
@@ -154,7 +147,7 @@ int atcacert_encode_pem_cert(const uint8_t* cert_bytes, size_t cert_bytes_size, 
  * \param[out] cert_bytes			The certificate buffer
  * \param[inout] cert_bytes_size	As input, the size of the certificate buffer in bytes.
  *									As output, the size of the certificate returned in bytes.
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 int atcacert_decode_pem_cert(const char* pem_cert, size_t pem_cert_size, uint8_t* cert_bytes, size_t* cert_bytes_size);
 
@@ -170,7 +163,7 @@ int atcacert_decode_pem_cert(const char* pem_cert, size_t pem_cert_size, uint8_t
  * \param[in]  challenge                Challenge to generate the response for. Must be 32 bytes.
  * \param[out] response                 Response will be returned in this buffer. 64 bytes.
  *
- * \return 0 on success
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 int atcacert_get_response(uint8_t       device_private_key_slot,
                           const uint8_t challenge[32],

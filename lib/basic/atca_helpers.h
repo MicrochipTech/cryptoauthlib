@@ -2,38 +2,31 @@
  * \file
  * \brief Helpers to support the CryptoAuthLib Basic API methods
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 #ifndef ATCA_HELPERS_H_
@@ -52,15 +45,15 @@
 extern "C" {
 #endif
 
-ATCA_STATUS atcab_printbin(uint8_t* binary, int binLen, bool addspace);
-ATCA_STATUS atcab_bin2hex(const uint8_t* binary, int binLen, char* asciiHex, int* asciiHexLen);
-ATCA_STATUS atcab_bin2hex_(const uint8_t* binary, int binLen, char* asciiHex, int* asciiHexLen, bool addSpace);
-ATCA_STATUS atcab_hex2bin(const char* asciiHex, int asciiHexLen, uint8_t* binary, int* binLen);
-ATCA_STATUS atcab_printbin_sp(uint8_t* binary, int binLen);
-ATCA_STATUS atcab_printbin_label(const char* label, uint8_t* binary, int binLen);
+ATCA_STATUS atcab_printbin(uint8_t* binary, int bin_len, bool add_space);
+ATCA_STATUS atcab_bin2hex(const uint8_t* binary, int bin_len, char* ascii_hex, int* ascii_hex_len);
+ATCA_STATUS atcab_bin2hex_(const uint8_t* binary, int bin_len, char* ascii_hex, int* ascii_hex_len, bool add_space);
+ATCA_STATUS atcab_hex2bin(const char* ascii_hex, int ascii_hex_len, uint8_t* binary, int* bin_len);
+ATCA_STATUS atcab_printbin_sp(uint8_t* binary, int bin_len);
+ATCA_STATUS atcab_printbin_label(const char* label, uint8_t* binary, int bin_len);
 
 
-ATCA_STATUS packHex(const char* asciiHex, int asciiHexLen, char* packedHex, int* packedLen);
+ATCA_STATUS packHex(const char* ascii_hex, int ascii_hex_len, char* packed_hex, int* packed_len);
 bool isDigit(char c);
 bool isWhiteSpace(char c);
 bool isAlpha(char c);
@@ -68,14 +61,21 @@ bool isHexAlpha(char c);
 bool isHex(char c);
 bool isHexDigit(char c);
 
-ATCA_STATUS packBase64(const char* asciiBase64, int asciiBase64Len, char* packedBase64, int* packedLen);
-bool isBase64(char c);
-bool isBase64Digit(char c);
-char base64Index(char c);
-char base64Char(char id);
-ATCA_STATUS atcab_base64decode(const char* encoded, size_t encodedLen, uint8_t* byteArray, size_t* arrayLen);
-ATCA_STATUS atcab_base64encode(const uint8_t* byteArray, size_t arrayLen, char* encoded, size_t* encodedLen);
-ATCA_STATUS atcab_base64encode_(const uint8_t* byteArray, size_t arrayLen, char* encoded, size_t* encodedLen, bool addNewLine);
+ATCA_STATUS packBase64(const char* ascii_base64, int ascii_base64_len, char* packed_base64, int* packed_len, const uint8_t * rules);
+bool isBase64(char c, const uint8_t * rules);
+bool isBase64Digit(char c, const uint8_t * rules);
+char base64Index(char c, const uint8_t * rules);
+char base64Char(char id, const uint8_t * rules);
+
+extern uint8_t atcab_b64rules_default[4];
+extern uint8_t atcab_b64rules_mime[4];
+extern uint8_t atcab_b64rules_urlsafe[4];
+
+ATCA_STATUS atcab_base64decode_(const char* encoded, size_t encoded_len, uint8_t* byte_array, size_t* array_len, const uint8_t * rules);
+ATCA_STATUS atcab_base64decode(const char* encoded, size_t encoded_len, uint8_t* byte_array, size_t* array_len);
+
+ATCA_STATUS atcab_base64encode_(const uint8_t* byte_array, size_t array_len, char* encoded, size_t* encoded_len, const uint8_t * rules);
+ATCA_STATUS atcab_base64encode(const uint8_t* byte_array, size_t array_len, char* encoded, size_t* encoded_len);
 
 #ifdef __cplusplus
 }

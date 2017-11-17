@@ -2,38 +2,31 @@
  * \file
  * \brief ATCA Hardware abstraction layer for Linux using kit protocol over a USB CDC device.
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 #include "atca_hal.h"
@@ -66,17 +59,6 @@
 atcacdc_t _gCdc;
 
 
-/** \brief HAL implementation of Kit USB CDC init
- *
- * this discovery assumes a udev rule is active which renames the ATCK101 CDC device as a ttyATCA%n
- * the udev rule is:
- *
- *  SUBSYSTEMS=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2122", MODE:="0777", SYMLINK+="ttyATCA%n"
- *
- *  \param[in] hal pointer to HAL specific data that is maintained by this HAL
- *  \param[in] cfg pointer to HAL specific configuration data that is used to initialize this HAL
- * \return ATCA_STATUS
- */
 
 char *dev = "/dev/ttyACM0";  // default device, Atmel CryptoAuth %n
 //char *dev = "/dev/ttyATCA0";  // default device, Atmel CryptoAuth %n
@@ -84,9 +66,11 @@ int speed = B115200;
 
 /** \brief discover cdc buses available for this hardware
  * this maintains a list of logical to physical bus mappings freeing the application
- * of the a-priori knowledge
+ * of the a-priori knowledge.This function is currently not implemented.
  * \param[in] cdc_buses - an array of logical bus numbers
  * \param[in] max_buses - maximum number of buses the app wants to attempt to discover
+ * \return ATCA_UNIMPLEMENTED
+
  */
 
 ATCA_STATUS hal_cdc_discover_buses(int cdc_buses[], int max_buses)
@@ -98,6 +82,7 @@ ATCA_STATUS hal_cdc_discover_buses(int cdc_buses[], int max_buses)
  * \param[in] busNum - logical bus number on which to look for CryptoAuth devices
  * \param[out] cfg[] - pointer to head of an array of interface config structures which get filled in by this method
  * \param[out] *found - number of devices found on this bus
+ * \return ATCA_UNIMPLEMENTED
  */
 
 ATCA_STATUS hal_cdc_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
@@ -105,6 +90,19 @@ ATCA_STATUS hal_cdc_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
     return ATCA_UNIMPLEMENTED;
 }
 
+
+
+/** \brief HAL implementation of Kit USB CDC init
+ *
+ * this discovery assumes a udev rule is active which renames the ATCK101 CDC device as a ttyATCA%n
+ * the udev rule is:
+ *
+ *  SUBSYSTEMS=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2122", MODE:="0777", SYMLINK+="ttyATCA%n"
+ *
+ *  \param[in] hal pointer to HAL specific data that is maintained by this HAL
+ *  \param[in] cfg pointer to HAL specific configuration data that is used to initialize this HAL
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
 ATCA_STATUS hal_kit_cdc_init(void* hal, ATCAIfaceCfg* cfg)
 {
     ATCAHAL_t *phal = NULL;
@@ -115,7 +113,9 @@ ATCA_STATUS hal_kit_cdc_init(void* hal, ATCAIfaceCfg* cfg)
 
     // Check the input variables
     if ((hal == NULL) || (cfg == NULL))
+    {
         return ATCA_BAD_PARAM;
+    }
 
     // Cast the hal to the ATCAHAL_t structure
     phal = (ATCAHAL_t*)hal;
@@ -166,7 +166,7 @@ ATCA_STATUS hal_kit_cdc_init(void* hal, ATCAIfaceCfg* cfg)
 
 /** \brief HAL implementation of Kit USB CDC post init
  *  \param[in] iface  instance
- *  \return ATCA_STATUS
+ *   \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_kit_cdc_post_init(ATCAIface iface)
 {
@@ -184,17 +184,19 @@ ATCA_STATUS hal_kit_cdc_post_init(ATCAIface iface)
         // Perform the kit protocol init
         status = kit_init(iface);
         if (status != ATCA_SUCCESS)
+        {
             return status;
+        }
     }
 
     return status;
 }
 
-/** \brief HAL implementation of send over USB CDC
+/** \brief HAL implementation of kit protocol send .It is called by the top layer.
  *  \param[in] iface     instance
  *  \param[in] txdata    pointer to bytes to send
  *  \param[in] txlength  number of bytes to send
- *  \return ATCA_STATUS
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS kit_phy_send(ATCAIface iface, const char* txdata, int txlength)
 {
@@ -209,11 +211,15 @@ ATCA_STATUS kit_phy_send(ATCAIface iface, const char* txdata, int txlength)
 #endif
     // Verify the input parameters
     if ((txdata == NULL) || (pCdc == NULL))
+    {
         return ATCA_BAD_PARAM;
+    }
 
     // Verify the write handle
     if (pCdc->kits[cdcid].write_handle == INVALID_HANDLE_VALUE)
+    {
         return ATCA_COMM_FAIL;
+    }
 
     // Write the bytes to the specified com port
     bytesWritten = write(pCdc->kits[cdcid].write_handle, txdata, txlength);
@@ -221,11 +227,11 @@ ATCA_STATUS kit_phy_send(ATCAIface iface, const char* txdata, int txlength)
     return status;
 }
 
-/** \brief HAL implementation of kit protocol send over USB CDC
+/** \brief HAL implementation of kit protocol receive data.It is called by the top layer.
  * \param[in]    iface   instance
  * \param[out]   rxdata  pointer to space to receive the data
  * \param[inout] rxsize  ptr to expected number of receive bytes to request
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS kit_phy_receive(ATCAIface iface, char* rxdata, int* rxsize)
 {
@@ -310,7 +316,7 @@ ATCA_STATUS hal_kit_phy_num_found(int8_t* num_found)
  *  \param[in] iface     instance
  *  \param[in] txdata    pointer to bytes to send
  *  \param[in] txlength  number of bytes to send
- *  \return ATCA_STATUS
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_kit_cdc_send(ATCAIface iface, uint8_t* txdata, int txlength)
 {
@@ -318,11 +324,11 @@ ATCA_STATUS hal_kit_cdc_send(ATCAIface iface, uint8_t* txdata, int txlength)
     return kit_send(iface, txdata, txlength);
 }
 
-/** \brief HAL implementation of send over USB CDC
+/** \brief HAL implementation of kit protocol receive over USB CDC
  * \param[in]    iface   instance
  * \param[in]    rxdata  pointer to space to receive the data
  * \param[inout] rxsize  ptr to expected number of receive bytes to request
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_kit_cdc_receive(ATCAIface iface, uint8_t* rxdata, uint16_t* rxsize)
 {
@@ -330,9 +336,9 @@ ATCA_STATUS hal_kit_cdc_receive(ATCAIface iface, uint8_t* rxdata, uint16_t* rxsi
     return kit_receive(iface, rxdata, rxsize);
 }
 
-/** \brief Call the wake for kit protocol
+/** \brief Call the wake for kit protocol over USB CDC
  * \param[in] iface ATCAIface instance that is the interface object to send the bytes over
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_kit_cdc_wake(ATCAIface iface)
 {
@@ -340,9 +346,9 @@ ATCA_STATUS hal_kit_cdc_wake(ATCAIface iface)
     return kit_wake(iface);
 }
 
-/** \brief Call the idle for kit protocol
+/** \brief Call the idle for kit protocol over USB CDC
  * \param[in] iface ATCAIface instance that is the interface object to send the bytes over
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.S
  */
 ATCA_STATUS hal_kit_cdc_idle(ATCAIface iface)
 {
@@ -350,9 +356,9 @@ ATCA_STATUS hal_kit_cdc_idle(ATCAIface iface)
     return kit_idle(iface);
 }
 
-/** \brief Call the sleep for kit protocol
+/** \brief Call the sleep for kit protocol over USB CDC
  * \param[in] iface ATCAIface instance that is the interface object to send the bytes over
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_kit_cdc_sleep(ATCAIface iface)
 {
@@ -360,9 +366,9 @@ ATCA_STATUS hal_kit_cdc_sleep(ATCAIface iface)
     return kit_sleep(iface);
 }
 
-/** \brief Close the physical port for CDC
+/** \brief Close the physical port for CDC over USB CDC
  * \param[in] hal_data The hardware abstraction data specific to this HAL
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_kit_cdc_release(void* hal_data)
 {
@@ -370,7 +376,9 @@ ATCA_STATUS hal_kit_cdc_release(void* hal_data)
     atcacdc_t* phaldat = (atcacdc_t*)hal_data;
 
     if ((hal_data == NULL))
+    {
         return ATCA_BAD_PARAM;
+    }
 
     // Close all kit USB devices
     for (i = 0; i < phaldat->num_kits_found; i++)
@@ -390,11 +398,26 @@ ATCA_STATUS hal_kit_cdc_release(void* hal_data)
     return ATCA_SUCCESS;
 }
 
-ATCA_STATUS hal_kit_cdc_discover_buses(int i2c_buses[], int max_buses)
+/** \brief discover cdc buses available for this hardware
+ * this maintains a list of logical to physical bus mappings freeing the application
+ * of the a-priori knowledge.This function is currently not implemented.
+ * \param[in] cdc_buses - an array of logical bus numbers
+ * \param[in] max_buses - maximum number of buses the app wants to attempt to discover
+ * \return ATCA_UNIMPLEMENTED
+
+ */
+ATCA_STATUS hal_kit_cdc_discover_buses(int cdc_buses[], int max_buses)
 {
     // TODO: Implement
     return ATCA_UNIMPLEMENTED;
 }
+
+/** \brief discover any CryptoAuth devices on a given logical bus number
+ * \param[in] busNum - logical bus number on which to look for CryptoAuth devices
+ * \param[out] cfg[] - pointer to head of an array of interface config structures which get filled in by this method
+ * \param[out] *found - number of devices found on this bus
+ * \return ATCA_UNIMPLEMENTED
+ */
 
 ATCA_STATUS hal_kit_cdc_discover_devices(int busNum, ATCAIfaceCfg *cfg, int *found)
 {

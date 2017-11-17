@@ -2,38 +2,31 @@
  * \file
  * \brief ATCA Hardware abstraction layer for Linux using kit protocol over a USB HID device.
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 #include <libudev.h>
@@ -55,22 +48,24 @@
 // File scope globals
 atcahid_t _gHid;
 
-/** \brief discover cdc buses available for this hardware
+/** \brief discover hid buses available for this hardware
  * this maintains a list of logical to physical bus mappings freeing the application
- * of the a-priori knowledge
+ * of the a-priori knowledge.This function is currently not implemented.
  * \param[in] cdc_buses - an array of logical bus numbers
  * \param[in] max_buses - maximum number of buses the app wants to attempt to discover
+ * \return ATCA_UNIMPLEMENTED
  */
 
-ATCA_STATUS hal_kit_hid_discover_buses(int cdc_buses[], int max_buses)
+ATCA_STATUS hal_kit_hid_discover_buses(int hid_buses[], int max_buses)
 {
     return ATCA_UNIMPLEMENTED;
 }
 
-/** \brief discover any CryptoAuth devices on a given logical bus number
+/** \brief discover any CryptoAuth devices on a given logical bus number.This function is currently not implemented.
  * \param[in] busNum - logical bus number on which to look for CryptoAuth devices
  * \param[out] cfg[] - pointer to head of an array of interface config structures which get filled in by this method
  * \param[out] *found - number of devices found on this bus
+ * \return ATCA_UNIMPLEMENTED
  */
 ATCA_STATUS hal_kit_hid_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
 {
@@ -80,7 +75,7 @@ ATCA_STATUS hal_kit_hid_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *fo
 /** \brief HAL implementation of Kit USB HID init
  *  \param[in] hal pointer to HAL specific data that is maintained by this HAL
  *  \param[in] cfg pointer to HAL specific configuration data that is used to initialize this HAL
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_kit_hid_init(void* hal, ATCAIfaceCfg* cfg)
 {
@@ -100,7 +95,9 @@ ATCA_STATUS hal_kit_hid_init(void* hal, ATCAIfaceCfg* cfg)
 
     // Check the input variables
     if ((cfg == NULL) || (phal == NULL))
+    {
         return ATCA_BAD_PARAM;
+    }
 
     // Initialize the _gHid structure
     memset(&_gHid, 0, sizeof(_gHid));
@@ -115,7 +112,9 @@ ATCA_STATUS hal_kit_hid_init(void* hal, ATCAIfaceCfg* cfg)
     // Create the udev object
     udev = udev_new();
     if (udev == NULL)
+    {
         return ATCA_COMM_FAIL;
+    }
 
     // Create the enumerate object
     enumerate = udev_enumerate_new(udev);
@@ -133,7 +132,9 @@ ATCA_STATUS hal_kit_hid_init(void* hal, ATCAIfaceCfg* cfg)
     {
         status = udev_enumerate_scan_devices(enumerate);
         if (status >= 0)
+        {
             list = udev_enumerate_get_list_entry(enumerate);
+        }
     }
 
     // Create the HID filter string
@@ -158,9 +159,13 @@ ATCA_STATUS hal_kit_hid_init(void* hal, ATCAIfaceCfg* cfg)
         {
             // Open the kit USB device for reading and writing
             if (_gHid.kits[index].read_handle != NULL)
+            {
                 fclose(_gHid.kits[index].read_handle);
+            }
             if (_gHid.kits[index].write_handle != NULL)
+            {
                 fclose(_gHid.kits[index].write_handle);
+            }
 
             file_descriptor = fopen(udev_device_get_devnode(syspath_device), "rb+");
             if (file_descriptor != NULL)
@@ -213,7 +218,7 @@ ATCA_STATUS hal_kit_hid_init(void* hal, ATCAIfaceCfg* cfg)
 
 /** \brief HAL implementation of Kit HID post init
  *  \param[in] iface  instance
- *  \return ATCA_STATUS
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_kit_hid_post_init(ATCAIface iface)
 {
@@ -223,24 +228,28 @@ ATCA_STATUS hal_kit_hid_post_init(ATCAIface iface)
     int i = 0;
 
     if ((pHid == NULL) || (pCfg == NULL))
+    {
         return ATCA_BAD_PARAM;
+    }
 
     // Perform the kit protocol init
     for (i = 0; i < pHid->num_kits_found; i++)
     {
         status = kit_init(iface);
         if (status != ATCA_SUCCESS)
+        {
             BREAK(status, "kit_init() Failed");
+        }
     }
 
     return status;
 }
 
-/** \brief HAL implementation of send over USB HID
+/** \brief HAL implementation of send over Kit protocol.This function is called by the top layer.
  *  \param[in] iface     instance
  *  \param[in] txdata    pointer to bytes to send
  *  \param[in] txlength  number of bytes to send
- *  \return ATCA_STATUS
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength)
 {
@@ -249,10 +258,14 @@ ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength)
     size_t bytes_written = 0;
 
     if ((txdata == NULL) || (cfg == NULL) || (pHid == NULL))
+    {
         return ATCA_BAD_PARAM;
+    }
 
     if (pHid->kits[cfg->atcahid.idx].write_handle == NULL)
+    {
         return ATCA_COMM_FAIL;
+    }
 
     // Send the data to the kit USB device
     if (txlength > 0)
@@ -269,11 +282,11 @@ ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength)
     return ATCA_SUCCESS;
 }
 
-/** \brief HAL implementation of kit protocol send over USB HID
+/** \brief HAL implementation of kit protocol receive.This function is called by the top layer.
  * \param[in]    iface   instance
  * \param[out]   rxdata  pointer to space to receive the data
  * \param[inout] rxsize  ptr to expected number of receive bytes to request
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxsize)
 {
@@ -284,10 +297,14 @@ ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxsize)
     size_t total_bytes_read = 0;
 
     if ((rxdata == NULL) || (rxsize == NULL) || (cfg == NULL) || (pHid == NULL))
+    {
         return ATCA_BAD_PARAM;
+    }
 
     if (pHid->kits[cfg->atcahid.idx].read_handle == NULL)
+    {
         return ATCA_COMM_FAIL;
+    }
 
     // Receive the data from the kit USB device
     do
@@ -304,7 +321,9 @@ ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxsize)
 
         // Check if the kit protocol message has been received
         if (strstr((char*)rxdata, "\n") != NULL)
+        {
             continue_read = false;
+        }
     }
     while (continue_read == true);
 
@@ -316,7 +335,7 @@ ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxsize)
 
 /** \brief Number of USB HID devices found
  *  \param[out] num_found
- *  \return ATCA_STATUS
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS kit_phy_num_found(int8_t* num_found)
 {
@@ -329,7 +348,7 @@ ATCA_STATUS kit_phy_num_found(int8_t* num_found)
  *  \param[in] iface     instance
  *  \param[in] txdata    pointer to bytes to send
  *  \param[in] txlength  number of bytes to send
- *  \return ATCA_STATUS
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_kit_hid_send(ATCAIface iface, uint8_t* txdata, int txlength)
 {
@@ -341,7 +360,7 @@ ATCA_STATUS hal_kit_hid_send(ATCAIface iface, uint8_t* txdata, int txlength)
  * \param[in]    iface   instance
  * \param[in]    rxdata  pointer to space to receive the data
  * \param[inout] rxsize  ptr to expected number of receive bytes to request
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_kit_hid_receive(ATCAIface iface, uint8_t* rxdata, uint16_t* rxsize)
 {
@@ -349,9 +368,9 @@ ATCA_STATUS hal_kit_hid_receive(ATCAIface iface, uint8_t* rxdata, uint16_t* rxsi
     return kit_receive(iface, rxdata, rxsize);
 }
 
-/** \brief Call the wake for kit protocol
+/** \brief Call the wake for kit protocol over USB HID
  * \param[in] iface  ATCAIface instance that is the interface object to send the bytes over
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_kit_hid_wake(ATCAIface iface)
 {
@@ -359,9 +378,9 @@ ATCA_STATUS hal_kit_hid_wake(ATCAIface iface)
     return kit_wake(iface);
 }
 
-/** \brief Call the idle for kit protocol
+/** \brief Call the idle for kit protocol over USB HID
  * \param[in] iface  ATCAIface instance that is the interface object to send the bytes over
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_kit_hid_idle(ATCAIface iface)
 {
@@ -369,9 +388,9 @@ ATCA_STATUS hal_kit_hid_idle(ATCAIface iface)
     return kit_idle(iface);
 }
 
-/** \brief Call the sleep for kit protocol
+/** \brief Call the sleep for kit protocol over USB HID
  * \param[in] iface  ATCAIface instance that is the interface object to send the bytes over
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_kit_hid_sleep(ATCAIface iface)
 {
@@ -381,7 +400,7 @@ ATCA_STATUS hal_kit_hid_sleep(ATCAIface iface)
 
 /** \brief Close the physical port for HID
  * \param[in] hal_data  The hardware abstraction data specific to this HAL
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_kit_hid_release(void* hal_data)
 {
@@ -389,7 +408,9 @@ ATCA_STATUS hal_kit_hid_release(void* hal_data)
     int i = 0;
 
     if (phaldat == NULL)
+    {
         return ATCA_BAD_PARAM;
+    }
 
     // Close all kit USB devices
     for (i = 0; i < phaldat->num_kits_found; i++)

@@ -2,44 +2,37 @@
  * \file
  * \brief Unity tests for the CryptoAuthLib software crypto API.
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 #include "atca_crypto_sw_tests.h"
 #include "crypto/atca_crypto_sw_sha1.h"
 #include "crypto/atca_crypto_sw_sha2.h"
-#ifdef WIN32
+#ifdef _WIN32
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -49,7 +42,7 @@ static const uint8_t nist_hash_msg1[] = "abc";
 static const uint8_t nist_hash_msg2[] = "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq";
 static const uint8_t nist_hash_msg3[] = "a";
 
-void atca_crypto_sw_tests(void)
+int atca_crypto_sw_tests(void)
 {
     UnityBegin("atca_crypto_sw_tests.c");
 
@@ -68,7 +61,7 @@ void atca_crypto_sw_tests(void)
     RUN_TEST(test_atcac_sw_sha2_256_nist_long);
     RUN_TEST(test_atcac_sw_sha2_256_nist_monte);
 
-    UnityEnd();
+    return UnityEnd();
 }
 
 void test_atcac_sw_sha1_nist1(void)
@@ -128,28 +121,44 @@ void test_atcac_sw_sha1_nist3(void)
     TEST_ASSERT_EQUAL_MEMORY(digest_ref, digest, sizeof(digest_ref));
 }
 
-#ifdef WIN32
+#ifdef _WIN32
 static void hex_to_uint8(const char hex_str[2], uint8_t* num)
 {
     *num = 0;
 
     if (hex_str[0] >= '0' && hex_str[0] <= '9')
+    {
         *num += (hex_str[0] - '0') << 4;
+    }
     else if (hex_str[0] >= 'A' && hex_str[0] <= 'F')
+    {
         *num += (hex_str[0] - 'A' + 10) << 4;
+    }
     else if (hex_str[0] >= 'a' && hex_str[0] <= 'f')
+    {
         *num += (hex_str[0] - 'a' + 10) << 4;
+    }
     else
+    {
         TEST_FAIL_MESSAGE("Not a hex digit.");
+    }
 
     if (hex_str[1] >= '0' && hex_str[1] <= '9')
+    {
         *num += (hex_str[1] - '0');
+    }
     else if (hex_str[1] >= 'A' && hex_str[1] <= 'F')
+    {
         *num += (hex_str[1] - 'A' + 10);
+    }
     else if (hex_str[1] >= 'a' && hex_str[1] <= 'f')
+    {
         *num += (hex_str[1] - 'a' + 10);
+    }
     else
+    {
         TEST_FAIL_MESSAGE("Not a hex digit.");
+    }
 }
 
 static void hex_to_data(const char* hex_str, uint8_t* data, size_t data_size)
@@ -159,7 +168,9 @@ static void hex_to_data(const char* hex_str, uint8_t* data, size_t data_size)
     TEST_ASSERT_EQUAL_MESSAGE(data_size * 2, strlen(hex_str) - 1, "Hex string unexpected length.");
 
     for (i = 0; i < data_size; i++)
+    {
         hex_to_uint8(&hex_str[i * 2], &data[i]);
+    }
 }
 
 static int read_rsp_hex_value(FILE* file, const char* name, uint8_t* data, size_t data_size)
@@ -172,16 +183,24 @@ static int read_rsp_hex_value(FILE* file, const char* name, uint8_t* data, size_
     {
         str = fgets(line, sizeof(line), file);
         if (str == NULL)
+        {
             continue;
+        }
 
         if (memcmp(line, name, name_size) == 0)
+        {
             str = &line[name_size];
+        }
         else
+        {
             str = NULL;
+        }
     }
     while (str == NULL && !feof(file));
     if (str == NULL)
+    {
         return ATCA_GEN_FAIL;
+    }
     hex_to_data(str, data, data_size);
 
     return ATCA_SUCCESS;
@@ -197,16 +216,24 @@ static int read_rsp_int_value(FILE* file, const char* name, int* value)
     {
         str = fgets(line, sizeof(line), file);
         if (str == NULL)
+        {
             continue;
+        }
 
         if (memcmp(line, name, name_size) == 0)
+        {
             str = &line[name_size];
+        }
         else
+        {
             str = NULL;
+        }
     }
     while (str == NULL && !feof(file));
     if (str == NULL)
+    {
         return ATCA_GEN_FAIL;
+    }
     *value = atoi(str);
 
     return ATCA_SUCCESS;
@@ -216,7 +243,7 @@ static int read_rsp_int_value(FILE* file, const char* name, int* value)
 
 static void test_atcac_sw_sha1_nist_simple(const char* filename)
 {
-#ifndef WIN32
+#ifndef _WIN32
     TEST_IGNORE_MESSAGE("Test only available under windows.");
 #else
     FILE* rsp_file = NULL;
@@ -228,13 +255,15 @@ static void test_atcac_sw_sha1_nist_simple(const char* filename)
     size_t count = 0;
 
     rsp_file = fopen(filename, "r");
-    TEST_ASSERT_NOT_NULL_MESSAGE(rsp_file, "Failed to  open file");
+    TEST_ASSERT_NOT_NULL_MESSAGE(rsp_file, "Failed to open file");
 
     do
     {
         ret = read_rsp_int_value(rsp_file, "Len = ", &len_bits);
         if (ret != ATCA_SUCCESS)
+        {
             continue;
+        }
 
         msg = malloc(len_bits == 0 ? 1 : len_bits / 8);
         TEST_ASSERT_NOT_NULL_MESSAGE(msg, "malloc failed");
@@ -260,17 +289,17 @@ static void test_atcac_sw_sha1_nist_simple(const char* filename)
 
 void test_atcac_sw_sha1_nist_short(void)
 {
-    test_atcac_sw_sha1_nist_simple("../cryptoauthlib-win-host/cryptoauthlib/test/sha-byte-test-vectors/SHA1ShortMsg.rsp");
+    test_atcac_sw_sha1_nist_simple("cryptoauthlib/test/sha-byte-test-vectors/SHA1ShortMsg.rsp");
 }
 
 void test_atcac_sw_sha1_nist_long(void)
 {
-    test_atcac_sw_sha1_nist_simple("../cryptoauthlib-win-host/cryptoauthlib/test/sha-byte-test-vectors/SHA1LongMsg.rsp");
+    test_atcac_sw_sha1_nist_simple("cryptoauthlib/test/sha-byte-test-vectors/SHA1LongMsg.rsp");
 }
 
 void test_atcac_sw_sha1_nist_monte(void)
 {
-#ifndef WIN32
+#ifndef _WIN32
     TEST_IGNORE_MESSAGE("Test only available under windows.");
 #else
     FILE* rsp_file = NULL;
@@ -281,8 +310,8 @@ void test_atcac_sw_sha1_nist_monte(void)
     uint8_t m[sizeof(seed) * 3];
     uint8_t md_ref[sizeof(seed)];
 
-    rsp_file = fopen("../cryptoauthlib-win-host/cryptoauthlib/test/sha-byte-test-vectors/SHA1Monte.rsp", "r");
-    TEST_ASSERT_NOT_EQUAL_MESSAGE(NULL, rsp_file, "Failed to  open sha-byte-test-vectors/SHA1Monte.rsp");
+    rsp_file = fopen("cryptoauthlib/test/sha-byte-test-vectors/SHA1Monte.rsp", "r");
+    TEST_ASSERT_NOT_EQUAL_MESSAGE(NULL, rsp_file, "Failed to open cryptoauthlib/test/sha-byte-test-vectors/SHA1Monte.rsp");
 
     // Find the seed value
     ret = read_rsp_hex_value(rsp_file, "Seed = ", seed, sizeof(seed));
@@ -369,7 +398,7 @@ void test_atcac_sw_sha2_256_nist3(void)
 
 static void test_atcac_sw_sha2_256_nist_simple(const char* filename)
 {
-#ifndef WIN32
+#ifndef _WIN32
     TEST_IGNORE_MESSAGE("Test only available under windows.");
 #else
     FILE* rsp_file = NULL;
@@ -381,13 +410,15 @@ static void test_atcac_sw_sha2_256_nist_simple(const char* filename)
     size_t count = 0;
 
     rsp_file = fopen(filename, "r");
-    TEST_ASSERT_NOT_NULL_MESSAGE(rsp_file, "Failed to  open file");
+    TEST_ASSERT_NOT_NULL_MESSAGE(rsp_file, "Failed to open file");
 
     do
     {
         ret = read_rsp_int_value(rsp_file, "Len = ", &len_bits);
         if (ret != ATCA_SUCCESS)
+        {
             continue;
+        }
 
         msg = malloc(len_bits == 0 ? 1 : len_bits / 8);
         TEST_ASSERT_NOT_NULL_MESSAGE(msg, "malloc failed");
@@ -413,17 +444,17 @@ static void test_atcac_sw_sha2_256_nist_simple(const char* filename)
 
 void test_atcac_sw_sha2_256_nist_short(void)
 {
-    test_atcac_sw_sha2_256_nist_simple("../cryptoauthlib-win-host/cryptoauthlib/test/sha-byte-test-vectors/SHA256ShortMsg.rsp");
+    test_atcac_sw_sha2_256_nist_simple("cryptoauthlib/test/sha-byte-test-vectors/SHA256ShortMsg.rsp");
 }
 
 void test_atcac_sw_sha2_256_nist_long(void)
 {
-    test_atcac_sw_sha2_256_nist_simple("../cryptoauthlib-win-host/cryptoauthlib/test/sha-byte-test-vectors/SHA256LongMsg.rsp");
+    test_atcac_sw_sha2_256_nist_simple("cryptoauthlib/test/sha-byte-test-vectors/SHA256LongMsg.rsp");
 }
 
 void test_atcac_sw_sha2_256_nist_monte(void)
 {
-#ifndef WIN32
+#ifndef _WIN32
     TEST_IGNORE_MESSAGE("Test only available under windows.");
 #else
     FILE* rsp_file = NULL;
@@ -434,8 +465,8 @@ void test_atcac_sw_sha2_256_nist_monte(void)
     uint8_t m[sizeof(seed) * 3];
     uint8_t md_ref[sizeof(seed)];
 
-    rsp_file = fopen("../cryptoauthlib-win-host/cryptoauthlib/test/sha-byte-test-vectors/SHA256Monte.rsp", "r");
-    TEST_ASSERT_NOT_EQUAL_MESSAGE(NULL, rsp_file, "Failed to  open sha-byte-test-vectors/SHA256Monte.rsp");
+    rsp_file = fopen("cryptoauthlib/test/sha-byte-test-vectors/SHA256Monte.rsp", "r");
+    TEST_ASSERT_NOT_EQUAL_MESSAGE(NULL, rsp_file, "Failed to open cryptoauthlib/test/sha-byte-test-vectors/SHA256Monte.rsp");
 
     // Find the seed value
     ret = read_rsp_hex_value(rsp_file, "Seed = ", seed, sizeof(seed));

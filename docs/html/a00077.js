@@ -1,7 +1,6 @@
 var a00077 =
 [
-    [ "atcac_sw_sha2_256", "a00225.html#ga63412270c4629874f2764171200c1b5c", null ],
-    [ "atcac_sw_sha2_256_finish", "a00225.html#gae3a29931f2104cce481aa9ef1ab16fea", null ],
-    [ "atcac_sw_sha2_256_init", "a00225.html#ga58283666b662f084155ba693870c1077", null ],
-    [ "atcac_sw_sha2_256_update", "a00225.html#gab1a09fa1d854722cc667cea319ca9984", null ]
+    [ "atcacert_gen_challenge_sw", "a00426.html#gaa9829e5aa1ece3d3a933db9827d3e8f3", null ],
+    [ "atcacert_verify_cert_sw", "a00426.html#gab78271af8c3e2837810fcdae6e3f5e28", null ],
+    [ "atcacert_verify_response_sw", "a00426.html#ga9d5bf9ec84d28a0412377818805c32c4", null ]
 ];

@@ -1,5 +1,4 @@
 var a00128 =
 [
-    [ "MAX_I2C_BUSES", "a00226.html#gaf89a7a4080a47aa10a5504291db285bf", null ],
-    [ "ATCAI2CMaster_t", "a00226.html#gae8f36006f14bf6a9f4914bac69ed9f98", null ]
+    [ "atcab_priv_write", "a00427.html#gad01e8e785073d8655de9116e7df8e7b5", null ]
 ];

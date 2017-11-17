@@ -1,18 +1,13 @@
 var a00134 =
 [
-    [ "change_i2c_speed", "a00226.html#gab7f613b378e0d01b80703df3ac662d6d", null ],
-    [ "hal_i2c_discover_buses", "a00226.html#ga05700385437884cc7b28c38d33e84f8c", null ],
-    [ "hal_i2c_discover_devices", "a00226.html#gad927b28b795eac9f9592fc9f9739bc0a", null ],
-    [ "hal_i2c_idle", "a00226.html#ga9317303ada721ff3f97e7aad69437a30", null ],
-    [ "hal_i2c_init", "a00226.html#ga09e7f465a040fbd19ea136269571de3c", null ],
-    [ "hal_i2c_post_init", "a00226.html#gafbe53519362f18c2688d10da6f7c618f", null ],
-    [ "hal_i2c_receive", "a00226.html#ga7785bcc305c14e2dc188bb1b9a77814a", null ],
-    [ "hal_i2c_release", "a00226.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
-    [ "hal_i2c_send", "a00226.html#gacd0fb31f0f88ef3762665e26b5aa784b", null ],
-    [ "hal_i2c_sleep", "a00226.html#ga3f89bae6a625d5f37abdcc99408def27", null ],
-    [ "hal_i2c_wake", "a00226.html#gad4df1b6755e2d5b5d9e810371e45ca8c", null ],
-    [ "i2c_read", "a00226.html#gae81b63d9702ffa82960fc8718953dae3", null ],
-    [ "i2c_write", "a00226.html#ga8fc6a91c0d59cdf46f1bdf33ca8ab048", null ],
-    [ "i2c_bus_ref_ct", "a00226.html#gaa7deec7f5d89dfb4f9746d050b0926f9", null ],
-    [ "i2c_hal_data", "a00226.html#ga95dac4460cd54b4b073285ebc79d215b", null ]
+    [ "atcab_cmp_config_zone", "a00427.html#gadb91d2c3601b95f0ad413cf84a4dfd87", null ],
+    [ "atcab_is_locked", "a00427.html#gaefce484222bdbedef37787a9b10d4426", null ],
+    [ "atcab_is_slot_locked", "a00427.html#ga802de50265ff91dc30dd7c93d9e026e1", null ],
+    [ "atcab_read_bytes_zone", "a00427.html#ga750704332198726725a327344f4f7dd5", null ],
+    [ "atcab_read_config_zone", "a00427.html#ga8ef47330eef6bc72ae8f7a8ef026dae3", null ],
+    [ "atcab_read_enc", "a00427.html#ga778a262b86fa1f8a38139cbae34376e4", null ],
+    [ "atcab_read_pubkey", "a00427.html#ga782ca1e5b1574b2b6793c841be22b28b", null ],
+    [ "atcab_read_serial_number", "a00427.html#ga96c434878e1f435e2cda5b0b5fec444f", null ],
+    [ "atcab_read_sig", "a00427.html#ga098c4c2c724b90b7e2f4ecf12b9530b7", null ],
+    [ "atcab_read_zone", "a00427.html#ga3ce01f02f456c08891ca1d67cd3ed0eb", null ]
 ];

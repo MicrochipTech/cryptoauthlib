@@ -270,11 +270,7 @@ extern int UNITY_OUTPUT_CHAR(int);
 #endif
 
 #ifndef UNITY_PRINT_EOL
-#ifdef _WIN32
 #define UNITY_PRINT_EOL()       { UNITY_OUTPUT_CHAR('\r'); UNITY_OUTPUT_CHAR('\n'); }
-#else
-#define UNITY_PRINT_EOL()       { UNITY_OUTPUT_CHAR('\n'); }
-#endif
 #endif
 
 #ifndef UNITY_OUTPUT_START

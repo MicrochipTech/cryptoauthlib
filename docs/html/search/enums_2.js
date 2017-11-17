@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['enum_5fcounter_5fmode',['enum_counter_mode',['../a00068.html#a78ae2f5bd71fa607d0e761c156e968fd',1,'atca_command.h']]]
+  ['swi_5fflag',['swi_flag',['../a00429.html#ga8759b00e645502d0f1c3b7330e20e52b',1,'hal_swi_bitbang.h']]]
 ];

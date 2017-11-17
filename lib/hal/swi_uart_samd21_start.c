@@ -3,38 +3,31 @@
  *
  * \brief  Atmel Crypto Auth hardware interface object
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 #include <stdlib.h>
@@ -49,9 +42,14 @@
  *
    @{ */
 
+/** \brief
+   - this HAL implementation assumes you've included the START SERCOM UART libraries in your project, otherwise,
+   the HAL layer will not compile because the START UART drivers are a dependency *
+ */
+
 /** \brief HAL implementation of SWI UART init.
  * \param[in] instance  instance
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS swi_uart_init(ATCASWIMaster_t *instance)
 {
@@ -75,7 +73,7 @@ ATCA_STATUS swi_uart_init(ATCASWIMaster_t *instance)
 
 /** \brief HAL implementation of SWI UART deinit.
  * \param[in] instance  instance
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS
  */
 ATCA_STATUS swi_uart_deinit(ATCASWIMaster_t *instance)
 {
@@ -145,8 +143,8 @@ void swi_uart_discover_buses(int swi_uart_buses[], int max_buses)
 
 /** \brief HAL implementation of SWI UART send byte over ASF.  This function send one byte over UART
  * \param[in] instance  instance
- * \param[in] data      byte to send
- * \return ATCA_STATUS
+ * \param[in] data      number of byte to send
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS swi_uart_send_byte(ATCASWIMaster_t *instance, uint8_t data)
 {
@@ -166,15 +164,19 @@ ATCA_STATUS swi_uart_send_byte(ATCASWIMaster_t *instance, uint8_t data)
     gpio_toggle_pin_level(PA20);
 #endif
     if (byte_sent <= 0)
+    {
         return ATCA_TIMEOUT;
+    }
     else
+    {
         return ATCA_SUCCESS;
+    }
 }
 
 /** \brief HAL implementation of SWI UART receive bytes over ASF.  This function receive one byte over UART
  * \param[in]    instance instance
- * \param[inout] data     pointer to space to receive the data
- * \return ATCA_STATUS
+ * \param[out] data     pointer to space to receive the data
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS swi_uart_receive_byte(ATCASWIMaster_t *instance, uint8_t *data)
 {
@@ -194,9 +196,13 @@ ATCA_STATUS swi_uart_receive_byte(ATCASWIMaster_t *instance, uint8_t *data)
     gpio_toggle_pin_level(PA21);
 #endif
     if (byte_sent <= 0)
+    {
         return ATCA_TIMEOUT;
+    }
     else
+    {
         return ATCA_SUCCESS;
+    }
 }
 
 /** @} */

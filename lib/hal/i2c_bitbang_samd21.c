@@ -1,41 +1,34 @@
 /**
  * \file
- * \brief  Hardware Interface Functions - I2C bit-banged
+ * \brief  Hardware Interface Functions - I2C bit-bang for SAMd21
  * \author Atmel Crypto Group
  * \date   November 18, 2015
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 #include <asf.h>
@@ -45,8 +38,8 @@
 
 
 I2CBuses i2c_buses_default = {
-    { EXT3_PIN_3, EXT3_PIN_9,  EXT3_PIN_I2C_SDA, EXT3_PIN_13, EXT2_PIN_3, EXT2_PIN_5, EXT2_PIN_7, EXT2_PIN_9,  EXT2_PIN_13, EXT2_PIN_15, EXT2_PIN_17, EXT1_PIN_3, EXT1_PIN_5, EXT1_PIN_7, EXT1_PIN_9,  EXT1_PIN_13, EXT1_PIN_15, EXT1_PIN_17},
-    { EXT3_PIN_7, EXT3_PIN_10, EXT3_PIN_I2C_SCL, EXT3_PIN_14, EXT2_PIN_4, EXT2_PIN_6, EXT2_PIN_8, EXT2_PIN_10, EXT2_PIN_14, EXT2_PIN_16, EXT2_PIN_18, EXT1_PIN_4, EXT1_PIN_6, EXT1_PIN_8, EXT1_PIN_10, EXT1_PIN_14, EXT1_PIN_16, EXT1_PIN_18}
+    { EXT3_PIN_3, EXT3_PIN_9,  EXT3_PIN_I2C_SDA,  EXT3_PIN_13,  EXT2_PIN_3,  EXT2_PIN_5,  EXT2_PIN_7,  EXT2_PIN_9,  EXT2_PIN_13,  EXT2_PIN_15,  EXT2_PIN_17,  EXT1_PIN_3,  EXT1_PIN_5,  EXT1_PIN_7, EXT1_PIN_9,  EXT1_PIN_13,  EXT1_PIN_15,  EXT1_PIN_17    },
+    { EXT3_PIN_7, EXT3_PIN_10, EXT3_PIN_I2C_SCL,  EXT3_PIN_14,  EXT2_PIN_4,  EXT2_PIN_6,  EXT2_PIN_8,  EXT2_PIN_10, EXT2_PIN_14,  EXT2_PIN_16,  EXT2_PIN_18,  EXT1_PIN_4,  EXT1_PIN_6,  EXT1_PIN_8, EXT1_PIN_10, EXT1_PIN_14,  EXT1_PIN_16,  EXT1_PIN_18    }
 };
 
 uint8_t pin_sda, pin_scl;
@@ -93,13 +86,17 @@ void i2c_send_ack(uint8_t ack)
     {
         I2C_SET_OUTPUT_LOW();   //!< Low data line indicates an ACK.
         while (I2C_DATA_IN())
+        {
             ;
+        }
     }
     else
     {
         I2C_SET_OUTPUT_HIGH();  //!< High data line indicates a NACK.
         while (!I2C_DATA_IN())
+        {
             ;
+        }
     }
 
     //! Clock out acknowledgment.
@@ -138,17 +135,26 @@ ATCA_STATUS i2c_send_byte(uint8_t i2c_byte)
     //! and translate the msb to OUTSET or OUTCLR,
     //! but then the code would become target specific.
     if (i2c_byte & 0x80)
+    {
         I2C_SET_OUTPUT_HIGH();
+    }
     else
+    {
         I2C_SET_OUTPUT_LOW();
+    }
+
     //! Send 8 bits of data.
     for (i = 0; i < 8; i++)
     {
         I2C_CLOCK_LOW();
         if (i2c_byte & 0x80)
+        {
             I2C_DATA_HIGH();
+        }
         else
+        {
             I2C_DATA_LOW();
+        }
         I2C_CLOCK_DELAY_WRITE_LOW();
 
         //! Clock out the data bit.
@@ -198,7 +204,9 @@ ATCA_STATUS i2c_send_bytes(uint8_t count, uint8_t *data)
         if (status != ATCA_SUCCESS)
         {
             if (i > 0)
+            {
                 status = ATCA_TX_FAIL;
+            }
             break;
         }
     }
@@ -219,7 +227,9 @@ uint8_t i2c_receive_one_byte(uint8_t ack)
         I2C_CLOCK_HIGH();
         I2C_CLOCK_DELAY_READ_HIGH();
         if (I2C_DATA_IN())
+        {
             i2c_byte |= i;
+        }
         I2C_CLOCK_LOW();
         if (i > 1)
         {
@@ -243,7 +253,9 @@ void i2c_receive_byte(uint8_t *data)
 void i2c_receive_bytes(uint8_t count, uint8_t *data)
 {
     while (--count)
+    {
         *data++ = i2c_receive_one_byte(1);
+    }
     *data = i2c_receive_one_byte(0);
 
     i2c_send_stop();

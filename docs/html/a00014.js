@@ -1,13 +1,11 @@
 var a00014 =
 [
-    [ "client_chal", "a00014.html#a218f1c30c4a21b348dbe1817a2c14896", null ],
-    [ "client_resp", "a00014.html#a430a448768d687a94e3daaa00dce63ce", null ],
-    [ "key_id", "a00014.html#ac21eed4200889cc115d16a781871d01c", null ],
-    [ "mode", "a00014.html#a37e90f5e3bd99fac2021fb3a326607d4", null ],
-    [ "other_data", "a00014.html#ac76ac607fd679316fc17b16039a86b9c", null ],
-    [ "otp", "a00014.html#a4510889ef4b42470bf1a1d4e940a19a9", null ],
-    [ "slot_key", "a00014.html#aa23b467edf1809a2a8b1b530a0159c45", null ],
-    [ "sn", "a00014.html#aef45bac2efcd5394c4ed79f73ee16d23", null ],
-    [ "target_key", "a00014.html#ab15c5e89189b9eea6fab7da58cc03967", null ],
-    [ "temp_key", "a00014.html#a72fae3d62889ef224f09c57a7646e061", null ]
+    [ "cfg_ateccx08a_i2c_default", "a00422.html#gafcb056718eb34ec3a612d550208e49cc", null ],
+    [ "cfg_ateccx08a_kitcdc_default", "a00422.html#ga8fb19127e7fc7cfbaa619ba41bccc4b3", null ],
+    [ "cfg_ateccx08a_kithid_default", "a00422.html#ga1f5e0890694189d4ce70f19b207eb070", null ],
+    [ "cfg_ateccx08a_swi_default", "a00422.html#ga5624aa554e1964981b794e2295b9432c", null ],
+    [ "cfg_atsha204a_i2c_default", "a00422.html#ga9fe83141d8e44bf623e624a72901832c", null ],
+    [ "cfg_atsha204a_kitcdc_default", "a00422.html#ga010430b93521c09efec9e5913ce769c1", null ],
+    [ "cfg_atsha204a_kithid_default", "a00422.html#gac6a0b1f7ea398eee53d1e4243a617c6c", null ],
+    [ "cfg_atsha204a_swi_default", "a00422.html#gae5e766a819c7920470b456238cbef70d", null ]
 ];

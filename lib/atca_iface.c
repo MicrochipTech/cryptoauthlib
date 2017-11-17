@@ -3,38 +3,31 @@
  *
  * \brief  Atmel Crypto Auth hardware interface object
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 #include <stdlib.h>
@@ -47,29 +40,7 @@
  *  device communication from all the upper layers of CryptoAuthLib
    @{ */
 
-/** \brief atca_iface is the C object backing ATCAIface.  See the atca_iface.h file for
- * details on the ATCAIface methods
- */
-
-struct atca_iface
-{
-    ATCAIfaceType mType;
-    ATCAIfaceCfg *mIfaceCFG;    // points to previous defined/given Cfg object, caller manages this
-
-    ATCA_STATUS (*atinit)(void *hal, ATCAIfaceCfg *);
-    ATCA_STATUS (*atpostinit)(ATCAIface hal);
-    ATCA_STATUS (*atsend)(ATCAIface hal, uint8_t *txdata, int txlength);
-    ATCA_STATUS (*atreceive)(ATCAIface hal, uint8_t *rxdata, uint16_t *rxlength);
-    ATCA_STATUS (*atwake)(ATCAIface hal);
-    ATCA_STATUS (*atidle)(ATCAIface hal);
-    ATCA_STATUS (*atsleep)(ATCAIface hal);
-
-    // treat as private
-    void *hal_data;     // generic pointer used by HAL to point to architecture specific structure
-                        // no ATCA object should touch this except HAL, HAL manages this pointer and memory it points to
-};
-
-ATCA_STATUS _atinit(ATCAIface caiface, ATCAHAL_t *hal);
+ATCA_STATUS _atinit(ATCAIface ca_iface, ATCAHAL_t *hal);
 
 /** \brief constructor for ATCAIface objects
  * \param[in] cfg  points to the logical configuration for the interface
@@ -78,107 +49,156 @@ ATCA_STATUS _atinit(ATCAIface caiface, ATCAHAL_t *hal);
 
 ATCAIface newATCAIface(ATCAIfaceCfg *cfg)  // constructor
 {
-    ATCAIface caiface = (ATCAIface)malloc(sizeof(struct atca_iface));
+    ATCAIface ca_iface;
 
-    caiface->mType = cfg->iface_type;
-    caiface->mIfaceCFG = cfg;
+    ca_iface = (ATCAIface)malloc(sizeof(struct atca_iface));
+    ca_iface->mType = cfg->iface_type;
+    ca_iface->mIfaceCFG = cfg;
 
-    if (atinit(caiface) != ATCA_SUCCESS)
+    if (atinit(ca_iface) != ATCA_SUCCESS)
     {
-        free(caiface);
-        caiface = NULL;
+        free(ca_iface);
+        ca_iface = NULL;
     }
 
-    return caiface;
+    return ca_iface;
 }
 
 // public ATCAIface methods
 
-ATCA_STATUS atinit(ATCAIface caiface)
+/** \brief This function performs the HAL initialisation by calling intermediate HAL wrapper function.
+ *  User should not call this function directly,instead use atcab_init() function
+ * \param[in] ca_iface  points to the logical configuration for the interface
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+
+ATCA_STATUS atinit(ATCAIface ca_iface)
 {
     ATCA_STATUS status = ATCA_COMM_FAIL;
     ATCAHAL_t hal;
 
-    _atinit(caiface, &hal);
+    _atinit(ca_iface, &hal);
 
-    status = caiface->atinit(&hal, caiface->mIfaceCFG);
+    status = ca_iface->atinit(&hal, ca_iface->mIfaceCFG);
     if (status == ATCA_SUCCESS)
     {
-        caiface->hal_data = hal.hal_data;
+        ca_iface->hal_data = hal.hal_data;
 
         // Perform the post init
-        status = caiface->atpostinit(caiface);
+        status = ca_iface->atpostinit(ca_iface);
     }
 
     return status;
 }
 
-ATCA_STATUS atsend(ATCAIface caiface, uint8_t *txdata, int txlength)
+/** \brief This function sends the data to device by calling intermediate HAL wrapper function.
+ * \param[in] ca_iface   points to the logical configuration for the interface
+ * \param[in] txdata    pointer to the data to be transmitted to the device
+ * \param[in] txlength  The total number of bytes to be transmitted to the device
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atsend(ATCAIface ca_iface, uint8_t *txdata, int txlength)
 {
-    return caiface->atsend(caiface, txdata, txlength);
+    return ca_iface->atsend(ca_iface, txdata, txlength);
 }
 
-ATCA_STATUS atreceive(ATCAIface caiface, uint8_t *rxdata, uint16_t *rxlength)
+/**\brief This function receives  data from device by calling intermediate HAL wrapper function.
+ * \param[in] ca_iface  points to the logical configuration for the interface
+ * \param[in] rxdata   pointer to the data to be stored from device
+ * \param[in] rxlength  pointer to holds the number of bytes to be received from device.
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atreceive(ATCAIface ca_iface, uint8_t *rxdata, uint16_t *rxlength)
 {
-    return caiface->atreceive(caiface, rxdata, rxlength);
+    return ca_iface->atreceive(ca_iface, rxdata, rxlength);
 }
 
-ATCA_STATUS atwake(ATCAIface caiface)
+/** \brief This function performs waking up of device by calling intermediate HAL wrapper function.
+ *  User should not call this function directly,instead  use atcab_wakeup() function
+ * \param[in] ca_iface  points to the logical configuration for the interface
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atwake(ATCAIface ca_iface)
 {
-    return caiface->atwake(caiface);
+    return ca_iface->atwake(ca_iface);
 }
 
-ATCA_STATUS atidle(ATCAIface caiface)
+
+/** \brief This function makes the device to go to idle state by calling intermediate HAL wrapper function.
+ *  User should not call this function directly,instead  use atcab_idle() function
+ * \param[in] ca_iface  points to the logical configuration for the interface
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atidle(ATCAIface ca_iface)
 {
     ATCA_STATUS status;
 
-    status = caiface->atidle(caiface);
+    status = ca_iface->atidle(ca_iface);
     atca_delay_ms(1);
     return status;
 }
 
-ATCA_STATUS atsleep(ATCAIface caiface)
+/** \brief This function makes the device to go to sleep by calling intermediate HAL wrapper function.
+ *  User should not call this function directly,instead  use atcab_sleep() function
+ * \param[in] ca_iface  points to the logical configuration for the interface
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atsleep(ATCAIface ca_iface)
 {
     ATCA_STATUS status;
 
-    status = caiface->atsleep(caiface);
+    status = ca_iface->atsleep(ca_iface);
     atca_delay_ms(1);
     return status;
 }
 
-ATCAIfaceCfg * atgetifacecfg(ATCAIface caiface)
+
+/** \brief This function returns the pointer to Interface configuration of the Crypto Auth device.
+ * \param[in] ca_iface  points to the logical configuration for the interface
+ * \return returns the pointer to ATCAIfaceCfg.
+ */
+ATCAIfaceCfg * atgetifacecfg(ATCAIface ca_iface)
 {
-    return caiface->mIfaceCFG;
+    return ca_iface->mIfaceCFG;
 }
 
-void* atgetifacehaldat(ATCAIface caiface)
+
+/** \brief This function returns the pointer of HAL data of the Crypto Auth device.
+ * \param[in] ca_iface  points to the logical configuration for the interface
+ * \return returns the pointer to HAL data.
+ */
+void* atgetifacehaldat(ATCAIface ca_iface)
 {
-    return caiface->hal_data;
+    return ca_iface->hal_data;
 }
 
-void deleteATCAIface(ATCAIface *caiface) // destructor
+
+/** \brief destructor for ATCAIface objects
+ * \param[in] ca_iface  points to the logical configuration for the interface
+ */
+void deleteATCAIface(ATCAIface *ca_iface) // destructor
 {
-    if (*caiface)
+    if (*ca_iface)
     {
-        hal_iface_release( (*caiface)->mType, (*caiface)->hal_data);  // let HAL clean up and disable physical level interface if ref count is 0
-        free((void*)*caiface);
+        hal_iface_release( (*ca_iface)->mType, (*ca_iface)->hal_data);  // let HAL clean up and disable physical level interface if ref count is 0
+        free((void*)*ca_iface);
     }
 
-    *caiface = NULL;
+    *ca_iface = NULL;
 }
 
-ATCA_STATUS _atinit(ATCAIface caiface, ATCAHAL_t *hal)
+ATCA_STATUS _atinit(ATCAIface ca_iface, ATCAHAL_t *hal)
 {
     // get method mapping to HAL methods for this interface
-    hal_iface_init(caiface->mIfaceCFG, hal);
-    caiface->atinit     = hal->halinit;
-    caiface->atpostinit = hal->halpostinit;
-    caiface->atsend     = hal->halsend;
-    caiface->atreceive  = hal->halreceive;
-    caiface->atwake     = hal->halwake;
-    caiface->atsleep    = hal->halsleep;
-    caiface->atidle     = hal->halidle;
-    caiface->hal_data   = hal->hal_data;
+    hal_iface_init(ca_iface->mIfaceCFG, hal);
+    ca_iface->atinit     = hal->halinit;
+    ca_iface->atpostinit = hal->halpostinit;
+    ca_iface->atsend     = hal->halsend;
+    ca_iface->atreceive  = hal->halreceive;
+    ca_iface->atwake     = hal->halwake;
+    ca_iface->atsleep    = hal->halsleep;
+    ca_iface->atidle     = hal->halidle;
+    ca_iface->hal_data   = hal->hal_data;
 
     return ATCA_SUCCESS;
 }

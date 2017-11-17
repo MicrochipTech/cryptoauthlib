@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['cdc_5fdevice_5ft',['cdc_device_t',['../a00226.html#ga99ee56102171adcbcecb8a78fb9fa895',1,'cdc_device_t():&#160;hal_linux_kit_cdc.h'],['../a00163.html#a99ee56102171adcbcecb8a78fb9fa895',1,'cdc_device_t():&#160;hal_win_kit_cdc.h']]]
+  ['handle',['HANDLE',['../a00429.html#ga069bb8cb95b0528d5ce0304bb5561a40',1,'hal_linux_kit_cdc.h']]],
+  ['hid_5fdevice_5ft',['hid_device_t',['../a00429.html#ga5f2f61628e945fd6538155628fc3a17a',1,'hid_device_t():&#160;hal_linux_kit_hid.h'],['../a00429.html#ga5f2f61628e945fd6538155628fc3a17a',1,'hid_device_t():&#160;hal_win_kit_hid.h']]]
 ];

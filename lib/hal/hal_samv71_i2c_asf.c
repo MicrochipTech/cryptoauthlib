@@ -7,38 +7,31 @@
  *
  * Prerequisite: add SERCOM I2C Master Polled support to application in Atmel Studio
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 #include <asf.h>
@@ -66,6 +59,7 @@ int i2c_bus_ref_ct = 0;                         // total in-use count across bus
  * of the a-priori knowledge
  * \param[in] i2c_buses - an array of logical bus numbers
  * \param[in] max_buses - maximum number of buses the app wants to attempt to discover
+ * \return ATCA_SUCCESS
  */
 
 ATCA_STATUS hal_i2c_discover_buses(int i2c_buses[], int max_buses)
@@ -89,21 +83,21 @@ ATCA_STATUS hal_i2c_discover_buses(int i2c_buses[], int max_buses)
 }
 
 /** \brief discover any CryptoAuth devices on a given logical bus number
- * \param[in] busNum - logical bus number on which to look for CryptoAuth devices
- * \param[out] cfg[] - pointer to head of an array of interface config structures which get filled in by this method
- * \param[out] *found - number of devices found on this bus
+ * \param[in]  bus_num  Logical bus number on which to look for CryptoAuth devices
+ * \param[out] cfg      Pointer to head of an array of interface config structures which get filled in by this method
+ * \param[out] found    Number of devices found on this bus
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-
-ATCA_STATUS hal_i2c_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
+ATCA_STATUS hal_i2c_discover_devices(int bus_num, ATCAIfaceCfg cfg[], int *found)
 {
     ATCAIfaceCfg *head = cfg;
-    uint8_t slaveAddress = 0x01;
+    uint8_t slave_address = 0x01;
     ATCADevice device;
-    ATCAIface discoverIface;
+    ATCAIface discover_iface;
     ATCACommand command;
     ATCAPacket packet;
-    uint32_t execution_time;
     ATCA_STATUS status;
+    uint8_t revs608[1][4] = { { 0x00, 0x00, 0x60, 0x01 } };
     uint8_t revs508[1][4] = { { 0x00, 0x00, 0x50, 0x00 } };
     uint8_t revs108[1][4] = { { 0x80, 0x00, 0x10, 0x01 } };
     uint8_t revs204[3][4] = { { 0x00, 0x02, 0x00, 0x08 },
@@ -116,7 +110,7 @@ ATCA_STATUS hal_i2c_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
         .iface_type             = ATCA_I2C_IFACE,
         .devtype                = ATECC508A,
         .atcai2c.slave_address  = 0x07,
-        .atcai2c.bus            = busNum,
+        .atcai2c.bus            = bus_num,
         .atcai2c.baud           = 400000,
         .wake_delay             = 800,
         .rx_retries             = 3
@@ -124,53 +118,71 @@ ATCA_STATUS hal_i2c_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
 
     ATCAHAL_t hal;
 
-    if (busNum < 0)
+    if (bus_num < 0)
+    {
         return ATCA_COMM_FAIL;
+    }
 
     hal_i2c_init(&hal, &discoverCfg);
     device = newATCADevice(&discoverCfg);
-    discoverIface = atGetIFace(device);
+    discover_iface = atGetIFace(device);
     command = atGetCommands(device);
 
     // iterate through all addresses on given i2c bus
     // all valid 7-bit addresses go from 0x07 to 0x78
-    for (slaveAddress = 0x07; slaveAddress <= 0x78; slaveAddress++)
+    for (slave_address = 0x07; slave_address <= 0x78; slave_address++)
     {
-        discoverCfg.atcai2c.slave_address = slaveAddress << 1;  // turn it into an 8-bit address which is what the rest of the i2c HAL is expecting when a packet is sent
+        discoverCfg.atcai2c.slave_address = slave_address << 1;  // turn it into an 8-bit address which is what the rest of the i2c HAL is expecting when a packet is sent
 
         // wake up device
         // If it wakes, send it a dev rev command.  Based on that response, determine the device type
         // BTW - this will wake every cryptoauth device living on the same bus (ecc508a, sha204a)
 
-        if (hal_i2c_wake(discoverIface) == ATCA_SUCCESS)
+        if (hal_i2c_wake(discover_iface) == ATCA_SUCCESS)
         {
             (*found)++;
             memcpy( (uint8_t*)head, (uint8_t*)&discoverCfg, sizeof(ATCAIfaceCfg));
 
-            memset(packet.data, 0x00, sizeof(packet.data));
+            memset(&packet, 0x00, sizeof(packet));
 
             // get devrev info and set device type accordingly
             atInfo(command, &packet);
-            execution_time = atGetExecTime(command, CMD_INFO) + 1;
+            if ((status = atGetExecTime(packet.opcode, command)) != ATCA_SUCCESS)
+            {
+                continue;
+            }
 
             // send the command
-            if ( (status = atsend(discoverIface, (uint8_t*)&packet, packet.txsize)) != ATCA_SUCCESS)
+            if ( (status = atsend(discover_iface, (uint8_t*)&packet, packet.txsize)) != ATCA_SUCCESS)
             {
                 printf("packet send error\r\n");
                 continue;
             }
 
             // delay the appropriate amount of time for command to execute
-            atca_delay_ms(execution_time);
+            atca_delay_ms((command->execution_time_msec) + 1);
 
             // receive the response
-            if ( (status = atreceive(discoverIface, &(packet.data[0]), &(packet.rxsize) )) != ATCA_SUCCESS)
+            if ( (status = atreceive(discover_iface, &(packet.data[0]), &(packet.rxsize) )) != ATCA_SUCCESS)
+            {
                 continue;
+            }
 
             if ( (status = isATCAError(packet.data)) != ATCA_SUCCESS)
+            {
                 continue;
+            }
 
             // determine device type from common info and dev rev response byte strings
+            for (i = 0; i < (int)sizeof(revs608) / 4; i++)
+            {
+                if (memcmp(&packet.data[1], &revs608[i], 4) == 0)
+                {
+                    discoverCfg.devtype = ATECC608A;
+                    break;
+                }
+            }
+
             for (i = 0; i < (int)sizeof(revs508) / 4; i++)
             {
                 if (memcmp(&packet.data[1], &revs508[i], 4) == 0)
@@ -204,7 +216,7 @@ ATCA_STATUS hal_i2c_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
             head++;
         }
 
-        hal_i2c_idle(discoverIface);
+        hal_i2c_idle(discover_iface);
     }
 
     // hal_i2c_release(&hal);
@@ -226,16 +238,21 @@ ATCA_STATUS hal_i2c_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
 /** \brief initialize an I2C interface using given config
  * \param[in] hal - opaque ptr to HAL data
  * \param[in] cfg - interface configuration
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_i2c_init(void *hal, ATCAIfaceCfg *cfg)
 {
     int bus = cfg->atcai2c.bus;   // 0-based logical bus number
     ATCAHAL_t *phal = (ATCAHAL_t*)hal;
-    twihs_options_t twiOptions;
+    twihs_options_t twi_options;
 
     if (i2c_bus_ref_ct == 0)       // power up state, no i2c buses will have been used
+    {
         for (int i = 0; i < MAX_I2C_BUSES; i++)
+        {
             i2c_hal_data[i] = NULL;
+        }
+    }
 
     i2c_bus_ref_ct++;  // total across buses
 
@@ -248,29 +265,35 @@ ATCA_STATUS hal_i2c_init(void *hal, ATCAIfaceCfg *cfg)
             i2c_hal_data[bus]->ref_ct = 1;  // buses are shared, this is the first instance
 
             /* Configure the options of TWI driver */
-            twiOptions.master_clk = sysclk_get_cpu_hz() / CONFIG_SYSCLK_DIV;
-            twiOptions.speed = cfg->atcai2c.baud;
+            twi_options.master_clk = sysclk_get_cpu_hz() / CONFIG_SYSCLK_DIV;
+            twi_options.speed = cfg->atcai2c.baud;
 
             switch (bus)
             {
             case 0: /* Enable the peripheral clock for TWI */
                 pmc_enable_periph_clk(ID_TWIHS0);
-                if (twihs_master_init(TWIHS0, &twiOptions) != TWIHS_SUCCESS)
+                if (twihs_master_init(TWIHS0, &twi_options) != TWIHS_SUCCESS)
+                {
                     return ATCA_COMM_FAIL;
+                }
                 i2c_hal_data[bus]->twi_module = (uint32_t)TWIHS0;
                 break;
 
             case 1: /* Enable the peripheral clock for TWI */
                 pmc_enable_periph_clk(ID_TWIHS1);
-                if (twihs_master_init(TWIHS1, &twiOptions) != TWIHS_SUCCESS)
+                if (twihs_master_init(TWIHS1, &twi_options) != TWIHS_SUCCESS)
+                {
                     return ATCA_COMM_FAIL;
+                }
                 i2c_hal_data[bus]->twi_module = (uint32_t)TWIHS1;
                 break;
 
             case 2: /* Enable the peripheral clock for TWI */
                 pmc_enable_periph_clk(ID_TWIHS2);
-                if (twihs_master_init(TWIHS2, &twiOptions) != TWIHS_SUCCESS)
+                if (twihs_master_init(TWIHS2, &twi_options) != TWIHS_SUCCESS)
+                {
                     return ATCA_COMM_FAIL;
+                }
                 i2c_hal_data[bus]->twi_module = (uint32_t)TWIHS2;
                 break;
             }
@@ -295,7 +318,7 @@ ATCA_STATUS hal_i2c_init(void *hal, ATCAIfaceCfg *cfg)
 
 /** \brief HAL implementation of I2C post init
  * \param[in] iface  instance
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS
  */
 ATCA_STATUS hal_i2c_post_init(ATCAIface iface)
 {
@@ -307,7 +330,7 @@ ATCA_STATUS hal_i2c_post_init(ATCAIface iface)
  * \param[in] iface     instance
  * \param[in] txdata    pointer to space to bytes to send
  * \param[in] txlength  number of bytes to send
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
 ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t *txdata, int txlength)
@@ -334,16 +357,18 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t *txdata, int txlength)
     packet.length = txlength;
 
     if (twihs_master_write(twihs_device, &packet) != STATUS_OK)
+    {
         return ATCA_COMM_FAIL;
+    }
 
     return ATCA_SUCCESS;
 }
 
 /** \brief HAL implementation of I2C receive function for ASF I2C
  * \param[in] iface     instance
- * \param[in] rxdata    pointer to space to receive the data
+ * \param[out] rxdata    pointer to space to receive the data
  * \param[in] rxlength  ptr to expected number of receive bytes to request
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
 ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t *rxdata, uint16_t *rxlength)
@@ -363,13 +388,19 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t *rxdata, uint16_t *rxlength
     while (retries-- > 0 && status != STATUS_OK)
     {
         if (twihs_master_read(twihs_device, &packet) != TWIHS_SUCCESS)
+        {
             status = ATCA_COMM_FAIL;
+        }
         else
+        {
             status = ATCA_SUCCESS;
+        }
     }
 
     if (status != STATUS_OK)
+    {
         return ATCA_COMM_FAIL;
+    }
 
     return ATCA_SUCCESS;
 }
@@ -377,6 +408,7 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t *rxdata, uint16_t *rxlength
 /** \brief method to change the bus speed of I2C
  * \param[in] iface  interface on which to change bus speed
  * \param[in] speed  baud rate (typically 100000 or 400000)
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
 ATCA_STATUS change_i2c_speed(ATCAIface iface, uint32_t speed)
@@ -387,13 +419,17 @@ ATCA_STATUS change_i2c_speed(ATCAIface iface, uint32_t speed)
 
     // if necessary, revert baud rate to what came in.
     if (twihs_set_speed(twihs_device, speed, sysclk_get_cpu_hz() / CONFIG_SYSCLK_DIV) == FAIL)
+    {
         return ATCA_COMM_FAIL;
+    }
 
     return ATCA_SUCCESS;
 }
 
 /** \brief wake up CryptoAuth device using I2C bus
  * \param[in] iface  interface to logical device to wakeup
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+
  */
 
 ATCA_STATUS hal_i2c_wake(ATCAIface iface)
@@ -408,8 +444,12 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
 
     if (bdrt != 100000)    // if not already at 100KHz, change it
 
+    {
         if (twihs_set_speed(twihs_device, 100000, sysclk_get_cpu_hz() / CONFIG_SYSCLK_DIV) == FAIL)
+        {
             return ATCA_COMM_FAIL;
+        }
+    }
 
     twihs_packet_t packet = {
         .addr[0]        = 0,
@@ -431,14 +471,22 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
 
     // if necessary, revert baud rate to what came in.
     if (bdrt != 100000)
+    {
         if (twihs_set_speed(twihs_device, bdrt, sysclk_get_cpu_hz() / CONFIG_SYSCLK_DIV) == FAIL)
+        {
             return ATCA_COMM_FAIL;
+        }
+    }
 
     if (status != STATUS_OK)
+    {
         return ATCA_COMM_FAIL;
+    }
 
     if (memcmp(data, expected, 4) == 0)
+    {
         return ATCA_SUCCESS;
+    }
 
     return ATCA_COMM_FAIL;
 }
@@ -446,6 +494,7 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
 
 /** \brief idle CryptoAuth device using I2C bus
  * \param[in] iface  interface to logical device to idle
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
 ATCA_STATUS hal_i2c_idle(ATCAIface iface)
@@ -468,13 +517,16 @@ ATCA_STATUS hal_i2c_idle(ATCAIface iface)
     packet.length = 1;
 
     if (twihs_master_write(twihs_device, &packet) != STATUS_OK)
+    {
         return ATCA_COMM_FAIL;
+    }
 
     return ATCA_SUCCESS;
 }
 
 /** \brief sleep CryptoAuth device using I2C bus
  * \param[in] iface  interface to logical device to sleep
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
 ATCA_STATUS hal_i2c_sleep(ATCAIface iface)
@@ -497,13 +549,16 @@ ATCA_STATUS hal_i2c_sleep(ATCAIface iface)
     packet.length = 1;
 
     if (twihs_master_write(twihs_device, &packet) != STATUS_OK)
+    {
         return ATCA_COMM_FAIL;
+    }
 
     return ATCA_SUCCESS;
 }
 
 /** \brief manages reference count on given bus and releases resource if no more refences exist
  * \param[in] hal_data - opaque pointer to hal data structure - known only to the HAL implementation
+ * \return ATCA_SUCCESS
  */
 
 ATCA_STATUS hal_i2c_release(void *hal_data)

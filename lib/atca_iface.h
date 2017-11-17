@@ -1,40 +1,33 @@
 /**
  * \file
  *
- * \brief  Atmel Crypto Auth hardware interface object
+ * \brief  Microchip Crypto Auth hardware interface object
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 #ifndef ATCA_IFACE_H
@@ -59,7 +52,7 @@ typedef enum
     ATCA_UART_IFACE,
     ATCA_SPI_IFACE,
     ATCA_HID_IFACE,
-    ATCA_SIM_IFACE,
+    ATCA_CUSTOM_IFACE,
     // additional physical interface types here
     ATCA_UNKNOWN_IFACE,
 } ATCAIfaceType;
@@ -109,11 +102,17 @@ typedef struct
             uint8_t  guid[16];      // The GUID for this HID device
         } atcahid;
 
-        struct ATCASIM
+        struct ATCACUSTOM
         {
-            int     device_id;  // Unsupported, must be 0. Change to reference different simulation instances.
-            uint8_t dev_rev[4]; // DevRev to request
-        } atcasim;
+            ATCA_STATUS (*halinit)(void *hal, void *cfg);
+            ATCA_STATUS (*halpostinit)(void *iface);
+            ATCA_STATUS (*halsend)(void *iface, uint8_t *txdata, int txlength);
+            ATCA_STATUS (*halreceive)(void *iface, uint8_t* rxdata, uint16_t* rxlength);
+            ATCA_STATUS (*halwake)(void *iface);
+            ATCA_STATUS (*halidle)(void *iface);
+            ATCA_STATUS (*halsleep)(void *iface);
+            ATCA_STATUS (*halrelease)(void* hal_data);
+        } atcacustom;
 
     };
 
@@ -121,21 +120,44 @@ typedef struct
     int      rx_retries;    // the number of retries to attempt for receiving bytes
     void *   cfg_data;      // opaque data used by HAL in device discovery
 } ATCAIfaceCfg;
-
 typedef struct atca_iface * ATCAIface;
+
+
+/** \brief atca_iface is the C object backing ATCAIface.  See the atca_iface.h file for
+ * details on the ATCAIface methods
+ */
+
+struct atca_iface
+{
+    ATCAIfaceType mType;
+    ATCAIfaceCfg *mIfaceCFG;    // points to previous defined/given Cfg object, caller manages this
+
+    ATCA_STATUS (*atinit)(void *hal, ATCAIfaceCfg *);
+    ATCA_STATUS (*atpostinit)(ATCAIface hal);
+    ATCA_STATUS (*atsend)(ATCAIface hal, uint8_t *txdata, int txlength);
+    ATCA_STATUS (*atreceive)(ATCAIface hal, uint8_t *rxdata, uint16_t *rxlength);
+    ATCA_STATUS (*atwake)(ATCAIface hal);
+    ATCA_STATUS (*atidle)(ATCAIface hal);
+    ATCA_STATUS (*atsleep)(ATCAIface hal);
+
+    // treat as private
+    void *hal_data;     // generic pointer used by HAL to point to architecture specific structure
+                        // no ATCA object should touch this except HAL, HAL manages this pointer and memory it points to
+};
+
 ATCAIface newATCAIface(ATCAIfaceCfg *cfg);  // constructor
 // IFace methods
-ATCA_STATUS atinit(ATCAIface caiface);
-ATCA_STATUS atpostinit(ATCAIface caiface);
-ATCA_STATUS atsend(ATCAIface caiface, uint8_t *txdata, int txlength);
-ATCA_STATUS atreceive(ATCAIface caiface, uint8_t *rxdata, uint16_t *rxlength);
-ATCA_STATUS atwake(ATCAIface caiface);
-ATCA_STATUS atidle(ATCAIface caiface);
-ATCA_STATUS atsleep(ATCAIface caiface);
+ATCA_STATUS atinit(ATCAIface ca_iface);
+ATCA_STATUS atpostinit(ATCAIface ca_iface);
+ATCA_STATUS atsend(ATCAIface ca_iface, uint8_t *txdata, int txlength);
+ATCA_STATUS atreceive(ATCAIface ca_iface, uint8_t *rxdata, uint16_t *rxlength);
+ATCA_STATUS atwake(ATCAIface ca_iface);
+ATCA_STATUS atidle(ATCAIface ca_iface);
+ATCA_STATUS atsleep(ATCAIface ca_iface);
 
 // accessors
-ATCAIfaceCfg * atgetifacecfg(ATCAIface caiface);
-void* atgetifacehaldat(ATCAIface caiface);
+ATCAIfaceCfg * atgetifacecfg(ATCAIface ca_iface);
+void* atgetifacehaldat(ATCAIface ca_iface);
 
 void deleteATCAIface(ATCAIface *dev);        // destructor
 /*---- end of OATCAIface ----*/

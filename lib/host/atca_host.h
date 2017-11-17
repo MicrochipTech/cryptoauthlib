@@ -2,38 +2,31 @@
  * \file
  * \brief  Definitions and Prototypes for ATCA Utility Functions
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 
@@ -94,7 +87,9 @@
 #define ATCA_PRIVWRITE_MAC_ZEROS_SIZE  (21)
 #define ATCA_PRIVWRITE_PLAIN_TEXT_SIZE (36)
 #define ATCA_DERIVE_KEY_ZEROS_SIZE     (25)
-#define HMAC_BLOCK_SIZE                  (64)
+#define HMAC_BLOCK_SIZE                 (64)
+#define ENCRYPTION_KEY_SIZE             (64)
+
 /** @} */
 
 /** \name Default Fixed Byte Values of Serial Number (SN[0:1] and SN[8])
@@ -115,13 +110,14 @@
  */
 typedef struct atca_temp_key
 {
-    uint8_t  value[ATCA_KEY_SIZE]; //!< Value of TempKey
-    uint32_t key_id       : 4;     //!< If TempKey was derived from a slot or transport key (GenDig or GenKey), that key ID is saved here.
-    uint32_t source_flag  : 1;     //!< Indicates id TempKey started from a random nonce (0) or not (1).
-    uint32_t gen_dig_data : 1;     //!< TempKey was derived from the GenDig command.
-    uint32_t gen_key_data : 1;     //!< TempKey was derived from the GenKey command (ATECC devices only).
-    uint32_t no_mac_flag  : 1;     //!< TempKey was derived from a key that has the NoMac bit set preventing the use of the MAC command. Known as CheckFlag in ATSHA devices).
-    uint32_t valid        : 1;     //!< TempKey is valid.
+    uint8_t  value[ATCA_KEY_SIZE * 2]; //!< Value of TempKey (64 bytes for ATECC608A only)
+    uint32_t key_id       : 4;         //!< If TempKey was derived from a slot or transport key (GenDig or GenKey), that key ID is saved here.
+    uint32_t source_flag  : 1;         //!< Indicates id TempKey started from a random nonce (0) or not (1).
+    uint32_t gen_dig_data : 1;         //!< TempKey was derived from the GenDig command.
+    uint32_t gen_key_data : 1;         //!< TempKey was derived from the GenKey command (ATECC devices only).
+    uint32_t no_mac_flag  : 1;         //!< TempKey was derived from a key that has the NoMac bit set preventing the use of the MAC command. Known as CheckFlag in ATSHA devices).
+    uint32_t valid        : 1;         //!< TempKey is valid.
+    uint8_t  is_64;                    //!< TempKey has 64 bytes of valid data
 } atca_temp_key_t;
 
 
@@ -147,6 +143,8 @@ struct atca_include_data_in_out
  *  \brief Input/output parameters for function atca_nonce().
  *  \var atca_nonce_in_out::mode
  *       \brief [in] Mode parameter used in Nonce command (Param1).
+ *  \var atca_nonce_in_out::zero
+ *       \brief [in] Zero parameter used in Nonce command (Param2).
  *  \var atca_nonce_in_out::num_in
  *       \brief [in] Pointer to 20-byte NumIn data used in Nonce command.
  *  \var atca_nonce_in_out::rand_out
@@ -157,11 +155,55 @@ struct atca_include_data_in_out
 typedef struct atca_nonce_in_out
 {
     uint8_t               mode;
+    uint16_t              zero;
     const uint8_t *       num_in;
     const uint8_t *       rand_out;
     struct atca_temp_key *temp_key;
 } atca_nonce_in_out_t;
 
+
+typedef struct atca_io_decrypt_in_out
+{
+    const uint8_t* io_key;     //!< IO protection key (32 bytes).
+    const uint8_t* out_nonce;  //!< OutNonce returned from command (32 bytes).
+    uint8_t*       data;       //!< As input, encrypted data. As output, decrypted data.
+    size_t         data_size;  //!< Size of data in bytes (32 or 64).
+} atca_io_decrypt_in_out_t;
+
+typedef struct atca_verify_mac
+{
+    uint8_t                mode;        //!< Mode (Param1) parameter used in Verify command.
+    uint16_t               key_id;      //!< KeyID (Param2) used in Verify command.
+    const uint8_t*         signature;   //!< Signature used in Verify command (64 bytes).
+    const uint8_t*         other_data;  //!< OtherData used in Verify command (19 bytes).
+    const uint8_t*         msg_dig_buf; //!< Message digest buffer (64 bytes).
+    const uint8_t*         io_key;      //!< IO protection key value (32 bytes).
+    const uint8_t*         sn;          //!< Serial number (9 bytes).
+    const atca_temp_key_t* temp_key;    //!< TempKey
+    uint8_t*               mac;         //!< Calculated verification MAC is returned here (32 bytes).
+} atca_verify_mac_in_out_t;
+
+
+typedef struct atca_secureboot_enc_in_out
+{
+    const uint8_t*              io_key;      //!< IO protection key value (32 bytes)
+    const struct atca_temp_key* temp_key;    //!< Current value of TempKey
+    const uint8_t*              digest;      //!< Plaintext digest as input
+    uint8_t*                    hashed_key;  //!< Calculated key is returned here (32 bytes)
+    uint8_t*                    digest_enc;  //!< Encrypted (ciphertext) digest is return here (32 bytes)
+} atca_secureboot_enc_in_out_t;
+
+
+typedef struct atca_secureboot_mac_in_out
+{
+    uint8_t        mode;                //!< SecureBoot mode (param1)
+    uint16_t       param2;              //!< SecureBoot param2
+    uint16_t       secure_boot_config;  //!< SecureBootConfig value from configuration zone
+    const uint8_t* hashed_key;          //!< Hashed key. SHA256(IO Protection Key | TempKey)
+    const uint8_t* digest;              //!< Digest (unencrypted)
+    const uint8_t* signature;           //!< Signature (can be NULL if not required)
+    uint8_t*       mac;                 //!< MAC is returned here
+} atca_secureboot_mac_in_out_t;
 
 /** \struct atca_mac_in_out
  *  \brief Input/output parameters for function atca_mac().
@@ -182,6 +224,9 @@ typedef struct atca_nonce_in_out
  *  \var atca_mac_in_out::temp_key
  *       \brief [in,out] Pointer to TempKey structure.
  */
+
+
+
 typedef struct atca_mac_in_out
 {
     uint8_t               mode;
@@ -279,29 +324,6 @@ struct atca_derive_key_mac_in_out
 };
 
 
-/** \struct atca_encrypt_in_out
- *  \brief Input/output parameters for function atca_encrypt().
- *  \var atca_encrypt_in_out::zone
- *       \brief [in] Zone parameter used in Write (Param1).
- *  \var atca_encrypt_in_out::address
- *       \brief [in] Address parameter used in Write command (Param2).
- *  \var atca_encrypt_in_out::crypto_data
- *       \brief [in,out] Pointer to 32-byte data. Input cleartext data, output encrypted data to Write command (Value field).
- *  \var atca_encrypt_in_out::mac
- *       \brief [out] Pointer to 32-byte Mac. Can be set to NULL if input MAC is not required by the Write command (write to OTP, unlocked user zone).
- *  \var atca_encrypt_in_out::temp_key
- *       \brief [in,out] Pointer to TempKey structure.
- */
-struct atca_encrypt_in_out
-{
-    uint8_t               zone;
-    uint16_t              address;
-    uint8_t *             crypto_data;
-    uint8_t *             mac;
-    struct atca_temp_key *temp_key;
-};
-
-
 /** \struct atca_decrypt_in_out
  *  \brief Input/output parameters for function atca_decrypt().
  *  \var atca_decrypt_in_out::crypto_data
@@ -346,13 +368,13 @@ typedef struct atca_check_mac_in_out
  *  \var atca_verify_in_out::temp_key
  *       \brief [in,out] Pointer to TempKey structure.
  */
-struct atca_verify_in_out
+typedef struct atca_verify_in_out
 {
     uint16_t              curve_type;
     const uint8_t *       signature;
     const uint8_t *       public_key;
     struct atca_temp_key *temp_key;
-};
+} atca_verify_in_out_t;
 
 /** \brief Input/output parameters for calculating the PubKey digest put into
  *         TempKey by the GenKey command with the
@@ -404,14 +426,17 @@ ATCA_STATUS atcah_write_auth_mac(struct atca_write_mac_in_out *param);
 ATCA_STATUS atcah_privwrite_auth_mac(struct atca_write_mac_in_out *param);
 ATCA_STATUS atcah_derive_key(struct atca_derive_key_in_out *param);
 ATCA_STATUS atcah_derive_key_mac(struct atca_derive_key_mac_in_out *param);
-ATCA_STATUS atcah_encrypt(struct atca_encrypt_in_out *param);
 ATCA_STATUS atcah_decrypt(struct atca_decrypt_in_out *param);
 ATCA_STATUS atcah_sha256(int32_t len, const uint8_t *message, uint8_t *digest);
 uint8_t *atcah_include_data(struct atca_include_data_in_out *param);
 ATCA_STATUS atcah_gen_key_msg(struct atca_gen_key_in_out *param);
 ATCA_STATUS atcah_config_to_sign_internal(ATCADeviceType device_type, struct atca_sign_internal_in_out *param, const uint8_t* config);
 ATCA_STATUS atcah_sign_internal_msg(ATCADeviceType device_type, struct atca_sign_internal_in_out *param);
-
+ATCA_STATUS atcah_verify_mac(atca_verify_mac_in_out_t *param);
+ATCA_STATUS atcah_secureboot_enc(atca_secureboot_enc_in_out_t* param);
+ATCA_STATUS atcah_secureboot_mac(atca_secureboot_mac_in_out_t *param);
+ATCA_STATUS atcah_encode_counter_match(uint32_t counter, uint8_t * counter_match);
+ATCA_STATUS atcah_io_decrypt(struct atca_io_decrypt_in_out *param);
 #ifdef __cplusplus
 }
 #endif

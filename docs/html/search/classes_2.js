@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['cdc_5fdevice',['cdc_device',['../a00049.html',1,'']]],
-  ['cl_5fhashcontext',['CL_HashContext',['../a00050.html',1,'']]]
+  ['device_5fexecution_5ftime_5ft',['device_execution_time_t',['../a00445.html',1,'']]]
 ];

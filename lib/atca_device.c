@@ -1,39 +1,32 @@
 /**
  * \file
- * \brief  Atmel CryptoAuth device object
+ * \brief  Microchip CryptoAuth device object
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 #include <stdlib.h>
@@ -43,39 +36,31 @@
  * \brief ATCADevice object - composite of command and interface objects
    @{ */
 
-/** \brief atca_device is the C object backing ATCADevice.  See the atca_device.h file for
- * details on the ATCADevice methods
- */
-
-struct atca_device
-{
-    ATCACommand mCommands;  // has-a command set to support a given CryptoAuth device
-    ATCAIface   mIface;     // has-a physical interface
-};
-
-/** \brief constructor for an Atmel CryptoAuth device
+/** \brief constructor for an Microchip CryptoAuth device
  * \param[in] cfg  pointer to an interface configuration object
  * \return reference to a new ATCADevice
  */
 
 ATCADevice newATCADevice(ATCAIfaceCfg *cfg)
 {
-    ATCADevice cadev = NULL;
+    ATCADevice ca_dev = NULL;
 
     if (cfg == NULL)
-        return NULL;
-
-    cadev = (ATCADevice)malloc(sizeof(struct atca_device));
-    cadev->mCommands = (ATCACommand)newATCACommand(cfg->devtype);
-    cadev->mIface    = (ATCAIface)newATCAIface(cfg);
-
-    if (cadev->mCommands == NULL || cadev->mIface == NULL)
     {
-        free(cadev);
-        cadev = NULL;
+        return NULL;
     }
 
-    return cadev;
+    ca_dev = (ATCADevice)malloc(sizeof(struct atca_device));
+    ca_dev->mCommands = (ATCACommand)newATCACommand(cfg->devtype);
+    ca_dev->mIface    = (ATCAIface)newATCAIface(cfg);
+
+    if (ca_dev->mCommands == NULL || ca_dev->mIface == NULL)
+    {
+        free(ca_dev);
+        ca_dev = NULL;
+    }
+
+    return ca_dev;
 }
 
 /** \brief returns a reference to the ATCACommand object for the device
@@ -98,22 +83,21 @@ ATCAIface atGetIFace(ATCADevice dev)
 }
 
 /** \brief destructor for a device NULLs reference after object is freed
- * \param[in] cadev  pointer to a reference to a device
+ * \param[in] ca_dev  pointer to a reference to a device
  *
  */
-
-void deleteATCADevice(ATCADevice *cadev)   // destructor
+void deleteATCADevice(ATCADevice *ca_dev)   // destructor
 {
-    struct atca_device *dev = *cadev;
+    struct atca_device *dev = *ca_dev;
 
-    if (*cadev)
+    if (*ca_dev)
     {
         deleteATCACommand( (ATCACommand*)&(dev->mCommands));
         deleteATCAIface((ATCAIface*)&(dev->mIface));
-        free((void*)*cadev);
+        free((void*)*ca_dev);
     }
 
-    *cadev = NULL;
+    *ca_dev = NULL;
 }
 
 /** @} */

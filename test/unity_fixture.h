@@ -19,11 +19,11 @@ int UnityMain(int argc, const char* argv[], void (*runAllTests)(void));
 #define TEST_GROUP(group) \
     static const char* TEST_GROUP_ ## group = # group
 
-#define TEST_SETUP(group) void TEST_ ## group ## _SETUP(void); \
-    void TEST_ ## group ## _SETUP(void)
+#define TEST_SETUP(group) static void TEST_ ## group ## _SETUP(void); \
+    static void TEST_ ## group ## _SETUP(void)
 
-#define TEST_TEAR_DOWN(group) void TEST_ ## group ## _TEAR_DOWN(void); \
-    void TEST_ ## group ## _TEAR_DOWN(void)
+#define TEST_TEAR_DOWN(group) static void TEST_ ## group ## _TEAR_DOWN(void); \
+    static void TEST_ ## group ## _TEAR_DOWN(void)
 
 
 #define TEST(group, name) \

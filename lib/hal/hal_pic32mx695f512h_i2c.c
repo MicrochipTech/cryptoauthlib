@@ -7,38 +7,31 @@
  *
  * Prerequisite:
  *
- * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
+ * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ *            You may use this software and any derivatives exclusively with
+ *            Microchip products.
  *
  * \page License
  *
- * You are permitted to use this software and its derivatives with Microchip
- * products. Redistribution and use in source and binary forms, with or without
- * modification, is permitted provided that the following conditions are met:
+ * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
+ * software and any derivatives exclusively with Microchip products.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * 3. The name of Microchip may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with a
- *    Microchip integrated circuit.
- *
- * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
 #include <plib.h>
@@ -54,7 +47,6 @@
  *
  * \brief
  * These methods define the hardware abstraction layer for communicating with a CryptoAuth device
- * using I2C driver of ASF.
  *
    @{ */
 
@@ -81,16 +73,22 @@ static bool StartTransfer(I2C_MODULE i2c_id, bool restart)
     {
         // Wait for the bus to be idle, then start the transfer
         while (!I2CBusIsIdle(i2c_id))
+        {
             ;
+        }
 
         if (I2CStart(i2c_id) != I2C_SUCCESS)
+        {
             //DBPRINTF("Error: Bus collision during transfer Start\n");
             return FALSE;
+        }
     }
 
     // Wait for the signal to complete
     do
+    {
         status = I2CGetStatus(i2c_id);
+    }
 
     while (!(status & I2C_START));
 
@@ -101,16 +99,22 @@ static bool TransmitOneByte(I2C_MODULE i2c_id, uint8_t data)
 {
     // Wait for the transmitter to be ready
     while (!I2CTransmitterIsReady(i2c_id))
+    {
         ;
+    }
 
     // Transmit the byte
     if (I2CSendByte(i2c_id, data) == I2C_MASTER_BUS_COLLISION)
+    {
         //DBPRINTF("Error: I2C Master Bus Collision\n");
         return FALSE;
+    }
 
     // Wait for the transmission to finish
     while (!I2CTransmissionHasCompleted(i2c_id))
+    {
         ;
+    }
 
     return TRUE;
 }
@@ -124,7 +128,9 @@ static uint8_t ReceiveOneByte(I2C_MODULE i2c_id, bool ack)
 
     // Wait until 1-byte is fully received
     while (!I2CReceivedDataIsAvailable(i2c_id))
+    {
         ;
+    }
 
     // Save the byte received
     data = I2CGetByte(i2c_id);
@@ -134,7 +140,9 @@ static uint8_t ReceiveOneByte(I2C_MODULE i2c_id, bool ack)
 
     // Wait until acknowledgement is successfully sent
     while (!I2CAcknowledgeHasCompleted(i2c_id))
+    {
         ;
+    }
 
     return data;
 }
@@ -148,7 +156,9 @@ static void StopTransfer(I2C_MODULE i2c_id)
 
     // Wait for the signal to complete
     do
+    {
         status = I2CGetStatus(i2c_id);
+    }
 
     while (!(status & I2C_STOP));
 }
@@ -162,10 +172,16 @@ void i2c_write(I2C_MODULE i2c_id, uint8_t address, uint8_t *data, int len)
     memcpy(&i2cBuffer[1], data, len);
 
     if (!StartTransfer(i2c_id, FALSE))
+    {
         return;
+    }
     for (i = 0; i < len + 1; i++)
+    {
         if (!TransmitOneByte(i2c_id, i2cBuffer[i]))
+        {
             break;
+        }
+    }
 
     StopTransfer(i2c_id);
 }
@@ -175,17 +191,25 @@ void i2c_read(I2C_MODULE i2c_id, uint8_t address, uint8_t *data, uint16_t len)
     uint16_t i;
 
     if (!StartTransfer(i2c_id, FALSE))
+    {
         return;
+    }
 
     if (!TransmitOneByte(i2c_id, (address | 0x01)))
+    {
         return;
+    }
 
     for (i = 0; i < len; i++)
     {
         if (i < len - 1) // send ACK
+        {
             data[i] = ReceiveOneByte(i2c_id, TRUE);
+        }
         else             // send NACK
+        {
             data[i] = ReceiveOneByte(i2c_id, FALSE);
+        }
     }
 
     StopTransfer(i2c_id);
@@ -195,25 +219,27 @@ void i2c_read(I2C_MODULE i2c_id, uint8_t address, uint8_t *data, uint16_t len)
 
 /**
  * \brief
- * This HAL implementation assumes you've included the ASF TWI libraries in your project, otherwise,
- * the HAL layer will not compile because the ASF TWI drivers are a dependency
+ * This HAL implementation assumes you've included the Plib libraries in your project, otherwise,
+ * the HAL layer will not compile because the Plib drivers are a dependency
  */
 
 /** \brief discover i2c buses available for this hardware
  * this maintains a list of logical to physical bus mappings freeing the application
- * of the a-priori knowledge
+ * of the a-priori knowledge.This function is currently not implemented.
  * \param[in] i2c_buses - an array of logical bus numbers
  * \param[in] max_buses - maximum number of buses the app wants to attempt to discover
+ * \return ATCA_UNIMPLEMENTED
  */
 ATCA_STATUS hal_i2c_discover_buses(int i2c_buses[], int max_buses)
 {
     return ATCA_UNIMPLEMENTED;
 }
 
-/** \brief discover any CryptoAuth devices on a given logical bus number
+/** \brief discover any CryptoAuth devices on a given logical bus number.This function is currently not implemented.
  * \param[in] busNum - logical bus number on which to look for CryptoAuth devices
  * \param[out] cfg[] - pointer to head of an array of interface config structures which get filled in by this method
  * \param[out] *found - number of devices found on this bus
+ * \return ATCA_UNIMPLEMENTED
  */
 ATCA_STATUS hal_i2c_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
 {
@@ -234,7 +260,7 @@ ATCA_STATUS hal_i2c_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
  * \param[in] hal - opaque ptr to HAL data
  * \param[in] cfg - interface configuration
  *
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_i2c_init(void *hal, ATCAIfaceCfg *cfg)
 {
@@ -244,8 +270,12 @@ ATCA_STATUS hal_i2c_init(void *hal, ATCAIfaceCfg *cfg)
 
     if (i2c_bus_ref_ct == 0)    // power up state, no i2c buses will have been used
 
+    {
         for (i = 0; i < MAX_I2C_BUSES; i++)
+        {
             i2c_hal_data[i] = NULL;
+        }
+    }
 
     i2c_bus_ref_ct++;   // total across buses
 
@@ -302,7 +332,7 @@ ATCA_STATUS hal_i2c_init(void *hal, ATCAIfaceCfg *cfg)
  *
  * \param[in] iface  instance
  *
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS
  */
 ATCA_STATUS hal_i2c_post_init(ATCAIface iface)
 {
@@ -316,7 +346,7 @@ ATCA_STATUS hal_i2c_post_init(ATCAIface iface)
  * \param[in] txdata    pointer to space to bytes to send
  * \param[in] txlength  number of bytes to send
  *
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t *txdata, int txlength)
 {
@@ -338,7 +368,7 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t *txdata, int txlength)
  * \param[in] rxdata    pointer to space to receive the data
  * \param[in] rxlength  ptr to expected number of receive bytes to request
  *
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS
  */
 ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t *rxdata, uint16_t *rxlength)
 {
@@ -376,7 +406,7 @@ void change_i2c_speed(ATCAIface iface, uint32_t speed)
  *
  * \param[in] iface  interface to logical device to wakeup
  *
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_i2c_wake(ATCAIface iface)
 {
@@ -387,7 +417,9 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
     uint8_t data[4], expected[4] = { 0x04, 0x11, 0x33, 0x43 };
 
     if (bdrt != 100000)     // if not already at 100KHz, change it
+    {
         change_i2c_speed(iface, 100000);
+    }
 
     // Send 0x00 as wake pulse
     i2c_write(i2c_hal_data[bus]->id, 0x00, NULL, NULL);
@@ -397,12 +429,16 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
 
     // if necessary, revert baud rate to what came in.
     if (bdrt != 100000)
+    {
         change_i2c_speed(iface, cfg->atcai2c.baud);
+    }
 
     i2c_read(i2c_hal_data[bus]->id, cfg->atcai2c.slave_address, data, 4);
 
     if (memcmp(data, expected, 4) == 0)
+    {
         return ATCA_SUCCESS;
+    }
 
     return ATCA_COMM_FAIL;
 }
@@ -412,7 +448,7 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
  *
  * \param[in] iface  interface to logical device to idle
  *
- * \return ATCA_STATUS
+ * \return ATCA_SUCCESS
  */
 ATCA_STATUS hal_i2c_idle(ATCAIface iface)
 {
@@ -432,7 +468,7 @@ ATCA_STATUS hal_i2c_idle(ATCAIface iface)
  *
  * \param[in] iface  interface to logical device to sleep
  *
- * \return ATCA_STATUS
+ * \return ATCA_SUCESS
  */
 ATCA_STATUS hal_i2c_sleep(ATCAIface iface)
 {
@@ -452,7 +488,7 @@ ATCA_STATUS hal_i2c_sleep(ATCAIface iface)
  *
  * \param[in] hal_data - opaque pointer to hal data structure - known only to the HAL implementation
  *
- * \return ATCA_STATUS
+ * \return ATCA_SUCESS
  */
 ATCA_STATUS hal_i2c_release(void *hal_data)
 {
