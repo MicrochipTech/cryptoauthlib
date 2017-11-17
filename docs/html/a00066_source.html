@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: atca_crypto_sw.h Source File</title>
+<title>CryptoAuthLib: atca_cfgs.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,23 +106,59 @@ $(document).ready(function(){initNavTree('a00066_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">atca_crypto_sw.h</div>  </div>
+<div class="title">atca_cfgs.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00066.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#ifndef ATCA_CRYPTO_SW_H</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#define ATCA_CRYPTO_SW_H</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#ifndef ATCA_CFGS_H_</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#define ATCA_CFGS_H_</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00091.html">atca_iface.h</a>&quot;</span></div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00090.html">atca_status.h</a>&quot;</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="a00090_html"><div class="ttname"><a href="a00090.html">atca_status.h</a></div><div class="ttdoc">Atmel Crypto Auth status codes. </div></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">extern</span> <a class="code" href="a00046.html">ATCAIfaceCfg</a> <a class="code" href="a00219.html#gafcb056718eb34ec3a612d550208e49cc">cfg_ateccx08a_i2c_default</a>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">extern</span> <a class="code" href="a00046.html">ATCAIfaceCfg</a> <a class="code" href="a00219.html#ga5624aa554e1964981b794e2295b9432c">cfg_ateccx08a_swi_default</a>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">extern</span> <a class="code" href="a00046.html">ATCAIfaceCfg</a> <a class="code" href="a00219.html#ga9fe83141d8e44bf623e624a72901832c">cfg_atsha204a_i2c_default</a>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">extern</span> <a class="code" href="a00046.html">ATCAIfaceCfg</a> <a class="code" href="a00219.html#gae5e766a819c7920470b456238cbef70d">cfg_atsha204a_swi_default</a>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">extern</span> <a class="code" href="a00046.html">ATCAIfaceCfg</a> <a class="code" href="a00219.html#gaa2b64ab02931bf57ba2818c790611a79">cfg_atecc508a_kitcdc_default</a>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">extern</span> <a class="code" href="a00046.html">ATCAIfaceCfg</a> <a class="code" href="a00219.html#ga010430b93521c09efec9e5913ce769c1">cfg_atsha204a_kitcdc_default</a>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keyword">extern</span> <a class="code" href="a00046.html">ATCAIfaceCfg</a> <a class="code" href="a00219.html#gaaa63e33d7f2b3ec23218bde299c5c063">cfg_atecc508a_kithid_default</a>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">extern</span> <a class="code" href="a00046.html">ATCAIfaceCfg</a> <a class="code" href="a00219.html#gac6a0b1f7ea398eee53d1e4243a617c6c">cfg_atsha204a_kithid_default</a>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">extern</span> <a class="code" href="a00046.html">ATCAIfaceCfg</a> <a class="code" href="a00066.html#a14428e55a04f954fc9fa755807bebf81">cfg_ataes132a_spi_default</a>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* ATCA_CFGS_H_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="a00219_html_ga010430b93521c09efec9e5913ce769c1"><div class="ttname"><a href="a00219.html#ga010430b93521c09efec9e5913ce769c1">cfg_atsha204a_kitcdc_default</a></div><div class="ttdeci">ATCAIfaceCfg cfg_atsha204a_kitcdc_default</div><div class="ttdoc">default configuration for Kit protocol over a CDC interface </div><div class="ttdef"><b>Definition:</b> atca_cfgs.c:104</div></div>
+<div class="ttc" id="a00091_html"><div class="ttname"><a href="a00091.html">atca_iface.h</a></div><div class="ttdoc">Atmel Crypto Auth hardware interface object. </div></div>
+<div class="ttc" id="a00219_html_gac6a0b1f7ea398eee53d1e4243a617c6c"><div class="ttname"><a href="a00219.html#gac6a0b1f7ea398eee53d1e4243a617c6c">cfg_atsha204a_kithid_default</a></div><div class="ttdeci">ATCAIfaceCfg cfg_atsha204a_kithid_default</div><div class="ttdoc">default configuration for Kit protocol over a HID interface for SHA204 </div><div class="ttdef"><b>Definition:</b> atca_cfgs.c:128</div></div>
+<div class="ttc" id="a00219_html_gafcb056718eb34ec3a612d550208e49cc"><div class="ttname"><a href="a00219.html#gafcb056718eb34ec3a612d550208e49cc">cfg_ateccx08a_i2c_default</a></div><div class="ttdeci">ATCAIfaceCfg cfg_ateccx08a_i2c_default</div><div class="ttdoc">default configuration for an ECCx08A device on the first logical I2C bus </div><div class="ttdef"><b>Definition:</b> atca_cfgs.c:51</div></div>
+<div class="ttc" id="a00219_html_gae5e766a819c7920470b456238cbef70d"><div class="ttname"><a href="a00219.html#gae5e766a819c7920470b456238cbef70d">cfg_atsha204a_swi_default</a></div><div class="ttdeci">ATCAIfaceCfg cfg_atsha204a_swi_default</div><div class="ttdoc">default configuration for an SHA204A device on the logical SWI bus over UART </div><div class="ttdef"><b>Definition:</b> atca_cfgs.c:83</div></div>
+<div class="ttc" id="a00046_html"><div class="ttname"><a href="a00046.html">ATCAIfaceCfg</a></div><div class="ttdef"><b>Definition:</b> atca_iface.h:74</div></div>
+<div class="ttc" id="a00219_html_ga9fe83141d8e44bf623e624a72901832c"><div class="ttname"><a href="a00219.html#ga9fe83141d8e44bf623e624a72901832c">cfg_atsha204a_i2c_default</a></div><div class="ttdeci">ATCAIfaceCfg cfg_atsha204a_i2c_default</div><div class="ttdoc">default configuration for a SHA204A device on the first logical I2C bus </div><div class="ttdef"><b>Definition:</b> atca_cfgs.c:72</div></div>
+<div class="ttc" id="a00066_html_a14428e55a04f954fc9fa755807bebf81"><div class="ttname"><a href="a00066.html#a14428e55a04f954fc9fa755807bebf81">cfg_ataes132a_spi_default</a></div><div class="ttdeci">ATCAIfaceCfg cfg_ataes132a_spi_default</div><div class="ttdoc">example of a default configuration for AES132 SPI </div></div>
+<div class="ttc" id="a00219_html_gaaa63e33d7f2b3ec23218bde299c5c063"><div class="ttname"><a href="a00219.html#gaaa63e33d7f2b3ec23218bde299c5c063">cfg_atecc508a_kithid_default</a></div><div class="ttdeci">ATCAIfaceCfg cfg_atecc508a_kithid_default</div><div class="ttdoc">default configuration for Kit protocol over a HID interface </div><div class="ttdef"><b>Definition:</b> atca_cfgs.c:117</div></div>
+<div class="ttc" id="a00219_html_gaa2b64ab02931bf57ba2818c790611a79"><div class="ttname"><a href="a00219.html#gaa2b64ab02931bf57ba2818c790611a79">cfg_atecc508a_kitcdc_default</a></div><div class="ttdeci">ATCAIfaceCfg cfg_atecc508a_kitcdc_default</div><div class="ttdoc">default configuration for Kit protocol over a CDC interface </div><div class="ttdef"><b>Definition:</b> atca_cfgs.c:92</div></div>
+<div class="ttc" id="a00219_html_ga5624aa554e1964981b794e2295b9432c"><div class="ttname"><a href="a00219.html#ga5624aa554e1964981b794e2295b9432c">cfg_ateccx08a_swi_default</a></div><div class="ttdeci">ATCAIfaceCfg cfg_ateccx08a_swi_default</div><div class="ttdoc">default configuration for an ECCx08A device on the logical SWI bus over UART </div><div class="ttdef"><b>Definition:</b> atca_cfgs.c:63</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="a00066.html">atca_crypto_sw.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00066.html">atca_cfgs.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: ATCAPacket Struct Reference</title>
+<title>CryptoAuthLib: atcahid Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -109,127 +109,38 @@ $(document).ready(function(){initNavTree('a00044.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ATCAPacket Struct Reference</div>  </div>
+<div class="title">atcahid Struct Reference<div class="ingroups"><a class="el" href="a00226.html">Hardware abstraction layer (hal_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>an ATCA packet structure. This is a superset of the packet transmitted on the wire. It's also used as a buffer for receiving the response  
- <a href="a00044.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="a00063_source.html">atca_command.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a00132_source.html">hal_linux_kit_hid.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ad64c25d49d8bac111d62c92a0e552289"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ad64c25d49d8bac111d62c92a0e552289">_reserved</a></td></tr>
-<tr class="separator:ad64c25d49d8bac111d62c92a0e552289"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c02ddae56a01b6df3be14acf14915a4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a3c02ddae56a01b6df3be14acf14915a4">txsize</a></td></tr>
-<tr class="separator:a3c02ddae56a01b6df3be14acf14915a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c1b56e6bccc2a95dbddf1a08e56e87d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a5c1b56e6bccc2a95dbddf1a08e56e87d">opcode</a></td></tr>
-<tr class="separator:a5c1b56e6bccc2a95dbddf1a08e56e87d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec4226da1b99c821237b6805c4e31333"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#aec4226da1b99c821237b6805c4e31333">param1</a></td></tr>
-<tr class="separator:aec4226da1b99c821237b6805c4e31333"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16a7565b150a9c17a39c80fc932b9514"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a16a7565b150a9c17a39c80fc932b9514">param2</a></td></tr>
-<tr class="separator:a16a7565b150a9c17a39c80fc932b9514"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b45776cb6c0c504015e101edef7344a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a0b45776cb6c0c504015e101edef7344a">data</a> [130]</td></tr>
-<tr class="separator:a0b45776cb6c0c504015e101edef7344a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f16544e2e38e2a389b69be0a7156986"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a7f16544e2e38e2a389b69be0a7156986">execTime</a></td></tr>
-<tr class="separator:a7f16544e2e38e2a389b69be0a7156986"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98e11ec1987c94d4f4658a80c46bde20"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a98e11ec1987c94d4f4658a80c46bde20">rxsize</a></td></tr>
-<tr class="separator:a98e11ec1987c94d4f4658a80c46bde20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20e678da3f77a9aabd9cb97d5340e502"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00226.html#ga5f2f61628e945fd6538155628fc3a17a">hid_device_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a20e678da3f77a9aabd9cb97d5340e502">kits</a> [<a class="el" href="a00226.html#ga49053c3cd6d48fe5f468ce010ac0a9ef">HID_DEVICES_MAX</a>]</td></tr>
+<tr class="separator:a20e678da3f77a9aabd9cb97d5340e502"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bb0ee74044865538adfcc5d5ae8f621"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a9bb0ee74044865538adfcc5d5ae8f621">num_kits_found</a></td></tr>
+<tr class="separator:a9bb0ee74044865538adfcc5d5ae8f621"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>an ATCA packet structure. This is a superset of the packet transmitted on the wire. It's also used as a buffer for receiving the response </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ad64c25d49d8bac111d62c92a0e552289"></a>
+<h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="a20e678da3f77a9aabd9cb97d5340e502"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t _reserved</td>
+          <td class="memname"><a class="el" href="a00226.html#ga5f2f61628e945fd6538155628fc3a17a">hid_device_t</a> kits</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a0b45776cb6c0c504015e101edef7344a"></a>
+<a class="anchor" id="a9bb0ee74044865538adfcc5d5ae8f621"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t data[130]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a7f16544e2e38e2a389b69be0a7156986"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t execTime</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a5c1b56e6bccc2a95dbddf1a08e56e87d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t opcode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aec4226da1b99c821237b6805c4e31333"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t param1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a16a7565b150a9c17a39c80fc932b9514"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t param2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a98e11ec1987c94d4f4658a80c46bde20"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t rxsize</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a3c02ddae56a01b6df3be14acf14915a4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t txsize</td>
+          <td class="memname">int8_t num_kits_found</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -241,7 +152,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00044.html">ATCAPacket</a></li>
+    <li class="navelem"><a class="el" href="a00044.html">atcahid</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

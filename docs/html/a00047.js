@@ -1,7 +1,11 @@
 var a00047 =
 [
-    [ "buf", "a00047.html#afa9986c74d11cc23893e2de2a505cafe", null ],
-    [ "byteCount", "a00047.html#a7dd834dde7d653957f91657aca4eb124", null ],
-    [ "byteCountHi", "a00047.html#a4f18b15c445fd0f55a0bf182e173d563", null ],
-    [ "h", "a00047.html#a015ca0a234558a1a0dbfc1e92f547ac0", null ]
+    [ "_reserved", "a00047.html#ad64c25d49d8bac111d62c92a0e552289", null ],
+    [ "data", "a00047.html#a0b45776cb6c0c504015e101edef7344a", null ],
+    [ "execTime", "a00047.html#a7f16544e2e38e2a389b69be0a7156986", null ],
+    [ "opcode", "a00047.html#a5c1b56e6bccc2a95dbddf1a08e56e87d", null ],
+    [ "param1", "a00047.html#aec4226da1b99c821237b6805c4e31333", null ],
+    [ "param2", "a00047.html#a16a7565b150a9c17a39c80fc932b9514", null ],
+    [ "rxsize", "a00047.html#a98e11ec1987c94d4f4658a80c46bde20", null ],
+    [ "txsize", "a00047.html#a3c02ddae56a01b6df3be14acf14915a4", null ]
 ];

@@ -1,10 +1,11 @@
 var a00188 =
 [
-    [ "cfg_ateccx08a_i2c_default", "a00188.html#gafcb056718eb34ec3a612d550208e49cc", null ],
-    [ "cfg_ateccx08a_swi_default", "a00188.html#ga5624aa554e1964981b794e2295b9432c", null ],
-    [ "cfg_ecc508_kitcdc_default", "a00188.html#ga92bf5d7373fb890df6e7ee1ffd8bad9d", null ],
-    [ "cfg_ecc508_kithid_default", "a00188.html#gad0a2cb2c20636f759c1a50191abfd68a", null ],
-    [ "cfg_sha204_kithid_default", "a00188.html#ga19d99d2db952ba463ef79c3a0274820b", null ],
-    [ "cfg_sha204a_i2c_default", "a00188.html#gadd4396e3d3f9d3d64e4bf1ba3d10af50", null ],
-    [ "cfg_sha204a_swi_default", "a00188.html#ga0d23184c63997cbc096cba32c1ce9fae", null ]
+    [ "swi_uart_deinit", "a00226.html#ga0b1aad3936bf003686d8db7fa2be5132", null ],
+    [ "swi_uart_discover_buses", "a00226.html#gad640b598d581ee7c8a4c804bee602906", null ],
+    [ "swi_uart_init", "a00226.html#ga003b63648f1a5f9eba274760559688f2", null ],
+    [ "swi_uart_mode", "a00226.html#gacc2a96c86ce4c07249b81bc6a7eb2e41", null ],
+    [ "swi_uart_receive_byte", "a00226.html#ga93f3dab17c14f71641ca970998ede823", null ],
+    [ "swi_uart_send_byte", "a00226.html#ga4a4d491006d9683d67838963706ac9c1", null ],
+    [ "swi_uart_setbaud", "a00226.html#gaba296f70baf68b768d6c4bb9cf7ba67d", null ],
+    [ "pin_conf", "a00226.html#gaab85cb460831e8b7e4d3a5315b31c596", null ]
 ];

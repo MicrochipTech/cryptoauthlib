@@ -1,7 +1,5 @@
 var a00052 =
 [
-    [ "block", "a00052.html#a0559c245b725b5b78057620e9677211e", null ],
-    [ "block_size", "a00052.html#a9e3fb1e50a1c71b2337df296222d9553", null ],
-    [ "hash", "a00052.html#a135f34ef1efee1401582f12744220dbb", null ],
-    [ "total_msg_size", "a00052.html#a8ee7e642376903508dd6b4df9eacc2de", null ]
+    [ "guard", "a00052.html#a6399ead8aa841f99d568bd54f6008c55", null ],
+    [ "size", "a00052.html#a854352f53b148adc24983a58a1866d66", null ]
 ];

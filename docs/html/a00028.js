@@ -1,7 +1,7 @@
 var a00028 =
 [
-    [ "curve_type", "a00196.html#ga9be4eee4ac6c9248a824d093f165839e", null ],
-    [ "public_key", "a00196.html#gacea547aa606ca17f8da337a1b58972a1", null ],
-    [ "signature", "a00196.html#gac97246a9059d3f687edfcbe5abfc5d8f", null ],
-    [ "temp_key", "a00196.html#gaa17e031da4b22938bed1c21161ba371a", null ]
+    [ "block", "a00028.html#a64478621dfd31e9e33e0dc1ce98d777c", null ],
+    [ "block_size", "a00028.html#a9e3fb1e50a1c71b2337df296222d9553", null ],
+    [ "hash", "a00028.html#a135f34ef1efee1401582f12744220dbb", null ],
+    [ "total_msg_size", "a00028.html#a8ee7e642376903508dd6b4df9eacc2de", null ]
 ];

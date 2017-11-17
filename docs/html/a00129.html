@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: hal_swi_bitbang.c File Reference</title>
+<title>CryptoAuthLib: hal_linux_kit_cdc.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,66 +106,99 @@ $(document).ready(function(){initNavTree('a00129.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">hal_swi_bitbang.c File Reference</div>  </div>
+<div class="title">hal_linux_kit_cdc.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for SWI bit banging.  
+<p>ATCA Hardware abstraction layer for Linux using kit protocol over a USB CDC device.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;asf.h&gt;</code><br />
-<code>#include &lt;string.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00085_source.html">atca_hal.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00172_source.html">kit_phy.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00130_source.html">hal_linux_kit_cdc.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00174_source.html">kit_protocol.h</a>&quot;</code><br />
 <code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00080_source.html">atca_hal.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00130_source.html">hal_swi_bitbang.h</a>&quot;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;termios.h&gt;</code><br />
+<code>#include &lt;sys/types.h&gt;</code><br />
+<code>#include &lt;sys/stat.h&gt;</code><br />
+<code>#include &lt;fcntl.h&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaf13cc0c18a825fdc030b007656b14d0b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gaf13cc0c18a825fdc030b007656b14d0b">max</a>(a,  b)    &#160;&#160;&#160;(((a) &gt; (b)) ? (a) : (b))</td></tr>
+<tr class="separator:gaf13cc0c18a825fdc030b007656b14d0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga467a85c72437d398d4baf80651798aaa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga467a85c72437d398d4baf80651798aaa">min</a>(a,  b)    &#160;&#160;&#160;(((a) &lt; (b)) ? (a) : (b))</td></tr>
+<tr class="separator:ga467a85c72437d398d4baf80651798aaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaf406053c1a3f2a86bdc887f2ff4b663d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#gaf406053c1a3f2a86bdc887f2ff4b663d">hal_swi_init</a> (void *hal, <a class="el" href="a00043.html">ATCAIfaceCfg</a> *cfg)</td></tr>
-<tr class="memdesc:gaf406053c1a3f2a86bdc887f2ff4b663d"><td class="mdescLeft">&#160;</td><td class="mdescRight">hal_swi_init manages requests to initialize a physical interface. It manages use counts so when an interface has released the physical layer, it will disable the interface for some other use. You can have multiple ATCAIFace instances using the same bus, and you can have multiple ATCAIFace instances on multiple swi buses, so hal_swi_init manages these things and ATCAIFace is abstracted from the physical details.  <a href="a00195.html#gaf406053c1a3f2a86bdc887f2ff4b663d">More...</a><br /></td></tr>
-<tr class="separator:gaf406053c1a3f2a86bdc887f2ff4b663d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9186e5235979216330ae580290872c77"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga9186e5235979216330ae580290872c77">hal_swi_post_init</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga9186e5235979216330ae580290872c77"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI post init.  <a href="a00195.html#ga9186e5235979216330ae580290872c77">More...</a><br /></td></tr>
-<tr class="separator:ga9186e5235979216330ae580290872c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeb8b8857192a7710785acce0110e8016"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#gaeb8b8857192a7710785acce0110e8016">hal_swi_send</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *txdata, int txlength)</td></tr>
-<tr class="memdesc:gaeb8b8857192a7710785acce0110e8016"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send byte(s) via SWI.  <a href="a00195.html#gaeb8b8857192a7710785acce0110e8016">More...</a><br /></td></tr>
-<tr class="separator:gaeb8b8857192a7710785acce0110e8016"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga02e9f36723f0feb21d373898728de04b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga02e9f36723f0feb21d373898728de04b">hal_swi_receive</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
-<tr class="memdesc:ga02e9f36723f0feb21d373898728de04b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive byte(s) via SWI.  <a href="a00195.html#ga02e9f36723f0feb21d373898728de04b">More...</a><br /></td></tr>
-<tr class="separator:ga02e9f36723f0feb21d373898728de04b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafc428980ec95e37eee94813db229fe70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#gafc428980ec95e37eee94813db229fe70">hal_swi_wake</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:gafc428980ec95e37eee94813db229fe70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send Wake flag via SWI.  <a href="a00195.html#gafc428980ec95e37eee94813db229fe70">More...</a><br /></td></tr>
-<tr class="separator:gafc428980ec95e37eee94813db229fe70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga618291172976da96c4f02dc9200c845c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga618291172976da96c4f02dc9200c845c">hal_swi_idle</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga618291172976da96c4f02dc9200c845c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send Idle flag via SWI.  <a href="a00195.html#ga618291172976da96c4f02dc9200c845c">More...</a><br /></td></tr>
-<tr class="separator:ga618291172976da96c4f02dc9200c845c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga252e365a30f2583dae8a8eac073a9f53"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga252e365a30f2583dae8a8eac073a9f53">hal_swi_sleep</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga252e365a30f2583dae8a8eac073a9f53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send Sleep flag via SWI.  <a href="a00195.html#ga252e365a30f2583dae8a8eac073a9f53">More...</a><br /></td></tr>
-<tr class="separator:ga252e365a30f2583dae8a8eac073a9f53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga196dbc62546b39ac3e556a0f7f6b7132"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga196dbc62546b39ac3e556a0f7f6b7132">hal_swi_release</a> (void *hal_data)</td></tr>
-<tr class="memdesc:ga196dbc62546b39ac3e556a0f7f6b7132"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manages reference count on given bus and releases resource if no more reference(s) exist.  <a href="a00195.html#ga196dbc62546b39ac3e556a0f7f6b7132">More...</a><br /></td></tr>
-<tr class="separator:ga196dbc62546b39ac3e556a0f7f6b7132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6ec842c5f4674de5da640541e616785a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga6ec842c5f4674de5da640541e616785a">hal_cdc_discover_buses</a> (int cdc_buses[], int max_buses)</td></tr>
+<tr class="memdesc:ga6ec842c5f4674de5da640541e616785a"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover cdc buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge  <a href="a00226.html#ga6ec842c5f4674de5da640541e616785a">More...</a><br /></td></tr>
+<tr class="separator:ga6ec842c5f4674de5da640541e616785a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga16da7367a3a2cc01b926ac681513874e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga16da7367a3a2cc01b926ac681513874e">hal_cdc_discover_devices</a> (int busNum, <a class="el" href="a00046.html">ATCAIfaceCfg</a> cfg[], int *found)</td></tr>
+<tr class="memdesc:ga16da7367a3a2cc01b926ac681513874e"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover any CryptoAuth devices on a given logical bus number  <a href="a00226.html#ga16da7367a3a2cc01b926ac681513874e">More...</a><br /></td></tr>
+<tr class="separator:ga16da7367a3a2cc01b926ac681513874e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga313bdfc8337f930a7f9fc6ca4e7731d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga313bdfc8337f930a7f9fc6ca4e7731d9">hal_kit_cdc_init</a> (void *hal, <a class="el" href="a00046.html">ATCAIfaceCfg</a> *cfg)</td></tr>
+<tr class="separator:ga313bdfc8337f930a7f9fc6ca4e7731d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad11b8714818c2b05f70593c002fc5945"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gad11b8714818c2b05f70593c002fc5945">hal_kit_cdc_post_init</a> (<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:gad11b8714818c2b05f70593c002fc5945"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of Kit USB CDC post init.  <a href="a00226.html#gad11b8714818c2b05f70593c002fc5945">More...</a><br /></td></tr>
+<tr class="separator:gad11b8714818c2b05f70593c002fc5945"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga020fb0be6c73515122cf4b9f749fd97d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga020fb0be6c73515122cf4b9f749fd97d">kit_phy_send</a> (<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, const char *txdata, int txlength)</td></tr>
+<tr class="memdesc:ga020fb0be6c73515122cf4b9f749fd97d"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of send over USB CDC.  <a href="a00226.html#ga020fb0be6c73515122cf4b9f749fd97d">More...</a><br /></td></tr>
+<tr class="separator:ga020fb0be6c73515122cf4b9f749fd97d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae5e94b6080d4279474eb3e98bc58901"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gaae5e94b6080d4279474eb3e98bc58901">kit_phy_receive</a> (<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, char *rxdata, int *rxsize)</td></tr>
+<tr class="memdesc:gaae5e94b6080d4279474eb3e98bc58901"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol send over USB CDC.  <a href="a00226.html#gaae5e94b6080d4279474eb3e98bc58901">More...</a><br /></td></tr>
+<tr class="separator:gaae5e94b6080d4279474eb3e98bc58901"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5fac3cf3552eee701aec448c1392edd8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga5fac3cf3552eee701aec448c1392edd8">hal_kit_phy_num_found</a> (int8_t *num_found)</td></tr>
+<tr class="memdesc:ga5fac3cf3552eee701aec448c1392edd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of USB CDC devices found.  <a href="a00226.html#ga5fac3cf3552eee701aec448c1392edd8">More...</a><br /></td></tr>
+<tr class="separator:ga5fac3cf3552eee701aec448c1392edd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7732806c89cd206a96b7fabbaf6770d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga7732806c89cd206a96b7fabbaf6770d5">hal_kit_cdc_send</a> (<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *txdata, int txlength)</td></tr>
+<tr class="memdesc:ga7732806c89cd206a96b7fabbaf6770d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol send over USB CDC.  <a href="a00226.html#ga7732806c89cd206a96b7fabbaf6770d5">More...</a><br /></td></tr>
+<tr class="separator:ga7732806c89cd206a96b7fabbaf6770d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f3972f81de141ff0816b605054d775a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga3f3972f81de141ff0816b605054d775a">hal_kit_cdc_receive</a> (<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *rxdata, uint16_t *rxsize)</td></tr>
+<tr class="memdesc:ga3f3972f81de141ff0816b605054d775a"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of send over USB CDC.  <a href="a00226.html#ga3f3972f81de141ff0816b605054d775a">More...</a><br /></td></tr>
+<tr class="separator:ga3f3972f81de141ff0816b605054d775a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabced238b72e636a557d00355a2e44ac9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gabced238b72e636a557d00355a2e44ac9">hal_kit_cdc_wake</a> (<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:gabced238b72e636a557d00355a2e44ac9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the wake for kit protocol.  <a href="a00226.html#gabced238b72e636a557d00355a2e44ac9">More...</a><br /></td></tr>
+<tr class="separator:gabced238b72e636a557d00355a2e44ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga92055a86e32f3dfc9eef064d48aa0870"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga92055a86e32f3dfc9eef064d48aa0870">hal_kit_cdc_idle</a> (<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:ga92055a86e32f3dfc9eef064d48aa0870"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the idle for kit protocol.  <a href="a00226.html#ga92055a86e32f3dfc9eef064d48aa0870">More...</a><br /></td></tr>
+<tr class="separator:ga92055a86e32f3dfc9eef064d48aa0870"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1299c47e6d73d987bc04b16f25637bf6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga1299c47e6d73d987bc04b16f25637bf6">hal_kit_cdc_sleep</a> (<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:ga1299c47e6d73d987bc04b16f25637bf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the sleep for kit protocol.  <a href="a00226.html#ga1299c47e6d73d987bc04b16f25637bf6">More...</a><br /></td></tr>
+<tr class="separator:ga1299c47e6d73d987bc04b16f25637bf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga21a939cc86a0602cb2ba3be3eec26e6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga21a939cc86a0602cb2ba3be3eec26e6e">hal_kit_cdc_release</a> (void *hal_data)</td></tr>
+<tr class="memdesc:ga21a939cc86a0602cb2ba3be3eec26e6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the physical port for CDC.  <a href="a00226.html#ga21a939cc86a0602cb2ba3be3eec26e6e">More...</a><br /></td></tr>
+<tr class="separator:ga21a939cc86a0602cb2ba3be3eec26e6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4463695310b7f6544dbe459be5340b86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga4463695310b7f6544dbe459be5340b86">hal_kit_cdc_discover_buses</a> (int i2c_buses[], int max_buses)</td></tr>
+<tr class="separator:ga4463695310b7f6544dbe459be5340b86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1e1fd4856e73176a487baac97175e9bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga1e1fd4856e73176a487baac97175e9bf">hal_kit_cdc_discover_devices</a> (int busNum, <a class="el" href="a00046.html">ATCAIfaceCfg</a> *cfg, int *found)</td></tr>
+<tr class="separator:ga1e1fd4856e73176a487baac97175e9bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga95ca8e0b044cf56e85a8c581a4c703da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00195.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga95ca8e0b044cf56e85a8c581a4c703da">swi_hal_data</a> [<a class="el" href="a00195.html#gaf9d9d027ce20f528edea144203141714">MAX_SWI_BUSES</a>]</td></tr>
-<tr class="memdesc:ga95ca8e0b044cf56e85a8c581a4c703da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logical to physical bus mapping structure.  <a href="a00195.html#ga95ca8e0b044cf56e85a8c581a4c703da">More...</a><br /></td></tr>
-<tr class="separator:ga95ca8e0b044cf56e85a8c581a4c703da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4656caa5bd357cc71fe66f4522d89e3f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga4656caa5bd357cc71fe66f4522d89e3f">swi_bus_ref_ct</a> = 0</td></tr>
-<tr class="memdesc:ga4656caa5bd357cc71fe66f4522d89e3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">total in-use count across buses  <a href="a00195.html#ga4656caa5bd357cc71fe66f4522d89e3f">More...</a><br /></td></tr>
-<tr class="separator:ga4656caa5bd357cc71fe66f4522d89e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc65c7c6bd64530b95fa72082f1e0390"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00226.html#ga2df85bfd309840b4c9a5087e053d4811">atcacdc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gabc65c7c6bd64530b95fa72082f1e0390">_gCdc</a></td></tr>
+<tr class="separator:gabc65c7c6bd64530b95fa72082f1e0390"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabe78755474c1323a5ac7b3dd6d03dedf"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gabe78755474c1323a5ac7b3dd6d03dedf">dev</a> = &quot;/dev/ttyACM0&quot;</td></tr>
+<tr class="memdesc:gabe78755474c1323a5ac7b3dd6d03dedf"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of Kit USB CDC init.  <a href="a00226.html#gabe78755474c1323a5ac7b3dd6d03dedf">More...</a><br /></td></tr>
+<tr class="separator:gabe78755474c1323a5ac7b3dd6d03dedf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga218b4f7c6cc2681a99c23a3b089d68b1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga218b4f7c6cc2681a99c23a3b089d68b1">speed</a> = B115200</td></tr>
+<tr class="separator:ga218b4f7c6cc2681a99c23a3b089d68b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for SWI bit banging. </p>
-<p>Copyright (c) 2015 Atmel Corporation. All rights reserved.</p>
+<div class="textblock"><p>ATCA Hardware abstraction layer for Linux using kit protocol over a USB CDC device. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00129.html">hal_swi_bitbang.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00129.html">hal_linux_kit_cdc.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

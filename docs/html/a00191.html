@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: ATCAIface (atca_)</title>
+<title>CryptoAuthLib: swi_uart_samd21_start.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -50,7 +50,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="files.html"><span>Files</span></a></li>
+      <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -67,6 +67,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -101,360 +107,81 @@ $(document).ready(function(){initNavTree('a00191.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">ATCAIface (atca_)</div>  </div>
+<div class="title">swi_uart_samd21_start.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Abstract interface to all CryptoAuth device types. This interface connects to the HAL implementation and abstracts the physical details of the device communication from all the upper layers of CryptoAuthLib.  
+<p>Atmel Crypto Auth hardware interface object.  
 <a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;hri_sercom_v200.h&gt;</code><br />
+<code>#include &quot;atmel_start.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00121_source.html">cryptoauthlib.h</a>&quot;</code><br />
+</div>
+<p><a href="a00191_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html">atca_iface</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a00023.html" title="atca_iface is the C object backing ATCAIface. See the atca_iface.h file for details on the ATCAIface ...">atca_iface</a> is the C object backing ATCAIface. See the <a class="el" href="a00086.html" title="Atmel Crypto Auth hardware interface object. ">atca_iface.h</a> file for details on the ATCAIface methods  <a href="a00023.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html">atcaSWImaster</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the hal_data for ATCA HAL.  <a href="a00048.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html">ATCAIfaceCfg</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaf9d9d027ce20f528edea144203141714"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gaf9d9d027ce20f528edea144203141714">MAX_SWI_BUSES</a>&#160;&#160;&#160;6</td></tr>
+<tr class="separator:gaf9d9d027ce20f528edea144203141714"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab45577245cf4a8ead70e2d56965f2df3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gab45577245cf4a8ead70e2d56965f2df3">RECEIVE_MODE</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:gab45577245cf4a8ead70e2d56965f2df3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b85133b317e72410ea0762d637d3460"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga4b85133b317e72410ea0762d637d3460">TRANSMIT_MODE</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:ga4b85133b317e72410ea0762d637d3460"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac55a27e4c3eae59bb1687eb7e8d1fe4b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gac55a27e4c3eae59bb1687eb7e8d1fe4b">RX_DELAY</a>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:gac55a27e4c3eae59bb1687eb7e8d1fe4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f3816567a2f513dd0e1f9eb17992fb2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga3f3816567a2f513dd0e1f9eb17992fb2">TX_DELAY</a>&#160;&#160;&#160;93</td></tr>
+<tr class="separator:ga3f3816567a2f513dd0e1f9eb17992fb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga75c11126f3fe81df3d6c27f5bb393303"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00023.html">atca_iface</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a></td></tr>
-<tr class="separator:ga75c11126f3fe81df3d6c27f5bb393303"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gac7f674d4a0afb12d2f3c9c5e98cb1089"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#gac7f674d4a0afb12d2f3c9c5e98cb1089">ATCAIfaceType</a> { <br />
-&#160;&#160;<a class="el" href="a00191.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a872efba3aa5b7890acfe0f1e0e453bcb">ATCA_I2C_IFACE</a>, 
-<a class="el" href="a00191.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a2ce2e46b7f4245ab3d750ea2805fdc26">ATCA_SWI_IFACE</a>, 
-<a class="el" href="a00191.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a80ec8c070f1c711f2b16ad39d2a0486d">ATCA_UART_IFACE</a>, 
-<a class="el" href="a00191.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a8d50943acfc67f797b9c8fbf565deeb7">ATCA_SPI_IFACE</a>, 
-<br />
-&#160;&#160;<a class="el" href="a00191.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a7da282c54282a02f5650c38a85d0dfb1">ATCA_HID_IFACE</a>
-<br />
- }<tr class="separator:gac7f674d4a0afb12d2f3c9c5e98cb1089"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</td></tr>
+<tr class="memitem:ga257ed552f7d68eb1e5d3ca7baa01559a"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00048.html">atcaSWImaster</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a></td></tr>
+<tr class="memdesc:ga257ed552f7d68eb1e5d3ca7baa01559a"><td class="mdescLeft">&#160;</td><td class="mdescRight">this is the hal_data for ATCA HAL for ASF SERCOM  <a href="a00226.html#ga257ed552f7d68eb1e5d3ca7baa01559a">More...</a><br /></td></tr>
+<tr class="separator:ga257ed552f7d68eb1e5d3ca7baa01559a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga3b1d17552f8f14e064a3961d3e64b879"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#ga3b1d17552f8f14e064a3961d3e64b879">_atinit</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> caiface, <a class="el" href="a00040.html">ATCAHAL_t</a> *hal)</td></tr>
-<tr class="separator:ga3b1d17552f8f14e064a3961d3e64b879"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6f28f18f0d00c5301939724325f6b6fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#ga6f28f18f0d00c5301939724325f6b6fc">newATCAIface</a> (<a class="el" href="a00043.html">ATCAIfaceCfg</a> *cfg)</td></tr>
-<tr class="memdesc:ga6f28f18f0d00c5301939724325f6b6fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor for ATCAIface objects  <a href="#ga6f28f18f0d00c5301939724325f6b6fc">More...</a><br /></td></tr>
-<tr class="separator:ga6f28f18f0d00c5301939724325f6b6fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaea9da7766b8f10ea6bf9f5fe972fedd7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#gaea9da7766b8f10ea6bf9f5fe972fedd7">atinit</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> caiface)</td></tr>
-<tr class="separator:gaea9da7766b8f10ea6bf9f5fe972fedd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4bd3260f3dd7a918869e6e82b9de441f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#ga4bd3260f3dd7a918869e6e82b9de441f">atsend</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> caiface, uint8_t *txdata, int txlength)</td></tr>
-<tr class="separator:ga4bd3260f3dd7a918869e6e82b9de441f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3505133e7f12f6ce69c69c95a3e8d0a4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#ga3505133e7f12f6ce69c69c95a3e8d0a4">atreceive</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> caiface, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
-<tr class="separator:ga3505133e7f12f6ce69c69c95a3e8d0a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2a0bb1c9b9023550dd3cd28d8a969f46"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#ga2a0bb1c9b9023550dd3cd28d8a969f46">atwake</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> caiface)</td></tr>
-<tr class="separator:ga2a0bb1c9b9023550dd3cd28d8a969f46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad39ff3227b81543a394693263a8baee4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#gad39ff3227b81543a394693263a8baee4">atidle</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> caiface)</td></tr>
-<tr class="separator:gad39ff3227b81543a394693263a8baee4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad1f603149e99a09125a4c3d32a36287e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#gad1f603149e99a09125a4c3d32a36287e">atsleep</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> caiface)</td></tr>
-<tr class="separator:gad1f603149e99a09125a4c3d32a36287e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga638aef05f5ac23ea92d46d5fee4c7673"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00043.html">ATCAIfaceCfg</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#ga638aef05f5ac23ea92d46d5fee4c7673">atgetifacecfg</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> caiface)</td></tr>
-<tr class="separator:ga638aef05f5ac23ea92d46d5fee4c7673"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab14097df78ab41a0f63b74b752f88b61"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#gab14097df78ab41a0f63b74b752f88b61">atgetifacehaldat</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> caiface)</td></tr>
-<tr class="separator:gab14097df78ab41a0f63b74b752f88b61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga310a734a1428491a394649015e8f5552"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#ga310a734a1428491a394649015e8f5552">deleteATCAIface</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> *caiface)</td></tr>
-<tr class="separator:ga310a734a1428491a394649015e8f5552"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga549ef825b08fd145a8cbf1df534afcf9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#ga549ef825b08fd145a8cbf1df534afcf9">atpostinit</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> caiface)</td></tr>
-<tr class="separator:ga549ef825b08fd145a8cbf1df534afcf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga003b63648f1a5f9eba274760559688f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga003b63648f1a5f9eba274760559688f2">swi_uart_init</a> (<a class="el" href="a00226.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a> *instance)</td></tr>
+<tr class="memdesc:ga003b63648f1a5f9eba274760559688f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of SWI UART init.  <a href="a00226.html#ga003b63648f1a5f9eba274760559688f2">More...</a><br /></td></tr>
+<tr class="separator:ga003b63648f1a5f9eba274760559688f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b1aad3936bf003686d8db7fa2be5132"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga0b1aad3936bf003686d8db7fa2be5132">swi_uart_deinit</a> (<a class="el" href="a00226.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a> *instance)</td></tr>
+<tr class="memdesc:ga0b1aad3936bf003686d8db7fa2be5132"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of SWI UART deinit.  <a href="a00226.html#ga0b1aad3936bf003686d8db7fa2be5132">More...</a><br /></td></tr>
+<tr class="separator:ga0b1aad3936bf003686d8db7fa2be5132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gaba296f70baf68b768d6c4bb9cf7ba67d">swi_uart_setbaud</a> (<a class="el" href="a00226.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a> *instance, uint32_t baudrate)</td></tr>
+<tr class="memdesc:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="mdescLeft">&#160;</td><td class="mdescRight">implementation of SWI UART change baudrate.  <a href="a00226.html#gaba296f70baf68b768d6c4bb9cf7ba67d">More...</a><br /></td></tr>
+<tr class="separator:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gacc2a96c86ce4c07249b81bc6a7eb2e41">swi_uart_mode</a> (<a class="el" href="a00226.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a> *instance, uint8_t mode)</td></tr>
+<tr class="memdesc:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="mdescLeft">&#160;</td><td class="mdescRight">implementation of SWI UART change mode.  <a href="a00226.html#gacc2a96c86ce4c07249b81bc6a7eb2e41">More...</a><br /></td></tr>
+<tr class="separator:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad640b598d581ee7c8a4c804bee602906"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gad640b598d581ee7c8a4c804bee602906">swi_uart_discover_buses</a> (int swi_uart_buses[], int max_buses)</td></tr>
+<tr class="memdesc:gad640b598d581ee7c8a4c804bee602906"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover UART buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge  <a href="a00226.html#gad640b598d581ee7c8a4c804bee602906">More...</a><br /></td></tr>
+<tr class="separator:gad640b598d581ee7c8a4c804bee602906"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4a4d491006d9683d67838963706ac9c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga4a4d491006d9683d67838963706ac9c1">swi_uart_send_byte</a> (<a class="el" href="a00226.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a> *instance, uint8_t data)</td></tr>
+<tr class="memdesc:ga4a4d491006d9683d67838963706ac9c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI UART send byte over ASF. This function send one byte over UART.  <a href="a00226.html#ga4a4d491006d9683d67838963706ac9c1">More...</a><br /></td></tr>
+<tr class="separator:ga4a4d491006d9683d67838963706ac9c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga93f3dab17c14f71641ca970998ede823"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga93f3dab17c14f71641ca970998ede823">swi_uart_receive_byte</a> (<a class="el" href="a00226.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a> *instance, uint8_t *data)</td></tr>
+<tr class="memdesc:ga93f3dab17c14f71641ca970998ede823"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI UART receive bytes over ASF. This function receive one byte over UART.  <a href="a00226.html#ga93f3dab17c14f71641ca970998ede823">More...</a><br /></td></tr>
+<tr class="separator:ga93f3dab17c14f71641ca970998ede823"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Abstract interface to all CryptoAuth device types. This interface connects to the HAL implementation and abstracts the physical details of the device communication from all the upper layers of CryptoAuthLib. </p>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga75c11126f3fe81df3d6c27f5bb393303"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef struct <a class="el" href="a00023.html">atca_iface</a>* <a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gac7f674d4a0afb12d2f3c9c5e98cb1089"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00191.html#gac7f674d4a0afb12d2f3c9c5e98cb1089">ATCAIfaceType</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="ggac7f674d4a0afb12d2f3c9c5e98cb1089a872efba3aa5b7890acfe0f1e0e453bcb"></a>ATCA_I2C_IFACE&#160;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ggac7f674d4a0afb12d2f3c9c5e98cb1089a2ce2e46b7f4245ab3d750ea2805fdc26"></a>ATCA_SWI_IFACE&#160;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ggac7f674d4a0afb12d2f3c9c5e98cb1089a80ec8c070f1c711f2b16ad39d2a0486d"></a>ATCA_UART_IFACE&#160;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ggac7f674d4a0afb12d2f3c9c5e98cb1089a8d50943acfc67f797b9c8fbf565deeb7"></a>ATCA_SPI_IFACE&#160;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ggac7f674d4a0afb12d2f3c9c5e98cb1089a7da282c54282a02f5650c38a85d0dfb1"></a>ATCA_HID_IFACE&#160;</td><td class="fielddoc">
-</td></tr>
-</table>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga3b1d17552f8f14e064a3961d3e64b879"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> _atinit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>caiface</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00040.html">ATCAHAL_t</a> *&#160;</td>
-          <td class="paramname"><em>hal</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga638aef05f5ac23ea92d46d5fee4c7673"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00043.html">ATCAIfaceCfg</a> * atgetifacecfg </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>caiface</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="gab14097df78ab41a0f63b74b752f88b61"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void * atgetifacehaldat </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>caiface</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="gad39ff3227b81543a394693263a8baee4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atidle </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>caiface</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="gaea9da7766b8f10ea6bf9f5fe972fedd7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atinit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>caiface</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga549ef825b08fd145a8cbf1df534afcf9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atpostinit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>caiface</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga3505133e7f12f6ce69c69c95a3e8d0a4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atreceive </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>caiface</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>rxdata</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>rxlength</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga4bd3260f3dd7a918869e6e82b9de441f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atsend </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>caiface</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>txdata</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>txlength</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="gad1f603149e99a09125a4c3d32a36287e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atsleep </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>caiface</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga2a0bb1c9b9023550dd3cd28d8a969f46"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atwake </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>caiface</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga310a734a1428491a394649015e8f5552"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void deleteATCAIface </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> *&#160;</td>
-          <td class="paramname"><em>caiface</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga6f28f18f0d00c5301939724325f6b6fc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> newATCAIface </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00043.html">ATCAIfaceCfg</a> *&#160;</td>
-          <td class="paramname"><em>cfg</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>constructor for ATCAIface objects </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>points to the logical configuration for the interface </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCAIface </dd></dl>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>Atmel Crypto Auth hardware interface object. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00191.html">swi_uart_samd21_start.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

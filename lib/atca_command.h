@@ -8,14 +8,13 @@
  * The command list is a superset of all device commands for this family.  The command object
  * differentiates the packet contents based on specific device type within the family.
  *
- * Copyright (c) 2015 Atmel Corporation. All rights reserved.
- *
- * \atmel_crypto_device_library_license_start
+ * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
  *
  * \page License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * You are permitted to use this software and its derivatives with Microchip
+ * products. Redistribution and use in source and binary forms, with or without
+ * modification, is permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
@@ -24,16 +23,16 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  *
- * 3. The name of Atmel may not be used to endorse or promote products derived
+ * 3. The name of Microchip may not be used to endorse or promote products derived
  *    from this software without specific prior written permission.
  *
- * 4. This software may only be redistributed and used in connection with an
- *    Atmel integrated circuit.
+ * 4. This software may only be redistributed and used in connection with a
+ *    Microchip integrated circuit.
  *
- * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
+ * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
+ * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
@@ -41,8 +40,6 @@
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
- * \atmel_crypto_device_library_license_stop
  */
 
 #ifndef ATCA_COMMAND_H
@@ -51,6 +48,10 @@
 #include "atca_compiler.h"
 #include "atca_status.h"
 #include "atca_devtypes.h"
+#ifdef __linux__
+#include <stddef.h>
+#endif
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -86,94 +87,95 @@ ATCACommand newATCACommand(ATCADeviceType device_type);  // constructor
 /** \brief an ATCA packet structure.  This is a superset of the packet transmitted on the wire.  It's also
  * used as a buffer for receiving the response
  */
-typedef struct {
+typedef struct
+{
 
-	// used for transmit/send
-	uint8_t _reserved;  // used by HAL layer as needed (I/O tokens, Word address values)
+    // used for transmit/send
+    uint8_t _reserved;  // used by HAL layer as needed (I/O tokens, Word address values)
 
-	//--- start of packet i/o frame----
-	uint8_t txsize;
-	uint8_t opcode;
-	uint8_t param1;     // often same as mode
-	uint16_t param2;
-	uint8_t data[130];  // includes 2-byte CRC.  data size is determined by largest possible data section of any
-	                    // command + crc (see: x08 verify data1 + data2 + data3 + data4)
-	                    // this is an explicit design trade-off (space) resulting in simplicity in use
-	                    // and implementation
-	//--- end of packet i/o frame
+    //--- start of packet i/o frame----
+    uint8_t  txsize;
+    uint8_t  opcode;
+    uint8_t  param1;    // often same as mode
+    uint16_t param2;
+    uint8_t  data[130]; // includes 2-byte CRC.  data size is determined by largest possible data section of any
+                        // command + crc (see: x08 verify data1 + data2 + data3 + data4)
+                        // this is an explicit design trade-off (space) resulting in simplicity in use
+                        // and implementation
+    //--- end of packet i/o frame
 
-	// used for receive
-	uint8_t execTime;       // execution time of command by opcode
-	uint16_t rxsize;        // expected response size, response is held in data member
+    // used for receive
+    uint8_t  execTime;      // execution time of command by opcode
+    uint16_t rxsize;        // expected response size, response is held in data member
 
-	// structure should be packed since it will be transmitted over the wire
-	// this method varies by compiler.  As new compilers are supported, add their structure packing method here
+    // structure should be packed since it will be transmitted over the wire
+    // this method varies by compiler.  As new compilers are supported, add their structure packing method here
 
 } ATCAPacket;
 #pragma pack( pop, ATCAPacket)
 
 ATCA_STATUS atCheckMAC(ATCACommand cacmd, ATCAPacket *packet);
-ATCA_STATUS atCounter(ATCACommand cacmd, ATCAPacket *packet );
-ATCA_STATUS atDeriveKey(ATCACommand cacmd, ATCAPacket *packet, bool hasMAC );
-ATCA_STATUS atECDH(ATCACommand cacmd, ATCAPacket *packet );
-ATCA_STATUS atGenDig(ATCACommand cacmd, ATCAPacket *packet, bool hasMACKey );
-ATCA_STATUS atGenKey(ATCACommand cacmd, ATCAPacket *packet, bool isPubKey );
-ATCA_STATUS atHMAC(ATCACommand cacmd, ATCAPacket *packet );
-ATCA_STATUS atInfo(ATCACommand cacmd, ATCAPacket *packet );
-ATCA_STATUS atLock(ATCACommand cacmd, ATCAPacket *packet );
-ATCA_STATUS atMAC(ATCACommand cacmd, ATCAPacket *packet );
-ATCA_STATUS atNonce(ATCACommand cacmd, ATCAPacket *packet );
-ATCA_STATUS atPause(ATCACommand cacmd, ATCAPacket *packet );
-ATCA_STATUS atPrivWrite(ATCACommand cacmd, ATCAPacket *packet );
-ATCA_STATUS atRandom(ATCACommand cacmd, ATCAPacket *packet );
-ATCA_STATUS atRead(ATCACommand cacmd, ATCAPacket *packet );
-ATCA_STATUS atSHA(ATCACommand cacmd, ATCAPacket *packet );
+ATCA_STATUS atCounter(ATCACommand cacmd, ATCAPacket *packet);
+ATCA_STATUS atDeriveKey(ATCACommand cacmd, ATCAPacket *packet, bool hasMAC);
+ATCA_STATUS atECDH(ATCACommand cacmd, ATCAPacket *packet);
+ATCA_STATUS atGenDig(ATCACommand cacmd, ATCAPacket *packet, bool isNoMacKey);
+ATCA_STATUS atGenKey(ATCACommand cacmd, ATCAPacket *packet);
+ATCA_STATUS atHMAC(ATCACommand cacmd, ATCAPacket *packet);
+ATCA_STATUS atInfo(ATCACommand cacmd, ATCAPacket *packet);
+ATCA_STATUS atLock(ATCACommand cacmd, ATCAPacket *packet);
+ATCA_STATUS atMAC(ATCACommand cacmd, ATCAPacket *packet);
+ATCA_STATUS atNonce(ATCACommand cacmd, ATCAPacket *packet);
+ATCA_STATUS atPause(ATCACommand cacmd, ATCAPacket *packet);
+ATCA_STATUS atPrivWrite(ATCACommand cacmd, ATCAPacket *packet);
+ATCA_STATUS atRandom(ATCACommand cacmd, ATCAPacket *packet);
+ATCA_STATUS atRead(ATCACommand cacmd, ATCAPacket *packet);
+ATCA_STATUS atSHA(ATCACommand cacmd, ATCAPacket *packet);
 ATCA_STATUS atSign(ATCACommand cacmd, ATCAPacket *packet);
 ATCA_STATUS atUpdateExtra(ATCACommand cacmd, ATCAPacket *packet);
 ATCA_STATUS atVerify(ATCACommand cacmd, ATCAPacket *packet);
-ATCA_STATUS atWrite(ATCACommand cacmd, ATCAPacket *packet);
-ATCA_STATUS atWriteEnc(ATCACommand cacmd, ATCAPacket *packet);
+ATCA_STATUS atWrite(ATCACommand cacmd, ATCAPacket *packet, bool hasMAC);
 
-bool atIsSHAFamily( ATCADeviceType deviceType );
-bool atIsECCFamily( ATCADeviceType deviceType );
-ATCA_STATUS isATCAError( uint8_t *data );
+bool atIsSHAFamily(ATCADeviceType deviceType);
+bool atIsECCFamily(ATCADeviceType deviceType);
+ATCA_STATUS isATCAError(uint8_t *data);
 
 // this map is used to index into an array of execution times
-typedef enum {
-	WAKE_TWHI,
-	CMD_CHECKMAC,
-	CMD_COUNTER,
-	CMD_DERIVEKEY,
-	CMD_ECDH,
-	CMD_GENDIG,
-	CMD_GENKEY,
-	CMD_HMAC,
-	CMD_INFO,
-	CMD_LOCK,
-	CMD_MAC,
-	CMD_NONCE,
-	CMD_PAUSE,
-	CMD_PRIVWRITE,
-	CMD_RANDOM,
-	CMD_READMEM,
-	CMD_SHA,
-	CMD_SIGN,
-	CMD_UPDATEEXTRA,
-	CMD_VERIFY,
-	CMD_WRITEMEM,
-	CMD_LASTCOMMAND  // placeholder
+typedef enum
+{
+    WAKE_TWHI,
+    CMD_CHECKMAC,
+    CMD_COUNTER,
+    CMD_DERIVEKEY,
+    CMD_ECDH,
+    CMD_GENDIG,
+    CMD_GENKEY,
+    CMD_HMAC,
+    CMD_INFO,
+    CMD_LOCK,
+    CMD_MAC,
+    CMD_NONCE,
+    CMD_PAUSE,
+    CMD_PRIVWRITE,
+    CMD_RANDOM,
+    CMD_READMEM,
+    CMD_SHA,
+    CMD_SIGN,
+    CMD_UPDATEEXTRA,
+    CMD_VERIFY,
+    CMD_WRITEMEM,
+    CMD_LASTCOMMAND  // placeholder
 } ATCA_CmdMap;
 
 ATCA_STATUS atInitExecTimes(ATCACommand cacmd, ATCADeviceType device_type);
-uint16_t atGetExecTime( ATCACommand cacmd, ATCA_CmdMap cmd );
+uint16_t atGetExecTime(ATCACommand cacmd, ATCA_CmdMap cmd);
 
-void deleteATCACommand( ATCACommand * );      // destructor
+void deleteATCACommand(ATCACommand *);        // destructor
 /*---- end of ATCACommand ----*/
 
 // command helpers
-void atCRC( uint8_t length, uint8_t *data, uint8_t *crc);
-void atCalcCrc( ATCAPacket *pkt);
-uint8_t atCheckCrc(uint8_t *response);
+void atCRC(size_t length, const uint8_t *data, uint8_t *crc_le);
+void atCalcCrc(ATCAPacket *pkt);
+uint8_t atCheckCrc(const uint8_t *response);
 
 
 /* command definitions */
@@ -231,7 +233,7 @@ uint8_t atCheckCrc(uint8_t *response);
 #define ATCA_SERIAL_NUM_SIZE        (9)                                 //!< number of bytes in the device serial number
 #define ATCA_RSP_SIZE_VAL           ((uint8_t)7)                        //!< size of response packet containing four bytes of data
 #define ATCA_KEY_COUNT              (16)                                //!< number of keys
-#define ATCA_CONFIG_SIZE            (128)                               //!< size of configuration zone
+#define ATCA_ECC_CONFIG_SIZE        (128)                               //!< size of configuration zone
 #define ATCA_SHA_CONFIG_SIZE        (88)                                //!< size of configuration zone
 #define ATCA_OTP_SIZE               (64)                                //!< size of OTP zone
 #define ATCA_DATA_SIZE              (ATCA_KEY_COUNT * ATCA_KEY_SIZE)    //!< size of data zone
@@ -275,9 +277,8 @@ uint8_t atCheckCrc(uint8_t *response);
 #define ATCA_ZONE_OTP                   ((uint8_t)0x01)         //!< OTP (One Time Programming) zone
 #define ATCA_ZONE_DATA                  ((uint8_t)0x02)         //!< Data zone
 #define ATCA_ZONE_MASK                  ((uint8_t)0x03)         //!< Zone mask
+#define ATCA_ZONE_ENCRYPTED             ((uint8_t)0x40)         //!< Zone bit 6 set: Write is encrypted with an unlocked data zone.
 #define ATCA_ZONE_READWRITE_32          ((uint8_t)0x80)         //!< Zone bit 7 set: Access 32 bytes, otherwise 4 bytes.
-#define ATCA_ZONE_ACCESS_4              ((uint8_t)4)            //!< Read or write 4 bytes.
-#define ATCA_ZONE_ACCESS_32             ((uint8_t)32)           //!< Read or write 32 bytes.
 #define ATCA_ADDRESS_MASK_CONFIG        (0x001F)                //!< Address bits 5 to 7 are 0 for Configuration zone.
 #define ATCA_ADDRESS_MASK_OTP           (0x000F)                //!< Address bits 4 to 7 are 0 for OTP zone.
 #define ATCA_ADDRESS_MASK               (0x007F)                //!< Address bit 7 to 15 are always 0.
@@ -305,9 +306,10 @@ uint8_t atCheckCrc(uint8_t *response);
 #define COUNTER_CHALLENGE_IDX               ATCA_DATA_IDX           //!< COUNTER command index for optional challenge
 #define COUNTER_COUNT_LONG                  (70)                    //!< COUNTER command packet size without challenge
 #define COUNTER_MODE_MASK                   ((uint8_t)0x01)         //!< COUNTER mode bits 1 to 7 are 0
-typedef enum {
-	COUNTER_MODE_READ = 0,
-	COUNTER_MODE_INCREASE = 1
+typedef enum
+{
+    COUNTER_MODE_READ = 0,
+    COUNTER_MODE_INCREASE = 1
 } enum_counter_mode;
 /** @} */
 
@@ -317,23 +319,15 @@ typedef enum {
 #define SHA_COUNT_LONG                      (7)
 #define ATCA_SHA_DIGEST_SIZE                        (32)
 #define SHA_DATA_MAX                        (64)
-#define SHA_BLOCK_SIZE                      (64)
+#define ATCA_SHA256_BLOCK_SIZE              (64)
 
-typedef enum {
-	SHA_MODE_SHA256_START = ((uint8_t) 0x00),               //!< Initialization, does not accept a message
-	SHA_MODE_SHA256_UPDATE = ((uint8_t) 0x01),              //!< Add 64 bytes in the meesage to the SHA context
-	SHA_MODE_SHA256_END = ((uint8_t) 0x02),                 //!< Complete the calculation and load the digest
-	SHA_MODE_SHA256_PUBLIC = ((uint8_t) 0x03),              //!< Add 64 bytes in the slot to the SHA context
-	SHA_MODE_HMAC_START = ((uint8_t) 0x04),                 //!< Initialization
-	SHA_MODE_HMAC_UPDATE = ((uint8_t) 0x05),                //!<
-	SHA_MODE_HMAC_END = ((uint8_t) 0x04)                    //!<
-} enum_sha_mode;
-#define SHA_SHA256_START_MASK               ((uint8_t)0x00) //!< Initialization, does not accept a message
-#define SHA_SHA256_UPDATE_MASK              ((uint8_t)0x01) //!< Add 64 bytes in the meesage to the SHA context
-#define SHA_SHA256_END_MASK                 ((uint8_t)0x02) //!< Complete the calculation and load the digest
-#define SHA_SHA256_PUBLIC_MASK              ((uint8_t)0x03) //!< Add 64 bytes in the slot to the SHA context
-#define SHA_HMAC_START_MASK                 ((uint8_t)0x04) //!< Initialization
-#define SHA_HMAC_END_MASK                   ((uint8_t)0x05) //!< Complete the HMAC/SHA256 computation
+#define SHA_MODE_SHA256_START               ((uint8_t)0x00) //!< Initialization, does not accept a message
+#define SHA_MODE_SHA256_UPDATE              ((uint8_t)0x01) //!< Add 64 bytes in the meesage to the SHA context
+#define SHA_MODE_SHA256_END                 ((uint8_t)0x02) //!< Complete the calculation and return the digest
+#define SHA_MODE_SHA256_PUBLIC              ((uint8_t)0x03) //!< Add 64 byte ECC public key in the slot to the SHA context
+#define SHA_MODE_HMAC_START                 ((uint8_t)0x04) //!< Initialization, HMAC calculation
+#define SHA_MODE_HMAC_UPDATE                ((uint8_t)0x01) //!< Add 64 bytes in the meesage to the SHA context
+#define SHA_MODE_HMAC_END                   ((uint8_t)0x05) //!< Complete the HMAC computation and return digest
 /** @} */
 
 
@@ -365,6 +359,7 @@ typedef enum {
 #define DERIVE_KEY_TARGETKEY_IDX        ATCA_PARAM2_IDX     //!< DeriveKey command index for target slot
 #define DERIVE_KEY_MAC_IDX              ATCA_DATA_IDX       //!< DeriveKey command index for optional MAC
 #define DERIVE_KEY_COUNT_SMALL          ATCA_CMD_SIZE_MIN   //!< DeriveKey command packet size without MAC
+#define DERIVE_KEY_MODE                 ((uint8_t)0x04)     //!< DeriveKey command mode set to 4 as in datasheet
 #define DERIVE_KEY_COUNT_LARGE          (39)                //!< DeriveKey command packet size with MAC
 #define DERIVE_KEY_RANDOM_FLAG          ((uint8_t)4)        //!< DeriveKey 1. parameter; has to match TempKey.SourceFlag
 #define DERIVE_KEY_MAC_SIZE             (32)                //!< DeriveKey MAC size
@@ -376,11 +371,12 @@ typedef enum {
 #define GENDIG_KEYID_IDX            ATCA_PARAM2_IDX     //!< GenDig command index for key id
 #define GENDIG_DATA_IDX             ATCA_DATA_IDX       //!< GenDig command index for optional data
 #define GENDIG_COUNT                ATCA_CMD_SIZE_MIN   //!< GenDig command packet size without "other data"
-#define GENDIG_COUNT_DATA           (11)                //!< GenDig command packet size with "other data"
-#define GENDIG_OTHER_DATA_SIZE      (32)                //!< GenDig size of "other data".  Is 4 bytes for SHA204, can be either 4 or 32 for ECC
-#define GENDIG_ZONE_CONFIG          ((uint8_t)0)        //!< GenDig zone id config
-#define GENDIG_ZONE_OTP             ((uint8_t)1)        //!< GenDig zone id OTP
-#define GENDIG_ZONE_DATA            ((uint8_t)2)        //!< GenDig zone id data
+#define GENDIG_ZONE_CONFIG          ((uint8_t)0)        //!< GenDig zone id config. Use KeyID to specify any of the four 256-bit blocks of the Configuration zone.
+#define GENDIG_ZONE_OTP             ((uint8_t)1)        //!< GenDig zone id OTP. Use KeyID to specify either the first or second 256-bit block of the OTP zone.
+#define GENDIG_ZONE_DATA            ((uint8_t)2)        //!< GenDig zone id data. Use KeyID to specify a slot in the Data zone or a transport key in the hardware array.
+#define GENDIG_ZONE_SHARED_NONCE    ((uint8_t)3)        //!< GenDig zone id shared nonce. KeyID specifies the location of the input value in the message generation.
+#define GENDIG_ZONE_COUNTER         ((uint8_t)4)        //!< GenDig zone id counter. KeyID specifies the monotonic counter ID to be included in the message generation.
+#define GENDIG_ZONE_KEY_CONFIG      ((uint8_t)5)        //!< GenDig zone id key config. KeyID specifies the slot for which the configuration information is to be included in the message generation.
 /** @} */
 
 /** \name Definitions for the GenKey Command
@@ -394,13 +390,8 @@ typedef enum {
 #define GENKEY_MODE_MASK            ((uint8_t)0x1C)         //!< GenKey mode bits 0 to 1 and 5 to 7 are 0
 #define GENKEY_MODE_PRIVATE         ((uint8_t)0x04)         //!< GenKey mode: private key generation
 #define GENKEY_MODE_PUBLIC          ((uint8_t)0x00)         //!< GenKey mode: public key calculation
-#define GENKEY_MODE_DIGEST          ((uint8_t)0x10)         //!< GenKey mode: digest calculation
-#define GENKEY_MODE_ADD_DIGEST      ((uint8_t)0x08)         //!< GenKey mode: additional digest calculation
-typedef enum {
-	GENKEY_MODE_PRIVATE_KEY_GENERATE = ((uint8_t) 0x04),    //!< Private Key Creation
-	GENKEY_MODE_PUBLIC_KEY_DIGEST = ((uint8_t) 0x08),       //!< Public Key Computation
-	GENKEY_MODE_DIGEST_IN_TEMPKEY = ((uint8_t) 0x10)        //!< Digest Calculation
-} enum_genkey_mode;
+#define GENKEY_MODE_DIGEST          ((uint8_t)0x08)         //!< GenKey mode: PubKey digest will be created after the public key is calculated
+#define GENKEY_MODE_PUBKEY_DIGEST   ((uint8_t)0x10)         //!< GenKey mode: Calculate PubKey digest on the public key in KeyId
 /** @} */
 /** \name Definitions for the GENKEY Command
    @{ */
@@ -412,8 +403,13 @@ typedef enum {
 #define HMAC_MODE_IDX               ATCA_PARAM1_IDX     //!< HMAC command index for mode
 #define HMAC_KEYID_IDX              ATCA_PARAM2_IDX     //!< HMAC command index for key id
 #define HMAC_COUNT                  ATCA_CMD_SIZE_MIN   //!< HMAC command packet size
-#define HMAC_MODE_SOURCE_FLAG_MATCH ((uint8_t)0x04)     //!< HMAC mode bit 2: match TempKey.SourceFlag
+#define HMAC_MODE_FLAG_TK_RAND      ((uint8_t)0x00)     //!< HMAC mode bit 2: The value of this bit must match the value in TempKey.SourceFlag or the command will return an error.
+#define HMAC_MODE_FLAG_TK_NORAND    ((uint8_t)0x04)     //!< HMAC mode bit 2: The value of this bit must match the value in TempKey.SourceFlag or the command will return an error.
+#define HMAC_MODE_FLAG_OTP88        ((uint8_t)0x10)     //!< HMAC mode bit 4: Include the first 88 OTP bits (OTP[0] through OTP[10]) in the message.; otherwise, the corresponding message bits are set to zero. Not applicable for ATECC508A.
+#define HMAC_MODE_FLAG_OTP64        ((uint8_t)0x20)     //!< HMAC mode bit 5: Include the first 64 OTP bits (OTP[0] through OTP[7]) in the message.; otherwise, the corresponding message bits are set to zero. If Mode[4] is set, the value of this mode bit is ignored. Not applicable for ATECC508A.
+#define HMAC_MODE_FLAG_FULLSN       ((uint8_t)0x40)     //!< HMAC mode bit 6: If set, include the 48 bits SN[2:3] and SN[4:7] in the message.; otherwise, the corresponding message bits are set to zero.
 #define HMAC_MODE_MASK              ((uint8_t)0x74)     //!< HMAC mode bits 0, 1, 3, and 7 are 0.
+#define HMAC_DIGEST_SIZE            (32)                //!< HMAC size of digest response
 /** @} */
 
 /** \name Definitions for the Info Command
@@ -443,6 +439,8 @@ typedef enum {
 #define LOCK_ZONE_DATA_SLOT         ((uint8_t)0x02)     //!< Lock slot of Data
 #define LOCK_ZONE_NO_CRC            ((uint8_t)0x80)     //!< Lock command: Ignore summary.
 #define LOCK_ZONE_MASK              (0xBF)              //!< Lock parameter 1 bits 6 are 0.
+#define ATCA_UNLOCKED               (0x55)              //!< Value indicating an unlocked zone
+#define ATCA_LOCKED                 (0x00)              //!< Value indicating a locked zone
 /** @} */
 
 /** \name Definitions for the MAC Command
@@ -527,6 +525,7 @@ typedef enum {
 #define SIGN_COUNT                  ATCA_CMD_SIZE_MIN   //!< Sign command packet size
 #define SIGN_MODE_MASK              ((uint8_t)0xC0)     //!< Sign mode bits 0 to 5 are 0
 #define SIGN_MODE_INTERNAL          ((uint8_t)0x00)     //!< Sign mode	 0: internal
+#define SIGN_MODE_INVALIDATE        ((uint8_t)0x01)     //!< Sign mode bit 1: Signature will be used for Verify(Invalidate)
 #define SIGN_MODE_INCLUDE_SN        ((uint8_t)0x40)     //!< Sign mode bit 6: include serial number
 #define SIGN_MODE_EXTERNAL          ((uint8_t)0x80)     //!< Sign mode bit 7: external
 /** @} */
@@ -536,7 +535,9 @@ typedef enum {
 #define UPDATE_MODE_IDX             ATCA_PARAM1_IDX     //!< UpdateExtra command index for mode
 #define UPDATE_VALUE_IDX            ATCA_PARAM2_IDX     //!< UpdateExtra command index for new value
 #define UPDATE_COUNT                ATCA_CMD_SIZE_MIN   //!< UpdateExtra command packet size
-#define UPDATE_CONFIG_BYTE_85       ((uint8_t)0x01)     //!< UpdateExtra mode: update Config byte 85
+#define UPDATE_MODE_USER_EXTRA      ((uint8_t)0x00)     //!< UpdateExtra mode: update Config byte 84 (user extra)
+#define UPDATE_MODE_SELECTOR        ((uint8_t)0x01)     //!< UpdateExtra mode: update Config byte 85 (selector)
+#define UPDATE_MODE_DEC_COUNTER     ((uint8_t)0x02)     //!< UpdateExtra mode: decrement counter
 /** @} */
 
 /** \name Definitions for the Verify Command
@@ -557,7 +558,7 @@ typedef enum {
 #define VERIFY_OTHER_DATA_SIZE      ( 19)                   //!< Verify size of "other data"
 #define VERIFY_MODE_MASK            ((uint8_t)0x03)         //!< Verify mode bits 2 to 7 are 0
 #define VERIFY_MODE_STORED          ((uint8_t)0x00)         //!< Verify mode: stored
-#define VERIFY_MODE_VALIDATEEXTERNAL  ((uint8_t)0x01)       //!< Verify mode: validate external
+#define VERIFY_MODE_VALIDATE_EXTERNAL  ((uint8_t)0x01)      //!< Verify mode: validate external
 #define VERIFY_MODE_EXTERNAL        ((uint8_t)0x02)         //!< Verify mode: external
 #define VERIFY_MODE_VALIDATE        ((uint8_t)0x03)         //!< Verify mode: validate
 #define VERIFY_MODE_INVALIDATE      ((uint8_t)0x07)         //!< Verify mode: invalidate
@@ -573,10 +574,6 @@ typedef enum {
 #define WRITE_VALUE_IDX             ATCA_DATA_IDX       //!< Write command index for data
 #define WRITE_MAC_VS_IDX            ( 9)                //!< Write command index for MAC following short data
 #define WRITE_MAC_VL_IDX            (37)                //!< Write command index for MAC following long data
-#define WRITE_COUNT_SHORT           (11)                //!< Write command packet size with short data and no MAC
-#define WRITE_COUNT_LONG            (39)                //!< Write command packet size with long data and no MAC
-#define WRITE_COUNT_SHORT_MAC       (43)                //!< Write command packet size with short data and MAC
-#define WRITE_COUNT_LONG_MAC        (71)                //!< Write command packet size with long data and MAC
 #define WRITE_MAC_SIZE              (32)                //!< Write MAC size
 #define WRITE_ZONE_MASK             ((uint8_t)0xC3)     //!< Write zone bits 2 to 5 are 0.
 #define WRITE_ZONE_WITH_MAC         ((uint8_t)0x40)     //!< Write zone bit 6: write encrypted with MAC

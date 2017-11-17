@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tls_20integration_20with_20atecc_20_28atcatls_5f_29',['TLS integration with ATECC (atcatls_)',['../a00197.html',1,'']]]
+  ['software_20crypto_20methods_20_28atcac_5f_29',['Software crypto methods (atcac_)',['../a00225.html',1,'']]]
 ];

@@ -1,10 +1,16 @@
 var a00029 =
 [
-    [ "auth_mac", "a00196.html#gadba80ba366b7bb6bda6cf8c6c481f319", null ],
-    [ "encrypted_data", "a00196.html#gad829fd59b808ca98af44ce6ac80622ce", null ],
-    [ "encryption_key", "a00196.html#ga7cbd8a1ad04e5e924f6b56aca2c5a857", null ],
-    [ "input_data", "a00196.html#gade4f0da9c721091ec1fa39dcb4976c2a", null ],
-    [ "key_id", "a00196.html#ga3eedc11953a89e931ede529eb72592ac", null ],
-    [ "temp_key", "a00196.html#gaa17e031da4b22938bed1c21161ba371a", null ],
-    [ "zone", "a00196.html#ga828b8f8a58cd9813deb365aab404c850", null ]
+    [ "digest", "a00029.html#a0b448fbaa0c4f1770b7c3f53acf265c5", null ],
+    [ "for_invalidate", "a00029.html#ac3544274ceb4f8950b3a5fe6640be634", null ],
+    [ "is_slot_locked", "a00029.html#afaeb2ef8df7a105b7f93a9fdb82fd6e8", null ],
+    [ "key_config", "a00029.html#af209160ffa65b538728640eb34e4be75", null ],
+    [ "key_id", "a00029.html#ac21eed4200889cc115d16a781871d01c", null ],
+    [ "message", "a00029.html#a35f4a3225daf3021decdc4ecea74fa46", null ],
+    [ "mode", "a00029.html#a37e90f5e3bd99fac2021fb3a326607d4", null ],
+    [ "slot_config", "a00029.html#a547704fabd162cdaa3d5ce84a111a3fc", null ],
+    [ "sn", "a00029.html#aef45bac2efcd5394c4ed79f73ee16d23", null ],
+    [ "temp_key", "a00029.html#a714b07e0515fd9d20714a4fc2a16c03e", null ],
+    [ "update_count", "a00029.html#a4a25483bf435220f212cbe8f0327b0a6", null ],
+    [ "use_flag", "a00029.html#a0aea6a2aaa9c7c3368d6a394d4c9ae05", null ],
+    [ "verify_other_data", "a00029.html#a04c0e9b276020bed4ed3d7d670ed3881", null ]
 ];

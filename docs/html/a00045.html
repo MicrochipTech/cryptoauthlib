@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: atcaSWImaster Struct Reference</title>
+<title>CryptoAuthLib: atcaI2Cmaster Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -109,33 +109,52 @@ $(document).ready(function(){initNavTree('a00045.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atcaSWImaster Struct Reference<div class="ingroups"><a class="el" href="a00195.html">Hardware abstraction layer (hal_)</a></div></div>  </div>
+<div class="title">atcaI2Cmaster Struct Reference<div class="ingroups"><a class="el" href="a00226.html">Hardware abstraction layer (hal_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the hal_data for ATCA HAL.  
+<p>this is the hal_data for ATCA HAL created using ASF  
  <a href="a00045.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="a00130_source.html">hal_swi_bitbang.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a00123_source.html">hal_at90usb1287_i2c_asf.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:afd6d53ef6b697533839248b40bc97861"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#afd6d53ef6b697533839248b40bc97861">pin_sda</a></td></tr>
-<tr class="separator:afd6d53ef6b697533839248b40bc97861"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fa5d175fefe82a0c13cc0f7afbf5593"><td class="memItemLeft" align="right" valign="top">int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a6fa5d175fefe82a0c13cc0f7afbf5593">i2c_master_instance</a></td></tr>
+<tr class="separator:a6fa5d175fefe82a0c13cc0f7afbf5593"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad72ba8c994f4d0e5ce354e17f7c427c0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ad72ba8c994f4d0e5ce354e17f7c427c0">ref_ct</a></td></tr>
+<tr class="separator:ad72ba8c994f4d0e5ce354e17f7c427c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5c011e6c2e8d49675f7029e8ec2c0a6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#af5c011e6c2e8d49675f7029e8ec2c0a6">bus_index</a></td></tr>
 <tr class="memdesc:af5c011e6c2e8d49675f7029e8ec2c0a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">for conveniences during interface release phase  <a href="#af5c011e6c2e8d49675f7029e8ec2c0a6">More...</a><br /></td></tr>
 <tr class="separator:af5c011e6c2e8d49675f7029e8ec2c0a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d29ab9b8f0842ee9a2906302b20011d"><td class="memItemLeft" align="right" valign="top">struct usart_module&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a2d29ab9b8f0842ee9a2906302b20011d">usart_instance</a></td></tr>
-<tr class="separator:a2d29ab9b8f0842ee9a2906302b20011d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7758bb1b871f6094e6d2f0c2ce10b18c"><td class="memItemLeft" align="right" valign="top">struct usart_sync_descriptor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a7758bb1b871f6094e6d2f0c2ce10b18c">USART_SWI</a></td></tr>
-<tr class="separator:a7758bb1b871f6094e6d2f0c2ce10b18c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1dd3236df177255a91b568170b70a74"><td class="memItemLeft" align="right" valign="top">usart_if&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ad1dd3236df177255a91b568170b70a74">usart_instance</a></td></tr>
-<tr class="separator:ad1dd3236df177255a91b568170b70a74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada591700ce06dd3a6bb9722a6eba38c4"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ada591700ce06dd3a6bb9722a6eba38c4">pin_sda</a></td></tr>
+<tr class="separator:ada591700ce06dd3a6bb9722a6eba38c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01c1392fd38975adfd6c1c7849b3fa50"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a01c1392fd38975adfd6c1c7849b3fa50">pin_scl</a></td></tr>
+<tr class="separator:a01c1392fd38975adfd6c1c7849b3fa50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a386ecc3f01d8b317bc512cab194d844f"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a386ecc3f01d8b317bc512cab194d844f">i2c_file</a> [16]</td></tr>
+<tr class="separator:a386ecc3f01d8b317bc512cab194d844f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10c34d148db33a5f64c3730a163fb7a7"><td class="memItemLeft" align="right" valign="top">I2C_MODULE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a10c34d148db33a5f64c3730a163fb7a7">id</a></td></tr>
+<tr class="separator:a10c34d148db33a5f64c3730a163fb7a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fafe5e32d17ee114246e3ccac81ee9f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a0fafe5e32d17ee114246e3ccac81ee9f">twi_id</a></td></tr>
+<tr class="separator:a0fafe5e32d17ee114246e3ccac81ee9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9f68faa090564cdbe2d7217be324f16"><td class="memItemLeft" align="right" valign="top">Twi *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ad9f68faa090564cdbe2d7217be324f16">twi_master_instance</a></td></tr>
+<tr class="separator:ad9f68faa090564cdbe2d7217be324f16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fa5d175fefe82a0c13cc0f7afbf5593"><td class="memItemLeft" align="right" valign="top">struct i2c_master_module&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a6fa5d175fefe82a0c13cc0f7afbf5593">i2c_master_instance</a></td></tr>
+<tr class="separator:a6fa5d175fefe82a0c13cc0f7afbf5593"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a335b4a621ab538c5a42160a5a14c161f"><td class="memItemLeft" align="right" valign="top">struct i2c_m_sync_desc&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a335b4a621ab538c5a42160a5a14c161f">i2c_master_instance</a></td></tr>
+<tr class="separator:a335b4a621ab538c5a42160a5a14c161f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b6de52fe5fd845e113c0ce337180de4"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a6b6de52fe5fd845e113c0ce337180de4">twi_module</a></td></tr>
+<tr class="separator:a6b6de52fe5fd845e113c0ce337180de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad60966bca127551f6271719dd9921045"><td class="memItemLeft" align="right" valign="top">twi_master_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ad60966bca127551f6271719dd9921045">i2c_master_instance</a></td></tr>
+<tr class="separator:ad60966bca127551f6271719dd9921045"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This is the hal_data for ATCA HAL. </p>
-<p>this is the hal_data for ATCA HAL for SWI UART</p>
-<p>this is the hal_data for ATCA HAL for ASF SERCOM </p>
+<div class="textblock"><p>this is the hal_data for ATCA HAL created using ASF </p>
+<p>this is the hal_data for ATCA HAL for Atmel START SERCOM</p>
+<p>this is the hal_data for ATCA HAL for ASF SERCOM</p>
+<p>this is the hal_data for ATCA HAL for ASF</p>
+<p>this is the hal_data for ATCA HAL</p>
+<p>This is the hal_data for ATCA HAL. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a class="anchor" id="af5c011e6c2e8d49675f7029e8ec2c0a6"></a>
 <div class="memitem">
@@ -151,48 +170,144 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afd6d53ef6b697533839248b40bc97861"></a>
+<a class="anchor" id="a386ecc3f01d8b317bc512cab194d844f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t pin_sda</td>
+          <td class="memname">char i2c_file[16]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ad1dd3236df177255a91b568170b70a74"></a>
+<a class="anchor" id="ad60966bca127551f6271719dd9921045"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">usart_if usart_instance</td>
+          <td class="memname">twi_master_t i2c_master_instance</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a2d29ab9b8f0842ee9a2906302b20011d"></a>
+<a class="anchor" id="a6fa5d175fefe82a0c13cc0f7afbf5593"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct usart_module usart_instance</td>
+          <td class="memname">struct i2c_master_module i2c_master_instance</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a7758bb1b871f6094e6d2f0c2ce10b18c"></a>
+<a class="anchor" id="a335b4a621ab538c5a42160a5a14c161f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct usart_sync_descriptor USART_SWI</td>
+          <td class="memname">struct i2c_m_sync_desc i2c_master_instance</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6fa5d175fefe82a0c13cc0f7afbf5593"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct i2c_master_module i2c_master_instance</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a10c34d148db33a5f64c3730a163fb7a7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">I2C_MODULE id</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a01c1392fd38975adfd6c1c7849b3fa50"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t pin_scl</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ada591700ce06dd3a6bb9722a6eba38c4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t pin_sda</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ad72ba8c994f4d0e5ce354e17f7c427c0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ref_ct</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0fafe5e32d17ee114246e3ccac81ee9f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t twi_id</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ad9f68faa090564cdbe2d7217be324f16"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Twi * twi_master_instance</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6b6de52fe5fd845e113c0ce337180de4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t twi_module</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -204,7 +319,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00045.html">atcaSWImaster</a></li>
+    <li class="navelem"><a class="el" href="a00045.html">atcaI2Cmaster</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

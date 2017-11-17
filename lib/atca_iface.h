@@ -3,14 +3,13 @@
  *
  * \brief  Atmel Crypto Auth hardware interface object
  *
- * Copyright (c) 2015 Atmel Corporation. All rights reserved.
- *
- * \atmel_crypto_device_library_license_start
+ * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
  *
  * \page License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * You are permitted to use this software and its derivatives with Microchip
+ * products. Redistribution and use in source and binary forms, with or without
+ * modification, is permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
@@ -19,16 +18,16 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  *
- * 3. The name of Atmel may not be used to endorse or promote products derived
+ * 3. The name of Microchip may not be used to endorse or promote products derived
  *    from this software without specific prior written permission.
  *
- * 4. This software may only be redistributed and used in connection with an
- *    Atmel integrated circuit.
+ * 4. This software may only be redistributed and used in connection with a
+ *    Microchip integrated circuit.
  *
- * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
+ * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
+ * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
@@ -36,8 +35,6 @@
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
- * \atmel_crypto_device_library_license_stop
  */
 
 #ifndef ATCA_IFACE_H
@@ -55,13 +52,16 @@ extern "C" {
 
 #include "atca_command.h"
 
-typedef enum {
-	ATCA_I2C_IFACE,
-	ATCA_SWI_IFACE,
-	ATCA_UART_IFACE,
-	ATCA_SPI_IFACE,
-	ATCA_HID_IFACE
-	// additional physical interface types here
+typedef enum
+{
+    ATCA_I2C_IFACE,
+    ATCA_SWI_IFACE,
+    ATCA_UART_IFACE,
+    ATCA_SPI_IFACE,
+    ATCA_HID_IFACE,
+    ATCA_SIM_IFACE,
+    // additional physical interface types here
+    ATCA_UNKNOWN_IFACE,
 } ATCAIfaceType;
 
 /* ATCAIfaceCfg is a mediator object between a completely abstract notion of a physical interface and an actual physical interface.
@@ -71,43 +71,55 @@ typedef enum {
     roughly the same parameters regardless of architecture and framework.  I2C
  */
 
-typedef struct {
+typedef struct
+{
 
-	ATCAIfaceType iface_type;       // active iface - how to interpret the union below
-	ATCADeviceType devtype;         // explicit device type
+    ATCAIfaceType  iface_type;      // active iface - how to interpret the union below
+    ATCADeviceType devtype;         // explicit device type
 
-	union {                         // each instance of an iface cfg defines a single type of interface
-		struct ATCAI2C {
-			uint8_t slave_address;  // 8-bit slave address
-			uint8_t bus;            // logical i2c bus number, 0-based - HAL will map this to a pin pair for SDA SCL
-			uint32_t baud;          // typically 400000
-		} atcai2c;
+    union                           // each instance of an iface cfg defines a single type of interface
+    {
+        struct ATCAI2C
+        {
+            uint8_t  slave_address; // 8-bit slave address
+            uint8_t  bus;           // logical i2c bus number, 0-based - HAL will map this to a pin pair for SDA SCL
+            uint32_t baud;          // typically 400000
+        } atcai2c;
 
-		struct ATCASWI {
-			uint8_t bus;        // logical SWI bus - HAL will map this to a pin	or uart port
-		} atcaswi;
+        struct ATCASWI
+        {
+            uint8_t bus;        // logical SWI bus - HAL will map this to a pin	or uart port
+        } atcaswi;
 
-		struct ATCAUART {
-			int port;           // logic port number
-			uint32_t baud;      // typically 115200
-			uint8_t wordsize;   // usually 8
-			uint8_t parity;     // 0 == even, 1 == odd, 2 == none
-			uint8_t stopbits;   // 0,1,2
-		} atcauart;
+        struct ATCAUART
+        {
+            int      port;      // logic port number
+            uint32_t baud;      // typically 115200
+            uint8_t  wordsize;  // usually 8
+            uint8_t  parity;    // 0 == even, 1 == odd, 2 == none
+            uint8_t  stopbits;  // 0,1,2
+        } atcauart;
 
-		struct ATCAHID {
-			int idx;                // HID enumeration index
-			uint32_t vid;           // Vendor ID of kit (0x03EB for CK101)
-			uint32_t pid;           // Product ID of kit (0x2312 for CK101)
-			uint32_t packetsize;    // Size of the USB packet
-			uint8_t guid[16];       // The GUID for this HID device
-		} atcahid;
+        struct ATCAHID
+        {
+            int      idx;           // HID enumeration index
+            uint32_t vid;           // Vendor ID of kit (0x03EB for CK101)
+            uint32_t pid;           // Product ID of kit (0x2312 for CK101)
+            uint32_t packetsize;    // Size of the USB packet
+            uint8_t  guid[16];      // The GUID for this HID device
+        } atcahid;
 
-	};
+        struct ATCASIM
+        {
+            int     device_id;  // Unsupported, must be 0. Change to reference different simulation instances.
+            uint8_t dev_rev[4]; // DevRev to request
+        } atcasim;
 
-	uint16_t wake_delay;    // microseconds of tWHI + tWLO which varies based on chip type
-	int rx_retries;         // the number of retries to attempt for receiving bytes
-	void     *cfg_data;     // opaque data used by HAL in device discovery
+    };
+
+    uint16_t wake_delay;    // microseconds of tWHI + tWLO which varies based on chip type
+    int      rx_retries;    // the number of retries to attempt for receiving bytes
+    void *   cfg_data;      // opaque data used by HAL in device discovery
 } ATCAIfaceCfg;
 
 typedef struct atca_iface * ATCAIface;
@@ -125,7 +137,7 @@ ATCA_STATUS atsleep(ATCAIface caiface);
 ATCAIfaceCfg * atgetifacecfg(ATCAIface caiface);
 void* atgetifacehaldat(ATCAIface caiface);
 
-void deleteATCAIface( ATCAIface *dev );      // destructor
+void deleteATCAIface(ATCAIface *dev);        // destructor
 /*---- end of OATCAIface ----*/
 
 #ifdef __cplusplus

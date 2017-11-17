@@ -1,12 +1,9 @@
 var a00130 =
 [
-    [ "AT88CK9000", "a00130.html#a7fd906f26f53c831071de1d2fc04eccf", null ],
-    [ "NO_TARGET_BOARD", "a00130.html#a3dee547ba249d0b9325bc17afb14892e", null ],
-    [ "ATCASWIMaster_t", "a00195.html#ga257ed552f7d68eb1e5d3ca7baa01559a", null ],
-    [ "swi_flag", "a00195.html#ga8759b00e645502d0f1c3b7330e20e52b", [
-      [ "SWI_FLAG_CMD", "a00195.html#gga8759b00e645502d0f1c3b7330e20e52babacdf58fcbc837d4c4e6d9640e157340", null ],
-      [ "SWI_FLAG_TX", "a00195.html#gga8759b00e645502d0f1c3b7330e20e52ba17fa7af18b61921986085f42fc05cc9f", null ],
-      [ "SWI_FLAG_IDLE", "a00195.html#gga8759b00e645502d0f1c3b7330e20e52baeb0778b0887019be95260a2c0420d21a", null ],
-      [ "SWI_FLAG_SLEEP", "a00195.html#gga8759b00e645502d0f1c3b7330e20e52ba1d93b236433ad7d6c2b82659009f42f7", null ]
-    ] ]
+    [ "CDC_BUFFER_MAX", "a00226.html#ga5ac8c9377f90d6ce3044f81f900a54fe", null ],
+    [ "CDC_DEVICES_MAX", "a00226.html#ga08b6c05184266dc4d5c8727bb9c1c754", null ],
+    [ "INVALID_HANDLE_VALUE", "a00226.html#ga5fdc7facea201bfce4ad308105f88d0c", null ],
+    [ "atcacdc_t", "a00226.html#ga2df85bfd309840b4c9a5087e053d4811", null ],
+    [ "cdc_device_t", "a00226.html#ga99ee56102171adcbcecb8a78fb9fa895", null ],
+    [ "HANDLE", "a00226.html#ga069bb8cb95b0528d5ce0304bb5561a40", null ]
 ];

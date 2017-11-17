@@ -1,12 +1,15 @@
 var a00155 =
 [
-    [ "swi_disable", "a00155.html#af016fffdce9f520096de8631e6692707", null ],
-    [ "swi_enable", "a00155.html#ad78929b51b34df503a37b4961577d5ce", null ],
-    [ "swi_receive_bytes", "a00155.html#afa009f7d683cb82293570a27d1f8ee10", null ],
-    [ "swi_send_byte", "a00155.html#a1c5ab22e67923ee54eef0e33b227be0b", null ],
-    [ "swi_send_bytes", "a00155.html#af0382e26c4d83b0762b39d12c772dd2e", null ],
-    [ "swi_send_wake_token", "a00155.html#ada6b4629603758b67820568677ab2a19", null ],
-    [ "swi_set_pin", "a00155.html#a076fc28889d32327dd3372538106da92", null ],
-    [ "swi_set_signal_pin", "a00155.html#a79bc8f2b72647fce853274cf8474b41e", null ],
-    [ "swi_buses_default", "a00155.html#a8ba5507b651724b4cdc74106a16b025c", null ]
+    [ "hal_swi_discover_buses", "a00226.html#ga53864a301dac6efbdbdc3931aa79e23e", null ],
+    [ "hal_swi_discover_devices", "a00226.html#ga7aeab32af6dde57ee3afcfb8ec802a2e", null ],
+    [ "hal_swi_idle", "a00226.html#ga618291172976da96c4f02dc9200c845c", null ],
+    [ "hal_swi_init", "a00226.html#gaf406053c1a3f2a86bdc887f2ff4b663d", null ],
+    [ "hal_swi_post_init", "a00226.html#ga9186e5235979216330ae580290872c77", null ],
+    [ "hal_swi_receive", "a00226.html#ga02e9f36723f0feb21d373898728de04b", null ],
+    [ "hal_swi_release", "a00226.html#ga196dbc62546b39ac3e556a0f7f6b7132", null ],
+    [ "hal_swi_send", "a00226.html#gaeb8b8857192a7710785acce0110e8016", null ],
+    [ "hal_swi_sleep", "a00226.html#ga252e365a30f2583dae8a8eac073a9f53", null ],
+    [ "hal_swi_wake", "a00226.html#gafc428980ec95e37eee94813db229fe70", null ],
+    [ "swi_bus_ref_ct", "a00226.html#ga4656caa5bd357cc71fe66f4522d89e3f", null ],
+    [ "swi_hal_data", "a00226.html#ga95ca8e0b044cf56e85a8c581a4c703da", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: test_atcacert_def_runner.c File Reference</title>
+<title>CryptoAuthLib: hal_xmega_a3bu_i2c_asf.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,566 +106,55 @@ $(document).ready(function(){initNavTree('a00168.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">test_atcacert_def_runner.c File Reference</div>  </div>
+<div class="title">hal_xmega_a3bu_i2c_asf.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="a00182_source.html">test/unity.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00184_source.html">test/unity_fixture.h</a>&quot;</code><br />
-</div><table class="memberdecls">
+
+<p>ATCA Hardware abstraction layer for XMEGA-A3BU I2C over ASF drivers.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;asf.h&gt;</code><br />
+<code>#include &quot;twi_master.h&quot;</code><br />
+</div>
+<p><a href="a00168_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html">atcaI2Cmaster</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">this is the hal_data for ATCA HAL created using ASF  <a href="a00045.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaf89a7a4080a47aa10a5504291db285bf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gaf89a7a4080a47aa10a5504291db285bf">MAX_I2C_BUSES</a>&#160;&#160;&#160;4</td></tr>
+<tr class="separator:gaf89a7a4080a47aa10a5504291db285bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gae8f36006f14bf6a9f4914bac69ed9f98"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00045.html">atcaI2Cmaster</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gae8f36006f14bf6a9f4914bac69ed9f98">ATCAI2CMaster_t</a></td></tr>
+<tr class="memdesc:gae8f36006f14bf6a9f4914bac69ed9f98"><td class="mdescLeft">&#160;</td><td class="mdescRight">this is the hal_data for ATCA HAL created using ASF  <a href="a00226.html#gae8f36006f14bf6a9f4914bac69ed9f98">More...</a><br /></td></tr>
+<tr class="separator:gae8f36006f14bf6a9f4914bac69ed9f98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a04cd4a728e5911dc2f6bd0e031d5e1b0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a04cd4a728e5911dc2f6bd0e031d5e1b0">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#gad93de2bdacdcfe04abb0e991a8401388">atcacert_get_key_id</a>)</td></tr>
-<tr class="separator:a04cd4a728e5911dc2f6bd0e031d5e1b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae96c240b6a32d2cab4e8d6108811fda4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#ae96c240b6a32d2cab4e8d6108811fda4">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga5e6494ab69250fbbe76404c9cd352b41">atcacert_set_cert_element</a>)</td></tr>
-<tr class="separator:ae96c240b6a32d2cab4e8d6108811fda4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae77ecca2517ab189d45a31c584abf0c6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#ae77ecca2517ab189d45a31c584abf0c6">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga038f8ed6cba2fee11a37840629d9039c">atcacert_get_cert_element</a>)</td></tr>
-<tr class="separator:ae77ecca2517ab189d45a31c584abf0c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a731e38b34cb9cd7d7f4a111897e6baa5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a731e38b34cb9cd7d7f4a111897e6baa5">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga7337facc592df42d585b22345e333ae3">atcacert_public_key_add_padding</a>)</td></tr>
-<tr class="separator:a731e38b34cb9cd7d7f4a111897e6baa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83f82ded276a304a1c43252067b13388"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a83f82ded276a304a1c43252067b13388">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#gadb83dfb792f1e6e90ce6a3d39f64e129">atcacert_public_key_remove_padding</a>)</td></tr>
-<tr class="separator:a83f82ded276a304a1c43252067b13388"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac997fc33d4b96e5e2d14c9224de45788"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#ac997fc33d4b96e5e2d14c9224de45788">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga4c4d5fe988ebface171689f3aa122e12">atcacert_set_subj_public_key</a>)</td></tr>
-<tr class="separator:ac997fc33d4b96e5e2d14c9224de45788"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a113380c512143a1cae14d8b11dc10fac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a113380c512143a1cae14d8b11dc10fac">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#gab4fac3fd2bf5a227140cc3012a4dad02">atcacert_get_subj_public_key</a>)</td></tr>
-<tr class="separator:a113380c512143a1cae14d8b11dc10fac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4eaaf5bfd6c7f87d7978dc82968814d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a4eaaf5bfd6c7f87d7978dc82968814d4">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga2843ebd40b7f0b6b4bf22cd447fa90e0">atcacert_get_subj_key_id</a>)</td></tr>
-<tr class="separator:a4eaaf5bfd6c7f87d7978dc82968814d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aebfb89cd4feddba0007b01c61c6dcc22"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#aebfb89cd4feddba0007b01c61c6dcc22">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#gaf1f3cdf5e1e65c9abcbe98ae046d9bf2">atcacert_set_signature</a>)</td></tr>
-<tr class="separator:aebfb89cd4feddba0007b01c61c6dcc22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20a427f9fa4df89cbaf6a8abe69dba5e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a20a427f9fa4df89cbaf6a8abe69dba5e">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#gaf55b75df5e523e2d275ebb8cbe36fec6">atcacert_get_signature</a>)</td></tr>
-<tr class="separator:a20a427f9fa4df89cbaf6a8abe69dba5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33efca42fa523920aa7ad0c83fb726fd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a33efca42fa523920aa7ad0c83fb726fd">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga36d4893ccd152a8ec18f84f90a5e3cb5">atcacert_set_issue_date</a>)</td></tr>
-<tr class="separator:a33efca42fa523920aa7ad0c83fb726fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a0d25d72998081b369869e926a203aa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a6a0d25d72998081b369869e926a203aa">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga51f7b996909bc9cae783bcaf0fe7082b">atcacert_get_issue_date</a>)</td></tr>
-<tr class="separator:a6a0d25d72998081b369869e926a203aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af079a2d2b372390145b568c4253347ab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#af079a2d2b372390145b568c4253347ab">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#gad499cd0bdce799a3278f99c80e0f9143">atcacert_set_expire_date</a>)</td></tr>
-<tr class="separator:af079a2d2b372390145b568c4253347ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97ce54e2776bd88b6e02c4e91f9b2f0d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a97ce54e2776bd88b6e02c4e91f9b2f0d">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga8d1d761d35cf36feea5c626bb1d70ab2">atcacert_get_expire_date</a>)</td></tr>
-<tr class="separator:a97ce54e2776bd88b6e02c4e91f9b2f0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a0fd0aa94ad7ee0dae5f2cd716a1061"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a3a0fd0aa94ad7ee0dae5f2cd716a1061">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga82ca7cff42ee4496a40076faac7ff6f6">atcacert_set_signer_id</a>)</td></tr>
-<tr class="separator:a3a0fd0aa94ad7ee0dae5f2cd716a1061"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2f0a02b5069bca6f8ff4310942f8354"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#af2f0a02b5069bca6f8ff4310942f8354">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga1201f3c1a20b5b105f9160bea104b102">atcacert_get_signer_id</a>)</td></tr>
-<tr class="separator:af2f0a02b5069bca6f8ff4310942f8354"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd5180d8417701cee5fc81045d66b1e8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#acd5180d8417701cee5fc81045d66b1e8">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga8ea6d02360de28ec06f3fca63b193338">atcacert_set_cert_sn</a>)</td></tr>
-<tr class="separator:acd5180d8417701cee5fc81045d66b1e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c75c29e2a115f4d6379af26492ec99e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a3c75c29e2a115f4d6379af26492ec99e">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#gae1f109cb8edea615c0f7126527208452">atcacert_gen_cert_sn</a>)</td></tr>
-<tr class="separator:a3c75c29e2a115f4d6379af26492ec99e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4687b304ef59cee5030f4210ba868ae7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a4687b304ef59cee5030f4210ba868ae7">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#gaf64c228c28f42f15e9b43457146d1504">atcacert_get_cert_sn</a>)</td></tr>
-<tr class="separator:a4687b304ef59cee5030f4210ba868ae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5675bd2a6c4d353fa3def37aa22e0295"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a5675bd2a6c4d353fa3def37aa22e0295">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga7b22f63ccda2cba10d5ca3dd9c39a06c">atcacert_set_auth_key_id</a>)</td></tr>
-<tr class="separator:a5675bd2a6c4d353fa3def37aa22e0295"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88dfb8d9f0c5a7bac88b4aa9124e3433"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a88dfb8d9f0c5a7bac88b4aa9124e3433">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#gadf6c26dd4333931acf2b8f6ac9a5f422">atcacert_get_auth_key_id</a>)</td></tr>
-<tr class="separator:a88dfb8d9f0c5a7bac88b4aa9124e3433"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26f916733bd3481990ecfa90d951de3f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a26f916733bd3481990ecfa90d951de3f">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga2e2c59c41193e71b1a4b96f58642bb49">atcacert_set_comp_cert</a>)</td></tr>
-<tr class="separator:a26f916733bd3481990ecfa90d951de3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3eff35072a1f7660383fd85d49bfcfb8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a3eff35072a1f7660383fd85d49bfcfb8">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga9a7903692035d06b5d1a45c3b56fce3a">atcacert_get_comp_cert</a>)</td></tr>
-<tr class="separator:a3eff35072a1f7660383fd85d49bfcfb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33704bf8364e03611c96ec289fceb1ea"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a33704bf8364e03611c96ec289fceb1ea">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga9883eaf43aa94e7a29c1bdf13514185c">atcacert_get_tbs</a>)</td></tr>
-<tr class="separator:a33704bf8364e03611c96ec289fceb1ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a222d699138c697adf4750f91572f9d5b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a222d699138c697adf4750f91572f9d5b">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga0b2fd4ca54a1fde2d0d669b1fc11284a">atcacert_get_tbs_digest</a>)</td></tr>
-<tr class="separator:a222d699138c697adf4750f91572f9d5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69189b5db1fc6c2c1315527f3760ebf8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a69189b5db1fc6c2c1315527f3760ebf8">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga593780a1837f517ce75bb19d9c5c9db7">atcacert_merge_device_loc</a>)</td></tr>
-<tr class="separator:a69189b5db1fc6c2c1315527f3760ebf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33b0a9e81a10fc9e6620e4579f0aed8e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a33b0a9e81a10fc9e6620e4579f0aed8e">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga84f1aeed7b88889d5bf01f21dbaaf398">atcacert_get_device_locs</a>)</td></tr>
-<tr class="separator:a33b0a9e81a10fc9e6620e4579f0aed8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc41bf0a8ab43fc238f6292deaafdc82"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#adc41bf0a8ab43fc238f6292deaafdc82">TEST_GROUP_RUNNER</a> (atcacert_cert_build)</td></tr>
-<tr class="separator:adc41bf0a8ab43fc238f6292deaafdc82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a148e5ea304ef5d238a462fc705d53be6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a148e5ea304ef5d238a462fc705d53be6">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#gad2e2ceb6fb7614254a94e89ba244fee7">atcacert_is_device_loc_overlap</a>)</td></tr>
-<tr class="separator:a148e5ea304ef5d238a462fc705d53be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add8275203b5ea0bb6665d122505cec73"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#add8275203b5ea0bb6665d122505cec73">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga240f94a03feb298e5c618677f2962a5a">atcacert_get_device_data</a>)</td></tr>
-<tr class="separator:add8275203b5ea0bb6665d122505cec73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab7f613b378e0d01b80703df3ac662d6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gab7f613b378e0d01b80703df3ac662d6d">change_i2c_speed</a> (<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint32_t <a class="el" href="a00226.html#ga218b4f7c6cc2681a99c23a3b089d68b1">speed</a>)</td></tr>
+<tr class="memdesc:gab7f613b378e0d01b80703df3ac662d6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">method to change the bus speec of I2C  <a href="a00226.html#gab7f613b378e0d01b80703df3ac662d6d">More...</a><br /></td></tr>
+<tr class="separator:gab7f613b378e0d01b80703df3ac662d6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2015 Atmel Corporation. All rights reserved.</dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a04cd4a728e5911dc2f6bd0e031d5e1b0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#gad93de2bdacdcfe04abb0e991a8401388">atcacert_get_key_id</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ae96c240b6a32d2cab4e8d6108811fda4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga5e6494ab69250fbbe76404c9cd352b41">atcacert_set_cert_element</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ae77ecca2517ab189d45a31c584abf0c6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga038f8ed6cba2fee11a37840629d9039c">atcacert_get_cert_element</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a731e38b34cb9cd7d7f4a111897e6baa5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga7337facc592df42d585b22345e333ae3">atcacert_public_key_add_padding</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a83f82ded276a304a1c43252067b13388"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#gadb83dfb792f1e6e90ce6a3d39f64e129">atcacert_public_key_remove_padding</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ac997fc33d4b96e5e2d14c9224de45788"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga4c4d5fe988ebface171689f3aa122e12">atcacert_set_subj_public_key</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a113380c512143a1cae14d8b11dc10fac"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#gab4fac3fd2bf5a227140cc3012a4dad02">atcacert_get_subj_public_key</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4eaaf5bfd6c7f87d7978dc82968814d4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga2843ebd40b7f0b6b4bf22cd447fa90e0">atcacert_get_subj_key_id</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aebfb89cd4feddba0007b01c61c6dcc22"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#gaf1f3cdf5e1e65c9abcbe98ae046d9bf2">atcacert_set_signature</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a20a427f9fa4df89cbaf6a8abe69dba5e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#gaf55b75df5e523e2d275ebb8cbe36fec6">atcacert_get_signature</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a33efca42fa523920aa7ad0c83fb726fd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga36d4893ccd152a8ec18f84f90a5e3cb5">atcacert_set_issue_date</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a6a0d25d72998081b369869e926a203aa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga51f7b996909bc9cae783bcaf0fe7082b">atcacert_get_issue_date</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="af079a2d2b372390145b568c4253347ab"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#gad499cd0bdce799a3278f99c80e0f9143">atcacert_set_expire_date</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a97ce54e2776bd88b6e02c4e91f9b2f0d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga8d1d761d35cf36feea5c626bb1d70ab2">atcacert_get_expire_date</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a3a0fd0aa94ad7ee0dae5f2cd716a1061"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga82ca7cff42ee4496a40076faac7ff6f6">atcacert_set_signer_id</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="af2f0a02b5069bca6f8ff4310942f8354"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga1201f3c1a20b5b105f9160bea104b102">atcacert_get_signer_id</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="acd5180d8417701cee5fc81045d66b1e8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga8ea6d02360de28ec06f3fca63b193338">atcacert_set_cert_sn</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a3c75c29e2a115f4d6379af26492ec99e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#gae1f109cb8edea615c0f7126527208452">atcacert_gen_cert_sn</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4687b304ef59cee5030f4210ba868ae7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#gaf64c228c28f42f15e9b43457146d1504">atcacert_get_cert_sn</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a5675bd2a6c4d353fa3def37aa22e0295"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga7b22f63ccda2cba10d5ca3dd9c39a06c">atcacert_set_auth_key_id</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a88dfb8d9f0c5a7bac88b4aa9124e3433"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#gadf6c26dd4333931acf2b8f6ac9a5f422">atcacert_get_auth_key_id</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a26f916733bd3481990ecfa90d951de3f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga2e2c59c41193e71b1a4b96f58642bb49">atcacert_set_comp_cert</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a3eff35072a1f7660383fd85d49bfcfb8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga9a7903692035d06b5d1a45c3b56fce3a">atcacert_get_comp_cert</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a33704bf8364e03611c96ec289fceb1ea"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga9883eaf43aa94e7a29c1bdf13514185c">atcacert_get_tbs</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a222d699138c697adf4750f91572f9d5b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga0b2fd4ca54a1fde2d0d669b1fc11284a">atcacert_get_tbs_digest</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a69189b5db1fc6c2c1315527f3760ebf8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga593780a1837f517ce75bb19d9c5c9db7">atcacert_merge_device_loc</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a33b0a9e81a10fc9e6620e4579f0aed8e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga84f1aeed7b88889d5bf01f21dbaaf398">atcacert_get_device_locs</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="adc41bf0a8ab43fc238f6292deaafdc82"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype">atcacert_cert_build&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a148e5ea304ef5d238a462fc705d53be6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#gad2e2ceb6fb7614254a94e89ba244fee7">atcacert_is_device_loc_overlap</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="add8275203b5ea0bb6665d122505cec73"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga240f94a03feb298e5c618677f2962a5a">atcacert_get_device_data</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>ATCA Hardware abstraction layer for XMEGA-A3BU I2C over ASF drivers. </p>
+<p>Prerequisite: add I2C Master Polled support to application in Atmel Studio</p>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_13e138d54eb8818da29c3992edef070a.html">test</a></li><li class="navelem"><a class="el" href="dir_3fd499d16b43d3319c6085ec747f938a.html">atcacert</a></li><li class="navelem"><a class="el" href="a00168.html">test_atcacert_def_runner.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00168.html">hal_xmega_a3bu_i2c_asf.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

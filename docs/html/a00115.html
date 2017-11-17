@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: hal_linux_kit_cdc.h File Reference</title>
+<title>CryptoAuthLib: atcatls_cfg.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -108,51 +108,116 @@ $(document).ready(function(){initNavTree('a00115.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">hal_linux_kit_cdc.h File Reference</div>  </div>
+<div class="title">atcatls_cfg.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for Linux using kit protocol over a USB CDC device.  
+<p>Collection of functions for hardware abstraction of TLS implementations (e.g. OpenSSL)  
 <a href="#details">More...</a></p>
-
+<div class="textblock"><code>#include &quot;<a class="el" href="a00121_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00105_source.html">atcacert/atcacert_def.h</a>&quot;</code><br />
+</div>
 <p><a href="a00115_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html">cdc_device</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html">atcacdc</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00058.html">TlsSlotDef</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga08b6c05184266dc4d5c8727bb9c1c754"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga08b6c05184266dc4d5c8727bb9c1c754">CDC_DEVICES_MAX</a>&#160;&#160;&#160;10</td></tr>
-<tr class="separator:ga08b6c05184266dc4d5c8727bb9c1c754"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5ac8c9377f90d6ce3044f81f900a54fe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga5ac8c9377f90d6ce3044f81f900a54fe">CDC_BUFFER_MAX</a>&#160;&#160;&#160;1024</td></tr>
-<tr class="separator:ga5ac8c9377f90d6ce3044f81f900a54fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5fdc7facea201bfce4ad308105f88d0c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga5fdc7facea201bfce4ad308105f88d0c">INVALID_HANDLE_VALUE</a>&#160;&#160;&#160;((int)(-1))</td></tr>
-<tr class="separator:ga5fdc7facea201bfce4ad308105f88d0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae933169cd42adcc22ae3e91be32ee3fe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#gae933169cd42adcc22ae3e91be32ee3fe">TLS_SLOT_AUTH_PRIV</a>&#160;&#160;&#160;((uint8_t)0x0)</td></tr>
+<tr class="memdesc:gae933169cd42adcc22ae3e91be32ee3fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary authentication private key.  <a href="a00228.html#gae933169cd42adcc22ae3e91be32ee3fe">More...</a><br /></td></tr>
+<tr class="separator:gae933169cd42adcc22ae3e91be32ee3fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga13aa72208f2fc33b532e29c7546479b4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ga13aa72208f2fc33b532e29c7546479b4">TLS_SLOT_AUTH_PMK</a>&#160;&#160;&#160;((uint8_t)0x1)</td></tr>
+<tr class="memdesc:ga13aa72208f2fc33b532e29c7546479b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Premaster key for ECDH cipher suites.  <a href="a00228.html#ga13aa72208f2fc33b532e29c7546479b4">More...</a><br /></td></tr>
+<tr class="separator:ga13aa72208f2fc33b532e29c7546479b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0eb68769f11560a22946bfd4fbfaba8f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ga0eb68769f11560a22946bfd4fbfaba8f">TLS_SLOT_ECDH_PRIV</a>&#160;&#160;&#160;((uint8_t)0x2)</td></tr>
+<tr class="memdesc:ga0eb68769f11560a22946bfd4fbfaba8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH private key.  <a href="a00228.html#ga0eb68769f11560a22946bfd4fbfaba8f">More...</a><br /></td></tr>
+<tr class="separator:ga0eb68769f11560a22946bfd4fbfaba8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0ac20b8944aed8eadf45d86ffbac0f2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ga0ac20b8944aed8eadf45d86ffbac0f2f">TLS_SLOT_ECDHE_PRIV</a>&#160;&#160;&#160;((uint8_t)0x2)</td></tr>
+<tr class="memdesc:ga0ac20b8944aed8eadf45d86ffbac0f2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDHE private key.  <a href="a00228.html#ga0ac20b8944aed8eadf45d86ffbac0f2f">More...</a><br /></td></tr>
+<tr class="separator:ga0ac20b8944aed8eadf45d86ffbac0f2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7bf4b635d7f1b3eba098df3fc8a6fe8a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ga7bf4b635d7f1b3eba098df3fc8a6fe8a">TLS_SLOT_ECDH_PMK</a>&#160;&#160;&#160;((uint8_t)0x3)</td></tr>
+<tr class="memdesc:ga7bf4b635d7f1b3eba098df3fc8a6fe8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH/ECDHE pmk slot. This slot is encrypted with encParentSlot.  <a href="a00228.html#ga7bf4b635d7f1b3eba098df3fc8a6fe8a">More...</a><br /></td></tr>
+<tr class="separator:ga7bf4b635d7f1b3eba098df3fc8a6fe8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1b14685e77949d4ee1ba32f60661dffa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ga1b14685e77949d4ee1ba32f60661dffa">TLS_SLOT_ENC_PARENT</a>&#160;&#160;&#160;((uint8_t)0x4)</td></tr>
+<tr class="memdesc:ga1b14685e77949d4ee1ba32f60661dffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">The parent encryption key. This is a random key set on a per-platform basis.  <a href="a00228.html#ga1b14685e77949d4ee1ba32f60661dffa">More...</a><br /></td></tr>
+<tr class="separator:ga1b14685e77949d4ee1ba32f60661dffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae3774b70ad8f5642bd06e77a1fe4db71"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#gae3774b70ad8f5642bd06e77a1fe4db71">TLS_SLOT_SHAKEY</a>&#160;&#160;&#160;((uint8_t)0x5)</td></tr>
+<tr class="memdesc:gae3774b70ad8f5642bd06e77a1fe4db71"><td class="mdescLeft">&#160;</td><td class="mdescRight">SHA key slot. Used for SHA use cases.  <a href="a00228.html#gae3774b70ad8f5642bd06e77a1fe4db71">More...</a><br /></td></tr>
+<tr class="separator:gae3774b70ad8f5642bd06e77a1fe4db71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad3276449420959967bb73c5c6c1ab337"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#gad3276449420959967bb73c5c6c1ab337">TLS_SLOT_HOST_SHAKEY</a>&#160;&#160;&#160;((uint8_t)0x6)</td></tr>
+<tr class="memdesc:gad3276449420959967bb73c5c6c1ab337"><td class="mdescLeft">&#160;</td><td class="mdescRight">Host SHA key slot. Used for host SHA use cases.  <a href="a00228.html#gad3276449420959967bb73c5c6c1ab337">More...</a><br /></td></tr>
+<tr class="separator:gad3276449420959967bb73c5c6c1ab337"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga985d5861e0ae7cd0cf8aca83d3650298"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ga985d5861e0ae7cd0cf8aca83d3650298">TLS_SLOT_FEATURE_PRIV</a>&#160;&#160;&#160;((uint8_t)0x7)</td></tr>
+<tr class="memdesc:ga985d5861e0ae7cd0cf8aca83d3650298"><td class="mdescLeft">&#160;</td><td class="mdescRight">Feature private key. Used for feature use cases.  <a href="a00228.html#ga985d5861e0ae7cd0cf8aca83d3650298">More...</a><br /></td></tr>
+<tr class="separator:ga985d5861e0ae7cd0cf8aca83d3650298"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4bd050241a749f7c7f052438d5f5bd5e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ga4bd050241a749f7c7f052438d5f5bd5e">TLS_SLOT8_ENC_STORE</a>&#160;&#160;&#160;((uint8_t)0x8)</td></tr>
+<tr class="memdesc:ga4bd050241a749f7c7f052438d5f5bd5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypted storage for 416 bytes.  <a href="a00228.html#ga4bd050241a749f7c7f052438d5f5bd5e">More...</a><br /></td></tr>
+<tr class="separator:ga4bd050241a749f7c7f052438d5f5bd5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga13df4af9f4d2347fe049a9ddb80a25e5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ga13df4af9f4d2347fe049a9ddb80a25e5">TLS_SLOT9_ENC_STORE</a>&#160;&#160;&#160;((uint8_t)0x9)</td></tr>
+<tr class="memdesc:ga13df4af9f4d2347fe049a9ddb80a25e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypted storage for 72 bytes.  <a href="a00228.html#ga13df4af9f4d2347fe049a9ddb80a25e5">More...</a><br /></td></tr>
+<tr class="separator:ga13df4af9f4d2347fe049a9ddb80a25e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac188f5dbe54b98343b28097b7849c176"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#gac188f5dbe54b98343b28097b7849c176">TLS_SLOT_AUTH_CERT</a>&#160;&#160;&#160;((uint8_t)0xA)</td></tr>
+<tr class="memdesc:gac188f5dbe54b98343b28097b7849c176"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compressed certificate information for the authPrivSlot.  <a href="a00228.html#gac188f5dbe54b98343b28097b7849c176">More...</a><br /></td></tr>
+<tr class="separator:gac188f5dbe54b98343b28097b7849c176"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b811f19338df28e3d94348c27c2eafc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ga9b811f19338df28e3d94348c27c2eafc">TLS_SLOT_SIGNER_PUBKEY</a>&#160;&#160;&#160;((uint8_t)0xB)</td></tr>
+<tr class="memdesc:ga9b811f19338df28e3d94348c27c2eafc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Public key of the signer of authCertSlot.  <a href="a00228.html#ga9b811f19338df28e3d94348c27c2eafc">More...</a><br /></td></tr>
+<tr class="separator:ga9b811f19338df28e3d94348c27c2eafc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa55e893b161818afebfd0206b403ef3f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#gaa55e893b161818afebfd0206b403ef3f">TLS_SLOT_SIGNER_CERT</a>&#160;&#160;&#160;((uint8_t)0xC)</td></tr>
+<tr class="memdesc:gaa55e893b161818afebfd0206b403ef3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compressed certificate information for the signerPubkey.  <a href="a00228.html#gaa55e893b161818afebfd0206b403ef3f">More...</a><br /></td></tr>
+<tr class="separator:gaa55e893b161818afebfd0206b403ef3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa5f14858980f5fec8d8f9b89ba33a15"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#gafa5f14858980f5fec8d8f9b89ba33a15">TLS_SLOT_FEATURE_CERT</a>&#160;&#160;&#160;((uint8_t)0xD)</td></tr>
+<tr class="memdesc:gafa5f14858980f5fec8d8f9b89ba33a15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compressed certificate information for the featurePrivSlot.  <a href="a00228.html#gafa5f14858980f5fec8d8f9b89ba33a15">More...</a><br /></td></tr>
+<tr class="separator:gafa5f14858980f5fec8d8f9b89ba33a15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9656936dca3600d05ae9cdc3694cfafe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ga9656936dca3600d05ae9cdc3694cfafe">TLS_SLOT_PKICA_PUBKEY</a>&#160;&#160;&#160;((uint8_t)0xE)</td></tr>
+<tr class="memdesc:ga9656936dca3600d05ae9cdc3694cfafe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Public key for the PKI certificate authority.  <a href="a00228.html#ga9656936dca3600d05ae9cdc3694cfafe">More...</a><br /></td></tr>
+<tr class="separator:ga9656936dca3600d05ae9cdc3694cfafe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c45ce0bd115d406f5ce740595b4987c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ga8c45ce0bd115d406f5ce740595b4987c">TLS_SLOT_MFRCA_PUBKEY</a>&#160;&#160;&#160;((uint8_t)0xF)</td></tr>
+<tr class="memdesc:ga8c45ce0bd115d406f5ce740595b4987c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Public key for the MFR certificate authority.  <a href="a00228.html#ga8c45ce0bd115d406f5ce740595b4987c">More...</a><br /></td></tr>
+<tr class="separator:ga8c45ce0bd115d406f5ce740595b4987c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9abb5304261cbc443e5b38ea54d680dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ga9abb5304261cbc443e5b38ea54d680dc">TLS_SLOT_DEV_SIGNER_PRIV</a>&#160;&#160;&#160;((uint8_t)0x2)</td></tr>
+<tr class="memdesc:ga9abb5304261cbc443e5b38ea54d680dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signer private key - For Development ONLY.  <a href="a00228.html#ga9abb5304261cbc443e5b38ea54d680dc">More...</a><br /></td></tr>
+<tr class="separator:ga9abb5304261cbc443e5b38ea54d680dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b9e69decc5dec66e792e00ff2b3d15d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ga4b9e69decc5dec66e792e00ff2b3d15d">TLS_SLOT_DEV_CA_PRIV</a>&#160;&#160;&#160;((uint8_t)0x7)</td></tr>
+<tr class="memdesc:ga4b9e69decc5dec66e792e00ff2b3d15d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Root CA private key - For Development ONLY.  <a href="a00228.html#ga4b9e69decc5dec66e792e00ff2b3d15d">More...</a><br /></td></tr>
+<tr class="separator:ga4b9e69decc5dec66e792e00ff2b3d15d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7f16c2f9c44a17fa9cdd16acd637bd69"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ga7f16c2f9c44a17fa9cdd16acd637bd69">FACTORY_INIT_I2C</a>&#160;&#160;&#160;(uint8_t)(0xC0)</td></tr>
+<tr class="separator:ga7f16c2f9c44a17fa9cdd16acd637bd69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2eb49933a78e39407997a2d132ec8949"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ga2eb49933a78e39407997a2d132ec8949">DEVICE_I2C</a>&#160;&#160;&#160;(uint8_t)(0xB0)</td></tr>
+<tr class="separator:ga2eb49933a78e39407997a2d132ec8949"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa5d6b2cc1b23594d7bb014455f014f3a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#gaa5d6b2cc1b23594d7bb014455f014f3a">D_I2C</a>&#160;&#160;&#160;<a class="el" href="a00228.html#ga2eb49933a78e39407997a2d132ec8949">DEVICE_I2C</a></td></tr>
+<tr class="separator:gaa5d6b2cc1b23594d7bb014455f014f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga069bb8cb95b0528d5ce0304bb5561a40"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga069bb8cb95b0528d5ce0304bb5561a40">HANDLE</a></td></tr>
-<tr class="separator:ga069bb8cb95b0528d5ce0304bb5561a40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga99ee56102171adcbcecb8a78fb9fa895"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00046.html">cdc_device</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga99ee56102171adcbcecb8a78fb9fa895">cdc_device_t</a></td></tr>
-<tr class="separator:ga99ee56102171adcbcecb8a78fb9fa895"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2df85bfd309840b4c9a5087e053d4811"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00032.html">atcacdc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga2df85bfd309840b4c9a5087e053d4811">atcacdc_t</a></td></tr>
-<tr class="separator:ga2df85bfd309840b4c9a5087e053d4811"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga0cdd64349463339f8936f8fbca8162b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ga0cdd64349463339f8936f8fbca8162b7">device_init_default</a> (void)</td></tr>
+<tr class="memdesc:ga0cdd64349463339f8936f8fbca8162b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function will write and lock the configuration zone, write and lock the data zone, run GenKey on private keys to prepare a device for a standard configuration. This configuration can be used for self-provisioning or as a generic configuration for illustration, example, or demo purposes.  <a href="a00228.html#ga0cdd64349463339f8936f8fbca8162b7">More...</a><br /></td></tr>
+<tr class="separator:ga0cdd64349463339f8936f8fbca8162b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98027849426d4672dfc6b65e5e20ac72"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ga98027849426d4672dfc6b65e5e20ac72">device_init</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def_signer, const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def_device)</td></tr>
+<tr class="memdesc:ga98027849426d4672dfc6b65e5e20ac72"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function will write and lock the configuration zone, write and lock the data zone, run GenKey on private keys to prepare a device for a standard configuration. This configuration can be used for self-provisioning or as a generic configuration for illustration, example, or demo purposes.  <a href="a00228.html#ga98027849426d4672dfc6b65e5e20ac72">More...</a><br /></td></tr>
+<tr class="separator:ga98027849426d4672dfc6b65e5e20ac72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga2b97f11a5067e2495c407f9f7e987261"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ga2b97f11a5067e2495c407f9f7e987261">g_cert_def_0_signer</a></td></tr>
+<tr class="separator:ga2b97f11a5067e2495c407f9f7e987261"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaadb5391e2adb13989c5ae32466c81aa"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#gaaadb5391e2adb13989c5ae32466c81aa">g_cert_def_0_device</a></td></tr>
+<tr class="separator:gaaadb5391e2adb13989c5ae32466c81aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for Linux using kit protocol over a USB CDC device. </p>
-<p>Copyright (c) 2015 Atmel Corporation. All rights reserved.</p>
+<div class="textblock"><p>Collection of functions for hardware abstraction of TLS implementations (e.g. OpenSSL) </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00115.html">hal_linux_kit_cdc.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_d3d260c11de525055358286eeb840f1a.html">tls</a></li><li class="navelem"><a class="el" href="a00115.html">atcatls_cfg.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

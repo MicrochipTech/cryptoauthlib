@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: atca_iface.c File Reference</title>
+<title>CryptoAuthLib: atca_hal.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -109,57 +109,52 @@ $(document).ready(function(){initNavTree('a00085.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_iface.c File Reference</div>  </div>
+<div class="title">atca_hal.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Atmel Crypto Auth hardware interface object.  
+<p>low-level HAL - methods used to setup indirection to physical layer interface  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00086_source.html">atca_iface.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00080_source.html">hal/atca_hal.h</a>&quot;</code><br />
-</div><table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a00094_source.html">atca_status.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00091_source.html">atca_iface.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00092_source.html">atca_start_config.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00093_source.html">atca_start_iface.h</a>&quot;</code><br />
+</div>
+<p><a href="a00085_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html">atca_iface</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a00023.html" title="atca_iface is the C object backing ATCAIface. See the atca_iface.h file for details on the ATCAIface ...">atca_iface</a> is the C object backing ATCAIface. See the <a class="el" href="a00086.html" title="Atmel Crypto Auth hardware interface object. ">atca_iface.h</a> file for details on the ATCAIface methods  <a href="a00023.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html">ATCAHAL_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">an intermediary data structure to allow the HAL layer to point the standard API functions used by the upper layers to the HAL implementation for the interface. This isolates the upper layers and loosely couples the ATCAIface object from the physical implementation.  <a href="a00043.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga3b1d17552f8f14e064a3961d3e64b879"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#ga3b1d17552f8f14e064a3961d3e64b879">_atinit</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> caiface, <a class="el" href="a00040.html">ATCAHAL_t</a> *hal)</td></tr>
-<tr class="separator:ga3b1d17552f8f14e064a3961d3e64b879"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6f28f18f0d00c5301939724325f6b6fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#ga6f28f18f0d00c5301939724325f6b6fc">newATCAIface</a> (<a class="el" href="a00043.html">ATCAIfaceCfg</a> *cfg)</td></tr>
-<tr class="memdesc:ga6f28f18f0d00c5301939724325f6b6fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor for ATCAIface objects  <a href="a00191.html#ga6f28f18f0d00c5301939724325f6b6fc">More...</a><br /></td></tr>
-<tr class="separator:ga6f28f18f0d00c5301939724325f6b6fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaea9da7766b8f10ea6bf9f5fe972fedd7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#gaea9da7766b8f10ea6bf9f5fe972fedd7">atinit</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> caiface)</td></tr>
-<tr class="separator:gaea9da7766b8f10ea6bf9f5fe972fedd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4bd3260f3dd7a918869e6e82b9de441f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#ga4bd3260f3dd7a918869e6e82b9de441f">atsend</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> caiface, uint8_t *txdata, int txlength)</td></tr>
-<tr class="separator:ga4bd3260f3dd7a918869e6e82b9de441f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3505133e7f12f6ce69c69c95a3e8d0a4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#ga3505133e7f12f6ce69c69c95a3e8d0a4">atreceive</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> caiface, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
-<tr class="separator:ga3505133e7f12f6ce69c69c95a3e8d0a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2a0bb1c9b9023550dd3cd28d8a969f46"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#ga2a0bb1c9b9023550dd3cd28d8a969f46">atwake</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> caiface)</td></tr>
-<tr class="separator:ga2a0bb1c9b9023550dd3cd28d8a969f46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad39ff3227b81543a394693263a8baee4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#gad39ff3227b81543a394693263a8baee4">atidle</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> caiface)</td></tr>
-<tr class="separator:gad39ff3227b81543a394693263a8baee4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad1f603149e99a09125a4c3d32a36287e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#gad1f603149e99a09125a4c3d32a36287e">atsleep</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> caiface)</td></tr>
-<tr class="separator:gad1f603149e99a09125a4c3d32a36287e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga638aef05f5ac23ea92d46d5fee4c7673"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00043.html">ATCAIfaceCfg</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#ga638aef05f5ac23ea92d46d5fee4c7673">atgetifacecfg</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> caiface)</td></tr>
-<tr class="separator:ga638aef05f5ac23ea92d46d5fee4c7673"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab14097df78ab41a0f63b74b752f88b61"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#gab14097df78ab41a0f63b74b752f88b61">atgetifacehaldat</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> caiface)</td></tr>
-<tr class="separator:gab14097df78ab41a0f63b74b752f88b61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga310a734a1428491a394649015e8f5552"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html#ga310a734a1428491a394649015e8f5552">deleteATCAIface</a> (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> *caiface)</td></tr>
-<tr class="separator:ga310a734a1428491a394649015e8f5552"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab77081d6d85ee3ab839a0882e80e9e87"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gab77081d6d85ee3ab839a0882e80e9e87">hal_iface_init</a> (<a class="el" href="a00046.html">ATCAIfaceCfg</a> *, <a class="el" href="a00043.html">ATCAHAL_t</a> *hal)</td></tr>
+<tr class="memdesc:gab77081d6d85ee3ab839a0882e80e9e87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard HAL API for ATCA to initialize a physical interface.  <a href="a00226.html#gab77081d6d85ee3ab839a0882e80e9e87">More...</a><br /></td></tr>
+<tr class="separator:gab77081d6d85ee3ab839a0882e80e9e87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4be1afccb41f28f6ce620b1d5197befc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga4be1afccb41f28f6ce620b1d5197befc">hal_iface_release</a> (<a class="el" href="a00222.html#gac7f674d4a0afb12d2f3c9c5e98cb1089">ATCAIfaceType</a>, void *hal_data)</td></tr>
+<tr class="memdesc:ga4be1afccb41f28f6ce620b1d5197befc"><td class="mdescLeft">&#160;</td><td class="mdescRight">releases a physical interface, HAL knows how to interpret hal_data  <a href="a00226.html#ga4be1afccb41f28f6ce620b1d5197befc">More...</a><br /></td></tr>
+<tr class="separator:ga4be1afccb41f28f6ce620b1d5197befc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7598dfcd6dcac882836544d48356d02f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga7598dfcd6dcac882836544d48356d02f">atca_delay_us</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga7598dfcd6dcac882836544d48356d02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API implemented at the HAL level.  <a href="a00226.html#ga7598dfcd6dcac882836544d48356d02f">More...</a><br /></td></tr>
+<tr class="separator:ga7598dfcd6dcac882836544d48356d02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga19891182689551cc3a88603135959351"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga19891182689551cc3a88603135959351">atca_delay_10us</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga19891182689551cc3a88603135959351"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of tens of microseconds.  <a href="a00226.html#ga19891182689551cc3a88603135959351">More...</a><br /></td></tr>
+<tr class="separator:ga19891182689551cc3a88603135959351"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga80a853a202b089064bfc4b159c3418b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga80a853a202b089064bfc4b159c3418b4">atca_delay_ms</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga80a853a202b089064bfc4b159c3418b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of milliseconds.  <a href="a00226.html#ga80a853a202b089064bfc4b159c3418b4">More...</a><br /></td></tr>
+<tr class="separator:ga80a853a202b089064bfc4b159c3418b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Atmel Crypto Auth hardware interface object. </p>
-<p>Copyright (c) 2015 Atmel Corporation. All rights reserved.</p>
+<div class="textblock"><p>low-level HAL - methods used to setup indirection to physical layer interface </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00085.html">atca_iface.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00085.html">atca_hal.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

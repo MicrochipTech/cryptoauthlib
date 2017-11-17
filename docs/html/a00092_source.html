@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: atcacert.h Source File</title>
+<title>CryptoAuthLib: atca_start_config.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,45 +106,21 @@ $(document).ready(function(){initNavTree('a00092_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">atcacert.h</div>  </div>
+<div class="title">atca_start_config.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a00092.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#ifndef ATCACERT_H</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#define ATCACERT_H</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#ifndef FALSE</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="a00192.html#gaa93f0eb578d23995850d61f7d61c55c1">   58</a></span>&#160;<span class="preprocessor">#define FALSE (0)</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#ifndef TRUE</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="a00192.html#gaa8cecfc5c5c054d2875c03e77b7be15d">   61</a></span>&#160;<span class="preprocessor">#define TRUE (1)</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="a00192.html#ga7bd1ad830360fc8b988f855da6d0d5ba">   64</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_SUCCESS              0   </span></div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="a00192.html#ga048a6bb9781dbbc402409a172f976f74">   65</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_ERROR                1   </span></div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="a00192.html#ga47509d283523ab1892fb8746d6f4e37d">   66</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_BAD_PARAMS           2   </span></div>
-<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="a00192.html#ga7a2e774fc8b12c4045dea335a86afca6">   67</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_BUFFER_TOO_SMALL     3   </span></div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="a00192.html#gaea155533fdd352d6602d3e2fc717930f">   68</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_DECODING_ERROR       4   </span></div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="a00192.html#gaafd66d6744314225ead24b3901bd6372">   69</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_INVALID_DATE         5   </span></div>
-<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="a00192.html#ga4b6db1523875a2b1453ef5e16989ecd4">   70</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_UNIMPLEMENTED        6   </span></div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="a00192.html#ga5a7cb98e18ad338f2eaf6594acb67c32">   71</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_UNEXPECTED_ELEM_SIZE 7   </span></div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="a00192.html#ga8e3e7c64650c92364bbac17f6a75474a">   72</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_ELEM_MISSING         8   </span></div>
-<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="a00192.html#ga62604c78d688530173e203b02df180fa">   73</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_ELEM_OUT_OF_BOUNDS   9   </span></div>
-<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="a00192.html#ga822ee0620c8d2d12ff971b9b35f9f5cd">   74</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_BAD_CERT             10  </span></div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="a00192.html#ga01010ef58d52a05292f6a70ff3d53ce8">   75</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_WRONG_CERT_DEF       11</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="a00192.html#gae1da5e02cd9b4ee7b8617d7bce0a5b5d">   76</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_VERIFY_FAILED        12  </span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">#endif</span></div>
+<a href="a00092.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">   this is a placeholder include used to satisfy the include</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">   when used with Atmel START, this file will be overwritten</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">   with the user configuration generated by Atmel START</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> */</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00092.html">atcacert.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00092.html">atca_start_config.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

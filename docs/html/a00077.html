@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: atca_device.h File Reference</title>
+<title>CryptoAuthLib: atca_crypto_sw_sha2.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,49 +106,41 @@ $(document).ready(function(){initNavTree('a00077.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_device.h File Reference</div>  </div>
+<div class="title">atca_crypto_sw_sha2.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Atmel Crypto Auth device object.  
+<p>Wrapper API for software SHA 256 routines.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00063_source.html">atca_command.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00086_source.html">atca_iface.h</a>&quot;</code><br />
-</div>
-<p><a href="a00077_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gaa94f7bb4af0a3d6735225cc85d92cb50"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00019.html">atca_device</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00190.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a></td></tr>
-<tr class="separator:gaa94f7bb4af0a3d6735225cc85d92cb50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a00078_source.html">atca_crypto_sw_sha2.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00183_source.html">hashes/sha2_routines.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gad5e12e12d3030e28d75164286df9e5e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00190.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00190.html#gad5e12e12d3030e28d75164286df9e5e9">newATCADevice</a> (<a class="el" href="a00043.html">ATCAIfaceCfg</a> *cfg)</td></tr>
-<tr class="memdesc:gad5e12e12d3030e28d75164286df9e5e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor for an Atmel CryptoAuth device  <a href="a00190.html#gad5e12e12d3030e28d75164286df9e5e9">More...</a><br /></td></tr>
-<tr class="separator:gad5e12e12d3030e28d75164286df9e5e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabf51c08f1928fc5ec44936f3117a9f7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00063.html#aebeafc249bfe2b00b6809d5c328841d9">ATCACommand</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00190.html#gabf51c08f1928fc5ec44936f3117a9f7e">atGetCommands</a> (<a class="el" href="a00190.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> <a class="el" href="a00195.html#gabe78755474c1323a5ac7b3dd6d03dedf">dev</a>)</td></tr>
-<tr class="memdesc:gabf51c08f1928fc5ec44936f3117a9f7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns a reference to the ATCACommand object for the device  <a href="a00190.html#gabf51c08f1928fc5ec44936f3117a9f7e">More...</a><br /></td></tr>
-<tr class="separator:gabf51c08f1928fc5ec44936f3117a9f7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f98e29cffa06446fc91b329703606af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00190.html#ga3f98e29cffa06446fc91b329703606af">atGetIFace</a> (<a class="el" href="a00190.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> <a class="el" href="a00195.html#gabe78755474c1323a5ac7b3dd6d03dedf">dev</a>)</td></tr>
-<tr class="memdesc:ga3f98e29cffa06446fc91b329703606af"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns a reference to the ATCAIface interface object for the device  <a href="a00190.html#ga3f98e29cffa06446fc91b329703606af">More...</a><br /></td></tr>
-<tr class="separator:ga3f98e29cffa06446fc91b329703606af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga57b4bc57010a0bcaf6385703c63d156c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00190.html#ga57b4bc57010a0bcaf6385703c63d156c">deleteATCADevice</a> (<a class="el" href="a00190.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> *cadev)</td></tr>
-<tr class="memdesc:ga57b4bc57010a0bcaf6385703c63d156c"><td class="mdescLeft">&#160;</td><td class="mdescRight">destructor for a device NULLs reference after object is freed  <a href="a00190.html#ga57b4bc57010a0bcaf6385703c63d156c">More...</a><br /></td></tr>
-<tr class="separator:ga57b4bc57010a0bcaf6385703c63d156c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58283666b662f084155ba693870c1077"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#ga58283666b662f084155ba693870c1077">atcac_sw_sha2_256_init</a> (<a class="el" href="a00034.html">atcac_sha2_256_ctx</a> *ctx)</td></tr>
+<tr class="memdesc:ga58283666b662f084155ba693870c1077"><td class="mdescLeft">&#160;</td><td class="mdescRight">initializes the SHA256 software  <a href="a00225.html#ga58283666b662f084155ba693870c1077">More...</a><br /></td></tr>
+<tr class="separator:ga58283666b662f084155ba693870c1077"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1a09fa1d854722cc667cea319ca9984"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#gab1a09fa1d854722cc667cea319ca9984">atcac_sw_sha2_256_update</a> (<a class="el" href="a00034.html">atcac_sha2_256_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
+<tr class="memdesc:gab1a09fa1d854722cc667cea319ca9984"><td class="mdescLeft">&#160;</td><td class="mdescRight">updates the running hash with the next block of data, called iteratively for the entire stream of data to be hashed  <a href="a00225.html#gab1a09fa1d854722cc667cea319ca9984">More...</a><br /></td></tr>
+<tr class="separator:gab1a09fa1d854722cc667cea319ca9984"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae3a29931f2104cce481aa9ef1ab16fea"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#gae3a29931f2104cce481aa9ef1ab16fea">atcac_sw_sha2_256_finish</a> (<a class="el" href="a00034.html">atcac_sha2_256_ctx</a> *ctx, uint8_t digest[<a class="el" href="a00225.html#ga86364f6d07b86740f3170d9d1ca60641">ATCA_SHA2_256_DIGEST_SIZE</a>])</td></tr>
+<tr class="memdesc:gae3a29931f2104cce481aa9ef1ab16fea"><td class="mdescLeft">&#160;</td><td class="mdescRight">completes the final SHA calculation and returns the final digest/hash  <a href="a00225.html#gae3a29931f2104cce481aa9ef1ab16fea">More...</a><br /></td></tr>
+<tr class="separator:gae3a29931f2104cce481aa9ef1ab16fea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga63412270c4629874f2764171200c1b5c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#ga63412270c4629874f2764171200c1b5c">atcac_sw_sha2_256</a> (const uint8_t *data, size_t data_size, uint8_t digest[<a class="el" href="a00225.html#ga86364f6d07b86740f3170d9d1ca60641">ATCA_SHA2_256_DIGEST_SIZE</a>])</td></tr>
+<tr class="memdesc:ga63412270c4629874f2764171200c1b5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">single call convenience function to comput SHA256 of given data  <a href="a00225.html#ga63412270c4629874f2764171200c1b5c">More...</a><br /></td></tr>
+<tr class="separator:ga63412270c4629874f2764171200c1b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Atmel Crypto Auth device object. </p>
-<p>Copyright (c) 2015 Atmel Corporation. All rights reserved.</p>
+<div class="textblock"><p>Wrapper API for software SHA 256 routines. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00077.html">atca_device.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="a00077.html">atca_crypto_sw_sha2.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

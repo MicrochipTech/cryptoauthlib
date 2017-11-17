@@ -1,8 +1,16 @@
 var a00080 =
 [
-    [ "atca_delay_10us", "a00195.html#ga19891182689551cc3a88603135959351", null ],
-    [ "atca_delay_ms", "a00195.html#ga80a853a202b089064bfc4b159c3418b4", null ],
-    [ "atca_delay_us", "a00195.html#ga7598dfcd6dcac882836544d48356d02f", null ],
-    [ "hal_iface_init", "a00195.html#gab77081d6d85ee3ab839a0882e80e9e87", null ],
-    [ "hal_iface_release", "a00195.html#ga4be1afccb41f28f6ce620b1d5197befc", null ]
+    [ "atca_crypto_sw_tests", "a00080.html#add54163079e82b8828b25e4194ec3674", null ],
+    [ "test_atcac_sw_sha1_nist1", "a00080.html#a79f2d36f9e1da5af1f355147d3a83c73", null ],
+    [ "test_atcac_sw_sha1_nist2", "a00080.html#aa396e5ce2cba7465f5d8348092419d07", null ],
+    [ "test_atcac_sw_sha1_nist3", "a00080.html#abdfed39dbb18549ffe1669f65ef359a4", null ],
+    [ "test_atcac_sw_sha1_nist_long", "a00080.html#a2e3662a8b81a2a0a41e8021253553a24", null ],
+    [ "test_atcac_sw_sha1_nist_monte", "a00080.html#a9e65f3c802154bdab4d827af2e24db98", null ],
+    [ "test_atcac_sw_sha1_nist_short", "a00080.html#a1375cceae84e5f626a606974135d54bc", null ],
+    [ "test_atcac_sw_sha2_256_nist1", "a00080.html#a72978ca88addcf67d8ac151b9be0f78b", null ],
+    [ "test_atcac_sw_sha2_256_nist2", "a00080.html#a5bf41e2e2a1d762bac0f12235030e9a1", null ],
+    [ "test_atcac_sw_sha2_256_nist3", "a00080.html#a07d841e2799365ce4c030e9457774c34", null ],
+    [ "test_atcac_sw_sha2_256_nist_long", "a00080.html#a779fbce841e3f0fe82e2356cc3c81850", null ],
+    [ "test_atcac_sw_sha2_256_nist_monte", "a00080.html#aeefcb1ce8fb1550890fc71374de0410c", null ],
+    [ "test_atcac_sw_sha2_256_nist_short", "a00080.html#a23aada6adf8a084f0664bc3b91cae72e", null ]
 ];

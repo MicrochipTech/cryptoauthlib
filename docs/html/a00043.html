@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: ATCAIfaceCfg Struct Reference</title>
+<title>CryptoAuthLib: ATCAHAL_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -109,327 +109,141 @@ $(document).ready(function(){initNavTree('a00043.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ATCAIfaceCfg Struct Reference<div class="ingroups"><a class="el" href="a00191.html">ATCAIface (atca_)</a></div></div>  </div>
+<div class="title">ATCAHAL_t Struct Reference<div class="ingroups"><a class="el" href="a00226.html">Hardware abstraction layer (hal_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="a00086_source.html">atca_iface.h</a>&gt;</code></p>
+<p>an intermediary data structure to allow the HAL layer to point the standard API functions used by the upper layers to the HAL implementation for the interface. This isolates the upper layers and loosely couples the ATCAIface object from the physical implementation.  
+ <a href="a00043.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="a00085_source.html">atca_hal.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a3d0753b214d2a12df80f22b56bfc6e71"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00191.html#gac7f674d4a0afb12d2f3c9c5e98cb1089">ATCAIfaceType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a3d0753b214d2a12df80f22b56bfc6e71">iface_type</a></td></tr>
-<tr class="separator:a3d0753b214d2a12df80f22b56bfc6e71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05f2d72f4feff51d21be443c82d02192"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00190.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a05f2d72f4feff51d21be443c82d02192">devtype</a></td></tr>
-<tr class="separator:a05f2d72f4feff51d21be443c82d02192"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ef8224e4259a43c0e5ff21b777e9a9c"><td class="memItemLeft" >union {</td></tr>
-<tr class="memitem:a88f8040c47fc046b2198a26f4ed3faf0"><td class="memItemLeft" >&#160;&#160;&#160;struct <b>ATCAI2C</b> {</td></tr>
-<tr class="memitem:ac93868aeda435dfb685a0a0020e5c7a4"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="a00043.html#ac93868aeda435dfb685a0a0020e5c7a4">slave_address</a></td></tr>
-<tr class="separator:ac93868aeda435dfb685a0a0020e5c7a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5262d4a80e6a0b6dce6fd57d4656786d"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="a00043.html#a5262d4a80e6a0b6dce6fd57d4656786d">bus</a></td></tr>
-<tr class="separator:a5262d4a80e6a0b6dce6fd57d4656786d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6e5ec63505c02923d71f7409cdbf1d1"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="a00043.html#ac6e5ec63505c02923d71f7409cdbf1d1">baud</a></td></tr>
-<tr class="separator:ac6e5ec63505c02923d71f7409cdbf1d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88f8040c47fc046b2198a26f4ed3faf0"><td class="memItemLeft" valign="top">&#160;&#160;&#160;}&#160;&#160;&#160;<a class="el" href="a00043.html#a88f8040c47fc046b2198a26f4ed3faf0">atcai2c</a></td></tr>
-<tr class="separator:a88f8040c47fc046b2198a26f4ed3faf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9670d2ececfd8d536f8e6b629ab7b1ed"><td class="memItemLeft" >&#160;&#160;&#160;struct <b>ATCASWI</b> {</td></tr>
-<tr class="memitem:a5262d4a80e6a0b6dce6fd57d4656786d"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="a00043.html#a5262d4a80e6a0b6dce6fd57d4656786d">bus</a></td></tr>
-<tr class="separator:a5262d4a80e6a0b6dce6fd57d4656786d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9670d2ececfd8d536f8e6b629ab7b1ed"><td class="memItemLeft" valign="top">&#160;&#160;&#160;}&#160;&#160;&#160;<a class="el" href="a00043.html#a9670d2ececfd8d536f8e6b629ab7b1ed">atcaswi</a></td></tr>
-<tr class="separator:a9670d2ececfd8d536f8e6b629ab7b1ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b39f87d1a01274c9da57768841683c3"><td class="memItemLeft" >&#160;&#160;&#160;struct <b>ATCAUART</b> {</td></tr>
-<tr class="memitem:a63c89c04d1feae07ca35558055155ffb"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;int&#160;&#160;&#160;<a class="el" href="a00043.html#a63c89c04d1feae07ca35558055155ffb">port</a></td></tr>
-<tr class="separator:a63c89c04d1feae07ca35558055155ffb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6e5ec63505c02923d71f7409cdbf1d1"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="a00043.html#ac6e5ec63505c02923d71f7409cdbf1d1">baud</a></td></tr>
-<tr class="separator:ac6e5ec63505c02923d71f7409cdbf1d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae696a833509f858d17988acdb1deb161"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="a00043.html#ae696a833509f858d17988acdb1deb161">wordsize</a></td></tr>
-<tr class="separator:ae696a833509f858d17988acdb1deb161"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0e72b59c63431c62f5b5eba36a65d17"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="a00043.html#aa0e72b59c63431c62f5b5eba36a65d17">parity</a></td></tr>
-<tr class="separator:aa0e72b59c63431c62f5b5eba36a65d17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9de35842403baab5738ea16162012d4f"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="a00043.html#a9de35842403baab5738ea16162012d4f">stopbits</a></td></tr>
-<tr class="separator:a9de35842403baab5738ea16162012d4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b39f87d1a01274c9da57768841683c3"><td class="memItemLeft" valign="top">&#160;&#160;&#160;}&#160;&#160;&#160;<a class="el" href="a00043.html#a0b39f87d1a01274c9da57768841683c3">atcauart</a></td></tr>
-<tr class="separator:a0b39f87d1a01274c9da57768841683c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa757f95b731b8dfdd4ce785e26944728"><td class="memItemLeft" >&#160;&#160;&#160;struct <b>ATCAHID</b> {</td></tr>
-<tr class="memitem:ae40354a1051342eb5a9db005715dcfa9"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;int&#160;&#160;&#160;<a class="el" href="a00043.html#ae40354a1051342eb5a9db005715dcfa9">idx</a></td></tr>
-<tr class="separator:ae40354a1051342eb5a9db005715dcfa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98780fe4ab562a61abfd7870ea0910c3"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="a00043.html#a98780fe4ab562a61abfd7870ea0910c3">vid</a></td></tr>
-<tr class="separator:a98780fe4ab562a61abfd7870ea0910c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec32162d9dc3fde2c76d766af522dae5"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="a00043.html#aec32162d9dc3fde2c76d766af522dae5">pid</a></td></tr>
-<tr class="separator:aec32162d9dc3fde2c76d766af522dae5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba242bb3690d4d5a7de01474f94cb4ab"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="a00043.html#aba242bb3690d4d5a7de01474f94cb4ab">packetsize</a></td></tr>
-<tr class="separator:aba242bb3690d4d5a7de01474f94cb4ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6dd59cf5b43526a4c6ccd515042af73"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="a00043.html#af6dd59cf5b43526a4c6ccd515042af73">guid</a> [16]</td></tr>
-<tr class="separator:af6dd59cf5b43526a4c6ccd515042af73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa757f95b731b8dfdd4ce785e26944728"><td class="memItemLeft" valign="top">&#160;&#160;&#160;}&#160;&#160;&#160;<a class="el" href="a00043.html#aa757f95b731b8dfdd4ce785e26944728">atcahid</a></td></tr>
-<tr class="separator:aa757f95b731b8dfdd4ce785e26944728"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ef8224e4259a43c0e5ff21b777e9a9c"><td class="memItemLeft" valign="top">};&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
-<tr class="separator:a4ef8224e4259a43c0e5ff21b777e9a9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a058e797431a238154c5347fa26982044"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a058e797431a238154c5347fa26982044">wake_delay</a></td></tr>
-<tr class="separator:a058e797431a238154c5347fa26982044"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9ce255f8b9bff64fe261235f9e70c03"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#aa9ce255f8b9bff64fe261235f9e70c03">rx_retries</a></td></tr>
-<tr class="separator:aa9ce255f8b9bff64fe261235f9e70c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97e106cc7267316cf40988744b231111"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a97e106cc7267316cf40988744b231111">cfg_data</a></td></tr>
-<tr class="separator:a97e106cc7267316cf40988744b231111"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa020e68c9d18f83f205981fa57107b3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#aa020e68c9d18f83f205981fa57107b3c">halinit</a> )(void *hal, <a class="el" href="a00046.html">ATCAIfaceCfg</a> *cfg)</td></tr>
+<tr class="separator:aa020e68c9d18f83f205981fa57107b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af174424ba7b2d19a74c72f8b4198c26b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#af174424ba7b2d19a74c72f8b4198c26b">halpostinit</a> )(<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="separator:af174424ba7b2d19a74c72f8b4198c26b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fb3aee6375216c53ef1e5a9df01e074"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a6fb3aee6375216c53ef1e5a9df01e074">halsend</a> )(<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *txdata, int txlength)</td></tr>
+<tr class="separator:a6fb3aee6375216c53ef1e5a9df01e074"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af95136769fcc864880463d4dcab0c11c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#af95136769fcc864880463d4dcab0c11c">halreceive</a> )(<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
+<tr class="separator:af95136769fcc864880463d4dcab0c11c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a033c21278fef7771916378cbcf726ae6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a033c21278fef7771916378cbcf726ae6">halwake</a> )(<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="separator:a033c21278fef7771916378cbcf726ae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3939b643c7f807fc8fe8abcf18e99196"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a3939b643c7f807fc8fe8abcf18e99196">halidle</a> )(<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="separator:a3939b643c7f807fc8fe8abcf18e99196"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2f432748c4d8efe98ec42d5cd1552b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ad2f432748c4d8efe98ec42d5cd1552b5">halsleep</a> )(<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="separator:ad2f432748c4d8efe98ec42d5cd1552b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5eb439f0ede23956fde8cd72f41b85ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a5eb439f0ede23956fde8cd72f41b85ba">halrelease</a> )(void *<a class="el" href="a00043.html#ad33508455720b78cc0fc880cb3f9885e">hal_data</a>)</td></tr>
+<tr class="separator:a5eb439f0ede23956fde8cd72f41b85ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad33508455720b78cc0fc880cb3f9885e"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ad33508455720b78cc0fc880cb3f9885e">hal_data</a></td></tr>
+<tr class="separator:ad33508455720b78cc0fc880cb3f9885e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a4ef8224e4259a43c0e5ff21b777e9a9c"></a>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>an intermediary data structure to allow the HAL layer to point the standard API functions used by the upper layers to the HAL implementation for the interface. This isolates the upper layers and loosely couples the ATCAIface object from the physical implementation. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="ad33508455720b78cc0fc880cb3f9885e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">union { ... } </td>
+          <td class="memname">void* hal_data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aa757f95b731b8dfdd4ce785e26944728"></a>
+<a class="anchor" id="a3939b643c7f807fc8fe8abcf18e99196"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct { ... } ::ATCAHID  <a class="el" href="a00041.html">atcahid</a></td>
+          <td class="memname"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(* halidle) (<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a88f8040c47fc046b2198a26f4ed3faf0"></a>
+<a class="anchor" id="aa020e68c9d18f83f205981fa57107b3c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct { ... } ::ATCAI2C  atcai2c</td>
+          <td class="memname"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(* halinit) (void *hal, <a class="el" href="a00046.html">ATCAIfaceCfg</a> *cfg)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a9670d2ececfd8d536f8e6b629ab7b1ed"></a>
+<a class="anchor" id="af174424ba7b2d19a74c72f8b4198c26b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct { ... } ::ATCASWI  atcaswi</td>
+          <td class="memname"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(* halpostinit) (<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a0b39f87d1a01274c9da57768841683c3"></a>
+<a class="anchor" id="af95136769fcc864880463d4dcab0c11c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct { ... } ::ATCAUART  atcauart</td>
+          <td class="memname"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(* halreceive) (<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *rxdata, uint16_t *rxlength)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ac6e5ec63505c02923d71f7409cdbf1d1"></a>
+<a class="anchor" id="a5eb439f0ede23956fde8cd72f41b85ba"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t baud</td>
+          <td class="memname"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(* halrelease) (void *<a class="el" href="a00043.html#ad33508455720b78cc0fc880cb3f9885e">hal_data</a>)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a5262d4a80e6a0b6dce6fd57d4656786d"></a>
+<a class="anchor" id="a6fb3aee6375216c53ef1e5a9df01e074"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t bus</td>
+          <td class="memname"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(* halsend) (<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *txdata, int txlength)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a97e106cc7267316cf40988744b231111"></a>
+<a class="anchor" id="ad2f432748c4d8efe98ec42d5cd1552b5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* cfg_data</td>
+          <td class="memname"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(* halsleep) (<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a05f2d72f4feff51d21be443c82d02192"></a>
+<a class="anchor" id="a033c21278fef7771916378cbcf726ae6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00190.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a> devtype</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="af6dd59cf5b43526a4c6ccd515042af73"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t guid[16]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ae40354a1051342eb5a9db005715dcfa9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int idx</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a3d0753b214d2a12df80f22b56bfc6e71"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00191.html#gac7f674d4a0afb12d2f3c9c5e98cb1089">ATCAIfaceType</a> iface_type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aba242bb3690d4d5a7de01474f94cb4ab"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t packetsize</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aa0e72b59c63431c62f5b5eba36a65d17"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t parity</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aec32162d9dc3fde2c76d766af522dae5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t pid</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a63c89c04d1feae07ca35558055155ffb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int port</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aa9ce255f8b9bff64fe261235f9e70c03"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int rx_retries</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ac93868aeda435dfb685a0a0020e5c7a4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t slave_address</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a9de35842403baab5738ea16162012d4f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t stopbits</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a98780fe4ab562a61abfd7870ea0910c3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t vid</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a058e797431a238154c5347fa26982044"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t wake_delay</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ae696a833509f858d17988acdb1deb161"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t wordsize</td>
+          <td class="memname"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(* halwake) (<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -441,7 +255,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00043.html">ATCAIfaceCfg</a></li>
+    <li class="navelem"><a class="el" href="a00043.html">ATCAHAL_t</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

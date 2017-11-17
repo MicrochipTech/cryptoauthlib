@@ -1,10 +1,33 @@
 var a00113 =
 [
-    [ "AT88CK9000", "a00113.html#a7fd906f26f53c831071de1d2fc04eccf", null ],
-    [ "NO_TARGET_BOARD", "a00113.html#a3dee547ba249d0b9325bc17afb14892e", null ],
-    [ "ATCAI2CMaster_t", "a00195.html#gae8f36006f14bf6a9f4914bac69ed9f98", null ],
-    [ "i2c_read_write_flag", "a00195.html#gaa3e90779b37cd1b3a4d32321d9d8b772", [
-      [ "I2C_WRITE", "a00195.html#ggaa3e90779b37cd1b3a4d32321d9d8b772adbf6337ed546b3c21fd08c397a346bb2", null ],
-      [ "I2C_READ", "a00195.html#ggaa3e90779b37cd1b3a4d32321d9d8b772a30040082a257338fe25e5bd5136bc9a8", null ]
-    ] ]
+    [ "atcatlsfn_get_enckey", "a00228.html#ga9cbd0041071e05fd2c8771fba859d8a1", null ],
+    [ "atcatls_calc_pubkey", "a00228.html#gad58e32e97154cb3a63783bec294ed34c", null ],
+    [ "atcatls_config_default", "a00228.html#gaf7aee64758bc2c194847b647f0dfbad1", null ],
+    [ "atcatls_create_csr", "a00228.html#ga977d6671cec46f80568230a13829d1e7", null ],
+    [ "atcatls_create_key", "a00228.html#ga4af487d7b8c148ef3f45d51603c17d41", null ],
+    [ "atcatls_ecdh", "a00228.html#ga94c1af2adb69e3f5ceffaed635947cec", null ],
+    [ "atcatls_ecdh_enc", "a00228.html#gac6ed45476b26a74b9ecdaaeee0bc088d", null ],
+    [ "atcatls_ecdhe", "a00228.html#gab58aebe45a19a981867a773a29f4255d", null ],
+    [ "atcatls_enc_read", "a00228.html#gadd0cd6e1f963b05a8ceace2d35bcd475", null ],
+    [ "atcatls_enc_rsakey_read", "a00228.html#gaed41b97390790040e3ff0e4165d341e2", null ],
+    [ "atcatls_enc_rsakey_write", "a00228.html#ga5033e03fcabf567b7bca8104e3c865c4", null ],
+    [ "atcatls_enc_write", "a00228.html#gaf0d8e7ad7bc1d44e3fcf2c0d7ca0d87a", null ],
+    [ "atcatls_finish", "a00228.html#ga3efb2b49d95622a7d8d1514008280521", null ],
+    [ "atcatls_get_ca_cert", "a00228.html#ga98863a207b0da4b288ee28799d67d22c", null ],
+    [ "atcatls_get_cert", "a00228.html#ga53db593bb5b8f07a3449e1ef1d6102af", null ],
+    [ "atcatls_get_device_cert", "a00228.html#ga914f4412c3c0a0fb5ae6f802da936ba1", null ],
+    [ "atcatls_get_enckey", "a00228.html#ga91ccb72878cf72a1768e51a240839e1f", null ],
+    [ "atcatls_get_signer_cert", "a00228.html#ga0116931e2954df009f976d02018ec5c9", null ],
+    [ "atcatls_get_sn", "a00228.html#gaad818f898bc82b0f1dba30f929d013d0", null ],
+    [ "atcatls_init", "a00228.html#gae26a822b1deed8274f25000ef48336f7", null ],
+    [ "atcatls_init_enckey", "a00228.html#gad22fb947c74f44444a9b92d5e6d54220", null ],
+    [ "atcatls_random", "a00228.html#ga79d1da595ad688af397c16741cc4b142", null ],
+    [ "atcatls_read_ca_pubkey", "a00228.html#ga9fd684cc33d13a9f4da3de83ee36be82", null ],
+    [ "atcatls_read_pubkey", "a00228.html#gae95f93b396667312f5f400e74661a9eb", null ],
+    [ "atcatls_set_enckey", "a00228.html#ga4fd920cc7a144762d521e5e88813f7c8", null ],
+    [ "atcatls_sign", "a00228.html#gaaa09d8ac89e04e75e4ba98c4ec872f8a", null ],
+    [ "atcatls_verify", "a00228.html#ga6fc4d5cb112e3c03f75291767251159d", null ],
+    [ "atcatls_verify_cert", "a00228.html#ga0f08d3e55ff7da74ffe886c641048be3", null ],
+    [ "atcatls_write_pubkey", "a00228.html#gaab10f75d61e3f34adcf5bc8ed5536971", null ],
+    [ "atcatlsfn_set_get_enckey", "a00228.html#ga9433fc3d3b042d0b58193d0d641579f1", null ]
 ];

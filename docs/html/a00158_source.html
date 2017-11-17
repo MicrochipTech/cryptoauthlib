@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: swi_uart_samd21_asf.h Source File</title>
+<title>CryptoAuthLib: hal_swi_uart.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,63 +106,46 @@ $(document).ready(function(){initNavTree('a00158_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">swi_uart_samd21_asf.h</div>  </div>
+<div class="title">hal_swi_uart.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00158.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#ifndef SWI_UART_SAMD21_ASF_H</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#define SWI_UART_SAMD21_ASF_H</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &lt;asf.h&gt;</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00110.html">cryptoauthlib.h</a>&quot;</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="a00195.html#gaf9d9d027ce20f528edea144203141714">   63</a></span>&#160;<span class="preprocessor">#define MAX_SWI_BUSES    6  // SAMD21 has up to 6 SERCOMS that can be configured as UART</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="a00195.html#gab45577245cf4a8ead70e2d56965f2df3">   65</a></span>&#160;<span class="preprocessor">#define RECEIVE_MODE    0   // UART Receive mode, RX enabled</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="a00195.html#ga4b85133b317e72410ea0762d637d3460">   66</a></span>&#160;<span class="preprocessor">#define TRANSMIT_MODE   1   // UART Transmit mode, RX disabled</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="a00195.html#gac55a27e4c3eae59bb1687eb7e8d1fe4b">   67</a></span>&#160;<span class="preprocessor">#define RX_DELAY        { volatile uint8_t delay = 90; while (delay--) __asm__(&quot;&quot;); }</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="a00195.html#ga3f3816567a2f513dd0e1f9eb17992fb2">   68</a></span>&#160;<span class="preprocessor">#define TX_DELAY        90</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="a00195.html#gab12a92582aefe426bb194e0c298e8f98">   70</a></span>&#160;<span class="preprocessor">#define DEBUG_PIN_1     EXT2_PIN_5</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="a00195.html#ga6a2579114d13238c7ba20d147a74090a">   71</a></span>&#160;<span class="preprocessor">#define DEBUG_PIN_2     EXT2_PIN_6</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="a00045.html">atcaSWImaster</a> {</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="comment">// struct usart_module for Atmel SWI interface</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="a00045.html#a2d29ab9b8f0842ee9a2906302b20011d">   76</a></span>&#160;    <span class="keyword">struct </span>usart_module <a class="code" href="a00045.html#a2d29ab9b8f0842ee9a2906302b20011d">usart_instance</a>;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="comment">// for conveniences during interface release phase</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="a00045.html#af5c011e6c2e8d49675f7029e8ec2c0a6">bus_index</a>;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;} <a class="code" href="a00195.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a>;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<a class="code" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a00195.html#ga003b63648f1a5f9eba274760559688f2">swi_uart_init</a>(<a class="code" href="a00045.html">ATCASWIMaster_t</a> *instance);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<a class="code" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a00195.html#ga0b1aad3936bf003686d8db7fa2be5132">swi_uart_deinit</a>(<a class="code" href="a00045.html">ATCASWIMaster_t</a> *instance);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00195.html#gaba296f70baf68b768d6c4bb9cf7ba67d">swi_uart_setbaud</a>(<a class="code" href="a00045.html">ATCASWIMaster_t</a> *instance, uint32_t baudrate);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00195.html#gacc2a96c86ce4c07249b81bc6a7eb2e41">swi_uart_mode</a>(<a class="code" href="a00045.html">ATCASWIMaster_t</a> *instance, uint8_t mode);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00195.html#gad640b598d581ee7c8a4c804bee602906">swi_uart_discover_buses</a>(<span class="keywordtype">int</span> swi_uart_buses[], <span class="keywordtype">int</span> max_buses);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<a class="code" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a00195.html#ga4a4d491006d9683d67838963706ac9c1">swi_uart_send_byte</a>(<a class="code" href="a00045.html">ATCASWIMaster_t</a> *instance, uint8_t data);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<a class="code" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a00195.html#ga93f3dab17c14f71641ca970998ede823">swi_uart_receive_byte</a>(<a class="code" href="a00045.html">ATCASWIMaster_t</a> *instance, uint8_t *data);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#endif // SWI_UART_ASF_H</span></div>
-<div class="ttc" id="a00195_html_ga257ed552f7d68eb1e5d3ca7baa01559a"><div class="ttname"><a href="a00195.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a></div><div class="ttdeci">struct atcaSWImaster ATCASWIMaster_t</div><div class="ttdoc">this is the hal_data for ATCA HAL for ASF SERCOM </div></div>
-<div class="ttc" id="a00195_html_ga0b1aad3936bf003686d8db7fa2be5132"><div class="ttname"><a href="a00195.html#ga0b1aad3936bf003686d8db7fa2be5132">swi_uart_deinit</a></div><div class="ttdeci">ATCA_STATUS swi_uart_deinit(ATCASWIMaster_t *instance)</div><div class="ttdoc">Implementation of SWI UART deinit. </div><div class="ttdef"><b>Definition:</b> swi_uart_samd21_asf.c:108</div></div>
-<div class="ttc" id="a00110_html"><div class="ttname"><a href="a00110.html">cryptoauthlib.h</a></div><div class="ttdoc">Single aggregation point for all CryptoAuthLib header files. </div></div>
-<div class="ttc" id="a00195_html_gad640b598d581ee7c8a4c804bee602906"><div class="ttname"><a href="a00195.html#gad640b598d581ee7c8a4c804bee602906">swi_uart_discover_buses</a></div><div class="ttdeci">void swi_uart_discover_buses(int swi_uart_buses[], int max_buses)</div><div class="ttdoc">discover UART buses available for this hardware this maintains a list of logical to physical bus mapp...</div><div class="ttdef"><b>Definition:</b> swi_uart_samd21_asf.c:155</div></div>
-<div class="ttc" id="a00195_html_gacc2a96c86ce4c07249b81bc6a7eb2e41"><div class="ttname"><a href="a00195.html#gacc2a96c86ce4c07249b81bc6a7eb2e41">swi_uart_mode</a></div><div class="ttdeci">void swi_uart_mode(ATCASWIMaster_t *instance, uint8_t mode)</div><div class="ttdoc">implementation of SWI UART change mode. </div><div class="ttdef"><b>Definition:</b> swi_uart_samd21_asf.c:142</div></div>
-<div class="ttc" id="a00195_html_gaba296f70baf68b768d6c4bb9cf7ba67d"><div class="ttname"><a href="a00195.html#gaba296f70baf68b768d6c4bb9cf7ba67d">swi_uart_setbaud</a></div><div class="ttdeci">void swi_uart_setbaud(ATCASWIMaster_t *instance, uint32_t baudrate)</div><div class="ttdoc">implementation of SWI UART change baudrate. </div><div class="ttdef"><b>Definition:</b> swi_uart_samd21_asf.c:120</div></div>
-<div class="ttc" id="a00195_html_ga4a4d491006d9683d67838963706ac9c1"><div class="ttname"><a href="a00195.html#ga4a4d491006d9683d67838963706ac9c1">swi_uart_send_byte</a></div><div class="ttdeci">ATCA_STATUS swi_uart_send_byte(ATCASWIMaster_t *instance, uint8_t data)</div><div class="ttdoc">HAL implementation of SWI UART send byte over ASF. This function send one byte over UART...</div><div class="ttdef"><b>Definition:</b> swi_uart_samd21_asf.c:170</div></div>
-<div class="ttc" id="a00089_html_a22bd6643f31f1d75dc3e7ea939f468cd"><div class="ttname"><a href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a></div><div class="ttdeci">ATCA_STATUS</div><div class="ttdef"><b>Definition:</b> atca_status.h:55</div></div>
-<div class="ttc" id="a00195_html_ga93f3dab17c14f71641ca970998ede823"><div class="ttname"><a href="a00195.html#ga93f3dab17c14f71641ca970998ede823">swi_uart_receive_byte</a></div><div class="ttdeci">ATCA_STATUS swi_uart_receive_byte(ATCASWIMaster_t *instance, uint8_t *data)</div><div class="ttdoc">HAL implementation of SWI UART receive bytes over ASF. This function receive one byte over UART...</div><div class="ttdef"><b>Definition:</b> swi_uart_samd21_asf.c:198</div></div>
-<div class="ttc" id="a00045_html_a2d29ab9b8f0842ee9a2906302b20011d"><div class="ttname"><a href="a00045.html#a2d29ab9b8f0842ee9a2906302b20011d">atcaSWImaster::usart_instance</a></div><div class="ttdeci">struct usart_module usart_instance</div><div class="ttdef"><b>Definition:</b> swi_uart_samd21_asf.h:76</div></div>
-<div class="ttc" id="a00045_html"><div class="ttname"><a href="a00045.html">atcaSWImaster</a></div><div class="ttdoc">This is the hal_data for ATCA HAL. </div><div class="ttdef"><b>Definition:</b> hal_swi_bitbang.h:81</div></div>
-<div class="ttc" id="a00045_html_af5c011e6c2e8d49675f7029e8ec2c0a6"><div class="ttname"><a href="a00045.html#af5c011e6c2e8d49675f7029e8ec2c0a6">atcaSWImaster::bus_index</a></div><div class="ttdeci">int bus_index</div><div class="ttdoc">for conveniences during interface release phase </div><div class="ttdef"><b>Definition:</b> hal_swi_bitbang.h:84</div></div>
-<div class="ttc" id="a00195_html_ga003b63648f1a5f9eba274760559688f2"><div class="ttname"><a href="a00195.html#ga003b63648f1a5f9eba274760559688f2">swi_uart_init</a></div><div class="ttdeci">ATCA_STATUS swi_uart_init(ATCASWIMaster_t *instance)</div><div class="ttdoc">Implementation of SWI UART init. </div><div class="ttdef"><b>Definition:</b> swi_uart_samd21_asf.c:64</div></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#ifndef HAL_SWI_UART_H_</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#define HAL_SWI_UART_H_</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#ifdef SAMD21_START</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">    #include &quot;<a class="code" href="a00191.html">swi_uart_samd21_start.h</a>&quot;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#elif defined (SAMD21_ASF)</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">    #include &quot;<a class="code" href="a00189.html">swi_uart_samd21_asf.h</a>&quot;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#elif defined (XMEGA_ASF)</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">    #include &quot;<a class="code" href="a00193.html">swi_uart_xmega_a3bu_asf.h</a>&quot;</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#elif defined (AT90USB_ASF)</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">    #include &quot;<a class="code" href="a00187.html">swi_uart_at90usb1287_asf.h</a>&quot;</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="a00226.html#ga8f12e3b749e7b3dc905114cc7b8d0b38">   60</a></span>&#160;<span class="preprocessor">#define SWI_WAKE_TOKEN   ((uint8_t)0x00)    </span></div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="a00226.html#ga13c01ac16bb14fde75e9c00dcd1cc761">   61</a></span>&#160;<span class="preprocessor">#define SWI_FLAG_CMD     ((uint8_t)0x77)    </span></div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="a00226.html#ga20af8352e13a7357650ba1cbf41349ea">   62</a></span>&#160;<span class="preprocessor">#define SWI_FLAG_TX      ((uint8_t)0x88)    </span></div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="a00226.html#ga6219d68ef915fdcd734f51960ba08fb6">   63</a></span>&#160;<span class="preprocessor">#define SWI_FLAG_IDLE    ((uint8_t)0xBB)    </span></div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="a00226.html#ga13ef2322176ad9b7ba3d2e23b277cce6">   64</a></span>&#160;<span class="preprocessor">#define SWI_FLAG_SLEEP   ((uint8_t)0xCC)    </span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<a class="code" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a00226.html#gaae96ea936a2e85d0bcb81b7868ee007d">hal_swi_send_flag</a>(<a class="code" href="a00024.html">ATCAIface</a> iface, uint8_t flag);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAL_SWI_UART_H_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="a00024_html"><div class="ttname"><a href="a00024.html">atca_iface</a></div><div class="ttdoc">atca_iface is the C object backing ATCAIface. See the atca_iface.h file for details on the ATCAIface ...</div><div class="ttdef"><b>Definition:</b> atca_iface.c:54</div></div>
+<div class="ttc" id="a00094_html_a22bd6643f31f1d75dc3e7ea939f468cd"><div class="ttname"><a href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a></div><div class="ttdeci">ATCA_STATUS</div><div class="ttdef"><b>Definition:</b> atca_status.h:52</div></div>
+<div class="ttc" id="a00193_html"><div class="ttname"><a href="a00193.html">swi_uart_xmega_a3bu_asf.h</a></div><div class="ttdoc">ATXMEGA&#39;s ATCA Hardware abstraction layer for SWI interface over XMEGA UART drivers. </div></div>
+<div class="ttc" id="a00191_html"><div class="ttname"><a href="a00191.html">swi_uart_samd21_start.h</a></div><div class="ttdoc">Atmel Crypto Auth hardware interface object. </div></div>
+<div class="ttc" id="a00226_html_gaae96ea936a2e85d0bcb81b7868ee007d"><div class="ttname"><a href="a00226.html#gaae96ea936a2e85d0bcb81b7868ee007d">hal_swi_send_flag</a></div><div class="ttdeci">ATCA_STATUS hal_swi_send_flag(ATCAIface iface, uint8_t data)</div><div class="ttdoc">HAL implementation of SWI send one byte over UART. </div><div class="ttdef"><b>Definition:</b> hal_swi_uart.c:268</div></div>
+<div class="ttc" id="a00187_html"><div class="ttname"><a href="a00187.html">swi_uart_at90usb1287_asf.h</a></div><div class="ttdoc">ATMEGA&#39;s ATCA Hardware abstraction layer for SWI interface over AT90USB1287 UART drivers. </div></div>
+<div class="ttc" id="a00189_html"><div class="ttname"><a href="a00189.html">swi_uart_samd21_asf.h</a></div><div class="ttdoc">ATXMEGA&#39;s ATCA Hardware abstraction layer for SWI interface over UART drivers. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00158.html">swi_uart_samd21_asf.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00158.html">hal_swi_uart.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

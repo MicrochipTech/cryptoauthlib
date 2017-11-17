@@ -1,13 +1,15 @@
 var modules =
 [
-    [ "Configuration (cfg_)", "a00188.html", "a00188" ],
-    [ "ATCACommand (atca_)", "a00189.html", "a00189" ],
-    [ "ATCADevice (atca_)", "a00190.html", "a00190" ],
-    [ "ATCAIface (atca_)", "a00191.html", "a00191" ],
-    [ "Certificate manipulation methods (atcacert_)", "a00192.html", "a00192" ],
-    [ "Basic Crypto API methods (atcab_)", "a00193.html", "a00193" ],
-    [ "Software crypto methods (atcac_)", "a00194.html", "a00194" ],
-    [ "Hardware abstraction layer (hal_)", "a00195.html", "a00195" ],
-    [ "Host side crypto methods (atcah_)", "a00196.html", "a00196" ],
-    [ "TLS integration with ATECC (atcatls_)", "a00197.html", "a00197" ]
+    [ "Configuration (cfg_)", "a00219.html", "a00219" ],
+    [ "ATCACommand (atca_)", "a00220.html", "a00220" ],
+    [ "ATCADevice (atca_)", "a00221.html", "a00221" ],
+    [ "ATCAIface (atca_)", "a00222.html", "a00222" ],
+    [ "Certificate manipulation methods (atcacert_)", "a00223.html", "a00223" ],
+    [ "Basic Crypto API methods (atcab_)", "a00224.html", "a00224" ],
+    [ "Software crypto methods (atcac_)", "a00225.html", "a00225" ],
+    [ "Hardware abstraction layer (hal_)", "a00226.html", "a00226" ],
+    [ "Host side crypto methods (atcah_)", "a00227.html", "a00227" ],
+    [ "TLS integration with ATECC (atcatls_)", "a00228.html", "a00228" ],
+    [ "Node authentication stages for node-auth-basic example", "a00229.html", "a00229" ],
+    [ "Circular Buffer", "a00230.html", "a00230" ]
 ];

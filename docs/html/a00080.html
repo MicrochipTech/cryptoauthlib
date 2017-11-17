@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: atca_hal.h File Reference</title>
+<title>CryptoAuthLib: atca_crypto_sw_tests.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,55 +106,265 @@ $(document).ready(function(){initNavTree('a00080.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_hal.h File Reference</div>  </div>
+<div class="title">atca_crypto_sw_tests.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>low-level HAL - methods used to setup indirection to physical layer interface  
+<p>Unity tests for the CryptoAuthLib software crypto API.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00089_source.html">atca_status.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00086_source.html">atca_iface.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00087_source.html">atca_start_config.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00088_source.html">atca_start_iface.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00213_source.html">unity.h</a>&quot;</code><br />
 </div>
 <p><a href="a00080_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html">ATCAHAL_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">an intermediary data structure to allow the HAL layer to point the standard API functions used by the upper layers to the HAL implementation for the interface. This isolates the upper layers and loosely couples the ATCAIface object from the physical implementation.  <a href="a00040.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gab77081d6d85ee3ab839a0882e80e9e87"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#gab77081d6d85ee3ab839a0882e80e9e87">hal_iface_init</a> (<a class="el" href="a00043.html">ATCAIfaceCfg</a> *, <a class="el" href="a00040.html">ATCAHAL_t</a> *hal)</td></tr>
-<tr class="memdesc:gab77081d6d85ee3ab839a0882e80e9e87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard HAL API for ATCA to initialize a physical interface.  <a href="a00195.html#gab77081d6d85ee3ab839a0882e80e9e87">More...</a><br /></td></tr>
-<tr class="separator:gab77081d6d85ee3ab839a0882e80e9e87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4be1afccb41f28f6ce620b1d5197befc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga4be1afccb41f28f6ce620b1d5197befc">hal_iface_release</a> (<a class="el" href="a00191.html#gac7f674d4a0afb12d2f3c9c5e98cb1089">ATCAIfaceType</a>, void *hal_data)</td></tr>
-<tr class="memdesc:ga4be1afccb41f28f6ce620b1d5197befc"><td class="mdescLeft">&#160;</td><td class="mdescRight">releases a physical interface, HAL knows how to interpret hal_data  <a href="a00195.html#ga4be1afccb41f28f6ce620b1d5197befc">More...</a><br /></td></tr>
-<tr class="separator:ga4be1afccb41f28f6ce620b1d5197befc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7598dfcd6dcac882836544d48356d02f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga7598dfcd6dcac882836544d48356d02f">atca_delay_us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga7598dfcd6dcac882836544d48356d02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API implemented at the HAL level.  <a href="a00195.html#ga7598dfcd6dcac882836544d48356d02f">More...</a><br /></td></tr>
-<tr class="separator:ga7598dfcd6dcac882836544d48356d02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga19891182689551cc3a88603135959351"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga19891182689551cc3a88603135959351">atca_delay_10us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga19891182689551cc3a88603135959351"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of tens of microseconds.  <a href="a00195.html#ga19891182689551cc3a88603135959351">More...</a><br /></td></tr>
-<tr class="separator:ga19891182689551cc3a88603135959351"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga80a853a202b089064bfc4b159c3418b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga80a853a202b089064bfc4b159c3418b4">atca_delay_ms</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga80a853a202b089064bfc4b159c3418b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of milliseconds. You can override this function if you like to do something else in your system while delaying.  <a href="a00195.html#ga80a853a202b089064bfc4b159c3418b4">More...</a><br /></td></tr>
-<tr class="separator:ga80a853a202b089064bfc4b159c3418b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add54163079e82b8828b25e4194ec3674"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#add54163079e82b8828b25e4194ec3674">atca_crypto_sw_tests</a> (void)</td></tr>
+<tr class="separator:add54163079e82b8828b25e4194ec3674"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79f2d36f9e1da5af1f355147d3a83c73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#a79f2d36f9e1da5af1f355147d3a83c73">test_atcac_sw_sha1_nist1</a> (void)</td></tr>
+<tr class="separator:a79f2d36f9e1da5af1f355147d3a83c73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa396e5ce2cba7465f5d8348092419d07"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#aa396e5ce2cba7465f5d8348092419d07">test_atcac_sw_sha1_nist2</a> (void)</td></tr>
+<tr class="separator:aa396e5ce2cba7465f5d8348092419d07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdfed39dbb18549ffe1669f65ef359a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#abdfed39dbb18549ffe1669f65ef359a4">test_atcac_sw_sha1_nist3</a> (void)</td></tr>
+<tr class="separator:abdfed39dbb18549ffe1669f65ef359a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1375cceae84e5f626a606974135d54bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#a1375cceae84e5f626a606974135d54bc">test_atcac_sw_sha1_nist_short</a> (void)</td></tr>
+<tr class="separator:a1375cceae84e5f626a606974135d54bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e3662a8b81a2a0a41e8021253553a24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#a2e3662a8b81a2a0a41e8021253553a24">test_atcac_sw_sha1_nist_long</a> (void)</td></tr>
+<tr class="separator:a2e3662a8b81a2a0a41e8021253553a24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e65f3c802154bdab4d827af2e24db98"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#a9e65f3c802154bdab4d827af2e24db98">test_atcac_sw_sha1_nist_monte</a> (void)</td></tr>
+<tr class="separator:a9e65f3c802154bdab4d827af2e24db98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72978ca88addcf67d8ac151b9be0f78b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#a72978ca88addcf67d8ac151b9be0f78b">test_atcac_sw_sha2_256_nist1</a> (void)</td></tr>
+<tr class="separator:a72978ca88addcf67d8ac151b9be0f78b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bf41e2e2a1d762bac0f12235030e9a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#a5bf41e2e2a1d762bac0f12235030e9a1">test_atcac_sw_sha2_256_nist2</a> (void)</td></tr>
+<tr class="separator:a5bf41e2e2a1d762bac0f12235030e9a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07d841e2799365ce4c030e9457774c34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#a07d841e2799365ce4c030e9457774c34">test_atcac_sw_sha2_256_nist3</a> (void)</td></tr>
+<tr class="separator:a07d841e2799365ce4c030e9457774c34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23aada6adf8a084f0664bc3b91cae72e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#a23aada6adf8a084f0664bc3b91cae72e">test_atcac_sw_sha2_256_nist_short</a> (void)</td></tr>
+<tr class="separator:a23aada6adf8a084f0664bc3b91cae72e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a779fbce841e3f0fe82e2356cc3c81850"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#a779fbce841e3f0fe82e2356cc3c81850">test_atcac_sw_sha2_256_nist_long</a> (void)</td></tr>
+<tr class="separator:a779fbce841e3f0fe82e2356cc3c81850"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeefcb1ce8fb1550890fc71374de0410c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#aeefcb1ce8fb1550890fc71374de0410c">test_atcac_sw_sha2_256_nist_monte</a> (void)</td></tr>
+<tr class="separator:aeefcb1ce8fb1550890fc71374de0410c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>low-level HAL - methods used to setup indirection to physical layer interface </p>
-<p>Copyright (c) 2015 Atmel Corporation. All rights reserved.</p>
-</div></div><!-- contents -->
+<div class="textblock"><p>Unity tests for the CryptoAuthLib software crypto API. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved. </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="add54163079e82b8828b25e4194ec3674"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void atca_crypto_sw_tests </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a79f2d36f9e1da5af1f355147d3a83c73"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void test_atcac_sw_sha1_nist1 </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa396e5ce2cba7465f5d8348092419d07"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void test_atcac_sw_sha1_nist2 </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="abdfed39dbb18549ffe1669f65ef359a4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void test_atcac_sw_sha1_nist3 </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a2e3662a8b81a2a0a41e8021253553a24"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void test_atcac_sw_sha1_nist_long </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9e65f3c802154bdab4d827af2e24db98"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void test_atcac_sw_sha1_nist_monte </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a1375cceae84e5f626a606974135d54bc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void test_atcac_sw_sha1_nist_short </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a72978ca88addcf67d8ac151b9be0f78b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void test_atcac_sw_sha2_256_nist1 </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5bf41e2e2a1d762bac0f12235030e9a1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void test_atcac_sw_sha2_256_nist2 </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a07d841e2799365ce4c030e9457774c34"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void test_atcac_sw_sha2_256_nist3 </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a779fbce841e3f0fe82e2356cc3c81850"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void test_atcac_sw_sha2_256_nist_long </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aeefcb1ce8fb1550890fc71374de0410c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void test_atcac_sw_sha2_256_nist_monte </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a23aada6adf8a084f0664bc3b91cae72e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void test_atcac_sw_sha2_256_nist_short </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00080.html">atca_hal.h</a></li>
+    <li class="navelem"><a class="el" href="dir_13e138d54eb8818da29c3992edef070a.html">test</a></li><li class="navelem"><a class="el" href="a00080.html">atca_crypto_sw_tests.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

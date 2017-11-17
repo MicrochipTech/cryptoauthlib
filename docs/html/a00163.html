@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: test_atcacert_client.c File Reference</title>
+<title>CryptoAuthLib: hal_win_kit_cdc.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,392 +106,88 @@ $(document).ready(function(){initNavTree('a00163.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">test_atcacert_client.c File Reference</div>  </div>
+<div class="title">hal_win_kit_cdc.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>cert client tests  
+<p>ATCA Hardware abstraction layer for Windows using kit protocol over a USB CDC device.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00094_source.html">atcacert/atcacert_client.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00182_source.html">test/unity.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00184_source.html">test/unity_fixture.h</a>&quot;</code><br />
-<code>#include &lt;string.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00110_source.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00057_source.html">basic/atca_basic.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00073_source.html">crypto/atca_crypto_sw_sha2.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00178_source.html">test_cert_def_0_device.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00180_source.html">test_cert_def_1_signer.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:af47716d804ef96eea7536ed02df15171"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#af47716d804ef96eea7536ed02df15171">TEST_GROUP</a> (atcacert_client)</td></tr>
-<tr class="separator:af47716d804ef96eea7536ed02df15171"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3bd5d80946e8052e4ded6406ee964ad9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#a3bd5d80946e8052e4ded6406ee964ad9">TEST_SETUP</a> (atcacert_client)</td></tr>
-<tr class="separator:a3bd5d80946e8052e4ded6406ee964ad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aadd42739c950774be44d6e378c5115e0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#aadd42739c950774be44d6e378c5115e0">TEST_TEAR_DOWN</a> (atcacert_client)</td></tr>
-<tr class="separator:aadd42739c950774be44d6e378c5115e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad31d8f9cb8d84ff4dabaebaa1f5c99c8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#ad31d8f9cb8d84ff4dabaebaa1f5c99c8">TEST</a> (atcacert_client, atcacert_client__init)</td></tr>
-<tr class="separator:ad31d8f9cb8d84ff4dabaebaa1f5c99c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b9e0f8b633e2f807839f74326b00314"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#a5b9e0f8b633e2f807839f74326b00314">TEST</a> (atcacert_client, atcacert_client__atcacert_read_cert_signer)</td></tr>
-<tr class="separator:a5b9e0f8b633e2f807839f74326b00314"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2dc4876748f4fd24f8465e5d75526bb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#ad2dc4876748f4fd24f8465e5d75526bb">TEST</a> (atcacert_client, atcacert_client__atcacert_read_cert_device)</td></tr>
-<tr class="separator:ad2dc4876748f4fd24f8465e5d75526bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf65461d8d1758565480c9b9d02e6cb1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#acf65461d8d1758565480c9b9d02e6cb1">TEST</a> (atcacert_client, atcacert_client__atcacert_read_cert_small_buf)</td></tr>
-<tr class="separator:acf65461d8d1758565480c9b9d02e6cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a134f4cf796fb1752a92b507386605998"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#a134f4cf796fb1752a92b507386605998">TEST</a> (atcacert_client, atcacert_client__atcacert_read_cert_bad_params)</td></tr>
-<tr class="separator:a134f4cf796fb1752a92b507386605998"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae64c68cf8cfdeabf541d54b48438915d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#ae64c68cf8cfdeabf541d54b48438915d">TEST</a> (atcacert_client, atcacert_client__atcacert_get_response)</td></tr>
-<tr class="separator:ae64c68cf8cfdeabf541d54b48438915d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf6b166c423e234a4ba3dd0824ad8096"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#acf6b166c423e234a4ba3dd0824ad8096">TEST</a> (atcacert_client, atcacert_client__atcacert_get_response_bad_params)</td></tr>
-<tr class="separator:acf6b166c423e234a4ba3dd0824ad8096"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><code>#include &lt;Windows.h&gt;</code><br />
+</div>
+<p><a href="a00163_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html">cdc_device</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html">atcacdc</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:add37ede5fe8955551c28ba1b22f11980"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00043.html">ATCAIfaceCfg</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#add37ede5fe8955551c28ba1b22f11980">gCfg</a></td></tr>
-<tr class="separator:add37ede5fe8955551c28ba1b22f11980"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd99f894f16b93a1fa7e5d4fa7095e8a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#acd99f894f16b93a1fa7e5d4fa7095e8a">g_signer_ca_public_key</a> [64]</td></tr>
-<tr class="separator:acd99f894f16b93a1fa7e5d4fa7095e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa053e9c31d76eb8bff743cc02752f49"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#afa053e9c31d76eb8bff743cc02752f49">g_signer_public_key</a> [64]</td></tr>
-<tr class="separator:afa053e9c31d76eb8bff743cc02752f49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acedd1c78e39ea27e75edb6d111d1feec"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#acedd1c78e39ea27e75edb6d111d1feec">g_device_public_key</a> [64]</td></tr>
-<tr class="separator:acedd1c78e39ea27e75edb6d111d1feec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa11fb6fbda375e300c6b7365c09632fd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#aa11fb6fbda375e300c6b7365c09632fd">g_signer_cert_ref</a> [512]</td></tr>
-<tr class="separator:aa11fb6fbda375e300c6b7365c09632fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36d309be6fcc95f05d51a7effbbae578"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#a36d309be6fcc95f05d51a7effbbae578">g_signer_cert_ref_size</a> = 0</td></tr>
-<tr class="separator:a36d309be6fcc95f05d51a7effbbae578"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98804ceadda3c0fc10dcecf2b08c6913"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#a98804ceadda3c0fc10dcecf2b08c6913">g_device_cert_ref</a> [512]</td></tr>
-<tr class="separator:a98804ceadda3c0fc10dcecf2b08c6913"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed661204ef3a8076053b843fbca02471"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#aed661204ef3a8076053b843fbca02471">g_device_cert_ref_size</a> = 0</td></tr>
-<tr class="separator:aed661204ef3a8076053b843fbca02471"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a08b6c05184266dc4d5c8727bb9c1c754"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#a08b6c05184266dc4d5c8727bb9c1c754">CDC_DEVICES_MAX</a>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:a08b6c05184266dc4d5c8727bb9c1c754"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ac8c9377f90d6ce3044f81f900a54fe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#a5ac8c9377f90d6ce3044f81f900a54fe">CDC_BUFFER_MAX</a>&#160;&#160;&#160;1024</td></tr>
+<tr class="separator:a5ac8c9377f90d6ce3044f81f900a54fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a99ee56102171adcbcecb8a78fb9fa895"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00049.html">cdc_device</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#a99ee56102171adcbcecb8a78fb9fa895">cdc_device_t</a></td></tr>
+<tr class="separator:a99ee56102171adcbcecb8a78fb9fa895"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2df85bfd309840b4c9a5087e053d4811"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00035.html">atcacdc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#a2df85bfd309840b4c9a5087e053d4811">atcacdc_t</a></td></tr>
+<tr class="separator:a2df85bfd309840b4c9a5087e053d4811"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>cert client tests </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2015 Atmel Corporation. All rights reserved.</dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ad31d8f9cb8d84ff4dabaebaa1f5c99c8"></a>
+<div class="textblock"><p>ATCA Hardware abstraction layer for Windows using kit protocol over a USB CDC device. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved. </dd></dl>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="a5ac8c9377f90d6ce3044f81f900a54fe"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">TEST </td>
-          <td>(</td>
-          <td class="paramtype">atcacert_client&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">atcacert_client__init&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define CDC_BUFFER_MAX&#160;&#160;&#160;1024</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a5b9e0f8b633e2f807839f74326b00314"></a>
+<a class="anchor" id="a08b6c05184266dc4d5c8727bb9c1c754"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">TEST </td>
-          <td>(</td>
-          <td class="paramtype">atcacert_client&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">atcacert_client__atcacert_read_cert_signer&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define CDC_DEVICES_MAX&#160;&#160;&#160;10</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ad2dc4876748f4fd24f8465e5d75526bb"></a>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="a2df85bfd309840b4c9a5087e053d4811"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">TEST </td>
-          <td>(</td>
-          <td class="paramtype">atcacert_client&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">atcacert_client__atcacert_read_cert_device&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">typedef struct <a class="el" href="a00035.html">atcacdc</a>  <a class="el" href="a00226.html#ga2df85bfd309840b4c9a5087e053d4811">atcacdc_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="acf65461d8d1758565480c9b9d02e6cb1"></a>
+<a class="anchor" id="a99ee56102171adcbcecb8a78fb9fa895"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">TEST </td>
-          <td>(</td>
-          <td class="paramtype">atcacert_client&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">atcacert_client__atcacert_read_cert_small_buf&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a134f4cf796fb1752a92b507386605998"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST </td>
-          <td>(</td>
-          <td class="paramtype">atcacert_client&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">atcacert_client__atcacert_read_cert_bad_params&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ae64c68cf8cfdeabf541d54b48438915d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST </td>
-          <td>(</td>
-          <td class="paramtype">atcacert_client&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">atcacert_client__atcacert_get_response&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="acf6b166c423e234a4ba3dd0824ad8096"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST </td>
-          <td>(</td>
-          <td class="paramtype">atcacert_client&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">atcacert_client__atcacert_get_response_bad_params&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="af47716d804ef96eea7536ed02df15171"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP </td>
-          <td>(</td>
-          <td class="paramtype">atcacert_client&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a3bd5d80946e8052e4ded6406ee964ad9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_SETUP </td>
-          <td>(</td>
-          <td class="paramtype">atcacert_client&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aadd42739c950774be44d6e378c5115e0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_TEAR_DOWN </td>
-          <td>(</td>
-          <td class="paramtype">atcacert_client&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a class="anchor" id="a98804ceadda3c0fc10dcecf2b08c6913"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t g_device_cert_ref[512]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aed661204ef3a8076053b843fbca02471"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t g_device_cert_ref_size = 0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="acedd1c78e39ea27e75edb6d111d1feec"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t g_device_public_key[64]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="acd99f894f16b93a1fa7e5d4fa7095e8a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t g_signer_ca_public_key[64]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aa11fb6fbda375e300c6b7365c09632fd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t g_signer_cert_ref[512]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a36d309be6fcc95f05d51a7effbbae578"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t g_signer_cert_ref_size = 0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="afa053e9c31d76eb8bff743cc02752f49"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t g_signer_public_key[64]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="add37ede5fe8955551c28ba1b22f11980"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00043.html">ATCAIfaceCfg</a>* gCfg</td>
+          <td class="memname">typedef struct <a class="el" href="a00049.html">cdc_device</a>  <a class="el" href="a00226.html#ga99ee56102171adcbcecb8a78fb9fa895">cdc_device_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -503,7 +199,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_13e138d54eb8818da29c3992edef070a.html">test</a></li><li class="navelem"><a class="el" href="dir_3fd499d16b43d3319c6085ec747f938a.html">atcacert</a></li><li class="navelem"><a class="el" href="a00163.html">test_atcacert_client.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00163.html">hal_win_kit_cdc.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

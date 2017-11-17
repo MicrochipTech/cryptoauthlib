@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: hal_sam4s_timer_asf.c File Reference</title>
+<title>CryptoAuthLib: cmd-processor.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,40 +106,365 @@ $(document).ready(function(){initNavTree('a00119.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">hal_sam4s_timer_asf.c File Reference</div>  </div>
+<div class="title">cmd-processor.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for SAM4S I2C over ASF drivers.  
+<p>simple command processor for test console  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;asf.h&gt;</code><br />
-<code>#include &lt;delay.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00080_source.html">atca_hal.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00096_source.html">atca_test.h</a>&quot;</code><br />
+<code>#include &lt;asf.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00118_source.html">cbuf.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00121_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00098_source.html">atca_unit_tests.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00063_source.html">atca_basic_tests.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00080_source.html">atca_crypto_sw_tests.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00120_source.html">cmd-processor.h</a>&quot;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a3099ddb9122ffa1d12fdc484e74676a6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#a3099ddb9122ffa1d12fdc484e74676a6">TEST_CD</a></td></tr>
+<tr class="separator:a3099ddb9122ffa1d12fdc484e74676a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0401dafacdbf0e42204a2d486af36011"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#a0401dafacdbf0e42204a2d486af36011">TEST_CIO</a></td></tr>
+<tr class="separator:a0401dafacdbf0e42204a2d486af36011"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe947d1642126b2f966b18c4155005de"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#abe947d1642126b2f966b18c4155005de">TEST_SW_CRYPTO</a></td></tr>
+<tr class="separator:abe947d1642126b2f966b18c4155005de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga7598dfcd6dcac882836544d48356d02f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga7598dfcd6dcac882836544d48356d02f">atca_delay_us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga7598dfcd6dcac882836544d48356d02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API implemented at the HAL level.  <a href="a00195.html#ga7598dfcd6dcac882836544d48356d02f">More...</a><br /></td></tr>
-<tr class="separator:ga7598dfcd6dcac882836544d48356d02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga19891182689551cc3a88603135959351"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga19891182689551cc3a88603135959351">atca_delay_10us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga19891182689551cc3a88603135959351"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of tens of microseconds.  <a href="a00195.html#ga19891182689551cc3a88603135959351">More...</a><br /></td></tr>
-<tr class="separator:ga19891182689551cc3a88603135959351"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga80a853a202b089064bfc4b159c3418b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga80a853a202b089064bfc4b159c3418b4">atca_delay_ms</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga80a853a202b089064bfc4b159c3418b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of milliseconds. You can override this function if you like to do something else in your system while delaying.  <a href="a00195.html#ga80a853a202b089064bfc4b159c3418b4">More...</a><br /></td></tr>
-<tr class="separator:ga80a853a202b089064bfc4b159c3418b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab643aab721dd293f9bec524e2ff728cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#ab643aab721dd293f9bec524e2ff728cc">RunAllCertDataTests</a> (void)</td></tr>
+<tr class="separator:ab643aab721dd293f9bec524e2ff728cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3619f93a05811a3261c0b935acaef6b5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#a3619f93a05811a3261c0b935acaef6b5">certdata_unit_tests</a> (void)</td></tr>
+<tr class="separator:a3619f93a05811a3261c0b935acaef6b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adeada86f910938687020de7e5217b036"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#adeada86f910938687020de7e5217b036">RunAllCertIOTests</a> (void)</td></tr>
+<tr class="separator:adeada86f910938687020de7e5217b036"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3c04a6df37fbc3fa8dbd3b218a16557"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#aa3c04a6df37fbc3fa8dbd3b218a16557">certio_unit_tests</a> (void)</td></tr>
+<tr class="separator:aa3c04a6df37fbc3fa8dbd3b218a16557"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03418403841ff39e520854f4c830339f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#a03418403841ff39e520854f4c830339f">help</a> (void)</td></tr>
+<tr class="separator:a03418403841ff39e520854f4c830339f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7c3b83d72a6ad9b18cc4fe0293ac480"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#ae7c3b83d72a6ad9b18cc4fe0293ac480">isDeviceLocked</a> (uint8_t zone, bool *isLocked)</td></tr>
+<tr class="separator:ae7c3b83d72a6ad9b18cc4fe0293ac480"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb1de3996bd4a67edb5d4de71e444d86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#abb1de3996bd4a67edb5d4de71e444d86">lockstatus</a> (void)</td></tr>
+<tr class="separator:abb1de3996bd4a67edb5d4de71e444d86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa95e9b3dc86231a5a29f9aa5c4efd144"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#aa95e9b3dc86231a5a29f9aa5c4efd144">lock_config_zone</a> (void)</td></tr>
+<tr class="separator:aa95e9b3dc86231a5a29f9aa5c4efd144"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a144b59f0765a7d12586e64d25e381d1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#a144b59f0765a7d12586e64d25e381d1c">lock_data_zone</a> (void)</td></tr>
+<tr class="separator:a144b59f0765a7d12586e64d25e381d1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2567c04402541544b9b3b8d4c7f85160"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#a2567c04402541544b9b3b8d4c7f85160">getinfo</a> (uint8_t *revision)</td></tr>
+<tr class="separator:a2567c04402541544b9b3b8d4c7f85160"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff869a03b9109774834b3c2fef616a4a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#aff869a03b9109774834b3c2fef616a4a">getsernum</a> (uint8_t *sernum)</td></tr>
+<tr class="separator:aff869a03b9109774834b3c2fef616a4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5adeccee28aaa10eaa8008dd827f9e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#ae5adeccee28aaa10eaa8008dd827f9e7">doRandoms</a> (void)</td></tr>
+<tr class="separator:ae5adeccee28aaa10eaa8008dd827f9e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17e092c5984f191517a69985b7198989"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#a17e092c5984f191517a69985b7198989">parseCmd</a> (const char *command)</td></tr>
+<tr class="separator:a17e092c5984f191517a69985b7198989"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2263bbc3f95075fb6f46fdbcabef8261"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#a2263bbc3f95075fb6f46fdbcabef8261">processCmd</a> (void)</td></tr>
+<tr class="separator:a2263bbc3f95075fb6f46fdbcabef8261"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a3d538a9ac05c15f34fb6ca61a5684e12"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#a3d538a9ac05c15f34fb6ca61a5684e12">cmdbytes</a> [128]</td></tr>
+<tr class="separator:a3d538a9ac05c15f34fb6ca61a5684e12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for SAM4S I2C over ASF drivers. </p>
-<p>Prerequisite: add "Delay routines (service)" module to application in Atmel Studio</p>
-<p>Copyright (c) 2015 Atmel Corporation. All rights reserved.</p>
-</div></div><!-- contents -->
+<div class="textblock"><p>simple command processor for test console </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved. </dd></dl>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="a3099ddb9122ffa1d12fdc484e74676a6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TEST_CD</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0401dafacdbf0e42204a2d486af36011"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TEST_CIO</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="abe947d1642126b2f966b18c4155005de"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TEST_SW_CRYPTO</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a3619f93a05811a3261c0b935acaef6b5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int certdata_unit_tests </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa3c04a6df37fbc3fa8dbd3b218a16557"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int certio_unit_tests </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ae5adeccee28aaa10eaa8008dd827f9e7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> doRandoms </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a2567c04402541544b9b3b8d4c7f85160"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> getinfo </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>revision</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aff869a03b9109774834b3c2fef616a4a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> getsernum </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>sernum</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a03418403841ff39e520854f4c830339f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int help </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ae7c3b83d72a6ad9b18cc4fe0293ac480"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> isDeviceLocked </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>zone</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool *&#160;</td>
+          <td class="paramname"><em>isLocked</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa95e9b3dc86231a5a29f9aa5c4efd144"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> lock_config_zone </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a144b59f0765a7d12586e64d25e381d1c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> lock_data_zone </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="abb1de3996bd4a67edb5d4de71e444d86"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> lockstatus </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a17e092c5984f191517a69985b7198989"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int parseCmd </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>command</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a2263bbc3f95075fb6f46fdbcabef8261"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int processCmd </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ab643aab721dd293f9bec524e2ff728cc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RunAllCertDataTests </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="adeada86f910938687020de7e5217b036"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RunAllCertIOTests </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="a3d538a9ac05c15f34fb6ca61a5684e12"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t cmdbytes[128]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00119.html">hal_sam4s_timer_asf.c</a></li>
+    <li class="navelem"><a class="el" href="dir_13e138d54eb8818da29c3992edef070a.html">test</a></li><li class="navelem"><a class="el" href="a00119.html">cmd-processor.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

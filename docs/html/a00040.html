@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: ATCAHAL_t Struct Reference</title>
+<title>CryptoAuthLib: atcacert_der_dec_length__good_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -109,141 +109,50 @@ $(document).ready(function(){initNavTree('a00040.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ATCAHAL_t Struct Reference<div class="ingroups"><a class="el" href="a00195.html">Hardware abstraction layer (hal_)</a></div></div>  </div>
+<div class="title">atcacert_der_dec_length__good_s Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>an intermediary data structure to allow the HAL layer to point the standard API functions used by the upper layers to the HAL implementation for the interface. This isolates the upper layers and loosely couples the ATCAIface object from the physical implementation.  
- <a href="a00040.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="a00080_source.html">atca_hal.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aa020e68c9d18f83f205981fa57107b3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#aa020e68c9d18f83f205981fa57107b3c">halinit</a> )(void *hal, <a class="el" href="a00043.html">ATCAIfaceCfg</a> *cfg)</td></tr>
-<tr class="separator:aa020e68c9d18f83f205981fa57107b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af174424ba7b2d19a74c72f8b4198c26b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#af174424ba7b2d19a74c72f8b4198c26b">halpostinit</a> )(<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="separator:af174424ba7b2d19a74c72f8b4198c26b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fb3aee6375216c53ef1e5a9df01e074"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a6fb3aee6375216c53ef1e5a9df01e074">halsend</a> )(<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *txdata, int txlength)</td></tr>
-<tr class="separator:a6fb3aee6375216c53ef1e5a9df01e074"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af95136769fcc864880463d4dcab0c11c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#af95136769fcc864880463d4dcab0c11c">halreceive</a> )(<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
-<tr class="separator:af95136769fcc864880463d4dcab0c11c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a033c21278fef7771916378cbcf726ae6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a033c21278fef7771916378cbcf726ae6">halwake</a> )(<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="separator:a033c21278fef7771916378cbcf726ae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3939b643c7f807fc8fe8abcf18e99196"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a3939b643c7f807fc8fe8abcf18e99196">halidle</a> )(<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="separator:a3939b643c7f807fc8fe8abcf18e99196"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2f432748c4d8efe98ec42d5cd1552b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ad2f432748c4d8efe98ec42d5cd1552b5">halsleep</a> )(<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="separator:ad2f432748c4d8efe98ec42d5cd1552b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5eb439f0ede23956fde8cd72f41b85ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a5eb439f0ede23956fde8cd72f41b85ba">halrelease</a> )(void *<a class="el" href="a00040.html#ad33508455720b78cc0fc880cb3f9885e">hal_data</a>)</td></tr>
-<tr class="separator:a5eb439f0ede23956fde8cd72f41b85ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad33508455720b78cc0fc880cb3f9885e"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ad33508455720b78cc0fc880cb3f9885e">hal_data</a></td></tr>
-<tr class="separator:ad33508455720b78cc0fc880cb3f9885e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebb70c2aab3407a9f05334c47131a43b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#aebb70c2aab3407a9f05334c47131a43b">length</a></td></tr>
+<tr class="separator:aebb70c2aab3407a9f05334c47131a43b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23cefcdad5a14ea62fd6e4a770bd8487"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a23cefcdad5a14ea62fd6e4a770bd8487">der_length_size</a></td></tr>
+<tr class="separator:a23cefcdad5a14ea62fd6e4a770bd8487"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd0569b34875f9f0e0a68b00c0e8ff3c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#acd0569b34875f9f0e0a68b00c0e8ff3c">der_length</a> [5]</td></tr>
+<tr class="separator:acd0569b34875f9f0e0a68b00c0e8ff3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>an intermediary data structure to allow the HAL layer to point the standard API functions used by the upper layers to the HAL implementation for the interface. This isolates the upper layers and loosely couples the ATCAIface object from the physical implementation. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ad33508455720b78cc0fc880cb3f9885e"></a>
+<h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="acd0569b34875f9f0e0a68b00c0e8ff3c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* hal_data</td>
+          <td class="memname">uint8_t der_length[5]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a3939b643c7f807fc8fe8abcf18e99196"></a>
+<a class="anchor" id="a23cefcdad5a14ea62fd6e4a770bd8487"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(* halidle) (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td>
+          <td class="memname">size_t der_length_size</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aa020e68c9d18f83f205981fa57107b3c"></a>
+<a class="anchor" id="aebb70c2aab3407a9f05334c47131a43b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(* halinit) (void *hal, <a class="el" href="a00043.html">ATCAIfaceCfg</a> *cfg)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="af174424ba7b2d19a74c72f8b4198c26b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(* halpostinit) (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="af95136769fcc864880463d4dcab0c11c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(* halreceive) (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *rxdata, uint16_t *rxlength)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a5eb439f0ede23956fde8cd72f41b85ba"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(* halrelease) (void *<a class="el" href="a00040.html#ad33508455720b78cc0fc880cb3f9885e">hal_data</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a6fb3aee6375216c53ef1e5a9df01e074"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(* halsend) (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *txdata, int txlength)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ad2f432748c4d8efe98ec42d5cd1552b5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(* halsleep) (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a033c21278fef7771916378cbcf726ae6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>(* halwake) (<a class="el" href="a00191.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td>
+          <td class="memname">uint32_t length</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -255,7 +164,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00040.html">ATCAHAL_t</a></li>
+    <li class="navelem"><a class="el" href="a00040.html">atcacert_der_dec_length__good_s</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

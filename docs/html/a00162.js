@@ -1,16 +1,19 @@
 var a00162 =
 [
-    [ "MAX_SWI_BUSES", "a00195.html#gaf9d9d027ce20f528edea144203141714", null ],
-    [ "RECEIVE_MODE", "a00195.html#gab45577245cf4a8ead70e2d56965f2df3", null ],
-    [ "RX_DELAY", "a00195.html#gac55a27e4c3eae59bb1687eb7e8d1fe4b", null ],
-    [ "TRANSMIT_MODE", "a00195.html#ga4b85133b317e72410ea0762d637d3460", null ],
-    [ "TX_DELAY", "a00195.html#ga3f3816567a2f513dd0e1f9eb17992fb2", null ],
-    [ "ATCASWIMaster_t", "a00195.html#ga257ed552f7d68eb1e5d3ca7baa01559a", null ],
-    [ "swi_uart_deinit", "a00195.html#ga0b1aad3936bf003686d8db7fa2be5132", null ],
-    [ "swi_uart_discover_buses", "a00195.html#gad640b598d581ee7c8a4c804bee602906", null ],
-    [ "swi_uart_init", "a00195.html#ga003b63648f1a5f9eba274760559688f2", null ],
-    [ "swi_uart_mode", "a00195.html#gacc2a96c86ce4c07249b81bc6a7eb2e41", null ],
-    [ "swi_uart_receive_byte", "a00195.html#ga93f3dab17c14f71641ca970998ede823", null ],
-    [ "swi_uart_send_byte", "a00195.html#ga4a4d491006d9683d67838963706ac9c1", null ],
-    [ "swi_uart_setbaud", "a00195.html#gaba296f70baf68b768d6c4bb9cf7ba67d", null ]
+    [ "hal_cdc_discover_buses", "a00162.html#a5320f17f400bf5ad0579dbdd5c8acf90", null ],
+    [ "hal_cdc_discover_devices", "a00162.html#a16da7367a3a2cc01b926ac681513874e", null ],
+    [ "hal_kit_cdc_discover_buses", "a00162.html#a4463695310b7f6544dbe459be5340b86", null ],
+    [ "hal_kit_cdc_discover_devices", "a00162.html#a1e1fd4856e73176a487baac97175e9bf", null ],
+    [ "hal_kit_cdc_idle", "a00162.html#a92055a86e32f3dfc9eef064d48aa0870", null ],
+    [ "hal_kit_cdc_init", "a00162.html#a313bdfc8337f930a7f9fc6ca4e7731d9", null ],
+    [ "hal_kit_cdc_post_init", "a00162.html#ad11b8714818c2b05f70593c002fc5945", null ],
+    [ "hal_kit_cdc_receive", "a00162.html#a3f3972f81de141ff0816b605054d775a", null ],
+    [ "hal_kit_cdc_release", "a00162.html#a21a939cc86a0602cb2ba3be3eec26e6e", null ],
+    [ "hal_kit_cdc_send", "a00162.html#a7732806c89cd206a96b7fabbaf6770d5", null ],
+    [ "hal_kit_cdc_sleep", "a00162.html#a1299c47e6d73d987bc04b16f25637bf6", null ],
+    [ "hal_kit_cdc_wake", "a00162.html#abced238b72e636a557d00355a2e44ac9", null ],
+    [ "hal_kit_phy_num_found", "a00162.html#a5fac3cf3552eee701aec448c1392edd8", null ],
+    [ "kit_phy_receive", "a00162.html#aae5e94b6080d4279474eb3e98bc58901", null ],
+    [ "kit_phy_send", "a00162.html#a020fb0be6c73515122cf4b9f749fd97d", null ],
+    [ "_gCdc", "a00162.html#abc65c7c6bd64530b95fa72082f1e0390", null ]
 ];

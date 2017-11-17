@@ -6,7 +6,7 @@ var NAVTREE =
     [ "License", "a00004.html", null ],
     [ "basic directory - Purpose", "a00006.html", null ],
     [ "crypto directory - Purpose", "a00008.html", null ],
-    [ "hal directory - Purpose", "a00010.html", null ],
+    [ "HAL Directory - Purpose", "a00010.html", null ],
     [ "Modules", "modules.html", "modules" ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
@@ -34,21 +34,23 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "a00002.html",
-"a00058.html#a51cfead6fa0b8429e907d2ca264ce864",
-"a00063.html#a71b3c35d021e0ac507fdd6cd9538467f",
-"a00089.html#a22bd6643f31f1d75dc3e7ea939f468cda4e5e63313a42c77753edf15c2f4432c3",
-"a00135.html",
-"a00165.html#a79ce7cd79ea85fd9d1bade9fd21feba8",
-"a00167.html#aab51719c577c40605e86bed1efd0fcd2",
-"a00180.html",
-"a00183.html#a34d61a21a177a63f9681e1d89653cc74",
-"a00188.html#gadd4396e3d3f9d3d64e4bf1ba3d10af50",
-"a00192.html#ga51f7b996909bc9cae783bcaf0fe7082b",
-"a00193.html#ga07b30b1b731bed510e36b30fee7fa3ae",
-"a00195.html#ga09e7f465a040fbd19ea136269571de3c",
-"a00195.html#gab77081d6d85ee3ab839a0882e80e9e87",
-"a00196.html#ga60fc543b3df6fa1dedfbf59e5bde554b",
-"a00197.html#gad58e32e97154cb3a63783bec294ed34c"
+"a00050.html",
+"a00068.html#a56e3f8d816e2068d80003fdee7d58763",
+"a00079.html#add54163079e82b8828b25e4194ec3674",
+"a00120.html#a9119196cffeb0f577313136a23a0c58c",
+"a00194.html#aadd42739c950774be44d6e378c5115e0",
+"a00198.html#a3c337ac108a3ca1b5f92f88d17e5b64a",
+"a00200.html#ab60a30e1e941e904e9cca1876ee264d5",
+"a00213.html#a6678b4c19671a716237d47d5aeb5db4c",
+"a00218.html#a80ceaefdf7a361cf7fd3256c32cfaa3e",
+"a00222.html#ga75c11126f3fe81df3d6c27f5bb393303",
+"a00223.html#gace8ac017f58840c296fe2cf29bdaa2fe",
+"a00224.html#ga89f26091b8754321ab55440a9e6b01ae",
+"a00226.html#ga13ef2322176ad9b7ba3d2e23b277cce6",
+"a00226.html#ga93f3dab17c14f71641ca970998ede823",
+"a00226.html#gaeaee19ff7623f0eab9839e68dae583af",
+"a00228.html#ga0116931e2954df009f976d02018ec5c9",
+"globals_defs_f.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

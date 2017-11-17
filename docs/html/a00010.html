@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: hal directory - Purpose</title>
+<title>CryptoAuthLib: HAL Directory - Purpose</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -100,12 +100,95 @@ $(document).ready(function(){initNavTree('a00010.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">hal directory - Purpose </div>  </div>
+<div class="title">HAL Directory - Purpose </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>This directory contains all the Hardware Abstraction Layer (HAL) files used to adapt the upper levels of atca-ng and abstractions to physical hardware.</p>
 <p>HAL contains physical implementations for I2C, SWI, SPI, UART and timers for specific hardware platforms.</p>
-<p>Include just those HAL files you require based on platform type. </p>
+<p><b>Include just those HAL files you require based on platform type.</b></p>
+<h1>CryptoAuthLib Release 2: Supported HAL Layers </h1>
+<p>HAL Layers files are combined into groups. Initial group is generic files that are typically included in a project. Files are then broken out by uController Family and or Operating System Interface.</p>
+<table class="doxtable">
+<tr>
+<th>Protocol Files </th><th>Interface </th><th>Files </th><th>API </th><th>Notes  </th></tr>
+<tr>
+<td>atca </td><td></td><td><a class="el" href="a00084.html" title="low-level HAL - methods used to setup indirection to physical layer interface. this level does the di...">atca_hal.c</a>/h </td><td></td><td>For all projects </td></tr>
+<tr>
+<td>kit protocol </td><td></td><td><a class="el" href="a00173.html" title="Atmel Crypto Auth hardware interface object. ">kit_protocol.c</a>/h </td><td></td><td>For all Kit Protocol projects </td></tr>
+<tr>
+<td></td><td></td><td><a class="el" href="a00172.html" title="ATCA Hardware abstraction layer physical send & receive function definitions. ">kit_phy.h</a> </td><td></td><td></td></tr>
+<tr>
+<td></td><td></td><td><a class="el" href="a00125.html" title="ATCA Hardware abstraction layer for I2C bit banging. ">hal_i2c_bitbang.c</a>/h </td><td>ASF </td><td>For all I2C Bitbang projects </td></tr>
+<tr>
+<td></td><td></td><td><a class="el" href="a00155.html" title="ATCA Hardware abstraction layer for SWI bit banging. ">hal_swi_bitbang.c</a>/h </td><td>ASF </td><td>For all SWI Bitbang projects </td></tr>
+<tr>
+<td></td><td></td><td><a class="el" href="a00157.html" title="ATCA Hardware abstraction layer for SWI over UART drivers. ">hal_swi_uart.c</a>/h </td><td>ASF </td><td>For all SWI UART projects </td></tr>
+</table>
+<table class="doxtable">
+<tr>
+<th>AVR Micros </th><th>Interface </th><th>Files </th><th>API </th><th>Notes  </th></tr>
+<tr>
+<td>at90usb1287 </td><td>I2C </td><td><a class="el" href="a00122.html" title="ATCA Hardware abstraction layer for AT90USB1287 I2C over ASF drivers. ">hal_at90usb1287_i2c_asf.c</a>/h </td><td>ASF </td><td></td></tr>
+<tr>
+<td></td><td></td><td><a class="el" href="a00124.html" title="ATCA Hardware abstraction layer for AT90USB1287 timer/delay over ASF drivers. ">hal_at90usb1287_timer_asf.c</a> </td><td>ASF </td><td>For all at90USB1287 </td></tr>
+<tr>
+<td></td><td>SWI </td><td><a class="el" href="a00186.html" title="ATXMEGA&#39;s ATCA Hardware abstraction layer for SWI interface over AT90USB1287 UART drivers...">swi_uart_at90usb1287_asf.c</a>/h </td><td>ASF </td><td></td></tr>
+<tr>
+<td>xmega_a3bu </td><td>I2C </td><td><a class="el" href="a00167.html" title="ATCA Hardware abstraction layer for XMEGA-A3BU I2C over ASF drivers. ">hal_xmega_a3bu_i2c_asf.c</a>/h </td><td>ASF </td><td></td></tr>
+<tr>
+<td></td><td></td><td><a class="el" href="a00169.html" title="ATCA Hardware abstraction layer for SAMD21 timer/delay over ASF drivers. ">hal_xmega_a3bu_timer_asf.c</a> </td><td>ASF </td><td>For all xmega_a3bu </td></tr>
+<tr>
+<td></td><td>SWI </td><td>swi_uart_xmaga_a3bu_asf.c/h </td><td>ASF </td><td></td></tr>
+</table>
+<table class="doxtable">
+<tr>
+<th>SAM Micros </th><th>Interface </th><th>Files </th><th>API </th><th>Notes  </th></tr>
+<tr>
+<td>sam4s </td><td>I2C </td><td><a class="el" href="a00137.html" title="ATCA Hardware abstraction layer for SAM4S I2C over ASF drivers. ">hal_sam4s_i2c_asf.c</a>/h </td><td>ASF </td><td></td></tr>
+<tr>
+<td></td><td></td><td><a class="el" href="a00139.html" title="ATCA Hardware abstraction layer for SAM4S I2C over ASF drivers. ">hal_sam4s_timer_asf.c</a> </td><td>ASF </td><td></td></tr>
+<tr>
+<td>samb11 </td><td>I2C </td><td><a class="el" href="a00140.html" title="ATCA Hardware abstraction layer for SAMB11 I2C over ASF drivers. ">hal_samb11_i2c_asf.c</a>/h </td><td>ASF </td><td></td></tr>
+<tr>
+<td></td><td></td><td><a class="el" href="a00142.html" title="ATCA Hardware abstraction layer for SAMB11 timer/delay over ASF drivers. ">hal_samb11_timer_asf.c</a> </td><td>ASF </td><td></td></tr>
+<tr>
+<td>samd21 </td><td>I2C </td><td><a class="el" href="a00143.html" title="ATCA Hardware abstraction layer for SAMD21 I2C over ASF drivers. ">hal_samd21_i2c_asf.c</a>/h </td><td>ASF </td><td></td></tr>
+<tr>
+<td></td><td></td><td><a class="el" href="a00147.html" title="ATCA Hardware abstraction layer for SAMD21 timer/delay over ASF drivers. ">hal_samd21_timer_asf.c</a> </td><td>ASF </td><td>For all samd21 ASF projects </td></tr>
+<tr>
+<td>samd21 </td><td>I2C </td><td><a class="el" href="a00145.html" title="ATCA Hardware abstraction layer for SAMD21 I2C over START drivers. ">hal_samd21_i2c_start.c</a>/h </td><td>START </td><td></td></tr>
+</table>
+<p>| | <a class="el" href="a00148.html" title="ATCA Hardware abstraction layer for SAMD21 I2C over START drivers. ">hal_samd21_timer_start.c</a> | START | For samd21 START projects | |samd21 | I2C | <a class="el" href="a00170.html" title="Hardware Interface Functions - I2C bit-banged. ">i2c_bitbang_samd21.c</a>/h | ASF | For samd21 I2C bitbang projects | |samd21 | SWI | <a class="el" href="a00184.html" title="Hardware Interface Functions - SWI bit-banged. ">swi_bitbang_samd21.c</a>/h | ASF | For samd21 SWI bitbang projects | |samd21 | SWI | swi_uart_samd21.c/h | ASF | For samd21 SWI uart projects | |samd21 | SWI | <a class="el" href="a00190.html" title="Atmel Crypto Auth hardware interface object. ">swi_uart_samd21_start.c</a>/h | START | | |samg55 | I2C | <a class="el" href="a00149.html" title="ATCA Hardware abstraction layer for SAM4S I2C over ASF drivers. ">hal_samg55_i2c_asf.c</a>/h | ASF | | | | | <a class="el" href="a00151.html" title="Prerequisite: add &quot;Delay routines (service)&quot; module to application in Atmel Studio. ">hal_samg55_timer_asf.c</a> | ASF | | |samv71 | I2C | <a class="el" href="a00152.html" title="ATCA Hardware abstraction layer for SAMV71 I2C over ASF drivers. ">hal_samv71_i2c_asf.c</a>/h | ASF | | | | | <a class="el" href="a00154.html" title="ATCA Hardware abstraction layer for SAMD21 timer/delay over ASF drivers. ">hal_samv71_timer_asf.c</a> | ASF | |</p>
+<table class="doxtable">
+<tr>
+<th>PIC Micros </th><th>Interface </th><th>Files </th><th>API </th><th>Notes  </th></tr>
+<tr>
+<td>pic32mx695f512h </td><td>I2C </td><td>hal_pic32mx695f512h.c/h </td><td>plib.h </td><td></td></tr>
+<tr>
+<td></td><td></td><td><a class="el" href="a00136.html" title="Prerequisite: ">hal_pic32mx695f512h_timer.c</a> </td><td>plib.h </td><td></td></tr>
+</table>
+<table class="doxtable">
+<tr>
+<th>OS </th><th>Interface </th><th>Files </th><th>API </th><th>Notes  </th></tr>
+<tr>
+<td>MS Windows </td><td>kit-cdc </td><td><a class="el" href="a00162.html" title="ATCA Hardware abstraction layer for Windows using kit protocol over a USB CDC device. ">hal_win_kit_cdc.c</a>/h </td><td>windows.h </td><td>For all windows USB CDC projects </td></tr>
+<tr>
+<td>MS Windows </td><td>kit-hid </td><td><a class="el" href="a00164.html" title="ATCA Hardware abstraction layer for Windows using kit protocol over a USB HID device. ">hal_win_kit_hid.c</a>/h </td><td>windows.h </td><td>For all windows USB HID projects </td></tr>
+<tr>
+<td></td><td></td><td></td><td>setupapi.h </td><td></td></tr>
+<tr>
+<td>MS Windows </td><td></td><td><a class="el" href="a00166.html" title="ATCA Hardware abstraction layer for windows timer functions. ">hal_win_timer.c</a> </td><td>windows.h </td><td>For all windows projects </td></tr>
+<tr>
+<td>Linux </td><td>I2C </td><td><a class="el" href="a00127.html" title="ATCA Hardware abstraction layer for Linux using kit protocol over a USB CDC device. ">hal_linux_i2c_userspace.c</a>/h </td><td>i2c-dev </td><td></td></tr>
+<tr>
+<td>Linux </td><td>kit-cdc </td><td><a class="el" href="a00129.html" title="ATCA Hardware abstraction layer for Linux using kit protocol over a USB CDC device. ">hal_linux_kit_cdc.c</a>/h </td><td>fopen </td><td>For USB Linux CDC projects </td></tr>
+<tr>
+<td>Linux </td><td>kit-hid </td><td><a class="el" href="a00131.html" title="ATCA Hardware abstraction layer for Linux using kit protocol over a USB HID device. ">hal_linux_kit_hid.c</a>/h </td><td>udev </td><td>For USB Linux HID Projects </td></tr>
+<tr>
+<td>Linux </td><td></td><td><a class="el" href="a00133.html" title="Timer Utility Functions. ">hal_linux_timer.c</a> </td><td></td><td>For all Linux projects </td></tr>
+<tr>
+<td></td><td></td><td>hal_linux_timer_userspace.c </td><td></td><td>For all Linux projects </td></tr>
+</table>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

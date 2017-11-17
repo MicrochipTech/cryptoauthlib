@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: test_atcacert_date_runner.c File Reference</title>
+<title>CryptoAuthLib: hal_win_timer.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -108,294 +108,37 @@ $(document).ready(function(){initNavTree('a00166.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">test_atcacert_date_runner.c File Reference</div>  </div>
+<div class="title">hal_win_timer.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="a00182_source.html">test/unity.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00184_source.html">test/unity_fixture.h</a>&quot;</code><br />
+
+<p>ATCA Hardware abstraction layer for windows timer functions.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;windows.h&gt;</code><br />
+<code>#include &lt;math.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00085_source.html">atca_hal.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a8ab2d8a248ada9b6836d33304a7366f0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00166.html#a8ab2d8a248ada9b6836d33304a7366f0">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#gae40aeb71d824e8bbe3233e86f3fb6a3f">atcacert_date_enc_iso8601_sep</a>)</td></tr>
-<tr class="separator:a8ab2d8a248ada9b6836d33304a7366f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae30876b32e149d89262bfb917c5d2420"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00166.html#ae30876b32e149d89262bfb917c5d2420">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#gaa83e2f3a3f83b321dade6cd3211136db">atcacert_date_enc_rfc5280_utc</a>)</td></tr>
-<tr class="separator:ae30876b32e149d89262bfb917c5d2420"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b0ba9ab96f0d0e24e59fa5ee9f1e6b0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00166.html#a3b0ba9ab96f0d0e24e59fa5ee9f1e6b0">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga1160e4293d7831e15a47e7b3f47013ca">atcacert_date_enc_posix_uint32_be</a>)</td></tr>
-<tr class="separator:a3b0ba9ab96f0d0e24e59fa5ee9f1e6b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9d36f7a0de00d87b5543c6f4c07d923"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00166.html#ac9d36f7a0de00d87b5543c6f4c07d923">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga4825cb7a817fa9471cfe30a1aa984b8f">atcacert_date_enc_posix_uint32_le</a>)</td></tr>
-<tr class="separator:ac9d36f7a0de00d87b5543c6f4c07d923"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf93d93a2a2ea9d8ac3fcee2433dae11"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00166.html#aaf93d93a2a2ea9d8ac3fcee2433dae11">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#gaaeb955dfc5b73719e2ecca542c2fc249">atcacert_date_enc_rfc5280_gen</a>)</td></tr>
-<tr class="separator:aaf93d93a2a2ea9d8ac3fcee2433dae11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94bcf19b84951e879c49343d3eb3cc7e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00166.html#a94bcf19b84951e879c49343d3eb3cc7e">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga5da5a0589a6168aafd34b4aac4e07553">atcacert_date_enc_compcert</a>)</td></tr>
-<tr class="separator:a94bcf19b84951e879c49343d3eb3cc7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4ca3d12bee8c41d31f1c53af9df0ccc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00166.html#ab4ca3d12bee8c41d31f1c53af9df0ccc">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#gaab946b2ea5dba6d1addacc995a6989ae">atcacert_date_enc</a>)</td></tr>
-<tr class="separator:ab4ca3d12bee8c41d31f1c53af9df0ccc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8989508ef331ab3df9b2a0ca4a5b7acc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00166.html#a8989508ef331ab3df9b2a0ca4a5b7acc">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga3ff21be0f011ce56dfde5e2ac99e17ce">atcacert_date_dec_iso8601_sep</a>)</td></tr>
-<tr class="separator:a8989508ef331ab3df9b2a0ca4a5b7acc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd9ed0e7344240cb840afc9d35aa4644"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00166.html#acd9ed0e7344240cb840afc9d35aa4644">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga7fa37d88f9405a3557110e58468f9e6e">atcacert_date_dec_rfc5280_utc</a>)</td></tr>
-<tr class="separator:acd9ed0e7344240cb840afc9d35aa4644"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aabb01b72a811ace919f4b3c0d8c0104c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00166.html#aabb01b72a811ace919f4b3c0d8c0104c">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga37893ca05c0e3ccbcec3725228b8a818">atcacert_date_dec_posix_uint32_be</a>)</td></tr>
-<tr class="separator:aabb01b72a811ace919f4b3c0d8c0104c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a541fee16a231c279390017347003e338"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00166.html#a541fee16a231c279390017347003e338">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#gab5bbaaf84f1c19409ee276241e9e2f6d">atcacert_date_dec_posix_uint32_le</a>)</td></tr>
-<tr class="separator:a541fee16a231c279390017347003e338"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fa4aac2211f976206d8a71ff28f7443"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00166.html#a9fa4aac2211f976206d8a71ff28f7443">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#gadd219151c074c3ec7785d68741a1cae1">atcacert_date_dec_rfc5280_gen</a>)</td></tr>
-<tr class="separator:a9fa4aac2211f976206d8a71ff28f7443"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01e2b3767a8ee83ace82d01243653caf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00166.html#a01e2b3767a8ee83ace82d01243653caf">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga1d267b06c94e1db2aa2f6e91df1c843f">atcacert_date_get_max_date</a>)</td></tr>
-<tr class="separator:a01e2b3767a8ee83ace82d01243653caf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6aad4f19fdd750c50b4645426dd7d08e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00166.html#a6aad4f19fdd750c50b4645426dd7d08e">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#gaba31331bcfab203c786004b027512fab">atcacert_date_dec_compcert</a>)</td></tr>
-<tr class="separator:a6aad4f19fdd750c50b4645426dd7d08e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17166c25bb041253093d284928202a7e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00166.html#a17166c25bb041253093d284928202a7e">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga368d038c02673b1e6ddacfd175786e6a">atcacert_date_dec</a>)</td></tr>
-<tr class="separator:a17166c25bb041253093d284928202a7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7598dfcd6dcac882836544d48356d02f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga7598dfcd6dcac882836544d48356d02f">atca_delay_us</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga7598dfcd6dcac882836544d48356d02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API implemented at the HAL level.  <a href="a00226.html#ga7598dfcd6dcac882836544d48356d02f">More...</a><br /></td></tr>
+<tr class="separator:ga7598dfcd6dcac882836544d48356d02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga19891182689551cc3a88603135959351"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga19891182689551cc3a88603135959351">atca_delay_10us</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga19891182689551cc3a88603135959351"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of tens of microseconds.  <a href="a00226.html#ga19891182689551cc3a88603135959351">More...</a><br /></td></tr>
+<tr class="separator:ga19891182689551cc3a88603135959351"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga80a853a202b089064bfc4b159c3418b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga80a853a202b089064bfc4b159c3418b4">atca_delay_ms</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga80a853a202b089064bfc4b159c3418b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of milliseconds.  <a href="a00226.html#ga80a853a202b089064bfc4b159c3418b4">More...</a><br /></td></tr>
+<tr class="separator:ga80a853a202b089064bfc4b159c3418b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2015 Atmel Corporation. All rights reserved.</dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a8ab2d8a248ada9b6836d33304a7366f0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#gae40aeb71d824e8bbe3233e86f3fb6a3f">atcacert_date_enc_iso8601_sep</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ae30876b32e149d89262bfb917c5d2420"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#gaa83e2f3a3f83b321dade6cd3211136db">atcacert_date_enc_rfc5280_utc</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a3b0ba9ab96f0d0e24e59fa5ee9f1e6b0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga1160e4293d7831e15a47e7b3f47013ca">atcacert_date_enc_posix_uint32_be</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ac9d36f7a0de00d87b5543c6f4c07d923"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga4825cb7a817fa9471cfe30a1aa984b8f">atcacert_date_enc_posix_uint32_le</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aaf93d93a2a2ea9d8ac3fcee2433dae11"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#gaaeb955dfc5b73719e2ecca542c2fc249">atcacert_date_enc_rfc5280_gen</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a94bcf19b84951e879c49343d3eb3cc7e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga5da5a0589a6168aafd34b4aac4e07553">atcacert_date_enc_compcert</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ab4ca3d12bee8c41d31f1c53af9df0ccc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#gaab946b2ea5dba6d1addacc995a6989ae">atcacert_date_enc</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a8989508ef331ab3df9b2a0ca4a5b7acc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga3ff21be0f011ce56dfde5e2ac99e17ce">atcacert_date_dec_iso8601_sep</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="acd9ed0e7344240cb840afc9d35aa4644"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga7fa37d88f9405a3557110e58468f9e6e">atcacert_date_dec_rfc5280_utc</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aabb01b72a811ace919f4b3c0d8c0104c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga37893ca05c0e3ccbcec3725228b8a818">atcacert_date_dec_posix_uint32_be</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a541fee16a231c279390017347003e338"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#gab5bbaaf84f1c19409ee276241e9e2f6d">atcacert_date_dec_posix_uint32_le</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a9fa4aac2211f976206d8a71ff28f7443"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#gadd219151c074c3ec7785d68741a1cae1">atcacert_date_dec_rfc5280_gen</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a01e2b3767a8ee83ace82d01243653caf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga1d267b06c94e1db2aa2f6e91df1c843f">atcacert_date_get_max_date</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a6aad4f19fdd750c50b4645426dd7d08e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#gaba31331bcfab203c786004b027512fab">atcacert_date_dec_compcert</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a17166c25bb041253093d284928202a7e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga368d038c02673b1e6ddacfd175786e6a">atcacert_date_dec</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>ATCA Hardware abstraction layer for windows timer functions. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_13e138d54eb8818da29c3992edef070a.html">test</a></li><li class="navelem"><a class="el" href="dir_3fd499d16b43d3319c6085ec747f938a.html">atcacert</a></li><li class="navelem"><a class="el" href="a00166.html">test_atcacert_date_runner.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00166.html">hal_win_timer.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

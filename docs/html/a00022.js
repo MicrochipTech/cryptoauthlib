@@ -1,10 +1,10 @@
 var a00022 =
 [
-    [ "key", "a00196.html#gab0d96f9d852c2058c2546a1338e87544", null ],
-    [ "key_id", "a00196.html#ga3eedc11953a89e931ede529eb72592ac", null ],
-    [ "mode", "a00196.html#ga1a6b6fb557d8d37d59700faf4e4c9167", null ],
-    [ "otp", "a00196.html#ga8712cb73a4d6b370658d8bc9a77fba3e", null ],
-    [ "response", "a00196.html#ga8ab7bcb35ce5bba05608c72da6b4a0d3", null ],
-    [ "sn", "a00196.html#ga7276bd20c5842e712da638d25ceb6d92", null ],
-    [ "temp_key", "a00196.html#gaa17e031da4b22938bed1c21161ba371a", null ]
+    [ "key_id", "a00022.html#ac21eed4200889cc115d16a781871d01c", null ],
+    [ "mode", "a00022.html#a37e90f5e3bd99fac2021fb3a326607d4", null ],
+    [ "other_data", "a00022.html#ac76ac607fd679316fc17b16039a86b9c", null ],
+    [ "public_key", "a00022.html#a122aff75e4ff5cd19542117ba3fdb855", null ],
+    [ "public_key_size", "a00022.html#aeaa21ee86ed67c665d190be7d12293c7", null ],
+    [ "sn", "a00022.html#aef45bac2efcd5394c4ed79f73ee16d23", null ],
+    [ "temp_key", "a00022.html#a72fae3d62889ef224f09c57a7646e061", null ]
 ];

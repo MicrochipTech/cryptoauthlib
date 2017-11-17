@@ -5,14 +5,13 @@
  * This is included for kit protocol implementations.
  * It is included in the kit protocol callback to actually send and recieve bytes.
  *
- * Copyright (c) 2015 Atmel Corporation. All rights reserved.
- *
- * \atmel_crypto_device_library_license_start
+ * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
  *
  * \page License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * You are permitted to use this software and its derivatives with Microchip
+ * products. Redistribution and use in source and binary forms, with or without
+ * modification, is permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
@@ -21,16 +20,16 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  *
- * 3. The name of Atmel may not be used to endorse or promote products derived
+ * 3. The name of Microchip may not be used to endorse or promote products derived
  *    from this software without specific prior written permission.
  *
- * 4. This software may only be redistributed and used in connection with an
- *    Atmel integrated circuit.
+ * 4. This software may only be redistributed and used in connection with a
+ *    Microchip integrated circuit.
  *
- * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
+ * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
+ * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
@@ -38,12 +37,10 @@
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
- * \atmel_crypto_device_library_license_stop
  */
 
-#ifndef ATCA_HAL_PHY_H_
-#define ATCA_HAL_PHY_H_
+#ifndef KIT_PHY_H_
+#define KIT_PHY_H_
 
 #include "cryptoauthlib.h"
 
@@ -60,8 +57,8 @@ extern "C" {
 #endif
 
 ATCA_STATUS kit_phy_num_found(int8_t* num_found);
-ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t *txdata, int txlength);
-ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxlength);
+ATCA_STATUS kit_phy_send(ATCAIface iface, const char *txdata, int txlength);
+ATCA_STATUS kit_phy_receive(ATCAIface iface, char* rxdata, int* rxlength);
 
 #ifdef __cplusplus
 }

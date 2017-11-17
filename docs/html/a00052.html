@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: sw_sha256_ctx Struct Reference</title>
+<title>CryptoAuthLib: GuardBytes Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -109,81 +109,39 @@ $(document).ready(function(){initNavTree('a00052.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">sw_sha256_ctx Struct Reference</div>  </div>
+<div class="title">GuardBytes Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p><code>#include &lt;<a class="el" href="a00154_source.html">sha2_routines.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a8ee7e642376903508dd6b4df9eacc2de"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#a8ee7e642376903508dd6b4df9eacc2de">total_msg_size</a></td></tr>
-<tr class="memdesc:a8ee7e642376903508dd6b4df9eacc2de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total number of message bytes processed.  <a href="#a8ee7e642376903508dd6b4df9eacc2de">More...</a><br /></td></tr>
-<tr class="separator:a8ee7e642376903508dd6b4df9eacc2de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e3fb1e50a1c71b2337df296222d9553"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#a9e3fb1e50a1c71b2337df296222d9553">block_size</a></td></tr>
-<tr class="memdesc:a9e3fb1e50a1c71b2337df296222d9553"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes in current block.  <a href="#a9e3fb1e50a1c71b2337df296222d9553">More...</a><br /></td></tr>
-<tr class="separator:a9e3fb1e50a1c71b2337df296222d9553"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0559c245b725b5b78057620e9677211e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#a0559c245b725b5b78057620e9677211e">block</a> [<a class="el" href="a00154.html#a9c1fe69ad43d4ca74b84303a0ed64f2f">SHA256_BLOCK_SIZE</a> *2]</td></tr>
-<tr class="memdesc:a0559c245b725b5b78057620e9677211e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unprocessed message storage.  <a href="#a0559c245b725b5b78057620e9677211e">More...</a><br /></td></tr>
-<tr class="separator:a0559c245b725b5b78057620e9677211e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a135f34ef1efee1401582f12744220dbb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#a135f34ef1efee1401582f12744220dbb">hash</a> [8]</td></tr>
-<tr class="memdesc:a135f34ef1efee1401582f12744220dbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hash state.  <a href="#a135f34ef1efee1401582f12744220dbb">More...</a><br /></td></tr>
-<tr class="separator:a135f34ef1efee1401582f12744220dbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a854352f53b148adc24983a58a1866d66"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#a854352f53b148adc24983a58a1866d66">size</a></td></tr>
+<tr class="separator:a854352f53b148adc24983a58a1866d66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6399ead8aa841f99d568bd54f6008c55"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html#a6399ead8aa841f99d568bd54f6008c55">guard</a> [sizeof(size_t)]</td></tr>
+<tr class="separator:a6399ead8aa841f99d568bd54f6008c55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a0559c245b725b5b78057620e9677211e"></a>
+<a class="anchor" id="a6399ead8aa841f99d568bd54f6008c55"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t block[<a class="el" href="a00154.html#a9c1fe69ad43d4ca74b84303a0ed64f2f">SHA256_BLOCK_SIZE</a> *2]</td>
+          <td class="memname">char guard[sizeof(size_t)]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Unprocessed message storage. </p>
-
 </div>
 </div>
-<a class="anchor" id="a9e3fb1e50a1c71b2337df296222d9553"></a>
+<a class="anchor" id="a854352f53b148adc24983a58a1866d66"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t block_size</td>
+          <td class="memname">size_t size</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Number of bytes in current block. </p>
-
-</div>
-</div>
-<a class="anchor" id="a135f34ef1efee1401582f12744220dbb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t hash[8]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Hash state. </p>
-
-</div>
-</div>
-<a class="anchor" id="a8ee7e642376903508dd6b4df9eacc2de"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t total_msg_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Total number of message bytes processed. </p>
 
 </div>
 </div>
@@ -192,7 +150,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00052.html">sw_sha256_ctx</a></li>
+    <li class="navelem"><a class="el" href="a00052.html">GuardBytes</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

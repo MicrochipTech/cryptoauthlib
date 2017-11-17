@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: atcatls.c File Reference</title>
+<title>CryptoAuthLib: atcacert_def.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,270 +106,214 @@ $(document).ready(function(){initNavTree('a00105.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atcatls.c File Reference</div>  </div>
+<div class="title">atcacert_def.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Collection of functions for hardware abstraction of TLS implementations (e.g. OpenSSL)  
+<p>Declarations for certificates related to ECC CryptoAuthentication devices. These are the definitions required to define a certificate and its various elements with regards to the CryptoAuthentication ECC devices.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00106_source.html">atcatls.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00107_source.html">atcatls_cfg.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00057_source.html">basic/atca_basic.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00094_source.html">atcacert/atcacert_client.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00102_source.html">atcacert/atcacert_host_hw.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ad0e6178e18abb869b13f7f9b24b09941"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00105.html#ad0e6178e18abb869b13f7f9b24b09941">RSA_KEY_SLOT</a>&#160;&#160;&#160;8</td></tr>
-<tr class="separator:ad0e6178e18abb869b13f7f9b24b09941"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af11246fda13208d597f16052de974d49"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00105.html#af11246fda13208d597f16052de974d49">RSA_KEY_START_BLOCK</a>&#160;&#160;&#160;5</td></tr>
-<tr class="separator:af11246fda13208d597f16052de974d49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00099_source.html">atcacert.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00103_source.html">atcacert_date.h</a>&quot;</code><br />
+</div>
+<p><a href="a00105_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html">atcacert_device_loc_s</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html">atcacert_cert_loc_s</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html">atcacert_cert_element_s</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00039.html">atcacert_def_s</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00036.html">atcacert_build_state_s</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga8fcfb1307197295422ace828b40ee37d"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00223.html#ga5430f01929cd7269e04db08d1f28642f">atcacert_cert_type_e</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga8fcfb1307197295422ace828b40ee37d">atcacert_cert_type_t</a></td></tr>
+<tr class="separator:ga8fcfb1307197295422ace828b40ee37d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa557358df9a164d6c1f14b1f53662c6c"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00223.html#ga813047a656af7fe578d28fd54c840e8e">atcacert_cert_sn_src_e</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#gaa557358df9a164d6c1f14b1f53662c6c">atcacert_cert_sn_src_t</a></td></tr>
+<tr class="separator:gaa557358df9a164d6c1f14b1f53662c6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga294899ca77a6801288e1ccb148de1f8b"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00223.html#ga1c0876228cb459f64347a63f3bae4c73">atcacert_device_zone_e</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga294899ca77a6801288e1ccb148de1f8b">atcacert_device_zone_t</a></td></tr>
+<tr class="separator:ga294899ca77a6801288e1ccb148de1f8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4889317187186736e62beb7538b870b2"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00223.html#ga77184d0c71198b489ea9b57d07da824e">atcacert_std_cert_element_e</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga4889317187186736e62beb7538b870b2">atcacert_std_cert_element_t</a></td></tr>
+<tr class="separator:ga4889317187186736e62beb7538b870b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0fb6e40d2f1496215af2f9ae23c861a0"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00041.html">atcacert_device_loc_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga0fb6e40d2f1496215af2f9ae23c861a0">atcacert_device_loc_t</a></td></tr>
+<tr class="separator:ga0fb6e40d2f1496215af2f9ae23c861a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae7c32139e6dce0fe25b4598299a77df6"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00038.html">atcacert_cert_loc_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#gae7c32139e6dce0fe25b4598299a77df6">atcacert_cert_loc_t</a></td></tr>
+<tr class="separator:gae7c32139e6dce0fe25b4598299a77df6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8d14206d455a7a7835ed613e57c20dd3"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00037.html">atcacert_cert_element_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga8d14206d455a7a7835ed613e57c20dd3">atcacert_cert_element_t</a></td></tr>
+<tr class="separator:ga8d14206d455a7a7835ed613e57c20dd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae9e78b17340263e97844ccaf72ca16ac"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00039.html">atcacert_def_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a></td></tr>
+<tr class="separator:gae9e78b17340263e97844ccaf72ca16ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga92ccf01a2c37be9caa7d840846672c83"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00036.html">atcacert_build_state_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga92ccf01a2c37be9caa7d840846672c83">atcacert_build_state_t</a></td></tr>
+<tr class="separator:ga92ccf01a2c37be9caa7d840846672c83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga5430f01929cd7269e04db08d1f28642f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga5430f01929cd7269e04db08d1f28642f">atcacert_cert_type_e</a> { <a class="el" href="a00223.html#gga5430f01929cd7269e04db08d1f28642fa82bc16ac5283813ee3ffe7cddf8e2b44">CERTTYPE_X509</a>, 
+<a class="el" href="a00223.html#gga5430f01929cd7269e04db08d1f28642fa92c401741edaf606af7056851db7dddb">CERTTYPE_CUSTOM</a>
+ }<tr class="separator:ga5430f01929cd7269e04db08d1f28642f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</td></tr>
+<tr class="memitem:ga813047a656af7fe578d28fd54c840e8e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga813047a656af7fe578d28fd54c840e8e">atcacert_cert_sn_src_e</a> { <br />
+&#160;&#160;<a class="el" href="a00223.html#gga813047a656af7fe578d28fd54c840e8ea1b3e4833214ba25ba3d665135b2b6cd1">SNSRC_STORED</a> = 0x0, 
+<a class="el" href="a00223.html#gga813047a656af7fe578d28fd54c840e8ea4c213faf0171fcc6aeb27a1ca344342b">SNSRC_STORED_DYNAMIC</a> = 0x7, 
+<a class="el" href="a00223.html#gga813047a656af7fe578d28fd54c840e8ea338258d51f0eb1c5d7ef9f0e639f5e41">SNSRC_DEVICE_SN</a> = 0x8, 
+<a class="el" href="a00223.html#gga813047a656af7fe578d28fd54c840e8eabda5814e7da6c10dc243749dea79ffff">SNSRC_SIGNER_ID</a> = 0x9, 
+<br />
+&#160;&#160;<a class="el" href="a00223.html#gga813047a656af7fe578d28fd54c840e8ea5dadea2da6020b492727eb1da6c4bb1e">SNSRC_PUB_KEY_HASH</a> = 0xA, 
+<a class="el" href="a00223.html#gga813047a656af7fe578d28fd54c840e8eaffba4ece10bc933c6b408a2b4e234ab2">SNSRC_DEVICE_SN_HASH</a> = 0xB, 
+<a class="el" href="a00223.html#gga813047a656af7fe578d28fd54c840e8eacaf00502661bc7b9c260ca68831928b5">SNSRC_PUB_KEY_HASH_POS</a> = 0xC, 
+<a class="el" href="a00223.html#gga813047a656af7fe578d28fd54c840e8eab87e9124d93ca45243eacac5b96452b7">SNSRC_DEVICE_SN_HASH_POS</a> = 0xD, 
+<br />
+&#160;&#160;<a class="el" href="a00223.html#gga813047a656af7fe578d28fd54c840e8ea83bf725c47007c842da4a8e93b1bf972">SNSRC_PUB_KEY_HASH_RAW</a> = 0xE, 
+<a class="el" href="a00223.html#gga813047a656af7fe578d28fd54c840e8ea2d608b2eeb6da309c1e9b2af7060d909">SNSRC_DEVICE_SN_HASH_RAW</a> = 0xF
+<br />
+ }<tr class="separator:ga813047a656af7fe578d28fd54c840e8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</td></tr>
+<tr class="memitem:ga1c0876228cb459f64347a63f3bae4c73"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga1c0876228cb459f64347a63f3bae4c73">atcacert_device_zone_e</a> { <a class="el" href="a00223.html#gga1c0876228cb459f64347a63f3bae4c73a4856bc2fcbda0be68832968204126207">DEVZONE_CONFIG</a> = 0x00, 
+<a class="el" href="a00223.html#gga1c0876228cb459f64347a63f3bae4c73ae42ffc066a13ac1f38195d2cf4e60cea">DEVZONE_OTP</a> = 0x01, 
+<a class="el" href="a00223.html#gga1c0876228cb459f64347a63f3bae4c73a774ecb8e950d309498a9aa64933d95cb">DEVZONE_DATA</a> = 0x02, 
+<a class="el" href="a00223.html#gga1c0876228cb459f64347a63f3bae4c73afe6b6aedf2a765638f3c62817db11f05">DEVZONE_NONE</a> = 0x07
+ }<tr class="separator:ga1c0876228cb459f64347a63f3bae4c73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</td></tr>
+<tr class="memitem:ga77184d0c71198b489ea9b57d07da824e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga77184d0c71198b489ea9b57d07da824e">atcacert_std_cert_element_e</a> { <br />
+&#160;&#160;<a class="el" href="a00223.html#gga77184d0c71198b489ea9b57d07da824eaf78a51bddeca05e1a525f26792b6de68">STDCERT_PUBLIC_KEY</a>, 
+<a class="el" href="a00223.html#gga77184d0c71198b489ea9b57d07da824ea8eab5679d330212bb87b2413ea82b7cc">STDCERT_SIGNATURE</a>, 
+<a class="el" href="a00223.html#gga77184d0c71198b489ea9b57d07da824ea2f3039692a71546e581fcaf8a8a53f15">STDCERT_ISSUE_DATE</a>, 
+<a class="el" href="a00223.html#gga77184d0c71198b489ea9b57d07da824ea886b91f34d6839fe9e9217490530c604">STDCERT_EXPIRE_DATE</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00223.html#gga77184d0c71198b489ea9b57d07da824eadfaaad6a933423f63fc3233bd84b90d3">STDCERT_SIGNER_ID</a>, 
+<a class="el" href="a00223.html#gga77184d0c71198b489ea9b57d07da824ea73b3d53d4e70a48fd3fdeb0143493efc">STDCERT_CERT_SN</a>, 
+<a class="el" href="a00223.html#gga77184d0c71198b489ea9b57d07da824ea6a9cddad9f6b552f0fe5f63fc57cf106">STDCERT_AUTH_KEY_ID</a>, 
+<a class="el" href="a00223.html#gga77184d0c71198b489ea9b57d07da824ea97400647cc539ce999c0b9f95d736585">STDCERT_SUBJ_KEY_ID</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00223.html#gga77184d0c71198b489ea9b57d07da824ead9a44768825ebcc67750d8e4172dc60f">STDCERT_NUM_ELEMENTS</a>
+<br />
+ }<tr class="separator:ga77184d0c71198b489ea9b57d07da824e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaf7aee64758bc2c194847b647f0dfbad1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#gaf7aee64758bc2c194847b647f0dfbad1">atcatls_config_default</a> ()</td></tr>
-<tr class="memdesc:gaf7aee64758bc2c194847b647f0dfbad1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the ECC508 for use with TLS API funcitons. The configuration zone is written and locked. All GenKey and slot initialization is done and then the data zone is locked. This configuration needs to be performed before the TLS API functions are called On a locked ECC508 device, this function will check the configuraiton against the default and fail if it does not match.  <a href="a00197.html#gaf7aee64758bc2c194847b647f0dfbad1">More...</a><br /></td></tr>
-<tr class="separator:gaf7aee64758bc2c194847b647f0dfbad1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae26a822b1deed8274f25000ef48336f7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#gae26a822b1deed8274f25000ef48336f7">atcatls_init</a> (<a class="el" href="a00043.html">ATCAIfaceCfg</a> *pCfg)</td></tr>
-<tr class="memdesc:gae26a822b1deed8274f25000ef48336f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the ECC508 for use with the TLS API. Like a constructor.  <a href="a00197.html#gae26a822b1deed8274f25000ef48336f7">More...</a><br /></td></tr>
-<tr class="separator:gae26a822b1deed8274f25000ef48336f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3efb2b49d95622a7d8d1514008280521"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#ga3efb2b49d95622a7d8d1514008280521">atcatls_finish</a> ()</td></tr>
-<tr class="memdesc:ga3efb2b49d95622a7d8d1514008280521"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalize the ECC508 when finished. Like a destructor.  <a href="a00197.html#ga3efb2b49d95622a7d8d1514008280521">More...</a><br /></td></tr>
-<tr class="separator:ga3efb2b49d95622a7d8d1514008280521"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaad818f898bc82b0f1dba30f929d013d0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#gaad818f898bc82b0f1dba30f929d013d0">atcatls_get_sn</a> (uint8_t sn_out[<a class="el" href="a00063.html#ab112a8a280ac5ad6e11b5fe2cc0be0a0">ATCA_SERIAL_NUM_SIZE</a>])</td></tr>
-<tr class="memdesc:gaad818f898bc82b0f1dba30f929d013d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the serial number of this device.  <a href="a00197.html#gaad818f898bc82b0f1dba30f929d013d0">More...</a><br /></td></tr>
-<tr class="separator:gaad818f898bc82b0f1dba30f929d013d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaa09d8ac89e04e75e4ba98c4ec872f8a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#gaaa09d8ac89e04e75e4ba98c4ec872f8a">atcatls_sign</a> (uint8_t slotid, const uint8_t *message, uint8_t *signature)</td></tr>
-<tr class="memdesc:gaaa09d8ac89e04e75e4ba98c4ec872f8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sign the message with the specified slot and return the signature.  <a href="a00197.html#gaaa09d8ac89e04e75e4ba98c4ec872f8a">More...</a><br /></td></tr>
-<tr class="separator:gaaa09d8ac89e04e75e4ba98c4ec872f8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6fc4d5cb112e3c03f75291767251159d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#ga6fc4d5cb112e3c03f75291767251159d">atcatls_verify</a> (const uint8_t *message, const uint8_t *signature, const uint8_t *pubkey, bool *verified)</td></tr>
-<tr class="memdesc:ga6fc4d5cb112e3c03f75291767251159d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify the signature of the specified message using the specified public key.  <a href="a00197.html#ga6fc4d5cb112e3c03f75291767251159d">More...</a><br /></td></tr>
-<tr class="separator:ga6fc4d5cb112e3c03f75291767251159d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0f08d3e55ff7da74ffe886c641048be3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#ga0f08d3e55ff7da74ffe886c641048be3">atcatls_verify_cert</a> (const <a class="el" href="a00192.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, const uint8_t *ca_public_key)</td></tr>
-<tr class="memdesc:ga0f08d3e55ff7da74ffe886c641048be3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a certificate against its certificate authority's public key using the host's ATECC device for crypto functions.  <a href="a00197.html#ga0f08d3e55ff7da74ffe886c641048be3">More...</a><br /></td></tr>
-<tr class="separator:ga0f08d3e55ff7da74ffe886c641048be3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga94c1af2adb69e3f5ceffaed635947cec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#ga94c1af2adb69e3f5ceffaed635947cec">atcatls_ecdh</a> (uint8_t slotid, const uint8_t *pubkey, uint8_t *pmk)</td></tr>
-<tr class="memdesc:ga94c1af2adb69e3f5ceffaed635947cec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a pre-master key (pmk) given a private key slot and a public key that will be shared with.  <a href="a00197.html#ga94c1af2adb69e3f5ceffaed635947cec">More...</a><br /></td></tr>
-<tr class="separator:ga94c1af2adb69e3f5ceffaed635947cec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac6ed45476b26a74b9ecdaaeee0bc088d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#gac6ed45476b26a74b9ecdaaeee0bc088d">atcatls_ecdh_enc</a> (uint8_t slotid, uint8_t enckeyId, const uint8_t *pubkey, uint8_t *pmk)</td></tr>
-<tr class="memdesc:gac6ed45476b26a74b9ecdaaeee0bc088d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a pre-master key (pmk) given a private key slot and a public key that will be shared with. This version performs an encrypted read from (slotid + 1)  <a href="a00197.html#gac6ed45476b26a74b9ecdaaeee0bc088d">More...</a><br /></td></tr>
-<tr class="separator:gac6ed45476b26a74b9ecdaaeee0bc088d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab58aebe45a19a981867a773a29f4255d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#gab58aebe45a19a981867a773a29f4255d">atcatls_ecdhe</a> (uint8_t slotid, const uint8_t *pubkey, uint8_t *pubkeyret, uint8_t *pmk)</td></tr>
-<tr class="memdesc:gab58aebe45a19a981867a773a29f4255d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a pre-master key (pmk) given a private key slot to create and a public key that will be shared with.  <a href="a00197.html#gab58aebe45a19a981867a773a29f4255d">More...</a><br /></td></tr>
-<tr class="separator:gab58aebe45a19a981867a773a29f4255d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4af487d7b8c148ef3f45d51603c17d41"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#ga4af487d7b8c148ef3f45d51603c17d41">atcatls_create_key</a> (uint8_t slotid, uint8_t *pubkey)</td></tr>
-<tr class="memdesc:ga4af487d7b8c148ef3f45d51603c17d41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a unique public-private key pair in the specified slot.  <a href="a00197.html#ga4af487d7b8c148ef3f45d51603c17d41">More...</a><br /></td></tr>
-<tr class="separator:ga4af487d7b8c148ef3f45d51603c17d41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad58e32e97154cb3a63783bec294ed34c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#gad58e32e97154cb3a63783bec294ed34c">atcatls_calc_pubkey</a> (uint8_t slotid, uint8_t *pubkey)</td></tr>
-<tr class="memdesc:gad58e32e97154cb3a63783bec294ed34c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the public key from the specified private key slot.  <a href="a00197.html#gad58e32e97154cb3a63783bec294ed34c">More...</a><br /></td></tr>
-<tr class="separator:gad58e32e97154cb3a63783bec294ed34c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae95f93b396667312f5f400e74661a9eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#gae95f93b396667312f5f400e74661a9eb">atcatls_read_pubkey</a> (uint8_t slotid, uint8_t *pubkey)</td></tr>
-<tr class="memdesc:gae95f93b396667312f5f400e74661a9eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">reads a pub key from a readable data slot versus atcab_get_pubkey which generates a pubkey from a private key slot  <a href="a00197.html#gae95f93b396667312f5f400e74661a9eb">More...</a><br /></td></tr>
-<tr class="separator:gae95f93b396667312f5f400e74661a9eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga79d1da595ad688af397c16741cc4b142"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#ga79d1da595ad688af397c16741cc4b142">atcatls_random</a> (uint8_t *randout)</td></tr>
-<tr class="memdesc:ga79d1da595ad688af397c16741cc4b142"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a random number.  <a href="a00197.html#ga79d1da595ad688af397c16741cc4b142">More...</a><br /></td></tr>
-<tr class="separator:ga79d1da595ad688af397c16741cc4b142"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9433fc3d3b042d0b58193d0d641579f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#ga9433fc3d3b042d0b58193d0d641579f1">atcatlsfn_set_get_enckey</a> (<a class="el" href="a00197.html#ga9cbd0041071e05fd2c8771fba859d8a1">atcatlsfn_get_enckey</a> *fn_get_enckey)</td></tr>
-<tr class="memdesc:ga9433fc3d3b042d0b58193d0d641579f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the function used to retrieve the unique encryption key for this platform.  <a href="a00197.html#ga9433fc3d3b042d0b58193d0d641579f1">More...</a><br /></td></tr>
-<tr class="separator:ga9433fc3d3b042d0b58193d0d641579f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad22fb947c74f44444a9b92d5e6d54220"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#gad22fb947c74f44444a9b92d5e6d54220">atcatls_init_enckey</a> (uint8_t *enckeyout, uint8_t enckeyId, bool lock)</td></tr>
-<tr class="memdesc:gad22fb947c74f44444a9b92d5e6d54220"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the unique encryption key for this platform. Write a random number to the parent encryption key slot Return the random number for storage on platform.  <a href="a00197.html#gad22fb947c74f44444a9b92d5e6d54220">More...</a><br /></td></tr>
-<tr class="separator:gad22fb947c74f44444a9b92d5e6d54220"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4fd920cc7a144762d521e5e88813f7c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#ga4fd920cc7a144762d521e5e88813f7c8">atcatls_set_enckey</a> (uint8_t *enckeyin, uint8_t enckeyId, bool lock)</td></tr>
-<tr class="memdesc:ga4fd920cc7a144762d521e5e88813f7c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the unique encryption key for this platform Write the provided encryption key to the parent encryption key slot Function optionally lock the parent encryption key slot after it is written.  <a href="a00197.html#ga4fd920cc7a144762d521e5e88813f7c8">More...</a><br /></td></tr>
-<tr class="separator:ga4fd920cc7a144762d521e5e88813f7c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga91ccb72878cf72a1768e51a240839e1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#ga91ccb72878cf72a1768e51a240839e1f">atcatls_get_enckey</a> (uint8_t *enckeyout)</td></tr>
-<tr class="memdesc:ga91ccb72878cf72a1768e51a240839e1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the random number for storage on platform. This function reads from platform storage, not the ECC508 device Therefore, the implementation is platform specific and must be provided at integration.  <a href="a00197.html#ga91ccb72878cf72a1768e51a240839e1f">More...</a><br /></td></tr>
-<tr class="separator:ga91ccb72878cf72a1768e51a240839e1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadd0cd6e1f963b05a8ceace2d35bcd475"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#gadd0cd6e1f963b05a8ceace2d35bcd475">atcatls_enc_read</a> (uint8_t slotid, uint8_t block, uint8_t enckeyId, uint8_t *data, int16_t *bufsize)</td></tr>
-<tr class="memdesc:gadd0cd6e1f963b05a8ceace2d35bcd475"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read encrypted bytes from the specified slot.  <a href="a00197.html#gadd0cd6e1f963b05a8ceace2d35bcd475">More...</a><br /></td></tr>
-<tr class="separator:gadd0cd6e1f963b05a8ceace2d35bcd475"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf0d8e7ad7bc1d44e3fcf2c0d7ca0d87a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#gaf0d8e7ad7bc1d44e3fcf2c0d7ca0d87a">atcatls_enc_write</a> (uint8_t slotid, uint8_t block, uint8_t enckeyId, uint8_t *data, int16_t bufsize)</td></tr>
-<tr class="memdesc:gaf0d8e7ad7bc1d44e3fcf2c0d7ca0d87a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write encrypted bytes to the specified slot.  <a href="a00197.html#gaf0d8e7ad7bc1d44e3fcf2c0d7ca0d87a">More...</a><br /></td></tr>
-<tr class="separator:gaf0d8e7ad7bc1d44e3fcf2c0d7ca0d87a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaed41b97390790040e3ff0e4165d341e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#gaed41b97390790040e3ff0e4165d341e2">atcatls_enc_rsakey_read</a> (uint8_t enckeyId, uint8_t *rsakey, int16_t *keysize)</td></tr>
-<tr class="memdesc:gaed41b97390790040e3ff0e4165d341e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a private RSA key from the device. The read will be encrypted.  <a href="a00197.html#gaed41b97390790040e3ff0e4165d341e2">More...</a><br /></td></tr>
-<tr class="separator:gaed41b97390790040e3ff0e4165d341e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5033e03fcabf567b7bca8104e3c865c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#ga5033e03fcabf567b7bca8104e3c865c4">atcatls_enc_rsakey_write</a> (uint8_t enckeyId, uint8_t *rsakey, int16_t keysize)</td></tr>
-<tr class="memdesc:ga5033e03fcabf567b7bca8104e3c865c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a private RSA key from the device. The write will be encrypted.  <a href="a00197.html#ga5033e03fcabf567b7bca8104e3c865c4">More...</a><br /></td></tr>
-<tr class="separator:ga5033e03fcabf567b7bca8104e3c865c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0116931e2954df009f976d02018ec5c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#ga0116931e2954df009f976d02018ec5c9">atcatls_get_signer_cert</a> (uint8_t *certout, size_t *certsize)</td></tr>
-<tr class="memdesc:ga0116931e2954df009f976d02018ec5c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the certificate - ENGINEERING TESTS ONLY since this returns a static buffer. Use <a class="el" href="a00197.html#ga53db593bb5b8f07a3449e1ef1d6102af" title="Reads the certificate specified by the certificate definition from the ATECC508A device. This process involves reading the dynamic cert data from the device and combining it with the template found in the certificate definition. Return the certificate int der format. ">atcatls_get_cert()</a> to get the actual certificates.  <a href="a00197.html#ga0116931e2954df009f976d02018ec5c9">More...</a><br /></td></tr>
-<tr class="separator:ga0116931e2954df009f976d02018ec5c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga914f4412c3c0a0fb5ae6f802da936ba1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#ga914f4412c3c0a0fb5ae6f802da936ba1">atcatls_get_device_cert</a> (uint8_t *certout, size_t *certsize)</td></tr>
-<tr class="memdesc:ga914f4412c3c0a0fb5ae6f802da936ba1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the certificate - ENGINEERING TESTS ONLY since this returns a static buffer. Use <a class="el" href="a00197.html#ga53db593bb5b8f07a3449e1ef1d6102af" title="Reads the certificate specified by the certificate definition from the ATECC508A device. This process involves reading the dynamic cert data from the device and combining it with the template found in the certificate definition. Return the certificate int der format. ">atcatls_get_cert()</a> to get the actual certificates.  <a href="a00197.html#ga914f4412c3c0a0fb5ae6f802da936ba1">More...</a><br /></td></tr>
-<tr class="separator:ga914f4412c3c0a0fb5ae6f802da936ba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga98863a207b0da4b288ee28799d67d22c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#ga98863a207b0da4b288ee28799d67d22c">atcatls_get_ca_cert</a> (uint8_t *certout, size_t *certsize)</td></tr>
-<tr class="memdesc:ga98863a207b0da4b288ee28799d67d22c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the certificate - ENGINEERING TESTS ONLY since this returns a static buffer. Use <a class="el" href="a00197.html#ga53db593bb5b8f07a3449e1ef1d6102af" title="Reads the certificate specified by the certificate definition from the ATECC508A device. This process involves reading the dynamic cert data from the device and combining it with the template found in the certificate definition. Return the certificate int der format. ">atcatls_get_cert()</a> to get the actual certificate.  <a href="a00197.html#ga98863a207b0da4b288ee28799d67d22c">More...</a><br /></td></tr>
-<tr class="separator:ga98863a207b0da4b288ee28799d67d22c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaec66cce8896fa71b50ba01a4fd242bd6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#gaec66cce8896fa71b50ba01a4fd242bd6">atcatls_write_pubkey</a> (uint8_t slotid, uint8_t pubkey[<a class="el" href="a00197.html#ga34670fc576ecea0cc9307800cf1e10d1">PUB_KEY_SIZE</a>], bool lock)</td></tr>
-<tr class="memdesc:gaec66cce8896fa71b50ba01a4fd242bd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a public key from the device.  <a href="a00197.html#gaec66cce8896fa71b50ba01a4fd242bd6">More...</a><br /></td></tr>
-<tr class="separator:gaec66cce8896fa71b50ba01a4fd242bd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaccc19a83b9d73041b8db471737a86e88"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#gaccc19a83b9d73041b8db471737a86e88">atcatls_read_ca_pubkey</a> (uint8_t slotid, uint8_t caPubkey[<a class="el" href="a00197.html#ga34670fc576ecea0cc9307800cf1e10d1">PUB_KEY_SIZE</a>])</td></tr>
-<tr class="memdesc:gaccc19a83b9d73041b8db471737a86e88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a public key from the device.  <a href="a00197.html#gaccc19a83b9d73041b8db471737a86e88">More...</a><br /></td></tr>
-<tr class="separator:gaccc19a83b9d73041b8db471737a86e88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga53db593bb5b8f07a3449e1ef1d6102af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00197.html#ga53db593bb5b8f07a3449e1ef1d6102af">atcatls_get_cert</a> (const <a class="el" href="a00192.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t *ca_public_key, uint8_t *certout, size_t *certsize)</td></tr>
-<tr class="memdesc:ga53db593bb5b8f07a3449e1ef1d6102af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the certificate specified by the certificate definition from the ATECC508A device. This process involves reading the dynamic cert data from the device and combining it with the template found in the certificate definition. Return the certificate int der format.  <a href="a00197.html#ga53db593bb5b8f07a3449e1ef1d6102af">More...</a><br /></td></tr>
-<tr class="separator:ga53db593bb5b8f07a3449e1ef1d6102af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a99e581481616321a88845958c97dbb43"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00105.html#a99e581481616321a88845958c97dbb43">_enckey</a> [<a class="el" href="a00063.html#a66a410dde8f388c582495ba315284276">ATCA_KEY_SIZE</a>] = { 0 }</td></tr>
-<tr class="separator:a99e581481616321a88845958c97dbb43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9dde78894fd4e585d380b6709f56872"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00197.html#ga9cbd0041071e05fd2c8771fba859d8a1">atcatlsfn_get_enckey</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00105.html#af9dde78894fd4e585d380b6709f56872">_fn_get_enckey</a> = NULL</td></tr>
-<tr class="separator:af9dde78894fd4e585d380b6709f56872"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6edb4c3336a246a577d613a3ada6675"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00105.html#aa6edb4c3336a246a577d613a3ada6675">g_CaCert</a> []</td></tr>
-<tr class="separator:aa6edb4c3336a246a577d613a3ada6675"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f9ca2b00c3461e12161badfbafc5c20"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00105.html#a4f9ca2b00c3461e12161badfbafc5c20">g_SignerCert</a> []</td></tr>
-<tr class="separator:a4f9ca2b00c3461e12161badfbafc5c20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a263d357d8cbe311944ff740a82259138"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00105.html#a263d357d8cbe311944ff740a82259138">g_DeviceCert</a> []</td></tr>
-<tr class="separator:a263d357d8cbe311944ff740a82259138"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad99d27c059a11c618255b87745561b4a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00105.html#ad99d27c059a11c618255b87745561b4a">config_data_default</a> []</td></tr>
-<tr class="separator:ad99d27c059a11c618255b87745561b4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84f1aeed7b88889d5bf01f21dbaaf398"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga84f1aeed7b88889d5bf01f21dbaaf398">atcacert_get_device_locs</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, <a class="el" href="a00223.html#ga0fb6e40d2f1496215af2f9ae23c861a0">atcacert_device_loc_t</a> *device_locs, size_t *device_locs_count, size_t device_locs_max_count, size_t block_size)</td></tr>
+<tr class="memdesc:ga84f1aeed7b88889d5bf01f21dbaaf398"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add all the device locations required to rebuild the specified certificate (cert_def) to a device locations list.  <a href="a00223.html#ga84f1aeed7b88889d5bf01f21dbaaf398">More...</a><br /></td></tr>
+<tr class="separator:ga84f1aeed7b88889d5bf01f21dbaaf398"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gace8ac017f58840c296fe2cf29bdaa2fe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#gace8ac017f58840c296fe2cf29bdaa2fe">atcacert_cert_build_start</a> (<a class="el" href="a00223.html#ga92ccf01a2c37be9caa7d840846672c83">atcacert_build_state_t</a> *build_state, const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, uint8_t *cert, size_t *cert_size, const uint8_t ca_public_key[64])</td></tr>
+<tr class="memdesc:gace8ac017f58840c296fe2cf29bdaa2fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the certificate rebuilding process.  <a href="a00223.html#gace8ac017f58840c296fe2cf29bdaa2fe">More...</a><br /></td></tr>
+<tr class="separator:gace8ac017f58840c296fe2cf29bdaa2fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga626158cfe54b84903885b2cc6c3880e4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga626158cfe54b84903885b2cc6c3880e4">atcacert_cert_build_process</a> (<a class="el" href="a00223.html#ga92ccf01a2c37be9caa7d840846672c83">atcacert_build_state_t</a> *build_state, const <a class="el" href="a00223.html#ga0fb6e40d2f1496215af2f9ae23c861a0">atcacert_device_loc_t</a> *device_loc, const uint8_t *device_data)</td></tr>
+<tr class="memdesc:ga626158cfe54b84903885b2cc6c3880e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process information read from the ATECC device. If it contains information for the certificate, it will be incorporated into the certificate.  <a href="a00223.html#ga626158cfe54b84903885b2cc6c3880e4">More...</a><br /></td></tr>
+<tr class="separator:ga626158cfe54b84903885b2cc6c3880e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9e594a491dccf61a638be46da5d40ff9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga9e594a491dccf61a638be46da5d40ff9">atcacert_cert_build_finish</a> (<a class="el" href="a00223.html#ga92ccf01a2c37be9caa7d840846672c83">atcacert_build_state_t</a> *build_state)</td></tr>
+<tr class="memdesc:ga9e594a491dccf61a638be46da5d40ff9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completes any final certificate processing required after all data from the device has been incorporated.  <a href="a00223.html#ga9e594a491dccf61a638be46da5d40ff9">More...</a><br /></td></tr>
+<tr class="separator:ga9e594a491dccf61a638be46da5d40ff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga240f94a03feb298e5c618677f2962a5a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga240f94a03feb298e5c618677f2962a5a">atcacert_get_device_data</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, const <a class="el" href="a00223.html#ga0fb6e40d2f1496215af2f9ae23c861a0">atcacert_device_loc_t</a> *device_loc, uint8_t *device_data)</td></tr>
+<tr class="memdesc:ga240f94a03feb298e5c618677f2962a5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the dynamic data that would be saved to the specified device location. This function is primarily used to break down a full certificate into the dynamic components to be saved to a device.  <a href="a00223.html#ga240f94a03feb298e5c618677f2962a5a">More...</a><br /></td></tr>
+<tr class="separator:ga240f94a03feb298e5c618677f2962a5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4c4d5fe988ebface171689f3aa122e12"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga4c4d5fe988ebface171689f3aa122e12">atcacert_set_subj_public_key</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, uint8_t *cert, size_t cert_size, const uint8_t subj_public_key[64])</td></tr>
+<tr class="memdesc:ga4c4d5fe988ebface171689f3aa122e12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the subject public key and subject key ID in a certificate.  <a href="a00223.html#ga4c4d5fe988ebface171689f3aa122e12">More...</a><br /></td></tr>
+<tr class="separator:ga4c4d5fe988ebface171689f3aa122e12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab4fac3fd2bf5a227140cc3012a4dad02"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#gab4fac3fd2bf5a227140cc3012a4dad02">atcacert_get_subj_public_key</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, uint8_t subj_public_key[64])</td></tr>
+<tr class="memdesc:gab4fac3fd2bf5a227140cc3012a4dad02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the subject public key from a certificate.  <a href="a00223.html#gab4fac3fd2bf5a227140cc3012a4dad02">More...</a><br /></td></tr>
+<tr class="separator:gab4fac3fd2bf5a227140cc3012a4dad02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2843ebd40b7f0b6b4bf22cd447fa90e0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga2843ebd40b7f0b6b4bf22cd447fa90e0">atcacert_get_subj_key_id</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, uint8_t subj_key_id[20])</td></tr>
+<tr class="memdesc:ga2843ebd40b7f0b6b4bf22cd447fa90e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the subject key ID from a certificate.  <a href="a00223.html#ga2843ebd40b7f0b6b4bf22cd447fa90e0">More...</a><br /></td></tr>
+<tr class="separator:ga2843ebd40b7f0b6b4bf22cd447fa90e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf1f3cdf5e1e65c9abcbe98ae046d9bf2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#gaf1f3cdf5e1e65c9abcbe98ae046d9bf2">atcacert_set_signature</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, uint8_t *cert, size_t *cert_size, size_t max_cert_size, const uint8_t signature[64])</td></tr>
+<tr class="memdesc:gaf1f3cdf5e1e65c9abcbe98ae046d9bf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the signature in a certificate. This may alter the size of the X.509 certificates.  <a href="a00223.html#gaf1f3cdf5e1e65c9abcbe98ae046d9bf2">More...</a><br /></td></tr>
+<tr class="separator:gaf1f3cdf5e1e65c9abcbe98ae046d9bf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf55b75df5e523e2d275ebb8cbe36fec6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#gaf55b75df5e523e2d275ebb8cbe36fec6">atcacert_get_signature</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, uint8_t signature[64])</td></tr>
+<tr class="memdesc:gaf55b75df5e523e2d275ebb8cbe36fec6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the signature from a certificate.  <a href="a00223.html#gaf55b75df5e523e2d275ebb8cbe36fec6">More...</a><br /></td></tr>
+<tr class="separator:gaf55b75df5e523e2d275ebb8cbe36fec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga36d4893ccd152a8ec18f84f90a5e3cb5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga36d4893ccd152a8ec18f84f90a5e3cb5">atcacert_set_issue_date</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, uint8_t *cert, size_t cert_size, const <a class="el" href="a00223.html#ga81a3a91e9aa4aca39ca6fe8a7a94b121">atcacert_tm_utc_t</a> *timestamp)</td></tr>
+<tr class="memdesc:ga36d4893ccd152a8ec18f84f90a5e3cb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the issue date (notBefore) in a certificate. Will be formatted according to the date format specified in the certificate definition.  <a href="a00223.html#ga36d4893ccd152a8ec18f84f90a5e3cb5">More...</a><br /></td></tr>
+<tr class="separator:ga36d4893ccd152a8ec18f84f90a5e3cb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga51f7b996909bc9cae783bcaf0fe7082b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga51f7b996909bc9cae783bcaf0fe7082b">atcacert_get_issue_date</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, <a class="el" href="a00223.html#ga81a3a91e9aa4aca39ca6fe8a7a94b121">atcacert_tm_utc_t</a> *timestamp)</td></tr>
+<tr class="memdesc:ga51f7b996909bc9cae783bcaf0fe7082b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the issue date from a certificate. Will be parsed according to the date format specified in the certificate definition.  <a href="a00223.html#ga51f7b996909bc9cae783bcaf0fe7082b">More...</a><br /></td></tr>
+<tr class="separator:ga51f7b996909bc9cae783bcaf0fe7082b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad499cd0bdce799a3278f99c80e0f9143"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#gad499cd0bdce799a3278f99c80e0f9143">atcacert_set_expire_date</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, uint8_t *cert, size_t cert_size, const <a class="el" href="a00223.html#ga81a3a91e9aa4aca39ca6fe8a7a94b121">atcacert_tm_utc_t</a> *timestamp)</td></tr>
+<tr class="memdesc:gad499cd0bdce799a3278f99c80e0f9143"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the expire date (notAfter) in a certificate. Will be formatted according to the date format specified in the certificate definition.  <a href="a00223.html#gad499cd0bdce799a3278f99c80e0f9143">More...</a><br /></td></tr>
+<tr class="separator:gad499cd0bdce799a3278f99c80e0f9143"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8d1d761d35cf36feea5c626bb1d70ab2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga8d1d761d35cf36feea5c626bb1d70ab2">atcacert_get_expire_date</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, <a class="el" href="a00223.html#ga81a3a91e9aa4aca39ca6fe8a7a94b121">atcacert_tm_utc_t</a> *timestamp)</td></tr>
+<tr class="memdesc:ga8d1d761d35cf36feea5c626bb1d70ab2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the expire date from a certificate. Will be parsed according to the date format specified in the certificate definition.  <a href="a00223.html#ga8d1d761d35cf36feea5c626bb1d70ab2">More...</a><br /></td></tr>
+<tr class="separator:ga8d1d761d35cf36feea5c626bb1d70ab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga82ca7cff42ee4496a40076faac7ff6f6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga82ca7cff42ee4496a40076faac7ff6f6">atcacert_set_signer_id</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, uint8_t *cert, size_t cert_size, const uint8_t signer_id[2])</td></tr>
+<tr class="memdesc:ga82ca7cff42ee4496a40076faac7ff6f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the signer ID in a certificate. Will be formatted as 4 upper-case hex digits.  <a href="a00223.html#ga82ca7cff42ee4496a40076faac7ff6f6">More...</a><br /></td></tr>
+<tr class="separator:ga82ca7cff42ee4496a40076faac7ff6f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1201f3c1a20b5b105f9160bea104b102"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga1201f3c1a20b5b105f9160bea104b102">atcacert_get_signer_id</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, uint8_t signer_id[2])</td></tr>
+<tr class="memdesc:ga1201f3c1a20b5b105f9160bea104b102"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the signer ID from a certificate. Will be parsed as 4 upper-case hex digits.  <a href="a00223.html#ga1201f3c1a20b5b105f9160bea104b102">More...</a><br /></td></tr>
+<tr class="separator:ga1201f3c1a20b5b105f9160bea104b102"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0a5a5fb234b9aa7093ae3a0bb2785f73"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga0a5a5fb234b9aa7093ae3a0bb2785f73">atcacert_set_cert_sn</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, uint8_t *cert, size_t *cert_size, size_t max_cert_size, const uint8_t *cert_sn, size_t cert_sn_size)</td></tr>
+<tr class="memdesc:ga0a5a5fb234b9aa7093ae3a0bb2785f73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the certificate serial number in a certificate.  <a href="a00223.html#ga0a5a5fb234b9aa7093ae3a0bb2785f73">More...</a><br /></td></tr>
+<tr class="separator:ga0a5a5fb234b9aa7093ae3a0bb2785f73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae1f109cb8edea615c0f7126527208452"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#gae1f109cb8edea615c0f7126527208452">atcacert_gen_cert_sn</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, uint8_t *cert, size_t cert_size, const uint8_t device_sn[9])</td></tr>
+<tr class="memdesc:gae1f109cb8edea615c0f7126527208452"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the certificate serial number by generating it from other information in the certificate using the scheme specified by sn_source in cert_def. See the.  <a href="a00223.html#gae1f109cb8edea615c0f7126527208452">More...</a><br /></td></tr>
+<tr class="separator:gae1f109cb8edea615c0f7126527208452"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf64c228c28f42f15e9b43457146d1504"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#gaf64c228c28f42f15e9b43457146d1504">atcacert_get_cert_sn</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, uint8_t *cert_sn, size_t *cert_sn_size)</td></tr>
+<tr class="memdesc:gaf64c228c28f42f15e9b43457146d1504"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the certificate serial number from a certificate.  <a href="a00223.html#gaf64c228c28f42f15e9b43457146d1504">More...</a><br /></td></tr>
+<tr class="separator:gaf64c228c28f42f15e9b43457146d1504"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b22f63ccda2cba10d5ca3dd9c39a06c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga7b22f63ccda2cba10d5ca3dd9c39a06c">atcacert_set_auth_key_id</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, uint8_t *cert, size_t cert_size, const uint8_t auth_public_key[64])</td></tr>
+<tr class="memdesc:ga7b22f63ccda2cba10d5ca3dd9c39a06c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the authority key ID in a certificate. Note that this takes the actual public key creates a key ID from it.  <a href="a00223.html#ga7b22f63ccda2cba10d5ca3dd9c39a06c">More...</a><br /></td></tr>
+<tr class="separator:ga7b22f63ccda2cba10d5ca3dd9c39a06c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga94a3b57e412fe2cfddf92fdc8e54a41e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga94a3b57e412fe2cfddf92fdc8e54a41e">atcacert_set_auth_key_id_raw</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, uint8_t *cert, size_t cert_size, const uint8_t *auth_key_id)</td></tr>
+<tr class="memdesc:ga94a3b57e412fe2cfddf92fdc8e54a41e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the authority key ID in a certificate.  <a href="a00223.html#ga94a3b57e412fe2cfddf92fdc8e54a41e">More...</a><br /></td></tr>
+<tr class="separator:ga94a3b57e412fe2cfddf92fdc8e54a41e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadf6c26dd4333931acf2b8f6ac9a5f422"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#gadf6c26dd4333931acf2b8f6ac9a5f422">atcacert_get_auth_key_id</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, uint8_t auth_key_id[20])</td></tr>
+<tr class="memdesc:gadf6c26dd4333931acf2b8f6ac9a5f422"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the authority key ID from a certificate.  <a href="a00223.html#gadf6c26dd4333931acf2b8f6ac9a5f422">More...</a><br /></td></tr>
+<tr class="separator:gadf6c26dd4333931acf2b8f6ac9a5f422"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2e2c59c41193e71b1a4b96f58642bb49"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga2e2c59c41193e71b1a4b96f58642bb49">atcacert_set_comp_cert</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, uint8_t *cert, size_t *cert_size, size_t max_cert_size, const uint8_t comp_cert[72])</td></tr>
+<tr class="memdesc:ga2e2c59c41193e71b1a4b96f58642bb49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the signature, issue date, expire date, and signer ID found in the compressed certificate. This also checks fields common between the cert_def and the compressed certificate to make sure they match.  <a href="a00223.html#ga2e2c59c41193e71b1a4b96f58642bb49">More...</a><br /></td></tr>
+<tr class="separator:ga2e2c59c41193e71b1a4b96f58642bb49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9a7903692035d06b5d1a45c3b56fce3a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga9a7903692035d06b5d1a45c3b56fce3a">atcacert_get_comp_cert</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, uint8_t comp_cert[72])</td></tr>
+<tr class="memdesc:ga9a7903692035d06b5d1a45c3b56fce3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the compressed certificate for the given certificate.  <a href="a00223.html#ga9a7903692035d06b5d1a45c3b56fce3a">More...</a><br /></td></tr>
+<tr class="separator:ga9a7903692035d06b5d1a45c3b56fce3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9883eaf43aa94e7a29c1bdf13514185c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga9883eaf43aa94e7a29c1bdf13514185c">atcacert_get_tbs</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, const uint8_t **tbs, size_t *tbs_size)</td></tr>
+<tr class="memdesc:ga9883eaf43aa94e7a29c1bdf13514185c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a pointer to the TBS data in a certificate.  <a href="a00223.html#ga9883eaf43aa94e7a29c1bdf13514185c">More...</a><br /></td></tr>
+<tr class="separator:ga9883eaf43aa94e7a29c1bdf13514185c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b2fd4ca54a1fde2d0d669b1fc11284a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga0b2fd4ca54a1fde2d0d669b1fc11284a">atcacert_get_tbs_digest</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, uint8_t tbs_digest[32])</td></tr>
+<tr class="memdesc:ga0b2fd4ca54a1fde2d0d669b1fc11284a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the SHA256 digest of certificate's TBS data.  <a href="a00223.html#ga0b2fd4ca54a1fde2d0d669b1fc11284a">More...</a><br /></td></tr>
+<tr class="separator:ga0b2fd4ca54a1fde2d0d669b1fc11284a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5dacb3927ef7eacfaf8c4e28641f7bce"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga5dacb3927ef7eacfaf8c4e28641f7bce">atcacert_set_cert_element</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const <a class="el" href="a00223.html#gae7c32139e6dce0fe25b4598299a77df6">atcacert_cert_loc_t</a> *cert_loc, uint8_t *cert, size_t cert_size, const uint8_t *data, size_t data_size)</td></tr>
+<tr class="memdesc:ga5dacb3927ef7eacfaf8c4e28641f7bce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an element in a certificate. The data_size must match the size in cert_loc.  <a href="a00223.html#ga5dacb3927ef7eacfaf8c4e28641f7bce">More...</a><br /></td></tr>
+<tr class="separator:ga5dacb3927ef7eacfaf8c4e28641f7bce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacdb102fcae9f3a822a19b2ca487b415d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#gacdb102fcae9f3a822a19b2ca487b415d">atcacert_get_cert_element</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const <a class="el" href="a00223.html#gae7c32139e6dce0fe25b4598299a77df6">atcacert_cert_loc_t</a> *cert_loc, const uint8_t *cert, size_t cert_size, uint8_t *data, size_t data_size)</td></tr>
+<tr class="memdesc:gacdb102fcae9f3a822a19b2ca487b415d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an element from a certificate.  <a href="a00223.html#gacdb102fcae9f3a822a19b2ca487b415d">More...</a><br /></td></tr>
+<tr class="separator:gacdb102fcae9f3a822a19b2ca487b415d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad93de2bdacdcfe04abb0e991a8401388"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#gad93de2bdacdcfe04abb0e991a8401388">atcacert_get_key_id</a> (const uint8_t public_key[64], uint8_t key_id[20])</td></tr>
+<tr class="memdesc:gad93de2bdacdcfe04abb0e991a8401388"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the key ID for a given public ECC P256 key.  <a href="a00223.html#gad93de2bdacdcfe04abb0e991a8401388">More...</a><br /></td></tr>
+<tr class="separator:gad93de2bdacdcfe04abb0e991a8401388"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga593780a1837f517ce75bb19d9c5c9db7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga593780a1837f517ce75bb19d9c5c9db7">atcacert_merge_device_loc</a> (<a class="el" href="a00223.html#ga0fb6e40d2f1496215af2f9ae23c861a0">atcacert_device_loc_t</a> *device_locs, size_t *device_locs_count, size_t device_locs_max_count, const <a class="el" href="a00223.html#ga0fb6e40d2f1496215af2f9ae23c861a0">atcacert_device_loc_t</a> *device_loc, size_t block_size)</td></tr>
+<tr class="memdesc:ga593780a1837f517ce75bb19d9c5c9db7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merge a new device location into a list of device locations. If the new location overlaps with an existing location, the existing one will be modified to encompass both. Otherwise the new location is appended to the end of the list.  <a href="a00223.html#ga593780a1837f517ce75bb19d9c5c9db7">More...</a><br /></td></tr>
+<tr class="separator:ga593780a1837f517ce75bb19d9c5c9db7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2e2ceb6fb7614254a94e89ba244fee7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#gad2e2ceb6fb7614254a94e89ba244fee7">atcacert_is_device_loc_overlap</a> (const <a class="el" href="a00223.html#ga0fb6e40d2f1496215af2f9ae23c861a0">atcacert_device_loc_t</a> *device_loc1, const <a class="el" href="a00223.html#ga0fb6e40d2f1496215af2f9ae23c861a0">atcacert_device_loc_t</a> *device_loc2)</td></tr>
+<tr class="separator:gad2e2ceb6fb7614254a94e89ba244fee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7337facc592df42d585b22345e333ae3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga7337facc592df42d585b22345e333ae3">atcacert_public_key_add_padding</a> (const uint8_t raw_key[64], uint8_t padded_key[72])</td></tr>
+<tr class="memdesc:ga7337facc592df42d585b22345e333ae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Takes a raw P256 ECC public key and converts it to the padded version used by ATECC devices. Input and output buffers can point to the same location to do an in-place transform.  <a href="a00223.html#ga7337facc592df42d585b22345e333ae3">More...</a><br /></td></tr>
+<tr class="separator:ga7337facc592df42d585b22345e333ae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb83dfb792f1e6e90ce6a3d39f64e129"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#gadb83dfb792f1e6e90ce6a3d39f64e129">atcacert_public_key_remove_padding</a> (const uint8_t padded_key[72], uint8_t raw_key[64])</td></tr>
+<tr class="memdesc:gadb83dfb792f1e6e90ce6a3d39f64e129"><td class="mdescLeft">&#160;</td><td class="mdescRight">Takes a padded public key used by ATECC devices and converts it to a raw P256 ECC public key. Input and output buffers can point to the same location to do an in-place transform.  <a href="a00223.html#gadb83dfb792f1e6e90ce6a3d39f64e129">More...</a><br /></td></tr>
+<tr class="separator:gadb83dfb792f1e6e90ce6a3d39f64e129"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Collection of functions for hardware abstraction of TLS implementations (e.g. OpenSSL) </p>
-<p>Copyright (c) 2015 Atmel Corporation. All rights reserved.</p>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ad0e6178e18abb869b13f7f9b24b09941"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define RSA_KEY_SLOT&#160;&#160;&#160;8</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="af11246fda13208d597f16052de974d49"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define RSA_KEY_START_BLOCK&#160;&#160;&#160;5</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a class="anchor" id="a99e581481616321a88845958c97dbb43"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t _enckey[<a class="el" href="a00063.html#a66a410dde8f388c582495ba315284276">ATCA_KEY_SIZE</a>] = { 0 }</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="af9dde78894fd4e585d380b6709f56872"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00197.html#ga9cbd0041071e05fd2c8771fba859d8a1">atcatlsfn_get_enckey</a>* _fn_get_enckey = NULL</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ad99d27c059a11c618255b87745561b4a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t config_data_default[]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aa6edb4c3336a246a577d613a3ada6675"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t g_CaCert[]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a263d357d8cbe311944ff740a82259138"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t g_DeviceCert[]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div>
-<div class="line">{</div>
-<div class="line">    0x30, 0x82, 0x01, 0xA8, 0x30, 0x82, 0x01, 0x4E, 0xA0, 0x03, 0x02, 0x01, 0x02, 0x02, 0x0A, 0x40,</div>
-<div class="line">    0x01, 0x23, 0x80, 0x4C, 0xD9, 0x2C, 0xA5, 0x71, 0xEE, 0x30, 0x0A, 0x06, 0x08, 0x2A, 0x86, 0x48,</div>
-<div class="line">    0xCE, 0x3D, 0x04, 0x03, 0x02, 0x30, 0x48, 0x31, 0x1A, 0x30, 0x18, 0x06, 0x03, 0x55, 0x04, 0x0A,</div>
-<div class="line">    0x0C, 0x11, 0x41, 0x74, 0x6D, 0x65, 0x6C, 0x20, 0x4F, 0x70, 0x65, 0x6E, 0x53, 0x53, 0x4C, 0x20,</div>
-<div class="line">    0x44, 0x65, 0x76, 0x31, 0x2A, 0x30, 0x28, 0x06, 0x03, 0x55, 0x04, 0x03, 0x0C, 0x21, 0x4F, 0x70,</div>
-<div class="line">    0x65, 0x6E, 0x53, 0x53, 0x4C, 0x20, 0x44, 0x65, 0x76, 0x20, 0x41, 0x54, 0x45, 0x43, 0x43, 0x35,</div>
-<div class="line">    0x30, 0x38, 0x41, 0x20, 0x53, 0x69, 0x67, 0x6E, 0x65, 0x72, 0x20, 0x31, 0x30, 0x30, 0x31, 0x30,</div>
-<div class="line">    0x20, 0x17, 0x0D, 0x31, 0x35, 0x31, 0x31, 0x31, 0x32, 0x31, 0x36, 0x30, 0x30, 0x30, 0x30, 0x5A,</div>
-<div class="line">    0x18, 0x0F, 0x39, 0x39, 0x39, 0x39, 0x31, 0x32, 0x33, 0x31, 0x32, 0x33, 0x35, 0x39, 0x35, 0x39,</div>
-<div class="line">    0x5A, 0x30, 0x43, 0x31, 0x1A, 0x30, 0x18, 0x06, 0x03, 0x55, 0x04, 0x0A, 0x0C, 0x11, 0x41, 0x74,</div>
-<div class="line">    0x6D, 0x65, 0x6C, 0x20, 0x4F, 0x70, 0x65, 0x6E, 0x53, 0x53, 0x4C, 0x20, 0x44, 0x65, 0x76, 0x31,</div>
-<div class="line">    0x25, 0x30, 0x23, 0x06, 0x03, 0x55, 0x04, 0x03, 0x0C, 0x1C, 0x4F, 0x70, 0x65, 0x6E, 0x53, 0x53,</div>
-<div class="line">    0x4C, 0x20, 0x44, 0x65, 0x76, 0x20, 0x41, 0x54, 0x45, 0x43, 0x43, 0x35, 0x30, 0x38, 0x41, 0x20,</div>
-<div class="line">    0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x30, 0x59, 0x30, 0x13, 0x06, 0x07, 0x2A, 0x86, 0x48, 0xCE,</div>
-<div class="line">    0x3D, 0x02, 0x01, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x03, 0x01, 0x07, 0x03, 0x42, 0x00,</div>
-<div class="line">    0x04, 0xA7, 0x15, 0xDE, 0x0C, 0x04, 0x16, 0x6D, 0xF3, 0xCF, 0x7D, 0x85, 0x5E, 0x3A, 0xD5, 0x74,</div>
-<div class="line">    0x02, 0xE6, 0x67, 0xF7, 0xFB, 0x64, 0x22, 0x92, 0x9A, 0xF5, 0x3A, 0x29, 0xE1, 0x1D, 0x0D, 0x03,</div>
-<div class="line">    0x95, 0xD5, 0xE4, 0x9E, 0x1D, 0xB8, 0xD9, 0x27, 0x4D, 0x08, 0x5B, 0x6B, 0x7C, 0x0E, 0xD9, 0xD1,</div>
-<div class="line">    0x59, 0x32, 0x9E, 0xFC, 0x14, 0x84, 0x2F, 0x93, 0x07, 0x9A, 0xF3, 0xFE, 0x2D, 0x2A, 0xE5, 0x6F,</div>
-<div class="line">    0xC5, 0xA3, 0x23, 0x30, 0x21, 0x30, 0x1F, 0x06, 0x03, 0x55, 0x1D, 0x23, 0x04, 0x18, 0x30, 0x16,</div>
-<div class="line">    0x80, 0x14, 0xBB, 0x0F, 0x75, 0x5F, 0x8F, 0xCC, 0xA3, 0x76, 0x16, 0x97, 0x3B, 0xE1, 0x01, 0xE4,</div>
-<div class="line">    0x50, 0x98, 0x94, 0xB9, 0x8D, 0xFF, 0x30, 0x0A, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x04,</div>
-<div class="line">    0x03, 0x02, 0x03, 0x48, 0x00, 0x30, 0x45, 0x02, 0x21, 0x00, 0xC0, 0xE8, 0x3B, 0x7C, 0xBF, 0xC5,</div>
-<div class="line">    0x96, 0x3D, 0x42, 0x20, 0xAB, 0xDB, 0x97, 0x15, 0x43, 0x48, 0xA1, 0x82, 0xA5, 0x90, 0xF9, 0xCC,</div>
-<div class="line">    0xF6, 0x91, 0x12, 0xDD, 0xEE, 0xC7, 0x1B, 0xA3, 0xA7, 0xA6, 0x02, 0x20, 0x27, 0x95, 0xB3, 0xC5,</div>
-<div class="line">    0x24, 0x84, 0x04, 0xD8, 0x64, 0x35, 0xF9, 0x7A, 0x0F, 0x8D, 0xFD, 0x91, 0x22, 0x34, 0x81, 0x00,</div>
-<div class="line">    0x00, 0x10, 0x37, 0x27, 0xA1, 0x38, 0x8D, 0x26, 0xC4, 0xD8, 0x63, 0xBB</div>
-<div class="line">}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="a4f9ca2b00c3461e12161badfbafc5c20"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t g_SignerCert[]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>Declarations for certificates related to ECC CryptoAuthentication devices. These are the definitions required to define a certificate and its various elements with regards to the CryptoAuthentication ECC devices. </p>
+<p>Only the dynamic elements of a certificate (the parts of the certificate that change from device to device) are stored on the ATECC device. The definitions here describe the form of the certificate, and where the dynamic elements can be found both on the ATECC device itself and in the certificate template.</p>
+<p>This also defines utility functions for working with the certificates and their definitions.</p>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_d3d260c11de525055358286eeb840f1a.html">tls</a></li><li class="navelem"><a class="el" href="a00105.html">atcatls.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00105.html">atcacert_def.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

@@ -1,17 +1,16 @@
 var a00152 =
 [
-    [ "CL_HashContext", "a00047.html", "a00047" ],
-    [ "_NOP", "a00152.html#a46388d9db8422abfea56ae2323f7a77c", null ],
-    [ "_WDRESET", "a00152.html#a45e79c30522d47f4c30922b3d5b06b46", null ],
-    [ "leftRotate", "a00152.html#a56a88d6165ee36c482ddc9b82826dd47", null ],
-    [ "memcpy_P", "a00152.html#a3015d84f1e64c03564961de070d25328", null ],
-    [ "strcpy_P", "a00152.html#a3541bc4d0b928b2faa9ca63a100d1b75", null ],
-    [ "U16", "a00152.html#ad0b4d315e0f0b5d356886ec69d4bed08", null ],
-    [ "U32", "a00152.html#a8f953f379d243081b950adb7f194b2e8", null ],
-    [ "U8", "a00152.html#a2c0958af86f0590374e4324757c537f2", null ],
-    [ "CL_hash", "a00152.html#a955169bbbce9b4712cafb9b7372b5ffa", null ],
-    [ "CL_hashFinal", "a00152.html#a672902e6406b4e4e2af33c70ec7a001c", null ],
-    [ "CL_hashInit", "a00152.html#affa9482d686cc435d640d67d7fa79772", null ],
-    [ "CL_hashUpdate", "a00152.html#a55a33e7a22aff4aca4bccf39897bc5f1", null ],
-    [ "shaEngine", "a00152.html#a6f06fe48f7cacc212305b862b46fd9aa", null ]
+    [ "change_i2c_speed", "a00226.html#gab7f613b378e0d01b80703df3ac662d6d", null ],
+    [ "hal_i2c_discover_buses", "a00226.html#ga05700385437884cc7b28c38d33e84f8c", null ],
+    [ "hal_i2c_discover_devices", "a00226.html#gad927b28b795eac9f9592fc9f9739bc0a", null ],
+    [ "hal_i2c_idle", "a00226.html#ga9317303ada721ff3f97e7aad69437a30", null ],
+    [ "hal_i2c_init", "a00226.html#ga09e7f465a040fbd19ea136269571de3c", null ],
+    [ "hal_i2c_post_init", "a00226.html#gafbe53519362f18c2688d10da6f7c618f", null ],
+    [ "hal_i2c_receive", "a00226.html#ga7785bcc305c14e2dc188bb1b9a77814a", null ],
+    [ "hal_i2c_release", "a00226.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
+    [ "hal_i2c_send", "a00226.html#gacd0fb31f0f88ef3762665e26b5aa784b", null ],
+    [ "hal_i2c_sleep", "a00226.html#ga3f89bae6a625d5f37abdcc99408def27", null ],
+    [ "hal_i2c_wake", "a00226.html#gad4df1b6755e2d5b5d9e810371e45ca8c", null ],
+    [ "i2c_bus_ref_ct", "a00226.html#gaa7deec7f5d89dfb4f9746d050b0926f9", null ],
+    [ "i2c_hal_data", "a00226.html#ga95dac4460cd54b4b073285ebc79d215b", null ]
 ];

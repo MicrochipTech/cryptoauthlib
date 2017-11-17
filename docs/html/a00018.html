@@ -109,33 +109,107 @@ $(document).ready(function(){initNavTree('a00018.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atca_derive_key_mac_in_out Struct Reference<div class="ingroups"><a class="el" href="a00196.html">Host side crypto methods (atcah_)</a></div></div>  </div>
+<div class="title">atca_derive_key_mac_in_out Struct Reference<div class="ingroups"><a class="el" href="a00227.html">Host side crypto methods (atcah_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Input/output parameters for function atca_derive_key_mac().  
+<p>Input/output parameters for function <a class="el" href="a00227.html#ga60fc543b3df6fa1dedfbf59e5bde554b" title="This function calculates the input MAC for a DeriveKey command. ">atcah_derive_key_mac()</a>.  
  <a href="a00018.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="a00084_source.html">atca_host.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a00089_source.html">atca_host.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ga56a0acddcb737a80ddd5a0ffcfeaedae"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga56a0acddcb737a80ddd5a0ffcfeaedae">random</a></td></tr>
-<tr class="memdesc:ga56a0acddcb737a80ddd5a0ffcfeaedae"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Random parameter used in DeriveKey command (Param1).  <a href="a00196.html#ga56a0acddcb737a80ddd5a0ffcfeaedae">More...</a><br /></td></tr>
-<tr class="separator:ga56a0acddcb737a80ddd5a0ffcfeaedae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaef11169e6cbbd8825f21b8cdcf5c1f0e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#gaef11169e6cbbd8825f21b8cdcf5c1f0e">target_key_id</a></td></tr>
-<tr class="memdesc:gaef11169e6cbbd8825f21b8cdcf5c1f0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] KeyID to be derived, TargetKey parameter used in DeriveKey command (Param2).  <a href="a00196.html#gaef11169e6cbbd8825f21b8cdcf5c1f0e">More...</a><br /></td></tr>
-<tr class="separator:gaef11169e6cbbd8825f21b8cdcf5c1f0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9a4fdbedbff82aebf299581b9efa571e"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga9a4fdbedbff82aebf299581b9efa571e">parent_key</a></td></tr>
-<tr class="memdesc:ga9a4fdbedbff82aebf299581b9efa571e"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 32-byte ParentKey. ParentKey here is always SlotConfig[TargetKey].WriteKey, regardless whether the operation is Roll or Create.  <a href="a00196.html#ga9a4fdbedbff82aebf299581b9efa571e">More...</a><br /></td></tr>
-<tr class="separator:ga9a4fdbedbff82aebf299581b9efa571e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47ce138310dbdf748d76087b537e4b48"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga47ce138310dbdf748d76087b537e4b48">mac</a></td></tr>
-<tr class="memdesc:ga47ce138310dbdf748d76087b537e4b48"><td class="mdescLeft">&#160;</td><td class="mdescRight">[out] Pointer to 32-byte Mac.  <a href="a00196.html#ga47ce138310dbdf748d76087b537e4b48">More...</a><br /></td></tr>
-<tr class="separator:ga47ce138310dbdf748d76087b537e4b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37e90f5e3bd99fac2021fb3a326607d4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a37e90f5e3bd99fac2021fb3a326607d4">mode</a></td></tr>
+<tr class="memdesc:a37e90f5e3bd99fac2021fb3a326607d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mode (param 1) of the derive key command.  <a href="#a37e90f5e3bd99fac2021fb3a326607d4">More...</a><br /></td></tr>
+<tr class="separator:a37e90f5e3bd99fac2021fb3a326607d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41104a8c85cd12c0fde0d791c3276a48"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a41104a8c85cd12c0fde0d791c3276a48">target_key_id</a></td></tr>
+<tr class="memdesc:a41104a8c85cd12c0fde0d791c3276a48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key ID (param 2) of the target slot to run the command on.  <a href="#a41104a8c85cd12c0fde0d791c3276a48">More...</a><br /></td></tr>
+<tr class="separator:a41104a8c85cd12c0fde0d791c3276a48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef45bac2efcd5394c4ed79f73ee16d23"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#aef45bac2efcd5394c4ed79f73ee16d23">sn</a></td></tr>
+<tr class="memdesc:aef45bac2efcd5394c4ed79f73ee16d23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though.  <a href="#aef45bac2efcd5394c4ed79f73ee16d23">More...</a><br /></td></tr>
+<tr class="separator:aef45bac2efcd5394c4ed79f73ee16d23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a000599eef5677ed1279b025c42ae260e"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a000599eef5677ed1279b025c42ae260e">parent_key</a></td></tr>
+<tr class="memdesc:a000599eef5677ed1279b025c42ae260e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parent key to be used in the derive key calculation (32 bytes).  <a href="#a000599eef5677ed1279b025c42ae260e">More...</a><br /></td></tr>
+<tr class="separator:a000599eef5677ed1279b025c42ae260e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5a9ad86915dfcef6db90b858690212a"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#aa5a9ad86915dfcef6db90b858690212a">mac</a></td></tr>
+<tr class="memdesc:aa5a9ad86915dfcef6db90b858690212a"><td class="mdescLeft">&#160;</td><td class="mdescRight">DeriveKey MAC will be returned here.  <a href="#aa5a9ad86915dfcef6db90b858690212a">More...</a><br /></td></tr>
+<tr class="separator:aa5a9ad86915dfcef6db90b858690212a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input/output parameters for function atca_derive_key_mac(). </p>
-</div></div><!-- contents -->
+<div class="textblock"><p>Input/output parameters for function <a class="el" href="a00227.html#ga60fc543b3df6fa1dedfbf59e5bde554b" title="This function calculates the input MAC for a DeriveKey command. ">atcah_derive_key_mac()</a>. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="aa5a9ad86915dfcef6db90b858690212a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* mac</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>DeriveKey MAC will be returned here. </p>
+
+</div>
+</div>
+<a class="anchor" id="a37e90f5e3bd99fac2021fb3a326607d4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t mode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Mode (param 1) of the derive key command. </p>
+
+</div>
+</div>
+<a class="anchor" id="a000599eef5677ed1279b025c42ae260e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint8_t* parent_key</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Parent key to be used in the derive key calculation (32 bytes). </p>
+
+</div>
+</div>
+<a class="anchor" id="aef45bac2efcd5394c4ed79f73ee16d23"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint8_t* sn</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though. </p>
+
+</div>
+</div>
+<a class="anchor" id="a41104a8c85cd12c0fde0d791c3276a48"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t target_key_id</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Key ID (param 2) of the target slot to run the command on. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

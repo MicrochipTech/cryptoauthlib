@@ -109,33 +109,141 @@ $(document).ready(function(){initNavTree('a00021.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atca_gen_dig_in_out Struct Reference<div class="ingroups"><a class="el" href="a00196.html">Host side crypto methods (atcah_)</a></div></div>  </div>
+<div class="title">atca_gen_dig_in_out Struct Reference<div class="ingroups"><a class="el" href="a00227.html">Host side crypto methods (atcah_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Input/output parameters for function atca_gen_dig().  
+<p>Input/output parameters for function <a class="el" href="a00227.html#ga6f6043ba8eebbaab6e6f3b4fa5e31ad4" title="This function combines the current TempKey with a stored value. ">atcah_gen_dig()</a>.  
  <a href="a00021.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="a00084_source.html">atca_host.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a00089_source.html">atca_host.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ga828b8f8a58cd9813deb365aab404c850"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga828b8f8a58cd9813deb365aab404c850">zone</a></td></tr>
-<tr class="memdesc:ga828b8f8a58cd9813deb365aab404c850"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Zone parameter used in GenDig command (Param1).  <a href="a00196.html#ga828b8f8a58cd9813deb365aab404c850">More...</a><br /></td></tr>
-<tr class="separator:ga828b8f8a58cd9813deb365aab404c850"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3eedc11953a89e931ede529eb72592ac"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga3eedc11953a89e931ede529eb72592ac">key_id</a></td></tr>
-<tr class="memdesc:ga3eedc11953a89e931ede529eb72592ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] KeyID parameter used in GenDig command (Param2).  <a href="a00196.html#ga3eedc11953a89e931ede529eb72592ac">More...</a><br /></td></tr>
-<tr class="separator:ga3eedc11953a89e931ede529eb72592ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga42913e79e96a895282f2168e8f0c7ead"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga42913e79e96a895282f2168e8f0c7ead">stored_value</a></td></tr>
-<tr class="memdesc:ga42913e79e96a895282f2168e8f0c7ead"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 32-byte stored value, can be a data slot, OTP page, configuration zone, or hardware transport key.  <a href="a00196.html#ga42913e79e96a895282f2168e8f0c7ead">More...</a><br /></td></tr>
-<tr class="separator:ga42913e79e96a895282f2168e8f0c7ead"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa17e031da4b22938bed1c21161ba371a"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a00027.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#gaa17e031da4b22938bed1c21161ba371a">temp_key</a></td></tr>
-<tr class="memdesc:gaa17e031da4b22938bed1c21161ba371a"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in,out] Pointer to TempKey structure.  <a href="a00196.html#gaa17e031da4b22938bed1c21161ba371a">More...</a><br /></td></tr>
-<tr class="separator:gaa17e031da4b22938bed1c21161ba371a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac746c3d65092170bfaf5b0d9950d8438"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00021.html#ac746c3d65092170bfaf5b0d9950d8438">zone</a></td></tr>
+<tr class="memdesc:ac746c3d65092170bfaf5b0d9950d8438"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Zone/Param1 for the GenDig command  <a href="#ac746c3d65092170bfaf5b0d9950d8438">More...</a><br /></td></tr>
+<tr class="separator:ac746c3d65092170bfaf5b0d9950d8438"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac21eed4200889cc115d16a781871d01c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00021.html#ac21eed4200889cc115d16a781871d01c">key_id</a></td></tr>
+<tr class="memdesc:ac21eed4200889cc115d16a781871d01c"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] KeyId/Param2 for the GenDig command  <a href="#ac21eed4200889cc115d16a781871d01c">More...</a><br /></td></tr>
+<tr class="separator:ac21eed4200889cc115d16a781871d01c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ab45b7847bf9d25cc2be99b11641e5f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00021.html#a6ab45b7847bf9d25cc2be99b11641e5f">is_key_nomac</a></td></tr>
+<tr class="memdesc:a6ab45b7847bf9d25cc2be99b11641e5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Set to true if the slot pointed to be key_id has the SotConfig.NoMac bit set  <a href="#a6ab45b7847bf9d25cc2be99b11641e5f">More...</a><br /></td></tr>
+<tr class="separator:a6ab45b7847bf9d25cc2be99b11641e5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef45bac2efcd5394c4ed79f73ee16d23"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00021.html#aef45bac2efcd5394c4ed79f73ee16d23">sn</a></td></tr>
+<tr class="memdesc:aef45bac2efcd5394c4ed79f73ee16d23"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though.  <a href="#aef45bac2efcd5394c4ed79f73ee16d23">More...</a><br /></td></tr>
+<tr class="separator:aef45bac2efcd5394c4ed79f73ee16d23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7871fda0cd5698905bc3aa8fe8a99808"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00021.html#a7871fda0cd5698905bc3aa8fe8a99808">stored_value</a></td></tr>
+<tr class="memdesc:a7871fda0cd5698905bc3aa8fe8a99808"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] 32-byte slot value, config block, OTP block as specified by the Zone/KeyId parameters  <a href="#a7871fda0cd5698905bc3aa8fe8a99808">More...</a><br /></td></tr>
+<tr class="separator:a7871fda0cd5698905bc3aa8fe8a99808"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac76ac607fd679316fc17b16039a86b9c"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00021.html#ac76ac607fd679316fc17b16039a86b9c">other_data</a></td></tr>
+<tr class="memdesc:ac76ac607fd679316fc17b16039a86b9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] 32-byte value for shared nonce zone, 4-byte value if is_key_nomac is true, ignored and/or NULL otherwise  <a href="#ac76ac607fd679316fc17b16039a86b9c">More...</a><br /></td></tr>
+<tr class="separator:ac76ac607fd679316fc17b16039a86b9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72fae3d62889ef224f09c57a7646e061"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a00030.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00021.html#a72fae3d62889ef224f09c57a7646e061">temp_key</a></td></tr>
+<tr class="memdesc:a72fae3d62889ef224f09c57a7646e061"><td class="mdescLeft">&#160;</td><td class="mdescRight">[inout] Current state of TempKey  <a href="#a72fae3d62889ef224f09c57a7646e061">More...</a><br /></td></tr>
+<tr class="separator:a72fae3d62889ef224f09c57a7646e061"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input/output parameters for function atca_gen_dig(). </p>
-</div></div><!-- contents -->
+<div class="textblock"><p>Input/output parameters for function <a class="el" href="a00227.html#ga6f6043ba8eebbaab6e6f3b4fa5e31ad4" title="This function combines the current TempKey with a stored value. ">atcah_gen_dig()</a>. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="a6ab45b7847bf9d25cc2be99b11641e5f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool is_key_nomac</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>[in] Set to true if the slot pointed to be key_id has the SotConfig.NoMac bit set </p>
+
+</div>
+</div>
+<a class="anchor" id="ac21eed4200889cc115d16a781871d01c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t key_id</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>[in] KeyId/Param2 for the GenDig command </p>
+
+</div>
+</div>
+<a class="anchor" id="ac76ac607fd679316fc17b16039a86b9c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint8_t* other_data</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>[in] 32-byte value for shared nonce zone, 4-byte value if is_key_nomac is true, ignored and/or NULL otherwise </p>
+
+</div>
+</div>
+<a class="anchor" id="aef45bac2efcd5394c4ed79f73ee16d23"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint8_t* sn</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>[in] Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though. </p>
+
+</div>
+</div>
+<a class="anchor" id="a7871fda0cd5698905bc3aa8fe8a99808"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint8_t* stored_value</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>[in] 32-byte slot value, config block, OTP block as specified by the Zone/KeyId parameters </p>
+
+</div>
+</div>
+<a class="anchor" id="a72fae3d62889ef224f09c57a7646e061"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="a00030.html">atca_temp_key</a>* temp_key</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>[inout] Current state of TempKey </p>
+
+</div>
+</div>
+<a class="anchor" id="ac746c3d65092170bfaf5b0d9950d8438"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t zone</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>[in] Zone/Param1 for the GenDig command </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

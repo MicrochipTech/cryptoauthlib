@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: hal_at88ck9000_timer.c File Reference</title>
+<title>CryptoAuthLib: atcacert_host_sw.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -108,37 +108,39 @@ $(document).ready(function(){initNavTree('a00111.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">hal_at88ck9000_timer.c File Reference</div>  </div>
+<div class="title">atcacert_host_sw.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for AT88CK900X timer/delay over ASF drivers.  
+<p>Host side methods using software implementations. host-side, the one authenticating a client, of the authentication process. Crypto functions are performed using a software library.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;asf.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00080_source.html">atca_hal.h</a>&quot;</code><br />
-<code>#include &quot;timer_utilities.h&quot;</code><br />
-</div><table class="memberdecls">
+<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00105_source.html">atcacert_def.h</a>&quot;</code><br />
+</div>
+<p><a href="a00111_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga7598dfcd6dcac882836544d48356d02f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga7598dfcd6dcac882836544d48356d02f">atca_delay_us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga7598dfcd6dcac882836544d48356d02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API implemented at the HAL level.  <a href="a00195.html#ga7598dfcd6dcac882836544d48356d02f">More...</a><br /></td></tr>
-<tr class="separator:ga7598dfcd6dcac882836544d48356d02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga19891182689551cc3a88603135959351"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga19891182689551cc3a88603135959351">atca_delay_10us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga19891182689551cc3a88603135959351"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of tens of microseconds.  <a href="a00195.html#ga19891182689551cc3a88603135959351">More...</a><br /></td></tr>
-<tr class="separator:ga19891182689551cc3a88603135959351"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga80a853a202b089064bfc4b159c3418b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html#ga80a853a202b089064bfc4b159c3418b4">atca_delay_ms</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga80a853a202b089064bfc4b159c3418b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of milliseconds. You can override this function if you like to do something else in your system while delaying.  <a href="a00195.html#ga80a853a202b089064bfc4b159c3418b4">More...</a><br /></td></tr>
-<tr class="separator:ga80a853a202b089064bfc4b159c3418b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab78271af8c3e2837810fcdae6e3f5e28"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#gab78271af8c3e2837810fcdae6e3f5e28">atcacert_verify_cert_sw</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, const uint8_t ca_public_key[64])</td></tr>
+<tr class="memdesc:gab78271af8c3e2837810fcdae6e3f5e28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a certificate against its certificate authority's public key using software crypto functions.  <a href="a00223.html#gab78271af8c3e2837810fcdae6e3f5e28">More...</a><br /></td></tr>
+<tr class="separator:gab78271af8c3e2837810fcdae6e3f5e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa9829e5aa1ece3d3a933db9827d3e8f3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#gaa9829e5aa1ece3d3a933db9827d3e8f3">atcacert_gen_challenge_sw</a> (uint8_t challenge[32])</td></tr>
+<tr class="memdesc:gaa9829e5aa1ece3d3a933db9827d3e8f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a random challenge to be sent to the client using a software PRNG.  <a href="a00223.html#gaa9829e5aa1ece3d3a933db9827d3e8f3">More...</a><br /></td></tr>
+<tr class="separator:gaa9829e5aa1ece3d3a933db9827d3e8f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d5bf9ec84d28a0412377818805c32c4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga9d5bf9ec84d28a0412377818805c32c4">atcacert_verify_response_sw</a> (const uint8_t device_public_key[64], const uint8_t challenge[32], const uint8_t response[64])</td></tr>
+<tr class="memdesc:ga9d5bf9ec84d28a0412377818805c32c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a client's response to a challenge using software crypto functions.  <a href="a00223.html#ga9d5bf9ec84d28a0412377818805c32c4">More...</a><br /></td></tr>
+<tr class="separator:ga9d5bf9ec84d28a0412377818805c32c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for AT88CK900X timer/delay over ASF drivers. </p>
-<p>Copyright (c) 2015 Atmel Corporation. All rights reserved.</p>
+<div class="textblock"><p>Host side methods using software implementations. host-side, the one authenticating a client, of the authentication process. Crypto functions are performed using a software library. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00111.html">hal_at88ck9000_timer.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00111.html">atcacert_host_sw.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

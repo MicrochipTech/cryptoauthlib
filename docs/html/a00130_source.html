@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: hal_swi_bitbang.h Source File</title>
+<title>CryptoAuthLib: hal_linux_kit_cdc.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,57 +106,53 @@ $(document).ready(function(){initNavTree('a00130_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">hal_swi_bitbang.h</div>  </div>
+<div class="title">hal_linux_kit_cdc.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00130.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#ifndef HAL_AT88CK900X_SWI_H_</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#define HAL_AT88CK900X_SWI_H_</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#ifndef NO_TARGET_BOARD</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="a00130.html#a3dee547ba249d0b9325bc17afb14892e">   48</a></span>&#160;<span class="preprocessor">#   define  NO_TARGET_BOARD         0</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#ifndef AT88CK9000</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="a00130.html#a7fd906f26f53c831071de1d2fc04eccf">   51</a></span>&#160;<span class="preprocessor">#       define  AT88CK9000          1</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#ifndef HAL_LINUX_KIT_CDC_H_</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#define HAL_LINUX_KIT_CDC_H_</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">// Kit USB defines</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="a00226.html#ga08b6c05184266dc4d5c8727bb9c1c754">   50</a></span>&#160;<span class="preprocessor">#define CDC_DEVICES_MAX     10      </span></div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="a00226.html#ga5ac8c9377f90d6ce3044f81f900a54fe">   51</a></span>&#160;<span class="preprocessor">#define CDC_BUFFER_MAX      1024    </span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#if     TARGET_BOARD == NO_TARGET_BOARD</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#       error You have to define a target board in project properties.</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#elif   TARGET_BOARD == AT88CK9000</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#       include &quot;<a class="code" href="a00156.html">swi_bitbang_at88ck9000.h</a>&quot;</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="a00195.html#ga8759b00e645502d0f1c3b7330e20e52b">   71</a></span>&#160;<span class="keyword">enum</span> <a class="code" href="a00195.html#ga8759b00e645502d0f1c3b7330e20e52b">swi_flag</a> {</div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="a00195.html#gga8759b00e645502d0f1c3b7330e20e52babacdf58fcbc837d4c4e6d9640e157340">   72</a></span>&#160;    <a class="code" href="a00195.html#gga8759b00e645502d0f1c3b7330e20e52babacdf58fcbc837d4c4e6d9640e157340">SWI_FLAG_CMD</a>   = (uint8_t)0x77,     </div>
-<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="a00195.html#gga8759b00e645502d0f1c3b7330e20e52ba17fa7af18b61921986085f42fc05cc9f">   73</a></span>&#160;    <a class="code" href="a00195.html#gga8759b00e645502d0f1c3b7330e20e52ba17fa7af18b61921986085f42fc05cc9f">SWI_FLAG_TX</a>    = (uint8_t)0x88,     </div>
-<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="a00195.html#gga8759b00e645502d0f1c3b7330e20e52baeb0778b0887019be95260a2c0420d21a">   74</a></span>&#160;    <a class="code" href="a00195.html#gga8759b00e645502d0f1c3b7330e20e52baeb0778b0887019be95260a2c0420d21a">SWI_FLAG_IDLE</a>  = (uint8_t)0xBB,     </div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="a00195.html#gga8759b00e645502d0f1c3b7330e20e52ba1d93b236433ad7d6c2b82659009f42f7">   75</a></span>&#160;    <a class="code" href="a00195.html#gga8759b00e645502d0f1c3b7330e20e52ba1d93b236433ad7d6c2b82659009f42f7">SWI_FLAG_SLEEP</a> = (uint8_t)0xCC      </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;};</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="a00045.html">   81</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="a00045.html">atcaSWImaster</a> {</div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="a00045.html#afd6d53ef6b697533839248b40bc97861">   82</a></span>&#160;    uint8_t <a class="code" href="a00045.html#afd6d53ef6b697533839248b40bc97861">pin_sda</a>;</div>
-<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="a00045.html#af5c011e6c2e8d49675f7029e8ec2c0a6">   84</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="a00045.html#af5c011e6c2e8d49675f7029e8ec2c0a6">bus_index</a>;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;} <a class="code" href="a00195.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a>;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAL_AT88CK900X_SWI_H_ */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="a00195_html_ga257ed552f7d68eb1e5d3ca7baa01559a"><div class="ttname"><a href="a00195.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a></div><div class="ttdeci">struct atcaSWImaster ATCASWIMaster_t</div><div class="ttdoc">This is the hal_data for ATCA HAL. </div></div>
-<div class="ttc" id="a00156_html"><div class="ttname"><a href="a00156.html">swi_bitbang_at88ck9000.h</a></div><div class="ttdoc">definitions for bit-banged SWI </div></div>
-<div class="ttc" id="a00195_html_ga8759b00e645502d0f1c3b7330e20e52b"><div class="ttname"><a href="a00195.html#ga8759b00e645502d0f1c3b7330e20e52b">swi_flag</a></div><div class="ttdeci">swi_flag</div><div class="ttdoc">This enumeration lists flags for SWI. </div><div class="ttdef"><b>Definition:</b> hal_swi_bitbang.h:71</div></div>
-<div class="ttc" id="a00195_html_gga8759b00e645502d0f1c3b7330e20e52babacdf58fcbc837d4c4e6d9640e157340"><div class="ttname"><a href="a00195.html#gga8759b00e645502d0f1c3b7330e20e52babacdf58fcbc837d4c4e6d9640e157340">SWI_FLAG_CMD</a></div><div class="ttdoc">flag preceding a command </div><div class="ttdef"><b>Definition:</b> hal_swi_bitbang.h:72</div></div>
-<div class="ttc" id="a00195_html_gga8759b00e645502d0f1c3b7330e20e52baeb0778b0887019be95260a2c0420d21a"><div class="ttname"><a href="a00195.html#gga8759b00e645502d0f1c3b7330e20e52baeb0778b0887019be95260a2c0420d21a">SWI_FLAG_IDLE</a></div><div class="ttdoc">flag requesting to go into Idle mode </div><div class="ttdef"><b>Definition:</b> hal_swi_bitbang.h:74</div></div>
-<div class="ttc" id="a00045_html_afd6d53ef6b697533839248b40bc97861"><div class="ttname"><a href="a00045.html#afd6d53ef6b697533839248b40bc97861">atcaSWImaster::pin_sda</a></div><div class="ttdeci">uint8_t pin_sda</div><div class="ttdef"><b>Definition:</b> hal_swi_bitbang.h:82</div></div>
-<div class="ttc" id="a00195_html_gga8759b00e645502d0f1c3b7330e20e52ba1d93b236433ad7d6c2b82659009f42f7"><div class="ttname"><a href="a00195.html#gga8759b00e645502d0f1c3b7330e20e52ba1d93b236433ad7d6c2b82659009f42f7">SWI_FLAG_SLEEP</a></div><div class="ttdoc">flag requesting to go into Sleep mode </div><div class="ttdef"><b>Definition:</b> hal_swi_bitbang.h:75</div></div>
-<div class="ttc" id="a00045_html"><div class="ttname"><a href="a00045.html">atcaSWImaster</a></div><div class="ttdoc">This is the hal_data for ATCA HAL. </div><div class="ttdef"><b>Definition:</b> hal_swi_bitbang.h:81</div></div>
-<div class="ttc" id="a00045_html_af5c011e6c2e8d49675f7029e8ec2c0a6"><div class="ttname"><a href="a00045.html#af5c011e6c2e8d49675f7029e8ec2c0a6">atcaSWImaster::bus_index</a></div><div class="ttdeci">int bus_index</div><div class="ttdoc">for conveniences during interface release phase </div><div class="ttdef"><b>Definition:</b> hal_swi_bitbang.h:84</div></div>
-<div class="ttc" id="a00195_html_gga8759b00e645502d0f1c3b7330e20e52ba17fa7af18b61921986085f42fc05cc9f"><div class="ttname"><a href="a00195.html#gga8759b00e645502d0f1c3b7330e20e52ba17fa7af18b61921986085f42fc05cc9f">SWI_FLAG_TX</a></div><div class="ttdoc">flag requesting a response </div><div class="ttdef"><b>Definition:</b> hal_swi_bitbang.h:73</div></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">// Each device that is found will have a read handle and a write handle</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="a00226.html#ga069bb8cb95b0528d5ce0304bb5561a40">   55</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">int</span> <a class="code" href="a00226.html#ga069bb8cb95b0528d5ce0304bb5561a40">HANDLE</a>;</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="a00226.html#ga5fdc7facea201bfce4ad308105f88d0c">   56</a></span>&#160;<span class="preprocessor">#define INVALID_HANDLE_VALUE ((int)(-1))</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="a00049.html">   57</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="a00049.html">cdc_device</a></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;{</div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="a00049.html#a79525e0d472c02e26e7c4aa4a780c1d9">   59</a></span>&#160;    <a class="code" href="a00226.html#ga069bb8cb95b0528d5ce0304bb5561a40">HANDLE</a> <a class="code" href="a00049.html#a79525e0d472c02e26e7c4aa4a780c1d9">read_handle</a>;         </div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="a00049.html#af11a0103eb96a026ea6782bfcad7548e">   60</a></span>&#160;    <a class="code" href="a00226.html#ga069bb8cb95b0528d5ce0304bb5561a40">HANDLE</a> <a class="code" href="a00049.html#af11a0103eb96a026ea6782bfcad7548e">write_handle</a>;        </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;} <a class="code" href="a00226.html#ga99ee56102171adcbcecb8a78fb9fa895">cdc_device_t</a>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment">// A structure to hold CDC information</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="a00035.html">   65</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="a00035.html">atcacdc</a></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;{</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="a00035.html#a90743aa58e9f430c381d56eb373edef4">   67</a></span>&#160;    <a class="code" href="a00049.html">cdc_device_t</a> <a class="code" href="a00035.html#a90743aa58e9f430c381d56eb373edef4">kits</a>[<a class="code" href="a00226.html#ga08b6c05184266dc4d5c8727bb9c1c754">CDC_DEVICES_MAX</a>];</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="a00035.html#a9bb0ee74044865538adfcc5d5ae8f621">   68</a></span>&#160;    int8_t       <a class="code" href="a00035.html#a9bb0ee74044865538adfcc5d5ae8f621">num_kits_found</a>;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;} <a class="code" href="a00226.html#ga2df85bfd309840b4c9a5087e053d4811">atcacdc_t</a>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAL_LINUX_KIT_CDC_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="ttc" id="a00035_html"><div class="ttname"><a href="a00035.html">atcacdc</a></div><div class="ttdef"><b>Definition:</b> hal_linux_kit_cdc.h:65</div></div>
+<div class="ttc" id="a00226_html_ga069bb8cb95b0528d5ce0304bb5561a40"><div class="ttname"><a href="a00226.html#ga069bb8cb95b0528d5ce0304bb5561a40">HANDLE</a></div><div class="ttdeci">int HANDLE</div><div class="ttdef"><b>Definition:</b> hal_linux_kit_cdc.h:55</div></div>
+<div class="ttc" id="a00226_html_ga2df85bfd309840b4c9a5087e053d4811"><div class="ttname"><a href="a00226.html#ga2df85bfd309840b4c9a5087e053d4811">atcacdc_t</a></div><div class="ttdeci">struct atcacdc atcacdc_t</div></div>
+<div class="ttc" id="a00226_html_ga08b6c05184266dc4d5c8727bb9c1c754"><div class="ttname"><a href="a00226.html#ga08b6c05184266dc4d5c8727bb9c1c754">CDC_DEVICES_MAX</a></div><div class="ttdeci">#define CDC_DEVICES_MAX</div><div class="ttdef"><b>Definition:</b> hal_linux_kit_cdc.h:50</div></div>
+<div class="ttc" id="a00035_html_a90743aa58e9f430c381d56eb373edef4"><div class="ttname"><a href="a00035.html#a90743aa58e9f430c381d56eb373edef4">atcacdc::kits</a></div><div class="ttdeci">cdc_device_t kits[CDC_DEVICES_MAX]</div><div class="ttdef"><b>Definition:</b> hal_linux_kit_cdc.h:67</div></div>
+<div class="ttc" id="a00049_html_a79525e0d472c02e26e7c4aa4a780c1d9"><div class="ttname"><a href="a00049.html#a79525e0d472c02e26e7c4aa4a780c1d9">cdc_device::read_handle</a></div><div class="ttdeci">HANDLE read_handle</div><div class="ttdef"><b>Definition:</b> hal_linux_kit_cdc.h:59</div></div>
+<div class="ttc" id="a00049_html"><div class="ttname"><a href="a00049.html">cdc_device</a></div><div class="ttdef"><b>Definition:</b> hal_linux_kit_cdc.h:57</div></div>
+<div class="ttc" id="a00226_html_ga99ee56102171adcbcecb8a78fb9fa895"><div class="ttname"><a href="a00226.html#ga99ee56102171adcbcecb8a78fb9fa895">cdc_device_t</a></div><div class="ttdeci">struct cdc_device cdc_device_t</div></div>
+<div class="ttc" id="a00035_html_a9bb0ee74044865538adfcc5d5ae8f621"><div class="ttname"><a href="a00035.html#a9bb0ee74044865538adfcc5d5ae8f621">atcacdc::num_kits_found</a></div><div class="ttdeci">int8_t num_kits_found</div><div class="ttdef"><b>Definition:</b> hal_linux_kit_cdc.h:68</div></div>
+<div class="ttc" id="a00049_html_af11a0103eb96a026ea6782bfcad7548e"><div class="ttname"><a href="a00049.html#af11a0103eb96a026ea6782bfcad7548e">cdc_device::write_handle</a></div><div class="ttdeci">HANDLE write_handle</div><div class="ttdoc">The kit USB read file handle. </div><div class="ttdef"><b>Definition:</b> hal_linux_kit_cdc.h:60</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00130.html">hal_swi_bitbang.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00130.html">hal_linux_kit_cdc.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

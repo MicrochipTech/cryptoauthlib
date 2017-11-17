@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: Software crypto methods (atcac_)</title>
+<title>CryptoAuthLib: test_atcacert_client.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -50,7 +50,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="files.html"><span>Files</span></a></li>
+      <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -67,6 +67,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -100,242 +106,86 @@ $(document).ready(function(){initNavTree('a00194.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">Software crypto methods (atcac_)</div>  </div>
+<div class="title">test_atcacert_client.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>These methods provide a software implementation of various crypto algorithms.  
+<p>cert client tests  
 <a href="#details">More...</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html">atcac_sha1_ctx</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html">atcac_sha2_256_ctx</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gab6935877a2675bfc95af283fb43affb5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a>&#160;&#160;&#160;(256 / 8)</td></tr>
-<tr class="separator:gab6935877a2675bfc95af283fb43affb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadb06f3adddd74993ab0da4be3ea71441"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#gadb06f3adddd74993ab0da4be3ea71441">ATCA_ECC_P256_PRIVATE_KEY_SIZE</a>&#160;&#160;&#160;(<a class="el" href="a00194.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a>)</td></tr>
-<tr class="separator:gadb06f3adddd74993ab0da4be3ea71441"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6bcf19f52fbceb7801fc3216d528fb3c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#ga6bcf19f52fbceb7801fc3216d528fb3c">ATCA_ECC_P256_PUBLIC_KEY_SIZE</a>&#160;&#160;&#160;(<a class="el" href="a00194.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a> * 2)</td></tr>
-<tr class="separator:ga6bcf19f52fbceb7801fc3216d528fb3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6eba254effebfbbb95381511fc7d80d5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#ga6eba254effebfbbb95381511fc7d80d5">ATCA_ECC_P256_SIGNATURE_SIZE</a>&#160;&#160;&#160;(<a class="el" href="a00194.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a> * 2)</td></tr>
-<tr class="separator:ga6eba254effebfbbb95381511fc7d80d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadb94a0991eb670ff1bf90253dfea0bfa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#gadb94a0991eb670ff1bf90253dfea0bfa">ATCA_SHA1_DIGEST_SIZE</a>&#160;&#160;&#160;(20)</td></tr>
-<tr class="separator:gadb94a0991eb670ff1bf90253dfea0bfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga86364f6d07b86740f3170d9d1ca60641"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#ga86364f6d07b86740f3170d9d1ca60641">ATCA_SHA2_256_DIGEST_SIZE</a>&#160;&#160;&#160;(32)</td></tr>
-<tr class="separator:ga86364f6d07b86740f3170d9d1ca60641"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a00101_source.html">atcacert/atcacert_client.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00213_source.html">test/unity.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00215_source.html">test/unity_fixture.h</a>&quot;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00121_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00061_source.html">basic/atca_basic.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00078_source.html">crypto/atca_crypto_sw_sha2.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00209_source.html">test_cert_def_0_device.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00211_source.html">test_cert_def_1_signer.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaa61eee6f208a1633d35cdf8d628a6835"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#gaa61eee6f208a1633d35cdf8d628a6835">atcac_sw_ecdsa_verify_p256</a> (const uint8_t msg[<a class="el" href="a00194.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a>], const uint8_t signature[<a class="el" href="a00194.html#ga6eba254effebfbbb95381511fc7d80d5">ATCA_ECC_P256_SIGNATURE_SIZE</a>], const uint8_t public_key[<a class="el" href="a00194.html#ga6bcf19f52fbceb7801fc3216d528fb3c">ATCA_ECC_P256_PUBLIC_KEY_SIZE</a>])</td></tr>
-<tr class="memdesc:gaa61eee6f208a1633d35cdf8d628a6835"><td class="mdescLeft">&#160;</td><td class="mdescRight">return software generated ECDSA verification result  <a href="#gaa61eee6f208a1633d35cdf8d628a6835">More...</a><br /></td></tr>
-<tr class="separator:gaa61eee6f208a1633d35cdf8d628a6835"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0710d8bf5e92403c4026c32af39ad79e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#ga0710d8bf5e92403c4026c32af39ad79e">atcac_sw_random</a> (uint8_t *data, size_t data_size)</td></tr>
-<tr class="memdesc:ga0710d8bf5e92403c4026c32af39ad79e"><td class="mdescLeft">&#160;</td><td class="mdescRight">return software generated random number  <a href="#ga0710d8bf5e92403c4026c32af39ad79e">More...</a><br /></td></tr>
-<tr class="separator:ga0710d8bf5e92403c4026c32af39ad79e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabed03bcc1228768534ef4ee49df0ad09"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#gabed03bcc1228768534ef4ee49df0ad09">atcac_sw_sha1_init</a> (<a class="el" href="a00030.html">atcac_sha1_ctx</a> *ctx)</td></tr>
-<tr class="separator:gabed03bcc1228768534ef4ee49df0ad09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga65ff558306a88e0fbe2fc82bbe6a9c03"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#ga65ff558306a88e0fbe2fc82bbe6a9c03">atcac_sw_sha1_update</a> (<a class="el" href="a00030.html">atcac_sha1_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
-<tr class="separator:ga65ff558306a88e0fbe2fc82bbe6a9c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5589df2a639f61a4dc4ccedc9b5a5453"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#ga5589df2a639f61a4dc4ccedc9b5a5453">atcac_sw_sha1_finish</a> (<a class="el" href="a00030.html">atcac_sha1_ctx</a> *ctx, uint8_t digest[<a class="el" href="a00194.html#gadb94a0991eb670ff1bf90253dfea0bfa">ATCA_SHA1_DIGEST_SIZE</a>])</td></tr>
-<tr class="separator:ga5589df2a639f61a4dc4ccedc9b5a5453"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga84b866657bf319dab2924c2db3a1e990"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#ga84b866657bf319dab2924c2db3a1e990">atcac_sw_sha1</a> (const uint8_t *data, size_t data_size, uint8_t digest[<a class="el" href="a00194.html#gadb94a0991eb670ff1bf90253dfea0bfa">ATCA_SHA1_DIGEST_SIZE</a>])</td></tr>
-<tr class="separator:ga84b866657bf319dab2924c2db3a1e990"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga58283666b662f084155ba693870c1077"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#ga58283666b662f084155ba693870c1077">atcac_sw_sha2_256_init</a> (<a class="el" href="a00031.html">atcac_sha2_256_ctx</a> *ctx)</td></tr>
-<tr class="memdesc:ga58283666b662f084155ba693870c1077"><td class="mdescLeft">&#160;</td><td class="mdescRight">initializes the SHA256 software  <a href="#ga58283666b662f084155ba693870c1077">More...</a><br /></td></tr>
-<tr class="separator:ga58283666b662f084155ba693870c1077"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab1a09fa1d854722cc667cea319ca9984"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#gab1a09fa1d854722cc667cea319ca9984">atcac_sw_sha2_256_update</a> (<a class="el" href="a00031.html">atcac_sha2_256_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
-<tr class="memdesc:gab1a09fa1d854722cc667cea319ca9984"><td class="mdescLeft">&#160;</td><td class="mdescRight">updates the running hash with the next block of data, called iteratively for the entire stream of data to be hashed  <a href="#gab1a09fa1d854722cc667cea319ca9984">More...</a><br /></td></tr>
-<tr class="separator:gab1a09fa1d854722cc667cea319ca9984"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae3a29931f2104cce481aa9ef1ab16fea"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#gae3a29931f2104cce481aa9ef1ab16fea">atcac_sw_sha2_256_finish</a> (<a class="el" href="a00031.html">atcac_sha2_256_ctx</a> *ctx, uint8_t digest[<a class="el" href="a00194.html#ga86364f6d07b86740f3170d9d1ca60641">ATCA_SHA2_256_DIGEST_SIZE</a>])</td></tr>
-<tr class="memdesc:gae3a29931f2104cce481aa9ef1ab16fea"><td class="mdescLeft">&#160;</td><td class="mdescRight">completes the final SHA calculation and returns the final digest/hash  <a href="#gae3a29931f2104cce481aa9ef1ab16fea">More...</a><br /></td></tr>
-<tr class="separator:gae3a29931f2104cce481aa9ef1ab16fea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga63412270c4629874f2764171200c1b5c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#ga63412270c4629874f2764171200c1b5c">atcac_sw_sha2_256</a> (const uint8_t *data, size_t data_size, uint8_t digest[<a class="el" href="a00194.html#ga86364f6d07b86740f3170d9d1ca60641">ATCA_SHA2_256_DIGEST_SIZE</a>])</td></tr>
-<tr class="memdesc:ga63412270c4629874f2764171200c1b5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">single call convenience function to comput SHA256 of given data  <a href="#ga63412270c4629874f2764171200c1b5c">More...</a><br /></td></tr>
-<tr class="separator:ga63412270c4629874f2764171200c1b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af47716d804ef96eea7536ed02df15171"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#af47716d804ef96eea7536ed02df15171">TEST_GROUP</a> (atcacert_client)</td></tr>
+<tr class="separator:af47716d804ef96eea7536ed02df15171"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bd5d80946e8052e4ded6406ee964ad9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#a3bd5d80946e8052e4ded6406ee964ad9">TEST_SETUP</a> (atcacert_client)</td></tr>
+<tr class="separator:a3bd5d80946e8052e4ded6406ee964ad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadd42739c950774be44d6e378c5115e0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#aadd42739c950774be44d6e378c5115e0">TEST_TEAR_DOWN</a> (atcacert_client)</td></tr>
+<tr class="separator:aadd42739c950774be44d6e378c5115e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad31d8f9cb8d84ff4dabaebaa1f5c99c8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#ad31d8f9cb8d84ff4dabaebaa1f5c99c8">TEST</a> (atcacert_client, atcacert_client__init)</td></tr>
+<tr class="separator:ad31d8f9cb8d84ff4dabaebaa1f5c99c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b9e0f8b633e2f807839f74326b00314"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#a5b9e0f8b633e2f807839f74326b00314">TEST</a> (atcacert_client, atcacert_client__atcacert_read_cert_signer)</td></tr>
+<tr class="separator:a5b9e0f8b633e2f807839f74326b00314"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2dc4876748f4fd24f8465e5d75526bb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#ad2dc4876748f4fd24f8465e5d75526bb">TEST</a> (atcacert_client, atcacert_client__atcacert_read_cert_device)</td></tr>
+<tr class="separator:ad2dc4876748f4fd24f8465e5d75526bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf65461d8d1758565480c9b9d02e6cb1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#acf65461d8d1758565480c9b9d02e6cb1">TEST</a> (atcacert_client, atcacert_client__atcacert_read_cert_small_buf)</td></tr>
+<tr class="separator:acf65461d8d1758565480c9b9d02e6cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a134f4cf796fb1752a92b507386605998"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#a134f4cf796fb1752a92b507386605998">TEST</a> (atcacert_client, atcacert_client__atcacert_read_cert_bad_params)</td></tr>
+<tr class="separator:a134f4cf796fb1752a92b507386605998"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae64c68cf8cfdeabf541d54b48438915d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#ae64c68cf8cfdeabf541d54b48438915d">TEST</a> (atcacert_client, atcacert_client__atcacert_get_response)</td></tr>
+<tr class="separator:ae64c68cf8cfdeabf541d54b48438915d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf6b166c423e234a4ba3dd0824ad8096"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#acf6b166c423e234a4ba3dd0824ad8096">TEST</a> (atcacert_client, atcacert_client__atcacert_get_response_bad_params)</td></tr>
+<tr class="separator:acf6b166c423e234a4ba3dd0824ad8096"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:add37ede5fe8955551c28ba1b22f11980"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00046.html">ATCAIfaceCfg</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#add37ede5fe8955551c28ba1b22f11980">gCfg</a></td></tr>
+<tr class="separator:add37ede5fe8955551c28ba1b22f11980"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd99f894f16b93a1fa7e5d4fa7095e8a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#acd99f894f16b93a1fa7e5d4fa7095e8a">g_signer_ca_public_key</a> [64]</td></tr>
+<tr class="separator:acd99f894f16b93a1fa7e5d4fa7095e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa053e9c31d76eb8bff743cc02752f49"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#afa053e9c31d76eb8bff743cc02752f49">g_signer_public_key</a> [64]</td></tr>
+<tr class="separator:afa053e9c31d76eb8bff743cc02752f49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acedd1c78e39ea27e75edb6d111d1feec"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#acedd1c78e39ea27e75edb6d111d1feec">g_device_public_key</a> [64]</td></tr>
+<tr class="separator:acedd1c78e39ea27e75edb6d111d1feec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa11fb6fbda375e300c6b7365c09632fd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#aa11fb6fbda375e300c6b7365c09632fd">g_signer_cert_ref</a> [512]</td></tr>
+<tr class="separator:aa11fb6fbda375e300c6b7365c09632fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36d309be6fcc95f05d51a7effbbae578"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#a36d309be6fcc95f05d51a7effbbae578">g_signer_cert_ref_size</a> = 0</td></tr>
+<tr class="separator:a36d309be6fcc95f05d51a7effbbae578"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98804ceadda3c0fc10dcecf2b08c6913"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#a98804ceadda3c0fc10dcecf2b08c6913">g_device_cert_ref</a> [512]</td></tr>
+<tr class="separator:a98804ceadda3c0fc10dcecf2b08c6913"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed661204ef3a8076053b843fbca02471"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#aed661204ef3a8076053b843fbca02471">g_device_cert_ref_size</a> = 0</td></tr>
+<tr class="separator:aed661204ef3a8076053b843fbca02471"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>These methods provide a software implementation of various crypto algorithms. </p>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gab6935877a2675bfc95af283fb43affb5"></a>
+<div class="textblock"><p>cert client tests </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved. </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ad31d8f9cb8d84ff4dabaebaa1f5c99c8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ATCA_ECC_P256_FIELD_SIZE&#160;&#160;&#160;(256 / 8)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="gadb06f3adddd74993ab0da4be3ea71441"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_ECC_P256_PRIVATE_KEY_SIZE&#160;&#160;&#160;(<a class="el" href="a00194.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga6bcf19f52fbceb7801fc3216d528fb3c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_ECC_P256_PUBLIC_KEY_SIZE&#160;&#160;&#160;(<a class="el" href="a00194.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a> * 2)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga6eba254effebfbbb95381511fc7d80d5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_ECC_P256_SIGNATURE_SIZE&#160;&#160;&#160;(<a class="el" href="a00194.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a> * 2)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="gadb94a0991eb670ff1bf90253dfea0bfa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_SHA1_DIGEST_SIZE&#160;&#160;&#160;(20)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga86364f6d07b86740f3170d9d1ca60641"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_SHA2_256_DIGEST_SIZE&#160;&#160;&#160;(32)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaa61eee6f208a1633d35cdf8d628a6835"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int atcac_sw_ecdsa_verify_p256 </td>
+          <td class="memname">TEST </td>
           <td>(</td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>msg</em>[ATCA_ECC_P256_FIELD_SIZE], </td>
+          <td class="paramtype">atcacert_client&#160;</td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>signature</em>[ATCA_ECC_P256_SIGNATURE_SIZE], </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>public_key</em>[ATCA_ECC_P256_PUBLIC_KEY_SIZE]&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>return software generated ECDSA verification result </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">msg</td><td>ptr to message or challenge </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">signature</td><td>ptr to the signature to verify </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">public_key</td><td>ptr to public key of device which signed the challenge return ATCA_STATUS </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga0710d8bf5e92403c4026c32af39ad79e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int atcac_sw_random </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>data_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>return software generated random number </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">data</td><td>ptr to space to receive the random number </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">data_size</td><td>size of data buffer return ATCA_STATUS </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga84b866657bf319dab2924c2db3a1e990"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int atcac_sw_sha1 </td>
-          <td>(</td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>data_size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>digest</em>[ATCA_SHA1_DIGEST_SIZE]&#160;</td>
+          <td class="paramtype">atcacert_client__init&#160;</td>
+          <td class="paramname">&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -347,21 +197,21 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga5589df2a639f61a4dc4ccedc9b5a5453"></a>
+<a class="anchor" id="a5b9e0f8b633e2f807839f74326b00314"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int atcac_sw_sha1_finish </td>
+          <td class="memname">TEST </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00030.html">atcac_sha1_ctx</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
+          <td class="paramtype">atcacert_client&#160;</td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>digest</em>[ATCA_SHA1_DIGEST_SIZE]&#160;</td>
+          <td class="paramtype">atcacert_client__atcacert_read_cert_signer&#160;</td>
+          <td class="paramname">&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -373,43 +223,21 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gabed03bcc1228768534ef4ee49df0ad09"></a>
+<a class="anchor" id="ad2dc4876748f4fd24f8465e5d75526bb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int atcac_sw_sha1_init </td>
+          <td class="memname">TEST </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00030.html">atcac_sha1_ctx</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga65ff558306a88e0fbe2fc82bbe6a9c03"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int atcac_sw_sha1_update </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00030.html">atcac_sha1_ctx</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
+          <td class="paramtype">atcacert_client&#160;</td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>data_size</em>&#160;</td>
+          <td class="paramtype">atcacert_client__atcacert_read_cert_device&#160;</td>
+          <td class="paramname">&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -421,27 +249,21 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga63412270c4629874f2764171200c1b5c"></a>
+<a class="anchor" id="acf65461d8d1758565480c9b9d02e6cb1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int atcac_sw_sha2_256 </td>
+          <td class="memname">TEST </td>
           <td>(</td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
+          <td class="paramtype">atcacert_client&#160;</td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>data_size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>digest</em>[ATCA_SHA2_256_DIGEST_SIZE]&#160;</td>
+          <td class="paramtype">atcacert_client__atcacert_read_cert_small_buf&#160;</td>
+          <td class="paramname">&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -451,34 +273,23 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>single call convenience function to comput SHA256 of given data </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>pointer to stream of data to hash </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">data_size</td><td>size of data stream to hash </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">digest</td><td>result </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_STATUS </dd></dl>
-
 </div>
 </div>
-<a class="anchor" id="gae3a29931f2104cce481aa9ef1ab16fea"></a>
+<a class="anchor" id="a134f4cf796fb1752a92b507386605998"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int atcac_sw_sha2_256_finish </td>
+          <td class="memname">TEST </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html">atcac_sha2_256_ctx</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
+          <td class="paramtype">atcacert_client&#160;</td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>digest</em>[ATCA_SHA2_256_DIGEST_SIZE]&#160;</td>
+          <td class="paramtype">atcacert_client__atcacert_read_cert_bad_params&#160;</td>
+          <td class="paramname">&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -488,64 +299,23 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>completes the final SHA calculation and returns the final digest/hash </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>ptr to context data structure </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">digest</td><td>receives the computed digest of the SHA 256 has </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_STATUS </dd></dl>
-
 </div>
 </div>
-<a class="anchor" id="ga58283666b662f084155ba693870c1077"></a>
+<a class="anchor" id="ae64c68cf8cfdeabf541d54b48438915d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int atcac_sw_sha2_256_init </td>
+          <td class="memname">TEST </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html">atcac_sha2_256_ctx</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>initializes the SHA256 software </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>ptr to context data structure </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_STATUS value </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gab1a09fa1d854722cc667cea319ca9984"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int atcac_sw_sha2_256_update </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00031.html">atcac_sha2_256_ctx</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
+          <td class="paramtype">atcacert_client&#160;</td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>data_size</em>&#160;</td>
+          <td class="paramtype">atcacert_client__atcacert_get_response&#160;</td>
+          <td class="paramname">&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -555,16 +325,176 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>updates the running hash with the next block of data, called iteratively for the entire stream of data to be hashed </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>ptr to SHA context data structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>ptr to next block of data to hash </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">data_size</td><td>size amount of data to hash in the given block, in bytes </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_STATUS </dd></dl>
+</div>
+</div>
+<a class="anchor" id="acf6b166c423e234a4ba3dd0824ad8096"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">atcacert_client&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">atcacert_client__atcacert_get_response_bad_params&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="af47716d804ef96eea7536ed02df15171"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST_GROUP </td>
+          <td>(</td>
+          <td class="paramtype">atcacert_client&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3bd5d80946e8052e4ded6406ee964ad9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST_SETUP </td>
+          <td>(</td>
+          <td class="paramtype">atcacert_client&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aadd42739c950774be44d6e378c5115e0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST_TEAR_DOWN </td>
+          <td>(</td>
+          <td class="paramtype">atcacert_client&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="a98804ceadda3c0fc10dcecf2b08c6913"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t g_device_cert_ref[512]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aed661204ef3a8076053b843fbca02471"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t g_device_cert_ref_size = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="acedd1c78e39ea27e75edb6d111d1feec"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t g_device_public_key[64]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="acd99f894f16b93a1fa7e5d4fa7095e8a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t g_signer_ca_public_key[64]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa11fb6fbda375e300c6b7365c09632fd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t g_signer_cert_ref[512]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a36d309be6fcc95f05d51a7effbbae578"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t g_signer_cert_ref_size = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="afa053e9c31d76eb8bff743cc02752f49"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t g_signer_public_key[64]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="add37ede5fe8955551c28ba1b22f11980"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00046.html">ATCAIfaceCfg</a>* gCfg</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -573,6 +503,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="dir_13e138d54eb8818da29c3992edef070a.html">test</a></li><li class="navelem"><a class="el" href="dir_3fd499d16b43d3319c6085ec747f938a.html">atcacert</a></li><li class="navelem"><a class="el" href="a00194.html">test_atcacert_client.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

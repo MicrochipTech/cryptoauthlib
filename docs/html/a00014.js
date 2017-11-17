@@ -1,10 +1,13 @@
 var a00014 =
 [
-    [ "client_resp", "a00196.html#gad83bd0567e340bab62291c229e061d99", null ],
-    [ "mode", "a00196.html#ga1a6b6fb557d8d37d59700faf4e4c9167", null ],
-    [ "other_data", "a00196.html#ga018527f369d21267692bf6eb6ba07dff", null ],
-    [ "otp", "a00196.html#ga8712cb73a4d6b370658d8bc9a77fba3e", null ],
-    [ "password", "a00196.html#ga9dbb300e28bc21c8dab41b01883918eb", null ],
-    [ "target_key", "a00196.html#ga26ff3ecc089054b089c2463d7310bd4f", null ],
-    [ "temp_key", "a00196.html#gaa17e031da4b22938bed1c21161ba371a", null ]
+    [ "client_chal", "a00014.html#a218f1c30c4a21b348dbe1817a2c14896", null ],
+    [ "client_resp", "a00014.html#a430a448768d687a94e3daaa00dce63ce", null ],
+    [ "key_id", "a00014.html#ac21eed4200889cc115d16a781871d01c", null ],
+    [ "mode", "a00014.html#a37e90f5e3bd99fac2021fb3a326607d4", null ],
+    [ "other_data", "a00014.html#ac76ac607fd679316fc17b16039a86b9c", null ],
+    [ "otp", "a00014.html#a4510889ef4b42470bf1a1d4e940a19a9", null ],
+    [ "slot_key", "a00014.html#aa23b467edf1809a2a8b1b530a0159c45", null ],
+    [ "sn", "a00014.html#aef45bac2efcd5394c4ed79f73ee16d23", null ],
+    [ "target_key", "a00014.html#ab15c5e89189b9eea6fab7da58cc03967", null ],
+    [ "temp_key", "a00014.html#a72fae3d62889ef224f09c57a7646e061", null ]
 ];

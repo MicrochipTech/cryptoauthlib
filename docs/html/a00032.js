@@ -1,5 +1,10 @@
 var a00032 =
 [
-    [ "kits", "a00032.html#a90743aa58e9f430c381d56eb373edef4", null ],
-    [ "num_kits_found", "a00032.html#a9bb0ee74044865538adfcc5d5ae8f621", null ]
+    [ "auth_mac", "a00032.html#a9f11512564ff4aeaf5f9d0646d971ed2", null ],
+    [ "encrypted_data", "a00032.html#a8c2a094baeab96152cea462ba9677887", null ],
+    [ "input_data", "a00032.html#a699b6e4448b505a2664025ccca3522f5", null ],
+    [ "key_id", "a00032.html#ac21eed4200889cc115d16a781871d01c", null ],
+    [ "sn", "a00032.html#aef45bac2efcd5394c4ed79f73ee16d23", null ],
+    [ "temp_key", "a00032.html#a72fae3d62889ef224f09c57a7646e061", null ],
+    [ "zone", "a00032.html#ac746c3d65092170bfaf5b0d9950d8438", null ]
 ];

@@ -2,14 +2,13 @@
  * \file
  * \brief ATCA Hardware abstraction layer for Windows using kit protocol over a USB CDC device.
  *
- * Copyright (c) 2015 Atmel Corporation. All rights reserved.
- *
- * \atmel_crypto_device_library_license_start
+ * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
  *
  * \page License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * You are permitted to use this software and its derivatives with Microchip
+ * products. Redistribution and use in source and binary forms, with or without
+ * modification, is permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
@@ -18,16 +17,16 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  *
- * 3. The name of Atmel may not be used to endorse or promote products derived
+ * 3. The name of Microchip may not be used to endorse or promote products derived
  *    from this software without specific prior written permission.
  *
- * 4. This software may only be redistributed and used in connection with an
- *    Atmel integrated circuit.
+ * 4. This software may only be redistributed and used in connection with a
+ *    Microchip integrated circuit.
  *
- * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
+ * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
+ * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
@@ -35,8 +34,6 @@
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
- * \atmel_crypto_device_library_license_stop
  */
 
 //#include "atca_basic.h"
@@ -63,161 +60,172 @@ atcacdc_t _gCdc;
  */
 ATCA_STATUS hal_kit_cdc_init(void* hal, ATCAIfaceCfg* cfg)
 {
-	ATCA_STATUS status = ATCA_SUCCESS;
-	ATCAHAL_t *phal = NULL;
-	GUID *pcdc_guid = NULL;
-	HDEVINFO dev_info;
-	SP_DEVINFO_DATA dev_data;
-	DWORD device_index = 0;
-	DWORD required_size = 0;
-	HKEY reg_key;
-	DWORD reg_type = 0;
-	TCHAR reg_data[256];
-	TCHAR cdc_data[256];
-	BOOL result = FALSE;
-	LONG reg_result = 0;
-	DCB dcb_settings;
-	COMMTIMEOUTS comm_timeouts;
-	int i = 0;
-	int index = 0;
+    ATCA_STATUS status = ATCA_SUCCESS;
+    ATCAHAL_t *phal = NULL;
+    GUID *pcdc_guid = NULL;
+    HDEVINFO dev_info;
+    SP_DEVINFO_DATA dev_data;
+    DWORD device_index = 0;
+    DWORD required_size = 0;
+    HKEY reg_key;
+    DWORD reg_type = 0;
+    TCHAR reg_data[256];
+    TCHAR cdc_data[256];
+    BOOL result = FALSE;
+    LONG reg_result = 0;
+    DCB dcb_settings;
+    COMMTIMEOUTS comm_timeouts;
+    int i = 0;
+    int index = 0;
 
-	// Check the input variables
-	if ((hal == NULL) || (cfg == NULL))
-		return ATCA_BAD_PARAM;
+    // Check the input variables
+    if ((hal == NULL) || (cfg == NULL))
+        return ATCA_BAD_PARAM;
 
-	// Cast the hal to the ATCAHAL_t strucure
-	phal = (ATCAHAL_t*)hal;
+    // Cast the hal to the ATCAHAL_t strucure
+    phal = (ATCAHAL_t*)hal;
 
-	// Initialize the _gCdc structure
-	memset(&_gCdc, 0, sizeof(_gCdc));
-	for (i = 0; i < CDC_DEVICES_MAX; i++) {
-		_gCdc.kits[i].read_handle = INVALID_HANDLE_VALUE;
-		_gCdc.kits[i].write_handle = INVALID_HANDLE_VALUE;
-	}
+    // Initialize the _gCdc structure
+    memset(&_gCdc, 0, sizeof(_gCdc));
+    for (i = 0; i < CDC_DEVICES_MAX; i++)
+    {
+        _gCdc.kits[i].read_handle = INVALID_HANDLE_VALUE;
+        _gCdc.kits[i].write_handle = INVALID_HANDLE_VALUE;
+    }
 
-	_gCdc.num_kits_found = 0;
+    _gCdc.num_kits_found = 0;
 
-	// Get the number of available GUIDs
-	result = SetupDiClassGuidsFromName(_T("Ports"), NULL, 0, &required_size);
-	if (required_size == 0)
-		return ATCA_COMM_FAIL;
+    // Get the number of available GUIDs
+    result = SetupDiClassGuidsFromName(_T("Ports"), NULL, 0, &required_size);
+    if (required_size == 0)
+        return ATCA_COMM_FAIL;
 
-	// Allocated the memory the GUID list
-	pcdc_guid = malloc(required_size * sizeof(GUID));
+    // Allocated the memory the GUID list
+    pcdc_guid = malloc(required_size * sizeof(GUID));
 
-	// Get the number of available GUIDs
-	result = SetupDiClassGuidsFromName(_T("Ports"), pcdc_guid, required_size, &required_size);
-	if (result == TRUE) {
-		//Query the devices
-		dev_info = SetupDiGetClassDevs(pcdc_guid, NULL, NULL, DIGCF_PRESENT);
-		if (dev_info != INVALID_HANDLE_VALUE) {
-			// Initialize the dev_data object
-			memset(&dev_data, 0, sizeof(SP_DEVINFO_DATA));
-			dev_data.cbSize = sizeof(SP_DEVINFO_DATA);
+    // Get the number of available GUIDs
+    result = SetupDiClassGuidsFromName(_T("Ports"), pcdc_guid, required_size, &required_size);
+    if (result == TRUE)
+    {
+        //Query the devices
+        dev_info = SetupDiGetClassDevs(pcdc_guid, NULL, NULL, DIGCF_PRESENT);
+        if (dev_info != INVALID_HANDLE_VALUE)
+        {
+            // Initialize the dev_data object
+            memset(&dev_data, 0, sizeof(SP_DEVINFO_DATA));
+            dev_data.cbSize = sizeof(SP_DEVINFO_DATA);
 
-			while (SetupDiEnumDeviceInfo(dev_info, device_index, &dev_data)) {
-				// Get the USB CDC friendly name
-				required_size = sizeof(reg_data);
-				result = SetupDiGetDeviceRegistryProperty(dev_info, &dev_data, SPDRP_FRIENDLYNAME, &reg_type,
-				                                          (PBYTE)reg_data, required_size, &required_size);
-				if (result == TRUE) {
-					// Determine if this is the correct kit USB CDC device
-					if ((_tcsstr(reg_data, _T("AT90USB"))) ||
-					    (_tcsstr(reg_data, _T("XPLAINED"))) ||
-					    (_tcsstr(reg_data, _T("Class ASF")))) {
-						// Get the registry key for the kit USB CDC device
-						reg_key = SetupDiOpenDevRegKey(dev_info, &dev_data, DICS_FLAG_GLOBAL,
-						                               0, DIREG_DEV, KEY_QUERY_VALUE);
-						if (reg_key != INVALID_HANDLE_VALUE) {
-							// Get the port used with this kit USB CDC device
-							required_size = sizeof(reg_data);
-							reg_result = RegQueryValueEx(reg_key, _T("PortName"), NULL, NULL,
-							                             (LPBYTE)reg_data, &required_size);
-							if (reg_result == ERROR_SUCCESS) {
-								_sntprintf_s(cdc_data, sizeof(cdc_data) / sizeof(cdc_data[0]), _TRUNCATE, _T("\\\\.\\%s"), reg_data);
+            while (SetupDiEnumDeviceInfo(dev_info, device_index, &dev_data))
+            {
+                // Get the USB CDC friendly name
+                required_size = sizeof(reg_data);
+                result = SetupDiGetDeviceRegistryProperty(dev_info, &dev_data, SPDRP_FRIENDLYNAME, &reg_type,
+                                                          (PBYTE)reg_data, required_size, &required_size);
+                if (result == TRUE)
+                {
+                    // Determine if this is the correct kit USB CDC device
+                    if ((_tcsstr(reg_data, _T("AT90USB"))) ||
+                        (_tcsstr(reg_data, _T("XPLAINED"))) ||
+                        (_tcsstr(reg_data, _T("Class ASF"))))
+                    {
+                        // Get the registry key for the kit USB CDC device
+                        reg_key = SetupDiOpenDevRegKey(dev_info, &dev_data, DICS_FLAG_GLOBAL,
+                                                       0, DIREG_DEV, KEY_QUERY_VALUE);
+                        if (reg_key != INVALID_HANDLE_VALUE)
+                        {
+                            // Get the port used with this kit USB CDC device
+                            required_size = sizeof(reg_data);
+                            reg_result = RegQueryValueEx(reg_key, _T("PortName"), NULL, NULL,
+                                                         (LPBYTE)reg_data, &required_size);
+                            if (reg_result == ERROR_SUCCESS)
+                            {
+                                _sntprintf_s(cdc_data, sizeof(cdc_data) / sizeof(cdc_data[0]), _TRUNCATE, _T("\\\\.\\%s"), reg_data);
 
-								// Open the kit USB device for reading and writing
-								if (_gCdc.kits[index].read_handle != INVALID_HANDLE_VALUE)
-									CloseHandle(_gCdc.kits[index].read_handle);
-								_gCdc.kits[index].read_handle  = INVALID_HANDLE_VALUE;
-								_gCdc.kits[index].write_handle = INVALID_HANDLE_VALUE;
+                                // Open the kit USB device for reading and writing
+                                if (_gCdc.kits[index].read_handle != INVALID_HANDLE_VALUE)
+                                    CloseHandle(_gCdc.kits[index].read_handle);
+                                _gCdc.kits[index].read_handle  = INVALID_HANDLE_VALUE;
+                                _gCdc.kits[index].write_handle = INVALID_HANDLE_VALUE;
 
-								_gCdc.kits[index].read_handle = CreateFile(cdc_data,
-								                                           GENERIC_READ | GENERIC_WRITE,
-								                                           0,
-								                                           NULL,
-								                                           OPEN_EXISTING,
-								                                           FILE_ATTRIBUTE_NORMAL,
-								                                           NULL);
-								_gCdc.kits[index].write_handle = _gCdc.kits[index].read_handle;
+                                _gCdc.kits[index].read_handle = CreateFile(cdc_data,
+                                                                           GENERIC_READ | GENERIC_WRITE,
+                                                                           0,
+                                                                           NULL,
+                                                                           OPEN_EXISTING,
+                                                                           FILE_ATTRIBUTE_NORMAL,
+                                                                           NULL);
+                                _gCdc.kits[index].write_handle = _gCdc.kits[index].read_handle;
 
-								if (_gCdc.kits[index].read_handle != INVALID_HANDLE_VALUE) {
-									// Get the comm settings
-									dcb_settings.DCBlength = sizeof(DCB);
-									result = GetCommState(_gCdc.kits[index].read_handle, &dcb_settings);
-									if (result == FALSE)
-										continue;
+                                if (_gCdc.kits[index].read_handle != INVALID_HANDLE_VALUE)
+                                {
+                                    // Get the comm settings
+                                    dcb_settings.DCBlength = sizeof(DCB);
+                                    result = GetCommState(_gCdc.kits[index].read_handle, &dcb_settings);
+                                    if (result == FALSE)
+                                        continue;
 
-									// Set the comm settings
-									dcb_settings.BaudRate = cfg->atcauart.baud;
-									dcb_settings.ByteSize = cfg->atcauart.wordsize;
-									dcb_settings.StopBits = cfg->atcauart.stopbits;
+                                    // Set the comm settings
+                                    dcb_settings.BaudRate = cfg->atcauart.baud;
+                                    dcb_settings.ByteSize = cfg->atcauart.wordsize;
+                                    dcb_settings.StopBits = cfg->atcauart.stopbits;
 
-									switch (cfg->atcauart.parity) {
-									case 0:  dcb_settings.Parity = EVENPARITY;
-									case 1:  dcb_settings.Parity = ODDPARITY;
-									case 2:  dcb_settings.Parity = NOPARITY;
-									default: dcb_settings.Parity = NOPARITY;
-									}
+                                    switch (cfg->atcauart.parity)
+                                    {
+                                    case 0:  dcb_settings.Parity = EVENPARITY;
+                                    case 1:  dcb_settings.Parity = ODDPARITY;
+                                    case 2:  dcb_settings.Parity = NOPARITY;
+                                    default: dcb_settings.Parity = NOPARITY;
+                                    }
 
-									result = SetCommState(_gCdc.kits[index].read_handle, &dcb_settings);
-									if (result == FALSE)
-										continue;
+                                    result = SetCommState(_gCdc.kits[index].read_handle, &dcb_settings);
+                                    if (result == FALSE)
+                                        continue;
 
-									// Set the comm timeout settings
-									comm_timeouts.ReadIntervalTimeout = 3;
-									comm_timeouts.ReadTotalTimeoutMultiplier = 3;
-									comm_timeouts.ReadTotalTimeoutConstant = 2;
-									comm_timeouts.WriteTotalTimeoutMultiplier = 3;
-									comm_timeouts.WriteTotalTimeoutConstant = 2;
+                                    // Set the comm timeout settings
+                                    comm_timeouts.ReadIntervalTimeout = 3;
+                                    comm_timeouts.ReadTotalTimeoutMultiplier = 3;
+                                    comm_timeouts.ReadTotalTimeoutConstant = 2;
+                                    comm_timeouts.WriteTotalTimeoutMultiplier = 3;
+                                    comm_timeouts.WriteTotalTimeoutConstant = 2;
 
-									SetCommTimeouts(_gCdc.kits[index].read_handle, &comm_timeouts);
-								}
+                                    SetCommTimeouts(_gCdc.kits[index].read_handle, &comm_timeouts);
+                                }
 
-								// Increment the opened kit USB device index
-								index++;
-							}
+                                // Increment the opened kit USB device index
+                                index++;
+                            }
 
-							// Close the registry key
-							RegCloseKey(reg_key);
-						}
-					}
-				}
+                            // Close the registry key
+                            RegCloseKey(reg_key);
+                        }
+                    }
+                }
 
-				// Break the while loop, if the maximum number of supported
-				// kit USB devices have been found
-				if (index == CDC_DEVICES_MAX)
-					break;
+                // Break the while loop, if the maximum number of supported
+                // kit USB devices have been found
+                if (index == CDC_DEVICES_MAX)
+                    break;
 
-				// Increment the device member index
-				device_index++;
-			}
-		}
+                // Increment the device member index
+                device_index++;
+            }
+        }
 
-		// Delete device info now that we're done
-		SetupDiDestroyDeviceInfoList(dev_info);
-	}
+        // Delete device info now that we're done
+        SetupDiDestroyDeviceInfoList(dev_info);
+    }
 
-	// Free allocated memory
-	free(pcdc_guid);
+    // Free allocated memory
+    free(pcdc_guid);
 
-	// Save the results of this discovery of HID
-	if (index > 0) {
-		_gCdc.num_kits_found = index;
-		phal->hal_data = &_gCdc;
-		return status;
-	}
-	return ATCA_NO_DEVICES;
+    // Save the results of this discovery of HID
+    if (index > 0)
+    {
+        _gCdc.num_kits_found = index;
+        phal->hal_data = &_gCdc;
+        return status;
+    }
+    return ATCA_NO_DEVICES;
 }
 
 /** \brief discover all CDC kits available
@@ -229,8 +237,8 @@ ATCA_STATUS hal_kit_cdc_init(void* hal, ATCAIfaceCfg* cfg)
 
 ATCA_STATUS hal_cdc_discover_buses(int i2c_buses[], int max_buses)
 {
-	// TODO: This should be set to the com port index(s)
-	return ATCA_UNIMPLEMENTED;
+    // TODO: This should be set to the com port index(s)
+    return ATCA_UNIMPLEMENTED;
 }
 
 /** \brief discover any CryptoAuth devices on a given logical bus number
@@ -240,8 +248,8 @@ ATCA_STATUS hal_cdc_discover_buses(int i2c_buses[], int max_buses)
  */
 ATCA_STATUS hal_cdc_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
 {
-	// TODO: Add kitg protocol calls to discover all devices
-	return ATCA_UNIMPLEMENTED;
+    // TODO: Add kitg protocol calls to discover all devices
+    return ATCA_UNIMPLEMENTED;
 }
 
 
@@ -251,27 +259,32 @@ ATCA_STATUS hal_cdc_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
  */
 ATCA_STATUS hal_kit_cdc_post_init(ATCAIface iface)
 {
-	ATCA_STATUS status = ATCA_SUCCESS;
-	atcacdc_t* pHalDat = atgetifacehaldat(iface);
-	ATCAIfaceCfg *pCfg = atgetifacecfg(iface);
-	int i = 0;
+    ATCA_STATUS status = ATCA_SUCCESS;
+    atcacdc_t* pHalDat = atgetifacehaldat(iface);
+    ATCAIfaceCfg *pCfg = atgetifacecfg(iface);
+    int i = 0;
 
-	do {
-		// Check the pointers
-		if (pHalDat == NULL || pCfg == NULL) {
-			status = ATCA_BAD_PARAM;
-			BREAK(status, "NULL pointers in hal_kit_cdc_post_init");
-		}
-		// Init all kit USB devices
-		for (i = 0; i < pHalDat->num_kits_found; i++) {
-			// Set the port
-			pCfg->atcauart.port = i;
-			// Perform the kit protocol init
-			status = kit_init(iface);
-			if (status != ATCA_SUCCESS) BREAK(status, "kit_init() Failed");
-		}
-	} while (0);
-	return status;
+    do
+    {
+        // Check the pointers
+        if (pHalDat == NULL || pCfg == NULL)
+        {
+            status = ATCA_BAD_PARAM;
+            BREAK(status, "NULL pointers in hal_kit_cdc_post_init");
+        }
+        // Init all kit USB devices
+        for (i = 0; i < pHalDat->num_kits_found; i++)
+        {
+            // Set the port
+            pCfg->atcauart.port = i;
+            // Perform the kit protocol init
+            status = kit_init(iface);
+            if (status != ATCA_SUCCESS)
+                BREAK(status, "kit_init() Failed");
+        }
+    }
+    while (0);
+    return status;
 }
 
 /** \brief HAL implementation of send over USB CDC
@@ -280,43 +293,44 @@ ATCA_STATUS hal_kit_cdc_post_init(ATCAIface iface)
  *  \param[in] txlength number of bytes to send
  *  \return ATCA_STATUS
  */
-ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength)
+ATCA_STATUS kit_phy_send(ATCAIface iface, const char* txdata, int txlength)
 {
-	ATCA_STATUS status = ATCA_SUCCESS;
-	ATCAIfaceCfg *cfg = atgetifacecfg(iface);
-	int cdcid = cfg->atcauart.port;
-	atcacdc_t* pCdc = (atcacdc_t*)atgetifacehaldat(iface);
-	uint8_t buffer[CDC_BUFFER_MAX];
-	DWORD bytes_to_send = 0;
-	DWORD bytes_left = 0;
-	DWORD bytes_sent = 0;
-	BOOL result = FALSE;
+    ATCA_STATUS status = ATCA_SUCCESS;
+    ATCAIfaceCfg *cfg = atgetifacecfg(iface);
+    int cdcid = cfg->atcauart.port;
+    atcacdc_t* pCdc = (atcacdc_t*)atgetifacehaldat(iface);
+    uint8_t buffer[CDC_BUFFER_MAX];
+    DWORD bytes_to_send = 0;
+    DWORD bytes_left = 0;
+    DWORD bytes_sent = 0;
+    BOOL result = FALSE;
 
-	if ((txdata == NULL) || (pCdc == NULL))
-		return ATCA_BAD_PARAM;
+    if ((txdata == NULL) || (pCdc == NULL))
+        return ATCA_BAD_PARAM;
 
-	if (pCdc->kits[cdcid].write_handle == INVALID_HANDLE_VALUE)
-		return ATCA_COMM_FAIL;
+    if (pCdc->kits[cdcid].write_handle == INVALID_HANDLE_VALUE)
+        return ATCA_COMM_FAIL;
 
-	bytes_left = txlength;
+    bytes_left = txlength;
 
-	while (bytes_left > 0) {
-		memset(buffer, 0, CDC_BUFFER_MAX);
+    while (bytes_left > 0)
+    {
+        memset(buffer, 0, CDC_BUFFER_MAX);
 
-		if (bytes_left >= CDC_BUFFER_MAX)
-			bytes_to_send = CDC_BUFFER_MAX;
-		else
-			bytes_to_send = bytes_left;
+        if (bytes_left >= CDC_BUFFER_MAX)
+            bytes_to_send = CDC_BUFFER_MAX;
+        else
+            bytes_to_send = bytes_left;
 
-		memcpy(&buffer[0], &txdata[(txlength - bytes_left)], bytes_to_send);
+        memcpy(&buffer[0], &txdata[(txlength - bytes_left)], bytes_to_send);
 
-		result = WriteFile(pCdc->kits[cdcid].write_handle, buffer, bytes_to_send, &bytes_sent, NULL);
-		if (result == FALSE)
-			return ATCA_TX_FAIL;
+        result = WriteFile(pCdc->kits[cdcid].write_handle, buffer, bytes_to_send, &bytes_sent, NULL);
+        if (result == FALSE)
+            return ATCA_TX_FAIL;
 
-		bytes_left -= bytes_sent;
-	}
-	return status;
+        bytes_left -= bytes_sent;
+    }
+    return status;
 }
 
 /** \brief HAL implementation of kit protocol send over USB CDC
@@ -325,70 +339,75 @@ ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength)
  * \param[inout] rxsize  ptr to expected number of receive bytes to request
  * \return ATCA_STATUS
  */
-ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxsize)
+ATCA_STATUS kit_phy_receive(ATCAIface iface, char* rxdata, int* rxsize)
 {
-	ATCAIfaceCfg *cfg = atgetifacecfg(iface);
-	int cdcid = cfg->atcauart.port;
-	atcacdc_t* pCdc = (atcacdc_t*)atgetifacehaldat(iface);
-	uint8_t buffer[CDC_BUFFER_MAX] = { 0 };
-	BOOL continue_read = TRUE;
-	DWORD bytes_read = 0;
-	DWORD total_bytes = 0;
-	BOOL result = true;
-	uint8_t* location = NULL;
-	int bytes_remain = 0;
-	int bytes_to_copy = 0;
-	int size_adjust = 0;
+    ATCAIfaceCfg *cfg = atgetifacecfg(iface);
+    int cdcid = cfg->atcauart.port;
+    atcacdc_t* pCdc = (atcacdc_t*)atgetifacehaldat(iface);
+    uint8_t buffer[CDC_BUFFER_MAX] = { 0 };
+    BOOL continue_read = TRUE;
+    DWORD bytes_read = 0;
+    DWORD total_bytes = 0;
+    BOOL result = true;
+    uint8_t* location = NULL;
+    int bytes_remain = 0;
+    int bytes_to_copy = 0;
+    int size_adjust = 0;
 
-	// Verify the input variables
-	if ((rxdata == NULL) || (rxsize == NULL) || (pCdc == NULL))
-		return ATCA_BAD_PARAM;
+    // Verify the input variables
+    if ((rxdata == NULL) || (rxsize == NULL) || (pCdc == NULL))
+        return ATCA_BAD_PARAM;
 
-	if (pCdc->kits[cdcid].read_handle == INVALID_HANDLE_VALUE)
-		return ATCA_COMM_FAIL;
+    if (pCdc->kits[cdcid].read_handle == INVALID_HANDLE_VALUE)
+        return ATCA_COMM_FAIL;
 
-	DWORD start_time_ms = GetTickCount();
-	while (continue_read == true) {
-		// If the CDC port disappears while trying to read, ReadFile will continue to report
-		// success and return 0 bytes. Same as when we're waiting for a reply. This lets the
-		// operation timeout.
-		if (GetTickCount() - start_time_ms > 3000) {
-			// Close handles to force a quicker failure.
-			CloseHandle(pCdc->kits[cdcid].read_handle);
-			pCdc->kits[cdcid].read_handle = INVALID_HANDLE_VALUE;
-			pCdc->kits[cdcid].write_handle = INVALID_HANDLE_VALUE;
-			return ATCA_COMM_FAIL;
-		}
+    DWORD start_time_ms = GetTickCount();
+    while (continue_read == true)
+    {
+        // If the CDC port disappears while trying to read, ReadFile will continue to report
+        // success and return 0 bytes. Same as when we're waiting for a reply. This lets the
+        // operation timeout.
+        if (GetTickCount() - start_time_ms > 3000)
+        {
+            // Close handles to force a quicker failure.
+            CloseHandle(pCdc->kits[cdcid].read_handle);
+            pCdc->kits[cdcid].read_handle = INVALID_HANDLE_VALUE;
+            pCdc->kits[cdcid].write_handle = INVALID_HANDLE_VALUE;
+            return ATCA_COMM_FAIL;
+        }
 
-		result = ReadFile(pCdc->kits[cdcid].read_handle, buffer, CDC_BUFFER_MAX, &bytes_read, NULL);
-		if (result == FALSE)
-			return ATCA_RX_FAIL;
+        result = ReadFile(pCdc->kits[cdcid].read_handle, buffer, CDC_BUFFER_MAX, &bytes_read, NULL);
+        if (result == FALSE)
+            return ATCA_RX_FAIL;
 
-		// Find the location of the '\n' character in read buffer
-		// todo: generalize this read...  it only applies if there is an ascii protocol with an <eom> of \n and if the <eom> exists
-		location = strchr((char*)&buffer[0], '\n');
-		if (location == NULL)
-			// Copy all of the bytes
-			bytes_to_copy = bytes_read;
-		else{
-			// Copy only the bytes remaining in the read buffer to the <eom>
-			bytes_to_copy = (int)(location - (char*)buffer);
+        // Find the location of the '\n' character in read buffer
+        // todo: generalize this read...  it only applies if there is an ascii protocol with an <eom> of \n and if the <eom> exists
+        location = strchr((char*)&buffer[0], '\n');
+        if (location == NULL)
+        {
+            // Copy all of the bytes
+            bytes_to_copy = bytes_read;
+        }
+        else
+        {
+            // Copy only the bytes remaining in the read buffer to the <eom>
+            bytes_to_copy = (int)(location - (char*)buffer);
 
-			// The response has been received, stop receiving more data
-			continue_read = false;
-		}
-		// Protect rxdata from overwriting, this will have the result of truncating the returned bytes
-		// Remaining space in rxdata
-		bytes_remain = (*rxsize - total_bytes);
-		// Use the minimum between number of bytes read and remaining space
-		bytes_to_copy = min(bytes_remain, bytes_to_copy);
+            // The response has been received, stop receiving more data
+            continue_read = false;
+        }
+        // Protect rxdata from overwriting, this will have the result of truncating the returned bytes
+        // Remaining space in rxdata
+        bytes_remain = (*rxsize - total_bytes);
+        // Use the minimum between number of bytes read and remaining space
+        bytes_to_copy = min(bytes_remain, bytes_to_copy);
 
-		// Copy the received data
-		memcpy(&rxdata[total_bytes], &buffer[0], bytes_to_copy);
-		total_bytes += bytes_to_copy - size_adjust;
-	}
-	*rxsize = total_bytes;
-	return ATCA_SUCCESS;
+        // Copy the received data
+        memcpy(&rxdata[total_bytes], &buffer[0], bytes_to_copy);
+        total_bytes += bytes_to_copy - size_adjust;
+    }
+    *rxsize = total_bytes;
+    return ATCA_SUCCESS;
 }
 
 /** \brief Number of USB CDC devices found
@@ -397,8 +416,8 @@ ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxsize)
  */
 ATCA_STATUS hal_kit_phy_num_found(int8_t* num_found)
 {
-	*num_found = _gCdc.num_kits_found;
-	return ATCA_SUCCESS;
+    *num_found = _gCdc.num_kits_found;
+    return ATCA_SUCCESS;
 }
 
 /** \brief HAL implementation of kit protocol send over USB CDC
@@ -409,8 +428,8 @@ ATCA_STATUS hal_kit_phy_num_found(int8_t* num_found)
  */
 ATCA_STATUS hal_kit_cdc_send(ATCAIface iface, uint8_t* txdata, int txlength)
 {
-	// Call the hal_kit_send() function that will call hal_phy_send() implemented below
-	return kit_send(iface, txdata, txlength);
+    // Call the hal_kit_send() function that will call hal_phy_send() implemented below
+    return kit_send(iface, txdata, txlength);
 }
 
 /** \brief HAL implementation of send over USB CDC
@@ -421,8 +440,8 @@ ATCA_STATUS hal_kit_cdc_send(ATCAIface iface, uint8_t* txdata, int txlength)
  */
 ATCA_STATUS hal_kit_cdc_receive(ATCAIface iface, uint8_t* rxdata, uint16_t* rxsize)
 {
-	// Call the hal_kit_receive() function that will call hal_phy_receive() implemented below
-	return kit_receive(iface, rxdata, rxsize);
+    // Call the hal_kit_receive() function that will call hal_phy_receive() implemented below
+    return kit_receive(iface, rxdata, rxsize);
 }
 
 /** \brief Call the wake for kit protocol
@@ -431,8 +450,8 @@ ATCA_STATUS hal_kit_cdc_receive(ATCAIface iface, uint8_t* rxdata, uint16_t* rxsi
  */
 ATCA_STATUS hal_kit_cdc_wake(ATCAIface iface)
 {
-	// Call the hal_kit_wake() function that will call hal_phy_send() and hal_phy_receive()
-	return kit_wake(iface);
+    // Call the hal_kit_wake() function that will call hal_phy_send() and hal_phy_receive()
+    return kit_wake(iface);
 }
 
 /** \brief Call the idle for kit protocol
@@ -441,8 +460,8 @@ ATCA_STATUS hal_kit_cdc_wake(ATCAIface iface)
  */
 ATCA_STATUS hal_kit_cdc_idle(ATCAIface iface)
 {
-	// Call the hal_kit_idle() function that will call hal_phy_send() and hal_phy_receive()
-	return kit_idle(iface);
+    // Call the hal_kit_idle() function that will call hal_phy_send() and hal_phy_receive()
+    return kit_idle(iface);
 }
 
 /** \brief Call the sleep for kit protocol
@@ -451,8 +470,8 @@ ATCA_STATUS hal_kit_cdc_idle(ATCAIface iface)
  */
 ATCA_STATUS hal_kit_cdc_sleep(ATCAIface iface)
 {
-	// Call the hal_kit_sleep() function that will call hal_phy_send() and hal_phy_receive()
-	return kit_sleep(iface);
+    // Call the hal_kit_sleep() function that will call hal_phy_send() and hal_phy_receive()
+    return kit_sleep(iface);
 }
 
 /** \brief Close the physical port for CDC
@@ -461,32 +480,34 @@ ATCA_STATUS hal_kit_cdc_sleep(ATCAIface iface)
  */
 ATCA_STATUS hal_kit_cdc_release(void* hal_data)
 {
-	int i = 0;
-	atcacdc_t* phaldat = (atcacdc_t*)hal_data;
+    int i = 0;
+    atcacdc_t* phaldat = (atcacdc_t*)hal_data;
 
-	if ((hal_data == NULL))
-		return ATCA_BAD_PARAM;
+    if ((hal_data == NULL))
+        return ATCA_BAD_PARAM;
 
-	// Close all kit USB devices
-	for (i = 0; i < phaldat->num_kits_found; i++) {
-		if (phaldat->kits[i].read_handle != INVALID_HANDLE_VALUE) {
-			CloseHandle(phaldat->kits[i].read_handle);
-			phaldat->kits[i].read_handle  = INVALID_HANDLE_VALUE;
-			phaldat->kits[i].write_handle = INVALID_HANDLE_VALUE;
-		}
-	}
-	return ATCA_SUCCESS;
+    // Close all kit USB devices
+    for (i = 0; i < phaldat->num_kits_found; i++)
+    {
+        if (phaldat->kits[i].read_handle != INVALID_HANDLE_VALUE)
+        {
+            CloseHandle(phaldat->kits[i].read_handle);
+            phaldat->kits[i].read_handle  = INVALID_HANDLE_VALUE;
+            phaldat->kits[i].write_handle = INVALID_HANDLE_VALUE;
+        }
+    }
+    return ATCA_SUCCESS;
 }
 
 ATCA_STATUS hal_kit_cdc_discover_buses(int i2c_buses[], int max_buses)
 {
-	// TODO: Implement
-	return ATCA_UNIMPLEMENTED;
+    // TODO: Implement
+    return ATCA_UNIMPLEMENTED;
 }
 
 ATCA_STATUS hal_kit_cdc_discover_devices(int busNum, ATCAIfaceCfg *cfg, int *found)
 {
-	// TODO: Implement
-	*found = 0;
-	return ATCA_UNIMPLEMENTED;
+    // TODO: Implement
+    *found = 0;
+    return ATCA_UNIMPLEMENTED;
 }

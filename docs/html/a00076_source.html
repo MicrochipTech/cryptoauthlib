@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: atca_crypto_sw_tests.h Source File</title>
+<title>CryptoAuthLib: atca_crypto_sw_sha1.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,52 +106,51 @@ $(document).ready(function(){initNavTree('a00076_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">atca_crypto_sw_tests.h</div>  </div>
+<div class="title">atca_crypto_sw_sha1.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00076.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#ifndef ATCA_CRYPTO_TESTS_H_</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#define ATCA_CRYPTO_TESTS_H_</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00183.html">unity.h</a>&quot;</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00076.html#add54163079e82b8828b25e4194ec3674">atca_crypto_sw_tests</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00076.html#a79f2d36f9e1da5af1f355147d3a83c73">test_atcac_sw_sha1_nist1</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00076.html#aa396e5ce2cba7465f5d8348092419d07">test_atcac_sw_sha1_nist2</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00076.html#abdfed39dbb18549ffe1669f65ef359a4">test_atcac_sw_sha1_nist3</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00076.html#a1375cceae84e5f626a606974135d54bc">test_atcac_sw_sha1_nist_short</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00076.html#a2e3662a8b81a2a0a41e8021253553a24">test_atcac_sw_sha1_nist_long</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00076.html#a9e65f3c802154bdab4d827af2e24db98">test_atcac_sw_sha1_nist_monte</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00076.html#a72978ca88addcf67d8ac151b9be0f78b">test_atcac_sw_sha2_256_nist1</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00076.html#a5bf41e2e2a1d762bac0f12235030e9a1">test_atcac_sw_sha2_256_nist2</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00076.html#a07d841e2799365ce4c030e9457774c34">test_atcac_sw_sha2_256_nist3</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00076.html#a23aada6adf8a084f0664bc3b91cae72e">test_atcac_sw_sha2_256_nist_short</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00076.html#a779fbce841e3f0fe82e2356cc3c81850">test_atcac_sw_sha2_256_nist_long</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00076.html#aeefcb1ce8fb1550890fc71374de0410c">test_atcac_sw_sha2_256_nist_monte</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#ifndef ATCA_CRYPTO_SW_SHA1_H</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#define ATCA_CRYPTO_SW_SHA1_H</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00070.html">atca_crypto_sw.h</a>&quot;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="a00225.html#gadb94a0991eb670ff1bf90253dfea0bfa">   54</a></span>&#160;<span class="preprocessor">#define ATCA_SHA1_DIGEST_SIZE (20)</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="a00033.html">   56</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;{</div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="a00033.html#a06a3e722d630d33450465af7c41fa708">   58</a></span>&#160;    uint32_t pad[32]; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;} <a class="code" href="a00033.html">atcac_sha1_ctx</a>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="a00076_html_a1375cceae84e5f626a606974135d54bc"><div class="ttname"><a href="a00076.html#a1375cceae84e5f626a606974135d54bc">test_atcac_sw_sha1_nist_short</a></div><div class="ttdeci">void test_atcac_sw_sha1_nist_short(void)</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_tests.c:253</div></div>
-<div class="ttc" id="a00076_html_abdfed39dbb18549ffe1669f65ef359a4"><div class="ttname"><a href="a00076.html#abdfed39dbb18549ffe1669f65ef359a4">test_atcac_sw_sha1_nist3</a></div><div class="ttdeci">void test_atcac_sw_sha1_nist3(void)</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_tests.c:105</div></div>
-<div class="ttc" id="a00076_html_a72978ca88addcf67d8ac151b9be0f78b"><div class="ttname"><a href="a00076.html#a72978ca88addcf67d8ac151b9be0f78b">test_atcac_sw_sha2_256_nist1</a></div><div class="ttdeci">void test_atcac_sw_sha2_256_nist1(void)</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_tests.c:305</div></div>
-<div class="ttc" id="a00076_html_aeefcb1ce8fb1550890fc71374de0410c"><div class="ttname"><a href="a00076.html#aeefcb1ce8fb1550890fc71374de0410c">test_atcac_sw_sha2_256_nist_monte</a></div><div class="ttdeci">void test_atcac_sw_sha2_256_nist_monte(void)</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_tests.c:414</div></div>
-<div class="ttc" id="a00076_html_a79f2d36f9e1da5af1f355147d3a83c73"><div class="ttname"><a href="a00076.html#a79f2d36f9e1da5af1f355147d3a83c73">test_atcac_sw_sha1_nist1</a></div><div class="ttdeci">void test_atcac_sw_sha1_nist1(void)</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_tests.c:73</div></div>
-<div class="ttc" id="a00076_html_a07d841e2799365ce4c030e9457774c34"><div class="ttname"><a href="a00076.html#a07d841e2799365ce4c030e9457774c34">test_atcac_sw_sha2_256_nist3</a></div><div class="ttdeci">void test_atcac_sw_sha2_256_nist3(void)</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_tests.c:337</div></div>
-<div class="ttc" id="a00076_html_add54163079e82b8828b25e4194ec3674"><div class="ttname"><a href="a00076.html#add54163079e82b8828b25e4194ec3674">atca_crypto_sw_tests</a></div><div class="ttdeci">void atca_crypto_sw_tests(void)</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_tests.c:55</div></div>
-<div class="ttc" id="a00076_html_aa396e5ce2cba7465f5d8348092419d07"><div class="ttname"><a href="a00076.html#aa396e5ce2cba7465f5d8348092419d07">test_atcac_sw_sha1_nist2</a></div><div class="ttdeci">void test_atcac_sw_sha1_nist2(void)</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_tests.c:89</div></div>
-<div class="ttc" id="a00076_html_a23aada6adf8a084f0664bc3b91cae72e"><div class="ttname"><a href="a00076.html#a23aada6adf8a084f0664bc3b91cae72e">test_atcac_sw_sha2_256_nist_short</a></div><div class="ttdeci">void test_atcac_sw_sha2_256_nist_short(void)</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_tests.c:404</div></div>
-<div class="ttc" id="a00183_html"><div class="ttname"><a href="a00183.html">unity.h</a></div></div>
-<div class="ttc" id="a00076_html_a5bf41e2e2a1d762bac0f12235030e9a1"><div class="ttname"><a href="a00076.html#a5bf41e2e2a1d762bac0f12235030e9a1">test_atcac_sw_sha2_256_nist2</a></div><div class="ttdeci">void test_atcac_sw_sha2_256_nist2(void)</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_tests.c:321</div></div>
-<div class="ttc" id="a00076_html_a779fbce841e3f0fe82e2356cc3c81850"><div class="ttname"><a href="a00076.html#a779fbce841e3f0fe82e2356cc3c81850">test_atcac_sw_sha2_256_nist_long</a></div><div class="ttdeci">void test_atcac_sw_sha2_256_nist_long(void)</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_tests.c:409</div></div>
-<div class="ttc" id="a00076_html_a9e65f3c802154bdab4d827af2e24db98"><div class="ttname"><a href="a00076.html#a9e65f3c802154bdab4d827af2e24db98">test_atcac_sw_sha1_nist_monte</a></div><div class="ttdeci">void test_atcac_sw_sha1_nist_monte(void)</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_tests.c:263</div></div>
-<div class="ttc" id="a00076_html_a2e3662a8b81a2a0a41e8021253553a24"><div class="ttname"><a href="a00076.html#a2e3662a8b81a2a0a41e8021253553a24">test_atcac_sw_sha1_nist_long</a></div><div class="ttdeci">void test_atcac_sw_sha1_nist_long(void)</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_tests.c:258</div></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00225.html#gabed03bcc1228768534ef4ee49df0ad09">atcac_sw_sha1_init</a>(<a class="code" href="a00033.html">atcac_sha1_ctx</a>* ctx);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00225.html#ga65ff558306a88e0fbe2fc82bbe6a9c03">atcac_sw_sha1_update</a>(<a class="code" href="a00033.html">atcac_sha1_ctx</a>* ctx, <span class="keyword">const</span> uint8_t* data, <span class="keywordtype">size_t</span> data_size);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00225.html#ga5589df2a639f61a4dc4ccedc9b5a5453">atcac_sw_sha1_finish</a>(<a class="code" href="a00033.html">atcac_sha1_ctx</a> * ctx, uint8_t digest[<a class="code" href="a00225.html#gadb94a0991eb670ff1bf90253dfea0bfa">ATCA_SHA1_DIGEST_SIZE</a>]);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00225.html#ga84b866657bf319dab2924c2db3a1e990">atcac_sw_sha1</a>(<span class="keyword">const</span> uint8_t * data, <span class="keywordtype">size_t</span> data_size, uint8_t digest[ATCA_SHA1_DIGEST_SIZE]);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a00225_html_ga65ff558306a88e0fbe2fc82bbe6a9c03"><div class="ttname"><a href="a00225.html#ga65ff558306a88e0fbe2fc82bbe6a9c03">atcac_sw_sha1_update</a></div><div class="ttdeci">int atcac_sw_sha1_update(atcac_sha1_ctx *ctx, const uint8_t *data, size_t data_size)</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_sha1.c:52</div></div>
+<div class="ttc" id="a00225_html_ga84b866657bf319dab2924c2db3a1e990"><div class="ttname"><a href="a00225.html#ga84b866657bf319dab2924c2db3a1e990">atcac_sw_sha1</a></div><div class="ttdeci">int atcac_sw_sha1(const uint8_t *data, size_t data_size, uint8_t digest[ATCA_SHA1_DIGEST_SIZE])</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_sha1.c:66</div></div>
+<div class="ttc" id="a00070_html"><div class="ttname"><a href="a00070.html">atca_crypto_sw.h</a></div><div class="ttdoc">Common defines for CryptoAuthLib software crypto wrappers. </div></div>
+<div class="ttc" id="a00225_html_gadb94a0991eb670ff1bf90253dfea0bfa"><div class="ttname"><a href="a00225.html#gadb94a0991eb670ff1bf90253dfea0bfa">ATCA_SHA1_DIGEST_SIZE</a></div><div class="ttdeci">#define ATCA_SHA1_DIGEST_SIZE</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_sha1.h:54</div></div>
+<div class="ttc" id="a00225_html_gabed03bcc1228768534ef4ee49df0ad09"><div class="ttname"><a href="a00225.html#gabed03bcc1228768534ef4ee49df0ad09">atcac_sw_sha1_init</a></div><div class="ttdeci">int atcac_sw_sha1_init(atcac_sha1_ctx *ctx)</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_sha1.c:43</div></div>
+<div class="ttc" id="a00033_html"><div class="ttname"><a href="a00033.html">atcac_sha1_ctx</a></div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_sha1.h:56</div></div>
+<div class="ttc" id="a00225_html_ga5589df2a639f61a4dc4ccedc9b5a5453"><div class="ttname"><a href="a00225.html#ga5589df2a639f61a4dc4ccedc9b5a5453">atcac_sw_sha1_finish</a></div><div class="ttdeci">int atcac_sw_sha1_finish(atcac_sha1_ctx *ctx, uint8_t digest[ATCA_SHA1_DIGEST_SIZE])</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_sha1.c:59</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_13e138d54eb8818da29c3992edef070a.html">test</a></li><li class="navelem"><a class="el" href="a00076.html">atca_crypto_sw_tests.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="a00076.html">atca_crypto_sw_sha1.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

@@ -1,7 +1,13 @@
 var a00024 =
 [
-    [ "mode", "a00024.html#a37e90f5e3bd99fac2021fb3a326607d4", null ],
-    [ "otp", "a00196.html#ga8712cb73a4d6b370658d8bc9a77fba3e", null ],
-    [ "p_temp", "a00196.html#gad87f95f0faf0c6fdfe94040efcb14860", null ],
-    [ "sn", "a00196.html#ga7276bd20c5842e712da638d25ceb6d92", null ]
+    [ "atidle", "a00024.html#af98425da891944b45d56cebd93b131f6", null ],
+    [ "atinit", "a00024.html#a43753a99c2b46caab2ae85d0504f1f84", null ],
+    [ "atpostinit", "a00024.html#a0dd463e6dbb6121768480ab7b42ba604", null ],
+    [ "atreceive", "a00024.html#a7ebe5db4da26f30972448931b7500546", null ],
+    [ "atsend", "a00024.html#a343ec53c611863bf30624e5775782ab5", null ],
+    [ "atsleep", "a00024.html#ae643f9f7998343cc33822de00192626b", null ],
+    [ "atwake", "a00024.html#a6cb270146e07d7c258bca835fda84be5", null ],
+    [ "hal_data", "a00024.html#ad33508455720b78cc0fc880cb3f9885e", null ],
+    [ "mIfaceCFG", "a00024.html#abdd7b8bd26139998d9da63a4fa562735", null ],
+    [ "mType", "a00024.html#ab4f4855cbadf7c7d2d3fb019eded7c8a", null ]
 ];

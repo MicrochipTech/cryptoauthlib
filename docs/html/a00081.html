@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: atca_helpers.c File Reference</title>
+<title>CryptoAuthLib: atca_device.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,47 +106,48 @@ $(document).ready(function(){initNavTree('a00081.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_helpers.c File Reference</div>  </div>
+<div class="title">atca_device.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Helpers to support the CryptoAuthLib Basic API methods.  
+<p>Atmel CryptoAuth device object.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00082_source.html">atca_helpers.h</a>&quot;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00082_source.html">atca_device.h</a>&quot;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00019.html">atca_device</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a00019.html" title="atca_device is the C object backing ATCADevice. See the atca_device.h file for details on the ATCADev...">atca_device</a> is the C object backing ATCADevice. See the <a class="el" href="a00082.html" title="Atmel Crypto Auth device object. ">atca_device.h</a> file for details on the ATCADevice methods  <a href="a00019.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga7a929bf65cbc777bab7e533a2755cfad"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00193.html#ga7a929bf65cbc777bab7e533a2755cfad">isDigit</a> (char c)</td></tr>
-<tr class="memdesc:ga7a929bf65cbc777bab7e533a2755cfad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks to see if a character is an ASCII representation of a digit ((c ge '0') and (c le '9'))  <a href="a00193.html#ga7a929bf65cbc777bab7e533a2755cfad">More...</a><br /></td></tr>
-<tr class="separator:ga7a929bf65cbc777bab7e533a2755cfad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab3db1b55b966b792e8308a1819933c0e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00193.html#gab3db1b55b966b792e8308a1819933c0e">isWhiteSpace</a> (char c)</td></tr>
-<tr class="memdesc:gab3db1b55b966b792e8308a1819933c0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks to see if a character is whitespace ((c == '<br />
-') || (c == '') || (c == '') || (c == ' '))  <a href="a00193.html#gab3db1b55b966b792e8308a1819933c0e">More...</a><br /></td></tr>
-<tr class="separator:gab3db1b55b966b792e8308a1819933c0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga78abefc293c0a04d8ef649c94c8a1057"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00193.html#ga78abefc293c0a04d8ef649c94c8a1057">isHexAlpha</a> (char c)</td></tr>
-<tr class="memdesc:ga78abefc293c0a04d8ef649c94c8a1057"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks to see if a character is an ASCII representation of hex ((c ge 'A') and (c le 'F')) || ((c ge 'a') and (c le 'f'))  <a href="a00193.html#ga78abefc293c0a04d8ef649c94c8a1057">More...</a><br /></td></tr>
-<tr class="separator:ga78abefc293c0a04d8ef649c94c8a1057"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab7ca9ee391118aafe6f3cf7df4fa5de3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00193.html#gab7ca9ee391118aafe6f3cf7df4fa5de3">isHex</a> (char c)</td></tr>
-<tr class="memdesc:gab7ca9ee391118aafe6f3cf7df4fa5de3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this character is a valid hex character or if this is whitespace (The character can be included in a valid hexstring).  <a href="a00193.html#gab7ca9ee391118aafe6f3cf7df4fa5de3">More...</a><br /></td></tr>
-<tr class="separator:gab7ca9ee391118aafe6f3cf7df4fa5de3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga39003da4dc8a0b8999f1325c2f96f641"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00193.html#ga39003da4dc8a0b8999f1325c2f96f641">isHexDigit</a> (char c)</td></tr>
-<tr class="memdesc:ga39003da4dc8a0b8999f1325c2f96f641"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this character is a valid hex character.  <a href="a00193.html#ga39003da4dc8a0b8999f1325c2f96f641">More...</a><br /></td></tr>
-<tr class="separator:ga39003da4dc8a0b8999f1325c2f96f641"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9d282d7c84cde638daf268e4f24757d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00193.html#ga9d282d7c84cde638daf268e4f24757d6">packHex</a> (const char *asciiHex, int asciiHexLen, char *packedHex, int *packedLen)</td></tr>
-<tr class="separator:ga9d282d7c84cde638daf268e4f24757d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad5e12e12d3030e28d75164286df9e5e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00221.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00221.html#gad5e12e12d3030e28d75164286df9e5e9">newATCADevice</a> (<a class="el" href="a00046.html">ATCAIfaceCfg</a> *cfg)</td></tr>
+<tr class="memdesc:gad5e12e12d3030e28d75164286df9e5e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor for an Atmel CryptoAuth device  <a href="a00221.html#gad5e12e12d3030e28d75164286df9e5e9">More...</a><br /></td></tr>
+<tr class="separator:gad5e12e12d3030e28d75164286df9e5e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabf51c08f1928fc5ec44936f3117a9f7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#aebeafc249bfe2b00b6809d5c328841d9">ATCACommand</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00221.html#gabf51c08f1928fc5ec44936f3117a9f7e">atGetCommands</a> (<a class="el" href="a00221.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> <a class="el" href="a00226.html#gabe78755474c1323a5ac7b3dd6d03dedf">dev</a>)</td></tr>
+<tr class="memdesc:gabf51c08f1928fc5ec44936f3117a9f7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns a reference to the ATCACommand object for the device  <a href="a00221.html#gabf51c08f1928fc5ec44936f3117a9f7e">More...</a><br /></td></tr>
+<tr class="separator:gabf51c08f1928fc5ec44936f3117a9f7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f98e29cffa06446fc91b329703606af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00221.html#ga3f98e29cffa06446fc91b329703606af">atGetIFace</a> (<a class="el" href="a00221.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> <a class="el" href="a00226.html#gabe78755474c1323a5ac7b3dd6d03dedf">dev</a>)</td></tr>
+<tr class="memdesc:ga3f98e29cffa06446fc91b329703606af"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns a reference to the ATCAIface interface object for the device  <a href="a00221.html#ga3f98e29cffa06446fc91b329703606af">More...</a><br /></td></tr>
+<tr class="separator:ga3f98e29cffa06446fc91b329703606af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga57b4bc57010a0bcaf6385703c63d156c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00221.html#ga57b4bc57010a0bcaf6385703c63d156c">deleteATCADevice</a> (<a class="el" href="a00221.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> *cadev)</td></tr>
+<tr class="memdesc:ga57b4bc57010a0bcaf6385703c63d156c"><td class="mdescLeft">&#160;</td><td class="mdescRight">destructor for a device NULLs reference after object is freed  <a href="a00221.html#ga57b4bc57010a0bcaf6385703c63d156c">More...</a><br /></td></tr>
+<tr class="separator:ga57b4bc57010a0bcaf6385703c63d156c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Helpers to support the CryptoAuthLib Basic API methods. </p>
-<p>Copyright (c) 2015 Atmel Corporation. All rights reserved.</p>
+<div class="textblock"><p>Atmel CryptoAuth device object. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00081.html">atca_helpers.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00081.html">atca_device.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

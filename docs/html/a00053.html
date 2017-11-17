@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: SWIBuses Struct Reference</title>
+<title>CryptoAuthLib: hid_device Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -109,27 +109,75 @@ $(document).ready(function(){initNavTree('a00053.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">SWIBuses Struct Reference</div>  </div>
+<div class="title">hid_device Struct Reference<div class="ingroups"><a class="el" href="a00226.html">Hardware abstraction layer (hal_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="a00156_source.html">swi_bitbang_at88ck9000.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a00132_source.html">hal_linux_kit_hid.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a7d0970077e95bd9d8ed8aac6b3e115ee"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a7d0970077e95bd9d8ed8aac6b3e115ee">pin_sda</a> [<a class="el" href="a00195.html#gaf9d9d027ce20f528edea144203141714">MAX_SWI_BUSES</a>]</td></tr>
-<tr class="separator:a7d0970077e95bd9d8ed8aac6b3e115ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72bac4e370ad82aef68188c521d2020d"><td class="memItemLeft" align="right" valign="top">FILE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a72bac4e370ad82aef68188c521d2020d">read_handle</a></td></tr>
+<tr class="separator:a72bac4e370ad82aef68188c521d2020d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0"><td class="memItemLeft" align="right" valign="top">FILE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0">write_handle</a></td></tr>
+<tr class="memdesc:ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The kit USB read file handle.  <a href="#ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0">More...</a><br /></td></tr>
+<tr class="separator:ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79525e0d472c02e26e7c4aa4a780c1d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00226.html#ga069bb8cb95b0528d5ce0304bb5561a40">HANDLE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a79525e0d472c02e26e7c4aa4a780c1d9">read_handle</a></td></tr>
+<tr class="separator:a79525e0d472c02e26e7c4aa4a780c1d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af11a0103eb96a026ea6782bfcad7548e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00226.html#ga069bb8cb95b0528d5ce0304bb5561a40">HANDLE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#af11a0103eb96a026ea6782bfcad7548e">write_handle</a></td></tr>
+<tr class="memdesc:af11a0103eb96a026ea6782bfcad7548e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The kit USB read file handle.  <a href="#af11a0103eb96a026ea6782bfcad7548e">More...</a><br /></td></tr>
+<tr class="separator:af11a0103eb96a026ea6782bfcad7548e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a7d0970077e95bd9d8ed8aac6b3e115ee"></a>
+<a class="anchor" id="a72bac4e370ad82aef68188c521d2020d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t pin_sda[<a class="el" href="a00195.html#gaf9d9d027ce20f528edea144203141714">MAX_SWI_BUSES</a>]</td>
+          <td class="memname">FILE* read_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a79525e0d472c02e26e7c4aa4a780c1d9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00226.html#ga069bb8cb95b0528d5ce0304bb5561a40">HANDLE</a> read_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">FILE* write_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The kit USB read file handle. </p>
+
+</div>
+</div>
+<a class="anchor" id="af11a0103eb96a026ea6782bfcad7548e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00226.html#ga069bb8cb95b0528d5ce0304bb5561a40">HANDLE</a> write_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The kit USB read file handle. </p>
 
 </div>
 </div>
@@ -138,7 +186,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00053.html">SWIBuses</a></li>
+    <li class="navelem"><a class="el" href="a00053.html">hid_device</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

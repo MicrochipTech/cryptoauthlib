@@ -128,6 +128,35 @@ $(document).ready(function(){initNavTree('index.html','');});
 <li>ATECC508A Node Authentication Example Using Asymmetric PKI is a complete, all-in-one example demonstrating all the stages of crypto authentication starting from provisioning the Crypto Authentication device with keys and certificates to demonstrating an authentication sequence using asymmetric techniques.</li>
 </ul>
 <h2>Release notes </h2>
+<p>07/01/2017</p><ul>
+<li>Removed assumption of SN[0:1]=0123, SN[8]=EE. SN now needs to be passed in for functions in atca_host and atca_basic functions will now read the config zone for the SN if needed.</li>
+<li>Renamed atcab_gendig_host() to <a class="el" href="a00224.html#ga70751ea87f2cf913986bc7bca2cc661f" title="Issues a GenDig command, which performs a SHA256 hash on the source data indicated by zone with the c...">atcab_gendig()</a> since it's not a host function. Removed original <a class="el" href="a00224.html#ga70751ea87f2cf913986bc7bca2cc661f" title="Issues a GenDig command, which performs a SHA256 hash on the source data indicated by zone with the c...">atcab_gendig()</a>, which had limited scope.</li>
+<li>Fixed <a class="el" href="a00227.html#gab17435577e546d2954bd697f21e6d3cc" title="This function generates an HMAC / SHA-256 hash of a key and other information. ">atcah_hmac()</a> for host side HMAC calculations. Added <a class="el" href="a00224.html#ga45f1d09a51f7a1f68916536ab5125b9d" title="The HMAC command computes an HMAC/SHA-256 digest of a key stored in the device, a challenge...">atcab_hmac()</a>.</li>
+<li>Removed unnecessary ATCADeviceType parameters from some atca_basic functions.</li>
+<li>Added <a class="el" href="a00223.html#gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6" title="Creates a CSR specified by the CSR definition from the ATECC508A device. This process involves readin...">atcacert_create_csr()</a> to create a signed CSR.</li>
+<li>New HAL implementation for Kit protocol over HID on Linux Please see the Incorporating CryptoAuthLib in a Linux project using USB HID devices section in this file for more information.</li>
+<li>Added <a class="el" href="a00223.html#ga71ea9d7c93c2fecb87a36b1343397fad" title="Take a full certificate and write it to the ATECC508A device according to the certificate definition...">atcacert_write_cert()</a> for writing certificates to the device.</li>
+<li>Added support for dynamic length certificate serial numbers in atcacert.</li>
+<li>Added <a class="el" href="a00224.html#gabf2b29b4d3ae926b63c403d084380dbe" title="The Write command writes either one four byte word or an 8-word block of 32 bytes to one of the EEPRO...">atcab_write()</a> for lower level write commands.</li>
+<li>Fixed <a class="el" href="a00227.html#ga47853951c57803eff1432780bf360057" title="This function calculates the input MAC for the Write command. ">atcah_write_auth_mac()</a>, which had wrong OpCode.</li>
+<li>Added <a class="el" href="a00224.html#ga023ff586b49807c67f5af587f7480a3f" title="The Verify command takes an ECDSA [R,S] signature and verifies that it is correctly generated from a ...">atcab_verify()</a> command for lower level verify commands.</li>
+<li>Added <a class="el" href="a00224.html#gae8cc7670847805423ad591985eecd832" title="Verify a signature and message (ECDSA verify operation) against a public key stored in a specified sl...">atcab_verify_stored()</a> for verifying data with a stored public key.</li>
+<li>Removed atcab_write_bytes_slot(). Use <a class="el" href="a00224.html#gac395a7e195aa3cf28b48de345755feb0" title="Write data into config, otp, or data zone with a given byte offset and length. Offset and length must...">atcab_write_bytes_zone()</a> instead.</li>
+<li>Modified <a class="el" href="a00224.html#gac395a7e195aa3cf28b48de345755feb0" title="Write data into config, otp, or data zone with a given byte offset and length. Offset and length must...">atcab_write_bytes_zone()</a> and <a class="el" href="a00224.html#gafef5ecc82d845eaebdf50a58ac489e66" title="Read data from config, otp, or data zone with a given byte offset and length. ">atcab_read_bytes_zone()</a> to specify a slot.</li>
+<li>Added <a class="el" href="a00224.html#gacf9a0c7772ebb65b87c4a4788850702b" title="Validate a public key stored in a slot. ">atcab_verify_validate()</a> and <a class="el" href="a00224.html#ga9393b545b2fa1fdd539672a0428a30ab" title="Invalidate a public key stored in a slot. ">atcab_verify_invalidate()</a></li>
+<li>Improvements to host functions to handle more cases.</li>
+<li>Added <a class="el" href="a00224.html#ga416e4aeacf3acc35b1d5b76028c6947d" title="The UpdateExtra command is used to update the values of the two extra bytes within the Configuration ...">atcab_updateextra()</a>, atcab_derive_key()</li>
+<li>Added support for more certificate formats.</li>
+<li>Added general purpose hardware SHA256 functions. See <a class="el" href="a00224.html#ga89f26091b8754321ab55440a9e6b01ae">atcab_hw_sha2_256()</a>.</li>
+<li>Removed device specific config read/write. Generic now handles both.</li>
+<li>Removed unnecessary response parameter from lock commands.</li>
+<li>Enhanced and added unit tests.</li>
+<li>Encrypted read and write functions now handle keys with SlotConfig.NoMac set.</li>
+<li><a class="el" href="a00224.html#gadb91d2c3601b95f0ad413cf84a4dfd87" title="This function compares all writable bytes in the configuration zone that is passed in to the bytes on...">atcab_cmp_config_zone()</a> handles all devices now.</li>
+<li>Fixed some edge cases in <a class="el" href="a00224.html#gafef5ecc82d845eaebdf50a58ac489e66" title="Read data from config, otp, or data zone with a given byte offset and length. ">atcab_read_bytes_zone()</a>.</li>
+<li>Updated <a class="el" href="a00220.html#ga12ab52fca6043bdafe063163826b3fc9" title="ATCACommand SHA method. ">atSHA()</a> to work with all devices.</li>
+<li>Fixed <a class="el" href="a00223.html#ga84f1aeed7b88889d5bf01f21dbaaf398" title="Add all the device locations required to rebuild the specified certificate (cert_def) to a device loc...">atcacert_get_device_locs()</a> when using stored sn.</li>
+</ul>
 <p>01/08/2016</p><ul>
 <li>New HAL implementations for<ul>
 <li>Single Wire interface for SAMD21 / SAMR21</li>
@@ -135,7 +164,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <li>XMega A3Bu HAL implementation</li>
 </ul>
 </li>
-<li>added <a class="el" href="a00193.html#ga563f3d7c25ee88ff5b2c988f4eb59bc3" title="returns a version string for the CryptoAuthLib release. The format of the version string returned is ...">atcab_version()</a> method to return current version string of libary to application</li>
+<li>added <a class="el" href="a00224.html#ga563f3d7c25ee88ff5b2c988f4eb59bc3" title="returns a version string for the CryptoAuthLib release. The format of the version string returned is ...">atcab_version()</a> method to return current version string of libary to application</li>
 <li>New Bus and Discovery API<ul>
 <li>returns a list of ATCA device configurations for each CryptoAuth device found</li>
 <li>currently implemented on SAMD21/R21 I2C, SAMV71</li>
@@ -146,7 +175,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <li>Added missing doxygen documentation for some CryptoAuthLib methods</li>
 <li>Stubs for HAL SPI removed as they are unused for SHA204A and ECC508A support</li>
 <li>bug fixes</li>
-<li>updated <a class="el" href="a00193.html#ga31d269ccdafd08519a899a8aebf53df1" title="Computes a SHA-256 digest. ">atcab_sha()</a> to accept a variable length message that is &gt; 64 bytes and not a multiple of 64 bytes (the SHA block size).</li>
+<li>updated <a class="el" href="a00224.html#ga31d269ccdafd08519a899a8aebf53df1" title="Computes a SHA-256 digest. ">atcab_sha()</a> to accept a variable length message that is &gt; 64 bytes and not a multiple of 64 bytes (the SHA block size).</li>
 <li>refactored Cert I/O and Cert Data tests to be smaller</li>
 <li>'uncrustify' source formatting</li>
 <li>published on GitHub</li>
@@ -184,7 +213,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 </ul>
 <p>All platform dependencies are contained within the HAL (hardware abstraction layer).</p>
 <div class="image">
-<img src="./docs/CryptoAuthLib-Architecture.png"  alt="CryptoAuthLib Architecture" title="CryptoAuthLib Architecture"/>
+<img src="../CryptoAuthLib-Architecture.png"  alt="CryptoAuthLib Architecture" title="CryptoAuthLib Architecture"/>
 </div>
 <p>There are three primary object types in CryptoAuthLib:</p><ul>
 <li>Device (ATCADevice)</li>
@@ -193,13 +222,13 @@ $(document).ready(function(){initNavTree('index.html','');});
 </ul>
 <p>ATCADevice is a composite object made up of ATCACommand ATCAIface.</p>
 <div class="image">
-<img src="./docs/cryptoauthlib-uml/ATCADevice.png"  alt="ATCADevice" title="ATCADevice and ATCACommand object"/>
+<img src="../cryptoauthlib-uml/ATCADevice.png"  alt="ATCADevice" title="ATCADevice and ATCACommand object"/>
 </div>
  <div class="image">
-<img src="./docs/cryptoauthlib-uml/ATCAIFace.png"  alt="ATCAIface" title="ATCAIface object"/>
+<img src="../cryptoauthlib-uml/ATCAIFace.png"  alt="ATCAIface" title="ATCAIface object"/>
 </div>
  <div class="image">
-<img src="./docs/cryptoauthlib-uml/ATCAHal.png"  alt="Hardware abstraction layer" title="CryptoAuth hardware abstraction layer"/>
+<img src="../cryptoauthlib-uml/ATCAHal.png"  alt="Hardware abstraction layer" title="CryptoAuth hardware abstraction layer"/>
 </div>
 <p>Currently, the vast majority of testing has been performed on:</p>
 <ul>
@@ -259,7 +288,17 @@ $(document).ready(function(){initNavTree('index.html','');});
 <h2>Incorporating CryptoAuthLib in a project </h2>
 <p>1) In your Makefile or IDE, choose the HAL support you need from the HAL directory and exclude other HAL files from your project.</p>
 <p>2) For I2C interfaces, define the symbol ATCA_HAL_I2C in your compiler's symbol definitions. This will hook up the CryptoAuthLib interface class with your HAL implementation of I2C methods.</p>
-<p>3) HAL implementations for CDC and HID interfaces to the ATCK101 are also included for use with Windows or Linux versions of the test host. </p>
+<p>3) HAL implementations for CDC and HID interfaces to the ATCK101 are also included for use with Windows or Linux versions of the test host.</p>
+<h2>Incorporating CryptoAuthLib in a Linux project using USB HID devices </h2>
+<p>The Linux HID HAL files use the Linux udev development software package.</p>
+<p>To install the udev development package under Ubuntu Linux, please type the following command at the terminaLlwindow:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;sudo apt-get install libudev-dev</div>
+</div><!-- fragment --><p>This adds the udev development development software package to the Ubuntu Linux installation.</p>
+<p>The Linux HID HAL files also require a udev rule to be added to change the permissions of the USB HID Devices. Please add a new udev rule for the Atmel CryptoAuth USB devices.</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;cd /etc/udev/rules.d</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;sudo touch atmel-cryptoauth.rules</div>
+</div><!-- fragment --><p>Edit the atmel-cryptoauth.rules file and add the following line to the file:</p>
+<p>SUBSYSTEM=="hidraw", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2312", MODE="0666" </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

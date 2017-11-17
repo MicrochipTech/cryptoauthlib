@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: unity_fixture_malloc_overrides.h File Reference</title>
+<title>CryptoAuthLib: swi_uart_at90usb1287_asf.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,177 +106,54 @@ $(document).ready(function(){initNavTree('a00186.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">unity_fixture_malloc_overrides.h File Reference</div>  </div>
+<div class="title">swi_uart_at90usb1287_asf.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><a href="a00186_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:acf143577800376dd931c059ecc61ba06"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#acf143577800376dd931c059ecc61ba06">malloc</a>&#160;&#160;&#160;<a class="el" href="a00186.html#a93ff6fda0f975eb47b8d828bd084f411">unity_malloc</a></td></tr>
-<tr class="separator:acf143577800376dd931c059ecc61ba06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84beef8cc122add35118ec7cd35286c4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#a84beef8cc122add35118ec7cd35286c4">calloc</a>&#160;&#160;&#160;<a class="el" href="a00186.html#a55e86effa9aaf4a111d6b47684a05369">unity_calloc</a></td></tr>
-<tr class="separator:a84beef8cc122add35118ec7cd35286c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b739878adcdb46fb5d209af7ce79628"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#a1b739878adcdb46fb5d209af7ce79628">realloc</a>&#160;&#160;&#160;<a class="el" href="a00186.html#a943255616637b00dbcf8e798acf0ab20">unity_realloc</a></td></tr>
-<tr class="separator:a1b739878adcdb46fb5d209af7ce79628"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c6efa7679f8cd9f61af96e105017560"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#a2c6efa7679f8cd9f61af96e105017560">free</a>&#160;&#160;&#160;<a class="el" href="a00186.html#a34d61a21a177a63f9681e1d89653cc74">unity_free</a></td></tr>
-<tr class="separator:a2c6efa7679f8cd9f61af96e105017560"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
+<p>ATXMEGA's ATCA Hardware abstraction layer for SWI interface over AT90USB1287 UART drivers.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &quot;usart_serial.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00187_source.html">swi_uart_at90usb1287_asf.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00087_source.html">basic/atca_helpers.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a93ff6fda0f975eb47b8d828bd084f411"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#a93ff6fda0f975eb47b8d828bd084f411">unity_malloc</a> (size_t size)</td></tr>
-<tr class="separator:a93ff6fda0f975eb47b8d828bd084f411"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55e86effa9aaf4a111d6b47684a05369"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#a55e86effa9aaf4a111d6b47684a05369">unity_calloc</a> (size_t num, size_t size)</td></tr>
-<tr class="separator:a55e86effa9aaf4a111d6b47684a05369"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a943255616637b00dbcf8e798acf0ab20"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#a943255616637b00dbcf8e798acf0ab20">unity_realloc</a> (void *oldMem, size_t size)</td></tr>
-<tr class="separator:a943255616637b00dbcf8e798acf0ab20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34d61a21a177a63f9681e1d89653cc74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#a34d61a21a177a63f9681e1d89653cc74">unity_free</a> (void *mem)</td></tr>
-<tr class="separator:a34d61a21a177a63f9681e1d89653cc74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga003b63648f1a5f9eba274760559688f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga003b63648f1a5f9eba274760559688f2">swi_uart_init</a> (<a class="el" href="a00226.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a> *instance)</td></tr>
+<tr class="memdesc:ga003b63648f1a5f9eba274760559688f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of SWI UART init.  <a href="a00226.html#ga003b63648f1a5f9eba274760559688f2">More...</a><br /></td></tr>
+<tr class="separator:ga003b63648f1a5f9eba274760559688f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b1aad3936bf003686d8db7fa2be5132"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga0b1aad3936bf003686d8db7fa2be5132">swi_uart_deinit</a> (<a class="el" href="a00226.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a> *instance)</td></tr>
+<tr class="memdesc:ga0b1aad3936bf003686d8db7fa2be5132"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of SWI UART deinit.  <a href="a00226.html#ga0b1aad3936bf003686d8db7fa2be5132">More...</a><br /></td></tr>
+<tr class="separator:ga0b1aad3936bf003686d8db7fa2be5132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gaba296f70baf68b768d6c4bb9cf7ba67d">swi_uart_setbaud</a> (<a class="el" href="a00226.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a> *instance, uint32_t baudrate)</td></tr>
+<tr class="memdesc:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="mdescLeft">&#160;</td><td class="mdescRight">implementation of SWI UART change baudrate.  <a href="a00226.html#gaba296f70baf68b768d6c4bb9cf7ba67d">More...</a><br /></td></tr>
+<tr class="separator:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gacc2a96c86ce4c07249b81bc6a7eb2e41">swi_uart_mode</a> (<a class="el" href="a00226.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a> *instance, uint8_t mode)</td></tr>
+<tr class="memdesc:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="mdescLeft">&#160;</td><td class="mdescRight">implementation of SWI UART change mode.  <a href="a00226.html#gacc2a96c86ce4c07249b81bc6a7eb2e41">More...</a><br /></td></tr>
+<tr class="separator:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad640b598d581ee7c8a4c804bee602906"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gad640b598d581ee7c8a4c804bee602906">swi_uart_discover_buses</a> (int swi_uart_buses[], int max_buses)</td></tr>
+<tr class="memdesc:gad640b598d581ee7c8a4c804bee602906"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover UART buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge  <a href="a00226.html#gad640b598d581ee7c8a4c804bee602906">More...</a><br /></td></tr>
+<tr class="separator:gad640b598d581ee7c8a4c804bee602906"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4a4d491006d9683d67838963706ac9c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga4a4d491006d9683d67838963706ac9c1">swi_uart_send_byte</a> (<a class="el" href="a00226.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a> *instance, uint8_t data)</td></tr>
+<tr class="memdesc:ga4a4d491006d9683d67838963706ac9c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI UART send byte over ASF. This function send one byte over UART.  <a href="a00226.html#ga4a4d491006d9683d67838963706ac9c1">More...</a><br /></td></tr>
+<tr class="separator:ga4a4d491006d9683d67838963706ac9c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga93f3dab17c14f71641ca970998ede823"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga93f3dab17c14f71641ca970998ede823">swi_uart_receive_byte</a> (<a class="el" href="a00226.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a> *instance, uint8_t *data)</td></tr>
+<tr class="memdesc:ga93f3dab17c14f71641ca970998ede823"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI UART receive bytes over ASF. This function receive one byte over UART.  <a href="a00226.html#ga93f3dab17c14f71641ca970998ede823">More...</a><br /></td></tr>
+<tr class="separator:ga93f3dab17c14f71641ca970998ede823"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a84beef8cc122add35118ec7cd35286c4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define calloc&#160;&#160;&#160;<a class="el" href="a00186.html#a55e86effa9aaf4a111d6b47684a05369">unity_calloc</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a2c6efa7679f8cd9f61af96e105017560"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define free&#160;&#160;&#160;<a class="el" href="a00186.html#a34d61a21a177a63f9681e1d89653cc74">unity_free</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="acf143577800376dd931c059ecc61ba06"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define malloc&#160;&#160;&#160;<a class="el" href="a00186.html#a93ff6fda0f975eb47b8d828bd084f411">unity_malloc</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a1b739878adcdb46fb5d209af7ce79628"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define realloc&#160;&#160;&#160;<a class="el" href="a00186.html#a943255616637b00dbcf8e798acf0ab20">unity_realloc</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a55e86effa9aaf4a111d6b47684a05369"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* unity_calloc </td>
-          <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>num</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a34d61a21a177a63f9681e1d89653cc74"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void unity_free </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>mem</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a93ff6fda0f975eb47b8d828bd084f411"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* unity_malloc </td>
-          <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a943255616637b00dbcf8e798acf0ab20"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* unity_realloc </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>oldMem</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>ATXMEGA's ATCA Hardware abstraction layer for SWI interface over AT90USB1287 UART drivers. </p>
+<p>Prerequisite: add UART Polled support to application in Atmel Studio</p>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_13e138d54eb8818da29c3992edef070a.html">test</a></li><li class="navelem"><a class="el" href="a00186.html">unity_fixture_malloc_overrides.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00186.html">swi_uart_at90usb1287_asf.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

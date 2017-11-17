@@ -1,5 +1,5 @@
 var a00049 =
 [
-    [ "guard", "a00049.html#a6399ead8aa841f99d568bd54f6008c55", null ],
-    [ "size", "a00049.html#a854352f53b148adc24983a58a1866d66", null ]
+    [ "read_handle", "a00049.html#a79525e0d472c02e26e7c4aa4a780c1d9", null ],
+    [ "write_handle", "a00049.html#af11a0103eb96a026ea6782bfcad7548e", null ]
 ];

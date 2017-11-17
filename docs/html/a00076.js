@@ -1,7 +1,8 @@
 var a00076 =
 [
-    [ "atGetCommands", "a00190.html#gabf51c08f1928fc5ec44936f3117a9f7e", null ],
-    [ "atGetIFace", "a00190.html#ga3f98e29cffa06446fc91b329703606af", null ],
-    [ "deleteATCADevice", "a00190.html#ga57b4bc57010a0bcaf6385703c63d156c", null ],
-    [ "newATCADevice", "a00190.html#gad5e12e12d3030e28d75164286df9e5e9", null ]
+    [ "ATCA_SHA1_DIGEST_SIZE", "a00225.html#gadb94a0991eb670ff1bf90253dfea0bfa", null ],
+    [ "atcac_sw_sha1", "a00225.html#ga84b866657bf319dab2924c2db3a1e990", null ],
+    [ "atcac_sw_sha1_finish", "a00225.html#ga5589df2a639f61a4dc4ccedc9b5a5453", null ],
+    [ "atcac_sw_sha1_init", "a00225.html#gabed03bcc1228768534ef4ee49df0ad09", null ],
+    [ "atcac_sw_sha1_update", "a00225.html#ga65ff558306a88e0fbe2fc82bbe6a9c03", null ]
 ];

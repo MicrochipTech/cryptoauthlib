@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: test_atcacert_der_integer_runner.c File Reference</title>
+<title>CryptoAuthLib: kit_phy.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -108,60 +108,38 @@ $(document).ready(function(){initNavTree('a00172.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">test_atcacert_der_integer_runner.c File Reference</div>  </div>
+<div class="title">kit_phy.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="a00182_source.html">test/unity.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00184_source.html">test/unity_fixture.h</a>&quot;</code><br />
-</div><table class="memberdecls">
+
+<p>ATCA Hardware abstraction layer physical send &amp; receive function definitions.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00121_source.html">cryptoauthlib.h</a>&quot;</code><br />
+</div>
+<p><a href="a00172_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a7e2d12b7fd205006cc48be484666212e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00172.html#a7e2d12b7fd205006cc48be484666212e">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#gaf156257cda87df879f54c07e80bc0e8d">atcacert_der_enc_integer</a>)</td></tr>
-<tr class="separator:a7e2d12b7fd205006cc48be484666212e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0462a67e880a32e8c36c4b9bacf29af"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00172.html#af0462a67e880a32e8c36c4b9bacf29af">TEST_GROUP_RUNNER</a> (<a class="el" href="a00192.html#ga3b095e11adc55a61e3cfb2957d0c6c77">atcacert_der_dec_integer</a>)</td></tr>
-<tr class="separator:af0462a67e880a32e8c36c4b9bacf29af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga11ee6ec0b2b7eb2ff2472f92208c3205"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga11ee6ec0b2b7eb2ff2472f92208c3205">kit_phy_num_found</a> (int8_t *num_found)</td></tr>
+<tr class="memdesc:ga11ee6ec0b2b7eb2ff2472f92208c3205"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of USB HID devices found.  <a href="a00226.html#ga11ee6ec0b2b7eb2ff2472f92208c3205">More...</a><br /></td></tr>
+<tr class="separator:ga11ee6ec0b2b7eb2ff2472f92208c3205"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga020fb0be6c73515122cf4b9f749fd97d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga020fb0be6c73515122cf4b9f749fd97d">kit_phy_send</a> (<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, const char *txdata, int txlength)</td></tr>
+<tr class="memdesc:ga020fb0be6c73515122cf4b9f749fd97d"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of send over USB CDC.  <a href="a00226.html#ga020fb0be6c73515122cf4b9f749fd97d">More...</a><br /></td></tr>
+<tr class="separator:ga020fb0be6c73515122cf4b9f749fd97d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae5e94b6080d4279474eb3e98bc58901"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00094.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gaae5e94b6080d4279474eb3e98bc58901">kit_phy_receive</a> (<a class="el" href="a00222.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, char *rxdata, int *rxsize)</td></tr>
+<tr class="memdesc:gaae5e94b6080d4279474eb3e98bc58901"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol send over USB CDC.  <a href="a00226.html#gaae5e94b6080d4279474eb3e98bc58901">More...</a><br /></td></tr>
+<tr class="separator:gaae5e94b6080d4279474eb3e98bc58901"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2015 Atmel Corporation. All rights reserved.</dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a7e2d12b7fd205006cc48be484666212e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#gaf156257cda87df879f54c07e80bc0e8d">atcacert_der_enc_integer</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="af0462a67e880a32e8c36c4b9bacf29af"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TEST_GROUP_RUNNER </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00192.html#ga3b095e11adc55a61e3cfb2957d0c6c77">atcacert_der_dec_integer</a>&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>ATCA Hardware abstraction layer physical send &amp; receive function definitions. </p>
+<p>This is included for kit protocol implementations. It is included in the kit protocol callback to actually send and recieve bytes.</p>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_13e138d54eb8818da29c3992edef070a.html">test</a></li><li class="navelem"><a class="el" href="dir_3fd499d16b43d3319c6085ec747f938a.html">atcacert</a></li><li class="navelem"><a class="el" href="a00172.html">test_atcacert_der_integer_runner.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00172.html">kit_phy.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

@@ -109,31 +109,31 @@ $(document).ready(function(){initNavTree('a00020.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atca_encrypt_in_out Struct Reference<div class="ingroups"><a class="el" href="a00196.html">Host side crypto methods (atcah_)</a></div></div>  </div>
+<div class="title">atca_encrypt_in_out Struct Reference<div class="ingroups"><a class="el" href="a00227.html">Host side crypto methods (atcah_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p>Input/output parameters for function atca_encrypt().  
  <a href="a00020.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="a00084_source.html">atca_host.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a00089_source.html">atca_host.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ga828b8f8a58cd9813deb365aab404c850"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga828b8f8a58cd9813deb365aab404c850">zone</a></td></tr>
-<tr class="memdesc:ga828b8f8a58cd9813deb365aab404c850"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Zone parameter used in Write (Param1).  <a href="a00196.html#ga828b8f8a58cd9813deb365aab404c850">More...</a><br /></td></tr>
+<tr class="memitem:ga828b8f8a58cd9813deb365aab404c850"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#ga828b8f8a58cd9813deb365aab404c850">zone</a></td></tr>
+<tr class="memdesc:ga828b8f8a58cd9813deb365aab404c850"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Zone parameter used in Write (Param1).  <a href="a00227.html#ga828b8f8a58cd9813deb365aab404c850">More...</a><br /></td></tr>
 <tr class="separator:ga828b8f8a58cd9813deb365aab404c850"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gade5a18d52133ef21f211020ceb464c07"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#gade5a18d52133ef21f211020ceb464c07">address</a></td></tr>
-<tr class="memdesc:gade5a18d52133ef21f211020ceb464c07"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Address parameter used in Write command (Param2).  <a href="a00196.html#gade5a18d52133ef21f211020ceb464c07">More...</a><br /></td></tr>
+<tr class="memitem:gade5a18d52133ef21f211020ceb464c07"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#gade5a18d52133ef21f211020ceb464c07">address</a></td></tr>
+<tr class="memdesc:gade5a18d52133ef21f211020ceb464c07"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Address parameter used in Write command (Param2).  <a href="a00227.html#gade5a18d52133ef21f211020ceb464c07">More...</a><br /></td></tr>
 <tr class="separator:gade5a18d52133ef21f211020ceb464c07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4155a23e70d1bf07de5d316efebeaee7"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga4155a23e70d1bf07de5d316efebeaee7">crypto_data</a></td></tr>
-<tr class="memdesc:ga4155a23e70d1bf07de5d316efebeaee7"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in,out] Pointer to 32-byte data. Input cleartext data, output encrypted data to Write command (Value field).  <a href="a00196.html#ga4155a23e70d1bf07de5d316efebeaee7">More...</a><br /></td></tr>
+<tr class="memitem:ga4155a23e70d1bf07de5d316efebeaee7"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#ga4155a23e70d1bf07de5d316efebeaee7">crypto_data</a></td></tr>
+<tr class="memdesc:ga4155a23e70d1bf07de5d316efebeaee7"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in,out] Pointer to 32-byte data. Input cleartext data, output encrypted data to Write command (Value field).  <a href="a00227.html#ga4155a23e70d1bf07de5d316efebeaee7">More...</a><br /></td></tr>
 <tr class="separator:ga4155a23e70d1bf07de5d316efebeaee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47ce138310dbdf748d76087b537e4b48"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga47ce138310dbdf748d76087b537e4b48">mac</a></td></tr>
-<tr class="memdesc:ga47ce138310dbdf748d76087b537e4b48"><td class="mdescLeft">&#160;</td><td class="mdescRight">[out] Pointer to 32-byte Mac. Can be set to NULL if input MAC is not required by the Write command (write to OTP, unlocked user zone).  <a href="a00196.html#ga47ce138310dbdf748d76087b537e4b48">More...</a><br /></td></tr>
+<tr class="memitem:ga47ce138310dbdf748d76087b537e4b48"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#ga47ce138310dbdf748d76087b537e4b48">mac</a></td></tr>
+<tr class="memdesc:ga47ce138310dbdf748d76087b537e4b48"><td class="mdescLeft">&#160;</td><td class="mdescRight">[out] Pointer to 32-byte Mac. Can be set to NULL if input MAC is not required by the Write command (write to OTP, unlocked user zone).  <a href="a00227.html#ga47ce138310dbdf748d76087b537e4b48">More...</a><br /></td></tr>
 <tr class="separator:ga47ce138310dbdf748d76087b537e4b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa17e031da4b22938bed1c21161ba371a"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a00027.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#gaa17e031da4b22938bed1c21161ba371a">temp_key</a></td></tr>
-<tr class="memdesc:gaa17e031da4b22938bed1c21161ba371a"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in,out] Pointer to TempKey structure.  <a href="a00196.html#gaa17e031da4b22938bed1c21161ba371a">More...</a><br /></td></tr>
+<tr class="memitem:gaa17e031da4b22938bed1c21161ba371a"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a00030.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#gaa17e031da4b22938bed1c21161ba371a">temp_key</a></td></tr>
+<tr class="memdesc:gaa17e031da4b22938bed1c21161ba371a"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in,out] Pointer to TempKey structure.  <a href="a00227.html#gaa17e031da4b22938bed1c21161ba371a">More...</a><br /></td></tr>
 <tr class="separator:gaa17e031da4b22938bed1c21161ba371a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>

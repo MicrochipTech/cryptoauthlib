@@ -2,14 +2,13 @@
  * \file
  * \brief ATCA Hardware abstraction layer for SWI bit banging.
  *
- * Copyright (c) 2015 Atmel Corporation. All rights reserved.
- *
- * \atmel_crypto_device_library_license_start
+ * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
  *
  * \page License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * You are permitted to use this software and its derivatives with Microchip
+ * products. Redistribution and use in source and binary forms, with or without
+ * modification, is permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
@@ -18,16 +17,16 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  *
- * 3. The name of Atmel may not be used to endorse or promote products derived
+ * 3. The name of Microchip may not be used to endorse or promote products derived
  *    from this software without specific prior written permission.
  *
- * 4. This software may only be redistributed and used in connection with an
- *    Atmel integrated circuit.
+ * 4. This software may only be redistributed and used in connection with a
+ *    Microchip integrated circuit.
  *
- * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
+ * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
+ * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
@@ -35,8 +34,6 @@
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
- * \atmel_crypto_device_library_license_stop
  */
 
 #include <asf.h>
@@ -44,6 +41,7 @@
 #include <stdio.h>
 #include "atca_hal.h"
 #include "hal_swi_bitbang.h"
+#include "atca_device.h"
 
 
 /**
@@ -58,6 +56,32 @@
  */
 ATCASWIMaster_t *swi_hal_data[MAX_SWI_BUSES];   //!< map logical, 0-based bus number to index
 int swi_bus_ref_ct = 0;                         //!< total in-use count across buses
+
+/** \brief discover swi buses available for this hardware
+ * this maintains a list of logical to physical bus mappings freeing the application
+ * of the a-priori knowledge
+ * \param[in] swi_buses - an array of logical bus numbers
+ * \param[in] max_buses - maximum number of buses the app wants to attempt to discover*/
+
+ATCA_STATUS hal_swi_discover_buses(int swi_buses[], int max_buses)
+{
+
+    return ATCA_UNIMPLEMENTED;
+
+}
+
+/** \brief discover any CryptoAuth devices on a given logical bus number
+ * \param[in] busNum - logical bus number on which to look for CryptoAuth devices
+ * \param[out] cfg[] - pointer to head of an array of interface config structures which get filled in by this method
+ * \param[out] *found - number of devices found on this bus
+ */
+
+ATCA_STATUS hal_swi_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
+{
+    return ATCA_UNIMPLEMENTED;
+
+}
+
 
 
 /**
@@ -80,40 +104,44 @@ int swi_bus_ref_ct = 0;                         //!< total in-use count across b
  */
 ATCA_STATUS hal_swi_init(void *hal, ATCAIfaceCfg *cfg)
 {
-	ATCAHAL_t *phal = (ATCAHAL_t*)hal;
+    ATCAHAL_t *phal = (ATCAHAL_t*)hal;
 
-	int bus = cfg->atcaswi.bus; //!< 0-based logical bus number
+    int bus = cfg->atcaswi.bus; //!< 0-based logical bus number
 
-	if (swi_bus_ref_ct == 0)    //!< power up state, no swi buses will have been used
+    if (swi_bus_ref_ct == 0)    //!< power up state, no swi buses will have been used
 
-		for ( int i = 0; i < MAX_SWI_BUSES; i++ )
-			swi_hal_data[i] = NULL;
-	swi_bus_ref_ct++;   //!< total across buses
+        for (int i = 0; i < MAX_SWI_BUSES; i++)
+            swi_hal_data[i] = NULL;
+    swi_bus_ref_ct++;   //!< total across buses
 
-	if (bus >= 0 && bus < MAX_SWI_BUSES) {
-		//! if this is the first time this bus and interface has been created, do the physical work of enabling it
-		if ( swi_hal_data[bus] == NULL ) {
-			swi_hal_data[bus] = malloc(sizeof(ATCASWIMaster_t));
+    if (bus >= 0 && bus < MAX_SWI_BUSES)
+    {
+        //! if this is the first time this bus and interface has been created, do the physical work of enabling it
+        if (swi_hal_data[bus] == NULL)
+        {
+            swi_hal_data[bus] = malloc(sizeof(ATCASWIMaster_t));
 
-			//! assign GPIO pin
-			swi_hal_data[bus]->pin_sda = swi_buses_default.pin_sda[bus];
+            //! assign GPIO pin
+            swi_hal_data[bus]->pin_sda = swi_buses_default.pin_sda[bus];
 
-			swi_set_pin(swi_hal_data[bus]->pin_sda);
-			swi_enable();
+            swi_set_pin(swi_hal_data[bus]->pin_sda);
+            swi_enable();
 
-			//! store this for use during the release phase
-			swi_hal_data[bus]->bus_index = bus;
-		}else {
-			//! otherwise, another interface already initialized the bus, any different
-			//! cfg parameters will be ignored...first one to initialize this sets the configuration
-		}
+            //! store this for use during the release phase
+            swi_hal_data[bus]->bus_index = bus;
+        }
+        else
+        {
+            //! otherwise, another interface already initialized the bus, any different
+            //! cfg parameters will be ignored...first one to initialize this sets the configuration
+        }
 
-		phal->hal_data = swi_hal_data[bus];
+        phal->hal_data = swi_hal_data[bus];
 
-		return ATCA_SUCCESS;
-	}
+        return ATCA_SUCCESS;
+    }
 
-	return ATCA_COMM_FAIL;
+    return ATCA_COMM_FAIL;
 }
 
 /**
@@ -125,7 +153,7 @@ ATCA_STATUS hal_swi_init(void *hal, ATCAIfaceCfg *cfg)
  */
 ATCA_STATUS hal_swi_post_init(ATCAIface iface)
 {
-	return ATCA_SUCCESS;
+    return ATCA_SUCCESS;
 }
 
 /**
@@ -139,23 +167,23 @@ ATCA_STATUS hal_swi_post_init(ATCAIface iface)
  */
 ATCA_STATUS hal_swi_send(ATCAIface iface, uint8_t *txdata, int txlength)
 {
-	ATCAIfaceCfg *cfg = atgetifacecfg(iface);
+    ATCAIfaceCfg *cfg = atgetifacecfg(iface);
 
-	int bus     = cfg->atcaswi.bus;
+    int bus     = cfg->atcaswi.bus;
 
-	//! Skip the Word Address data as SWI doesn't use it
-	txdata++;
+    //! Skip the Word Address data as SWI doesn't use it
+    txdata++;
 
-	//! Set SWI pin
-	swi_set_pin(swi_hal_data[bus]->pin_sda);
+    //! Set SWI pin
+    swi_set_pin(swi_hal_data[bus]->pin_sda);
 
-	//! Send Command Flag
-	swi_send_byte(SWI_FLAG_CMD);
+    //! Send Command Flag
+    swi_send_byte(SWI_FLAG_CMD);
 
-	//! Send the remaining bytes
-	swi_send_bytes(txlength, txdata);
+    //! Send the remaining bytes
+    swi_send_bytes(txlength, txdata);
 
-	return ATCA_SUCCESS;
+    return ATCA_SUCCESS;
 }
 
 /**
@@ -171,33 +199,42 @@ ATCA_STATUS hal_swi_send(ATCAIface iface, uint8_t *txdata, int txlength)
  */
 ATCA_STATUS hal_swi_receive(ATCAIface iface, uint8_t *rxdata, uint16_t *rxlength)
 {
-	ATCAIfaceCfg *cfg = atgetifacecfg(iface);
+    ATCAIfaceCfg *cfg = atgetifacecfg(iface);
 
-	ATCA_STATUS status = ATCA_RX_TIMEOUT;
+    ATCA_STATUS status = ATCA_RX_TIMEOUT;
 
-	int bus     = cfg->atcaswi.bus;
-	int retries = cfg->rx_retries;
-	uint16_t count;
+    int bus     = cfg->atcaswi.bus;
+    int retries = cfg->rx_retries;
+    uint16_t count;
 
-	//! Set SWI pin
-	swi_set_pin(swi_hal_data[bus]->pin_sda);
+    //! Set SWI pin
+    swi_set_pin(swi_hal_data[bus]->pin_sda);
 
-	while (retries-- > 0 && status != ATCA_SUCCESS) {
-		swi_send_byte(SWI_FLAG_TX);
+    while (retries-- > 0 && status != ATCA_SUCCESS)
+    {
+        swi_send_byte(SWI_FLAG_TX);
 
-		status = swi_receive_bytes(*rxlength, rxdata);
-		if (status == ATCA_RX_FAIL) {
-			count = rxdata[0];
-			if ((count < ATCA_RSP_SIZE_MIN) || (count > *rxlength)) {
-				status = ATCA_INVALID_SIZE;
-				break;
-			}else
-				status = ATCA_SUCCESS;
-		}else if (status == ATCA_RX_TIMEOUT)
-			status = ATCA_RX_NO_RESPONSE;
-	}
+        status = swi_receive_bytes(*rxlength, rxdata);
+        if (status == ATCA_RX_FAIL)
+        {
+            count = rxdata[0];
+            if ((count < ATCA_RSP_SIZE_MIN) || (count > *rxlength))
+            {
+                status = ATCA_INVALID_SIZE;
+                break;
+            }
+            else
+            {
+                status = ATCA_SUCCESS;
+            }
+        }
+        else if (status == ATCA_RX_TIMEOUT)
+        {
+            status = ATCA_RX_NO_RESPONSE;
+        }
+    }
 
-	return status;
+    return status;
 }
 
 /**
@@ -209,31 +246,33 @@ ATCA_STATUS hal_swi_receive(ATCAIface iface, uint8_t *rxdata, uint16_t *rxlength
  */
 ATCA_STATUS hal_swi_wake(ATCAIface iface)
 {
-	ATCAIfaceCfg *cfg = atgetifacecfg(iface);
+    ATCAIfaceCfg *cfg = atgetifacecfg(iface);
 
-	ATCA_STATUS status = ATCA_WAKE_FAILED;
+    ATCA_STATUS status = ATCA_WAKE_FAILED;
 
-	int bus     = cfg->atcaswi.bus;
-	uint8_t response[4] = { 0x00, 0x00, 0x00, 0x00 };
-	uint8_t expected_response[4] = { 0x04, 0x11, 0x33, 0x43 };
+    int bus     = cfg->atcaswi.bus;
+    uint8_t response[4] = { 0x00, 0x00, 0x00, 0x00 };
+    uint8_t expected_response[4] = { 0x04, 0x11, 0x33, 0x43 };
+    uint16_t rxlength  = sizeof(response);
 
-	//! Set SWI pin
-	swi_set_pin(swi_hal_data[bus]->pin_sda);
+    //! Set SWI pin
+    swi_set_pin(swi_hal_data[bus]->pin_sda);
 
-	//! Generate Wake Token
-	swi_send_wake_token();
+    //! Generate Wake Token
+    swi_send_wake_token();
 
-	//! Wait tWHI + tWLO
-	atca_delay_us(cfg->wake_delay);
+    //! Wait tWHI + tWLO
+    atca_delay_us(cfg->wake_delay);
 
-	status = hal_swi_receive(iface, response, sizeof(response));
-	if (status == ATCA_SUCCESS) {
-		//! Compare response with expected_response
-		if (memcmp(response, expected_response, 4) != 0)
-			status = ATCA_WAKE_FAILED;
-	}
+    status = hal_swi_receive(iface, response, &rxlength);
+    if (status == ATCA_SUCCESS)
+    {
+        //! Compare response with expected_response
+        if (memcmp(response, expected_response, 4) != 0)
+            status = ATCA_WAKE_FAILED;
+    }
 
-	return status;
+    return status;
 }
 
 /**
@@ -245,16 +284,16 @@ ATCA_STATUS hal_swi_wake(ATCAIface iface)
  */
 ATCA_STATUS hal_swi_idle(ATCAIface iface)
 {
-	ATCAIfaceCfg *cfg = atgetifacecfg(iface);
+    ATCAIfaceCfg *cfg = atgetifacecfg(iface);
 
-	int bus     = cfg->atcaswi.bus;
+    int bus     = cfg->atcaswi.bus;
 
-	//! Set SWI pin
-	swi_set_pin(swi_hal_data[bus]->pin_sda);
+    //! Set SWI pin
+    swi_set_pin(swi_hal_data[bus]->pin_sda);
 
-	swi_send_byte(SWI_FLAG_IDLE);
+    swi_send_byte(SWI_FLAG_IDLE);
 
-	return ATCA_SUCCESS;
+    return ATCA_SUCCESS;
 }
 
 /**
@@ -266,16 +305,16 @@ ATCA_STATUS hal_swi_idle(ATCAIface iface)
  */
 ATCA_STATUS hal_swi_sleep(ATCAIface iface)
 {
-	ATCAIfaceCfg *cfg = atgetifacecfg(iface);
+    ATCAIfaceCfg *cfg = atgetifacecfg(iface);
 
-	int bus     = cfg->atcaswi.bus;
+    int bus     = cfg->atcaswi.bus;
 
-	//! Set SWI pin
-	swi_set_pin(swi_hal_data[bus]->pin_sda);
+    //! Set SWI pin
+    swi_set_pin(swi_hal_data[bus]->pin_sda);
 
-	swi_send_byte(SWI_FLAG_SLEEP);
+    swi_send_byte(SWI_FLAG_SLEEP);
 
-	return ATCA_SUCCESS;
+    return ATCA_SUCCESS;
 }
 
 /**
@@ -289,19 +328,20 @@ ATCA_STATUS hal_swi_sleep(ATCAIface iface)
  */
 ATCA_STATUS hal_swi_release(void *hal_data)
 {
-	ATCASWIMaster_t *hal = (ATCASWIMaster_t*)hal_data;
+    ATCASWIMaster_t *hal = (ATCASWIMaster_t*)hal_data;
 
-	swi_bus_ref_ct--;   //!< track total SWI instances
+    swi_bus_ref_ct--;   //!< track total SWI instances
 
-	//! if the use count for this bus has gone to 0 references, disable it.  protect against an unbracketed release
-	if (hal && swi_hal_data[hal->bus_index] != NULL) {
-		swi_set_pin(swi_hal_data[hal->bus_index]->pin_sda);
-		swi_disable();
-		free(swi_hal_data[hal->bus_index]);
-		swi_hal_data[hal->bus_index] = NULL;
-	}
+    //! if the use count for this bus has gone to 0 references, disable it.  protect against an unbracketed release
+    if (hal && swi_hal_data[hal->bus_index] != NULL)
+    {
+        swi_set_pin(swi_hal_data[hal->bus_index]->pin_sda);
+        swi_disable();
+        free(swi_hal_data[hal->bus_index]);
+        swi_hal_data[hal->bus_index] = NULL;
+    }
 
-	return ATCA_SUCCESS;
+    return ATCA_SUCCESS;
 }
 
 /** @} */

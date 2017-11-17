@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: atcacert_cert_element_s Struct Reference</title>
+<title>CryptoAuthLib: atcac_sha2_256_ctx Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -109,66 +109,30 @@ $(document).ready(function(){initNavTree('a00034.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atcacert_cert_element_s Struct Reference<div class="ingroups"><a class="el" href="a00192.html">Certificate manipulation methods (atcacert_)</a></div></div>  </div>
+<div class="title">atcac_sha2_256_ctx Struct Reference<div class="ingroups"><a class="el" href="a00225.html">Software crypto methods (atcac_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="a00098_source.html">atcacert_def.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a00078_source.html">atca_crypto_sw_sha2.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a0b1ca4dcd178907e4151c7132e3b55f5"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#a0b1ca4dcd178907e4151c7132e3b55f5">id</a> [16]</td></tr>
-<tr class="memdesc:a0b1ca4dcd178907e4151c7132e3b55f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID identifying this element.  <a href="#a0b1ca4dcd178907e4151c7132e3b55f5">More...</a><br /></td></tr>
-<tr class="separator:a0b1ca4dcd178907e4151c7132e3b55f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa36729eb861afe13bb70974147bc403b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00192.html#ga0fb6e40d2f1496215af2f9ae23c861a0">atcacert_device_loc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#aa36729eb861afe13bb70974147bc403b">device_loc</a></td></tr>
-<tr class="memdesc:aa36729eb861afe13bb70974147bc403b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Location in the device for the element.  <a href="#aa36729eb861afe13bb70974147bc403b">More...</a><br /></td></tr>
-<tr class="separator:aa36729eb861afe13bb70974147bc403b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af74e55b0689356f989d8330ae3072376"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00192.html#gae7c32139e6dce0fe25b4598299a77df6">atcacert_cert_loc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#af74e55b0689356f989d8330ae3072376">cert_loc</a></td></tr>
-<tr class="memdesc:af74e55b0689356f989d8330ae3072376"><td class="mdescLeft">&#160;</td><td class="mdescRight">Location in the certificate template for the element.  <a href="#af74e55b0689356f989d8330ae3072376">More...</a><br /></td></tr>
-<tr class="separator:af74e55b0689356f989d8330ae3072376"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a517ae98c637466c44dc7e26a3abccf02"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html#a517ae98c637466c44dc7e26a3abccf02">pad</a> [48]</td></tr>
+<tr class="memdesc:a517ae98c637466c44dc7e26a3abccf02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filler value to make sure the actual implementation has enough room to store its context. uint32_t is used to remove some alignment warnings.  <a href="#a517ae98c637466c44dc7e26a3abccf02">More...</a><br /></td></tr>
+<tr class="separator:a517ae98c637466c44dc7e26a3abccf02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Defines a generic dynamic element for a certificate including the device and template locations. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="af74e55b0689356f989d8330ae3072376"></a>
+<h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="a517ae98c637466c44dc7e26a3abccf02"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00192.html#gae7c32139e6dce0fe25b4598299a77df6">atcacert_cert_loc_t</a> cert_loc</td>
+          <td class="memname">uint32_t pad[48]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Location in the certificate template for the element. </p>
-
-</div>
-</div>
-<a class="anchor" id="aa36729eb861afe13bb70974147bc403b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00192.html#ga0fb6e40d2f1496215af2f9ae23c861a0">atcacert_device_loc_t</a> device_loc</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Location in the device for the element. </p>
-
-</div>
-</div>
-<a class="anchor" id="a0b1ca4dcd178907e4151c7132e3b55f5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">char id[16]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>ID identifying this element. </p>
+<p>Filler value to make sure the actual implementation has enough room to store its context. uint32_t is used to remove some alignment warnings. </p>
 
 </div>
 </div>
@@ -177,7 +141,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00034.html">atcacert_cert_element_s</a></li>
+    <li class="navelem"><a class="el" href="a00034.html">atcac_sha2_256_ctx</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

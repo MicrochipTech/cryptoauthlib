@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: atca_verify_in_out Struct Reference</title>
+<title>CryptoAuthLib: atca_sha256_ctx Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -109,38 +109,90 @@ $(document).ready(function(){initNavTree('a00028.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atca_verify_in_out Struct Reference<div class="ingroups"><a class="el" href="a00196.html">Host side crypto methods (atcah_)</a></div></div>  </div>
+<div class="title">atca_sha256_ctx Struct Reference<div class="ingroups"><a class="el" href="a00224.html">Basic Crypto API methods (atcab_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Input/output parameters for function atca_verify().  
- <a href="a00028.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="a00084_source.html">atca_host.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a00061_source.html">atca_basic.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ga9be4eee4ac6c9248a824d093f165839e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga9be4eee4ac6c9248a824d093f165839e">curve_type</a></td></tr>
-<tr class="memdesc:ga9be4eee4ac6c9248a824d093f165839e"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Curve type used in Verify command (Param2).  <a href="a00196.html#ga9be4eee4ac6c9248a824d093f165839e">More...</a><br /></td></tr>
-<tr class="separator:ga9be4eee4ac6c9248a824d093f165839e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac97246a9059d3f687edfcbe5abfc5d8f"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#gac97246a9059d3f687edfcbe5abfc5d8f">signature</a></td></tr>
-<tr class="memdesc:gac97246a9059d3f687edfcbe5abfc5d8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to ECDSA signature to be verified  <a href="a00196.html#gac97246a9059d3f687edfcbe5abfc5d8f">More...</a><br /></td></tr>
-<tr class="separator:gac97246a9059d3f687edfcbe5abfc5d8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacea547aa606ca17f8da337a1b58972a1"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#gacea547aa606ca17f8da337a1b58972a1">public_key</a></td></tr>
-<tr class="memdesc:gacea547aa606ca17f8da337a1b58972a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to the public key to be used for verification  <a href="a00196.html#gacea547aa606ca17f8da337a1b58972a1">More...</a><br /></td></tr>
-<tr class="separator:gacea547aa606ca17f8da337a1b58972a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa17e031da4b22938bed1c21161ba371a"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a00027.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#gaa17e031da4b22938bed1c21161ba371a">temp_key</a></td></tr>
-<tr class="memdesc:gaa17e031da4b22938bed1c21161ba371a"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in,out] Pointer to TempKey structure.  <a href="a00196.html#gaa17e031da4b22938bed1c21161ba371a">More...</a><br /></td></tr>
-<tr class="separator:gaa17e031da4b22938bed1c21161ba371a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ee7e642376903508dd6b4df9eacc2de"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a8ee7e642376903508dd6b4df9eacc2de">total_msg_size</a></td></tr>
+<tr class="memdesc:a8ee7e642376903508dd6b4df9eacc2de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total number of message bytes processed.  <a href="#a8ee7e642376903508dd6b4df9eacc2de">More...</a><br /></td></tr>
+<tr class="separator:a8ee7e642376903508dd6b4df9eacc2de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e3fb1e50a1c71b2337df296222d9553"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a9e3fb1e50a1c71b2337df296222d9553">block_size</a></td></tr>
+<tr class="memdesc:a9e3fb1e50a1c71b2337df296222d9553"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes in current block.  <a href="#a9e3fb1e50a1c71b2337df296222d9553">More...</a><br /></td></tr>
+<tr class="separator:a9e3fb1e50a1c71b2337df296222d9553"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64478621dfd31e9e33e0dc1ce98d777c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a64478621dfd31e9e33e0dc1ce98d777c">block</a> [64 *2]</td></tr>
+<tr class="memdesc:a64478621dfd31e9e33e0dc1ce98d777c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unprocessed message storage.  <a href="#a64478621dfd31e9e33e0dc1ce98d777c">More...</a><br /></td></tr>
+<tr class="separator:a64478621dfd31e9e33e0dc1ce98d777c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a135f34ef1efee1401582f12744220dbb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a135f34ef1efee1401582f12744220dbb">hash</a> [8]</td></tr>
+<tr class="memdesc:a135f34ef1efee1401582f12744220dbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hash state.  <a href="#a135f34ef1efee1401582f12744220dbb">More...</a><br /></td></tr>
+<tr class="separator:a135f34ef1efee1401582f12744220dbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input/output parameters for function atca_verify(). </p>
-</div></div><!-- contents -->
+<h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="a64478621dfd31e9e33e0dc1ce98d777c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t block[64 *2]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Unprocessed message storage. </p>
+
+</div>
+</div>
+<a class="anchor" id="a9e3fb1e50a1c71b2337df296222d9553"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t block_size</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Number of bytes in current block. </p>
+
+</div>
+</div>
+<a class="anchor" id="a135f34ef1efee1401582f12744220dbb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t hash[8]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Hash state. </p>
+
+</div>
+</div>
+<a class="anchor" id="a8ee7e642376903508dd6b4df9eacc2de"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t total_msg_size</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Total number of message bytes processed. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00028.html">atca_verify_in_out</a></li>
+    <li class="navelem"><a class="el" href="a00028.html">atca_sha256_ctx</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

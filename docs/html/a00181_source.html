@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: test_cert_def_1_signer.h Source File</title>
+<title>CryptoAuthLib: sha1_routines.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,28 +106,85 @@ $(document).ready(function(){initNavTree('a00181_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">test_cert_def_1_signer.h</div>  </div>
+<div class="title">sha1_routines.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a00181.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef TEST_CERT_DEF_1_SIGNER_H</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define TEST_CERT_DEF_1_SIGNER_H</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00099.html">atcacert/atcacert_def.h</a>&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> uint8_t <a class="code" href="a00181.html#ad65fee39ed821300dc249246becbeecb">g_test_signer_1_ca_public_key</a>[];</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="a00037.html">atcacert_def_t</a> <a class="code" href="a00181.html#af888bfc6976683c8e404c97c3fd821ca">g_test_cert_def_1_signer</a>;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#endif // TEST_CERT_DEF_1_SIGNER_H</span></div>
-<div class="ttc" id="a00099_html"><div class="ttname"><a href="a00099.html">atcacert_def.h</a></div><div class="ttdoc">Declarations for certificates related to ECC CryptoAuthentication devices. These are the definitions ...</div></div>
-<div class="ttc" id="a00181_html_ad65fee39ed821300dc249246becbeecb"><div class="ttname"><a href="a00181.html#ad65fee39ed821300dc249246becbeecb">g_test_signer_1_ca_public_key</a></div><div class="ttdeci">const uint8_t g_test_signer_1_ca_public_key[]</div><div class="ttdef"><b>Definition:</b> test_cert_def_1_signer.c:3</div></div>
-<div class="ttc" id="a00181_html_af888bfc6976683c8e404c97c3fd821ca"><div class="ttname"><a href="a00181.html#af888bfc6976683c8e404c97c3fd821ca">g_test_cert_def_1_signer</a></div><div class="ttdeci">const atcacert_def_t g_test_cert_def_1_signer</div><div class="ttdef"><b>Definition:</b> test_cert_def_1_signer.c:41</div></div>
-<div class="ttc" id="a00037_html"><div class="ttname"><a href="a00037.html">atcacert_def_s</a></div><div class="ttdef"><b>Definition:</b> atcacert_def.h:154</div></div>
+<a href="a00181.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#ifndef __SHA1_ROUTINES_DOT_H__</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#define __SHA1_ROUTINES_DOT_H__</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#ifdef WIN32</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &lt;windows.h&gt;</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &lt;assert.h&gt;</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#ifndef U8</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="a00181.html#a2c0958af86f0590374e4324757c537f2">   55</a></span>&#160;<span class="preprocessor">#define U8 uint8_t</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#ifndef U16</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="a00181.html#ad0b4d315e0f0b5d356886ec69d4bed08">   59</a></span>&#160;<span class="preprocessor">#define U16 uint16_t</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#ifndef U32</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="a00181.html#a8f953f379d243081b950adb7f194b2e8">   63</a></span>&#160;<span class="preprocessor">#define U32 uint32_t</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#ifndef memcpy_P</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="a00181.html#a3015d84f1e64c03564961de070d25328">   68</a></span>&#160;<span class="preprocessor">#define memcpy_P memmove</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#ifndef strcpy_P</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="a00181.html#a3541bc4d0b928b2faa9ca63a100d1b75">   72</a></span>&#160;<span class="preprocessor">#define strcpy_P strcpy</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#ifndef _WDRESET</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="a00181.html#a45e79c30522d47f4c30922b3d5b06b46">   76</a></span>&#160;<span class="preprocessor">#define _WDRESET()</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="a00181.html#a46388d9db8422abfea56ae2323f7a77c">   77</a></span>&#160;<span class="preprocessor">#define _NOP()</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="a00050.html">   80</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;{</div>
+<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="a00050.html#a015ca0a234558a1a0dbfc1e92f547ac0">   82</a></span>&#160;    <a class="code" href="a00181.html#a8f953f379d243081b950adb7f194b2e8">U32</a> h[20 / 4];      <span class="comment">// Ensure it&#39;s word aligned</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="a00050.html#afa9986c74d11cc23893e2de2a505cafe">   83</a></span>&#160;    <a class="code" href="a00181.html#a8f953f379d243081b950adb7f194b2e8">U32</a> buf[64 / 4];    <span class="comment">// Ensure it&#39;s word aligned</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="a00050.html#a7dd834dde7d653957f91657aca4eb124">   84</a></span>&#160;    <a class="code" href="a00181.html#a8f953f379d243081b950adb7f194b2e8">U32</a> <a class="code" href="a00050.html#a7dd834dde7d653957f91657aca4eb124">byteCount</a>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="a00050.html#a4f18b15c445fd0f55a0bf182e173d563">   85</a></span>&#160;    <a class="code" href="a00181.html#a8f953f379d243081b950adb7f194b2e8">U32</a> <a class="code" href="a00050.html#a4f18b15c445fd0f55a0bf182e173d563">byteCountHi</a>;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;} <a class="code" href="a00050.html">CL_HashContext</a>;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="a00181.html#a56a88d6165ee36c482ddc9b82826dd47">   88</a></span>&#160;<span class="preprocessor">#define leftRotate(x, n) (x) = (((x) &lt;&lt; (n)) | ((x) &gt;&gt; (32 - (n))))</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00181.html#a6f06fe48f7cacc212305b862b46fd9aa">shaEngine</a>(<a class="code" href="a00181.html#a8f953f379d243081b950adb7f194b2e8">U32</a> *buf, <a class="code" href="a00181.html#a8f953f379d243081b950adb7f194b2e8">U32</a> *h);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00181.html#affa9482d686cc435d640d67d7fa79772">CL_hashInit</a>(<a class="code" href="a00050.html">CL_HashContext</a> *ctx);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00181.html#a55a33e7a22aff4aca4bccf39897bc5f1">CL_hashUpdate</a>(<a class="code" href="a00050.html">CL_HashContext</a> *ctx, <span class="keyword">const</span> <a class="code" href="a00181.html#a2c0958af86f0590374e4324757c537f2">U8</a> *src, <span class="keywordtype">int</span> nbytes);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00181.html#a672902e6406b4e4e2af33c70ec7a001c">CL_hashFinal</a>(<a class="code" href="a00050.html">CL_HashContext</a> *ctx, <a class="code" href="a00181.html#a2c0958af86f0590374e4324757c537f2">U8</a> *dest);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00181.html#a955169bbbce9b4712cafb9b7372b5ffa">CL_hash</a>(<a class="code" href="a00181.html#a2c0958af86f0590374e4324757c537f2">U8</a> *msg, <span class="keywordtype">int</span> msgBytes, <a class="code" href="a00181.html#a2c0958af86f0590374e4324757c537f2">U8</a> *dest);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">#endif // __SHA1_ROUTINES_DOT_H__</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="ttc" id="a00181_html_a8f953f379d243081b950adb7f194b2e8"><div class="ttname"><a href="a00181.html#a8f953f379d243081b950adb7f194b2e8">U32</a></div><div class="ttdeci">#define U32</div><div class="ttdef"><b>Definition:</b> sha1_routines.h:63</div></div>
+<div class="ttc" id="a00181_html_a6f06fe48f7cacc212305b862b46fd9aa"><div class="ttname"><a href="a00181.html#a6f06fe48f7cacc212305b862b46fd9aa">shaEngine</a></div><div class="ttdeci">void shaEngine(U32 *buf, U32 *h)</div><div class="ttdef"><b>Definition:</b> sha1_routines.c:193</div></div>
+<div class="ttc" id="a00050_html"><div class="ttname"><a href="a00050.html">CL_HashContext</a></div><div class="ttdef"><b>Definition:</b> sha1_routines.h:80</div></div>
+<div class="ttc" id="a00050_html_a4f18b15c445fd0f55a0bf182e173d563"><div class="ttname"><a href="a00050.html#a4f18b15c445fd0f55a0bf182e173d563">CL_HashContext::byteCountHi</a></div><div class="ttdeci">U32 byteCountHi</div><div class="ttdef"><b>Definition:</b> sha1_routines.h:85</div></div>
+<div class="ttc" id="a00181_html_affa9482d686cc435d640d67d7fa79772"><div class="ttname"><a href="a00181.html#affa9482d686cc435d640d67d7fa79772">CL_hashInit</a></div><div class="ttdeci">void CL_hashInit(CL_HashContext *ctx)</div><div class="ttdef"><b>Definition:</b> sha1_routines.c:42</div></div>
+<div class="ttc" id="a00181_html_a55a33e7a22aff4aca4bccf39897bc5f1"><div class="ttname"><a href="a00181.html#a55a33e7a22aff4aca4bccf39897bc5f1">CL_hashUpdate</a></div><div class="ttdeci">void CL_hashUpdate(CL_HashContext *ctx, const U8 *src, int nbytes)</div><div class="ttdef"><b>Definition:</b> sha1_routines.c:57</div></div>
+<div class="ttc" id="a00050_html_a7dd834dde7d653957f91657aca4eb124"><div class="ttname"><a href="a00050.html#a7dd834dde7d653957f91657aca4eb124">CL_HashContext::byteCount</a></div><div class="ttdeci">U32 byteCount</div><div class="ttdef"><b>Definition:</b> sha1_routines.h:84</div></div>
+<div class="ttc" id="a00181_html_a955169bbbce9b4712cafb9b7372b5ffa"><div class="ttname"><a href="a00181.html#a955169bbbce9b4712cafb9b7372b5ffa">CL_hash</a></div><div class="ttdeci">void CL_hash(U8 *msg, int msgBytes, U8 *dest)</div><div class="ttdef"><b>Definition:</b> sha1_routines.c:184</div></div>
+<div class="ttc" id="a00181_html_a672902e6406b4e4e2af33c70ec7a001c"><div class="ttname"><a href="a00181.html#a672902e6406b4e4e2af33c70ec7a001c">CL_hashFinal</a></div><div class="ttdeci">void CL_hashFinal(CL_HashContext *ctx, U8 *dest)</div><div class="ttdef"><b>Definition:</b> sha1_routines.c:119</div></div>
+<div class="ttc" id="a00181_html_a2c0958af86f0590374e4324757c537f2"><div class="ttname"><a href="a00181.html#a2c0958af86f0590374e4324757c537f2">U8</a></div><div class="ttdeci">#define U8</div><div class="ttdef"><b>Definition:</b> sha1_routines.h:55</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_13e138d54eb8818da29c3992edef070a.html">test</a></li><li class="navelem"><a class="el" href="dir_3fd499d16b43d3319c6085ec747f938a.html">atcacert</a></li><li class="navelem"><a class="el" href="a00181.html">test_cert_def_1_signer.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="dir_39966be8f8e069f6fa92c98611834f6b.html">hashes</a></li><li class="navelem"><a class="el" href="a00181.html">sha1_routines.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

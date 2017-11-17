@@ -1,6 +1,5 @@
 var a00128 =
 [
-    [ "atca_delay_10us", "a00195.html#ga19891182689551cc3a88603135959351", null ],
-    [ "atca_delay_ms", "a00195.html#ga80a853a202b089064bfc4b159c3418b4", null ],
-    [ "atca_delay_us", "a00195.html#ga7598dfcd6dcac882836544d48356d02f", null ]
+    [ "MAX_I2C_BUSES", "a00226.html#gaf89a7a4080a47aa10a5504291db285bf", null ],
+    [ "ATCAI2CMaster_t", "a00226.html#gae8f36006f14bf6a9f4914bac69ed9f98", null ]
 ];

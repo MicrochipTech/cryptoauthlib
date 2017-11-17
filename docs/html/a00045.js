@@ -1,8 +1,16 @@
 var a00045 =
 [
     [ "bus_index", "a00045.html#af5c011e6c2e8d49675f7029e8ec2c0a6", null ],
-    [ "pin_sda", "a00045.html#afd6d53ef6b697533839248b40bc97861", null ],
-    [ "usart_instance", "a00045.html#ad1dd3236df177255a91b568170b70a74", null ],
-    [ "usart_instance", "a00045.html#a2d29ab9b8f0842ee9a2906302b20011d", null ],
-    [ "USART_SWI", "a00045.html#a7758bb1b871f6094e6d2f0c2ce10b18c", null ]
+    [ "i2c_file", "a00045.html#a386ecc3f01d8b317bc512cab194d844f", null ],
+    [ "i2c_master_instance", "a00045.html#ad60966bca127551f6271719dd9921045", null ],
+    [ "i2c_master_instance", "a00045.html#a6fa5d175fefe82a0c13cc0f7afbf5593", null ],
+    [ "i2c_master_instance", "a00045.html#a335b4a621ab538c5a42160a5a14c161f", null ],
+    [ "i2c_master_instance", "a00045.html#a6fa5d175fefe82a0c13cc0f7afbf5593", null ],
+    [ "id", "a00045.html#a10c34d148db33a5f64c3730a163fb7a7", null ],
+    [ "pin_scl", "a00045.html#a01c1392fd38975adfd6c1c7849b3fa50", null ],
+    [ "pin_sda", "a00045.html#ada591700ce06dd3a6bb9722a6eba38c4", null ],
+    [ "ref_ct", "a00045.html#ad72ba8c994f4d0e5ce354e17f7c427c0", null ],
+    [ "twi_id", "a00045.html#a0fafe5e32d17ee114246e3ccac81ee9f", null ],
+    [ "twi_master_instance", "a00045.html#ad9f68faa090564cdbe2d7217be324f16", null ],
+    [ "twi_module", "a00045.html#a6b6de52fe5fd845e113c0ce337180de4", null ]
 ];

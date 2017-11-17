@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: all_atcacert_tests.c File Reference</title>
+<title>CryptoAuthLib: I2CBuses Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -49,8 +49,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -71,8 +71,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
-      <li><a href="files.html"><span>File&#160;List</span></a></li>
-      <li><a href="globals.html"><span>Globals</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
+      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -106,49 +107,40 @@ $(document).ready(function(){initNavTree('a00055.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">all_atcacert_tests.c File Reference</div>  </div>
+<div class="title">I2CBuses Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="a00184_source.html">test/unity_fixture.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ab643aab721dd293f9bec524e2ff728cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ab643aab721dd293f9bec524e2ff728cc">RunAllCertDataTests</a> (void)</td></tr>
-<tr class="separator:ab643aab721dd293f9bec524e2ff728cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adeada86f910938687020de7e5217b036"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#adeada86f910938687020de7e5217b036">RunAllCertIOTests</a> (void)</td></tr>
-<tr class="separator:adeada86f910938687020de7e5217b036"><td class="memSeparator" colspan="2">&#160;</td></tr>
+
+<p><code>#include &lt;<a class="el" href="a00171_source.html">i2c_bitbang_samd21.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:a396018ddf66ce0e1263ed2b4729dc9b9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a396018ddf66ce0e1263ed2b4729dc9b9">pin_sda</a> [<a class="el" href="a00171.html#af89a7a4080a47aa10a5504291db285bf">MAX_I2C_BUSES</a>]</td></tr>
+<tr class="separator:a396018ddf66ce0e1263ed2b4729dc9b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acddd0c9305a0f679828010052db4f184"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#acddd0c9305a0f679828010052db4f184">pin_scl</a> [<a class="el" href="a00171.html#af89a7a4080a47aa10a5504291db285bf">MAX_I2C_BUSES</a>]</td></tr>
+<tr class="separator:acddd0c9305a0f679828010052db4f184"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2015 Atmel Corporation. All rights reserved.</dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ab643aab721dd293f9bec524e2ff728cc"></a>
+<h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="acddd0c9305a0f679828010052db4f184"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void RunAllCertDataTests </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td class="memname">uint8_t pin_scl[<a class="el" href="a00171.html#af89a7a4080a47aa10a5504291db285bf">MAX_I2C_BUSES</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="adeada86f910938687020de7e5217b036"></a>
+<a class="anchor" id="a396018ddf66ce0e1263ed2b4729dc9b9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void RunAllCertIOTests </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td class="memname">uint8_t pin_sda[<a class="el" href="a00171.html#af89a7a4080a47aa10a5504291db285bf">MAX_I2C_BUSES</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -160,7 +152,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_13e138d54eb8818da29c3992edef070a.html">test</a></li><li class="navelem"><a class="el" href="dir_3fd499d16b43d3319c6085ec747f938a.html">atcacert</a></li><li class="navelem"><a class="el" href="a00055.html">all_atcacert_tests.c</a></li>
+    <li class="navelem"><a class="el" href="a00055.html">I2CBuses</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

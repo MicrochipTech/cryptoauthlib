@@ -1,16 +1,17 @@
 var a00131 =
 [
-    [ "hal_swi_discover_buses", "a00195.html#ga53864a301dac6efbdbdc3931aa79e23e", null ],
-    [ "hal_swi_discover_devices", "a00195.html#ga7aeab32af6dde57ee3afcfb8ec802a2e", null ],
-    [ "hal_swi_idle", "a00195.html#ga618291172976da96c4f02dc9200c845c", null ],
-    [ "hal_swi_init", "a00195.html#gaf406053c1a3f2a86bdc887f2ff4b663d", null ],
-    [ "hal_swi_post_init", "a00195.html#ga9186e5235979216330ae580290872c77", null ],
-    [ "hal_swi_receive", "a00195.html#ga02e9f36723f0feb21d373898728de04b", null ],
-    [ "hal_swi_release", "a00195.html#ga196dbc62546b39ac3e556a0f7f6b7132", null ],
-    [ "hal_swi_send", "a00195.html#gaeb8b8857192a7710785acce0110e8016", null ],
-    [ "hal_swi_send_flag", "a00195.html#gaae96ea936a2e85d0bcb81b7868ee007d", null ],
-    [ "hal_swi_sleep", "a00195.html#ga252e365a30f2583dae8a8eac073a9f53", null ],
-    [ "hal_swi_wake", "a00195.html#gafc428980ec95e37eee94813db229fe70", null ],
-    [ "swi_bus_ref_ct", "a00195.html#ga4656caa5bd357cc71fe66f4522d89e3f", null ],
-    [ "swi_hal_data", "a00195.html#ga95ca8e0b044cf56e85a8c581a4c703da", null ]
+    [ "hal_kit_hid_discover_buses", "a00226.html#ga72a0005b0e9c6a21f4eb0106aeeb04a0", null ],
+    [ "hal_kit_hid_discover_devices", "a00226.html#gadfa25f4974951524eb45fff5c2ba889a", null ],
+    [ "hal_kit_hid_idle", "a00226.html#gaacf6310945889a6119cab867a1ced5e2", null ],
+    [ "hal_kit_hid_init", "a00226.html#ga95b4e99655383680272a1d9354d42479", null ],
+    [ "hal_kit_hid_post_init", "a00226.html#ga6f06bc1662b3d0361f6a241e1b5612f2", null ],
+    [ "hal_kit_hid_receive", "a00226.html#gaa80dfd4a91f557329fa1daf16b0f05a8", null ],
+    [ "hal_kit_hid_release", "a00226.html#ga8c7b9adb28b4bbdee8d5cd78ab16255f", null ],
+    [ "hal_kit_hid_send", "a00226.html#ga47588dbefadcc1569513b053a156f3d6", null ],
+    [ "hal_kit_hid_sleep", "a00226.html#ga1aa3345cb5d3e8fc29defe2758904fed", null ],
+    [ "hal_kit_hid_wake", "a00226.html#ga65289262310f2662b2c47450b93c9580", null ],
+    [ "kit_phy_num_found", "a00226.html#ga11ee6ec0b2b7eb2ff2472f92208c3205", null ],
+    [ "kit_phy_receive", "a00226.html#gabb507252b1011037d6d2cce7d91b01d0", null ],
+    [ "kit_phy_send", "a00226.html#gabd452e3edb32ea0d22653c182b4e1198", null ],
+    [ "_gHid", "a00226.html#gab97bfae6ae6051d081edf51bb45eea05", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: cryptoauthlib.h Source File</title>
+<title>CryptoAuthLib: atcacert_host_sw.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,42 +106,49 @@ $(document).ready(function(){initNavTree('a00111_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">cryptoauthlib.h</div>  </div>
+<div class="title">atcacert_host_sw.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00111.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#ifndef _ATCA_LIB_H</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#define _ATCA_LIB_H</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00081.html">hal/atca_hal.h</a>&quot;</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00090.html">atca_status.h</a>&quot;</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00078.html">atca_device.h</a>&quot;</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00064.html">atca_command.h</a>&quot;</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00062.html">atca_cfgs.h</a>&quot;</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00058.html">basic/atca_basic.h</a>&quot;</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00083.html">basic/atca_helpers.h</a>&quot;</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="a00111.html#a8f200e8d61725d588e0b7815efb0dc25">   56</a></span>&#160;<span class="preprocessor">#define BREAK(status, message) break</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="a00111.html#a127536c92ac8b7d05d9a325cbec19805">   57</a></span>&#160;<span class="preprocessor">#define DBGOUT(message) break</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="a00111.html#a41aa74b584c0a5946789bc6eded1e460">   58</a></span>&#160;<span class="preprocessor">#define PRINT(message) break</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="a00064_html"><div class="ttname"><a href="a00064.html">atca_command.h</a></div><div class="ttdoc">Atmel Crypto Auth device command object - this is a command builder only, it does not send the comman...</div></div>
-<div class="ttc" id="a00062_html"><div class="ttname"><a href="a00062.html">atca_cfgs.h</a></div><div class="ttdoc">a set of default configurations for various ATCA devices and interfaces </div></div>
-<div class="ttc" id="a00090_html"><div class="ttname"><a href="a00090.html">atca_status.h</a></div><div class="ttdoc">Atmel Crypto Auth status codes. </div></div>
-<div class="ttc" id="a00083_html"><div class="ttname"><a href="a00083.html">atca_helpers.h</a></div><div class="ttdoc">Helpers to support the CryptoAuthLib Basic API methods. </div></div>
-<div class="ttc" id="a00058_html"><div class="ttname"><a href="a00058.html">atca_basic.h</a></div><div class="ttdoc">CryptoAuthLib Basic API methods - a simple crypto authentication api. These methods manage a global A...</div></div>
-<div class="ttc" id="a00081_html"><div class="ttname"><a href="a00081.html">atca_hal.h</a></div><div class="ttdoc">low-level HAL - methods used to setup indirection to physical layer interface </div></div>
-<div class="ttc" id="a00078_html"><div class="ttname"><a href="a00078.html">atca_device.h</a></div><div class="ttdoc">Atmel Crypto Auth device object. </div></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#ifndef ATCACERT_HOST_SOFT_H</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#define ATCACERT_HOST_SOFT_H</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00105.html">atcacert_def.h</a>&quot;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">// Inform function naming when compiling in C++</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00223.html#gab78271af8c3e2837810fcdae6e3f5e28">atcacert_verify_cert_sw</a>(<span class="keyword">const</span> <a class="code" href="a00039.html">atcacert_def_t</a>* cert_def,</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                            <span class="keyword">const</span> uint8_t*        cert,</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                            <span class="keywordtype">size_t</span>                cert_size,</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                            <span class="keyword">const</span> uint8_t         ca_public_key[64]);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00223.html#gaa9829e5aa1ece3d3a933db9827d3e8f3">atcacert_gen_challenge_sw</a>(uint8_t challenge[32]);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00223.html#ga9d5bf9ec84d28a0412377818805c32c4">atcacert_verify_response_sw</a>(<span class="keyword">const</span> uint8_t device_public_key[64],</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;                                <span class="keyword">const</span> uint8_t challenge[32],</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;                                <span class="keyword">const</span> uint8_t response[64]);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;}</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a00223_html_gab78271af8c3e2837810fcdae6e3f5e28"><div class="ttname"><a href="a00223.html#gab78271af8c3e2837810fcdae6e3f5e28">atcacert_verify_cert_sw</a></div><div class="ttdeci">int atcacert_verify_cert_sw(const atcacert_def_t *cert_def, const uint8_t *cert, size_t cert_size, const uint8_t ca_public_key[64])</div><div class="ttdoc">Verify a certificate against its certificate authority&#39;s public key using software crypto functions...</div><div class="ttdef"><b>Definition:</b> atcacert_host_sw.c:46</div></div>
+<div class="ttc" id="a00223_html_gaa9829e5aa1ece3d3a933db9827d3e8f3"><div class="ttname"><a href="a00223.html#gaa9829e5aa1ece3d3a933db9827d3e8f3">atcacert_gen_challenge_sw</a></div><div class="ttdeci">int atcacert_gen_challenge_sw(uint8_t challenge[32])</div><div class="ttdoc">Generate a random challenge to be sent to the client using a software PRNG. </div><div class="ttdef"><b>Definition:</b> atcacert_host_sw.c:73</div></div>
+<div class="ttc" id="a00039_html"><div class="ttname"><a href="a00039.html">atcacert_def_s</a></div><div class="ttdef"><b>Definition:</b> atcacert_def.h:159</div></div>
+<div class="ttc" id="a00223_html_ga9d5bf9ec84d28a0412377818805c32c4"><div class="ttname"><a href="a00223.html#ga9d5bf9ec84d28a0412377818805c32c4">atcacert_verify_response_sw</a></div><div class="ttdeci">int atcacert_verify_response_sw(const uint8_t device_public_key[64], const uint8_t challenge[32], const uint8_t response[64])</div><div class="ttdoc">Verify a client&#39;s response to a challenge using software crypto functions. </div><div class="ttdef"><b>Definition:</b> atcacert_host_sw.c:81</div></div>
+<div class="ttc" id="a00105_html"><div class="ttname"><a href="a00105.html">atcacert_def.h</a></div><div class="ttdoc">Declarations for certificates related to ECC CryptoAuthentication devices. These are the definitions ...</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00111.html">cryptoauthlib.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00111.html">atcacert_host_sw.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

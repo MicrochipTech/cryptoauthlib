@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: cryptoauthlib.h File Reference</title>
+<title>CryptoAuthLib: atcacert_host_sw.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,103 +106,41 @@ $(document).ready(function(){initNavTree('a00110.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">cryptoauthlib.h File Reference</div>  </div>
+<div class="title">atcacert_host_sw.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Single aggregation point for all CryptoAuthLib header files.  
+<p>host side methods using software implementations  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;string.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00080_source.html">hal/atca_hal.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00089_source.html">atca_status.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00077_source.html">atca_device.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00063_source.html">atca_command.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00061_source.html">atca_cfgs.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00057_source.html">basic/atca_basic.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00082_source.html">basic/atca_helpers.h</a>&quot;</code><br />
-</div>
-<p><a href="a00110_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a8f200e8d61725d588e0b7815efb0dc25"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00110.html#a8f200e8d61725d588e0b7815efb0dc25">BREAK</a>(status,  message)&#160;&#160;&#160;break</td></tr>
-<tr class="separator:a8f200e8d61725d588e0b7815efb0dc25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a127536c92ac8b7d05d9a325cbec19805"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00110.html#a127536c92ac8b7d05d9a325cbec19805">DBGOUT</a>(message)&#160;&#160;&#160;break</td></tr>
-<tr class="separator:a127536c92ac8b7d05d9a325cbec19805"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41aa74b584c0a5946789bc6eded1e460"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00110.html#a41aa74b584c0a5946789bc6eded1e460">PRINT</a>(message)&#160;&#160;&#160;break</td></tr>
-<tr class="separator:a41aa74b584c0a5946789bc6eded1e460"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00111_source.html">atcacert_host_sw.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00078_source.html">crypto/atca_crypto_sw_sha2.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00072_source.html">crypto/atca_crypto_sw_ecdsa.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00074_source.html">crypto/atca_crypto_sw_rand.h</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gab78271af8c3e2837810fcdae6e3f5e28"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#gab78271af8c3e2837810fcdae6e3f5e28">atcacert_verify_cert_sw</a> (const <a class="el" href="a00223.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, const uint8_t ca_public_key[64])</td></tr>
+<tr class="memdesc:gab78271af8c3e2837810fcdae6e3f5e28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a certificate against its certificate authority's public key using software crypto functions.  <a href="a00223.html#gab78271af8c3e2837810fcdae6e3f5e28">More...</a><br /></td></tr>
+<tr class="separator:gab78271af8c3e2837810fcdae6e3f5e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa9829e5aa1ece3d3a933db9827d3e8f3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#gaa9829e5aa1ece3d3a933db9827d3e8f3">atcacert_gen_challenge_sw</a> (uint8_t challenge[32])</td></tr>
+<tr class="memdesc:gaa9829e5aa1ece3d3a933db9827d3e8f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a random challenge to be sent to the client using a software PRNG.  <a href="a00223.html#gaa9829e5aa1ece3d3a933db9827d3e8f3">More...</a><br /></td></tr>
+<tr class="separator:gaa9829e5aa1ece3d3a933db9827d3e8f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d5bf9ec84d28a0412377818805c32c4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ga9d5bf9ec84d28a0412377818805c32c4">atcacert_verify_response_sw</a> (const uint8_t device_public_key[64], const uint8_t challenge[32], const uint8_t response[64])</td></tr>
+<tr class="memdesc:ga9d5bf9ec84d28a0412377818805c32c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a client's response to a challenge using software crypto functions.  <a href="a00223.html#ga9d5bf9ec84d28a0412377818805c32c4">More...</a><br /></td></tr>
+<tr class="separator:ga9d5bf9ec84d28a0412377818805c32c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Single aggregation point for all CryptoAuthLib header files. </p>
+<div class="textblock"><p>host side methods using software implementations </p>
 <p>Copyright (c) 2015 Atmel Corporation. All rights reserved.</p>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a8f200e8d61725d588e0b7815efb0dc25"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BREAK</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">status, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">message&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;break</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a127536c92ac8b7d05d9a325cbec19805"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DBGOUT</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">message</td><td>)</td>
-          <td>&#160;&#160;&#160;break</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a41aa74b584c0a5946789bc6eded1e460"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PRINT</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">message</td><td>)</td>
-          <td>&#160;&#160;&#160;break</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00110.html">cryptoauthlib.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00110.html">atcacert_host_sw.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

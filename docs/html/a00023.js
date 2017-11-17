@@ -1,13 +1,10 @@
 var a00023 =
 [
-    [ "atidle", "a00023.html#af98425da891944b45d56cebd93b131f6", null ],
-    [ "atinit", "a00023.html#a43753a99c2b46caab2ae85d0504f1f84", null ],
-    [ "atpostinit", "a00023.html#a0dd463e6dbb6121768480ab7b42ba604", null ],
-    [ "atreceive", "a00023.html#a7ebe5db4da26f30972448931b7500546", null ],
-    [ "atsend", "a00023.html#a343ec53c611863bf30624e5775782ab5", null ],
-    [ "atsleep", "a00023.html#ae643f9f7998343cc33822de00192626b", null ],
-    [ "atwake", "a00023.html#a6cb270146e07d7c258bca835fda84be5", null ],
-    [ "hal_data", "a00023.html#ad33508455720b78cc0fc880cb3f9885e", null ],
-    [ "mIfaceCFG", "a00023.html#abdd7b8bd26139998d9da63a4fa562735", null ],
-    [ "mType", "a00023.html#ab4f4855cbadf7c7d2d3fb019eded7c8a", null ]
+    [ "key", "a00227.html#gab0d96f9d852c2058c2546a1338e87544", null ],
+    [ "key_id", "a00227.html#ga3eedc11953a89e931ede529eb72592ac", null ],
+    [ "mode", "a00227.html#ga1a6b6fb557d8d37d59700faf4e4c9167", null ],
+    [ "otp", "a00227.html#ga8712cb73a4d6b370658d8bc9a77fba3e", null ],
+    [ "response", "a00227.html#ga8ab7bcb35ce5bba05608c72da6b4a0d3", null ],
+    [ "sn", "a00227.html#ga7276bd20c5842e712da638d25ceb6d92", null ],
+    [ "temp_key", "a00227.html#gaa17e031da4b22938bed1c21161ba371a", null ]
 ];

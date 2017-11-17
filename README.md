@@ -40,6 +40,41 @@ sequence using asymmetric techniques.
 
 Release notes
 -----------
+07/01/2017
+  - Removed assumption of SN[0:1]=0123, SN[8]=EE. SN now needs to be passed in
+for functions in atca_host and atca_basic functions will now read the config
+zone for the SN if needed.
+  - Renamed atcab_gendig_host() to atcab_gendig() since it's not a host
+function. Removed original atcab_gendig(), which had limited scope.
+  - Fixed atcah_hmac() for host side HMAC calculations. Added atcab_hmac().
+  - Removed unnecessary ATCADeviceType parameters from some atca_basic
+functions.
+  - Added atcacert_create_csr() to create a signed CSR.
+  - New HAL implementation for Kit protocol over HID on Linux
+    Please see the Incorporating CryptoAuthLib in a Linux project using USB HID devices section
+    in this file for more information.
+  - Added atcacert_write_cert() for writing certificates to the device.
+  - Added support for dynamic length certificate serial numbers in atcacert.
+  - Added atcab_write() for lower level write commands.
+  - Fixed atcah_write_auth_mac(), which had wrong OpCode.
+  - Added atcab_verify() command for lower level verify commands.
+  - Added atcab_verify_stored() for verifying data with a stored public key.
+  - Removed atcab_write_bytes_slot(). Use atcab_write_bytes_zone() instead.
+  - Modified atcab_write_bytes_zone() and atcab_read_bytes_zone() to specify a slot.
+  - Added atcab_verify_validate() and atcab_verify_invalidate()
+  - Improvements to host functions to handle more cases.
+  - Added atcab_updateextra(), atcab_derive_key()
+  - Added support for more certificate formats.
+  - Added general purpose hardware SHA256 functions. See atcab_hw_sha2_256().
+  - Removed device specific config read/write. Generic now handles both.
+  - Removed unnecessary response parameter from lock commands.
+  - Enhanced and added unit tests.
+  - Encrypted read and write functions now handle keys with SlotConfig.NoMac set.
+  - atcab_cmp_config_zone() handles all devices now.
+  - Fixed some edge cases in atcab_read_bytes_zone().
+  - Updated atSHA() to work with all devices.
+  - Fixed atcacert_get_device_locs() when using stored sn.
+  
 01/08/2016
   - New HAL implementations for
     - Single Wire interface for SAMD21 / SAMR21
@@ -102,7 +137,7 @@ The library is structured to support portability to:
 
 All platform dependencies are contained within the HAL (hardware abstraction layer).
 
-![CryptoAuthLib Architecture](./docs/CryptoAuthLib-Architecture.png "CryptoAuthLib Architecture" )
+![CryptoAuthLib Architecture](../CryptoAuthLib-Architecture.png "CryptoAuthLib Architecture" )
 
 There are three primary object types in CryptoAuthLib:
   - Device (ATCADevice)
@@ -111,9 +146,9 @@ There are three primary object types in CryptoAuthLib:
   
 ATCADevice is a composite object made up of ATCACommand ATCAIface.
 
-![ATCADevice](./docs/cryptoauthlib-uml/ATCADevice.png "ATCADevice and ATCACommand object" )
-![ATCAIface](./docs/cryptoauthlib-uml/ATCAIFace.png "ATCAIface object" )
-![Hardware abstraction layer](./docs/cryptoauthlib-uml/ATCAHal.png "CryptoAuth hardware abstraction layer" )
+![ATCADevice](../cryptoauthlib-uml/ATCADevice.png "ATCADevice and ATCACommand object" )
+![ATCAIface](../cryptoauthlib-uml/ATCAIFace.png "ATCAIface object" )
+![Hardware abstraction layer](../cryptoauthlib-uml/ATCAHal.png "CryptoAuth hardware abstraction layer" )
 
 Currently, the vast majority of testing has been performed on:
 
@@ -252,3 +287,29 @@ hook up the CryptoAuthLib interface class with your HAL implementation of I2C me
 
 3) HAL implementations for CDC and HID interfaces to the ATCK101 are also included for
 use with Windows or Linux versions of the test host.
+
+Incorporating CryptoAuthLib in a Linux project using USB HID devices
+-----------------------------------------
+The Linux HID HAL files use the Linux udev development software package.
+
+To install the udev development package under Ubuntu Linux, please type the following
+command at the terminaLlwindow:
+
+```bash
+sudo apt-get install libudev-dev
+```
+
+This adds the udev development development software package to the Ubuntu Linux installation.
+
+
+The Linux HID HAL files also require a udev rule to be added to change the permissions of the 
+USB HID Devices.  Please add a new udev rule for the Atmel CryptoAuth USB devices.
+
+```bash
+cd /etc/udev/rules.d
+sudo touch atmel-cryptoauth.rules
+```
+
+Edit the atmel-cryptoauth.rules file and add the following line to the file:
+
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2312", MODE="0666"

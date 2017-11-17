@@ -1,18 +1,10 @@
 var a00190 =
 [
-    [ "atca_device", "a00019.html", [
-      [ "mCommands", "a00019.html#aac7a3ed180ba0fcf0d86f7b54ebc1379", null ],
-      [ "mIface", "a00019.html#aca75c68806e47e95144dc86a3f50d236", null ]
-    ] ],
-    [ "ATCADevice", "a00190.html#gaa94f7bb4af0a3d6735225cc85d92cb50", null ],
-    [ "ATCADeviceType", "a00190.html#gafb234ccd6a80d09c0efbe336c2354267", [
-      [ "ATSHA204A", "a00190.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268", null ],
-      [ "ATECC108A", "a00190.html#ggafb234ccd6a80d09c0efbe336c2354267a20efd97b5b1001eec4a52e0ed5bf594c", null ],
-      [ "ATECC508A", "a00190.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae", null ],
-      [ "ATCA_DEV_UNKNOWN", "a00190.html#ggafb234ccd6a80d09c0efbe336c2354267a3488f672341dda0ad20508ad888280ad", null ]
-    ] ],
-    [ "atGetCommands", "a00190.html#gabf51c08f1928fc5ec44936f3117a9f7e", null ],
-    [ "atGetIFace", "a00190.html#ga3f98e29cffa06446fc91b329703606af", null ],
-    [ "deleteATCADevice", "a00190.html#ga57b4bc57010a0bcaf6385703c63d156c", null ],
-    [ "newATCADevice", "a00190.html#gad5e12e12d3030e28d75164286df9e5e9", null ]
+    [ "swi_uart_deinit", "a00226.html#ga0b1aad3936bf003686d8db7fa2be5132", null ],
+    [ "swi_uart_discover_buses", "a00226.html#gad640b598d581ee7c8a4c804bee602906", null ],
+    [ "swi_uart_init", "a00226.html#ga003b63648f1a5f9eba274760559688f2", null ],
+    [ "swi_uart_mode", "a00226.html#gacc2a96c86ce4c07249b81bc6a7eb2e41", null ],
+    [ "swi_uart_receive_byte", "a00226.html#ga93f3dab17c14f71641ca970998ede823", null ],
+    [ "swi_uart_send_byte", "a00226.html#ga4a4d491006d9683d67838963706ac9c1", null ],
+    [ "swi_uart_setbaud", "a00226.html#gaba296f70baf68b768d6c4bb9cf7ba67d", null ]
 ];

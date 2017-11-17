@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: atca_host.c File Reference</title>
+<title>CryptoAuthLib: atca_devtypes.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,71 +106,35 @@ $(document).ready(function(){initNavTree('a00083.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">atca_host.c File Reference</div>  </div>
+<div class="title">atca_devtypes.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Host side methods to support CryptoAuth computations.  
+<p>Atmel Crypto Auth.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00084_source.html">atca_host.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00073_source.html">crypto/atca_crypto_sw_sha2.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gad456d2c1172343bb40d8cd0e391d44f4"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#gad456d2c1172343bb40d8cd0e391d44f4">atcah_include_data</a> (struct <a class="el" href="a00024.html">atca_include_data_in_out</a> *param)</td></tr>
-<tr class="memdesc:gad456d2c1172343bb40d8cd0e391d44f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function copies otp and sn data into a command buffer.  <a href="a00196.html#gad456d2c1172343bb40d8cd0e391d44f4">More...</a><br /></td></tr>
-<tr class="separator:gad456d2c1172343bb40d8cd0e391d44f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ee18575f8b4c1560f9e5c741403ef1b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga9ee18575f8b4c1560f9e5c741403ef1b">atcah_nonce</a> (struct <a class="el" href="a00026.html">atca_nonce_in_out</a> *param)</td></tr>
-<tr class="memdesc:ga9ee18575f8b4c1560f9e5c741403ef1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function calculates a 32-byte nonce based on a 20-byte input value (param-&gt;num_in) and 32-byte random number (param-&gt;rand_out).  <a href="a00196.html#ga9ee18575f8b4c1560f9e5c741403ef1b">More...</a><br /></td></tr>
-<tr class="separator:ga9ee18575f8b4c1560f9e5c741403ef1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga44361cadf1819cea687208eeadd57059"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga44361cadf1819cea687208eeadd57059">atcah_mac</a> (struct <a class="el" href="a00025.html">atca_mac_in_out</a> *param)</td></tr>
-<tr class="memdesc:ga44361cadf1819cea687208eeadd57059"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function generates an SHA-256 digest (MAC) of a key, challenge, and other information.  <a href="a00196.html#ga44361cadf1819cea687208eeadd57059">More...</a><br /></td></tr>
-<tr class="separator:ga44361cadf1819cea687208eeadd57059"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5b457cd0ccba73864eee4030b6079ba7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga5b457cd0ccba73864eee4030b6079ba7">atcah_check_mac</a> (struct <a class="el" href="a00014.html">atca_check_mac_in_out</a> *param)</td></tr>
-<tr class="memdesc:ga5b457cd0ccba73864eee4030b6079ba7"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function calculates a SHA-256 digest (MAC) of a password and other information, to be verified using the CheckMac device command.  <a href="a00196.html#ga5b457cd0ccba73864eee4030b6079ba7">More...</a><br /></td></tr>
-<tr class="separator:ga5b457cd0ccba73864eee4030b6079ba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab17435577e546d2954bd697f21e6d3cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#gab17435577e546d2954bd697f21e6d3cc">atcah_hmac</a> (struct <a class="el" href="a00022.html">atca_hmac_in_out</a> *param)</td></tr>
-<tr class="memdesc:gab17435577e546d2954bd697f21e6d3cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function generates an HMAC / SHA-256 hash of a key and other information.  <a href="a00196.html#gab17435577e546d2954bd697f21e6d3cc">More...</a><br /></td></tr>
-<tr class="separator:gab17435577e546d2954bd697f21e6d3cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6f6043ba8eebbaab6e6f3b4fa5e31ad4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga6f6043ba8eebbaab6e6f3b4fa5e31ad4">atcah_gen_dig</a> (struct <a class="el" href="a00021.html">atca_gen_dig_in_out</a> *param)</td></tr>
-<tr class="memdesc:ga6f6043ba8eebbaab6e6f3b4fa5e31ad4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function combines the current TempKey with a stored value.  <a href="a00196.html#ga6f6043ba8eebbaab6e6f3b4fa5e31ad4">More...</a><br /></td></tr>
-<tr class="separator:ga6f6043ba8eebbaab6e6f3b4fa5e31ad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga43ef2dc1159f28fbb100a2b9bf150c0c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga43ef2dc1159f28fbb100a2b9bf150c0c">atcah_gen_mac</a> (struct <a class="el" href="a00021.html">atca_gen_dig_in_out</a> *param)</td></tr>
-<tr class="memdesc:ga43ef2dc1159f28fbb100a2b9bf150c0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function combines the session key with a plain text.  <a href="a00196.html#ga43ef2dc1159f28fbb100a2b9bf150c0c">More...</a><br /></td></tr>
-<tr class="separator:ga43ef2dc1159f28fbb100a2b9bf150c0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47853951c57803eff1432780bf360057"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga47853951c57803eff1432780bf360057">atcah_write_auth_mac</a> (struct <a class="el" href="a00029.html">atca_write_mac_in_out</a> *param)</td></tr>
-<tr class="memdesc:ga47853951c57803eff1432780bf360057"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function calculates the input MAC for the PrivWrite command.  <a href="a00196.html#ga47853951c57803eff1432780bf360057">More...</a><br /></td></tr>
-<tr class="separator:ga47853951c57803eff1432780bf360057"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaed8aa58875c6bdf46a937313e69c6ebb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#gaed8aa58875c6bdf46a937313e69c6ebb">atcah_privwrite_auth_mac</a> (struct <a class="el" href="a00029.html">atca_write_mac_in_out</a> *param)</td></tr>
-<tr class="memdesc:gaed8aa58875c6bdf46a937313e69c6ebb"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function calculates the input MAC for the PrivWrite command.  <a href="a00196.html#gaed8aa58875c6bdf46a937313e69c6ebb">More...</a><br /></td></tr>
-<tr class="separator:gaed8aa58875c6bdf46a937313e69c6ebb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga02b3479eaee1bd1741675c2a1249ffda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga02b3479eaee1bd1741675c2a1249ffda">atcah_derive_key</a> (struct <a class="el" href="a00017.html">atca_derive_key_in_out</a> *param)</td></tr>
-<tr class="memdesc:ga02b3479eaee1bd1741675c2a1249ffda"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function combines a key with the TempKey.  <a href="a00196.html#ga02b3479eaee1bd1741675c2a1249ffda">More...</a><br /></td></tr>
-<tr class="separator:ga02b3479eaee1bd1741675c2a1249ffda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga60fc543b3df6fa1dedfbf59e5bde554b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga60fc543b3df6fa1dedfbf59e5bde554b">atcah_derive_key_mac</a> (struct <a class="el" href="a00018.html">atca_derive_key_mac_in_out</a> *param)</td></tr>
-<tr class="memdesc:ga60fc543b3df6fa1dedfbf59e5bde554b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function calculates the input MAC for a DeriveKey command.  <a href="a00196.html#ga60fc543b3df6fa1dedfbf59e5bde554b">More...</a><br /></td></tr>
-<tr class="separator:ga60fc543b3df6fa1dedfbf59e5bde554b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9c30b48aca74b9d0bef5cdbfe39fbd36"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga9c30b48aca74b9d0bef5cdbfe39fbd36">atcah_encrypt</a> (struct <a class="el" href="a00020.html">atca_encrypt_in_out</a> *param)</td></tr>
-<tr class="memdesc:ga9c30b48aca74b9d0bef5cdbfe39fbd36"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function encrypts 32-byte plain text data to be written using Write opcode, and optionally calculates input MAC.  <a href="a00196.html#ga9c30b48aca74b9d0bef5cdbfe39fbd36">More...</a><br /></td></tr>
-<tr class="separator:ga9c30b48aca74b9d0bef5cdbfe39fbd36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga89408b8338dd9f43c4ba85b2a082c3ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ga89408b8338dd9f43c4ba85b2a082c3ae">atcah_decrypt</a> (struct <a class="el" href="a00016.html">atca_decrypt_in_out</a> *param)</td></tr>
-<tr class="memdesc:ga89408b8338dd9f43c4ba85b2a082c3ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function decrypts 32-byte encrypted data received with the Read command.  <a href="a00196.html#ga89408b8338dd9f43c4ba85b2a082c3ae">More...</a><br /></td></tr>
-<tr class="separator:ga89408b8338dd9f43c4ba85b2a082c3ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad7e2217cd71b77b6c1b08f2f2f6f0a3e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#gad7e2217cd71b77b6c1b08f2f2f6f0a3e">atcah_sha256</a> (int32_t len, const uint8_t *message, uint8_t *digest)</td></tr>
-<tr class="memdesc:gad7e2217cd71b77b6c1b08f2f2f6f0a3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function creates a SHA256 digest on a little-endian system.  <a href="a00196.html#gad7e2217cd71b77b6c1b08f2f2f6f0a3e">More...</a><br /></td></tr>
-<tr class="separator:gad7e2217cd71b77b6c1b08f2f2f6f0a3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+
+<p><a href="a00083_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gafb234ccd6a80d09c0efbe336c2354267"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00221.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a> { <a class="el" href="a00221.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268">ATSHA204A</a>, 
+<a class="el" href="a00221.html#ggafb234ccd6a80d09c0efbe336c2354267a20efd97b5b1001eec4a52e0ed5bf594c">ATECC108A</a>, 
+<a class="el" href="a00221.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae">ATECC508A</a>, 
+<a class="el" href="a00221.html#ggafb234ccd6a80d09c0efbe336c2354267a3488f672341dda0ad20508ad888280ad">ATCA_DEV_UNKNOWN</a> = 0x20
+ }<tr class="separator:gafb234ccd6a80d09c0efbe336c2354267"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Host side methods to support CryptoAuth computations. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2015 Atmel Corporation. All rights reserved.</dd></dl>
+<div class="textblock"><p>Atmel Crypto Auth. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b2187fb9aff39e17c00391b7def58804.html">host</a></li><li class="navelem"><a class="el" href="a00083.html">atca_host.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00083.html">atca_devtypes.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

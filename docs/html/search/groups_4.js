@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['software_20crypto_20methods_20_28atcac_5f_29',['Software crypto methods (atcac_)',['../a00194.html',1,'']]]
+  ['node_20authentication_20stages_20for_20node_2dauth_2dbasic_20example',['Node authentication stages for node-auth-basic example',['../a00229.html',1,'']]]
 ];

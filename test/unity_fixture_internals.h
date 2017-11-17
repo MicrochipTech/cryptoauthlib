@@ -8,11 +8,12 @@
 #ifndef UNITY_FIXTURE_INTERNALS_H_
 #define UNITY_FIXTURE_INTERNALS_H_
 
-typedef struct _UNITY_FIXTURE_T {
-	int Verbose;
-	unsigned int RepeatCount;
-	const char* NameFilter;
-	const char* GroupFilter;
+typedef struct _UNITY_FIXTURE_T
+{
+    int          Verbose;
+    unsigned int RepeatCount;
+    const char*  NameFilter;
+    const char*  GroupFilter;
 } UNITY_FIXTURE_T;
 
 typedef void unityfunction (void);
@@ -35,9 +36,9 @@ void UnityPointer_Set(void ** ptr, void * newValue);
 void UnityPointer_UndoAllSets(void);
 void UnityPointer_Init(void);
 
-void UnityAssertEqualPointer(const void * expected,
-                             const void * actual,
-                             const char* msg,
+void UnityAssertEqualPointer(const void *          expected,
+                             const void *          actual,
+                             const char*           msg,
                              const UNITY_LINE_TYPE lineNumber);
 
 #endif /* UNITY_FIXTURE_INTERNALS_H_ */

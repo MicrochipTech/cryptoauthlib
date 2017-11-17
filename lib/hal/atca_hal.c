@@ -5,14 +5,13 @@
  * low-level physical interfaces.  Its main goal is to keep low-level details from bleeding into
  * the logical interface implemetation.
  *
- * Copyright (c) 2015 Atmel Corporation. All rights reserved.
- *
- * \atmel_crypto_device_library_license_start
+ * \copyright Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries (Microchip). All rights reserved.
  *
  * \page License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * You are permitted to use this software and its derivatives with Microchip
+ * products. Redistribution and use in source and binary forms, with or without
+ * modification, is permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
@@ -21,16 +20,16 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  *
- * 3. The name of Atmel may not be used to endorse or promote products derived
+ * 3. The name of Microchip may not be used to endorse or promote products derived
  *    from this software without specific prior written permission.
  *
- * 4. This software may only be redistributed and used in connection with an
- *    Atmel integrated circuit.
+ * 4. This software may only be redistributed and used in connection with a
+ *    Microchip integrated circuit.
  *
- * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
+ * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
+ * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL MICROCHIP BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
@@ -38,8 +37,6 @@
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
- * \atmel_crypto_device_library_license_stop
  */
 
 
@@ -54,85 +51,103 @@
  * \param[in] hal pointer to ATCAHAL_t intermediate datastructure
  */
 
-ATCA_STATUS hal_iface_init( ATCAIfaceCfg *cfg, ATCAHAL_t *hal )
+ATCA_STATUS hal_iface_init(ATCAIfaceCfg *cfg, ATCAHAL_t *hal)
 {
-	// Because C isn't a real object oriented language or dynamically typed, some switch in the overall system is unavoidable
-	// The key here is to provide the flexibility to include just the types of interfaces you want/need without breaking the
-	// object model.  The former is needed so in an embedded, constrained memory environment, you don't have to pay the price
-	// (in terms of memory) for interfaces you don't use in your application.
-	ATCA_STATUS status = ATCA_COMM_FAIL;
+    // Because C isn't a real object oriented language or dynamically typed, some switch in the overall system is unavoidable
+    // The key here is to provide the flexibility to include just the types of interfaces you want/need without breaking the
+    // object model.  The former is needed so in an embedded, constrained memory environment, you don't have to pay the price
+    // (in terms of memory) for interfaces you don't use in your application.
+    ATCA_STATUS status = ATCA_COMM_FAIL;
 
-	switch (cfg->iface_type) {
-	case ATCA_I2C_IFACE:
-		#ifdef ATCA_HAL_I2C
-		hal->halinit = &hal_i2c_init;
-		hal->halpostinit = &hal_i2c_post_init;
-		hal->halreceive = &hal_i2c_receive;
-		hal->halsend = &hal_i2c_send;
-		hal->halsleep = &hal_i2c_sleep;
-		hal->halwake = &hal_i2c_wake;
-		hal->halidle = &hal_i2c_idle;
-		hal->halrelease = &hal_i2c_release;
-		hal->hal_data = NULL;
+    switch (cfg->iface_type)
+    {
+    case ATCA_I2C_IFACE:
+        #ifdef ATCA_HAL_I2C
+        hal->halinit = &hal_i2c_init;
+        hal->halpostinit = &hal_i2c_post_init;
+        hal->halreceive = &hal_i2c_receive;
+        hal->halsend = &hal_i2c_send;
+        hal->halsleep = &hal_i2c_sleep;
+        hal->halwake = &hal_i2c_wake;
+        hal->halidle = &hal_i2c_idle;
+        hal->halrelease = &hal_i2c_release;
+        hal->hal_data = NULL;
 
-		status = ATCA_SUCCESS;
-		#endif
-		break;
-	case ATCA_SWI_IFACE:
-		#ifdef ATCA_HAL_SWI
-		hal->halinit = &hal_swi_init;
-		hal->halpostinit = &hal_swi_post_init;
-		hal->halreceive = &hal_swi_receive;
-		hal->halsend = &hal_swi_send;
-		hal->halsleep = &hal_swi_sleep;
-		hal->halwake = &hal_swi_wake;
-		hal->halidle = &hal_swi_idle;
-		hal->halrelease = &hal_swi_release;
-		hal->hal_data = NULL;
+        status = ATCA_SUCCESS;
+        #endif
+        break;
+    case ATCA_SWI_IFACE:
+        #ifdef ATCA_HAL_SWI
+        hal->halinit = &hal_swi_init;
+        hal->halpostinit = &hal_swi_post_init;
+        hal->halreceive = &hal_swi_receive;
+        hal->halsend = &hal_swi_send;
+        hal->halsleep = &hal_swi_sleep;
+        hal->halwake = &hal_swi_wake;
+        hal->halidle = &hal_swi_idle;
+        hal->halrelease = &hal_swi_release;
+        hal->hal_data = NULL;
 
-		status = ATCA_SUCCESS;
-		#endif
-		break;
-	case ATCA_UART_IFACE:
-		#ifdef ATCA_HAL_UART
-		// TODO - initialize UART iface
-		#endif
-		#ifdef ATCA_HAL_KIT_CDC
-		hal->halinit = &hal_kit_cdc_init;
-		hal->halpostinit = &hal_kit_cdc_post_init;
-		hal->halreceive = &hal_kit_cdc_receive;
-		hal->halsend = &hal_kit_cdc_send;
-		hal->halsleep = &hal_kit_cdc_sleep;
-		hal->halwake = &hal_kit_cdc_wake;
-		hal->halidle = &hal_kit_cdc_idle;
-		hal->halrelease = &hal_kit_cdc_release;
-		hal->hal_data = NULL;
+        status = ATCA_SUCCESS;
+        #endif
+        break;
+    case ATCA_UART_IFACE:
+        #ifdef ATCA_HAL_UART
+        // TODO - initialize UART iface
+        #endif
+        #ifdef ATCA_HAL_KIT_CDC
+        hal->halinit = &hal_kit_cdc_init;
+        hal->halpostinit = &hal_kit_cdc_post_init;
+        hal->halreceive = &hal_kit_cdc_receive;
+        hal->halsend = &hal_kit_cdc_send;
+        hal->halsleep = &hal_kit_cdc_sleep;
+        hal->halwake = &hal_kit_cdc_wake;
+        hal->halidle = &hal_kit_cdc_idle;
+        hal->halrelease = &hal_kit_cdc_release;
+        hal->hal_data = NULL;
 
-		status = ATCA_SUCCESS;
-		#endif
-		break;
-	case ATCA_SPI_IFACE:
-		#ifdef ATCA_HAL_SPI
-		// TODO - initialize SPI iface
-		#endif
-		break;
-	case ATCA_HID_IFACE:
-		#ifdef ATCA_HAL_KIT_HID
-		hal->halinit = &hal_kit_hid_init;
-		hal->halpostinit = &hal_kit_hid_post_init;
-		hal->halreceive = &hal_kit_hid_receive;
-		hal->halsend = &hal_kit_hid_send;
-		hal->halsleep = &hal_kit_hid_sleep;
-		hal->halwake = &hal_kit_hid_wake;
-		hal->halidle = &hal_kit_hid_idle;
-		hal->halrelease = &hal_kit_hid_release;
-		hal->hal_data = NULL;
+        status = ATCA_SUCCESS;
+        #endif
+        break;
+    case ATCA_SPI_IFACE:
+        #ifdef ATCA_HAL_SPI
+        // TODO - initialize SPI iface
+        #endif
+        break;
+    case ATCA_HID_IFACE:
+        #ifdef ATCA_HAL_KIT_HID
+        hal->halinit = &hal_kit_hid_init;
+        hal->halpostinit = &hal_kit_hid_post_init;
+        hal->halreceive = &hal_kit_hid_receive;
+        hal->halsend = &hal_kit_hid_send;
+        hal->halsleep = &hal_kit_hid_sleep;
+        hal->halwake = &hal_kit_hid_wake;
+        hal->halidle = &hal_kit_hid_idle;
+        hal->halrelease = &hal_kit_hid_release;
+        hal->hal_data = NULL;
 
-		status = ATCA_SUCCESS;
-		#endif
-		break;
-	}
-	return status;
+        status = ATCA_SUCCESS;
+        #endif
+        break;
+    case ATCA_SIM_IFACE:
+        #ifdef ATCA_HAL_SIM
+        hal->halinit = &hal_sim_init;
+        hal->halpostinit = &hal_sim_post_init;
+        hal->halreceive = &hal_sim_receive;
+        hal->halsend = &hal_sim_send;
+        hal->halsleep = &hal_sim_sleep;
+        hal->halwake = &hal_sim_wake;
+        hal->halidle = &hal_sim_idle;
+        hal->halrelease = &hal_sim_release;
+        hal->hal_data = NULL;
+
+        status = ATCA_SUCCESS;
+        #endif
+        break;
+    default:
+        break;
+    }
+    return status;
 }
 
 /** \brief releases a physical interface, HAL knows how to interpret hal_data
@@ -140,40 +155,48 @@ ATCA_STATUS hal_iface_init( ATCAIfaceCfg *cfg, ATCAHAL_t *hal )
  * \param[in] hal_data - pointer to opaque hal data maintained by HAL implementation for this interface type
  */
 
-ATCA_STATUS hal_iface_release( ATCAIfaceType ifacetype, void *hal_data )
+ATCA_STATUS hal_iface_release(ATCAIfaceType ifacetype, void *hal_data)
 {
-	ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status = ATCA_GEN_FAIL;
 
-	switch (ifacetype) {
-	case ATCA_I2C_IFACE:
-			#ifdef ATCA_HAL_I2C
-		status = hal_i2c_release(hal_data);
-			#endif
-		break;
-	case ATCA_SWI_IFACE:
-			#ifdef ATCA_HAL_SWI
-		status = hal_swi_release(hal_data);
-			#endif
-		break;
-	case ATCA_UART_IFACE:
-			#ifdef ATCA_HAL_UART
-		// TODO - release HAL UART
-			#endif
-			#ifdef ATCA_HAL_KIT_CDC
-		status = hal_kit_cdc_release(hal_data);
-			#endif
-		break;
-	case ATCA_SPI_IFACE:
-			#ifdef ATCA_HAL_SPI
-		// TODO - release HAL SPI
-			#endif
-		break;
-	case ATCA_HID_IFACE:
-			#ifdef ATCA_HAL_KIT_HID
-		status = hal_kit_hid_release(hal_data);
-			#endif
-		break;
-	}
+    switch (ifacetype)
+    {
+    case ATCA_I2C_IFACE:
+            #ifdef ATCA_HAL_I2C
+        status = hal_i2c_release(hal_data);
+            #endif
+        break;
+    case ATCA_SWI_IFACE:
+            #ifdef ATCA_HAL_SWI
+        status = hal_swi_release(hal_data);
+            #endif
+        break;
+    case ATCA_UART_IFACE:
+            #ifdef ATCA_HAL_UART
+        // TODO - release HAL UART
+            #endif
+            #ifdef ATCA_HAL_KIT_CDC
+        status = hal_kit_cdc_release(hal_data);
+            #endif
+        break;
+    case ATCA_SPI_IFACE:
+            #ifdef ATCA_HAL_SPI
+        // TODO - release HAL SPI
+            #endif
+        break;
+    case ATCA_HID_IFACE:
+            #ifdef ATCA_HAL_KIT_HID
+        status = hal_kit_hid_release(hal_data);
+            #endif
+        break;
+    case ATCA_SIM_IFACE:
+#ifdef ATCA_HAL_SIM
+        status = hal_sim_release(hal_data);
+#endif
+        break;
+    default:
+        break;
+    }
 
-	return status;
+    return status;
 }

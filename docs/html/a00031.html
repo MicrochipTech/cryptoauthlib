@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>CryptoAuthLib: atcac_sha2_256_ctx Struct Reference</title>
+<title>CryptoAuthLib: atca_verify_in_out Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -109,39 +109,38 @@ $(document).ready(function(){initNavTree('a00031.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atcac_sha2_256_ctx Struct Reference<div class="ingroups"><a class="el" href="a00194.html">Software crypto methods (atcac_)</a></div></div>  </div>
+<div class="title">atca_verify_in_out Struct Reference<div class="ingroups"><a class="el" href="a00227.html">Host side crypto methods (atcah_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="a00073_source.html">atca_crypto_sw_sha2.h</a>&gt;</code></p>
+<p>Input/output parameters for function atcah_verify().  
+ <a href="a00031.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="a00089_source.html">atca_host.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a517ae98c637466c44dc7e26a3abccf02"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html#a517ae98c637466c44dc7e26a3abccf02">pad</a> [48]</td></tr>
-<tr class="memdesc:a517ae98c637466c44dc7e26a3abccf02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filler value to make sure the actual implementation has enough room to store its context. uint32_t is used to remove some alignment warnings.  <a href="#a517ae98c637466c44dc7e26a3abccf02">More...</a><br /></td></tr>
-<tr class="separator:a517ae98c637466c44dc7e26a3abccf02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9be4eee4ac6c9248a824d093f165839e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#ga9be4eee4ac6c9248a824d093f165839e">curve_type</a></td></tr>
+<tr class="memdesc:ga9be4eee4ac6c9248a824d093f165839e"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Curve type used in Verify command (Param2).  <a href="a00227.html#ga9be4eee4ac6c9248a824d093f165839e">More...</a><br /></td></tr>
+<tr class="separator:ga9be4eee4ac6c9248a824d093f165839e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac97246a9059d3f687edfcbe5abfc5d8f"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#gac97246a9059d3f687edfcbe5abfc5d8f">signature</a></td></tr>
+<tr class="memdesc:gac97246a9059d3f687edfcbe5abfc5d8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to ECDSA signature to be verified  <a href="a00227.html#gac97246a9059d3f687edfcbe5abfc5d8f">More...</a><br /></td></tr>
+<tr class="separator:gac97246a9059d3f687edfcbe5abfc5d8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacea547aa606ca17f8da337a1b58972a1"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#gacea547aa606ca17f8da337a1b58972a1">public_key</a></td></tr>
+<tr class="memdesc:gacea547aa606ca17f8da337a1b58972a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to the public key to be used for verification  <a href="a00227.html#gacea547aa606ca17f8da337a1b58972a1">More...</a><br /></td></tr>
+<tr class="separator:gacea547aa606ca17f8da337a1b58972a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa17e031da4b22938bed1c21161ba371a"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a00030.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#gaa17e031da4b22938bed1c21161ba371a">temp_key</a></td></tr>
+<tr class="memdesc:gaa17e031da4b22938bed1c21161ba371a"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in,out] Pointer to TempKey structure.  <a href="a00227.html#gaa17e031da4b22938bed1c21161ba371a">More...</a><br /></td></tr>
+<tr class="separator:gaa17e031da4b22938bed1c21161ba371a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a517ae98c637466c44dc7e26a3abccf02"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t pad[48]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Filler value to make sure the actual implementation has enough room to store its context. uint32_t is used to remove some alignment warnings. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Input/output parameters for function atcah_verify(). </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00031.html">atcac_sha2_256_ctx</a></li>
+    <li class="navelem"><a class="el" href="a00031.html">atca_verify_in_out</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
