@@ -1,0 +1,58 @@
+var a00191 =
+[
+    [ "atca_iface", "a00023.html", [
+      [ "atidle", "a00023.html#af98425da891944b45d56cebd93b131f6", null ],
+      [ "atinit", "a00023.html#a43753a99c2b46caab2ae85d0504f1f84", null ],
+      [ "atpostinit", "a00023.html#a0dd463e6dbb6121768480ab7b42ba604", null ],
+      [ "atreceive", "a00023.html#a7ebe5db4da26f30972448931b7500546", null ],
+      [ "atsend", "a00023.html#a343ec53c611863bf30624e5775782ab5", null ],
+      [ "atsleep", "a00023.html#ae643f9f7998343cc33822de00192626b", null ],
+      [ "atwake", "a00023.html#a6cb270146e07d7c258bca835fda84be5", null ],
+      [ "hal_data", "a00023.html#ad33508455720b78cc0fc880cb3f9885e", null ],
+      [ "mIfaceCFG", "a00023.html#abdd7b8bd26139998d9da63a4fa562735", null ],
+      [ "mType", "a00023.html#ab4f4855cbadf7c7d2d3fb019eded7c8a", null ]
+    ] ],
+    [ "ATCAIfaceCfg", "a00043.html", [
+      [ "atcahid", "a00043.html#aa757f95b731b8dfdd4ce785e26944728", null ],
+      [ "atcai2c", "a00043.html#a88f8040c47fc046b2198a26f4ed3faf0", null ],
+      [ "atcaswi", "a00043.html#a9670d2ececfd8d536f8e6b629ab7b1ed", null ],
+      [ "atcauart", "a00043.html#a0b39f87d1a01274c9da57768841683c3", null ],
+      [ "baud", "a00043.html#ac6e5ec63505c02923d71f7409cdbf1d1", null ],
+      [ "bus", "a00043.html#a5262d4a80e6a0b6dce6fd57d4656786d", null ],
+      [ "cfg_data", "a00043.html#a97e106cc7267316cf40988744b231111", null ],
+      [ "devtype", "a00043.html#a05f2d72f4feff51d21be443c82d02192", null ],
+      [ "guid", "a00043.html#af6dd59cf5b43526a4c6ccd515042af73", null ],
+      [ "idx", "a00043.html#ae40354a1051342eb5a9db005715dcfa9", null ],
+      [ "iface_type", "a00043.html#a3d0753b214d2a12df80f22b56bfc6e71", null ],
+      [ "packetsize", "a00043.html#aba242bb3690d4d5a7de01474f94cb4ab", null ],
+      [ "parity", "a00043.html#aa0e72b59c63431c62f5b5eba36a65d17", null ],
+      [ "pid", "a00043.html#aec32162d9dc3fde2c76d766af522dae5", null ],
+      [ "port", "a00043.html#a63c89c04d1feae07ca35558055155ffb", null ],
+      [ "rx_retries", "a00043.html#aa9ce255f8b9bff64fe261235f9e70c03", null ],
+      [ "slave_address", "a00043.html#ac93868aeda435dfb685a0a0020e5c7a4", null ],
+      [ "stopbits", "a00043.html#a9de35842403baab5738ea16162012d4f", null ],
+      [ "vid", "a00043.html#a98780fe4ab562a61abfd7870ea0910c3", null ],
+      [ "wake_delay", "a00043.html#a058e797431a238154c5347fa26982044", null ],
+      [ "wordsize", "a00043.html#ae696a833509f858d17988acdb1deb161", null ]
+    ] ],
+    [ "ATCAIface", "a00191.html#ga75c11126f3fe81df3d6c27f5bb393303", null ],
+    [ "ATCAIfaceType", "a00191.html#gac7f674d4a0afb12d2f3c9c5e98cb1089", [
+      [ "ATCA_I2C_IFACE", "a00191.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a872efba3aa5b7890acfe0f1e0e453bcb", null ],
+      [ "ATCA_SWI_IFACE", "a00191.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a2ce2e46b7f4245ab3d750ea2805fdc26", null ],
+      [ "ATCA_UART_IFACE", "a00191.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a80ec8c070f1c711f2b16ad39d2a0486d", null ],
+      [ "ATCA_SPI_IFACE", "a00191.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a8d50943acfc67f797b9c8fbf565deeb7", null ],
+      [ "ATCA_HID_IFACE", "a00191.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a7da282c54282a02f5650c38a85d0dfb1", null ]
+    ] ],
+    [ "_atinit", "a00191.html#ga3b1d17552f8f14e064a3961d3e64b879", null ],
+    [ "atgetifacecfg", "a00191.html#ga638aef05f5ac23ea92d46d5fee4c7673", null ],
+    [ "atgetifacehaldat", "a00191.html#gab14097df78ab41a0f63b74b752f88b61", null ],
+    [ "atidle", "a00191.html#gad39ff3227b81543a394693263a8baee4", null ],
+    [ "atinit", "a00191.html#gaea9da7766b8f10ea6bf9f5fe972fedd7", null ],
+    [ "atpostinit", "a00191.html#ga549ef825b08fd145a8cbf1df534afcf9", null ],
+    [ "atreceive", "a00191.html#ga3505133e7f12f6ce69c69c95a3e8d0a4", null ],
+    [ "atsend", "a00191.html#ga4bd3260f3dd7a918869e6e82b9de441f", null ],
+    [ "atsleep", "a00191.html#gad1f603149e99a09125a4c3d32a36287e", null ],
+    [ "atwake", "a00191.html#ga2a0bb1c9b9023550dd3cd28d8a969f46", null ],
+    [ "deleteATCAIface", "a00191.html#ga310a734a1428491a394649015e8f5552", null ],
+    [ "newATCAIface", "a00191.html#ga6f28f18f0d00c5301939724325f6b6fc", null ]
+];
