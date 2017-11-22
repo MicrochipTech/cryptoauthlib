@@ -46,6 +46,9 @@ Examples
 
 Release notes
 -----------
+11/22/2017
+  - Added support for FLEXCOM6 on SAMG55 driver
+  
 11/17/2017
   - Added library support for the ATECC608A device
   - Added support for Counter command

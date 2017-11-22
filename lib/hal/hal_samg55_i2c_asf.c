@@ -294,13 +294,8 @@ ATCA_STATUS hal_i2c_init(void *hal, ATCAIfaceCfg *cfg)
                 i2c_hal_data[bus]->twi_master_instance = TWI4;
                 break;
             case 1:
-                //i2c_hal_data[bus]->twi_id = ID_TWI1;
-                //i2c_hal_data[bus]->twi_master_instance = TWI1;
-                //// configure TWI1 pins
-                //gpio_configure_pin(PIO_PB4_IDX, (PIO_PERIPH_A | PIO_PULLUP));
-                //gpio_configure_pin(PIO_PB5_IDX, (PIO_PERIPH_A | PIO_PULLUP));
-                //// disable JTAG
-                //MATRIX->CCFG_SYSIO |= (1 << 4) | (1 << 5);
+                i2c_hal_data[bus]->twi_id = FLEXCOM6;
+                i2c_hal_data[bus]->twi_master_instance = TWI6;
                 break;
             }
 
