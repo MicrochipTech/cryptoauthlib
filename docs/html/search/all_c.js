@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['mac',['mac',['../a00585.html#aa5a9ad86915dfcef6db90b858690212a',1,'atca_verify_mac::mac()'],['../a00593.html#aa5a9ad86915dfcef6db90b858690212a',1,'atca_secureboot_mac_in_out::mac()'],['../a00617.html#aa5a9ad86915dfcef6db90b858690212a',1,'atca_derive_key_mac_in_out::mac()']]],
+  ['mac',['mac',['../a00593.html#aa5a9ad86915dfcef6db90b858690212a',1,'atca_verify_mac::mac()'],['../a00601.html#aa5a9ad86915dfcef6db90b858690212a',1,'atca_secureboot_mac_in_out::mac()'],['../a00625.html#aa5a9ad86915dfcef6db90b858690212a',1,'atca_derive_key_mac_in_out::mac()']]],
   ['mac_5fchallenge_5fidx',['MAC_CHALLENGE_IDX',['../a00423.html#ga427e37c74bad23b251deb2274de6d703',1,'atca_command.h']]],
   ['mac_5fchallenge_5fsize',['MAC_CHALLENGE_SIZE',['../a00423.html#ga921afead5f0a35822bc8263c3a1e1761',1,'atca_command.h']]],
   ['mac_5fcount_5flong',['MAC_COUNT_LONG',['../a00423.html#gaa466dfdf174c134a11f578d1731990ef',1,'atca_command.h']]],
@@ -27,12 +27,12 @@ var searchData=
   ['max_5fswi_5fbuses',['MAX_SWI_BUSES',['../a00371.html#af9d9d027ce20f528edea144203141714',1,'MAX_SWI_BUSES():&#160;swi_bitbang_samd21.h'],['../a00429.html#gaf9d9d027ce20f528edea144203141714',1,'MAX_SWI_BUSES():&#160;swi_uart_at90usb1287_asf.h'],['../a00429.html#gaf9d9d027ce20f528edea144203141714',1,'MAX_SWI_BUSES():&#160;swi_uart_samd21_asf.h'],['../a00429.html#gaf9d9d027ce20f528edea144203141714',1,'MAX_SWI_BUSES():&#160;swi_uart_samd21_start.h'],['../a00429.html#gaf9d9d027ce20f528edea144203141714',1,'MAX_SWI_BUSES():&#160;swi_uart_xmega_a3bu_asf.h']]],
   ['mcommands',['mCommands',['../a00449.html#aac7a3ed180ba0fcf0d86f7b54ebc1379',1,'atca_device']]],
   ['memcpy_5fp',['memcpy_P',['../a00194.html#a3015d84f1e64c03564961de070d25328',1,'sha1_routines.h']]],
-  ['message',['message',['../a00637.html#a35f4a3225daf3021decdc4ecea74fa46',1,'atca_sign_internal_in_out']]],
-  ['mfrcapubkeyslot',['mfrCaPubkeySlot',['../a00645.html#a532b77416a95f471ebb03ee956083517',1,'TlsSlotDef']]],
+  ['message',['message',['../a00645.html#a35f4a3225daf3021decdc4ecea74fa46',1,'atca_sign_internal_in_out']]],
+  ['mfrcapubkeyslot',['mfrCaPubkeySlot',['../a00653.html#a532b77416a95f471ebb03ee956083517',1,'TlsSlotDef']]],
   ['miface',['mIface',['../a00449.html#aca75c68806e47e95144dc86a3f50d236',1,'atca_device']]],
   ['mifacecfg',['mIfaceCFG',['../a00481.html#abdd7b8bd26139998d9da63a4fa562735',1,'atca_iface']]],
   ['min',['min',['../a00429.html#gac6afabdc09a49a433ee19d8a9486056d',1,'hal_linux_kit_cdc.c']]],
-  ['mode',['mode',['../a00573.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_include_data_in_out::mode()'],['../a00430.html#ga1a6b6fb557d8d37d59700faf4e4c9167',1,'atca_nonce_in_out::mode()'],['../a00585.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_verify_mac::mode()'],['../a00593.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_secureboot_mac_in_out::mode()'],['../a00430.html#ga1a6b6fb557d8d37d59700faf4e4c9167',1,'atca_mac_in_out::mode()'],['../a00430.html#ga1a6b6fb557d8d37d59700faf4e4c9167',1,'atca_hmac_in_out::mode()'],['../a00613.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_derive_key_in_out::mode()'],['../a00617.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_derive_key_mac_in_out::mode()'],['../a00625.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_check_mac_in_out::mode()'],['../a00633.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_gen_key_in_out::mode()'],['../a00637.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_sign_internal_in_out::mode()']]],
-  ['msg_5fdig_5fbuf',['msg_dig_buf',['../a00585.html#abb42a6a187e06500b79b8bdbf097ef1c',1,'atca_verify_mac']]],
+  ['mode',['mode',['../a00581.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_include_data_in_out::mode()'],['../a00430.html#ga1a6b6fb557d8d37d59700faf4e4c9167',1,'atca_nonce_in_out::mode()'],['../a00593.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_verify_mac::mode()'],['../a00601.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_secureboot_mac_in_out::mode()'],['../a00430.html#ga1a6b6fb557d8d37d59700faf4e4c9167',1,'atca_mac_in_out::mode()'],['../a00430.html#ga1a6b6fb557d8d37d59700faf4e4c9167',1,'atca_hmac_in_out::mode()'],['../a00621.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_derive_key_in_out::mode()'],['../a00625.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_derive_key_mac_in_out::mode()'],['../a00633.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_check_mac_in_out::mode()'],['../a00641.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_gen_key_in_out::mode()'],['../a00645.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_sign_internal_in_out::mode()']]],
+  ['msg_5fdig_5fbuf',['msg_dig_buf',['../a00593.html#abb42a6a187e06500b79b8bdbf097ef1c',1,'atca_verify_mac']]],
   ['mtype',['mType',['../a00481.html#ab4f4855cbadf7c7d2d3fb019eded7c8a',1,'atca_iface']]]
 ];

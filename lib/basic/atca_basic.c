@@ -34,7 +34,7 @@
 #include "atca_basic.h"
 #include "host/atca_host.h"
 
-char atca_version[] = { "20171122" };  // change for each release, yyyymmdd
+char atca_version[] = { "20180115" };  // change for each release, yyyymmdd
 ATCADevice _gDevice = NULL;
 #define MAX_BUSES   4
 

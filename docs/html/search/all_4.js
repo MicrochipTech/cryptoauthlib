@@ -1,8 +1,8 @@
 var searchData=
 [
   ['d_5fi2c',['D_I2C',['../a00431.html#gaa5d6b2cc1b23594d7bb014455f014f3a',1,'atcatls_cfg.h']]],
-  ['data',['data',['../a00441.html#a0b45776cb6c0c504015e101edef7344a',1,'ATCAPacket::data()'],['../a00581.html#abe222f6d3581e7920dcad5306cc906a8',1,'atca_io_decrypt_in_out::data()']]],
-  ['data_5fsize',['data_size',['../a00581.html#ad6bc120bffc64dfc5230863a8ba96596',1,'atca_io_decrypt_in_out']]],
+  ['data',['data',['../a00441.html#a0b45776cb6c0c504015e101edef7344a',1,'ATCAPacket::data()'],['../a00589.html#abe222f6d3581e7920dcad5306cc906a8',1,'atca_io_decrypt_in_out::data()']]],
+  ['data_5fsize',['data_size',['../a00589.html#ad6bc120bffc64dfc5230863a8ba96596',1,'atca_io_decrypt_in_out']]],
   ['datefmt_5fiso8601_5fsep',['DATEFMT_ISO8601_SEP',['../a00426.html#gga62a103735770a0f935a472fc2c1d78dba593aa8634c6a3d493cb7bebe4a40a8b5',1,'atcacert_date.h']]],
   ['datefmt_5fiso8601_5fsep_5fsize',['DATEFMT_ISO8601_SEP_SIZE',['../a00426.html#ga4cd9a96f5434fa3bc256878031d63846',1,'atcacert_date.h']]],
   ['datefmt_5fmax_5fsize',['DATEFMT_MAX_SIZE',['../a00426.html#gae920fb7b153cf98e0d10365ec1d364de',1,'atcacert_date.h']]],
@@ -44,8 +44,8 @@ var searchData=
   ['devzone_5fdata',['DEVZONE_DATA',['../a00426.html#gga1c0876228cb459f64347a63f3bae4c73a774ecb8e950d309498a9aa64933d95cb',1,'atcacert_def.h']]],
   ['devzone_5fnone',['DEVZONE_NONE',['../a00426.html#gga1c0876228cb459f64347a63f3bae4c73afe6b6aedf2a765638f3c62817db11f05',1,'atcacert_def.h']]],
   ['devzone_5fotp',['DEVZONE_OTP',['../a00426.html#gga1c0876228cb459f64347a63f3bae4c73ae42ffc066a13ac1f38195d2cf4e60cea',1,'atcacert_def.h']]],
-  ['digest',['digest',['../a00589.html#aff3a2b64b0d86058508f766de59438d1',1,'atca_secureboot_enc_in_out::digest()'],['../a00593.html#aff3a2b64b0d86058508f766de59438d1',1,'atca_secureboot_mac_in_out::digest()'],['../a00637.html#a0b448fbaa0c4f1770b7c3f53acf265c5',1,'atca_sign_internal_in_out::digest()']]],
-  ['digest_5fenc',['digest_enc',['../a00589.html#aa9a9b371e24a757dba2cf1f87d03b31e',1,'atca_secureboot_enc_in_out']]],
+  ['digest',['digest',['../a00597.html#aff3a2b64b0d86058508f766de59438d1',1,'atca_secureboot_enc_in_out::digest()'],['../a00601.html#aff3a2b64b0d86058508f766de59438d1',1,'atca_secureboot_mac_in_out::digest()'],['../a00645.html#a0b448fbaa0c4f1770b7c3f53acf265c5',1,'atca_sign_internal_in_out::digest()']]],
+  ['digest_5fenc',['digest_enc',['../a00597.html#aa9a9b371e24a757dba2cf1f87d03b31e',1,'atca_secureboot_enc_in_out']]],
   ['disable_5finterrupt',['DISABLE_INTERRUPT',['../a00356.html#a07adac5c5eb0d63bed4b79a50bcb676b',1,'i2c_bitbang_samd21.h']]],
   ['dt',['dt',['../a00437.html#aebea355958c50f7d6a7d946f33ddc0aa',1,'atca_command']]]
 ];

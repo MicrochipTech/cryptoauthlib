@@ -1,55 +1,55 @@
 var a00429 =
 [
-    [ "ATCAHAL_t", "a00533.html", [
-      [ "hal_data", "a00533.html#ad33508455720b78cc0fc880cb3f9885e", null ],
-      [ "halidle", "a00533.html#a3939b643c7f807fc8fe8abcf18e99196", null ],
-      [ "halinit", "a00533.html#aa020e68c9d18f83f205981fa57107b3c", null ],
-      [ "halpostinit", "a00533.html#af174424ba7b2d19a74c72f8b4198c26b", null ],
-      [ "halreceive", "a00533.html#af95136769fcc864880463d4dcab0c11c", null ],
-      [ "halrelease", "a00533.html#a5eb439f0ede23956fde8cd72f41b85ba", null ],
-      [ "halsend", "a00533.html#a6fb3aee6375216c53ef1e5a9df01e074", null ],
-      [ "halsleep", "a00533.html#ad2f432748c4d8efe98ec42d5cd1552b5", null ],
-      [ "halwake", "a00533.html#a033c21278fef7771916378cbcf726ae6", null ]
+    [ "ATCAHAL_t", "a00541.html", [
+      [ "hal_data", "a00541.html#ad33508455720b78cc0fc880cb3f9885e", null ],
+      [ "halidle", "a00541.html#a3939b643c7f807fc8fe8abcf18e99196", null ],
+      [ "halinit", "a00541.html#aa020e68c9d18f83f205981fa57107b3c", null ],
+      [ "halpostinit", "a00541.html#af174424ba7b2d19a74c72f8b4198c26b", null ],
+      [ "halreceive", "a00541.html#af95136769fcc864880463d4dcab0c11c", null ],
+      [ "halrelease", "a00541.html#a5eb439f0ede23956fde8cd72f41b85ba", null ],
+      [ "halsend", "a00541.html#a6fb3aee6375216c53ef1e5a9df01e074", null ],
+      [ "halsleep", "a00541.html#ad2f432748c4d8efe98ec42d5cd1552b5", null ],
+      [ "halwake", "a00541.html#a033c21278fef7771916378cbcf726ae6", null ]
     ] ],
-    [ "atcaI2Cmaster", "a00537.html", [
-      [ "bus_index", "a00537.html#af5c011e6c2e8d49675f7029e8ec2c0a6", null ],
-      [ "i2c_file", "a00537.html#a386ecc3f01d8b317bc512cab194d844f", null ],
-      [ "i2c_master_instance", "a00537.html#ad60966bca127551f6271719dd9921045", null ],
-      [ "i2c_master_instance", "a00537.html#a6fa5d175fefe82a0c13cc0f7afbf5593", null ],
-      [ "i2c_master_instance", "a00537.html#a335b4a621ab538c5a42160a5a14c161f", null ],
-      [ "i2c_master_instance", "a00537.html#a6fa5d175fefe82a0c13cc0f7afbf5593", null ],
-      [ "id", "a00537.html#a10c34d148db33a5f64c3730a163fb7a7", null ],
-      [ "pin_scl", "a00537.html#a01c1392fd38975adfd6c1c7849b3fa50", null ],
-      [ "pin_sda", "a00537.html#ada591700ce06dd3a6bb9722a6eba38c4", null ],
-      [ "ref_ct", "a00537.html#ad72ba8c994f4d0e5ce354e17f7c427c0", null ],
-      [ "twi_id", "a00537.html#a0fafe5e32d17ee114246e3ccac81ee9f", null ],
-      [ "twi_master_instance", "a00537.html#ad9f68faa090564cdbe2d7217be324f16", null ],
-      [ "twi_module", "a00537.html#a6b6de52fe5fd845e113c0ce337180de4", null ]
+    [ "atcaI2Cmaster", "a00545.html", [
+      [ "bus_index", "a00545.html#af5c011e6c2e8d49675f7029e8ec2c0a6", null ],
+      [ "i2c_file", "a00545.html#a386ecc3f01d8b317bc512cab194d844f", null ],
+      [ "i2c_master_instance", "a00545.html#ad60966bca127551f6271719dd9921045", null ],
+      [ "i2c_master_instance", "a00545.html#a6fa5d175fefe82a0c13cc0f7afbf5593", null ],
+      [ "i2c_master_instance", "a00545.html#a335b4a621ab538c5a42160a5a14c161f", null ],
+      [ "i2c_master_instance", "a00545.html#a6fa5d175fefe82a0c13cc0f7afbf5593", null ],
+      [ "id", "a00545.html#a10c34d148db33a5f64c3730a163fb7a7", null ],
+      [ "pin_scl", "a00545.html#a01c1392fd38975adfd6c1c7849b3fa50", null ],
+      [ "pin_sda", "a00545.html#ada591700ce06dd3a6bb9722a6eba38c4", null ],
+      [ "ref_ct", "a00545.html#ad72ba8c994f4d0e5ce354e17f7c427c0", null ],
+      [ "twi_id", "a00545.html#a0fafe5e32d17ee114246e3ccac81ee9f", null ],
+      [ "twi_master_instance", "a00545.html#ad9f68faa090564cdbe2d7217be324f16", null ],
+      [ "twi_module", "a00545.html#a6b6de52fe5fd845e113c0ce337180de4", null ]
     ] ],
-    [ "cdc_device", "a00541.html", [
-      [ "read_handle", "a00541.html#a79525e0d472c02e26e7c4aa4a780c1d9", null ],
-      [ "write_handle", "a00541.html#af11a0103eb96a026ea6782bfcad7548e", null ]
-    ] ],
-    [ "atcacdc", "a00545.html", [
-      [ "kits", "a00545.html#a90743aa58e9f430c381d56eb373edef4", null ],
-      [ "num_kits_found", "a00545.html#a9bb0ee74044865538adfcc5d5ae8f621", null ]
-    ] ],
-    [ "hid_device", "a00549.html", [
-      [ "read_handle", "a00549.html#a72bac4e370ad82aef68188c521d2020d", null ],
+    [ "cdc_device", "a00549.html", [
       [ "read_handle", "a00549.html#a79525e0d472c02e26e7c4aa4a780c1d9", null ],
-      [ "write_handle", "a00549.html#ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0", null ],
       [ "write_handle", "a00549.html#af11a0103eb96a026ea6782bfcad7548e", null ]
     ] ],
-    [ "atcahid", "a00553.html", [
-      [ "kits", "a00553.html#a20e678da3f77a9aabd9cb97d5340e502", null ],
+    [ "atcacdc", "a00553.html", [
+      [ "kits", "a00553.html#a90743aa58e9f430c381d56eb373edef4", null ],
       [ "num_kits_found", "a00553.html#a9bb0ee74044865538adfcc5d5ae8f621", null ]
     ] ],
-    [ "atcaSWImaster", "a00557.html", [
-      [ "bus_index", "a00557.html#af5c011e6c2e8d49675f7029e8ec2c0a6", null ],
-      [ "pin_sda", "a00557.html#afd6d53ef6b697533839248b40bc97861", null ],
-      [ "usart_instance", "a00557.html#ad1dd3236df177255a91b568170b70a74", null ],
-      [ "usart_instance", "a00557.html#a2d29ab9b8f0842ee9a2906302b20011d", null ],
-      [ "USART_SWI", "a00557.html#a7758bb1b871f6094e6d2f0c2ce10b18c", null ]
+    [ "hid_device", "a00557.html", [
+      [ "read_handle", "a00557.html#a72bac4e370ad82aef68188c521d2020d", null ],
+      [ "read_handle", "a00557.html#a79525e0d472c02e26e7c4aa4a780c1d9", null ],
+      [ "write_handle", "a00557.html#ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0", null ],
+      [ "write_handle", "a00557.html#af11a0103eb96a026ea6782bfcad7548e", null ]
+    ] ],
+    [ "atcahid", "a00561.html", [
+      [ "kits", "a00561.html#a20e678da3f77a9aabd9cb97d5340e502", null ],
+      [ "num_kits_found", "a00561.html#a9bb0ee74044865538adfcc5d5ae8f621", null ]
+    ] ],
+    [ "atcaSWImaster", "a00565.html", [
+      [ "bus_index", "a00565.html#af5c011e6c2e8d49675f7029e8ec2c0a6", null ],
+      [ "pin_sda", "a00565.html#afd6d53ef6b697533839248b40bc97861", null ],
+      [ "usart_instance", "a00565.html#ad1dd3236df177255a91b568170b70a74", null ],
+      [ "usart_instance", "a00565.html#a2d29ab9b8f0842ee9a2906302b20011d", null ],
+      [ "USART_SWI", "a00565.html#a7758bb1b871f6094e6d2f0c2ce10b18c", null ]
     ] ],
     [ "CDC_BUFFER_MAX", "a00429.html#ga5ac8c9377f90d6ce3044f81f900a54fe", null ],
     [ "CDC_DEVICES_MAX", "a00429.html#ga08b6c05184266dc4d5c8727bb9c1c754", null ],

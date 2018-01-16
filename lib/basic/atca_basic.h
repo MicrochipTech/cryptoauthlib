@@ -76,6 +76,28 @@ ATCA_STATUS atcab_aes_encrypt(uint16_t key_id, uint8_t key_block, const uint8_t*
 ATCA_STATUS atcab_aes_decrypt(uint16_t key_id, uint8_t key_block, const uint8_t* ciphertext, uint8_t* plaintext);
 ATCA_STATUS atcab_aes_gfm(const uint8_t* h, const uint8_t* input, uint8_t* output);
 
+typedef struct atca_aes_cbc_ctx
+{
+    uint16_t key_id;                     //!< Key location. Can either be a slot number or ATCA_TEMPKEY_KEYID for TempKey.
+    uint8_t  key_block;                  //!< Index of the 16-byte block to use within the key location for the actual key.
+    uint8_t  ciphertext[AES_DATA_SIZE];  //!< Ciphertext from last operation.
+} atca_aes_cbc_ctx_t;
+
+ATCA_STATUS atcab_aes_cbc_init(atca_aes_cbc_ctx_t* ctx, uint16_t key_id, uint8_t key_block, const uint8_t* iv);
+ATCA_STATUS atcab_aes_cbc_encrypt_block(atca_aes_cbc_ctx_t* ctx, const uint8_t* plaintext, uint8_t* ciphertext);
+ATCA_STATUS atcab_aes_cbc_decrypt_block(atca_aes_cbc_ctx_t* ctx, const uint8_t* ciphertext, uint8_t* plaintext);
+
+typedef struct atca_aes_cmac_ctx
+{
+    atca_aes_cbc_ctx_t cbc_ctx;              //!< CBC context
+    uint32_t           block_size;           //!< Number of bytes in current block.
+    uint8_t            block[AES_DATA_SIZE]; //!< Unprocessed message storage.
+} atca_aes_cmac_ctx_t;
+
+ATCA_STATUS atcab_aes_cmac_init(atca_aes_cmac_ctx_t* ctx, uint16_t key_id, uint8_t key_block);
+ATCA_STATUS atcab_aes_cmac_update(atca_aes_cmac_ctx_t* ctx, const uint8_t* data, uint32_t data_size);
+ATCA_STATUS atcab_aes_cmac_finish(atca_aes_cmac_ctx_t* ctx, uint8_t* cmac, uint32_t cmac_size);
+
 // CheckMAC command functions
 ATCA_STATUS atcab_checkmac(uint8_t mode, uint16_t key_id, const uint8_t *challenge, const uint8_t *response, const uint8_t *other_data);
 

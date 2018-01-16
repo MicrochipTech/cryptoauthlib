@@ -1,10 +1,10 @@
 var a00601 =
 [
-    [ "key", "a00430.html#gab0d96f9d852c2058c2546a1338e87544", null ],
-    [ "key_id", "a00430.html#ga3eedc11953a89e931ede529eb72592ac", null ],
-    [ "mode", "a00430.html#ga1a6b6fb557d8d37d59700faf4e4c9167", null ],
-    [ "otp", "a00430.html#ga8712cb73a4d6b370658d8bc9a77fba3e", null ],
-    [ "response", "a00430.html#ga8ab7bcb35ce5bba05608c72da6b4a0d3", null ],
-    [ "sn", "a00430.html#ga7276bd20c5842e712da638d25ceb6d92", null ],
-    [ "temp_key", "a00430.html#gaa17e031da4b22938bed1c21161ba371a", null ]
+    [ "digest", "a00601.html#aff3a2b64b0d86058508f766de59438d1", null ],
+    [ "hashed_key", "a00601.html#a1f1ddb903087eec963d0faf82a3283a4", null ],
+    [ "mac", "a00601.html#aa5a9ad86915dfcef6db90b858690212a", null ],
+    [ "mode", "a00601.html#a37e90f5e3bd99fac2021fb3a326607d4", null ],
+    [ "param2", "a00601.html#a16a7565b150a9c17a39c80fc932b9514", null ],
+    [ "secure_boot_config", "a00601.html#a6abd57960eb27eecadcf1163a1441fb1", null ],
+    [ "signature", "a00601.html#a35388d4dff80916a7409fd0554ac58b6", null ]
 ];

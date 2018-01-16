@@ -1,6 +1,6 @@
 var a00371 =
 [
-    [ "SWIBuses", "a00565.html", "a00565" ],
+    [ "SWIBuses", "a00573.html", "a00573" ],
     [ "BIT_DELAY_1H", "a00371.html#a1ce4882b7d053eafcec22cd84fb5727d", null ],
     [ "BIT_DELAY_1L", "a00371.html#ad884cf7d66d88b38180369a791a9824b", null ],
     [ "BIT_DELAY_5", "a00371.html#a2ced4699fc4ab5162dbb9453edecb32e", null ],

@@ -1,8 +1,11 @@
 var a00577 =
 [
-    [ "mode", "a00430.html#ga1a6b6fb557d8d37d59700faf4e4c9167", null ],
-    [ "num_in", "a00430.html#ga02a9d64ea363dc3b231b8cc0b317de8a", null ],
-    [ "rand_out", "a00430.html#ga75f7197e2840bcf9fe00722e739fdd9c", null ],
-    [ "temp_key", "a00430.html#gaa17e031da4b22938bed1c21161ba371a", null ],
-    [ "zero", "a00430.html#ga876993158b491f4626155b468ffb6edc", null ]
+    [ "gen_dig_data", "a00577.html#a4d86ff0b6591fecad80a29b3e9c21770", null ],
+    [ "gen_key_data", "a00577.html#aff240f3ccb1c2f27d4c4c7d64c29135f", null ],
+    [ "is_64", "a00577.html#a3f6d684924e3635e6e57441b66b98978", null ],
+    [ "key_id", "a00577.html#a3c9e1911e32476da4aa8b1951b3b634c", null ],
+    [ "no_mac_flag", "a00577.html#a527d4ea9f5c9a1672a855f2bad8dcdc0", null ],
+    [ "source_flag", "a00577.html#a3c297c5f22a182d9c59e6dc86dc815b5", null ],
+    [ "valid", "a00577.html#a2508f82318bdac6b715d548091b03055", null ],
+    [ "value", "a00577.html#a9d39af90116e75f8805942afa953046f", null ]
 ];

@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['cbc_5fctx',['cbc_ctx',['../a00513.html#a9246ae6d7229247b3e9b5e540a26ac05',1,'atca_aes_cmac_ctx']]],
   ['cert',['cert',['../a00505.html#aa09eb68c2656a44748cad406cf960f7c',1,'atcacert_build_state_s']]],
   ['cert_5fdef',['cert_def',['../a00505.html#abaf4bb65d962f53a31b943c663eaf3b9',1,'atcacert_build_state_s']]],
   ['cert_5felements',['cert_elements',['../a00501.html#aa9a44f95411d86a78a93e650a9c19f53',1,'atcacert_def_s']]],
@@ -20,8 +21,9 @@ var searchData=
   ['cfg_5fdata',['cfg_data',['../a00453.html#a97e106cc7267316cf40988744b231111',1,'ATCAIfaceCfg']]],
   ['chain_5fid',['chain_id',['../a00501.html#af383252a42d77882d0f3aac7f6ee5048',1,'atcacert_def_s']]],
   ['challenge',['challenge',['../a00430.html#ga88d82c85f774fa04ccf768e566fec194',1,'atca_mac_in_out']]],
-  ['client_5fchal',['client_chal',['../a00625.html#a218f1c30c4a21b348dbe1817a2c14896',1,'atca_check_mac_in_out']]],
-  ['client_5fresp',['client_resp',['../a00625.html#a430a448768d687a94e3daaa00dce63ce',1,'atca_check_mac_in_out']]],
+  ['ciphertext',['ciphertext',['../a00509.html#a984a9b23546b1bab664b3a3e721830b7',1,'atca_aes_cbc_ctx']]],
+  ['client_5fchal',['client_chal',['../a00633.html#a218f1c30c4a21b348dbe1817a2c14896',1,'atca_check_mac_in_out']]],
+  ['client_5fresp',['client_resp',['../a00633.html#a430a448768d687a94e3daaa00dce63ce',1,'atca_check_mac_in_out']]],
   ['clock_5fdivider',['clock_divider',['../a00437.html#a380510ad0d2dbde608f38387436db3bc',1,'atca_command']]],
   ['comp_5fcert_5fdev_5floc',['comp_cert_dev_loc',['../a00501.html#a2d5a033a5aa1227c536ec1aa71a84fa5',1,'atcacert_def_s']]],
   ['contents',['contents',['../a00433.html#aa6082c83a20a90e5a2ab9f216961972f',1,'update_license']]],
@@ -29,6 +31,6 @@ var searchData=
   ['count',['count',['../a00489.html#af6a39bfc7e1dc3b6f9c997c1c43fa996',1,'atcacert_device_loc_s::count()'],['../a00493.html#af6a39bfc7e1dc3b6f9c997c1c43fa996',1,'atcacert_cert_loc_s::count()']]],
   ['crypto_5fdata',['crypto_data',['../a00430.html#ga4155a23e70d1bf07de5d316efebeaee7',1,'atca_decrypt_in_out']]],
   ['cryptoauthlib_5fdir',['cryptoauthlib_dir',['../a00433.html#ae37358b0bd8e19139f9162d587d0eb59',1,'update_license']]],
-  ['cur',['cur',['../a00641.html#aee7e8f6f5f1a4b5b402473cf99d3042a',1,'atca_jwt_t']]],
+  ['cur',['cur',['../a00649.html#aee7e8f6f5f1a4b5b402473cf99d3042a',1,'atca_jwt_t']]],
   ['curve_5ftype',['curve_type',['../a00430.html#ga9be4eee4ac6c9248a824d093f165839e',1,'atca_verify_in_out']]]
 ];

@@ -1,7 +1,7 @@
 var a00581 =
 [
-    [ "data", "a00581.html#abe222f6d3581e7920dcad5306cc906a8", null ],
-    [ "data_size", "a00581.html#ad6bc120bffc64dfc5230863a8ba96596", null ],
-    [ "io_key", "a00581.html#a130c5ab3a3f978b77641faa7813aa5d2", null ],
-    [ "out_nonce", "a00581.html#a70a057043fcc9f4dc22455f6df43d710", null ]
+    [ "mode", "a00581.html#a37e90f5e3bd99fac2021fb3a326607d4", null ],
+    [ "otp", "a00430.html#ga8712cb73a4d6b370658d8bc9a77fba3e", null ],
+    [ "p_temp", "a00430.html#gad87f95f0faf0c6fdfe94040efcb14860", null ],
+    [ "sn", "a00430.html#ga7276bd20c5842e712da638d25ceb6d92", null ]
 ];

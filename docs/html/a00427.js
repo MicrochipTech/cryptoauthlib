@@ -1,16 +1,34 @@
 var a00427 =
 [
-    [ "atca_sha256_ctx", "a00509.html", [
-      [ "block", "a00509.html#a407f9109b29f2f3a4c9f7d1de450ad41", null ],
-      [ "block_size", "a00509.html#a9e3fb1e50a1c71b2337df296222d9553", null ],
-      [ "total_msg_size", "a00509.html#a8ee7e642376903508dd6b4df9eacc2de", null ]
+    [ "atca_aes_cbc_ctx", "a00509.html", [
+      [ "ciphertext", "a00509.html#a984a9b23546b1bab664b3a3e721830b7", null ],
+      [ "key_block", "a00509.html#a2ec310210422989027a46428a61fb1c1", null ],
+      [ "key_id", "a00509.html#ac21eed4200889cc115d16a781871d01c", null ]
+    ] ],
+    [ "atca_aes_cmac_ctx", "a00513.html", [
+      [ "block", "a00513.html#adae27798b73271394b86837502dfd853", null ],
+      [ "block_size", "a00513.html#a9e3fb1e50a1c71b2337df296222d9553", null ],
+      [ "cbc_ctx", "a00513.html#a9246ae6d7229247b3e9b5e540a26ac05", null ]
+    ] ],
+    [ "atca_sha256_ctx", "a00517.html", [
+      [ "block", "a00517.html#a407f9109b29f2f3a4c9f7d1de450ad41", null ],
+      [ "block_size", "a00517.html#a9e3fb1e50a1c71b2337df296222d9553", null ],
+      [ "total_msg_size", "a00517.html#a8ee7e642376903508dd6b4df9eacc2de", null ]
     ] ],
     [ "BLOCK_NUMBER", "a00427.html#ga66d0b18bba952f5acdee8cf68b889b75", null ],
     [ "WORD_OFFSET", "a00427.html#ga9e5ab0fea07bd91159ab96f18105d1b1", null ],
+    [ "atca_aes_cbc_ctx_t", "a00427.html#gaa702726fe160635225abc3c1ed421f7e", null ],
+    [ "atca_aes_cmac_ctx_t", "a00427.html#ga05fa8c58bf4408381db8871b0dca64b6", null ],
     [ "atca_hmac_sha256_ctx_t", "a00427.html#ga4c1f62e502c168be9261d2af921e78ba", null ],
     [ "atca_sha256_ctx_t", "a00427.html#ga530ccce9f617be7dbf3661e19a4c0546", null ],
     [ "_atcab_exit", "a00427.html#ga5802cd6847a837458604db5dbec4a6f0", null ],
     [ "atcab_aes", "a00427.html#gad115ce255664a48b80e90ea19c156b79", null ],
+    [ "atcab_aes_cbc_decrypt_block", "a00427.html#ga7c66e1b8b31bb87be3de6c9a9084c21e", null ],
+    [ "atcab_aes_cbc_encrypt_block", "a00427.html#ga7414e3dc8215cedc1bffc6cf576d7d1e", null ],
+    [ "atcab_aes_cbc_init", "a00427.html#gabc41b824cdc9b10efa46bcbf74850184", null ],
+    [ "atcab_aes_cmac_finish", "a00427.html#gac0be51b283b107465dcf42758ca31687", null ],
+    [ "atcab_aes_cmac_init", "a00427.html#ga84506ff4105e63823c99527788d36d52", null ],
+    [ "atcab_aes_cmac_update", "a00427.html#ga0cf22e893c713890faeb9fa8784760b1", null ],
     [ "atcab_aes_decrypt", "a00427.html#ga9658e84055727e6357cf7ef636b4e398", null ],
     [ "atcab_aes_encrypt", "a00427.html#gacc9a58dc49f91674213f34fa7bbd05e1", null ],
     [ "atcab_aes_gfm", "a00427.html#ga5554940ed4c7c7e28652ce6923cf9314", null ],

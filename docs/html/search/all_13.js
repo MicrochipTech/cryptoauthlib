@@ -4,7 +4,7 @@ var searchData=
   ['u32',['U32',['../a00194.html#a8f953f379d243081b950adb7f194b2e8',1,'sha1_routines.h']]],
   ['u8',['U8',['../a00194.html#a2c0958af86f0590374e4324757c537f2',1,'sha1_routines.h']]],
   ['unsupported',['UNSUPPORTED',['../a00423.html#gae4b35fe373f16e1afec2db230116a229',1,'atca_command.h']]],
-  ['update_5fcount',['update_count',['../a00637.html#a4a25483bf435220f212cbe8f0327b0a6',1,'atca_sign_internal_in_out::update_count()'],['../a00020.html#aac8020f191ca7ce2b1a81fcede9b5aa2',1,'UPDATE_COUNT():&#160;atca_command.h']]],
+  ['update_5fcount',['update_count',['../a00645.html#a4a25483bf435220f212cbe8f0327b0a6',1,'atca_sign_internal_in_out::update_count()'],['../a00020.html#aac8020f191ca7ce2b1a81fcede9b5aa2',1,'UPDATE_COUNT():&#160;atca_command.h']]],
   ['update_5flicense',['update_license',['../a00433.html',1,'']]],
   ['update_5flicense_2epy',['update_license.py',['../a00005.html',1,'']]],
   ['update_5fmode_5fdec_5fcounter',['UPDATE_MODE_DEC_COUNTER',['../a00020.html#a023880ad2167cc0d6cefb7f747b73c92',1,'atca_command.h']]],
@@ -15,7 +15,7 @@ var searchData=
   ['update_5frsp_5fsize',['UPDATE_RSP_SIZE',['../a00020.html#aabf82974c18252bcd0c48ee99af75dfb',1,'atca_command.h']]],
   ['update_5fvalue_5fidx',['UPDATE_VALUE_IDX',['../a00020.html#a0aacda6ef1cf79b10b3a2a7e2e9d8799',1,'atca_command.h']]],
   ['us_5fscale',['us_SCALE',['../a00429.html#ga5a8416082aa7664c94099d3d787eee3c',1,'hal_pic32mx695f512h_timer.c']]],
-  ['usart_5finstance',['usart_instance',['../a00557.html#ad1dd3236df177255a91b568170b70a74',1,'atcaSWImaster::usart_instance()'],['../a00557.html#a2d29ab9b8f0842ee9a2906302b20011d',1,'atcaSWImaster::usart_instance()']]],
-  ['usart_5fswi',['USART_SWI',['../a00557.html#a7758bb1b871f6094e6d2f0c2ce10b18c',1,'atcaSWImaster']]],
-  ['use_5fflag',['use_flag',['../a00637.html#a0aea6a2aaa9c7c3368d6a394d4c9ae05',1,'atca_sign_internal_in_out']]]
+  ['usart_5finstance',['usart_instance',['../a00565.html#ad1dd3236df177255a91b568170b70a74',1,'atcaSWImaster::usart_instance()'],['../a00565.html#a2d29ab9b8f0842ee9a2906302b20011d',1,'atcaSWImaster::usart_instance()']]],
+  ['usart_5fswi',['USART_SWI',['../a00565.html#a7758bb1b871f6094e6d2f0c2ce10b18c',1,'atcaSWImaster']]],
+  ['use_5fflag',['use_flag',['../a00645.html#a0aea6a2aaa9c7c3368d6a394d4c9ae05',1,'atca_sign_internal_in_out']]]
 ];

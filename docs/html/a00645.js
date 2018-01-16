@@ -1,20 +1,16 @@
 var a00645 =
 [
-    [ "authCertSlot", "a00645.html#a801a9097a5fd08f14ca37ae12a9ed516", null ],
-    [ "authPmkSlot", "a00645.html#a55466ef8233d2c55904e5302550cdb87", null ],
-    [ "authPrivSlot", "a00645.html#aee2b661fe83139a577a1f689bd0b437b", null ],
-    [ "ecdhePrivSlot", "a00645.html#af34caa502c549b7d54f8f50c3da6017e", null ],
-    [ "ecdhPmkSlot", "a00645.html#a835144f00549831445481ec50a18af13", null ],
-    [ "ecdhPrivSlot", "a00645.html#af7fb2179519dc8348004f954a3262b31", null ],
-    [ "encParentSlot", "a00645.html#aa14888de11ed578bab72f8d5703a6c9e", null ],
-    [ "encStoreSlot8", "a00645.html#ab0cb1d14d38b64c543d76417e4db7a23", null ],
-    [ "encStoreSlot9", "a00645.html#ac08738989471bb18a1b4551283ff1bd0", null ],
-    [ "featureCertSlot", "a00645.html#abccc9b8e3f8cc3afec9e335155cb9f5b", null ],
-    [ "featurePrivSlot", "a00645.html#a47671b6c40192f2f9016ae67c4180dfd", null ],
-    [ "hostShaKeySlot", "a00645.html#a17edc74c72928282c30eda9b285327dd", null ],
-    [ "mfrCaPubkeySlot", "a00645.html#a532b77416a95f471ebb03ee956083517", null ],
-    [ "pkiCaPubkeySlot", "a00645.html#ac313c69ba2567aff5411a0dda0a3c800", null ],
-    [ "shaKeySlot", "a00645.html#a38985af8e0d13bc5537be06bd9a097b4", null ],
-    [ "signerCertSlot", "a00645.html#a69e7782700dae3a4e89468277aa41b22", null ],
-    [ "signerPubkeySlot", "a00645.html#af16feb2e7197c5c9f7ccf6684969f68f", null ]
+    [ "digest", "a00645.html#a0b448fbaa0c4f1770b7c3f53acf265c5", null ],
+    [ "for_invalidate", "a00645.html#ac3544274ceb4f8950b3a5fe6640be634", null ],
+    [ "is_slot_locked", "a00645.html#afaeb2ef8df7a105b7f93a9fdb82fd6e8", null ],
+    [ "key_config", "a00645.html#af209160ffa65b538728640eb34e4be75", null ],
+    [ "key_id", "a00645.html#ac21eed4200889cc115d16a781871d01c", null ],
+    [ "message", "a00645.html#a35f4a3225daf3021decdc4ecea74fa46", null ],
+    [ "mode", "a00645.html#a37e90f5e3bd99fac2021fb3a326607d4", null ],
+    [ "slot_config", "a00645.html#a547704fabd162cdaa3d5ce84a111a3fc", null ],
+    [ "sn", "a00645.html#aef45bac2efcd5394c4ed79f73ee16d23", null ],
+    [ "temp_key", "a00645.html#a714b07e0515fd9d20714a4fc2a16c03e", null ],
+    [ "update_count", "a00645.html#a4a25483bf435220f212cbe8f0327b0a6", null ],
+    [ "use_flag", "a00645.html#a0aea6a2aaa9c7c3368d6a394d4c9ae05", null ],
+    [ "verify_other_data", "a00645.html#a04c0e9b276020bed4ed3d7d670ed3881", null ]
 ];

@@ -46,6 +46,10 @@ Examples
 
 Release notes
 -----------
+01/15/2018
+  - Added AES-128 CBC implementation using AES command
+  - Added AES-128 CMAC implementation using AES command
+  
 11/22/2017
   - Added support for FLEXCOM6 on SAMG55 driver
   

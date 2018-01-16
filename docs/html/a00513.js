@@ -1,6 +1,6 @@
 var a00513 =
 [
-    [ "block", "a00513.html#a407f9109b29f2f3a4c9f7d1de450ad41", null ],
+    [ "block", "a00513.html#adae27798b73271394b86837502dfd853", null ],
     [ "block_size", "a00513.html#a9e3fb1e50a1c71b2337df296222d9553", null ],
-    [ "total_msg_size", "a00513.html#a8ee7e642376903508dd6b4df9eacc2de", null ]
+    [ "cbc_ctx", "a00513.html#a9246ae6d7229247b3e9b5e540a26ac05", null ]
 ];

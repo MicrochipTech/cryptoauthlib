@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['atca_5faes_5fcbc_5fctx_5ft',['atca_aes_cbc_ctx_t',['../a00427.html#gaa702726fe160635225abc3c1ed421f7e',1,'atca_basic.h']]],
+  ['atca_5faes_5fcmac_5fctx_5ft',['atca_aes_cmac_ctx_t',['../a00427.html#ga05fa8c58bf4408381db8871b0dca64b6',1,'atca_basic.h']]],
   ['atca_5fcheck_5fmac_5fin_5fout_5ft',['atca_check_mac_in_out_t',['../a00430.html#ga897821490d4d10e168f1c94cd67966e7',1,'atca_host.h']]],
   ['atca_5fgen_5fdig_5fin_5fout_5ft',['atca_gen_dig_in_out_t',['../a00430.html#ga5ed81b300bd0d04f88708ad122d3a53a',1,'atca_host.h']]],
   ['atca_5fgen_5fkey_5fin_5fout_5ft',['atca_gen_key_in_out_t',['../a00430.html#ga804b097bbb0a7086f7d208390689146b',1,'atca_host.h']]],

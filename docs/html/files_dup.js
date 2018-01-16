@@ -1,4 +1,4 @@
-var files =
+var files_dup =
 [
     [ "atca_basic.c", "a00083.html", "a00083" ],
     [ "atca_basic.h", "a00086.html", "a00086" ],

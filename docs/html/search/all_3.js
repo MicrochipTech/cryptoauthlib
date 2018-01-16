@@ -1,8 +1,9 @@
 var searchData=
 [
   ['certificate_20manipulation_20methods_20_28atcacert_5f_29',['Certificate manipulation methods (atcacert_)',['../a00426.html',1,'']]],
+  ['cbc_5fctx',['cbc_ctx',['../a00513.html#a9246ae6d7229247b3e9b5e540a26ac05',1,'atca_aes_cmac_ctx']]],
   ['cdc_5fbuffer_5fmax',['CDC_BUFFER_MAX',['../a00429.html#ga5ac8c9377f90d6ce3044f81f900a54fe',1,'CDC_BUFFER_MAX():&#160;hal_linux_kit_cdc.h'],['../a00332.html#a5ac8c9377f90d6ce3044f81f900a54fe',1,'CDC_BUFFER_MAX():&#160;hal_win_kit_cdc.h']]],
-  ['cdc_5fdevice',['cdc_device',['../a00541.html',1,'']]],
+  ['cdc_5fdevice',['cdc_device',['../a00549.html',1,'']]],
   ['cdc_5fdevice_5ft',['cdc_device_t',['../a00429.html#ga99ee56102171adcbcecb8a78fb9fa895',1,'cdc_device_t():&#160;hal_linux_kit_cdc.h'],['../a00332.html#a99ee56102171adcbcecb8a78fb9fa895',1,'cdc_device_t():&#160;hal_win_kit_cdc.h']]],
   ['cdc_5fdevices_5fmax',['CDC_DEVICES_MAX',['../a00429.html#ga08b6c05184266dc4d5c8727bb9c1c754',1,'CDC_DEVICES_MAX():&#160;hal_linux_kit_cdc.h'],['../a00332.html#a08b6c05184266dc4d5c8727bb9c1c754',1,'CDC_DEVICES_MAX():&#160;hal_win_kit_cdc.h']]],
   ['cert',['cert',['../a00505.html#aa09eb68c2656a44748cad406cf960f7c',1,'atcacert_build_state_s']]],
@@ -47,13 +48,14 @@ var searchData=
   ['checkmac_5fmode_5fsource_5fflag_5fmatch',['CHECKMAC_MODE_SOURCE_FLAG_MATCH',['../a00423.html#gac3ca4e46c6a0fb69ba0dfa5fe88ed9ad',1,'atca_command.h']]],
   ['checkmac_5fother_5fdata_5fsize',['CHECKMAC_OTHER_DATA_SIZE',['../a00423.html#ga7c365741639a5c7dc29267a130e8d827',1,'atca_command.h']]],
   ['checkmac_5frsp_5fsize',['CHECKMAC_RSP_SIZE',['../a00423.html#gaa44ecaa440ab845d5939333171476adf',1,'atca_command.h']]],
+  ['ciphertext',['ciphertext',['../a00509.html#a984a9b23546b1bab664b3a3e721830b7',1,'atca_aes_cbc_ctx']]],
   ['cl_5fhash',['CL_hash',['../a00191.html#a955169bbbce9b4712cafb9b7372b5ffa',1,'CL_hash(U8 *msg, int msgBytes, U8 *dest):&#160;sha1_routines.c'],['../a00194.html#a955169bbbce9b4712cafb9b7372b5ffa',1,'CL_hash(U8 *msg, int msgBytes, U8 *dest):&#160;sha1_routines.c']]],
-  ['cl_5fhashcontext',['CL_HashContext',['../a00525.html',1,'']]],
+  ['cl_5fhashcontext',['CL_HashContext',['../a00533.html',1,'']]],
   ['cl_5fhashfinal',['CL_hashFinal',['../a00191.html#a672902e6406b4e4e2af33c70ec7a001c',1,'CL_hashFinal(CL_HashContext *ctx, U8 *dest):&#160;sha1_routines.c'],['../a00194.html#a672902e6406b4e4e2af33c70ec7a001c',1,'CL_hashFinal(CL_HashContext *ctx, U8 *dest):&#160;sha1_routines.c']]],
   ['cl_5fhashinit',['CL_hashInit',['../a00191.html#affa9482d686cc435d640d67d7fa79772',1,'CL_hashInit(CL_HashContext *ctx):&#160;sha1_routines.c'],['../a00194.html#affa9482d686cc435d640d67d7fa79772',1,'CL_hashInit(CL_HashContext *ctx):&#160;sha1_routines.c']]],
   ['cl_5fhashupdate',['CL_hashUpdate',['../a00191.html#a55a33e7a22aff4aca4bccf39897bc5f1',1,'CL_hashUpdate(CL_HashContext *ctx, const U8 *src, int nbytes):&#160;sha1_routines.c'],['../a00194.html#a55a33e7a22aff4aca4bccf39897bc5f1',1,'CL_hashUpdate(CL_HashContext *ctx, const U8 *src, int nbytes):&#160;sha1_routines.c']]],
-  ['client_5fchal',['client_chal',['../a00625.html#a218f1c30c4a21b348dbe1817a2c14896',1,'atca_check_mac_in_out']]],
-  ['client_5fresp',['client_resp',['../a00625.html#a430a448768d687a94e3daaa00dce63ce',1,'atca_check_mac_in_out']]],
+  ['client_5fchal',['client_chal',['../a00633.html#a218f1c30c4a21b348dbe1817a2c14896',1,'atca_check_mac_in_out']]],
+  ['client_5fresp',['client_resp',['../a00633.html#a430a448768d687a94e3daaa00dce63ce',1,'atca_check_mac_in_out']]],
   ['clock_5fdivider',['clock_divider',['../a00437.html#a380510ad0d2dbde608f38387436db3bc',1,'atca_command']]],
   ['cmd_5faes',['CMD_AES',['../a00423.html#gga615635dd80cc407aac83a09a4f9991e5aa072da7b0d4fcbc587b06e1c53b31540',1,'atca_command.h']]],
   ['cmd_5fcheckmac',['CMD_CHECKMAC',['../a00423.html#gga615635dd80cc407aac83a09a4f9991e5a261689d5c9b28c441202360a20b9da1a',1,'atca_command.h']]],
@@ -103,8 +105,8 @@ var searchData=
   ['crypto_5fdata',['crypto_data',['../a00430.html#ga4155a23e70d1bf07de5d316efebeaee7',1,'atca_decrypt_in_out']]],
   ['cryptoauthlib_2eh',['cryptoauthlib.h',['../a00203.html',1,'']]],
   ['cryptoauthlib_5fdir',['cryptoauthlib_dir',['../a00433.html#ae37358b0bd8e19139f9162d587d0eb59',1,'update_license']]],
-  ['cur',['cur',['../a00641.html#aee7e8f6f5f1a4b5b402473cf99d3042a',1,'atca_jwt_t']]],
+  ['cur',['cur',['../a00649.html#aee7e8f6f5f1a4b5b402473cf99d3042a',1,'atca_jwt_t']]],
   ['curve_5ftype',['curve_type',['../a00430.html#ga9be4eee4ac6c9248a824d093f165839e',1,'atca_verify_in_out']]],
   ['cryptoauthlib_20_2d_20microchip_20cryptoauthentication_20library',['CryptoAuthLib - Microchip CryptoAuthentication Library',['../index.html',1,'']]],
-  ['crypto_20directory_20_2d_20purpose',['crypto directory - Purpose',['../a00661.html',1,'']]]
+  ['crypto_20directory_20_2d_20purpose',['crypto directory - Purpose',['../a00669.html',1,'']]]
 ];

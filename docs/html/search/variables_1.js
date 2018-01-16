@@ -17,8 +17,8 @@ var searchData=
   ['atsend',['atsend',['../a00481.html#a343ec53c611863bf30624e5775782ab5',1,'atca_iface']]],
   ['atsleep',['atsleep',['../a00481.html#ae643f9f7998343cc33822de00192626b',1,'atca_iface']]],
   ['atwake',['atwake',['../a00481.html#a6cb270146e07d7c258bca835fda84be5',1,'atca_iface']]],
-  ['auth_5fmac',['auth_mac',['../a00609.html#a9f11512564ff4aeaf5f9d0646d971ed2',1,'atca_write_mac_in_out']]],
-  ['authcertslot',['authCertSlot',['../a00645.html#a801a9097a5fd08f14ca37ae12a9ed516',1,'TlsSlotDef']]],
-  ['authpmkslot',['authPmkSlot',['../a00645.html#a55466ef8233d2c55904e5302550cdb87',1,'TlsSlotDef']]],
-  ['authprivslot',['authPrivSlot',['../a00645.html#aee2b661fe83139a577a1f689bd0b437b',1,'TlsSlotDef']]]
+  ['auth_5fmac',['auth_mac',['../a00617.html#a9f11512564ff4aeaf5f9d0646d971ed2',1,'atca_write_mac_in_out']]],
+  ['authcertslot',['authCertSlot',['../a00653.html#a801a9097a5fd08f14ca37ae12a9ed516',1,'TlsSlotDef']]],
+  ['authpmkslot',['authPmkSlot',['../a00653.html#a55466ef8233d2c55904e5302550cdb87',1,'TlsSlotDef']]],
+  ['authprivslot',['authPrivSlot',['../a00653.html#aee2b661fe83139a577a1f689bd0b437b',1,'TlsSlotDef']]]
 ];
