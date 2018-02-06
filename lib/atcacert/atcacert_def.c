@@ -538,7 +538,6 @@ int atcacert_get_device_data(const atcacert_def_t*        cert_def,
     // Certificate serial number
     if (atcacert_is_device_loc_overlap(&cert_def->cert_sn_dev_loc, device_loc))
     {
-        temp_buf_size = sizeof(temp_buf);
         ret = atcacert_get_cert_sn(cert_def, cert, cert_size, temp_buf, &temp_buf_size);
         if (ret != ATCACERT_E_SUCCESS)
         {
@@ -591,7 +590,7 @@ int atcacert_get_device_data(const atcacert_def_t*        cert_def,
     {
         if (atcacert_is_device_loc_overlap(&cert_def->cert_elements[i].device_loc, device_loc))
         {
-            if (sizeof(temp_buf) < cert_def->cert_elements[i].device_loc.count)
+            if (temp_buf_size < cert_def->cert_elements[i].device_loc.count)
             {
                 return ATCACERT_E_BUFFER_TOO_SMALL;
             }
