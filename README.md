@@ -1,4 +1,4 @@
-CryptoAuthLib - Microchip CryptoAuthentication Library       {#mainpage}
+CryptoAuthLib - Microchip CryptoAuthentication Library
 ====================================================
 
 Introduction
