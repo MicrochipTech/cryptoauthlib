@@ -175,7 +175,7 @@ The library is structured to support portability to:
 All platform dependencies are contained within the HAL (hardware abstraction
 layer).
 
-![CryptoAuthLib Architecture](../CryptoAuthLib-Architecture.png "CryptoAuthLib Architecture" )
+![CryptoAuthLib Architecture](./docs/CryptoAuthLib-Architecture.png "CryptoAuthLib Architecture" )
 
 There are three primary object types in CryptoAuthLib:
   - Device (ATCADevice)
@@ -184,9 +184,9 @@ There are three primary object types in CryptoAuthLib:
   
 ATCADevice is a composite object made up of ATCACommand ATCAIface.
 
-![ATCADevice](../cryptoauthlib-uml/ATCADevice.png "ATCADevice and ATCACommand object" )
-![ATCAIface](../cryptoauthlib-uml/ATCAIFace.png "ATCAIface object" )
-![Hardware abstraction layer](../cryptoauthlib-uml/ATCAHal.png "CryptoAuth hardware abstraction layer" )
+![ATCADevice](./docs/cryptoauthlib-uml/ATCADevice.png "ATCADevice and ATCACommand object" )
+![ATCAIface](./docs/cryptoauthlib-uml/ATCAIFace.png "ATCAIface object" )
+![Hardware abstraction layer](./docs/cryptoauthlib-uml/ATCAHal.png "CryptoAuth hardware abstraction layer" )
 
 Currently, the vast majority of testing has been performed on:
 
