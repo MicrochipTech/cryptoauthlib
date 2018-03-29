@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_device Struct Reference</title>
+<title>CryptoAuthLib: kit_phy.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
    </div>
-   <div id="projectbrief">Atmel CryptoAuthentication Library</div>
+   <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
  </tr>
  </tbody>
@@ -87,61 +87,40 @@ $(document).ready(function(){initNavTree('a00449.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_device Struct Reference<div class="ingroups"><a class="el" href="a00424.html">ATCADevice (atca_)</a></div></div>  </div>
+<div class="title">kit_phy.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="a00449.html" title="atca_device is the C object backing ATCADevice. See the atca_device.h file for details on the ATCADev...">atca_device</a> is the C object backing ATCADevice. See the <a class="el" href="a00029.html" title="Microchip Crypto Auth device object. ">atca_device.h</a> file for details on the ATCADevice methods  
- <a href="a00449.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="a00029_source.html">atca_device.h</a>&gt;</code></p>
+<p>ATCA Hardware abstraction layer physical send &amp; receive function definitions.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00284_source.html">cryptoauthlib.h</a>&quot;</code><br />
+</div>
+<p><a href="a00449_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:aac7a3ed180ba0fcf0d86f7b54ebc1379"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00423.html#gaf84ea18096bee21811d7eead14a92ac1">ATCACommand</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00449.html#aac7a3ed180ba0fcf0d86f7b54ebc1379">mCommands</a></td></tr>
-<tr class="separator:aac7a3ed180ba0fcf0d86f7b54ebc1379"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca75c68806e47e95144dc86a3f50d236"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00425.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00449.html#aca75c68806e47e95144dc86a3f50d236">mIface</a></td></tr>
-<tr class="separator:aca75c68806e47e95144dc86a3f50d236"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga11ee6ec0b2b7eb2ff2472f92208c3205"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00759.html#ga11ee6ec0b2b7eb2ff2472f92208c3205">kit_phy_num_found</a> (int8_t *num_found)</td></tr>
+<tr class="memdesc:ga11ee6ec0b2b7eb2ff2472f92208c3205"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of USB HID devices found.  <a href="a00759.html#ga11ee6ec0b2b7eb2ff2472f92208c3205">More...</a><br /></td></tr>
+<tr class="separator:ga11ee6ec0b2b7eb2ff2472f92208c3205"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga020fb0be6c73515122cf4b9f749fd97d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00759.html#ga020fb0be6c73515122cf4b9f749fd97d">kit_phy_send</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, const char *txdata, int txlength)</td></tr>
+<tr class="memdesc:ga020fb0be6c73515122cf4b9f749fd97d"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol send .It is called by the top layer.  <a href="a00759.html#ga020fb0be6c73515122cf4b9f749fd97d">More...</a><br /></td></tr>
+<tr class="separator:ga020fb0be6c73515122cf4b9f749fd97d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae5e94b6080d4279474eb3e98bc58901"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00759.html#gaae5e94b6080d4279474eb3e98bc58901">kit_phy_receive</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, char *rxdata, int *rxsize)</td></tr>
+<tr class="memdesc:gaae5e94b6080d4279474eb3e98bc58901"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol receive data.It is called by the top layer.  <a href="a00759.html#gaae5e94b6080d4279474eb3e98bc58901">More...</a><br /></td></tr>
+<tr class="separator:gaae5e94b6080d4279474eb3e98bc58901"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="a00449.html" title="atca_device is the C object backing ATCADevice. See the atca_device.h file for details on the ATCADev...">atca_device</a> is the C object backing ATCADevice. See the <a class="el" href="a00029.html" title="Microchip Crypto Auth device object. ">atca_device.h</a> file for details on the ATCADevice methods </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a id="aac7a3ed180ba0fcf0d86f7b54ebc1379"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac7a3ed180ba0fcf0d86f7b54ebc1379">&#9670;&nbsp;</a></span>mCommands</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00423.html#gaf84ea18096bee21811d7eead14a92ac1">ATCACommand</a> mCommands</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aca75c68806e47e95144dc86a3f50d236"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca75c68806e47e95144dc86a3f50d236">&#9670;&nbsp;</a></span>mIface</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00425.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> mIface</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>ATCA Hardware abstraction layer physical send &amp; receive function definitions. </p>
+<p>This is included for kit protocol implementations. It is included in the kit protocol callback to actually send and recieve bytes.</p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this software and any derivatives exclusively with Microchip products. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00449.html">atca_device</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00449.html">kit_phy.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

@@ -60,8 +60,8 @@ atcacdc_t _gCdc;
 
 
 
-char *dev = "/dev/ttyACM0";  // default device, Atmel CryptoAuth %n
-//char *dev = "/dev/ttyATCA0";  // default device, Atmel CryptoAuth %n
+char *dev = "/dev/ttyACM0";  // default device, Microchip CryptoAuth %n
+//char *dev = "/dev/ttyATCA0";  // default device, Microchip CryptoAuth %n
 int speed = B115200;
 
 /** \brief discover cdc buses available for this hardware
@@ -69,7 +69,7 @@ int speed = B115200;
  * of the a-priori knowledge.This function is currently not implemented.
  * \param[in] cdc_buses - an array of logical bus numbers
  * \param[in] max_buses - maximum number of buses the app wants to attempt to discover
- * \return ATCA_UNIMPLEMENTED
+ * \return ATCA_SUCCESS on success, otherwise an error code.
 
  */
 
@@ -82,7 +82,7 @@ ATCA_STATUS hal_cdc_discover_buses(int cdc_buses[], int max_buses)
  * \param[in] busNum - logical bus number on which to look for CryptoAuth devices
  * \param[out] cfg[] - pointer to head of an array of interface config structures which get filled in by this method
  * \param[out] *found - number of devices found on this bus
- * \return ATCA_UNIMPLEMENTED
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
 ATCA_STATUS hal_cdc_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
@@ -304,7 +304,7 @@ ATCA_STATUS kit_phy_receive(ATCAIface iface, char* rxdata, int* rxsize)
 
 /** \brief Number of USB CDC devices found
  *  \param[out] num_found
- *  \return ATCA_STATUS
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_kit_phy_num_found(int8_t* num_found)
 {
@@ -403,7 +403,7 @@ ATCA_STATUS hal_kit_cdc_release(void* hal_data)
  * of the a-priori knowledge.This function is currently not implemented.
  * \param[in] cdc_buses - an array of logical bus numbers
  * \param[in] max_buses - maximum number of buses the app wants to attempt to discover
- * \return ATCA_UNIMPLEMENTED
+ * \return ATCA_SUCCESS on success, otherwise an error code.
 
  */
 ATCA_STATUS hal_kit_cdc_discover_buses(int cdc_buses[], int max_buses)
@@ -416,7 +416,7 @@ ATCA_STATUS hal_kit_cdc_discover_buses(int cdc_buses[], int max_buses)
  * \param[in] busNum - logical bus number on which to look for CryptoAuth devices
  * \param[out] cfg[] - pointer to head of an array of interface config structures which get filled in by this method
  * \param[out] *found - number of devices found on this bus
- * \return ATCA_UNIMPLEMENTED
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
 ATCA_STATUS hal_kit_cdc_discover_devices(int busNum, ATCAIfaceCfg *cfg, int *found)

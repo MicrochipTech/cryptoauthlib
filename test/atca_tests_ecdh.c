@@ -33,6 +33,7 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 TEST(atca_cmd_unit_test, ecdh)
 {
@@ -52,15 +53,16 @@ TEST(atca_cmd_unit_test, ecdh)
     atca_nonce_in_out_t nonce_params;
     atca_gen_dig_in_out_t gen_dig_params;
     int i;
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     unit_test_assert_data_is_locked();
 
     // Read SN
     packet.param1 = ATCA_ZONE_CONFIG | ATCA_ZONE_READWRITE_32;
     packet.param2 = 0;
-    status = atRead(gCommandObj, &packet);
+    status = atRead(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT(packet.rxsize >= packet.data[ATCA_COUNT_IDX]);
     TEST_ASSERT_EQUAL(32 + 3, packet.data[ATCA_COUNT_IDX]);
@@ -71,9 +73,9 @@ TEST(atca_cmd_unit_test, ecdh)
     // Generate key pair for bob
     packet.param1 = GENKEY_MODE_PRIVATE;
     packet.param2 = private_key_id_bob;
-    status = atGenKey(gCommandObj, &packet);
+    status = atGenKey(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT(packet.rxsize >= packet.data[ATCA_COUNT_IDX]);
     TEST_ASSERT_EQUAL(ATCA_PUB_KEY_SIZE + 3, packet.data[ATCA_COUNT_IDX]);
@@ -82,9 +84,9 @@ TEST(atca_cmd_unit_test, ecdh)
     // Generate key pair for alice
     packet.param1 = GENKEY_MODE_PRIVATE;
     packet.param2 = private_key_id_alice;
-    status = atGenKey(gCommandObj, &packet);
+    status = atGenKey(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT(packet.rxsize >= packet.data[ATCA_COUNT_IDX]);
     TEST_ASSERT_EQUAL(ATCA_PUB_KEY_SIZE + 3, packet.data[ATCA_COUNT_IDX]);
@@ -94,9 +96,9 @@ TEST(atca_cmd_unit_test, ecdh)
     packet.param1 = ECDH_PREFIX_MODE;
     packet.param2 = private_key_id_bob;
     memcpy(packet.data, public_key_alice, sizeof(public_key_alice));
-    status = atECDH(gCommandObj, &packet);
+    status = atECDH(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT(packet.rxsize >= packet.data[ATCA_COUNT_IDX]);
     TEST_ASSERT_EQUAL(4, packet.data[ATCA_COUNT_IDX]);
@@ -106,9 +108,9 @@ TEST(atca_cmd_unit_test, ecdh)
     //packet.param1 = ATCA_ZONE_DATA | ATCA_ZONE_READWRITE_32;
     //packet.param2 = 4 << 3;
     //memcpy(packet.data, g_slot4_key, 32);
-    //status = atWrite(gCommandObj, &packet);
+    //status = atWrite(ca_cmd, &packet);
     //TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    //status = send_command(gCommandObj, gIface, &packet);
+    //status = atca_execute_command(&packet, _gDevice);
     //TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Random nonce
@@ -123,9 +125,9 @@ TEST(atca_cmd_unit_test, ecdh)
     packet.param1 = nonce_params.mode;
     packet.param2 = nonce_params.zero;
     memcpy(packet.data, nonce_params.num_in, NONCE_NUMIN_SIZE);
-    status = atNonce(gCommandObj, &packet);
+    status = atNonce(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT(packet.rxsize >= packet.data[ATCA_COUNT_IDX]);
     TEST_ASSERT_EQUAL(RANDOM_NUM_SIZE + 3, packet.data[ATCA_COUNT_IDX]);
@@ -146,9 +148,9 @@ TEST(atca_cmd_unit_test, ecdh)
     gen_dig_params.temp_key = &temp_key;
     packet.param1 = gen_dig_params.zone;
     packet.param2 = gen_dig_params.key_id;
-    status = atGenDig(gCommandObj, &packet, false);
+    status = atGenDig(ca_cmd, &packet, false);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT(packet.rxsize >= packet.data[ATCA_COUNT_IDX]);
 
@@ -159,9 +161,9 @@ TEST(atca_cmd_unit_test, ecdh)
     // Encrypted read
     packet.param1 = ATCA_ZONE_DATA | ATCA_ZONE_READWRITE_32;
     packet.param2 = (private_key_id_bob + 1) << 3;
-    status = atRead(gCommandObj, &packet);
+    status = atRead(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT(packet.rxsize >= packet.data[ATCA_COUNT_IDX]);
     TEST_ASSERT_EQUAL(ATCA_KEY_SIZE + 3, packet.data[ATCA_COUNT_IDX]);
@@ -176,9 +178,9 @@ TEST(atca_cmd_unit_test, ecdh)
     packet.param1 = ECDH_PREFIX_MODE;
     packet.param2 = private_key_id_alice;
     memcpy(packet.data, public_key_bob, sizeof(public_key_bob));
-    status = atECDH(gCommandObj, &packet);
+    status = atECDH(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT(packet.rxsize >= packet.data[ATCA_COUNT_IDX]);
     TEST_ASSERT_EQUAL(ATCA_KEY_SIZE + 3, packet.data[ATCA_COUNT_IDX]);

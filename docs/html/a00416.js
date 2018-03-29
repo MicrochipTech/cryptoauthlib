@@ -1,11 +1,9 @@
 var a00416 =
 [
-    [ "device_init", "a00432.html#ga98027849426d4672dfc6b65e5e20ac72", null ],
-    [ "device_init_default", "a00432.html#ga0cdd64349463339f8936f8fbca8162b7", null ],
-    [ "g_cert_def_0_device", "a00432.html#gaaadb5391e2adb13989c5ae32466c81aa", null ],
-    [ "g_cert_def_0_signer", "a00432.html#ga2b97f11a5067e2495c407f9f7e987261", null ],
-    [ "g_cert_template_0_device", "a00432.html#ga0c30090734c8befc8c6853d9b5bd5882", null ],
-    [ "g_cert_template_0_signer", "a00432.html#gadb6c39cc8617bfd8b0c8112a404de973", null ],
-    [ "g_signer_0_ca_public_key", "a00432.html#gac2e50c7b9b1bfb090c84768ce947bae5", null ],
-    [ "g_signer_ca_public_key", "a00432.html#gacd99f894f16b93a1fa7e5d4fa7095e8a", null ]
+    [ "SWI_FLAG_CMD", "a00759.html#ga13c01ac16bb14fde75e9c00dcd1cc761", null ],
+    [ "SWI_FLAG_IDLE", "a00759.html#ga6219d68ef915fdcd734f51960ba08fb6", null ],
+    [ "SWI_FLAG_SLEEP", "a00759.html#ga13ef2322176ad9b7ba3d2e23b277cce6", null ],
+    [ "SWI_FLAG_TX", "a00759.html#ga20af8352e13a7357650ba1cbf41349ea", null ],
+    [ "SWI_WAKE_TOKEN", "a00759.html#ga8f12e3b749e7b3dc905114cc7b8d0b38", null ],
+    [ "hal_swi_send_flag", "a00759.html#gaae96ea936a2e85d0bcb81b7868ee007d", null ]
 ];

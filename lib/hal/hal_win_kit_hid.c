@@ -110,7 +110,7 @@ ATCA_STATUS hal_kit_hid_init(void* hal, ATCAIfaceCfg* cfg)
     memset(hid_filter, 0, sizeof(hid_filter));
     _stprintf(hid_filter, _T("vid_%04x&pid_%04x"), cfg->atcahid.vid, cfg->atcahid.pid);
 
-    // Find the Atmel kit USB devices
+    // Find the Microchip CryptoAuthentication kit protocol devices
     while (SetupDiEnumDeviceInterfaces(dev_info, NULL, &hid_guid, device_index, &dev_data))
     {
         // Get the required buffer size of the detailed data
@@ -174,11 +174,14 @@ ATCA_STATUS hal_kit_hid_init(void* hal, ATCAIfaceCfg* cfg)
     SetupDiDestroyDeviceInfoList(dev_info);
 
     // Save the results of this discovery of HID
-    if (index > 0)
+    _gHid.num_kits_found = index;
+    phal->hal_data = &_gHid;
+
+    if (_gHid.num_kits_found == 0)
     {
-        _gHid.num_kits_found = index;
-        phal->hal_data = &_gHid;
+        status = ATCA_NO_DEVICES;
     }
+
     return status;
 }
 

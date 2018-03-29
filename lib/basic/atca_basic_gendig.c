@@ -38,7 +38,7 @@
  */
 
 #include "atca_basic.h"
-#include "host/atca_host.h"
+#include "atca_execution.h"
 
 /** \brief Issues a GenDig command, which performs a SHA256 hash on the source data indicated by zone with the
  *  contents of TempKey.  See the CryptoAuth datasheet for your chip to see what the values of zone
@@ -83,7 +83,7 @@ ATCA_STATUS atcab_gendig(uint8_t zone, uint16_t key_id, const uint8_t *other_dat
             break;
         }
 
-        if ((status = atcab_execute_command(&packet)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(&packet, _gDevice)) != ATCA_SUCCESS)
         {
             break;
         }

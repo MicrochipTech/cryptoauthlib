@@ -1,4 +1,6 @@
 var a00176 =
 [
-    [ "atcac_sw_random", "a00428.html#ga0710d8bf5e92403c4026c32af39ad79e", null ]
+    [ "atcab_counter", "a00757.html#gabaaaef242649206029e1c10ac6d1fb7d", null ],
+    [ "atcab_counter_increment", "a00757.html#ga6e510e056ea16a0a34b405b7ca378f16", null ],
+    [ "atcab_counter_read", "a00757.html#gaeee666028a097659af69cc828a6bd68b", null ]
 ];

@@ -38,6 +38,7 @@
  * TERMS.
  */
 #include "atca_basic.h"
+#include "atca_execution.h"
 #include "host/atca_host.h"
 
 
@@ -96,7 +97,7 @@ ATCA_STATUS atcab_write(uint8_t zone, uint16_t address, const uint8_t *value, co
             break;
         }
 
-        if ((status = atcab_execute_command(&packet)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(&packet, _gDevice)) != ATCA_SUCCESS)
         {
             break;
         }

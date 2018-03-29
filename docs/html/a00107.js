@@ -1,6 +1,10 @@
 var a00107 =
 [
-    [ "atcab_genkey", "a00427.html#ga617bdbdce7b5736351d93214d44c5b8f", null ],
-    [ "atcab_genkey_base", "a00427.html#gaa8b6953ad2c7f749e61566fd38fe6903", null ],
-    [ "atcab_get_pubkey", "a00427.html#gad2096a4618dd37c48ed48847fe63d844", null ]
+    [ "ATCADeviceType", "a00754.html#gafb234ccd6a80d09c0efbe336c2354267", [
+      [ "ATSHA204A", "a00754.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268", null ],
+      [ "ATECC108A", "a00754.html#ggafb234ccd6a80d09c0efbe336c2354267a20efd97b5b1001eec4a52e0ed5bf594c", null ],
+      [ "ATECC508A", "a00754.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae", null ],
+      [ "ATECC608A", "a00754.html#ggafb234ccd6a80d09c0efbe336c2354267a183a6224a93e6c2b82c6dc0e132398bf", null ],
+      [ "ATCA_DEV_UNKNOWN", "a00754.html#ggafb234ccd6a80d09c0efbe336c2354267a3488f672341dda0ad20508ad888280ad", null ]
+    ] ]
 ];

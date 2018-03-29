@@ -1,6 +1,6 @@
 var a00359 =
 [
-    [ "kit_phy_num_found", "a00429.html#ga11ee6ec0b2b7eb2ff2472f92208c3205", null ],
-    [ "kit_phy_receive", "a00429.html#gaae5e94b6080d4279474eb3e98bc58901", null ],
-    [ "kit_phy_send", "a00429.html#ga020fb0be6c73515122cf4b9f749fd97d", null ]
+    [ "atca_delay_10us", "a00759.html#ga19891182689551cc3a88603135959351", null ],
+    [ "atca_delay_ms", "a00759.html#ga80a853a202b089064bfc4b159c3418b4", null ],
+    [ "atca_delay_us", "a00759.html#ga7598dfcd6dcac882836544d48356d02f", null ]
 ];

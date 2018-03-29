@@ -39,7 +39,7 @@
 
 
 #include "atca_basic.h"
-#include "host/atca_host.h"
+#include "atca_execution.h"
 
 /** \brief Issues a HMAC command, which computes an HMAC/SHA-256 digest of a
  *          key stored in the device, a challenge, and other information on the
@@ -76,7 +76,7 @@ ATCA_STATUS atcab_hmac(uint8_t mode, uint16_t key_id, uint8_t* digest)
             break;
         }
 
-        if ((status = atcab_execute_command(&packet)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(&packet, _gDevice)) != ATCA_SUCCESS)
         {
             break;
         }

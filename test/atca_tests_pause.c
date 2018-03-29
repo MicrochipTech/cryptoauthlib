@@ -33,22 +33,24 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 
 TEST(atca_cmd_unit_test, pause)
 {
     ATCA_STATUS status;
     ATCAPacket packet;
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     // build a pause command
     packet.param1 = 0x00;
     packet.param2 = 0x0000;
 
-    status = atPause(gCommandObj, &packet);
+    status = atPause(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL_INT(PAUSE_COUNT, packet.txsize);
     TEST_ASSERT_EQUAL_INT(PAUSE_RSP_SIZE, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(0x00, packet.data[ATCA_RSP_DATA_IDX]);
 

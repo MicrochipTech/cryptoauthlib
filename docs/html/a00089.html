@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_basic_aes.c File Reference</title>
+<title>CryptoAuthLib: atca_cfgs.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
    </div>
-   <div id="projectbrief">Atmel CryptoAuthentication Library</div>
+   <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
  </tr>
  </tbody>
@@ -87,61 +87,54 @@ $(document).ready(function(){initNavTree('a00089.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">atca_basic_aes.c File Reference</div>  </div>
+<div class="title">atca_cfgs.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for AES command.  
+<p>a set of default configurations for various ATCA devices and interfaces  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00086_source.html">atca_basic.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00401_source.html">host/atca_host.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gad115ce255664a48b80e90ea19c156b79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#gad115ce255664a48b80e90ea19c156b79">atcab_aes</a> (uint8_t mode, uint16_t key_id, const uint8_t *aes_in, uint8_t *aes_out)</td></tr>
-<tr class="memdesc:gad115ce255664a48b80e90ea19c156b79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the AES-128 encrypt, decrypt, or GFM calculation.  <a href="a00427.html#gad115ce255664a48b80e90ea19c156b79">More...</a><br /></td></tr>
-<tr class="separator:gad115ce255664a48b80e90ea19c156b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacc9a58dc49f91674213f34fa7bbd05e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#gacc9a58dc49f91674213f34fa7bbd05e1">atcab_aes_encrypt</a> (uint16_t key_id, uint8_t key_block, const uint8_t *plaintext, uint8_t *ciphertext)</td></tr>
-<tr class="memdesc:gacc9a58dc49f91674213f34fa7bbd05e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform an AES-128 encrypt operation with a key in the device.  <a href="a00427.html#gacc9a58dc49f91674213f34fa7bbd05e1">More...</a><br /></td></tr>
-<tr class="separator:gacc9a58dc49f91674213f34fa7bbd05e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9658e84055727e6357cf7ef636b4e398"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#ga9658e84055727e6357cf7ef636b4e398">atcab_aes_decrypt</a> (uint16_t key_id, uint8_t key_block, const uint8_t *ciphertext, uint8_t *plaintext)</td></tr>
-<tr class="memdesc:ga9658e84055727e6357cf7ef636b4e398"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform an AES-128 decrypt operation with a key in the device.  <a href="a00427.html#ga9658e84055727e6357cf7ef636b4e398">More...</a><br /></td></tr>
-<tr class="separator:ga9658e84055727e6357cf7ef636b4e398"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5554940ed4c7c7e28652ce6923cf9314"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#ga5554940ed4c7c7e28652ce6923cf9314">atcab_aes_gfm</a> (const uint8_t *h, const uint8_t *input, uint8_t *output)</td></tr>
-<tr class="memdesc:ga5554940ed4c7c7e28652ce6923cf9314"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a Galois Field Multiply (GFM) operation.  <a href="a00427.html#ga5554940ed4c7c7e28652ce6923cf9314">More...</a><br /></td></tr>
-<tr class="separator:ga5554940ed4c7c7e28652ce6923cf9314"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabc41b824cdc9b10efa46bcbf74850184"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#gabc41b824cdc9b10efa46bcbf74850184">atcab_aes_cbc_init</a> (<a class="el" href="a00427.html#gaa702726fe160635225abc3c1ed421f7e">atca_aes_cbc_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block, const uint8_t *iv)</td></tr>
-<tr class="memdesc:gabc41b824cdc9b10efa46bcbf74850184"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for AES CBC operation.  <a href="a00427.html#gabc41b824cdc9b10efa46bcbf74850184">More...</a><br /></td></tr>
-<tr class="separator:gabc41b824cdc9b10efa46bcbf74850184"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7414e3dc8215cedc1bffc6cf576d7d1e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#ga7414e3dc8215cedc1bffc6cf576d7d1e">atcab_aes_cbc_encrypt_block</a> (<a class="el" href="a00427.html#gaa702726fe160635225abc3c1ed421f7e">atca_aes_cbc_ctx_t</a> *ctx, const uint8_t *plaintext, uint8_t *ciphertext)</td></tr>
-<tr class="memdesc:ga7414e3dc8215cedc1bffc6cf576d7d1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypt a block of data using CBC mode and a key within the ATECC608A. <a class="el" href="a00427.html#gabc41b824cdc9b10efa46bcbf74850184" title="Initialize context for AES CBC operation. ">atcab_aes_cbc_init()</a> should be called before the first use of this function.  <a href="a00427.html#ga7414e3dc8215cedc1bffc6cf576d7d1e">More...</a><br /></td></tr>
-<tr class="separator:ga7414e3dc8215cedc1bffc6cf576d7d1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7c66e1b8b31bb87be3de6c9a9084c21e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#ga7c66e1b8b31bb87be3de6c9a9084c21e">atcab_aes_cbc_decrypt_block</a> (<a class="el" href="a00427.html#gaa702726fe160635225abc3c1ed421f7e">atca_aes_cbc_ctx_t</a> *ctx, const uint8_t *ciphertext, uint8_t *plaintext)</td></tr>
-<tr class="memdesc:ga7c66e1b8b31bb87be3de6c9a9084c21e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypt a block of data using CBC mode and a key within the ATECC608A. <a class="el" href="a00427.html#gabc41b824cdc9b10efa46bcbf74850184" title="Initialize context for AES CBC operation. ">atcab_aes_cbc_init()</a> should be called before the first use of this function.  <a href="a00427.html#ga7c66e1b8b31bb87be3de6c9a9084c21e">More...</a><br /></td></tr>
-<tr class="separator:ga7c66e1b8b31bb87be3de6c9a9084c21e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga84506ff4105e63823c99527788d36d52"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#ga84506ff4105e63823c99527788d36d52">atcab_aes_cmac_init</a> (<a class="el" href="a00427.html#ga05fa8c58bf4408381db8871b0dca64b6">atca_aes_cmac_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block)</td></tr>
-<tr class="memdesc:ga84506ff4105e63823c99527788d36d52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a CMAC calculation using an AES-128 key in the ATECC608A.  <a href="a00427.html#ga84506ff4105e63823c99527788d36d52">More...</a><br /></td></tr>
-<tr class="separator:ga84506ff4105e63823c99527788d36d52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0cf22e893c713890faeb9fa8784760b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#ga0cf22e893c713890faeb9fa8784760b1">atcab_aes_cmac_update</a> (<a class="el" href="a00427.html#ga05fa8c58bf4408381db8871b0dca64b6">atca_aes_cmac_ctx_t</a> *ctx, const uint8_t *data, uint32_t data_size)</td></tr>
-<tr class="memdesc:ga0cf22e893c713890faeb9fa8784760b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add data to an initialized CMAC calculation.  <a href="a00427.html#ga0cf22e893c713890faeb9fa8784760b1">More...</a><br /></td></tr>
-<tr class="separator:ga0cf22e893c713890faeb9fa8784760b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac0be51b283b107465dcf42758ca31687"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#gac0be51b283b107465dcf42758ca31687">atcab_aes_cmac_finish</a> (<a class="el" href="a00427.html#ga05fa8c58bf4408381db8871b0dca64b6">atca_aes_cmac_ctx_t</a> *ctx, uint8_t *cmac, uint32_t cmac_size)</td></tr>
-<tr class="memdesc:gac0be51b283b107465dcf42758ca31687"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finish a CMAC operation returning the CMAC value.  <a href="a00427.html#gac0be51b283b107465dcf42758ca31687">More...</a><br /></td></tr>
-<tr class="separator:gac0be51b283b107465dcf42758ca31687"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00119_source.html">atca_iface.h</a>&quot;</code><br />
+</div>
+<p><a href="a00089_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:gafcb056718eb34ec3a612d550208e49cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00777.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00752.html#gafcb056718eb34ec3a612d550208e49cc">cfg_ateccx08a_i2c_default</a></td></tr>
+<tr class="memdesc:gafcb056718eb34ec3a612d550208e49cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for an ECCx08A device on the first logical I2C bus  <a href="a00752.html#gafcb056718eb34ec3a612d550208e49cc">More...</a><br /></td></tr>
+<tr class="separator:gafcb056718eb34ec3a612d550208e49cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5624aa554e1964981b794e2295b9432c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00777.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00752.html#ga5624aa554e1964981b794e2295b9432c">cfg_ateccx08a_swi_default</a></td></tr>
+<tr class="memdesc:ga5624aa554e1964981b794e2295b9432c"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for an ECCx08A device on the logical SWI bus over UART  <a href="a00752.html#ga5624aa554e1964981b794e2295b9432c">More...</a><br /></td></tr>
+<tr class="separator:ga5624aa554e1964981b794e2295b9432c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8fb19127e7fc7cfbaa619ba41bccc4b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00777.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00752.html#ga8fb19127e7fc7cfbaa619ba41bccc4b3">cfg_ateccx08a_kitcdc_default</a></td></tr>
+<tr class="memdesc:ga8fb19127e7fc7cfbaa619ba41bccc4b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for Kit protocol over a CDC interface  <a href="a00752.html#ga8fb19127e7fc7cfbaa619ba41bccc4b3">More...</a><br /></td></tr>
+<tr class="separator:ga8fb19127e7fc7cfbaa619ba41bccc4b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1f5e0890694189d4ce70f19b207eb070"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00777.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00752.html#ga1f5e0890694189d4ce70f19b207eb070">cfg_ateccx08a_kithid_default</a></td></tr>
+<tr class="memdesc:ga1f5e0890694189d4ce70f19b207eb070"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for Kit protocol over a HID interface  <a href="a00752.html#ga1f5e0890694189d4ce70f19b207eb070">More...</a><br /></td></tr>
+<tr class="separator:ga1f5e0890694189d4ce70f19b207eb070"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9fe83141d8e44bf623e624a72901832c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00777.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00752.html#ga9fe83141d8e44bf623e624a72901832c">cfg_atsha204a_i2c_default</a></td></tr>
+<tr class="memdesc:ga9fe83141d8e44bf623e624a72901832c"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for a SHA204A device on the first logical I2C bus  <a href="a00752.html#ga9fe83141d8e44bf623e624a72901832c">More...</a><br /></td></tr>
+<tr class="separator:ga9fe83141d8e44bf623e624a72901832c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae5e766a819c7920470b456238cbef70d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00777.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00752.html#gae5e766a819c7920470b456238cbef70d">cfg_atsha204a_swi_default</a></td></tr>
+<tr class="memdesc:gae5e766a819c7920470b456238cbef70d"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for an SHA204A device on the logical SWI bus over UART  <a href="a00752.html#gae5e766a819c7920470b456238cbef70d">More...</a><br /></td></tr>
+<tr class="separator:gae5e766a819c7920470b456238cbef70d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga010430b93521c09efec9e5913ce769c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00777.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00752.html#ga010430b93521c09efec9e5913ce769c1">cfg_atsha204a_kitcdc_default</a></td></tr>
+<tr class="memdesc:ga010430b93521c09efec9e5913ce769c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for Kit protocol over a CDC interface  <a href="a00752.html#ga010430b93521c09efec9e5913ce769c1">More...</a><br /></td></tr>
+<tr class="separator:ga010430b93521c09efec9e5913ce769c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac6a0b1f7ea398eee53d1e4243a617c6c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00777.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00752.html#gac6a0b1f7ea398eee53d1e4243a617c6c">cfg_atsha204a_kithid_default</a></td></tr>
+<tr class="memdesc:gac6a0b1f7ea398eee53d1e4243a617c6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for Kit protocol over a HID interface for SHA204  <a href="a00752.html#gac6a0b1f7ea398eee53d1e4243a617c6c">More...</a><br /></td></tr>
+<tr class="separator:gac6a0b1f7ea398eee53d1e4243a617c6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for AES command. </p>
-<p>The AES command supports 128-bit AES encryption or decryption of small messages or data packets in ECB mode. Also can perform GFM (Galois Field Multiply) calculation in support of AES-GCM.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC608A. Refer to device datasheet for full details.</dd></dl>
+<div class="textblock"><p>a set of default configurations for various ATCA devices and interfaces </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this software and any derivatives exclusively with Microchip products. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00089.html">atca_basic_aes.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00089.html">atca_cfgs.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

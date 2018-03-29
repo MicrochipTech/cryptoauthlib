@@ -33,12 +33,14 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 TEST(atca_cmd_unit_test, hmac)
 {
     ATCA_STATUS status;
     ATCAPacket packet;
     uint16_t keyID = 0x01;
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     unit_test_assert_config_is_locked();
 
@@ -47,20 +49,20 @@ TEST(atca_cmd_unit_test, hmac)
     packet.param2 = 0x0000;
     memset(packet.data, 0x55, 32);
 
-    status = atNonce(gCommandObj, &packet);
+    status = atNonce(ca_cmd, &packet);
     TEST_ASSERT_EQUAL_INT(NONCE_COUNT_LONG, packet.txsize);
     TEST_ASSERT_EQUAL_INT(NONCE_RSP_SIZE_SHORT, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     TEST_ASSERT_EQUAL_INT8(ATCA_SUCCESS, packet.data[1]);
 
     packet.param1 = GENDIG_ZONE_DATA;
     packet.param2 = keyID;
-    status = atGenDig(gCommandObj, &packet, false);
+    status = atGenDig(ca_cmd, &packet, false);
     TEST_ASSERT_EQUAL_INT(GENDIG_COUNT, packet.txsize);
     TEST_ASSERT_EQUAL_INT(NONCE_RSP_SIZE_SHORT, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
 
@@ -69,10 +71,10 @@ TEST(atca_cmd_unit_test, hmac)
     // build a random command
     packet.param1 = RANDOM_SEED_UPDATE;
     packet.param2 = 0x0000;
-    status = atRandom(gCommandObj, &packet);
+    status = atRandom(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(ATCA_RSP_SIZE_32, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
 
@@ -81,17 +83,17 @@ TEST(atca_cmd_unit_test, hmac)
     packet.param2 = 0x0000;
     memset(packet.data, 0x55, 32);    // a 32-byte nonce
 
-    status = atNonce(gCommandObj, &packet);
+    status = atNonce(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // build a HMAC command
     packet.param1 = ATCA_ZONE_DATA;
     packet.param2 = keyID;
-    status = atHMAC(gCommandObj, &packet);
+    status = atHMAC(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // check if the response has the 32 bytes HMAC digest

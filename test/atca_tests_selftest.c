@@ -33,18 +33,20 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 TEST(atca_cmd_unit_test, selftest)
 {
     ATCA_STATUS status;
     ATCAPacket packet;
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     packet.param1 = SELFTEST_MODE_RNG;
     packet.param2 = 0x0000;
-    status = atSelfTest(gCommandObj, &packet);
+    status = atSelfTest(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(SELFTEST_RSP_SIZE, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
 
@@ -57,11 +59,7 @@ TEST(atca_cmd_basic_test, selftest_individual)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(0, result);
 
-    status = atcab_selftest(SELFTEST_MODE_ECDSA_VERIFY, 0, &result);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT_EQUAL(0, result);
-
-    status = atcab_selftest(SELFTEST_MODE_ECDSA_SIGN, 0, &result);
+    status = atcab_selftest(SELFTEST_MODE_ECDSA_SIGN_VERIFY, 0, &result);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(0, result);
 

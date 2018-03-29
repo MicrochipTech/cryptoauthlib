@@ -1,7 +1,5 @@
 var a00113 =
 [
-    [ "atcab_info", "a00427.html#ga6e19ecd60be4c74665d9ec142e460771", null ],
-    [ "atcab_info_base", "a00427.html#ga806d07982fda5c30755af6b5b4ef9314", null ],
-    [ "atcab_info_get_latch", "a00427.html#ga376b6ae92f14c60fba4ca5c6461e0b48", null ],
-    [ "atcab_info_set_latch", "a00427.html#ga2649126606db8a0b64ae8e19d09f6600", null ]
+    [ "ATCA_UNSUPPORTED_CMD", "a00113.html#aa025be8149d8f6e4d07aaa436b026db2", null ],
+    [ "atca_execute_command", "a00113.html#a9a6a7a38f14d486a4b2124d196fc6849", null ]
 ];

@@ -33,19 +33,21 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 TEST(atca_cmd_unit_test, read)
 {
     ATCA_STATUS status;
     ATCAPacket packet;
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     // build read command
     packet.param1 = ATCA_ZONE_CONFIG;
     packet.param2 = 0x0000;
 
-    status = atRead(gCommandObj, &packet);
+    status = atRead(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(0x07, packet.rxsize);
     TEST_ASSERT_EQUAL(0x07, packet.data[ATCA_COUNT_IDX]);

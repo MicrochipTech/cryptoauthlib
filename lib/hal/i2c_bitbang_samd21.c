@@ -1,8 +1,6 @@
 /**
  * \file
- * \brief  Hardware Interface Functions - I2C bit-bang for SAMd21
- * \author Atmel Crypto Group
- * \date   November 18, 2015
+ * \brief  Hardware Interface Functions - I2C bit-bang for SAMD21
  *
  * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
  *            You may use this software and any derivatives exclusively with

@@ -33,6 +33,7 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 TEST(atca_cmd_unit_test, verify)
 {
@@ -41,15 +42,16 @@ TEST(atca_cmd_unit_test, verify)
     uint16_t keyID = 0x00;
     uint8_t public_key[ATCA_PUB_KEY_SIZE];
     uint8_t signature[VERIFY_256_SIGNATURE_SIZE];
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     unit_test_assert_config_is_locked();
 
     // build a genkey command
     packet.param1 = 0x04; // a random private key is generated and stored in slot keyID
     packet.param2 = keyID;
-    status = atGenKey(gCommandObj, &packet);
+    status = atGenKey(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(GENKEY_RSP_SIZE_LONG, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // copy the data response into the public key
@@ -58,8 +60,8 @@ TEST(atca_cmd_unit_test, verify)
     // build a random command
     packet.param1 = RANDOM_SEED_UPDATE;
     packet.param2 = 0x0000;
-    status = atRandom(gCommandObj, &packet);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atRandom(ca_cmd, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
 
@@ -68,19 +70,19 @@ TEST(atca_cmd_unit_test, verify)
     packet.param2 = 0x0000;
     memset(packet.data, 0x55, 32);    // a 32-byte nonce
 
-    status = atNonce(gCommandObj, &packet);
+    status = atNonce(ca_cmd, &packet);
     TEST_ASSERT_EQUAL_INT(NONCE_COUNT_LONG, packet.txsize);
     TEST_ASSERT_EQUAL_INT(NONCE_RSP_SIZE_SHORT, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
 
     // build a sign command
     packet.param1 = SIGN_MODE_EXTERNAL; //verify the signature
     packet.param2 = keyID;
-    status = atSign(gCommandObj, &packet);
+    status = atSign(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // copy the data response into the signature
@@ -89,9 +91,9 @@ TEST(atca_cmd_unit_test, verify)
     // build an random command
     packet.param1 = RANDOM_SEED_UPDATE;
     packet.param2 = 0x0000;
-    status = atRandom(gCommandObj, &packet);
+    status = atRandom(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
 
@@ -100,10 +102,10 @@ TEST(atca_cmd_unit_test, verify)
     packet.param2 = 0x0000;
     memset(packet.data, 0x55, 32);    // a 32-byte nonce
 
-    status = atNonce(gCommandObj, &packet);
+    status = atNonce(ca_cmd, &packet);
     TEST_ASSERT_EQUAL_INT(NONCE_COUNT_LONG, packet.txsize);
     TEST_ASSERT_EQUAL_INT(NONCE_RSP_SIZE_SHORT, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
 
@@ -113,9 +115,9 @@ TEST(atca_cmd_unit_test, verify)
     memcpy(&packet.data[0], signature, sizeof(signature));
     memcpy(&packet.data[64], public_key, sizeof(public_key));
 
-    status = atVerify(gCommandObj, &packet);
+    status = atVerify(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(0x00, packet.data[ATCA_RSP_DATA_IDX]);
 }

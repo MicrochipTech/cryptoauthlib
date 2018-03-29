@@ -68,7 +68,6 @@ ATCA_STATUS atcab_sleep(void);
 ATCA_STATUS atcab_cfg_discover(ATCAIfaceCfg cfg_array[], int max);
 ATCA_STATUS atcab_get_addr(uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t* addr);
 ATCA_STATUS atcab_get_zone_size(uint8_t zone, uint16_t slot, size_t* size);
-ATCA_STATUS atcab_execute_command(ATCAPacket* packet);
 
 // AES command functions
 ATCA_STATUS atcab_aes(uint8_t mode, uint16_t key_id, const uint8_t* aes_in, uint8_t* aes_out);

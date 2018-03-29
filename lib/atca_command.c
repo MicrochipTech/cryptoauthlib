@@ -41,151 +41,6 @@
 #include "atca_command.h"
 #include "atca_devtypes.h"
 
-/*Execution times for ATSHA204A supported commands...*/
-static const device_execution_time_t device_execution_time_204[] = {
-    { ATCA_CHECKMAC,     38},
-    { ATCA_DERIVE_KEY,   62},
-    { ATCA_GENDIG,       43},
-    { ATCA_HMAC,         69},
-    { ATCA_INFO,         2},
-    { ATCA_LOCK,         24},
-    { ATCA_MAC,          35},
-    { ATCA_NONCE,        60},
-    { ATCA_PAUSE,        2},
-    { ATCA_RANDOM,       50},
-    { ATCA_READ,         5},
-    { ATCA_SHA,          22},
-    { ATCA_UPDATE_EXTRA, 12},
-    { ATCA_WRITE,        42}
-};
-
-/*Execution times for ATECC108A supported commands...*/
-static const device_execution_time_t device_execution_time_108[] = {
-    { ATCA_CHECKMAC,     13},
-    { ATCA_COUNTER,      20},
-    { ATCA_DERIVE_KEY,   50},
-    { ATCA_GENDIG,       11},
-    { ATCA_GENKEY,       115},
-    { ATCA_HMAC,         23},
-    { ATCA_INFO,         2},
-    { ATCA_LOCK,         32},
-    { ATCA_MAC,          14},
-    { ATCA_NONCE,        29},
-    { ATCA_PAUSE,        3},
-    { ATCA_PRIVWRITE,    48},
-    { ATCA_RANDOM,       23},
-    { ATCA_READ,         5},
-    { ATCA_SHA,          9},
-    { ATCA_SIGN,         60},
-    { ATCA_UPDATE_EXTRA, 10},
-    { ATCA_VERIFY,       72},
-    { ATCA_WRITE,        26}
-};
-
-/*Execution times for ATECC508A supported commands...*/
-static const device_execution_time_t device_execution_time_508[] = {
-    { ATCA_CHECKMAC,     13},
-    { ATCA_COUNTER,      20},
-    { ATCA_DERIVE_KEY,   50},
-    { ATCA_ECDH,         58},
-    { ATCA_GENDIG,       11},
-    { ATCA_GENKEY,       115},
-    { ATCA_HMAC,         23},
-    { ATCA_INFO,         2},
-    { ATCA_LOCK,         32},
-    { ATCA_MAC,          14},
-    { ATCA_NONCE,        29},
-    { ATCA_PAUSE,        3},
-    { ATCA_PRIVWRITE,    48},
-    { ATCA_RANDOM,       23},
-    { ATCA_READ,         5},
-    { ATCA_SHA,          9},
-    { ATCA_SIGN,         60},
-    { ATCA_UPDATE_EXTRA, 10},
-    { ATCA_VERIFY,       72},
-    { ATCA_WRITE,        26}
-};
-
-/*Execution times for ATECC608A-M0 supported commands...*/
-static const device_execution_time_t device_execution_time_608_m0[] = {
-    { ATCA_AES,          27},
-    { ATCA_CHECKMAC,     40},
-    { ATCA_COUNTER,      25},
-    { ATCA_DERIVE_KEY,   50},
-    { ATCA_ECDH,         60},
-    { ATCA_GENDIG,       25},
-    { ATCA_GENKEY,       115},
-    { ATCA_INFO,         5},
-    { ATCA_KDF,          165},
-    { ATCA_LOCK,         35},
-    { ATCA_MAC,          55},
-    { ATCA_NONCE,        20},
-    { ATCA_PRIVWRITE,    50},
-    { ATCA_RANDOM,       23},
-    { ATCA_READ,         5},
-    { ATCA_SECUREBOOT,   80},
-    { ATCA_SELFTEST,     250},
-    { ATCA_SHA,          36},
-    { ATCA_SIGN,         115},
-    { ATCA_UPDATE_EXTRA, 10},
-    { ATCA_VERIFY,       105},
-    { ATCA_WRITE,        45}
-};
-
-/*Execution times for ATECC608A-M1 supported commands...*/
-static const device_execution_time_t device_execution_time_608_m1[] = {
-    { ATCA_AES,          27},
-    { ATCA_CHECKMAC,     40},
-    { ATCA_COUNTER,      25},
-    { ATCA_DERIVE_KEY,   50},
-    { ATCA_ECDH,         140},
-    { ATCA_GENDIG,       35},
-    { ATCA_GENKEY,       215},
-    { ATCA_INFO,         5},
-    { ATCA_KDF,          165},
-    { ATCA_LOCK,         35},
-    { ATCA_MAC,          55},
-    { ATCA_NONCE,        20},
-    { ATCA_PRIVWRITE,    50},
-    { ATCA_RANDOM,       23},
-    { ATCA_READ,         5},
-    { ATCA_SECUREBOOT,   151},
-    { ATCA_SELFTEST,     590},
-    { ATCA_SHA,          42},
-    { ATCA_SIGN,         220},
-    { ATCA_UPDATE_EXTRA, 10},
-    { ATCA_VERIFY,       295},
-    { ATCA_WRITE,        45}
-};
-
-/*Execution times for ATECC608A-M2 supported commands...*/
-static const device_execution_time_t device_execution_time_608_m2[] = {
-    { ATCA_AES,          27},
-    { ATCA_CHECKMAC,     40},
-    { ATCA_COUNTER,      25},
-    { ATCA_DERIVE_KEY,   50},
-    { ATCA_ECDH,         455},
-    { ATCA_GENDIG,       35},
-    { ATCA_GENKEY,       630},
-    { ATCA_INFO,         5},
-    { ATCA_KDF,          165},
-    { ATCA_LOCK,         35},
-    { ATCA_MAC,          55},
-    { ATCA_NONCE,        20},
-    { ATCA_PRIVWRITE,    50},
-    { ATCA_RANDOM,       23},
-    { ATCA_READ,         5},
-    { ATCA_SECUREBOOT,   451},
-    { ATCA_SELFTEST,     2200},
-    { ATCA_SHA,          75},
-    { ATCA_SIGN,         665},
-    { ATCA_UPDATE_EXTRA, 10},
-    { ATCA_VERIFY,       1085},
-    { ATCA_WRITE,        45}
-};
-
-// full superset of commands goes here
-
 /** \brief ATCACommand CheckMAC method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -209,11 +64,6 @@ ATCA_STATUS atCheckMAC(ATCACommand ca_cmd, ATCAPacket *packet)
  */
 ATCA_STATUS atCounter(ATCACommand ca_cmd, ATCAPacket *packet)
 {
-    if (!atIsECCFamily(ca_cmd->dt) )
-    {
-        return ATCA_BAD_OPCODE;
-    }
-
     // Set the opcode & parameters
     packet->opcode = ATCA_COUNTER;
     packet->txsize = COUNTER_COUNT;
@@ -837,7 +687,7 @@ ATCA_STATUS atKDF(ATCACommand ca_cmd, ATCAPacket *packet, uint16_t* out_data_siz
                 packet->rxsize += 32;
             }
         }
-        else if ((details & KDF_DETAILS_PRF_AEAD_MASK) == KDF_DETAILS_PRF_AEAD_MODE3)
+        else if ((details & KDF_DETAILS_PRF_AEAD_MASK) == KDF_DETAILS_PRF_AEAD_MODE1)
         {
             // This AEAD processing mode will return 32 bytes even when the
             // output buffer isn't the target
@@ -930,82 +780,6 @@ void deleteATCACommand(ATCACommand *ca_cmd)    // destructor
     *ca_cmd = NULL;
 }
 
-
-
-/** \brief return the typical execution type for the given command
- *  \param[in] opcode  Opcode value of the command
- *  \param[in] ca_cmd  Command object for which the execution times are associated
- *  \return ATCA_SUCCESS
- */
-ATCA_STATUS atGetExecTime(uint8_t opcode, ATCACommand ca_cmd)
-{
-    ATCA_STATUS status = ATCA_SUCCESS;
-    const device_execution_time_t *execution_times;
-    uint8_t i, no_of_commands;
-
-
-    switch (ca_cmd->dt)
-    {
-    case ATSHA204A:
-        execution_times = device_execution_time_204;
-        no_of_commands = sizeof(device_execution_time_204) / sizeof(device_execution_time_t);
-        break;
-
-    case ATECC108A:
-        execution_times = device_execution_time_108;
-        no_of_commands = sizeof(device_execution_time_108) / sizeof(device_execution_time_t);
-        break;
-
-    case ATECC508A:
-        execution_times = device_execution_time_508;
-        no_of_commands = sizeof(device_execution_time_508) / sizeof(device_execution_time_t);
-        break;
-
-    case ATECC608A:
-        if (ca_cmd->clock_divider == ATCA_CHIPMODE_CLOCK_DIV_M1)
-        {
-            execution_times = device_execution_time_608_m1;
-            no_of_commands = sizeof(device_execution_time_608_m1) / sizeof(device_execution_time_t);
-        }
-        else if (ca_cmd->clock_divider == ATCA_CHIPMODE_CLOCK_DIV_M2)
-        {
-            execution_times = device_execution_time_608_m2;
-            no_of_commands = sizeof(device_execution_time_608_m2) / sizeof(device_execution_time_t);
-        }
-        else
-        {
-            // Assume default M0 clock divider
-            execution_times = device_execution_time_608_m0;
-            no_of_commands = sizeof(device_execution_time_608_m0) / sizeof(device_execution_time_t);
-        }
-        break;
-
-    default:
-        no_of_commands = 0;
-        execution_times = NULL;
-        break;
-    }
-
-    ca_cmd->execution_time_msec = UNSUPPORTED;
-
-    for (i = 0; i < no_of_commands; i++)
-    {
-        if (execution_times[i].opcode == opcode)
-        {
-            ca_cmd->execution_time_msec = execution_times[i].execution_time_msec;
-            break;
-        }
-    }
-
-    if (ca_cmd->execution_time_msec == UNSUPPORTED)
-    {
-        status = ATCA_BAD_OPCODE;
-    }
-
-    return status;
-}
-
-
 /** \brief Calculates CRC over the given raw data and returns the CRC in
  *         little-endian byte order.
  *
@@ -1089,6 +863,7 @@ bool atIsSHAFamily(ATCADeviceType device_type)
     case ATECC608A:
         return true;
         break;
+
     default:
         return false;
         break;
@@ -1144,6 +919,8 @@ ATCA_STATUS isATCAError(uint8_t *data)
         case 0x07: // chip is in self test failure mode
             return ATCA_STATUS_SELFTEST_ERROR;
             break;
+        case 0x08: //random number generator health test error
+            return ATCA_HEALTH_TEST_ERROR;
         case 0x0f: // chip can't execute the command
             return ATCA_EXECUTION_ERROR;
             break;

@@ -33,12 +33,14 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 
 TEST(atca_cmd_unit_test, privwrite)
 {
     ATCA_STATUS status;
     ATCAPacket packet;
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     unit_test_assert_config_is_locked();
     unit_test_assert_data_is_unlocked();
@@ -48,9 +50,9 @@ TEST(atca_cmd_unit_test, privwrite)
     packet.param2 = 0x0000;
     memset(&packet.data[4], 0x55, 32);
 
-    status = atPrivWrite(gCommandObj, &packet);
+    status = atPrivWrite(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(PRIVWRITE_RSP_SIZE, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(0x00, packet.data[ATCA_RSP_DATA_IDX]);
 

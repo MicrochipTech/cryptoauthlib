@@ -33,6 +33,7 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 TEST(atca_cmd_unit_test, counter)
 {
@@ -40,21 +41,22 @@ TEST(atca_cmd_unit_test, counter)
     ATCAPacket packet;
     uint8_t increased_bin_val[4] = { 0x00 };
     uint32_t test;
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     // build a counter command
     packet.param1 = COUNTER_MODE_INCREMENT;
     packet.param2 = 0x0000;
-    status = atCounter(gCommandObj, &packet);
+    status = atCounter(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(COUNTER_RSP_SIZE, packet.rxsize);
-    status = send_command(gCommandObj, gIface,  &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     memcpy(increased_bin_val, &packet.data[ATCA_RSP_DATA_IDX], sizeof(increased_bin_val));
 
     // build a counter command
     packet.param1 = COUNTER_MODE_READ;
     packet.param2 = 0x0000;
-    status = atCounter(gCommandObj, &packet);
-    status = send_command(gCommandObj, gIface,  &packet);
+    status = atCounter(ca_cmd, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL_MEMORY(increased_bin_val, &packet.data[ATCA_RSP_DATA_IDX], 4);
     memcpy(&test, &packet.data[ATCA_RSP_DATA_IDX], 4);

@@ -1,8 +1,6 @@
 var a00188 =
 [
-    [ "ATCA_SHA2_256_DIGEST_SIZE", "a00428.html#ga86364f6d07b86740f3170d9d1ca60641", null ],
-    [ "atcac_sw_sha2_256", "a00428.html#ga63412270c4629874f2764171200c1b5c", null ],
-    [ "atcac_sw_sha2_256_finish", "a00428.html#gae3a29931f2104cce481aa9ef1ab16fea", null ],
-    [ "atcac_sw_sha2_256_init", "a00428.html#ga58283666b662f084155ba693870c1077", null ],
-    [ "atcac_sw_sha2_256_update", "a00428.html#gab1a09fa1d854722cc667cea319ca9984", null ]
+    [ "atcab_genkey", "a00757.html#ga617bdbdce7b5736351d93214d44c5b8f", null ],
+    [ "atcab_genkey_base", "a00757.html#gaa8b6953ad2c7f749e61566fd38fe6903", null ],
+    [ "atcab_get_pubkey", "a00757.html#gad2096a4618dd37c48ed48847fe63d844", null ]
 ];

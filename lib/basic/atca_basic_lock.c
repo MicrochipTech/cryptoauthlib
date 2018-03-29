@@ -38,7 +38,7 @@
  */
 
 #include "atca_basic.h"
-#include "host/atca_host.h"
+#include "atca_execution.h"
 
 /** \brief The Lock command prevents future modifications of the Configuration
  *         and/or Data and OTP zones. If the device is so configured, then
@@ -69,7 +69,7 @@ ATCA_STATUS atcab_lock(uint8_t mode, uint16_t summary_crc)
             break;
         }
 
-        if ((status = atcab_execute_command(&packet)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(&packet, _gDevice)) != ATCA_SUCCESS)
         {
             break;
         }

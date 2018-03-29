@@ -33,6 +33,7 @@
 #include "basic/atca_helpers.h"
 #include "crypto/atca_crypto_sw_sha2.h"
 #include "jwt/atca_jwt.h"
+#include <stdio.h>
 
 /** \brief The only supported JWT format for this library */
 static const char g_jwt_header[] = "{\"alg\":\"ES256\",\"typ\":\"JWT\"}";
@@ -265,7 +266,7 @@ ATCA_STATUS atca_jwt_add_claim_numeric(
         atca_jwt_check_payload_start(jwt);
 
         remaining = jwt->buflen - jwt->cur;
-        written = snprintf(&jwt->buf[jwt->cur], remaining, "\"%s\":%d", claim, value);
+        written = snprintf(&jwt->buf[jwt->cur], remaining, "\"%s\":%ld", claim, value);
         if (0 < written && written < remaining)
         {
             jwt->cur += written;
@@ -295,7 +296,7 @@ ATCA_STATUS atca_jwt_verify(
     uint8_t digest[ATCA_KEY_SIZE];
     uint8_t signature[ATCA_SIG_SIZE];
     size_t sig_len = sizeof(signature);
-    const char * pStr = buf;
+    const char* pStr = buf;
     bool verified = false;
 
     if (!buf || !buflen || !pubkey)

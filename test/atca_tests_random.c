@@ -33,19 +33,21 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 TEST(atca_cmd_unit_test, random)
 {
     ATCA_STATUS status;
     ATCAPacket packet;
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     // build an random command
     packet.param1 = RANDOM_SEED_UPDATE;
     packet.param2 = 0x0000;
-    status = atRandom(gCommandObj, &packet);
+    status = atRandom(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(ATCA_RSP_SIZE_32, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     atca_delay_ms(1);

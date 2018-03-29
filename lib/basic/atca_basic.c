@@ -34,11 +34,11 @@
 #include "atca_basic.h"
 #include "host/atca_host.h"
 
-char atca_version[] = { "20180115" };  // change for each release, yyyymmdd
+char atca_version[] = { "20180329" };  // change for each release, yyyymmdd
 ATCADevice _gDevice = NULL;
 #define MAX_BUSES   4
 
-/** \brief basic API methods are all prefixed with atcab_  (Atmel CryptoAuth Basic)
+/** \brief basic API methods are all prefixed with atcab_  (CryptoAuthLib Basic)
  *  the fundamental premise of the basic API is it is based on a single interface
  *  instance and that instance is global, so all basic API commands assume that
  *  one global device is the one to operate on.
@@ -379,74 +379,5 @@ ATCA_STATUS atcab_get_zone_size(uint8_t zone, uint16_t slot, size_t* size)
         }
     }
 
-    return status;
-}
-
-/** \brief It performs the transmission of the packet to device ,waits for the device execution time and recevies the response from the device.
- *
- * \param[in,out]  packet  pointer to hold the packet to/from device.
- *
- *
- * \return ATCA_SUCCESS on success, otherwise an error code.
- */
-ATCA_STATUS atcab_execute_command(ATCAPacket* packet)
-{
-    ATCA_STATUS status;
-    ATCACommand ca_cmd = _gDevice->mCommands;
-    ATCAIface ca_iface = _gDevice->mIface;
-
-    if ((status = atGetExecTime(packet->opcode, ca_cmd)) != ATCA_SUCCESS)
-    {
-        return status;
-    }
-    do
-    {
-        if ((status = atcab_wakeup()) != ATCA_SUCCESS)
-        {
-            break;
-        }
-
-        // send the command
-        if ((status = atsend(ca_iface, (uint8_t*)packet, packet->txsize)) != ATCA_SUCCESS)
-        {
-            break;
-        }
-
-        // delay the appropriate amount of time for command to execute
-        atca_delay_ms(ca_cmd->execution_time_msec);
-
-        // receive the response
-        if ((status = atreceive(ca_iface, packet->data, &(packet->rxsize))) != ATCA_SUCCESS)
-        {
-            break;
-        }
-
-        // Check response size
-        if (packet->rxsize < 4)
-        {
-            if (packet->rxsize > 0)
-            {
-                status = ATCA_RX_FAIL;
-            }
-            else
-            {
-                status = ATCA_RX_NO_RESPONSE;
-            }
-            break;
-        }
-
-        if ((status = atCheckCrc(packet->data)) != ATCA_SUCCESS)
-        {
-            break;
-        }
-
-        if ((status = isATCAError(packet->data)) != ATCA_SUCCESS)
-        {
-            break;
-        }
-    }
-    while (0);
-
-    _atcab_exit();
     return status;
 }

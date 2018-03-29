@@ -31,8 +31,6 @@
 #include "test/atca_test.h"
 #include "jwt/atca_jwt.h"
 
-void atca_jwt_check_payload_start(atca_jwt_t* jwt);
-
 /* Configuration Options */
 #define ATCA_JWT_TEST_DEVICES  ( DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) )
 #define ATCA_JWT_TEST_SIGNING_KEY_ID    (0)
@@ -277,8 +275,15 @@ TEST_SETUP(atca_jwt_crypto)
 
 TEST_TEAR_DOWN(atca_jwt_crypto)
 {
-    ATCA_STATUS status = atcab_release();
+    ATCA_STATUS status;
 
+    status = atcab_wakeup();
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    status = atcab_sleep();
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    status = atcab_release();
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
 
@@ -346,24 +351,24 @@ TEST(atca_jwt_crypto, finalize)
 
 t_test_case_info jwt_unit_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_period),                ATCA_JWT_TEST_DEVICES                               },
-    { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_brace),                 ATCA_JWT_TEST_DEVICES                               },
-    { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_other),                 ATCA_JWT_TEST_DEVICES                               },
-    { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_invalid_params),        ATCA_JWT_TEST_DEVICES                               },
+    { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_period),                ATCA_JWT_TEST_DEVICES},
+    { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_brace),                 ATCA_JWT_TEST_DEVICES},
+    { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_other),                 ATCA_JWT_TEST_DEVICES},
+    { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_invalid_params),        ATCA_JWT_TEST_DEVICES},
 
-    { REGISTER_TEST_CASE(atca_jwt,        init),                                      ATCA_JWT_TEST_DEVICES                               },
-    { REGISTER_TEST_CASE(atca_jwt,        init_invalid_params),                       ATCA_JWT_TEST_DEVICES                               },
-    { REGISTER_TEST_CASE(atca_jwt,        claim_add_string),                          ATCA_JWT_TEST_DEVICES                               },
-    { REGISTER_TEST_CASE(atca_jwt,        claim_add_string_invalid_params),           ATCA_JWT_TEST_DEVICES                               },
-    { REGISTER_TEST_CASE(atca_jwt,        claim_add_numeric),                         ATCA_JWT_TEST_DEVICES                               },
-    { REGISTER_TEST_CASE(atca_jwt,        claim_add_numeric_invalid_params),          ATCA_JWT_TEST_DEVICES                               },
+    { REGISTER_TEST_CASE(atca_jwt,        init),                                      ATCA_JWT_TEST_DEVICES},
+    { REGISTER_TEST_CASE(atca_jwt,        init_invalid_params),                       ATCA_JWT_TEST_DEVICES},
+    { REGISTER_TEST_CASE(atca_jwt,        claim_add_string),                          ATCA_JWT_TEST_DEVICES},
+    { REGISTER_TEST_CASE(atca_jwt,        claim_add_string_invalid_params),           ATCA_JWT_TEST_DEVICES},
+    { REGISTER_TEST_CASE(atca_jwt,        claim_add_numeric),                         ATCA_JWT_TEST_DEVICES},
+    { REGISTER_TEST_CASE(atca_jwt,        claim_add_numeric_invalid_params),          ATCA_JWT_TEST_DEVICES},
 
-    { REGISTER_TEST_CASE(atca_jwt,        verify_invalid_params),                     ATCA_JWT_TEST_DEVICES                               },
-    { REGISTER_TEST_CASE(atca_jwt,        finalize_invalid_params),                   ATCA_JWT_TEST_DEVICES                               },
+    { REGISTER_TEST_CASE(atca_jwt,        verify_invalid_params),                     ATCA_JWT_TEST_DEVICES},
+    { REGISTER_TEST_CASE(atca_jwt,        finalize_invalid_params),                   ATCA_JWT_TEST_DEVICES},
 
-    { REGISTER_TEST_CASE(atca_jwt_crypto, verify),                                    ATCA_JWT_TEST_DEVICES                               },
-    { REGISTER_TEST_CASE(atca_jwt_crypto, verify_invalid),                            ATCA_JWT_TEST_DEVICES                               },
-    { REGISTER_TEST_CASE(atca_jwt_crypto, finalize),                                  ATCA_JWT_TEST_DEVICES                               },
+    { REGISTER_TEST_CASE(atca_jwt_crypto, verify),                                    ATCA_JWT_TEST_DEVICES},
+    { REGISTER_TEST_CASE(atca_jwt_crypto, verify_invalid),                            ATCA_JWT_TEST_DEVICES},
+    { REGISTER_TEST_CASE(atca_jwt_crypto, finalize),                                  ATCA_JWT_TEST_DEVICES},
 
     { (fp_test_case)NULL,                 (uint8_t)0 },                               /* Array Termination element*/
 };

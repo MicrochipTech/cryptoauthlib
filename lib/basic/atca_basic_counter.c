@@ -36,7 +36,7 @@
  * TERMS.
  */
 #include "atca_basic.h"
-#include "host/atca_host.h"
+#include "atca_execution.h"
 
 
 /** \brief Compute the Counter functions
@@ -68,7 +68,7 @@ ATCA_STATUS atcab_counter(uint8_t mode, uint16_t counter_id, uint32_t *counter_v
             break;
         }
 
-        if ((status = atcab_execute_command(&packet)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(&packet, _gDevice)) != ATCA_SUCCESS)
         {
             break;
         }

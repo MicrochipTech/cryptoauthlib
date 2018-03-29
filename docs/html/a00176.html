@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_crypto_sw_rand.h File Reference</title>
+<title>CryptoAuthLib: atca_basic_counter.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
    </div>
-   <div id="projectbrief">Atmel CryptoAuthentication Library</div>
+   <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
  </tr>
  </tbody>
@@ -89,29 +89,38 @@ $(document).ready(function(){initNavTree('a00176.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_crypto_sw_rand.h File Reference</div>  </div>
+<div class="title">atca_basic_counter.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="a00164_source.html">atca_crypto_sw.h</a>&quot;</code><br />
-<code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-</div>
-<p><a href="a00176_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
+
+<p>CryptoAuthLib Basic API methods for Counter command.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00167_source.html">atca_basic.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00113_source.html">atca_execution.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga0710d8bf5e92403c4026c32af39ad79e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00428.html#ga0710d8bf5e92403c4026c32af39ad79e">atcac_sw_random</a> (uint8_t *data, size_t data_size)</td></tr>
-<tr class="memdesc:ga0710d8bf5e92403c4026c32af39ad79e"><td class="mdescLeft">&#160;</td><td class="mdescRight">return software generated random number and the function is currently not implemented  <a href="a00428.html#ga0710d8bf5e92403c4026c32af39ad79e">More...</a><br /></td></tr>
-<tr class="separator:ga0710d8bf5e92403c4026c32af39ad79e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabaaaef242649206029e1c10ac6d1fb7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00757.html#gabaaaef242649206029e1c10ac6d1fb7d">atcab_counter</a> (uint8_t mode, uint16_t counter_id, uint32_t *counter_value)</td></tr>
+<tr class="memdesc:gabaaaef242649206029e1c10ac6d1fb7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the Counter functions.  <a href="a00757.html#gabaaaef242649206029e1c10ac6d1fb7d">More...</a><br /></td></tr>
+<tr class="separator:gabaaaef242649206029e1c10ac6d1fb7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6e510e056ea16a0a34b405b7ca378f16"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00757.html#ga6e510e056ea16a0a34b405b7ca378f16">atcab_counter_increment</a> (uint16_t counter_id, uint32_t *counter_value)</td></tr>
+<tr class="memdesc:ga6e510e056ea16a0a34b405b7ca378f16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increments one of the device's monotonic counters.  <a href="a00757.html#ga6e510e056ea16a0a34b405b7ca378f16">More...</a><br /></td></tr>
+<tr class="separator:ga6e510e056ea16a0a34b405b7ca378f16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeee666028a097659af69cc828a6bd68b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00757.html#gaeee666028a097659af69cc828a6bd68b">atcab_counter_read</a> (uint16_t counter_id, uint32_t *counter_value)</td></tr>
+<tr class="memdesc:gaeee666028a097659af69cc828a6bd68b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read one of the device's monotonic counters.  <a href="a00757.html#gaeee666028a097659af69cc828a6bd68b">More...</a><br /></td></tr>
+<tr class="separator:gaeee666028a097659af69cc828a6bd68b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this software and any derivatives exclusively with Microchip products. </dd></dl>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for Counter command. </p>
+<p>The Counter command reads or increments the binary count value for one of the two monotonic counters</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC508A and ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this software and any derivatives exclusively with Microchip products. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="a00176.html">atca_crypto_sw_rand.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00176.html">atca_basic_counter.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

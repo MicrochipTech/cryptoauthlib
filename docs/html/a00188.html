@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_crypto_sw_sha2.h File Reference</title>
+<title>CryptoAuthLib: atca_basic_genkey.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
    </div>
-   <div id="projectbrief">Atmel CryptoAuthentication Library</div>
+   <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
  </tr>
  </tbody>
@@ -87,56 +87,40 @@ $(document).ready(function(){initNavTree('a00188.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_crypto_sw_sha2.h File Reference</div>  </div>
+<div class="title">atca_basic_genkey.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Wrapper API for software SHA 256 routines.  
+<p>CryptoAuthLib Basic API methods for GenKey command.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00164_source.html">atca_crypto_sw.h</a>&quot;</code><br />
-<code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-</div>
-<p><a href="a00188_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00529.html">atcac_sha2_256_ctx</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga86364f6d07b86740f3170d9d1ca60641"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00428.html#ga86364f6d07b86740f3170d9d1ca60641">ATCA_SHA2_256_DIGEST_SIZE</a>&#160;&#160;&#160;(32)</td></tr>
-<tr class="separator:ga86364f6d07b86740f3170d9d1ca60641"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a00167_source.html">atca_basic.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00113_source.html">atca_execution.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga58283666b662f084155ba693870c1077"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00428.html#ga58283666b662f084155ba693870c1077">atcac_sw_sha2_256_init</a> (<a class="el" href="a00529.html">atcac_sha2_256_ctx</a> *ctx)</td></tr>
-<tr class="memdesc:ga58283666b662f084155ba693870c1077"><td class="mdescLeft">&#160;</td><td class="mdescRight">initializes the SHA256 software  <a href="a00428.html#ga58283666b662f084155ba693870c1077">More...</a><br /></td></tr>
-<tr class="separator:ga58283666b662f084155ba693870c1077"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab1a09fa1d854722cc667cea319ca9984"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00428.html#gab1a09fa1d854722cc667cea319ca9984">atcac_sw_sha2_256_update</a> (<a class="el" href="a00529.html">atcac_sha2_256_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
-<tr class="memdesc:gab1a09fa1d854722cc667cea319ca9984"><td class="mdescLeft">&#160;</td><td class="mdescRight">updates the running hash with the next block of data, called iteratively for the entire stream of data to be hashed using the SHA256 software  <a href="a00428.html#gab1a09fa1d854722cc667cea319ca9984">More...</a><br /></td></tr>
-<tr class="separator:gab1a09fa1d854722cc667cea319ca9984"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae3a29931f2104cce481aa9ef1ab16fea"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00428.html#gae3a29931f2104cce481aa9ef1ab16fea">atcac_sw_sha2_256_finish</a> (<a class="el" href="a00529.html">atcac_sha2_256_ctx</a> *ctx, uint8_t digest[<a class="el" href="a00428.html#ga86364f6d07b86740f3170d9d1ca60641">ATCA_SHA2_256_DIGEST_SIZE</a>])</td></tr>
-<tr class="memdesc:gae3a29931f2104cce481aa9ef1ab16fea"><td class="mdescLeft">&#160;</td><td class="mdescRight">completes the final SHA256 calculation and returns the final digest/hash  <a href="a00428.html#gae3a29931f2104cce481aa9ef1ab16fea">More...</a><br /></td></tr>
-<tr class="separator:gae3a29931f2104cce481aa9ef1ab16fea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga63412270c4629874f2764171200c1b5c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00428.html#ga63412270c4629874f2764171200c1b5c">atcac_sw_sha2_256</a> (const uint8_t *data, size_t data_size, uint8_t digest[<a class="el" href="a00428.html#ga86364f6d07b86740f3170d9d1ca60641">ATCA_SHA2_256_DIGEST_SIZE</a>])</td></tr>
-<tr class="memdesc:ga63412270c4629874f2764171200c1b5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">single call convenience function which computes Hash of given data using SHA256 software  <a href="a00428.html#ga63412270c4629874f2764171200c1b5c">More...</a><br /></td></tr>
-<tr class="separator:ga63412270c4629874f2764171200c1b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa8b6953ad2c7f749e61566fd38fe6903"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00757.html#gaa8b6953ad2c7f749e61566fd38fe6903">atcab_genkey_base</a> (uint8_t mode, uint16_t key_id, const uint8_t *other_data, uint8_t *public_key)</td></tr>
+<tr class="memdesc:gaa8b6953ad2c7f749e61566fd38fe6903"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues GenKey command, which can generate a private key, compute a public key, nd/or compute a digest of a public key.  <a href="a00757.html#gaa8b6953ad2c7f749e61566fd38fe6903">More...</a><br /></td></tr>
+<tr class="separator:gaa8b6953ad2c7f749e61566fd38fe6903"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga617bdbdce7b5736351d93214d44c5b8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00757.html#ga617bdbdce7b5736351d93214d44c5b8f">atcab_genkey</a> (uint16_t key_id, uint8_t *public_key)</td></tr>
+<tr class="memdesc:ga617bdbdce7b5736351d93214d44c5b8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues GenKey command, which generates a new random private key in slot and returns the public key.  <a href="a00757.html#ga617bdbdce7b5736351d93214d44c5b8f">More...</a><br /></td></tr>
+<tr class="separator:ga617bdbdce7b5736351d93214d44c5b8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2096a4618dd37c48ed48847fe63d844"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00757.html#gad2096a4618dd37c48ed48847fe63d844">atcab_get_pubkey</a> (uint16_t key_id, uint8_t *public_key)</td></tr>
+<tr class="memdesc:gad2096a4618dd37c48ed48847fe63d844"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses GenKey command to calculate the public key from an existing private key in a slot.  <a href="a00757.html#gad2096a4618dd37c48ed48847fe63d844">More...</a><br /></td></tr>
+<tr class="separator:gad2096a4618dd37c48ed48847fe63d844"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Wrapper API for software SHA 256 routines. </p>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for GenKey command. </p>
+<p>The GenKey command is used for creating ECC private keys, generating ECC public keys, and for digest calculations involving public keys.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC108A, ATECC508A, ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this software and any derivatives exclusively with Microchip products. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="a00188.html">atca_crypto_sw_sha2.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00188.html">atca_basic_genkey.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

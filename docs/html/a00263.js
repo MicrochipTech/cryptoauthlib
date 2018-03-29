@@ -1,17 +1,8 @@
 var a00263 =
 [
-    [ "change_i2c_speed", "a00429.html#gab7f613b378e0d01b80703df3ac662d6d", null ],
-    [ "hal_i2c_discover_buses", "a00429.html#ga05700385437884cc7b28c38d33e84f8c", null ],
-    [ "hal_i2c_discover_devices", "a00429.html#gad927b28b795eac9f9592fc9f9739bc0a", null ],
-    [ "hal_i2c_idle", "a00429.html#ga9317303ada721ff3f97e7aad69437a30", null ],
-    [ "hal_i2c_init", "a00429.html#ga09e7f465a040fbd19ea136269571de3c", null ],
-    [ "hal_i2c_post_init", "a00429.html#gafbe53519362f18c2688d10da6f7c618f", null ],
-    [ "hal_i2c_receive", "a00429.html#ga7785bcc305c14e2dc188bb1b9a77814a", null ],
-    [ "hal_i2c_release", "a00429.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
-    [ "hal_i2c_send", "a00429.html#gacd0fb31f0f88ef3762665e26b5aa784b", null ],
-    [ "hal_i2c_sleep", "a00429.html#ga3f89bae6a625d5f37abdcc99408def27", null ],
-    [ "hal_i2c_wake", "a00429.html#gad4df1b6755e2d5b5d9e810371e45ca8c", null ],
-    [ "i2c_bus_ref_ct", "a00429.html#gaa7deec7f5d89dfb4f9746d050b0926f9", null ],
-    [ "i2c_hal_data", "a00429.html#ga95dac4460cd54b4b073285ebc79d215b", null ],
-    [ "opt_twi_master", "a00429.html#gaf58feaf4fd74545ecd5b8b5241d5dbce", null ]
+    [ "ATCA_SHA1_DIGEST_SIZE", "a00758.html#gadb94a0991eb670ff1bf90253dfea0bfa", null ],
+    [ "atcac_sw_sha1", "a00758.html#ga84b866657bf319dab2924c2db3a1e990", null ],
+    [ "atcac_sw_sha1_finish", "a00758.html#ga5589df2a639f61a4dc4ccedc9b5a5453", null ],
+    [ "atcac_sw_sha1_init", "a00758.html#gabed03bcc1228768534ef4ee49df0ad09", null ],
+    [ "atcac_sw_sha1_update", "a00758.html#ga65ff558306a88e0fbe2fc82bbe6a9c03", null ]
 ];

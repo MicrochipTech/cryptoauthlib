@@ -33,6 +33,7 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 // These keys are chosen specifically to test the CMAC subkey generation code.
 // When the keys are used to encrypt an all-zero block we need all bit
@@ -142,54 +143,51 @@ TEST(atca_cmd_unit_test, aes)
 {
     ATCA_STATUS status;
     ATCAPacket packet;
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     // build read command
     packet.param1 = ATCA_ZONE_CONFIG;
     packet.param2 = 0x0003;
 
-    status = atRead(gCommandObj, &packet);
+    status = atRead(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     if ((packet.data[2] & AES_CONFIG_ENABLE_BIT_MASK) == 0) //packet.data[2] contains the AES enable bit
     {
         TEST_IGNORE_MESSAGE("Ignoring the test ,AES is not enabled in Configuration zone");
     }
 
-
     //build a nonce command (pass through mode) to store the aes key in tempkey
     packet.param1 = NONCE_MODE_PASSTHROUGH;
     packet.param2 = 0x0000;
     memcpy(packet.data, g_aes_keys[0], ATCA_KEY_SIZE);    // a 32-byte nonce
 
-    status = atNonce(gCommandObj, &packet);
+    status = atNonce(ca_cmd, &packet);
     TEST_ASSERT_EQUAL_INT(NONCE_COUNT_LONG, packet.txsize);
     TEST_ASSERT_EQUAL_INT(NONCE_RSP_SIZE_SHORT, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // check for nonce response for pass through mode
     TEST_ASSERT_EQUAL_INT8(ATCA_SUCCESS, packet.data[1]);
 
-
     packet.param1 = AES_MODE_ENCRYPT;                //selects encrypt mode and use first 16 byte data in tempkey as key
     packet.param2 = 0xFFFF;
     memcpy(packet.data, g_plaintext, AES_DATA_SIZE); // a 16-byte data to be encrypted
 
-    status = atAES(gCommandObj, &packet);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atAES(ca_cmd, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     TEST_ASSERT_EQUAL_MEMORY(g_ciphertext_ecb[0], &packet.data[1], AES_DATA_SIZE);
-
-
 
     packet.param1 = AES_MODE_DECRYPT;                        //selects decrypt mode and use first 16 byte data in tempkey as key
     packet.param2 = 0xFFFF;
     memcpy(packet.data, g_ciphertext_ecb[0], AES_DATA_SIZE); // a 16-byte data to be encrypted
 
-    status = atAES(gCommandObj, &packet);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atAES(ca_cmd, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     TEST_ASSERT_EQUAL_MEMORY(g_plaintext, &packet.data[1], AES_DATA_SIZE);

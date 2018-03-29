@@ -35,7 +35,7 @@
  * TERMS.
  */
 #include "atca_basic.h"
-#include "host/atca_host.h"
+#include "atca_execution.h"
 
 /** \brief Executes Random command, which generates a 32 byte random number
  *          from the CryptoAuth device.
@@ -61,7 +61,7 @@ ATCA_STATUS atcab_random(uint8_t *rand_out)
             break;
         }
 
-        if ((status = atcab_execute_command(&packet)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(&packet, _gDevice)) != ATCA_SUCCESS)
         {
             break;
         }

@@ -120,17 +120,6 @@ typedef struct
 } ATCAPacket;
 #pragma pack( pop, ATCAPacket)
 
-/** \brief Structure to hold the device execution time and the opcode for the corressponding command
- */
-typedef struct
-{
-    uint8_t  opcode;
-    uint16_t execution_time_msec;
-}device_execution_time_t;
-
-
-#define UNSUPPORTED    ((uint16_t)0xFFFF)
-
 ATCA_STATUS atCheckMAC(ATCACommand ca_cmd, ATCAPacket *packet);
 ATCA_STATUS atCounter(ATCACommand ca_cmd, ATCAPacket *packet);
 ATCA_STATUS atDeriveKey(ATCACommand ca_cmd, ATCAPacket *packet, bool has_mac);
@@ -190,8 +179,6 @@ typedef enum
     CMD_SELFTEST,
     CMD_LASTCOMMAND  // placeholder
 } ATCA_CmdMap;
-
-ATCA_STATUS atGetExecTime(uint8_t opcode, ATCACommand ca_cmd);
 
 void deleteATCACommand(ATCACommand *);        // destructor
 /*---- end of ATCACommand ----*/
@@ -533,8 +520,7 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 
 #define KDF_DETAILS_PRF_AEAD_MASK        ((uint32_t)0x00000600)    //!< KDF details for PRF, AEAD processing mask
 #define KDF_DETAILS_PRF_AEAD_MODE0       ((uint32_t)0x00000000)    //!< KDF details for PRF, AEAD no processing
-#define KDF_DETAILS_PRF_AEAD_MODE2       ((uint32_t)0x00000400)    //!< KDF details for PRF, AEAD generate 96 bytes, ignore first 32
-#define KDF_DETAILS_PRF_AEAD_MODE3       ((uint32_t)0x00000600)    //!< KDF details for PRF, AEAD generate 96 bytes, ignore first 32, split remaining between target and output
+#define KDF_DETAILS_PRF_AEAD_MODE1       ((uint32_t)0x00000200)    //!< KDF details for PRF, AEAD First 32 go to target, second 32 go to output buffer
 
 #define KDF_DETAILS_AES_KEY_LOC_MASK     ((uint32_t)0x00000003)    //!< KDF details for AES, key location mask
 
@@ -686,16 +672,15 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 
 /** \name Definitions for the SelfTest Command
    @{ */
-#define SELFTEST_MODE_IDX              ATCA_PARAM1_IDX          //!< SelfTest command index for mode
-#define SELFTEST_COUNT                 ATCA_CMD_SIZE_MIN        //!< SelfTest command packet size
-#define SELFTEST_MODE_RNG              ((uint8_t)0x01)          //!< SelfTest mode RNG DRBG function
-#define SELFTEST_MODE_ECDSA_VERIFY     ((uint8_t)0x02)          //!< SelfTest mode ECDSA verify function
-#define SELFTEST_MODE_ECDSA_SIGN       ((uint8_t)0x04)          //!< SelfTest mode ECDSA sign function
-#define SELFTEST_MODE_ECDH             ((uint8_t)0x08)          //!< SelfTest mode ECDH function
-#define SELFTEST_MODE_AES              ((uint8_t)0x10)          //!< SelfTest mode AES encrypt function
-#define SELFTEST_MODE_SHA              ((uint8_t)0x20)          //!< SelfTest mode SHA function
-#define SELFTEST_MODE_ALL              ((uint8_t)0x3F)          //!< SelfTest mode all algorithms
-#define SELFTEST_RSP_SIZE              ATCA_RSP_SIZE_MIN        //!< SelfTest command response packet size
+#define SELFTEST_MODE_IDX                   ATCA_PARAM1_IDX          //!< SelfTest command index for mode
+#define SELFTEST_COUNT                      ATCA_CMD_SIZE_MIN        //!< SelfTest command packet size
+#define SELFTEST_MODE_RNG                   ((uint8_t)0x01)          //!< SelfTest mode RNG DRBG function
+#define SELFTEST_MODE_ECDSA_SIGN_VERIFY     ((uint8_t)0x02)          //!< SelfTest mode ECDSA verify function
+#define SELFTEST_MODE_ECDH                  ((uint8_t)0x08)          //!< SelfTest mode ECDH function
+#define SELFTEST_MODE_AES                   ((uint8_t)0x10)          //!< SelfTest mode AES encrypt function
+#define SELFTEST_MODE_SHA                   ((uint8_t)0x20)          //!< SelfTest mode SHA function
+#define SELFTEST_MODE_ALL                   ((uint8_t)0x3B)          //!< SelfTest mode all algorithms
+#define SELFTEST_RSP_SIZE                   ATCA_RSP_SIZE_MIN        //!< SelfTest command response packet size
 /** @} */
 
 /** \name Definitions for the SHA Command

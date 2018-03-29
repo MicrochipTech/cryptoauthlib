@@ -2,8 +2,6 @@
  * \file
  * \brief host side methods using software implementations
  *
- * Copyright (c) 2015 Atmel Corporation. All rights reserved.
- *
  * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
  *            You may use this software and any derivatives exclusively with
  *            Microchip products.

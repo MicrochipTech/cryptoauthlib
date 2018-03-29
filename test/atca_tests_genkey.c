@@ -33,6 +33,7 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 
 /** \brief this test assumes a specific configuration and locked config zone
@@ -45,15 +46,16 @@ TEST(atca_cmd_unit_test, genkey)
     ATCA_STATUS status;
     ATCAPacket packet;
     uint16_t keyID = 0;
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     unit_test_assert_config_is_locked();
 
     // build a genkey command
     packet.param1 = 0x04; // a random private key is generated and stored in slot keyID
     packet.param2 = keyID;
-    status = atGenKey(gCommandObj, &packet);
+    status = atGenKey(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(GENKEY_RSP_SIZE_LONG, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     TEST_ASSERT_EQUAL(67, packet.data[0]);

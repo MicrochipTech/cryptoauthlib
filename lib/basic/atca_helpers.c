@@ -447,6 +447,9 @@ char base64Index(char c, const uint8_t * rules)
     return IS_INVALID;
 }
 
+#define B64_IS_EQUAL   (char)64
+#define B64_IS_INVALID (char)0xFF
+
 /**
  * \brief Returns the base 64 character of the given index.
  * \param[in] id     index to check
@@ -476,11 +479,11 @@ char base64Char(char id, const uint8_t * rules)
         return rules[1];
     }
 
-    if (id == IS_EQUAL)
+    if (id == B64_IS_EQUAL)
     {
         return rules[2];
     }
-    return IS_INVALID;
+    return B64_IS_INVALID;
 }
 
 /**
@@ -492,8 +495,6 @@ char base64Char(char id, const uint8_t * rules)
  * \param[inout] array_len    As input, the size of the byte_array buffer.
  *                            As output, the length of the decoded data.
  * \param[in]    rules        base64 ruleset to use
- *
- * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcab_base64decode_(const char* encoded, size_t encoded_len, uint8_t* byte_array, size_t* array_len, const uint8_t * rules)
 {

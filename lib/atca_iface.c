@@ -1,7 +1,7 @@
 /**
  * \file
  *
- * \brief  Atmel Crypto Auth hardware interface object
+ * \brief  Microchip CryptoAuthLib hardware interface object
  *
  * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
  *            You may use this software and any derivatives exclusively with

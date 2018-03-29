@@ -33,6 +33,7 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 
 TEST(atca_cmd_unit_test, info)
@@ -43,14 +44,15 @@ TEST(atca_cmd_unit_test, info)
     uint32_t devrev = 0;
     uint32_t devrev_min = 0;
     uint32_t devrev_max = 0;
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     // build an info command
     packet.param1 = INFO_MODE_REVISION;   // these tests are for communication testing mainly,
                                           // but if testing the entire chip, would need to go through all the modes.
                                           // this tests version mode only
-    status = atInfo(gCommandObj, &packet);
+    status = atInfo(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_RSP_SIZE_4, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     switch (gCfg->devtype)
@@ -66,6 +68,10 @@ TEST(atca_cmd_unit_test, info)
     case ATECC508A:
         devrev_min = 0x00005000;
         devrev_max = 0x000050FF;
+        break;
+    case ATECC608A:
+        devrev_min = 0x00006000;
+        devrev_max = 0x000060FF;
         break;
     default:
         TEST_FAIL_MESSAGE("Unknown device type");

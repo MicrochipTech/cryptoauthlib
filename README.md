@@ -1,4 +1,4 @@
-CryptoAuthLib - Microchip CryptoAuthentication Library       {#mainpage}
+CryptoAuthLib - Microchip CryptoAuthentication Library
 ====================================================
 
 Introduction
@@ -46,6 +46,15 @@ Examples
 
 Release notes
 -----------
+03/29/2018
+  - Added support for response polling by default, which will make commands.
+    return faster (define ATCA_NO_POLL to use old delay method).
+  - Removed atcatls related files as they were of limited value.
+  - Test framework generates a prompt before locking test configuration.
+  - Test framework puts device to sleep between tests.
+  - Fixed mode parameter issue in atcah_gen_key_msg().
+  - ATECC608A health test error code added.
+
 01/15/2018
   - Added AES-128 CBC implementation using AES command
   - Added AES-128 CMAC implementation using AES command
@@ -175,7 +184,7 @@ The library is structured to support portability to:
 All platform dependencies are contained within the HAL (hardware abstraction
 layer).
 
-![CryptoAuthLib Architecture](../CryptoAuthLib-Architecture.png "CryptoAuthLib Architecture" )
+![CryptoAuthLib Architecture](./docs/CryptoAuthLib-Architecture.png "CryptoAuthLib Architecture" )
 
 There are three primary object types in CryptoAuthLib:
   - Device (ATCADevice)
@@ -184,9 +193,9 @@ There are three primary object types in CryptoAuthLib:
   
 ATCADevice is a composite object made up of ATCACommand ATCAIface.
 
-![ATCADevice](../cryptoauthlib-uml/ATCADevice.png "ATCADevice and ATCACommand object" )
-![ATCAIface](../cryptoauthlib-uml/ATCAIFace.png "ATCAIface object" )
-![Hardware abstraction layer](../cryptoauthlib-uml/ATCAHal.png "CryptoAuth hardware abstraction layer" )
+![ATCADevice](./docs/cryptoauthlib-uml/ATCADevice.png "ATCADevice and ATCACommand object" )
+![ATCAIface](./docs/cryptoauthlib-uml/ATCAIFace.png "ATCAIface object" )
+![Hardware abstraction layer](./docs/cryptoauthlib-uml/ATCAHal.png "CryptoAuth hardware abstraction layer" )
 
 Currently, the vast majority of testing has been performed on:
 

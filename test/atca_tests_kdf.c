@@ -33,6 +33,7 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 #define AES_CONFIG_ENABLE_BIT_MASK   (uint8_t)0x01
 
@@ -41,7 +42,7 @@ TEST(atca_cmd_unit_test, kdf)
 
     ATCA_STATUS status = ATCA_GEN_FAIL;
     ATCAPacket packet;
-
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     uint8_t data_input_32[] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f,
                                 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f };
@@ -54,9 +55,9 @@ TEST(atca_cmd_unit_test, kdf)
     packet.param1 = ATCA_ZONE_CONFIG;
     packet.param2 = 0x0003;
 
-    status = atRead(gCommandObj, &packet);
+    status = atRead(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     if ((packet.data[2] & AES_CONFIG_ENABLE_BIT_MASK) == 0)  //packet.data[2] contains the AES enable bit
     {
@@ -68,10 +69,10 @@ TEST(atca_cmd_unit_test, kdf)
     packet.param2 = 0x0000;
     memcpy(packet.data, nonce, 32);    // a 32-byte nonce
 
-    status = atNonce(gCommandObj, &packet);
+    status = atNonce(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(NONCE_COUNT_LONG, packet.txsize);
     TEST_ASSERT_EQUAL(NONCE_RSP_SIZE_SHORT, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // check for nonce response for pass through mode
@@ -83,8 +84,8 @@ TEST(atca_cmd_unit_test, kdf)
     memcpy(&packet.data[4], data_input_32, 32);    // a 32 byte input data to AES KDF
     packet.txsize = ATCA_CMD_SIZE_MIN + KDF_DETAILS_SIZE + AES_DATA_SIZE;
     packet.rxsize = ATCA_RSP_SIZE_MIN;
-    status = atKDF(gCommandObj, &packet, NULL, NULL);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atKDF(ca_cmd, &packet, NULL, NULL);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
 

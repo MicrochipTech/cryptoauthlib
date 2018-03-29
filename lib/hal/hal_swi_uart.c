@@ -34,6 +34,7 @@
 #include "atca_hal.h"
 #include "hal_swi_uart.h"
 #include "atca_device.h"
+#include "atca_execution.h"
 
 /** \defgroup hal_ Hardware abstraction layer (hal_)
  *
@@ -100,15 +101,12 @@ ATCA_STATUS hal_swi_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
 {
     ATCAIfaceCfg *head = cfg;
     ATCADevice device;
-    ATCAIface discoverIface;
-    ATCACommand command;
     ATCAPacket packet;
     ATCA_STATUS status;
-    uint8_t revs508[1][4] = { { 0x00, 0x00, 0x50, 0x00 } };
-    uint8_t revs108[1][4] = { { 0x80, 0x00, 0x10, 0x01 } };
-    uint8_t revs204[3][4] = { { 0x00, 0x02, 0x00, 0x08 },
-                              { 0x00, 0x02, 0x00, 0x09 },
-                              { 0x00, 0x04, 0x05, 0x00 } };
+    uint8_t revs608[][4] = { { 0x00, 0x00, 0x60, 0x01 }, { 0x00, 0x00, 0x60, 0x02 } };
+    uint8_t revs508[][4] = { { 0x00, 0x00, 0x50, 0x00 } };
+    uint8_t revs108[][4] = { { 0x80, 0x00, 0x10, 0x01 } };
+    uint8_t revs204[][4] = { { 0x00, 0x02, 0x00, 0x08 }, { 0x00, 0x02, 0x00, 0x09 }, { 0x00, 0x04, 0x05, 0x00 } };
     unsigned int i;
 
     /** \brief default configuration, to be reused during discovery process */
@@ -120,85 +118,77 @@ ATCA_STATUS hal_swi_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
         .rx_retries     = 3
     };
 
+    ATCAHAL_t hal;
+
+    if (busNum < 0)
+    {
+        return ATCA_COMM_FAIL;
+    }
+
+    hal_swi_init(&hal, &discoverCfg);
+    device = newATCADevice(&discoverCfg);
+
+
+    memset(packet.data, 0x00, sizeof(packet.data));
+
     // build an info command
     packet.param1 = INFO_MODE_REVISION;
     packet.param2 = 0;
-
-    device = newATCADevice(&discoverCfg);
-    discoverIface = atGetIFace(device);
-    command = atGetCommands(device);
-
-    // wake up device
-    // If it wakes, send it a dev rev command.  Based on that response, determine the device type
-    // BTW - this will wake every cryptoauth device living on the same bus (ecc508a, sha204a)
-
-    if (hal_swi_wake(discoverIface) == ATCA_SUCCESS)
+    atInfo(device->mCommands, &packet);
+    if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
     {
+        return status;
+    }
+
+    // determine device type from common info and dev rev response byte strings... start with unknown
+    discoverCfg.devtype = ATCA_DEV_UNKNOWN;
+
+    for (i = 0; i < (int)sizeof(revs608) / 4; i++)
+    {
+        if (memcmp(&packet.data[1], &revs608[i], 4) == 0)
+        {
+            discoverCfg.devtype = ATECC608A;
+            break;
+        }
+    }
+
+    for (i = 0; i < sizeof(revs508) / 4; i++)
+    {
+        if (memcmp(&packet.data[1], &revs508[i], 4) == 0)
+        {
+            discoverCfg.devtype = ATECC508A;
+            break;
+        }
+    }
+
+    for (i = 0; i < sizeof(revs204) / 4; i++)
+    {
+        if (memcmp(&packet.data[1], &revs204[i], 4) == 0)
+        {
+            discoverCfg.devtype = ATSHA204A;
+            break;
+        }
+    }
+
+    for (i = 0; i < sizeof(revs108) / 4; i++)
+    {
+        if (memcmp(&packet.data[1], &revs108[i], 4) == 0)
+        {
+            discoverCfg.devtype = ATECC108A;
+            break;
+        }
+    }
+
+    if (discoverCfg.devtype != ATCA_DEV_UNKNOWN)
+    {
+        // now the device type is known, so update the caller's cfg array element with it
         (*found)++;
         memcpy( (uint8_t*)head, (uint8_t*)&discoverCfg, sizeof(ATCAIfaceCfg));
-
-        memset(packet.data, 0x00, sizeof(packet.data));
-
-        // get devrev info and set device type accordingly
-        atInfo(command, &packet);
-        if ((status = atGetExecTime(packet.opcode, command)) != ATCA_SUCCESS)
-        {
-            return status;
-        }
-
-        // send the command
-        if ( (status = atsend(discoverIface, (uint8_t*)&packet, packet.txsize)) != ATCA_SUCCESS)
-        {
-            printf("packet send error\r\n");
-        }
-
-        // delay the appropriate amount of time for command to execute
-        atca_delay_ms((command->execution_time_msec) + 1);
-
-        // receive the response
-        if ( (status = atreceive(discoverIface, &(packet.data[0]), &(packet.rxsize) )) != ATCA_SUCCESS)
-        {
-        }
-
-        if ( (status = isATCAError(packet.data)) != ATCA_SUCCESS)
-        {
-            printf("command response error\r\n");
-        }
-
-        // determine device type from common info and dev rev response byte strings
-        for (i = 0; i < sizeof(revs508) / 4; i++)
-        {
-            if (memcmp(&packet.data[1], &revs508[i], 4) == 0)
-            {
-                discoverCfg.devtype = ATECC508A;
-                break;
-            }
-        }
-
-        for (i = 0; i < sizeof(revs204) / 4; i++)
-        {
-            if (memcmp(&packet.data[1], &revs204[i], 4) == 0)
-            {
-                discoverCfg.devtype = ATSHA204A;
-                break;
-            }
-        }
-
-        for (i = 0; i < sizeof(revs108) / 4; i++)
-        {
-            if (memcmp(&packet.data[1], &revs108[i], 4) == 0)
-            {
-                discoverCfg.devtype = ATECC108A;
-                break;
-            }
-        }
-
-        atca_delay_ms(15);
-        // now the device type is known, so update the caller's cfg array element with it
         head->devtype = discoverCfg.devtype;
-
-        hal_swi_idle(discoverIface);
+        head++;
     }
+
+    atca_delay_ms(15);
 
     deleteATCADevice(&device);
 

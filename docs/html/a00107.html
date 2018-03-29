@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_basic_genkey.c File Reference</title>
+<title>CryptoAuthLib: atca_devtypes.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
    </div>
-   <div id="projectbrief">Atmel CryptoAuthentication Library</div>
+   <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
  </tr>
  </tbody>
@@ -87,40 +87,40 @@ $(document).ready(function(){initNavTree('a00107.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">atca_basic_genkey.c File Reference</div>  </div>
+<div class="title">atca_devtypes.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for GenKey command.  
+<p>Microchip Crypto Auth.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00086_source.html">atca_basic.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00401_source.html">host/atca_host.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gaa8b6953ad2c7f749e61566fd38fe6903"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#gaa8b6953ad2c7f749e61566fd38fe6903">atcab_genkey_base</a> (uint8_t mode, uint16_t key_id, const uint8_t *other_data, uint8_t *public_key)</td></tr>
-<tr class="memdesc:gaa8b6953ad2c7f749e61566fd38fe6903"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues GenKey command, which can generate a private key, compute a public key, nd/or compute a digest of a public key.  <a href="a00427.html#gaa8b6953ad2c7f749e61566fd38fe6903">More...</a><br /></td></tr>
-<tr class="separator:gaa8b6953ad2c7f749e61566fd38fe6903"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga617bdbdce7b5736351d93214d44c5b8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#ga617bdbdce7b5736351d93214d44c5b8f">atcab_genkey</a> (uint16_t key_id, uint8_t *public_key)</td></tr>
-<tr class="memdesc:ga617bdbdce7b5736351d93214d44c5b8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues GenKey command, which generates a new random private key in slot and returns the public key.  <a href="a00427.html#ga617bdbdce7b5736351d93214d44c5b8f">More...</a><br /></td></tr>
-<tr class="separator:ga617bdbdce7b5736351d93214d44c5b8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad2096a4618dd37c48ed48847fe63d844"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#gad2096a4618dd37c48ed48847fe63d844">atcab_get_pubkey</a> (uint16_t key_id, uint8_t *public_key)</td></tr>
-<tr class="memdesc:gad2096a4618dd37c48ed48847fe63d844"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses GenKey command to calculate the public key from an existing private key in a slot.  <a href="a00427.html#gad2096a4618dd37c48ed48847fe63d844">More...</a><br /></td></tr>
-<tr class="separator:gad2096a4618dd37c48ed48847fe63d844"><td class="memSeparator" colspan="2">&#160;</td></tr>
+
+<p><a href="a00107_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gafb234ccd6a80d09c0efbe336c2354267"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00754.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a> { <br />
+&#160;&#160;<a class="el" href="a00754.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268">ATSHA204A</a>, 
+<a class="el" href="a00754.html#ggafb234ccd6a80d09c0efbe336c2354267a20efd97b5b1001eec4a52e0ed5bf594c">ATECC108A</a>, 
+<a class="el" href="a00754.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae">ATECC508A</a>, 
+<a class="el" href="a00754.html#ggafb234ccd6a80d09c0efbe336c2354267a183a6224a93e6c2b82c6dc0e132398bf">ATECC608A</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00754.html#ggafb234ccd6a80d09c0efbe336c2354267a3488f672341dda0ad20508ad888280ad">ATCA_DEV_UNKNOWN</a> = 0x20
+<br />
+ }</td></tr>
+<tr class="memdesc:gafb234ccd6a80d09c0efbe336c2354267"><td class="mdescLeft">&#160;</td><td class="mdescRight">The supported Device type in Cryptoauthlib library.  <a href="a00754.html#gafb234ccd6a80d09c0efbe336c2354267">More...</a><br /></td></tr>
+<tr class="separator:gafb234ccd6a80d09c0efbe336c2354267"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for GenKey command. </p>
-<p>The GenKey command is used for creating ECC private keys, generating ECC public keys, and for digest calculations involving public keys.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC108A, ATECC508A, ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>Microchip Crypto Auth. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this software and any derivatives exclusively with Microchip products. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00107.html">atca_basic_genkey.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00107.html">atca_devtypes.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

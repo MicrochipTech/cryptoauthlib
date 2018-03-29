@@ -50,33 +50,9 @@
 #include "cmd-processor.h"
 #include "atca_cfgs.h"
 
-#define TEST_CD
-#define TEST_CIO
-#define TEST_SW_CRYPTO
-
-#if XMEGA_A3BU
-#undef TEST_CD
-#undef TEST_CIO
-#endif
-
-#if SAMB11G
-#undef TEST_CD
-#undef TEST_CIO
-#endif
-
-#ifdef __AVR_AT90USB1287__
-#undef TEST_CD
-#undef TEST_CIO
-#undef TEST_SW_CRYPTO
-#endif
-
 static ATCA_STATUS set_test_config(ATCADeviceType deviceType);
-#ifdef TEST_CD
 static int certdata_unit_tests(void);
-#endif
-#ifdef TEST_CIO
 static int certio_unit_tests(void);
-#endif
 static ATCA_STATUS is_device_locked(uint8_t zone, bool *isLocked);
 static ATCA_STATUS lock_status(void);
 static ATCA_STATUS lock_config_zone(void);
@@ -111,37 +87,37 @@ static void set_clock_divider_m2(void);
 static const char* argv[] = { "manual", "-v" };
 static t_menu_info mas_menu_info[] =
 {
-    { "help",     "Display Menu",                                   help                                },
-    { "discover", "Discover Buses and Devices",                     discover                            },
-    { "204",      "Set Target Device to ATECC204A",                 select_204                          },
-    { "108",      "Set Target Device to ATECC108A",                 select_108                          },
-    { "508",      "Set Target Device to ATECC508A",                 select_508                          },
-    { "608",      "Set Target Device to ATECC608A",                 select_608                          },
-    { "info",     "Get the Chip Revision",                          info                                },
-    { "sernum",   "Get the Chip Serial Number",                     sernum                              },
-    { "basic",    "Run Basic Test on Selected Device",              run_basic_tests                     },
-    { "unit",     "Run Unit Test on Selected Device",               run_unit_tests                      },
-    { "otpzero",  "Zero Out OTP Zone",                              run_otpzero_tests                   },
-    { "util",     "Run Helper Function Tests",                      run_helper_tests                    },
-    { "readcfg",  "Read the Config Zone",                           read_config                         },
-    { "lockstat", "Zone Lock Status",                               (fp_menu_handler)lock_status        },
-    { "lockcfg",  "Lock the Config Zone",                           lock_config                         },
-    { "lockdata", "Lock Data and OTP Zones",                        lock_data                           },
-    { "rand",     "Generate Some Random Numbers",                   (fp_menu_handler)do_randoms         },
-    #ifdef TEST_CD
-    { "cd",       "Run Unit Tests on Cert Data",                    (fp_menu_handler)certdata_unit_tests},
+    { "help",     "Display Menu",                                   help                                 },
+    { "discover", "Discover Buses and Devices",                     discover                             },
+    { "204",      "Set Target Device to ATECC204A",                 select_204                           },
+    { "108",      "Set Target Device to ATECC108A",                 select_108                           },
+    { "508",      "Set Target Device to ATECC508A",                 select_508                           },
+    { "608",      "Set Target Device to ATECC608A",                 select_608                           },
+    { "info",     "Get the Chip Revision",                          info                                 },
+    { "sernum",   "Get the Chip Serial Number",                     sernum                               },
+    { "rand",     "Generate Some Random Numbers",                   (fp_menu_handler)do_randoms          },
+    { "readcfg",  "Read the Config Zone",                           read_config                          },
+    { "lockstat", "Zone Lock Status",                               (fp_menu_handler)lock_status         },
+    { "lockcfg",  "Lock the Config Zone",                           lock_config                          },
+    { "lockdata", "Lock Data and OTP Zones",                        lock_data                            },
+    #ifndef DO_NOT_TEST_BASIC_UNIT
+    { "basic",    "Run Basic Test on Selected Device",              run_basic_tests                      },
+    { "unit",     "Run Unit Test on Selected Device",               run_unit_tests                       },
+    { "otpzero",  "Zero Out OTP Zone",                              run_otpzero_tests                    },
+    { "util",     "Run Helper Function Tests",                      run_helper_tests                     },
+    { "all",      "Run all unit tests, locking as needed.",         run_all_tests                        },
+    { "clkdivm0", "Set ATECC608A to ClockDivider M0(0x00)",         set_clock_divider_m0                 },
+    { "clkdivm1", "Set ATECC608A to ClockDivider M1(0x05)",         set_clock_divider_m1                 },
+    { "clkdivm2", "Set ATECC608A to ClockDivider M2(0x0D)",         set_clock_divider_m2                 },
     #endif
-    #ifdef TEST_CIO
-    { "cio",      "Run Unit Test on Cert I/O",                      (fp_menu_handler)certio_unit_tests  },
+    #ifndef DO_NOT_TEST_CERT
+    { "cd",       "Run Unit Tests on Cert Data",                    (fp_menu_handler)certdata_unit_tests },
+    { "cio",      "Run Unit Test on Cert I/O",                      (fp_menu_handler)certio_unit_tests   },
     #endif
-    #ifdef TEST_SW_CRYPTO
-    { "crypto",   "Run Unit Tests for Software Crypto Functions",   atca_crypto_sw_tests                },
+    #ifdef DO_NOT_TEST_SW_CRYPTO
+    { "crypto",   "Run Unit Tests for Software Crypto Functions",   (fp_menu_handler)atca_crypto_sw_tests},
     #endif
-    { "all",      "Run all unit tests, locking as needed.",         run_all_tests                       },
-    { "clkdivm0", "Set ATECC608A to ClockDivider M0(0x00)",         set_clock_divider_m0},
-    { "clkdivm1", "Set ATECC608A to ClockDivider M1(0x05)",         set_clock_divider_m1},
-    { "clkdivm2", "Set ATECC608A to ClockDivider M2(0x0D)",         set_clock_divider_m2},
-    { NULL,       NULL,                                             NULL                                },
+    { NULL,       NULL,                                             NULL                                 },
 };
 
 #if defined(_WIN32) || defined(__linux__)
@@ -197,6 +173,10 @@ static int parse_cmd(const char *command)
     uint8_t index = 0;
 
     printf("\r\n");
+    if (command[0] == '\0' || command[0] == '\n')
+    {
+        return ATCA_SUCCESS;
+    }
     while (mas_menu_info[index].menu_cmd != NULL)
     {
         if (strstr(command, mas_menu_info[index].menu_cmd))
@@ -290,7 +270,7 @@ static ATCA_STATUS check_clock_divider(void)
         return status;
     }
 
-    do 
+    do
     {
         // Read current config values
         status = atcab_read_bytes_zone(ATCA_ZONE_CONFIG, 0, ATCA_CHIPMODE_OFFSET, &chip_mode, 1);
@@ -302,8 +282,9 @@ static ATCA_STATUS check_clock_divider(void)
 
         // Update the ATECC608A test config data so all the unit tests will run with the new chip mode
         update_chip_mode(&test_ecc608_configdata[ATCA_CHIPMODE_OFFSET], 0xFF, 0xFF, chip_mode & ATCA_CHIPMODE_WATCHDOG_MASK, chip_mode & ATCA_CHIPMODE_CLOCK_DIV_MASK);
-    
-    } while (0);
+
+    }
+    while (0);
 
     atcab_release();
     return status;
@@ -312,14 +293,18 @@ static ATCA_STATUS check_clock_divider(void)
 static void run_basic_tests(void)
 {
     if (gCfg->devtype == ATECC608A)
+    {
         check_clock_divider();
+    }
     run_test(RunAllBasicTests);
 }
 
 static void run_unit_tests(void)
 {
     if (gCfg->devtype == ATECC608A)
+    {
         check_clock_divider();
+    }
     run_test(RunAllFeatureTests);
 }
 static void run_otpzero_tests(void)
@@ -465,7 +450,7 @@ static void discover(void)
         ifaceCfgs[i].iface_type = ATCA_UNKNOWN_IFACE;
     }
 
-    printf("Searching...");
+    printf("Searching...\r\n");
     atcab_cfg_discover(ifaceCfgs, sizeof(ifaceCfgs) / sizeof(ATCAIfaceCfg));
     for (i = 0; i < (int)(sizeof(ifaceCfgs) / sizeof(ATCAIfaceCfg)); i++)
     {
@@ -516,23 +501,19 @@ static void sernum(void)
     }
 }
 
-#ifdef TEST_CD
 void RunAllCertDataTests(void);
 static int certdata_unit_tests(void)
 {
     UnityMain(sizeof(argv) / sizeof(char*), argv, RunAllCertDataTests);
     return ATCA_SUCCESS;
 }
-#endif
 
-#ifdef TEST_CIO
 void RunAllCertIOTests(void);
 static int certio_unit_tests(void)
 {
     UnityMain(sizeof(argv) / sizeof(char*), argv, RunAllCertIOTests);
     return ATCA_SUCCESS;
 }
-#endif
 
 static ATCA_STATUS is_device_locked(uint8_t zone, bool *isLocked)
 {
@@ -553,6 +534,17 @@ static ATCA_STATUS is_device_locked(uint8_t zone, bool *isLocked)
 static ATCA_STATUS lock_config_zone(void)
 {
     ATCA_STATUS status;
+
+    uint8_t ch = 0;
+
+    printf("Locking with test configuration, which is suitable only for unit tests... \r\nConfirm by typing Y\r\n");
+    scanf("%c", &ch);
+
+    if (!((ch == 'Y') || (ch == 'y')))
+    {
+        printf("Skipping Config Lock on request.\r\n");
+        return ATCA_GEN_FAIL;
+    }
 
     status = atcab_init(gCfg);
     if (status != ATCA_SUCCESS)
@@ -671,7 +663,9 @@ static void run_all_tests(void)
     int fails = 0;
 
     if (gCfg->devtype == ATECC608A)
+    {
         check_clock_divider();
+    }
 
     status = is_device_locked(LOCK_ZONE_CONFIG, &is_config_locked);
     if (status != ATCA_SUCCESS)
@@ -774,7 +768,7 @@ static void run_all_tests(void)
         return;
     }
 
-#ifdef TEST_SW_CRYPTO
+#ifndef DO_NOT_TEST_SW_CRYPTO
     fails += atca_crypto_sw_tests();
     if (fails > 0)
     {
@@ -782,7 +776,8 @@ static void run_all_tests(void)
         return;
     }
 #endif
-#ifdef TEST_CIO
+
+#ifndef DO_NOT_TEST_CERT
     if (atIsECCFamily(gCfg->devtype))
     {
         fails += run_test(RunAllCertIOTests);
@@ -796,8 +791,7 @@ static void run_all_tests(void)
     {
         printf("cio tests don't apply to non-ECC devices.\r\n");
     }
-#endif
-#ifdef TEST_CD
+
     fails += run_test(RunAllCertDataTests);
     if (fails > 0)
     {
@@ -936,7 +930,7 @@ static ATCA_STATUS set_chip_mode(uint8_t i2c_user_extra_add, uint8_t ttl_enable,
         return status;
     }
 
-    do 
+    do
     {
         // Read current config values
         status = atcab_read_bytes_zone(ATCA_ZONE_CONFIG, 0, 16, config_word, 4);
@@ -980,8 +974,9 @@ static ATCA_STATUS set_chip_mode(uint8_t i2c_user_extra_add, uint8_t ttl_enable,
 
         // Update the ATECC608A test config data so all the unit tests will run with the new chip mode
         update_chip_mode(&test_ecc608_configdata[ATCA_CHIPMODE_OFFSET], i2c_user_extra_add, ttl_enable, watchdog, clock_divider);
-    
-    } while (0);
+
+    }
+    while (0);
 
     atcab_release();
     return status;
@@ -990,6 +985,7 @@ static ATCA_STATUS set_chip_mode(uint8_t i2c_user_extra_add, uint8_t ttl_enable,
 static void set_clock_divider_m0(void)
 {
     ATCA_STATUS status = set_chip_mode(0xFF, 0xFF, ATCA_CHIPMODE_WATCHDOG_SHORT, ATCA_CHIPMODE_CLOCK_DIV_M0);
+
     if (status == ATCA_SUCCESS)
     {
         printf("Set device to clock divider M0 (0x%02X) and watchdog to 1.3s nominal.\r\n", ATCA_CHIPMODE_CLOCK_DIV_M0 >> 3);
@@ -999,6 +995,7 @@ static void set_clock_divider_m0(void)
 static void set_clock_divider_m1(void)
 {
     ATCA_STATUS status = set_chip_mode(0xFF, 0xFF, ATCA_CHIPMODE_WATCHDOG_SHORT, ATCA_CHIPMODE_CLOCK_DIV_M1);
+
     if (status == ATCA_SUCCESS)
     {
         printf("Set device to clock divider M1 (0x%02X) and watchdog to 1.3s nominal.\r\n", ATCA_CHIPMODE_CLOCK_DIV_M1 >> 3);
@@ -1010,6 +1007,7 @@ static void set_clock_divider_m2(void)
     // Additionally set watchdog to long settings (~13s) as some commands
     // can't complete in time on the faster watchdog setting.
     ATCA_STATUS status = set_chip_mode(0xFF, 0xFF, ATCA_CHIPMODE_WATCHDOG_LONG, ATCA_CHIPMODE_CLOCK_DIV_M2);
+
     if (status == ATCA_SUCCESS)
     {
         printf("Set device to clock divider M2 (0x%02X) and watchdog to 13s nominal.\r\n", ATCA_CHIPMODE_CLOCK_DIV_M2 >> 3);

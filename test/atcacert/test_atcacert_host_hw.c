@@ -125,12 +125,19 @@ TEST_SETUP(atcacert_host_hw)
 
 TEST_TEAR_DOWN(atcacert_host_hw)
 {
-    ATCA_STATUS status = atcab_release();
+    ATCA_STATUS status;
 
+    status = atcab_wakeup();
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    status = atcab_sleep();
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    status = atcab_release();
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
 
-TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_cert_hw)
+TEST(atcacert_host_hw, atcacert_verify_cert_hw)
 {
     int ret = 0;
     uint8_t signer_public_key[64];
@@ -148,7 +155,7 @@ TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_cert_hw)
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 }
 
-TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_cert_hw_verify_failed)
+TEST(atcacert_host_hw, atcacert_verify_cert_hw_verify_failed)
 {
     int ret = 0;
     uint8_t bad_cert[sizeof(g_signer_cert)];
@@ -164,7 +171,7 @@ TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_cert_hw_verify_failed)
     TEST_ASSERT_EQUAL(ATCACERT_E_VERIFY_FAILED, ret);
 }
 
-TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_cert_hw_short_cert)
+TEST(atcacert_host_hw, atcacert_verify_cert_hw_short_cert)
 {
     // Cert size is shortened so the TBS will run past the end of the cert
     int ret = atcacert_verify_cert_hw(&g_test_cert_def_1_signer,  g_signer_cert, sizeof(g_signer_cert) - 100, g_test_signer_1_ca_public_key);
@@ -172,7 +179,7 @@ TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_cert_hw_short_cert)
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_CERT, ret);
 }
 
-TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_cert_hw_bad_sig)
+TEST(atcacert_host_hw, atcacert_verify_cert_hw_bad_sig)
 {
     int ret = 0;
     uint8_t bad_cert[sizeof(g_signer_cert)];
@@ -187,7 +194,7 @@ TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_cert_hw_bad_sig)
     TEST_ASSERT_EQUAL(ATCACERT_E_DECODING_ERROR, ret);
 }
 
-TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_cert_hw_bad_params)
+TEST(atcacert_host_hw, atcacert_verify_cert_hw_bad_params)
 {
     int ret = 0;
 
@@ -213,7 +220,7 @@ TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_cert_hw_bad_params)
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
 
-TEST(atcacert_host_hw, atcacert_host_hw__atcacert_gen_challenge_hw)
+TEST(atcacert_host_hw, atcacert_gen_challenge_hw)
 {
     int ret = 0;
     uint8_t init[32];
@@ -235,14 +242,14 @@ TEST(atcacert_host_hw, atcacert_host_hw__atcacert_gen_challenge_hw)
     TEST_ASSERT(memcmp(challenge1, challenge2, sizeof(challenge1)) != 0);
 }
 
-TEST(atcacert_host_hw, atcacert_host_hw__atcacert_gen_challenge_hw_bad_params)
+TEST(atcacert_host_hw, atcacert_gen_challenge_hw_bad_params)
 {
     int ret = atcacert_gen_challenge_hw(NULL);
 
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
 
-TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_response_hw)
+TEST(atcacert_host_hw, atcacert_verify_response_hw)
 {
     int ret = 0;
 
@@ -250,7 +257,7 @@ TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_response_hw)
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 }
 
-TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_response_hw_bad_challenge)
+TEST(atcacert_host_hw, atcacert_verify_response_hw_bad_challenge)
 {
     int ret = 0;
     const uint8_t challenge[32] = {
@@ -262,7 +269,7 @@ TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_response_hw_bad_challen
     TEST_ASSERT_EQUAL(ATCACERT_E_VERIFY_FAILED, ret);
 }
 
-TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_response_hw_bad_response)
+TEST(atcacert_host_hw, atcacert_verify_response_hw_bad_response)
 {
     int ret = 0;
     const uint8_t response[64] = {
@@ -276,7 +283,7 @@ TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_response_hw_bad_respons
     TEST_ASSERT_EQUAL(ATCACERT_E_VERIFY_FAILED, ret);
 }
 
-TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_response_hw_bad_public_key)
+TEST(atcacert_host_hw, atcacert_verify_response_hw_bad_public_key)
 {
     int ret = 0;
     const uint8_t public_key[64] = {
@@ -290,7 +297,7 @@ TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_response_hw_bad_public_
     TEST_ASSERT_EQUAL(ATCACERT_E_VERIFY_FAILED, ret);
 }
 
-TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_response_hw_malformed_public_key)
+TEST(atcacert_host_hw, atcacert_verify_response_hw_malformed_public_key)
 {
     int ret = 0;
     const uint8_t public_key[64] = {
@@ -304,7 +311,7 @@ TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_response_hw_malformed_p
     TEST_ASSERT_EQUAL(ATCA_EXECUTION_ERROR, ret); // Malformed public key results in an execution failure on the verify command
 }
 
-TEST(atcacert_host_hw, atcacert_host_hw__atcacert_verify_response_hw_bad_params)
+TEST(atcacert_host_hw, atcacert_verify_response_hw_bad_params)
 {
     int ret = 0;
 

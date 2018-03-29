@@ -33,12 +33,14 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 TEST(atca_cmd_unit_test, sign)
 {
     ATCA_STATUS status;
     ATCAPacket packet;
     uint16_t keyID = 0;
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     unit_test_assert_config_is_locked();
 
@@ -48,10 +50,10 @@ TEST(atca_cmd_unit_test, sign)
     packet.param2 = 0x0000;
     memset(packet.data, 0x55, 32);    // a 32-byte nonce
 
-    status = atNonce(gCommandObj, &packet);
+    status = atNonce(ca_cmd, &packet);
     TEST_ASSERT_EQUAL_INT(NONCE_COUNT_LONG, packet.txsize);
     TEST_ASSERT_EQUAL_INT(NONCE_RSP_SIZE_SHORT, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // check for nonce response for pass through mode
@@ -60,9 +62,9 @@ TEST(atca_cmd_unit_test, sign)
     // build a sign command
     packet.param1 = SIGN_MODE_EXTERNAL;
     packet.param2 = keyID;
-    status = atSign(gCommandObj, &packet);
+    status = atSign(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
 

@@ -37,6 +37,7 @@
  * TERMS.
  */
 #include "atca_basic.h"
+#include "atca_execution.h"
 #include "host/atca_host.h"
 
 
@@ -98,7 +99,7 @@ ATCA_STATUS atcab_read_zone(uint8_t zone, uint16_t slot, uint8_t block, uint8_t 
             break;
         }
 
-        if ((status = atcab_execute_command(&packet)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(&packet, _gDevice)) != ATCA_SUCCESS)
         {
             break;
         }

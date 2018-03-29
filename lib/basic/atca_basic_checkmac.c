@@ -38,7 +38,7 @@
  */
 
 #include "atca_basic.h"
-#include "host/atca_host.h"
+#include "atca_execution.h"
 
 /** \brief Compares a MAC response with input values
  *	\param[in] mode        Controls which fields within the device are used in
@@ -87,7 +87,7 @@ ATCA_STATUS atcab_checkmac(uint8_t mode, uint16_t key_id, const uint8_t *challen
             break;
         }
 
-        if ((status = atcab_execute_command( (void*)&packet)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command( (void*)&packet, _gDevice)) != ATCA_SUCCESS)
         {
             break;
         }

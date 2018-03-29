@@ -33,12 +33,14 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 TEST(atca_cmd_unit_test, derivekey)
 {
     ATCA_STATUS status;
     ATCAPacket packet;
     uint16_t keyID = 9;
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     unit_test_assert_config_is_locked();
 
@@ -47,18 +49,18 @@ TEST(atca_cmd_unit_test, derivekey)
     packet.param2 = 0x0000;
     memset(packet.data, 0x00, 32);
 
-    status = atNonce(gCommandObj, &packet);
+    status = atNonce(ca_cmd, &packet);
     TEST_ASSERT_EQUAL_INT(NONCE_COUNT_SHORT, packet.txsize);
     TEST_ASSERT_EQUAL_INT(NONCE_RSP_SIZE_LONG, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // build a deriveKey command (Roll Key operation)
     packet.param1 = 0;
     packet.param2 = keyID;
-    status = atDeriveKey(gCommandObj, &packet, true);
+    status = atDeriveKey(ca_cmd, &packet, true);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // check for derive key response if it's success or not

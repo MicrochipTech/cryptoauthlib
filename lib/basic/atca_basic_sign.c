@@ -37,7 +37,7 @@
  */
 
 #include "atca_basic.h"
-#include "host/atca_host.h"
+#include "atca_execution.h"
 
 /** \brief Executes the Sign command, which generates a signature using the
  *          ECDSA algorithm.
@@ -72,7 +72,7 @@ ATCA_STATUS atcab_sign_base(uint8_t mode, uint16_t key_id, uint8_t *signature)
             break;
         }
 
-        if ((status = atcab_execute_command(&packet)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(&packet, _gDevice)) != ATCA_SUCCESS)
         {
             break;
         }

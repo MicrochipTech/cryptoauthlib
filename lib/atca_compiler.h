@@ -1,7 +1,8 @@
 /**
  * \file
- * \brief ATCA is meant to be portable across architectures, even non-Atmel architectures and compiler environments.
- *        This file is for isolating compiler specific macros.
+ * \brief CryptoAuthLiub is meant to be portable across architectures, even
+ *        non-Microchip architectures and compiler environments. This file is
+ *        for isolating compiler specific macros.
  *
  * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
  *            You may use this software and any derivatives exclusively with

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_crypto_sw_sha1.h File Reference</title>
+<title>CryptoAuthLib: atca_basic_ecdh.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
    </div>
-   <div id="projectbrief">Atmel CryptoAuthentication Library</div>
+   <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
  </tr>
  </tbody>
@@ -87,56 +87,50 @@ $(document).ready(function(){initNavTree('a00182.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_crypto_sw_sha1.h File Reference</div>  </div>
+<div class="title">atca_basic_ecdh.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Wrapper API for SHA 1 routines.  
+<p>CryptoAuthLib Basic API methods for ECDH command.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00164_source.html">atca_crypto_sw.h</a>&quot;</code><br />
-<code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-</div>
-<p><a href="a00182_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00525.html">atcac_sha1_ctx</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gadb94a0991eb670ff1bf90253dfea0bfa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00428.html#gadb94a0991eb670ff1bf90253dfea0bfa">ATCA_SHA1_DIGEST_SIZE</a>&#160;&#160;&#160;(20)</td></tr>
-<tr class="separator:gadb94a0991eb670ff1bf90253dfea0bfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a00167_source.html">atca_basic.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00113_source.html">atca_execution.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00491_source.html">host/atca_host.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gabed03bcc1228768534ef4ee49df0ad09"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00428.html#gabed03bcc1228768534ef4ee49df0ad09">atcac_sw_sha1_init</a> (<a class="el" href="a00525.html">atcac_sha1_ctx</a> *ctx)</td></tr>
-<tr class="memdesc:gabed03bcc1228768534ef4ee49df0ad09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing SHA1 hash in software.  <a href="a00428.html#gabed03bcc1228768534ef4ee49df0ad09">More...</a><br /></td></tr>
-<tr class="separator:gabed03bcc1228768534ef4ee49df0ad09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga65ff558306a88e0fbe2fc82bbe6a9c03"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00428.html#ga65ff558306a88e0fbe2fc82bbe6a9c03">atcac_sw_sha1_update</a> (<a class="el" href="a00525.html">atcac_sha1_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
-<tr class="memdesc:ga65ff558306a88e0fbe2fc82bbe6a9c03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add arbitrary data to a SHA1 hash.  <a href="a00428.html#ga65ff558306a88e0fbe2fc82bbe6a9c03">More...</a><br /></td></tr>
-<tr class="separator:ga65ff558306a88e0fbe2fc82bbe6a9c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5589df2a639f61a4dc4ccedc9b5a5453"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00428.html#ga5589df2a639f61a4dc4ccedc9b5a5453">atcac_sw_sha1_finish</a> (<a class="el" href="a00525.html">atcac_sha1_ctx</a> *ctx, uint8_t digest[<a class="el" href="a00428.html#gadb94a0991eb670ff1bf90253dfea0bfa">ATCA_SHA1_DIGEST_SIZE</a>])</td></tr>
-<tr class="memdesc:ga5589df2a639f61a4dc4ccedc9b5a5453"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete the SHA1 hash in software and return the digest.  <a href="a00428.html#ga5589df2a639f61a4dc4ccedc9b5a5453">More...</a><br /></td></tr>
-<tr class="separator:ga5589df2a639f61a4dc4ccedc9b5a5453"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga84b866657bf319dab2924c2db3a1e990"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00428.html#ga84b866657bf319dab2924c2db3a1e990">atcac_sw_sha1</a> (const uint8_t *data, size_t data_size, uint8_t digest[<a class="el" href="a00428.html#gadb94a0991eb670ff1bf90253dfea0bfa">ATCA_SHA1_DIGEST_SIZE</a>])</td></tr>
-<tr class="memdesc:ga84b866657bf319dab2924c2db3a1e990"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform SHA1 hash of data in software.  <a href="a00428.html#ga84b866657bf319dab2924c2db3a1e990">More...</a><br /></td></tr>
-<tr class="separator:ga84b866657bf319dab2924c2db3a1e990"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga211c9405bb5049dd4a5da92d25c83f3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00757.html#ga211c9405bb5049dd4a5da92d25c83f3c">atcab_ecdh_base</a> (uint8_t mode, uint16_t key_id, const uint8_t *public_key, uint8_t *pms, uint8_t *out_nonce)</td></tr>
+<tr class="memdesc:ga211c9405bb5049dd4a5da92d25c83f3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base function for generating premaster secret key using ECDH.  <a href="a00757.html#ga211c9405bb5049dd4a5da92d25c83f3c">More...</a><br /></td></tr>
+<tr class="separator:ga211c9405bb5049dd4a5da92d25c83f3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6fc480ad2824df6309f4f370ffad15f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00757.html#ga6fc480ad2824df6309f4f370ffad15f9">atcab_ecdh</a> (uint16_t key_id, const uint8_t *public_key, uint8_t *pms)</td></tr>
+<tr class="memdesc:ga6fc480ad2824df6309f4f370ffad15f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in a slot and the premaster secret is returned in the clear.  <a href="a00757.html#ga6fc480ad2824df6309f4f370ffad15f9">More...</a><br /></td></tr>
+<tr class="separator:ga6fc480ad2824df6309f4f370ffad15f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab6e0c175cbcb5f794b12a8ec22485176"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00757.html#gab6e0c175cbcb5f794b12a8ec22485176">atcab_ecdh_enc</a> (uint16_t key_id, const uint8_t *public_key, uint8_t *pms, const uint8_t *read_key, uint16_t read_key_id)</td></tr>
+<tr class="memdesc:gab6e0c175cbcb5f794b12a8ec22485176"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in a slot and the premaster secret is read from the next slot.  <a href="a00757.html#gab6e0c175cbcb5f794b12a8ec22485176">More...</a><br /></td></tr>
+<tr class="separator:gab6e0c175cbcb5f794b12a8ec22485176"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga975f7303086190d3b6f76c367583d622"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00757.html#ga975f7303086190d3b6f76c367583d622">atcab_ecdh_ioenc</a> (uint16_t key_id, const uint8_t *public_key, uint8_t *pms, const uint8_t *io_key)</td></tr>
+<tr class="memdesc:ga975f7303086190d3b6f76c367583d622"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in a slot and the premaster secret is returned encrypted using the IO protection key.  <a href="a00757.html#ga975f7303086190d3b6f76c367583d622">More...</a><br /></td></tr>
+<tr class="separator:ga975f7303086190d3b6f76c367583d622"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac244b83b061ffd8ae3d59b5f973baa53"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00757.html#gac244b83b061ffd8ae3d59b5f973baa53">atcab_ecdh_tempkey</a> (const uint8_t *public_key, uint8_t *pms)</td></tr>
+<tr class="memdesc:gac244b83b061ffd8ae3d59b5f973baa53"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in TempKey and the premaster secret is returned in the clear.  <a href="a00757.html#gac244b83b061ffd8ae3d59b5f973baa53">More...</a><br /></td></tr>
+<tr class="separator:gac244b83b061ffd8ae3d59b5f973baa53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafaccb0c9d12154b0c5b917f89f233721"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00757.html#gafaccb0c9d12154b0c5b917f89f233721">atcab_ecdh_tempkey_ioenc</a> (const uint8_t *public_key, uint8_t *pms, const uint8_t *io_key)</td></tr>
+<tr class="memdesc:gafaccb0c9d12154b0c5b917f89f233721"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in TempKey and the premaster secret is returned encrypted using the IO protection key.  <a href="a00757.html#gafaccb0c9d12154b0c5b917f89f233721">More...</a><br /></td></tr>
+<tr class="separator:gafaccb0c9d12154b0c5b917f89f233721"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Wrapper API for SHA 1 routines. </p>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for ECDH command. </p>
+<p>The ECDH command implements the Elliptic Curve Diffie-Hellman algorithm to combine an internal private key with an external public key to calculate a shared secret.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC508A, ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this software and any derivatives exclusively with Microchip products. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="a00182.html">atca_crypto_sw_sha1.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00182.html">atca_basic_ecdh.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

@@ -1,9 +1,17 @@
 var a00326 =
 [
-    [ "SWI_FLAG_CMD", "a00429.html#ga13c01ac16bb14fde75e9c00dcd1cc761", null ],
-    [ "SWI_FLAG_IDLE", "a00429.html#ga6219d68ef915fdcd734f51960ba08fb6", null ],
-    [ "SWI_FLAG_SLEEP", "a00429.html#ga13ef2322176ad9b7ba3d2e23b277cce6", null ],
-    [ "SWI_FLAG_TX", "a00429.html#ga20af8352e13a7357650ba1cbf41349ea", null ],
-    [ "SWI_WAKE_TOKEN", "a00429.html#ga8f12e3b749e7b3dc905114cc7b8d0b38", null ],
-    [ "hal_swi_send_flag", "a00429.html#gaae96ea936a2e85d0bcb81b7868ee007d", null ]
+    [ "hal_kit_hid_discover_buses", "a00759.html#gaec415116564275f0ed9ef020a973bb10", null ],
+    [ "hal_kit_hid_discover_devices", "a00759.html#gadfa25f4974951524eb45fff5c2ba889a", null ],
+    [ "hal_kit_hid_idle", "a00759.html#gaacf6310945889a6119cab867a1ced5e2", null ],
+    [ "hal_kit_hid_init", "a00759.html#ga95b4e99655383680272a1d9354d42479", null ],
+    [ "hal_kit_hid_post_init", "a00759.html#ga6f06bc1662b3d0361f6a241e1b5612f2", null ],
+    [ "hal_kit_hid_receive", "a00759.html#gaa80dfd4a91f557329fa1daf16b0f05a8", null ],
+    [ "hal_kit_hid_release", "a00759.html#ga8c7b9adb28b4bbdee8d5cd78ab16255f", null ],
+    [ "hal_kit_hid_send", "a00759.html#ga47588dbefadcc1569513b053a156f3d6", null ],
+    [ "hal_kit_hid_sleep", "a00759.html#ga1aa3345cb5d3e8fc29defe2758904fed", null ],
+    [ "hal_kit_hid_wake", "a00759.html#ga65289262310f2662b2c47450b93c9580", null ],
+    [ "kit_phy_num_found", "a00759.html#ga11ee6ec0b2b7eb2ff2472f92208c3205", null ],
+    [ "kit_phy_receive", "a00759.html#gabb507252b1011037d6d2cce7d91b01d0", null ],
+    [ "kit_phy_send", "a00759.html#gabd452e3edb32ea0d22653c182b4e1198", null ],
+    [ "_gHid", "a00759.html#gab97bfae6ae6051d081edf51bb45eea05", null ]
 ];

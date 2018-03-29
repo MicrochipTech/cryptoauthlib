@@ -1,12 +1,6 @@
 var a00368 =
 [
-    [ "swi_disable", "a00368.html#af016fffdce9f520096de8631e6692707", null ],
-    [ "swi_enable", "a00368.html#ad78929b51b34df503a37b4961577d5ce", null ],
-    [ "swi_receive_bytes", "a00368.html#afa009f7d683cb82293570a27d1f8ee10", null ],
-    [ "swi_send_byte", "a00368.html#a1c5ab22e67923ee54eef0e33b227be0b", null ],
-    [ "swi_send_bytes", "a00368.html#af0382e26c4d83b0762b39d12c772dd2e", null ],
-    [ "swi_send_wake_token", "a00368.html#ada6b4629603758b67820568677ab2a19", null ],
-    [ "swi_set_pin", "a00368.html#a076fc28889d32327dd3372538106da92", null ],
-    [ "swi_set_signal_pin", "a00368.html#a79bc8f2b72647fce853274cf8474b41e", null ],
-    [ "swi_buses_default", "a00368.html#a8ba5507b651724b4cdc74106a16b025c", null ]
+    [ "atca_delay_10us", "a00759.html#ga19891182689551cc3a88603135959351", null ],
+    [ "atca_delay_ms", "a00759.html#ga80a853a202b089064bfc4b159c3418b4", null ],
+    [ "atca_delay_us", "a00759.html#ga7598dfcd6dcac882836544d48356d02f", null ]
 ];

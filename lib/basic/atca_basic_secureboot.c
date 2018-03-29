@@ -37,6 +37,7 @@
 
 
 #include "atca_basic.h"
+#include "atca_execution.h"
 #include "host/atca_host.h"
 
 /** \brief Executes Secure Boot command, which provides support for secure
@@ -81,7 +82,7 @@ ATCA_STATUS atcab_secureboot(uint8_t mode, uint16_t param2, const uint8_t* diges
             break;
         }
 
-        if ((status = atcab_execute_command(&packet)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(&packet, _gDevice)) != ATCA_SUCCESS)
         {
             break;
         }

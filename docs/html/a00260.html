@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_pic32mx695f512h_timer.c File Reference</title>
+<title>CryptoAuthLib: atca_crypto_sw_sha1.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
    </div>
-   <div id="projectbrief">Atmel CryptoAuthentication Library</div>
+   <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
  </tr>
  </tbody>
@@ -87,48 +87,41 @@ $(document).ready(function(){initNavTree('a00260.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">hal_pic32mx695f512h_timer.c File Reference</div>  </div>
+<div class="title">atca_crypto_sw_sha1.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for PIC32MX695F512H timer/delay routine.  
+<p>Wrapper API for SHA 1 routines.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;plib.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00209_source.html">hal/atca_hal.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00263_source.html">atca_crypto_sw_sha1.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00275_source.html">hashes/sha1_routines.h</a>&quot;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga512016e5f1966a8fd45b3f1a81ba5b8f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00429.html#ga512016e5f1966a8fd45b3f1a81ba5b8f">CPU_CLOCK</a>&#160;&#160;&#160;(80000000UL)</td></tr>
-<tr class="separator:ga512016e5f1966a8fd45b3f1a81ba5b8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5a8416082aa7664c94099d3d787eee3c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00429.html#ga5a8416082aa7664c94099d3d787eee3c">us_SCALE</a>&#160;&#160;&#160;((<a class="el" href="a00429.html#ga512016e5f1966a8fd45b3f1a81ba5b8f">CPU_CLOCK</a> / 2) / 1000000)</td></tr>
-<tr class="separator:ga5a8416082aa7664c94099d3d787eee3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga31c35882825888bc79e420905830f25d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00429.html#ga31c35882825888bc79e420905830f25d">delay_us</a> (UINT32 delay)</td></tr>
-<tr class="separator:ga31c35882825888bc79e420905830f25d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7598dfcd6dcac882836544d48356d02f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00429.html#ga7598dfcd6dcac882836544d48356d02f">atca_delay_us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga7598dfcd6dcac882836544d48356d02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API implemented at the HAL level.  <a href="a00429.html#ga7598dfcd6dcac882836544d48356d02f">More...</a><br /></td></tr>
-<tr class="separator:ga7598dfcd6dcac882836544d48356d02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga19891182689551cc3a88603135959351"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00429.html#ga19891182689551cc3a88603135959351">atca_delay_10us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga19891182689551cc3a88603135959351"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of tens of microseconds.  <a href="a00429.html#ga19891182689551cc3a88603135959351">More...</a><br /></td></tr>
-<tr class="separator:ga19891182689551cc3a88603135959351"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga80a853a202b089064bfc4b159c3418b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00429.html#ga80a853a202b089064bfc4b159c3418b4">atca_delay_ms</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga80a853a202b089064bfc4b159c3418b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of milliseconds.  <a href="a00429.html#ga80a853a202b089064bfc4b159c3418b4">More...</a><br /></td></tr>
-<tr class="separator:ga80a853a202b089064bfc4b159c3418b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabed03bcc1228768534ef4ee49df0ad09"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00758.html#gabed03bcc1228768534ef4ee49df0ad09">atcac_sw_sha1_init</a> (<a class="el" href="a00849.html">atcac_sha1_ctx</a> *ctx)</td></tr>
+<tr class="memdesc:gabed03bcc1228768534ef4ee49df0ad09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing SHA1 hash in software.  <a href="a00758.html#gabed03bcc1228768534ef4ee49df0ad09">More...</a><br /></td></tr>
+<tr class="separator:gabed03bcc1228768534ef4ee49df0ad09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga65ff558306a88e0fbe2fc82bbe6a9c03"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00758.html#ga65ff558306a88e0fbe2fc82bbe6a9c03">atcac_sw_sha1_update</a> (<a class="el" href="a00849.html">atcac_sha1_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
+<tr class="memdesc:ga65ff558306a88e0fbe2fc82bbe6a9c03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add arbitrary data to a SHA1 hash.  <a href="a00758.html#ga65ff558306a88e0fbe2fc82bbe6a9c03">More...</a><br /></td></tr>
+<tr class="separator:ga65ff558306a88e0fbe2fc82bbe6a9c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5589df2a639f61a4dc4ccedc9b5a5453"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00758.html#ga5589df2a639f61a4dc4ccedc9b5a5453">atcac_sw_sha1_finish</a> (<a class="el" href="a00849.html">atcac_sha1_ctx</a> *ctx, uint8_t digest[<a class="el" href="a00758.html#gadb94a0991eb670ff1bf90253dfea0bfa">ATCA_SHA1_DIGEST_SIZE</a>])</td></tr>
+<tr class="memdesc:ga5589df2a639f61a4dc4ccedc9b5a5453"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete the SHA1 hash in software and return the digest.  <a href="a00758.html#ga5589df2a639f61a4dc4ccedc9b5a5453">More...</a><br /></td></tr>
+<tr class="separator:ga5589df2a639f61a4dc4ccedc9b5a5453"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84b866657bf319dab2924c2db3a1e990"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00758.html#ga84b866657bf319dab2924c2db3a1e990">atcac_sw_sha1</a> (const uint8_t *data, size_t data_size, uint8_t digest[<a class="el" href="a00758.html#gadb94a0991eb670ff1bf90253dfea0bfa">ATCA_SHA1_DIGEST_SIZE</a>])</td></tr>
+<tr class="memdesc:ga84b866657bf319dab2924c2db3a1e990"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform SHA1 hash of data in software.  <a href="a00758.html#ga84b866657bf319dab2924c2db3a1e990">More...</a><br /></td></tr>
+<tr class="separator:ga84b866657bf319dab2924c2db3a1e990"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for PIC32MX695F512H timer/delay routine. </p>
+<div class="textblock"><p>Wrapper API for SHA 1 routines. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this software and any derivatives exclusively with Microchip products. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00260.html">hal_pic32mx695f512h_timer.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="a00260.html">atca_crypto_sw_sha1.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

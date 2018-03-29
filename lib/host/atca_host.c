@@ -1269,7 +1269,7 @@ ATCA_STATUS atcah_gen_key_msg(struct atca_gen_key_in_out *param)
         }
         memcpy(&msg[33], param->other_data, 3); // OtherData replaces mode and key_id in message
     }
-    else if (param->mode & GENKEY_MODE_PUBLIC)
+    else if (param->mode & GENKEY_MODE_DIGEST)
     {
         msg[33] = param->mode;
         msg[34] = (uint8_t)(param->key_id >> 0);

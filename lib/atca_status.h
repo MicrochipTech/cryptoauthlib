@@ -64,8 +64,8 @@ typedef enum
     ATCA_RX_NO_RESPONSE         = 0xE7, //!< Not an error while the Command layer is polling for a command response.
     ATCA_RESYNC_WITH_WAKEUP     = 0xE8, //!< Re-synchronization succeeded, but only after generating a Wake-up
     ATCA_PARITY_ERROR           = 0xE9, //!< for protocols needing parity
-    ATCA_TX_TIMEOUT             = 0xEA, //!< for Atmel PHY protocol, timeout on transmission waiting for master
-    ATCA_RX_TIMEOUT             = 0xEB, //!< for Atmel PHY protocol, timeout on receipt waiting for master
+    ATCA_TX_TIMEOUT             = 0xEA, //!< for Microchip PHY protocol, timeout on transmission waiting for master
+    ATCA_RX_TIMEOUT             = 0xEB, //!< for Microchip PHY protocol, timeout on receipt waiting for master
     ATCA_TOO_MANY_COMM_RETRIES  = 0xEC, //!< Device did not respond too many times during a transmission. Could indicate no device present.
     ATCA_SMALL_BUFFER           = 0xED, //!< Supplied buffer is too small for data required
     ATCA_COMM_FAIL              = 0xF0, //!< Communication with device failed. Same as in hardware dependent modules.
@@ -78,6 +78,7 @@ typedef enum
     ATCA_TX_FAIL                = 0xF7, //!< Failed to write
     ATCA_NOT_LOCKED             = 0xF8, //!< required zone was not locked
     ATCA_NO_DEVICES             = 0xF9, //!< For protocols that support device discovery (kit protocol), no devices were found
+    ATCA_HEALTH_TEST_ERROR      = 0xFA, //!< random number generator health test error
 } ATCA_STATUS;
 
 #ifdef __cplusplus

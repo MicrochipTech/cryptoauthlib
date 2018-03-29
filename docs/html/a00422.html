@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: Configuration (cfg_)</title>
+<title>CryptoAuthLib: hal_win_kit_cdc.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
    </div>
-   <div id="projectbrief">Atmel CryptoAuthentication Library</div>
+   <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
  </tr>
  </tbody>
@@ -87,191 +87,99 @@ $(document).ready(function(){initNavTree('a00422.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#var-members">Variables</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">Configuration (cfg_)</div>  </div>
+<div class="title">hal_win_kit_cdc.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Logical device configurations describe the CryptoAuth device type and logical interface.  
+<p>ATCA Hardware abstraction layer for Windows using kit protocol over a USB CDC device.  
 <a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;Windows.h&gt;</code><br />
+</div>
+<p><a href="a00422_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:gafcb056718eb34ec3a612d550208e49cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00453.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#gafcb056718eb34ec3a612d550208e49cc">cfg_ateccx08a_i2c_default</a></td></tr>
-<tr class="memdesc:gafcb056718eb34ec3a612d550208e49cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for an ECCx08A device  <a href="#gafcb056718eb34ec3a612d550208e49cc">More...</a><br /></td></tr>
-<tr class="separator:gafcb056718eb34ec3a612d550208e49cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5624aa554e1964981b794e2295b9432c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00453.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#ga5624aa554e1964981b794e2295b9432c">cfg_ateccx08a_swi_default</a></td></tr>
-<tr class="memdesc:ga5624aa554e1964981b794e2295b9432c"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for an ECCx08A device on the logical SWI bus over UART  <a href="#ga5624aa554e1964981b794e2295b9432c">More...</a><br /></td></tr>
-<tr class="separator:ga5624aa554e1964981b794e2295b9432c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8fb19127e7fc7cfbaa619ba41bccc4b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00453.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#ga8fb19127e7fc7cfbaa619ba41bccc4b3">cfg_ateccx08a_kitcdc_default</a></td></tr>
-<tr class="memdesc:ga8fb19127e7fc7cfbaa619ba41bccc4b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for Kit protocol over the device's async interface  <a href="#ga8fb19127e7fc7cfbaa619ba41bccc4b3">More...</a><br /></td></tr>
-<tr class="separator:ga8fb19127e7fc7cfbaa619ba41bccc4b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1f5e0890694189d4ce70f19b207eb070"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00453.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#ga1f5e0890694189d4ce70f19b207eb070">cfg_ateccx08a_kithid_default</a></td></tr>
-<tr class="memdesc:ga1f5e0890694189d4ce70f19b207eb070"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for Kit protocol over the device's async interface  <a href="#ga1f5e0890694189d4ce70f19b207eb070">More...</a><br /></td></tr>
-<tr class="separator:ga1f5e0890694189d4ce70f19b207eb070"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9fe83141d8e44bf623e624a72901832c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00453.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#ga9fe83141d8e44bf623e624a72901832c">cfg_atsha204a_i2c_default</a></td></tr>
-<tr class="memdesc:ga9fe83141d8e44bf623e624a72901832c"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for a SHA204A device on the first logical I2C bus  <a href="#ga9fe83141d8e44bf623e624a72901832c">More...</a><br /></td></tr>
-<tr class="separator:ga9fe83141d8e44bf623e624a72901832c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae5e766a819c7920470b456238cbef70d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00453.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#gae5e766a819c7920470b456238cbef70d">cfg_atsha204a_swi_default</a></td></tr>
-<tr class="memdesc:gae5e766a819c7920470b456238cbef70d"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for an SHA204A device on the logical SWI bus over UART  <a href="#gae5e766a819c7920470b456238cbef70d">More...</a><br /></td></tr>
-<tr class="separator:gae5e766a819c7920470b456238cbef70d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga010430b93521c09efec9e5913ce769c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00453.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#ga010430b93521c09efec9e5913ce769c1">cfg_atsha204a_kitcdc_default</a></td></tr>
-<tr class="memdesc:ga010430b93521c09efec9e5913ce769c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for Kit protocol over the device's async interface  <a href="#ga010430b93521c09efec9e5913ce769c1">More...</a><br /></td></tr>
-<tr class="separator:ga010430b93521c09efec9e5913ce769c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac6a0b1f7ea398eee53d1e4243a617c6c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00453.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#gac6a0b1f7ea398eee53d1e4243a617c6c">cfg_atsha204a_kithid_default</a></td></tr>
-<tr class="memdesc:gac6a0b1f7ea398eee53d1e4243a617c6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for Kit protocol over the device's async interface  <a href="#gac6a0b1f7ea398eee53d1e4243a617c6c">More...</a><br /></td></tr>
-<tr class="separator:gac6a0b1f7ea398eee53d1e4243a617c6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00873.html">cdc_device</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00877.html">atcacdc</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a08b6c05184266dc4d5c8727bb9c1c754"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#a08b6c05184266dc4d5c8727bb9c1c754">CDC_DEVICES_MAX</a>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:a08b6c05184266dc4d5c8727bb9c1c754"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ac8c9377f90d6ce3044f81f900a54fe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#a5ac8c9377f90d6ce3044f81f900a54fe">CDC_BUFFER_MAX</a>&#160;&#160;&#160;1024</td></tr>
+<tr class="separator:a5ac8c9377f90d6ce3044f81f900a54fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a99ee56102171adcbcecb8a78fb9fa895"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00873.html">cdc_device</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#a99ee56102171adcbcecb8a78fb9fa895">cdc_device_t</a></td></tr>
+<tr class="separator:a99ee56102171adcbcecb8a78fb9fa895"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2df85bfd309840b4c9a5087e053d4811"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00877.html">atcacdc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#a2df85bfd309840b4c9a5087e053d4811">atcacdc_t</a></td></tr>
+<tr class="separator:a2df85bfd309840b4c9a5087e053d4811"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Logical device configurations describe the CryptoAuth device type and logical interface. </p>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="gafcb056718eb34ec3a612d550208e49cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gafcb056718eb34ec3a612d550208e49cc">&#9670;&nbsp;</a></span>cfg_ateccx08a_i2c_default</h2>
+<div class="textblock"><p>ATCA Hardware abstraction layer for Windows using kit protocol over a USB CDC device. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this software and any derivatives exclusively with Microchip products. </dd></dl>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a5ac8c9377f90d6ce3044f81f900a54fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ac8c9377f90d6ce3044f81f900a54fe">&#9670;&nbsp;</a></span>CDC_BUFFER_MAX</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00453.html">ATCAIfaceCfg</a> cfg_ateccx08a_i2c_default</td>
+          <td class="memname">#define CDC_BUFFER_MAX&#160;&#160;&#160;1024</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .iface_type             = <a class="code" href="a00425.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a872efba3aa5b7890acfe0f1e0e453bcb">ATCA_I2C_IFACE</a>,</div><div class="line">    .devtype                = <a class="code" href="a00424.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae">ATECC508A</a>,</div><div class="line">    .atcai2c.slave_address  = 0xC0,</div><div class="line">    .atcai2c.bus            = 2,</div><div class="line">    .atcai2c.baud           = 400000,</div><div class="line">    </div><div class="line">    .wake_delay             = 1500,</div><div class="line">    .rx_retries             = 20</div><div class="line">}</div><div class="ttc" id="a00425_html_ggac7f674d4a0afb12d2f3c9c5e98cb1089a872efba3aa5b7890acfe0f1e0e453bcb"><div class="ttname"><a href="a00425.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a872efba3aa5b7890acfe0f1e0e453bcb">ATCA_I2C_IFACE</a></div><div class="ttdef"><b>Definition:</b> atca_iface.h:50</div></div>
-<div class="ttc" id="a00424_html_ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae"><div class="ttname"><a href="a00424.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae">ATECC508A</a></div><div class="ttdef"><b>Definition:</b> atca_devtypes.h:49</div></div>
-</div><!-- fragment -->
-<p>default configuration for an ECCx08A device </p>
-<p>default configuration for an ECCx08A device on the first logical I2C bus </p>
 
 </div>
 </div>
-<a id="ga8fb19127e7fc7cfbaa619ba41bccc4b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga8fb19127e7fc7cfbaa619ba41bccc4b3">&#9670;&nbsp;</a></span>cfg_ateccx08a_kitcdc_default</h2>
+<a id="a08b6c05184266dc4d5c8727bb9c1c754"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08b6c05184266dc4d5c8727bb9c1c754">&#9670;&nbsp;</a></span>CDC_DEVICES_MAX</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00453.html">ATCAIfaceCfg</a> cfg_ateccx08a_kitcdc_default</td>
+          <td class="memname">#define CDC_DEVICES_MAX&#160;&#160;&#160;10</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .iface_type         = <a class="code" href="a00425.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a80ec8c070f1c711f2b16ad39d2a0486d">ATCA_UART_IFACE</a>,</div><div class="line">    .devtype            = <a class="code" href="a00424.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae">ATECC508A</a>,</div><div class="line">    .atcauart.port      = 0,</div><div class="line">    .atcauart.baud      = 115200,</div><div class="line">    .atcauart.wordsize  = 8,</div><div class="line">    .atcauart.parity    = 2,</div><div class="line">    .atcauart.stopbits  = 1,</div><div class="line">    .rx_retries         = 1,</div><div class="line">}</div><div class="ttc" id="a00424_html_ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae"><div class="ttname"><a href="a00424.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae">ATECC508A</a></div><div class="ttdef"><b>Definition:</b> atca_devtypes.h:49</div></div>
-<div class="ttc" id="a00425_html_ggac7f674d4a0afb12d2f3c9c5e98cb1089a80ec8c070f1c711f2b16ad39d2a0486d"><div class="ttname"><a href="a00425.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a80ec8c070f1c711f2b16ad39d2a0486d">ATCA_UART_IFACE</a></div><div class="ttdef"><b>Definition:</b> atca_iface.h:52</div></div>
-</div><!-- fragment -->
-<p>default configuration for Kit protocol over the device's async interface </p>
-<p>default configuration for Kit protocol over a CDC interface </p>
 
 </div>
 </div>
-<a id="ga1f5e0890694189d4ce70f19b207eb070"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1f5e0890694189d4ce70f19b207eb070">&#9670;&nbsp;</a></span>cfg_ateccx08a_kithid_default</h2>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a2df85bfd309840b4c9a5087e053d4811"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2df85bfd309840b4c9a5087e053d4811">&#9670;&nbsp;</a></span>atcacdc_t</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00453.html">ATCAIfaceCfg</a> cfg_ateccx08a_kithid_default</td>
+          <td class="memname">typedef struct <a class="el" href="a00877.html">atcacdc</a>  <a class="el" href="a00759.html#ga2df85bfd309840b4c9a5087e053d4811">atcacdc_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .iface_type         = <a class="code" href="a00425.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a7da282c54282a02f5650c38a85d0dfb1">ATCA_HID_IFACE</a>,</div><div class="line">    .devtype            = <a class="code" href="a00424.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae">ATECC508A</a>,</div><div class="line">    .atcahid.idx        = 0,</div><div class="line">    .atcahid.vid        = 0x03EB,</div><div class="line">    .atcahid.pid        = 0x2312,</div><div class="line">    .atcahid.packetsize = 64,</div><div class="line">    .atcahid.guid       = { 0x4d,        0x1e, 0x55, 0xb2, 0xf1, 0x6f, 0x11, 0xcf, 0x88, 0xcb, 0x00, 0x11, 0x11, 0x00, 0x00, 0x30 },</div><div class="line">}</div><div class="ttc" id="a00425_html_ggac7f674d4a0afb12d2f3c9c5e98cb1089a7da282c54282a02f5650c38a85d0dfb1"><div class="ttname"><a href="a00425.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a7da282c54282a02f5650c38a85d0dfb1">ATCA_HID_IFACE</a></div><div class="ttdef"><b>Definition:</b> atca_iface.h:54</div></div>
-<div class="ttc" id="a00424_html_ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae"><div class="ttname"><a href="a00424.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae">ATECC508A</a></div><div class="ttdef"><b>Definition:</b> atca_devtypes.h:49</div></div>
-</div><!-- fragment -->
-<p>default configuration for Kit protocol over the device's async interface </p>
-<p>default configuration for Kit protocol over a HID interface </p>
 
 </div>
 </div>
-<a id="ga5624aa554e1964981b794e2295b9432c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga5624aa554e1964981b794e2295b9432c">&#9670;&nbsp;</a></span>cfg_ateccx08a_swi_default</h2>
+<a id="a99ee56102171adcbcecb8a78fb9fa895"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99ee56102171adcbcecb8a78fb9fa895">&#9670;&nbsp;</a></span>cdc_device_t</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00453.html">ATCAIfaceCfg</a> cfg_ateccx08a_swi_default</td>
+          <td class="memname">typedef struct <a class="el" href="a00873.html">cdc_device</a>  <a class="el" href="a00759.html#ga99ee56102171adcbcecb8a78fb9fa895">cdc_device_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .iface_type     = <a class="code" href="a00425.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a2ce2e46b7f4245ab3d750ea2805fdc26">ATCA_SWI_IFACE</a>,</div><div class="line">    .devtype        = <a class="code" href="a00424.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae">ATECC508A</a>,</div><div class="line">    .atcaswi.bus    = 4,</div><div class="line">    .wake_delay     = 1500,</div><div class="line">    .rx_retries     = 10</div><div class="line">}</div><div class="ttc" id="a00425_html_ggac7f674d4a0afb12d2f3c9c5e98cb1089a2ce2e46b7f4245ab3d750ea2805fdc26"><div class="ttname"><a href="a00425.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a2ce2e46b7f4245ab3d750ea2805fdc26">ATCA_SWI_IFACE</a></div><div class="ttdef"><b>Definition:</b> atca_iface.h:51</div></div>
-<div class="ttc" id="a00424_html_ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae"><div class="ttname"><a href="a00424.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae">ATECC508A</a></div><div class="ttdef"><b>Definition:</b> atca_devtypes.h:49</div></div>
-</div><!-- fragment -->
-<p>default configuration for an ECCx08A device on the logical SWI bus over UART </p>
-
-</div>
-</div>
-<a id="ga9fe83141d8e44bf623e624a72901832c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga9fe83141d8e44bf623e624a72901832c">&#9670;&nbsp;</a></span>cfg_atsha204a_i2c_default</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00453.html">ATCAIfaceCfg</a> cfg_atsha204a_i2c_default</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .iface_type             = <a class="code" href="a00425.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a872efba3aa5b7890acfe0f1e0e453bcb">ATCA_I2C_IFACE</a>,</div><div class="line">    .devtype                = <a class="code" href="a00424.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268">ATSHA204A</a>,</div><div class="line">    .atcai2c.slave_address  = 0xC8,</div><div class="line">    .atcai2c.bus            = 2,</div><div class="line">    .atcai2c.baud           = 400000,</div><div class="line">    .wake_delay             = 2560,</div><div class="line">    .rx_retries             = 20</div><div class="line">}</div><div class="ttc" id="a00424_html_ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268"><div class="ttname"><a href="a00424.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268">ATSHA204A</a></div><div class="ttdef"><b>Definition:</b> atca_devtypes.h:47</div></div>
-<div class="ttc" id="a00425_html_ggac7f674d4a0afb12d2f3c9c5e98cb1089a872efba3aa5b7890acfe0f1e0e453bcb"><div class="ttname"><a href="a00425.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a872efba3aa5b7890acfe0f1e0e453bcb">ATCA_I2C_IFACE</a></div><div class="ttdef"><b>Definition:</b> atca_iface.h:50</div></div>
-</div><!-- fragment -->
-<p>default configuration for a SHA204A device on the first logical I2C bus </p>
-
-</div>
-</div>
-<a id="ga010430b93521c09efec9e5913ce769c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga010430b93521c09efec9e5913ce769c1">&#9670;&nbsp;</a></span>cfg_atsha204a_kitcdc_default</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00453.html">ATCAIfaceCfg</a> cfg_atsha204a_kitcdc_default</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .iface_type        = <a class="code" href="a00425.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a80ec8c070f1c711f2b16ad39d2a0486d">ATCA_UART_IFACE</a>,</div><div class="line">    .devtype           = <a class="code" href="a00424.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268">ATSHA204A</a>,</div><div class="line">    .atcauart.port     = 0,</div><div class="line">    .atcauart.baud     = 115200,</div><div class="line">    .atcauart.wordsize = 8,</div><div class="line">    .atcauart.parity   = 2,</div><div class="line">    .atcauart.stopbits = 1,</div><div class="line">    .rx_retries        = 1,</div><div class="line">}</div><div class="ttc" id="a00424_html_ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268"><div class="ttname"><a href="a00424.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268">ATSHA204A</a></div><div class="ttdef"><b>Definition:</b> atca_devtypes.h:47</div></div>
-<div class="ttc" id="a00425_html_ggac7f674d4a0afb12d2f3c9c5e98cb1089a80ec8c070f1c711f2b16ad39d2a0486d"><div class="ttname"><a href="a00425.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a80ec8c070f1c711f2b16ad39d2a0486d">ATCA_UART_IFACE</a></div><div class="ttdef"><b>Definition:</b> atca_iface.h:52</div></div>
-</div><!-- fragment -->
-<p>default configuration for Kit protocol over the device's async interface </p>
-<p>default configuration for Kit protocol over a CDC interface </p>
-
-</div>
-</div>
-<a id="gac6a0b1f7ea398eee53d1e4243a617c6c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac6a0b1f7ea398eee53d1e4243a617c6c">&#9670;&nbsp;</a></span>cfg_atsha204a_kithid_default</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00453.html">ATCAIfaceCfg</a> cfg_atsha204a_kithid_default</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .iface_type         = <a class="code" href="a00425.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a7da282c54282a02f5650c38a85d0dfb1">ATCA_HID_IFACE</a>,</div><div class="line">    .devtype            = <a class="code" href="a00424.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268">ATSHA204A</a>,</div><div class="line">    .atcahid.idx        = 0,</div><div class="line">    .atcahid.vid        = 0x03EB,</div><div class="line">    .atcahid.pid        = 0x2312,</div><div class="line">    .atcahid.packetsize = 64,</div><div class="line">    .atcahid.guid       = { 0x4d,        0x1e, 0x55, 0xb2, 0xf1, 0x6f, 0x11, 0xcf, 0x88, 0xcb, 0x00, 0x11, 0x11, 0x00, 0x00, 0x30 },</div><div class="line">}</div><div class="ttc" id="a00425_html_ggac7f674d4a0afb12d2f3c9c5e98cb1089a7da282c54282a02f5650c38a85d0dfb1"><div class="ttname"><a href="a00425.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a7da282c54282a02f5650c38a85d0dfb1">ATCA_HID_IFACE</a></div><div class="ttdef"><b>Definition:</b> atca_iface.h:54</div></div>
-<div class="ttc" id="a00424_html_ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268"><div class="ttname"><a href="a00424.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268">ATSHA204A</a></div><div class="ttdef"><b>Definition:</b> atca_devtypes.h:47</div></div>
-</div><!-- fragment -->
-<p>default configuration for Kit protocol over the device's async interface </p>
-<p>default configuration for Kit protocol over a HID interface for SHA204 </p>
-
-</div>
-</div>
-<a id="gae5e766a819c7920470b456238cbef70d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae5e766a819c7920470b456238cbef70d">&#9670;&nbsp;</a></span>cfg_atsha204a_swi_default</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00453.html">ATCAIfaceCfg</a> cfg_atsha204a_swi_default</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .iface_type     = <a class="code" href="a00425.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a2ce2e46b7f4245ab3d750ea2805fdc26">ATCA_SWI_IFACE</a>,</div><div class="line">    .devtype        = <a class="code" href="a00424.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268">ATSHA204A</a>,</div><div class="line">    .atcaswi.bus    = 4,</div><div class="line">    .wake_delay     = 2560,</div><div class="line">    .rx_retries     = 10</div><div class="line">}</div><div class="ttc" id="a00425_html_ggac7f674d4a0afb12d2f3c9c5e98cb1089a2ce2e46b7f4245ab3d750ea2805fdc26"><div class="ttname"><a href="a00425.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a2ce2e46b7f4245ab3d750ea2805fdc26">ATCA_SWI_IFACE</a></div><div class="ttdef"><b>Definition:</b> atca_iface.h:51</div></div>
-<div class="ttc" id="a00424_html_ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268"><div class="ttname"><a href="a00424.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268">ATSHA204A</a></div><div class="ttdef"><b>Definition:</b> atca_devtypes.h:47</div></div>
-</div><!-- fragment -->
-<p>default configuration for an SHA204A device on the logical SWI bus over UART </p>
 
 </div>
 </div>
@@ -280,6 +188,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00422.html">hal_win_kit_cdc.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

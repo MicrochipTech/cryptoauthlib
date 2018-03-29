@@ -36,6 +36,7 @@
  * TERMS.
  */
 #include "atca_basic.h"
+#include "atca_execution.h"
 #include "host/atca_host.h"
 
 /** \brief Executes PrivWrite command, to write externally generated ECC
@@ -167,7 +168,7 @@ ATCA_STATUS atcab_priv_write(uint16_t key_id, const uint8_t priv_key[36], uint16
             break;
         }
 
-        if ((status = atcab_execute_command(&packet)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(&packet, _gDevice)) != ATCA_SUCCESS)
         {
             break;
         }

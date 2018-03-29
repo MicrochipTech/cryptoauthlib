@@ -38,7 +38,7 @@
  */
 
 #include "atca_basic.h"
-#include "host/atca_host.h"
+#include "atca_execution.h"
 
 /** \brief Executes Nonce command, which loads a random or fixed nonce/data
  *          into the device for use by subsequent commands.
@@ -97,7 +97,7 @@ ATCA_STATUS atcab_nonce_base(uint8_t mode, uint16_t zero, const uint8_t *num_in,
             break;
         }
 
-        if ((status = atcab_execute_command(&packet)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(&packet, _gDevice)) != ATCA_SUCCESS)
         {
             break;
         }

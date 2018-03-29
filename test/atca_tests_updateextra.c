@@ -33,12 +33,14 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 
 TEST(atca_cmd_unit_test, updateextra)
 {
     ATCA_STATUS status;
     ATCAPacket packet;
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     unit_test_assert_config_is_locked();
 
@@ -46,10 +48,10 @@ TEST(atca_cmd_unit_test, updateextra)
     packet.param1 = UPDATE_MODE_USER_EXTRA;
     packet.param2 = 0x0000;
 
-    status = atUpdateExtra(gCommandObj, &packet);
+    status = atUpdateExtra(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(UPDATE_RSP_SIZE, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(0x00, packet.data[1]);
 }

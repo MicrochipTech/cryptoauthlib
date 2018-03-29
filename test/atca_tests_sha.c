@@ -33,6 +33,7 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 static const uint8_t nist_hash_msg1[] = "abc";
 static const uint8_t nist_hash_msg2[] = "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq";
@@ -43,15 +44,16 @@ TEST(atca_cmd_unit_test, sha)
     ATCAPacket packet;
     uint8_t sha_success = 0x00;
     uint8_t sha_digest_out[ATCA_SHA_DIGEST_SIZE];
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     // initialize SHA calculation engine, initializes TempKey
     packet.param1 = SHA_MODE_SHA256_START;
     packet.param2 = 0x0000;
 
-    status = atSHA(gCommandObj, &packet, 0);
+    status = atSHA(ca_cmd, &packet, 0);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(SHA_RSP_SIZE_SHORT, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // check the response, if error then TempKey not initialized
@@ -61,10 +63,10 @@ TEST(atca_cmd_unit_test, sha)
     packet.param1 = SHA_MODE_SHA256_END;
     packet.param2 = 0x0000;
 
-    status = atSHA(gCommandObj, &packet, 0);
+    status = atSHA(ca_cmd, &packet, 0);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(SHA_RSP_SIZE_LONG, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Copy the response into digest_out
@@ -554,8 +556,8 @@ t_test_case_info sha_basic_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist1),      DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist2),      DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist_short), DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    //{ REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist_long),		DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    //{ REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist_monte),		DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
+    //{ REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist_long),  DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
+    //{ REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist_monte), DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_context),                                                                                    DEVICE_MASK(ATECC608A) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_hmac),                                                                                       DEVICE_MASK(ATECC608A) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_hmac_tempkey),                                                                               DEVICE_MASK(ATECC608A) },

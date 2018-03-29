@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_basic_info.c File Reference</title>
+<title>CryptoAuthLib: atca_execution.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
    </div>
-   <div id="projectbrief">Atmel CryptoAuthentication Library</div>
+   <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
  </tr>
  </tbody>
@@ -87,45 +87,97 @@ $(document).ready(function(){initNavTree('a00113.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_basic_info.c File Reference</div>  </div>
+<div class="title">atca_execution.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for Info command.  
+<p>Defines an execution handler that executes a given command on a device and returns the results.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00086_source.html">atca_basic.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00401_source.html">host/atca_host.h</a>&quot;</code><br />
-</div><table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a00122_source.html">atca_status.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00095_source.html">atca_command.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00104_source.html">atca_device.h</a>&quot;</code><br />
+</div>
+<p><a href="a00113_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:aa025be8149d8f6e4d07aaa436b026db2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00113.html#aa025be8149d8f6e4d07aaa436b026db2">ATCA_UNSUPPORTED_CMD</a>&#160;&#160;&#160;((uint16_t)0xFFFF)</td></tr>
+<tr class="separator:aa025be8149d8f6e4d07aaa436b026db2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga806d07982fda5c30755af6b5b4ef9314"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#ga806d07982fda5c30755af6b5b4ef9314">atcab_info_base</a> (uint8_t mode, uint16_t param2, uint8_t *out_data)</td></tr>
-<tr class="memdesc:ga806d07982fda5c30755af6b5b4ef9314"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues an Info command, which return internal device information and can control GPIO and the persistent latch.  <a href="a00427.html#ga806d07982fda5c30755af6b5b4ef9314">More...</a><br /></td></tr>
-<tr class="separator:ga806d07982fda5c30755af6b5b4ef9314"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6e19ecd60be4c74665d9ec142e460771"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#ga6e19ecd60be4c74665d9ec142e460771">atcab_info</a> (uint8_t *revision)</td></tr>
-<tr class="memdesc:ga6e19ecd60be4c74665d9ec142e460771"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the Info command to get the device revision (DevRev).  <a href="a00427.html#ga6e19ecd60be4c74665d9ec142e460771">More...</a><br /></td></tr>
-<tr class="separator:ga6e19ecd60be4c74665d9ec142e460771"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga376b6ae92f14c60fba4ca5c6461e0b48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#ga376b6ae92f14c60fba4ca5c6461e0b48">atcab_info_get_latch</a> (bool *state)</td></tr>
-<tr class="memdesc:ga376b6ae92f14c60fba4ca5c6461e0b48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the Info command to get the persistent latch current state for an ATECC608A device.  <a href="a00427.html#ga376b6ae92f14c60fba4ca5c6461e0b48">More...</a><br /></td></tr>
-<tr class="separator:ga376b6ae92f14c60fba4ca5c6461e0b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2649126606db8a0b64ae8e19d09f6600"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#ga2649126606db8a0b64ae8e19d09f6600">atcab_info_set_latch</a> (bool state)</td></tr>
-<tr class="memdesc:ga2649126606db8a0b64ae8e19d09f6600"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the Info command to set the persistent latch state for an ATECC608A device.  <a href="a00427.html#ga2649126606db8a0b64ae8e19d09f6600">More...</a><br /></td></tr>
-<tr class="separator:ga2649126606db8a0b64ae8e19d09f6600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a6a7a38f14d486a4b2124d196fc6849"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00113.html#a9a6a7a38f14d486a4b2124d196fc6849">atca_execute_command</a> (<a class="el" href="a00769.html">ATCAPacket</a> *packet, <a class="el" href="a00754.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:a9a6a7a38f14d486a4b2124d196fc6849"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wakes up device, sends the packet, waits for command completion, receives response, and puts the device into the idle state.  <a href="#a9a6a7a38f14d486a4b2124d196fc6849">More...</a><br /></td></tr>
+<tr class="separator:a9a6a7a38f14d486a4b2124d196fc6849"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for Info command. </p>
-<p>Info command returns a variety of static and dynamic information about the device and its state. Also is used to control the GPIO pin and the persistent latch.</p>
-<dl class="section note"><dt>Note</dt><dd>The ATSHA204A refers to this command as DevRev instead of Info, however, the OpCode and operation is the same.</dd>
-<dd>
-List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A &amp; ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>Defines an execution handler that executes a given command on a device and returns the results. </p>
+<p>The basic flow is to wake the device, send the command, wait/poll for completion, and finally receives the response from the device and does basic checks before returning to caller.</p>
+<p>This handler supports the ATSHA and ATECC device family.</p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this software and any derivatives exclusively with Microchip products. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="aa025be8149d8f6e4d07aaa436b026db2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa025be8149d8f6e4d07aaa436b026db2">&#9670;&nbsp;</a></span>ATCA_UNSUPPORTED_CMD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_UNSUPPORTED_CMD&#160;&#160;&#160;((uint16_t)0xFFFF)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a9a6a7a38f14d486a4b2124d196fc6849"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a6a7a38f14d486a4b2124d196fc6849">&#9670;&nbsp;</a></span>atca_execute_command()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atca_execute_command </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00769.html">ATCAPacket</a> *&#160;</td>
+          <td class="paramname"><em>packet</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00754.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Wakes up device, sends the packet, waits for command completion, receives response, and puts the device into the idle state. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">packet</td><td>As input, the packet to be sent. As output, the data buffer in the packet structure will contain the response. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>CryptoAuthentication device to send the command to.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00113.html">atca_basic_info.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00113.html">atca_execution.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

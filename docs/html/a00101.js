@@ -1,9 +1,7 @@
 var a00101 =
 [
-    [ "atcab_ecdh", "a00427.html#ga6fc480ad2824df6309f4f370ffad15f9", null ],
-    [ "atcab_ecdh_base", "a00427.html#ga211c9405bb5049dd4a5da92d25c83f3c", null ],
-    [ "atcab_ecdh_enc", "a00427.html#gab6e0c175cbcb5f794b12a8ec22485176", null ],
-    [ "atcab_ecdh_ioenc", "a00427.html#ga975f7303086190d3b6f76c367583d622", null ],
-    [ "atcab_ecdh_tempkey", "a00427.html#gac244b83b061ffd8ae3d59b5f973baa53", null ],
-    [ "atcab_ecdh_tempkey_ioenc", "a00427.html#gafaccb0c9d12154b0c5b917f89f233721", null ]
+    [ "atGetCommands", "a00754.html#gabf51c08f1928fc5ec44936f3117a9f7e", null ],
+    [ "atGetIFace", "a00754.html#ga3f98e29cffa06446fc91b329703606af", null ],
+    [ "deleteATCADevice", "a00754.html#gac087cf04cd5bd6ff2e026d89bfbf5e12", null ],
+    [ "newATCADevice", "a00754.html#gad5e12e12d3030e28d75164286df9e5e9", null ]
 ];

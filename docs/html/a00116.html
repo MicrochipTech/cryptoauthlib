@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_basic_kdf.c File Reference</title>
+<title>CryptoAuthLib: atca_iface.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
    </div>
-   <div id="projectbrief">Atmel CryptoAuthentication Library</div>
+   <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
  </tr>
  </tbody>
@@ -89,32 +89,60 @@ $(document).ready(function(){initNavTree('a00116.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_basic_kdf.c File Reference</div>  </div>
+<div class="title">atca_iface.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for KDF command.  
+<p>Microchip CryptoAuthLib hardware interface object.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00086_source.html">atca_basic.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00401_source.html">host/atca_host.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00119_source.html">atca_iface.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00290_source.html">hal/atca_hal.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga40a6c01492a76366f9402302b527c4e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#ga40a6c01492a76366f9402302b527c4e1">atcab_kdf</a> (uint8_t mode, uint16_t key_id, const uint32_t details, const uint8_t *message, uint8_t *out_data, uint8_t *out_nonce)</td></tr>
-<tr class="memdesc:ga40a6c01492a76366f9402302b527c4e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the KDF command, which derives a new key in PRF, AES, or HKDF modes.  <a href="a00427.html#ga40a6c01492a76366f9402302b527c4e1">More...</a><br /></td></tr>
-<tr class="separator:ga40a6c01492a76366f9402302b527c4e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafdef2e89419fb8f93160efdd109ef8e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#gafdef2e89419fb8f93160efdd109ef8e4">_atinit</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> ca_iface, <a class="el" href="a00865.html">ATCAHAL_t</a> *hal)</td></tr>
+<tr class="separator:gafdef2e89419fb8f93160efdd109ef8e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f28f18f0d00c5301939724325f6b6fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#ga6f28f18f0d00c5301939724325f6b6fc">newATCAIface</a> (<a class="el" href="a00777.html">ATCAIfaceCfg</a> *cfg)</td></tr>
+<tr class="memdesc:ga6f28f18f0d00c5301939724325f6b6fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor for ATCAIface objects  <a href="a00755.html#ga6f28f18f0d00c5301939724325f6b6fc">More...</a><br /></td></tr>
+<tr class="separator:ga6f28f18f0d00c5301939724325f6b6fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga386353e8700eec35e4548dfa29f13b8d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#ga386353e8700eec35e4548dfa29f13b8d">atinit</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> ca_iface)</td></tr>
+<tr class="memdesc:ga386353e8700eec35e4548dfa29f13b8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function performs the HAL initialisation by calling intermediate HAL wrapper function. User should not call this function directly,instead use <a class="el" href="a00757.html#gacdc4fa3d2f2f6d197af8c10ab1f288b8" title="atcab_init is called once for the life of the application and creates a global ATCADevice object used...">atcab_init()</a> function.  <a href="a00755.html#ga386353e8700eec35e4548dfa29f13b8d">More...</a><br /></td></tr>
+<tr class="separator:ga386353e8700eec35e4548dfa29f13b8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga29c6f441d31c84629954d50cc95d3c5d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#ga29c6f441d31c84629954d50cc95d3c5d">atsend</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> ca_iface, uint8_t *txdata, int txlength)</td></tr>
+<tr class="memdesc:ga29c6f441d31c84629954d50cc95d3c5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function sends the data to device by calling intermediate HAL wrapper function.  <a href="a00755.html#ga29c6f441d31c84629954d50cc95d3c5d">More...</a><br /></td></tr>
+<tr class="separator:ga29c6f441d31c84629954d50cc95d3c5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1feec3d6e0c3c8b23d87ce0bbefcacdb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#ga1feec3d6e0c3c8b23d87ce0bbefcacdb">atreceive</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> ca_iface, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
+<tr class="memdesc:ga1feec3d6e0c3c8b23d87ce0bbefcacdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function receives data from device by calling intermediate HAL wrapper function.  <a href="a00755.html#ga1feec3d6e0c3c8b23d87ce0bbefcacdb">More...</a><br /></td></tr>
+<tr class="separator:ga1feec3d6e0c3c8b23d87ce0bbefcacdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga32693c852341e1b946bab3cca5f71761"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#ga32693c852341e1b946bab3cca5f71761">atwake</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> ca_iface)</td></tr>
+<tr class="memdesc:ga32693c852341e1b946bab3cca5f71761"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function performs waking up of device by calling intermediate HAL wrapper function. User should not call this function directly,instead use <a class="el" href="a00757.html#gad3bc620aedd9322d160eece0d8d20c82" title="wakeup the CryptoAuth device ">atcab_wakeup()</a> function.  <a href="a00755.html#ga32693c852341e1b946bab3cca5f71761">More...</a><br /></td></tr>
+<tr class="separator:ga32693c852341e1b946bab3cca5f71761"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac794fffe040e6d47a34c756720f3cbea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#gac794fffe040e6d47a34c756720f3cbea">atidle</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> ca_iface)</td></tr>
+<tr class="memdesc:gac794fffe040e6d47a34c756720f3cbea"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function makes the device to go to idle state by calling intermediate HAL wrapper function. User should not call this function directly,instead use <a class="el" href="a00757.html#gaf47433a371b9fcb8d65a4214cd9e4fa0" title="idle the CryptoAuth device ">atcab_idle()</a> function.  <a href="a00755.html#gac794fffe040e6d47a34c756720f3cbea">More...</a><br /></td></tr>
+<tr class="separator:gac794fffe040e6d47a34c756720f3cbea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac06336335e5f3191e3b1fc06d2830d96"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#gac06336335e5f3191e3b1fc06d2830d96">atsleep</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> ca_iface)</td></tr>
+<tr class="memdesc:gac06336335e5f3191e3b1fc06d2830d96"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function makes the device to go to sleep by calling intermediate HAL wrapper function. User should not call this function directly,instead use <a class="el" href="a00757.html#ga9475e032c388144c5a0df45d1df182a5" title="invoke sleep on the CryptoAuth device ">atcab_sleep()</a> function.  <a href="a00755.html#gac06336335e5f3191e3b1fc06d2830d96">More...</a><br /></td></tr>
+<tr class="separator:gac06336335e5f3191e3b1fc06d2830d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac88ba81abfd42df65c6c0c64414dfc6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00777.html">ATCAIfaceCfg</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#gac88ba81abfd42df65c6c0c64414dfc6e">atgetifacecfg</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> ca_iface)</td></tr>
+<tr class="memdesc:gac88ba81abfd42df65c6c0c64414dfc6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns the pointer to Interface configuration of the Crypto Auth device.  <a href="a00755.html#gac88ba81abfd42df65c6c0c64414dfc6e">More...</a><br /></td></tr>
+<tr class="separator:gac88ba81abfd42df65c6c0c64414dfc6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5e4163b8882d4eb42d4d5191c8731da0"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#ga5e4163b8882d4eb42d4d5191c8731da0">atgetifacehaldat</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> ca_iface)</td></tr>
+<tr class="memdesc:ga5e4163b8882d4eb42d4d5191c8731da0"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns the pointer of HAL data of the Crypto Auth device.  <a href="a00755.html#ga5e4163b8882d4eb42d4d5191c8731da0">More...</a><br /></td></tr>
+<tr class="separator:ga5e4163b8882d4eb42d4d5191c8731da0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf8074d759241d3edd6d8ead1d7322a98"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#gaf8074d759241d3edd6d8ead1d7322a98">deleteATCAIface</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> *ca_iface)</td></tr>
+<tr class="memdesc:gaf8074d759241d3edd6d8ead1d7322a98"><td class="mdescLeft">&#160;</td><td class="mdescRight">destructor for ATCAIface objects  <a href="a00755.html#gaf8074d759241d3edd6d8ead1d7322a98">More...</a><br /></td></tr>
+<tr class="separator:gaf8074d759241d3edd6d8ead1d7322a98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for KDF command. </p>
-<p>The KDF command implements one of a number of Key Derivation Functions (KDF). Generally this function combines a source key with an input string and creates a result key/digest/array. Three algorithms are currently supported: PRF, HKDF and AES.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC608A. Refer to device datasheet for full details.</dd></dl>
+<div class="textblock"><p>Microchip CryptoAuthLib hardware interface object. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this software and any derivatives exclusively with Microchip products. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00116.html">atca_basic_kdf.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00116.html">atca_iface.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

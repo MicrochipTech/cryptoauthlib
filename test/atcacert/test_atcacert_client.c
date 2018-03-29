@@ -178,12 +178,19 @@ TEST_SETUP(atcacert_client)
 
 TEST_TEAR_DOWN(atcacert_client)
 {
-    ATCA_STATUS status = atcab_release();
+    ATCA_STATUS status;
 
+    status = atcab_wakeup();
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    status = atcab_sleep();
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    status = atcab_release();
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
 
-TEST(atcacert_client, atcacert_client__init)
+TEST(atcacert_client, init)
 {
     int ret = 0;
 
@@ -270,7 +277,7 @@ TEST(atcacert_client, atcacert_client__init)
     printf("Device Certificate:\r\n%s\r\n", disp_str);
 }
 
-TEST(atcacert_client, atcacert_client__atcacert_read_cert_signer)
+TEST(atcacert_client, atcacert_read_cert_signer)
 {
     int ret = 0;
     uint8_t cert[512];
@@ -282,7 +289,7 @@ TEST(atcacert_client, atcacert_client__atcacert_read_cert_signer)
     TEST_ASSERT_EQUAL_MEMORY(g_signer_cert_ref, cert, cert_size);
 }
 
-TEST(atcacert_client, atcacert_client__atcacert_read_cert_device)
+TEST(atcacert_client, atcacert_read_cert_device)
 {
     int ret = 0;
     uint8_t cert[512];
@@ -294,7 +301,7 @@ TEST(atcacert_client, atcacert_client__atcacert_read_cert_device)
     TEST_ASSERT_EQUAL_MEMORY(g_device_cert_ref, cert, cert_size);
 }
 
-TEST(atcacert_client, atcacert_client__atcacert_read_cert_small_buf)
+TEST(atcacert_client, atcacert_read_cert_small_buf)
 {
     int ret = 0;
     uint8_t cert[64];
@@ -304,7 +311,7 @@ TEST(atcacert_client, atcacert_client__atcacert_read_cert_small_buf)
     TEST_ASSERT_EQUAL(ATCACERT_E_BUFFER_TOO_SMALL, ret);
 }
 
-TEST(atcacert_client, atcacert_client__atcacert_read_cert_bad_params)
+TEST(atcacert_client, atcacert_read_cert_bad_params)
 {
     int ret = 0;
     uint8_t cert[128];
@@ -353,7 +360,7 @@ TEST(atcacert_client, atcacert_client__atcacert_read_cert_bad_params)
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
 
-TEST(atcacert_client, atcacert_client__atcacert_get_response)
+TEST(atcacert_client, atcacert_get_response)
 {
     int ret = 0;
     uint8_t response[64];
@@ -386,7 +393,7 @@ TEST(atcacert_client, atcacert_client__atcacert_get_response)
     printf("Public Key:\r\n%s\r\n", disp_str);
 }
 
-TEST(atcacert_client, atcacert_client__atcacert_get_response_bad_params)
+TEST(atcacert_client, atcacert_get_response_bad_params)
 {
     int ret = 0;
     uint8_t response[64];

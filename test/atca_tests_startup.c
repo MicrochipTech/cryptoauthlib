@@ -33,15 +33,16 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 TEST(atca_cmd_unit_test, wake_sleep)
 {
     ATCA_STATUS status;
 
-    status = atwake(gIface);
+    status = atwake(_gDevice->mIface);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    status = atsleep(gIface);
+    status = atsleep(_gDevice->mIface);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
 
@@ -49,10 +50,10 @@ TEST(atca_cmd_unit_test, wake_idle)
 {
     ATCA_STATUS status;
 
-    status = atwake(gIface);
+    status = atwake(_gDevice->mIface);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    status = atidle(gIface);
+    status = atidle(_gDevice->mIface);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
 
@@ -60,12 +61,13 @@ TEST(atca_cmd_unit_test, crcerror)
 {
     ATCA_STATUS status;
     ATCAPacket packet;
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
-    if (gIfaceCfg->iface_type == ATCA_HID_IFACE)
+    if (_gDevice->mIface->mIfaceCFG->iface_type == ATCA_HID_IFACE)
     {
         TEST_IGNORE_MESSAGE("Kit protocol corrects CRC errors.");
     }
-    if (gIfaceCfg->iface_type == ATCA_UART_IFACE)
+    if (_gDevice->mIface->mIfaceCFG->iface_type == ATCA_UART_IFACE)
     {
         TEST_IGNORE_MESSAGE("Kit protocol corrects CRC errors.");
     }
@@ -74,13 +76,12 @@ TEST(atca_cmd_unit_test, crcerror)
     packet.param1 = INFO_MODE_REVISION;   // these tests are for communication testing mainly,
                                           // but if testing the entire chip, would need to go through all the modes.
                                           // this tests version mode only
-    status = atInfo(gCommandObj, &packet);
+    status = atInfo(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     // simulate the packet so CRC is broken
     packet.data[0] = 0xff;
     packet.data[1] = 0xff;
-
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_STATUS_CRC, status);
 
     // test to make sure CRC error is in the packet

@@ -29,6 +29,7 @@
  * TERMS.
  */
 #include "atca_test.h"
+#include "atca_execution.h"
 
 // gCfg must point to one of the cfg_ structures for any unit test to work.  this allows
 // the command console to switch device types at runtime.
@@ -59,7 +60,7 @@ uint8_t test_ecc608_configdata[ATCA_ECC_CONFIG_SIZE] = {
     0x9F, 0x8F, 0x83, 0x64, 0xC4, 0x44, 0xC4, 0x64, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F,  //47
     0x0F, 0x0F, 0x0F, 0x0F, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF,  //63
     0x00, 0x00, 0x00, 0x00, 0xFF, 0x84, 0x03, 0xBC, 0x09, 0x69, 0x76, 0x00, 0x00, 0x00, 0x00, 0x00,  //79
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0x06, 0x40, 0x00, 0x00, 0x00, 0x00,  //95
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0x0E, 0x40, 0x00, 0x00, 0x00, 0x00,  //95
     0x33, 0x00, 0x1C, 0x00, 0x13, 0x00, 0x1C, 0x00, 0x3C, 0x00, 0x3E, 0x00, 0x1C, 0x00, 0x33, 0x00,  //111
     0x1C, 0x00, 0x1C, 0x00, 0x38, 0x10, 0x30, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x32, 0x00, 0x30, 0x00   //127
 };
@@ -82,7 +83,7 @@ const uint8_t sha204_default_config[ATCA_SHA_CONFIG_SIZE] = {
     0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00,
     0xEE, 0x55, 0x00, 0x00,
-    // I2C, TempOffset, OtpMode, ChipMode
+    // I2C, CheckMacConfig, OtpMode, SelectorMode
     0xC8, 0x00, 0x55, 0x00,
     // SlotConfig
     0x8F, 0x80, 0x80, 0xA1,
@@ -109,15 +110,10 @@ const uint8_t sha204_default_config[ATCA_SHA_CONFIG_SIZE] = {
     0x00, 0x00, 0x55, 0x55,
 };
 
-ATCADevice gDevice;
-ATCACommand gCommandObj;
-ATCAIface gIface;
-ATCAIfaceCfg* gIfaceCfg;
-
-
 t_test_case_info* basic_tests[] =
 {
     startup_basic_test_info,
+    info_basic_test_info,
     aes_basic_test_info,
     verify_basic_test_info,
     derivekey_basic_test_info,
@@ -146,6 +142,7 @@ t_test_case_info* basic_tests[] =
 t_test_case_info* unit_tests[] =
 {
     startup_unit_test_info,
+    info_unit_test_info,
     aes_unit_test_info,
     verify_unit_test_info,
     derivekey_unit_test_info,
@@ -275,14 +272,15 @@ static bool atcau_is_locked(uint8_t zone)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
     ATCAPacket packet;
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     // build an read command
     packet.param1 = 0x00;
     packet.param2 = 0x15;
-    status = atRead(gCommandObj, &packet);
+    status = atRead(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     switch (zone)
@@ -307,29 +305,20 @@ static bool atcau_is_locked(uint8_t zone)
 void test_assert_interface_init(void)
 {
     /* If the device is still connected - disconnect it */
-    if (gDevice)
+    if (_gDevice)
     {
-        deleteATCADevice(&gDevice);
-        TEST_ASSERT_NULL(gDevice);
+        deleteATCADevice(&_gDevice);
+        TEST_ASSERT_NULL(_gDevice);
     }
 
     /* Get the device */
-    gDevice = newATCADevice(gCfg);
-    TEST_ASSERT_NOT_NULL(gDevice);
+    _gDevice = newATCADevice(gCfg);
+    TEST_ASSERT_NOT_NULL(_gDevice);
 
-    gCommandObj = atGetCommands(gDevice);
-    TEST_ASSERT_NOT_NULL(gCommandObj);
-
-    gIface = atGetIFace(gDevice);
-    TEST_ASSERT_NOT_NULL(gIface);
-
-    gIfaceCfg = atgetifacecfg(gIface);
-    TEST_ASSERT_NOT_NULL(gIfaceCfg);
-
-    if (gCommandObj->dt == ATECC608A)
+    if (_gDevice->mCommands->dt == ATECC608A)
     {
         // Set the clock divider, which should be the same value as the test config
-        gCommandObj->clock_divider = test_ecc608_configdata[ATCA_CHIPMODE_OFFSET] & ATCA_CHIPMODE_CLOCK_DIV_MASK;
+        _gDevice->mCommands->clock_divider = test_ecc608_configdata[ATCA_CHIPMODE_OFFSET] & ATCA_CHIPMODE_CLOCK_DIV_MASK;
     }
 }
 
@@ -338,15 +327,18 @@ void test_assert_interface_init(void)
  */
 void test_assert_interface_deinit(void)
 {
-    if (gDevice)
-    {
-        deleteATCADevice(&gDevice);
-        TEST_ASSERT_NULL(gDevice);
-    }
+    ATCA_STATUS status;
 
-    gCommandObj = NULL;
-    gIface = NULL;
-    gIfaceCfg = NULL;
+    TEST_ASSERT((_gDevice != NULL) && (_gDevice->mIface != NULL));
+
+    status = atwake(_gDevice->mIface);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    status = atsleep(_gDevice->mIface);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    deleteATCADevice(&_gDevice);
+    TEST_ASSERT_NULL(_gDevice);
 }
 
 void test_assert_config_is_unlocked(void)
@@ -449,46 +441,4 @@ void unit_test_assert_data_is_unlocked(void)
     }
 }
 
-
-ATCA_STATUS send_command(ATCACommand commandObj, ATCAIface iface, ATCAPacket* packet)
-{
-    ATCA_STATUS status = ATCA_SUCCESS;
-
-    if ((status = atGetExecTime(packet->opcode, commandObj)) != ATCA_SUCCESS)
-    {
-        return status;
-    }
-
-    do
-    {
-
-        // wake command
-        if ((status = atwake(iface)) != ATCA_SUCCESS)
-        {
-            break;
-        }
-
-        // Send command
-        if ((status = atsend(iface, (uint8_t*)packet, packet->txsize)) != ATCA_SUCCESS)
-        {
-            break;
-        }
-
-        // Delay the appropriate amount of time for command to execute
-        atca_delay_ms(commandObj->execution_time_msec);
-
-        // Receive the response
-        if ((status = atreceive(iface, packet->data, &(packet->rxsize))) != ATCA_SUCCESS)
-        {
-            break;
-        }
-
-        // Check for command errors
-        status = isATCAError(packet->data);
-    }
-    while (0);
-
-    atidle(iface);
-    return status;
-}
 

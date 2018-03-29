@@ -41,8 +41,15 @@ TEST_SETUP(atca_cmd_basic_test)
 }
 TEST_TEAR_DOWN(atca_cmd_basic_test)
 {
-    ATCA_STATUS status = atcab_release();
+    ATCA_STATUS status;
 
+    status = atcab_wakeup();
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    status = atcab_sleep();
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    status = atcab_release();
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
 

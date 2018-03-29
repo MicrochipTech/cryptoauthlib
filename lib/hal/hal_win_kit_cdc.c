@@ -29,7 +29,6 @@
  * TERMS.
  */
 
-//#include "atca_basic.h"
 #include "atca_hal.h"
 #include "kit_phy.h"
 #include "hal_win_kit_cdc.h"

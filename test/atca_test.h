@@ -60,6 +60,7 @@ typedef struct
 void RunAllTests(t_test_case_info** tests_list);
 
 extern t_test_case_info startup_basic_test_info[];
+extern t_test_case_info info_basic_test_info[];
 extern t_test_case_info aes_basic_test_info[];
 extern t_test_case_info verify_basic_test_info[];
 extern t_test_case_info derivekey_basic_test_info[];
@@ -87,6 +88,7 @@ extern t_test_case_info helper_basic_test_info[];
 extern t_test_case_info otpzero_basic_test_info[];
 
 extern t_test_case_info startup_unit_test_info[];
+extern t_test_case_info info_unit_test_info[];
 extern t_test_case_info aes_unit_test_info[];
 extern t_test_case_info verify_unit_test_info[];
 extern t_test_case_info derivekey_unit_test_info[];
@@ -110,10 +112,6 @@ extern t_test_case_info updateextra_unit_test_info[];
 extern t_test_case_info counter_unit_test_info[];
 extern t_test_case_info sboot_unit_test_info[];
 extern t_test_case_info jwt_unit_test_info[];
-extern ATCADevice gDevice;
-extern ATCACommand gCommandObj;
-extern ATCAIface gIface;
-extern ATCAIfaceCfg* gIfaceCfg;
 
 void test_assert_interface_init(void);
 void test_assert_interface_deinit(void);
@@ -132,8 +130,6 @@ void test_assert_config_is_locked(void);
 void test_assert_data_is_unlocked(void);
 void test_assert_data_is_locked(void);
 void check_config_aes_enable(void);
-
-ATCA_STATUS send_command(ATCACommand commandObj, ATCAIface iface, ATCAPacket* packet);
 
 // Helper tests
 void RunAllHelperTests(void);

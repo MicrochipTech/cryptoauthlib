@@ -37,7 +37,7 @@
  */
 
 #include "atca_basic.h"
-#include "host/atca_host.h"
+#include "atca_execution.h"
 
 /** \brief Issues GenKey command, which can generate a private key, compute a
  *          public key, nd/or compute a digest of a public key.
@@ -76,7 +76,7 @@ ATCA_STATUS atcab_genkey_base(uint8_t mode, uint16_t key_id, const uint8_t* othe
             break;
         }
 
-        if ((status = atcab_execute_command(&packet)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(&packet, _gDevice)) != ATCA_SUCCESS)
         {
             break;
         }

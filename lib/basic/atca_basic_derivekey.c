@@ -37,7 +37,7 @@
  */
 
 #include "atca_basic.h"
-#include "host/atca_host.h"
+#include "atca_execution.h"
 
 /** \brief Executes the DeviveKey command for deriving a new key from a
  *          nonce (TempKey) and an existing key.
@@ -71,7 +71,7 @@ ATCA_STATUS atcab_derivekey(uint8_t mode, uint16_t target_key, const uint8_t* ma
             break;
         }
 
-        if ((status = atcab_execute_command(&packet)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(&packet, _gDevice)) != ATCA_SUCCESS)
         {
             break;
         }

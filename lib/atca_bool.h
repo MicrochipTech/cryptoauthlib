@@ -1,7 +1,7 @@
 /**
  * \file
  *
- * \brief  Atmel Crypto Auth status codes
+ * \brief bool define for systems that don't have it
  *
  * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
  *            You may use this software and any derivatives exclusively with

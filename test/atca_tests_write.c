@@ -33,6 +33,7 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 TEST(atca_cmd_unit_test, write)
 {
@@ -40,6 +41,7 @@ TEST(atca_cmd_unit_test, write)
     ATCAPacket packet;
     uint8_t zone;
     uint16_t addr = 0x00;
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     unit_test_assert_config_is_locked();
 
@@ -53,9 +55,9 @@ TEST(atca_cmd_unit_test, write)
     memset(packet.data, 0x00, sizeof(packet.data));
     memcpy(packet.data, g_slot4_key, 32);
 
-    status = atWrite(gCommandObj, &packet, false);
+    status = atWrite(ca_cmd, &packet, false);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(0x00, packet.data[ATCA_RSP_DATA_IDX]);
 }
@@ -64,8 +66,12 @@ TEST(atca_cmd_basic_test, write_boundary_conditions)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     uint8_t write_data[ATCA_BLOCK_SIZE];
+    uint8_t block = 2;
 
-    //TODO: Add variant to test ATSHA204A
+    if (gCfg->devtype == ATSHA204A)
+    {
+        block = 0;
+    }
 
     test_assert_config_is_locked();
     test_assert_data_is_unlocked();
@@ -76,22 +82,22 @@ TEST(atca_cmd_basic_test, write_boundary_conditions)
     TEST_ASSERT_EQUAL(ATCA_BAD_PARAM, status);
 
     status = atcab_write_zone(ATCA_ZONE_DATA, 0, 0, 0, write_data, ATCA_BLOCK_SIZE);
-    TEST_ASSERT_EQUAL(ATCA_EXECUTION_ERROR, status);   // should fail because config has slot 0 as a key
+    TEST_ASSERT_EQUAL(gCfg->devtype == ATSHA204A ? ATCA_SUCCESS : ATCA_EXECUTION_ERROR, status); // should fail on ECC device, because config has slot 0 as a key
 
     status = atcab_write_zone(ATCA_ZONE_DATA, 0, 0, 0, write_data, ATCA_BLOCK_SIZE + 1);
     TEST_ASSERT_EQUAL(ATCA_BAD_PARAM, status);
 
     // less than a block size (less than 32-bytes)
-    status = atcab_write_zone(ATCA_ZONE_DATA, 10, 2, 0, write_data, 31);
+    status = atcab_write_zone(ATCA_ZONE_DATA, 10, block, 0, write_data, 31);
     TEST_ASSERT_EQUAL(ATCA_BAD_PARAM, status);
     // less than a block size (less than 4-bytes)
-    status = atcab_write_zone(ATCA_ZONE_DATA, 10, 2, 0, write_data, 3);
+    status = atcab_write_zone(ATCA_ZONE_DATA, 10, block, 0, write_data, 3);
     TEST_ASSERT_EQUAL(ATCA_BAD_PARAM, status);
     // equal to block(4-bytes) size, this is not permitted bcos 4-byte writes are not allowed when zone unlocked
-    status = atcab_write_zone(ATCA_ZONE_DATA, 10, 2, 0, write_data, ATCA_WORD_SIZE);
+    status = atcab_write_zone(ATCA_ZONE_DATA, 10, block, 0, write_data, ATCA_WORD_SIZE);
     TEST_ASSERT_EQUAL(ATCA_EXECUTION_ERROR, status);
     // equal to block(32-bytes) size,
-    status = atcab_write_zone(ATCA_ZONE_DATA, 10, 1, 0, write_data, ATCA_BLOCK_SIZE);
+    status = atcab_write_zone(ATCA_ZONE_DATA, 10, block, 0, write_data, ATCA_BLOCK_SIZE);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);  //pass for both locked and unlocked case
 }
 
@@ -160,16 +166,16 @@ TEST(atca_cmd_basic_test, write_invalid_block)
 
     // valid slot and last offset, invalid block
     status = atcab_write_zone(ATCA_ZONE_DATA, 8, 4, 7, write_data, ATCA_WORD_SIZE);
-    TEST_ASSERT_EQUAL(ATCA_EXECUTION_ERROR, status);
+    TEST_ASSERT(ATCA_PARSE_ERROR == status || ATCA_EXECUTION_ERROR == status);
     // invalid slot, valid block and offset
     status = atcab_write_zone(ATCA_ZONE_DATA, 16, 0, 0, write_data, ATCA_BLOCK_SIZE);
     TEST_ASSERT(ATCA_PARSE_ERROR == status || ATCA_EXECUTION_ERROR == status);
     // valid slot, invalid block and offset
     status = atcab_write_zone(ATCA_ZONE_DATA, 10, 4, 8, write_data, ATCA_WORD_SIZE);
-    TEST_ASSERT_EQUAL(ATCA_EXECUTION_ERROR, status);
+    TEST_ASSERT(ATCA_PARSE_ERROR == status || ATCA_EXECUTION_ERROR == status);
     // valid block(4-bytes size) and slot, invalid offset
     status = atcab_write_zone(ATCA_ZONE_DATA, 10, 2, 2, write_data, ATCA_WORD_SIZE);
-    TEST_ASSERT_EQUAL(ATCA_EXECUTION_ERROR, status);
+    TEST_ASSERT(ATCA_PARSE_ERROR == status || ATCA_EXECUTION_ERROR == status);
 }
 
 TEST(atca_cmd_basic_test, write_invalid_block_len)
@@ -198,7 +204,7 @@ TEST(atca_cmd_basic_test, write_invalid_block_len)
     //writing 32 bytes into 4bytes block => 32-byte Write command writes only 4 bytes and ignores the rest
     status = atcab_write_zone(ATCA_ZONE_DATA, 10, 2, 1, write_data, ATCA_BLOCK_SIZE);
     //pass for both locked and unlocked case
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(gCfg->devtype == ATSHA204A ? ATCA_PARSE_ERROR : ATCA_SUCCESS, status);
 }
 
 TEST(atca_cmd_basic_test, write_bytes_zone_config)
@@ -407,14 +413,13 @@ TEST(atca_cmd_basic_test, write_slot4_key)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
 
-TEST(atca_cmd_basic_test, write_data_zone)
+TEST(atca_cmd_basic_test, write_data_zone_blocks)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     uint8_t write_data[ATCA_BLOCK_SIZE * 2];
     uint8_t read_data[sizeof(write_data)];
 
     // Test assumes ECC slot sizes
-    // TODO: Add variant for ATSHA204A
     test_assert_data_is_locked();
 
     // Generate random data to be written
@@ -474,9 +479,13 @@ TEST(atca_cmd_basic_test, write_enc)
     uint8_t write_data[ATCA_KEY_SIZE];
     uint8_t read_data[ATCA_KEY_SIZE];
 
-    // Test assumes ECC sized slot 8
-    // TODO: Add variant for ATSHA204A
     test_assert_data_is_locked();
+
+    // Test assumes ECC sized slot 8.. Whereas slot 8 for SHA204A
+    if (gCfg->devtype == ATSHA204A)
+    {
+        key_id = 3; block = 0;
+    }
 
     status = atcab_random(&write_data[0]);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
@@ -581,19 +590,19 @@ TEST(atca_cmd_basic_test, write_config_zone)
 
 t_test_case_info write_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_boundary_conditions),                            DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_upper_slots),                                    DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_invalid_block),                                  DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_invalid_block_len),                              DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_boundary_conditions),   DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
+    //{ REGISTER_TEST_CASE(atca_cmd_basic_test, write_upper_slots),                                    DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_invalid_block),         DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_invalid_block_len),     DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, write_bytes_zone_config),     DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, write_otp_zone_nolock),       DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, write_otp_zone_nolock_check), DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, write_otp_zone),              DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, write_slot4_key),             DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_data_zone),                                      DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_bytes_zone_slot8),                               DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_enc),                                            DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_enc_data_unlock),                                DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_data_zone_blocks),                               DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
+    //{ REGISTER_TEST_CASE(atca_cmd_basic_test, write_bytes_zone_slot8),                               DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_enc),                   DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_enc_data_unlock),       DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, write_zone),                  DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, write_config_zone),           DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
     { (fp_test_case)NULL,                     (uint8_t)0 },                 /* Array Termination element*/

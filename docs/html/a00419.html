@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcatls_cfg.h File Reference</title>
+<title>CryptoAuthLib: hal_win_kit_cdc.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
    </div>
-   <div id="projectbrief">Atmel CryptoAuthentication Library</div>
+   <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
  </tr>
  </tbody>
@@ -87,118 +87,648 @@ $(document).ready(function(){initNavTree('a00419.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">atcatls_cfg.h File Reference</div>  </div>
+<div class="title">hal_win_kit_cdc.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Collection of functions for hardware abstraction of TLS implementations (e.g. OpenSSL)  
+<p>ATCA Hardware abstraction layer for Windows using kit protocol over a USB CDC device.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00203_source.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00062_source.html">atcacert/atcacert_def.h</a>&quot;</code><br />
-</div>
-<p><a href="a00419_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html">TlsSlotDef</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gae933169cd42adcc22ae3e91be32ee3fe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#gae933169cd42adcc22ae3e91be32ee3fe">TLS_SLOT_AUTH_PRIV</a>&#160;&#160;&#160;((uint8_t)0x0)</td></tr>
-<tr class="memdesc:gae933169cd42adcc22ae3e91be32ee3fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary authentication private key.  <a href="a00431.html#gae933169cd42adcc22ae3e91be32ee3fe">More...</a><br /></td></tr>
-<tr class="separator:gae933169cd42adcc22ae3e91be32ee3fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga13aa72208f2fc33b532e29c7546479b4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ga13aa72208f2fc33b532e29c7546479b4">TLS_SLOT_AUTH_PMK</a>&#160;&#160;&#160;((uint8_t)0x1)</td></tr>
-<tr class="memdesc:ga13aa72208f2fc33b532e29c7546479b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Premaster key for ECDH cipher suites.  <a href="a00431.html#ga13aa72208f2fc33b532e29c7546479b4">More...</a><br /></td></tr>
-<tr class="separator:ga13aa72208f2fc33b532e29c7546479b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0eb68769f11560a22946bfd4fbfaba8f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ga0eb68769f11560a22946bfd4fbfaba8f">TLS_SLOT_ECDH_PRIV</a>&#160;&#160;&#160;((uint8_t)0x2)</td></tr>
-<tr class="memdesc:ga0eb68769f11560a22946bfd4fbfaba8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH private key.  <a href="a00431.html#ga0eb68769f11560a22946bfd4fbfaba8f">More...</a><br /></td></tr>
-<tr class="separator:ga0eb68769f11560a22946bfd4fbfaba8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0ac20b8944aed8eadf45d86ffbac0f2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ga0ac20b8944aed8eadf45d86ffbac0f2f">TLS_SLOT_ECDHE_PRIV</a>&#160;&#160;&#160;((uint8_t)0x2)</td></tr>
-<tr class="memdesc:ga0ac20b8944aed8eadf45d86ffbac0f2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDHE private key.  <a href="a00431.html#ga0ac20b8944aed8eadf45d86ffbac0f2f">More...</a><br /></td></tr>
-<tr class="separator:ga0ac20b8944aed8eadf45d86ffbac0f2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7bf4b635d7f1b3eba098df3fc8a6fe8a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ga7bf4b635d7f1b3eba098df3fc8a6fe8a">TLS_SLOT_ECDH_PMK</a>&#160;&#160;&#160;((uint8_t)0x3)</td></tr>
-<tr class="memdesc:ga7bf4b635d7f1b3eba098df3fc8a6fe8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH/ECDHE pmk slot. This slot is encrypted with encParentSlot.  <a href="a00431.html#ga7bf4b635d7f1b3eba098df3fc8a6fe8a">More...</a><br /></td></tr>
-<tr class="separator:ga7bf4b635d7f1b3eba098df3fc8a6fe8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1b14685e77949d4ee1ba32f60661dffa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ga1b14685e77949d4ee1ba32f60661dffa">TLS_SLOT_ENC_PARENT</a>&#160;&#160;&#160;((uint8_t)0x4)</td></tr>
-<tr class="memdesc:ga1b14685e77949d4ee1ba32f60661dffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">The parent encryption key. This is a random key set on a per-platform basis.  <a href="a00431.html#ga1b14685e77949d4ee1ba32f60661dffa">More...</a><br /></td></tr>
-<tr class="separator:ga1b14685e77949d4ee1ba32f60661dffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae3774b70ad8f5642bd06e77a1fe4db71"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#gae3774b70ad8f5642bd06e77a1fe4db71">TLS_SLOT_SHAKEY</a>&#160;&#160;&#160;((uint8_t)0x5)</td></tr>
-<tr class="memdesc:gae3774b70ad8f5642bd06e77a1fe4db71"><td class="mdescLeft">&#160;</td><td class="mdescRight">SHA key slot. Used for SHA use cases.  <a href="a00431.html#gae3774b70ad8f5642bd06e77a1fe4db71">More...</a><br /></td></tr>
-<tr class="separator:gae3774b70ad8f5642bd06e77a1fe4db71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad3276449420959967bb73c5c6c1ab337"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#gad3276449420959967bb73c5c6c1ab337">TLS_SLOT_HOST_SHAKEY</a>&#160;&#160;&#160;((uint8_t)0x6)</td></tr>
-<tr class="memdesc:gad3276449420959967bb73c5c6c1ab337"><td class="mdescLeft">&#160;</td><td class="mdescRight">Host SHA key slot. Used for host SHA use cases.  <a href="a00431.html#gad3276449420959967bb73c5c6c1ab337">More...</a><br /></td></tr>
-<tr class="separator:gad3276449420959967bb73c5c6c1ab337"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga985d5861e0ae7cd0cf8aca83d3650298"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ga985d5861e0ae7cd0cf8aca83d3650298">TLS_SLOT_FEATURE_PRIV</a>&#160;&#160;&#160;((uint8_t)0x7)</td></tr>
-<tr class="memdesc:ga985d5861e0ae7cd0cf8aca83d3650298"><td class="mdescLeft">&#160;</td><td class="mdescRight">Feature private key. Used for feature use cases.  <a href="a00431.html#ga985d5861e0ae7cd0cf8aca83d3650298">More...</a><br /></td></tr>
-<tr class="separator:ga985d5861e0ae7cd0cf8aca83d3650298"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4bd050241a749f7c7f052438d5f5bd5e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ga4bd050241a749f7c7f052438d5f5bd5e">TLS_SLOT8_ENC_STORE</a>&#160;&#160;&#160;((uint8_t)0x8)</td></tr>
-<tr class="memdesc:ga4bd050241a749f7c7f052438d5f5bd5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypted storage for 416 bytes.  <a href="a00431.html#ga4bd050241a749f7c7f052438d5f5bd5e">More...</a><br /></td></tr>
-<tr class="separator:ga4bd050241a749f7c7f052438d5f5bd5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga13df4af9f4d2347fe049a9ddb80a25e5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ga13df4af9f4d2347fe049a9ddb80a25e5">TLS_SLOT9_ENC_STORE</a>&#160;&#160;&#160;((uint8_t)0x9)</td></tr>
-<tr class="memdesc:ga13df4af9f4d2347fe049a9ddb80a25e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypted storage for 72 bytes.  <a href="a00431.html#ga13df4af9f4d2347fe049a9ddb80a25e5">More...</a><br /></td></tr>
-<tr class="separator:ga13df4af9f4d2347fe049a9ddb80a25e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac188f5dbe54b98343b28097b7849c176"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#gac188f5dbe54b98343b28097b7849c176">TLS_SLOT_AUTH_CERT</a>&#160;&#160;&#160;((uint8_t)0xA)</td></tr>
-<tr class="memdesc:gac188f5dbe54b98343b28097b7849c176"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compressed certificate information for the authPrivSlot.  <a href="a00431.html#gac188f5dbe54b98343b28097b7849c176">More...</a><br /></td></tr>
-<tr class="separator:gac188f5dbe54b98343b28097b7849c176"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9b811f19338df28e3d94348c27c2eafc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ga9b811f19338df28e3d94348c27c2eafc">TLS_SLOT_SIGNER_PUBKEY</a>&#160;&#160;&#160;((uint8_t)0xB)</td></tr>
-<tr class="memdesc:ga9b811f19338df28e3d94348c27c2eafc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Public key of the signer of authCertSlot.  <a href="a00431.html#ga9b811f19338df28e3d94348c27c2eafc">More...</a><br /></td></tr>
-<tr class="separator:ga9b811f19338df28e3d94348c27c2eafc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa55e893b161818afebfd0206b403ef3f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#gaa55e893b161818afebfd0206b403ef3f">TLS_SLOT_SIGNER_CERT</a>&#160;&#160;&#160;((uint8_t)0xC)</td></tr>
-<tr class="memdesc:gaa55e893b161818afebfd0206b403ef3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compressed certificate information for the signerPubkey.  <a href="a00431.html#gaa55e893b161818afebfd0206b403ef3f">More...</a><br /></td></tr>
-<tr class="separator:gaa55e893b161818afebfd0206b403ef3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa5f14858980f5fec8d8f9b89ba33a15"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#gafa5f14858980f5fec8d8f9b89ba33a15">TLS_SLOT_FEATURE_CERT</a>&#160;&#160;&#160;((uint8_t)0xD)</td></tr>
-<tr class="memdesc:gafa5f14858980f5fec8d8f9b89ba33a15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compressed certificate information for the featurePrivSlot.  <a href="a00431.html#gafa5f14858980f5fec8d8f9b89ba33a15">More...</a><br /></td></tr>
-<tr class="separator:gafa5f14858980f5fec8d8f9b89ba33a15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9656936dca3600d05ae9cdc3694cfafe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ga9656936dca3600d05ae9cdc3694cfafe">TLS_SLOT_PKICA_PUBKEY</a>&#160;&#160;&#160;((uint8_t)0xE)</td></tr>
-<tr class="memdesc:ga9656936dca3600d05ae9cdc3694cfafe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Public key for the PKI certificate authority.  <a href="a00431.html#ga9656936dca3600d05ae9cdc3694cfafe">More...</a><br /></td></tr>
-<tr class="separator:ga9656936dca3600d05ae9cdc3694cfafe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8c45ce0bd115d406f5ce740595b4987c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ga8c45ce0bd115d406f5ce740595b4987c">TLS_SLOT_MFRCA_PUBKEY</a>&#160;&#160;&#160;((uint8_t)0xF)</td></tr>
-<tr class="memdesc:ga8c45ce0bd115d406f5ce740595b4987c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Public key for the MFR certificate authority.  <a href="a00431.html#ga8c45ce0bd115d406f5ce740595b4987c">More...</a><br /></td></tr>
-<tr class="separator:ga8c45ce0bd115d406f5ce740595b4987c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9abb5304261cbc443e5b38ea54d680dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ga9abb5304261cbc443e5b38ea54d680dc">TLS_SLOT_DEV_SIGNER_PRIV</a>&#160;&#160;&#160;((uint8_t)0x2)</td></tr>
-<tr class="memdesc:ga9abb5304261cbc443e5b38ea54d680dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signer private key - For Development ONLY.  <a href="a00431.html#ga9abb5304261cbc443e5b38ea54d680dc">More...</a><br /></td></tr>
-<tr class="separator:ga9abb5304261cbc443e5b38ea54d680dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4b9e69decc5dec66e792e00ff2b3d15d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ga4b9e69decc5dec66e792e00ff2b3d15d">TLS_SLOT_DEV_CA_PRIV</a>&#160;&#160;&#160;((uint8_t)0x7)</td></tr>
-<tr class="memdesc:ga4b9e69decc5dec66e792e00ff2b3d15d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Root CA private key - For Development ONLY.  <a href="a00431.html#ga4b9e69decc5dec66e792e00ff2b3d15d">More...</a><br /></td></tr>
-<tr class="separator:ga4b9e69decc5dec66e792e00ff2b3d15d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7f16c2f9c44a17fa9cdd16acd637bd69"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ga7f16c2f9c44a17fa9cdd16acd637bd69">FACTORY_INIT_I2C</a>&#160;&#160;&#160;(uint8_t)(0xC0)</td></tr>
-<tr class="separator:ga7f16c2f9c44a17fa9cdd16acd637bd69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2eb49933a78e39407997a2d132ec8949"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ga2eb49933a78e39407997a2d132ec8949">DEVICE_I2C</a>&#160;&#160;&#160;(uint8_t)(0xB0)</td></tr>
-<tr class="separator:ga2eb49933a78e39407997a2d132ec8949"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa5d6b2cc1b23594d7bb014455f014f3a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#gaa5d6b2cc1b23594d7bb014455f014f3a">D_I2C</a>&#160;&#160;&#160;<a class="el" href="a00431.html#ga2eb49933a78e39407997a2d132ec8949">DEVICE_I2C</a></td></tr>
-<tr class="separator:gaa5d6b2cc1b23594d7bb014455f014f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a00290_source.html">atca_hal.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00449_source.html">kit_phy.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00422_source.html">hal_win_kit_cdc.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00455_source.html">kit_protocol.h</a>&quot;</code><br />
+<code>#include &lt;SetupAPI.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;tchar.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga0cdd64349463339f8936f8fbca8162b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ga0cdd64349463339f8936f8fbca8162b7">device_init_default</a> (void)</td></tr>
-<tr class="memdesc:ga0cdd64349463339f8936f8fbca8162b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function will write and lock the configuration zone, write and lock the data zone, run GenKey on private keys to prepare a device for a standard configuration. This configuration can be used for self-provisioning or as a generic configuration for illustration, example, or demo purposes.  <a href="a00431.html#ga0cdd64349463339f8936f8fbca8162b7">More...</a><br /></td></tr>
-<tr class="separator:ga0cdd64349463339f8936f8fbca8162b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga98027849426d4672dfc6b65e5e20ac72"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ga98027849426d4672dfc6b65e5e20ac72">device_init</a> (const <a class="el" href="a00426.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def_signer, const <a class="el" href="a00426.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def_device)</td></tr>
-<tr class="memdesc:ga98027849426d4672dfc6b65e5e20ac72"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function will write and lock the configuration zone, write and lock the data zone, run GenKey on private keys to prepare a device for a standard configuration. This configuration can be used for self-provisioning or as a generic configuration for illustration, example, or demo purposes.  <a href="a00431.html#ga98027849426d4672dfc6b65e5e20ac72">More...</a><br /></td></tr>
-<tr class="separator:ga98027849426d4672dfc6b65e5e20ac72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a313bdfc8337f930a7f9fc6ca4e7731d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00419.html#a313bdfc8337f930a7f9fc6ca4e7731d9">hal_kit_cdc_init</a> (void *hal, <a class="el" href="a00777.html">ATCAIfaceCfg</a> *cfg)</td></tr>
+<tr class="memdesc:a313bdfc8337f930a7f9fc6ca4e7731d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of Kit USB CDC init.  <a href="#a313bdfc8337f930a7f9fc6ca4e7731d9">More...</a><br /></td></tr>
+<tr class="separator:a313bdfc8337f930a7f9fc6ca4e7731d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5320f17f400bf5ad0579dbdd5c8acf90"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00419.html#a5320f17f400bf5ad0579dbdd5c8acf90">hal_cdc_discover_buses</a> (int i2c_buses[], int max_buses)</td></tr>
+<tr class="memdesc:a5320f17f400bf5ad0579dbdd5c8acf90"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover all CDC kits available.This function is currently not implemented. this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge  <a href="#a5320f17f400bf5ad0579dbdd5c8acf90">More...</a><br /></td></tr>
+<tr class="separator:a5320f17f400bf5ad0579dbdd5c8acf90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16da7367a3a2cc01b926ac681513874e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00419.html#a16da7367a3a2cc01b926ac681513874e">hal_cdc_discover_devices</a> (int busNum, <a class="el" href="a00777.html">ATCAIfaceCfg</a> cfg[], int *found)</td></tr>
+<tr class="memdesc:a16da7367a3a2cc01b926ac681513874e"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover any CryptoAuth devices on a given logical bus number.This function is currently not implemented.  <a href="#a16da7367a3a2cc01b926ac681513874e">More...</a><br /></td></tr>
+<tr class="separator:a16da7367a3a2cc01b926ac681513874e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad11b8714818c2b05f70593c002fc5945"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00419.html#ad11b8714818c2b05f70593c002fc5945">hal_kit_cdc_post_init</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:ad11b8714818c2b05f70593c002fc5945"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of Kit USB CDC post init.  <a href="#ad11b8714818c2b05f70593c002fc5945">More...</a><br /></td></tr>
+<tr class="separator:ad11b8714818c2b05f70593c002fc5945"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a020fb0be6c73515122cf4b9f749fd97d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00419.html#a020fb0be6c73515122cf4b9f749fd97d">kit_phy_send</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, const char *txdata, int txlength)</td></tr>
+<tr class="memdesc:a020fb0be6c73515122cf4b9f749fd97d"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol send .It is called by the top layer.  <a href="#a020fb0be6c73515122cf4b9f749fd97d">More...</a><br /></td></tr>
+<tr class="separator:a020fb0be6c73515122cf4b9f749fd97d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae5e94b6080d4279474eb3e98bc58901"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00419.html#aae5e94b6080d4279474eb3e98bc58901">kit_phy_receive</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, char *rxdata, int *rxsize)</td></tr>
+<tr class="memdesc:aae5e94b6080d4279474eb3e98bc58901"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol receive data.It is called by the top layer.  <a href="#aae5e94b6080d4279474eb3e98bc58901">More...</a><br /></td></tr>
+<tr class="separator:aae5e94b6080d4279474eb3e98bc58901"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fac3cf3552eee701aec448c1392edd8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00419.html#a5fac3cf3552eee701aec448c1392edd8">hal_kit_phy_num_found</a> (int8_t *num_found)</td></tr>
+<tr class="memdesc:a5fac3cf3552eee701aec448c1392edd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of USB CDC devices found.  <a href="#a5fac3cf3552eee701aec448c1392edd8">More...</a><br /></td></tr>
+<tr class="separator:a5fac3cf3552eee701aec448c1392edd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7732806c89cd206a96b7fabbaf6770d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00419.html#a7732806c89cd206a96b7fabbaf6770d5">hal_kit_cdc_send</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *txdata, int txlength)</td></tr>
+<tr class="memdesc:a7732806c89cd206a96b7fabbaf6770d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol send over USB CDC.  <a href="#a7732806c89cd206a96b7fabbaf6770d5">More...</a><br /></td></tr>
+<tr class="separator:a7732806c89cd206a96b7fabbaf6770d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f3972f81de141ff0816b605054d775a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00419.html#a3f3972f81de141ff0816b605054d775a">hal_kit_cdc_receive</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *rxdata, uint16_t *rxsize)</td></tr>
+<tr class="memdesc:a3f3972f81de141ff0816b605054d775a"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol receive over USB CDC.  <a href="#a3f3972f81de141ff0816b605054d775a">More...</a><br /></td></tr>
+<tr class="separator:a3f3972f81de141ff0816b605054d775a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abced238b72e636a557d00355a2e44ac9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00419.html#abced238b72e636a557d00355a2e44ac9">hal_kit_cdc_wake</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:abced238b72e636a557d00355a2e44ac9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the wake for kit protocol over USB CDC.  <a href="#abced238b72e636a557d00355a2e44ac9">More...</a><br /></td></tr>
+<tr class="separator:abced238b72e636a557d00355a2e44ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92055a86e32f3dfc9eef064d48aa0870"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00419.html#a92055a86e32f3dfc9eef064d48aa0870">hal_kit_cdc_idle</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:a92055a86e32f3dfc9eef064d48aa0870"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the idle for kit protocol over USB CDC.  <a href="#a92055a86e32f3dfc9eef064d48aa0870">More...</a><br /></td></tr>
+<tr class="separator:a92055a86e32f3dfc9eef064d48aa0870"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1299c47e6d73d987bc04b16f25637bf6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00419.html#a1299c47e6d73d987bc04b16f25637bf6">hal_kit_cdc_sleep</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:a1299c47e6d73d987bc04b16f25637bf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the sleep for kit protocol over USB CDC.  <a href="#a1299c47e6d73d987bc04b16f25637bf6">More...</a><br /></td></tr>
+<tr class="separator:a1299c47e6d73d987bc04b16f25637bf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21a939cc86a0602cb2ba3be3eec26e6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00419.html#a21a939cc86a0602cb2ba3be3eec26e6e">hal_kit_cdc_release</a> (void *hal_data)</td></tr>
+<tr class="memdesc:a21a939cc86a0602cb2ba3be3eec26e6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the physical port for CDC.  <a href="#a21a939cc86a0602cb2ba3be3eec26e6e">More...</a><br /></td></tr>
+<tr class="separator:a21a939cc86a0602cb2ba3be3eec26e6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56255b770aa5e34b3e69898eaeda93e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00419.html#a56255b770aa5e34b3e69898eaeda93e9">hal_kit_cdc_discover_buses</a> (int cdc_buses[], int max_buses)</td></tr>
+<tr class="memdesc:a56255b770aa5e34b3e69898eaeda93e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover cdc buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge.This function is currently not implemented.  <a href="#a56255b770aa5e34b3e69898eaeda93e9">More...</a><br /></td></tr>
+<tr class="separator:a56255b770aa5e34b3e69898eaeda93e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e1fd4856e73176a487baac97175e9bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00419.html#a1e1fd4856e73176a487baac97175e9bf">hal_kit_cdc_discover_devices</a> (int busNum, <a class="el" href="a00777.html">ATCAIfaceCfg</a> *cfg, int *found)</td></tr>
+<tr class="memdesc:a1e1fd4856e73176a487baac97175e9bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover any CryptoAuth devices on a given logical bus number  <a href="#a1e1fd4856e73176a487baac97175e9bf">More...</a><br /></td></tr>
+<tr class="separator:a1e1fd4856e73176a487baac97175e9bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga2b97f11a5067e2495c407f9f7e987261"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a00426.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ga2b97f11a5067e2495c407f9f7e987261">g_cert_def_0_signer</a></td></tr>
-<tr class="separator:ga2b97f11a5067e2495c407f9f7e987261"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaadb5391e2adb13989c5ae32466c81aa"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a00426.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#gaaadb5391e2adb13989c5ae32466c81aa">g_cert_def_0_device</a></td></tr>
-<tr class="separator:gaaadb5391e2adb13989c5ae32466c81aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc65c7c6bd64530b95fa72082f1e0390"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00759.html#ga2df85bfd309840b4c9a5087e053d4811">atcacdc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00419.html#abc65c7c6bd64530b95fa72082f1e0390">_gCdc</a></td></tr>
+<tr class="separator:abc65c7c6bd64530b95fa72082f1e0390"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Collection of functions for hardware abstraction of TLS implementations (e.g. OpenSSL) </p>
+<div class="textblock"><p>ATCA Hardware abstraction layer for Windows using kit protocol over a USB CDC device. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this software and any derivatives exclusively with Microchip products. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a5320f17f400bf5ad0579dbdd5c8acf90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5320f17f400bf5ad0579dbdd5c8acf90">&#9670;&nbsp;</a></span>hal_cdc_discover_buses()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_cdc_discover_buses </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i2c_buses</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>max_buses</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>discover all CDC kits available.This function is currently not implemented. this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">i2c_buses</td><td>- an array of logical bus numbers </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">max_buses</td><td>- maximum number of buses the app wants to attempt to discover </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_UNIMPLEMENTED </dd></dl>
+
+</div>
+</div>
+<a id="a16da7367a3a2cc01b926ac681513874e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16da7367a3a2cc01b926ac681513874e">&#9670;&nbsp;</a></span>hal_cdc_discover_devices()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_cdc_discover_devices </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>busNum</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00777.html">ATCAIfaceCfg</a>&#160;</td>
+          <td class="paramname"><em>cfg</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>found</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>discover any CryptoAuth devices on a given logical bus number.This function is currently not implemented. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">busNum</td><td>- logical bus number on which to look for CryptoAuth devices </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">cfg[]</td><td>- pointer to head of an array of interface config structures which get filled in by this method </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*found</td><td>- number of devices found on this bus </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_UNIMPLEMENTED </dd></dl>
+
+</div>
+</div>
+<a id="a56255b770aa5e34b3e69898eaeda93e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56255b770aa5e34b3e69898eaeda93e9">&#9670;&nbsp;</a></span>hal_kit_cdc_discover_buses()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_kit_cdc_discover_buses </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>cdc_buses</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>max_buses</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>discover cdc buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge.This function is currently not implemented. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">cdc_buses</td><td>- an array of logical bus numbers </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">max_buses</td><td>- maximum number of buses the app wants to attempt to discover </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_UNIMPLEMENTED </dd></dl>
+
+</div>
+</div>
+<a id="a1e1fd4856e73176a487baac97175e9bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e1fd4856e73176a487baac97175e9bf">&#9670;&nbsp;</a></span>hal_kit_cdc_discover_devices()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_kit_cdc_discover_devices </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>busNum</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00777.html">ATCAIfaceCfg</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>found</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>discover any CryptoAuth devices on a given logical bus number </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">busNum</td><td>- logical bus number on which to look for CryptoAuth devices </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">cfg[]</td><td>- pointer to head of an array of interface config structures which get filled in by this method </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*found</td><td>- number of devices found on this bus </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_UNIMPLEMENTED </dd></dl>
+
+</div>
+</div>
+<a id="a92055a86e32f3dfc9eef064d48aa0870"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92055a86e32f3dfc9eef064d48aa0870">&#9670;&nbsp;</a></span>hal_kit_cdc_idle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_kit_cdc_idle </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Call the idle for kit protocol over USB CDC. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>ATCAIface instance that is the interface object to send the bytes over </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="a313bdfc8337f930a7f9fc6ca4e7731d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a313bdfc8337f930a7f9fc6ca4e7731d9">&#9670;&nbsp;</a></span>hal_kit_cdc_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_kit_cdc_init </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>hal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00777.html">ATCAIfaceCfg</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>HAL implementation of Kit USB CDC init. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hal</td><td>pointer to HAL specific data that is maintained by this HAL </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>pointer to HAL specific configuration data that is used to initialize this HAL </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="ad11b8714818c2b05f70593c002fc5945"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad11b8714818c2b05f70593c002fc5945">&#9670;&nbsp;</a></span>hal_kit_cdc_post_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_kit_cdc_post_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>HAL implementation of Kit USB CDC post init. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>instance </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="a3f3972f81de141ff0816b605054d775a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f3972f81de141ff0816b605054d775a">&#9670;&nbsp;</a></span>hal_kit_cdc_receive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_kit_cdc_receive </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>rxdata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramname"><em>rxsize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>HAL implementation of kit protocol receive over USB CDC. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rxdata</td><td>pointer to space to receive the data </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">rxsize</td><td>ptr to expected number of receive bytes to request </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="a21a939cc86a0602cb2ba3be3eec26e6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21a939cc86a0602cb2ba3be3eec26e6e">&#9670;&nbsp;</a></span>hal_kit_cdc_release()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_kit_cdc_release </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>hal_data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Close the physical port for CDC. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hal_data</td><td>The hardware abstraction data specific to this HAL </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="a7732806c89cd206a96b7fabbaf6770d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7732806c89cd206a96b7fabbaf6770d5">&#9670;&nbsp;</a></span>hal_kit_cdc_send()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_kit_cdc_send </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>txdata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>txlength</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>HAL implementation of kit protocol send over USB CDC. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">txdata</td><td>pointer to bytes to send </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">txlength</td><td>number of bytes to send </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="a1299c47e6d73d987bc04b16f25637bf6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1299c47e6d73d987bc04b16f25637bf6">&#9670;&nbsp;</a></span>hal_kit_cdc_sleep()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_kit_cdc_sleep </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Call the sleep for kit protocol over USB CDC. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>ATCAIface instance that is the interface object to send the bytes over </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="abced238b72e636a557d00355a2e44ac9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abced238b72e636a557d00355a2e44ac9">&#9670;&nbsp;</a></span>hal_kit_cdc_wake()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_kit_cdc_wake </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Call the wake for kit protocol over USB CDC. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>ATCAIface instance that is the interface object to send the bytes over </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="a5fac3cf3552eee701aec448c1392edd8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fac3cf3552eee701aec448c1392edd8">&#9670;&nbsp;</a></span>hal_kit_phy_num_found()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_kit_phy_num_found </td>
+          <td>(</td>
+          <td class="paramtype">int8_t *&#160;</td>
+          <td class="paramname"><em>num_found</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Number of USB CDC devices found. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">num_found</td><td>Number of USB CDC devices found returned here </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS </dd></dl>
+
+</div>
+</div>
+<a id="aae5e94b6080d4279474eb3e98bc58901"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae5e94b6080d4279474eb3e98bc58901">&#9670;&nbsp;</a></span>kit_phy_receive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> kit_phy_receive </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>rxdata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>rxsize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>HAL implementation of kit protocol receive data.It is called by the top layer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>instance </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">rxdata</td><td>pointer to space to receive the data </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">rxsize</td><td>ptr to expected number of receive bytes to request </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="a020fb0be6c73515122cf4b9f749fd97d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a020fb0be6c73515122cf4b9f749fd97d">&#9670;&nbsp;</a></span>kit_phy_send()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> kit_phy_send </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>txdata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>txlength</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>HAL implementation of kit protocol send .It is called by the top layer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">txdata</td><td>pointer to bytes to send </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">txlength</td><td>number of bytes to send </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="abc65c7c6bd64530b95fa72082f1e0390"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc65c7c6bd64530b95fa72082f1e0390">&#9670;&nbsp;</a></span>_gCdc</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00759.html#ga2df85bfd309840b4c9a5087e053d4811">atcacdc_t</a> _gCdc</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_d3d260c11de525055358286eeb840f1a.html">tls</a></li><li class="navelem"><a class="el" href="a00419.html">atcatls_cfg.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00419.html">hal_win_kit_cdc.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

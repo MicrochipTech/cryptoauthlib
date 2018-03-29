@@ -57,11 +57,14 @@ typedef enum
     ATCA_UNKNOWN_IFACE,
 } ATCAIfaceType;
 
-/* ATCAIfaceCfg is a mediator object between a completely abstract notion of a physical interface and an actual physical interface.
+/* ATCAIfaceCfg is a mediator object between a completely abstract notion of a
+   physical interface and an actual physical interface.
 
-    The main purpose of it is to keep hardware specifics from bleeding into the higher levels - hardware specifics could include
-    things like framework specific items (ASF SERCOM) vs a non-Atmel I2C library constant that defines an I2C port.   But I2C has
-    roughly the same parameters regardless of architecture and framework.  I2C
+   The main purpose of it is to keep hardware specifics from bleeding into the
+   higher levels - hardware specifics could include things like framework
+   specific items (ASF SERCOM) vs a non-Microchip I2C library constant that
+   defines an I2C port. But I2C has roughly the same parameters regardless of
+   architecture and framework.
  */
 
 typedef struct

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_basic_random.c File Reference</title>
+<title>CryptoAuthLib: atcacert_client.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
    </div>
-   <div id="projectbrief">Atmel CryptoAuthentication Library</div>
+   <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
  </tr>
  </tbody>
@@ -87,34 +87,186 @@ $(document).ready(function(){initNavTree('a00131.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_basic_random.c File Reference</div>  </div>
+<div class="title">atcacert_client.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for Random command.  
+<p>Client side cert i/o methods. These declarations deal with the client-side, the node being authenticated, of the authentication process. It is assumed the client has an ECC CryptoAuthentication device (e.g. ATECC508A) and the certificates are stored on that device.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00086_source.html">atca_basic.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00401_source.html">host/atca_host.h</a>&quot;</code><br />
-</div><table class="memberdecls">
+<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00143_source.html">atcacert_def.h</a>&quot;</code><br />
+</div>
+<p><a href="a00131_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:aefb573f85f8692759f6c82587a948d71"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00131.html#aefb573f85f8692759f6c82587a948d71">PEM_CERT_BEGIN</a>&#160;&#160;&#160;&quot;-----BEGIN CERTIFICATE-----&quot;</td></tr>
+<tr class="separator:aefb573f85f8692759f6c82587a948d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbe03d95d1d6a651c01d1ef74daa4063"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00131.html#afbe03d95d1d6a651c01d1ef74daa4063">PEM_CERT_END</a>&#160;&#160;&#160;&quot;-----END CERTIFICATE-----&quot;</td></tr>
+<tr class="separator:afbe03d95d1d6a651c01d1ef74daa4063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a006df03d5e86c2d586f02362ca66566e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00131.html#a006df03d5e86c2d586f02362ca66566e">PEM_CSR_BEGIN</a>&#160;&#160;&#160;&quot;-----BEGIN CERTIFICATE REQUEST-----&quot;</td></tr>
+<tr class="separator:a006df03d5e86c2d586f02362ca66566e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7521d8913a097b0a910d00fdb664210"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00131.html#ad7521d8913a097b0a910d00fdb664210">PEM_CSR_END</a>&#160;&#160;&#160;&quot;-----END CERTIFICATE REQUEST-----&quot;</td></tr>
+<tr class="separator:ad7521d8913a097b0a910d00fdb664210"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc47b0b6f2ef14310bce94967c0c7f36"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00131.html#abc47b0b6f2ef14310bce94967c0c7f36">PEM_CERT_BEGIN_EOL</a>&#160;&#160;&#160;<a class="el" href="a00131.html#aefb573f85f8692759f6c82587a948d71">PEM_CERT_BEGIN</a> &quot;\n&quot;</td></tr>
+<tr class="separator:abc47b0b6f2ef14310bce94967c0c7f36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35f37dfeff854bdb9abfcb44351322b0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00131.html#a35f37dfeff854bdb9abfcb44351322b0">PEM_CERT_END_EOL</a>&#160;&#160;&#160;&quot;\n&quot;PEM_CERT_END &quot;\n&quot;</td></tr>
+<tr class="separator:a35f37dfeff854bdb9abfcb44351322b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f4b40b348581d7e448a0afcf7a1c5da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00131.html#a2f4b40b348581d7e448a0afcf7a1c5da">PEM_CSR_BEGIN_EOL</a>&#160;&#160;&#160;<a class="el" href="a00131.html#a006df03d5e86c2d586f02362ca66566e">PEM_CSR_BEGIN</a> &quot;\n&quot;</td></tr>
+<tr class="separator:a2f4b40b348581d7e448a0afcf7a1c5da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7effe162d8a358aaf2c54cbef038d41b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00131.html#a7effe162d8a358aaf2c54cbef038d41b">PEM_CSR_END_EOL</a>&#160;&#160;&#160;&quot;\n&quot;PEM_CSR_END &quot;\n&quot;</td></tr>
+<tr class="separator:a7effe162d8a358aaf2c54cbef038d41b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga4fa442396dfbb89e59dfca837b565cec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#ga4fa442396dfbb89e59dfca837b565cec">atcab_random</a> (uint8_t *rand_out)</td></tr>
-<tr class="memdesc:ga4fa442396dfbb89e59dfca837b565cec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Random command, which generates a 32 byte random number from the CryptoAuth device.  <a href="a00427.html#ga4fa442396dfbb89e59dfca837b565cec">More...</a><br /></td></tr>
-<tr class="separator:ga4fa442396dfbb89e59dfca837b565cec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf13dfd0ea4e563194cec6e62892b5c4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#gaaf13dfd0ea4e563194cec6e62892b5c4">atcacert_read_cert</a> (const <a class="el" href="a00756.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t ca_public_key[64], uint8_t *cert, size_t *cert_size)</td></tr>
+<tr class="memdesc:gaaf13dfd0ea4e563194cec6e62892b5c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the certificate specified by the certificate definition from the ATECC508A device.  <a href="a00756.html#gaaf13dfd0ea4e563194cec6e62892b5c4">More...</a><br /></td></tr>
+<tr class="separator:gaaf13dfd0ea4e563194cec6e62892b5c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga71ea9d7c93c2fecb87a36b1343397fad"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga71ea9d7c93c2fecb87a36b1343397fad">atcacert_write_cert</a> (const <a class="el" href="a00756.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size)</td></tr>
+<tr class="memdesc:ga71ea9d7c93c2fecb87a36b1343397fad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take a full certificate and write it to the ATECC508A device according to the certificate definition.  <a href="a00756.html#ga71ea9d7c93c2fecb87a36b1343397fad">More...</a><br /></td></tr>
+<tr class="separator:ga71ea9d7c93c2fecb87a36b1343397fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6">atcacert_create_csr</a> (const <a class="el" href="a00756.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *csr_def, uint8_t *csr, size_t *csr_size)</td></tr>
+<tr class="memdesc:gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a CSR specified by the CSR definition from the ATECC508A device. This process involves reading the dynamic CSR data from the device and combining it with the template found in the CSR definition, then signing it. Return the CSR int der format.  <a href="a00756.html#gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6">More...</a><br /></td></tr>
+<tr class="separator:gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2f9817d4e3f51a233dc85183b85236c7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga2f9817d4e3f51a233dc85183b85236c7">atcacert_create_csr_pem</a> (const <a class="el" href="a00756.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *csr_def, char *csr_pem, size_t *csr_size)</td></tr>
+<tr class="memdesc:ga2f9817d4e3f51a233dc85183b85236c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a CSR specified by the CSR definition from the ATECC508A device. This process involves reading the dynamic CSR data from the device and combining it with the template found in the CSR definition, then signing it. Return the CSR int der format.  <a href="a00756.html#ga2f9817d4e3f51a233dc85183b85236c7">More...</a><br /></td></tr>
+<tr class="separator:ga2f9817d4e3f51a233dc85183b85236c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0fdea2639cb243ebd76adc45f7714b41"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga0fdea2639cb243ebd76adc45f7714b41">atcacert_encode_pem_cert</a> (const uint8_t *cert_bytes, size_t cert_bytes_size, char *pem_cert, size_t *pem_cert_size)</td></tr>
+<tr class="memdesc:ga0fdea2639cb243ebd76adc45f7714b41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a certificate to PEM format.  <a href="a00756.html#ga0fdea2639cb243ebd76adc45f7714b41">More...</a><br /></td></tr>
+<tr class="separator:ga0fdea2639cb243ebd76adc45f7714b41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga77d0c6ee170bb70b6f5668e95c92c080"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga77d0c6ee170bb70b6f5668e95c92c080">atcacert_decode_pem_cert</a> (const char *pem_cert, size_t pem_cert_size, uint8_t *cert_bytes, size_t *cert_bytes_size)</td></tr>
+<tr class="memdesc:ga77d0c6ee170bb70b6f5668e95c92c080"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract the certificate bytes from a PEM encoded certificate.  <a href="a00756.html#ga77d0c6ee170bb70b6f5668e95c92c080">More...</a><br /></td></tr>
+<tr class="separator:ga77d0c6ee170bb70b6f5668e95c92c080"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f7223a578ce5c07a831638106c6ff6c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga9f7223a578ce5c07a831638106c6ff6c">atcacert_get_response</a> (uint8_t device_private_key_slot, const uint8_t challenge[32], uint8_t response[64])</td></tr>
+<tr class="memdesc:ga9f7223a578ce5c07a831638106c6ff6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the response to a challenge sent from the host.  <a href="a00756.html#ga9f7223a578ce5c07a831638106c6ff6c">More...</a><br /></td></tr>
+<tr class="separator:ga9f7223a578ce5c07a831638106c6ff6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for Random command. </p>
-<p>The Random command generates a random number for use by the system.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>Client side cert i/o methods. These declarations deal with the client-side, the node being authenticated, of the authentication process. It is assumed the client has an ECC CryptoAuthentication device (e.g. ATECC508A) and the certificates are stored on that device. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this software and any derivatives exclusively with Microchip products. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="aefb573f85f8692759f6c82587a948d71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefb573f85f8692759f6c82587a948d71">&#9670;&nbsp;</a></span>PEM_CERT_BEGIN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PEM_CERT_BEGIN&#160;&#160;&#160;&quot;-----BEGIN CERTIFICATE-----&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abc47b0b6f2ef14310bce94967c0c7f36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc47b0b6f2ef14310bce94967c0c7f36">&#9670;&nbsp;</a></span>PEM_CERT_BEGIN_EOL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PEM_CERT_BEGIN_EOL&#160;&#160;&#160;<a class="el" href="a00131.html#aefb573f85f8692759f6c82587a948d71">PEM_CERT_BEGIN</a> &quot;\n&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afbe03d95d1d6a651c01d1ef74daa4063"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbe03d95d1d6a651c01d1ef74daa4063">&#9670;&nbsp;</a></span>PEM_CERT_END</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PEM_CERT_END&#160;&#160;&#160;&quot;-----END CERTIFICATE-----&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a35f37dfeff854bdb9abfcb44351322b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35f37dfeff854bdb9abfcb44351322b0">&#9670;&nbsp;</a></span>PEM_CERT_END_EOL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PEM_CERT_END_EOL&#160;&#160;&#160;&quot;\n&quot;PEM_CERT_END &quot;\n&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a006df03d5e86c2d586f02362ca66566e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a006df03d5e86c2d586f02362ca66566e">&#9670;&nbsp;</a></span>PEM_CSR_BEGIN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PEM_CSR_BEGIN&#160;&#160;&#160;&quot;-----BEGIN CERTIFICATE REQUEST-----&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2f4b40b348581d7e448a0afcf7a1c5da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f4b40b348581d7e448a0afcf7a1c5da">&#9670;&nbsp;</a></span>PEM_CSR_BEGIN_EOL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PEM_CSR_BEGIN_EOL&#160;&#160;&#160;<a class="el" href="a00131.html#a006df03d5e86c2d586f02362ca66566e">PEM_CSR_BEGIN</a> &quot;\n&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad7521d8913a097b0a910d00fdb664210"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7521d8913a097b0a910d00fdb664210">&#9670;&nbsp;</a></span>PEM_CSR_END</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PEM_CSR_END&#160;&#160;&#160;&quot;-----END CERTIFICATE REQUEST-----&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7effe162d8a358aaf2c54cbef038d41b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7effe162d8a358aaf2c54cbef038d41b">&#9670;&nbsp;</a></span>PEM_CSR_END_EOL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PEM_CSR_END_EOL&#160;&#160;&#160;&quot;\n&quot;PEM_CSR_END &quot;\n&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00131.html">atca_basic_random.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00131.html">atcacert_client.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

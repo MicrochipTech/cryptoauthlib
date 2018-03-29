@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_basic_nonce.c File Reference</title>
+<title>CryptoAuthLib: atcacert.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
    </div>
-   <div id="projectbrief">Atmel CryptoAuthentication Library</div>
+   <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
  </tr>
  </tbody>
@@ -87,49 +87,74 @@ $(document).ready(function(){initNavTree('a00125.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">atca_basic_nonce.c File Reference</div>  </div>
+<div class="title">atcacert.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for Nonce command.  
+<p>Declarations common to all atcacert code.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00086_source.html">atca_basic.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00401_source.html">host/atca_host.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gaf8e10791759a8a5e5dcd82774f4895d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#gaf8e10791759a8a5e5dcd82774f4895d6">atcab_nonce_base</a> (uint8_t mode, uint16_t zero, const uint8_t *num_in, uint8_t *rand_out)</td></tr>
-<tr class="memdesc:gaf8e10791759a8a5e5dcd82774f4895d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Nonce command, which loads a random or fixed nonce/data into the device for use by subsequent commands.  <a href="a00427.html#gaf8e10791759a8a5e5dcd82774f4895d6">More...</a><br /></td></tr>
-<tr class="separator:gaf8e10791759a8a5e5dcd82774f4895d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2293df1c1c794496790bae25d3844fa5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#ga2293df1c1c794496790bae25d3844fa5">atcab_nonce</a> (const uint8_t *num_in)</td></tr>
-<tr class="memdesc:ga2293df1c1c794496790bae25d3844fa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command in pass-through mode to initialize TempKey to a specified value.  <a href="a00427.html#ga2293df1c1c794496790bae25d3844fa5">More...</a><br /></td></tr>
-<tr class="separator:ga2293df1c1c794496790bae25d3844fa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2239ae3a87c341a48aa108bd82a58552"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#ga2239ae3a87c341a48aa108bd82a58552">atcab_nonce_load</a> (uint8_t target, const uint8_t *num_in, uint16_t num_in_size)</td></tr>
-<tr class="memdesc:ga2239ae3a87c341a48aa108bd82a58552"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command in pass-through mode to load one of the device's internal buffers with a fixed value.  <a href="a00427.html#ga2239ae3a87c341a48aa108bd82a58552">More...</a><br /></td></tr>
-<tr class="separator:ga2239ae3a87c341a48aa108bd82a58552"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaed67d447d547c67b7b8be6b958d1fb5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#gaed67d447d547c67b7b8be6b958d1fb5c">atcab_nonce_rand</a> (const uint8_t *num_in, uint8_t *rand_out)</td></tr>
-<tr class="memdesc:gaed67d447d547c67b7b8be6b958d1fb5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command to generate a random nonce combining a host nonce (num_in) and a device random number.  <a href="a00427.html#gaed67d447d547c67b7b8be6b958d1fb5c">More...</a><br /></td></tr>
-<tr class="separator:gaed67d447d547c67b7b8be6b958d1fb5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga114a721517c95d5ba5fcac5b226669d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#ga114a721517c95d5ba5fcac5b226669d6">atcab_challenge</a> (const uint8_t *num_in)</td></tr>
-<tr class="memdesc:ga114a721517c95d5ba5fcac5b226669d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command in pass-through mode to initialize TempKey to a specified value.  <a href="a00427.html#ga114a721517c95d5ba5fcac5b226669d6">More...</a><br /></td></tr>
-<tr class="separator:ga114a721517c95d5ba5fcac5b226669d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaadde4309089c569fd87c24a1a2326cd4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#gaadde4309089c569fd87c24a1a2326cd4">atcab_challenge_seed_update</a> (const uint8_t *num_in, uint8_t *rand_out)</td></tr>
-<tr class="memdesc:gaadde4309089c569fd87c24a1a2326cd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command to generate a random challenge combining a host nonce (num_in) and a device random number.  <a href="a00427.html#gaadde4309089c569fd87c24a1a2326cd4">More...</a><br /></td></tr>
-<tr class="separator:gaadde4309089c569fd87c24a1a2326cd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+</div>
+<p><a href="a00125_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaa93f0eb578d23995850d61f7d61c55c1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#gaa93f0eb578d23995850d61f7d61c55c1">FALSE</a>&#160;&#160;&#160;(0)</td></tr>
+<tr class="separator:gaa93f0eb578d23995850d61f7d61c55c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa8cecfc5c5c054d2875c03e77b7be15d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#gaa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a>&#160;&#160;&#160;(1)</td></tr>
+<tr class="separator:gaa8cecfc5c5c054d2875c03e77b7be15d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7bd1ad830360fc8b988f855da6d0d5ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga7bd1ad830360fc8b988f855da6d0d5ba">ATCACERT_E_SUCCESS</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:ga7bd1ad830360fc8b988f855da6d0d5ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operation completed successfully.  <a href="a00756.html#ga7bd1ad830360fc8b988f855da6d0d5ba">More...</a><br /></td></tr>
+<tr class="separator:ga7bd1ad830360fc8b988f855da6d0d5ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga048a6bb9781dbbc402409a172f976f74"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga048a6bb9781dbbc402409a172f976f74">ATCACERT_E_ERROR</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:ga048a6bb9781dbbc402409a172f976f74"><td class="mdescLeft">&#160;</td><td class="mdescRight">General error.  <a href="a00756.html#ga048a6bb9781dbbc402409a172f976f74">More...</a><br /></td></tr>
+<tr class="separator:ga048a6bb9781dbbc402409a172f976f74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47509d283523ab1892fb8746d6f4e37d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga47509d283523ab1892fb8746d6f4e37d">ATCACERT_E_BAD_PARAMS</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memdesc:ga47509d283523ab1892fb8746d6f4e37d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalid/bad parameter passed to function.  <a href="a00756.html#ga47509d283523ab1892fb8746d6f4e37d">More...</a><br /></td></tr>
+<tr class="separator:ga47509d283523ab1892fb8746d6f4e37d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a2e774fc8b12c4045dea335a86afca6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga7a2e774fc8b12c4045dea335a86afca6">ATCACERT_E_BUFFER_TOO_SMALL</a>&#160;&#160;&#160;3</td></tr>
+<tr class="memdesc:ga7a2e774fc8b12c4045dea335a86afca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Supplied buffer for output is too small to hold the result.  <a href="a00756.html#ga7a2e774fc8b12c4045dea335a86afca6">More...</a><br /></td></tr>
+<tr class="separator:ga7a2e774fc8b12c4045dea335a86afca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaea155533fdd352d6602d3e2fc717930f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#gaea155533fdd352d6602d3e2fc717930f">ATCACERT_E_DECODING_ERROR</a>&#160;&#160;&#160;4</td></tr>
+<tr class="memdesc:gaea155533fdd352d6602d3e2fc717930f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data being decoded/parsed has an invalid format.  <a href="a00756.html#gaea155533fdd352d6602d3e2fc717930f">More...</a><br /></td></tr>
+<tr class="separator:gaea155533fdd352d6602d3e2fc717930f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaafd66d6744314225ead24b3901bd6372"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#gaafd66d6744314225ead24b3901bd6372">ATCACERT_E_INVALID_DATE</a>&#160;&#160;&#160;5</td></tr>
+<tr class="memdesc:gaafd66d6744314225ead24b3901bd6372"><td class="mdescLeft">&#160;</td><td class="mdescRight">Date is invalid.  <a href="a00756.html#gaafd66d6744314225ead24b3901bd6372">More...</a><br /></td></tr>
+<tr class="separator:gaafd66d6744314225ead24b3901bd6372"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b6db1523875a2b1453ef5e16989ecd4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga4b6db1523875a2b1453ef5e16989ecd4">ATCACERT_E_UNIMPLEMENTED</a>&#160;&#160;&#160;6</td></tr>
+<tr class="memdesc:ga4b6db1523875a2b1453ef5e16989ecd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function is unimplemented for the current configuration.  <a href="a00756.html#ga4b6db1523875a2b1453ef5e16989ecd4">More...</a><br /></td></tr>
+<tr class="separator:ga4b6db1523875a2b1453ef5e16989ecd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a7cb98e18ad338f2eaf6594acb67c32"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga5a7cb98e18ad338f2eaf6594acb67c32">ATCACERT_E_UNEXPECTED_ELEM_SIZE</a>&#160;&#160;&#160;7</td></tr>
+<tr class="memdesc:ga5a7cb98e18ad338f2eaf6594acb67c32"><td class="mdescLeft">&#160;</td><td class="mdescRight">A certificate element size was not what was expected.  <a href="a00756.html#ga5a7cb98e18ad338f2eaf6594acb67c32">More...</a><br /></td></tr>
+<tr class="separator:ga5a7cb98e18ad338f2eaf6594acb67c32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8e3e7c64650c92364bbac17f6a75474a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga8e3e7c64650c92364bbac17f6a75474a">ATCACERT_E_ELEM_MISSING</a>&#160;&#160;&#160;8</td></tr>
+<tr class="memdesc:ga8e3e7c64650c92364bbac17f6a75474a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The certificate element isn't defined for the certificate definition.  <a href="a00756.html#ga8e3e7c64650c92364bbac17f6a75474a">More...</a><br /></td></tr>
+<tr class="separator:ga8e3e7c64650c92364bbac17f6a75474a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga62604c78d688530173e203b02df180fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga62604c78d688530173e203b02df180fa">ATCACERT_E_ELEM_OUT_OF_BOUNDS</a>&#160;&#160;&#160;9</td></tr>
+<tr class="memdesc:ga62604c78d688530173e203b02df180fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Certificate element is out of bounds for the given certificate.  <a href="a00756.html#ga62604c78d688530173e203b02df180fa">More...</a><br /></td></tr>
+<tr class="separator:ga62604c78d688530173e203b02df180fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga822ee0620c8d2d12ff971b9b35f9f5cd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga822ee0620c8d2d12ff971b9b35f9f5cd">ATCACERT_E_BAD_CERT</a>&#160;&#160;&#160;10</td></tr>
+<tr class="memdesc:ga822ee0620c8d2d12ff971b9b35f9f5cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Certificate structure is bad in some way.  <a href="a00756.html#ga822ee0620c8d2d12ff971b9b35f9f5cd">More...</a><br /></td></tr>
+<tr class="separator:ga822ee0620c8d2d12ff971b9b35f9f5cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga01010ef58d52a05292f6a70ff3d53ce8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga01010ef58d52a05292f6a70ff3d53ce8">ATCACERT_E_WRONG_CERT_DEF</a>&#160;&#160;&#160;11</td></tr>
+<tr class="separator:ga01010ef58d52a05292f6a70ff3d53ce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae1da5e02cd9b4ee7b8617d7bce0a5b5d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#gae1da5e02cd9b4ee7b8617d7bce0a5b5d">ATCACERT_E_VERIFY_FAILED</a>&#160;&#160;&#160;12</td></tr>
+<tr class="memdesc:gae1da5e02cd9b4ee7b8617d7bce0a5b5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Certificate or challenge/response verification failed.  <a href="a00756.html#gae1da5e02cd9b4ee7b8617d7bce0a5b5d">More...</a><br /></td></tr>
+<tr class="separator:gae1da5e02cd9b4ee7b8617d7bce0a5b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for Nonce command. </p>
-<p>The Nonce command generates a nonce for use by a subsequent commands of the device by combining an internally generated random number with an input value from the system.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, and ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>Declarations common to all atcacert code. </p>
+<p>These are common definitions used by all the atcacert code.</p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this software and any derivatives exclusively with Microchip products. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00125.html">atca_basic_nonce.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00125.html">atcacert.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

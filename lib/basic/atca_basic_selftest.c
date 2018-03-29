@@ -36,7 +36,7 @@
  */
 
 #include "atca_basic.h"
-#include "host/atca_host.h"
+#include "atca_execution.h"
 
 /** \brief Executes the SelfTest command, which performs a test of one or more
  *          of the cryptographic engines within the ATECC608A chip.
@@ -69,7 +69,7 @@ ATCA_STATUS atcab_selftest(uint8_t mode, uint16_t param2, uint8_t* result)
             break;
         }
 
-        status = atcab_execute_command(&packet);
+        status = atca_execute_command(&packet, _gDevice);
 
         // This command is a little awkward, because it returns its status as
         // a single byte, which can be hard to differentiate from an actual

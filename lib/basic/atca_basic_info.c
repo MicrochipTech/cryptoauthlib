@@ -40,7 +40,7 @@
  * TERMS.
  */
 #include "atca_basic.h"
-#include "host/atca_host.h"
+#include "atca_execution.h"
 
 /** \brief Issues an Info command, which return internal device information and
  *          can control GPIO and the persistent latch.
@@ -69,7 +69,7 @@ ATCA_STATUS atcab_info_base(uint8_t mode, uint16_t param2, uint8_t* out_data)
             break;
         }
 
-        if ((status = atcab_execute_command(&packet)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(&packet, _gDevice)) != ATCA_SUCCESS)
         {
             break;
         }

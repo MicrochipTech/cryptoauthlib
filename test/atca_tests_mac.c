@@ -33,6 +33,7 @@
 #include "basic/atca_basic.h"
 #include "host/atca_host.h"
 #include "test/atca_tests.h"
+#include "atca_execution.h"
 
 TEST(atca_cmd_basic_test, mac_key_challenge)
 {
@@ -330,9 +331,6 @@ TEST(atca_cmd_basic_test, checkmac)
         checkmac_params.client_resp,
         checkmac_params.other_data);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-    status = atcab_release();
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
 
 TEST(atca_cmd_unit_test, mac)
@@ -340,6 +338,7 @@ TEST(atca_cmd_unit_test, mac)
     ATCA_STATUS status;
     ATCAPacket packet;
     uint16_t keyID = 0x01;
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     unit_test_assert_config_is_locked();
 
@@ -349,9 +348,9 @@ TEST(atca_cmd_unit_test, mac)
     memset(packet.data, 0x55, 32);    // a 32-byte challenge
 
     //memcpy(packet.data, challenge, sizeof(challenge));
-    status = atMAC(gCommandObj, &packet);
+    status = atMAC(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     atca_delay_ms(1);
@@ -363,11 +362,12 @@ TEST(atca_cmd_unit_test, checkmac)
     uint16_t keyID = 0x0004;
     static uint8_t response_mac[MAC_RSP_SIZE];              // Make the response buffer the size of a MAC response.
     static uint8_t other_data[CHECKMAC_OTHER_DATA_SIZE];    // First four bytes of Mac command are needed for CheckMac command.
+    ATCACommand ca_cmd = _gDevice->mCommands;
 
     unit_test_assert_config_is_locked();
     unit_test_assert_data_is_locked();
 
-    if (gIfaceCfg->devtype == ATSHA204A)
+    if (_gDevice->mIface->mIfaceCFG->devtype == ATSHA204A)
     {
         keyID = 0x0001;
     }
@@ -381,10 +381,10 @@ TEST(atca_cmd_unit_test, checkmac)
     packet.param2 = keyID;
     memset(packet.data, 0x55, 32);    // a 32-byte challenge
 
-    status = atMAC(gCommandObj, &packet);
+    status = atMAC(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(ATCA_RSP_SIZE_32, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     memcpy(response_mac, packet.data, sizeof(response_mac));
 
@@ -398,10 +398,10 @@ TEST(atca_cmd_unit_test, checkmac)
     other_data[2] = (uint8_t)keyID;
     memcpy(&packet.data[64], other_data, sizeof(other_data));
 
-    status = atCheckMAC(gCommandObj, &packet);
+    status = atCheckMAC(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(CHECKMAC_RSP_SIZE, packet.rxsize);
-    status = send_command(gCommandObj, gIface, &packet);
+    status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(0x00, packet.data[ATCA_RSP_DATA_IDX]);
 }

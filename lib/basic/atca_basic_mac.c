@@ -38,7 +38,7 @@
  */
 
 #include "atca_basic.h"
-#include "host/atca_host.h"
+#include "atca_execution.h"
 
 /** \brief Executes MAC command, which computes a SHA-256 digest of a key
  *          stored in the device, a challenge, and other information on the
@@ -83,7 +83,7 @@ ATCA_STATUS atcab_mac(uint8_t mode, uint16_t key_id, const uint8_t* challenge, u
             break;
         }
 
-        if ((status = atcab_execute_command(&packet)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(&packet, _gDevice)) != ATCA_SUCCESS)
         {
             break;
         }

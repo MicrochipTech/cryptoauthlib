@@ -32,6 +32,10 @@
 #ifndef ATCA_JWT_H_
 #define ATCA_JWT_H_
 
+/** \defgroup jwt JSON Web Token (JWT) methods (atca_jwt_)
+ * \brief Methods for signing and verifying JSON Web Token (JWT) tokens.
+   @{ */
+
 #include "cryptoauthlib.h"
 
 /** \brief Structure to hold metadata information about the jwt being built */
@@ -46,7 +50,9 @@ ATCA_STATUS atca_jwt_init(atca_jwt_t* jwt, char* buf, uint16_t buflen);
 ATCA_STATUS atca_jwt_add_claim_string(atca_jwt_t* jwt, const char* claim, const char* value);
 ATCA_STATUS atca_jwt_add_claim_numeric(atca_jwt_t* jwt, const char* claim, int32_t value);
 ATCA_STATUS atca_jwt_finalize(atca_jwt_t* jwt, uint16_t key_id);
-
+void atca_jwt_check_payload_start(atca_jwt_t* jwt);
 ATCA_STATUS atca_jwt_verify(const char* buf, uint16_t buflen, const uint8_t* pubkey);
+
+/** @} */
 
 #endif /* ATCA_JWT_H_ */

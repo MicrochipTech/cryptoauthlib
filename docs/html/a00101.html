@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_basic_ecdh.c File Reference</title>
+<title>CryptoAuthLib: atca_device.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
    </div>
-   <div id="projectbrief">Atmel CryptoAuthentication Library</div>
+   <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
  </tr>
  </tbody>
@@ -89,47 +89,39 @@ $(document).ready(function(){initNavTree('a00101.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_basic_ecdh.c File Reference</div>  </div>
+<div class="title">atca_device.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for ECDH command.  
+<p>Microchip CryptoAuth device object.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00086_source.html">atca_basic.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00401_source.html">host/atca_host.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00104_source.html">atca_device.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga211c9405bb5049dd4a5da92d25c83f3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#ga211c9405bb5049dd4a5da92d25c83f3c">atcab_ecdh_base</a> (uint8_t mode, uint16_t key_id, const uint8_t *public_key, uint8_t *pms, uint8_t *out_nonce)</td></tr>
-<tr class="memdesc:ga211c9405bb5049dd4a5da92d25c83f3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base function for generating premaster secret key using ECDH.  <a href="a00427.html#ga211c9405bb5049dd4a5da92d25c83f3c">More...</a><br /></td></tr>
-<tr class="separator:ga211c9405bb5049dd4a5da92d25c83f3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6fc480ad2824df6309f4f370ffad15f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#ga6fc480ad2824df6309f4f370ffad15f9">atcab_ecdh</a> (uint16_t key_id, const uint8_t *public_key, uint8_t *pms)</td></tr>
-<tr class="memdesc:ga6fc480ad2824df6309f4f370ffad15f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in a slot and the premaster secret is returned in the clear.  <a href="a00427.html#ga6fc480ad2824df6309f4f370ffad15f9">More...</a><br /></td></tr>
-<tr class="separator:ga6fc480ad2824df6309f4f370ffad15f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab6e0c175cbcb5f794b12a8ec22485176"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#gab6e0c175cbcb5f794b12a8ec22485176">atcab_ecdh_enc</a> (uint16_t key_id, const uint8_t *public_key, uint8_t *pms, const uint8_t *read_key, uint16_t read_key_id)</td></tr>
-<tr class="memdesc:gab6e0c175cbcb5f794b12a8ec22485176"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in a slot and the premaster secret is read from the next slot.  <a href="a00427.html#gab6e0c175cbcb5f794b12a8ec22485176">More...</a><br /></td></tr>
-<tr class="separator:gab6e0c175cbcb5f794b12a8ec22485176"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga975f7303086190d3b6f76c367583d622"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#ga975f7303086190d3b6f76c367583d622">atcab_ecdh_ioenc</a> (uint16_t key_id, const uint8_t *public_key, uint8_t *pms, const uint8_t *io_key)</td></tr>
-<tr class="memdesc:ga975f7303086190d3b6f76c367583d622"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in a slot and the premaster secret is returned encrypted using the IO protection key.  <a href="a00427.html#ga975f7303086190d3b6f76c367583d622">More...</a><br /></td></tr>
-<tr class="separator:ga975f7303086190d3b6f76c367583d622"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac244b83b061ffd8ae3d59b5f973baa53"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#gac244b83b061ffd8ae3d59b5f973baa53">atcab_ecdh_tempkey</a> (const uint8_t *public_key, uint8_t *pms)</td></tr>
-<tr class="memdesc:gac244b83b061ffd8ae3d59b5f973baa53"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in TempKey and the premaster secret is returned in the clear.  <a href="a00427.html#gac244b83b061ffd8ae3d59b5f973baa53">More...</a><br /></td></tr>
-<tr class="separator:gac244b83b061ffd8ae3d59b5f973baa53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafaccb0c9d12154b0c5b917f89f233721"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html#gafaccb0c9d12154b0c5b917f89f233721">atcab_ecdh_tempkey_ioenc</a> (const uint8_t *public_key, uint8_t *pms, const uint8_t *io_key)</td></tr>
-<tr class="memdesc:gafaccb0c9d12154b0c5b917f89f233721"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in TempKey and the premaster secret is returned encrypted using the IO protection key.  <a href="a00427.html#gafaccb0c9d12154b0c5b917f89f233721">More...</a><br /></td></tr>
-<tr class="separator:gafaccb0c9d12154b0c5b917f89f233721"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad5e12e12d3030e28d75164286df9e5e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00754.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00754.html#gad5e12e12d3030e28d75164286df9e5e9">newATCADevice</a> (<a class="el" href="a00777.html">ATCAIfaceCfg</a> *cfg)</td></tr>
+<tr class="memdesc:gad5e12e12d3030e28d75164286df9e5e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor for an Microchip CryptoAuth device  <a href="a00754.html#gad5e12e12d3030e28d75164286df9e5e9">More...</a><br /></td></tr>
+<tr class="separator:gad5e12e12d3030e28d75164286df9e5e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabf51c08f1928fc5ec44936f3117a9f7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00753.html#gaf84ea18096bee21811d7eead14a92ac1">ATCACommand</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00754.html#gabf51c08f1928fc5ec44936f3117a9f7e">atGetCommands</a> (<a class="el" href="a00754.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> <a class="el" href="a00759.html#gabe78755474c1323a5ac7b3dd6d03dedf">dev</a>)</td></tr>
+<tr class="memdesc:gabf51c08f1928fc5ec44936f3117a9f7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns a reference to the ATCACommand object for the device  <a href="a00754.html#gabf51c08f1928fc5ec44936f3117a9f7e">More...</a><br /></td></tr>
+<tr class="separator:gabf51c08f1928fc5ec44936f3117a9f7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f98e29cffa06446fc91b329703606af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00754.html#ga3f98e29cffa06446fc91b329703606af">atGetIFace</a> (<a class="el" href="a00754.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> <a class="el" href="a00759.html#gabe78755474c1323a5ac7b3dd6d03dedf">dev</a>)</td></tr>
+<tr class="memdesc:ga3f98e29cffa06446fc91b329703606af"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns a reference to the ATCAIface interface object for the device  <a href="a00754.html#ga3f98e29cffa06446fc91b329703606af">More...</a><br /></td></tr>
+<tr class="separator:ga3f98e29cffa06446fc91b329703606af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac087cf04cd5bd6ff2e026d89bfbf5e12"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00754.html#gac087cf04cd5bd6ff2e026d89bfbf5e12">deleteATCADevice</a> (<a class="el" href="a00754.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> *ca_dev)</td></tr>
+<tr class="memdesc:gac087cf04cd5bd6ff2e026d89bfbf5e12"><td class="mdescLeft">&#160;</td><td class="mdescRight">destructor for a device NULLs reference after object is freed  <a href="a00754.html#gac087cf04cd5bd6ff2e026d89bfbf5e12">More...</a><br /></td></tr>
+<tr class="separator:gac087cf04cd5bd6ff2e026d89bfbf5e12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for ECDH command. </p>
-<p>The ECDH command implements the Elliptic Curve Diffie-Hellman algorithm to combine an internal private key with an external public key to calculate a shared secret.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC508A, ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>Microchip CryptoAuth device object. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this software and any derivatives exclusively with Microchip products. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00101.html">atca_basic_ecdh.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00101.html">atca_device.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
