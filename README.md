@@ -1,3 +1,5 @@
+This is a fork of [Atmel's cryptoauthlib](https://github.com/MicrochipTech/cryptoauthlib) that packages it for [PlatformIO](https://platformio.org/).
+
 CryptoAuthLib - Microchip CryptoAuthentication Library
 ====================================================
 

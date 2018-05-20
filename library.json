@@ -1,0 +1,14 @@
+{
+  "name": "cryptoauthlib",
+  "version": "20180329",
+  "keywords": "crypto,atecc508a",
+  "description": "MicrochipTech's cryptoauthlib packaged for PlatformIO",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evansgp/cryptoauthlib.git"
+  },
+  "build": {
+    "srcFilter": ["-<app/>", "-<docs/>", "-<test/>"],
+    "flags": ["-I lib"]
+  }
+}
