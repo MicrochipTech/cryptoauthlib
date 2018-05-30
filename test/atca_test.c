@@ -45,7 +45,7 @@ ATCAIfaceCfg g_iface_config = {
     .rx_retries        = 20
 };
 
-ATCAIfaceCfg *gCfg = &g_iface_config;
+ATCAIfaceCfg UNITY_WEAK_ATTRIBUTE *gCfg = &g_iface_config;
 
 const uint8_t g_slot4_key[] = {
     0x37, 0x80, 0xe6, 0x3d, 0x49, 0x68, 0xad, 0xe5,
