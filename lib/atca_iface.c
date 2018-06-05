@@ -52,6 +52,11 @@ ATCAIface newATCAIface(ATCAIfaceCfg *cfg)  // constructor
     ATCAIface ca_iface;
 
     ca_iface = (ATCAIface)malloc(sizeof(struct atca_iface));
+    if(ca_iface == NULL)
+    {
+        return NULL;  
+    }
+   
     ca_iface->mType = cfg->iface_type;
     ca_iface->mIfaceCFG = cfg;
 
