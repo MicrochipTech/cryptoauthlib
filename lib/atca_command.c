@@ -756,6 +756,11 @@ ATCACommand newATCACommand(ATCADeviceType device_type)    // constructor
     ATCACommand ca_cmd;
 
     ca_cmd = (ATCACommand)malloc(sizeof(atca_command));
+    if(ca_cmd == NULL)
+    {
+        return NULL;   
+    }
+    
     ca_cmd->dt = device_type;
     ca_cmd->clock_divider = 0;
     if (status != ATCA_SUCCESS)
