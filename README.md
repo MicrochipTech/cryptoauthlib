@@ -64,6 +64,7 @@ Release notes
   - Added wake retry to accomodate power on self test delay.
   - Added ca_cert_def member to atcacert_def_s so cert chains can be traversed
     as a linked list.
+
 03/29/2018
   - Added support for response polling by default, which will make commands
     return faster (define ATCA_NO_POLL to use old delay method).
