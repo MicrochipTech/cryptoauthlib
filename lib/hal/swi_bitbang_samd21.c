@@ -2,57 +2,48 @@
  * \file
  * \brief  Hardware Interface Functions - SWI bit-banged
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 
 #include <asf.h>
 #include <stdint.h>
 #include "swi_bitbang_samd21.h"
-
+#include "atca_command.h"
 
 
 
 
 SWIBuses swi_buses_default = {
     { EXT3_PIN_3, EXT3_PIN_9, EXT3_PIN_I2C_SDA, EXT3_PIN_13, EXT2_PIN_13, EXT2_PIN_5, EXT2_PIN_7, EXT2_PIN_9, EXT2_PIN_3, EXT2_PIN_15, EXT2_PIN_17, EXT1_PIN_3, EXT1_PIN_5, EXT1_PIN_7, EXT1_PIN_9, EXT1_PIN_13, EXT1_PIN_15, EXT1_PIN_17, EXT3_PIN_7, EXT3_PIN_10, EXT3_PIN_I2C_SCL, EXT3_PIN_14, EXT2_PIN_4, EXT2_PIN_6, EXT2_PIN_8, EXT2_PIN_10, EXT2_PIN_14, EXT2_PIN_16, EXT2_PIN_18, EXT1_PIN_4, EXT1_PIN_6, EXT1_PIN_8, EXT1_PIN_10, EXT1_PIN_14, EXT1_PIN_16, EXT1_PIN_18 }
-
 };
-
 
 //! declaration of the variable indicating which pin the selected device is connected to
 static uint8_t device_pin;
-
 
 void swi_set_pin(uint8_t id)
 {
     device_pin = id;
 }
-
-
 
 void swi_enable(void)
 {
@@ -100,11 +91,7 @@ void swi_send_bytes(uint8_t count, uint8_t *buffer)
     pin_conf.direction  = PORT_PIN_DIR_OUTPUT;
     port_pin_set_config(device_pin, &pin_conf);
 
-    //! Wait turn around time.
-    RX_TX_DELAY;
     cpu_irq_disable();
-
-
     for (i = 0; i < count; i++)
     {
         for (bit_mask = 1; bit_mask > 0; bit_mask <<= 1)
@@ -130,25 +117,17 @@ void swi_send_bytes(uint8_t count, uint8_t *buffer)
         }
     }
     cpu_irq_enable();
-
-
-
 }
 
 
 void swi_send_byte(uint8_t byte)
 {
     swi_send_bytes(1, &byte);
-
 }
-
-
-
 
 ATCA_STATUS swi_receive_bytes(uint8_t count, uint8_t *buffer)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
-
     uint8_t i;
     uint8_t bit_mask;
     uint8_t pulse_count;
@@ -158,7 +137,6 @@ ATCA_STATUS swi_receive_bytes(uint8_t count, uint8_t *buffer)
 
     port_get_config_defaults(&pin_conf);
     port_pin_set_config(device_pin, &pin_conf);
-
 
     cpu_irq_disable();
     //! Receive bits and store in buffer.
@@ -249,13 +227,31 @@ ATCA_STATUS swi_receive_bytes(uint8_t count, uint8_t *buffer)
             }
         }
 
-
         if (status != ATCA_SUCCESS)
         {
             break;
         }
-    }
 
+        if (i == 0)
+        {
+            if (buffer[0] < ATCA_RSP_SIZE_MIN)
+            {
+                status = ATCA_INVALID_SIZE;
+                break;
+            }
+            else if (buffer[0] > count)
+            {
+                status = ATCA_SMALL_BUFFER;
+                break;
+            }
+            else
+            {
+                count = buffer[0];
+            }
+        }
+    }
+    cpu_irq_enable();
+    RX_TX_DELAY;        //forcing tTURNAROUND (To CryptoAuthentication)
     if (status == ATCA_RX_TIMEOUT)
     {
         if (i > 0)
@@ -264,9 +260,6 @@ ATCA_STATUS swi_receive_bytes(uint8_t count, uint8_t *buffer)
             status = ATCA_RX_FAIL;
         }
     }
-
-    cpu_irq_enable();
-
 
     return status;
 }

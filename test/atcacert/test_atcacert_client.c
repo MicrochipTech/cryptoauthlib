@@ -2,35 +2,32 @@
  * \file
  * \brief cert client tests
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 
 
 #include "atcacert/atcacert_client.h"
+#include "atcacert/atcacert_pem.h"
 #include "test/unity.h"
 #include "test/unity_fixture.h"
 #include <string.h>
@@ -39,6 +36,7 @@
 #include "crypto/atca_crypto_sw_sha2.h"
 #include "test_cert_def_0_device.h"
 #include "test_cert_def_1_signer.h"
+#include "test_cert_def_2_device_csr.h"
 
 extern ATCAIfaceCfg *gCfg;
 
@@ -422,4 +420,93 @@ TEST(atcacert_client, atcacert_get_response_bad_params)
 
     ret = atcacert_get_response(16, NULL, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+}
+
+TEST(atcacert_client, atcacert_generate_device_csr)
+{
+    uint8_t csr_der_buffer[512];
+    uint8_t signature[64];
+    uint8_t pub_key[64];
+    size_t csr_der_buffer_length = 0;
+    bool is_verified = false;
+    uint8_t csr_digest[ATCA_BLOCK_SIZE];
+    char disp_str[1024];
+    int disp_size = sizeof(disp_str);
+    const atcacert_cert_loc_t* pub_loc = NULL;
+    int ret = 0;
+
+    memset(csr_der_buffer, 0, sizeof(csr_der_buffer));
+
+    // Generate the device CSR
+    csr_der_buffer_length = sizeof(csr_der_buffer);
+    ret = atcacert_create_csr(&g_csr_def_2_device, csr_der_buffer, &csr_der_buffer_length);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    ret = atcab_bin2hex(csr_der_buffer, csr_der_buffer_length, disp_str, &disp_size);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    printf("Device CSR:\r\n%s\r\n", disp_str);
+
+    // Get the public key from CSR
+    pub_loc =  &(g_csr_def_2_device.std_cert_elements[STDCERT_PUBLIC_KEY]);
+    ret = atcacert_get_cert_element(&g_csr_def_2_device, pub_loc, csr_der_buffer, csr_der_buffer_length, pub_key, ATCA_PUB_KEY_SIZE);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    // Get the digest of the CSR
+    ret = atcacert_get_tbs_digest(&g_csr_def_2_device, csr_der_buffer, csr_der_buffer_length, csr_digest);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    //Get the signature from the CSR
+    ret = atcacert_get_signature(&g_csr_def_2_device, csr_der_buffer, csr_der_buffer_length, signature);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    ret = atcab_verify_extern(csr_digest, signature, pub_key, &is_verified);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT(is_verified);
+
+}
+
+TEST(atcacert_client, atcacert_generate_device_csr_pem)
+{
+    uint8_t csr_der_buffer[512];
+    char csr_pem_buffer[512];
+    uint8_t signature[64];
+    uint8_t pub_key[64];
+    size_t csr_der_buffer_length = 0;
+    size_t csr_pem_buffer_length = 0;
+    bool is_verified = false;
+    uint8_t csr_digest[ATCA_BLOCK_SIZE] = { 0 };
+    const atcacert_cert_loc_t* pub_loc = NULL;
+    int ret = 0;
+
+    memset(csr_pem_buffer, 0, sizeof(csr_pem_buffer));
+    memset(csr_der_buffer, 0, sizeof(csr_der_buffer));
+
+    //Generate the CSR certificate in PEM
+    csr_pem_buffer_length = sizeof(csr_pem_buffer);
+    ret = atcacert_create_csr_pem(&g_csr_def_2_device, (char*)&csr_pem_buffer, &csr_pem_buffer_length);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    printf("Device CSR :\r\n%s", csr_pem_buffer);
+
+    // Convert the CSR certificate to DER
+    csr_der_buffer_length = sizeof(csr_der_buffer);
+    ret = atcacert_decode_pem_csr(csr_pem_buffer, csr_pem_buffer_length, csr_der_buffer, &csr_der_buffer_length);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    // Get the public key from CSR
+    pub_loc =  &(g_csr_def_2_device.std_cert_elements[STDCERT_PUBLIC_KEY]);
+    ret = atcacert_get_cert_element(&g_csr_def_2_device, pub_loc, csr_der_buffer, csr_der_buffer_length, pub_key, ATCA_PUB_KEY_SIZE);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    // Get the digest of the CSR
+    ret = atcacert_get_tbs_digest(&g_csr_def_2_device, csr_der_buffer, csr_der_buffer_length, csr_digest);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    //Get the signature from the CSR
+    ret = atcacert_get_signature(&g_csr_def_2_device, csr_der_buffer, csr_der_buffer_length, signature);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    ret = atcab_verify_extern(csr_digest, signature, pub_key, &is_verified);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT(is_verified);
 }

@@ -2,31 +2,27 @@
  * \file
  * \brief Unity tests for the cryptoauthlib Verify Command
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 #include <stdlib.h>
 #include "atca_test.h"
@@ -64,8 +60,7 @@ TEST(atca_cmd_unit_test, ecdh)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT(packet.rxsize >= packet.data[ATCA_COUNT_IDX]);
-    TEST_ASSERT_EQUAL(32 + 3, packet.data[ATCA_COUNT_IDX]);
+    TEST_ASSERT_EQUAL(ATCA_KEY_SIZE + 3, packet.data[ATCA_COUNT_IDX]);
 
     memcpy(&sn[0], &packet.data[ATCA_RSP_DATA_IDX], 4);
     memcpy(&sn[4], &packet.data[ATCA_RSP_DATA_IDX + 8], 5);
@@ -77,7 +72,6 @@ TEST(atca_cmd_unit_test, ecdh)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT(packet.rxsize >= packet.data[ATCA_COUNT_IDX]);
     TEST_ASSERT_EQUAL(ATCA_PUB_KEY_SIZE + 3, packet.data[ATCA_COUNT_IDX]);
     memcpy(public_key_bob, &packet.data[ATCA_RSP_DATA_IDX], ATCA_PUB_KEY_SIZE);
 
@@ -88,7 +82,6 @@ TEST(atca_cmd_unit_test, ecdh)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT(packet.rxsize >= packet.data[ATCA_COUNT_IDX]);
     TEST_ASSERT_EQUAL(ATCA_PUB_KEY_SIZE + 3, packet.data[ATCA_COUNT_IDX]);
     memcpy(public_key_alice, &packet.data[ATCA_RSP_DATA_IDX], ATCA_PUB_KEY_SIZE);
 
@@ -100,7 +93,6 @@ TEST(atca_cmd_unit_test, ecdh)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT(packet.rxsize >= packet.data[ATCA_COUNT_IDX]);
     TEST_ASSERT_EQUAL(4, packet.data[ATCA_COUNT_IDX]);
 
     // Bob's PMS is written to the next slot, read that value
@@ -129,7 +121,6 @@ TEST(atca_cmd_unit_test, ecdh)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT(packet.rxsize >= packet.data[ATCA_COUNT_IDX]);
     TEST_ASSERT_EQUAL(RANDOM_NUM_SIZE + 3, packet.data[ATCA_COUNT_IDX]);
     memcpy(rand_out, &packet.data[ATCA_RSP_DATA_IDX], RANDOM_NUM_SIZE);
 
@@ -152,7 +143,6 @@ TEST(atca_cmd_unit_test, ecdh)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT(packet.rxsize >= packet.data[ATCA_COUNT_IDX]);
 
     // Perform host-side nonce calculation
     status = atcah_gen_dig(&gen_dig_params);
@@ -165,7 +155,6 @@ TEST(atca_cmd_unit_test, ecdh)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT(packet.rxsize >= packet.data[ATCA_COUNT_IDX]);
     TEST_ASSERT_EQUAL(ATCA_KEY_SIZE + 3, packet.data[ATCA_COUNT_IDX]);
 
     // Decrypt bob's PMS
@@ -182,7 +171,6 @@ TEST(atca_cmd_unit_test, ecdh)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT(packet.rxsize >= packet.data[ATCA_COUNT_IDX]);
     TEST_ASSERT_EQUAL(ATCA_KEY_SIZE + 3, packet.data[ATCA_COUNT_IDX]);
 
     // Alice's PMS is returned in the clear
@@ -211,6 +199,7 @@ TEST(atca_cmd_basic_test, ecdh)
 
     status = atcab_genkey(key_id_alice, pub_alice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    displen = sizeof(displaystr);
     status = atcab_bin2hex(pub_alice, ATCA_PUB_KEY_SIZE, displaystr, &displen);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     printf("alice slot %d pubkey:\r\n%s\r\n", key_id_alice, displaystr);
@@ -221,6 +210,7 @@ TEST(atca_cmd_basic_test, ecdh)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_NOT_EQUAL_MESSAGE(0, memcmp(pub_bob, frag, sizeof(frag)), "Bob key not initialized");
 
+    displen = sizeof(displaystr);
     status = atcab_bin2hex(pub_bob, ATCA_PUB_KEY_SIZE, displaystr, &displen);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     printf("bob slot %d pubkey:\r\n%s\r\n", key_id_bob, displaystr);
@@ -235,6 +225,7 @@ TEST(atca_cmd_basic_test, ecdh)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_NOT_EQUAL(0, memcmp(pub_alice, frag, sizeof(frag)));
 
+    displen = sizeof(displaystr);
     status = atcab_bin2hex(pms_alice, ECDH_KEY_SIZE, displaystr, &displen);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     printf("alice's pms:\r\n%s\r\n", displaystr);
@@ -243,6 +234,7 @@ TEST(atca_cmd_basic_test, ecdh)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_NOT_EQUAL(0, memcmp(pms_bob, frag, sizeof(frag)));
 
+    displen = sizeof(displaystr);
     status = atcab_bin2hex(pms_bob, ECDH_KEY_SIZE, displaystr, &displen);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     printf("bob's pms:\r\n%s\r\n", displaystr);
@@ -272,6 +264,7 @@ TEST(atca_cmd_basic_test, ecdh_protection_key)
     status = atcab_genkey(tempkey_alice, pub_alice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_NOT_EQUAL_MESSAGE(0, memcmp(pub_alice, frag, sizeof(frag)), "Alice key not initialized");
+    displen = sizeof(displaystr);
     status = atcab_bin2hex(pub_alice, ATCA_PUB_KEY_SIZE, displaystr, &displen);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     printf("alice  pubkey:\r\n%s\r\n", displaystr);
@@ -280,6 +273,7 @@ TEST(atca_cmd_basic_test, ecdh_protection_key)
     status = atcab_genkey(key_id_bob, pub_bob);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_NOT_EQUAL_MESSAGE(0, memcmp(pub_bob, frag, sizeof(frag)), "Bob key not initialized");
+    displen = sizeof(displaystr);
     status = atcab_bin2hex(pub_bob, ATCA_PUB_KEY_SIZE, displaystr, &displen);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     printf("bob slot %d pubkey:\r\n%s\r\n", key_id_bob, displaystr);
@@ -287,6 +281,7 @@ TEST(atca_cmd_basic_test, ecdh_protection_key)
     //Generating Alice PMS with bob public key.
     status = atcab_ecdh_tempkey(pub_bob, pms_alice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    displen = sizeof(displaystr);
     status = atcab_bin2hex(pms_alice, ECDH_KEY_SIZE, displaystr, &displen);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     printf("alice's pms:\r\n%s\r\n", displaystr);
@@ -295,11 +290,13 @@ TEST(atca_cmd_basic_test, ecdh_protection_key)
     status = atcab_ecdh_ioenc(key_id_bob, pub_alice, pms_bob, g_slot4_key);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_NOT_EQUAL(0, memcmp(pms_bob, frag, sizeof(frag)));
+    displen = sizeof(displaystr);
     status = atcab_bin2hex(pms_bob, ECDH_KEY_SIZE, displaystr, &displen);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     printf("bob's encrypted pms  :\r\n%s\r\n", displaystr);
 
     //display bob's decrypted pms
+    displen = sizeof(displaystr);
     status = atcab_bin2hex(pms_bob, ECDH_KEY_SIZE, displaystr, &displen);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     printf("bob's decrypted pms:\r\n%s\r\n", displaystr);

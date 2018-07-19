@@ -2,31 +2,27 @@
  * \file
  * \brief ATCA Hardware abstraction layer for Linux using kit protocol over a USB HID device.
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 
 #include <libudev.h>
@@ -62,12 +58,12 @@ ATCA_STATUS hal_kit_hid_discover_buses(int hid_buses[], int max_buses)
 }
 
 /** \brief discover any CryptoAuth devices on a given logical bus number.This function is currently not implemented.
- * \param[in] busNum - logical bus number on which to look for CryptoAuth devices
+ * \param[in] bus_num - logical bus number on which to look for CryptoAuth devices
  * \param[out] cfg[] - pointer to head of an array of interface config structures which get filled in by this method
  * \param[out] *found - number of devices found on this bus
  * \return ATCA_UNIMPLEMENTED
  */
-ATCA_STATUS hal_kit_hid_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
+ATCA_STATUS hal_kit_hid_discover_devices(int bus_num, ATCAIfaceCfg cfg[], int *found)
 {
     return ATCA_UNIMPLEMENTED;
 }

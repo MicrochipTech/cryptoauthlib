@@ -1,6 +1,13 @@
 var a00889 =
 [
-    [ "i2cDriverInit", "a00889.html#ae40d3e07534bf6cb2e78c329983048c7", null ],
-    [ "i2cDriverInstance", "a00889.html#af8b2d2e531312c0b6adda321a50fabc7", null ],
-    [ "i2cDriverInstanceIndex", "a00889.html#a61f012e6351d468a23da071e8ee588b6", null ]
+    [ "atidle", "a00889.html#af98425da891944b45d56cebd93b131f6", null ],
+    [ "atinit", "a00889.html#a43753a99c2b46caab2ae85d0504f1f84", null ],
+    [ "atpostinit", "a00889.html#a0dd463e6dbb6121768480ab7b42ba604", null ],
+    [ "atreceive", "a00889.html#a7ebe5db4da26f30972448931b7500546", null ],
+    [ "atsend", "a00889.html#a343ec53c611863bf30624e5775782ab5", null ],
+    [ "atsleep", "a00889.html#ae643f9f7998343cc33822de00192626b", null ],
+    [ "atwake", "a00889.html#a6cb270146e07d7c258bca835fda84be5", null ],
+    [ "hal_data", "a00889.html#ad33508455720b78cc0fc880cb3f9885e", null ],
+    [ "mIfaceCFG", "a00889.html#abdd7b8bd26139998d9da63a4fa562735", null ],
+    [ "mType", "a00889.html#ab4f4855cbadf7c7d2d3fb019eded7c8a", null ]
 ];

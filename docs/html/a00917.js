@@ -1,7 +1,6 @@
 var a00917 =
 [
-    [ "data", "a00917.html#abe222f6d3581e7920dcad5306cc906a8", null ],
-    [ "data_size", "a00917.html#ad6bc120bffc64dfc5230863a8ba96596", null ],
-    [ "io_key", "a00917.html#a130c5ab3a3f978b77641faa7813aa5d2", null ],
-    [ "out_nonce", "a00917.html#a70a057043fcc9f4dc22455f6df43d710", null ]
+    [ "ciphertext", "a00917.html#a984a9b23546b1bab664b3a3e721830b7", null ],
+    [ "key_block", "a00917.html#a2ec310210422989027a46428a61fb1c1", null ],
+    [ "key_id", "a00917.html#ac21eed4200889cc115d16a781871d01c", null ]
 ];

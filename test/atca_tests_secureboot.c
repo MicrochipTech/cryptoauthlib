@@ -2,31 +2,27 @@
  * \file
  * \brief Unity tests for the cryptoauthlib Basic API
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 #include <stdlib.h>
 #include "atca_test.h"
@@ -77,7 +73,6 @@ TEST(atca_cmd_unit_test, sboot)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT(packet.rxsize >= packet.data[ATCA_COUNT_IDX]);
     TEST_ASSERT_EQUAL(ATCA_PUB_KEY_SIZE + 3, packet.data[ATCA_COUNT_IDX]);
     memcpy(public_key, &packet.data[ATCA_RSP_DATA_IDX], ATCA_PUB_KEY_SIZE);
 
@@ -156,10 +151,10 @@ TEST(atca_cmd_unit_test, sboot)
 
     status = atSHA(ca_cmd, &packet, 0);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT_EQUAL(SHA_RSP_SIZE_SHORT, packet.rxsize);
     status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, packet.data[1]);
+    TEST_ASSERT_EQUAL(SHA_RSP_SIZE_SHORT, packet.data[ATCA_COUNT_IDX]);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, packet.data[ATCA_RSP_DATA_IDX]);
 
 
 
@@ -169,22 +164,22 @@ TEST(atca_cmd_unit_test, sboot)
     memcpy(packet.data, message, 64);
     status = atSHA(ca_cmd, &packet, 64);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT_EQUAL(SHA_RSP_SIZE_SHORT, packet.rxsize);
     status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, packet.data[1]);
+    TEST_ASSERT_EQUAL(SHA_RSP_SIZE_SHORT, packet.data[ATCA_COUNT_IDX]);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, packet.data[ATCA_RSP_DATA_IDX]);
 
     // Compute the SHA 256 digest if TempKey is loaded correctly
     packet.param1 = SHA_MODE_SHA256_END;
     packet.param2 = 0x0000;
     status = atSHA(ca_cmd, &packet, 0);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT_EQUAL(SHA_RSP_SIZE_LONG, packet.rxsize);
     status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(SHA_RSP_SIZE_LONG, packet.data[ATCA_COUNT_IDX]);
 
     // Copy the response into digest
-    memcpy(&digest[0], &packet.data[1], SECUREBOOT_DIGEST_SIZE);
+    memcpy(&digest[0], &packet.data[ATCA_RSP_DATA_IDX], SECUREBOOT_DIGEST_SIZE);
 
 
     // build an random command
@@ -192,9 +187,9 @@ TEST(atca_cmd_unit_test, sboot)
     packet.param2 = 0x0000;
     status = atRandom(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT_EQUAL(ATCA_RSP_SIZE_32, packet.rxsize);
     status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(ATCA_RSP_SIZE_32, packet.data[ATCA_COUNT_IDX]);
 
     // set up message to sign
     //build a nonce command (pass through mode)
@@ -203,13 +198,14 @@ TEST(atca_cmd_unit_test, sboot)
     memcpy(packet.data, digest, 32);        // a 32-byte nonce
 
     status = atNonce(ca_cmd, &packet);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL_INT(NONCE_COUNT_LONG, packet.txsize);
-    TEST_ASSERT_EQUAL_INT(NONCE_RSP_SIZE_SHORT, packet.rxsize);
     status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL_INT(NONCE_RSP_SIZE_SHORT, packet.data[ATCA_COUNT_IDX]);
 
     // check for nonce response for pass through mode
-    TEST_ASSERT_EQUAL_INT8(ATCA_SUCCESS, packet.data[1]);
+    TEST_ASSERT_EQUAL_INT8(ATCA_SUCCESS, packet.data[ATCA_RSP_DATA_IDX]);
 
 
     // build a sign command
@@ -220,7 +216,7 @@ TEST(atca_cmd_unit_test, sboot)
     status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     // Copy the signature
-    memcpy(signature, &packet.data[1], ATCA_SIG_SIZE);
+    memcpy(signature, &packet.data[ATCA_RSP_DATA_IDX], ATCA_SIG_SIZE);
 
 
     // build a sboot command

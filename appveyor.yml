@@ -1,0 +1,48 @@
+environment:
+  TWINE_USERNAME:
+    secure: TEiy+eHGeQQIy9jUEpUNMA==
+  TWINE_PASSWORD:
+    secure: nGYP/oqo/DSfCQduEhhKGg==
+
+  matrix:
+    - PYTHON: "C:\\Python27"
+    - PYTHON: "C:\\Python27-x64"
+    - PYTHON: "C:\\Python35"
+    - PYTHON: "C:\\Python35-x64"
+    - PYTHON: "C:\\Python36"
+    - PYTHON: "C:\\Python36-x64"
+
+install:
+    - cmd: "%PYTHON%\\python.exe -m pip install --upgrade pip"
+    - cmd: "%PYTHON%\\python.exe -m pip install --upgrade setuptools"
+    - cmd: "%PYTHON%\\python.exe -m pip install --upgrade wheel"
+    - cmd: "%PYTHON%\\python.exe -m pip install --upgrade pytest"
+    - cmd: "%PYTHON%\\python.exe -m pip install --upgrade twine"
+
+before_build:
+    - cd python
+    - cmd: "git describe --tags >VERSION"
+
+build_script:
+    - cmd: "%PYTHON%\\python.exe setup.py bdist_wheel"
+
+after_build:
+    - cmd: "%PYTHON%\\python.exe setup.py install"
+
+test_script:
+    - ps: |
+        & ${env:PYTHON}\scripts\pytest.exe --junitxml=build\results.xml
+        $testsExitCode = $lastexitcode
+        $wc = New-Object 'System.Net.WebClient'
+        $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\build\results.xml))
+        if ($testsExitCode -ne 0) {exit $testsExitCode}
+    
+artifacts:
+    - path: python\dist\*.whl
+
+#on_success:
+#  You can use this step to upload your artifacts to a public website.
+#  See Appveyor's documentation for more details. Or you can simply
+#  access your wheels from the Appveyor "artifacts" tab for your build.
+deploy_script:
+    - ps: if ($env:APPVEYOR_REPO_TAG -eq $TRUE) { & ${env:PYTHON}\python.exe -m twine upload "dist\*.whl" --skip-existing }

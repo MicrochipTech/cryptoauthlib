@@ -3,11 +3,11 @@ var indexSectionsWithContent =
   0: "_abcdefghijklmnoprstuvwz",
   1: "acdhims",
   2: "achiklrs",
-  3: "_abcdhiknops",
+  3: "_abcdhiknoprst",
   4: "_abcdefghiklmnoprstuvwz",
   5: "achs",
   6: "ais",
-  7: "acdisw",
+  7: "acdis",
   8: "_abcdeilmprstuvwz",
   9: "abchjs",
   10: "abch"

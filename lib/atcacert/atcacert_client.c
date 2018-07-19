@@ -4,36 +4,33 @@
  *        of the authentication process. It is assumed the client has an ECC CryptoAuthentication device
  *        (e.g. ATECC508A) and the certificates are stored on that device.
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 
 
 #include <stdlib.h>
 #include "atcacert_client.h"
+#include "atcacert_pem.h"
 #include "cryptoauthlib.h"
 #include "basic/atca_basic.h"
 
@@ -85,7 +82,7 @@ int atcacert_read_cert(const atcacert_def_t* cert_def,
 
     for (i = 0; i < device_locs_count; i++)
     {
-        uint8_t data[416];
+        static uint8_t data[416];
         if (device_locs[i].zone == DEVZONE_DATA && device_locs[i].is_genkey)
         {
             ret = atcab_get_pubkey(device_locs[i].slot, data);
@@ -149,7 +146,7 @@ int atcacert_write_cert(const atcacert_def_t* cert_def,
     {
         size_t end_block;
         size_t start_block;
-        uint8_t data[416];
+        static uint8_t data[416];
         uint8_t block;
 
         if (device_locs[i].zone == DEVZONE_CONFIG)
@@ -182,189 +179,41 @@ int atcacert_write_cert(const atcacert_def_t* cert_def,
     return ATCACERT_E_SUCCESS;
 }
 
-int atcacert_decode_pem_cert(const char* pem_cert, size_t pem_cert_size, uint8_t* cert_bytes, size_t* cert_bytes_size)
-{
-    ATCA_STATUS status = ATCA_SUCCESS;
-    const char cert_header[] = PEM_CERT_BEGIN;
-    const char cert_footer[] = PEM_CERT_END;
-    size_t cert_header_size = sizeof(cert_header);
-    size_t max_size = (pem_cert_size * 3 / 4) - sizeof(cert_header) - sizeof(cert_footer);
-    char* cert_ptr = NULL;
-    size_t cert_begin = 0;
-    size_t cert_end = 0;
-    size_t cert_size = 0;
-
-    do
-    {
-        // Check the pointers
-        if (pem_cert == NULL || cert_bytes == NULL || cert_bytes_size == NULL)
-        {
-            status = ATCACERT_E_BAD_PARAMS;
-            BREAK(status, "Null input parameter");
-        }
-        // Check the buffer size
-        if (*cert_bytes_size < max_size)
-        {
-            status = ATCACERT_E_BAD_PARAMS;
-            BREAK(status, "buffer size too small");
-        }
-        // Strip the certificate begin & end tags
-        // Find the start byte location
-        cert_ptr = strstr(pem_cert, cert_header);
-        cert_begin = cert_ptr == NULL ? 0 : (cert_ptr - pem_cert) + cert_header_size;
-
-        // Find the end byte location
-        cert_ptr = strstr(pem_cert, cert_footer);
-        cert_end = cert_ptr == NULL ? pem_cert_size : (size_t)(cert_ptr - pem_cert);
-
-        // Decode the base 64 bytes
-        cert_size = cert_end - cert_begin;
-        atcab_base64decode(&pem_cert[cert_begin], cert_size, cert_bytes, cert_bytes_size);
-
-    }
-    while (false);
-
-    return status;
-}
-
-int atcacert_encode_pem_cert(const uint8_t* cert_bytes, size_t cert_bytes_size, char* pem_cert, size_t* pem_cert_size)
-{
-    ATCA_STATUS status = ATCA_SUCCESS;
-    const char cert_header[] = PEM_CERT_BEGIN_EOL;
-    const char cert_footer[] = PEM_CERT_END_EOL;
-    size_t cert_header_size = sizeof(cert_header);
-    size_t cert_footer_size = sizeof(cert_footer);
-    size_t pem_max_size = (cert_bytes_size * 4 / 3) + cert_header_size + cert_footer_size;
-    size_t cpy_loc = 0;
-    size_t encoded_len = 0;
-
-    do
-    {
-        // Check the pointers
-        if (pem_cert == NULL || cert_bytes == NULL || pem_cert_size == NULL)
-        {
-            status = ATCACERT_E_BAD_PARAMS;
-            BREAK(status, "Null input parameter");
-        }
-        // Check the buffer size
-        if (*pem_cert_size < pem_max_size)
-        {
-            status = ATCACERT_E_BAD_PARAMS;
-            BREAK(status, "buffer size too small");
-        }
-        //// Allocate the buffer to hold the PEM encoded cert
-        //csr_encoded = (char*)malloc(encoded_len);
-        //memset(csr_encoded, 0, encoded_len);
-
-        // Clear the pem buffer
-        memset(pem_cert, 0x00, *pem_cert_size);
-
-        // Add the certificate begin tag
-        memcpy(pem_cert, cert_header, cert_header_size);
-        cpy_loc += cert_header_size - 1; // Subtract the null terminator
-
-        // Base 64 encode the bytes
-        encoded_len = pem_max_size - cpy_loc;
-        status = atcab_base64encode(cert_bytes, cert_bytes_size, &pem_cert[cpy_loc], &encoded_len);
-        if (status != ATCA_SUCCESS)
-        {
-            BREAK(status, "Base 64 encoding failed");
-        }
-        cpy_loc += encoded_len;
-
-        // Copy the certificate end tag
-        if ((cpy_loc + cert_footer_size) > *pem_cert_size)
-        {
-            status = ATCACERT_E_BAD_PARAMS;
-            BREAK(status, "buffer too small");
-        }
-        memcpy(&pem_cert[cpy_loc], cert_footer, cert_footer_size);
-        cpy_loc += cert_footer_size - 1; // Subtract the null terminator
-        *pem_cert_size = cpy_loc;
-
-    }
-    while (false);
-
-    return status;
-}
-
 int atcacert_create_csr_pem(const atcacert_def_t* csr_def, char* csr, size_t* csr_size)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
-    size_t csr_len = 0;
-    uint8_t* csr_bytes = (uint8_t*)csr;
-    char* csr_encoded = NULL;
-    size_t encoded_len = 0;
-    const char csr_header[] = PEM_CSR_BEGIN_EOL;
-    const char csr_footer[] = PEM_CSR_END_EOL;
-    size_t cpy_loc = 0;
+    size_t csr_max_size;
+    size_t csr_der_size;
 
-    do
+    // Check the pointers
+    if (csr_def == NULL || csr == NULL || csr_size == NULL)
     {
-        // Check the pointers
-        if (csr_def == NULL || csr == NULL || csr == NULL || csr_size == NULL)
-        {
-            status = ATCACERT_E_BAD_PARAMS;
-            BREAK(status, "Null input parameter");
-        }
-
-        // Call the create csr function to get the csr bytes
-        csr_len = *csr_size;
-        status = atcacert_create_csr(csr_def, csr_bytes, &csr_len);
-        if (status != ATCA_SUCCESS)
-        {
-            BREAK(status, "Failed to create CSR");
-        }
-
-        // Allocate the buffer to hold the fully wrapped CSR
-        encoded_len = *csr_size;
-        csr_encoded = malloc(encoded_len);
-        memset(csr_encoded, 0, encoded_len);
-
-        // Wrap the CSR in the header/footer
-        if ((cpy_loc + sizeof(csr_header)) > *csr_size)
-        {
-            status = ATCACERT_E_BAD_PARAMS;
-            BREAK(status, "CSR buffer too small");
-        }
-        // Copy the header into the PEM CSR
-        memcpy(&csr_encoded[cpy_loc], csr_header, sizeof(csr_header));
-        cpy_loc += sizeof(csr_header) - 1; // Subtract the null terminator
-
-        // Base 64 encode the bytes
-        encoded_len -= cpy_loc;
-        status = atcab_base64encode(csr_bytes, csr_len, &csr_encoded[cpy_loc], &encoded_len);
-        if (status != ATCA_SUCCESS)
-        {
-            BREAK(status, "Base 64 encoding failed");
-        }
-        cpy_loc += encoded_len;
-
-        // Copy the footer into the PEM CSR
-        if ((cpy_loc + sizeof(csr_footer)) > *csr_size)
-        {
-            status = ATCACERT_E_BAD_PARAMS;
-            BREAK(status, "CSR buffer too small");
-        }
-        memcpy(&csr_encoded[cpy_loc], csr_footer, sizeof(csr_footer));
-        cpy_loc += sizeof(csr_footer) - 1; // Subtract the null terminator
-
-        // Copy the wrapped CSR
-        memcpy(csr, csr_encoded, cpy_loc);
-        *csr_size = cpy_loc;
-
+        return ATCACERT_E_BAD_PARAMS;
     }
-    while (false);
+    csr_max_size = *csr_size;
+    *csr_size = 0;
 
-    // Deallocate the buffer if needed
-    if (csr_encoded != NULL)
+    // Create DER CSR
+    csr_der_size = csr_max_size;
+    status = atcacert_create_csr(csr_def, (uint8_t*)csr, &csr_der_size);
+    if (status != ATCACERT_E_SUCCESS)
     {
-        free(csr_encoded);
+        return status;
     }
 
-    return status;
+    // Move the DER CSR to the end of the buffer, so we can encode it into
+    // PEM in place.
+    memmove(csr + (csr_max_size - csr_der_size), csr, csr_der_size);
+
+    *csr_size = csr_max_size;
+    status = atcacert_encode_pem_csr((uint8_t*)(csr + (csr_max_size - csr_der_size)), csr_der_size, csr, csr_size);
+    if (status != ATCACERT_E_SUCCESS)
+    {
+        return status;
+    }
+
+    return ATCACERT_E_SUCCESS;
 }
-
 
 int atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, size_t* csr_size)
 {
@@ -389,7 +238,7 @@ int atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, size_t* csr
         // Check the csr buffer size
         if (*csr_size < csr_def->cert_template_size)
         {
-            status = ATCACERT_E_BAD_PARAMS;
+            status = ATCACERT_E_BUFFER_TOO_SMALL;
             BREAK(status, "CSR buffer size too small");
         }
         // Copy the CSR template into the CSR that will be returned

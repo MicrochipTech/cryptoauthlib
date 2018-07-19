@@ -2,31 +2,27 @@
  * \file
  * \brief ATCA Hardware abstraction layer for SWI over UART drivers.
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 
 #include <string.h>
@@ -45,13 +41,12 @@
    @{ */
 
 /** \brief logical to physical bus mapping structure */
-ATCASWIMaster_t *swi_hal_data[MAX_SWI_BUSES];   // map logical, 0-based bus number to index
-int swi_bus_ref_ct = 0;                         // total in-use count across buses
+static ATCASWIMaster_t swi_hal_data[MAX_SWI_BUSES];   // map logical, 0-based bus number to index
 
 #ifdef DEBUG_HAL
 static void print_array(uint8_t *data, uint32_t data_size)
 {
-    //	printf("%.4x\r\n", data_size);
+    //  printf("%.4x\r\n", data_size);
 
     uint32_t n;
 
@@ -91,16 +86,22 @@ ATCA_STATUS hal_swi_discover_buses(int swi_buses[], int max_buses)
 }
 
 /** \brief discover any CryptoAuth devices on a given logical bus number
- * \param[in] busNum - logical bus number on which to look for CryptoAuth devices
+ * \param[in] bus_num - logical bus number on which to look for CryptoAuth devices
  * \param[out] cfg[] - pointer to head of an array of interface config structures which get filled in by this method
  * \param[out] *found - number of devices found on this bus
  * \return ATCA_SUCCESS
  */
 
-ATCA_STATUS hal_swi_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
+ATCA_STATUS hal_swi_discover_devices(int bus_num, ATCAIfaceCfg cfg[], int *found)
 {
     ATCAIfaceCfg *head = cfg;
     ATCADevice device;
+
+#ifdef ATCA_NO_HEAP
+    struct atca_device disc_device;
+    struct atca_command disc_command;
+    struct atca_iface disc_iface;
+#endif
     ATCAPacket packet;
     ATCA_STATUS status;
     uint8_t revs608[][4] = { { 0x00, 0x00, 0x60, 0x01 }, { 0x00, 0x00, 0x60, 0x02 } };
@@ -113,20 +114,32 @@ ATCA_STATUS hal_swi_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
     ATCAIfaceCfg discoverCfg = {
         .iface_type     = ATCA_SWI_IFACE,
         .devtype        = ATECC508A,
-        .atcaswi.bus    = busNum,
+        .atcaswi.bus    = bus_num,
         .wake_delay     = 800,
         .rx_retries     = 3
     };
 
-    ATCAHAL_t hal;
-
-    if (busNum < 0)
+    if (bus_num < 0)
     {
         return ATCA_COMM_FAIL;
     }
 
-    hal_swi_init(&hal, &discoverCfg);
+#ifdef ATCA_NO_HEAP
+    disc_device.mCommands = &disc_command;
+    disc_device.mIface    = &disc_iface;
+    status = initATCADevice(&discoverCfg, &disc_device);
+    if (status != ATCA_SUCCESS)
+    {
+        return status;
+    }
+    device = &disc_device;
+#else
     device = newATCADevice(&discoverCfg);
+    if (device == NULL)
+    {
+        return ATCA_COMM_FAIL;
+    }
+#endif
 
 
     memset(packet.data, 0x00, sizeof(packet.data));
@@ -190,7 +203,11 @@ ATCA_STATUS hal_swi_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
 
     atca_delay_ms(15);
 
+#ifdef ATCA_NO_HEAP
+    releaseATCADevice(device);
+#else
     deleteATCADevice(&device);
+#endif
 
     return ATCA_SUCCESS;
 }
@@ -209,39 +226,33 @@ ATCA_STATUS hal_swi_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
 
 ATCA_STATUS hal_swi_init(void *hal, ATCAIfaceCfg *cfg)
 {
-    int bus = cfg->atcaswi.bus;   // 0-based logical bus number
-    ATCAHAL_t *phal = (ATCAHAL_t*)hal;
-
-    if (swi_bus_ref_ct == 0)       // power up state, no swi buses will have been used
+    if (cfg->atcaswi.bus >= MAX_SWI_BUSES)
     {
-        for (int i = 0; i < MAX_SWI_BUSES; i++)
-        {
-            swi_hal_data[i] = NULL;
-        }
-        swi_bus_ref_ct++;  // total across buses become 1
+        return ATCA_COMM_FAIL;
+    }
+    ATCASWIMaster_t* data = &swi_hal_data[cfg->atcaswi.bus];
+
+    if (data->ref_ct <= 0)
+    {
+        // Bus isn't being used, enable it
+
+        // initialize  UART module for SWI interface
+        swi_uart_init(data);
+
+        // store this for use during the release phase
+        data->bus_index = cfg->atcaswi.bus;
+        // buses are shared, this is the first instance
+        data->ref_ct = 1;
+    }
+    else
+    {
+        // Bus is already is use, increment reference counter
+        data->ref_ct++;
     }
 
-    if (bus >= 0 && bus < MAX_SWI_BUSES)
-    {
-        // if this is the first time this bus and interface has been created, do the physical work of enabling it
-        if (swi_hal_data[bus] == NULL)
-        {
-            swi_hal_data[bus] = malloc(sizeof(ATCASWIMaster_t) );
-            // store this for use during the release phase
-            swi_hal_data[bus]->bus_index = bus;
-            // initialize  UART module for SWI interface
-            swi_uart_init(swi_hal_data[bus]);
-        }
-        else
-        {
-            // otherwise, another interface already initialized the bus, any different
-            // cfg parameters will be ignored...first one to initialize this sets the configuration
-        }
-        phal->hal_data = swi_hal_data[bus];
+    ((ATCAHAL_t*)hal)->hal_data = data;
 
-        return ATCA_SUCCESS;
-    }
-    return ATCA_COMM_FAIL;
+    return ATCA_SUCCESS;
 }
 
 /** \brief HAL implementation of SWI post init
@@ -264,7 +275,6 @@ ATCA_STATUS hal_swi_send_flag(ATCAIface iface, uint8_t data)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
-    int bus = cfg->atcaswi.bus;
     uint8_t bit_mask, bit_data;
 
     for (bit_mask = 1; bit_mask > 0; bit_mask <<= 1)
@@ -272,7 +282,7 @@ ATCA_STATUS hal_swi_send_flag(ATCAIface iface, uint8_t data)
         // Send one byte that represent one bit, 0x7F for one or 0x7D for zero
         // The LSB (least significant bit) is sent first.
         bit_data = (bit_mask & data) ? 0x7F : 0x7D;
-        status |= swi_uart_send_byte(swi_hal_data[bus], bit_data);
+        status |= swi_uart_send_byte(&swi_hal_data[cfg->atcaswi.bus], bit_data);
 
     }
     if (status != ATCA_SUCCESS)
@@ -312,7 +322,6 @@ ATCA_STATUS hal_swi_send(ATCAIface iface, uint8_t *txdata, int txlength)
 #endif
     ATCA_STATUS status = ATCA_SUCCESS;
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
-    int bus = cfg->atcaswi.bus;
     uint8_t i, bit_mask, bit_data;
 
     //Skip the Word Address data as SWI doesn't use it
@@ -328,7 +337,7 @@ ATCA_STATUS hal_swi_send(ATCAIface iface, uint8_t *txdata, int txlength)
                 // Send one byte that represent one bit, 0x7F for one or 0x7D for zero
                 // The LSB (least significant bit) is sent first.
                 bit_data = (bit_mask & *txdata) ? 0x7F : 0x7D;
-                status = swi_uart_send_byte(swi_hal_data[bus], bit_data);
+                status = swi_uart_send_byte(&swi_hal_data[cfg->atcaswi.bus], bit_data);
                 if (status != ATCA_SUCCESS)
                 {
                     return ATCA_COMM_FAIL;
@@ -342,76 +351,118 @@ ATCA_STATUS hal_swi_send(ATCAIface iface, uint8_t *txdata, int txlength)
 }
 
 /** \brief HAL implementation of SWI receive function over UART
- * \param[in]  iface     instance
- * \param[out] rxdata    pointer to space to receive the data
- * \param[in]  rxlength  ptr to expected number of receive bytes to request
+ * \param[in]    iface     Device to interact with.
+ * \param[out]   rxdata    Data received will be returned here.
+ * \param[inout] rxlength  As input, the size of the rxdata buffer.
+ *                         As output, the number of bytes received.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-
 ATCA_STATUS hal_swi_receive(ATCAIface iface, uint8_t *rxdata, uint16_t *rxlength)
 {
 #ifdef DEBUG_HAL
     printf("hal_swi_receive()\r\n");
 #endif
-    ATCA_STATUS status = ATCA_COMM_FAIL;
+    ATCA_STATUS status = !ATCA_SUCCESS;
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
     int bus = cfg->atcaswi.bus;
     int retries = cfg->rx_retries;
-    uint8_t bit_mask, *head_buff, bit_data;
-    uint16_t i = 0;
+    uint8_t bit_mask, *head_buff, bit_data, count;
+    uint8_t i = 0;
+    uint16_t rxdata_max_size = *rxlength;
 
-    while ((status != ATCA_SUCCESS) && (retries >= 0x00))
+    *rxlength = 0;
+    if (rxdata_max_size < 1)
     {
-        retries--;
-        head_buff = rxdata;
+        return ATCA_SMALL_BUFFER;
+    }
 
-        status = hal_swi_send_flag(iface, SWI_FLAG_TX);
+    head_buff = rxdata;
 
-        // Set SWI to receive mode.
-        swi_uart_mode(swi_hal_data[bus], RECEIVE_MODE);
-#ifdef SAMD21_ASF
-        RX_DELAY
-#else
-        atca_delay_us(RX_DELAY); // Must be configured to sync with response from device
-#endif
-        if (status == ATCA_SUCCESS)
+    while (retries-- > 0 && status != ATCA_SUCCESS)
+    {
+        if ((status = hal_swi_send_flag(iface, SWI_FLAG_TX)) == ATCA_SUCCESS)
         {
-            for (i = 0; i < *rxlength; i++)
-            {
-                *head_buff = 0x00;
-                for (bit_mask = 1; bit_mask > 0; bit_mask <<= 1)
-                {
-                    bit_data = 0;
-                    status = swi_uart_receive_byte(swi_hal_data[bus], &bit_data);
-                    if ((i == 0) && (bit_mask == 1) && (status != ATCA_SUCCESS))
-                    {
-                        break;
-                    }
-                    // Sometimes bit data from device is stretched
-                    // When the device sends a "one" bit, it is read as 0x7E or 0x7F.
-                    // When the device sends a "zero" bit, it is read as 0x7A, 0x7B, or 7D.
-                    if ((bit_data ^ 0x7F) < 2)
-                    {
-                        // Received "one" bit.
-                        *head_buff |= bit_mask;
-                    }
-                }
-                if ((i == 0) && (bit_mask == 1) && (status != ATCA_SUCCESS))
-                {
-                    break;
-                }
-                head_buff++;
-            }
-            // Set SWI to transmit mode.
-            swi_uart_mode(swi_hal_data[bus], TRANSMIT_MODE);
-            atca_delay_us(TX_DELAY); // Must be configured to sync with response from device
+            swi_uart_mode(&swi_hal_data[bus], RECEIVE_MODE);
+
+            atca_delay_us(RX_DELAY); // Must be configured to sync with response from device
         }
-        // The Response shorter than expected
-        if ((i >= 4) && (status == ATCA_TIMEOUT))
+
+        *head_buff = 0x00;
+        for (bit_mask = 1; bit_mask > 0; bit_mask <<= 1)
         {
-            status = ATCA_SUCCESS;
+            bit_data = 0;
+            status = swi_uart_receive_byte(&swi_hal_data[bus], &bit_data);
+            if (status != ATCA_SUCCESS)
+            {
+                break;
+            }
+            // Sometimes bit data from device is stretched
+            // When the device sends a "one" bit, it is read as 0x7E or 0x7F.
+            // When the device sends a "zero" bit, it is read as 0x7A, 0x7B, or 7D.
+            if ((bit_data ^ 0x7F) < 2)
+            {
+                // Received "one" bit.
+                *head_buff |= bit_mask;
+            }
         }
     }
+    if (status != ATCA_SUCCESS)
+    {
+        // Set SWI to transmit mode.
+        swi_uart_mode(&swi_hal_data[bus], TRANSMIT_MODE);
+        atca_delay_us(TX_DELAY);
+        return status;
+    }
+    if (*head_buff < ATCA_RSP_SIZE_MIN)
+    {
+        // Set SWI to transmit mode.
+        swi_uart_mode(&swi_hal_data[bus], TRANSMIT_MODE);
+        atca_delay_us(TX_DELAY);
+        return ATCA_INVALID_SIZE;
+    }
+    if (*head_buff > rxdata_max_size)
+    {
+        // Set SWI to transmit mode.
+        swi_uart_mode(&swi_hal_data[bus], TRANSMIT_MODE);
+        atca_delay_us(TX_DELAY);
+        return ATCA_SMALL_BUFFER;
+    }
+
+    count = (*head_buff) - 1;
+    head_buff++;
+
+    for (i = 0; i < count; i++)
+    {
+        *head_buff = 0x00;
+        for (bit_mask = 1; bit_mask > 0; bit_mask <<= 1)
+        {
+            bit_data = 0;
+            status = swi_uart_receive_byte(&swi_hal_data[bus], &bit_data);
+            if (status != ATCA_SUCCESS)
+            {
+                // Set SWI to transmit mode.
+                swi_uart_mode(&swi_hal_data[bus], TRANSMIT_MODE);
+                atca_delay_us(TX_DELAY);
+                return status;
+            }
+            // Sometimes bit data from device is stretched
+            // When the device sends a "one" bit, it is read as 0x7E or 0x7F.
+            // When the device sends a "zero" bit, it is read as 0x7A, 0x7B, or 7D.
+            if ((bit_data ^ 0x7F) < 2)
+            {
+                // Received "one" bit.
+                *head_buff |= bit_mask;
+            }
+        }
+        head_buff++;
+    }
+
+    *rxlength = rxdata[0];
+
+    // Set SWI to transmit mode.
+    swi_uart_mode(&swi_hal_data[bus], TRANSMIT_MODE);
+    atca_delay_us(TX_DELAY);
+
 #ifdef DEBUG_HAL
     printf("\r\nResponse Packet (size:0x%.4x)\r\n", *rxlength);
     printf("Count  : %.2x\r\n", rxdata[0]);
@@ -422,6 +473,7 @@ ATCA_STATUS hal_swi_receive(ATCAIface iface, uint8_t *rxdata, uint16_t *rxlength
     }
     printf("\r\n");
 #endif
+
     return status;
 }
 
@@ -441,17 +493,17 @@ ATCA_STATUS hal_swi_wake(ATCAIface iface)
     int bus = cfg->atcaswi.bus;
     int retries = cfg->rx_retries;
     uint16_t datalength = 4;
-    uint8_t data[4] = { 0x00, 0x00, 0x00, 0x00 }, expected[4] = { 0x04, 0x11, 0x33, 0x43 };
+    uint8_t data[4] = { 0x00, 0x00, 0x00, 0x00 };
 
     while ((status != ATCA_SUCCESS) && (retries >= 0x00))
     {
         retries--;
         // Change baudrate to 115200 to get low signal more than 60us
-        swi_uart_setbaud(swi_hal_data[bus], 115200);
+        swi_uart_setbaud(&swi_hal_data[bus], 115200);
         // Send byte 0x00
-        status = swi_uart_send_byte(swi_hal_data[bus], SWI_WAKE_TOKEN);
+        status = swi_uart_send_byte(&swi_hal_data[bus], SWI_WAKE_TOKEN);
         // Change baudrate back to 230400
-        swi_uart_setbaud(swi_hal_data[bus], 230400);
+        swi_uart_setbaud(&swi_hal_data[bus], 230400);
     }
 
     if (!status)
@@ -465,12 +517,7 @@ ATCA_STATUS hal_swi_wake(ATCAIface iface)
         return ATCA_TIMEOUT;
     }
 
-    if (memcmp(data, expected, 4) == 0)
-    {
-        return ATCA_SUCCESS;
-    }
-
-    return ATCA_COMM_FAIL;
+    return hal_check_wake(data, 4);
 }
 
 /** \brief idle CryptoAuth device using SWI interface
@@ -502,14 +549,11 @@ ATCA_STATUS hal_swi_release(void *hal_data)
 {
     ATCASWIMaster_t *hal = (ATCASWIMaster_t*)hal_data;
 
-    swi_bus_ref_ct--;  // track total SWI instances
-
     // if the use count for this bus has gone to 0 references, disable it.  protect against an unbracketed release
-    if (hal && swi_hal_data[hal->bus_index] != NULL)
+    if (hal && --(hal->ref_ct) <= 0)
     {
-        swi_uart_deinit(swi_hal_data[hal->bus_index]);
-        free(swi_hal_data[hal->bus_index]);
-        swi_hal_data[hal->bus_index] = NULL;
+        swi_uart_deinit(&swi_hal_data[hal->bus_index]);
+        hal->ref_ct = 0;
     }
     return ATCA_SUCCESS;
 }

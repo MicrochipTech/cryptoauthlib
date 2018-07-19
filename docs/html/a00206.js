@@ -1,9 +1,7 @@
 var a00206 =
 [
-    [ "atcab_challenge", "a00757.html#ga114a721517c95d5ba5fcac5b226669d6", null ],
-    [ "atcab_challenge_seed_update", "a00757.html#gaadde4309089c569fd87c24a1a2326cd4", null ],
-    [ "atcab_nonce", "a00757.html#ga2293df1c1c794496790bae25d3844fa5", null ],
-    [ "atcab_nonce_base", "a00757.html#gaf8e10791759a8a5e5dcd82774f4895d6", null ],
-    [ "atcab_nonce_load", "a00757.html#ga2239ae3a87c341a48aa108bd82a58552", null ],
-    [ "atcab_nonce_rand", "a00757.html#gaed67d447d547c67b7b8be6b958d1fb5c", null ]
+    [ "atcab_info", "a00841.html#ga6e19ecd60be4c74665d9ec142e460771", null ],
+    [ "atcab_info_base", "a00841.html#ga806d07982fda5c30755af6b5b4ef9314", null ],
+    [ "atcab_info_get_latch", "a00841.html#ga376b6ae92f14c60fba4ca5c6461e0b48", null ],
+    [ "atcab_info_set_latch", "a00841.html#ga2649126606db8a0b64ae8e19d09f6600", null ]
 ];

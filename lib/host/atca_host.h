@@ -2,37 +2,34 @@
  * \file
  * \brief  Definitions and Prototypes for ATCA Utility Functions
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 
 
 #ifndef ATCA_HOST_H
-#   define ATCA_HOST_H
+#define ATCA_HOST_H
 
+#include <stdint.h>
 #include "cryptoauthlib.h"  // contains definitions used by chip and these routines
 
 /** \defgroup atcah Host side crypto methods (atcah_)
@@ -111,12 +108,12 @@
 typedef struct atca_temp_key
 {
     uint8_t  value[ATCA_KEY_SIZE * 2]; //!< Value of TempKey (64 bytes for ATECC608A only)
-    uint32_t key_id       : 4;         //!< If TempKey was derived from a slot or transport key (GenDig or GenKey), that key ID is saved here.
-    uint32_t source_flag  : 1;         //!< Indicates id TempKey started from a random nonce (0) or not (1).
-    uint32_t gen_dig_data : 1;         //!< TempKey was derived from the GenDig command.
-    uint32_t gen_key_data : 1;         //!< TempKey was derived from the GenKey command (ATECC devices only).
-    uint32_t no_mac_flag  : 1;         //!< TempKey was derived from a key that has the NoMac bit set preventing the use of the MAC command. Known as CheckFlag in ATSHA devices).
-    uint32_t valid        : 1;         //!< TempKey is valid.
+    unsigned key_id       : 4;         //!< If TempKey was derived from a slot or transport key (GenDig or GenKey), that key ID is saved here.
+    unsigned source_flag  : 1;         //!< Indicates id TempKey started from a random nonce (0) or not (1).
+    unsigned gen_dig_data : 1;         //!< TempKey was derived from the GenDig command.
+    unsigned gen_key_data : 1;         //!< TempKey was derived from the GenKey command (ATECC devices only).
+    unsigned no_mac_flag  : 1;         //!< TempKey was derived from a key that has the NoMac bit set preventing the use of the MAC command. Known as CheckFlag in ATSHA devices).
+    unsigned valid        : 1;         //!< TempKey is valid.
     uint8_t  is_64;                    //!< TempKey has 64 bytes of valid data
 } atca_temp_key_t;
 

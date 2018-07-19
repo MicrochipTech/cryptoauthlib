@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: CL_HashContext Struct Reference</title>
+<title>CryptoAuthLib: atca_device Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,77 +89,56 @@ $(document).ready(function(){initNavTree('a00857.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">CL_HashContext Struct Reference</div>  </div>
+<div class="title">atca_device Struct Reference<div class="ingroups"><a class="el" href="a00838.html">ATCADevice (atca_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="a00275_source.html">sha1_routines.h</a>&gt;</code></p>
+<p><a class="el" href="a00857.html" title="atca_device is the C object backing ATCADevice. See the atca_device.h file for details on the ATCADev...">atca_device</a> is the C object backing ATCADevice. See the <a class="el" href="a00110.html" title="Microchip Crypto Auth device object. ">atca_device.h</a> file for details on the ATCADevice methods.  
+ <a href="a00857.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="a00110_source.html">atca_device.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a015ca0a234558a1a0dbfc1e92f547ac0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#a8f953f379d243081b950adb7f194b2e8">U32</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00857.html#a015ca0a234558a1a0dbfc1e92f547ac0">h</a> [20/4]</td></tr>
-<tr class="separator:a015ca0a234558a1a0dbfc1e92f547ac0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa9986c74d11cc23893e2de2a505cafe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#a8f953f379d243081b950adb7f194b2e8">U32</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00857.html#afa9986c74d11cc23893e2de2a505cafe">buf</a> [64/4]</td></tr>
-<tr class="separator:afa9986c74d11cc23893e2de2a505cafe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7dd834dde7d653957f91657aca4eb124"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#a8f953f379d243081b950adb7f194b2e8">U32</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00857.html#a7dd834dde7d653957f91657aca4eb124">byteCount</a></td></tr>
-<tr class="separator:a7dd834dde7d653957f91657aca4eb124"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f18b15c445fd0f55a0bf182e173d563"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#a8f953f379d243081b950adb7f194b2e8">U32</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00857.html#a4f18b15c445fd0f55a0bf182e173d563">byteCountHi</a></td></tr>
-<tr class="separator:a4f18b15c445fd0f55a0bf182e173d563"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac7a3ed180ba0fcf0d86f7b54ebc1379"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00837.html#gaebeafc249bfe2b00b6809d5c328841d9">ATCACommand</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00857.html#aac7a3ed180ba0fcf0d86f7b54ebc1379">mCommands</a></td></tr>
+<tr class="memdesc:aac7a3ed180ba0fcf0d86f7b54ebc1379"><td class="mdescLeft">&#160;</td><td class="mdescRight">Command set for a given CryptoAuth device.  <a href="#aac7a3ed180ba0fcf0d86f7b54ebc1379">More...</a><br /></td></tr>
+<tr class="separator:aac7a3ed180ba0fcf0d86f7b54ebc1379"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca75c68806e47e95144dc86a3f50d236"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00839.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00857.html#aca75c68806e47e95144dc86a3f50d236">mIface</a></td></tr>
+<tr class="memdesc:aca75c68806e47e95144dc86a3f50d236"><td class="mdescLeft">&#160;</td><td class="mdescRight">Physical interface.  <a href="#aca75c68806e47e95144dc86a3f50d236">More...</a><br /></td></tr>
+<tr class="separator:aca75c68806e47e95144dc86a3f50d236"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Field Documentation</h2>
-<a id="afa9986c74d11cc23893e2de2a505cafe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa9986c74d11cc23893e2de2a505cafe">&#9670;&nbsp;</a></span>buf</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p><a class="el" href="a00857.html" title="atca_device is the C object backing ATCADevice. See the atca_device.h file for details on the ATCADev...">atca_device</a> is the C object backing ATCADevice. See the <a class="el" href="a00110.html" title="Microchip Crypto Auth device object. ">atca_device.h</a> file for details on the ATCADevice methods. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a id="aac7a3ed180ba0fcf0d86f7b54ebc1379"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac7a3ed180ba0fcf0d86f7b54ebc1379">&#9670;&nbsp;</a></span>mCommands</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00275.html#a8f953f379d243081b950adb7f194b2e8">U32</a> buf[64/4]</td>
+          <td class="memname"><a class="el" href="a00837.html#gaebeafc249bfe2b00b6809d5c328841d9">ATCACommand</a> mCommands</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Command set for a given CryptoAuth device. </p>
+
 </div>
 </div>
-<a id="a7dd834dde7d653957f91657aca4eb124"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7dd834dde7d653957f91657aca4eb124">&#9670;&nbsp;</a></span>byteCount</h2>
+<a id="aca75c68806e47e95144dc86a3f50d236"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca75c68806e47e95144dc86a3f50d236">&#9670;&nbsp;</a></span>mIface</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00275.html#a8f953f379d243081b950adb7f194b2e8">U32</a> byteCount</td>
+          <td class="memname"><a class="el" href="a00839.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> mIface</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a4f18b15c445fd0f55a0bf182e173d563"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4f18b15c445fd0f55a0bf182e173d563">&#9670;&nbsp;</a></span>byteCountHi</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00275.html#a8f953f379d243081b950adb7f194b2e8">U32</a> byteCountHi</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a015ca0a234558a1a0dbfc1e92f547ac0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a015ca0a234558a1a0dbfc1e92f547ac0">&#9670;&nbsp;</a></span>h</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00275.html#a8f953f379d243081b950adb7f194b2e8">U32</a> h[20/4]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>Physical interface. </p>
 
 </div>
 </div>
@@ -168,7 +147,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00857.html">CL_HashContext</a></li>
+    <li class="navelem"><a class="el" href="a00857.html">atca_device</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

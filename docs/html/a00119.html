@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_iface.h File Reference</title>
+<title>CryptoAuthLib: atca_execution.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,93 +87,97 @@ $(document).ready(function(){initNavTree('a00119.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_iface.h File Reference</div>  </div>
+<div class="title">atca_execution.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Microchip Crypto Auth hardware interface object.  
+<p>Defines an execution handler that executes a given command on a device and returns the results.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00095_source.html">atca_command.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00128_source.html">atca_status.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00101_source.html">atca_command.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00110_source.html">atca_device.h</a>&quot;</code><br />
 </div>
 <p><a href="a00119_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00777.html">ATCAIfaceCfg</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00805.html">atca_iface</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a00805.html" title="atca_iface is the C object backing ATCAIface. See the atca_iface.h file for details on the ATCAIface ...">atca_iface</a> is the C object backing ATCAIface. See the <a class="el" href="a00119.html" title="Microchip Crypto Auth hardware interface object. ">atca_iface.h</a> file for details on the ATCAIface methods  <a href="a00805.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga75c11126f3fe81df3d6c27f5bb393303"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00805.html">atca_iface</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a></td></tr>
-<tr class="separator:ga75c11126f3fe81df3d6c27f5bb393303"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gac7f674d4a0afb12d2f3c9c5e98cb1089"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#gac7f674d4a0afb12d2f3c9c5e98cb1089">ATCAIfaceType</a> { <br />
-&#160;&#160;<a class="el" href="a00755.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a872efba3aa5b7890acfe0f1e0e453bcb">ATCA_I2C_IFACE</a>, 
-<a class="el" href="a00755.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a2ce2e46b7f4245ab3d750ea2805fdc26">ATCA_SWI_IFACE</a>, 
-<a class="el" href="a00755.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a80ec8c070f1c711f2b16ad39d2a0486d">ATCA_UART_IFACE</a>, 
-<a class="el" href="a00755.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a8d50943acfc67f797b9c8fbf565deeb7">ATCA_SPI_IFACE</a>, 
-<br />
-&#160;&#160;<a class="el" href="a00755.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a7da282c54282a02f5650c38a85d0dfb1">ATCA_HID_IFACE</a>, 
-<a class="el" href="a00755.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a1da1522f46e7dbd1a928ff130594561d">ATCA_CUSTOM_IFACE</a>, 
-<a class="el" href="a00755.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089ac300244b5b323ee44001db318f365cec">ATCA_UNKNOWN_IFACE</a>
-<br />
- }</td></tr>
-<tr class="separator:gac7f674d4a0afb12d2f3c9c5e98cb1089"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:aa025be8149d8f6e4d07aaa436b026db2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#aa025be8149d8f6e4d07aaa436b026db2">ATCA_UNSUPPORTED_CMD</a>&#160;&#160;&#160;((uint16_t)0xFFFF)</td></tr>
+<tr class="separator:aa025be8149d8f6e4d07aaa436b026db2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga6f28f18f0d00c5301939724325f6b6fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#ga6f28f18f0d00c5301939724325f6b6fc">newATCAIface</a> (<a class="el" href="a00777.html">ATCAIfaceCfg</a> *cfg)</td></tr>
-<tr class="memdesc:ga6f28f18f0d00c5301939724325f6b6fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor for ATCAIface objects  <a href="a00755.html#ga6f28f18f0d00c5301939724325f6b6fc">More...</a><br /></td></tr>
-<tr class="separator:ga6f28f18f0d00c5301939724325f6b6fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga386353e8700eec35e4548dfa29f13b8d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#ga386353e8700eec35e4548dfa29f13b8d">atinit</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> ca_iface)</td></tr>
-<tr class="memdesc:ga386353e8700eec35e4548dfa29f13b8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function performs the HAL initialisation by calling intermediate HAL wrapper function. User should not call this function directly,instead use <a class="el" href="a00757.html#gacdc4fa3d2f2f6d197af8c10ab1f288b8" title="atcab_init is called once for the life of the application and creates a global ATCADevice object used...">atcab_init()</a> function.  <a href="a00755.html#ga386353e8700eec35e4548dfa29f13b8d">More...</a><br /></td></tr>
-<tr class="separator:ga386353e8700eec35e4548dfa29f13b8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6a9d6c47d866cba4ddd4ee6e671743d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#ga6a9d6c47d866cba4ddd4ee6e671743d5">atpostinit</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> ca_iface)</td></tr>
-<tr class="separator:ga6a9d6c47d866cba4ddd4ee6e671743d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga29c6f441d31c84629954d50cc95d3c5d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#ga29c6f441d31c84629954d50cc95d3c5d">atsend</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> ca_iface, uint8_t *txdata, int txlength)</td></tr>
-<tr class="memdesc:ga29c6f441d31c84629954d50cc95d3c5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function sends the data to device by calling intermediate HAL wrapper function.  <a href="a00755.html#ga29c6f441d31c84629954d50cc95d3c5d">More...</a><br /></td></tr>
-<tr class="separator:ga29c6f441d31c84629954d50cc95d3c5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1feec3d6e0c3c8b23d87ce0bbefcacdb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#ga1feec3d6e0c3c8b23d87ce0bbefcacdb">atreceive</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> ca_iface, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
-<tr class="memdesc:ga1feec3d6e0c3c8b23d87ce0bbefcacdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function receives data from device by calling intermediate HAL wrapper function.  <a href="a00755.html#ga1feec3d6e0c3c8b23d87ce0bbefcacdb">More...</a><br /></td></tr>
-<tr class="separator:ga1feec3d6e0c3c8b23d87ce0bbefcacdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga32693c852341e1b946bab3cca5f71761"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#ga32693c852341e1b946bab3cca5f71761">atwake</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> ca_iface)</td></tr>
-<tr class="memdesc:ga32693c852341e1b946bab3cca5f71761"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function performs waking up of device by calling intermediate HAL wrapper function. User should not call this function directly,instead use <a class="el" href="a00757.html#gad3bc620aedd9322d160eece0d8d20c82" title="wakeup the CryptoAuth device ">atcab_wakeup()</a> function.  <a href="a00755.html#ga32693c852341e1b946bab3cca5f71761">More...</a><br /></td></tr>
-<tr class="separator:ga32693c852341e1b946bab3cca5f71761"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac794fffe040e6d47a34c756720f3cbea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#gac794fffe040e6d47a34c756720f3cbea">atidle</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> ca_iface)</td></tr>
-<tr class="memdesc:gac794fffe040e6d47a34c756720f3cbea"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function makes the device to go to idle state by calling intermediate HAL wrapper function. User should not call this function directly,instead use <a class="el" href="a00757.html#gaf47433a371b9fcb8d65a4214cd9e4fa0" title="idle the CryptoAuth device ">atcab_idle()</a> function.  <a href="a00755.html#gac794fffe040e6d47a34c756720f3cbea">More...</a><br /></td></tr>
-<tr class="separator:gac794fffe040e6d47a34c756720f3cbea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac06336335e5f3191e3b1fc06d2830d96"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#gac06336335e5f3191e3b1fc06d2830d96">atsleep</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> ca_iface)</td></tr>
-<tr class="memdesc:gac06336335e5f3191e3b1fc06d2830d96"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function makes the device to go to sleep by calling intermediate HAL wrapper function. User should not call this function directly,instead use <a class="el" href="a00757.html#ga9475e032c388144c5a0df45d1df182a5" title="invoke sleep on the CryptoAuth device ">atcab_sleep()</a> function.  <a href="a00755.html#gac06336335e5f3191e3b1fc06d2830d96">More...</a><br /></td></tr>
-<tr class="separator:gac06336335e5f3191e3b1fc06d2830d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac88ba81abfd42df65c6c0c64414dfc6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00777.html">ATCAIfaceCfg</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#gac88ba81abfd42df65c6c0c64414dfc6e">atgetifacecfg</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> ca_iface)</td></tr>
-<tr class="memdesc:gac88ba81abfd42df65c6c0c64414dfc6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns the pointer to Interface configuration of the Crypto Auth device.  <a href="a00755.html#gac88ba81abfd42df65c6c0c64414dfc6e">More...</a><br /></td></tr>
-<tr class="separator:gac88ba81abfd42df65c6c0c64414dfc6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5e4163b8882d4eb42d4d5191c8731da0"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#ga5e4163b8882d4eb42d4d5191c8731da0">atgetifacehaldat</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> ca_iface)</td></tr>
-<tr class="memdesc:ga5e4163b8882d4eb42d4d5191c8731da0"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns the pointer of HAL data of the Crypto Auth device.  <a href="a00755.html#ga5e4163b8882d4eb42d4d5191c8731da0">More...</a><br /></td></tr>
-<tr class="separator:ga5e4163b8882d4eb42d4d5191c8731da0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf8074d759241d3edd6d8ead1d7322a98"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html#gaf8074d759241d3edd6d8ead1d7322a98">deleteATCAIface</a> (<a class="el" href="a00755.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> *ca_iface)</td></tr>
-<tr class="memdesc:gaf8074d759241d3edd6d8ead1d7322a98"><td class="mdescLeft">&#160;</td><td class="mdescRight">destructor for ATCAIface objects  <a href="a00755.html#gaf8074d759241d3edd6d8ead1d7322a98">More...</a><br /></td></tr>
-<tr class="separator:gaf8074d759241d3edd6d8ead1d7322a98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a6a7a38f14d486a4b2124d196fc6849"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#a9a6a7a38f14d486a4b2124d196fc6849">atca_execute_command</a> (<a class="el" href="a00853.html">ATCAPacket</a> *packet, <a class="el" href="a00838.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:a9a6a7a38f14d486a4b2124d196fc6849"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wakes up device, sends the packet, waits for command completion, receives response, and puts the device into the idle state.  <a href="#a9a6a7a38f14d486a4b2124d196fc6849">More...</a><br /></td></tr>
+<tr class="separator:a9a6a7a38f14d486a4b2124d196fc6849"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Microchip Crypto Auth hardware interface object. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this software and any derivatives exclusively with Microchip products. </dd></dl>
-</div></div><!-- contents -->
+<div class="textblock"><p>Defines an execution handler that executes a given command on a device and returns the results. </p>
+<p>The basic flow is to wake the device, send the command, wait/poll for completion, and finally receives the response from the device and does basic checks before returning to caller.</p>
+<p>This handler supports the ATSHA and ATECC device family.</p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="aa025be8149d8f6e4d07aaa436b026db2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa025be8149d8f6e4d07aaa436b026db2">&#9670;&nbsp;</a></span>ATCA_UNSUPPORTED_CMD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_UNSUPPORTED_CMD&#160;&#160;&#160;((uint16_t)0xFFFF)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a9a6a7a38f14d486a4b2124d196fc6849"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a6a7a38f14d486a4b2124d196fc6849">&#9670;&nbsp;</a></span>atca_execute_command()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atca_execute_command </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00853.html">ATCAPacket</a> *&#160;</td>
+          <td class="paramname"><em>packet</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00838.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Wakes up device, sends the packet, waits for command completion, receives response, and puts the device into the idle state. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">packet</td><td>As input, the packet to be sent. As output, the data buffer in the packet structure will contain the response. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>CryptoAuthentication device to send the command to.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00119.html">atca_iface.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00119.html">atca_execution.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

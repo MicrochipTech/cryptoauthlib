@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['newatcacommand',['newATCACommand',['../a00753.html#gac004e4f2b9a435f9de6cea523c0e9a2d',1,'newATCACommand(ATCADeviceType device_type):&#160;atca_command.c'],['../a00753.html#gac004e4f2b9a435f9de6cea523c0e9a2d',1,'newATCACommand(ATCADeviceType device_type):&#160;atca_command.c']]],
-  ['newatcadevice',['newATCADevice',['../a00754.html#gad5e12e12d3030e28d75164286df9e5e9',1,'atca_device.c']]],
-  ['newatcaiface',['newATCAIface',['../a00755.html#ga6f28f18f0d00c5301939724325f6b6fc',1,'atca_iface.c']]]
+  ['newatcacommand',['newATCACommand',['../a00837.html#gac004e4f2b9a435f9de6cea523c0e9a2d',1,'newATCACommand(ATCADeviceType device_type):&#160;atca_command.c'],['../a00837.html#gac004e4f2b9a435f9de6cea523c0e9a2d',1,'newATCACommand(ATCADeviceType device_type):&#160;atca_command.c']]],
+  ['newatcadevice',['newATCADevice',['../a00838.html#gad5e12e12d3030e28d75164286df9e5e9',1,'atca_device.c']]],
+  ['newatcaiface',['newATCAIface',['../a00839.html#ga6f28f18f0d00c5301939724325f6b6fc',1,'atca_iface.c']]]
 ];

@@ -7,31 +7,27 @@
  *
  * Prerequisite:
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 
 #include <plib.h>
@@ -54,9 +50,7 @@
  * \brief
  * Logical to physical bus mapping structure
  */
-ATCAI2CMaster_t *i2c_hal_data[MAX_I2C_BUSES];   // map logical, 0-based bus number to index
-int i2c_bus_ref_ct = 0;                         // total in-use count across buses
-//twi_options_t opt_twi_master;
+static ATCAI2CMaster_t i2c_hal_data[MAX_I2C_BUSES];   // map logical, 0-based bus number to index
 
 
 /****** I2C Driver implementation *******/
@@ -95,6 +89,34 @@ static bool StartTransfer(I2C_MODULE i2c_id, bool restart)
     return TRUE;
 }
 
+static bool Check_slave_ACK(I2C_MODULE i2c_id)
+{
+    bool status = false;
+
+    switch (i2c_id)
+    {
+    case I2C1:
+        if ((I2C1STATbits.ACKSTAT) != 1)
+        {
+            status = TRUE;
+        }
+        break;
+    case I2C3:
+        if ((I2C3STATbits.ACKSTAT) != 1)
+        {
+            status  = TRUE;
+        }
+        break;
+    default:
+        status = false;
+    }
+
+
+    return status;
+}
+
+
+
 static bool TransmitOneByte(I2C_MODULE i2c_id, uint8_t data)
 {
     // Wait for the transmitter to be ready
@@ -116,7 +138,7 @@ static bool TransmitOneByte(I2C_MODULE i2c_id, uint8_t data)
         ;
     }
 
-    return TRUE;
+    return Check_slave_ACK(i2c_id);
 }
 
 static uint8_t ReceiveOneByte(I2C_MODULE i2c_id, bool ack)
@@ -186,18 +208,20 @@ void i2c_write(I2C_MODULE i2c_id, uint8_t address, uint8_t *data, int len)
     StopTransfer(i2c_id);
 }
 
-void i2c_read(I2C_MODULE i2c_id, uint8_t address, uint8_t *data, uint16_t len)
+ATCA_STATUS i2c_read(I2C_MODULE i2c_id, uint8_t address, uint8_t *data, uint16_t len)
 {
     uint16_t i;
+    ATCA_STATUS status = !ATCA_SUCCESS;
 
     if (!StartTransfer(i2c_id, FALSE))
     {
-        return;
+        return ATCA_COMM_FAIL;
     }
 
     if (!TransmitOneByte(i2c_id, (address | 0x01)))
     {
-        return;
+        StopTransfer(i2c_id);
+        return ATCA_COMM_FAIL;
     }
 
     for (i = 0; i < len; i++)
@@ -213,6 +237,9 @@ void i2c_read(I2C_MODULE i2c_id, uint8_t address, uint8_t *data, uint16_t len)
     }
 
     StopTransfer(i2c_id);
+
+    return ATCA_SUCCESS;
+
 }
 /****************************************/
 
@@ -236,12 +263,12 @@ ATCA_STATUS hal_i2c_discover_buses(int i2c_buses[], int max_buses)
 }
 
 /** \brief discover any CryptoAuth devices on a given logical bus number.This function is currently not implemented.
- * \param[in] busNum - logical bus number on which to look for CryptoAuth devices
+ * \param[in] bus_num - logical bus number on which to look for CryptoAuth devices
  * \param[out] cfg[] - pointer to head of an array of interface config structures which get filled in by this method
  * \param[out] *found - number of devices found on this bus
  * \return ATCA_UNIMPLEMENTED
  */
-ATCA_STATUS hal_i2c_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
+ATCA_STATUS hal_i2c_discover_devices(int bus_num, ATCAIfaceCfg cfg[], int *found)
 {
     return ATCA_UNIMPLEMENTED;
 }
@@ -264,67 +291,56 @@ ATCA_STATUS hal_i2c_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
  */
 ATCA_STATUS hal_i2c_init(void *hal, ATCAIfaceCfg *cfg)
 {
-    int bus = cfg->atcai2c.bus; // 0-based logical bus number
-    int i;
-    ATCAHAL_t *phal = (ATCAHAL_t*)hal;
-
-    if (i2c_bus_ref_ct == 0)    // power up state, no i2c buses will have been used
-
+    if (cfg->atcai2c.bus >= MAX_I2C_BUSES)
     {
-        for (i = 0; i < MAX_I2C_BUSES; i++)
-        {
-            i2c_hal_data[i] = NULL;
-        }
+        return ATCA_COMM_FAIL;
     }
+    ATCAI2CMaster_t* data = &i2c_hal_data[cfg->atcai2c.bus];
 
-    i2c_bus_ref_ct++;   // total across buses
-
-    if (bus >= 0 && bus < MAX_I2C_BUSES)
+    if (data->ref_ct <= 0)
     {
-        //// if this is the first time this bus and interface has been created, do the physical work of enabling it
-        if (i2c_hal_data[bus] == NULL)
-        {
-            i2c_hal_data[bus] = malloc(sizeof(ATCAI2CMaster_t));
-            i2c_hal_data[bus]->ref_ct = 1;  // buses are shared, this is the first instance
+        // Bus isn't being used, enable it
 
-            switch (bus)
-            {
+        switch (cfg->atcai2c.bus)
+        {
 //            case 0:
-//                i2c_hal_data[bus]->id = I2C0;
+//                data->id = I2C0;
 //                break;
-            case 1:
-                i2c_hal_data[bus]->id = I2C1;
-                break;
+        case 1:
+            data->id = I2C1;
+            break;
 //            case 2:
-//                i2c_hal_data[bus]->id = I2C2;
+//                data->id = I2C2;
 //                break;
-            case 3:
-                i2c_hal_data[bus]->id = I2C3;
-                break;
-            }
-
-            // Set the I2C baudrate
-            I2CSetFrequency(i2c_hal_data[bus]->id, GetPeripheralClock(), cfg->atcai2c.baud);
-
-            // Enable the I2C bus
-            I2CEnable(i2c_hal_data[bus]->id, TRUE);
-
-            // store this for use during the release phase
-            i2c_hal_data[bus]->bus_index = bus;
-        }
-        else
-        {
-            // otherwise, another interface already initialized the bus, so this interface will share it and any different
-            // cfg parameters will be ignored...first one to initialize this sets the configuration
-            i2c_hal_data[bus]->ref_ct++;
+        case 3:
+            data->id = I2C3;
+            break;
+        default:
+            return ATCA_COMM_FAIL;
         }
 
-        phal->hal_data = i2c_hal_data[bus];
-
-        return ATCA_SUCCESS;
+        // Set the I2C baudrate
+        I2CSetFrequency(data->id, GetPeripheralClock(), cfg->atcai2c.baud);
+        // Enable the I2C bus
+        I2CEnable(data->id, TRUE);
+        // store this for use during the release phase
+        data->bus_index = cfg->atcai2c.bus;
+        // buses are shared, this is the first instance
+        data->ref_ct = 1;
+    }
+    else
+    {
+        // Bus is already is use, increment reference counter
+        data->ref_ct++;
     }
 
-    return ATCA_COMM_FAIL;
+    ((ATCAHAL_t*)hal)->hal_data = data;
+
+    return ATCA_SUCCESS;
+
+
+
+
 }
 
 /**
@@ -356,26 +372,60 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t *txdata, int txlength)
     txdata[0] = 0x03;   // insert the Word Address Value, Command token
     txlength++;         // account for word address value byte.
 
-    i2c_write(i2c_hal_data[bus]->id, cfg->atcai2c.slave_address, txdata, txlength);
+    i2c_write(i2c_hal_data[bus].id, cfg->atcai2c.slave_address, txdata, txlength);
 
     return ATCA_SUCCESS;
 }
 
 /**
  * \brief HAL implementation of I2C receive function for ASF I2C
- *
- * \param[in] iface     instance
- * \param[in] rxdata    pointer to space to receive the data
- * \param[in] rxlength  ptr to expected number of receive bytes to request
- *
- * \return ATCA_SUCCESS
+ * \param[in]    iface     Device to interact with.
+ * \param[out]   rxdata    Data received will be returned here.
+ * \param[inout] rxlength  As input, the size of the rxdata buffer.
+ *                         As output, the number of bytes received.
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t *rxdata, uint16_t *rxlength)
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
     int bus = cfg->atcai2c.bus;
+    int count;
+    int retries = 10;
+    int status = !ATCA_SUCCESS;
+    uint16_t rxdata_max_size = *rxlength;
 
-    i2c_read(i2c_hal_data[bus]->id, cfg->atcai2c.slave_address, rxdata, *rxlength);
+    *rxlength = 0;
+    if (rxdata_max_size < 1)
+    {
+        return ATCA_SMALL_BUFFER;
+    }
+
+    while (retries-- > 0 && status != ATCA_SUCCESS)
+    {
+        status = i2c_read(i2c_hal_data[bus].id, cfg->atcai2c.slave_address, rxdata, 1);
+    }
+
+    if (status != ATCA_SUCCESS)
+    {
+        return ATCA_COMM_FAIL;
+    }
+    if (rxdata[0] < ATCA_RSP_SIZE_MIN)
+    {
+        return ATCA_INVALID_SIZE;
+    }
+    if (rxdata[0] > rxdata_max_size)
+    {
+        return ATCA_SMALL_BUFFER;
+    }
+
+    count  = rxdata[0] - 1;
+    status = i2c_read(i2c_hal_data[bus].id, cfg->atcai2c.slave_address, &rxdata[1], count);
+    if (status != ATCA_SUCCESS)
+    {
+        return ATCA_COMM_FAIL;
+    }
+
+    *rxlength = rxdata[0];
 
     return ATCA_SUCCESS;
 }
@@ -392,13 +442,13 @@ void change_i2c_speed(ATCAIface iface, uint32_t speed)
     int bus = cfg->atcai2c.bus;
 
     // Disable the I2C bus
-    I2CEnable(i2c_hal_data[bus]->id, FALSE);
+    I2CEnable(i2c_hal_data[bus].id, FALSE);
 
     // Set the I2C baudrate
-    I2CSetFrequency(i2c_hal_data[bus]->id, GetPeripheralClock(), speed);
+    I2CSetFrequency(i2c_hal_data[bus].id, GetPeripheralClock(), speed);
 
     // Enable the I2C bus
-    I2CEnable(i2c_hal_data[bus]->id, TRUE);
+    I2CEnable(i2c_hal_data[bus].id, TRUE);
 }
 
 /**
@@ -414,7 +464,7 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
     int bus = cfg->atcai2c.bus;
     uint32_t bdrt = cfg->atcai2c.baud;
 
-    uint8_t data[4], expected[4] = { 0x04, 0x11, 0x33, 0x43 };
+    uint8_t data[4];
 
     if (bdrt != 100000)     // if not already at 100KHz, change it
     {
@@ -422,7 +472,7 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
     }
 
     // Send 0x00 as wake pulse
-    i2c_write(i2c_hal_data[bus]->id, 0x00, NULL, NULL);
+    i2c_write(i2c_hal_data[bus].id, 0x00, NULL, NULL);
 
     atca_delay_ms(3);   // wait tWHI + tWLO which is configured based on device type and configuration structure
     //atca_delay_us(cfg->wake_delay);
@@ -433,14 +483,9 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
         change_i2c_speed(iface, cfg->atcai2c.baud);
     }
 
-    i2c_read(i2c_hal_data[bus]->id, cfg->atcai2c.slave_address, data, 4);
+    i2c_read(i2c_hal_data[bus].id, cfg->atcai2c.slave_address, data, 4);
 
-    if (memcmp(data, expected, 4) == 0)
-    {
-        return ATCA_SUCCESS;
-    }
-
-    return ATCA_COMM_FAIL;
+    return hal_check_wake(data, 4);
 }
 
 /**
@@ -458,7 +503,7 @@ ATCA_STATUS hal_i2c_idle(ATCAIface iface)
 
     data[0] = 0x02; // idle word address value
 
-    i2c_write(i2c_hal_data[bus]->id, cfg->atcai2c.slave_address, data, 1);
+    i2c_write(i2c_hal_data[bus].id, cfg->atcai2c.slave_address, data, 1);
 
     return ATCA_SUCCESS;
 }
@@ -478,7 +523,7 @@ ATCA_STATUS hal_i2c_sleep(ATCAIface iface)
 
     data[0] = 0x01; // idle word address value
 
-    i2c_write(i2c_hal_data[bus]->id, cfg->atcai2c.slave_address, data, 1);
+    i2c_write(i2c_hal_data[bus].id, cfg->atcai2c.slave_address, data, 1);
 
     return ATCA_SUCCESS;
 }
@@ -494,14 +539,11 @@ ATCA_STATUS hal_i2c_release(void *hal_data)
 {
     ATCAI2CMaster_t *hal = (ATCAI2CMaster_t*)hal_data;
 
-    i2c_bus_ref_ct--;  // track total i2c bus interface instances for consistency checking and debugging
-
     // if the use count for this bus has gone to 0 references, disable it.  protect against an unbracketed release
-    if (hal && --(hal->ref_ct) <= 0 && i2c_hal_data[hal->bus_index] != NULL)
+    if (hal && --(hal->ref_ct) <= 0)
     {
         I2CEnable(hal->id, FALSE);
-        free(i2c_hal_data[hal->bus_index]);
-        i2c_hal_data[hal->bus_index] = NULL;
+        hal->ref_ct = 0;
     }
 
     return ATCA_SUCCESS;

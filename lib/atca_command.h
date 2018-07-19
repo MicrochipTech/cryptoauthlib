@@ -8,31 +8,27 @@
  * The command list is a superset of all device commands for this family.  The command object
  * differentiates the packet contents based on specific device type within the family.
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 
 #ifndef ATCA_COMMAND_H
@@ -41,9 +37,6 @@
 #include "atca_compiler.h"
 #include "atca_status.h"
 #include "atca_devtypes.h"
-#ifdef __linux__
-#include <stddef.h>
-#endif
 
 
 #ifdef __cplusplus
@@ -56,16 +49,19 @@ extern "C" {
 
 /** \brief atca_command is the C object backing ATCACommand.
  */
-typedef struct
+struct atca_command
 {
     ATCADeviceType dt;
     uint8_t        clock_divider;
     uint16_t       execution_time_msec;
-}atca_command;
+};
 
 /*--- ATCACommand ---------*/
-typedef atca_command* ATCACommand;
-ATCACommand newATCACommand(ATCADeviceType device_type);  // constructor
+typedef struct atca_command* ATCACommand;
+
+ATCA_STATUS initATCACommand(ATCADeviceType device_type, ATCACommand ca_cmd);
+ATCACommand newATCACommand(ATCADeviceType device_type);
+void deleteATCACommand(ATCACommand *ca_cmd);
 
 /* add ATCACommand declarations here
  *
@@ -90,6 +86,7 @@ ATCACommand newATCACommand(ATCADeviceType device_type);  // constructor
 // @2, the wire still has the intended byte alignment with arm-eabi.  this is likely the least portable part of atca
 
 #pragma pack( push, ATCAPacket, 2 )
+
 /** \brief an ATCA packet structure.  This is a superset of the packet transmitted on the wire.  It's also
  * used as a buffer for receiving the response
  */
@@ -104,21 +101,22 @@ typedef struct
     uint8_t  opcode;
     uint8_t  param1;    // often same as mode
     uint16_t param2;
-    uint8_t  data[130]; // includes 2-byte CRC.  data size is determined by largest possible data section of any
+    uint8_t  data[192]; // includes 2-byte CRC.  data size is determined by largest possible data section of any
                         // command + crc (see: x08 verify data1 + data2 + data3 + data4)
                         // this is an explicit design trade-off (space) resulting in simplicity in use
                         // and implementation
     //--- end of packet i/o frame
 
     // used for receive
-    uint8_t  execTime;      // execution time of command by opcode
-    uint16_t rxsize;        // expected response size, response is held in data member
+    uint8_t execTime;       // execution time of command by opcode
 
     // structure should be packed since it will be transmitted over the wire
     // this method varies by compiler.  As new compilers are supported, add their structure packing method here
 
 } ATCAPacket;
+
 #pragma pack( pop, ATCAPacket)
+
 
 ATCA_STATUS atCheckMAC(ATCACommand ca_cmd, ATCAPacket *packet);
 ATCA_STATUS atCounter(ATCACommand ca_cmd, ATCAPacket *packet);
@@ -143,45 +141,12 @@ ATCA_STATUS atVerify(ATCACommand ca_cmd, ATCAPacket *packet);
 ATCA_STATUS atWrite(ATCACommand ca_cmd, ATCAPacket *packet, bool has_mac);
 ATCA_STATUS atAES(ATCACommand ca_cmd, ATCAPacket *packet);
 ATCA_STATUS atSelfTest(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atKDF(ATCACommand ca_cmd, ATCAPacket *packet, uint16_t* out_data_size, uint16_t* out_nonce_size);
+ATCA_STATUS atKDF(ATCACommand ca_cmd, ATCAPacket *packet);
 
 bool atIsSHAFamily(ATCADeviceType device_type);
 bool atIsECCFamily(ATCADeviceType device_type);
 ATCA_STATUS isATCAError(uint8_t *data);
 
-// this map is used to index into an array of execution times
-typedef enum
-{
-    WAKE_TWHI,
-    CMD_CHECKMAC,
-    CMD_COUNTER,
-    CMD_DERIVEKEY,
-    CMD_ECDH,
-    CMD_GENDIG,
-    CMD_GENKEY,
-    CMD_HMAC,
-    CMD_INFO,
-    CMD_LOCK,
-    CMD_MAC,
-    CMD_NONCE,
-    CMD_PAUSE,
-    CMD_PRIVWRITE,
-    CMD_RANDOM,
-    CMD_READMEM,
-    CMD_SHA,
-    CMD_SIGN,
-    CMD_UPDATEEXTRA,
-    CMD_VERIFY,
-    CMD_WRITEMEM,
-    CMD_AES,
-    CMD_KDF,
-    CMD_SECUREBOOT,
-    CMD_SELFTEST,
-    CMD_LASTCOMMAND  // placeholder
-} ATCA_CmdMap;
-
-void deleteATCACommand(ATCACommand *);        // destructor
-/*---- end of ATCACommand ----*/
 
 // command helpers
 void atCRC(size_t length, const uint8_t *data, uint8_t *crc_le);
@@ -208,35 +173,32 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 //! communication error
 #define CMD_STATUS_BYTE_COMM    ((uint8_t)0xFF)
 
-/** \brief
+/** \name Opcodes for Crypto Authentication device commands
    @{ */
-
-/** \name opcodes for ATATECC Commands
-   @{ */
-#define ATCA_CHECKMAC                   ((uint8_t)0x28)         //!< CheckMac command op-code
-#define ATCA_DERIVE_KEY                 ((uint8_t)0x1C)         //!< DeriveKey command op-code
-#define ATCA_INFO                       ((uint8_t)0x30)         //!< Info command op-code
-#define ATCA_GENDIG                     ((uint8_t)0x15)         //!< GenDig command op-code
-#define ATCA_GENKEY                     ((uint8_t)0x40)         //!< GenKey command op-code
-#define ATCA_HMAC                       ((uint8_t)0x11)         //!< HMAC command op-code
-#define ATCA_LOCK                       ((uint8_t)0x17)         //!< Lock command op-code
-#define ATCA_MAC                        ((uint8_t)0x08)         //!< MAC command op-code
-#define ATCA_NONCE                      ((uint8_t)0x16)         //!< Nonce command op-code
-#define ATCA_PAUSE                      ((uint8_t)0x01)         //!< Pause command op-code
-#define ATCA_PRIVWRITE                  ((uint8_t)0x46)         //!< PrivWrite command op-code
-#define ATCA_RANDOM                     ((uint8_t)0x1B)         //!< Random command op-code
-#define ATCA_READ                       ((uint8_t)0x02)         //!< Read command op-code
-#define ATCA_SIGN                       ((uint8_t)0x41)         //!< Sign command op-code
-#define ATCA_UPDATE_EXTRA               ((uint8_t)0x20)         //!< UpdateExtra command op-code
-#define ATCA_VERIFY                     ((uint8_t)0x45)         //!< GenKey command op-code
-#define ATCA_WRITE                      ((uint8_t)0x12)         //!< Write command op-code
-#define ATCA_ECDH                       ((uint8_t)0x43)         //!< ECDH command op-code
-#define ATCA_COUNTER                    ((uint8_t)0x24)         //!< Counter command op-code
-#define ATCA_SHA                        ((uint8_t)0x47)         //!< SHA command op-code
-#define ATCA_AES                        ((uint8_t)0x51)         //!< AES command op-code
-#define ATCA_KDF                        ((uint8_t)0x56)         //!< KDF command op-code
-#define ATCA_SECUREBOOT                 ((uint8_t)0x80)         //!< Secure Boot command op-code
-#define ATCA_SELFTEST                   ((uint8_t)0x77)         //!< Self test command op-code
+#define ATCA_CHECKMAC     ((uint8_t)0x28)  //!< CheckMac command op-code
+#define ATCA_DERIVE_KEY   ((uint8_t)0x1C)  //!< DeriveKey command op-code
+#define ATCA_INFO         ((uint8_t)0x30)  //!< Info command op-code
+#define ATCA_GENDIG       ((uint8_t)0x15)  //!< GenDig command op-code
+#define ATCA_GENKEY       ((uint8_t)0x40)  //!< GenKey command op-code
+#define ATCA_HMAC         ((uint8_t)0x11)  //!< HMAC command op-code
+#define ATCA_LOCK         ((uint8_t)0x17)  //!< Lock command op-code
+#define ATCA_MAC          ((uint8_t)0x08)  //!< MAC command op-code
+#define ATCA_NONCE        ((uint8_t)0x16)  //!< Nonce command op-code
+#define ATCA_PAUSE        ((uint8_t)0x01)  //!< Pause command op-code
+#define ATCA_PRIVWRITE    ((uint8_t)0x46)  //!< PrivWrite command op-code
+#define ATCA_RANDOM       ((uint8_t)0x1B)  //!< Random command op-code
+#define ATCA_READ         ((uint8_t)0x02)  //!< Read command op-code
+#define ATCA_SIGN         ((uint8_t)0x41)  //!< Sign command op-code
+#define ATCA_UPDATE_EXTRA ((uint8_t)0x20)  //!< UpdateExtra command op-code
+#define ATCA_VERIFY       ((uint8_t)0x45)  //!< GenKey command op-code
+#define ATCA_WRITE        ((uint8_t)0x12)  //!< Write command op-code
+#define ATCA_ECDH         ((uint8_t)0x43)  //!< ECDH command op-code
+#define ATCA_COUNTER      ((uint8_t)0x24)  //!< Counter command op-code
+#define ATCA_SHA          ((uint8_t)0x47)  //!< SHA command op-code
+#define ATCA_AES          ((uint8_t)0x51)  //!< AES command op-code
+#define ATCA_KDF          ((uint8_t)0x56)  //!< KDF command op-code
+#define ATCA_SECUREBOOT   ((uint8_t)0x80)  //!< Secure Boot command op-code
+#define ATCA_SELFTEST     ((uint8_t)0x77)  //!< Self test command op-code
 
 
 
@@ -442,7 +404,7 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define GENKEY_MODE_PUBKEY_DIGEST   ((uint8_t)0x10)         //!< GenKey mode: Calculate PubKey digest on the public key in KeyId
 #define GENKEY_PRIVATE_TO_TEMPKEY   ((uint16_t)0xFFFF)      //!< GenKey Create private key and store to tempkey (608 only)
 #define GENKEY_RSP_SIZE_SHORT       ATCA_RSP_SIZE_MIN       //!< GenKey response packet size in Digest mode
-#define GENKEY_RSP_SIZE_LONG        ATCA_RSP_SIZE_72        //!< GenKey response packet size when returning a public key
+#define GENKEY_RSP_SIZE_LONG        ATCA_RSP_SIZE_64        //!< GenKey response packet size when returning a public key
 /** @} */
 
 /** \name Definitions for the HMAC Command

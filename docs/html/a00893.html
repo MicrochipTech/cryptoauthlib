@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcaSWImaster Struct Reference</title>
+<title>CryptoAuthLib: atcacert_tm_utc_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,100 +89,108 @@ $(document).ready(function(){initNavTree('a00893.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atcaSWImaster Struct Reference<div class="ingroups"><a class="el" href="a00759.html">Hardware abstraction layer (hal_)</a></div></div>  </div>
+<div class="title">atcacert_tm_utc_s Struct Reference<div class="ingroups"><a class="el" href="a00840.html">Certificate manipulation methods (atcacert_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the hal_data for ATCA HAL.  
- <a href="a00893.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="a00410_source.html">hal_swi_bitbang.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a00143_source.html">atcacert_date.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:afd6d53ef6b697533839248b40bc97861"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00893.html#afd6d53ef6b697533839248b40bc97861">pin_sda</a></td></tr>
-<tr class="separator:afd6d53ef6b697533839248b40bc97861"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5c011e6c2e8d49675f7029e8ec2c0a6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00893.html#af5c011e6c2e8d49675f7029e8ec2c0a6">bus_index</a></td></tr>
-<tr class="memdesc:af5c011e6c2e8d49675f7029e8ec2c0a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">for conveniences during interface release phase  <a href="#af5c011e6c2e8d49675f7029e8ec2c0a6">More...</a><br /></td></tr>
-<tr class="separator:af5c011e6c2e8d49675f7029e8ec2c0a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1dd3236df177255a91b568170b70a74"><td class="memItemLeft" align="right" valign="top">usart_if&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00893.html#ad1dd3236df177255a91b568170b70a74">usart_instance</a></td></tr>
-<tr class="separator:ad1dd3236df177255a91b568170b70a74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d29ab9b8f0842ee9a2906302b20011d"><td class="memItemLeft" align="right" valign="top">struct usart_module&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00893.html#a2d29ab9b8f0842ee9a2906302b20011d">usart_instance</a></td></tr>
-<tr class="separator:a2d29ab9b8f0842ee9a2906302b20011d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7758bb1b871f6094e6d2f0c2ce10b18c"><td class="memItemLeft" align="right" valign="top">struct usart_sync_descriptor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00893.html#a7758bb1b871f6094e6d2f0c2ce10b18c">USART_SWI</a></td></tr>
-<tr class="separator:a7758bb1b871f6094e6d2f0c2ce10b18c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18df301c1a10c8d493da86ce5c2aea78"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00893.html#a18df301c1a10c8d493da86ce5c2aea78">tm_sec</a></td></tr>
+<tr class="separator:a18df301c1a10c8d493da86ce5c2aea78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a987fa9280fe4cd6c6b8f77409f1c1504"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00893.html#a987fa9280fe4cd6c6b8f77409f1c1504">tm_min</a></td></tr>
+<tr class="separator:a987fa9280fe4cd6c6b8f77409f1c1504"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d171061df9e012fcfbd1172b8440d5f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00893.html#a4d171061df9e012fcfbd1172b8440d5f">tm_hour</a></td></tr>
+<tr class="separator:a4d171061df9e012fcfbd1172b8440d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02048604d30b880033311cf542d63f92"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00893.html#a02048604d30b880033311cf542d63f92">tm_mday</a></td></tr>
+<tr class="separator:a02048604d30b880033311cf542d63f92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada983deda100b604bee5716512453658"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00893.html#ada983deda100b604bee5716512453658">tm_mon</a></td></tr>
+<tr class="separator:ada983deda100b604bee5716512453658"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a994c4f4519ba57e186580d21cc86f9e5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00893.html#a994c4f4519ba57e186580d21cc86f9e5">tm_year</a></td></tr>
+<tr class="separator:a994c4f4519ba57e186580d21cc86f9e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This is the hal_data for ATCA HAL. </p>
-<p>this is the hal_data for ATCA HAL for ASF SERCOM</p>
-<p>this is the hal_data for ATCA HAL for SWI UART </p>
+<div class="textblock"><p>Holds a broken-down date in UTC. Mimics atcacert_tm_utc_t from time.h. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="af5c011e6c2e8d49675f7029e8ec2c0a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af5c011e6c2e8d49675f7029e8ec2c0a6">&#9670;&nbsp;</a></span>bus_index</h2>
+<a id="a4d171061df9e012fcfbd1172b8440d5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d171061df9e012fcfbd1172b8440d5f">&#9670;&nbsp;</a></span>tm_hour</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int bus_index</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>for conveniences during interface release phase </p>
-
-</div>
-</div>
-<a id="afd6d53ef6b697533839248b40bc97861"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd6d53ef6b697533839248b40bc97861">&#9670;&nbsp;</a></span>pin_sda</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t pin_sda</td>
+          <td class="memname">int tm_hour</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ad1dd3236df177255a91b568170b70a74"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad1dd3236df177255a91b568170b70a74">&#9670;&nbsp;</a></span>usart_instance <span class="overload">[1/2]</span></h2>
+<a id="a02048604d30b880033311cf542d63f92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02048604d30b880033311cf542d63f92">&#9670;&nbsp;</a></span>tm_mday</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">usart_if usart_instance</td>
+          <td class="memname">int tm_mday</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a2d29ab9b8f0842ee9a2906302b20011d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d29ab9b8f0842ee9a2906302b20011d">&#9670;&nbsp;</a></span>usart_instance <span class="overload">[2/2]</span></h2>
+<a id="a987fa9280fe4cd6c6b8f77409f1c1504"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a987fa9280fe4cd6c6b8f77409f1c1504">&#9670;&nbsp;</a></span>tm_min</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct usart_module usart_instance</td>
+          <td class="memname">int tm_min</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a7758bb1b871f6094e6d2f0c2ce10b18c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7758bb1b871f6094e6d2f0c2ce10b18c">&#9670;&nbsp;</a></span>USART_SWI</h2>
+<a id="ada983deda100b604bee5716512453658"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada983deda100b604bee5716512453658">&#9670;&nbsp;</a></span>tm_mon</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct usart_sync_descriptor USART_SWI</td>
+          <td class="memname">int tm_mon</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a18df301c1a10c8d493da86ce5c2aea78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18df301c1a10c8d493da86ce5c2aea78">&#9670;&nbsp;</a></span>tm_sec</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tm_sec</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a994c4f4519ba57e186580d21cc86f9e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a994c4f4519ba57e186580d21cc86f9e5">&#9670;&nbsp;</a></span>tm_year</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tm_year</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -194,7 +202,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00893.html">atcaSWImaster</a></li>
+    <li class="navelem"><a class="el" href="a00893.html">atcacert_tm_utc_s</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

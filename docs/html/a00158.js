@@ -1,6 +1,6 @@
 var a00158 =
 [
-    [ "atcacert_gen_challenge_sw", "a00756.html#gaa9829e5aa1ece3d3a933db9827d3e8f3", null ],
-    [ "atcacert_verify_cert_sw", "a00756.html#gab78271af8c3e2837810fcdae6e3f5e28", null ],
-    [ "atcacert_verify_response_sw", "a00756.html#ga9d5bf9ec84d28a0412377818805c32c4", null ]
+    [ "atcacert_gen_challenge_hw", "a00840.html#ga208c1ea765f192bd86b26964fbb5edcb", null ],
+    [ "atcacert_verify_cert_hw", "a00840.html#ga81e92ea606e86051afa84f2fac4898d6", null ],
+    [ "atcacert_verify_response_hw", "a00840.html#gafeffa7a36a7b5a343f5f568d090e8eed", null ]
 ];

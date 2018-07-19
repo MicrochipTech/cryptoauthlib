@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_samd21_timer_asf.c File Reference</title>
+<title>CryptoAuthLib: hal_sam4s_timer_asf.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,37 +89,38 @@ $(document).ready(function(){initNavTree('a00383.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">hal_samd21_timer_asf.c File Reference</div>  </div>
+<div class="title">hal_sam4s_timer_asf.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for SAMD21 timer/delay over ASF drivers.  
+<p>ATCA Hardware abstraction layer for SAM4S I2C over ASF drivers.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;asf.h&gt;</code><br />
 <code>#include &lt;delay.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00290_source.html">atca_hal.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00308_source.html">atca_hal.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga7598dfcd6dcac882836544d48356d02f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00759.html#ga7598dfcd6dcac882836544d48356d02f">atca_delay_us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga7598dfcd6dcac882836544d48356d02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API implemented at the HAL level.  <a href="a00759.html#ga7598dfcd6dcac882836544d48356d02f">More...</a><br /></td></tr>
+<tr class="memitem:ga7598dfcd6dcac882836544d48356d02f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#ga7598dfcd6dcac882836544d48356d02f">atca_delay_us</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga7598dfcd6dcac882836544d48356d02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API implemented at the HAL level.  <a href="a00843.html#ga7598dfcd6dcac882836544d48356d02f">More...</a><br /></td></tr>
 <tr class="separator:ga7598dfcd6dcac882836544d48356d02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga19891182689551cc3a88603135959351"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00759.html#ga19891182689551cc3a88603135959351">atca_delay_10us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga19891182689551cc3a88603135959351"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of tens of microseconds.  <a href="a00759.html#ga19891182689551cc3a88603135959351">More...</a><br /></td></tr>
+<tr class="memitem:ga19891182689551cc3a88603135959351"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#ga19891182689551cc3a88603135959351">atca_delay_10us</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga19891182689551cc3a88603135959351"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of tens of microseconds.  <a href="a00843.html#ga19891182689551cc3a88603135959351">More...</a><br /></td></tr>
 <tr class="separator:ga19891182689551cc3a88603135959351"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga80a853a202b089064bfc4b159c3418b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00759.html#ga80a853a202b089064bfc4b159c3418b4">atca_delay_ms</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga80a853a202b089064bfc4b159c3418b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of milliseconds.  <a href="a00759.html#ga80a853a202b089064bfc4b159c3418b4">More...</a><br /></td></tr>
+<tr class="memitem:ga80a853a202b089064bfc4b159c3418b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#ga80a853a202b089064bfc4b159c3418b4">atca_delay_ms</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga80a853a202b089064bfc4b159c3418b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of milliseconds.  <a href="a00843.html#ga80a853a202b089064bfc4b159c3418b4">More...</a><br /></td></tr>
 <tr class="separator:ga80a853a202b089064bfc4b159c3418b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for SAMD21 timer/delay over ASF drivers. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this software and any derivatives exclusively with Microchip products. </dd></dl>
+<div class="textblock"><p>ATCA Hardware abstraction layer for SAM4S I2C over ASF drivers. </p>
+<p>Prerequisite: add "Delay routines (service)" module to application in Atmel Studio</p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00383.html">hal_samd21_timer_asf.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00383.html">hal_sam4s_timer_asf.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

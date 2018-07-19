@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_jwt_t Struct Reference</title>
+<title>CryptoAuthLib: atcaSWImaster Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,63 +89,116 @@ $(document).ready(function(){initNavTree('a00977.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atca_jwt_t Struct Reference<div class="ingroups"><a class="el" href="a00761.html">JSON Web Token (JWT) methods (atca_jwt_)</a></div></div>  </div>
+<div class="title">atcaSWImaster Struct Reference<div class="ingroups"><a class="el" href="a00843.html">Hardware abstraction layer (hal_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure to hold metadata information about the jwt being built.  
+<p>This is the hal_data for ATCA HAL.  
  <a href="a00977.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="a00497_source.html">atca_jwt.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a00434_source.html">hal_swi_bitbang.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a1fe855c208bc17a51a4d34fefdb2d5b1"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00977.html#a1fe855c208bc17a51a4d34fefdb2d5b1">buf</a></td></tr>
-<tr class="separator:a1fe855c208bc17a51a4d34fefdb2d5b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a892366b22e8ea42d95e49308022eef4d"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00977.html#a892366b22e8ea42d95e49308022eef4d">buflen</a></td></tr>
-<tr class="separator:a892366b22e8ea42d95e49308022eef4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee7e8f6f5f1a4b5b402473cf99d3042a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00977.html#aee7e8f6f5f1a4b5b402473cf99d3042a">cur</a></td></tr>
-<tr class="separator:aee7e8f6f5f1a4b5b402473cf99d3042a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd6d53ef6b697533839248b40bc97861"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00977.html#afd6d53ef6b697533839248b40bc97861">pin_sda</a></td></tr>
+<tr class="separator:afd6d53ef6b697533839248b40bc97861"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad72ba8c994f4d0e5ce354e17f7c427c0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00977.html#ad72ba8c994f4d0e5ce354e17f7c427c0">ref_ct</a></td></tr>
+<tr class="separator:ad72ba8c994f4d0e5ce354e17f7c427c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5c011e6c2e8d49675f7029e8ec2c0a6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00977.html#af5c011e6c2e8d49675f7029e8ec2c0a6">bus_index</a></td></tr>
+<tr class="memdesc:af5c011e6c2e8d49675f7029e8ec2c0a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">for conveniences during interface release phase  <a href="#af5c011e6c2e8d49675f7029e8ec2c0a6">More...</a><br /></td></tr>
+<tr class="separator:af5c011e6c2e8d49675f7029e8ec2c0a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1dd3236df177255a91b568170b70a74"><td class="memItemLeft" align="right" valign="top">usart_if&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00977.html#ad1dd3236df177255a91b568170b70a74">usart_instance</a></td></tr>
+<tr class="separator:ad1dd3236df177255a91b568170b70a74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d29ab9b8f0842ee9a2906302b20011d"><td class="memItemLeft" align="right" valign="top">struct usart_module&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00977.html#a2d29ab9b8f0842ee9a2906302b20011d">usart_instance</a></td></tr>
+<tr class="separator:a2d29ab9b8f0842ee9a2906302b20011d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7758bb1b871f6094e6d2f0c2ce10b18c"><td class="memItemLeft" align="right" valign="top">struct usart_sync_descriptor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00977.html#a7758bb1b871f6094e6d2f0c2ce10b18c">USART_SWI</a></td></tr>
+<tr class="separator:a7758bb1b871f6094e6d2f0c2ce10b18c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure to hold metadata information about the jwt being built. </p>
+<div class="textblock"><p>This is the hal_data for ATCA HAL. </p>
+<p>this is the hal_data for ATCA HAL for ASF SERCOM</p>
+<p>this is the hal_data for ATCA HAL for SWI UART </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="a1fe855c208bc17a51a4d34fefdb2d5b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1fe855c208bc17a51a4d34fefdb2d5b1">&#9670;&nbsp;</a></span>buf</h2>
+<a id="af5c011e6c2e8d49675f7029e8ec2c0a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5c011e6c2e8d49675f7029e8ec2c0a6">&#9670;&nbsp;</a></span>bus_index</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char* buf</td>
+          <td class="memname">int bus_index</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>for conveniences during interface release phase </p>
+
+</div>
+</div>
+<a id="afd6d53ef6b697533839248b40bc97861"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd6d53ef6b697533839248b40bc97861">&#9670;&nbsp;</a></span>pin_sda</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t pin_sda</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a892366b22e8ea42d95e49308022eef4d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a892366b22e8ea42d95e49308022eef4d">&#9670;&nbsp;</a></span>buflen</h2>
+<a id="ad72ba8c994f4d0e5ce354e17f7c427c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad72ba8c994f4d0e5ce354e17f7c427c0">&#9670;&nbsp;</a></span>ref_ct</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t buflen</td>
+          <td class="memname">int ref_ct</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="aee7e8f6f5f1a4b5b402473cf99d3042a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee7e8f6f5f1a4b5b402473cf99d3042a">&#9670;&nbsp;</a></span>cur</h2>
+<a id="ad1dd3236df177255a91b568170b70a74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1dd3236df177255a91b568170b70a74">&#9670;&nbsp;</a></span>usart_instance <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t cur</td>
+          <td class="memname">usart_if usart_instance</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2d29ab9b8f0842ee9a2906302b20011d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d29ab9b8f0842ee9a2906302b20011d">&#9670;&nbsp;</a></span>usart_instance <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct usart_module usart_instance</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7758bb1b871f6094e6d2f0c2ce10b18c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7758bb1b871f6094e6d2f0c2ce10b18c">&#9670;&nbsp;</a></span>USART_SWI</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct usart_sync_descriptor USART_SWI</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -157,7 +210,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00977.html">atca_jwt_t</a></li>
+    <li class="navelem"><a class="el" href="a00977.html">atcaSWImaster</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

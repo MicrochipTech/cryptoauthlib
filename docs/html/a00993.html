@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: HAL Directory - Purpose</title>
+<title>CryptoAuthLib: atca_include_data_in_out Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -86,118 +86,55 @@ $(document).ready(function(){initNavTree('a00993.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">HAL Directory - Purpose </div>  </div>
+<div class="title">atca_include_data_in_out Struct Reference<div class="ingroups"><a class="el" href="a00844.html">Host side crypto methods (atcah_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This directory contains all the Hardware Abstraction Layer (HAL) files used to adapt the upper levels of atca-ng and abstractions to physical hardware.</p>
-<p>HAL contains physical implementations for I2C, SWI, SPI, UART and timers for specific hardware platforms.</p>
-<p><b>Include just those HAL files you require based on platform type.</b></p>
-<h1>CryptoAuthLib Release 2: Supported HAL Layers </h1>
-<p>HAL Layers files are combined into groups. Initial group is generic files that are typically included in a project. Files are then broken out by uController Family and or Operating System Interface.</p>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Protocol Files  </th><th class="markdownTableHeadNone">Interface  </th><th class="markdownTableHeadNone">Files  </th><th class="markdownTableHeadNone">API  </th><th class="markdownTableHeadNone">Notes   </th></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">atca  </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a00287.html" title="low-level HAL - methods used to setup indirection to physical layer interface. this level does the di...">atca_hal.c</a>/h  </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">For all projects   </td></tr>
-<tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyNone">kit protocol  </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a00452.html" title="Microchip Crypto Auth hardware interface object. ">kit_protocol.c</a>/h  </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">For all Kit Protocol projects   </td></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a00449.html" title="ATCA Hardware abstraction layer physical send &amp; receive function definitions. ">kit_phy.h</a>  </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a00308.html" title="ATCA Hardware abstraction layer for I2C bit banging. ">hal_i2c_bitbang.c</a>/h  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone">For all I2C Bitbang projects   </td></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a00407.html" title="ATCA Hardware abstraction layer for SWI bit banging. ">hal_swi_bitbang.c</a>/h  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone">For all SWI Bitbang projects   </td></tr>
-<tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a00413.html" title="ATCA Hardware abstraction layer for SWI over UART drivers. ">hal_swi_uart.c</a>/h  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone">For all SWI UART projects   </td></tr>
+
+<p>Input / output parameters for function atca_include_data().  
+ <a href="a00993.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="a00515_source.html">atca_host.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:gad87f95f0faf0c6fdfe94040efcb14860"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00844.html#gad87f95f0faf0c6fdfe94040efcb14860">p_temp</a></td></tr>
+<tr class="memdesc:gad87f95f0faf0c6fdfe94040efcb14860"><td class="mdescLeft">&#160;</td><td class="mdescRight">[out] pointer to output buffer  <a href="a00844.html#gad87f95f0faf0c6fdfe94040efcb14860">More...</a><br /></td></tr>
+<tr class="separator:gad87f95f0faf0c6fdfe94040efcb14860"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8712cb73a4d6b370658d8bc9a77fba3e"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00844.html#ga8712cb73a4d6b370658d8bc9a77fba3e">otp</a></td></tr>
+<tr class="memdesc:ga8712cb73a4d6b370658d8bc9a77fba3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] pointer to one-time-programming data  <a href="a00844.html#ga8712cb73a4d6b370658d8bc9a77fba3e">More...</a><br /></td></tr>
+<tr class="separator:ga8712cb73a4d6b370658d8bc9a77fba3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7276bd20c5842e712da638d25ceb6d92"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00844.html#ga7276bd20c5842e712da638d25ceb6d92">sn</a></td></tr>
+<tr class="memdesc:ga7276bd20c5842e712da638d25ceb6d92"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] pointer to serial number data  <a href="a00844.html#ga7276bd20c5842e712da638d25ceb6d92">More...</a><br /></td></tr>
+<tr class="separator:ga7276bd20c5842e712da638d25ceb6d92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37e90f5e3bd99fac2021fb3a326607d4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00993.html#a37e90f5e3bd99fac2021fb3a326607d4">mode</a></td></tr>
+<tr class="separator:a37e90f5e3bd99fac2021fb3a326607d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">AVR Micros  </th><th class="markdownTableHeadNone">Interface  </th><th class="markdownTableHeadNone">Files  </th><th class="markdownTableHeadNone">API  </th><th class="markdownTableHeadNone">Notes   </th></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">at90usb1287  </td><td class="markdownTableBodyNone">I2C  </td><td class="markdownTableBodyNone"><a class="el" href="a00299.html" title="ATCA Hardware abstraction layer for AT90USB1287 I2C over ASF drivers. ">hal_at90usb1287_i2c_asf.c</a>/h  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a00305.html" title="ATCA Hardware abstraction layer for AT90USB1287 timer/delay over ASF drivers. ">hal_at90usb1287_timer_asf.c</a>  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone">For all at90USB1287   </td></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">SWI  </td><td class="markdownTableBodyNone"><a class="el" href="a00464.html" title="ATXMEGA&#39;s ATCA Hardware abstraction layer for SWI interface over AT90USB1287 UART drivers...">swi_uart_at90usb1287_asf.c</a>/h  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyNone">xmega_a3bu  </td><td class="markdownTableBodyNone">I2C  </td><td class="markdownTableBodyNone"><a class="el" href="a00434.html" title="ATCA Hardware abstraction layer for XMEGA-A3BU I2C over ASF drivers. ">hal_xmega_a3bu_i2c_asf.c</a>/h  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a00440.html" title="ATCA Hardware abstraction layer for SAMD21 timer/delay over ASF drivers. ">hal_xmega_a3bu_timer_asf.c</a>  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone">For all xmega_a3bu   </td></tr>
-<tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">SWI  </td><td class="markdownTableBodyNone">swi_uart_xmaga_a3bu_asf.c/h  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone"></td></tr>
-</table>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">SAM Micros  </th><th class="markdownTableHeadNone">Interface  </th><th class="markdownTableHeadNone">Files  </th><th class="markdownTableHeadNone">API  </th><th class="markdownTableHeadNone">Notes   </th></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">sam4s  </td><td class="markdownTableBodyNone">I2C  </td><td class="markdownTableBodyNone"><a class="el" href="a00353.html" title="ATCA Hardware abstraction layer for SAM4S I2C over ASF drivers. ">hal_sam4s_i2c_asf.c</a>/h  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a00359.html" title="ATCA Hardware abstraction layer for SAM4S I2C over ASF drivers. ">hal_sam4s_timer_asf.c</a>  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">samb11  </td><td class="markdownTableBodyNone">I2C  </td><td class="markdownTableBodyNone"><a class="el" href="a00362.html" title="ATCA Hardware abstraction layer for SAMB11 I2C over ASF drivers. ">hal_samb11_i2c_asf.c</a>/h  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a00368.html" title="ATCA Hardware abstraction layer for SAMB11 timer/delay over ASF drivers. ">hal_samb11_timer_asf.c</a>  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">samd21  </td><td class="markdownTableBodyNone">I2C  </td><td class="markdownTableBodyNone"><a class="el" href="a00371.html" title="ATCA Hardware abstraction layer for SAMD21 I2C over ASF drivers. ">hal_samd21_i2c_asf.c</a>/h  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a00383.html" title="ATCA Hardware abstraction layer for SAMD21 timer/delay over ASF drivers. ">hal_samd21_timer_asf.c</a>  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone">For all samd21 ASF projects   </td></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">samd21  </td><td class="markdownTableBodyNone">I2C  </td><td class="markdownTableBodyNone"><a class="el" href="a00377.html" title="ATCA Hardware abstraction layer for SAMD21 I2C over START drivers. ">hal_samd21_i2c_start.c</a>/h  </td><td class="markdownTableBodyNone">START  </td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a00386.html" title="ATCA Hardware abstraction layer for SAMD21 I2C over START drivers. ">hal_samd21_timer_start.c</a>  </td><td class="markdownTableBodyNone">START  </td><td class="markdownTableBodyNone">For all samd21 START projects   </td></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">samd21  </td><td class="markdownTableBodyNone">I2C  </td><td class="markdownTableBodyNone"><a class="el" href="a00443.html" title="Hardware Interface Functions - I2C bit-bang for SAMD21. ">i2c_bitbang_samd21.c</a>/h  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone">For samd21 I2C bitbang projects   </td></tr>
-<tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyNone">samd21  </td><td class="markdownTableBodyNone">SWI  </td><td class="markdownTableBodyNone"><a class="el" href="a00458.html" title="Hardware Interface Functions - SWI bit-banged. ">swi_bitbang_samd21.c</a>/h  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone">For samd21 SWI bitbang projects   </td></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">samd21  </td><td class="markdownTableBodyNone">SWI  </td><td class="markdownTableBodyNone">swi_uart_samd21.c/h  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone">For samd21 SWI uart projects   </td></tr>
-<tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyNone">samd21  </td><td class="markdownTableBodyNone">SWI  </td><td class="markdownTableBodyNone"><a class="el" href="a00476.html">swi_uart_samd21_start.c</a>/h  </td><td class="markdownTableBodyNone">START  </td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">samg55  </td><td class="markdownTableBodyNone">I2C  </td><td class="markdownTableBodyNone"><a class="el" href="a00389.html" title="ATCA Hardware abstraction layer for SAMG55 I2C over ASF drivers. ">hal_samg55_i2c_asf.c</a>/h  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a00395.html" title="Prerequisite: add &quot;Delay routines (service)&quot; module to application in Atmel Studio. ">hal_samg55_timer_asf.c</a>  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">samv71  </td><td class="markdownTableBodyNone">I2C  </td><td class="markdownTableBodyNone"><a class="el" href="a00398.html" title="ATCA Hardware abstraction layer for SAMV71 I2C over ASF drivers. ">hal_samv71_i2c_asf.c</a>/h  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a00404.html" title="ATCA Hardware abstraction layer for SAMD21 timer/delay over ASF drivers. ">hal_samv71_timer_asf.c</a>  </td><td class="markdownTableBodyNone">ASF  </td><td class="markdownTableBodyNone"></td></tr>
-</table>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">PIC Micros  </th><th class="markdownTableHeadNone">Interface  </th><th class="markdownTableHeadNone">Files  </th><th class="markdownTableHeadNone">API  </th><th class="markdownTableHeadNone">Notes   </th></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">pic32mx695f512h  </td><td class="markdownTableBodyNone">I2C  </td><td class="markdownTableBodyNone">hal_pic32mx695f512h.c/h  </td><td class="markdownTableBodyNone">plib.h  </td><td class="markdownTableBodyNone">For pic32mx695f512h Standalone Mplab projects   </td></tr>
-<tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a00341.html" title="ATCA Hardware abstraction layer for PIC32MX695F512H timer/delay routine. ">hal_pic32mx695f512h_timer.c</a>  </td><td class="markdownTableBodyNone">plib.h  </td><td class="markdownTableBodyNone">For pic32mx695f512h Standalone Mplab projects   </td></tr>
-</table>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">OS  </th><th class="markdownTableHeadNone">Interface  </th><th class="markdownTableHeadNone">Files  </th><th class="markdownTableHeadNone">API  </th><th class="markdownTableHeadNone">Notes   </th></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">MS Windows  </td><td class="markdownTableBodyNone">kit-cdc  </td><td class="markdownTableBodyNone"><a class="el" href="a00419.html" title="ATCA Hardware abstraction layer for Windows using kit protocol over a USB CDC device. ">hal_win_kit_cdc.c</a>/h  </td><td class="markdownTableBodyNone">windows.h  </td><td class="markdownTableBodyNone">For all windows USB CDC projects   </td></tr>
-<tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyNone">MS Windows  </td><td class="markdownTableBodyNone">kit-hid  </td><td class="markdownTableBodyNone"><a class="el" href="a00425.html" title="ATCA Hardware abstraction layer for Windows using kit protocol over a USB HID device. ">hal_win_kit_hid.c</a>/h  </td><td class="markdownTableBodyNone">windows.h  </td><td class="markdownTableBodyNone">For all windows USB HID projects   </td></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">setupapi.h  </td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyNone">MS Windows  </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a00431.html" title="ATCA Hardware abstraction layer for windows timer functions. ">hal_win_timer.c</a>  </td><td class="markdownTableBodyNone">windows.h  </td><td class="markdownTableBodyNone">For all windows projects   </td></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Linux  </td><td class="markdownTableBodyNone">I2C  </td><td class="markdownTableBodyNone"><a class="el" href="a00314.html" title="ATCA Hardware abstraction layer for Linux using I2C. ">hal_linux_i2c_userspace.c</a>/h  </td><td class="markdownTableBodyNone">i2c-dev  </td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Linux  </td><td class="markdownTableBodyNone">kit-cdc  </td><td class="markdownTableBodyNone"><a class="el" href="a00320.html" title="ATCA Hardware abstraction layer for Linux using kit protocol over a USB CDC device. ">hal_linux_kit_cdc.c</a>/h  </td><td class="markdownTableBodyNone">fopen  </td><td class="markdownTableBodyNone">For USB Linux CDC projects   </td></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Linux  </td><td class="markdownTableBodyNone">kit-hid  </td><td class="markdownTableBodyNone"><a class="el" href="a00326.html" title="ATCA Hardware abstraction layer for Linux using kit protocol over a USB HID device. ">hal_linux_kit_hid.c</a>/h  </td><td class="markdownTableBodyNone">udev  </td><td class="markdownTableBodyNone">For USB Linux HID Projects   </td></tr>
-<tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Linux  </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a00332.html" title="Timer Utility Functions for Linux. ">hal_linux_timer.c</a>  </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">For all Linux projects   </td></tr>
-<tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
-</table>
-</div></div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Input / output parameters for function atca_include_data(). </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a id="a37e90f5e3bd99fac2021fb3a326607d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37e90f5e3bd99fac2021fb3a326607d4">&#9670;&nbsp;</a></span>mode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t mode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="a00993.html">atca_include_data_in_out</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

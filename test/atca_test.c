@@ -2,31 +2,27 @@
  * \file
  * \brief  Cryptoauthlib Testing: Common Resources & Functions
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 #include "atca_test.h"
 #include "atca_execution.h"
@@ -299,21 +295,44 @@ static bool atcau_is_locked(uint8_t zone)
     return false;
 }
 
+#ifdef ATCA_NO_HEAP
+extern struct atca_device g_atcab_device;
+extern struct atca_command g_atcab_command;
+extern struct atca_iface g_atcab_iface;
+#endif
+
 /**
  * \brief Initialize the interface and check it was successful
  */
 void test_assert_interface_init(void)
 {
-    /* If the device is still connected - disconnect it */
+#ifdef ATCA_NO_HEAP
+    ATCA_STATUS status;
+#endif
+
+    // If the device is still connected - disconnect it
     if (_gDevice)
     {
+#ifdef ATCA_NO_HEAP
+        status = releaseATCADevice(_gDevice);
+        _gDevice = NULL;
+#else
         deleteATCADevice(&_gDevice);
         TEST_ASSERT_NULL(_gDevice);
+#endif
     }
 
-    /* Get the device */
+    // Get the device
+#ifdef ATCA_NO_HEAP
+    g_atcab_device.mCommands = &g_atcab_command;
+    g_atcab_device.mIface    = &g_atcab_iface;
+    status = initATCADevice(gCfg, &g_atcab_device);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    _gDevice = &g_atcab_device;
+#else
     _gDevice = newATCADevice(gCfg);
     TEST_ASSERT_NOT_NULL(_gDevice);
+#endif
 
     if (_gDevice->mCommands->dt == ATECC608A)
     {
@@ -337,8 +356,14 @@ void test_assert_interface_deinit(void)
     status = atsleep(_gDevice->mIface);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
+#ifdef ATCA_NO_HEAP
+    status = releaseATCADevice(_gDevice);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    _gDevice = NULL;
+#else
     deleteATCADevice(&_gDevice);
     TEST_ASSERT_NULL(_gDevice);
+#endif
 }
 
 void test_assert_config_is_unlocked(void)

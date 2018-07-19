@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_nonce_in_out Struct Reference</title>
+<title>CryptoAuthLib: atcacert_build_state_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,41 +89,138 @@ $(document).ready(function(){initNavTree('a00913.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atca_nonce_in_out Struct Reference<div class="ingroups"><a class="el" href="a00760.html">Host side crypto methods (atcah_)</a></div></div>  </div>
+<div class="title">atcacert_build_state_s Struct Reference<div class="ingroups"><a class="el" href="a00840.html">Certificate manipulation methods (atcacert_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Input/output parameters for function atca_nonce().  
- <a href="a00913.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="a00491_source.html">atca_host.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a00149_source.html">atcacert_def.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ga1a6b6fb557d8d37d59700faf4e4c9167"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00760.html#ga1a6b6fb557d8d37d59700faf4e4c9167">mode</a></td></tr>
-<tr class="memdesc:ga1a6b6fb557d8d37d59700faf4e4c9167"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Mode parameter used in Nonce command (Param1).  <a href="a00760.html#ga1a6b6fb557d8d37d59700faf4e4c9167">More...</a><br /></td></tr>
-<tr class="separator:ga1a6b6fb557d8d37d59700faf4e4c9167"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga876993158b491f4626155b468ffb6edc"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00760.html#ga876993158b491f4626155b468ffb6edc">zero</a></td></tr>
-<tr class="memdesc:ga876993158b491f4626155b468ffb6edc"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Zero parameter used in Nonce command (Param2).  <a href="a00760.html#ga876993158b491f4626155b468ffb6edc">More...</a><br /></td></tr>
-<tr class="separator:ga876993158b491f4626155b468ffb6edc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga02a9d64ea363dc3b231b8cc0b317de8a"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00760.html#ga02a9d64ea363dc3b231b8cc0b317de8a">num_in</a></td></tr>
-<tr class="memdesc:ga02a9d64ea363dc3b231b8cc0b317de8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 20-byte NumIn data used in Nonce command.  <a href="a00760.html#ga02a9d64ea363dc3b231b8cc0b317de8a">More...</a><br /></td></tr>
-<tr class="separator:ga02a9d64ea363dc3b231b8cc0b317de8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga75f7197e2840bcf9fe00722e739fdd9c"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00760.html#ga75f7197e2840bcf9fe00722e739fdd9c">rand_out</a></td></tr>
-<tr class="memdesc:ga75f7197e2840bcf9fe00722e739fdd9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 32-byte RandOut data from Nonce command.  <a href="a00760.html#ga75f7197e2840bcf9fe00722e739fdd9c">More...</a><br /></td></tr>
-<tr class="separator:ga75f7197e2840bcf9fe00722e739fdd9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa17e031da4b22938bed1c21161ba371a"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a00905.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00760.html#gaa17e031da4b22938bed1c21161ba371a">temp_key</a></td></tr>
-<tr class="memdesc:gaa17e031da4b22938bed1c21161ba371a"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in,out] Pointer to TempKey structure.  <a href="a00760.html#gaa17e031da4b22938bed1c21161ba371a">More...</a><br /></td></tr>
-<tr class="separator:gaa17e031da4b22938bed1c21161ba371a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abaf4bb65d962f53a31b943c663eaf3b9"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a00840.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00913.html#abaf4bb65d962f53a31b943c663eaf3b9">cert_def</a></td></tr>
+<tr class="memdesc:abaf4bb65d962f53a31b943c663eaf3b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Certificate definition for the certificate being rebuilt.  <a href="#abaf4bb65d962f53a31b943c663eaf3b9">More...</a><br /></td></tr>
+<tr class="separator:abaf4bb65d962f53a31b943c663eaf3b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa09eb68c2656a44748cad406cf960f7c"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00913.html#aa09eb68c2656a44748cad406cf960f7c">cert</a></td></tr>
+<tr class="memdesc:aa09eb68c2656a44748cad406cf960f7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer to contain the rebuilt certificate.  <a href="#aa09eb68c2656a44748cad406cf960f7c">More...</a><br /></td></tr>
+<tr class="separator:aa09eb68c2656a44748cad406cf960f7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a083f29531821a0ef698b452cb2b7f5b4"><td class="memItemLeft" align="right" valign="top">size_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00913.html#a083f29531821a0ef698b452cb2b7f5b4">cert_size</a></td></tr>
+<tr class="memdesc:a083f29531821a0ef698b452cb2b7f5b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current size of the certificate in bytes.  <a href="#a083f29531821a0ef698b452cb2b7f5b4">More...</a><br /></td></tr>
+<tr class="separator:a083f29531821a0ef698b452cb2b7f5b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbc4bbcc72558a31f830df7df2df53b8"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00913.html#abbc4bbcc72558a31f830df7df2df53b8">max_cert_size</a></td></tr>
+<tr class="memdesc:abbc4bbcc72558a31f830df7df2df53b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max size of the cert buffer in bytes.  <a href="#abbc4bbcc72558a31f830df7df2df53b8">More...</a><br /></td></tr>
+<tr class="separator:abbc4bbcc72558a31f830df7df2df53b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3969ddf030fd0524b62c572070bb3edc"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00913.html#a3969ddf030fd0524b62c572070bb3edc">is_device_sn</a></td></tr>
+<tr class="memdesc:a3969ddf030fd0524b62c572070bb3edc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates the structure contains the device SN.  <a href="#a3969ddf030fd0524b62c572070bb3edc">More...</a><br /></td></tr>
+<tr class="separator:a3969ddf030fd0524b62c572070bb3edc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5aa8a40126b53aa3748ba0d00de61e60"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00913.html#a5aa8a40126b53aa3748ba0d00de61e60">device_sn</a> [9]</td></tr>
+<tr class="memdesc:a5aa8a40126b53aa3748ba0d00de61e60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storage for the device SN, when it's found.  <a href="#a5aa8a40126b53aa3748ba0d00de61e60">More...</a><br /></td></tr>
+<tr class="separator:a5aa8a40126b53aa3748ba0d00de61e60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input/output parameters for function atca_nonce(). </p>
-</div></div><!-- contents -->
+<div class="textblock"><p>Tracks the state of a certificate as it's being rebuilt from device information. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a id="aa09eb68c2656a44748cad406cf960f7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa09eb68c2656a44748cad406cf960f7c">&#9670;&nbsp;</a></span>cert</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* cert</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Buffer to contain the rebuilt certificate. </p>
+
+</div>
+</div>
+<a id="abaf4bb65d962f53a31b943c663eaf3b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abaf4bb65d962f53a31b943c663eaf3b9">&#9670;&nbsp;</a></span>cert_def</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a00840.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a>* cert_def</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Certificate definition for the certificate being rebuilt. </p>
+
+</div>
+</div>
+<a id="a083f29531821a0ef698b452cb2b7f5b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a083f29531821a0ef698b452cb2b7f5b4">&#9670;&nbsp;</a></span>cert_size</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t* cert_size</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Current size of the certificate in bytes. </p>
+
+</div>
+</div>
+<a id="a5aa8a40126b53aa3748ba0d00de61e60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5aa8a40126b53aa3748ba0d00de61e60">&#9670;&nbsp;</a></span>device_sn</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t device_sn[9]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Storage for the device SN, when it's found. </p>
+
+</div>
+</div>
+<a id="a3969ddf030fd0524b62c572070bb3edc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3969ddf030fd0524b62c572070bb3edc">&#9670;&nbsp;</a></span>is_device_sn</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t is_device_sn</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indicates the structure contains the device SN. </p>
+
+</div>
+</div>
+<a id="abbc4bbcc72558a31f830df7df2df53b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbc4bbcc72558a31f830df7df2df53b8">&#9670;&nbsp;</a></span>max_cert_size</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t max_cert_size</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Max size of the cert buffer in bytes. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00913.html">atca_nonce_in_out</a></li>
+    <li class="navelem"><a class="el" href="a00913.html">atcacert_build_state_s</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

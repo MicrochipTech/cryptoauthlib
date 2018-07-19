@@ -10,31 +10,27 @@
  * \note List of devices that support this command - ATECC608A. Refer to device
  *       datasheet for full details.
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 
 #include "atca_basic.h"
@@ -71,7 +67,6 @@ ATCA_STATUS atcab_kdf(uint8_t mode, uint16_t key_id, const uint32_t details, con
     ATCACommand ca_cmd = _gDevice->mCommands;
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint16_t out_data_size = 0;
-    uint16_t out_nonce_size = 0;
 
     do
     {
@@ -103,7 +98,7 @@ ATCA_STATUS atcab_kdf(uint8_t mode, uint16_t key_id, const uint32_t details, con
         }
 
         // Build command
-        if ((status = atKDF(ca_cmd, &packet, &out_data_size, &out_nonce_size)) != ATCA_SUCCESS)
+        if ((status = atKDF(ca_cmd, &packet)) != ATCA_SUCCESS)
         {
             break;
         }
@@ -114,16 +109,25 @@ ATCA_STATUS atcab_kdf(uint8_t mode, uint16_t key_id, const uint32_t details, con
             break;
         }
 
+        if (((mode & KDF_MODE_ALG_MASK) == KDF_MODE_ALG_PRF) && (details & KDF_DETAILS_PRF_TARGET_LEN_64))
+        {
+            out_data_size = 64;
+        }
+        else
+        {
+            out_data_size = 32;
+        }
+
         // Return OutData if possible
-        if (out_data != NULL && packet.rxsize >= (ATCA_PACKET_OVERHEAD + out_data_size))
+        if (out_data != NULL && packet.data[ATCA_COUNT_IDX] >= (ATCA_PACKET_OVERHEAD + out_data_size))
         {
             memcpy(out_data, &packet.data[ATCA_RSP_DATA_IDX], out_data_size);
         }
 
         // return OutNonce if possible
-        if (out_nonce != NULL && packet.rxsize >= (ATCA_PACKET_OVERHEAD + out_data_size + out_nonce_size))
+        if (out_nonce != NULL && packet.data[ATCA_COUNT_IDX] >= (ATCA_PACKET_OVERHEAD + out_data_size + 32))
         {
-            memcpy(out_nonce, &packet.data[ATCA_RSP_DATA_IDX + out_data_size], out_nonce_size);
+            memcpy(out_nonce, &packet.data[ATCA_RSP_DATA_IDX + out_data_size], 32);
         }
     }
     while (false);

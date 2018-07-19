@@ -8,31 +8,27 @@
  * however, by defining the ATCA_NO_POLL symbol the code will instead wait an
  * estimated max execution time before requesting the result.
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 
 #include <stdlib.h>
@@ -52,7 +48,7 @@
 #endif
 
 #ifndef ATCA_POLLING_MAX_TIME_MSEC
-#define ATCA_POLLING_MAX_TIME_MSEC        2000
+#define ATCA_POLLING_MAX_TIME_MSEC        2500
 #endif
 
 #ifdef ATCA_NO_POLL
@@ -127,7 +123,7 @@ static const device_execution_time_t device_execution_time_608_m0[] = {
     { ATCA_CHECKMAC,     40},
     { ATCA_COUNTER,      25},
     { ATCA_DERIVE_KEY,   50},
-    { ATCA_ECDH,         60},
+    { ATCA_ECDH,         75},
     { ATCA_GENDIG,       25},
     { ATCA_GENKEY,       115},
     { ATCA_INFO,         5},
@@ -153,7 +149,7 @@ static const device_execution_time_t device_execution_time_608_m1[] = {
     { ATCA_CHECKMAC,     40},
     { ATCA_COUNTER,      25},
     { ATCA_DERIVE_KEY,   50},
-    { ATCA_ECDH,         140},
+    { ATCA_ECDH,         172},
     { ATCA_GENDIG,       35},
     { ATCA_GENKEY,       215},
     { ATCA_INFO,         5},
@@ -164,8 +160,8 @@ static const device_execution_time_t device_execution_time_608_m1[] = {
     { ATCA_PRIVWRITE,    50},
     { ATCA_RANDOM,       23},
     { ATCA_READ,         5},
-    { ATCA_SECUREBOOT,   151},
-    { ATCA_SELFTEST,     590},
+    { ATCA_SECUREBOOT,   160},
+    { ATCA_SELFTEST,     625},
     { ATCA_SHA,          42},
     { ATCA_SIGN,         220},
     { ATCA_UPDATE_EXTRA, 10},
@@ -179,9 +175,9 @@ static const device_execution_time_t device_execution_time_608_m2[] = {
     { ATCA_CHECKMAC,     40},
     { ATCA_COUNTER,      25},
     { ATCA_DERIVE_KEY,   50},
-    { ATCA_ECDH,         455},
+    { ATCA_ECDH,         531},
     { ATCA_GENDIG,       35},
-    { ATCA_GENKEY,       630},
+    { ATCA_GENKEY,       653},
     { ATCA_INFO,         5},
     { ATCA_KDF,          165},
     { ATCA_LOCK,         35},
@@ -190,8 +186,8 @@ static const device_execution_time_t device_execution_time_608_m2[] = {
     { ATCA_PRIVWRITE,    50},
     { ATCA_RANDOM,       23},
     { ATCA_READ,         5},
-    { ATCA_SECUREBOOT,   451},
-    { ATCA_SELFTEST,     2200},
+    { ATCA_SECUREBOOT,   480},
+    { ATCA_SELFTEST,     2324},
     { ATCA_SHA,          75},
     { ATCA_SIGN,         665},
     { ATCA_UPDATE_EXTRA, 10},
@@ -290,6 +286,7 @@ ATCA_STATUS atca_execute_command(ATCAPacket* packet, ATCADevice device)
     ATCA_STATUS status;
     uint32_t execution_or_wait_time;
     uint32_t max_delay_count;
+    uint16_t rxsize;
 
     do
     {
@@ -321,8 +318,10 @@ ATCA_STATUS atca_execute_command(ATCAPacket* packet, ATCADevice device)
 
         do
         {
+            memset(packet->data, 0, sizeof(packet->data));
             // receive the response
-            if ((status = atreceive(device->mIface, packet->data, &(packet->rxsize))) == ATCA_SUCCESS)
+            rxsize = sizeof(packet->data);
+            if ((status = atreceive(device->mIface, packet->data, &rxsize)) == ATCA_SUCCESS)
             {
                 break;
             }
@@ -333,11 +332,15 @@ ATCA_STATUS atca_execute_command(ATCAPacket* packet, ATCADevice device)
 #endif
         }
         while (max_delay_count-- > 0);
+        if (status != ATCA_SUCCESS)
+        {
+            break;
+        }
 
         // Check response size
-        if (packet->rxsize < 4)
+        if (rxsize < 4)
         {
-            if (packet->rxsize > 0)
+            if (rxsize > 0)
             {
                 status = ATCA_RX_FAIL;
             }

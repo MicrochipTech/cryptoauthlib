@@ -1,8 +1,6 @@
 var a00953 =
 [
-    [ "mac", "a00953.html#aa5a9ad86915dfcef6db90b858690212a", null ],
-    [ "mode", "a00953.html#a37e90f5e3bd99fac2021fb3a326607d4", null ],
-    [ "parent_key", "a00953.html#a000599eef5677ed1279b025c42ae260e", null ],
-    [ "sn", "a00953.html#aef45bac2efcd5394c4ed79f73ee16d23", null ],
-    [ "target_key_id", "a00953.html#a41104a8c85cd12c0fde0d791c3276a48", null ]
+    [ "kits", "a00953.html#a20e678da3f77a9aabd9cb97d5340e502", null ],
+    [ "kits", "a00953.html#aa09aaf9e2fbb91f0cef6b473135d4628", null ],
+    [ "num_kits_found", "a00953.html#a9bb0ee74044865538adfcc5d5ae8f621", null ]
 ];

@@ -7,31 +7,27 @@
  *
  * Prerequisite: add SERCOM I2C Master Polled support to application in Atmel Studio
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 
 #include <asf.h>
@@ -52,8 +48,8 @@
    @{ */
 
 /** \brief logical to physical bus mapping structure */
-ATCAI2CMaster_t *i2c_hal_data[MAX_I2C_BUSES];   // map logical, 0-based bus number to index
-int i2c_bus_ref_ct = 0;                         // total in-use count across buses
+static ATCAI2CMaster_t i2c_hal_data[MAX_I2C_BUSES];   // map logical, 0-based bus number to index
+static twihs_options_t opt_twi_master;
 
 /** \brief discover i2c buses available for this hardware
  * this maintains a list of logical to physical bus mappings freeing the application
@@ -94,6 +90,12 @@ ATCA_STATUS hal_i2c_discover_devices(int bus_num, ATCAIfaceCfg cfg[], int *found
     ATCAIfaceCfg *head = cfg;
     uint8_t slave_address = 0x01;
     ATCADevice device;
+
+#ifdef ATCA_NO_HEAP
+    struct atca_device disc_device;
+    struct atca_command disc_command;
+    struct atca_iface disc_iface;
+#endif
     ATCAPacket packet;
     ATCA_STATUS status;
     uint8_t revs608[][4] = { { 0x00, 0x00, 0x60, 0x01 }, { 0x00, 0x00, 0x60, 0x02 } };
@@ -113,15 +115,27 @@ ATCA_STATUS hal_i2c_discover_devices(int bus_num, ATCAIfaceCfg cfg[], int *found
         .rx_retries             = 3
     };
 
-    ATCAHAL_t hal;
-
     if (bus_num < 0)
     {
         return ATCA_COMM_FAIL;
     }
 
-    hal_i2c_init(&hal, &discoverCfg);
+#ifdef ATCA_NO_HEAP
+    disc_device.mCommands = &disc_command;
+    disc_device.mIface    = &disc_iface;
+    status = initATCADevice(&discoverCfg, &disc_device);
+    if (status != ATCA_SUCCESS)
+    {
+        return status;
+    }
+    device = &disc_device;
+#else
     device = newATCADevice(&discoverCfg);
+    if (device == NULL)
+    {
+        return ATCA_COMM_FAIL;
+    }
+#endif
 
     // iterate through all addresses on given i2c bus
     // all valid 7-bit addresses go from 0x07 to 0x78
@@ -191,7 +205,11 @@ ATCA_STATUS hal_i2c_discover_devices(int bus_num, ATCAIfaceCfg cfg[], int *found
         atca_delay_ms(15);
     }
 
+#ifdef ATCA_NO_HEAP
+    releaseATCADevice(device);
+#else
     deleteATCADevice(&device);
+#endif
 
     return ATCA_SUCCESS;
 }
@@ -214,78 +232,59 @@ ATCA_STATUS hal_i2c_discover_devices(int bus_num, ATCAIfaceCfg cfg[], int *found
  */
 ATCA_STATUS hal_i2c_init(void *hal, ATCAIfaceCfg *cfg)
 {
-    int bus = cfg->atcai2c.bus;   // 0-based logical bus number
-    ATCAHAL_t *phal = (ATCAHAL_t*)hal;
-    twihs_options_t twi_options;
-
-    if (i2c_bus_ref_ct == 0)       // power up state, no i2c buses will have been used
+    if (cfg->atcai2c.bus >= MAX_I2C_BUSES)
     {
-        for (int i = 0; i < MAX_I2C_BUSES; i++)
+        return ATCA_COMM_FAIL;
+    }
+    ATCAI2CMaster_t* data = &i2c_hal_data[cfg->atcai2c.bus];
+
+    if (data->ref_ct <= 0)
+    {
+        // Bus isn't being used, enable it
+        opt_twi_master.master_clk = sysclk_get_cpu_hz() / CONFIG_SYSCLK_DIV;
+        opt_twi_master.speed = cfg->atcai2c.baud;
+
+        switch (cfg->atcai2c.bus)
         {
-            i2c_hal_data[i] = NULL;
+        case 0:     /* Enable the peripheral clock for TWI */
+            data->twi_id = ID_TWIHS0;
+            data->twi_module = TWIHS0;
+            break;
+
+        case 1:     /* Enable the peripheral clock for TWI */
+            data->twi_id = ID_TWIHS1;
+            data->twi_module = TWIHS1;
+            break;
+
+        case 2:     /* Enable the peripheral clock for TWI */
+            data->twi_id = ID_TWIHS2;
+            data->twi_module = TWIHS2;
+            break;
+
+        default:
+            return ATCA_COMM_FAIL;
         }
+
+        pmc_enable_periph_clk(data->twi_id);
+        if (twihs_master_init(data->twi_module, &opt_twi_master) != TWIHS_SUCCESS)
+        {
+            return ATCA_COMM_FAIL;
+        }
+
+        // store this for use during the release phase
+        data->bus_index = cfg->atcai2c.bus;
+        // buses are shared, this is the first instance
+        data->ref_ct = 1;
+    }
+    else
+    {
+        // Bus is already is use, increment reference counter
+        data->ref_ct++;
     }
 
-    i2c_bus_ref_ct++;  // total across buses
+    ((ATCAHAL_t*)hal)->hal_data = data;
 
-    if (bus >= 0 && bus < MAX_I2C_BUSES)
-    {
-        // if this is the first time this bus and interface has been created, do the physical work of enabling it
-        if (i2c_hal_data[bus] == NULL)
-        {
-            i2c_hal_data[bus] = malloc(sizeof(ATCAI2CMaster_t) );
-            i2c_hal_data[bus]->ref_ct = 1;  // buses are shared, this is the first instance
-
-            /* Configure the options of TWI driver */
-            twi_options.master_clk = sysclk_get_cpu_hz() / CONFIG_SYSCLK_DIV;
-            twi_options.speed = cfg->atcai2c.baud;
-
-            switch (bus)
-            {
-            case 0: /* Enable the peripheral clock for TWI */
-                pmc_enable_periph_clk(ID_TWIHS0);
-                if (twihs_master_init(TWIHS0, &twi_options) != TWIHS_SUCCESS)
-                {
-                    return ATCA_COMM_FAIL;
-                }
-                i2c_hal_data[bus]->twi_module = (uint32_t)TWIHS0;
-                break;
-
-            case 1: /* Enable the peripheral clock for TWI */
-                pmc_enable_periph_clk(ID_TWIHS1);
-                if (twihs_master_init(TWIHS1, &twi_options) != TWIHS_SUCCESS)
-                {
-                    return ATCA_COMM_FAIL;
-                }
-                i2c_hal_data[bus]->twi_module = (uint32_t)TWIHS1;
-                break;
-
-            case 2: /* Enable the peripheral clock for TWI */
-                pmc_enable_periph_clk(ID_TWIHS2);
-                if (twihs_master_init(TWIHS2, &twi_options) != TWIHS_SUCCESS)
-                {
-                    return ATCA_COMM_FAIL;
-                }
-                i2c_hal_data[bus]->twi_module = (uint32_t)TWIHS2;
-                break;
-            }
-
-            // store this for use during the release phase
-            i2c_hal_data[bus]->bus_index = bus;
-        }
-        else
-        {
-            // otherwise, another interface already initialized the bus, so this interface will share it and any different
-            // cfg parameters will be ignored...first one to initialize this sets the configuration
-            i2c_hal_data[bus]->ref_ct++;
-        }
-
-        phal->hal_data = i2c_hal_data[bus];
-
-        return ATCA_SUCCESS;
-    }
-
-    return ATCA_COMM_FAIL;
+    return ATCA_SUCCESS;
 }
 
 /** \brief HAL implementation of I2C post init
@@ -309,7 +308,7 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t *txdata, int txlength)
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
     int bus = cfg->atcai2c.bus;
-    Twihs *twihs_device = (Twihs*)(i2c_hal_data[bus]->twi_module);
+    Twihs *twihs_device = i2c_hal_data[bus].twi_module;
 
     twihs_packet_t packet = {
         .addr[0]        = 0,
@@ -337,27 +336,35 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t *txdata, int txlength)
 }
 
 /** \brief HAL implementation of I2C receive function for ASF I2C
- * \param[in] iface     instance
- * \param[out] rxdata    pointer to space to receive the data
- * \param[in] rxlength  ptr to expected number of receive bytes to request
+ * \param[in]    iface     Device to interact with.
+ * \param[out]   rxdata    Data received will be returned here.
+ * \param[inout] rxlength  As input, the size of the rxdata buffer.
+ *                         As output, the number of bytes received.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-
 ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t *rxdata, uint16_t *rxlength)
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
     int bus = cfg->atcai2c.bus;
     int retries = cfg->rx_retries;
-    int status = !STATUS_OK;
-    Twihs *twihs_device = (Twihs*)(i2c_hal_data[bus]->twi_module);
+    int status = !ATCA_SUCCESS;
+    Twihs *twihs_device = i2c_hal_data[bus].twi_module;
+    uint16_t rxdata_max_size = *rxlength;
 
     twihs_packet_t packet = {
         .chip   = cfg->atcai2c.slave_address >> 1, // use 7-bit address
         .buffer = rxdata,
-        .length = *rxlength
+        .length = 1
     };
 
-    while (retries-- > 0 && status != STATUS_OK)
+    *rxlength = 0;
+    if (rxdata_max_size < 1)
+    {
+        return ATCA_SMALL_BUFFER;
+    }
+
+    //Read Length byte i.e. first byte from device
+    while (retries-- > 0 && status != ATCA_SUCCESS)
     {
         if (twihs_master_read(twihs_device, &packet) != TWIHS_SUCCESS)
         {
@@ -368,11 +375,37 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t *rxdata, uint16_t *rxlength
             status = ATCA_SUCCESS;
         }
     }
-
-    if (status != STATUS_OK)
+    if (status != ATCA_SUCCESS)
     {
-        return ATCA_COMM_FAIL;
+        return status;
     }
+    if (rxdata[0] < ATCA_RSP_SIZE_MIN)
+    {
+        return ATCA_INVALID_SIZE;
+    }
+    if (rxdata[0] > rxdata_max_size)
+    {
+        return ATCA_SMALL_BUFFER;
+    }
+
+    //Update receive length with first byte received and set to read rest of the data
+    packet.length = rxdata[0] - 1;
+    packet.buffer = &rxdata[1];
+
+    if (twihs_master_read(twihs_device, &packet) != TWIHS_SUCCESS)
+    {
+        status = ATCA_COMM_FAIL;
+    }
+    else
+    {
+        status = ATCA_SUCCESS;
+    }
+    if (status != ATCA_SUCCESS)
+    {
+        return status;
+    }
+
+    *rxlength = rxdata[0];
 
     return ATCA_SUCCESS;
 }
@@ -387,7 +420,7 @@ ATCA_STATUS change_i2c_speed(ATCAIface iface, uint32_t speed)
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
     int bus = cfg->atcai2c.bus;
-    Twihs *twihs_device = (Twihs*)(i2c_hal_data[bus]->twi_module);
+    Twihs *twihs_device = i2c_hal_data[bus].twi_module;
 
     // if necessary, revert baud rate to what came in.
     if (twihs_set_speed(twihs_device, speed, sysclk_get_cpu_hz() / CONFIG_SYSCLK_DIV) == FAIL)
@@ -411,8 +444,8 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
     uint16_t rxlength;
     uint32_t bdrt = cfg->atcai2c.baud;
     int status = !STATUS_OK;
-    uint8_t data[4], expected[4] = { 0x04, 0x11, 0x33, 0x43 };
-    Twihs *twihs_device = (Twihs*)(i2c_hal_data[bus]->twi_module);
+    uint8_t data[4];
+    Twihs *twihs_device = i2c_hal_data[bus].twi_module;
 
     if (bdrt != 100000)    // if not already at 100KHz, change it
 
@@ -455,12 +488,7 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
         return ATCA_COMM_FAIL;
     }
 
-    if (memcmp(data, expected, 4) == 0)
-    {
-        return ATCA_SUCCESS;
-    }
-
-    return ATCA_COMM_FAIL;
+    return hal_check_wake(data, 4);
 }
 
 
@@ -474,7 +502,7 @@ ATCA_STATUS hal_i2c_idle(ATCAIface iface)
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
     int bus = cfg->atcai2c.bus;
     uint8_t data[4];
-    Twihs *twihs_device = (Twihs*)(i2c_hal_data[bus]->twi_module);
+    Twihs *twihs_device = i2c_hal_data[bus].twi_module;
 
     data[0] = 0x02;  // idle word address value
 
@@ -506,7 +534,7 @@ ATCA_STATUS hal_i2c_sleep(ATCAIface iface)
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
     int bus = cfg->atcai2c.bus;
     uint8_t data[4];
-    Twihs *twihs_device = (Twihs*)(i2c_hal_data[bus]->twi_module);
+    Twihs *twihs_device = i2c_hal_data[bus].twi_module;
 
     data[0] = 0x01;  // sleep word address value
 
@@ -536,17 +564,13 @@ ATCA_STATUS hal_i2c_sleep(ATCAIface iface)
 ATCA_STATUS hal_i2c_release(void *hal_data)
 {
     ATCAI2CMaster_t *hal = (ATCAI2CMaster_t*)hal_data;
-    int bus = hal->bus_index;
-    Twihs *twihs_device = (Twihs*)(i2c_hal_data[bus]->twi_module);
-
-    i2c_bus_ref_ct--;  // track total i2c bus interface instances for consistency checking and debugging
+    Twihs *twihs_device = i2c_hal_data[hal->bus_index].twi_module;
 
     // if the use count for this bus has gone to 0 references, disable it.  protect against an unbracketed release
-    if (hal && --(hal->ref_ct) <= 0 && i2c_hal_data[bus] != NULL)
+    if (hal && --(hal->ref_ct) <= 0)
     {
         twihs_disable_master_mode(twihs_device);
-        free(i2c_hal_data[hal->bus_index]);
-        i2c_hal_data[hal->bus_index] = NULL;
+        hal->ref_ct = 0;
     }
 
     return ATCA_SUCCESS;

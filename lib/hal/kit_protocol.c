@@ -3,31 +3,27 @@
  *
  * \brief  Microchip Crypto Auth hardware interface object
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 
 #include <stdlib.h>
@@ -164,26 +160,24 @@ ATCA_STATUS kit_receive(ATCAIface iface, uint8_t* rxdata, uint16_t* rxsize)
     ATCA_STATUS status = ATCA_SUCCESS;
     uint8_t kitstatus = 0;
     int nkitbuf = 0;
-    int dataSize = 0;
-    char* pkitbuf = NULL;
+    int dataSize;
+    char pkitbuf[256 * 2 + KIT_RX_WRAP_SIZE];
 
     // Check the pointers
     if ((rxdata == NULL) || (rxsize == NULL))
     {
         return ATCA_BAD_PARAM;
     }
-
-    // Adjust the read buffer size
     dataSize = *rxsize;
-    nkitbuf = dataSize * 2 + KIT_RX_WRAP_SIZE;
-    pkitbuf = malloc(nkitbuf);
-    memset(pkitbuf, 0, nkitbuf);
+    *rxsize = 0;
+
+    memset(pkitbuf, 0, sizeof(pkitbuf));
 
     // Receive the bytes
+    nkitbuf = sizeof(pkitbuf);
     status = kit_phy_receive(iface, pkitbuf, &nkitbuf);
     if (status != ATCA_SUCCESS)
     {
-        free(pkitbuf);
         return ATCA_GEN_FAIL;
     }
 
@@ -193,14 +187,15 @@ ATCA_STATUS kit_receive(ATCAIface iface, uint8_t* rxdata, uint16_t* rxsize)
 #endif
 
     // Unwrap from kit protocol
-    memset(rxdata, 0, *rxsize);
     status = kit_parse_rsp(pkitbuf, nkitbuf, &kitstatus, rxdata, &dataSize);
-    *rxsize = dataSize;
+    if (status != ATCA_SUCCESS)
+    {
+        return status;
+    }
 
-    // Free the bytes
-    free(pkitbuf);
+    *rxsize = (uint16_t)dataSize;
 
-    return status;
+    return ATCA_SUCCESS;
 }
 
 /** \brief Call the wake for kit protocol
@@ -243,7 +238,7 @@ ATCA_STATUS kit_wake(ATCAIface iface)
     memset(rxdata, 0, rxsize);
     status = kit_parse_rsp(reply, replysize, &kitstatus, rxdata, &rxsize);
 
-    return status;
+    return hal_check_wake(rxdata, rxsize);
 }
 
 /** \brief Call the idle for kit protocol
@@ -345,9 +340,8 @@ ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlen, char* pkitcmd, int* n
     ATCA_STATUS status = ATCA_SUCCESS;
     char cmdpre[] = "s:t(";     // sha:talk(
     char cmdpost[] = ")\n";
-//	char* pkitcmd = NULL;
     int cmdAsciiLen = txlen * 2;
-    int cmdlen = txlen * 2 + sizeof(cmdpre) + sizeof(cmdpost) + 1;
+    int cmdlen = txlen * 2 + sizeof(cmdpre) + sizeof(cmdpost) - 1;
     int cpylen = 0;
     int cpyindex = 0;
 
@@ -356,9 +350,9 @@ ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlen, char* pkitcmd, int* n
     {
         return ATCA_BAD_PARAM;
     }
-    if (*nkitcmd > cmdlen)
+    if (*nkitcmd < cmdlen)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_SMALL_BUFFER;
     }
 
     // Wrap in kit protocol

@@ -1,10 +1,19 @@
 var a00236 =
 [
-    [ "atcab_write", "a00757.html#gabf2b29b4d3ae926b63c403d084380dbe", null ],
-    [ "atcab_write_bytes_zone", "a00757.html#gac395a7e195aa3cf28b48de345755feb0", null ],
-    [ "atcab_write_config_counter", "a00757.html#gab25ca44957dff1c2df34607738ca3bf7", null ],
-    [ "atcab_write_config_zone", "a00757.html#ga0777a86aa412a97b19cc72a12c171b94", null ],
-    [ "atcab_write_enc", "a00757.html#ga14cf75d1be264ac1125087d76ee6344c", null ],
-    [ "atcab_write_pubkey", "a00757.html#ga47cbedeb3c3e9f7cbf2b9433cd60d1aa", null ],
-    [ "atcab_write_zone", "a00757.html#ga1f5a6bbcf4f840803635fb8951b3a7e2", null ]
+    [ "hw_sha256_ctx", "a00929.html", "a00929" ],
+    [ "atcab_hw_sha2_256", "a00841.html#ga4bf8b665fe1712626a480742c2daa16b", null ],
+    [ "atcab_hw_sha2_256_finish", "a00841.html#ga6ed7e645262fcc32b00d8a9facf09e91", null ],
+    [ "atcab_hw_sha2_256_init", "a00841.html#gade49e7746864105730fa7d531645ff62", null ],
+    [ "atcab_hw_sha2_256_update", "a00841.html#ga67f2ce6224651d9cc65e9915e35558bd", null ],
+    [ "atcab_sha", "a00841.html#ga31d269ccdafd08519a899a8aebf53df1", null ],
+    [ "atcab_sha_base", "a00841.html#gab3a32e171ca1c30bd31a216b32c9b5a4", null ],
+    [ "atcab_sha_end", "a00841.html#ga1db86704035048066a370815b657234d", null ],
+    [ "atcab_sha_hmac", "a00841.html#gae655ce06583c08169170102fbb0b55c9", null ],
+    [ "atcab_sha_hmac_finish", "a00841.html#gaa4be9972396b7cadb08dd8e2199daf08", null ],
+    [ "atcab_sha_hmac_init", "a00841.html#ga310a017cddce9ef05071cb619b4b6db9", null ],
+    [ "atcab_sha_hmac_update", "a00841.html#gae3343c160e80365b7e96bdfdc9b6365c", null ],
+    [ "atcab_sha_read_context", "a00841.html#ga74d1db50562642ce511fa7cbd384c2ab", null ],
+    [ "atcab_sha_start", "a00841.html#gae0a7ef89fce4cbd0ee1c76759cd93b9a", null ],
+    [ "atcab_sha_update", "a00841.html#ga39bd70baa7a4c7f4849fcf8b94d4d949", null ],
+    [ "atcab_sha_write_context", "a00841.html#ga070fa80ac0d76f6816d9f7affbcfb120", null ]
 ];

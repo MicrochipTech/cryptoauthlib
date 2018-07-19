@@ -1,4 +1,4 @@
 var a00191 =
 [
-    [ "atcab_hmac", "a00757.html#ga45f1d09a51f7a1f68916536ab5125b9d", null ]
+    [ "atcab_derivekey", "a00841.html#ga34b7b6d46868f0d63d195216ef9939b1", null ]
 ];

@@ -1,6 +1,9 @@
 var a00440 =
 [
-    [ "atca_delay_10us", "a00759.html#ga19891182689551cc3a88603135959351", null ],
-    [ "atca_delay_ms", "a00759.html#ga80a853a202b089064bfc4b159c3418b4", null ],
-    [ "atca_delay_us", "a00759.html#ga7598dfcd6dcac882836544d48356d02f", null ]
+    [ "SWI_FLAG_CMD", "a00843.html#ga13c01ac16bb14fde75e9c00dcd1cc761", null ],
+    [ "SWI_FLAG_IDLE", "a00843.html#ga6219d68ef915fdcd734f51960ba08fb6", null ],
+    [ "SWI_FLAG_SLEEP", "a00843.html#ga13ef2322176ad9b7ba3d2e23b277cce6", null ],
+    [ "SWI_FLAG_TX", "a00843.html#ga20af8352e13a7357650ba1cbf41349ea", null ],
+    [ "SWI_WAKE_TOKEN", "a00843.html#ga8f12e3b749e7b3dc905114cc7b8d0b38", null ],
+    [ "hal_swi_send_flag", "a00843.html#gaae96ea936a2e85d0bcb81b7868ee007d", null ]
 ];

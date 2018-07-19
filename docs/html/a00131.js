@@ -1,18 +1,18 @@
 var a00131 =
 [
-    [ "PEM_CERT_BEGIN", "a00131.html#aefb573f85f8692759f6c82587a948d71", null ],
-    [ "PEM_CERT_BEGIN_EOL", "a00131.html#abc47b0b6f2ef14310bce94967c0c7f36", null ],
-    [ "PEM_CERT_END", "a00131.html#afbe03d95d1d6a651c01d1ef74daa4063", null ],
-    [ "PEM_CERT_END_EOL", "a00131.html#a35f37dfeff854bdb9abfcb44351322b0", null ],
-    [ "PEM_CSR_BEGIN", "a00131.html#a006df03d5e86c2d586f02362ca66566e", null ],
-    [ "PEM_CSR_BEGIN_EOL", "a00131.html#a2f4b40b348581d7e448a0afcf7a1c5da", null ],
-    [ "PEM_CSR_END", "a00131.html#ad7521d8913a097b0a910d00fdb664210", null ],
-    [ "PEM_CSR_END_EOL", "a00131.html#a7effe162d8a358aaf2c54cbef038d41b", null ],
-    [ "atcacert_create_csr", "a00756.html#gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6", null ],
-    [ "atcacert_create_csr_pem", "a00756.html#ga2f9817d4e3f51a233dc85183b85236c7", null ],
-    [ "atcacert_decode_pem_cert", "a00756.html#ga77d0c6ee170bb70b6f5668e95c92c080", null ],
-    [ "atcacert_encode_pem_cert", "a00756.html#ga0fdea2639cb243ebd76adc45f7714b41", null ],
-    [ "atcacert_get_response", "a00756.html#ga9f7223a578ce5c07a831638106c6ff6c", null ],
-    [ "atcacert_read_cert", "a00756.html#gaaf13dfd0ea4e563194cec6e62892b5c4", null ],
-    [ "atcacert_write_cert", "a00756.html#ga71ea9d7c93c2fecb87a36b1343397fad", null ]
+    [ "ATCACERT_E_BAD_CERT", "a00840.html#ga822ee0620c8d2d12ff971b9b35f9f5cd", null ],
+    [ "ATCACERT_E_BAD_PARAMS", "a00840.html#ga47509d283523ab1892fb8746d6f4e37d", null ],
+    [ "ATCACERT_E_BUFFER_TOO_SMALL", "a00840.html#ga7a2e774fc8b12c4045dea335a86afca6", null ],
+    [ "ATCACERT_E_DECODING_ERROR", "a00840.html#gaea155533fdd352d6602d3e2fc717930f", null ],
+    [ "ATCACERT_E_ELEM_MISSING", "a00840.html#ga8e3e7c64650c92364bbac17f6a75474a", null ],
+    [ "ATCACERT_E_ELEM_OUT_OF_BOUNDS", "a00840.html#ga62604c78d688530173e203b02df180fa", null ],
+    [ "ATCACERT_E_ERROR", "a00840.html#ga048a6bb9781dbbc402409a172f976f74", null ],
+    [ "ATCACERT_E_INVALID_DATE", "a00840.html#gaafd66d6744314225ead24b3901bd6372", null ],
+    [ "ATCACERT_E_SUCCESS", "a00840.html#ga7bd1ad830360fc8b988f855da6d0d5ba", null ],
+    [ "ATCACERT_E_UNEXPECTED_ELEM_SIZE", "a00840.html#ga5a7cb98e18ad338f2eaf6594acb67c32", null ],
+    [ "ATCACERT_E_UNIMPLEMENTED", "a00840.html#ga4b6db1523875a2b1453ef5e16989ecd4", null ],
+    [ "ATCACERT_E_VERIFY_FAILED", "a00840.html#gae1da5e02cd9b4ee7b8617d7bce0a5b5d", null ],
+    [ "ATCACERT_E_WRONG_CERT_DEF", "a00840.html#ga01010ef58d52a05292f6a70ff3d53ce8", null ],
+    [ "FALSE", "a00840.html#gaa93f0eb578d23995850d61f7d61c55c1", null ],
+    [ "TRUE", "a00840.html#gaa8cecfc5c5c054d2875c03e77b7be15d", null ]
 ];

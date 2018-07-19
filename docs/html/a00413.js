@@ -1,16 +1,14 @@
 var a00413 =
 [
-    [ "hal_swi_discover_buses", "a00759.html#ga53864a301dac6efbdbdc3931aa79e23e", null ],
-    [ "hal_swi_discover_devices", "a00759.html#ga7aeab32af6dde57ee3afcfb8ec802a2e", null ],
-    [ "hal_swi_idle", "a00759.html#ga618291172976da96c4f02dc9200c845c", null ],
-    [ "hal_swi_init", "a00759.html#gaf406053c1a3f2a86bdc887f2ff4b663d", null ],
-    [ "hal_swi_post_init", "a00759.html#ga9186e5235979216330ae580290872c77", null ],
-    [ "hal_swi_receive", "a00759.html#ga02e9f36723f0feb21d373898728de04b", null ],
-    [ "hal_swi_release", "a00759.html#ga196dbc62546b39ac3e556a0f7f6b7132", null ],
-    [ "hal_swi_send", "a00759.html#gaeb8b8857192a7710785acce0110e8016", null ],
-    [ "hal_swi_send_flag", "a00759.html#gaae96ea936a2e85d0bcb81b7868ee007d", null ],
-    [ "hal_swi_sleep", "a00759.html#ga252e365a30f2583dae8a8eac073a9f53", null ],
-    [ "hal_swi_wake", "a00759.html#gafc428980ec95e37eee94813db229fe70", null ],
-    [ "swi_bus_ref_ct", "a00759.html#ga4656caa5bd357cc71fe66f4522d89e3f", null ],
-    [ "swi_hal_data", "a00759.html#ga95ca8e0b044cf56e85a8c581a4c703da", null ]
+    [ "change_i2c_speed", "a00843.html#gab7f613b378e0d01b80703df3ac662d6d", null ],
+    [ "hal_i2c_discover_buses", "a00843.html#ga05700385437884cc7b28c38d33e84f8c", null ],
+    [ "hal_i2c_discover_devices", "a00843.html#gac7644e62498a596c09952ee3b28017b9", null ],
+    [ "hal_i2c_idle", "a00843.html#ga9317303ada721ff3f97e7aad69437a30", null ],
+    [ "hal_i2c_init", "a00843.html#ga09e7f465a040fbd19ea136269571de3c", null ],
+    [ "hal_i2c_post_init", "a00843.html#gafbe53519362f18c2688d10da6f7c618f", null ],
+    [ "hal_i2c_receive", "a00843.html#ga7785bcc305c14e2dc188bb1b9a77814a", null ],
+    [ "hal_i2c_release", "a00843.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
+    [ "hal_i2c_send", "a00843.html#gacd0fb31f0f88ef3762665e26b5aa784b", null ],
+    [ "hal_i2c_sleep", "a00843.html#ga3f89bae6a625d5f37abdcc99408def27", null ],
+    [ "hal_i2c_wake", "a00843.html#gad4df1b6755e2d5b5d9e810371e45ca8c", null ]
 ];

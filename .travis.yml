@@ -1,0 +1,34 @@
+language: python
+
+matrix:
+  include:
+#    - sudo: required
+#      services:
+#        - docker
+#      env:
+#        - PIP=pip
+#        - PYTHON=python
+#        - CIBW_BEFORE_BUILD_LINUX='yum install cmake -y'
+    - os: osx
+      language: generic
+      compiler: gcc
+      env:
+        - PIP=pip2
+        - PYTHON=python2
+
+script:
+  - cd python
+  - git describe --tags >VERSION
+  - cp -r ../lib .
+  - cp -r ../third_party .
+  - $PIP install wheel
+  - $PYTHON setup.py sdist --dist-dir wheelhouse
+  - $PIP install cibuildwheel
+  - export CIBW_SKIP='cp34-*'
+  - export CIBW_BUILD_VERBOSITY=3
+  - cibuildwheel --output-dir wheelhouse
+  - |
+    if [[ $TRAVIS_TAG ]]; then
+      $PIP install twine
+      $PYTHON -m twine upload wheelhouse/* --skip-existing
+    fi

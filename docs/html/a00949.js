@@ -1,9 +1,12 @@
 var a00949 =
 [
-    [ "mode", "a00949.html#a37e90f5e3bd99fac2021fb3a326607d4", null ],
-    [ "parent_key", "a00949.html#a000599eef5677ed1279b025c42ae260e", null ],
-    [ "sn", "a00949.html#aef45bac2efcd5394c4ed79f73ee16d23", null ],
-    [ "target_key", "a00949.html#afca67d3e5d5a7c772262731cc08880b1", null ],
-    [ "target_key_id", "a00949.html#a41104a8c85cd12c0fde0d791c3276a48", null ],
-    [ "temp_key", "a00949.html#a72fae3d62889ef224f09c57a7646e061", null ]
+    [ "hal_data", "a00949.html#ad33508455720b78cc0fc880cb3f9885e", null ],
+    [ "halidle", "a00949.html#a3939b643c7f807fc8fe8abcf18e99196", null ],
+    [ "halinit", "a00949.html#aa020e68c9d18f83f205981fa57107b3c", null ],
+    [ "halpostinit", "a00949.html#af174424ba7b2d19a74c72f8b4198c26b", null ],
+    [ "halreceive", "a00949.html#af95136769fcc864880463d4dcab0c11c", null ],
+    [ "halrelease", "a00949.html#a5eb439f0ede23956fde8cd72f41b85ba", null ],
+    [ "halsend", "a00949.html#a6fb3aee6375216c53ef1e5a9df01e074", null ],
+    [ "halsleep", "a00949.html#ad2f432748c4d8efe98ec42d5cd1552b5", null ],
+    [ "halwake", "a00949.html#a033c21278fef7771916378cbcf726ae6", null ]
 ];

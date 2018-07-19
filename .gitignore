@@ -48,3 +48,12 @@ local.properties
 *.o
 
 .vs
+
+# Python
+.tox/
+.pytest_cache/
+build/
+.build/
+*.pyc
+.dist/
+dist/

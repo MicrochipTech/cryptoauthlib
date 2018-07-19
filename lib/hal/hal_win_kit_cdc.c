@@ -2,31 +2,27 @@
  * \file
  * \brief ATCA Hardware abstraction layer for Windows using kit protocol over a USB CDC device.
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 
 #include "atca_hal.h"
@@ -247,12 +243,12 @@ ATCA_STATUS hal_cdc_discover_buses(int i2c_buses[], int max_buses)
 }
 
 /** \brief discover any CryptoAuth devices on a given logical bus number.This function is currently not implemented.
- * \param[in] busNum - logical bus number on which to look for CryptoAuth devices
+ * \param[in] bus_num - logical bus number on which to look for CryptoAuth devices
  * \param[out] cfg[] - pointer to head of an array of interface config structures which get filled in by this method
  * \param[out] *found - number of devices found on this bus
  * \return ATCA_UNIMPLEMENTED
  */
-ATCA_STATUS hal_cdc_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
+ATCA_STATUS hal_cdc_discover_devices(int bus_num, ATCAIfaceCfg cfg[], int *found)
 {
     // TODO: Add kitg protocol calls to discover all devices
     return ATCA_UNIMPLEMENTED;
@@ -423,9 +419,9 @@ ATCA_STATUS kit_phy_receive(ATCAIface iface, char* rxdata, int* rxsize)
         }
         // Protect rxdata from overwriting, this will have the result of truncating the returned bytes
         // Remaining space in rxdata
-        bytes_remain = (*rxsize - total_bytes);
+        //bytes_remain = (*rxsize - total_bytes);
         // Use the minimum between number of bytes read and remaining space
-        bytes_to_copy = min(bytes_remain, bytes_to_copy);
+        //bytes_to_copy = min(bytes_remain, bytes_to_copy);
 
         // Copy the received data
         memcpy(&rxdata[total_bytes], &buffer[0], bytes_to_copy);
@@ -458,9 +454,10 @@ ATCA_STATUS hal_kit_cdc_send(ATCAIface iface, uint8_t* txdata, int txlength)
 }
 
 /** \brief HAL implementation of kit protocol receive over USB CDC
- * \param[in]    iface   instance
- * \param[in]    rxdata  pointer to space to receive the data
- * \param[inout] rxsize  ptr to expected number of receive bytes to request
+ * \param[in]    iface   Device to interact with.
+ * \param[out]   rxdata  Data received will be returned here.
+ * \param[inout] rxsize  As input, the size of the rxdata buffer.
+ *                       As output, the number of bytes received.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS hal_kit_cdc_receive(ATCAIface iface, uint8_t* rxdata, uint16_t* rxsize)
@@ -542,12 +539,12 @@ ATCA_STATUS hal_kit_cdc_discover_buses(int cdc_buses[], int max_buses)
 
 
 /** \brief discover any CryptoAuth devices on a given logical bus number
- * \param[in] busNum - logical bus number on which to look for CryptoAuth devices
+ * \param[in] bus_num - logical bus number on which to look for CryptoAuth devices
  * \param[out] cfg[] - pointer to head of an array of interface config structures which get filled in by this method
  * \param[out] *found - number of devices found on this bus
  * \return ATCA_UNIMPLEMENTED
  */
-ATCA_STATUS hal_kit_cdc_discover_devices(int busNum, ATCAIfaceCfg *cfg, int *found)
+ATCA_STATUS hal_kit_cdc_discover_devices(int bus_num, ATCAIfaceCfg *cfg, int *found)
 {
     // TODO: Implement
     *found = 0;

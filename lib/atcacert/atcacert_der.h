@@ -2,31 +2,27 @@
  * \file
  * \brief function declarations required to work with DER encoded data related to X.509 certificates.
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 
 
@@ -60,7 +56,7 @@ extern "C" {
  * \param[inout] der_length_size  As input, size of der_length buffer in bytes.
  *                                As output, the size of the DER length encoding in bytes.
  *
- * \return On successful execution it returns ATCACERT_E_SUCCESS otherwise it returns error code.
+ * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 int atcacert_der_enc_length(uint32_t length, uint8_t* der_length, size_t* der_length_size);
 
@@ -74,7 +70,7 @@ int atcacert_der_enc_length(uint32_t length, uint8_t* der_length, size_t* der_le
  *                                As output, the size of the DER encoded length that was decoded.
  * \param[out]   length           Decoded length is returned here.
  *
- * \return On successful execution it returns ATCACERT_E_SUCCESS otherwise it returns error code.
+ * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 int atcacert_der_dec_length(const uint8_t* der_length, size_t* der_length_size, uint32_t* length);
 
@@ -93,7 +89,7 @@ int atcacert_der_adjust_length(uint8_t* der_length, size_t* der_length_size, int
  * \param[inout] der_int_size   As input, the size of the der_int buffer in bytes.
  *                              As output, the size of the DER integer returned in bytes.
  *
- * \return On successful execution it returns ATCACERT_E_SUCCESS otherwise it returns error code.
+ * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 int atcacert_der_enc_integer(const uint8_t* int_data,
                              size_t         int_data_size,
@@ -115,7 +111,7 @@ int atcacert_der_enc_integer(const uint8_t* int_data,
  * \param[inout]  int_data_size  As input, the size of int_data in bytes.
  *                               As output, the size of the decoded integer in bytes.
  *
- * \return On successful execution it returns ATCACERT_E_SUCCESS otherwise it returns error code.
+ * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 int atcacert_der_dec_integer(const uint8_t* der_int,
                              size_t*        der_int_size,
@@ -136,7 +132,7 @@ int atcacert_der_dec_integer(const uint8_t* der_int,
  * \param[inout] der_sig_size   As input, the size of the x509_sig buffer in bytes.
  *                              As output, the size of the returned X.509 signature in bytes.
  *
- * \return On successful execution it returns ATCACERT_E_SUCCESS otherwise it returns error code.
+ * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 int atcacert_der_enc_ecdsa_sig_value(const uint8_t raw_sig[64],
                                      uint8_t*      der_sig,
@@ -155,7 +151,7 @@ int atcacert_der_enc_ecdsa_sig_value(const uint8_t raw_sig[64],
  * \param[out]   raw_sig        Parsed P256 ECDSA signature will be returned in this buffer.
  *                              Formatted as R and S integers concatenated together. 64 bytes.
  *
- * \return On successful execution it returns ATCACERT_E_SUCCESS otherwise it returns error code.
+ * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 int atcacert_der_dec_ecdsa_sig_value(const uint8_t * der_sig,
                                      size_t *        der_sig_size,

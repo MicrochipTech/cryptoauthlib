@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: license.txt File Reference</title>
+<title>CryptoAuthLib: swi_uart_samd21_start.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,431 +87,48 @@ $(document).ready(function(){initNavTree('a00500.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">license.txt File Reference</div>  </div>
+<div class="title">swi_uart_samd21_start.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00503_source.html">swi_uart_samd21_start.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00254_source.html">basic/atca_helpers.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a12da3acd04e3589c2114dc5d0853f811"><td class="memItemLeft" align="right" valign="top">either version of the&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#a12da3acd04e3589c2114dc5d0853f811">or</a> (at your option) any later version. <a class="el" href="a00500.html#ad7d14be55a088137975311629d46fb11">systemd</a> is distributed in the hope that it will be useful</td></tr>
-<tr class="separator:a12da3acd04e3589c2114dc5d0853f811"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a6d9c6973514334d30f18732cce26e487"><td class="memItemLeft" align="right" valign="top">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a></td></tr>
-<tr class="separator:a6d9c6973514334d30f18732cce26e487"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb3b32a3270091ccfdac6f1c95af67d8"><td class="memItemLeft" align="right" valign="top">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#afb3b32a3270091ccfdac6f1c95af67d8">EXPRESS</a></td></tr>
-<tr class="separator:afb3b32a3270091ccfdac6f1c95af67d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cd4151984faeb8ae89accf66bfbbc88"><td class="memItemLeft" align="right" valign="top">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#a4cd4151984faeb8ae89accf66bfbbc88">STATUTORY</a></td></tr>
-<tr class="separator:a4cd4151984faeb8ae89accf66bfbbc88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38b2b38e974765c84ff77b93cf33b154"><td class="memItemLeft" align="right" valign="top">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS SOFTWARE IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a></td></tr>
-<tr class="separator:a38b2b38e974765c84ff77b93cf33b154"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abafb29e39823567906677bad024c600c"><td class="memItemLeft" align="right" valign="top">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#abafb29e39823567906677bad024c600c">INFRINGEMENT</a></td></tr>
-<tr class="separator:abafb29e39823567906677bad024c600c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74a56b30fb63fa58d2bc07ffb0837d06"><td class="memItemLeft" align="right" valign="top">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#a74a56b30fb63fa58d2bc07ffb0837d06">MERCHANTABILITY</a></td></tr>
-<tr class="separator:a74a56b30fb63fa58d2bc07ffb0837d06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a843f8ec8ecbc00d56b7ecb2fd961a277"><td class="memItemLeft" align="right" valign="top">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#a843f8ec8ecbc00d56b7ecb2fd961a277">PURPOSE</a></td></tr>
-<tr class="separator:a843f8ec8ecbc00d56b7ecb2fd961a277"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50f55433b8f462faaabefb798c1c4eb1"><td class="memItemLeft" align="right" valign="top">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#a50f55433b8f462faaabefb798c1c4eb1">PRODUCTS</a></td></tr>
-<tr class="separator:a50f55433b8f462faaabefb798c1c4eb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78d5ead39a173c46cac759b3022ff856"><td class="memItemLeft" align="right" valign="top">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#a78d5ead39a173c46cac759b3022ff856">INDIRECT</a></td></tr>
-<tr class="separator:a78d5ead39a173c46cac759b3022ff856"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a009284093e1432b5548816c996b6e7c8"><td class="memItemLeft" align="right" valign="top">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#a009284093e1432b5548816c996b6e7c8">SPECIAL</a></td></tr>
-<tr class="separator:a009284093e1432b5548816c996b6e7c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8e76d07c512a2f2c001e5d2d354ccef"><td class="memItemLeft" align="right" valign="top">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#aa8e76d07c512a2f2c001e5d2d354ccef">PUNITIVE</a></td></tr>
-<tr class="separator:aa8e76d07c512a2f2c001e5d2d354ccef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25d517fad5aac9a054533a88339826c1"><td class="memItemLeft" align="right" valign="top">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> INCIDENTAL OR CONSEQUENTIAL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#a25d517fad5aac9a054533a88339826c1">LOSS</a></td></tr>
-<tr class="separator:a25d517fad5aac9a054533a88339826c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82ea0afe0611b0f213a0f990d495a9c8"><td class="memItemLeft" align="right" valign="top">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> INCIDENTAL OR CONSEQUENTIAL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#a82ea0afe0611b0f213a0f990d495a9c8">DAMAGE</a></td></tr>
-<tr class="separator:a82ea0afe0611b0f213a0f990d495a9c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aecdc6d34080ac7e012542bab437ee0ee"><td class="memItemLeft" align="right" valign="top">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> INCIDENTAL OR CONSEQUENTIAL COST OR EXPENSE OF <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> KIND WHATSOEVER RELATED TO THE HOWEVER&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#aecdc6d34080ac7e012542bab437ee0ee">CAUSED</a></td></tr>
-<tr class="separator:aecdc6d34080ac7e012542bab437ee0ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a418ecdc01e9d4d6f681f3cedb9534fce"><td class="memItemLeft" align="right" valign="top">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> INCIDENTAL OR CONSEQUENTIAL COST OR EXPENSE OF <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> KIND WHATSOEVER RELATED TO THE HOWEVER EVEN IF MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE TO THE FULLEST EXTENT ALLOWED BY&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#a418ecdc01e9d4d6f681f3cedb9534fce">LAW</a></td></tr>
-<tr class="separator:a418ecdc01e9d4d6f681f3cedb9534fce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47d4752dee461049af925dc52ec63461"><td class="memItemLeft" align="right" valign="top">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> INCIDENTAL OR CONSEQUENTIAL COST OR EXPENSE OF <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> KIND WHATSOEVER RELATED TO THE HOWEVER EVEN IF MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE TO THE FULLEST EXTENT ALLOWED BY MICROCHIP S TOTAL LIABILITY ON ALL CLAIMS IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> WAY RELATED TO THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> WILL NOT EXCEED THE AMOUNT OF&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#a47d4752dee461049af925dc52ec63461">FEES</a></td></tr>
-<tr class="separator:a47d4752dee461049af925dc52ec63461"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad65119178a0120af1ed84e0893bb0209"><td class="memItemLeft" align="right" valign="top">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING ANY IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH ANY OTHER OR USE IN ANY APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INCIDENTAL OR CONSEQUENTIAL COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE HOWEVER EVEN IF MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE TO THE FULLEST EXTENT ALLOWED BY MICROCHIP S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> WILL NOT EXCEED THE AMOUNT OF IF&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a></td></tr>
-<tr class="separator:ad65119178a0120af1ed84e0893bb0209"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d1ae9d03ff3ee76e6c423f8e19e120a"><td class="memItemLeft" align="right" valign="top">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> INCIDENTAL OR CONSEQUENTIAL COST OR EXPENSE OF <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> KIND WHATSOEVER RELATED TO THE HOWEVER EVEN IF MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE TO THE FULLEST EXTENT ALLOWED BY MICROCHIP S TOTAL LIABILITY ON ALL CLAIMS IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> WAY RELATED TO THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> WILL NOT EXCEED THE AMOUNT OF IF THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> MICROCHIP PROVIDES THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#a9d1ae9d03ff3ee76e6c423f8e19e120a">TERMS</a></td></tr>
-<tr class="separator:a9d1ae9d03ff3ee76e6c423f8e19e120a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e62b77d6e9a4cf2ad0d1b8d19383d74"><td class="memItemLeft" align="right" valign="top">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> INCIDENTAL OR CONSEQUENTIAL COST OR EXPENSE OF <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> KIND WHATSOEVER RELATED TO THE HOWEVER EVEN IF MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE TO THE FULLEST EXTENT ALLOWED BY MICROCHIP S TOTAL LIABILITY ON ALL CLAIMS IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> WAY RELATED TO THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> WILL NOT EXCEED THE AMOUNT OF IF THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> MICROCHIP PROVIDES THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE this code depends on the libudev h header file with the following&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#a7e62b77d6e9a4cf2ad0d1b8d19383d74">license</a></td></tr>
-<tr class="separator:a7e62b77d6e9a4cf2ad0d1b8d19383d74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b83833564ea423ec5340bb9b27fa3c7"><td class="memItemLeft" align="right" valign="top">you can redistribute it and <a class="el" href="a00500.html#a12da3acd04e3589c2114dc5d0853f811">or</a> modify it under the terms of the GNU Lesser General Public <a class="el" href="a00500.html#a355539e51bed3008068dfe985e226ab8">License</a> as published by the Free Software&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#a6b83833564ea423ec5340bb9b27fa3c7">Foundation</a></td></tr>
-<tr class="separator:a6b83833564ea423ec5340bb9b27fa3c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a355539e51bed3008068dfe985e226ab8"><td class="memItemLeft" align="right" valign="top">either version of the&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#a355539e51bed3008068dfe985e226ab8">License</a></td></tr>
-<tr class="separator:a355539e51bed3008068dfe985e226ab8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01d4ec73d916d67d085f3e63d1fdbd4b"><td class="memItemLeft" align="right" valign="top">either version of the but WITHOUT <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#a01d4ec73d916d67d085f3e63d1fdbd4b">WARRANTY</a></td></tr>
-<tr class="separator:a01d4ec73d916d67d085f3e63d1fdbd4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7d14be55a088137975311629d46fb11"><td class="memItemLeft" align="right" valign="top">without even the implied warranty of <a class="el" href="a00500.html#a74a56b30fb63fa58d2bc07ffb0837d06">MERCHANTABILITY</a> <a class="el" href="a00500.html#a12da3acd04e3589c2114dc5d0853f811">or</a> FITNESS FOR A PARTICULAR <a class="el" href="a00500.html#a843f8ec8ecbc00d56b7ecb2fd961a277">PURPOSE</a> See the GNU Lesser General Public <a class="el" href="a00500.html#a355539e51bed3008068dfe985e226ab8">License</a> for more details You should have received a copy of the GNU Lesser General Public <a class="el" href="a00500.html#a355539e51bed3008068dfe985e226ab8">License</a> along with&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#ad7d14be55a088137975311629d46fb11">systemd</a></td></tr>
-<tr class="separator:ad7d14be55a088137975311629d46fb11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0512e77e510c7e2d84a2817fbe4987d5"><td class="memItemLeft" align="right" valign="top">If&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00500.html#a0512e77e510c7e2d84a2817fbe4987d5">not</a></td></tr>
-<tr class="separator:a0512e77e510c7e2d84a2817fbe4987d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga003b63648f1a5f9eba274760559688f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#ga003b63648f1a5f9eba274760559688f2">swi_uart_init</a> (<a class="el" href="a00843.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a> *instance)</td></tr>
+<tr class="memdesc:ga003b63648f1a5f9eba274760559688f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of SWI UART init.  <a href="a00843.html#ga003b63648f1a5f9eba274760559688f2">More...</a><br /></td></tr>
+<tr class="separator:ga003b63648f1a5f9eba274760559688f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b1aad3936bf003686d8db7fa2be5132"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#ga0b1aad3936bf003686d8db7fa2be5132">swi_uart_deinit</a> (<a class="el" href="a00843.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a> *instance)</td></tr>
+<tr class="memdesc:ga0b1aad3936bf003686d8db7fa2be5132"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of SWI UART deinit.  <a href="a00843.html#ga0b1aad3936bf003686d8db7fa2be5132">More...</a><br /></td></tr>
+<tr class="separator:ga0b1aad3936bf003686d8db7fa2be5132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#gaba296f70baf68b768d6c4bb9cf7ba67d">swi_uart_setbaud</a> (<a class="el" href="a00843.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a> *instance, uint32_t baudrate)</td></tr>
+<tr class="memdesc:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="mdescLeft">&#160;</td><td class="mdescRight">implementation of SWI UART change baudrate.  <a href="a00843.html#gaba296f70baf68b768d6c4bb9cf7ba67d">More...</a><br /></td></tr>
+<tr class="separator:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#gacc2a96c86ce4c07249b81bc6a7eb2e41">swi_uart_mode</a> (<a class="el" href="a00843.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a> *instance, uint8_t mode)</td></tr>
+<tr class="memdesc:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="mdescLeft">&#160;</td><td class="mdescRight">implementation of SWI UART change mode.  <a href="a00843.html#gacc2a96c86ce4c07249b81bc6a7eb2e41">More...</a><br /></td></tr>
+<tr class="separator:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad640b598d581ee7c8a4c804bee602906"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#gad640b598d581ee7c8a4c804bee602906">swi_uart_discover_buses</a> (int swi_uart_buses[], int max_buses)</td></tr>
+<tr class="memdesc:gad640b598d581ee7c8a4c804bee602906"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover UART buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge  <a href="a00843.html#gad640b598d581ee7c8a4c804bee602906">More...</a><br /></td></tr>
+<tr class="separator:gad640b598d581ee7c8a4c804bee602906"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4a4d491006d9683d67838963706ac9c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#ga4a4d491006d9683d67838963706ac9c1">swi_uart_send_byte</a> (<a class="el" href="a00843.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a> *instance, uint8_t data)</td></tr>
+<tr class="memdesc:ga4a4d491006d9683d67838963706ac9c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI UART send byte over ASF. This function send one byte over UART.  <a href="a00843.html#ga4a4d491006d9683d67838963706ac9c1">More...</a><br /></td></tr>
+<tr class="separator:ga4a4d491006d9683d67838963706ac9c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga93f3dab17c14f71641ca970998ede823"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#ga93f3dab17c14f71641ca970998ede823">swi_uart_receive_byte</a> (<a class="el" href="a00843.html#ga257ed552f7d68eb1e5d3ca7baa01559a">ATCASWIMaster_t</a> *instance, uint8_t *data)</td></tr>
+<tr class="memdesc:ga93f3dab17c14f71641ca970998ede823"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI UART receive bytes over ASF. This function receive one byte over UART.  <a href="a00843.html#ga93f3dab17c14f71641ca970998ede823">More...</a><br /></td></tr>
+<tr class="separator:ga93f3dab17c14f71641ca970998ede823"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a12da3acd04e3589c2114dc5d0853f811"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a12da3acd04e3589c2114dc5d0853f811">&#9670;&nbsp;</a></span>or()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">either version of the or </td>
-          <td>(</td>
-          <td class="paramtype">at your&#160;</td>
-          <td class="paramname"><em>option</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="ad65119178a0120af1ed84e0893bb0209"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad65119178a0120af1ed84e0893bb0209">&#9670;&nbsp;</a></span>ANY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING ANY IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH ANY OTHER OR USE IN ANY APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INCIDENTAL OR CONSEQUENTIAL COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE HOWEVER EVEN IF MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE TO THE FULLEST EXTENT ALLOWED BY MICROCHIP S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> WILL NOT EXCEED THE AMOUNT OF IF ANY</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aecdc6d34080ac7e012542bab437ee0ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aecdc6d34080ac7e012542bab437ee0ee">&#9670;&nbsp;</a></span>CAUSED</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> INCIDENTAL OR CONSEQUENTIAL COST OR EXPENSE OF <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> KIND WHATSOEVER RELATED TO THE HOWEVER CAUSED</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a82ea0afe0611b0f213a0f990d495a9c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a82ea0afe0611b0f213a0f990d495a9c8">&#9670;&nbsp;</a></span>DAMAGE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> INCIDENTAL OR CONSEQUENTIAL DAMAGE</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="afb3b32a3270091ccfdac6f1c95af67d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb3b32a3270091ccfdac6f1c95af67d8">&#9670;&nbsp;</a></span>EXPRESS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER EXPRESS</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a47d4752dee461049af925dc52ec63461"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a47d4752dee461049af925dc52ec63461">&#9670;&nbsp;</a></span>FEES</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> INCIDENTAL OR CONSEQUENTIAL COST OR EXPENSE OF <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> KIND WHATSOEVER RELATED TO THE HOWEVER EVEN IF MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE TO THE FULLEST EXTENT ALLOWED BY MICROCHIP S TOTAL LIABILITY ON ALL CLAIMS IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> WAY RELATED TO THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> WILL NOT EXCEED THE AMOUNT OF FEES</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a6b83833564ea423ec5340bb9b27fa3c7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b83833564ea423ec5340bb9b27fa3c7">&#9670;&nbsp;</a></span>Foundation</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">you can redistribute it and <a class="el" href="a00500.html#a12da3acd04e3589c2114dc5d0853f811">or</a> modify it under the terms of the GNU Lesser General Public <a class="el" href="a00500.html#a355539e51bed3008068dfe985e226ab8">License</a> as published by the Free Software Foundation</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a78d5ead39a173c46cac759b3022ff856"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78d5ead39a173c46cac759b3022ff856">&#9670;&nbsp;</a></span>INDIRECT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> INDIRECT</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="abafb29e39823567906677bad024c600c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abafb29e39823567906677bad024c600c">&#9670;&nbsp;</a></span>INFRINGEMENT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON INFRINGEMENT</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a418ecdc01e9d4d6f681f3cedb9534fce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a418ecdc01e9d4d6f681f3cedb9534fce">&#9670;&nbsp;</a></span>LAW</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> INCIDENTAL OR CONSEQUENTIAL COST OR EXPENSE OF <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> KIND WHATSOEVER RELATED TO THE HOWEVER EVEN IF MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE TO THE FULLEST EXTENT ALLOWED BY LAW</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7e62b77d6e9a4cf2ad0d1b8d19383d74"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e62b77d6e9a4cf2ad0d1b8d19383d74">&#9670;&nbsp;</a></span>license</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> INCIDENTAL OR CONSEQUENTIAL COST OR EXPENSE OF <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> KIND WHATSOEVER RELATED TO THE HOWEVER EVEN IF MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE TO THE FULLEST EXTENT ALLOWED BY MICROCHIP S TOTAL LIABILITY ON ALL CLAIMS IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> WAY RELATED TO THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> WILL NOT EXCEED THE AMOUNT OF IF THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> MICROCHIP PROVIDES THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE this code depends on the libudev h header file with the following license</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a355539e51bed3008068dfe985e226ab8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a355539e51bed3008068dfe985e226ab8">&#9670;&nbsp;</a></span>License</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">either version of the License</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a25d517fad5aac9a054533a88339826c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a25d517fad5aac9a054533a88339826c1">&#9670;&nbsp;</a></span>LOSS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> INCIDENTAL OR CONSEQUENTIAL LOSS</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a74a56b30fb63fa58d2bc07ffb0837d06"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a74a56b30fb63fa58d2bc07ffb0837d06">&#9670;&nbsp;</a></span>MERCHANTABILITY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON MERCHANTABILITY</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0512e77e510c7e2d84a2817fbe4987d5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0512e77e510c7e2d84a2817fbe4987d5">&#9670;&nbsp;</a></span>not</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">If not</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a50f55433b8f462faaabefb798c1c4eb1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a50f55433b8f462faaabefb798c1c4eb1">&#9670;&nbsp;</a></span>PRODUCTS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER PRODUCTS</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa8e76d07c512a2f2c001e5d2d354ccef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa8e76d07c512a2f2c001e5d2d354ccef">&#9670;&nbsp;</a></span>PUNITIVE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> PUNITIVE</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a843f8ec8ecbc00d56b7ecb2fd961a277"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a843f8ec8ecbc00d56b7ecb2fd961a277">&#9670;&nbsp;</a></span>PURPOSE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR PURPOSE</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a38b2b38e974765c84ff77b93cf33b154"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a38b2b38e974765c84ff77b93cf33b154">&#9670;&nbsp;</a></span>SOFTWARE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS SOFTWARE IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> INCIDENTAL OR CONSEQUENTIAL COST OR EXPENSE OF <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> KIND WHATSOEVER RELATED TO THE SOFTWARE</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a009284093e1432b5548816c996b6e7c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a009284093e1432b5548816c996b6e7c8">&#9670;&nbsp;</a></span>SPECIAL</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> SPECIAL</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a4cd4151984faeb8ae89accf66bfbbc88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4cd4151984faeb8ae89accf66bfbbc88">&#9670;&nbsp;</a></span>STATUTORY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR STATUTORY</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad7d14be55a088137975311629d46fb11"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad7d14be55a088137975311629d46fb11">&#9670;&nbsp;</a></span>systemd</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">without even the implied warranty of <a class="el" href="a00500.html#a74a56b30fb63fa58d2bc07ffb0837d06">MERCHANTABILITY</a> <a class="el" href="a00500.html#a12da3acd04e3589c2114dc5d0853f811">or</a> FITNESS FOR A PARTICULAR <a class="el" href="a00500.html#a843f8ec8ecbc00d56b7ecb2fd961a277">PURPOSE</a> See the GNU Lesser General Public <a class="el" href="a00500.html#a355539e51bed3008068dfe985e226ab8">License</a> for more details You should have received a copy of the GNU Lesser General Public <a class="el" href="a00500.html#a355539e51bed3008068dfe985e226ab8">License</a> along with systemd</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a9d1ae9d03ff3ee76e6c423f8e19e120a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9d1ae9d03ff3ee76e6c423f8e19e120a">&#9670;&nbsp;</a></span>TERMS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WHETHER IMPLIED OR APPLY TO THIS INCLUDING <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> IMPLIED <a class="el" href="a00500.html#a6d9c6973514334d30f18732cce26e487">WARRANTIES</a> OF NON AND FITNESS FOR A PARTICULAR OR ITS INTERACTION WITH MICROCHIP COMBINATION WITH <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> OTHER OR USE IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> APPLICATION IN NO EVENT WILL MICROCHIP BE LIABLE FOR <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> INCIDENTAL OR CONSEQUENTIAL COST OR EXPENSE OF <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> KIND WHATSOEVER RELATED TO THE HOWEVER EVEN IF MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE TO THE FULLEST EXTENT ALLOWED BY MICROCHIP S TOTAL LIABILITY ON ALL CLAIMS IN <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> WAY RELATED TO THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> WILL NOT EXCEED THE AMOUNT OF IF THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> MICROCHIP PROVIDES THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE TERMS</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">===============================================================================</div><div class="line">If <span class="keyword">using</span> the Linux HID driver (lib/hal/hal_linux_kit_hid.c)</div></div><!-- fragment -->
-</div>
-</div>
-<a id="a6d9c6973514334d30f18732cce26e487"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6d9c6973514334d30f18732cce26e487">&#9670;&nbsp;</a></span>WARRANTIES</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">c Microchip Technology Inc and its subsidiaries You may use this software and any derivatives exclusively with Microchip products THIS <a class="el" href="a00500.html#a38b2b38e974765c84ff77b93cf33b154">SOFTWARE</a> IS SUPPLIED BY MICROCHIP AS IS NO WARRANTIES</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a01d4ec73d916d67d085f3e63d1fdbd4b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a01d4ec73d916d67d085f3e63d1fdbd4b">&#9670;&nbsp;</a></span>WARRANTY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">either version of the but WITHOUT <a class="el" href="a00500.html#ad65119178a0120af1ed84e0893bb0209">ANY</a> WARRANTY</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00500.html">license.txt</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00500.html">swi_uart_samd21_start.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

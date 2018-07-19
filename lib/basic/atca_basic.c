@@ -3,39 +3,40 @@
  * \brief CryptoAuthLib Basic API methods. These methods provide a simpler way
  *        to access the core crypto methods.
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 
 
 #include "atca_basic.h"
 #include "host/atca_host.h"
 
-char atca_version[] = { "20180329" };  // change for each release, yyyymmdd
+const char atca_version[] = { "20180718" };  // change for each release, yyyymmdd
 ATCADevice _gDevice = NULL;
+#ifdef ATCA_NO_HEAP
+struct atca_command g_atcab_command;
+struct atca_iface g_atcab_iface;
+struct atca_device g_atcab_device;
+#endif
 #define MAX_BUSES   4
 
 /** \brief basic API methods are all prefixed with atcab_  (CryptoAuthLib Basic)
@@ -56,29 +57,40 @@ ATCA_STATUS atcab_version(char *ver_str)
 }
 
 
-/** \brief atcab_init is called once for the life of the application and creates a global ATCADevice object used by Basic API.
- *  This method builds a global ATCADevice instance behinds the scenes that's used for all Basic API operations
- *  \param[in] cfg      pointer that holds the interface configuration.  This is usually a predefined configuration found in atca_cfgs.h
- *  \return    ATCA_SUCCESS on success, otherwise an error code.
+/** \brief Creates a global ATCADevice object used by Basic API.
+ *  \param[in] cfg  Logical interface configuration. Some predefined
+ *                  configurations can be found in atca_cfgs.h
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcab_init(ATCAIfaceCfg *cfg)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
-    if (_gDevice)       // if there's already a device created, release it
+    // If a device has already been initialized, release it
+    if (_gDevice)
     {
         atcab_release();
     }
-    _gDevice = newATCADevice(cfg);
 
-    if ((_gDevice == NULL) || (_gDevice->mIface == NULL) || (_gDevice->mCommands == NULL))
+#ifdef ATCA_NO_HEAP
+    g_atcab_device.mCommands = &g_atcab_command;
+    g_atcab_device.mIface = &g_atcab_iface;
+    status = initATCADevice(cfg, &g_atcab_device);
+    if (status != ATCA_SUCCESS)
     {
-        return ATCA_GEN_FAIL;  // Device creation failed
-
+        return status;
     }
+    _gDevice = &g_atcab_device;
+#else
+    _gDevice = newATCADevice(cfg);
+    if (_gDevice == NULL)
+    {
+        return ATCA_GEN_FAIL;
+    }
+#endif
+
     if (cfg->devtype == ATECC608A)
     {
-
         if ((status = atcab_read_bytes_zone(ATCA_ZONE_CONFIG, 0, ATCA_CHIPMODE_OFFSET, &_gDevice->mCommands->clock_divider, 1)) != ATCA_SUCCESS)
         {
             return status;
@@ -124,7 +136,16 @@ ATCA_STATUS atcab_init_device(ATCADevice ca_device)
  */
 ATCA_STATUS atcab_release(void)
 {
+#ifdef ATCA_NO_HEAP
+    ATCA_STATUS status = releaseATCADevice(_gDevice);
+    if (status != ATCA_SUCCESS)
+    {
+        return status;
+    }
+    _gDevice = NULL;
+#else
     deleteATCADevice(&_gDevice);
+#endif
     return ATCA_SUCCESS;
 }
 

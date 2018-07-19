@@ -1,8 +1,9 @@
 var a00893 =
 [
-    [ "bus_index", "a00893.html#af5c011e6c2e8d49675f7029e8ec2c0a6", null ],
-    [ "pin_sda", "a00893.html#afd6d53ef6b697533839248b40bc97861", null ],
-    [ "usart_instance", "a00893.html#ad1dd3236df177255a91b568170b70a74", null ],
-    [ "usart_instance", "a00893.html#a2d29ab9b8f0842ee9a2906302b20011d", null ],
-    [ "USART_SWI", "a00893.html#a7758bb1b871f6094e6d2f0c2ce10b18c", null ]
+    [ "tm_hour", "a00893.html#a4d171061df9e012fcfbd1172b8440d5f", null ],
+    [ "tm_mday", "a00893.html#a02048604d30b880033311cf542d63f92", null ],
+    [ "tm_min", "a00893.html#a987fa9280fe4cd6c6b8f77409f1c1504", null ],
+    [ "tm_mon", "a00893.html#ada983deda100b604bee5716512453658", null ],
+    [ "tm_sec", "a00893.html#a18df301c1a10c8d493da86ce5c2aea78", null ],
+    [ "tm_year", "a00893.html#a994c4f4519ba57e186580d21cc86f9e5", null ]
 ];

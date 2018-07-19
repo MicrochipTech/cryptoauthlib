@@ -1,7 +1,10 @@
 var a00110 =
 [
-    [ "ATCA_POLLING_FREQUENCY_TIME_MSEC", "a00110.html#a608ef7949677dac87e1c76c826e6bf40", null ],
-    [ "ATCA_POLLING_INIT_TIME_MSEC", "a00110.html#a8bec71e1581c804c34ee5239109e0aaf", null ],
-    [ "ATCA_POLLING_MAX_TIME_MSEC", "a00110.html#a3fec2247165d648a94cea3d0cbfd662f", null ],
-    [ "atca_execute_command", "a00110.html#a9a6a7a38f14d486a4b2124d196fc6849", null ]
+    [ "ATCADevice", "a00838.html#gaa94f7bb4af0a3d6735225cc85d92cb50", null ],
+    [ "atGetCommands", "a00838.html#gabf51c08f1928fc5ec44936f3117a9f7e", null ],
+    [ "atGetIFace", "a00838.html#ga3f98e29cffa06446fc91b329703606af", null ],
+    [ "deleteATCADevice", "a00838.html#gac087cf04cd5bd6ff2e026d89bfbf5e12", null ],
+    [ "initATCADevice", "a00838.html#ga8eec7f2190d1f9bda6684f5d2177db15", null ],
+    [ "newATCADevice", "a00838.html#gad5e12e12d3030e28d75164286df9e5e9", null ],
+    [ "releaseATCADevice", "a00838.html#gab729e6c838c0a247d4f226fb92492d96", null ]
 ];

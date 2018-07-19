@@ -2,31 +2,27 @@
  * \file
  * \brief Unity tests for the cryptoauthlib Verify Command
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 #include <stdlib.h>
 #include "atca_test.h"
@@ -340,26 +336,207 @@ TEST(atca_helper, base64_url_decode)
                                     atcab_b64rules_urlsafe, true);
 }
 
+static const uint8_t g_bin2hex_bin[] = {
+    0x01, 0x7d, 0x78, 0x1d, 0x95, 0xc6, 0x06, 0x18, 0xbe, 0xe0, 0xfb, 0x92, 0x05, 0xb0, 0x4b, 0x52,
+    0xec, 0x43, 0xb3, 0xeb, 0xa1, 0xe5, 0x20, 0x86, 0x32, 0xea, 0x1f, 0xaa, 0xa6, 0x68, 0x1b, 0xbc,
+    0xf8, 0xd8, 0x28, 0x71, 0xf4, 0x81, 0x9c, 0x2f, 0xcd, 0x15, 0x38, 0xc3, 0xd0, 0xb7, 0xf7, 0x14,
+    0xbb, 0x6b, 0x83, 0x78, 0x0f, 0x6f, 0x38, 0x8f, 0x77, 0x2f, 0xe3, 0x67, 0x64, 0x33, 0x4f, 0x74
+};
+
+static const char g_bin2hex_hex[] =
+    "01 7D 78 1D 95 C6 06 18 BE E0 FB 92 05 B0 4B 52\r\n"
+    "EC 43 B3 EB A1 E5 20 86 32 EA 1F AA A6 68 1B BC\r\n"
+    "F8 D8 28 71 F4 81 9C 2F CD 15 38 C3 D0 B7 F7 14\r\n"
+    "BB 6B 83 78 0F 6F 38 8F 77 2F E3 67 64 33 4F 74";
+
+static const char g_bin2hex_hex_no_pretty[] =
+    "017D781D95C60618BEE0FB9205B04B52"
+    "EC43B3EBA1E5208632EA1FAAA6681BBC"
+    "F8D82871F4819C2FCD1538C3D0B7F714"
+    "BB6B83780F6F388F772FE36764334F74";
+
+TEST(atca_helper, bin2hex_simple)
+{
+    char hex[10 * 3];
+    int hex_size = sizeof(hex);
+    ATCA_STATUS status;
+
+    memset(hex, 0xFF, sizeof(hex)); // Preset to non-null values to check ending null behavior
+
+    status = atcab_bin2hex(g_bin2hex_bin, 10, hex, &hex_size);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(10 * 3 - 1, hex_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_bin2hex_hex, hex, hex_size);
+    TEST_ASSERT_EQUAL(NULL, hex[hex_size]);
+}
+
+TEST(atca_helper, bin2hex_simple_no_null)
+{
+    char hex[10 * 3];
+    int hex_size = sizeof(hex) - 1;  // Size it too small to have an ending null
+    ATCA_STATUS status;
+
+    memset(hex, 0xFF, sizeof(hex)); // Preset to non-null values to check ending null behavior
+
+    status = atcab_bin2hex(g_bin2hex_bin, 10, hex, &hex_size);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(10 * 3 - 1, hex_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_bin2hex_hex, hex, hex_size);
+    TEST_ASSERT_EQUAL((char)0xFF, hex[hex_size]);
+}
+
+TEST(atca_helper, bin2hex_one)
+{
+    char hex[3];
+    int hex_size = sizeof(hex);
+    ATCA_STATUS status;
+
+    memset(hex, 0xFF, sizeof(hex)); // Preset to non-null values to check ending null behavior
+
+    status = atcab_bin2hex(g_bin2hex_bin, 1, hex, &hex_size);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(2, hex_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_bin2hex_hex, hex, hex_size);
+    TEST_ASSERT_EQUAL(NULL, hex[hex_size]);
+}
+
+TEST(atca_helper, bin2hex_all)
+{
+    char hex[sizeof(g_bin2hex_hex)];
+    int hex_size = sizeof(hex);
+    ATCA_STATUS status;
+
+    memset(hex, 0xFF, sizeof(hex)); // Preset to non-null values to check ending null behavior
+
+    status = atcab_bin2hex(g_bin2hex_bin, sizeof(g_bin2hex_bin), hex, &hex_size);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(sizeof(g_bin2hex_hex) - 1, hex_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_bin2hex_hex, hex, hex_size);
+    TEST_ASSERT_EQUAL(NULL, hex[hex_size]);
+}
+
+TEST(atca_helper, bin2hex_in_place)
+{
+    char hex[sizeof(g_bin2hex_hex)];
+    int hex_size = sizeof(hex);
+    uint8_t* bin = NULL;
+    ATCA_STATUS status;
+
+    // Place input data at the end of the output buffer
+    bin = (uint8_t*)&hex[sizeof(hex) - sizeof(g_bin2hex_bin)];
+    memcpy(bin, g_bin2hex_bin, sizeof(g_bin2hex_bin));
+
+    status = atcab_bin2hex(bin, sizeof(g_bin2hex_bin), hex, &hex_size);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(sizeof(g_bin2hex_hex) - 1, hex_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_bin2hex_hex, hex, hex_size);
+    TEST_ASSERT_EQUAL(NULL, hex[hex_size]);
+}
+
+TEST(atca_helper, bin2hex_no_pretty)
+{
+    char hex[sizeof(g_bin2hex_hex_no_pretty)];
+    int hex_size = sizeof(hex);
+    ATCA_STATUS status;
+
+    memset(hex, 0xFF, sizeof(hex)); // Preset to non-null values to check ending null behavior
+
+    status = atcab_bin2hex_(g_bin2hex_bin, sizeof(g_bin2hex_bin), hex, &hex_size, false);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(sizeof(g_bin2hex_hex_no_pretty) - 1, hex_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_bin2hex_hex_no_pretty, hex, hex_size);
+    TEST_ASSERT_EQUAL(NULL, hex[hex_size]);
+}
+
+TEST(atca_helper, bin2hex_small_buf)
+{
+    char hex[10 * 3 - 2]; // Size buffer one smaller than required
+    int hex_size = sizeof(hex);
+    ATCA_STATUS status;
+
+    status = atcab_bin2hex(g_bin2hex_bin, 10, hex, &hex_size);
+    TEST_ASSERT_EQUAL(ATCA_SMALL_BUFFER, status);
+}
+
+TEST(atca_helper, hex2bin)
+{
+    uint8_t bin[sizeof(g_bin2hex_bin)];
+    int bin_size = sizeof(bin);
+    ATCA_STATUS status;
+
+    status = atcab_hex2bin(g_bin2hex_hex, strlen(g_bin2hex_hex), bin, &bin_size);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(sizeof(g_bin2hex_bin), bin_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_bin2hex_bin, bin, bin_size);
+}
+
+TEST(atca_helper, hex2bin_in_place)
+{
+    uint8_t bin[sizeof(g_bin2hex_hex)];
+    int bin_size = sizeof(g_bin2hex_hex);
+    ATCA_STATUS status;
+
+    // Place hex data in output buffer
+    memcpy(bin, g_bin2hex_hex, sizeof(g_bin2hex_hex));
+
+    status = atcab_hex2bin((char*)bin, strlen((char*)bin), bin, &bin_size);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(sizeof(g_bin2hex_bin), bin_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_bin2hex_bin, bin, bin_size);
+}
+
+TEST(atca_helper, hex2bin_incomplete)
+{
+    uint8_t bin[sizeof(g_bin2hex_bin)];
+    int bin_size = sizeof(bin);
+    ATCA_STATUS status;
+
+    status = atcab_hex2bin(g_bin2hex_hex, strlen(g_bin2hex_hex) - 1, bin, &bin_size);
+    TEST_ASSERT_EQUAL(ATCA_BAD_PARAM, status);
+}
+
+TEST(atca_helper, hex2bin_small_buf)
+{
+    uint8_t bin[sizeof(g_bin2hex_bin) - 1];
+    int bin_size = sizeof(bin);
+    ATCA_STATUS status;
+
+    status = atcab_hex2bin(g_bin2hex_hex, strlen(g_bin2hex_hex), bin, &bin_size);
+    TEST_ASSERT_EQUAL(ATCA_SMALL_BUFFER, status);
+}
+
 t_test_case_info helper_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_helper, base64_encode),                      ATCA_TESTS_HELPER_DEVICES },
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_to_dirty_buffer),      ATCA_TESTS_HELPER_DEVICES },
-    { REGISTER_TEST_CASE(atca_helper, base64_decode),                      ATCA_TESTS_HELPER_DEVICES },
-    { REGISTER_TEST_CASE(atca_helper, base64_decode_to_dirty_buffer),      ATCA_TESTS_HELPER_DEVICES },
-                                                                                                     
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode),               ATCA_TESTS_HELPER_DEVICES },
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode_mod_3),         ATCA_TESTS_HELPER_DEVICES },
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode_mod_3_minus_1), ATCA_TESTS_HELPER_DEVICES },
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode_mod_3_minus_2), ATCA_TESTS_HELPER_DEVICES },
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode_mod_3_minus_3), ATCA_TESTS_HELPER_DEVICES },
-                                                                                                     
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_check_newline_32),     ATCA_TESTS_HELPER_DEVICES },
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_check_newline_64),     ATCA_TESTS_HELPER_DEVICES },
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_check_newline_96),     ATCA_TESTS_HELPER_DEVICES },
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_check_newline_128),    ATCA_TESTS_HELPER_DEVICES },
-                                                                                                     
-    { REGISTER_TEST_CASE(atca_helper, base64_url_encode),                  ATCA_TESTS_HELPER_DEVICES },
-    { REGISTER_TEST_CASE(atca_helper, base64_url_decode),                  ATCA_TESTS_HELPER_DEVICES },
+    { REGISTER_TEST_CASE(atca_helper, base64_encode),                      ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_to_dirty_buffer),      ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, base64_decode),                      ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, base64_decode_to_dirty_buffer),      ATCA_TESTS_HELPER_DEVICES},
+
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode),               ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode_mod_3),         ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode_mod_3_minus_1), ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode_mod_3_minus_2), ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode_mod_3_minus_3), ATCA_TESTS_HELPER_DEVICES},
+
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_check_newline_32),     ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_check_newline_64),     ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_check_newline_96),     ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_check_newline_128),    ATCA_TESTS_HELPER_DEVICES},
+
+    { REGISTER_TEST_CASE(atca_helper, base64_url_encode),                  ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, base64_url_decode),                  ATCA_TESTS_HELPER_DEVICES},
+
+    { REGISTER_TEST_CASE(atca_helper, bin2hex_simple),                     ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, bin2hex_simple_no_null),             ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, bin2hex_one),                        ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, bin2hex_all),                        ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, bin2hex_in_place),                   ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, bin2hex_no_pretty),                  ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, bin2hex_small_buf),                  ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, hex2bin),                            ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, hex2bin_in_place),                   ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, hex2bin_incomplete),                 ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, hex2bin_small_buf),                  ATCA_TESTS_HELPER_DEVICES},
 
     { (fp_test_case)NULL,             (uint8_t)0 },                        /* Array Termination element*/
 };

@@ -1,38 +1,34 @@
 /** \file
  * \brief simple command processor for test console
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 
 #include "atca_test.h"
 // Undefine the Unity FAIL macro so it doesn't conflict with the ASF definition
 #undef FAIL
 
-#if !defined(_WIN32) && !defined(__linux__) && !defined(__XC32__)
+#if !defined(_WIN32) && !defined(__linux__) && !defined(__XC32__) && !defined(__APPLE__)
 #ifdef ATMEL_START
 #include "atmel_start.h"
 #else
@@ -89,7 +85,7 @@ static t_menu_info mas_menu_info[] =
 {
     { "help",     "Display Menu",                                   help                                 },
     { "discover", "Discover Buses and Devices",                     discover                             },
-    { "204",      "Set Target Device to ATECC204A",                 select_204                           },
+    { "204",      "Set Target Device to ATSHA204A",                 select_204                           },
     { "108",      "Set Target Device to ATECC108A",                 select_108                           },
     { "508",      "Set Target Device to ATECC508A",                 select_508                           },
     { "608",      "Set Target Device to ATECC608A",                 select_608                           },
@@ -100,12 +96,12 @@ static t_menu_info mas_menu_info[] =
     { "lockstat", "Zone Lock Status",                               (fp_menu_handler)lock_status         },
     { "lockcfg",  "Lock the Config Zone",                           lock_config                          },
     { "lockdata", "Lock Data and OTP Zones",                        lock_data                            },
+    { "all",      "Run all unit tests, locking as needed.",         run_all_tests                        },
     #ifndef DO_NOT_TEST_BASIC_UNIT
     { "basic",    "Run Basic Test on Selected Device",              run_basic_tests                      },
     { "unit",     "Run Unit Test on Selected Device",               run_unit_tests                       },
     { "otpzero",  "Zero Out OTP Zone",                              run_otpzero_tests                    },
     { "util",     "Run Helper Function Tests",                      run_helper_tests                     },
-    { "all",      "Run all unit tests, locking as needed.",         run_all_tests                        },
     { "clkdivm0", "Set ATECC608A to ClockDivider M0(0x00)",         set_clock_divider_m0                 },
     { "clkdivm1", "Set ATECC608A to ClockDivider M1(0x05)",         set_clock_divider_m1                 },
     { "clkdivm2", "Set ATECC608A to ClockDivider M2(0x0D)",         set_clock_divider_m2                 },
@@ -114,13 +110,13 @@ static t_menu_info mas_menu_info[] =
     { "cd",       "Run Unit Tests on Cert Data",                    (fp_menu_handler)certdata_unit_tests },
     { "cio",      "Run Unit Test on Cert I/O",                      (fp_menu_handler)certio_unit_tests   },
     #endif
-    #ifdef DO_NOT_TEST_SW_CRYPTO
+    #ifndef DO_NOT_TEST_SW_CRYPTO
     { "crypto",   "Run Unit Tests for Software Crypto Functions",   (fp_menu_handler)atca_crypto_sw_tests},
     #endif
     { NULL,       NULL,                                             NULL                                 },
 };
 
-#if defined(_WIN32) || defined(__linux__)
+#if defined(_WIN32) || defined(__linux__) || defined(__APPLE__)
 #include <stdio.h>
 #include <stdlib.h>
 #include "cmd-processor.h"
@@ -408,7 +404,7 @@ static ATCA_STATUS do_randoms(void)
     ATCA_STATUS status;
     uint8_t randout[RANDOM_RSP_SIZE];
     char displayStr[RANDOM_RSP_SIZE * 3];
-    int displen = sizeof(displayStr);
+    int displen;
     int i;
 
     status = atcab_init(gCfg);
@@ -418,13 +414,14 @@ static ATCA_STATUS do_randoms(void)
         return status;
     }
 
+	printf("Random Numbers:\r\n");
     for (i = 0; i < 5; i++)
     {
         if ((status = atcab_random(randout)) != ATCA_SUCCESS)
         {
             break;
         }
-
+        displen = sizeof(displayStr);
         atcab_bin2hex(randout, 32, displayStr, &displen);
         printf("%s\r\n", displayStr);
     }
@@ -438,6 +435,7 @@ static ATCA_STATUS do_randoms(void)
 
     return status;
 }
+
 static void discover(void)
 {
     ATCAIfaceCfg ifaceCfgs[10];
@@ -538,7 +536,11 @@ static ATCA_STATUS lock_config_zone(void)
     uint8_t ch = 0;
 
     printf("Locking with test configuration, which is suitable only for unit tests... \r\nConfirm by typing Y\r\n");
-    scanf("%c", &ch);
+    do
+    {
+        scanf("%c", &ch);
+    }
+    while (ch == '\n' || ch == '\r');
 
     if (!((ch == 'Y') || (ch == 'y')))
     {
@@ -566,6 +568,20 @@ static ATCA_STATUS lock_config_zone(void)
 static ATCA_STATUS lock_data_zone(void)
 {
     ATCA_STATUS status;
+    uint8_t ch = 0;
+
+    printf("Locking Data zone... \r\nConfirm by typing Y\r\n");
+    do
+    {
+        scanf("%c", &ch);
+    }
+    while (ch == '\n' || ch == '\r');
+
+    if (!((ch == 'Y') || (ch == 'y')))
+    {
+        printf("Skipping Data Zone Lock on request.\r\n");
+        return ATCA_GEN_FAIL;
+    }
 
     status = atcab_init(gCfg);
     if (status != ATCA_SUCCESS)
@@ -667,6 +683,10 @@ static void run_all_tests(void)
         check_clock_divider();
     }
 
+	info();
+	sernum();
+	do_randoms();
+
     status = is_device_locked(LOCK_ZONE_CONFIG, &is_config_locked);
     if (status != ATCA_SUCCESS)
     {
@@ -687,6 +707,7 @@ static void run_all_tests(void)
         return;
     }
 
+#ifndef DO_NOT_TEST_BASIC_UNIT
     if (!is_config_locked)
     {
         fails += run_test(RunAllFeatureTests);
@@ -767,6 +788,7 @@ static void run_all_tests(void)
         printf("util tests failed.\r\n");
         return;
     }
+#endif
 
 #ifndef DO_NOT_TEST_SW_CRYPTO
     fails += atca_crypto_sw_tests();

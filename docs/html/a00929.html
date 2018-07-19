@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_secureboot_mac_in_out Struct Reference</title>
+<title>CryptoAuthLib: hw_sha256_ctx Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,146 +89,68 @@ $(document).ready(function(){initNavTree('a00929.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atca_secureboot_mac_in_out Struct Reference<div class="ingroups"><a class="el" href="a00760.html">Host side crypto methods (atcah_)</a></div></div>  </div>
+<div class="title">hw_sha256_ctx Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p><code>#include &lt;<a class="el" href="a00491_source.html">atca_host.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a37e90f5e3bd99fac2021fb3a326607d4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00929.html#a37e90f5e3bd99fac2021fb3a326607d4">mode</a></td></tr>
-<tr class="memdesc:a37e90f5e3bd99fac2021fb3a326607d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">SecureBoot mode (param1)  <a href="#a37e90f5e3bd99fac2021fb3a326607d4">More...</a><br /></td></tr>
-<tr class="separator:a37e90f5e3bd99fac2021fb3a326607d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16a7565b150a9c17a39c80fc932b9514"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00929.html#a16a7565b150a9c17a39c80fc932b9514">param2</a></td></tr>
-<tr class="memdesc:a16a7565b150a9c17a39c80fc932b9514"><td class="mdescLeft">&#160;</td><td class="mdescRight">SecureBoot param2.  <a href="#a16a7565b150a9c17a39c80fc932b9514">More...</a><br /></td></tr>
-<tr class="separator:a16a7565b150a9c17a39c80fc932b9514"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6abd57960eb27eecadcf1163a1441fb1"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00929.html#a6abd57960eb27eecadcf1163a1441fb1">secure_boot_config</a></td></tr>
-<tr class="memdesc:a6abd57960eb27eecadcf1163a1441fb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">SecureBootConfig value from configuration zone.  <a href="#a6abd57960eb27eecadcf1163a1441fb1">More...</a><br /></td></tr>
-<tr class="separator:a6abd57960eb27eecadcf1163a1441fb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f1ddb903087eec963d0faf82a3283a4"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00929.html#a1f1ddb903087eec963d0faf82a3283a4">hashed_key</a></td></tr>
-<tr class="memdesc:a1f1ddb903087eec963d0faf82a3283a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashed key. SHA256(IO Protection Key | TempKey)  <a href="#a1f1ddb903087eec963d0faf82a3283a4">More...</a><br /></td></tr>
-<tr class="separator:a1f1ddb903087eec963d0faf82a3283a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff3a2b64b0d86058508f766de59438d1"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00929.html#aff3a2b64b0d86058508f766de59438d1">digest</a></td></tr>
-<tr class="memdesc:aff3a2b64b0d86058508f766de59438d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Digest (unencrypted)  <a href="#aff3a2b64b0d86058508f766de59438d1">More...</a><br /></td></tr>
-<tr class="separator:aff3a2b64b0d86058508f766de59438d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35388d4dff80916a7409fd0554ac58b6"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00929.html#a35388d4dff80916a7409fd0554ac58b6">signature</a></td></tr>
-<tr class="memdesc:a35388d4dff80916a7409fd0554ac58b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signature (can be NULL if not required)  <a href="#a35388d4dff80916a7409fd0554ac58b6">More...</a><br /></td></tr>
-<tr class="separator:a35388d4dff80916a7409fd0554ac58b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5a9ad86915dfcef6db90b858690212a"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00929.html#aa5a9ad86915dfcef6db90b858690212a">mac</a></td></tr>
-<tr class="memdesc:aa5a9ad86915dfcef6db90b858690212a"><td class="mdescLeft">&#160;</td><td class="mdescRight">MAC is returned here.  <a href="#aa5a9ad86915dfcef6db90b858690212a">More...</a><br /></td></tr>
-<tr class="separator:aa5a9ad86915dfcef6db90b858690212a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ee7e642376903508dd6b4df9eacc2de"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00929.html#a8ee7e642376903508dd6b4df9eacc2de">total_msg_size</a></td></tr>
+<tr class="memdesc:a8ee7e642376903508dd6b4df9eacc2de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total number of message bytes processed.  <a href="#a8ee7e642376903508dd6b4df9eacc2de">More...</a><br /></td></tr>
+<tr class="separator:a8ee7e642376903508dd6b4df9eacc2de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e3fb1e50a1c71b2337df296222d9553"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00929.html#a9e3fb1e50a1c71b2337df296222d9553">block_size</a></td></tr>
+<tr class="memdesc:a9e3fb1e50a1c71b2337df296222d9553"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes in current block.  <a href="#a9e3fb1e50a1c71b2337df296222d9553">More...</a><br /></td></tr>
+<tr class="separator:a9e3fb1e50a1c71b2337df296222d9553"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a407f9109b29f2f3a4c9f7d1de450ad41"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00929.html#a407f9109b29f2f3a4c9f7d1de450ad41">block</a> [<a class="el" href="a00837.html#ga85e0a506bd6fdae6ce32d5df3a48ac1c">ATCA_SHA256_BLOCK_SIZE</a> *2]</td></tr>
+<tr class="memdesc:a407f9109b29f2f3a4c9f7d1de450ad41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unprocessed message storage.  <a href="#a407f9109b29f2f3a4c9f7d1de450ad41">More...</a><br /></td></tr>
+<tr class="separator:a407f9109b29f2f3a4c9f7d1de450ad41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="aff3a2b64b0d86058508f766de59438d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff3a2b64b0d86058508f766de59438d1">&#9670;&nbsp;</a></span>digest</h2>
+<a id="a407f9109b29f2f3a4c9f7d1de450ad41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a407f9109b29f2f3a4c9f7d1de450ad41">&#9670;&nbsp;</a></span>block</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint8_t* digest</td>
+          <td class="memname">uint8_t block[<a class="el" href="a00837.html#ga85e0a506bd6fdae6ce32d5df3a48ac1c">ATCA_SHA256_BLOCK_SIZE</a> *2]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Digest (unencrypted) </p>
+<p>Unprocessed message storage. </p>
 
 </div>
 </div>
-<a id="a1f1ddb903087eec963d0faf82a3283a4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1f1ddb903087eec963d0faf82a3283a4">&#9670;&nbsp;</a></span>hashed_key</h2>
+<a id="a9e3fb1e50a1c71b2337df296222d9553"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e3fb1e50a1c71b2337df296222d9553">&#9670;&nbsp;</a></span>block_size</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint8_t* hashed_key</td>
+          <td class="memname">uint32_t block_size</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Hashed key. SHA256(IO Protection Key | TempKey) </p>
+<p>Number of bytes in current block. </p>
 
 </div>
 </div>
-<a id="aa5a9ad86915dfcef6db90b858690212a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa5a9ad86915dfcef6db90b858690212a">&#9670;&nbsp;</a></span>mac</h2>
+<a id="a8ee7e642376903508dd6b4df9eacc2de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ee7e642376903508dd6b4df9eacc2de">&#9670;&nbsp;</a></span>total_msg_size</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* mac</td>
+          <td class="memname">uint32_t total_msg_size</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>MAC is returned here. </p>
-
-</div>
-</div>
-<a id="a37e90f5e3bd99fac2021fb3a326607d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37e90f5e3bd99fac2021fb3a326607d4">&#9670;&nbsp;</a></span>mode</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t mode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>SecureBoot mode (param1) </p>
-
-</div>
-</div>
-<a id="a16a7565b150a9c17a39c80fc932b9514"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a16a7565b150a9c17a39c80fc932b9514">&#9670;&nbsp;</a></span>param2</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t param2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>SecureBoot param2. </p>
-
-</div>
-</div>
-<a id="a6abd57960eb27eecadcf1163a1441fb1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6abd57960eb27eecadcf1163a1441fb1">&#9670;&nbsp;</a></span>secure_boot_config</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t secure_boot_config</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>SecureBootConfig value from configuration zone. </p>
-
-</div>
-</div>
-<a id="a35388d4dff80916a7409fd0554ac58b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35388d4dff80916a7409fd0554ac58b6">&#9670;&nbsp;</a></span>signature</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const uint8_t* signature</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Signature (can be NULL if not required) </p>
+<p>Total number of message bytes processed. </p>
 
 </div>
 </div>
@@ -237,7 +159,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00929.html">atca_secureboot_mac_in_out</a></li>
+    <li class="navelem"><a class="el" href="a00929.html">hw_sha256_ctx</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: secure_boot_parameters Struct Reference</title>
+<title>CryptoAuthLib: SWIBuses Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,58 +89,26 @@ $(document).ready(function(){initNavTree('a00985.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">secure_boot_parameters Struct Reference</div>  </div>
+<div class="title">SWIBuses Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="a00020_source.html">secure_boot.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a00485_source.html">swi_bitbang_samd21.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a42beed23912c5ea5307c11701c6883ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00989.html">memory_parameters</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00985.html#a42beed23912c5ea5307c11701c6883ab">memory_params</a></td></tr>
-<tr class="separator:a42beed23912c5ea5307c11701c6883ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9fb5ef2eb0843381351919dc0f7cafd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00853.html">atcac_sha2_256_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00985.html#af9fb5ef2eb0843381351919dc0f7cafd">s_sha_context</a></td></tr>
-<tr class="separator:af9fb5ef2eb0843381351919dc0f7cafd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15de5c1cdbe015c9927c51026a44c15d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00985.html#a15de5c1cdbe015c9927c51026a44c15d">app_digest</a> [<a class="el" href="a00753.html#gad1d5f6fcf8f33b7ea3061280620df8bd">ATCA_SHA_DIGEST_SIZE</a>]</td></tr>
-<tr class="separator:a15de5c1cdbe015c9927c51026a44c15d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d0970077e95bd9d8ed8aac6b3e115ee"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00985.html#a7d0970077e95bd9d8ed8aac6b3e115ee">pin_sda</a> [<a class="el" href="a00843.html#gaf9d9d027ce20f528edea144203141714">MAX_SWI_BUSES</a>]</td></tr>
+<tr class="separator:a7d0970077e95bd9d8ed8aac6b3e115ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="a15de5c1cdbe015c9927c51026a44c15d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15de5c1cdbe015c9927c51026a44c15d">&#9670;&nbsp;</a></span>app_digest</h2>
+<a id="a7d0970077e95bd9d8ed8aac6b3e115ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d0970077e95bd9d8ed8aac6b3e115ee">&#9670;&nbsp;</a></span>pin_sda</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t app_digest[<a class="el" href="a00753.html#gad1d5f6fcf8f33b7ea3061280620df8bd">ATCA_SHA_DIGEST_SIZE</a>]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a42beed23912c5ea5307c11701c6883ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42beed23912c5ea5307c11701c6883ab">&#9670;&nbsp;</a></span>memory_params</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00989.html">memory_parameters</a> memory_params</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af9fb5ef2eb0843381351919dc0f7cafd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af9fb5ef2eb0843381351919dc0f7cafd">&#9670;&nbsp;</a></span>s_sha_context</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00853.html">atcac_sha2_256_ctx</a> s_sha_context</td>
+          <td class="memname">uint32_t pin_sda[<a class="el" href="a00843.html#gaf9d9d027ce20f528edea144203141714">MAX_SWI_BUSES</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -152,7 +120,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00985.html">secure_boot_parameters</a></li>
+    <li class="navelem"><a class="el" href="a00985.html">SWIBuses</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

@@ -32,6 +32,18 @@ configuration is well tested, then you can commit it to a CryptoAuth Xplained
 Pro Extension, for example. Keep in mind that once you lock a device, it will
 not be changeable.
 
+There are two major compiler defines that affect the operation of the library.
+  - ATCA_NO_POLL can be used to revert to a non-polling mechanism for device
+    responses. Normally responses are polled for after sending a command,
+    giving quicker response times. However, if ATCA_NO_POLL is defined, then
+    the library will simply delay the max execution time of a command before
+    reading the response.
+  - ATCA_NO_HEAP can be used to remove the use of malloc/free from the main
+    library. This can be helpful for smaller MCUs that don't have a heap
+    implemented. If just using the basic API, then there shouldn't be any code
+    changes required. The lower-level API will no longer use the new/delete
+    functions and the init/release functions should be used directly.
+
 Examples
 -----------
 
@@ -46,8 +58,14 @@ Examples
 
 Release notes
 -----------
+07/18/2018
+  - Added ATCA_NO_HEAP define to remove use of malloc/free.
+  - Moved PEM functions to their own file in atcacert.
+  - Added wake retry to accomodate power on self test delay.
+  - Added ca_cert_def member to atcacert_def_s so cert chains can be traversed
+    as a linked list.
 03/29/2018
-  - Added support for response polling by default, which will make commands.
+  - Added support for response polling by default, which will make commands
     return faster (define ATCA_NO_POLL to use old delay method).
   - Removed atcatls related files as they were of limited value.
   - Test framework generates a prompt before locking test configuration.

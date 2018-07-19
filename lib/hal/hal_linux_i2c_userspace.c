@@ -2,35 +2,28 @@
  * \file
  * \brief ATCA Hardware abstraction layer for Linux using I2C.
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
-
-#include "atca_hal.h"
-#include "hal_linux_i2c_userspace.h"
 
 #include <linux/i2c-dev.h>
 #include <unistd.h>
@@ -44,6 +37,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "atca_hal.h"
+#include "hal_linux_i2c_userspace.h"
 
 /** \defgroup hal_ Hardware abstraction layer (hal_)
  *
@@ -70,13 +65,13 @@ ATCA_STATUS hal_i2c_discover_buses(int i2c_buses[], int max_buses)
 }
 
 /** \brief discover any CryptoAuth devices on a given logical bus number
- * \param[in]  busNum  logical bus number on which to look for CryptoAuth devices
+ * \param[in]  bus_num  logical bus number on which to look for CryptoAuth devices
  * \param[out] cfg     pointer to head of an array of interface config structures which get filled in by this method
  * \param[out] found   number of devices found on this bus
  * \return ATCA_UNIMPLEMENTED
  */
 
-ATCA_STATUS hal_i2c_discover_devices(int busNum, ATCAIfaceCfg cfg[], int *found)
+ATCA_STATUS hal_i2c_discover_devices(int bus_num, ATCAIfaceCfg cfg[], int *found)
 {
     return ATCA_UNIMPLEMENTED;
 }
@@ -194,17 +189,25 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t *txdata, int txlength)
 }
 
 /** \brief HAL implementation of I2C receive function
- * \param[in] iface     instance
- * \param[in] rxdata    pointer to space to receive the data
- * \param[in] rxlength  ptr to expected number of receive bytes to request
+ * \param[in]    iface     Device to interact with.
+ * \param[out]   rxdata    Data received will be returned here.
+ * \param[inout] rxlength  As input, the size of the rxdata buffer.
+ *                         As output, the number of bytes received.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-
 ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t *rxdata, uint16_t *rxlength)
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
     int bus = cfg->atcai2c.bus;
     int f_i2c;  // I2C file descriptor
+    uint16_t count;
+    uint16_t rxdata_max_size = *rxlength;
+
+    *rxlength = 0;
+    if (rxdata_max_size < 1)
+    {
+        return ATCA_SMALL_BUFFER;
+    }
 
     // Initiate I2C communication
     if ( (f_i2c = open(i2c_hal_data[bus]->i2c_file, O_RDWR)) < 0)
@@ -219,12 +222,32 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t *rxdata, uint16_t *rxlength
         return ATCA_COMM_FAIL;
     }
 
-    // Receive data
-    if (read(f_i2c, rxdata, *rxlength) != *rxlength)
+    // Receive count
+    count = 1;
+    if (read(f_i2c, rxdata, count) != count)
     {
         close(f_i2c);
         return ATCA_COMM_FAIL;
     }
+
+    if (rxdata[0] < ATCA_RSP_SIZE_MIN)
+    {
+        return ATCA_INVALID_SIZE;
+    }
+    if (rxdata[0] > rxdata_max_size)
+    {
+        return ATCA_SMALL_BUFFER;
+    }
+
+    count = rxdata[0] - 1;
+    // Receive data
+    if (read(f_i2c, &rxdata[1], count) != count)
+    {
+        close(f_i2c);
+        return ATCA_COMM_FAIL;
+    }
+
+    *rxlength = rxdata[0];
 
     close(f_i2c);
     return ATCA_SUCCESS;
@@ -250,7 +273,7 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
     int bus = cfg->atcai2c.bus;
     int f_i2c;  // I2C file descriptor
-    uint8_t data[4], expected[4] = { 0x04, 0x11, 0x33, 0x43 };
+    uint8_t data[4];
     uint8_t dummy_byte = 0x00;
 
     // Initiate I2C communication
@@ -294,11 +317,7 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
     close(f_i2c);
     // if necessary, revert baud rate to what came in.
 
-    if (memcmp(data, expected, 4) == 0)
-    {
-        return ATCA_SUCCESS;
-    }
-    return ATCA_COMM_FAIL;
+    return hal_check_wake(data, 4);
 }
 
 /** \brief idle CryptoAuth device using I2C bus

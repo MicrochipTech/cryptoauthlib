@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['law',['LAW',['../a00500.html#a418ecdc01e9d4d6f681f3cedb9534fce',1,'license.txt']]],
-  ['license',['license',['../a00500.html#a7e62b77d6e9a4cf2ad0d1b8d19383d74',1,'license():&#160;license.txt'],['../a00500.html#a355539e51bed3008068dfe985e226ab8',1,'License():&#160;license.txt']]],
-  ['loss',['LOSS',['../a00500.html#a25d517fad5aac9a054533a88339826c1',1,'license.txt']]]
+  ['law',['LAW',['../a00524.html#ae7b3211c089ceb4e0613690bd035fcc8',1,'license.txt']]],
+  ['liability',['LIABILITY',['../a00524.html#a6ddcff3b4469da51f9bad85dbf0386c2',1,'license.txt']]],
+  ['license',['License',['../a00524.html#a355539e51bed3008068dfe985e226ab8',1,'License():&#160;license.txt'],['../a00524.html#a3b16060f9e1484bd07cd5e162e2eddf4',1,'license():&#160;license.txt']]],
+  ['loss',['LOSS',['../a00524.html#a23c8d68a0c8d14f113b15a3b62d8e7b5',1,'license.txt']]]
 ];

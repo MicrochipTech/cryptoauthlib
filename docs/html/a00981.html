@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: secure_boot_config_bits Struct Reference</title>
+<title>CryptoAuthLib: I2CBuses Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,122 +89,42 @@ $(document).ready(function(){initNavTree('a00981.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">secure_boot_config_bits Struct Reference</div>  </div>
+<div class="title">I2CBuses Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="a00020_source.html">secure_boot.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a00470_source.html">i2c_bitbang_samd21.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a159545ee58a6feff4210207e945ed8a6"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#a159545ee58a6feff4210207e945ed8a6">secure_boot_mode</a>: 2</td></tr>
-<tr class="separator:a159545ee58a6feff4210207e945ed8a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef6eee6b683ef0108fca05b531719f86"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#aef6eee6b683ef0108fca05b531719f86">secure_boot_reserved1</a>: 1</td></tr>
-<tr class="separator:aef6eee6b683ef0108fca05b531719f86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29997e53feca6ea2ceb53bd12ccb7397"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#a29997e53feca6ea2ceb53bd12ccb7397">secure_boot_persistent_enable</a>: 1</td></tr>
-<tr class="separator:a29997e53feca6ea2ceb53bd12ccb7397"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0322cbed208460dead1ab2aaf42f35e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#af0322cbed208460dead1ab2aaf42f35e">secure_boot_rand_nonce</a>: 1</td></tr>
-<tr class="separator:af0322cbed208460dead1ab2aaf42f35e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad94b92f8d5650653e8b6d7d3c9e50ba4"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#ad94b92f8d5650653e8b6d7d3c9e50ba4">secure_boot_reserved2</a>: 3</td></tr>
-<tr class="separator:ad94b92f8d5650653e8b6d7d3c9e50ba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a454c1e8a0b9b0c4b56aa415ad1856889"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#a454c1e8a0b9b0c4b56aa415ad1856889">secure_boot_sig_dig</a>: 4</td></tr>
-<tr class="separator:a454c1e8a0b9b0c4b56aa415ad1856889"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d4d608806c7df6022d7e08df3ead4f3"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#a0d4d608806c7df6022d7e08df3ead4f3">secure_boot_pub_key</a>: 4</td></tr>
-<tr class="separator:a0d4d608806c7df6022d7e08df3ead4f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a396018ddf66ce0e1263ed2b4729dc9b9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#a396018ddf66ce0e1263ed2b4729dc9b9">pin_sda</a> [<a class="el" href="a00470.html#af89a7a4080a47aa10a5504291db285bf">MAX_I2C_BUSES</a>]</td></tr>
+<tr class="separator:a396018ddf66ce0e1263ed2b4729dc9b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acddd0c9305a0f679828010052db4f184"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#acddd0c9305a0f679828010052db4f184">pin_scl</a> [<a class="el" href="a00470.html#af89a7a4080a47aa10a5504291db285bf">MAX_I2C_BUSES</a>]</td></tr>
+<tr class="separator:acddd0c9305a0f679828010052db4f184"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="a159545ee58a6feff4210207e945ed8a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a159545ee58a6feff4210207e945ed8a6">&#9670;&nbsp;</a></span>secure_boot_mode</h2>
+<a id="acddd0c9305a0f679828010052db4f184"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acddd0c9305a0f679828010052db4f184">&#9670;&nbsp;</a></span>pin_scl</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t secure_boot_mode</td>
+          <td class="memname">uint8_t pin_scl[<a class="el" href="a00470.html#af89a7a4080a47aa10a5504291db285bf">MAX_I2C_BUSES</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a29997e53feca6ea2ceb53bd12ccb7397"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29997e53feca6ea2ceb53bd12ccb7397">&#9670;&nbsp;</a></span>secure_boot_persistent_enable</h2>
+<a id="a396018ddf66ce0e1263ed2b4729dc9b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a396018ddf66ce0e1263ed2b4729dc9b9">&#9670;&nbsp;</a></span>pin_sda</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t secure_boot_persistent_enable</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0d4d608806c7df6022d7e08df3ead4f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d4d608806c7df6022d7e08df3ead4f3">&#9670;&nbsp;</a></span>secure_boot_pub_key</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t secure_boot_pub_key</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af0322cbed208460dead1ab2aaf42f35e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0322cbed208460dead1ab2aaf42f35e">&#9670;&nbsp;</a></span>secure_boot_rand_nonce</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t secure_boot_rand_nonce</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aef6eee6b683ef0108fca05b531719f86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef6eee6b683ef0108fca05b531719f86">&#9670;&nbsp;</a></span>secure_boot_reserved1</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t secure_boot_reserved1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad94b92f8d5650653e8b6d7d3c9e50ba4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad94b92f8d5650653e8b6d7d3c9e50ba4">&#9670;&nbsp;</a></span>secure_boot_reserved2</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t secure_boot_reserved2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a454c1e8a0b9b0c4b56aa415ad1856889"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a454c1e8a0b9b0c4b56aa415ad1856889">&#9670;&nbsp;</a></span>secure_boot_sig_dig</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t secure_boot_sig_dig</td>
+          <td class="memname">uint8_t pin_sda[<a class="el" href="a00470.html#af89a7a4080a47aa10a5504291db285bf">MAX_I2C_BUSES</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -216,7 +136,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00981.html">secure_boot_config_bits</a></li>
+    <li class="navelem"><a class="el" href="a00981.html">I2CBuses</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

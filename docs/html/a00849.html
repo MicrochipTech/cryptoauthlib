@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcac_sha1_ctx Struct Reference</title>
+<title>CryptoAuthLib: atca_command Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,32 +89,66 @@ $(document).ready(function(){initNavTree('a00849.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atcac_sha1_ctx Struct Reference<div class="ingroups"><a class="el" href="a00758.html">Software crypto methods (atcac_)</a></div></div>  </div>
+<div class="title">atca_command Struct Reference<div class="ingroups"><a class="el" href="a00837.html">ATCACommand (atca_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="a00263_source.html">atca_crypto_sw_sha1.h</a>&gt;</code></p>
+<p><a class="el" href="a00849.html" title="atca_command is the C object backing ATCACommand. ">atca_command</a> is the C object backing ATCACommand.  
+ <a href="a00849.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="a00101_source.html">atca_command.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a06a3e722d630d33450465af7c41fa708"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00849.html#a06a3e722d630d33450465af7c41fa708">pad</a> [32]</td></tr>
-<tr class="memdesc:a06a3e722d630d33450465af7c41fa708"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filler value to make sure the actual implementation has enough room to store its context. uint32_t is used to remove some alignment warnings.  <a href="#a06a3e722d630d33450465af7c41fa708">More...</a><br /></td></tr>
-<tr class="separator:a06a3e722d630d33450465af7c41fa708"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebea355958c50f7d6a7d946f33ddc0aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00838.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00849.html#aebea355958c50f7d6a7d946f33ddc0aa">dt</a></td></tr>
+<tr class="separator:aebea355958c50f7d6a7d946f33ddc0aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a380510ad0d2dbde608f38387436db3bc"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00849.html#a380510ad0d2dbde608f38387436db3bc">clock_divider</a></td></tr>
+<tr class="separator:a380510ad0d2dbde608f38387436db3bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77632045612dbd0a5ac4488567c14dd3"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00849.html#a77632045612dbd0a5ac4488567c14dd3">execution_time_msec</a></td></tr>
+<tr class="separator:a77632045612dbd0a5ac4488567c14dd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Field Documentation</h2>
-<a id="a06a3e722d630d33450465af7c41fa708"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06a3e722d630d33450465af7c41fa708">&#9670;&nbsp;</a></span>pad</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p><a class="el" href="a00849.html" title="atca_command is the C object backing ATCACommand. ">atca_command</a> is the C object backing ATCACommand. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a id="a380510ad0d2dbde608f38387436db3bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a380510ad0d2dbde608f38387436db3bc">&#9670;&nbsp;</a></span>clock_divider</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t pad[32]</td>
+          <td class="memname">uint8_t clock_divider</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Filler value to make sure the actual implementation has enough room to store its context. uint32_t is used to remove some alignment warnings. </p>
+</div>
+</div>
+<a id="aebea355958c50f7d6a7d946f33ddc0aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebea355958c50f7d6a7d946f33ddc0aa">&#9670;&nbsp;</a></span>dt</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00838.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a> dt</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a77632045612dbd0a5ac4488567c14dd3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77632045612dbd0a5ac4488567c14dd3">&#9670;&nbsp;</a></span>execution_time_msec</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t execution_time_msec</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -123,7 +157,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00849.html">atcac_sha1_ctx</a></li>
+    <li class="navelem"><a class="el" href="a00849.html">atca_command</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

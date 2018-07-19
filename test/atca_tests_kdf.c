@@ -2,31 +2,27 @@
  * \file
  * \brief Unity tests for the cryptoauthlib KDF Command
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 #include <stdlib.h>
 #include "atca_test.h"
@@ -71,9 +67,9 @@ TEST(atca_cmd_unit_test, kdf)
 
     status = atNonce(ca_cmd, &packet);
     TEST_ASSERT_EQUAL(NONCE_COUNT_LONG, packet.txsize);
-    TEST_ASSERT_EQUAL(NONCE_RSP_SIZE_SHORT, packet.rxsize);
     status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(NONCE_RSP_SIZE_SHORT, packet.data[ATCA_COUNT_IDX]);
 
     // check for nonce response for pass through mode
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, packet.data[1]);
@@ -83,8 +79,8 @@ TEST(atca_cmd_unit_test, kdf)
     memset(packet.data, 0x00, 4);                  // a 4 byte details related to AES
     memcpy(&packet.data[4], data_input_32, 32);    // a 32 byte input data to AES KDF
     packet.txsize = ATCA_CMD_SIZE_MIN + KDF_DETAILS_SIZE + AES_DATA_SIZE;
-    packet.rxsize = ATCA_RSP_SIZE_MIN;
-    status = atKDF(ca_cmd, &packet, NULL, NULL);
+    status = atKDF(ca_cmd, &packet);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     status = atca_execute_command(&packet, _gDevice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }

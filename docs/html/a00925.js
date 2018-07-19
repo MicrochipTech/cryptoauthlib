@@ -1,8 +1,6 @@
 var a00925 =
 [
-    [ "digest", "a00925.html#aff3a2b64b0d86058508f766de59438d1", null ],
-    [ "digest_enc", "a00925.html#aa9a9b371e24a757dba2cf1f87d03b31e", null ],
-    [ "hashed_key", "a00925.html#a4e3f2b3f58d04cbc9d85d936b039170e", null ],
-    [ "io_key", "a00925.html#a130c5ab3a3f978b77641faa7813aa5d2", null ],
-    [ "temp_key", "a00925.html#a714b07e0515fd9d20714a4fc2a16c03e", null ]
+    [ "block", "a00925.html#a407f9109b29f2f3a4c9f7d1de450ad41", null ],
+    [ "block_size", "a00925.html#a9e3fb1e50a1c71b2337df296222d9553", null ],
+    [ "total_msg_size", "a00925.html#a8ee7e642376903508dd6b4df9eacc2de", null ]
 ];

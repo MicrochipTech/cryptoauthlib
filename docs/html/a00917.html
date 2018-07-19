@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_io_decrypt_in_out Struct Reference</title>
+<title>CryptoAuthLib: atca_aes_cbc_ctx Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,89 +89,70 @@ $(document).ready(function(){initNavTree('a00917.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atca_io_decrypt_in_out Struct Reference<div class="ingroups"><a class="el" href="a00760.html">Host side crypto methods (atcah_)</a></div></div>  </div>
+<div class="title">atca_aes_cbc_ctx Struct Reference<div class="ingroups"><a class="el" href="a00841.html">Basic Crypto API methods (atcab_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="a00491_source.html">atca_host.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a00179_source.html">atca_basic.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a130c5ab3a3f978b77641faa7813aa5d2"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00917.html#a130c5ab3a3f978b77641faa7813aa5d2">io_key</a></td></tr>
-<tr class="memdesc:a130c5ab3a3f978b77641faa7813aa5d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO protection key (32 bytes).  <a href="#a130c5ab3a3f978b77641faa7813aa5d2">More...</a><br /></td></tr>
-<tr class="separator:a130c5ab3a3f978b77641faa7813aa5d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70a057043fcc9f4dc22455f6df43d710"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00917.html#a70a057043fcc9f4dc22455f6df43d710">out_nonce</a></td></tr>
-<tr class="memdesc:a70a057043fcc9f4dc22455f6df43d710"><td class="mdescLeft">&#160;</td><td class="mdescRight">OutNonce returned from command (32 bytes).  <a href="#a70a057043fcc9f4dc22455f6df43d710">More...</a><br /></td></tr>
-<tr class="separator:a70a057043fcc9f4dc22455f6df43d710"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe222f6d3581e7920dcad5306cc906a8"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00917.html#abe222f6d3581e7920dcad5306cc906a8">data</a></td></tr>
-<tr class="memdesc:abe222f6d3581e7920dcad5306cc906a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">As input, encrypted data. As output, decrypted data.  <a href="#abe222f6d3581e7920dcad5306cc906a8">More...</a><br /></td></tr>
-<tr class="separator:abe222f6d3581e7920dcad5306cc906a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6bc120bffc64dfc5230863a8ba96596"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00917.html#ad6bc120bffc64dfc5230863a8ba96596">data_size</a></td></tr>
-<tr class="memdesc:ad6bc120bffc64dfc5230863a8ba96596"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of data in bytes (32 or 64).  <a href="#ad6bc120bffc64dfc5230863a8ba96596">More...</a><br /></td></tr>
-<tr class="separator:ad6bc120bffc64dfc5230863a8ba96596"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac21eed4200889cc115d16a781871d01c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00917.html#ac21eed4200889cc115d16a781871d01c">key_id</a></td></tr>
+<tr class="memdesc:ac21eed4200889cc115d16a781871d01c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key location. Can either be a slot number or ATCA_TEMPKEY_KEYID for TempKey.  <a href="#ac21eed4200889cc115d16a781871d01c">More...</a><br /></td></tr>
+<tr class="separator:ac21eed4200889cc115d16a781871d01c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ec310210422989027a46428a61fb1c1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00917.html#a2ec310210422989027a46428a61fb1c1">key_block</a></td></tr>
+<tr class="memdesc:a2ec310210422989027a46428a61fb1c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of the 16-byte block to use within the key location for the actual key.  <a href="#a2ec310210422989027a46428a61fb1c1">More...</a><br /></td></tr>
+<tr class="separator:a2ec310210422989027a46428a61fb1c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a984a9b23546b1bab664b3a3e721830b7"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00917.html#a984a9b23546b1bab664b3a3e721830b7">ciphertext</a> [<a class="el" href="a00837.html#ga8cbce00b91b0ddfb3264c9c367a3699a">AES_DATA_SIZE</a>]</td></tr>
+<tr class="memdesc:a984a9b23546b1bab664b3a3e721830b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ciphertext from last operation.  <a href="#a984a9b23546b1bab664b3a3e721830b7">More...</a><br /></td></tr>
+<tr class="separator:a984a9b23546b1bab664b3a3e721830b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="abe222f6d3581e7920dcad5306cc906a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe222f6d3581e7920dcad5306cc906a8">&#9670;&nbsp;</a></span>data</h2>
+<a id="a984a9b23546b1bab664b3a3e721830b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a984a9b23546b1bab664b3a3e721830b7">&#9670;&nbsp;</a></span>ciphertext</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* data</td>
+          <td class="memname">uint8_t ciphertext[<a class="el" href="a00837.html#ga8cbce00b91b0ddfb3264c9c367a3699a">AES_DATA_SIZE</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>As input, encrypted data. As output, decrypted data. </p>
+<p>Ciphertext from last operation. </p>
 
 </div>
 </div>
-<a id="ad6bc120bffc64dfc5230863a8ba96596"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad6bc120bffc64dfc5230863a8ba96596">&#9670;&nbsp;</a></span>data_size</h2>
+<a id="a2ec310210422989027a46428a61fb1c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ec310210422989027a46428a61fb1c1">&#9670;&nbsp;</a></span>key_block</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t data_size</td>
+          <td class="memname">uint8_t key_block</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Size of data in bytes (32 or 64). </p>
+<p>Index of the 16-byte block to use within the key location for the actual key. </p>
 
 </div>
 </div>
-<a id="a130c5ab3a3f978b77641faa7813aa5d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a130c5ab3a3f978b77641faa7813aa5d2">&#9670;&nbsp;</a></span>io_key</h2>
+<a id="ac21eed4200889cc115d16a781871d01c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac21eed4200889cc115d16a781871d01c">&#9670;&nbsp;</a></span>key_id</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint8_t* io_key</td>
+          <td class="memname">uint16_t key_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>IO protection key (32 bytes). </p>
-
-</div>
-</div>
-<a id="a70a057043fcc9f4dc22455f6df43d710"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70a057043fcc9f4dc22455f6df43d710">&#9670;&nbsp;</a></span>out_nonce</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const uint8_t* out_nonce</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>OutNonce returned from command (32 bytes). </p>
+<p>Key location. Can either be a slot number or ATCA_TEMPKEY_KEYID for TempKey. </p>
 
 </div>
 </div>
@@ -180,7 +161,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00917.html">atca_io_decrypt_in_out</a></li>
+    <li class="navelem"><a class="el" href="a00917.html">atca_aes_cbc_ctx</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

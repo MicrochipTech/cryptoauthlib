@@ -1,7 +1,6 @@
 var a00428 =
 [
-    [ "HID_DEVICES_MAX", "a00759.html#ga49053c3cd6d48fe5f468ce010ac0a9ef", null ],
-    [ "HID_PACKET_MAX", "a00759.html#ga6cdff3589b286ebcdd7771bb425fbf73", null ],
-    [ "atcahid_t", "a00759.html#ga2416cca7ee952e679d466e3349d65035", null ],
-    [ "hid_device_t", "a00759.html#ga5f2f61628e945fd6538155628fc3a17a", null ]
+    [ "atca_delay_10us", "a00843.html#ga19891182689551cc3a88603135959351", null ],
+    [ "atca_delay_ms", "a00843.html#ga80a853a202b089064bfc4b159c3418b4", null ],
+    [ "atca_delay_us", "a00843.html#ga7598dfcd6dcac882836544d48356d02f", null ]
 ];

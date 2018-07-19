@@ -5,31 +5,27 @@
  * low-level physical interfaces.  Its main goal is to keep low-level details from bleeding into
  * the logical interface implemetation.
  *
- * \copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
- *            You may use this software and any derivatives exclusively with
- *            Microchip products.
+ * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- *
- * (c) 2017 Microchip Technology Inc. and its subsidiaries. You may use this
- * software and any derivatives exclusively with Microchip products.
- *
+ * 
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ * 
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
- *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIPS TOTAL LIABILITY ON ALL CLAIMS IN
- * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
- * TERMS.
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
  */
 
 
@@ -186,6 +182,9 @@ ATCA_STATUS hal_iface_release(ATCAIfaceType iface_type, void *hal_data)
         break;
     case ATCA_CUSTOM_IFACE:
 #ifdef ATCA_HAL_CUSTOM
+        // Current architecture/API prevents us from accessing the custom
+        // release function. So we just assume success at this point.
+        status = ATCA_SUCCESS;
 #endif
         break;
     default:
@@ -193,4 +192,30 @@ ATCA_STATUS hal_iface_release(ATCAIfaceType iface_type, void *hal_data)
     }
 
     return status;
+}
+
+/** \brief Utility function for hal_wake to check the reply.
+ * \param[in] response       Wake response to be checked.
+ * \param[in] response_size  Size of the response to check.
+ * \return ATCA_SUCCESS for expected wake, ATCA_STATUS_SELFTEST_ERROR if the
+ *         power on self test failed, ATCA_WAKE_FAILED for other failures.
+ */
+ATCA_STATUS hal_check_wake(const uint8_t* response, int response_size)
+{
+    const uint8_t expected_response[4] = { 0x04, 0x11, 0x33, 0x43 };
+    uint8_t selftest_fail_resp[4] = { 0x04, 0x07, 0xC4, 0x40 };
+
+    if (response_size != 4)
+    {
+        return ATCA_WAKE_FAILED;
+    }
+    if (memcmp(response, expected_response, 4) == 0)
+    {
+        return ATCA_SUCCESS;
+    }
+    if (memcmp(response, selftest_fail_resp, 4) == 0)
+    {
+        return ATCA_STATUS_SELFTEST_ERROR;
+    }
+    return ATCA_WAKE_FAILED;
 }
