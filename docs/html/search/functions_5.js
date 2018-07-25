@@ -47,5 +47,5 @@ var searchData=
   ['hal_5fswi_5fsend_5fflag',['hal_swi_send_flag',['../a00843.html#gaae96ea936a2e85d0bcb81b7868ee007d',1,'hal_swi_uart.c']]],
   ['hal_5fswi_5fsleep',['hal_swi_sleep',['../a00843.html#ga252e365a30f2583dae8a8eac073a9f53',1,'hal_swi_bitbang.c']]],
   ['hal_5fswi_5fwake',['hal_swi_wake',['../a00843.html#gafc428980ec95e37eee94813db229fe70',1,'hal_swi_bitbang.c']]],
-  ['host_5fgenerate_5frandom_5fnumber',['host_generate_random_number',['../a00026.html#a197406dca9e671c3ef8036976108527f',1,'secure_boot.h']]]
+  ['host_5fgenerate_5frandom_5fnumber',['host_generate_random_number',['../a00023.html#a197406dca9e671c3ef8036976108527f',1,'secure_boot.h']]]
 ];

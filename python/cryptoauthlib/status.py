@@ -70,3 +70,5 @@ class Status(Enum):
     ATCA_NOT_LOCKED = 0xF8
     ATCA_NO_DEVICES = 0xF9
     ATCA_NOT_INIT = 0xFA
+
+__all__ = ['Status']

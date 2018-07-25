@@ -130,7 +130,7 @@ var searchData=
   ['hmac_5fmode_5fidx',['HMAC_MODE_IDX',['../a00837.html#gadf58a677811566e8446870523bb65850',1,'atca_command.h']]],
   ['hmac_5fmode_5fmask',['HMAC_MODE_MASK',['../a00837.html#ga8250b0997534871fdd6ead1c3aa220ba',1,'atca_command.h']]],
   ['hmac_5frsp_5fsize',['HMAC_RSP_SIZE',['../a00837.html#gadec1fd29e8c6b2f804fc4050778dafc8',1,'atca_command.h']]],
-  ['host_5fgenerate_5frandom_5fnumber',['host_generate_random_number',['../a00026.html#a197406dca9e671c3ef8036976108527f',1,'secure_boot.h']]],
+  ['host_5fgenerate_5frandom_5fnumber',['host_generate_random_number',['../a00023.html#a197406dca9e671c3ef8036976108527f',1,'secure_boot.h']]],
   ['hw_5fsha256_5fctx',['hw_sha256_ctx',['../a00929.html',1,'']]],
   ['hal_20directory_20_2d_20purpose',['HAL Directory - Purpose',['../a01077.html',1,'']]]
 ];

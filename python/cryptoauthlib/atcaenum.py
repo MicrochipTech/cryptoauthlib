@@ -27,3 +27,7 @@ class AtcaEnum(int, Enum):
 
     def __int__(self):
         return int(self.value)
+
+
+# Make module import * safe - keep at the end of the file
+__all__ = [x for x in dir() if x.startswith(__name__.split('.')[-1])]

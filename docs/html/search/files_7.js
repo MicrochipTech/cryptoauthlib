@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['secure_5fboot_2ec',['secure_boot.c',['../a00023.html',1,'']]],
-  ['secure_5fboot_2eh',['secure_boot.h',['../a00026.html',1,'']]],
-  ['secure_5fboot_5fmemory_2eh',['secure_boot_memory.h',['../a00029.html',1,'']]],
+  ['secure_5fboot_2ec',['secure_boot.c',['../a00020.html',1,'']]],
+  ['secure_5fboot_2eh',['secure_boot.h',['../a00023.html',1,'']]],
+  ['secure_5fboot_5fmemory_2eh',['secure_boot_memory.h',['../a00026.html',1,'']]],
   ['sha1_5froutines_2ec',['sha1_routines.c',['../a00287.html',1,'']]],
   ['sha1_5froutines_2eh',['sha1_routines.h',['../a00290.html',1,'']]],
   ['sha2_5froutines_2ec',['sha2_routines.c',['../a00293.html',1,'']]],

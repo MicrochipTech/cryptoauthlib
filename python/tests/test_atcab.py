@@ -40,6 +40,53 @@ def test_atcab_aes_gfm(test_init):
     assert atcab_aes_gfm(hash_key, inp, output) == Status.ATCA_SUCCESS
     assert output == bytearray(atcab_mock.r_aes_gfm_output)
 
+def test_atcab_aes_cbc_init(test_init):
+    s_ciphertext = bytearray(16)
+    s_key_id = 1
+    s_key_block = 0
+    ctx = atca_aes_cbc_ctx(key_id = s_key_id, keyblock = s_key_block, ciphertext = bytes(s_ciphertext))
+    iv = bytearray(16)
+    assert atcab_aes_cbc_init(ctx, s_key_id, s_key_block, iv) == Status.ATCA_SUCCESS
+
+def test_atcab_aes_cbc_encryptblock(test_init):
+    s_ciphertext = bytearray(16)
+    s_key_id = 1
+    s_key_block = 0
+    ctx = atca_aes_cbc_ctx(key_id = s_key_id, keyblock = s_key_block, ciphertext = bytes(s_ciphertext))
+    plaintext = bytearray(16)
+    ciphertext = s_ciphertext
+    assert atcab_aes_cbc_encrypt_block(ctx, plaintext, ciphertext) == Status.ATCA_SUCCESS
+    assert ciphertext == bytearray(bytes(atcab_mock.r_ciphertext))
+
+def test_atcab_aes_cbc_decrypt_block(test_init):
+    s_ciphertext = bytearray(16)
+    s_key_id = 1
+    s_key_block = 0
+    ctx = atca_aes_cbc_ctx(key_id = s_key_id, keyblock = s_key_block, ciphertext = bytes(s_ciphertext))
+    plaintext = bytearray(16)
+    ciphertext = bytearray(16)
+    assert atcab_aes_cbc_decrypt_block(ctx, ciphertext, plaintext) == Status.ATCA_SUCCESS
+    assert plaintext == bytearray(bytes(atcab_mock.r_plaintext))
+
+def test_atcab_aes_cmac_init(test_init):
+    ctx = atca_aes_cmac_ctx()
+    key_id = 1
+    key_block = 0
+    assert atcab_aes_cmac_init(ctx, key_id, key_block) == Status.ATCA_SUCCESS
+
+def test_atcab_aes_cmac_update(test_init):
+    ctx = atca_aes_cmac_ctx()
+    data = bytearray(16)
+    data_size = 16
+    assert atcab_aes_cmac_update(ctx, data, data_size) == Status.ATCA_SUCCESS
+
+def test_atcab_aes_cmac_finish(test_init):
+    ctx = atca_aes_cmac_ctx()
+    cmac = bytearray(16)
+    size = 16
+    assert atcab_aes_cmac_finish(ctx, cmac, size) == Status.ATCA_SUCCESS
+    assert cmac == bytearray(bytes(atcab_mock.r_aes_cmac_output))
+
 #---------------ATCA_BASIC_CHECKMAC--------------#
 
 def test_atcab_checkmac(test_init):

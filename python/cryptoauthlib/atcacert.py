@@ -1,3 +1,6 @@
+"""
+ATCACERT: classes and functions for interacting with compressed certificates
+"""
 from ctypes import Structure, c_int, c_uint8, c_uint16, c_char, POINTER, Array
 from .atcab import get_cryptoauthlib
 from .atcaenum import AtcaEnum
@@ -146,3 +149,6 @@ class atcacert_def_t(Structure):
 
         super(atcacert_def_t, self).__init__(*args, **kwargs)
 
+
+# Make module import * safe - keep at the end of the file
+__all__ = [x for x in dir() if x.startswith(__name__.split('.')[-1])]

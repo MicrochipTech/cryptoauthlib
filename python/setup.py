@@ -19,7 +19,7 @@ _URL = 'https://github.com/MicrochipTech/cryptoauthlib'
 _VERSION = open('VERSION', 'r').read().strip()
 _DOWNLOAD_URL = '%s/archive/%s.tar.gz' % (_URL, _VERSION)
 _CLASSIFIERS = [
-    'Development Status :: 3 - Alpha',
+    'Development Status :: 4 - Beta',
     'License :: Other/Proprietary License',
     'Intended Audience :: Developers',
     'Programming Language :: Python',
@@ -28,7 +28,9 @@ _CLASSIFIERS = [
     'Programming Language :: Python :: 3',
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
+    'Operating System :: OS Independent',
 ]
+
 _PROJECT_URLS = {
     'Documentation': '%s/wiki/python' % _URL,
     'Source': _URL,
@@ -42,6 +44,12 @@ if sys.platform is 'win32':
 #elif sys.platform is 'darwin':
 else:
     _PACKAGE_DATA['libcryptoauth'] = ['libcryptoauth.so']
+
+# Check to see if this is being used with python 2.7 which requires some
+# backported features
+_INSTALL_REQUIRES = []
+if sys.version_info[0] == 2:
+    _INSTALL_REQUIRES += ['enum34']
 
 # See if this is being built from an sdist structure
 if os.path.exists('lib') and os.path.exists('third_party'):
@@ -179,7 +187,7 @@ if __name__ == '__main__':
            'install': CryptoAuthCommandInstall
         },
         setup_requires=['setuptools>=38.6.0', 'wheel'],
-        install_requires=['enum34;python_version<"3.4"'],
+        install_requires=_INSTALL_REQUIRES,
         ext_modules=_EXTENSIONS,
         python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4',
         zip_safe=False

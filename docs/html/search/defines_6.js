@@ -18,5 +18,5 @@ var searchData=
   ['i2c_5fset_5foutput',['I2C_SET_OUTPUT',['../a00470.html#a704e88e63280d2b338c6d5aaa287ded6',1,'i2c_bitbang_samd21.h']]],
   ['i2c_5fset_5foutput_5fhigh',['I2C_SET_OUTPUT_HIGH',['../a00470.html#a560b261db9a1d59e1cd72a73da03d06c',1,'i2c_bitbang_samd21.h']]],
   ['i2c_5fset_5foutput_5flow',['I2C_SET_OUTPUT_LOW',['../a00470.html#a9b2c622317087560cb142947b325cbe9',1,'i2c_bitbang_samd21.h']]],
-  ['io_5fprotection_5fkey_5fslot',['IO_PROTECTION_KEY_SLOT',['../a00017.html#a60c58ea0ec675162d62034323c906b9b',1,'crypto_device_app.h']]]
+  ['io_5fprotection_5fkey_5fslot',['IO_PROTECTION_KEY_SLOT',['../a00014.html#a60c58ea0ec675162d62034323c906b9b',1,'crypto_device_app.h']]]
 ];

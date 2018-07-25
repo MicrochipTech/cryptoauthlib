@@ -2,13 +2,27 @@
 Dynamic link library loading under ctypes and HAL initilization/release functions
 """
 import os.path
-from ctypes import c_uint8, c_uint32, cdll, byref, create_string_buffer
+from ctypes import c_uint8, c_uint32, cdll, byref, create_string_buffer, Structure, c_char, c_uint16, Union
 from .status import Status
 
 # Because this module directly mirrors the C api the following is an exception to the python coding standard
 # pylint: disable-msg=too-many-arguments
 
 _CRYPTO_LIB = None
+
+
+class atca_aes_cbc_ctx(Structure):
+    """AES CBC Context"""
+    _fields_ = [("key_id", c_uint16),
+                ("key_block", c_uint8),
+                ("ciphertext", c_char*16)]
+
+
+class atca_aes_cmac_ctx(Structure):
+    """AES CMAC Context"""
+    _fields_ = [("cbc_ctx", atca_aes_cbc_ctx),
+                ("block_size", c_uint32),
+                ("block", c_char*16)]
 
 
 class LibraryLoadError(Exception):
@@ -169,6 +183,128 @@ def atcab_aes_gfm(hash_key, inp, output):
     else:
         status = _CRYPTO_LIB.atcab_aes_gfm(bytes(hash_key), bytes(inp), byref(c_output))
         output[0:] = bytes(c_output.raw)
+    return status
+
+
+def atcab_aes_cbc_init(ctx, key_id, key_block, iv):
+    """
+    Initialize context for AES CBC operation.
+    Args:
+        ctx                 AES CBC context to be initialized
+        key_id              Key location. Can either be a slot number
+                            or ATCA_TEMPKEY_KEYID for TempKey.
+        key_block           Index of the 16-byte block to use within the
+                            key location for the actual key.
+        iv                  Initialization vector (16 bytes). Bytearray format
+
+    Return:
+        Status Code
+    """
+    if not isinstance(iv, bytearray):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        status = _CRYPTO_LIB.atcab_aes_cbc_init(ctx, key_id, key_block, bytes(iv))
+    return status
+
+
+def atcab_aes_cbc_encrypt_block(ctx, plaintext, ciphertext):
+    """
+    Encrypt a block of data using CBC mode and a key within the
+    ATECC608A. atcab_aes_cbc_init() should be called before the
+    first use of this function.
+
+    Args:
+        ctx                 AES CBC context.
+        plaintext           Plaintext to be encrypted (16 bytes).
+                            (Bytearray or bytes)
+        ciphertext          Encrypted data is returned here (16 bytes).
+                            (Bytearray or bytes)
+
+    Return:
+        Status code
+    """
+    c_ciphertext = create_string_buffer(16)
+    if not isinstance(plaintext, bytearray):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        status = _CRYPTO_LIB.atcab_aes_cbc_encrypt_block(ctx, bytes(plaintext), byref(c_ciphertext))
+        ciphertext[0:] = bytes(c_ciphertext.raw)
+    return status
+
+def atcab_aes_cbc_decrypt_block(ctx, ciphertext, plaintext):
+    """
+    Decrypt a block of data using CBC mode and a key within the
+    ATECC608A. atcab_aes_cbc_init() should be called before the
+    first use of this function.
+
+    Args:
+        ctx                 AES CBC context.
+        ciphertext          Ciphertext to be decrypted (16 bytes).
+                            (Bytearray or bytes)
+        plaintext           Decrypted data is returned here (16 bytes).
+                            (Bytearray or bytes)
+
+    Return:
+        Status code
+    """
+    c_plaintext = create_string_buffer(16)
+    if not isinstance(plaintext, bytearray):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        status = _CRYPTO_LIB.atcab_aes_cbc_decrypt_block(ctx, bytes(ciphertext), byref(c_plaintext))
+        plaintext[0:] = bytes(c_plaintext.raw)
+    return status
+
+def atcab_aes_cmac_init(ctx, key_id, key_block):
+    """
+    Initialize a CMAC calculation using an AES-128 key in the ATECC608A.
+
+    Args:
+        ctx                 AES-128 CMAC context.
+        key_id              Key location. Can either be a slot number
+                            or ATCA_TEMPKEY_KEYID for TempKey.
+        key_block           Index of the 16-byte block to use within
+                            the key location for the actual key.
+
+    Return:
+        Status code
+    """
+    status = _CRYPTO_LIB.atcab_aes_cmac_init(ctx, key_id, key_block)
+    return status
+
+def atcab_aes_cmac_update(ctx, data, data_size):
+    """
+    Add data to an initialized CMAC calculation.
+
+    Args:
+        ctx                 AES-128 CMAC context.
+        data                Data to be added.
+        data_size           Size of the data to be added in bytes.
+
+    Return:
+        Status code
+    """
+    if not isinstance(data, bytearray):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        status = _CRYPTO_LIB.atcab_aes_cmac_update(ctx, bytes(data), data_size)
+    return status
+
+def atcab_aes_cmac_finish(ctx, cmac, size):
+    """
+    Finish a CMAC operation returning the CMAC value.
+
+    Args:
+        ctx                 AES-128 CMAC context.
+        cmac                CMAC is returned here.
+        cmac_size           Size of CMAC requested in bytes (max 16 bytes).
+    """
+    c_cmac = create_string_buffer(16)
+    if not isinstance(cmac, bytearray):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        status = _CRYPTO_LIB.atcab_aes_cmac_finish(ctx, byref(c_cmac), size)
+        cmac[0:] = bytes(c_cmac.raw)
     return status
 
 
@@ -2315,3 +2451,8 @@ def atcab_write_config_counter(counter_id, counter_value):
     else:
         status = _CRYPTO_LIB.atcab_write_config_counter(counter_id, counter_value)
     return status
+
+
+# Make module import * safe - keep at the end of the file
+__all__ = ['load_cryptoauthlib', 'get_cryptoauthlib', 'atca_aes_cbc_ctx', 'atca_aes_cmac_ctx'] 
+            + [x for x in dir() if x.startswith(__name__.split('.')[-1])]

@@ -58,6 +58,9 @@ Examples
 
 Release notes
 -----------
+07/25/2018
+  - Clean up python wrapper
+
 07/18/2018
   - Added ATCA_NO_HEAP define to remove use of malloc/free.
   - Moved PEM functions to their own file in atcacert.
