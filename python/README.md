@@ -6,7 +6,7 @@ interface to Microchip CryptoAuthentication devices.
 
 ### Code Examples
 Code examples for python are available on github as part of
-[CryptoAuthTools](https://github.com/MicrochipTech/cryptoauthtools/python/examples)
+[CryptoAuthTools](https://github.com/MicrochipTech/cryptoauthtools/tree/master/python/examples)
 under the python/examples directory
 
 
