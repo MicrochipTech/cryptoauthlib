@@ -11,6 +11,8 @@ Microchip CryptoAuth devices.  The family of devices supported currently are:
 - [ATECC508A](http://www.microchip.com/ATECC508A)
 - [ATECC608A](http://www.microchip.com/ATECC608A)
 
+Online documentation is at https://microchiptech.github.io/cryptoauthlib/
+
 Latest software and examples can be found at:
   - http://www.microchip.com/SWLibraryWeb/product.aspx?product=CryptoAuthLib
 
