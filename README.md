@@ -58,6 +58,9 @@ Examples
 
 Release notes
 -----------
+08/17/2018
+  - Better support for multiple kit protocol devices
+
 07/25/2018
   - Clean up python wrapper
 

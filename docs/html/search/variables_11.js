@@ -16,15 +16,15 @@ var searchData=
   ['slot_5fkey',['slot_key',['../a01045.html#aa23b467edf1809a2a8b1b530a0159c45',1,'atca_check_mac_in_out']]],
   ['sn',['sn',['../a00844.html#ga7276bd20c5842e712da638d25ceb6d92',1,'atca_include_data_in_out::sn()'],['../a01005.html#aef45bac2efcd5394c4ed79f73ee16d23',1,'atca_verify_mac::sn()'],['../a00844.html#ga7276bd20c5842e712da638d25ceb6d92',1,'atca_mac_in_out::sn()'],['../a00844.html#ga7276bd20c5842e712da638d25ceb6d92',1,'atca_hmac_in_out::sn()'],['../a01025.html#aef45bac2efcd5394c4ed79f73ee16d23',1,'atca_gen_dig_in_out::sn()'],['../a01029.html#aef45bac2efcd5394c4ed79f73ee16d23',1,'atca_write_mac_in_out::sn()'],['../a01033.html#aef45bac2efcd5394c4ed79f73ee16d23',1,'atca_derive_key_in_out::sn()'],['../a01037.html#aef45bac2efcd5394c4ed79f73ee16d23',1,'atca_derive_key_mac_in_out::sn()'],['../a01045.html#aef45bac2efcd5394c4ed79f73ee16d23',1,'atca_check_mac_in_out::sn()'],['../a01053.html#aef45bac2efcd5394c4ed79f73ee16d23',1,'atca_gen_key_in_out::sn()'],['../a01057.html#aef45bac2efcd5394c4ed79f73ee16d23',1,'atca_sign_internal_in_out::sn()']]],
   ['sn_5fsource',['sn_source',['../a00909.html#af44c31e823af19e6efe6b418a13fafe3',1,'atcacert_def_s']]],
-  ['software',['SOFTWARE',['../a00524.html#a0b42d98385899be4ab4f4ac101712a83',1,'license.txt']]],
+  ['software',['SOFTWARE',['../a00527.html#a0b42d98385899be4ab4f4ac101712a83',1,'license.txt']]],
   ['source_5fflag',['source_flag',['../a00989.html#a2ffc3c1a03eda290c709dc78b7e8b51e',1,'atca_temp_key']]],
-  ['special',['SPECIAL',['../a00524.html#a752275406812c1aa8c22e53696b48c57',1,'license.txt']]],
+  ['special',['SPECIAL',['../a00527.html#a752275406812c1aa8c22e53696b48c57',1,'license.txt']]],
   ['speed',['speed',['../a00843.html#ga218b4f7c6cc2681a99c23a3b089d68b1',1,'hal_linux_kit_cdc.c']]],
   ['start_5faddress',['start_address',['../a01073.html#abe5b74a6bf41557a5ae72460fa563219',1,'memory_parameters']]],
-  ['statutory',['STATUTORY',['../a00524.html#a5ca3438f18c3bf2d2c1790995d290399',1,'license.txt']]],
+  ['statutory',['STATUTORY',['../a00527.html#a5ca3438f18c3bf2d2c1790995d290399',1,'license.txt']]],
   ['std_5fcert_5felements',['std_cert_elements',['../a00909.html#a7e2ecd6c0b4cef9637e3b281d29200ce',1,'atcacert_def_s']]],
   ['stopbits',['stopbits',['../a00861.html#a9de35842403baab5738ea16162012d4f',1,'ATCAIfaceCfg']]],
   ['stored_5fvalue',['stored_value',['../a01025.html#a7871fda0cd5698905bc3aa8fe8a99808',1,'atca_gen_dig_in_out']]],
-  ['swi_5fbuses_5fdefault',['swi_buses_default',['../a00482.html#a8ba5507b651724b4cdc74106a16b025c',1,'swi_buses_default():&#160;swi_bitbang_samd21.c'],['../a00485.html#a8ba5507b651724b4cdc74106a16b025c',1,'swi_buses_default():&#160;swi_bitbang_samd21.c']]],
-  ['systemd',['systemd',['../a00524.html#ad7d14be55a088137975311629d46fb11',1,'license.txt']]]
+  ['swi_5fbuses_5fdefault',['swi_buses_default',['../a00485.html#a8ba5507b651724b4cdc74106a16b025c',1,'swi_buses_default():&#160;swi_bitbang_samd21.c'],['../a00488.html#a8ba5507b651724b4cdc74106a16b025c',1,'swi_buses_default():&#160;swi_bitbang_samd21.c']]],
+  ['systemd',['systemd',['../a00527.html#ad7d14be55a088137975311629d46fb11',1,'license.txt']]]
 ];

@@ -1,8 +1,8 @@
 var a00287 =
 [
-    [ "CL_hash", "a00287.html#a955169bbbce9b4712cafb9b7372b5ffa", null ],
-    [ "CL_hashFinal", "a00287.html#a672902e6406b4e4e2af33c70ec7a001c", null ],
-    [ "CL_hashInit", "a00287.html#affa9482d686cc435d640d67d7fa79772", null ],
-    [ "CL_hashUpdate", "a00287.html#a55a33e7a22aff4aca4bccf39897bc5f1", null ],
-    [ "shaEngine", "a00287.html#a6f06fe48f7cacc212305b862b46fd9aa", null ]
+    [ "ATCA_SHA2_256_DIGEST_SIZE", "a00842.html#ga86364f6d07b86740f3170d9d1ca60641", null ],
+    [ "atcac_sw_sha2_256", "a00842.html#ga63412270c4629874f2764171200c1b5c", null ],
+    [ "atcac_sw_sha2_256_finish", "a00842.html#gae3a29931f2104cce481aa9ef1ab16fea", null ],
+    [ "atcac_sw_sha2_256_init", "a00842.html#ga58283666b662f084155ba693870c1077", null ],
+    [ "atcac_sw_sha2_256_update", "a00842.html#gab1a09fa1d854722cc667cea319ca9984", null ]
 ];

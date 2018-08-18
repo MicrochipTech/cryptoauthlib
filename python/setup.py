@@ -45,12 +45,6 @@ if sys.platform is 'win32':
 else:
     _PACKAGE_DATA['libcryptoauth'] = ['libcryptoauth.so']
 
-# Check to see if this is being used with python 2.7 which requires some
-# backported features
-_INSTALL_REQUIRES = []
-if sys.version_info[0] == 2:
-    _INSTALL_REQUIRES += ['enum34']
-
 # See if this is being built from an sdist structure
 if os.path.exists('lib') and os.path.exists('third_party'):
     _sdist_build = True
@@ -154,7 +148,7 @@ class CryptoAuthCommandBuildExt(build_ext):
 
 class CryptoAuthCommandInstall(install):
     def run(self):
-        install.run(self)
+        self.do_egg_install()
         install_udev_rules()
 
 
@@ -162,6 +156,12 @@ class BinaryDistribution(Distribution):
     def has_ext_modules(self):
         return (_EXTENSIONS is not None)
 
+# Setuptools has some weird behavior when the install command class is extended
+# but only affects bdist_* invocations which only applies to macos and windows
+# and the extension is only required for linux
+_COMMANDS = { 'build_ext': CryptoAuthCommandBuildExt }
+if sys.platform.startswith('linux'):
+    _COMMANDS['install'] = CryptoAuthCommandInstall
 
 if __name__ == '__main__':
     setup(
@@ -182,12 +182,9 @@ if __name__ == '__main__':
         package_data=_PACKAGE_DATA,
         include_package_data=True,
         distclass=BinaryDistribution,
-        cmdclass={
-           'build_ext': CryptoAuthCommandBuildExt,
-           'install': CryptoAuthCommandInstall
-        },
+        cmdclass=_COMMANDS,
         setup_requires=['setuptools>=38.6.0', 'wheel'],
-        install_requires=_INSTALL_REQUIRES,
+        install_requires=['enum34;python_version<"3.4"'],
         ext_modules=_EXTENSIONS,
         python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4',
         zip_safe=False

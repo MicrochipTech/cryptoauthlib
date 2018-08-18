@@ -1,7 +1,8 @@
 var a00281 =
 [
-    [ "atcac_sw_sha2_256", "a00842.html#ga63412270c4629874f2764171200c1b5c", null ],
-    [ "atcac_sw_sha2_256_finish", "a00842.html#gae3a29931f2104cce481aa9ef1ab16fea", null ],
-    [ "atcac_sw_sha2_256_init", "a00842.html#ga58283666b662f084155ba693870c1077", null ],
-    [ "atcac_sw_sha2_256_update", "a00842.html#gab1a09fa1d854722cc667cea319ca9984", null ]
+    [ "ATCA_SHA1_DIGEST_SIZE", "a00842.html#gadb94a0991eb670ff1bf90253dfea0bfa", null ],
+    [ "atcac_sw_sha1", "a00842.html#ga84b866657bf319dab2924c2db3a1e990", null ],
+    [ "atcac_sw_sha1_finish", "a00842.html#ga5589df2a639f61a4dc4ccedc9b5a5453", null ],
+    [ "atcac_sw_sha1_init", "a00842.html#gabed03bcc1228768534ef4ee49df0ad09", null ],
+    [ "atcac_sw_sha1_update", "a00842.html#ga65ff558306a88e0fbe2fc82bbe6a9c03", null ]
 ];

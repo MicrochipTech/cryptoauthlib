@@ -1,9 +1,14 @@
 var a00440 =
 [
-    [ "SWI_FLAG_CMD", "a00843.html#ga13c01ac16bb14fde75e9c00dcd1cc761", null ],
-    [ "SWI_FLAG_IDLE", "a00843.html#ga6219d68ef915fdcd734f51960ba08fb6", null ],
-    [ "SWI_FLAG_SLEEP", "a00843.html#ga13ef2322176ad9b7ba3d2e23b277cce6", null ],
-    [ "SWI_FLAG_TX", "a00843.html#ga20af8352e13a7357650ba1cbf41349ea", null ],
-    [ "SWI_WAKE_TOKEN", "a00843.html#ga8f12e3b749e7b3dc905114cc7b8d0b38", null ],
-    [ "hal_swi_send_flag", "a00843.html#gaae96ea936a2e85d0bcb81b7868ee007d", null ]
+    [ "hal_swi_discover_buses", "a00843.html#ga53864a301dac6efbdbdc3931aa79e23e", null ],
+    [ "hal_swi_discover_devices", "a00843.html#ga354e6fa757688b73e6fb5293bb835def", null ],
+    [ "hal_swi_idle", "a00843.html#ga618291172976da96c4f02dc9200c845c", null ],
+    [ "hal_swi_init", "a00843.html#gaf406053c1a3f2a86bdc887f2ff4b663d", null ],
+    [ "hal_swi_post_init", "a00843.html#ga9186e5235979216330ae580290872c77", null ],
+    [ "hal_swi_receive", "a00843.html#ga02e9f36723f0feb21d373898728de04b", null ],
+    [ "hal_swi_release", "a00843.html#ga196dbc62546b39ac3e556a0f7f6b7132", null ],
+    [ "hal_swi_send", "a00843.html#gaeb8b8857192a7710785acce0110e8016", null ],
+    [ "hal_swi_send_flag", "a00843.html#gaae96ea936a2e85d0bcb81b7868ee007d", null ],
+    [ "hal_swi_sleep", "a00843.html#ga252e365a30f2583dae8a8eac073a9f53", null ],
+    [ "hal_swi_wake", "a00843.html#gafc428980ec95e37eee94813db229fe70", null ]
 ];

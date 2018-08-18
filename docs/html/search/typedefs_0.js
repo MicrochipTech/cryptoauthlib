@@ -17,7 +17,7 @@ var searchData=
   ['atca_5fverify_5fin_5fout_5ft',['atca_verify_in_out_t',['../a00844.html#gab4d485e0545aa3defd75702fe51f9a13',1,'atca_host.h']]],
   ['atca_5fverify_5fmac_5fin_5fout_5ft',['atca_verify_mac_in_out_t',['../a00844.html#ga39d794a93edb13943760550086940fa4',1,'atca_host.h']]],
   ['atca_5fwrite_5fmac_5fin_5fout_5ft',['atca_write_mac_in_out_t',['../a00844.html#gafeefb2141ebb14988f08eb86f7cd6608',1,'atca_host.h']]],
-  ['atcacdc_5ft',['atcacdc_t',['../a00843.html#ga2df85bfd309840b4c9a5087e053d4811',1,'atcacdc_t():&#160;hal_linux_kit_cdc.h'],['../a00446.html#a2df85bfd309840b4c9a5087e053d4811',1,'atcacdc_t():&#160;hal_win_kit_cdc.h']]],
+  ['atcacdc_5ft',['atcacdc_t',['../a00843.html#ga2df85bfd309840b4c9a5087e053d4811',1,'atcacdc_t():&#160;hal_linux_kit_cdc.h'],['../a00449.html#a2df85bfd309840b4c9a5087e053d4811',1,'atcacdc_t():&#160;hal_win_kit_cdc.h']]],
   ['atcacert_5fbuild_5fstate_5ft',['atcacert_build_state_t',['../a00840.html#ga92ccf01a2c37be9caa7d840846672c83',1,'atcacert_def.h']]],
   ['atcacert_5fcert_5felement_5ft',['atcacert_cert_element_t',['../a00840.html#ga8d14206d455a7a7835ed613e57c20dd3',1,'atcacert_def.h']]],
   ['atcacert_5fcert_5floc_5ft',['atcacert_cert_loc_t',['../a00840.html#gae7c32139e6dce0fe25b4598299a77df6',1,'atcacert_def.h']]],

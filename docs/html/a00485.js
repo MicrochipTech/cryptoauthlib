@@ -1,14 +1,5 @@
 var a00485 =
 [
-    [ "SWIBuses", "a00985.html", "a00985" ],
-    [ "BIT_DELAY_1H", "a00485.html#a1ce4882b7d053eafcec22cd84fb5727d", null ],
-    [ "BIT_DELAY_1L", "a00485.html#ad884cf7d66d88b38180369a791a9824b", null ],
-    [ "BIT_DELAY_5", "a00485.html#a2ced4699fc4ab5162dbb9453edecb32e", null ],
-    [ "BIT_DELAY_7", "a00485.html#abd0d20a34060650b8a2895c17f842f44", null ],
-    [ "MAX_SWI_BUSES", "a00485.html#af9d9d027ce20f528edea144203141714", null ],
-    [ "RX_TX_DELAY", "a00485.html#a60ba93807a2c0ea2ce1432245f3f7da0", null ],
-    [ "START_PULSE_TIME_OUT", "a00485.html#ab10604796b42fb6b8eed23fc88ebd47f", null ],
-    [ "ZERO_PULSE_TIME_OUT", "a00485.html#ad935b86cd295ba61924231e29033c55b", null ],
     [ "swi_disable", "a00485.html#af016fffdce9f520096de8631e6692707", null ],
     [ "swi_enable", "a00485.html#ad78929b51b34df503a37b4961577d5ce", null ],
     [ "swi_receive_bytes", "a00485.html#afa009f7d683cb82293570a27d1f8ee10", null ],

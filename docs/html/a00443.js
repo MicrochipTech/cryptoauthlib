@@ -1,19 +1,9 @@
 var a00443 =
 [
-    [ "hal_cdc_discover_buses", "a00443.html#a5320f17f400bf5ad0579dbdd5c8acf90", null ],
-    [ "hal_cdc_discover_devices", "a00443.html#a5604d17ec61ab15961079beb8f3c8682", null ],
-    [ "hal_kit_cdc_discover_buses", "a00443.html#a56255b770aa5e34b3e69898eaeda93e9", null ],
-    [ "hal_kit_cdc_discover_devices", "a00443.html#a0a042c3f441fa78c4f05a18bfbeb5f2d", null ],
-    [ "hal_kit_cdc_idle", "a00443.html#a92055a86e32f3dfc9eef064d48aa0870", null ],
-    [ "hal_kit_cdc_init", "a00443.html#a313bdfc8337f930a7f9fc6ca4e7731d9", null ],
-    [ "hal_kit_cdc_post_init", "a00443.html#ad11b8714818c2b05f70593c002fc5945", null ],
-    [ "hal_kit_cdc_receive", "a00443.html#a3f3972f81de141ff0816b605054d775a", null ],
-    [ "hal_kit_cdc_release", "a00443.html#a21a939cc86a0602cb2ba3be3eec26e6e", null ],
-    [ "hal_kit_cdc_send", "a00443.html#a7732806c89cd206a96b7fabbaf6770d5", null ],
-    [ "hal_kit_cdc_sleep", "a00443.html#a1299c47e6d73d987bc04b16f25637bf6", null ],
-    [ "hal_kit_cdc_wake", "a00443.html#abced238b72e636a557d00355a2e44ac9", null ],
-    [ "hal_kit_phy_num_found", "a00443.html#a5fac3cf3552eee701aec448c1392edd8", null ],
-    [ "kit_phy_receive", "a00443.html#aae5e94b6080d4279474eb3e98bc58901", null ],
-    [ "kit_phy_send", "a00443.html#a020fb0be6c73515122cf4b9f749fd97d", null ],
-    [ "_gCdc", "a00443.html#abc65c7c6bd64530b95fa72082f1e0390", null ]
+    [ "SWI_FLAG_CMD", "a00843.html#ga13c01ac16bb14fde75e9c00dcd1cc761", null ],
+    [ "SWI_FLAG_IDLE", "a00843.html#ga6219d68ef915fdcd734f51960ba08fb6", null ],
+    [ "SWI_FLAG_SLEEP", "a00843.html#ga13ef2322176ad9b7ba3d2e23b277cce6", null ],
+    [ "SWI_FLAG_TX", "a00843.html#ga20af8352e13a7357650ba1cbf41349ea", null ],
+    [ "SWI_WAKE_TOKEN", "a00843.html#ga8f12e3b749e7b3dc905114cc7b8d0b38", null ],
+    [ "hal_swi_send_flag", "a00843.html#gaae96ea936a2e85d0bcb81b7868ee007d", null ]
 ];

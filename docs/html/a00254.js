@@ -1,5 +1,7 @@
 var a00254 =
 [
+    [ "B64_IS_EQUAL", "a00254.html#a42f1518aca295fab198d042b18fef075", null ],
+    [ "B64_IS_INVALID", "a00254.html#abd4bf9cd40bc547cd53e2ef325a1c8d0", null ],
     [ "atcab_base64decode", "a00841.html#ga1593f87c555ab964d3ebd5edd49aeb0b", null ],
     [ "atcab_base64decode_", "a00841.html#ga55ba8a1787f69d44d6e40db041fbd786", null ],
     [ "atcab_base64encode", "a00841.html#ga4b7e341b530fcac3f4eaae874bb36422", null ],
@@ -7,9 +9,6 @@ var a00254 =
     [ "atcab_bin2hex", "a00841.html#gacb3b82aa86941f2c9fecdcd989779d01", null ],
     [ "atcab_bin2hex_", "a00841.html#gaa39f16ea58dba1e92c103f1c9da45680", null ],
     [ "atcab_hex2bin", "a00841.html#ga70bc80cb31518db01d552b5496e70ae3", null ],
-    [ "atcab_printbin", "a00841.html#ga468b5d680257de526c3d0e98fd0b648c", null ],
-    [ "atcab_printbin_label", "a00841.html#gaea1694c40ade14f33ad51631ee779802", null ],
-    [ "atcab_printbin_sp", "a00841.html#ga60eedad7751cd4087c1889d3ae435ebd", null ],
     [ "base64Char", "a00841.html#ga3cf48d232ffbc9000c4d8547120f8b2d", null ],
     [ "base64Index", "a00841.html#ga175f401662f82c1e2ef822a9e1fd0b57", null ],
     [ "isAlpha", "a00841.html#ga592c23e94097ad5e212beb6390aa88c6", null ],

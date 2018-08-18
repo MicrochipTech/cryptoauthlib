@@ -1,3 +1,6 @@
+"""
+Enum Extension for improved comparisons
+"""
 from enum import Enum
 
 

@@ -29,8 +29,8 @@ var searchData=
   ['nonce_5fzero_5fcalc_5fmask',['NONCE_ZERO_CALC_MASK',['../a00837.html#ga99bca33105a872e8a20fe199cc17219b',1,'atca_command.h']]],
   ['nonce_5fzero_5fcalc_5frandom',['NONCE_ZERO_CALC_RANDOM',['../a00837.html#ga80b8b54f333be5a587f22e2d04812de6',1,'atca_command.h']]],
   ['nonce_5fzero_5fcalc_5ftempkey',['NONCE_ZERO_CALC_TEMPKEY',['../a00837.html#ga2a2b74db24609199702267614fc31990',1,'atca_command.h']]],
-  ['not',['not',['../a00524.html#a0512e77e510c7e2d84a2817fbe4987d5',1,'license.txt']]],
-  ['notice',['notice',['../a00524.html#a7977b24631cbfb00c68825ecb3a3a349',1,'license.txt']]],
+  ['not',['not',['../a00527.html#a0512e77e510c7e2d84a2817fbe4987d5',1,'license.txt']]],
+  ['notice',['notice',['../a00527.html#a7977b24631cbfb00c68825ecb3a3a349',1,'license.txt']]],
   ['num_5fin',['num_in',['../a00844.html#ga02a9d64ea363dc3b231b8cc0b317de8a',1,'atca_nonce_in_out']]],
   ['num_5fkits_5ffound',['num_kits_found',['../a00953.html#a9bb0ee74044865538adfcc5d5ae8f621',1,'atcahid::num_kits_found()'],['../a00965.html#a9bb0ee74044865538adfcc5d5ae8f621',1,'atcacdc::num_kits_found()']]]
 ];

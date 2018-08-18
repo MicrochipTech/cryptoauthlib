@@ -1,47 +1,7 @@
 var a00149 =
 [
-    [ "atcacert_build_state_t", "a00840.html#ga92ccf01a2c37be9caa7d840846672c83", null ],
-    [ "atcacert_cert_element_t", "a00840.html#ga8d14206d455a7a7835ed613e57c20dd3", null ],
-    [ "atcacert_cert_loc_t", "a00840.html#gae7c32139e6dce0fe25b4598299a77df6", null ],
-    [ "atcacert_cert_sn_src_t", "a00840.html#gaa557358df9a164d6c1f14b1f53662c6c", null ],
-    [ "atcacert_cert_type_t", "a00840.html#ga8fcfb1307197295422ace828b40ee37d", null ],
-    [ "atcacert_def_t", "a00840.html#gae9e78b17340263e97844ccaf72ca16ac", null ],
-    [ "atcacert_device_loc_t", "a00840.html#ga0fb6e40d2f1496215af2f9ae23c861a0", null ],
-    [ "atcacert_device_zone_t", "a00840.html#ga294899ca77a6801288e1ccb148de1f8b", null ],
-    [ "atcacert_std_cert_element_t", "a00840.html#ga4889317187186736e62beb7538b870b2", null ],
-    [ "atcacert_cert_sn_src_e", "a00840.html#ga813047a656af7fe578d28fd54c840e8e", [
-      [ "SNSRC_STORED", "a00840.html#gga813047a656af7fe578d28fd54c840e8ea1b3e4833214ba25ba3d665135b2b6cd1", null ],
-      [ "SNSRC_STORED_DYNAMIC", "a00840.html#gga813047a656af7fe578d28fd54c840e8ea4c213faf0171fcc6aeb27a1ca344342b", null ],
-      [ "SNSRC_DEVICE_SN", "a00840.html#gga813047a656af7fe578d28fd54c840e8ea338258d51f0eb1c5d7ef9f0e639f5e41", null ],
-      [ "SNSRC_SIGNER_ID", "a00840.html#gga813047a656af7fe578d28fd54c840e8eabda5814e7da6c10dc243749dea79ffff", null ],
-      [ "SNSRC_PUB_KEY_HASH", "a00840.html#gga813047a656af7fe578d28fd54c840e8ea5dadea2da6020b492727eb1da6c4bb1e", null ],
-      [ "SNSRC_DEVICE_SN_HASH", "a00840.html#gga813047a656af7fe578d28fd54c840e8eaffba4ece10bc933c6b408a2b4e234ab2", null ],
-      [ "SNSRC_PUB_KEY_HASH_POS", "a00840.html#gga813047a656af7fe578d28fd54c840e8eacaf00502661bc7b9c260ca68831928b5", null ],
-      [ "SNSRC_DEVICE_SN_HASH_POS", "a00840.html#gga813047a656af7fe578d28fd54c840e8eab87e9124d93ca45243eacac5b96452b7", null ],
-      [ "SNSRC_PUB_KEY_HASH_RAW", "a00840.html#gga813047a656af7fe578d28fd54c840e8ea83bf725c47007c842da4a8e93b1bf972", null ],
-      [ "SNSRC_DEVICE_SN_HASH_RAW", "a00840.html#gga813047a656af7fe578d28fd54c840e8ea2d608b2eeb6da309c1e9b2af7060d909", null ]
-    ] ],
-    [ "atcacert_cert_type_e", "a00840.html#ga5430f01929cd7269e04db08d1f28642f", [
-      [ "CERTTYPE_X509", "a00840.html#gga5430f01929cd7269e04db08d1f28642fa82bc16ac5283813ee3ffe7cddf8e2b44", null ],
-      [ "CERTTYPE_CUSTOM", "a00840.html#gga5430f01929cd7269e04db08d1f28642fa92c401741edaf606af7056851db7dddb", null ]
-    ] ],
-    [ "atcacert_device_zone_e", "a00840.html#ga1c0876228cb459f64347a63f3bae4c73", [
-      [ "DEVZONE_CONFIG", "a00840.html#gga1c0876228cb459f64347a63f3bae4c73a4856bc2fcbda0be68832968204126207", null ],
-      [ "DEVZONE_OTP", "a00840.html#gga1c0876228cb459f64347a63f3bae4c73ae42ffc066a13ac1f38195d2cf4e60cea", null ],
-      [ "DEVZONE_DATA", "a00840.html#gga1c0876228cb459f64347a63f3bae4c73a774ecb8e950d309498a9aa64933d95cb", null ],
-      [ "DEVZONE_NONE", "a00840.html#gga1c0876228cb459f64347a63f3bae4c73afe6b6aedf2a765638f3c62817db11f05", null ]
-    ] ],
-    [ "atcacert_std_cert_element_e", "a00840.html#ga77184d0c71198b489ea9b57d07da824e", [
-      [ "STDCERT_PUBLIC_KEY", "a00840.html#gga77184d0c71198b489ea9b57d07da824eaf78a51bddeca05e1a525f26792b6de68", null ],
-      [ "STDCERT_SIGNATURE", "a00840.html#gga77184d0c71198b489ea9b57d07da824ea8eab5679d330212bb87b2413ea82b7cc", null ],
-      [ "STDCERT_ISSUE_DATE", "a00840.html#gga77184d0c71198b489ea9b57d07da824ea2f3039692a71546e581fcaf8a8a53f15", null ],
-      [ "STDCERT_EXPIRE_DATE", "a00840.html#gga77184d0c71198b489ea9b57d07da824ea886b91f34d6839fe9e9217490530c604", null ],
-      [ "STDCERT_SIGNER_ID", "a00840.html#gga77184d0c71198b489ea9b57d07da824eadfaaad6a933423f63fc3233bd84b90d3", null ],
-      [ "STDCERT_CERT_SN", "a00840.html#gga77184d0c71198b489ea9b57d07da824ea73b3d53d4e70a48fd3fdeb0143493efc", null ],
-      [ "STDCERT_AUTH_KEY_ID", "a00840.html#gga77184d0c71198b489ea9b57d07da824ea6a9cddad9f6b552f0fe5f63fc57cf106", null ],
-      [ "STDCERT_SUBJ_KEY_ID", "a00840.html#gga77184d0c71198b489ea9b57d07da824ea97400647cc539ce999c0b9f95d736585", null ],
-      [ "STDCERT_NUM_ELEMENTS", "a00840.html#gga77184d0c71198b489ea9b57d07da824ead9a44768825ebcc67750d8e4172dc60f", null ]
-    ] ],
+    [ "ATCACERT_MAX", "a00149.html#a3619112000a52adc0d060cf5ab29212e", null ],
+    [ "ATCACERT_MIN", "a00149.html#a52393fe9fec6f6b0da20dcfd5a6bc25f", null ],
     [ "atcacert_cert_build_finish", "a00840.html#ga9e594a491dccf61a638be46da5d40ff9", null ],
     [ "atcacert_cert_build_process", "a00840.html#ga626158cfe54b84903885b2cc6c3880e4", null ],
     [ "atcacert_cert_build_start", "a00840.html#gace8ac017f58840c296fe2cf29bdaa2fe", null ],

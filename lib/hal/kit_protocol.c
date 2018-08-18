@@ -39,7 +39,44 @@
  *
    @{ */
 
+/* Constants */
+#define KIT_MAX_SCAN_COUNT      4
+#define KIT_MAX_TX_BUF          32
 
+#ifndef strnchr
+/** Local implementation of strnchr if it doesn't exist in the system */
+char * strnchr(const char * s, size_t count, int c)
+{
+    int i;
+
+    for (i = 0; i < count; i++)
+    {
+        if (s[i] == c)
+        {
+            return &s[i];
+        }
+    }
+    return NULL;
+}
+#endif
+
+/** Kit Protocol is key */
+char kit_id_from_devtype(ATCADeviceType devtype)
+{
+    switch (devtype)
+    {
+    case ATSHA204A:
+        return 'S';
+    case ATECC108A:
+    /* fallthrough */
+    case ATECC508A:
+    /* fallthrough */
+    case ATECC608A:
+        return 'E';
+    default:
+        return 'd';
+    }
+}
 
 /** \brief HAL implementation of kit protocol init.  This function calls back to the physical protocol to send the bytes
  *  \param[in] iface  instance
@@ -48,62 +85,80 @@
 ATCA_STATUS kit_init(ATCAIface iface)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
-    uint8_t kitstatus = 0;
-    char address[] = "board:device(00)\n";
-    int addresssize = sizeof(address);
-    char reply[KIT_RX_WRAP_SIZE + 4];
-    int replysize = sizeof(reply);
-    uint8_t rxdata[2];
-    int rxsize = sizeof(rxdata);
-    char selectaddress[KIT_MSG_SIZE];
-    int selectaddresssize = sizeof(selectaddress);
-    char selectaddresspre[] = "s:physical:select(";
-    char selectaddresspost[] = ")\n";
-    int copysize = 0;
+    const char kit_device[] = "board:device(%02X)\n";
+    const char kit_device_select[] = "%c:physical:select(%02X)\n";
+    uint8_t txbuf[KIT_MAX_TX_BUF];
+    int txlen;
+    uint8_t rxbuf[KIT_RX_WRAP_SIZE + 4];
+    int rxlen;
+    char match;
+    int i;
 
-    // Send the address bytes
-    status = kit_phy_send(iface, address, addresssize);
+    match = kit_id_from_devtype(iface->mIfaceCFG->devtype);
 
-    // Receive the reply to address "...(C0)\n"
-    memset(reply, 0, replysize);
-    status = kit_phy_receive(iface, reply, &replysize);
-    if (status != ATCA_SUCCESS)
+    /* Iterate to find the target device */
+    for (i = 0; i < KIT_MAX_SCAN_COUNT; i++)
     {
-        return ATCA_GEN_FAIL;
+        txlen = snprintf(txbuf, sizeof(txbuf) - 2, kit_device, i);
+        txbuf[sizeof(txbuf) - 1] = '\0';
+        if (txlen < 0)
+        {
+            status = ATCA_INVALID_SIZE;
+            break;
+        }
+
+        if (ATCA_SUCCESS != (status = kit_phy_send(iface, txbuf, txlen)))
+        {
+            break;
+        }
+
+        rxlen = sizeof(rxbuf);
+        memset(rxbuf, 0, rxlen);
+        if (ATCA_SUCCESS != (status = kit_phy_receive(iface, rxbuf, &rxlen)))
+        {
+            break;
+        }
+
+        /* If the device type is correct the device has to be "selected" use the
+            returned I2C address */
+        if (match == rxbuf[0])
+        {
+            char * addr = strnchr(rxbuf, rxlen, '(');
+            int address = 0;
+            if (!addr)
+            {
+                status = ATCA_GEN_FAIL;
+                break;
+            }
+
+            if (1 != sscanf(addr, "(%02X)", &address))
+            {
+                status = ATCA_GEN_FAIL;
+                break;
+            }
+
+            txlen = snprintf(txbuf, sizeof(txbuf) - 1, kit_device_select, match, address);
+            txbuf[sizeof(txbuf) - 1] = '\0';
+            if (txlen < 0)
+            {
+                status = ATCA_INVALID_SIZE;
+                break;
+            }
+
+            if (ATCA_SUCCESS != (status = kit_phy_send(iface, txbuf, txlen)))
+            {
+                break;
+            }
+
+            rxlen = sizeof(rxbuf);
+            status = kit_phy_receive(iface, rxbuf, &rxlen);
+            break;
+        }
     }
 
-    if (replysize == 4)
+    if ((KIT_MAX_SCAN_COUNT == i) && !status)
     {
-        // Probably an error
-        status = kit_parse_rsp(reply, replysize, &kitstatus, rxdata, &rxsize);
-        if (status != ATCA_SUCCESS)
-        {
-            return status;
-        }
-        if (kitstatus != 0)
-        {
-            return ATCA_NO_DEVICES;
-        }
-    }
-    rxsize = 2;
-    memcpy(rxdata, strchr(reply, '(') + 1, rxsize);
-
-    // Send the select address bytes
-    memset(selectaddress, 0, selectaddresssize);
-    copysize = sizeof(selectaddresspre);
-    memcpy(&selectaddress[0], selectaddresspre, copysize);
-    memcpy(&selectaddress[(copysize - 1)], rxdata, rxsize);
-    copysize = (sizeof(selectaddresspre) + rxsize);
-    memcpy(&selectaddress[(copysize - 1)], selectaddresspost, sizeof(selectaddresspost));
-    copysize = (sizeof(selectaddresspre) + rxsize + sizeof(selectaddresspost));
-    status = kit_phy_send(iface, selectaddress, copysize);
-
-    // Receive the reply to select address "00()\n"
-    memset(reply, 0, replysize);
-    status = kit_phy_receive(iface, reply, &replysize);
-    if (status != ATCA_SUCCESS)
-    {
-        return ATCA_GEN_FAIL;
+        status = ATCA_NO_DEVICES;
     }
 
     return status;
@@ -129,7 +184,8 @@ ATCA_STATUS kit_send(ATCAIface iface, const uint8_t* txdata, int txlength)
     // Wrap in kit protocol
     pkitbuf = malloc(nkitbuf);
     memset(pkitbuf, 0, nkitbuf);
-    status = kit_wrap_cmd(&txdata[1], txlength, pkitbuf, &nkitbuf);
+    status = kit_wrap_cmd(&txdata[1], txlength, pkitbuf, &nkitbuf,
+                          kit_id_from_devtype(iface->mIfaceCFG->devtype));
     if (status != ATCA_SUCCESS)
     {
         free(pkitbuf);
@@ -149,7 +205,8 @@ ATCA_STATUS kit_send(ATCAIface iface, const uint8_t* txdata, int txlength)
     return status;
 }
 
-/** \brief HAL implementation to receive bytes and unwrap from kit protocol.  This function calls back to the physical protocol to receive the bytes
+/** \brief HAL implementation to receive bytes and unwrap from kit protocol.
+ *         This function calls back to the physical protocol to receive the bytes
  * \param[in]    iface   instance
  * \param[in]    rxdata  pointer to space to receive the data
  * \param[inout] rxsize  ptr to expected number of receive bytes to request
@@ -206,12 +263,14 @@ ATCA_STATUS kit_wake(ATCAIface iface)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     uint8_t kitstatus = 0;
-    char wake[] = "s:w()\n";
+    char wake[] = "d:w()\n";
     int wakesize = sizeof(wake);
     char reply[KIT_RX_WRAP_SIZE + 4];
     int replysize = sizeof(reply);
     uint8_t rxdata[10];
     int rxsize = sizeof(rxdata);
+
+    wake[0] = kit_id_from_devtype(iface->mIfaceCFG->devtype);
 
     // Send the bytes
     status = kit_phy_send(iface, wake, wakesize);
@@ -249,12 +308,14 @@ ATCA_STATUS kit_idle(ATCAIface iface)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     uint8_t kitstatus = 0;
-    char idle[] = "s:i()\n";
+    char idle[] = "d:i()\n";
     int idlesize = sizeof(idle);
     char reply[KIT_RX_WRAP_SIZE];
     int replysize = sizeof(reply);
     uint8_t rxdata[10];
     int rxsize = sizeof(rxdata);
+
+    idle[0] = kit_id_from_devtype(iface->mIfaceCFG->devtype);
 
     // Send the bytes
     status = kit_phy_send(iface, idle, idlesize);
@@ -293,12 +354,14 @@ ATCA_STATUS kit_sleep(ATCAIface iface)
     ATCA_STATUS status = ATCA_SUCCESS;
     uint8_t kitstatus = 0;
 
-    char sleep[] = "s:s()\n";
+    char sleep[] = "d:s()\n";
     int sleepsize = sizeof(sleep);
     char reply[KIT_RX_WRAP_SIZE];
     int replysize = sizeof(reply);
     uint8_t rxdata[10];
     int rxsize = sizeof(rxdata);
+
+    sleep[0] = kit_id_from_devtype(iface->mIfaceCFG->devtype);
 
     // Send the bytes
     status = kit_phy_send(iface, sleep, sleepsize);
@@ -335,10 +398,10 @@ ATCA_STATUS kit_sleep(ATCAIface iface)
  * \param[inout] nkitcmd pointer to the size of the binary data converted to ascii kit protocol
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlen, char* pkitcmd, int* nkitcmd)
+ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlen, char* pkitcmd, int* nkitcmd, char target)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
-    char cmdpre[] = "s:t(";     // sha:talk(
+    char cmdpre[] = "d:t(";
     char cmdpost[] = ")\n";
     int cmdAsciiLen = txlen * 2;
     int cmdlen = txlen * 2 + sizeof(cmdpre) + sizeof(cmdpost) - 1;
@@ -362,6 +425,8 @@ ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlen, char* pkitcmd, int* n
     cpylen = (int)strlen(cmdpre);
     memcpy(&pkitcmd[cpyindex], cmdpre, cpylen);
     cpyindex += cpylen;
+
+    pkitcmd[0] = target;
 
     // Copy the ascii binary bytes
     status = atcab_bin2hex_(txdata, txlen, &pkitcmd[cpyindex], &cmdAsciiLen, false);
@@ -406,7 +471,7 @@ ATCA_STATUS kit_parse_rsp(const char* pkitbuf, int nkitbuf, uint8_t* kitstatus, 
     }
 
     // Next get the binary data bytes
-    endDataPtr = strchr((char*)pkitbuf, ')');
+    endDataPtr = strnchr((char*)pkitbuf, nkitbuf, ')');
     if (endDataPtr < (&pkitbuf[dataId]))
     {
         return ATCA_GEN_FAIL;

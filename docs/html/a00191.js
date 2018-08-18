@@ -1,4 +1,6 @@
 var a00191 =
 [
-    [ "atcab_derivekey", "a00841.html#ga34b7b6d46868f0d63d195216ef9939b1", null ]
+    [ "atcab_counter", "a00841.html#gabaaaef242649206029e1c10ac6d1fb7d", null ],
+    [ "atcab_counter_increment", "a00841.html#ga6e510e056ea16a0a34b405b7ca378f16", null ],
+    [ "atcab_counter_read", "a00841.html#gaeee666028a097659af69cc828a6bd68b", null ]
 ];

@@ -1,12 +1,32 @@
 """
 Dynamic link library loading under ctypes and HAL initilization/release functions
 """
+# (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+#
+# Subject to your compliance with these terms, you may use Microchip software
+# and any derivatives exclusively with Microchip products. It is your
+# responsibility to comply with third party license terms applicable to your
+# use of third party software (including open source software) that may
+# accompany Microchip software.
+#
+# THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+# EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+# WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+# PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+# SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+# OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+# MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+# FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+# LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+# THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+# THIS SOFTWARE.
+
 import os.path
-from ctypes import c_uint8, c_uint32, cdll, byref, create_string_buffer, Structure, c_char, c_uint16, Union
+from ctypes import c_uint8, c_uint32, cdll, byref, create_string_buffer, Structure, c_char, c_uint16
 from .status import Status
 
 # Because this module directly mirrors the C api the following is an exception to the python coding standard
-# pylint: disable-msg=too-many-arguments
+# pylint: disable-msg=too-many-arguments, invalid-name, too-few-public-methods
 
 _CRYPTO_LIB = None
 
@@ -49,7 +69,7 @@ def load_cryptoauthlib(lib=None):
         except:
             raise LibraryLoadError("Unable to load cryptoauthlib")
 
-            
+
 def get_cryptoauthlib():
     """
     This is a helper function for the other python files in this module to use the loaded library
@@ -2454,5 +2474,5 @@ def atcab_write_config_counter(counter_id, counter_value):
 
 
 # Make module import * safe - keep at the end of the file
-__all__ = ['load_cryptoauthlib', 'get_cryptoauthlib', 'atca_aes_cbc_ctx', 'atca_aes_cmac_ctx'] 
-            + [x for x in dir() if x.startswith(__name__.split('.')[-1])]
+__all__ = ['load_cryptoauthlib', 'get_cryptoauthlib', 'atca_aes_cbc_ctx', 'atca_aes_cmac_ctx']
+__all__ += [x for x in dir() if x.startswith(__name__.split('.')[-1])]

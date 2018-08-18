@@ -1,6 +1,5 @@
 var a00110 =
 [
-    [ "ATCADevice", "a00838.html#gaa94f7bb4af0a3d6735225cc85d92cb50", null ],
     [ "atGetCommands", "a00838.html#gabf51c08f1928fc5ec44936f3117a9f7e", null ],
     [ "atGetIFace", "a00838.html#ga3f98e29cffa06446fc91b329703606af", null ],
     [ "deleteATCADevice", "a00838.html#gac087cf04cd5bd6ff2e026d89bfbf5e12", null ],

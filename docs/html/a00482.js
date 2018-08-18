@@ -1,12 +1,14 @@
 var a00482 =
 [
-    [ "swi_disable", "a00482.html#af016fffdce9f520096de8631e6692707", null ],
-    [ "swi_enable", "a00482.html#ad78929b51b34df503a37b4961577d5ce", null ],
-    [ "swi_receive_bytes", "a00482.html#afa009f7d683cb82293570a27d1f8ee10", null ],
-    [ "swi_send_byte", "a00482.html#a1c5ab22e67923ee54eef0e33b227be0b", null ],
-    [ "swi_send_bytes", "a00482.html#af0382e26c4d83b0762b39d12c772dd2e", null ],
-    [ "swi_send_wake_token", "a00482.html#ada6b4629603758b67820568677ab2a19", null ],
-    [ "swi_set_pin", "a00482.html#a076fc28889d32327dd3372538106da92", null ],
-    [ "swi_set_signal_pin", "a00482.html#a79bc8f2b72647fce853274cf8474b41e", null ],
-    [ "swi_buses_default", "a00482.html#a8ba5507b651724b4cdc74106a16b025c", null ]
+    [ "KIT_MSG_SIZE", "a00843.html#ga0810d89c328e48fd91eb604323cca4e9", null ],
+    [ "KIT_RX_WRAP_SIZE", "a00843.html#ga59e33124fc2fa800cc9c90a6ee3ff543", null ],
+    [ "KIT_TX_WRAP_SIZE", "a00843.html#ga8a649555029d4f23edfc15a8c01b2d3d", null ],
+    [ "kit_idle", "a00843.html#gaeaee19ff7623f0eab9839e68dae583af", null ],
+    [ "kit_init", "a00843.html#ga8fb98d1c372e7e75f99a2f7d1182b877", null ],
+    [ "kit_parse_rsp", "a00843.html#ga8bf59f4218d312568b769b8b8e5c563e", null ],
+    [ "kit_receive", "a00843.html#ga09a86ccc517208f9c9a057ea569e2a18", null ],
+    [ "kit_send", "a00843.html#gac9dc79f9b5281fbe82c20b6af9de76b7", null ],
+    [ "kit_sleep", "a00843.html#gaf6054a0c971830411d5008b94923bdd8", null ],
+    [ "kit_wake", "a00843.html#gaf7ce58d02b067b956abd32127f5519e9", null ],
+    [ "kit_wrap_cmd", "a00843.html#ga0f09f4b79c681f54b88a8f71bca0d4c4", null ]
 ];

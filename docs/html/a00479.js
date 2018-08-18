@@ -1,8 +1,8 @@
 var a00479 =
 [
-    [ "KIT_MSG_SIZE", "a00843.html#ga0810d89c328e48fd91eb604323cca4e9", null ],
-    [ "KIT_RX_WRAP_SIZE", "a00843.html#ga59e33124fc2fa800cc9c90a6ee3ff543", null ],
-    [ "KIT_TX_WRAP_SIZE", "a00843.html#ga8a649555029d4f23edfc15a8c01b2d3d", null ],
+    [ "KIT_MAX_SCAN_COUNT", "a00843.html#ga8d90399e7f84850d1e8d4cd5e9f67fa8", null ],
+    [ "KIT_MAX_TX_BUF", "a00843.html#gadc1b033607e06cff7464dc0a49df2744", null ],
+    [ "kit_id_from_devtype", "a00843.html#gae9acffb3ff9a025924457fce5c24a709", null ],
     [ "kit_idle", "a00843.html#gaeaee19ff7623f0eab9839e68dae583af", null ],
     [ "kit_init", "a00843.html#ga8fb98d1c372e7e75f99a2f7d1182b877", null ],
     [ "kit_parse_rsp", "a00843.html#ga8bf59f4218d312568b769b8b8e5c563e", null ],
@@ -10,5 +10,6 @@ var a00479 =
     [ "kit_send", "a00843.html#gac9dc79f9b5281fbe82c20b6af9de76b7", null ],
     [ "kit_sleep", "a00843.html#gaf6054a0c971830411d5008b94923bdd8", null ],
     [ "kit_wake", "a00843.html#gaf7ce58d02b067b956abd32127f5519e9", null ],
-    [ "kit_wrap_cmd", "a00843.html#ga19691c1ebed0e2b7742147b2a6ecfe9d", null ]
+    [ "kit_wrap_cmd", "a00843.html#ga0f09f4b79c681f54b88a8f71bca0d4c4", null ],
+    [ "strnchr", "a00843.html#ga1473b18d902ce22c6b22d04ff5a7ef02", null ]
 ];

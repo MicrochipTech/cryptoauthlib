@@ -1,10 +1,10 @@
 var a00248 =
 [
-    [ "atcab_write", "a00841.html#gabf2b29b4d3ae926b63c403d084380dbe", null ],
-    [ "atcab_write_bytes_zone", "a00841.html#gac395a7e195aa3cf28b48de345755feb0", null ],
-    [ "atcab_write_config_counter", "a00841.html#gab25ca44957dff1c2df34607738ca3bf7", null ],
-    [ "atcab_write_config_zone", "a00841.html#ga0777a86aa412a97b19cc72a12c171b94", null ],
-    [ "atcab_write_enc", "a00841.html#ga14cf75d1be264ac1125087d76ee6344c", null ],
-    [ "atcab_write_pubkey", "a00841.html#ga47cbedeb3c3e9f7cbf2b9433cd60d1aa", null ],
-    [ "atcab_write_zone", "a00841.html#ga1f5a6bbcf4f840803635fb8951b3a7e2", null ]
+    [ "atcab_verify", "a00841.html#ga694d921c7bc17a0e158ef96e3d476700", null ],
+    [ "atcab_verify_extern", "a00841.html#ga2c3e18de900ba705192963d08b37f600", null ],
+    [ "atcab_verify_extern_mac", "a00841.html#ga17bf17c4786be097a0bb111a6f9d8ca6", null ],
+    [ "atcab_verify_invalidate", "a00841.html#ga9393b545b2fa1fdd539672a0428a30ab", null ],
+    [ "atcab_verify_stored", "a00841.html#gae8cc7670847805423ad591985eecd832", null ],
+    [ "atcab_verify_stored_mac", "a00841.html#gaa52cdbbfd2f089d8eb42ef2640204ca7", null ],
+    [ "atcab_verify_validate", "a00841.html#gacf9a0c7772ebb65b87c4a4788850702b", null ]
 ];

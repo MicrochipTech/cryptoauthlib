@@ -56,7 +56,7 @@ def test_atcab_aes_cbc_encryptblock(test_init):
     plaintext = bytearray(16)
     ciphertext = s_ciphertext
     assert atcab_aes_cbc_encrypt_block(ctx, plaintext, ciphertext) == Status.ATCA_SUCCESS
-    assert ciphertext == bytearray(bytes(atcab_mock.r_ciphertext))
+    assert ciphertext == bytearray(atcab_mock.r_ciphertext)
 
 def test_atcab_aes_cbc_decrypt_block(test_init):
     s_ciphertext = bytearray(16)
@@ -66,7 +66,7 @@ def test_atcab_aes_cbc_decrypt_block(test_init):
     plaintext = bytearray(16)
     ciphertext = bytearray(16)
     assert atcab_aes_cbc_decrypt_block(ctx, ciphertext, plaintext) == Status.ATCA_SUCCESS
-    assert plaintext == bytearray(bytes(atcab_mock.r_plaintext))
+    assert plaintext == bytearray(atcab_mock.r_plaintext)
 
 def test_atcab_aes_cmac_init(test_init):
     ctx = atca_aes_cmac_ctx()
@@ -85,7 +85,7 @@ def test_atcab_aes_cmac_finish(test_init):
     cmac = bytearray(16)
     size = 16
     assert atcab_aes_cmac_finish(ctx, cmac, size) == Status.ATCA_SUCCESS
-    assert cmac == bytearray(bytes(atcab_mock.r_aes_cmac_output))
+    assert cmac == bytearray(atcab_mock.r_aes_cmac_output)
 
 #---------------ATCA_BASIC_CHECKMAC--------------#
 

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: kit_protocol.c File Reference</title>
+<title>CryptoAuthLib: kit_phy.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,54 +89,38 @@ $(document).ready(function(){initNavTree('a00476.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">kit_protocol.c File Reference</div>  </div>
+<div class="title">kit_phy.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Microchip Crypto Auth hardware interface object.  
+<p>ATCA Hardware abstraction layer physical send &amp; receive function definitions.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00473_source.html">kit_phy.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00479_source.html">kit_protocol.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00254_source.html">basic/atca_helpers.h</a>&quot;</code><br />
-</div><table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a00302_source.html">cryptoauthlib.h</a>&quot;</code><br />
+</div>
+<p><a href="a00476_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga8fb98d1c372e7e75f99a2f7d1182b877"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#ga8fb98d1c372e7e75f99a2f7d1182b877">kit_init</a> (<a class="el" href="a00839.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga8fb98d1c372e7e75f99a2f7d1182b877"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol init. This function calls back to the physical protocol to send the bytes.  <a href="a00843.html#ga8fb98d1c372e7e75f99a2f7d1182b877">More...</a><br /></td></tr>
-<tr class="separator:ga8fb98d1c372e7e75f99a2f7d1182b877"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac9dc79f9b5281fbe82c20b6af9de76b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#gac9dc79f9b5281fbe82c20b6af9de76b7">kit_send</a> (<a class="el" href="a00839.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, const uint8_t *txdata, int txlength)</td></tr>
-<tr class="memdesc:gac9dc79f9b5281fbe82c20b6af9de76b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol send. This function calls back to the physical protocol to send the bytes.  <a href="a00843.html#gac9dc79f9b5281fbe82c20b6af9de76b7">More...</a><br /></td></tr>
-<tr class="separator:gac9dc79f9b5281fbe82c20b6af9de76b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga09a86ccc517208f9c9a057ea569e2a18"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#ga09a86ccc517208f9c9a057ea569e2a18">kit_receive</a> (<a class="el" href="a00839.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *rxdata, uint16_t *rxsize)</td></tr>
-<tr class="memdesc:ga09a86ccc517208f9c9a057ea569e2a18"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation to receive bytes and unwrap from kit protocol. This function calls back to the physical protocol to receive the bytes.  <a href="a00843.html#ga09a86ccc517208f9c9a057ea569e2a18">More...</a><br /></td></tr>
-<tr class="separator:ga09a86ccc517208f9c9a057ea569e2a18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf7ce58d02b067b956abd32127f5519e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#gaf7ce58d02b067b956abd32127f5519e9">kit_wake</a> (<a class="el" href="a00839.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:gaf7ce58d02b067b956abd32127f5519e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the wake for kit protocol.  <a href="a00843.html#gaf7ce58d02b067b956abd32127f5519e9">More...</a><br /></td></tr>
-<tr class="separator:gaf7ce58d02b067b956abd32127f5519e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeaee19ff7623f0eab9839e68dae583af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#gaeaee19ff7623f0eab9839e68dae583af">kit_idle</a> (<a class="el" href="a00839.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:gaeaee19ff7623f0eab9839e68dae583af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the idle for kit protocol.  <a href="a00843.html#gaeaee19ff7623f0eab9839e68dae583af">More...</a><br /></td></tr>
-<tr class="separator:gaeaee19ff7623f0eab9839e68dae583af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf6054a0c971830411d5008b94923bdd8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#gaf6054a0c971830411d5008b94923bdd8">kit_sleep</a> (<a class="el" href="a00839.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:gaf6054a0c971830411d5008b94923bdd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the sleep for kit protocol.  <a href="a00843.html#gaf6054a0c971830411d5008b94923bdd8">More...</a><br /></td></tr>
-<tr class="separator:gaf6054a0c971830411d5008b94923bdd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga19691c1ebed0e2b7742147b2a6ecfe9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#ga19691c1ebed0e2b7742147b2a6ecfe9d">kit_wrap_cmd</a> (const uint8_t *txdata, int txlen, char *pkitcmd, int *nkitcmd)</td></tr>
-<tr class="memdesc:ga19691c1ebed0e2b7742147b2a6ecfe9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrap binary bytes in ascii kit protocol.  <a href="a00843.html#ga19691c1ebed0e2b7742147b2a6ecfe9d">More...</a><br /></td></tr>
-<tr class="separator:ga19691c1ebed0e2b7742147b2a6ecfe9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8bf59f4218d312568b769b8b8e5c563e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#ga8bf59f4218d312568b769b8b8e5c563e">kit_parse_rsp</a> (const char *pkitbuf, int nkitbuf, uint8_t *kitstatus, uint8_t *rxdata, int *datasize)</td></tr>
-<tr class="memdesc:ga8bf59f4218d312568b769b8b8e5c563e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse the response ascii from the kit.  <a href="a00843.html#ga8bf59f4218d312568b769b8b8e5c563e">More...</a><br /></td></tr>
-<tr class="separator:ga8bf59f4218d312568b769b8b8e5c563e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga11ee6ec0b2b7eb2ff2472f92208c3205"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00131.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#ga11ee6ec0b2b7eb2ff2472f92208c3205">kit_phy_num_found</a> (int8_t *num_found)</td></tr>
+<tr class="memdesc:ga11ee6ec0b2b7eb2ff2472f92208c3205"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of USB HID devices found.  <a href="a00843.html#ga11ee6ec0b2b7eb2ff2472f92208c3205">More...</a><br /></td></tr>
+<tr class="separator:ga11ee6ec0b2b7eb2ff2472f92208c3205"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga020fb0be6c73515122cf4b9f749fd97d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00131.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#ga020fb0be6c73515122cf4b9f749fd97d">kit_phy_send</a> (<a class="el" href="a00839.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, const char *txdata, int txlength)</td></tr>
+<tr class="memdesc:ga020fb0be6c73515122cf4b9f749fd97d"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol send .It is called by the top layer.  <a href="a00843.html#ga020fb0be6c73515122cf4b9f749fd97d">More...</a><br /></td></tr>
+<tr class="separator:ga020fb0be6c73515122cf4b9f749fd97d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae5e94b6080d4279474eb3e98bc58901"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00131.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00843.html#gaae5e94b6080d4279474eb3e98bc58901">kit_phy_receive</a> (<a class="el" href="a00839.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, char *rxdata, int *rxsize)</td></tr>
+<tr class="memdesc:gaae5e94b6080d4279474eb3e98bc58901"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol receive data.It is called by the top layer.  <a href="a00843.html#gaae5e94b6080d4279474eb3e98bc58901">More...</a><br /></td></tr>
+<tr class="separator:gaae5e94b6080d4279474eb3e98bc58901"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Microchip Crypto Auth hardware interface object. </p>
+<div class="textblock"><p>ATCA Hardware abstraction layer physical send &amp; receive function definitions. </p>
+<p>This is included for kit protocol implementations. It is included in the kit protocol callback to actually send and recieve bytes.</p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00476.html">kit_protocol.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00476.html">kit_phy.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

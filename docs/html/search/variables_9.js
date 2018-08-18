@@ -1,7 +1,7 @@
 var searchData=
 [
   ['i2c_5fbus_5fref_5fct',['i2c_bus_ref_ct',['../a00843.html#gaa7deec7f5d89dfb4f9746d050b0926f9',1,'hal_linux_i2c_userspace.c']]],
-  ['i2c_5fbuses_5fdefault',['i2c_buses_default',['../a00467.html#ad2e9f2387bb528f37bceb48cd88af3d0',1,'i2c_buses_default():&#160;i2c_bitbang_samd21.c'],['../a00470.html#ad2e9f2387bb528f37bceb48cd88af3d0',1,'i2c_buses_default():&#160;i2c_bitbang_samd21.c']]],
+  ['i2c_5fbuses_5fdefault',['i2c_buses_default',['../a00470.html#ad2e9f2387bb528f37bceb48cd88af3d0',1,'i2c_buses_default():&#160;i2c_bitbang_samd21.c'],['../a00473.html#ad2e9f2387bb528f37bceb48cd88af3d0',1,'i2c_buses_default():&#160;i2c_bitbang_samd21.c']]],
   ['i2c_5ffile',['i2c_file',['../a00957.html#a386ecc3f01d8b317bc512cab194d844f',1,'atcaI2Cmaster']]],
   ['i2c_5fhal_5fdata',['i2c_hal_data',['../a00843.html#ga95dac4460cd54b4b073285ebc79d215b',1,'hal_linux_i2c_userspace.c']]],
   ['i2c_5fmaster_5finstance',['i2c_master_instance',['../a00957.html#a6fa5d175fefe82a0c13cc0f7afbf5593',1,'atcaI2Cmaster::i2c_master_instance()'],['../a00957.html#a6fa5d175fefe82a0c13cc0f7afbf5593',1,'atcaI2Cmaster::i2c_master_instance()'],['../a00957.html#a335b4a621ab538c5a42160a5a14c161f',1,'atcaI2Cmaster::i2c_master_instance()'],['../a00957.html#ad60966bca127551f6271719dd9921045',1,'atcaI2Cmaster::i2c_master_instance()']]],
@@ -12,10 +12,10 @@ var searchData=
   ['id',['id',['../a00905.html#a0b1ca4dcd178907e4151c7132e3b55f5',1,'atcacert_cert_element_s::id()'],['../a00957.html#a10c34d148db33a5f64c3730a163fb7a7',1,'atcaI2Cmaster::id()'],['../a00957.html#a7441ef0865bcb3db9b8064dd7375c1ea',1,'atcaI2Cmaster::id()']]],
   ['idx',['idx',['../a00861.html#ae40354a1051342eb5a9db005715dcfa9',1,'ATCAIfaceCfg']]],
   ['iface_5ftype',['iface_type',['../a00861.html#a3d0753b214d2a12df80f22b56bfc6e71',1,'ATCAIfaceCfg']]],
-  ['incidental',['INCIDENTAL',['../a00524.html#a672c9264e9de75bce6ab2cb4d5bde5c1',1,'license.txt']]],
-  ['including',['INCLUDING',['../a00524.html#a3e9c2f2beba8585ea947b758fe1a127d',1,'license.txt']]],
-  ['indirect',['INDIRECT',['../a00524.html#ad8724d922f0e30d3010a431017c0aaaa',1,'license.txt']]],
-  ['infringement',['INFRINGEMENT',['../a00524.html#a7c4fbd85a126d156dfee161e8fd6681a',1,'license.txt']]],
+  ['incidental',['INCIDENTAL',['../a00527.html#a672c9264e9de75bce6ab2cb4d5bde5c1',1,'license.txt']]],
+  ['including',['INCLUDING',['../a00527.html#a3e9c2f2beba8585ea947b758fe1a127d',1,'license.txt']]],
+  ['indirect',['INDIRECT',['../a00527.html#ad8724d922f0e30d3010a431017c0aaaa',1,'license.txt']]],
+  ['infringement',['INFRINGEMENT',['../a00527.html#a7c4fbd85a126d156dfee161e8fd6681a',1,'license.txt']]],
   ['input_5fdata',['input_data',['../a01029.html#a699b6e4448b505a2664025ccca3522f5',1,'atca_write_mac_in_out']]],
   ['io_5fkey',['io_key',['../a01001.html#a130c5ab3a3f978b77641faa7813aa5d2',1,'atca_io_decrypt_in_out::io_key()'],['../a01005.html#a130c5ab3a3f978b77641faa7813aa5d2',1,'atca_verify_mac::io_key()'],['../a01009.html#a130c5ab3a3f978b77641faa7813aa5d2',1,'atca_secureboot_enc_in_out::io_key()']]],
   ['is_5f64',['is_64',['../a00989.html#a3f6d684924e3635e6e57441b66b98978',1,'atca_temp_key']]],

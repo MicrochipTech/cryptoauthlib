@@ -1,11 +1,8 @@
 var a00509 =
 [
-    [ "MAX_SWI_BUSES", "a00843.html#gaf9d9d027ce20f528edea144203141714", null ],
-    [ "RECEIVE_MODE", "a00843.html#gab45577245cf4a8ead70e2d56965f2df3", null ],
-    [ "RX_DELAY", "a00843.html#gac55a27e4c3eae59bb1687eb7e8d1fe4b", null ],
-    [ "TRANSMIT_MODE", "a00843.html#ga4b85133b317e72410ea0762d637d3460", null ],
-    [ "TX_DELAY", "a00843.html#ga3f3816567a2f513dd0e1f9eb17992fb2", null ],
-    [ "ATCASWIMaster_t", "a00843.html#ga257ed552f7d68eb1e5d3ca7baa01559a", null ],
+    [ "DEBUG_PIN", "a00509.html#aac77b9d8c3b5ebb1caa337b6896c7080", null ],
+    [ "DEBUG_PIN_1", "a00509.html#ab12a92582aefe426bb194e0c298e8f98", null ],
+    [ "DEBUG_PIN_2", "a00509.html#a6a2579114d13238c7ba20d147a74090a", null ],
     [ "swi_uart_deinit", "a00843.html#ga0b1aad3936bf003686d8db7fa2be5132", null ],
     [ "swi_uart_discover_buses", "a00843.html#gad640b598d581ee7c8a4c804bee602906", null ],
     [ "swi_uart_init", "a00843.html#ga003b63648f1a5f9eba274760559688f2", null ],

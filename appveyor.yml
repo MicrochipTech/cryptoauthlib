@@ -11,12 +11,15 @@ environment:
     - PYTHON: "C:\\Python35-x64"
     - PYTHON: "C:\\Python36"
     - PYTHON: "C:\\Python36-x64"
+    - PYTHON: "C:\\Python37"
+    - PYTHON: "C:\\Python37-x64"
 
 install:
     - cmd: "%PYTHON%\\python.exe -m pip install --upgrade pip"
     - cmd: "%PYTHON%\\python.exe -m pip install --upgrade setuptools"
     - cmd: "%PYTHON%\\python.exe -m pip install --upgrade wheel"
     - cmd: "%PYTHON%\\python.exe -m pip install --upgrade pytest"
+    - cmd: "%PYTHON%\\python.exe -m pip install --upgrade enum34"
     - cmd: "%PYTHON%\\python.exe -m pip install --upgrade twine"
 
 before_build:

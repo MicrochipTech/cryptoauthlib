@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_basic_genkey.c File Reference</title>
+<title>CryptoAuthLib: atca_basic_gendig.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,38 +89,32 @@ $(document).ready(function(){initNavTree('a00200.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_basic_genkey.c File Reference</div>  </div>
+<div class="title">atca_basic_gendig.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for GenKey command.  
+<p>CryptoAuthLib Basic API methods for GenDig command.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00179_source.html">atca_basic.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00119_source.html">atca_execution.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00182_source.html">atca_basic.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00122_source.html">atca_execution.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaa8b6953ad2c7f749e61566fd38fe6903"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00841.html#gaa8b6953ad2c7f749e61566fd38fe6903">atcab_genkey_base</a> (uint8_t mode, uint16_t key_id, const uint8_t *other_data, uint8_t *public_key)</td></tr>
-<tr class="memdesc:gaa8b6953ad2c7f749e61566fd38fe6903"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues GenKey command, which can generate a private key, compute a public key, nd/or compute a digest of a public key.  <a href="a00841.html#gaa8b6953ad2c7f749e61566fd38fe6903">More...</a><br /></td></tr>
-<tr class="separator:gaa8b6953ad2c7f749e61566fd38fe6903"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga617bdbdce7b5736351d93214d44c5b8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00841.html#ga617bdbdce7b5736351d93214d44c5b8f">atcab_genkey</a> (uint16_t key_id, uint8_t *public_key)</td></tr>
-<tr class="memdesc:ga617bdbdce7b5736351d93214d44c5b8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues GenKey command, which generates a new random private key in slot and returns the public key.  <a href="a00841.html#ga617bdbdce7b5736351d93214d44c5b8f">More...</a><br /></td></tr>
-<tr class="separator:ga617bdbdce7b5736351d93214d44c5b8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad2096a4618dd37c48ed48847fe63d844"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00841.html#gad2096a4618dd37c48ed48847fe63d844">atcab_get_pubkey</a> (uint16_t key_id, uint8_t *public_key)</td></tr>
-<tr class="memdesc:gad2096a4618dd37c48ed48847fe63d844"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses GenKey command to calculate the public key from an existing private key in a slot.  <a href="a00841.html#gad2096a4618dd37c48ed48847fe63d844">More...</a><br /></td></tr>
-<tr class="separator:gad2096a4618dd37c48ed48847fe63d844"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga70751ea87f2cf913986bc7bca2cc661f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00131.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00841.html#ga70751ea87f2cf913986bc7bca2cc661f">atcab_gendig</a> (uint8_t zone, uint16_t key_id, const uint8_t *other_data, uint8_t other_data_size)</td></tr>
+<tr class="memdesc:ga70751ea87f2cf913986bc7bca2cc661f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues a GenDig command, which performs a SHA256 hash on the source data indicated by zone with the contents of TempKey. See the CryptoAuth datasheet for your chip to see what the values of zone correspond to.  <a href="a00841.html#ga70751ea87f2cf913986bc7bca2cc661f">More...</a><br /></td></tr>
+<tr class="separator:ga70751ea87f2cf913986bc7bca2cc661f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for GenKey command. </p>
-<p>The GenKey command is used for creating ECC private keys, generating ECC public keys, and for digest calculations involving public keys.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC108A, ATECC508A, ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for GenDig command. </p>
+<p>The GenDig command uses SHA-256 to combine a stored value with the contents of TempKey, which must have been valid prior to the execution of this command.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, and ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00200.html">atca_basic_genkey.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00200.html">atca_basic_gendig.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

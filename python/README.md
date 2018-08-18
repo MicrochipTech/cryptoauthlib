@@ -6,14 +6,15 @@ interface to Microchip CryptoAuthentication devices.
 
 ### Code Examples
 Code examples for python are available on github as part of
-[CryptoAuthTools](https://github.com/MicrochipTech/cryptoauthtools/python/examples)
-under the python/examples directory
+[CryptoAuthTools](https://github.com/MicrochipTech/cryptoauthtools)
+under the [python/examples](https://github.com/MicrochipTech/cryptoauthtools/tree/master/python/examples)
+directory
 
 
 ## Installation
 ### CryptoAuthLib python module can be installed through Python’s pip tool:
 ```
-pip install cryptoauthlib
+    pip install cryptoauthlib
 ```
 
 ### To upgrade your installation when new releases are made:
@@ -51,56 +52,56 @@ The family of devices supported currently are:
 The following is a 'C' code made using cryptoauthlib 'C' library.
 
 ```C
-    #include "cryptoauthlib.h"
+#include "cryptoauthlib.h"
 
-    void main()
+void main()
+{
+    ATCA_STATUS status;
+    uint8_t revision[4];
+    uint8_t randomnum[32];
+
+    status = atcab_init(cfg_ateccx08a_kitcdc_default);
+    if (status != ATCA_SUCCESS)
     {
-        ATCA_STATUS status;
-        uint8_t revision[4];
-        uint8_t randomnum[32];
-
-        status = atcab_init(cfg_ateccx08a_kitcdc_default)
-        if (status != ATCA_SUCCESS)
-        {
-            printf("Error");
-            exit();
-        }
-
-        status = atcab_info(revision);
-        if (status != ATCA_SUCCESS)
-        {
-            printf("Error");
-            exit();
-        }
-
-        status = atcab_random(randomnum);
-        if (status != ATCA_SUCCESS)
-        {
-            printf("Error");
-            exit();
-        }
+        printf("Error");
+        exit();
     }
+
+    status = atcab_info(revision);
+    if (status != ATCA_SUCCESS)
+    {
+        printf("Error");
+        exit();
+    }
+
+    status = atcab_random(randomnum);
+    if (status != ATCA_SUCCESS)
+    {
+        printf("Error");
+        exit();
+    }
+}
 ```
     
 The same code in python would be:
 
 ```python
-    from cryptoauthlib import *
+from cryptoauthlib import *
 
-    ATCA_SUCCESS = 0x00
-    revision = bytearray(4)
-    randomnum = bytearray(32)
+ATCA_SUCCESS = 0x00
+revision = bytearray(4)
+randomnum = bytearray(32)
 
-    # Locate and load the compiled library
-    load_cryptoauthlib()
+# Locate and load the compiled library
+load_cryptoauthlib()
 
-    assert ATCA_SUCCESS == atcab_init(cfg_ateccx08a_kithid_default())
+assert ATCA_SUCCESS == atcab_init(cfg_ateccx08a_kithid_default())
 
-    assert ATCA_SUCCESS == atcab_info(revision)
-    print(''.join(['%02X ' % x for x in revision])
+assert ATCA_SUCCESS == atcab_info(revision)
+print(''.join(['%02X ' % x for x in revision]))
 
-    assert ATCA_SUCCESS == atcab_random(randomnum)
-    print(''.join(['%02X ' % x for x in randomnum])
+assert ATCA_SUCCESS == atcab_random(randomnum)
+print(''.join(['%02X ' % x for x in randomnum]))
 ```
 
 In the above python code, "import cryptoauthlib" imports the python module. load_cryptoauthlib()
@@ -167,7 +168,7 @@ dir(cryptoauthlib) will return all the methods available in the cryptoauthlib mo
 
 ## Code Examples
 Code examples for python are available on github as part of 
-[CryptoAuthTools](https://github.com/MicrochipTech/cryptoauthtools/python/examples) under the
+[CryptoAuthTools](https://github.com/MicrochipTech/cryptoauthtools/tree/master/python/examples) under the
 python/examples directory
 
 
