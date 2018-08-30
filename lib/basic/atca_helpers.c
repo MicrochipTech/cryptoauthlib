@@ -454,7 +454,7 @@ uint8_t base64Index(char c, const uint8_t * rules)
  */
 char base64Char(uint8_t id, const uint8_t * rules)
 {
-    if (id >= 0 && (id < 26))
+    if (id < 26)
     {
         return (char)('A' + id);
     }
