@@ -6,13 +6,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -30,7 +30,7 @@
 #include "atca_basic.h"
 #include "host/atca_host.h"
 
-const char atca_version[] = { "20180817" };  // change for each release, yyyymmdd
+const char atca_version[] = { "20181025" };  // change for each release, yyyymmdd
 ATCADevice _gDevice = NULL;
 #ifdef ATCA_NO_HEAP
 struct atca_command g_atcab_command;
@@ -212,8 +212,9 @@ ATCA_STATUS atcab_sleep(void)
 
 ATCA_STATUS atcab_cfg_discover(ATCAIfaceCfg cfg_array[], int max_ifaces)
 {
-    int iface_num = 0, i;
+    int iface_num = 0;
     int found = 0;
+    int i = 0;
 
 // this cumulatively gathers all the interfaces enabled by #defines
 

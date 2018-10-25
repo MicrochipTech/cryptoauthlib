@@ -5,13 +5,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -184,11 +184,9 @@ ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength)
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
     atcahid_t* pHid = (atcahid_t*)atgetifacehaldat(iface);
-    uint8_t* msg;
     int bytes_written = 0;
     int bytes_left;
     int bytes_to_send;
-    int bytes_sent;
     uint8_t buffer[HID_PACKET_MAX];
 
     if ((txdata == NULL) || (cfg == NULL) || (pHid == NULL))
@@ -230,28 +228,6 @@ ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength)
 
         bytes_left -= bytes_to_send;
     }
-
-//	// Send the data to the kit USB device
-//	if (txlength > 0) {
-//        // hid_write expects the first byte to be the Report Index.
-//        // 0x00 if the target device has a single report
-//        msg = (uint8_t*)malloc((size_t)(txlength+1));
-//        if (msg != NULL)
-//        {
-//            msg[0] = 0x00;
-//            memcpy(msg+1, txdata, txlength);
-//#ifdef KIT_DEBUG
-//            printf("HID layer: Write: %s", msg + 1);
-//#endif // KIT_DEBUG
-//            bytes_written = hid_write(pHid->kits[cfg->atcahid.idx], msg, txlength+1);
-//            free(msg);
-//
-//            if (bytes_written != txlength +1)
-//                return ATCA_TX_FAIL;
-//        }
-//        else
-//			return ATCA_GEN_FAIL;
-//	}
 
     return ATCA_SUCCESS;
 }

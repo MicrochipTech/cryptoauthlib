@@ -12,13 +12,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -225,7 +225,7 @@ ATCA_STATUS atcab_hw_sha2_256_update(atca_sha256_ctx_t* ctx, const uint8_t* data
     ATCA_STATUS status = ATCA_SUCCESS;
     uint32_t block_count;
     uint32_t rem_size = ATCA_SHA256_BLOCK_SIZE - ctx->block_size;
-    uint32_t copy_size = data_size > rem_size ? rem_size : data_size;
+    uint32_t copy_size = data_size > rem_size ? rem_size : (uint32_t)data_size;
     uint32_t i = 0;
 
     // Copy data into current block
@@ -234,7 +234,7 @@ ATCA_STATUS atcab_hw_sha2_256_update(atca_sha256_ctx_t* ctx, const uint8_t* data
     if (ctx->block_size + data_size < ATCA_SHA256_BLOCK_SIZE)
     {
         // Not enough data to finish off the current block
-        ctx->block_size += data_size;
+        ctx->block_size += (uint32_t)data_size;
         return ATCA_SUCCESS;
     }
 
@@ -247,7 +247,7 @@ ATCA_STATUS atcab_hw_sha2_256_update(atca_sha256_ctx_t* ctx, const uint8_t* data
 
     // Process any additional blocks
     data_size -= copy_size; // Adjust to the remaining message bytes
-    block_count = data_size / ATCA_SHA256_BLOCK_SIZE;
+    block_count = (uint32_t)(data_size / ATCA_SHA256_BLOCK_SIZE);
     for (i = 0; i < block_count; i++)
     {
         status = atcab_sha_update(&data[copy_size + i * ATCA_SHA256_BLOCK_SIZE]);
@@ -396,7 +396,7 @@ ATCA_STATUS atcab_sha_hmac_update(atca_hmac_sha256_ctx_t* ctx, const uint8_t* da
     ATCA_STATUS status = ATCA_SUCCESS;
     uint32_t block_count;
     uint32_t rem_size = ATCA_SHA256_BLOCK_SIZE - ctx->block_size;
-    uint32_t copy_size = data_size > rem_size ? rem_size : data_size;
+    uint32_t copy_size = data_size > rem_size ? rem_size : (uint32_t)data_size;
     uint32_t i = 0;
 
     // Copy data into current block
@@ -405,7 +405,7 @@ ATCA_STATUS atcab_sha_hmac_update(atca_hmac_sha256_ctx_t* ctx, const uint8_t* da
     if (ctx->block_size + data_size < ATCA_SHA256_BLOCK_SIZE)
     {
         // Not enough data to finish off the current block
-        ctx->block_size += data_size;
+        ctx->block_size += (uint32_t)data_size;
         return ATCA_SUCCESS;
     }
 
@@ -418,7 +418,7 @@ ATCA_STATUS atcab_sha_hmac_update(atca_hmac_sha256_ctx_t* ctx, const uint8_t* da
 
     // Process any additional blocks
     data_size -= copy_size; // Adjust to the remaining message bytes
-    block_count = data_size / ATCA_SHA256_BLOCK_SIZE;
+    block_count = (uint32_t)(data_size / ATCA_SHA256_BLOCK_SIZE);
     for (i = 0; i < block_count; i++)
     {
         status = atcab_sha_base(SHA_MODE_HMAC_UPDATE, ATCA_SHA256_BLOCK_SIZE, &data[copy_size + i * ATCA_SHA256_BLOCK_SIZE], NULL, NULL);

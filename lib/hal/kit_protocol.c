@@ -6,13 +6,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -44,16 +44,17 @@
 #define KIT_MAX_TX_BUF          32
 
 #ifndef strnchr
-/** Local implementation of strnchr if it doesn't exist in the system */
+// Local implementation of strnchr if it doesn't exist in the system
 char * strnchr(const char * s, size_t count, int c)
 {
-    int i;
+    size_t i;
 
     for (i = 0; i < count; i++)
     {
         if (s[i] == c)
         {
-            return &s[i];
+            // Casting away const intentionally per API
+            return (char*)&s[i];
         }
     }
     return NULL;
@@ -87,9 +88,9 @@ ATCA_STATUS kit_init(ATCAIface iface)
     ATCA_STATUS status = ATCA_SUCCESS;
     const char kit_device[] = "board:device(%02X)\n";
     const char kit_device_select[] = "%c:physical:select(%02X)\n";
-    uint8_t txbuf[KIT_MAX_TX_BUF];
+    char txbuf[KIT_MAX_TX_BUF];
     int txlen;
-    uint8_t rxbuf[KIT_RX_WRAP_SIZE + 4];
+    char rxbuf[KIT_RX_WRAP_SIZE + 4];
     int rxlen;
     char match;
     int i;
@@ -177,7 +178,7 @@ ATCA_STATUS kit_send(ATCAIface iface, const uint8_t* txdata, int txlength)
     char* pkitbuf = NULL;
 
     // Check the pointers
-    if ((txdata == NULL))
+    if (txdata == NULL)
     {
         return ATCA_BAD_PARAM;
     }
@@ -392,10 +393,14 @@ ATCA_STATUS kit_sleep(ATCAIface iface)
 }
 
 /** \brief Wrap binary bytes in ascii kit protocol
- * \param[in] txdata pointer to the binary data to wrap
- * \param[in] txlen length of the binary data to wrap
- * \param[out] pkitcmd pointer to binary data converted to ascii kit protocol
- * \param[inout] nkitcmd pointer to the size of the binary data converted to ascii kit protocol
+ * \param[in]    txdata   Binary data to wrap.
+ * \param[in]    txlen    Length of binary data in bytes.
+ * \param[out]   pkitcmd  ASCII kit protocol wrapped data is return here.
+ * \param[inout] nkitcmd  As input, the size of the pkitcmd buffer.
+ *                        As output, the number of bytes returned in the
+ *                        pkitcmd buffer.
+ * \param[in]    target   Target char to use 's' for SHA devices, 'e' for ECC
+                          devices.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlen, char* pkitcmd, int* nkitcmd, char target)
@@ -403,17 +408,17 @@ ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlen, char* pkitcmd, int* n
     ATCA_STATUS status = ATCA_SUCCESS;
     char cmdpre[] = "d:t(";
     char cmdpost[] = ")\n";
-    int cmdAsciiLen = txlen * 2;
-    int cmdlen = txlen * 2 + sizeof(cmdpre) + sizeof(cmdpost) - 1;
-    int cpylen = 0;
-    int cpyindex = 0;
+    size_t cmdAsciiLen = txlen * 2;
+    size_t cmdlen = txlen * 2 + sizeof(cmdpre) + sizeof(cmdpost) - 1;
+    size_t cpylen = 0;
+    size_t cpyindex = 0;
 
     // Check the variables
     if (txdata == NULL || pkitcmd == NULL || nkitcmd == NULL)
     {
         return ATCA_BAD_PARAM;
     }
-    if (*nkitcmd < cmdlen)
+    if (*nkitcmd < (int)cmdlen)
     {
         return ATCA_SMALL_BUFFER;
     }
@@ -422,7 +427,7 @@ ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlen, char* pkitcmd, int* n
     memset(pkitcmd, 0, *nkitcmd);
 
     // Copy the prefix
-    cpylen = (int)strlen(cmdpre);
+    cpylen = strlen(cmdpre);
     memcpy(&pkitcmd[cpyindex], cmdpre, cpylen);
     cpyindex += cpylen;
 
@@ -437,11 +442,11 @@ ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlen, char* pkitcmd, int* n
     cpyindex += cmdAsciiLen;
 
     // Copy the postfix
-    cpylen = (int)strlen(cmdpost);
+    cpylen = strlen(cmdpost);
     memcpy(&pkitcmd[cpyindex], cmdpost, cpylen);
     cpyindex += cpylen;
 
-    *nkitcmd = cpyindex;
+    *nkitcmd = (int)cpyindex;
 
     return status;
 }
@@ -459,8 +464,9 @@ ATCA_STATUS kit_parse_rsp(const char* pkitbuf, int nkitbuf, uint8_t* kitstatus, 
     ATCA_STATUS status = ATCA_SUCCESS;
     int statusId = 0;
     int dataId = 3;
-    int binSize = 1;
-    int asciiDataSize = 0;
+    size_t binSize = 1;
+    size_t asciiDataSize = 0;
+    size_t datasizeTemp = *datasize;
     char* endDataPtr = 0;
 
     // First get the kit status
@@ -476,8 +482,9 @@ ATCA_STATUS kit_parse_rsp(const char* pkitbuf, int nkitbuf, uint8_t* kitstatus, 
     {
         return ATCA_GEN_FAIL;
     }
-    asciiDataSize = (int)(endDataPtr - (&pkitbuf[dataId]));
-    status = atcab_hex2bin(&pkitbuf[dataId], asciiDataSize, rxdata, datasize);
+    asciiDataSize = endDataPtr - (&pkitbuf[dataId]);
+    status = atcab_hex2bin(&pkitbuf[dataId], asciiDataSize, rxdata, &datasizeTemp);
+    *datasize = (int)datasizeTemp;
     if (status != ATCA_SUCCESS)
     {
         return status;

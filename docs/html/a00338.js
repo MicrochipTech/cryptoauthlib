@@ -1,8 +1,8 @@
 var a00338 =
 [
-    [ "ATCAI2CMaster_t", "a00843.html#gae8f36006f14bf6a9f4914bac69ed9f98", null ],
-    [ "i2c_read_write_flag", "a00843.html#gaa3e90779b37cd1b3a4d32321d9d8b772", [
-      [ "I2C_WRITE", "a00843.html#ggaa3e90779b37cd1b3a4d32321d9d8b772adbf6337ed546b3c21fd08c397a346bb2", null ],
-      [ "I2C_READ", "a00843.html#ggaa3e90779b37cd1b3a4d32321d9d8b772a30040082a257338fe25e5bd5136bc9a8", null ]
-    ] ]
+    [ "ATCA_MUTEX_TIMEOUT", "a00338.html#acf61a669d2246c92200734be17bd5488", null ],
+    [ "hal_create_mutex", "a03537.html#gab289a3949663589ac6be71d72fb18278", null ],
+    [ "hal_destroy_mutex", "a03537.html#ga4589d7b3e951f40b7928f1cf31f7ddf3", null ],
+    [ "hal_lock_mutex", "a03537.html#gad4cd02ff7ae4e75844eab4e84eb61994", null ],
+    [ "hal_unlock_mutex", "a03537.html#ga31fd8170a49623686543f6247b883bd1", null ]
 ];

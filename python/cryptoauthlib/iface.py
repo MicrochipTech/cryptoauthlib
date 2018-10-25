@@ -22,12 +22,37 @@ Interface Configuration
 # THIS SOFTWARE.
 
 from ctypes import Structure, Union, c_uint16, c_int, c_uint8, c_uint32, c_void_p
-from .atcab import get_cryptoauthlib
+from .library import get_cryptoauthlib, get_ctype_by_name
+from .atcaenum import AtcaEnum
 
 # Because this module directly mirrors the C api the following is an exception to the python coding standard
 # pylint: disable-msg=too-few-public-methods
 
+
+class ATCAIfaceType(AtcaEnum):
+    """
+    Interface Type Enumerations from atca_iface.h
+    """
+    ATCA_I2C_IFACE = 0
+    ATCA_SWI_IFACE = 1
+    ATCA_UART_IFACE = 2
+    ATCA_SPI_IFACE = 3
+    ATCA_HID_IFACE = 4
+
+
+class ATCADeviceType(AtcaEnum):
+    """
+    Device Type Enumeration from atca_devtypes.h
+    """
+    ATSHA204A = 0
+    ATECC108A = 1
+    ATECC508A = 2
+    ATECC608A = 3
+    ATCA_DEV_UNKNOWN = 0x20
+
+
 # The following must match atca_iface.h exactly
+
 
 class _ATCAI2C(Structure):
     """I2C/TWI HAL configuration"""
@@ -82,8 +107,8 @@ class _ATCAIfaceParams(Union):
 
 class ATCAIfaceCfg(Structure):
     """Interface configuration structure used by atcab_init()"""
-    _fields_ = [('iface_type', c_int),
-                ('devtype', c_int),
+    _fields_ = [('iface_type', get_ctype_by_name('ATCAIfaceType')),
+                ('devtype', get_ctype_by_name('ATCADeviceType')),
                 ('cfg', _ATCAIfaceParams),
                 ('wake_delay', c_uint16),
                 ('rx_retries', c_int),
@@ -121,4 +146,4 @@ def cfg_atsha204a_kithid_default():
 
 
 # Make module import * safe - keep at the end of the file
-__all__ = ['ATCAIfaceCfg'] + [x for x in dir() if x.startswith('cfg_')]
+__all__ = ['ATCAIfaceCfg', 'ATCAIfaceType', 'ATCADeviceType'] + [x for x in dir() if x.startswith('cfg_')]

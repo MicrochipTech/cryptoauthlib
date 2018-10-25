@@ -1,10 +1,12 @@
 var a00491 =
 [
-    [ "swi_uart_deinit", "a00843.html#ga0b1aad3936bf003686d8db7fa2be5132", null ],
-    [ "swi_uart_discover_buses", "a00843.html#gad640b598d581ee7c8a4c804bee602906", null ],
-    [ "swi_uart_init", "a00843.html#ga003b63648f1a5f9eba274760559688f2", null ],
-    [ "swi_uart_mode", "a00843.html#gacc2a96c86ce4c07249b81bc6a7eb2e41", null ],
-    [ "swi_uart_receive_byte", "a00843.html#ga93f3dab17c14f71641ca970998ede823", null ],
-    [ "swi_uart_send_byte", "a00843.html#ga4a4d491006d9683d67838963706ac9c1", null ],
-    [ "swi_uart_setbaud", "a00843.html#gaba296f70baf68b768d6c4bb9cf7ba67d", null ]
+    [ "swi_disable", "a00491.html#af016fffdce9f520096de8631e6692707", null ],
+    [ "swi_enable", "a00491.html#ad78929b51b34df503a37b4961577d5ce", null ],
+    [ "swi_receive_bytes", "a00491.html#afa009f7d683cb82293570a27d1f8ee10", null ],
+    [ "swi_send_byte", "a00491.html#a1c5ab22e67923ee54eef0e33b227be0b", null ],
+    [ "swi_send_bytes", "a00491.html#af0382e26c4d83b0762b39d12c772dd2e", null ],
+    [ "swi_send_wake_token", "a00491.html#ada6b4629603758b67820568677ab2a19", null ],
+    [ "swi_set_pin", "a00491.html#a076fc28889d32327dd3372538106da92", null ],
+    [ "swi_set_signal_pin", "a00491.html#a79bc8f2b72647fce853274cf8474b41e", null ],
+    [ "swi_buses_default", "a00491.html#a8ba5507b651724b4cdc74106a16b025c", null ]
 ];

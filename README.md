@@ -60,6 +60,14 @@ Examples
 
 Release notes
 -----------
+10/25/2018
+  - Added basic certificate functions to the python wrapper.
+  - Added Espressif ESP32 I2C driver.
+  - Made generic Atmel START drivers to support most MCUs in START.
+  - Added AES-CTR mode functions.
+  - Python wrapper functions now return single values with AtcaReference.
+  - Added mutex support to HAL and better support for freeRTOS.
+  
 08/17/2018
   - Better support for multiple kit protocol devices
 

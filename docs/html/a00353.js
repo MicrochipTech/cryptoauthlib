@@ -1,17 +1,16 @@
 var a00353 =
 [
-    [ "hal_kit_hid_discover_buses", "a00843.html#ga549d0b53127f1bb10e7f34453b8a2d3c", null ],
-    [ "hal_kit_hid_discover_devices", "a00843.html#ga0121a73c96416c97ce07ed9077226588", null ],
-    [ "hal_kit_hid_idle", "a00843.html#gaacf6310945889a6119cab867a1ced5e2", null ],
-    [ "hal_kit_hid_init", "a00843.html#ga95b4e99655383680272a1d9354d42479", null ],
-    [ "hal_kit_hid_post_init", "a00843.html#ga6f06bc1662b3d0361f6a241e1b5612f2", null ],
-    [ "hal_kit_hid_receive", "a00843.html#gaa80dfd4a91f557329fa1daf16b0f05a8", null ],
-    [ "hal_kit_hid_release", "a00843.html#ga8c7b9adb28b4bbdee8d5cd78ab16255f", null ],
-    [ "hal_kit_hid_send", "a00843.html#ga47588dbefadcc1569513b053a156f3d6", null ],
-    [ "hal_kit_hid_sleep", "a00843.html#ga1aa3345cb5d3e8fc29defe2758904fed", null ],
-    [ "hal_kit_hid_wake", "a00843.html#ga65289262310f2662b2c47450b93c9580", null ],
-    [ "kit_phy_num_found", "a00843.html#ga11ee6ec0b2b7eb2ff2472f92208c3205", null ],
-    [ "kit_phy_receive", "a00843.html#gabb507252b1011037d6d2cce7d91b01d0", null ],
-    [ "kit_phy_send", "a00843.html#gabd452e3edb32ea0d22653c182b4e1198", null ],
-    [ "_gHid", "a00843.html#gab97bfae6ae6051d081edf51bb45eea05", null ]
+    [ "change_i2c_speed", "a03537.html#gab7f613b378e0d01b80703df3ac662d6d", null ],
+    [ "hal_i2c_discover_buses", "a03537.html#ga05700385437884cc7b28c38d33e84f8c", null ],
+    [ "hal_i2c_discover_devices", "a03537.html#gac7644e62498a596c09952ee3b28017b9", null ],
+    [ "hal_i2c_idle", "a03537.html#ga9317303ada721ff3f97e7aad69437a30", null ],
+    [ "hal_i2c_init", "a03537.html#ga09e7f465a040fbd19ea136269571de3c", null ],
+    [ "hal_i2c_post_init", "a03537.html#gafbe53519362f18c2688d10da6f7c618f", null ],
+    [ "hal_i2c_receive", "a03537.html#ga7785bcc305c14e2dc188bb1b9a77814a", null ],
+    [ "hal_i2c_release", "a03537.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
+    [ "hal_i2c_send", "a03537.html#gacd0fb31f0f88ef3762665e26b5aa784b", null ],
+    [ "hal_i2c_sleep", "a03537.html#ga3f89bae6a625d5f37abdcc99408def27", null ],
+    [ "hal_i2c_wake", "a03537.html#gad4df1b6755e2d5b5d9e810371e45ca8c", null ],
+    [ "i2c_bus_ref_ct", "a03537.html#gaa7deec7f5d89dfb4f9746d050b0926f9", null ],
+    [ "i2c_hal_data", "a03537.html#ga95dac4460cd54b4b073285ebc79d215b", null ]
 ];

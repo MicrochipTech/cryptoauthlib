@@ -12,7 +12,7 @@ directory
 
 
 ## Installation
-### CryptoAuthLib python module can be installed through Python’s pip tool:
+### CryptoAuthLib python module can be installed through Python's pip tool:
 ```
     pip install cryptoauthlib
 ```
@@ -171,5 +171,10 @@ Code examples for python are available on github as part of
 [CryptoAuthTools](https://github.com/MicrochipTech/cryptoauthtools/tree/master/python/examples) under the
 python/examples directory
 
-
+## Tests
+Module tests can be located in the [python/tests](https://github.com/MicrochipTech/cryptoauthlib/tree/master/python/tests)
+of the main cryptoauthlib repository. The [README.md](https://github.com/MicrochipTech/cryptoauthlib/tree/master/python/tests/README.md)
+has details for how to run the tests. The module tests are not comprehensive for the entire functionality
+of cryptoauthlib but rather are meant to test the python module code only against the library to ensure
+the interfaces are correct and ctypes structures match the platform.
 

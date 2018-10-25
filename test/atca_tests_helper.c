@@ -5,13 +5,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -58,13 +58,16 @@ static uint8_t atca_tests_helper_base64_vector_in1[] = {
     0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF,
 };
 
-static char atca_tests_helper_base64_vector_out1[] =
+/*
+   // Currently unused
+   static char atca_tests_helper_base64_vector_out1[] =
     "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4v\r\n"
     "MDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5f\r\n"
     "YGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6P\r\n"
     "kJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmqq6ytrq+wsbKztLW2t7i5uru8vb6/\r\n"
     "wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj5OXm5+jp6uvs7e7v\r\n"
     "8PHy8/T19vf4+fr7/P3+/w==";
+ */
 
 static char atca_tests_helper_base64_vector_url1[] =
     "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4v"
@@ -358,7 +361,7 @@ static const char g_bin2hex_hex_no_pretty[] =
 TEST(atca_helper, bin2hex_simple)
 {
     char hex[10 * 3];
-    int hex_size = sizeof(hex);
+    size_t hex_size = sizeof(hex);
     ATCA_STATUS status;
 
     memset(hex, 0xFF, sizeof(hex)); // Preset to non-null values to check ending null behavior
@@ -373,7 +376,7 @@ TEST(atca_helper, bin2hex_simple)
 TEST(atca_helper, bin2hex_simple_no_null)
 {
     char hex[10 * 3];
-    int hex_size = sizeof(hex) - 1;  // Size it too small to have an ending null
+    size_t hex_size = sizeof(hex) - 1;  // Size it too small to have an ending null
     ATCA_STATUS status;
 
     memset(hex, 0xFF, sizeof(hex)); // Preset to non-null values to check ending null behavior
@@ -388,7 +391,7 @@ TEST(atca_helper, bin2hex_simple_no_null)
 TEST(atca_helper, bin2hex_one)
 {
     char hex[3];
-    int hex_size = sizeof(hex);
+    size_t hex_size = sizeof(hex);
     ATCA_STATUS status;
 
     memset(hex, 0xFF, sizeof(hex)); // Preset to non-null values to check ending null behavior
@@ -403,7 +406,7 @@ TEST(atca_helper, bin2hex_one)
 TEST(atca_helper, bin2hex_all)
 {
     char hex[sizeof(g_bin2hex_hex)];
-    int hex_size = sizeof(hex);
+    size_t hex_size = sizeof(hex);
     ATCA_STATUS status;
 
     memset(hex, 0xFF, sizeof(hex)); // Preset to non-null values to check ending null behavior
@@ -418,7 +421,7 @@ TEST(atca_helper, bin2hex_all)
 TEST(atca_helper, bin2hex_in_place)
 {
     char hex[sizeof(g_bin2hex_hex)];
-    int hex_size = sizeof(hex);
+    size_t hex_size = sizeof(hex);
     uint8_t* bin = NULL;
     ATCA_STATUS status;
 
@@ -436,7 +439,7 @@ TEST(atca_helper, bin2hex_in_place)
 TEST(atca_helper, bin2hex_no_pretty)
 {
     char hex[sizeof(g_bin2hex_hex_no_pretty)];
-    int hex_size = sizeof(hex);
+    size_t hex_size = sizeof(hex);
     ATCA_STATUS status;
 
     memset(hex, 0xFF, sizeof(hex)); // Preset to non-null values to check ending null behavior
@@ -451,7 +454,7 @@ TEST(atca_helper, bin2hex_no_pretty)
 TEST(atca_helper, bin2hex_small_buf)
 {
     char hex[10 * 3 - 2]; // Size buffer one smaller than required
-    int hex_size = sizeof(hex);
+    size_t hex_size = sizeof(hex);
     ATCA_STATUS status;
 
     status = atcab_bin2hex(g_bin2hex_bin, 10, hex, &hex_size);
@@ -461,7 +464,7 @@ TEST(atca_helper, bin2hex_small_buf)
 TEST(atca_helper, hex2bin)
 {
     uint8_t bin[sizeof(g_bin2hex_bin)];
-    int bin_size = sizeof(bin);
+    size_t bin_size = sizeof(bin);
     ATCA_STATUS status;
 
     status = atcab_hex2bin(g_bin2hex_hex, strlen(g_bin2hex_hex), bin, &bin_size);
@@ -473,7 +476,7 @@ TEST(atca_helper, hex2bin)
 TEST(atca_helper, hex2bin_in_place)
 {
     uint8_t bin[sizeof(g_bin2hex_hex)];
-    int bin_size = sizeof(g_bin2hex_hex);
+    size_t bin_size = sizeof(g_bin2hex_hex);
     ATCA_STATUS status;
 
     // Place hex data in output buffer
@@ -488,7 +491,7 @@ TEST(atca_helper, hex2bin_in_place)
 TEST(atca_helper, hex2bin_incomplete)
 {
     uint8_t bin[sizeof(g_bin2hex_bin)];
-    int bin_size = sizeof(bin);
+    size_t bin_size = sizeof(bin);
     ATCA_STATUS status;
 
     status = atcab_hex2bin(g_bin2hex_hex, strlen(g_bin2hex_hex) - 1, bin, &bin_size);
@@ -498,13 +501,14 @@ TEST(atca_helper, hex2bin_incomplete)
 TEST(atca_helper, hex2bin_small_buf)
 {
     uint8_t bin[sizeof(g_bin2hex_bin) - 1];
-    int bin_size = sizeof(bin);
+    size_t bin_size = sizeof(bin);
     ATCA_STATUS status;
 
     status = atcab_hex2bin(g_bin2hex_hex, strlen(g_bin2hex_hex), bin, &bin_size);
     TEST_ASSERT_EQUAL(ATCA_SMALL_BUFFER, status);
 }
 
+// *INDENT-OFF* - Preserve formatting
 t_test_case_info helper_basic_test_info[] =
 {
     { REGISTER_TEST_CASE(atca_helper, base64_encode),                      ATCA_TESTS_HELPER_DEVICES},
@@ -540,3 +544,4 @@ t_test_case_info helper_basic_test_info[] =
 
     { (fp_test_case)NULL,             (uint8_t)0 },                        /* Array Termination element*/
 };
+// *INDENT-ON*

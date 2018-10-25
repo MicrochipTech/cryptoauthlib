@@ -5,13 +5,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -384,48 +384,49 @@ ATCA_STATUS hal_swi_receive(ATCAIface iface, uint8_t *rxdata, uint16_t *rxlength
         {
             swi_uart_mode(&swi_hal_data[bus], RECEIVE_MODE);
 
-            atca_delay_us(RX_DELAY); // Must be configured to sync with response from device
-        }
-
-        *head_buff = 0x00;
-        for (bit_mask = 1; bit_mask > 0; bit_mask <<= 1)
-        {
-            bit_data = 0;
-            status = swi_uart_receive_byte(&swi_hal_data[bus], &bit_data);
-            if (status != ATCA_SUCCESS)
+            *head_buff = 0x00;
+            for (bit_mask = 1; bit_mask > 0; bit_mask <<= 1)
             {
+                bit_data = 0;
+                status = swi_uart_receive_byte(&swi_hal_data[bus], &bit_data);
+                if (status != ATCA_SUCCESS)
+                {
+                    break;
+                }
+                // Sometimes bit data from device is stretched
+                // When the device sends a "one" bit, it is read as 0x7E or 0x7F.
+                // When the device sends a "zero" bit, it is read as 0x7A, 0x7B, or 7D.
+                if ((bit_data ^ 0x7F) < 2)
+                {
+                    // Received "one" bit.
+                    *head_buff |= bit_mask;
+                }
+            }
+
+            if (status == ATCA_SUCCESS)
+            {
+                if (*head_buff < ATCA_RSP_SIZE_MIN)
+                {
+                    // Set SWI to transmit mode.
+                    swi_uart_mode(&swi_hal_data[bus], TRANSMIT_MODE);
+                    atca_delay_us(TX_DELAY);
+                    return ATCA_INVALID_SIZE;
+                }
+                if (*head_buff > rxdata_max_size)
+                {
+                    // Set SWI to transmit mode.
+                    swi_uart_mode(&swi_hal_data[bus], TRANSMIT_MODE);
+                    atca_delay_us(TX_DELAY);
+                    return ATCA_SMALL_BUFFER;
+                }
                 break;
             }
-            // Sometimes bit data from device is stretched
-            // When the device sends a "one" bit, it is read as 0x7E or 0x7F.
-            // When the device sends a "zero" bit, it is read as 0x7A, 0x7B, or 7D.
-            if ((bit_data ^ 0x7F) < 2)
+            else
             {
-                // Received "one" bit.
-                *head_buff |= bit_mask;
+                swi_uart_mode(&swi_hal_data[bus], TRANSMIT_MODE);
             }
+
         }
-    }
-    if (status != ATCA_SUCCESS)
-    {
-        // Set SWI to transmit mode.
-        swi_uart_mode(&swi_hal_data[bus], TRANSMIT_MODE);
-        atca_delay_us(TX_DELAY);
-        return status;
-    }
-    if (*head_buff < ATCA_RSP_SIZE_MIN)
-    {
-        // Set SWI to transmit mode.
-        swi_uart_mode(&swi_hal_data[bus], TRANSMIT_MODE);
-        atca_delay_us(TX_DELAY);
-        return ATCA_INVALID_SIZE;
-    }
-    if (*head_buff > rxdata_max_size)
-    {
-        // Set SWI to transmit mode.
-        swi_uart_mode(&swi_hal_data[bus], TRANSMIT_MODE);
-        atca_delay_us(TX_DELAY);
-        return ATCA_SMALL_BUFFER;
     }
 
     count = (*head_buff) - 1;

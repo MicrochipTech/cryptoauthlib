@@ -5,13 +5,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -41,15 +41,15 @@
 extern "C" {
 #endif
 
-ATCA_STATUS atcab_printbin(uint8_t* binary, int bin_len, bool add_space);
-ATCA_STATUS atcab_bin2hex(const uint8_t* bin, int bin_size, char* hex, int* hex_size);
-ATCA_STATUS atcab_bin2hex_(const uint8_t* bin, int bin_size, char* hex, int* hex_size, bool is_pretty);
-ATCA_STATUS atcab_hex2bin(const char* ascii_hex, int ascii_hex_len, uint8_t* binary, int* bin_len);
-ATCA_STATUS atcab_printbin_sp(uint8_t* binary, int bin_len);
-ATCA_STATUS atcab_printbin_label(const char* label, uint8_t* binary, int bin_len);
+ATCA_STATUS atcab_printbin(uint8_t* binary, size_t bin_len, bool add_space);
+ATCA_STATUS atcab_bin2hex(const uint8_t* bin, size_t bin_size, char* hex, size_t* hex_size);
+ATCA_STATUS atcab_bin2hex_(const uint8_t* bin, size_t bin_size, char* hex, size_t* hex_size, bool is_pretty);
+ATCA_STATUS atcab_hex2bin(const char* ascii_hex, size_t ascii_hex_len, uint8_t* binary, size_t* bin_len);
+ATCA_STATUS atcab_printbin_sp(uint8_t* binary, size_t bin_len);
+ATCA_STATUS atcab_printbin_label(const char* label, uint8_t* binary, size_t bin_len);
 
 
-ATCA_STATUS packHex(const char* ascii_hex, int ascii_hex_len, char* packed_hex, int* packed_len);
+ATCA_STATUS packHex(const char* ascii_hex, size_t ascii_hex_len, char* packed_hex, size_t* packed_len);
 bool isDigit(char c);
 bool isWhiteSpace(char c);
 bool isAlpha(char c);

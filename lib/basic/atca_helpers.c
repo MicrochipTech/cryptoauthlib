@@ -5,13 +5,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -51,7 +51,7 @@ uint8_t atcab_b64rules_urlsafe[4]   = { '-', '_', 0, 0 };
  *                           As output, the size of the output hex.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atcab_bin2hex(const uint8_t* bin, int bin_size, char* hex, int* hex_size)
+ATCA_STATUS atcab_bin2hex(const uint8_t* bin, size_t bin_size, char* hex, size_t* hex_size)
 {
     return atcab_bin2hex_(bin, bin_size, hex, hex_size, true);
 }
@@ -90,11 +90,11 @@ static void uint8_to_hex(uint8_t num, char* hex_str)
  *                           added for pretty printing.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atcab_bin2hex_(const uint8_t* bin, int bin_size, char* hex, int* hex_size, bool is_pretty)
+ATCA_STATUS atcab_bin2hex_(const uint8_t* bin, size_t bin_size, char* hex, size_t* hex_size, bool is_pretty)
 {
-    int i;
-    int cur_hex_size = 0;
-    int max_hex_size;
+    size_t i;
+    size_t cur_hex_size = 0;
+    size_t max_hex_size;
 
     // Verify the inputs
     if (bin == NULL || hex == NULL || hex_size == NULL)
@@ -176,10 +176,10 @@ inline static uint8_t hex_digit_to_num(char c)
  *                          As output, the size of the bin data.
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atcab_hex2bin(const char* hex, int hex_size, uint8_t* bin, int* bin_size)
+ATCA_STATUS atcab_hex2bin(const char* hex, size_t hex_size, uint8_t* bin, size_t* bin_size)
 {
-    int hex_index;
-    int bin_index = 0;
+    size_t hex_index;
+    size_t bin_index = 0;
     bool is_upper_nibble = true;
 
     for (hex_index = 0; hex_index < hex_size; hex_index++)
@@ -286,10 +286,10 @@ bool isHexDigit(char c)
  *                              Out: Number of bytes in the packed hex string
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS packHex(const char* ascii_hex, int ascii_hex_len, char* packed_hex, int* packed_len)
+ATCA_STATUS packHex(const char* ascii_hex, size_t ascii_hex_len, char* packed_hex, size_t* packed_len)
 {
-    int i = 0;
-    int j = 0;
+    size_t i = 0;
+    size_t j = 0;
 
     // Verify the inputs
     if ((ascii_hex == NULL) || (packed_hex == NULL) || (packed_len == NULL))
@@ -320,7 +320,7 @@ ATCA_STATUS packHex(const char* ascii_hex, int ascii_hex_len, char* packed_hex, 
  *  \param[in] bin_len length of buffer to print
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atcab_printbin_label(const char* label, uint8_t* binary, int bin_len)
+ATCA_STATUS atcab_printbin_label(const char* label, uint8_t* binary, size_t bin_len)
 {
     printf("%s", label);
     return atcab_printbin(binary, bin_len, true);
@@ -331,7 +331,7 @@ ATCA_STATUS atcab_printbin_label(const char* label, uint8_t* binary, int bin_len
  *  \param[in] bin_len length of buffer to print
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atcab_printbin_sp(uint8_t* binary, int bin_len)
+ATCA_STATUS atcab_printbin_sp(uint8_t* binary, size_t bin_len)
 {
     return atcab_printbin(binary, bin_len, true);
 }
@@ -342,10 +342,10 @@ ATCA_STATUS atcab_printbin_sp(uint8_t* binary, int bin_len)
  *  \param[in] add_space indicates whether spaces and returns should be added for pretty printing
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atcab_printbin(uint8_t* binary, int bin_len, bool add_space)
+ATCA_STATUS atcab_printbin(uint8_t* binary, size_t bin_len, bool add_space)
 {
-    int i = 0;
-    int line_len = 16;
+    size_t i = 0;
+    size_t line_len = 16;
 
     // Verify the inputs
     if (binary == NULL)

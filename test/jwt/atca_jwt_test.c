@@ -3,13 +3,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -344,7 +344,7 @@ TEST(atca_jwt_crypto, finalize)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, atca_jwt_verify(buf, sizeof(buf), pubkey));
 }
 
-
+// *INDENT-OFF* - Preserve formatting
 t_test_case_info jwt_unit_test_info[] =
 {
     { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_period),                ATCA_JWT_TEST_DEVICES},
@@ -368,3 +368,4 @@ t_test_case_info jwt_unit_test_info[] =
 
     { (fp_test_case)NULL,                 (uint8_t)0 },                               /* Array Termination element*/
 };
+// *INDENT-ON*

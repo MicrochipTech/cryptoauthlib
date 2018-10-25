@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['releaseatcadevice',['releaseATCADevice',['../a00838.html#gab729e6c838c0a247d4f226fb92492d96',1,'atca_device.c']]],
-  ['releaseatcaiface',['releaseATCAIface',['../a00839.html#gab9ee16357a8e397a72eda7e9c8553fb3',1,'atca_iface.c']]]
+  ['packhex',['packHex',['../a03535.html#gad017ae33af5a7ea062cea7d54de675a8',1,'packHex(const char *ascii_hex, size_t ascii_hex_len, char *packed_hex, size_t *packed_len):&#160;atca_helpers.c'],['../a03535.html#gad017ae33af5a7ea062cea7d54de675a8',1,'packHex(const char *ascii_hex, size_t ascii_hex_len, char *packed_hex, size_t *packed_len):&#160;atca_helpers.c']]]
 ];

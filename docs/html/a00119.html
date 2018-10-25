@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_execution.c File Reference</title>
+<title>CryptoAuthLib: atca_execution.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -90,76 +90,43 @@ $(document).ready(function(){initNavTree('a00119.html','');});
 <a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_execution.c File Reference</div>  </div>
+<div class="title">atca_execution.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Implements an execution handler that executes a given command on a device and returns the results.  
+<p>Defines an execution handler that executes a given command on a device and returns the results.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;string.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00104_source.html">atca_command.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00113_source.html">atca_device.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00122_source.html">atca_execution.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00116_source.html">atca_devtypes.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00311_source.html">hal/atca_hal.h</a>&quot;</code><br />
-</div><table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a00128_source.html">atca_status.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00101_source.html">atca_command.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00110_source.html">atca_device.h</a>&quot;</code><br />
+</div>
+<p><a href="a00119_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a8bec71e1581c804c34ee5239109e0aaf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#a8bec71e1581c804c34ee5239109e0aaf">ATCA_POLLING_INIT_TIME_MSEC</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:a8bec71e1581c804c34ee5239109e0aaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a608ef7949677dac87e1c76c826e6bf40"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#a608ef7949677dac87e1c76c826e6bf40">ATCA_POLLING_FREQUENCY_TIME_MSEC</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:a608ef7949677dac87e1c76c826e6bf40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3fec2247165d648a94cea3d0cbfd662f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#a3fec2247165d648a94cea3d0cbfd662f">ATCA_POLLING_MAX_TIME_MSEC</a>&#160;&#160;&#160;2500</td></tr>
-<tr class="separator:a3fec2247165d648a94cea3d0cbfd662f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa025be8149d8f6e4d07aaa436b026db2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#aa025be8149d8f6e4d07aaa436b026db2">ATCA_UNSUPPORTED_CMD</a>&#160;&#160;&#160;((uint16_t)0xFFFF)</td></tr>
+<tr class="separator:aa025be8149d8f6e4d07aaa436b026db2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a9a6a7a38f14d486a4b2124d196fc6849"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00131.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#a9a6a7a38f14d486a4b2124d196fc6849">atca_execute_command</a> (<a class="el" href="a00853.html">ATCAPacket</a> *packet, <a class="el" href="a00838.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
+<tr class="memitem:a9a6a7a38f14d486a4b2124d196fc6849"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html#a9a6a7a38f14d486a4b2124d196fc6849">atca_execute_command</a> (<a class="el" href="a03547.html">ATCAPacket</a> *packet, <a class="el" href="a03532.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
 <tr class="memdesc:a9a6a7a38f14d486a4b2124d196fc6849"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wakes up device, sends the packet, waits for command completion, receives response, and puts the device into the idle state.  <a href="#a9a6a7a38f14d486a4b2124d196fc6849">More...</a><br /></td></tr>
 <tr class="separator:a9a6a7a38f14d486a4b2124d196fc6849"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Implements an execution handler that executes a given command on a device and returns the results. </p>
-<p>This implementation wraps Polling and No polling (simple wait) schemes into a single method and use it across the library. Polling is used by default, however, by defining the ATCA_NO_POLL symbol the code will instead wait an estimated max execution time before requesting the result.</p>
+<div class="textblock"><p>Defines an execution handler that executes a given command on a device and returns the results. </p>
+<p>The basic flow is to wake the device, send the command, wait/poll for completion, and finally receives the response from the device and does basic checks before returning to caller.</p>
+<p>This handler supports the ATSHA and ATECC device family.</p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a608ef7949677dac87e1c76c826e6bf40"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a608ef7949677dac87e1c76c826e6bf40">&#9670;&nbsp;</a></span>ATCA_POLLING_FREQUENCY_TIME_MSEC</h2>
+<a id="aa025be8149d8f6e4d07aaa436b026db2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa025be8149d8f6e4d07aaa436b026db2">&#9670;&nbsp;</a></span>ATCA_UNSUPPORTED_CMD</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ATCA_POLLING_FREQUENCY_TIME_MSEC&#160;&#160;&#160;2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8bec71e1581c804c34ee5239109e0aaf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8bec71e1581c804c34ee5239109e0aaf">&#9670;&nbsp;</a></span>ATCA_POLLING_INIT_TIME_MSEC</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_POLLING_INIT_TIME_MSEC&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3fec2247165d648a94cea3d0cbfd662f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3fec2247165d648a94cea3d0cbfd662f">&#9670;&nbsp;</a></span>ATCA_POLLING_MAX_TIME_MSEC</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_POLLING_MAX_TIME_MSEC&#160;&#160;&#160;2500</td>
+          <td class="memname">#define ATCA_UNSUPPORTED_CMD&#160;&#160;&#160;((uint16_t)0xFFFF)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -174,15 +141,15 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00131.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atca_execute_command </td>
+          <td class="memname"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atca_execute_command </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00853.html">ATCAPacket</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a03547.html">ATCAPacket</a> *&#160;</td>
           <td class="paramname"><em>packet</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00838.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a03532.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td>
           <td class="paramname"><em>device</em>&#160;</td>
         </tr>
         <tr>
@@ -210,7 +177,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00119.html">atca_execution.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00119.html">atca_execution.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

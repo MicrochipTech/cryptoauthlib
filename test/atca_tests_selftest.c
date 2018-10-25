@@ -5,13 +5,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -82,7 +82,7 @@ TEST(atca_cmd_basic_test, selftest_all)
     TEST_ASSERT_EQUAL(0, result);
 }
 
-
+// *INDENT-OFF* - Preserve formatting
 t_test_case_info selftest_basic_test_info[] =
 {
     { REGISTER_TEST_CASE(atca_cmd_basic_test, selftest_individual), DEVICE_MASK(ATECC608A) },
@@ -95,5 +95,6 @@ t_test_case_info selftest_unit_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_unit_test, selftest), DEVICE_MASK(ATECC608A) },
     { (fp_test_case)NULL,                    (uint8_t)0 },/* Array Termination element*/
 };
+// *INDENT-ON*
 
 

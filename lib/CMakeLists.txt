@@ -52,10 +52,10 @@ endif(ATCA_HAL_I2C)
 
 # Add Remaining Sources depending on target library type
 if(ATCA_PKCS11)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${PKCS11_SRC} ${ATCACERT_DEF_SRC})
+set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${PKCS11_SRC})
 endif()
 
-add_library(cryptoauth SHARED ${CRYPTOAUTH_SRC})
+add_library(cryptoauth SHARED ${CRYPTOAUTH_SRC} ${ATCACERT_DEF_SRC})
 
 # Add Remaining Sources depending on target library type
 if(ATCA_PKCS11)

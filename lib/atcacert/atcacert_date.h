@@ -5,13 +5,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -86,7 +86,7 @@ extern const size_t ATCACERT_DATE_FORMAT_SIZES[ATCACERT_DATE_FORMAT_SIZES_COUNT]
  *
  * \param[in]    format               Format to use.
  * \param[in]    timestamp            Timestamp to format.
- * \param[out]   formatted_date       Formatted date will be return in this buffer.
+ * \param[out]   formatted_date       Formatted date will be returned in this buffer.
  * \param[inout] formatted_date_size  As input, the size of the formatted_date buffer.
  *                                    As output, the size of the returned formatted_date.
  *

@@ -5,13 +5,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -156,6 +156,17 @@ ATCA_STATUS hal_kit_hid_discover_devices(int bus_num, ATCAIfaceCfg *cfg, int *fo
 void atca_delay_us(uint32_t delay);
 void atca_delay_10us(uint32_t delay);
 void atca_delay_ms(uint32_t delay);
+
+/** \brief Optional hal interfaces */
+ATCA_STATUS hal_create_mutex(void ** ppMutex, char* pName);
+ATCA_STATUS hal_destroy_mutex(void * pMutex);
+ATCA_STATUS hal_lock_mutex(void * pMutex);
+ATCA_STATUS hal_unlock_mutex(void * pMutex);
+
+/** \brief If an RTOS is being use make sure the delay definitions do not conflict */
+#ifdef ATCA_USE_RTOS_TIMER
+void atca_delay_ms_internal(uint32_t delay);
+#endif
 
 #ifdef __cplusplus
 }

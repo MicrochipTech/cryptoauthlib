@@ -1,10 +1,7 @@
 var a00116 =
 [
-    [ "ATCADeviceType", "a00838.html#gafb234ccd6a80d09c0efbe336c2354267", [
-      [ "ATSHA204A", "a00838.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268", null ],
-      [ "ATECC108A", "a00838.html#ggafb234ccd6a80d09c0efbe336c2354267a20efd97b5b1001eec4a52e0ed5bf594c", null ],
-      [ "ATECC508A", "a00838.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae", null ],
-      [ "ATECC608A", "a00838.html#ggafb234ccd6a80d09c0efbe336c2354267a183a6224a93e6c2b82c6dc0e132398bf", null ],
-      [ "ATCA_DEV_UNKNOWN", "a00838.html#ggafb234ccd6a80d09c0efbe336c2354267a3488f672341dda0ad20508ad888280ad", null ]
-    ] ]
+    [ "ATCA_POLLING_FREQUENCY_TIME_MSEC", "a00116.html#a608ef7949677dac87e1c76c826e6bf40", null ],
+    [ "ATCA_POLLING_INIT_TIME_MSEC", "a00116.html#a8bec71e1581c804c34ee5239109e0aaf", null ],
+    [ "ATCA_POLLING_MAX_TIME_MSEC", "a00116.html#a3fec2247165d648a94cea3d0cbfd662f", null ],
+    [ "atca_execute_command", "a00116.html#a9a6a7a38f14d486a4b2124d196fc6849", null ]
 ];

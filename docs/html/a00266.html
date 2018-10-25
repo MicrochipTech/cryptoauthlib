@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_crypto_sw_ecdsa.c File Reference</title>
+<title>CryptoAuthLib: atca_crypto_sw_ecdsa.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,31 +87,43 @@ $(document).ready(function(){initNavTree('a00266.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_crypto_sw_ecdsa.c File Reference</div>  </div>
+<div class="title">atca_crypto_sw_ecdsa.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>API wrapper for software ECDSA verify. Currently unimplemented but could be implemented via a 3rd party library such as MicroECC.  
-<a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00269_source.html">atca_crypto_sw_ecdsa.h</a>&quot;</code><br />
-</div><table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a00260_source.html">atca_crypto_sw.h</a>&quot;</code><br />
+<code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+</div>
+<p><a href="a00266_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gab6935877a2675bfc95af283fb43affb5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03536.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a>&#160;&#160;&#160;(256 / 8)</td></tr>
+<tr class="separator:gab6935877a2675bfc95af283fb43affb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb06f3adddd74993ab0da4be3ea71441"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03536.html#gadb06f3adddd74993ab0da4be3ea71441">ATCA_ECC_P256_PRIVATE_KEY_SIZE</a>&#160;&#160;&#160;(<a class="el" href="a03536.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a>)</td></tr>
+<tr class="separator:gadb06f3adddd74993ab0da4be3ea71441"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6bcf19f52fbceb7801fc3216d528fb3c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03536.html#ga6bcf19f52fbceb7801fc3216d528fb3c">ATCA_ECC_P256_PUBLIC_KEY_SIZE</a>&#160;&#160;&#160;(<a class="el" href="a03536.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a> * 2)</td></tr>
+<tr class="separator:ga6bcf19f52fbceb7801fc3216d528fb3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6eba254effebfbbb95381511fc7d80d5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03536.html#ga6eba254effebfbbb95381511fc7d80d5">ATCA_ECC_P256_SIGNATURE_SIZE</a>&#160;&#160;&#160;(<a class="el" href="a03536.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a> * 2)</td></tr>
+<tr class="separator:ga6eba254effebfbbb95381511fc7d80d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaa61eee6f208a1633d35cdf8d628a6835"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00842.html#gaa61eee6f208a1633d35cdf8d628a6835">atcac_sw_ecdsa_verify_p256</a> (const uint8_t msg[<a class="el" href="a00842.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a>], const uint8_t signature[<a class="el" href="a00842.html#ga6eba254effebfbbb95381511fc7d80d5">ATCA_ECC_P256_SIGNATURE_SIZE</a>], const uint8_t public_key[<a class="el" href="a00842.html#ga6bcf19f52fbceb7801fc3216d528fb3c">ATCA_ECC_P256_PUBLIC_KEY_SIZE</a>])</td></tr>
-<tr class="memdesc:gaa61eee6f208a1633d35cdf8d628a6835"><td class="mdescLeft">&#160;</td><td class="mdescRight">return software generated ECDSA verification result and the function is currently not implemented  <a href="a00842.html#gaa61eee6f208a1633d35cdf8d628a6835">More...</a><br /></td></tr>
+<tr class="memitem:gaa61eee6f208a1633d35cdf8d628a6835"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03536.html#gaa61eee6f208a1633d35cdf8d628a6835">atcac_sw_ecdsa_verify_p256</a> (const uint8_t msg[<a class="el" href="a03536.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a>], const uint8_t signature[<a class="el" href="a03536.html#ga6eba254effebfbbb95381511fc7d80d5">ATCA_ECC_P256_SIGNATURE_SIZE</a>], const uint8_t public_key[<a class="el" href="a03536.html#ga6bcf19f52fbceb7801fc3216d528fb3c">ATCA_ECC_P256_PUBLIC_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:gaa61eee6f208a1633d35cdf8d628a6835"><td class="mdescLeft">&#160;</td><td class="mdescRight">return software generated ECDSA verification result and the function is currently not implemented  <a href="a03536.html#gaa61eee6f208a1633d35cdf8d628a6835">More...</a><br /></td></tr>
 <tr class="separator:gaa61eee6f208a1633d35cdf8d628a6835"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>API wrapper for software ECDSA verify. Currently unimplemented but could be implemented via a 3rd party library such as MicroECC. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+<div class="textblock"><dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="a00266.html">atca_crypto_sw_ecdsa.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="a00266.html">atca_crypto_sw_ecdsa.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

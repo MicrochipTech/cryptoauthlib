@@ -4,13 +4,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -28,7 +28,7 @@
 // Undefine the Unity FAIL macro so it doesn't conflict with the ASF definition
 #undef FAIL
 
-#if !defined(_WIN32) && !defined(__linux__) && !defined(__XC32__) && !defined(__APPLE__)
+#if !defined(_WIN32) && !defined(__linux__) && !defined(__XC32__) && !defined(__APPLE__) && !defined(ESP32)
 #ifdef ATMEL_START
 #include "atmel_start.h"
 #else
@@ -81,6 +81,7 @@ static void set_clock_divider_m1(void);
 static void set_clock_divider_m2(void);
 
 static const char* argv[] = { "manual", "-v" };
+// *INDENT-OFF*  - Preserve formatting
 static t_menu_info mas_menu_info[] =
 {
     { "help",     "Display Menu",                                   help                                 },
@@ -115,6 +116,7 @@ static t_menu_info mas_menu_info[] =
     #endif
     { NULL,       NULL,                                             NULL                                 },
 };
+// *INDENT-ON*
 
 #if defined(_WIN32) || defined(__linux__) || defined(__APPLE__)
 #include <stdio.h>
@@ -122,20 +124,12 @@ static t_menu_info mas_menu_info[] =
 #include "cmd-processor.h"
 int main(int argc, char* argv[])
 {
-
     char buffer[1024];
-    size_t bufsize = sizeof(buffer);
-
-    if (!buffer)
-    {
-        fprintf(stderr, "Failed to allocated a buffer");
-        return 1;
-    }
 
     while (true)
     {
         printf("$ ");
-        if (fgets(buffer, bufsize, stdin))
+        if (fgets(buffer, sizeof(buffer), stdin))
         {
             parse_cmd(buffer);
         }
@@ -143,9 +137,7 @@ int main(int argc, char* argv[])
 
     return 0;
 }
-#endif
-
-#ifndef _WIN32
+#else
 int processCmd(void)
 {
     static char cmd[cmdQ_SIZE + 1];
@@ -404,7 +396,7 @@ static ATCA_STATUS do_randoms(void)
     ATCA_STATUS status;
     uint8_t randout[RANDOM_RSP_SIZE];
     char displayStr[RANDOM_RSP_SIZE * 3];
-    int displen;
+    size_t displen = sizeof(displayStr);
     int i;
 
     status = atcab_init(gCfg);
@@ -414,7 +406,7 @@ static ATCA_STATUS do_randoms(void)
         return status;
     }
 
-	printf("Random Numbers:\r\n");
+    printf("Random Numbers:\r\n");
     for (i = 0; i < 5; i++)
     {
         if ((status = atcab_random(randout)) != ATCA_SUCCESS)
@@ -428,7 +420,7 @@ static ATCA_STATUS do_randoms(void)
 
     if (status != ATCA_SUCCESS)
     {
-        printf("error: %02x\r\n", status);
+        printf("atcab_random() failed with ret=0x%08X\r\n", status);
     }
 
     atcab_release();
@@ -472,7 +464,7 @@ static void info(void)
     ATCA_STATUS status;
     uint8_t revision[4];
     char displaystr[15];
-    int displaylen = sizeof(displaystr);
+    size_t displaylen = sizeof(displaystr);
 
     status = get_info(revision);
     if (status == ATCA_SUCCESS)
@@ -488,7 +480,7 @@ static void sernum(void)
     ATCA_STATUS status;
     uint8_t serialnum[ATCA_SERIAL_NUM_SIZE];
     char displaystr[30];
-    int displaylen = sizeof(displaystr);
+    size_t displaylen = sizeof(displaystr);
 
     status = get_serial_no(serialnum);
     if (status == ATCA_SUCCESS)
@@ -683,9 +675,9 @@ static void run_all_tests(void)
         check_clock_divider();
     }
 
-	info();
-	sernum();
-	do_randoms();
+    info();
+    sernum();
+    do_randoms();
 
     status = is_device_locked(LOCK_ZONE_CONFIG, &is_config_locked);
     if (status != ATCA_SUCCESS)

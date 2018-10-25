@@ -5,13 +5,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -1352,8 +1352,8 @@ ATCA_STATUS atcah_config_to_sign_internal(ATCADeviceType device_type, struct atc
  * required by the Verify(In/Validate) command as well as the SHA256 digest of
  * the full message.
  *
- * \param[out] device_type  the type of the input device
- * \param[out] param  Input data and output buffers required by the command.
+ * \param[out] device_type  Device type to perform the calculation for.
+ * \param[out] param        Input data and output buffers required.
  *
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
@@ -1434,36 +1434,31 @@ ATCA_STATUS atcah_sign_internal_msg(ATCADeviceType device_type, struct atca_sign
     }
 }
 
-
-
-/** \brief Builds the Counter match value that needs to be stored in the slot
+/** \brief Builds the counter match value that needs to be stored in a slot.
  *
+ * \param[in]  counter_value        Counter value to be used for the counter
+ *                                  match. This must be a multiple of 32.
+ * \param[out] counter_match_value  Data to be stored in the beginning of a
+ *                                  counter match slot will be returned here
+ *                                  (8 bytes).
  *
- * the function expects the counter_value value passed to be aligned by 32 otherwise returns error
- * The pointer for counter_match_value should be passed by an array having a size greater than 8.
- *
- *
- * \param[in]   counter_value:       Counter value to be used for the counter match.
- * \param[out]  counter_match_value  pointer to store the counter match value
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-
 ATCA_STATUS atcah_encode_counter_match(uint32_t counter_value, uint8_t * counter_match_value)
 {
-
-    if ( (counter_value > COUNTER_MAX_VALUE) || (counter_value % 32 != 0) || (counter_match_value == NULL))
+    if ((counter_value > COUNTER_MAX_VALUE) || (counter_value % 32 != 0) || (counter_match_value == NULL))
     {
         return ATCA_BAD_PARAM;
     }
 
-
+    // Counter match value is stored in little-endian unsigned format
     counter_match_value[0] = (uint8_t)((counter_value >> 0) & 0xFF);
     counter_match_value[1] = (uint8_t)((counter_value >> 8) & 0xFF);
     counter_match_value[2] = (uint8_t)((counter_value >> 16) & 0xFF);
     counter_match_value[3] = (uint8_t)((counter_value >> 24) & 0xFF);
+
+    // Counter match value should be repeated in the next 4 bytes
     memcpy(counter_match_value + 4, counter_match_value, 4);
 
     return ATCA_SUCCESS;
-
-
 }

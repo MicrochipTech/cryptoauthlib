@@ -5,13 +5,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -30,11 +30,12 @@
 #include "i2c_bitbang_samd21.h"
 #define DEFAULT_I2C_BUS 2
 
-
+// *INDENT-OFF* - Preserve alignment from the code formatter
 I2CBuses i2c_buses_default = {
     {EXT3_PIN_3, EXT3_PIN_9,  EXT3_PIN_I2C_SDA, EXT3_PIN_13, EXT2_PIN_3, EXT2_PIN_5, EXT2_PIN_7, EXT2_PIN_9,  EXT2_PIN_13, EXT2_PIN_15, EXT2_PIN_17, EXT1_PIN_3, EXT1_PIN_5, EXT1_PIN_7, EXT1_PIN_9,  EXT1_PIN_13, EXT1_PIN_15, EXT1_PIN_17},
     {EXT3_PIN_7, EXT3_PIN_10, EXT3_PIN_I2C_SCL, EXT3_PIN_14, EXT2_PIN_4, EXT2_PIN_6, EXT2_PIN_8, EXT2_PIN_10, EXT2_PIN_14, EXT2_PIN_16, EXT2_PIN_18, EXT1_PIN_4, EXT1_PIN_6, EXT1_PIN_8, EXT1_PIN_10, EXT1_PIN_14, EXT1_PIN_16, EXT1_PIN_18}
 };
+// *INDENT-ON*
 
 uint8_t pin_sda, pin_scl;
 

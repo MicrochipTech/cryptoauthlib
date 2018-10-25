@@ -1,7 +1,5 @@
 var a00119 =
 [
-    [ "ATCA_POLLING_FREQUENCY_TIME_MSEC", "a00119.html#a608ef7949677dac87e1c76c826e6bf40", null ],
-    [ "ATCA_POLLING_INIT_TIME_MSEC", "a00119.html#a8bec71e1581c804c34ee5239109e0aaf", null ],
-    [ "ATCA_POLLING_MAX_TIME_MSEC", "a00119.html#a3fec2247165d648a94cea3d0cbfd662f", null ],
+    [ "ATCA_UNSUPPORTED_CMD", "a00119.html#aa025be8149d8f6e4d07aaa436b026db2", null ],
     [ "atca_execute_command", "a00119.html#a9a6a7a38f14d486a4b2124d196fc6849", null ]
 ];

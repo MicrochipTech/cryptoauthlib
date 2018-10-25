@@ -1,5 +1,5 @@
-from ctypes import c_uint8, create_string_buffer, memmove, byref, cast, c_void_p, c_uint32
-from cryptoauthlib import Status
+from ctypes import c_uint8, create_string_buffer, memmove, byref, cast, c_void_p, c_uint32, POINTER
+from cryptoauthlib import *
 
 c_ptr = type(byref(create_string_buffer(1)))
 
@@ -13,11 +13,11 @@ class atcab_mock(object):
 
     #--------------------------------------------------------------------#
     # atcab_aes(self, mode, key_id, aes_in, aes_out)
-    r_aes_out           = create_string_buffer(16)
-    r_aes_out.value     = bytes(bytearray([0x00, 0x01, 0x02, 0x04,
-                                 0x00, 0x01, 0x02, 0x04,
-                                 0x00, 0x01, 0x02, 0x04,
-                                 0x00, 0x01, 0x02, 0x04]))
+    r_aes_out = create_string_buffer(16)
+    r_aes_out.value = bytes(bytearray([0x00, 0x01, 0x02, 0x04,
+                                       0x00, 0x01, 0x02, 0x04,
+                                       0x00, 0x01, 0x02, 0x04,
+                                       0x00, 0x01, 0x02, 0x04]))
 
     def atcab_aes(self, mode, key_id, aes_in, aes_out):
 
@@ -40,11 +40,11 @@ class atcab_mock(object):
 
     #--------------------------------------------------------------------#
     # atcab_aes_encrypt(key_id, key_block, plaintext, ciphertext)
-    r_ciphertext            = create_string_buffer(16)
-    r_ciphertext.value      = bytes(bytearray([0x00, 0x01, 0x02, 0x04,
-                                     0x00, 0x01, 0x02, 0x04,
-                                     0x00, 0x01, 0x02, 0x04,
-                                     0x00, 0x01, 0x02, 0x04]))
+    r_ciphertext = create_string_buffer(16)
+    r_ciphertext.value = bytes(bytearray([0x00, 0x01, 0x02, 0x04,
+                                          0x00, 0x01, 0x02, 0x04,
+                                          0x00, 0x01, 0x02, 0x04,
+                                          0x00, 0x01, 0x02, 0x04]))
 
     def atcab_aes_encrypt(self, key_id, key_block, plaintext, ciphertext):
 
@@ -67,11 +67,11 @@ class atcab_mock(object):
 
     #--------------------------------------------------------------------#
     # atcab_aes_decrypt(key_id, key_block, ciphertext, plaintext):
-    r_plaintext             = create_string_buffer(16)
-    r_plaintext.value       = bytes(bytearray([0x00, 0x01, 0x02, 0x04,
-                                     0x00, 0x01, 0x02, 0x04,
-                                     0x00, 0x01, 0x02, 0x04,
-                                     0x00, 0x01, 0x02, 0x04]))
+    r_plaintext = create_string_buffer(16)
+    r_plaintext.value = bytes(bytearray([0x00, 0x01, 0x02, 0x04,
+                                         0x00, 0x01, 0x02, 0x04,
+                                         0x00, 0x01, 0x02, 0x04,
+                                         0x00, 0x01, 0x02, 0x04]))
 
     def atcab_aes_decrypt(self, key_id, key_block, ciphertext, plaintext):
 
@@ -93,11 +93,11 @@ class atcab_mock(object):
 
     #--------------------------------------------------------------------#
     # atcab_aes_gfm(hash_key, inp, output):
-    r_aes_gfm_output                = create_string_buffer(16)
-    r_aes_gfm_output.value          = bytes(bytearray([0x00, 0x01, 0x02, 0x04,
-                                     0x00, 0x01, 0x02, 0x04,
-                                     0x00, 0x01, 0x02, 0x04,
-                                     0x00, 0x01, 0x02, 0x04]))
+    r_aes_gfm_output = create_string_buffer(16)
+    r_aes_gfm_output.value = bytes(bytearray([0x00, 0x01, 0x02, 0x04,
+                                              0x00, 0x01, 0x02, 0x04,
+                                              0x00, 0x01, 0x02, 0x04,
+                                              0x00, 0x01, 0x02, 0x04]))
 
     def atcab_aes_gfm(self, hash_key, inp, output):
 
@@ -119,9 +119,6 @@ class atcab_mock(object):
 
     def atcab_aes_cbc_init(self, ctx, key_id, key_block, iv):
 
-        if not "atca_aes_cbc_ctx" in str(type(ctx)):
-            raise TypeError
-
         if not isinstance(key_id, int):
             raise TypeError
 
@@ -138,9 +135,6 @@ class atcab_mock(object):
 
     def atcab_aes_cbc_encrypt_block(self, ctx, plaintext, ciphertext):
 
-        if not "atca_aes_cbc_ctx" in str(type(ctx)):
-            raise TypeError
-
         if not isinstance(plaintext, bytes):
             raise TypeError
 
@@ -155,9 +149,6 @@ class atcab_mock(object):
     # atcab_aes_cbc_decrypt_block(ctx, ciphertext, plaintext):
 
     def atcab_aes_cbc_decrypt_block(self, ctx, ciphertext, plaintext):
-
-        if not "atca_aes_cbc_ctx" in str(type(ctx)):
-            raise TypeError
 
         if not isinstance(plaintext, c_ptr):
             raise TypeError
@@ -174,9 +165,6 @@ class atcab_mock(object):
 
     def atcab_aes_cmac_init(self, ctx, key_id, key_block):
 
-        if not "atca_aes_cmac_ctx" in str(type(ctx)):
-            raise TypeError
-
         if not isinstance(key_id, int):
             raise TypeError
 
@@ -190,9 +178,6 @@ class atcab_mock(object):
 
     def atcab_aes_cmac_update(self, ctx, data, data_size):
 
-        if not "atca_aes_cmac_ctx" in str(type(ctx)):
-            raise TypeError
-
         if not isinstance(data, bytes):
             raise TypeError
 
@@ -204,16 +189,13 @@ class atcab_mock(object):
     #--------------------------------------------------------------------#
     #atcab_aes_cmac_finish(ctx, cmac, size):
 
-    r_aes_cmac_output                = create_string_buffer(16)
-    r_aes_cmac_output.value          = bytes(bytearray([0x00, 0x01, 0x02, 0x04,
-                                     0x00, 0x01, 0x02, 0x04,
-                                     0x00, 0x01, 0x02, 0x04,
-                                     0x00, 0x01, 0x02, 0x04]))
+    r_aes_cmac_output = create_string_buffer(16)
+    r_aes_cmac_output.value = bytes(bytearray([0x00, 0x01, 0x02, 0x04,
+                                               0x00, 0x01, 0x02, 0x04,
+                                               0x00, 0x01, 0x02, 0x04,
+                                               0x00, 0x01, 0x02, 0x04]))
 
     def atcab_aes_cmac_finish(self, ctx, cmac, size):
-
-        if not "atca_aes_cmac_ctx" in str(type(ctx)):
-            raise TypeError
 
         if not isinstance(cmac, c_ptr):
             raise TypeError
@@ -222,6 +204,82 @@ class atcab_mock(object):
             raise TypeError
 
         memmove(cast(cmac, c_void_p).value, cast(byref(self.r_aes_cmac_output), c_void_p).value, len(self.r_aes_cmac_output))
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    #atcab_aes_ctr_init(ctx, key_id, key_block, counter_size, iv):
+
+    def atcab_aes_ctr_init(self, ctx, key_id, key_block, counter_size, iv):
+
+        if not isinstance(key_id, int):
+            raise TypeError
+
+        if not isinstance(key_block, int):
+            raise TypeError
+
+        if not isinstance(counter_size, int):
+            raise TypeError
+
+        if not isinstance(iv, bytes):
+            raise TypeError
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    #atcab_aes_ctr_init_rand(ctx, key_id, key_block, counter_size, iv):
+
+    def atcab_aes_ctr_init_rand(self, ctx, key_id, key_block, counter_size, iv):
+
+        if not isinstance(key_id, int):
+            raise TypeError
+
+        if not isinstance(key_block, int):
+            raise TypeError
+
+        if not isinstance(counter_size, int):
+            raise TypeError
+
+        if not isinstance(iv, c_ptr):
+            raise TypeError
+
+        memmove(cast(iv, c_void_p).value, cast(byref(self.r_aes_ctr_output), c_void_p).value, len(self.r_aes_ctr_output))
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    #atcab_aes_ctr_encrypt_block(ctx, plaintext, ciphertext):
+
+    r_aes_ctr_output = create_string_buffer(16)
+    r_aes_ctr_output.value = bytes(bytearray([0x00, 0x01, 0x02, 0x04,
+                                              0x00, 0x01, 0x02, 0x04,
+                                              0x00, 0x01, 0x02, 0x04,
+                                              0x00, 0x01, 0x02, 0x04]))
+
+    def atcab_aes_ctr_encrypt_block(self, ctx, plaintext, ciphertext):
+
+        if not isinstance(plaintext, bytes):
+            raise TypeError
+
+        if not isinstance(ciphertext, c_ptr):
+            raise TypeError
+
+        memmove(cast(ciphertext, c_void_p).value, cast(byref(self.r_aes_ctr_output), c_void_p).value, len(self.r_aes_ctr_output))
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    #atcab_aes_ctr_encrypt_block(ctx, plaintext, ciphertext):
+
+    def atcab_aes_ctr_decrypt_block(self, ctx, ciphertext, plaintext):
+
+        if not isinstance(ciphertext, bytes):
+            raise TypeError
+
+        if not isinstance(plaintext, c_ptr):
+            raise TypeError
+
+        memmove(cast(plaintext, c_void_p).value, cast(byref(self.r_aes_ctr_output), c_void_p).value, len(self.r_aes_ctr_output))
 
         return Status.ATCA_SUCCESS
 
@@ -249,8 +307,8 @@ class atcab_mock(object):
 
     #--------------------------------------------------------------------#
     # atcab_counter(mode, counter_id, counter_value):
-    r_counter_value         = c_uint32()
-    r_counter_value.value   = 0x12345678
+    r_counter_value = c_uint32()
+    r_counter_value.value = 0x12345678
 
     def atcab_counter(self, mode, counter_id, counter_value):
 
@@ -317,19 +375,17 @@ class atcab_mock(object):
     #--------------------------------------------------------------------#
     # atcab_ecdh_base(mode, key_id, public_key, pms, out_nonce):
 
-    r_ecdh_pms              = create_string_buffer(32)
-    r_ecdh_pms.value        = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                     0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                     0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                     0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                                    ]))
+    r_ecdh_pms = create_string_buffer(32)
+    r_ecdh_pms.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
-    r_ecdh_out_nonce                = create_string_buffer(32)
-    r_ecdh_out_nonce.value          = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                             0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                             0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                             0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                                            ]))
+    r_ecdh_out_nonce = create_string_buffer(32)
+    r_ecdh_out_nonce.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                              0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                              0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                              0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
     def atcab_ecdh_base(self, mode, key_id, public_key, pms, out_nonce):
 
@@ -471,11 +527,10 @@ class atcab_mock(object):
     #--------------------------------------------------------------------#
     # atcab_genkey_base(mode, key_id, other_data, public_key):
     r_genkey_pubkey = create_string_buffer(64)
-    r_genkey_pubkey.value  = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                                   ]))
+    r_genkey_pubkey.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                             0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                             0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                             0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
     def atcab_genkey_base(self, mode, key_id, other_data, public_key):
 
@@ -526,12 +581,11 @@ class atcab_mock(object):
 
     #--------------------------------------------------------------------#
     # atcab_hmac(mode, key_id, digest):
-    r_hmac_digest              = create_string_buffer(32)
-    r_hmac_digest.value        = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                                        ]))
+    r_hmac_digest = create_string_buffer(32)
+    r_hmac_digest.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                           0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                           0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                           0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
     def atcab_hmac(self, mode, key_id, digest):
 
@@ -552,7 +606,7 @@ class atcab_mock(object):
     # atcab_info_base(mode, param2, out_data):
 
     r_revision = create_string_buffer(4)
-    r_revision.value = bytes(bytearray([0,1,2,3]))
+    r_revision.value = bytes(bytearray([0, 1, 2, 3]))
 
     def atcab_info_base(self, mode, param2, out_data):
 
@@ -611,19 +665,17 @@ class atcab_mock(object):
     # atcab_kdf(mode, key_id, details, message, out_data, out_nonce):
 
     r_kdf_out_data = create_string_buffer(64)
-    r_kdf_out_data.value  = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                                   ]))
+    r_kdf_out_data.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                            0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                            0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                            0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
 
-    r_kdf_out_nonce              = create_string_buffer(32)
-    r_kdf_out_nonce.value        = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                          0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                          0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                          0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                                         ]))
+    r_kdf_out_nonce = create_string_buffer(32)
+    r_kdf_out_nonce.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                             0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                             0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                             0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
     def atcab_kdf(self, mode, key_id, details, message, out_data, out_nonce):
 
@@ -707,12 +759,11 @@ class atcab_mock(object):
     #--------------------------------------------------------------------#
     # atcab_mac(mode, key_id, challenge, digest):
 
-    r_mac_digest              = create_string_buffer(32)
-    r_mac_digest.value        = bytes(bytearray([ 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                                        ]))
+    r_mac_digest = create_string_buffer(32)
+    r_mac_digest.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                          0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                          0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                          0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
 
     def atcab_mac(self, mode, key_id, challenge, digest):
@@ -736,12 +787,11 @@ class atcab_mock(object):
     #--------------------------------------------------------------------#
     # atcab_nonce_base(mode, zero, num_in, rand_out):
 
-    r_nonce_rand_out              = create_string_buffer(32)
-    r_nonce_rand_out.value        = bytes(bytearray([ 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                            0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                            0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                            0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                                            ]))
+    r_nonce_rand_out = create_string_buffer(32)
+    r_nonce_rand_out.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                              0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                              0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                              0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
     def atcab_nonce_base(self, mode, zero, num_in, rand_out):
 
@@ -846,12 +896,11 @@ class atcab_mock(object):
     #--------------------------------------------------------------------#
     # atcab_random(random_number):
 
-    r_rand_out              = create_string_buffer(32)
-    r_rand_out.value        = bytes(bytearray([ 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                      0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                      0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                      0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                                      ]))
+    r_rand_out = create_string_buffer(32)
+    r_rand_out.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
     def atcab_random(self, random_number):
 
@@ -864,12 +913,11 @@ class atcab_mock(object):
     #--------------------------------------------------------------------#
     # atcab_read_zone(zone, slot, block, offset, data, length):
 
-    r_read_zone_data              = create_string_buffer(32)
-    r_read_zone_data.value        = bytes(bytearray([ 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                            0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                            0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                            0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                                            ]))
+    r_read_zone_data = create_string_buffer(32)
+    r_read_zone_data.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                              0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                              0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                              0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
     def atcab_read_zone(self, zone, slot, block, offset, data, length):
 
@@ -949,12 +997,11 @@ class atcab_mock(object):
     #--------------------------------------------------------------------#
     # atcab_read_enc(key_id, block, data, enc_key, enc_key_id):
 
-    r_read_enc_data              = create_string_buffer(32)
-    r_read_enc_data.value        = bytes(bytearray([ 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                            0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                            0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                            0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                                            ]))
+    r_read_enc_data = create_string_buffer(32)
+    r_read_enc_data.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                             0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                             0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                             0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
     def atcab_read_enc(self, key_id, block, data, enc_key, enc_key_id):
 
@@ -981,7 +1028,7 @@ class atcab_mock(object):
     # atcab_read_config_zone(config_data):
 
     r_read_config_data = create_string_buffer(128)
-    r_read_config_data.value = bytes(bytearray(range(0,128)))
+    r_read_config_data.value = bytes(bytearray(range(0, 128)))
 
     def atcab_read_config_zone(self, config_data):
 
@@ -1015,10 +1062,9 @@ class atcab_mock(object):
 
     r_read_sig = create_string_buffer(64)
     r_read_sig.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                              0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                              0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                              0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                             ]))
+                                        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
     def atcab_read_sig(self, slot, sig):
 
@@ -1037,10 +1083,9 @@ class atcab_mock(object):
 
     r_read_pubkey = create_string_buffer(64)
     r_read_pubkey.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                             ]))
+                                           0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                           0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                           0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
     def atcab_read_pubkey(self, slot, public_key):
 
@@ -1059,10 +1104,9 @@ class atcab_mock(object):
 
     r_read_bytes_zone_data = create_string_buffer(64)
     r_read_bytes_zone_data.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                                   ]))
+                                                    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                                    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                                    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
     def atcab_read_bytes_zone(self, zone, slot, offset, data, length):
 
@@ -1088,12 +1132,11 @@ class atcab_mock(object):
     #--------------------------------------------------------------------#
     # atcab_secureboot(self, mode, param2, digest, signature, mac):
 
-    r_sboot_mac              = create_string_buffer(32)
-    r_sboot_mac.value        = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                      0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                      0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                      0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                                     ]))
+    r_sboot_mac = create_string_buffer(32)
+    r_sboot_mac.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                         0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                         0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                         0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
     def atcab_secureboot(self, mode, param2, digest, signature, mac):
 
@@ -1171,7 +1214,7 @@ class atcab_mock(object):
     # atcab_sha_base(mode, length, message, data_out, data_out_size):
 
     r_sha_base_data = create_string_buffer(130)
-    r_sha_base_data.value = bytes(bytearray(range(0,130)))
+    r_sha_base_data.value = bytes(bytearray(range(0, 130)))
 
     r_sha_base_data_size = c_uint8()
     r_sha_base_data_size.value = 130
@@ -1215,12 +1258,11 @@ class atcab_mock(object):
     #--------------------------------------------------------------------#
     # atcab_sha_end(digest, length, message):
 
-    r_sha_digest              = create_string_buffer(32)
-    r_sha_digest.value        = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                       0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                       0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                       0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                                      ]))
+    r_sha_digest = create_string_buffer(32)
+    r_sha_digest.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                          0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                          0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                          0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
     def atcab_sha_end(self, digest, length, message):
 
@@ -1241,7 +1283,7 @@ class atcab_mock(object):
     # atcab_sha_read_context(context, context_size):
 
     r_sha_context_data = create_string_buffer(130)
-    r_sha_context_data.value = bytes(bytearray(range(0,130)))
+    r_sha_context_data.value = bytes(bytearray(range(0, 130)))
 
     r_sha_context_size = c_uint8()
     r_sha_context_size.value = 130
@@ -1295,18 +1337,12 @@ class atcab_mock(object):
 
     def atcab_hw_sha2_256_init(self, ctx):
 
-        if not isinstance(ctx, bytes):
-            raise TypeError
-
         return Status.ATCA_SUCCESS
 
     #--------------------------------------------------------------------#
     # atcab_hw_sha2_256_update(ctx, data, data_size):
 
     def atcab_hw_sha2_256_update(self, ctx, data, data_size):
-
-        if not isinstance(ctx, bytes):
-            raise TypeError
 
         if not isinstance(data, bytes):
             raise TypeError
@@ -1320,9 +1356,6 @@ class atcab_mock(object):
     # atcab_hw_sha2_256_finish(ctx, digest):
 
     def atcab_hw_sha2_256_finish(self, ctx, digest):
-
-        if not isinstance(ctx, bytes):
-            raise TypeError
 
         if not isinstance(digest, c_ptr):
             raise TypeError
@@ -1354,9 +1387,6 @@ class atcab_mock(object):
 
     def atcab_sha_hmac_init(self, ctx, key_slot):
 
-        if not isinstance(ctx, bytes):
-            raise TypeError
-
         if not isinstance(key_slot, int):
             raise TypeError
 
@@ -1366,9 +1396,6 @@ class atcab_mock(object):
     # atcab_sha_hmac_update(ctx, data, data_size):
 
     def atcab_sha_hmac_update(self, ctx, data, data_size):
-
-        if not isinstance(ctx, bytes):
-            raise TypeError
 
         if not isinstance(data, bytes):
             raise TypeError
@@ -1382,9 +1409,6 @@ class atcab_mock(object):
     # atcab_sha_hmac_finish(ctx, digest, target):
 
     def atcab_sha_hmac_finish(self, ctx, digest, target):
-
-        if not isinstance(ctx, bytes):
-            raise TypeError
 
         if not isinstance(digest, c_ptr):
             raise TypeError
@@ -1425,10 +1449,9 @@ class atcab_mock(object):
 
     r_signature = create_string_buffer(64)
     r_signature.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                               0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                               0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                               0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                              ]))
+                                         0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                         0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                         0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
     def atcab_sign_base(self, mode, key_id, signature):
 
@@ -1442,6 +1465,7 @@ class atcab_mock(object):
             raise TypeError
 
         memmove(cast(signature, c_void_p).value, cast(byref(self.r_signature), c_void_p).value, len(self.r_signature))
+
         return Status.ATCA_SUCCESS
 
     #--------------------------------------------------------------------#
@@ -1459,6 +1483,7 @@ class atcab_mock(object):
             raise TypeError
 
         memmove(cast(signature, c_void_p).value, cast(byref(self.r_signature), c_void_p).value, len(self.r_signature))
+
         return Status.ATCA_SUCCESS
 
     #--------------------------------------------------------------------#
@@ -1479,6 +1504,7 @@ class atcab_mock(object):
             raise TypeError
 
         memmove(cast(signature, c_void_p).value, cast(byref(self.r_signature), c_void_p).value, len(self.r_signature))
+
         return Status.ATCA_SUCCESS
 
     #--------------------------------------------------------------------#
@@ -1499,10 +1525,9 @@ class atcab_mock(object):
 
     r_mac = create_string_buffer(64)
     r_mac.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                         0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                         0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                         0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                        ]))
+                                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
     def atcab_verify(self, mode, key_id, signature, public_key, other_data, mac):
 
@@ -1823,5 +1848,206 @@ class atcab_mock(object):
 
         if not isinstance(counter_value, int):
             raise TypeError
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcacert_get_response(device_private_key_slot, challenge, response):
+
+    r_response = create_string_buffer(64)
+    r_response.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
+
+    def atcacert_get_response(self, device_private_key_slot, challenge, response):
+
+        if not isinstance(device_private_key_slot, int):
+            raise TypeError
+
+        if not isinstance(challenge, bytes):
+            raise TypeError
+
+        if not isinstance(response, c_ptr):
+            raise TypeError
+
+        memmove(cast(response, c_void_p).value, cast(byref(self.r_response), c_void_p).value, len(self.r_response))
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcacert_read_cert(cert_def, ca_public_key, cert, cert_size):
+
+    r_cert_size = c_uint8()
+    r_cert_size.value = 64
+
+    r_cert = create_string_buffer(64)
+    r_cert.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
+
+    def atcacert_read_cert(self, cert_def, ca_public_key, cert, cert_size):
+
+        if not isinstance(ca_public_key, bytes):
+            raise TypeError
+
+        if not isinstance(cert, c_ptr):
+            raise TypeError
+
+        if not isinstance(cert_size, c_ptr):
+            raise TypeError
+
+        if cast(cert_size, POINTER(c_uint32)).contents.value < len(self.r_cert):
+            raise ValueError
+
+        memmove(cast(cert, c_void_p).value, cast(byref(self.r_cert), c_void_p).value, len(self.r_cert))
+        memmove(cast(cert_size, c_void_p).value, cast(byref(self.r_cert_size), c_void_p).value, 1)
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcacert_write_cert(self, cert_def, cert, cert_size):
+
+    def atcacert_write_cert(self, cert_def, cert, cert_size):
+
+        if not isinstance(cert, bytes):
+            raise TypeError
+
+        if not isinstance(cert_size, int):
+            raise TypeError
+
+        return Status.ATCA_SUCCESS
+
+
+    #--------------------------------------------------------------------#
+    # atcacert_create_csr(self, csr_def, csr, csr_size):
+
+    r_csr_size = c_uint8()
+    r_csr_size.value = 64
+
+    r_csr = create_string_buffer(64)
+    r_csr.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
+
+    def atcacert_create_csr(self, csr_def, csr, csr_size):
+
+        if not isinstance(csr, c_ptr):
+            raise TypeError
+
+        if not isinstance(csr_size, c_ptr):
+            raise TypeError
+
+        memmove(cast(csr, c_void_p).value, cast(byref(self.r_csr), c_void_p).value, len(self.r_csr))
+        memmove(cast(csr_size, c_void_p).value, cast(byref(self.r_csr_size), c_void_p).value, 1)
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcacert_create_csr_pem(self, csr_def, csr, csr_size):
+
+    r_csr_size = c_uint8()
+    r_csr_size.value = 64
+
+    r_csr = create_string_buffer(64)
+    r_csr.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
+
+    def atcacert_create_csr_pem(self, csr_def, csr, csr_size):
+
+        if not isinstance(csr, c_ptr):
+            raise TypeError
+
+        if not isinstance(csr_size, c_ptr):
+            raise TypeError
+
+        memmove(cast(csr, c_void_p).value, cast(byref(self.r_csr), c_void_p).value, len(self.r_csr))
+        memmove(cast(csr_size, c_void_p).value, cast(byref(self.r_csr_size), c_void_p).value, 1)
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcacert_date_enc(format, timestamp, formatted_date, formatted_date_size):
+
+    r_formatted_date = create_string_buffer(3)
+    r_formatted_date.value = bytes(bytearray([0x00, 0x01, 0x02]))
+
+    r_formatted_date_size = c_uint8()
+    r_formatted_date_size.value = 3
+
+    def atcacert_date_enc(self, format, timestamp, formatted_date, formatted_date_size):
+
+        if not isinstance(formatted_date, c_ptr):
+            raise TypeError
+
+        if not isinstance(formatted_date_size, c_ptr):
+            raise TypeError
+
+        memmove(cast(formatted_date, c_void_p).value, cast(byref(self.r_formatted_date), c_void_p).value, len(self.r_formatted_date))
+        memmove(cast(formatted_date_size, c_void_p).value, cast(byref(self.r_formatted_date_size), c_void_p).value, 1)
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcacert_date_dec( format, formatted_date, formatted_date_size, timestamp):
+
+    def atcacert_date_dec(self, format, formatted_date, formatted_date_size, timestamp):
+
+        if not isinstance(formatted_date, bytes):
+            raise TypeError
+
+        if not isinstance(formatted_date_size, int):
+            raise TypeError
+
+        timestamp.tm_sec = 12
+        timestamp.tm_min = 2
+        timestamp.tm_hour = 3
+        timestamp.tm_mday = 4
+        timestamp.tm_mon = 5
+        timestamp.tm_year = 2018
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcacert_date_enc_compcert(issue_date, expire_years, enc_dates):
+
+    r_enc_dates = create_string_buffer(3)
+    r_enc_dates.value = bytes(bytearray([0x00, 0x01, 0x02]))
+
+    def atcacert_date_enc_compcert(self, issue_date, expire_years, enc_dates):
+
+        if not isinstance(expire_years, int):
+            raise TypeError
+
+        if not isinstance(enc_dates, c_ptr):
+            raise TypeError
+
+        memmove(cast(enc_dates, c_void_p).value, cast(byref(self.r_enc_dates), c_void_p).value, len(self.r_enc_dates))
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcacert_date_dec_compcert(enc_dates, expire_date_format, issue_date, expire_date):
+
+    def atcacert_date_dec_compcert(self, enc_dates, expire_date_format, issue_date, expire_date):
+
+        if not isinstance(enc_dates, bytes):
+            raise TypeError
+
+        issue_date.tm_sec = 12
+        expire_date.tm_sec = 12
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcacert_date_get_max_date(date_format, timestamp):
+
+    def atcacert_date_get_max_date(self, date_format, timestamp):
+
+        timestamp.tm_sec = 12
 
         return Status.ATCA_SUCCESS

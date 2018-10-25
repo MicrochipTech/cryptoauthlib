@@ -1,13 +1,13 @@
 var modules =
 [
-    [ "Configuration (cfg_)", "a00836.html", "a00836" ],
-    [ "ATCACommand (atca_)", "a00837.html", "a00837" ],
-    [ "ATCADevice (atca_)", "a00838.html", "a00838" ],
-    [ "ATCAIface (atca_)", "a00839.html", "a00839" ],
-    [ "Certificate manipulation methods (atcacert_)", "a00840.html", "a00840" ],
-    [ "Basic Crypto API methods (atcab_)", "a00841.html", "a00841" ],
-    [ "Software crypto methods (atcac_)", "a00842.html", "a00842" ],
-    [ "Hardware abstraction layer (hal_)", "a00843.html", "a00843" ],
-    [ "Host side crypto methods (atcah_)", "a00844.html", "a00844" ],
-    [ "JSON Web Token (JWT) methods (atca_jwt_)", "a00845.html", "a00845" ]
+    [ "Configuration (cfg_)", "a03530.html", "a03530" ],
+    [ "ATCACommand (atca_)", "a03531.html", "a03531" ],
+    [ "ATCADevice (atca_)", "a03532.html", "a03532" ],
+    [ "ATCAIface (atca_)", "a03533.html", "a03533" ],
+    [ "Certificate manipulation methods (atcacert_)", "a03534.html", "a03534" ],
+    [ "Basic Crypto API methods (atcab_)", "a03535.html", "a03535" ],
+    [ "Software crypto methods (atcac_)", "a03536.html", "a03536" ],
+    [ "Hardware abstraction layer (hal_)", "a03537.html", "a03537" ],
+    [ "Host side crypto methods (atcah_)", "a03538.html", "a03538" ],
+    [ "JSON Web Token (JWT) methods (atca_jwt_)", "a03539.html", "a03539" ]
 ];

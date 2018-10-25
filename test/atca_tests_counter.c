@@ -5,13 +5,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -108,38 +108,33 @@ TEST(atca_cmd_basic_test, counter_match)
     uint8_t signature[ATCA_SIG_SIZE];
     uint16_t private_key_id = 0;
     bool is_verified = false;
-    uint8_t counter_limit = 1;
-    uint8_t counter_id = 0;
     uint8_t counter_match_slot_data[32];
-    uint32_t counter_data;
+    uint32_t counter_match;
     uint32_t counter0_value;
 
     test_assert_config_is_locked();
     test_assert_data_is_locked();
 
-
-
-    //Read the current counter0 value
-    status = atcab_counter_read(counter_id, &counter0_value);
+    // Read the current counter 0 value
+    status = atcab_counter_read(0, &counter0_value);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    printf("Starting counter 0: %u\r\n", counter0_value);
 
-    //Increase the counter0 value so that it is aligned to multiple of 32-counter_limit
-    while ((uint8_t)(counter0_value % 32) < (32 - counter_limit))
+    // Increase the counter 0 value so that it is aligned to multiple of 32-counter_limit
+    while ((uint8_t)(counter0_value % 32) < (32 - 1))
     {
-        status = atcab_counter_increment(counter_id, &counter0_value);
+        status = atcab_counter_increment(0, &counter0_value);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
     }
+    printf("Incrementing counter 0 to 32-byte boundary: %u\r\n", counter0_value);
 
-    counter_data = counter0_value + counter_limit;//Calculate the counter match value to be written in slot
-
-
-    status = atcah_encode_counter_match(counter_data, counter_match_slot_data);
+    // Update the counter match value
+    counter_match = counter0_value + 1; // Calculate the counter match value to be written in slot
+    status = atcah_encode_counter_match(counter_match, counter_match_slot_data);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-    status = atcab_write_bytes_zone(ATCA_ZONE_DATA, 10, 0, counter_match_slot_data, sizeof(counter_match_slot_data)); //Writing the counter match value to the slot 10
+    status = atcab_write_bytes_zone(ATCA_ZONE_DATA, 10, 0, counter_match_slot_data, sizeof(counter_match_slot_data));
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
+    printf("Setting counter match to: %u\r\n", counter_match);
 
     // Generate random message
     status = atcab_random(msg);
@@ -149,29 +144,38 @@ TEST(atca_cmd_basic_test, counter_match)
     status = atcab_genkey(private_key_id, public_key);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    // Sign message and message is loaded in message digest buffer
-    status = atcab_sign(private_key_id, msg, signature); //The message is signed by the private key in slot 0 and the counter0 value is increased
+    // Sign message with key tied to counter 0, it should succeed because the limit hasn't been reached yet
+    status = atcab_sign(private_key_id, msg, signature);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Validate counter change
+    status = atcab_counter_read(0, &counter0_value);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    printf("Counter 0 after successful sign: %u\r\n", counter0_value);
+    TEST_ASSERT_EQUAL(counter_match, counter0_value); // Counter should now equal the counter match value
 
     // Verify signature
     status = atcab_verify_extern(msg, signature, public_key, &is_verified);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(true, is_verified);
 
-
-    // Sign message and message is loaded in message digest buffer
-    status = atcab_sign(private_key_id, msg, signature);//The counter0 value and the counter match value in slot becomes equal and the signing fails
+    // Sign message with key tied to counter 0, it should fail because the limit has been reached
+    status = atcab_sign(private_key_id, msg, signature);
     TEST_ASSERT_EQUAL(ATCA_EXECUTION_ERROR, status);
 
-
-    status = atcah_encode_counter_match((COUNTER_MAX_VALUE - 31), counter_match_slot_data);//The counter match value should be aligned for 32
+    // Validate counter doesn't change
+    status = atcab_counter_read(0, &counter0_value);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    printf("Counter 0 after failed sign: %u\r\n", counter0_value);
+    TEST_ASSERT_EQUAL(counter_match, counter0_value); // Counter should not increment after reaching counter match
 
-    // Test cross-block writes
-    status = atcab_write_bytes_zone(ATCA_ZONE_DATA, 10, 0, counter_match_slot_data, sizeof(counter_match_slot_data));//Writing the maximum value to the slot for the remaning test cases to execute
+    // Set counter match value to high limit so the slot can be used for other tests
+    status = atcah_encode_counter_match((COUNTER_MAX_VALUE - 31), counter_match_slot_data);                           // The counter match value should be aligned for 32
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
+    status = atcab_write_bytes_zone(ATCA_ZONE_DATA, 10, 0, counter_match_slot_data, sizeof(counter_match_slot_data)); //Writing the maximum value to the slot for the remaning test cases to execute
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
+
 /*
    Test the counter 1 for the different value range.
    Write different range of values to counter 1 configuration zone and read the value to verify it.
@@ -214,6 +218,7 @@ TEST(atca_cmd_basic_test, counter_write_test)
 
 }
 
+// *INDENT-OFF* - Preserve formatting
 t_test_case_info counter_basic_test_info[] =
 {
     { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_write_test), DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
@@ -227,5 +232,5 @@ t_test_case_info counter_unit_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_unit_test, counter), DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A)  },
     { (fp_test_case)NULL,                    (uint8_t)0 },/* Array Termination element*/
 };
-
+// *INDENT-ON*
 

@@ -5,13 +5,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -214,7 +214,7 @@ TEST(atcacert_client, init)
     };
     uint8_t config32[32];
     char disp_str[1500];
-    int disp_size = sizeof(disp_str);
+    size_t disp_size = sizeof(disp_str);
 
 
     ret = atcab_read_zone(ATCA_ZONE_CONFIG, 0, 0, 0, config32, 32);
@@ -254,7 +254,7 @@ TEST(atcacert_client, init)
         config32,
         signer_ca_private_key_slot);
     disp_size = sizeof(disp_str);
-    ret = atcab_bin2hex(g_signer_cert_ref, (int)g_signer_cert_ref_size, disp_str, &disp_size);
+    ret = atcab_bin2hex(g_signer_cert_ref, g_signer_cert_ref_size, disp_str, &disp_size);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     printf("Signer Certificate:\r\n%s\r\n", disp_str);
 
@@ -270,7 +270,7 @@ TEST(atcacert_client, init)
         config32,
         signer_private_key_slot);
     disp_size = sizeof(disp_str);
-    ret = atcab_bin2hex(g_device_cert_ref, (int)g_device_cert_ref_size, disp_str, &disp_size);
+    ret = atcab_bin2hex(g_device_cert_ref, g_device_cert_ref_size, disp_str, &disp_size);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     printf("Device Certificate:\r\n%s\r\n", disp_str);
 }
@@ -368,7 +368,7 @@ TEST(atcacert_client, atcacert_get_response)
         0x84, 0xd1, 0x97, 0x0a, 0xea, 0xfe, 0xac, 0x60, 0x7e, 0xd1, 0x3e, 0x12, 0xb7, 0x32, 0x25, 0xf1
     };
     char disp_str[256];
-    int disp_size = sizeof(disp_str);
+    size_t disp_size = sizeof(disp_str);
 
     ret = atcacert_get_response(0, challenge, response);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
@@ -431,7 +431,7 @@ TEST(atcacert_client, atcacert_generate_device_csr)
     bool is_verified = false;
     uint8_t csr_digest[ATCA_BLOCK_SIZE];
     char disp_str[1024];
-    int disp_size = sizeof(disp_str);
+    size_t disp_size = sizeof(disp_str);
     const atcacert_cert_loc_t* pub_loc = NULL;
     int ret = 0;
 

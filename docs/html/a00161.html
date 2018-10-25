@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_host_hw.c File Reference</title>
+<title>CryptoAuthLib: atcacert_host_hw.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,26 +89,28 @@ $(document).ready(function(){initNavTree('a00161.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atcacert_host_hw.c File Reference</div>  </div>
+<div class="title">atcacert_host_hw.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p>host side methods using CryptoAuth hardware  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00164_source.html">atcacert_host_hw.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00182_source.html">basic/atca_basic.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00287_source.html">crypto/atca_crypto_sw_sha2.h</a>&quot;</code><br />
-</div><table class="memberdecls">
+<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00149_source.html">atcacert_def.h</a>&quot;</code><br />
+</div>
+<p><a href="a00161_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga81e92ea606e86051afa84f2fac4898d6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00840.html#ga81e92ea606e86051afa84f2fac4898d6">atcacert_verify_cert_hw</a> (const <a class="el" href="a00840.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, const uint8_t ca_public_key[64])</td></tr>
-<tr class="memdesc:ga81e92ea606e86051afa84f2fac4898d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a certificate against its certificate authority's public key using the host's ATECC device for crypto functions.  <a href="a00840.html#ga81e92ea606e86051afa84f2fac4898d6">More...</a><br /></td></tr>
+<tr class="memitem:ga81e92ea606e86051afa84f2fac4898d6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03534.html#ga81e92ea606e86051afa84f2fac4898d6">atcacert_verify_cert_hw</a> (const <a class="el" href="a03534.html#gae9e78b17340263e97844ccaf72ca16ac">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, const uint8_t ca_public_key[64])</td></tr>
+<tr class="memdesc:ga81e92ea606e86051afa84f2fac4898d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a certificate against its certificate authority's public key using the host's ATECC device for crypto functions.  <a href="a03534.html#ga81e92ea606e86051afa84f2fac4898d6">More...</a><br /></td></tr>
 <tr class="separator:ga81e92ea606e86051afa84f2fac4898d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga208c1ea765f192bd86b26964fbb5edcb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00840.html#ga208c1ea765f192bd86b26964fbb5edcb">atcacert_gen_challenge_hw</a> (uint8_t challenge[32])</td></tr>
-<tr class="memdesc:ga208c1ea765f192bd86b26964fbb5edcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a random challenge to be sent to the client using the RNG on the host's ATECC device.  <a href="a00840.html#ga208c1ea765f192bd86b26964fbb5edcb">More...</a><br /></td></tr>
+<tr class="memitem:ga208c1ea765f192bd86b26964fbb5edcb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03534.html#ga208c1ea765f192bd86b26964fbb5edcb">atcacert_gen_challenge_hw</a> (uint8_t challenge[32])</td></tr>
+<tr class="memdesc:ga208c1ea765f192bd86b26964fbb5edcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a random challenge to be sent to the client using the RNG on the host's ATECC device.  <a href="a03534.html#ga208c1ea765f192bd86b26964fbb5edcb">More...</a><br /></td></tr>
 <tr class="separator:ga208c1ea765f192bd86b26964fbb5edcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafeffa7a36a7b5a343f5f568d090e8eed"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00840.html#gafeffa7a36a7b5a343f5f568d090e8eed">atcacert_verify_response_hw</a> (const uint8_t device_public_key[64], const uint8_t challenge[32], const uint8_t response[64])</td></tr>
-<tr class="memdesc:gafeffa7a36a7b5a343f5f568d090e8eed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a client's response to a challenge using the host's ATECC device for crypto functions.  <a href="a00840.html#gafeffa7a36a7b5a343f5f568d090e8eed">More...</a><br /></td></tr>
+<tr class="memitem:gafeffa7a36a7b5a343f5f568d090e8eed"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03534.html#gafeffa7a36a7b5a343f5f568d090e8eed">atcacert_verify_response_hw</a> (const uint8_t device_public_key[64], const uint8_t challenge[32], const uint8_t response[64])</td></tr>
+<tr class="memdesc:gafeffa7a36a7b5a343f5f568d090e8eed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a client's response to a challenge using the host's ATECC device for crypto functions.  <a href="a03534.html#gafeffa7a36a7b5a343f5f568d090e8eed">More...</a><br /></td></tr>
 <tr class="separator:gafeffa7a36a7b5a343f5f568d090e8eed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -119,7 +121,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00161.html">atcacert_host_hw.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00161.html">atcacert_host_hw.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

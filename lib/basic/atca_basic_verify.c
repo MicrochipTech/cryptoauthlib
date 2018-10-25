@@ -12,13 +12,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -112,7 +112,7 @@ ATCA_STATUS atcab_verify(uint8_t mode, uint16_t key_id, const uint8_t* signature
         }
 
         // The Verify command may return MAC if requested
-        if ((mac != NULL) && (packet.data[ATCA_COUNT_IDX] >= (MAC_SIZE + ATCA_PACKET_OVERHEAD)))
+        if ((mac != NULL) && (packet.data[ATCA_COUNT_IDX] >= (ATCA_PACKET_OVERHEAD + MAC_SIZE)))
         {
             memcpy(mac, &packet.data[ATCA_RSP_DATA_IDX], MAC_SIZE);
         }

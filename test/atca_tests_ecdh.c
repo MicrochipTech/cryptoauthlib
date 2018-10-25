@@ -5,13 +5,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -189,7 +189,7 @@ TEST(atca_cmd_basic_test, ecdh)
     uint8_t key_id_alice = 0, key_id_bob = 2;
     char displaystr[256];
     uint8_t frag[4] = { 0x44, 0x44, 0x44, 0x44 };
-    int displen = sizeof(displaystr);
+    size_t displen = sizeof(displaystr);
 
     test_assert_data_is_locked();
 
@@ -252,7 +252,7 @@ TEST(atca_cmd_basic_test, ecdh_protection_key)
     uint16_t tempkey_alice = 0xFFFF;
     char displaystr[256];
     uint8_t frag[4] = { 0x44, 0x44, 0x44, 0x44 };
-    int displen = sizeof(displaystr);
+    size_t displen = sizeof(displaystr);
 
     test_assert_data_is_locked();
 
@@ -304,6 +304,7 @@ TEST(atca_cmd_basic_test, ecdh_protection_key)
     TEST_ASSERT_EQUAL_MEMORY(pms_alice, pms_bob, sizeof(pms_alice));
 }
 
+// *INDENT-OFF* - Preserve formatting
 t_test_case_info ecdh_basic_test_info[] =
 {
     { REGISTER_TEST_CASE(atca_cmd_basic_test, ecdh),                DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
@@ -316,5 +317,5 @@ t_test_case_info ecdh_unit_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_unit_test, ecdh), DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
     { (fp_test_case)NULL,                    (uint8_t)0 },/* Array Termination element*/
 };
-
+// *INDENT-ON*
 

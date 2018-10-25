@@ -29,17 +29,6 @@ before_build:
 build_script:
     - cmd: "%PYTHON%\\python.exe setup.py bdist_wheel"
 
-after_build:
-    - cmd: "%PYTHON%\\python.exe setup.py install"
-
-test_script:
-    - ps: |
-        & ${env:PYTHON}\scripts\pytest.exe --junitxml=build\results.xml
-        $testsExitCode = $lastexitcode
-        $wc = New-Object 'System.Net.WebClient'
-        $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\build\results.xml))
-        if ($testsExitCode -ne 0) {exit $testsExitCode}
-    
 artifacts:
     - path: python\dist\*.whl
 

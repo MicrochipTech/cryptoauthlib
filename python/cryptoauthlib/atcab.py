@@ -21,14 +21,12 @@ Dynamic link library loading under ctypes and HAL initilization/release function
 # THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
 # THIS SOFTWARE.
 
-import os.path
-from ctypes import c_uint8, c_uint32, cdll, byref, create_string_buffer, Structure, c_char, c_uint16
+from ctypes import c_uint8, c_uint32, byref, create_string_buffer, Structure, c_char, c_uint16
 from .status import Status
+from .library import get_cryptoauthlib, AtcaReference
 
 # Because this module directly mirrors the C api the following is an exception to the python coding standard
 # pylint: disable-msg=too-many-arguments, invalid-name, too-few-public-methods
-
-_CRYPTO_LIB = None
 
 
 class atca_aes_cbc_ctx(Structure):
@@ -45,37 +43,24 @@ class atca_aes_cmac_ctx(Structure):
                 ("block", c_char*16)]
 
 
-class LibraryLoadError(Exception):
-    """CryptpAuthLib failed to Load"""
+class atca_aes_ctr_ctx(Structure):
+    """AES CTR Context"""
+    _fields_ = [("key_id", c_uint16),
+                ("key_block", c_uint8),
+                ("iv", c_char*16),
+                ("counter_size", c_uint8)]
 
 
-def load_cryptoauthlib(lib=None):
-    """
-    Load CryptoAauthLib into Python environment
-    raise LibraryLoadError if cryptoauthlib library can't be loaded
-    """
-    global _CRYPTO_LIB      # pylint: disable=global-statement
-    if lib is not None:
-        _CRYPTO_LIB = lib
-    else:
-        try:
-            curr_path = os.path.abspath(os.path.dirname(__file__))
-            if os.path.exists(os.path.join(curr_path, "cryptoauth.dll")):
-                _CRYPTO_LIB = cdll.LoadLibrary(os.path.join(curr_path, "cryptoauth.dll"))
-            elif os.path.exists(os.path.join(curr_path, "libcryptoauth.so")):
-                _CRYPTO_LIB = cdll.LoadLibrary(os.path.join(curr_path, "libcryptoauth.so"))
-            elif os.path.exists(os.path.join(curr_path, "libcryptoauth.dylib")):
-                _CRYPTO_LIB = cdll.LoadLibrary(os.path.join(curr_path, "libcryptoauth.dylib"))
-        except:
-            raise LibraryLoadError("Unable to load cryptoauthlib")
+class atca_sha256_ctx(Structure):
+    """SHA256 context"""
+    _fields_ = [("total_msg_size", c_uint32),
+                ("block_size", c_uint32),
+                ("block", c_char*64*2)]
 
 
-def get_cryptoauthlib():
-    """
-    This is a helper function for the other python files in this module to use the loaded library
-    """
-    global _CRYPTO_LIB      # pylint: disable=global-statement
-    return _CRYPTO_LIB
+class atca_hmac_sha256_ctx_t(atca_sha256_ctx):
+    """HMAC-SHA256 context"""
+    pass
 
 
 def atcab_init(iface_cfg):
@@ -84,10 +69,7 @@ def atcab_init(iface_cfg):
     Communication over USB HID and Kit Protocol by default
     raise CryptoException
     """
-    if _CRYPTO_LIB is None:
-        load_cryptoauthlib(_CRYPTO_LIB)
-
-    status = _CRYPTO_LIB.atcab_init(byref(iface_cfg))
+    status = get_cryptoauthlib().atcab_init(byref(iface_cfg))
     return status
 
 
@@ -96,7 +78,7 @@ def atcab_release():
     Release the kit and the communication stack
     raise CryptoException
     """
-    return _CRYPTO_LIB.atcab_release()
+    return get_cryptoauthlib().atcab_release()
 
 
 # CryptoAuthLib Basic API methods for AES command.
@@ -125,7 +107,7 @@ def atcab_aes(mode, key_id, aes_in, aes_out):
     if not isinstance(aes_out, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_aes(mode, key_id, bytes(aes_in), byref(c_aes_out))
+        status = get_cryptoauthlib().atcab_aes(mode, key_id, bytes(aes_in), byref(c_aes_out))
         aes_out[0:] = bytes(c_aes_out.raw)
     return status
 
@@ -151,7 +133,7 @@ def atcab_aes_encrypt(key_id, key_block, plaintext, ciphertext):
     if not isinstance(ciphertext, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_aes_encrypt(key_id, key_block, bytes(plaintext), byref(c_ciphertext))
+        status = get_cryptoauthlib().atcab_aes_encrypt(key_id, key_block, bytes(plaintext), byref(c_ciphertext))
         ciphertext[0:] = bytes(c_ciphertext.raw)
     return status
 
@@ -177,7 +159,7 @@ def atcab_aes_decrypt(key_id, key_block, ciphertext, plaintext):
     if not isinstance(plaintext, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_aes_decrypt(key_id, key_block, bytes(ciphertext), byref(c_plaintext))
+        status = get_cryptoauthlib().atcab_aes_decrypt(key_id, key_block, bytes(ciphertext), byref(c_plaintext))
         plaintext[0:] = bytes(c_plaintext.raw)
     return status
 
@@ -201,7 +183,7 @@ def atcab_aes_gfm(hash_key, inp, output):
     if not isinstance(output, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_aes_gfm(bytes(hash_key), bytes(inp), byref(c_output))
+        status = get_cryptoauthlib().atcab_aes_gfm(bytes(hash_key), bytes(inp), byref(c_output))
         output[0:] = bytes(c_output.raw)
     return status
 
@@ -217,13 +199,13 @@ def atcab_aes_cbc_init(ctx, key_id, key_block, iv):
                             key location for the actual key.
         iv                  Initialization vector (16 bytes). Bytearray format
 
-    Return:
+    Returns:
         Status Code
     """
     if not isinstance(iv, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_aes_cbc_init(ctx, key_id, key_block, bytes(iv))
+        status = get_cryptoauthlib().atcab_aes_cbc_init(byref(ctx), key_id, key_block, bytes(iv))
     return status
 
 
@@ -240,16 +222,17 @@ def atcab_aes_cbc_encrypt_block(ctx, plaintext, ciphertext):
         ciphertext          Encrypted data is returned here (16 bytes).
                             (Bytearray or bytes)
 
-    Return:
+    Returns:
         Status code
     """
     c_ciphertext = create_string_buffer(16)
-    if not isinstance(plaintext, bytearray):
+    if not isinstance(ciphertext, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_aes_cbc_encrypt_block(ctx, bytes(plaintext), byref(c_ciphertext))
+        status = get_cryptoauthlib().atcab_aes_cbc_encrypt_block(byref(ctx), bytes(plaintext), byref(c_ciphertext))
         ciphertext[0:] = bytes(c_ciphertext.raw)
     return status
+
 
 def atcab_aes_cbc_decrypt_block(ctx, ciphertext, plaintext):
     """
@@ -264,16 +247,17 @@ def atcab_aes_cbc_decrypt_block(ctx, ciphertext, plaintext):
         plaintext           Decrypted data is returned here (16 bytes).
                             (Bytearray or bytes)
 
-    Return:
+    Returns:
         Status code
     """
     c_plaintext = create_string_buffer(16)
     if not isinstance(plaintext, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_aes_cbc_decrypt_block(ctx, bytes(ciphertext), byref(c_plaintext))
+        status = get_cryptoauthlib().atcab_aes_cbc_decrypt_block(byref(ctx), bytes(ciphertext), byref(c_plaintext))
         plaintext[0:] = bytes(c_plaintext.raw)
     return status
+
 
 def atcab_aes_cmac_init(ctx, key_id, key_block):
     """
@@ -286,11 +270,12 @@ def atcab_aes_cmac_init(ctx, key_id, key_block):
         key_block           Index of the 16-byte block to use within
                             the key location for the actual key.
 
-    Return:
+    Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_aes_cmac_init(ctx, key_id, key_block)
+    status = get_cryptoauthlib().atcab_aes_cmac_init(byref(ctx), key_id, key_block)
     return status
+
 
 def atcab_aes_cmac_update(ctx, data, data_size):
     """
@@ -301,14 +286,15 @@ def atcab_aes_cmac_update(ctx, data, data_size):
         data                Data to be added.
         data_size           Size of the data to be added in bytes.
 
-    Return:
+    Returns:
         Status code
     """
     if not isinstance(data, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_aes_cmac_update(ctx, bytes(data), data_size)
+        status = get_cryptoauthlib().atcab_aes_cmac_update(byref(ctx), bytes(data), data_size)
     return status
+
 
 def atcab_aes_cmac_finish(ctx, cmac, size):
     """
@@ -318,13 +304,122 @@ def atcab_aes_cmac_finish(ctx, cmac, size):
         ctx                 AES-128 CMAC context.
         cmac                CMAC is returned here.
         cmac_size           Size of CMAC requested in bytes (max 16 bytes).
+
+    Returns:
+        Status code
     """
     c_cmac = create_string_buffer(16)
     if not isinstance(cmac, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_aes_cmac_finish(ctx, byref(c_cmac), size)
+        status = get_cryptoauthlib().atcab_aes_cmac_finish(byref(ctx), byref(c_cmac), size)
         cmac[0:] = bytes(c_cmac.raw)
+    return status
+
+
+def atcab_aes_ctr_init(ctx, key_id, key_block, counter_size, iv):
+    """
+    Initialize context for AES CTR operation with an existing IV, which
+    is common when start a decrypt operation.
+
+    The IV is a combination of nonce (left-field) and big-endian counter
+    (right-field). The counter_size field sets the size of the counter and the
+    remaining bytes are assumed to be the nonce.
+
+    Args:
+        ctx                 AES CTR context to be initialized.
+        key_id              Key location. Can either be a slot number or
+                            ATCA_TEMPKEY_KEYID for TempKey.
+        key_block           Index of the 16-byte block to use within the key
+                            location for the actual key.
+        counter_size        Size of counter in IV in bytes. 4 bytes is a
+                            common size.
+        iv                  Initialization vector (concatenation of nonce and
+                            counter) 16 bytes.
+
+    Returns:
+        ATCA_SUCCESS on success, otherwise an error code.
+    """
+    status = get_cryptoauthlib().atcab_aes_ctr_init(byref(ctx), key_id, key_block, counter_size, bytes(iv))
+    return status
+
+
+def atcab_aes_ctr_init_rand(ctx, key_id, key_block, counter_size, iv):
+    """
+    Initialize context for AES CTR operation with a random nonce and
+    counter set to 0 as the IV, which is common when starting an
+    encrypt operation.
+
+    The IV is a combination of nonce (left-field) and big-endian counter
+    (right-field). The counter_size field sets the size of the counter and the
+    remaining bytes are assumed to be the nonce.
+
+    Args:
+        ctx                 AES CTR context to be initialized.
+        key_id              Key location. Can either be a slot number or
+                            ATCA_TEMPKEY_KEYID for TempKey.
+        key_block           Index of the 16-byte block to use within the key
+                            location for the actual key.
+        counter_size        Size of counter in IV in bytes. 4 bytes is a
+                            common size.
+        iv                  Initialization vector (concatenation of nonce and
+                            counter) is returned here (16 bytes).
+
+    Returns:
+        ATCA_SUCCESS on success, otherwise an error code.
+    """
+    c_iv = create_string_buffer(16)
+    if not isinstance(iv, bytearray):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        status = get_cryptoauthlib().atcab_aes_ctr_init_rand(byref(ctx), key_id, key_block, counter_size, byref(c_iv))
+        iv[0:] = bytes(c_iv.raw)
+    return status
+
+
+def atcab_aes_ctr_encrypt_block(ctx, plaintext, ciphertext):
+    """
+    Encrypt a block of data using CTR mode and a key within the
+    ATECC608A device. atcab_aes_ctr_init() or atcab_aes_ctr_init_rand()
+    should be called before the first use of this function.
+
+    Args:
+        ctx                 AES CTR context structure.
+        plaintext           Plaintext to be encrypted (16 bytes).
+        ciphertext          Encrypted data is returned here (16 bytes).
+
+    Returns:
+        Status code
+    """
+    c_ciphertext = create_string_buffer(16)
+    if not isinstance(ciphertext, bytearray):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        status = get_cryptoauthlib().atcab_aes_ctr_encrypt_block(byref(ctx), bytes(plaintext), byref(c_ciphertext))
+        ciphertext[0:] = bytes(c_ciphertext.raw)
+    return status
+
+
+def atcab_aes_ctr_decrypt_block(ctx, ciphertext, plaintext):
+    """
+    Decrypt a block of data using CTR mode and a key within the
+    ATECC608A device. atcab_aes_ctr_init() or atcab_aes_ctr_init_rand()
+    should be called before the first use of this function.
+
+    Args:
+        ctx                 AES CTR context structure.
+        ciphertext          Ciphertext to be decrypted (16 bytes).
+        plaintext           Decrypted data is returned here (16 bytes).
+
+    Returns:
+        Status code
+    """
+    c_plaintext = create_string_buffer(16)
+    if not isinstance(plaintext, bytearray):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        status = get_cryptoauthlib().atcab_aes_ctr_decrypt_block(byref(ctx), bytes(ciphertext), byref(c_plaintext))
+        plaintext[0:] = bytes(c_plaintext.raw)
     return status
 
 
@@ -351,7 +446,7 @@ def atcab_checkmac(mode, key_id, challenge, response, other_data):
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_checkmac(mode, key_id, bytes(challenge), bytes(response), bytes(other_data))
+    status = get_cryptoauthlib().atcab_checkmac(mode, key_id, bytes(challenge), bytes(response), bytes(other_data))
     return status
 
 
@@ -368,19 +463,18 @@ def atcab_counter(mode, counter_id, counter_value):
     Args:
         mode                The mode used for the counter (int)
         counter_id          The counter to be used (int)
-        counter_value       Counter value returned from device (Python list is
-                            expected here, first element will be updated with
-                            the counter value)
+        counter_value       Counter value returned from device
+                            (AtcaReference expected)
 
     Returns:
         Status code
     """
-    c_counter_value = c_uint32()
-    if not isinstance(counter_value, list):
+    if not isinstance(counter_value, AtcaReference):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_counter(mode, counter_id, byref(c_counter_value))
-        counter_value.append(c_counter_value.value)
+        c_counter_value = c_uint32(counter_value.value)
+        status = get_cryptoauthlib().atcab_counter(mode, counter_id, byref(c_counter_value))
+        counter_value.value = c_counter_value.value
     return status
 
 
@@ -390,20 +484,18 @@ def atcab_counter_increment(counter_id, counter_value):
 
     Args:
         counter_id          Counter to be incremented (int)
-        counter_value       New value of the counter is returned here. (Python list is
-                            expected here, first element will be updated with
-                            the new counter value)
-
+        counter_value       New value of the counter is returned here
+                            (AtcaReference expected)
 
     Returns:
         Status code
     """
-    c_counter_value = c_uint32()
-    if not isinstance(counter_value, list):
+    if not isinstance(counter_value, AtcaReference):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_counter_increment(counter_id, byref(c_counter_value))
-        counter_value.append(c_counter_value.value)
+        c_counter_value = c_uint32(counter_value.value)
+        status = get_cryptoauthlib().atcab_counter_increment(counter_id, byref(c_counter_value))
+        counter_value.value = c_counter_value.value
     return status
 
 
@@ -413,19 +505,18 @@ def atcab_counter_read(counter_id, counter_value):
 
     Args:
         counter_id          Counter to be read (int)
-        counter_value       Counter value is returned here. (Python list is
-                            expected here, first element will be updated with
-                            the new counter value)
+        counter_value       Counter value is returned here
+                            (AtcaReference expected)
 
     Returns:
         Status code
     """
-    c_counter_value = c_uint32()
-    if not isinstance(counter_value, list):
+    if not isinstance(counter_value, AtcaReference):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_counter_read(counter_id, byref(c_counter_value))
-        counter_value.append(c_counter_value.value)
+        c_counter_value = c_uint32(counter_value.value)
+        status = get_cryptoauthlib().atcab_counter_read(counter_id, byref(c_counter_value))
+        counter_value.value = c_counter_value.value
     return status
 
 
@@ -449,7 +540,7 @@ def atcab_derivekey(mode, target_key, mac):
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_derivekey(mode, target_key, bytes(mac))
+    status = get_cryptoauthlib().atcab_derivekey(mode, target_key, bytes(mac))
     return status
 
 
@@ -484,7 +575,7 @@ def atcab_ecdh_base(mode, key_id, public_key, pms, out_nonce):
     if (not isinstance(pms, bytearray)) or (not isinstance(out_nonce, bytearray)):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_ecdh_base(mode, key_id, bytes(public_key), byref(c_pms), byref(c_out_nonce))
+        status = get_cryptoauthlib().atcab_ecdh_base(mode, key_id, bytes(public_key), byref(c_pms), byref(c_out_nonce))
         pms[0:] = bytes(c_pms.raw)
         out_nonce[0:] = bytes(c_out_nonce.raw)
     return status
@@ -511,7 +602,7 @@ def atcab_ecdh(key_id, public_key, pms):
     if not isinstance(pms, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_ecdh(key_id, bytes(public_key), byref(c_pms))
+        status = get_cryptoauthlib().atcab_ecdh(key_id, bytes(public_key), byref(c_pms))
         pms[0:] = bytes(c_pms.raw)
     return status
 
@@ -541,7 +632,8 @@ def atcab_ecdh_enc(key_id, public_key, pms, read_key, read_key_id):
     if not isinstance(pms, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_ecdh_enc(key_id, bytes(public_key), byref(c_pms), bytes(read_key), read_key_id)
+        status = get_cryptoauthlib().atcab_ecdh_enc(key_id, bytes(public_key),
+                                                    byref(c_pms), bytes(read_key), read_key_id)
         pms[0:] = bytes(c_pms.raw)
     return status
 
@@ -568,7 +660,7 @@ def atcab_ecdh_ioenc(key_id, public_key, pms, io_key):
     if not isinstance(pms, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_ecdh_ioenc(key_id, bytes(public_key), byref(c_pms), bytes(io_key))
+        status = get_cryptoauthlib().atcab_ecdh_ioenc(key_id, bytes(public_key), byref(c_pms), bytes(io_key))
         pms[0:] = bytes(c_pms.raw)
     return status
 
@@ -593,7 +685,7 @@ def atcab_ecdh_tempkey(public_key, pms):
     if not isinstance(pms, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_ecdh_tempkey(bytes(public_key), byref(c_pms))
+        status = get_cryptoauthlib().atcab_ecdh_tempkey(bytes(public_key), byref(c_pms))
         pms[0:] = bytes(c_pms.raw)
     return status
 
@@ -619,7 +711,7 @@ def atcab_ecdh_tempkey_ioenc(public_key, pms, io_key):
     if not isinstance(pms, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_ecdh_tempkey_ioenc(bytes(public_key), byref(c_pms), bytes(io_key))
+        status = get_cryptoauthlib().atcab_ecdh_tempkey_ioenc(bytes(public_key), byref(c_pms), bytes(io_key))
         pms[0:] = bytes(c_pms.raw)
     return status
 
@@ -652,7 +744,7 @@ def atcab_gendig(zone, key_id, other_data, other_data_size):
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_gendig(zone, key_id, bytes(other_data), other_data_size)
+    status = get_cryptoauthlib().atcab_gendig(zone, key_id, bytes(other_data), other_data_size)
     return status
 
 
@@ -686,7 +778,7 @@ def atcab_genkey_base(mode, key_id, other_data, public_key):
     if not isinstance(public_key, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_genkey_base(mode, key_id, bytes(other_data), byref(c_public_key))
+        status = get_cryptoauthlib().atcab_genkey_base(mode, key_id, bytes(other_data), byref(c_public_key))
         public_key[0:] = bytes(c_public_key.raw)
     return status
 
@@ -713,7 +805,7 @@ def atcab_genkey(key_id, public_key):
     if not isinstance(public_key, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_genkey(key_id, byref(c_public_key))
+        status = get_cryptoauthlib().atcab_genkey(key_id, byref(c_public_key))
         public_key[0:] = bytes(c_public_key.raw)
     return status
 
@@ -737,7 +829,7 @@ def atcab_get_pubkey(key_id, public_key):
     if not isinstance(public_key, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_get_pubkey(key_id, byref(c_public_key))
+        status = get_cryptoauthlib().atcab_get_pubkey(key_id, byref(c_public_key))
         public_key[0:] = bytes(c_public_key.raw)
     return status
 
@@ -771,7 +863,7 @@ def atcab_hmac(mode, key_id, digest):
     if not isinstance(digest, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_hmac(mode, key_id, byref(c_digest))
+        status = get_cryptoauthlib().atcab_hmac(mode, key_id, byref(c_digest))
         digest[0:] = bytes(c_digest.raw)
     return status
 
@@ -802,7 +894,7 @@ def atcab_info_base(mode, param2, out_data):
     if not isinstance(out_data, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_info_base(mode, param2, byref(c_out_data))
+        status = get_cryptoauthlib().atcab_info_base(mode, param2, byref(c_out_data))
         out_data[0:] = bytes(c_out_data.raw)
     return status
 
@@ -822,7 +914,7 @@ def atcab_info(revision):
     if not isinstance(revision, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_info(byref(c_revision))
+        status = get_cryptoauthlib().atcab_info(byref(c_revision))
         revision[0:] = bytes(c_revision.raw)
     return status
 
@@ -833,21 +925,18 @@ def atcab_info_get_latch(state):
     an ATECC608A device.
 
     Args:
-        State               The state is returned here.
-                            Set (true) or Clear (false).
-                            returns 1 or 0, (Expects bytearray of size 1,
-                            the first element will be updated with the state value)
+        state               The state is returned here. Set (True) or
+                            clear (False). Expects AtcaReference.
 
     Returns:
         Status code
     """
-    c_state = c_uint8()
-
-    if not isinstance(state, bytearray):
+    if not isinstance(state, AtcaReference):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_info_get_latch(byref(c_state))
-        state[0] = c_state.value
+        c_state = c_uint8(state.value)
+        status = get_cryptoauthlib().atcab_info_get_latch(byref(c_state))
+        state.value = c_state.value
     return status
 
 
@@ -857,13 +946,13 @@ def atcab_info_set_latch(state):
     ATECC608A device.
 
     Args:
-        state               Persistent latch state. Set (true) or clear (false).
-                            (int, expects 0 or 1)
+        state               Persistent latch state. Set (True) or
+                            clear (False).
 
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_info_set_latch(state)
+    status = get_cryptoauthlib().atcab_info_set_latch(int(state))
     return status
 
 
@@ -910,8 +999,8 @@ def atcab_kdf(mode, key_id, details, message, out_data, out_nonce):
     if (not isinstance(out_data, bytearray)) or (not isinstance(out_nonce, bytearray)):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_kdf(mode, key_id, bytes(details), bytes(message),
-                                       byref(c_out_data), byref(c_out_nonce))
+        status = get_cryptoauthlib().atcab_kdf(mode, key_id, bytes(details), bytes(message),
+                                               byref(c_out_data), byref(c_out_nonce))
         out_data[0:] = bytes(c_out_data.raw)
         out_nonce[0:] = bytes(c_out_nonce.raw)
     return status
@@ -939,7 +1028,7 @@ def atcab_lock(mode, summary_crc):
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_lock(mode, summary_crc)
+    status = get_cryptoauthlib().atcab_lock(mode, summary_crc)
     return status
 
 
@@ -953,7 +1042,7 @@ def atcab_lock_config_zone():
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_lock_config_zone()
+    status = get_cryptoauthlib().atcab_lock_config_zone()
     return status
 
 
@@ -971,7 +1060,7 @@ def atcab_lock_config_zone_crc(summary_crc):
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_lock_config_zone_crc(summary_crc)
+    status = get_cryptoauthlib().atcab_lock_config_zone_crc(summary_crc)
     return status
 
 
@@ -988,7 +1077,7 @@ def atcab_lock_data_zone():
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_lock_data_zone()
+    status = get_cryptoauthlib().atcab_lock_data_zone()
     return status
 
 
@@ -1006,7 +1095,7 @@ def atcab_lock_data_zone_crc(summary_crc):
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_lock_data_zone_crc(summary_crc)
+    status = get_cryptoauthlib().atcab_lock_data_zone_crc(summary_crc)
     return status
 
 
@@ -1022,7 +1111,7 @@ def atcab_lock_data_slot(slot):
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_lock_data_slot(slot)
+    status = get_cryptoauthlib().atcab_lock_data_slot(slot)
     return status
 
 
@@ -1055,7 +1144,7 @@ def atcab_mac(mode, key_id, challenge, digest):
     if not isinstance(digest, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_mac(mode, key_id, bytes(challenge), byref(c_digest))
+        status = get_cryptoauthlib().atcab_mac(mode, key_id, bytes(challenge), byref(c_digest))
         digest[0:] = bytes(c_digest.raw)
     return status
 
@@ -1093,7 +1182,7 @@ def atcab_nonce_base(mode, zero, num_in, rand_out):
     if not isinstance(rand_out, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_nonce_base(mode, zero, bytes(num_in), byref(c_rand_out))
+        status = get_cryptoauthlib().atcab_nonce_base(mode, zero, bytes(num_in), byref(c_rand_out))
         rand_out[0:] = bytes(c_rand_out.raw)
     return status
 
@@ -1110,8 +1199,7 @@ def atcab_nonce(num_in):
     Returns:
         None
     """
-
-    status = _CRYPTO_LIB.atcab_nonce(bytes(num_in))
+    status = get_cryptoauthlib().atcab_nonce(bytes(num_in))
     return status
 
 
@@ -1136,8 +1224,7 @@ def atcab_nonce_load(target, num_in, num_in_size):
     Returns:
         Status code
     """
-
-    status = _CRYPTO_LIB.atcab_nonce_load(target, bytes(num_in), num_in_size)
+    status = get_cryptoauthlib().atcab_nonce_load(target, bytes(num_in), num_in_size)
     return status
 
 
@@ -1157,11 +1244,10 @@ def atcab_nonce_rand(num_in, rand_out):
         Status code
     """
     c_rand_out = create_string_buffer(32)
-
     if not isinstance(rand_out, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_nonce_rand(bytes(num_in), byref(c_rand_out))
+        status = get_cryptoauthlib().atcab_nonce_rand(bytes(num_in), byref(c_rand_out))
         rand_out[0:] = bytes(c_rand_out.raw)
     return status
 
@@ -1178,7 +1264,7 @@ def atcab_challenge(num_in):
     Returns:
         Status Code
     """
-    status = _CRYPTO_LIB.atcab_challenge(bytes(num_in))
+    status = get_cryptoauthlib().atcab_challenge(bytes(num_in))
     return status
 
 
@@ -1201,7 +1287,7 @@ def atcab_challenge_seed_update(num_in, rand_out):
     if not isinstance(rand_out, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_challenge_seed_update(bytes(num_in), byref(c_rand_out))
+        status = get_cryptoauthlib().atcab_challenge_seed_update(bytes(num_in), byref(c_rand_out))
         rand_out[0:] = bytes(c_rand_out.raw)
     return status
 
@@ -1230,7 +1316,7 @@ def atcab_priv_write(key_id, priv_key, write_key_id, write_key):
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_priv_write(key_id, bytes(priv_key), write_key_id, bytes(write_key))
+    status = get_cryptoauthlib().atcab_priv_write(key_id, bytes(priv_key), write_key_id, bytes(write_key))
     return status
 
 
@@ -1241,18 +1327,12 @@ def atcab_priv_write(key_id, priv_key, write_key_id, write_key):
 
 def atcab_random(random_number):
     """
-    --> Generates a 32 byte random number
+    Generates a 32 byte random number. Note that if the configuration zone
+    isn't locked yet (LockConfig) then it will return a 0xFFFF0000 repeating
+    pattern instead.
 
     Args:
-        random_number       Generates a 32 byte random number or
-                            0xff 0xff x00 x00 xff xff x00 x00
-                            0xff 0xff x00 x00 xff xff x00 x00
-                            0xff 0xff x00 x00 xff xff x00 x00
-                            0xff 0xff x00 x00 xff xff x00 x00
-                            bytearray until the device is configured
-                            with the policy bit (configuration lock bit) set
-                            return -> bytearray() variable of size 32
-                            (Expects bytearray)
+        random_number       Random number is returned here (expects bytearray)
 
     Returns:
         Status code
@@ -1261,7 +1341,7 @@ def atcab_random(random_number):
     if not isinstance(random_number, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_random(byref(c_random_number))
+        status = get_cryptoauthlib().atcab_random(byref(c_random_number))
         random_number[0:] = bytes(c_random_number.raw)
     return status
 
@@ -1288,7 +1368,7 @@ def atcab_read_zone(zone, slot, block, offset, data, length):
         block               32 byte block index within the zone. (int)
         offset              4 byte work index within the block. Ignored for 32 byte
                             reads. (Expects bytearray)
-        lengh               Length of the data to be read. Must be either 4 or 32.
+        length              Length of the data to be read. Must be either 4 or 32.
         data                Read data is returned here. (Expects bytearray)
 
     Returns:
@@ -1298,7 +1378,7 @@ def atcab_read_zone(zone, slot, block, offset, data, length):
     if not isinstance(data, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_read_zone(zone, slot, block, offset, byref(c_data), length)
+        status = get_cryptoauthlib().atcab_read_zone(zone, slot, block, offset, byref(c_data), length)
         data[0:] = bytes(c_data.raw)
     return status
 
@@ -1319,7 +1399,7 @@ def atcab_read_serial_number(serial_number):
     if not isinstance(serial_number, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_read_serial_number(byref(c_serial_number))
+        status = get_cryptoauthlib().atcab_read_serial_number(byref(c_serial_number))
         serial_number[0:] = bytes(c_serial_number.raw)
     return status
 
@@ -1332,18 +1412,17 @@ def atcab_is_slot_locked(slot, is_locked):
     Args:
         slot                Slot to query for locked (slot 0-15) (int)
         is_locked           Lock state returned here. True if locked.
-                            (Expects bytearray, the first element of
-                            bytearray will be updated with the is_locked status)
+                            (Expects AtcaReference)
 
     Returns:
         Status code
     """
-    c_is_locked = c_uint8(0)
-    if not isinstance(is_locked, bytearray):
+    if not isinstance(is_locked, AtcaReference):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_is_slot_locked(slot, byref(c_is_locked))
-        is_locked[0] = c_is_locked.value
+        c_is_locked = c_uint8(is_locked.value)
+        status = get_cryptoauthlib().atcab_is_slot_locked(slot, byref(c_is_locked))
+        is_locked.value = c_is_locked.value
     return status
 
 
@@ -1356,18 +1435,17 @@ def atcab_is_locked(zone, is_locked):
         zone                The zone to query for locked (use LOCK_ZONE_CONFIG(0x00) or
                             LOCK_ZONE_DATA(0x01) ). (int)
         is_locked           Lock state returned here. True if locked.
-                            (Expects bytearray, the first element of bytearray
-                            will be updated with the is_locked status)
+                            (Expects AtcaReference)
 
     Returns:
         Status code
     """
-    c_is_locked = c_uint8()
-    if not isinstance(is_locked, bytearray):
+    if not isinstance(is_locked, AtcaReference):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_is_locked(zone, byref(c_is_locked))
-        is_locked[0] = c_is_locked.value
+        c_is_locked = c_uint8(is_locked.value)
+        status = get_cryptoauthlib().atcab_is_locked(zone, byref(c_is_locked))
+        is_locked.value = c_is_locked.value
     return status
 
 
@@ -1394,7 +1472,7 @@ def atcab_read_enc(key_id, block, data, enc_key, enc_key_id):
     if not isinstance(data, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_read_enc(key_id, block, byref(c_data), bytes(enc_key), enc_key_id)
+        status = get_cryptoauthlib().atcab_read_enc(key_id, block, byref(c_data), bytes(enc_key), enc_key_id)
         data[0:] = bytes(c_data.raw)
     return status
 
@@ -1416,7 +1494,7 @@ def atcab_read_config_zone(config_data):
     if not isinstance(config_data, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_read_config_zone(byref(c_config_data))
+        status = get_cryptoauthlib().atcab_read_config_zone(byref(c_config_data))
         config_data[0:] = bytes(c_config_data.raw)
     return status
 
@@ -1435,16 +1513,17 @@ def atcab_cmp_config_zone(config_data, same_config):
                             against. (bytearray or bytes)
         same_config         Result is returned here. True if the static portions
                             on the configuration zones are the same.
-                            (Expects bytes, the first element of bytearray
-                            will be updated with the status)
-
+                            (Expects AtcaReference)
 
     Returns:
         Status code
     """
-    c_same_config = c_uint8()
-    status = _CRYPTO_LIB.atcab_cmp_config_zone(bytes(config_data), byref(c_same_config))
-    same_config[0] = c_same_config.value
+    if not isinstance(same_config, AtcaReference):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        c_same_config = c_uint8(same_config.value)
+        status = get_cryptoauthlib().atcab_cmp_config_zone(bytes(config_data), byref(c_same_config))
+        same_config.value = c_same_config.value
     return status
 
 
@@ -1467,7 +1546,7 @@ def atcab_read_sig(slot, sig):
     if not isinstance(sig, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_read_sig(slot, byref(c_sig))
+        status = get_cryptoauthlib().atcab_read_sig(slot, byref(c_sig))
         sig[0:] = bytes(c_sig.raw)
     return status
 
@@ -1493,7 +1572,7 @@ def atcab_read_pubkey(slot, public_key):
     if not isinstance(public_key, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_read_pubkey(slot, byref(c_public_key))
+        status = get_cryptoauthlib().atcab_read_pubkey(slot, byref(c_public_key))
         public_key[0:] = bytes(c_public_key.raw)
     return status
 
@@ -1522,7 +1601,7 @@ def atcab_read_bytes_zone(zone, slot, offset, data, length):
     if not isinstance(data, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_read_bytes_zone(zone, slot, offset, byref(c_data), length)
+        status = get_cryptoauthlib().atcab_read_bytes_zone(zone, slot, offset, byref(c_data), length)
         data[0:] = bytes(c_data.raw)
     return status
 
@@ -1556,7 +1635,7 @@ def atcab_secureboot(mode, param2, digest, signature, mac):
     if not isinstance(mac, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_secureboot(mode, param2, bytes(digest), bytes(signature), byref(c_mac))
+        status = get_cryptoauthlib().atcab_secureboot(mode, param2, bytes(digest), bytes(signature), byref(c_mac))
         mac[0:] = bytes(c_mac.raw)
     return status
 
@@ -1577,19 +1656,19 @@ def atcab_secureboot_mac(mode, digest, signature, num_in, io_keys, is_verified):
                             (bytearray or bytes)
         num_in              Host nonce (20 bytes).(bytearray or bytes)
         io_key              IO protection key (32 bytes). (bytearray or bytes)
-        is_verified         Verify result is returned here. (Expects bytearray,
-                            first element will be updated with the status)
+        is_verified         Verify result is returned here. (Expects
+                            AtcaReference)
 
     Returns:
         Status code
     """
-    c_is_verified = c_uint8()
-    if not isinstance(is_verified, bytearray):
+    if not isinstance(is_verified, AtcaReference):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_secureboot_mac(mode, bytes(digest), bytes(signature),
-                                                  bytes(num_in), bytes(io_keys), byref(c_is_verified))
-        is_verified[0] = c_is_verified.value
+        c_is_verified = c_uint8(is_verified.value)
+        status = get_cryptoauthlib().atcab_secureboot_mac(mode, bytes(digest), bytes(signature),
+                                                          bytes(num_in), bytes(io_keys), byref(c_is_verified))
+        is_verified.value = c_is_verified.value
     return status
 
 
@@ -1611,18 +1690,18 @@ def atcab_selftest(mode, param2, result):
                             SELFTEST_MODE_ECDH, SELFTEST_MODE_AES,
                             SELFTEST_MODE_SHA, SELFTEST_MODE_ALL. (int)
         param2              Currently unused, should be 0. (int)
-        result              Results are returned here as a bit field. (Expects bytearray,
-                            first element will be updated with the status)
+        result              Results are returned here as a bit field. (Expects
+                            AtcaReference)
 
     Returns:
         Status code
     """
-    c_result = c_uint8()
-    if not isinstance(result, bytearray):
+    if not isinstance(result, AtcaReference):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_selftest(mode, param2, byref(c_result))
-        result[0] = c_result.value
+        c_result = c_uint8(result.value)
+        status = get_cryptoauthlib().atcab_selftest(mode, param2, byref(c_result))
+        result.value = c_result.value
     return status
 
 
@@ -1656,21 +1735,20 @@ def atcab_sha_base(mode, length, message, data_out, data_out_size):
                             context).(Expects bytearray)
         data_out_size       As input, the size of the data_out buffer. As
                             output, the number of bytes returned in
-                            data_out. (Expects bytearray, first element
-                            will be updated with the data_out_size)
+                            data_out. (Expects AtcaReference)
 
     Returns:
         Status code
     """
-    if (not isinstance(data_out, bytearray)) or (not isinstance(data_out_size, bytearray)):
+    if (not isinstance(data_out, bytearray)) or (not isinstance(data_out_size, AtcaReference)):
         status = Status.ATCA_BAD_PARAM
     else:
-        c_data_out_size = c_uint8()
-        c_data_out_size.value = data_out_size[0]
-        c_data_out = create_string_buffer(130)
-        status = _CRYPTO_LIB.atcab_sha_base(mode, length, bytes(message), byref(c_data_out), byref(c_data_out_size))
-        data_out_size[0] = c_data_out_size.value
-        data_out[0:] = bytes(c_data_out.raw)
+        c_data_out_size = c_uint8(data_out_size.value)
+        c_data_out = create_string_buffer(data_out_size.value)
+        status = get_cryptoauthlib().atcab_sha_base(mode, length, bytes(message),
+                                                    byref(c_data_out), byref(c_data_out_size))
+        data_out[:] = bytes(c_data_out.raw)[0:c_data_out_size.value]
+        data_out_size.value = c_data_out_size.value
     return status
 
 
@@ -1684,7 +1762,7 @@ def atcab_sha_start():
     Returns;
         Status code
     """
-    status = _CRYPTO_LIB.atcab_sha_start()
+    status = get_cryptoauthlib().atcab_sha_start()
     return status
 
 
@@ -1700,7 +1778,7 @@ def atcab_sha_update(message):
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_sha_update(bytes(message))
+    status = get_cryptoauthlib().atcab_sha_update(bytes(message))
     return status
 
 
@@ -1718,11 +1796,11 @@ def atcab_sha_end(digest, length, message):
     Returns:
         Status code
     """
-    c_digest = create_string_buffer(32)
     if not isinstance(digest, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_sha_end(byref(c_digest), length, bytes(message))
+        c_digest = create_string_buffer(32)
+        status = get_cryptoauthlib().atcab_sha_end(byref(c_digest), length, bytes(message))
         digest[0:] = bytes(c_digest.raw)
     return status
 
@@ -1736,22 +1814,19 @@ def atcab_sha_read_context(context, context_size):
         context             Context data is returned here. (Expects bytearray)
         context_size        As input, the size of the context buffer in
                             bytes. As output, the size of the returned
-                            context data. (Expects bytearray, first element
-                            will be updated with the context size)
+                            context data. (Expects AtcaReference)
 
     Retuns:
         Status code
     """
-    c_context_size = c_uint8()
-    c_context_size.value = context_size[0]
-    c_context = create_string_buffer(130)
-
-    if (not isinstance(context, bytearray)) or (not isinstance(context_size, bytearray)):
+    if (not isinstance(context, bytearray)) or (not isinstance(context_size, AtcaReference)):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_sha_read_context(byref(c_context), byref(c_context_size))
-        context_size[0] = c_context_size.value
-        context[0:] = bytes(c_context.raw)
+        c_context_size = c_uint8(context_size.value)
+        c_context = create_string_buffer(context_size.value)
+        status = get_cryptoauthlib().atcab_sha_read_context(byref(c_context), byref(c_context_size))
+        context[:] = bytes(c_context.raw)[0:c_context_size.value]
+        context_size.value = c_context_size.value
     return status
 
 
@@ -1767,7 +1842,7 @@ def atcab_sha_write_context(context, context_size):
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_sha_write_context(bytes(context), context_size)
+    status = get_cryptoauthlib().atcab_sha_write_context(bytes(context), context_size)
     return status
 
 
@@ -1783,9 +1858,12 @@ def atcab_sha(length, message, digest):
     Returns:
         Status code
     """
-    c_digest = create_string_buffer(32)
-    status = _CRYPTO_LIB.atcab_sha(length, bytes(message), byref(c_digest))
-    digest[0:] = bytes(c_digest.raw)
+    if not isinstance(digest, bytearray):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        c_digest = create_string_buffer(32)
+        status = get_cryptoauthlib().atcab_sha(length, bytes(message), byref(c_digest))
+        digest[0:] = bytes(c_digest.raw)
     return status
 
 
@@ -1795,12 +1873,12 @@ def atcab_hw_sha2_256_init(ctx):
     on a device. Note that only one SHA operation can be run at a time.
 
     Args:
-        ctx                     SHA256 context (bytearray or bytes)
+        ctx                     SHA256 context (atca_sha256_ctx)
 
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_hw_sha2_256_init(bytes(ctx))
+    status = get_cryptoauthlib().atcab_hw_sha2_256_init(byref(ctx))
     return status
 
 
@@ -1810,14 +1888,14 @@ def atcab_hw_sha2_256_update(ctx, data, data_size):
         operation on a device.
 
     Args:
-        ctx                 SHA256 context (bytearray or bytes)
+        ctx                 SHA256 context (atca_sha256_ctx)
         data                Message data to be added to hash. (bytearray or bytes)
         data_size           Size of data in bytes. (int)
 
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_hw_sha2_256_update(bytes(ctx), bytes(data), data_size)
+    status = get_cryptoauthlib().atcab_hw_sha2_256_update(byref(ctx), bytes(data), data_size)
     return status
 
 
@@ -1827,16 +1905,19 @@ def atcab_hw_sha2_256_finish(ctx, digest):
     SHA-256 operation on a device.
 
     Args:
-    ctx                     SHA256 context (bytearray or bytes)
+    ctx                     SHA256 context (atca_sha256_ctx)
     digest                  SHA256 digest is returned here (32 bytes)
                             (Expects bytearray)
 
     Returns:
-    Status code
+        Status code
     """
-    c_digest = create_string_buffer(32)
-    status = _CRYPTO_LIB.atcab_hw_sha2_256_finish(bytes(ctx), byref(c_digest))
-    digest[0:] = bytes(c_digest.raw)
+    if not isinstance(digest, bytearray):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        c_digest = create_string_buffer(32)
+        status = get_cryptoauthlib().atcab_hw_sha2_256_finish(byref(ctx), byref(c_digest))
+        digest[0:] = bytes(c_digest.raw)
     return status
 
 
@@ -1853,11 +1934,11 @@ def atcab_hw_sha2_256(data, data_size, digest):
     Returns:
         Status code
     """
-    c_digest = create_string_buffer(32)
     if not isinstance(data, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_hw_sha2_256(bytes(data), data_size, byref(c_digest))
+        c_digest = create_string_buffer(32)
+        status = get_cryptoauthlib().atcab_hw_sha2_256(bytes(data), data_size, byref(c_digest))
         digest[0:] = bytes(c_digest.raw)
     return status
 
@@ -1867,13 +1948,13 @@ def atcab_sha_hmac_init(ctx, key_slot):
     Executes SHA command to start an HMAC/SHA-256 operation
 
     Args:
-        ctx                 HMAC/SHA-256 context (bytearray or bytes)
+        ctx                 HMAC/SHA-256 context (atca_hmac_sha256_ctx_t)
         key_slot            Slot key id to use for the HMAC calculation (int)
 
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_sha_hmac_init(bytes(ctx), key_slot)
+    status = get_cryptoauthlib().atcab_sha_hmac_init(bytes(ctx), key_slot)
     return status
 
 
@@ -1883,14 +1964,14 @@ def atcab_sha_hmac_update(ctx, data, data_size):
     a HMAC/SHA-256 operation.
 
     Args:
-        ctx                 HMAC/SHA-256 context (bytearray or bytes)
+        ctx                 HMAC/SHA-256 context (atca_hmac_sha256_ctx_t)
         data                Message data to add (bytearray or bytes)
         data_size           Size of message data in bytes (int)
 
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_sha_hmac_update(bytes(ctx), bytes(data), data_size)
+    status = get_cryptoauthlib().atcab_sha_hmac_update(byref(ctx), bytes(data), data_size)
     return status
 
 
@@ -1899,7 +1980,7 @@ def atcab_sha_hmac_finish(ctx, digest, target):
     Executes SHA command to complete a HMAC/SHA-256 operation.
 
     Args:
-        ctx                 HMAC/SHA-256 context (bytearray or bytes)
+        ctx                 HMAC/SHA-256 context (atca_hmac_sha256_ctx_t)
         target              Where to save the digest internal to the device.
                             For ATECC608A, can be SHA_MODE_TARGET_TEMPKEY,
                             SHA_MODE_TARGET_MSGDIGBUF, or SHA_MODE_TARGET_OUT_ONLY.
@@ -1911,11 +1992,11 @@ def atcab_sha_hmac_finish(ctx, digest, target):
     Returns:
         Status code
     """
-    c_digest = create_string_buffer(32)
     if not isinstance(digest, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_sha_hmac_finish(bytes(ctx), byref(c_digest), target)
+        c_digest = create_string_buffer(32)
+        status = get_cryptoauthlib().atcab_sha_hmac_finish(byref(ctx), byref(c_digest), target)
         digest[0:] = bytes(c_digest.raw)
     return status
 
@@ -1939,11 +2020,11 @@ def atcab_sha_hmac(data, data_size, key_slot, digest, target):
     Return:
         Status code
     """
-    c_digest = create_string_buffer(32)
     if not isinstance(digest, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_sha_hmac(bytes(data), data_size, key_slot, byref(c_digest), target)
+        c_digest = create_string_buffer(32)
+        status = get_cryptoauthlib().atcab_sha_hmac(bytes(data), data_size, key_slot, byref(c_digest), target)
         digest[0:] = bytes(c_digest.raw)
     return status
 
@@ -1967,11 +2048,11 @@ def atcab_sign_base(mode, key_id, signature):
     Returns:
         Stauts code
     """
-    c_signature = create_string_buffer(64)
     if not isinstance(signature, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_sign_base(mode, key_id, byref(c_signature))
+        c_signature = create_string_buffer(64)
+        status = get_cryptoauthlib().atcab_sign_base(mode, key_id, byref(c_signature))
         signature[0:] = bytes(c_signature.raw)
     return status
 
@@ -1996,7 +2077,7 @@ def atcab_sign(key_id, msg, signature):
     if not isinstance(signature, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_sign(key_id, bytes(msg), byref(c_signature))
+        status = get_cryptoauthlib().atcab_sign(key_id, bytes(msg), byref(c_signature))
         signature[0:] = bytes(c_signature.raw)
     return status
 
@@ -2008,9 +2089,9 @@ def atcab_sign_internal(key_id, is_invalidate, is_full_sn, signature):
     Args:
         key_id              Slot of the private key to be used to sign the message (int)
         is_invalidate       Set to true if the signature will be used with the Verify(Invalidate)
-                            command. false for all other cases. (int)
+                            command. false for all other cases.
         is_full_sn          Set to true if the message should incorporate the device's
-                            full serial number. (int)
+                            full serial number.
         signature           Signature is returned here. Format is R and S integers in
                             big-endian format. 64 bytes for P256 curve (Expects bytearray)
 
@@ -2021,7 +2102,8 @@ def atcab_sign_internal(key_id, is_invalidate, is_full_sn, signature):
     if not isinstance(signature, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_sign_internal(key_id, is_invalidate, is_full_sn, byref(c_signature))
+        status = get_cryptoauthlib().atcab_sign_internal(key_id, int(is_invalidate), int(is_full_sn),
+                                                         byref(c_signature))
         signature[0:] = bytes(c_signature.raw)
     return status
 
@@ -2046,7 +2128,7 @@ def atcab_updateextra(mode, new_value):
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_updateextra(mode, new_value)
+    status = get_cryptoauthlib().atcab_updateextra(mode, new_value)
     return status
 
 
@@ -2089,12 +2171,12 @@ def atcab_verify(mode, key_id, signature, public_key, other_data, mac):
     Returns:
         Status code
     """
-    c_mac = create_string_buffer(64)
     if not isinstance(mac, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_verify(mode, key_id, bytes(signature), bytes(public_key),
-                                          bytes(other_data), byref(c_mac))
+        c_mac = create_string_buffer(64)
+        status = get_cryptoauthlib().atcab_verify(mode, key_id, bytes(signature), bytes(public_key),
+                                                  bytes(other_data), byref(c_mac))
         mac[0:] = bytes(c_mac.raw)
     return status
 
@@ -2120,19 +2202,19 @@ def atcab_verify_extern_stored_mac(mode, key_id, message, signature, public_key,
         num_in              System nonce (32 byte) used for the verification MAC. (bytearray or bytes)
         io_key              IO protection key for verifying the validation MAC. (bytearray or bytes)
         is_verified         Boolean whether or not the message, signature, public key verified.
-                            (Expects bytearray, first element will be updated witht the is_verified value)
+                            (Expects AtcaReference)
 
     Returns:
         Status code
     """
-    c_is_verified = c_uint8()
-    if not isinstance(is_verified, bytearray):
+    if not isinstance(is_verified, AtcaReference):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_verify_extern_stored_mac(mode, key_id, bytes(message), bytes(signature),
-                                                            bytes(public_key), bytes(num_in), bytes(io_key),
-                                                            byref(c_is_verified))
-        is_verified[0] = c_is_verified.value
+        c_is_verified = c_uint8(is_verified.value)
+        status = get_cryptoauthlib().atcab_verify_extern_stored_mac(mode, key_id, bytes(message), bytes(signature),
+                                                                    bytes(public_key), bytes(num_in), bytes(io_key),
+                                                                    byref(c_is_verified))
+        is_verified.value = c_is_verified.value
     return status
 
 
@@ -2151,19 +2233,19 @@ def atcab_verify_extern(message, signature, public_key, is_verified):
         public_key          The public key to be used for verification. X and Y integers
                             in big-endian format. 64 bytes for P256 curve. (Expects bytes)
         is_verified         Boolean whether or not the message, signature, public key verified.
-                            (Expects bytearray, first element will be updated witht the is_verified value)
+                            (Expects AtcaReference)
 
 
     Returns:
         Status code
     """
-    c_is_verified = c_uint8()
-    if not isinstance(is_verified, bytearray):
+    if not isinstance(is_verified, AtcaReference):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_verify_extern(bytes(message), bytes(signature), bytes(public_key),
-                                                 byref(c_is_verified))
-        is_verified[0] = c_is_verified.value
+        c_is_verified = c_uint8(is_verified.value)
+        status = get_cryptoauthlib().atcab_verify_extern(bytes(message), bytes(signature), bytes(public_key),
+                                                         byref(c_is_verified))
+        is_verified.value = c_is_verified.value
     return status
 
 
@@ -2183,18 +2265,18 @@ def atcab_verify_extern_mac(message, signature, public_key, num_in, io_key, is_v
         num_in              System nonce (32 byte) used for the verification MAC. (bytearray or bytes)
         io_key              IO protection key for verifying the validation MAC. (bytearray or bytes)
         is_verified         Boolean whether or not the message, signature, public key verified.
-                            (Expects bytearray, first element will be updated witht the is_verified value)
+                            (Expects AtcaReference)
 
     Returns:
         Stats code
     """
-    c_is_verified = c_uint8()
-    if not isinstance(is_verified, bytearray):
+    if not isinstance(is_verified, AtcaReference):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_verify_extern_mac(bytes(message), bytes(signature), bytes(public_key),
-                                                     bytes(num_in), bytes(io_key), byref(c_is_verified))
-        is_verified[0] = c_is_verified.value
+        c_is_verified = c_uint8(is_verified.value)
+        status = get_cryptoauthlib().atcab_verify_extern_mac(bytes(message), bytes(signature), bytes(public_key),
+                                                             bytes(num_in), bytes(io_key), byref(c_is_verified))
+        is_verified.value = c_is_verified.value
     return status
 
 
@@ -2211,18 +2293,17 @@ def atcab_verify_stored(message, signature, key_id, is_verified):
                             64 bytes for P256 curve. (bytearray or bytes)
         key_id              Slot containing the public key to be used in the verification.(int)
         is_verified         Boolean whether or not the message, signature, public key verified.
-                            (Expects bytearray, first element will be updated witht the is_verified value)
-
+                            (Expects AtcaReference)
 
     Returns:
         Status code
     """
-    c_is_verified = c_uint8()
-    if not isinstance(is_verified, bytearray):
+    if not isinstance(is_verified, AtcaReference):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_verify_stored(bytes(message), bytes(signature), key_id, byref(c_is_verified))
-        is_verified[0] = c_is_verified.value
+        c_is_verified = c_uint8(is_verified.value)
+        status = get_cryptoauthlib().atcab_verify_stored(bytes(message), bytes(signature), key_id, byref(c_is_verified))
+        is_verified.value = c_is_verified.value
     return status
 
 
@@ -2244,18 +2325,18 @@ def atcab_verify_stored_mac(message, signature, key_id, num_in, io_key, is_verif
         io_key              IO protection key for verifying the validation MAC.
                             (bytearray or bytes)
         is_verified         Boolean whether or not the message, signature, public key verified.
-                            (Expects bytearray, first element will be updated witht the is_verified value)
+                            (Expects AtcaReference)
 
     Retuns:
         Status code
     """
-    c_is_verified = c_uint8()
-    if not isinstance(is_verified, bytearray):
+    if not isinstance(is_verified, AtcaReference):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_verify_stored_mac(bytes(message), bytes(signature), key_id, bytes(num_in),
-                                                     bytes(io_key), byref(c_is_verified))
-        is_verified[0] = c_is_verified.value
+        c_is_verified = c_uint8(is_verified.value)
+        status = get_cryptoauthlib().atcab_verify_stored_mac(bytes(message), bytes(signature), key_id, bytes(num_in),
+                                                             bytes(io_key), byref(c_is_verified))
+        is_verified.value = c_is_verified.value
     return status
 
 
@@ -2271,18 +2352,18 @@ def atcab_verify_validate(key_id, signature, other_data, is_verified):
                             64 bytes for P256 curve. (bytearray or bytes)
         other_data          19 bytes of data used to build the verification message (bytearray or bytes)
         is_verified         Boolean whether or not the message, signature, public key verified.
-                            (Expects bytearray, first element will be updated witht the is_verified value)
-
+                            (Expects AtcaReference)
 
     Returns:
         Status code
     """
-    c_is_verified = c_uint8()
-    if not isinstance(is_verified, bytearray):
+    if not isinstance(is_verified, AtcaReference):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_verify_validate(key_id, bytes(signature), bytes(other_data), byref(c_is_verified))
-        is_verified[0] = c_is_verified.value
+        c_is_verified = c_uint8(is_verified.value)
+        status = get_cryptoauthlib().atcab_verify_validate(key_id, bytes(signature), bytes(other_data),
+                                                           byref(c_is_verified))
+        is_verified.value = c_is_verified.value
     return status
 
 
@@ -2299,18 +2380,18 @@ def atcab_verify_invalidate(key_id, signature, other_data, is_verified):
                             64 bytes for P256 curve. (bytearray or bytes)
         other_data          19 bytes of data used to build the verification message (bytearray or bytes)
         is_verified         Boolean whether or not the message, signature, public key verified.
-                            (Expects bytearray, first element will be updated witht the is_verified value)
-
+                            (Expects AtcaReference)
 
     Returns:
         Status code
     """
-    c_is_verified = c_uint8()
-    if not isinstance(is_verified, bytearray):
+    if not isinstance(is_verified, AtcaReference):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = _CRYPTO_LIB.atcab_verify_invalidate(key_id, bytes(signature), bytes(other_data), byref(c_is_verified))
-        is_verified[0] = c_is_verified.value
+        c_is_verified = c_uint8(is_verified.value)
+        status = get_cryptoauthlib().atcab_verify_invalidate(key_id, bytes(signature), bytes(other_data),
+                                                             byref(c_is_verified))
+        is_verified.value = c_is_verified.value
     return status
 
 
@@ -2342,7 +2423,7 @@ def atcab_write(zone, address, value, mac):
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_write(zone, address, bytes(value), bytes(mac))
+    status = get_cryptoauthlib().atcab_write(zone, address, bytes(value), bytes(mac))
     return status
 
 
@@ -2363,7 +2444,7 @@ def atcab_write_zone(zone, slot, block, offset, data, length):
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_write_zone(zone, slot, block, offset, bytes(data), length)
+    status = get_cryptoauthlib().atcab_write_zone(zone, slot, block, offset, bytes(data), length)
     return status
 
 
@@ -2386,7 +2467,7 @@ def atcab_write_enc(key_id, block, data, enc_key, enc_key_id):
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_write_enc(key_id, block, bytes(data), bytes(enc_key), enc_key_id)
+    status = get_cryptoauthlib().atcab_write_enc(key_id, block, bytes(data), bytes(enc_key), enc_key_id)
     return status
 
 
@@ -2407,7 +2488,7 @@ def atcab_write_config_zone(conf):
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_write_config_zone(bytes(conf))
+    status = get_cryptoauthlib().atcab_write_config_zone(bytes(conf))
     return status
 
 
@@ -2424,7 +2505,7 @@ def atcab_write_pubkey(slot, public_key):
     Returns:
         Status code
     """
-    status = _CRYPTO_LIB.atcab_write_pubkey(slot, bytes(public_key))
+    status = get_cryptoauthlib().atcab_write_pubkey(slot, bytes(public_key))
     return status
 
 
@@ -2451,7 +2532,7 @@ def atcab_write_bytes_zone(zone, slot, offset_bytes, data, length):
     Returns:
         None
     """
-    status = _CRYPTO_LIB.atcab_write_bytes_zone(zone, slot, offset_bytes, bytes(data), length)
+    status = get_cryptoauthlib().atcab_write_bytes_zone(zone, slot, offset_bytes, bytes(data), length)
     return status
 
 
@@ -2466,13 +2547,10 @@ def atcab_write_config_counter(counter_id, counter_value):
         counter_id          Counter to be written (int)
         counter_value       Counter value to set (int)
     """
-    if counter_id > 1 or counter_value > 2097151:
-        status = Status.ATCA_BAD_PARAM
-    else:
-        status = _CRYPTO_LIB.atcab_write_config_counter(counter_id, counter_value)
+    status = get_cryptoauthlib().atcab_write_config_counter(counter_id, counter_value)
     return status
 
 
 # Make module import * safe - keep at the end of the file
-__all__ = ['load_cryptoauthlib', 'get_cryptoauthlib', 'atca_aes_cbc_ctx', 'atca_aes_cmac_ctx']
+__all__ = ['atca_aes_cbc_ctx', 'atca_aes_cmac_ctx', 'atca_aes_ctr_ctx', 'atca_sha256_ctx', 'atca_hmac_sha256_ctx_t']
 __all__ += [x for x in dir() if x.startswith(__name__.split('.')[-1])]

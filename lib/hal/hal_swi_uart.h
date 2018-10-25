@@ -5,13 +5,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -28,8 +28,8 @@
 #ifndef HAL_SWI_UART_H_
 #define HAL_SWI_UART_H_
 
-#ifdef SAMD21_START
-    #include "swi_uart_samd21_start.h"
+#ifdef ATMEL_START
+    #include "swi_uart_start.h"
 #elif defined (SAMD21_ASF)
     #include "swi_uart_samd21_asf.h"
 #elif defined (XMEGA_ASF)
