@@ -71,7 +71,7 @@ def copy_udev_rules(target):
     if not os.path.exists(target + os.path.sep + os.path.basename(rules)):
         shutil.copy(rules, target)
 
-            
+
 def install_udev_rules():
     if sys.platform.startswith('linux'):
         try:
@@ -162,8 +162,8 @@ class BinaryDistribution(Distribution):
 # but only affects bdist_* invocations which only applies to macos and windows
 # and the extension is only required for linux
 _COMMANDS = { 'build_ext': CryptoAuthCommandBuildExt }
-if sys.platform.startswith('linux'):
-    _COMMANDS['install'] = CryptoAuthCommandInstall
+#if sys.platform.startswith('linux'):
+#    _COMMANDS['install'] = CryptoAuthCommandInstall
 
 if __name__ == '__main__':
     setup(
