@@ -31,6 +31,7 @@
 #include <stddef.h>
 #include <string.h>
 
+#include "atca_config.h"
 #include "hal/atca_hal.h"
 #include "atca_status.h"
 #include "atca_device.h"

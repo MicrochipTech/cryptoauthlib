@@ -26,6 +26,7 @@
  */
 
 #include <stddef.h>
+#include "cryptoauthlib.h"
 #include "atca_cfgs.h"
 #include "atca_iface.h"
 #include "atca_device.h"
@@ -39,9 +40,9 @@
 /** \brief default configuration for an ECCx08A device */
 ATCAIfaceCfg cfg_ateccx08a_i2c_default = {
     .iface_type             = ATCA_I2C_IFACE,
-    .devtype                = ATECC508A,
+    .devtype                = ATECC608A,
     .atcai2c.slave_address  = 0xC0,
-    .atcai2c.bus            = 2,
+    .atcai2c.bus            = 1,
     .atcai2c.baud           = 400000,
     //.atcai2c.baud = 100000,
     .wake_delay             = 1500,

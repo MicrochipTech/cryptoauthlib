@@ -134,7 +134,7 @@ class CryptoAuthCommandBuildExt(build_ext):
         if sys.platform.startswith('linux'):
             cmake_args += ['-DATCA_HAL_I2C=ON']
 
-        cmake_args += ['-DATCACERT_DEF_SRC={}atca_utils_sizes.c'.format('' if _sdist_build else '../test/')]
+        cmake_args += ['-DATCACERT_DEF_SRC={}atca_utils_sizes.c'.format(setupdir + os.path.sep if _sdist_build else '../test/')]
 
         if not os.path.exists(self.build_temp):
             os.makedirs(self.build_temp)

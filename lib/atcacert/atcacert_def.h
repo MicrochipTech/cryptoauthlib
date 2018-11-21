@@ -321,6 +321,17 @@ int atcacert_get_subj_public_key(const atcacert_def_t * cert_def,
                                  uint8_t                subj_public_key[64]);
 
 /**
+ * \brief Gets the subject key ID based on a certificate definition.
+ *
+ * \param[in]  cert_def     Certificate definition
+ * \param[out] subj_key_id  Subject key ID is returned in this buffer. 20 bytes.
+ *
+ * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
+ */
+int atcacert_def_get_subj_key_id(const atcacert_def_t * cert_def,
+                                 uint8_t                subj_key_id[20]);
+
+/**
  * \brief Gets the subject key ID from a certificate.
  *
  * \param[in]  cert_def     Certificate definition for the certificate.

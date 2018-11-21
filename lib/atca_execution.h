@@ -36,6 +36,7 @@
 #ifndef ATCA_EXECUTION_H
 #define ATCA_EXECUTION_H
 
+#include "atca_config.h"
 #include "atca_status.h"
 #include "atca_command.h"
 #include "atca_device.h"
