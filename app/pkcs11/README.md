@@ -7,21 +7,31 @@ provider. These instructions are for commonly available Linux systems with packa
 ## Update libp11 on the system. The version should be at minimum 0.4.10
 
 * Install the build dependendencies for the system:
-    ```
+
+    ```bash
     # Debian like systems
     $ sudo apt-get build-dep libengine-pkcs11-openssl1.1
     ```
-    ```
+    
+    ```bash
     # RPM based systems
     $ yum-builddep engine-pkcs11
     ```
 
-* Get the latest version of libp11
+* Change to a sane directory
+
+    ```bash
+    cd ~
     ```
+
+* Get the latest version of libp11
+
+    ```bash
     $ git clone https://github.com/OpenSC/libp11.git
     ```
 
 * Rerun the build configuration tools:
+
     ```
     $ cd libp11
     $ ./bootstrap
@@ -29,46 +39,60 @@ provider. These instructions are for commonly available Linux systems with packa
     ```
 
 * Build the library:
-    ```
+
+    ```bash
     $ make
     ```
 
 * Install the library:
-    ```
+
+    ```bash
     $ sudo make install
     ```
 
 ## Build and Install cryptoauthlib with PKCS11 support
 
 * Install the build dependendencies for the system:
-    ```
+
+    ```bash
     # Debian like systems
-    $ sudo apt-get install cmake udev-dev
+    $ sudo apt-get install cmake libudev-dev
     ```
-    ```
+
+    ```bash
     # RPM based systems
     $ yum install cmake
     $ yum install libudev-devel
     ```
 
-    * Get the latest version of cryptoauthlib with PKCS11 support 
+* Change to a sane directory
+
+    ```bash
+    cd ~
     ```
-    $ $ git clone --single-branch -b pkcs11 https://github.com/MicrochipTech/cryptoauthlib
+
+* Get the latest version of cryptoauthlib with PKCS11 support 
+
+    ```bash
+    $ git clone --single-branch -b pkcs11 https://github.com/MicrochipTech/cryptoauthlib
     ```
 
 * Rerun the build configuration tools:
-    ```
+
+    ```bash
     $ cd cryptoauthlib
     $ cmake .
     ```
 
 * Build the library:
-    ```
+
+    ```bash
     $ make
     ```
 
 * Install the library:
-    ```
+
+    ```bash
     $ sudo make install
     ```
 
@@ -77,13 +101,15 @@ provider. These instructions are for commonly available Linux systems with packa
 By default the following files will be created.
 
 * /etc/cryptoauthlib/cryptoauthlib.conf
-    ```
+
+    ```text
     # Cryptoauthlib Configuration File
     filestore = /var/lib/cryptoauthlib
     ```
 
 * /var/lib/cryptoauthlib/slot.conf.tmpl
-    ```
+
+    ```text
     # Reserved Configuration for a device
     # The objects in this file will be created and marked as undeletable
     # These are processed in order. Configuration parameters must be comma
@@ -117,7 +143,8 @@ and their resources into pkcs11 tokens and objects.
 A device file must be named <pkcs11_slot_number>.conf
 
 For a single device:
-   ```
+
+   ```bash
    $ cd /var/lib/cryptoauthlib
    $ cp slot.conf.tmpl 0.conf
    ```
@@ -140,16 +167,19 @@ new objects is used. When the library is initialized it will scan for files of t
 
 This is an optional step but is very helpful for using multiple pkcs11 libraries in a system.
 Detailed setup can be found at [p11-glue](https://p11-glue.github.io/p11-glue/p11-kit/manual/)
-    ```
-    # Debian like systems
-    $ sudo apt-get install p11-kit
-    ```
-    ```
-    # RPM based systems
-    $ yum install p11-kit
-    ```
 
-* Create or edit the global configuration file: /etc/pkcs11/pkcs11.conf
+```bash
+# Debian like systems
+$ sudo apt-get install p11-kit
+```
+
+```bash
+# RPM based systems
+$ yum install p11-kit
+```
+
+* Create or edit the global configuration file ```/etc/pkcs11/pkcs11.conf```.  The directory ```/etc/pkcs11``` may require creation first.
+
     ```
     # This setting controls whether to load user configuration from the
     # ~/.config/pkcs11 directory. Possible values:
@@ -159,9 +189,10 @@ Detailed setup can be found at [p11-glue](https://p11-glue.github.io/p11-glue/p1
     user-config: merge
     ```
 
-* Create a module configuration file:
-User module name (only available for a single user): ~/.config/pkcs11/modules/cryptoauthlib.module
-Global module name (available to the whole system): /usr/share/p11-kit/modules/cryptoauthlib.module
+* Create a module configuration file.
+
+  - User module name (only available for a single user): ```~/.config/pkcs11/modules/cryptoauthlib.module```
+  - Global module name (available to the whole system): ```/usr/share/p11-kit/modules/cryptoauthlib.module```
 
     ```
     module: /usr/lib/libcryptoauth.so
@@ -171,7 +202,7 @@ Global module name (available to the whole system): /usr/share/p11-kit/modules/c
     log-calls: no
     ```
 
-For more details on the configuration files see the [configuration documentation](https://p11-glue.github.io/p11-glue/p11-kit/manual/pkcs11-conf.html)
+For more details on the configuration files see the [configuration documentation](https://p11-glue.github.io/p11-glue/p11-kit/manual/pkcs11-conf.html).
 
 ## Without using p11-kit-proxy
 
@@ -182,56 +213,63 @@ be manually configured to use libp11 and cryptoauthlib
 This requires editing the default openssl.cnf file. To locate the file being used by the system run
 the following command:
 
-    ```
-    $ openssl version -a | grep OPENSSLDIR:
+```bash
+$ openssl version -a | grep OPENSSLDIR:
 
-    OPENSSLDIR: "/usr/lib/ssl"
-    ```
+OPENSSLDIR: "/usr/lib/ssl"
+```
 
 This gives the default path where openssl is compiled to find the openssl.cnf file
 
 In this case the file to edit will be /usr/lib/ssl/openssl.cnf
 
 This line must be placed at the top, before any sections are defined:
-    ```
-    openssl_conf = openssl_init
-    ```
+
+```text
+openssl_conf = openssl_init
+```
+
 This should be added to the bottom of the file:
-    ```
-    [openssl_init]
-    engines=engine_section
 
-    [engine_section]
-    pkcs11 = pkcs11_section
+```text
+[openssl_init]
+engines=engine_section
 
-    [pkcs11_section]
-    engine_id = pkcs11
-    # Wherever the engine installed by libp11 is. For example it could be:
-    # /usr/lib/arm-linux-gnueabihf/engines-1.1/libpkcs11.so
-    dynamic_path = /usr/lib/ssl/engines/libpkcs11.so 
-    MODULE_PATH = /usr/lib/libcryptoauth.so
-    init = 0
-    ```
+[engine_section]
+pkcs11 = pkcs11_section
+
+[pkcs11_section]
+engine_id = pkcs11
+# Wherever the engine installed by libp11 is. For example it could be:
+# /usr/lib/arm-linux-gnueabihf/engines-1.1/libpkcs11.so
+dynamic_path = /usr/lib/ssl/engines/libpkcs11.so 
+MODULE_PATH = /usr/lib/libcryptoauth.so
+init = 0
+```
 
 ## Testing
 
 To use p11tool it has to be installed:
-    ```
-    # Debian like systems
-    $ sudo apt-get install gnutls-bin
-    ```
-    ```
-    # RPM based systems
-    $ yum install gnutls-utils
-    ```
+
+```bash
+# Debian like systems
+$ sudo apt-get install gnutls-bin
+```
+
+```bash
+# RPM based systems
+$ yum install gnutls-utils
+```
 
 __Note__: If not using p11-kit-proxy then the provider has to be specified in p11tool calls:
-    ```
-    $ p11tool --provider /usr/lib/libcryptoauth.so
-    ```
+
+```bash
+$ p11tool --provider=/usr/lib/libcryptoauth.so
+```
 
 * Get the public key for a private key (as defined by the 0.conf file cited above):
-    ```
+
+    ```bash
     $ p11tool --export-pubkey "pkcs11:token=0123EE;object=device;type=private"
     warning: --login was not specified and it may be required for this operation.
     warning: no --outfile was specified and the public key will be printed on screen.
@@ -242,7 +280,8 @@ __Note__: If not using p11-kit-proxy then the provider has to be specified in p1
     ```
 
 * Get the public key and decode it using OpenSSL
-    ```
+
+    ```bash
     $ p11tool --export-pubkey "pkcs11:token=0123EE;object=device;type=private" | openssl pkey -pubin -text -noout
     warning: --login was not specified and it may be required for this operation.
     warning: no --outfile was specified and the public key will be printed on screen.
@@ -258,7 +297,8 @@ __Note__: If not using p11-kit-proxy then the provider has to be specified in p1
     ```
 
 * Create a CSR for the private key
-    ```
+
+    ```bash
     $ openssl req -engine pkcs11 -key "pkcs11:token=0123EE;object=device;type=private" -keyform engine -new -out new_device.csr -subj "/CN=NEW CSR EXAMPLE"
     engine "pkcs11" set.
 
@@ -273,7 +313,8 @@ __Note__: If not using p11-kit-proxy then the provider has to be specified in p1
     ```
 
 * Verify the newly created csr
-    ```
+
+    ```bash
     $ openssl req -in new_device.csr -verify -text -noout
     verify OK
     Certificate Request:
