@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['wake_5fdelay',['wake_delay',['../a03555.html#a058e797431a238154c5347fa26982044',1,'ATCAIfaceCfg']]],
-  ['warranties',['WARRANTIES',['../a00533.html#a8c193cd81f81696b59e5c6e5bb38d91f',1,'license.txt']]],
-  ['warranty',['WARRANTY',['../a00533.html#a01d4ec73d916d67d085f3e63d1fdbd4b',1,'license.txt']]],
-  ['wordsize',['wordsize',['../a03555.html#ae696a833509f858d17988acdb1deb161',1,'ATCAIfaceCfg']]],
-  ['write_5fbufhandle',['write_bufHandle',['../a00383.html#a26a598d8070b8e4859fceb58f4212f78',1,'hal_pic32mz2048efm_i2c.c']]],
-  ['write_5fhandle',['write_handle',['../a03659.html#af11a0103eb96a026ea6782bfcad7548e',1,'cdc_device::write_handle()'],['../a03667.html#ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0',1,'hid_device::write_handle()'],['../a03667.html#af11a0103eb96a026ea6782bfcad7548e',1,'hid_device::write_handle()']]]
+  ['valid',['valid',['../a01066.html#a6b455a7e89f8a891cd7e3b66d1b17b67',1,'atca_temp_key']]],
+  ['value',['value',['../a01066.html#a9d39af90116e75f8805942afa953046f',1,'atca_temp_key']]],
+  ['verify_5fother_5fdata',['verify_other_data',['../a01134.html#a04c0e9b276020bed4ed3d7d670ed3881',1,'atca_sign_internal_in_out']]],
+  ['version_5finfo',['version_info',['../a01150.html#aea79a9ccd71a91f69bb5773f43350f14',1,'memory_parameters']]],
+  ['vid',['vid',['../a00930.html#a98780fe4ab562a61abfd7870ea0910c3',1,'ATCAIfaceCfg']]]
 ];

@@ -1,17 +1,10 @@
 var a00317 =
 [
-    [ "hal_kit_hid_discover_buses", "a03537.html#ga549d0b53127f1bb10e7f34453b8a2d3c", null ],
-    [ "hal_kit_hid_discover_devices", "a03537.html#ga0121a73c96416c97ce07ed9077226588", null ],
-    [ "hal_kit_hid_idle", "a03537.html#gaacf6310945889a6119cab867a1ced5e2", null ],
-    [ "hal_kit_hid_init", "a03537.html#ga95b4e99655383680272a1d9354d42479", null ],
-    [ "hal_kit_hid_post_init", "a03537.html#ga6f06bc1662b3d0361f6a241e1b5612f2", null ],
-    [ "hal_kit_hid_receive", "a03537.html#gaa80dfd4a91f557329fa1daf16b0f05a8", null ],
-    [ "hal_kit_hid_release", "a03537.html#ga8c7b9adb28b4bbdee8d5cd78ab16255f", null ],
-    [ "hal_kit_hid_send", "a03537.html#ga47588dbefadcc1569513b053a156f3d6", null ],
-    [ "hal_kit_hid_sleep", "a03537.html#ga1aa3345cb5d3e8fc29defe2758904fed", null ],
-    [ "hal_kit_hid_wake", "a03537.html#ga65289262310f2662b2c47450b93c9580", null ],
-    [ "kit_phy_num_found", "a03537.html#ga11ee6ec0b2b7eb2ff2472f92208c3205", null ],
-    [ "kit_phy_receive", "a03537.html#gabb507252b1011037d6d2cce7d91b01d0", null ],
-    [ "kit_phy_send", "a03537.html#gabd452e3edb32ea0d22653c182b4e1198", null ],
-    [ "_gHid", "a03537.html#gab97bfae6ae6051d081edf51bb45eea05", null ]
+    [ "sw_sha256_ctx", "a01022.html", "a01022" ],
+    [ "SHA256_BLOCK_SIZE", "a00317.html#a9c1fe69ad43d4ca74b84303a0ed64f2f", null ],
+    [ "SHA256_DIGEST_SIZE", "a00317.html#a81efbc0fc101b06a914f7ff9e2fbc0e9", null ],
+    [ "sw_sha256", "a00317.html#a5f6c75bec312e0d2faa7d645b62c3898", null ],
+    [ "sw_sha256_final", "a00317.html#ace8eb02759b23942f866ddcd2057390a", null ],
+    [ "sw_sha256_init", "a00317.html#acfb7028e6f10d29c548cbecdbfa53ac8", null ],
+    [ "sw_sha256_update", "a00317.html#a7f5d8ad85631d77bfdb10dfb728bfbce", null ]
 ];

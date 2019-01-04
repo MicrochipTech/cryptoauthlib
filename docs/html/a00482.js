@@ -1,6 +1,7 @@
 var a00482 =
 [
-    [ "kit_phy_num_found", "a03537.html#ga11ee6ec0b2b7eb2ff2472f92208c3205", null ],
-    [ "kit_phy_receive", "a03537.html#gaae5e94b6080d4279474eb3e98bc58901", null ],
-    [ "kit_phy_send", "a03537.html#ga020fb0be6c73515122cf4b9f749fd97d", null ]
+    [ "HID_DEVICES_MAX", "a00912.html#ga49053c3cd6d48fe5f468ce010ac0a9ef", null ],
+    [ "HID_PACKET_MAX", "a00912.html#ga6cdff3589b286ebcdd7771bb425fbf73", null ],
+    [ "atcahid_t", "a00912.html#ga2416cca7ee952e679d466e3349d65035", null ],
+    [ "hid_device_t", "a00912.html#ga5f2f61628e945fd6538155628fc3a17a", null ]
 ];

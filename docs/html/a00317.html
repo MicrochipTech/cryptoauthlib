@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_all_platforms_kit_hidapi.c File Reference</title>
+<title>CryptoAuthLib: sha2_routines.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,79 +87,237 @@ $(document).ready(function(){initNavTree('a00317.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">hal_all_platforms_kit_hidapi.c File Reference</div>  </div>
+<div class="title">sha2_routines.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>HAL for kit protocol over HID for any platform.  
+<p>Software implementation of the SHA256 algorithm.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;string.h&gt;</code><br />
-<code>#include &quot;hidapi.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00308_source.html">atca_hal.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00320_source.html">hal_all_platforms_kit_hidapi.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00488_source.html">hal/kit_protocol.h</a>&quot;</code><br />
-</div><table class="memberdecls">
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+</div>
+<p><a href="a00317_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01022.html">sw_sha256_ctx</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a81efbc0fc101b06a914f7ff9e2fbc0e9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#a81efbc0fc101b06a914f7ff9e2fbc0e9">SHA256_DIGEST_SIZE</a>&#160;&#160;&#160;(32)</td></tr>
+<tr class="separator:a81efbc0fc101b06a914f7ff9e2fbc0e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c1fe69ad43d4ca74b84303a0ed64f2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#a9c1fe69ad43d4ca74b84303a0ed64f2f">SHA256_BLOCK_SIZE</a>&#160;&#160;&#160;(64)</td></tr>
+<tr class="separator:a9c1fe69ad43d4ca74b84303a0ed64f2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga549d0b53127f1bb10e7f34453b8a2d3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03537.html#ga549d0b53127f1bb10e7f34453b8a2d3c">hal_kit_hid_discover_buses</a> (int i2c_buses[], int max_buses)</td></tr>
-<tr class="memdesc:ga549d0b53127f1bb10e7f34453b8a2d3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover cdc buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge  <a href="a03537.html#ga549d0b53127f1bb10e7f34453b8a2d3c">More...</a><br /></td></tr>
-<tr class="separator:ga549d0b53127f1bb10e7f34453b8a2d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0121a73c96416c97ce07ed9077226588"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03537.html#ga0121a73c96416c97ce07ed9077226588">hal_kit_hid_discover_devices</a> (int bus_num, <a class="el" href="a03555.html">ATCAIfaceCfg</a> cfg[], int *found)</td></tr>
-<tr class="memdesc:ga0121a73c96416c97ce07ed9077226588"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover any CryptoAuth devices on a given logical bus number  <a href="a03537.html#ga0121a73c96416c97ce07ed9077226588">More...</a><br /></td></tr>
-<tr class="separator:ga0121a73c96416c97ce07ed9077226588"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga95b4e99655383680272a1d9354d42479"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03537.html#ga95b4e99655383680272a1d9354d42479">hal_kit_hid_init</a> (void *hal, <a class="el" href="a03555.html">ATCAIfaceCfg</a> *cfg)</td></tr>
-<tr class="memdesc:ga95b4e99655383680272a1d9354d42479"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of Kit USB HID init.  <a href="a03537.html#ga95b4e99655383680272a1d9354d42479">More...</a><br /></td></tr>
-<tr class="separator:ga95b4e99655383680272a1d9354d42479"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6f06bc1662b3d0361f6a241e1b5612f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03537.html#ga6f06bc1662b3d0361f6a241e1b5612f2">hal_kit_hid_post_init</a> (<a class="el" href="a03533.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga6f06bc1662b3d0361f6a241e1b5612f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of Kit HID post init.  <a href="a03537.html#ga6f06bc1662b3d0361f6a241e1b5612f2">More...</a><br /></td></tr>
-<tr class="separator:ga6f06bc1662b3d0361f6a241e1b5612f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabd452e3edb32ea0d22653c182b4e1198"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03537.html#gabd452e3edb32ea0d22653c182b4e1198">kit_phy_send</a> (<a class="el" href="a03533.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *txdata, int txlength)</td></tr>
-<tr class="memdesc:gabd452e3edb32ea0d22653c182b4e1198"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of send over USB HID.  <a href="a03537.html#gabd452e3edb32ea0d22653c182b4e1198">More...</a><br /></td></tr>
-<tr class="separator:gabd452e3edb32ea0d22653c182b4e1198"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabb507252b1011037d6d2cce7d91b01d0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03537.html#gabb507252b1011037d6d2cce7d91b01d0">kit_phy_receive</a> (<a class="el" href="a03533.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *rxdata, int *rxsize)</td></tr>
-<tr class="memdesc:gabb507252b1011037d6d2cce7d91b01d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol send over USB HID.  <a href="a03537.html#gabb507252b1011037d6d2cce7d91b01d0">More...</a><br /></td></tr>
-<tr class="separator:gabb507252b1011037d6d2cce7d91b01d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga11ee6ec0b2b7eb2ff2472f92208c3205"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03537.html#ga11ee6ec0b2b7eb2ff2472f92208c3205">kit_phy_num_found</a> (int8_t *num_found)</td></tr>
-<tr class="memdesc:ga11ee6ec0b2b7eb2ff2472f92208c3205"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of USB HID devices found.  <a href="a03537.html#ga11ee6ec0b2b7eb2ff2472f92208c3205">More...</a><br /></td></tr>
-<tr class="separator:ga11ee6ec0b2b7eb2ff2472f92208c3205"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47588dbefadcc1569513b053a156f3d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03537.html#ga47588dbefadcc1569513b053a156f3d6">hal_kit_hid_send</a> (<a class="el" href="a03533.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *txdata, int txlength)</td></tr>
-<tr class="memdesc:ga47588dbefadcc1569513b053a156f3d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol send over USB HID.  <a href="a03537.html#ga47588dbefadcc1569513b053a156f3d6">More...</a><br /></td></tr>
-<tr class="separator:ga47588dbefadcc1569513b053a156f3d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa80dfd4a91f557329fa1daf16b0f05a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03537.html#gaa80dfd4a91f557329fa1daf16b0f05a8">hal_kit_hid_receive</a> (<a class="el" href="a03533.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *rxdata, uint16_t *rxsize)</td></tr>
-<tr class="memdesc:gaa80dfd4a91f557329fa1daf16b0f05a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of send over USB HID.  <a href="a03537.html#gaa80dfd4a91f557329fa1daf16b0f05a8">More...</a><br /></td></tr>
-<tr class="separator:gaa80dfd4a91f557329fa1daf16b0f05a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga65289262310f2662b2c47450b93c9580"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03537.html#ga65289262310f2662b2c47450b93c9580">hal_kit_hid_wake</a> (<a class="el" href="a03533.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga65289262310f2662b2c47450b93c9580"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the wake for kit protocol.  <a href="a03537.html#ga65289262310f2662b2c47450b93c9580">More...</a><br /></td></tr>
-<tr class="separator:ga65289262310f2662b2c47450b93c9580"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaacf6310945889a6119cab867a1ced5e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03537.html#gaacf6310945889a6119cab867a1ced5e2">hal_kit_hid_idle</a> (<a class="el" href="a03533.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:gaacf6310945889a6119cab867a1ced5e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the idle for kit protocol.  <a href="a03537.html#gaacf6310945889a6119cab867a1ced5e2">More...</a><br /></td></tr>
-<tr class="separator:gaacf6310945889a6119cab867a1ced5e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1aa3345cb5d3e8fc29defe2758904fed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03537.html#ga1aa3345cb5d3e8fc29defe2758904fed">hal_kit_hid_sleep</a> (<a class="el" href="a03533.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga1aa3345cb5d3e8fc29defe2758904fed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the sleep for kit protocol.  <a href="a03537.html#ga1aa3345cb5d3e8fc29defe2758904fed">More...</a><br /></td></tr>
-<tr class="separator:ga1aa3345cb5d3e8fc29defe2758904fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8c7b9adb28b4bbdee8d5cd78ab16255f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03537.html#ga8c7b9adb28b4bbdee8d5cd78ab16255f">hal_kit_hid_release</a> (void *hal_data)</td></tr>
-<tr class="memdesc:ga8c7b9adb28b4bbdee8d5cd78ab16255f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the physical port for HID.  <a href="a03537.html#ga8c7b9adb28b4bbdee8d5cd78ab16255f">More...</a><br /></td></tr>
-<tr class="separator:ga8c7b9adb28b4bbdee8d5cd78ab16255f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:gab97bfae6ae6051d081edf51bb45eea05"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03537.html#ga2416cca7ee952e679d466e3349d65035">atcahid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03537.html#gab97bfae6ae6051d081edf51bb45eea05">_gHid</a></td></tr>
-<tr class="separator:gab97bfae6ae6051d081edf51bb45eea05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfb7028e6f10d29c548cbecdbfa53ac8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#acfb7028e6f10d29c548cbecdbfa53ac8">sw_sha256_init</a> (<a class="el" href="a01022.html">sw_sha256_ctx</a> *ctx)</td></tr>
+<tr class="memdesc:acfb7028e6f10d29c548cbecdbfa53ac8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Intialize the software SHA256.  <a href="#acfb7028e6f10d29c548cbecdbfa53ac8">More...</a><br /></td></tr>
+<tr class="separator:acfb7028e6f10d29c548cbecdbfa53ac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f5d8ad85631d77bfdb10dfb728bfbce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#a7f5d8ad85631d77bfdb10dfb728bfbce">sw_sha256_update</a> (<a class="el" href="a01022.html">sw_sha256_ctx</a> *ctx, const uint8_t *message, uint32_t len)</td></tr>
+<tr class="memdesc:a7f5d8ad85631d77bfdb10dfb728bfbce"><td class="mdescLeft">&#160;</td><td class="mdescRight">updates the running hash with the next block of data, called iteratively for the entire stream of data to be hashed using the SHA256 software  <a href="#a7f5d8ad85631d77bfdb10dfb728bfbce">More...</a><br /></td></tr>
+<tr class="separator:a7f5d8ad85631d77bfdb10dfb728bfbce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace8eb02759b23942f866ddcd2057390a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#ace8eb02759b23942f866ddcd2057390a">sw_sha256_final</a> (<a class="el" href="a01022.html">sw_sha256_ctx</a> *ctx, uint8_t digest[<a class="el" href="a00317.html#a81efbc0fc101b06a914f7ff9e2fbc0e9">SHA256_DIGEST_SIZE</a>])</td></tr>
+<tr class="memdesc:ace8eb02759b23942f866ddcd2057390a"><td class="mdescLeft">&#160;</td><td class="mdescRight">completes the final SHA256 calculation and returns the final digest/hash  <a href="#ace8eb02759b23942f866ddcd2057390a">More...</a><br /></td></tr>
+<tr class="separator:ace8eb02759b23942f866ddcd2057390a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f6c75bec312e0d2faa7d645b62c3898"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#a5f6c75bec312e0d2faa7d645b62c3898">sw_sha256</a> (const uint8_t *message, unsigned int len, uint8_t digest[<a class="el" href="a00317.html#a81efbc0fc101b06a914f7ff9e2fbc0e9">SHA256_DIGEST_SIZE</a>])</td></tr>
+<tr class="memdesc:a5f6c75bec312e0d2faa7d645b62c3898"><td class="mdescLeft">&#160;</td><td class="mdescRight">single call convenience function which computes Hash of given data using SHA256 software  <a href="#a5f6c75bec312e0d2faa7d645b62c3898">More...</a><br /></td></tr>
+<tr class="separator:a5f6c75bec312e0d2faa7d645b62c3898"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>HAL for kit protocol over HID for any platform. </p>
+<div class="textblock"><p>Software implementation of the SHA256 algorithm. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a9c1fe69ad43d4ca74b84303a0ed64f2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c1fe69ad43d4ca74b84303a0ed64f2f">&#9670;&nbsp;</a></span>SHA256_BLOCK_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHA256_BLOCK_SIZE&#160;&#160;&#160;(64)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a81efbc0fc101b06a914f7ff9e2fbc0e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81efbc0fc101b06a914f7ff9e2fbc0e9">&#9670;&nbsp;</a></span>SHA256_DIGEST_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHA256_DIGEST_SIZE&#160;&#160;&#160;(32)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a5f6c75bec312e0d2faa7d645b62c3898"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f6c75bec312e0d2faa7d645b62c3898">&#9670;&nbsp;</a></span>sw_sha256()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sw_sha256 </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>digest</em>[SHA256_DIGEST_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>single call convenience function which computes Hash of given data using SHA256 software </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">message</td><td>pointer to stream of data to hash </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>size of data stream to hash </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">digest</td><td>result </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ace8eb02759b23942f866ddcd2057390a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace8eb02759b23942f866ddcd2057390a">&#9670;&nbsp;</a></span>sw_sha256_final()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sw_sha256_final </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01022.html">sw_sha256_ctx</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>digest</em>[SHA256_DIGEST_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>completes the final SHA256 calculation and returns the final digest/hash </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>ptr to context data structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">digest</td><td>receives the computed digest of the SHA 256 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acfb7028e6f10d29c548cbecdbfa53ac8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfb7028e6f10d29c548cbecdbfa53ac8">&#9670;&nbsp;</a></span>sw_sha256_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sw_sha256_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01022.html">sw_sha256_ctx</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Intialize the software SHA256. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>SHA256 hash context </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7f5d8ad85631d77bfdb10dfb728bfbce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f5d8ad85631d77bfdb10dfb728bfbce">&#9670;&nbsp;</a></span>sw_sha256_update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sw_sha256_update </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01022.html">sw_sha256_ctx</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>msg_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>updates the running hash with the next block of data, called iteratively for the entire stream of data to be hashed using the SHA256 software </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>SHA256 hash context </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">msg</td><td>Raw blocks to be processed </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">msg_size</td><td>The size of the message passed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00317.html">hal_all_platforms_kit_hidapi.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="dir_39966be8f8e069f6fa92c98611834f6b.html">hashes</a></li><li class="navelem"><a class="el" href="a00317.html">sha2_routines.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

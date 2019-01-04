@@ -1,6 +1,7 @@
 var a00320 =
 [
-    [ "HID_DEVICES_MAX", "a03537.html#ga49053c3cd6d48fe5f468ce010ac0a9ef", null ],
-    [ "HID_PACKET_MAX", "a03537.html#ga6cdff3589b286ebcdd7771bb425fbf73", null ],
-    [ "atcahid_t", "a03537.html#ga2416cca7ee952e679d466e3349d65035", null ]
+    [ "BREAK", "a00320.html#a8f200e8d61725d588e0b7815efb0dc25", null ],
+    [ "DBGOUT", "a00320.html#a127536c92ac8b7d05d9a325cbec19805", null ],
+    [ "PRINT", "a00320.html#a41aa74b584c0a5946789bc6eded1e460", null ],
+    [ "RETURN", "a00320.html#a20a55a7bc081de346786a88d3e278952", null ]
 ];

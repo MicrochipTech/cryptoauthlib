@@ -1,4 +1,4 @@
 var a00011 =
 [
-    [ "crypto_device_verify_app", "a00011.html#a19617ea9c26833614201b9695ec7a1ca", null ]
+    [ "symmetric_authenticate", "a00011.html#a9a41d1600ffd22de067ded50447d359b", null ]
 ];

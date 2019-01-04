@@ -1,23 +1,8 @@
 var a00359 =
 [
-    [ "max", "a03537.html#gaffe776513b24d84b39af8ab0930fef7f", null ],
-    [ "min", "a03537.html#gac6afabdc09a49a433ee19d8a9486056d", null ],
-    [ "hal_cdc_discover_buses", "a03537.html#ga6ec842c5f4674de5da640541e616785a", null ],
-    [ "hal_cdc_discover_devices", "a03537.html#ga5604d17ec61ab15961079beb8f3c8682", null ],
-    [ "hal_kit_cdc_discover_buses", "a03537.html#ga56255b770aa5e34b3e69898eaeda93e9", null ],
-    [ "hal_kit_cdc_discover_devices", "a03537.html#ga0a042c3f441fa78c4f05a18bfbeb5f2d", null ],
-    [ "hal_kit_cdc_idle", "a03537.html#ga92055a86e32f3dfc9eef064d48aa0870", null ],
-    [ "hal_kit_cdc_init", "a03537.html#ga313bdfc8337f930a7f9fc6ca4e7731d9", null ],
-    [ "hal_kit_cdc_post_init", "a03537.html#gad11b8714818c2b05f70593c002fc5945", null ],
-    [ "hal_kit_cdc_receive", "a03537.html#ga3f3972f81de141ff0816b605054d775a", null ],
-    [ "hal_kit_cdc_release", "a03537.html#ga21a939cc86a0602cb2ba3be3eec26e6e", null ],
-    [ "hal_kit_cdc_send", "a03537.html#ga7732806c89cd206a96b7fabbaf6770d5", null ],
-    [ "hal_kit_cdc_sleep", "a03537.html#ga1299c47e6d73d987bc04b16f25637bf6", null ],
-    [ "hal_kit_cdc_wake", "a03537.html#gabced238b72e636a557d00355a2e44ac9", null ],
-    [ "hal_kit_phy_num_found", "a03537.html#ga5fac3cf3552eee701aec448c1392edd8", null ],
-    [ "kit_phy_receive", "a03537.html#gaae5e94b6080d4279474eb3e98bc58901", null ],
-    [ "kit_phy_send", "a03537.html#ga020fb0be6c73515122cf4b9f749fd97d", null ],
-    [ "_gCdc", "a03537.html#gabc65c7c6bd64530b95fa72082f1e0390", null ],
-    [ "dev", "a03537.html#gabe78755474c1323a5ac7b3dd6d03dedf", null ],
-    [ "speed", "a03537.html#ga218b4f7c6cc2681a99c23a3b089d68b1", null ]
+    [ "ATCA_MUTEX_TIMEOUT", "a00359.html#acf61a669d2246c92200734be17bd5488", null ],
+    [ "hal_create_mutex", "a00912.html#gab289a3949663589ac6be71d72fb18278", null ],
+    [ "hal_destroy_mutex", "a00912.html#ga4589d7b3e951f40b7928f1cf31f7ddf3", null ],
+    [ "hal_lock_mutex", "a00912.html#gad4cd02ff7ae4e75844eab4e84eb61994", null ],
+    [ "hal_unlock_mutex", "a00912.html#ga31fd8170a49623686543f6247b883bd1", null ]
 ];

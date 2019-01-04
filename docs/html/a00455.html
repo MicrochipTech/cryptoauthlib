@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_win_kit_cdc.h File Reference</title>
+<title>CryptoAuthLib: hal_samv71_timer_asf.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,108 +87,39 @@ $(document).ready(function(){initNavTree('a00455.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">hal_win_kit_cdc.h File Reference</div>  </div>
+<div class="title">hal_samv71_timer_asf.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for Windows using kit protocol over a USB CDC device.  
+<p>ATCA Hardware abstraction layer for SAMD21 timer/delay over ASF drivers.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;Windows.h&gt;</code><br />
-</div>
-<p><a href="a00455_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03659.html">cdc_device</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03663.html">atcacdc</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a08b6c05184266dc4d5c8727bb9c1c754"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00455.html#a08b6c05184266dc4d5c8727bb9c1c754">CDC_DEVICES_MAX</a>&#160;&#160;&#160;10</td></tr>
-<tr class="separator:a08b6c05184266dc4d5c8727bb9c1c754"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ac8c9377f90d6ce3044f81f900a54fe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00455.html#a5ac8c9377f90d6ce3044f81f900a54fe">CDC_BUFFER_MAX</a>&#160;&#160;&#160;1024</td></tr>
-<tr class="separator:a5ac8c9377f90d6ce3044f81f900a54fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a99ee56102171adcbcecb8a78fb9fa895"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a03659.html">cdc_device</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00455.html#a99ee56102171adcbcecb8a78fb9fa895">cdc_device_t</a></td></tr>
-<tr class="separator:a99ee56102171adcbcecb8a78fb9fa895"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2df85bfd309840b4c9a5087e053d4811"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a03663.html">atcacdc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00455.html#a2df85bfd309840b4c9a5087e053d4811">atcacdc_t</a></td></tr>
-<tr class="separator:a2df85bfd309840b4c9a5087e053d4811"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><code>#include &lt;asf.h&gt;</code><br />
+<code>#include &lt;delay.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00329_source.html">atca_hal.h</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga7598dfcd6dcac882836544d48356d02f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00912.html#ga7598dfcd6dcac882836544d48356d02f">atca_delay_us</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga7598dfcd6dcac882836544d48356d02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API implemented at the HAL level.  <a href="a00912.html#ga7598dfcd6dcac882836544d48356d02f">More...</a><br /></td></tr>
+<tr class="separator:ga7598dfcd6dcac882836544d48356d02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga19891182689551cc3a88603135959351"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00912.html#ga19891182689551cc3a88603135959351">atca_delay_10us</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga19891182689551cc3a88603135959351"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of tens of microseconds.  <a href="a00912.html#ga19891182689551cc3a88603135959351">More...</a><br /></td></tr>
+<tr class="separator:ga19891182689551cc3a88603135959351"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga80a853a202b089064bfc4b159c3418b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00912.html#ga80a853a202b089064bfc4b159c3418b4">atca_delay_ms</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga80a853a202b089064bfc4b159c3418b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of milliseconds.  <a href="a00912.html#ga80a853a202b089064bfc4b159c3418b4">More...</a><br /></td></tr>
+<tr class="separator:ga80a853a202b089064bfc4b159c3418b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for Windows using kit protocol over a USB CDC device. </p>
+<div class="textblock"><p>ATCA Hardware abstraction layer for SAMD21 timer/delay over ASF drivers. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a5ac8c9377f90d6ce3044f81f900a54fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ac8c9377f90d6ce3044f81f900a54fe">&#9670;&nbsp;</a></span>CDC_BUFFER_MAX</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CDC_BUFFER_MAX&#160;&#160;&#160;1024</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a08b6c05184266dc4d5c8727bb9c1c754"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a08b6c05184266dc4d5c8727bb9c1c754">&#9670;&nbsp;</a></span>CDC_DEVICES_MAX</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CDC_DEVICES_MAX&#160;&#160;&#160;10</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a id="a2df85bfd309840b4c9a5087e053d4811"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2df85bfd309840b4c9a5087e053d4811">&#9670;&nbsp;</a></span>atcacdc_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef struct <a class="el" href="a03663.html">atcacdc</a>  <a class="el" href="a03537.html#ga2df85bfd309840b4c9a5087e053d4811">atcacdc_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a99ee56102171adcbcecb8a78fb9fa895"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99ee56102171adcbcecb8a78fb9fa895">&#9670;&nbsp;</a></span>cdc_device_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef struct <a class="el" href="a03659.html">cdc_device</a>  <a class="el" href="a03537.html#ga99ee56102171adcbcecb8a78fb9fa895">cdc_device_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00455.html">hal_win_kit_cdc.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00455.html">hal_samv71_timer_asf.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

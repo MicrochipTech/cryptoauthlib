@@ -57,10 +57,23 @@ class atca_sha256_ctx(Structure):
                 ("block_size", c_uint32),
                 ("block", c_char*64*2)]
 
+class atca_aes_gcm_ctx(Structure):
+    """Context structure for AES GCM operations"""
+    _fields_ = [("key_id", c_uint16),
+                ("key_block", c_uint8),
+                ("cb", c_char*16),
+                ("data_size", c_uint32),
+                ("aad_size", c_uint32),
+                ("h", c_char*16),
+                ("j0", c_char*16),
+                ("y", c_char*16),
+                ("partial_aad", c_char*16),
+                ("partial_aad_size", c_uint32),
+                ("enc_cb", c_char*16),
+                ("ciphertext_block", c_char*16)]
 
 class atca_hmac_sha256_ctx_t(atca_sha256_ctx):
     """HMAC-SHA256 context"""
-    pass
 
 
 def atcab_init(iface_cfg):
@@ -422,6 +435,168 @@ def atcab_aes_ctr_decrypt_block(ctx, ciphertext, plaintext):
         plaintext[0:] = bytes(c_plaintext.raw)
     return status
 
+
+def atcab_aes_gcm_init(ctx, key_id, key_block, iv, iv_size):
+    """
+    Initialize context for AES GCM operation with an existing IV, which
+    is common when starting a decrypt operation.
+
+    Args:
+        ctx                 AES GCM context to be initialized.
+        key_id              Key location. Can either be a slot number or
+                            ATCA_TEMPKEY_KEYID for TempKey.
+        key_block           Index of the 16-byte block to use within the key
+                            location for the actual key.
+        iv                  Initialization vector.
+        iv_size       Size of IV in bytes. Standard is 12 bytes.
+    Returns:
+        ATCA_SUCCESS on success, otherwise an error code.
+    """
+    status = get_cryptoauthlib().atcab_aes_gcm_init(byref(ctx), key_id, key_block, bytes(iv), iv_size)
+    return status
+
+def atcab_aes_gcm_init_rand(ctx, key_id, key_block, rand_size, free_field, free_field_size, iv):
+    """
+    Initialize context for AES GCM operation with a IV composed of a
+    random and optional fixed(free) field, which is common when
+    starting an encrypt operation.
+
+    Args:
+        ctx                 AES CTR context to be initialized.
+        key_id              Key location. Can either be a slot number or
+                            ATCA_TEMPKEY_KEYID for TempKey.
+        key_block           Index of the 16-byte block to use within the
+                            key location for the actual key.
+        rand_size           Size of the random field in bytes. Minimum and
+                            recommended size is 12 bytes. Max is 32 bytes.
+        free_field          Fixed data to include in the IV after the
+                            random field. Can be NULL if not used.
+        free_field_size     Size of the free field in bytes.
+        iv                  Initialization vector is returned here. Its
+                            size will be rand_size and free_field_size
+                            combined.
+    Returns:
+        ATCA_SUCCESS on success, otherwise an error code.
+    """
+    c_iv = create_string_buffer(16)
+    if not isinstance(iv, bytearray):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        status = get_cryptoauthlib().atcab_aes_gcm_init_rand(byref(ctx), key_id, key_block, rand_size,
+                                                             bytes(free_field), free_field_size, byref(c_iv))
+        iv[0:] = bytes(c_iv.raw)
+    return status
+
+def atcab_aes_gcm_aad_update(ctx, aad, aad_size):
+    """
+    Process Additional Authenticated Data (AAD) using GCM mode and a
+    key within the ATECC608A device.
+
+    This can be called multiple times. atcab_aes_gcm_init() or
+    atcab_aes_gcm_init_rand() should be called before the first use of this
+    function. When there is AAD to include, this should be called before
+    atcab_aes_gcm_encrypt_update() or atcab_aes_gcm_decrypt_update().
+
+    Args:
+        ctx                 AES GCM context
+        aad                 Additional authenticated data to be added
+        aad_size            Size of aad in bytes
+
+    Returns:
+        ATCA_SUCCESS on success, otherwise an error code.
+    """
+    status = get_cryptoauthlib().atcab_aes_gcm_aad_update(byref(ctx), bytes(aad), aad_size)
+    return status
+
+def atcab_aes_gcm_encrypt_update(ctx, plaintext, plaintext_size, ciphertext):
+    """
+    Encrypt data using GCM mode and a key within the ATECC608A device.
+    atcab_aes_gcm_init() or atcab_aes_gcm_init_rand() should be called
+    before the first use of this function.
+
+    Args:
+        ctx                 AES GCM context structure.
+        plaintext           Plaintext to be encrypted (16 bytes).
+        plaintext_size      Size of plaintext in bytes.
+        ciphertext          Encrypted data is returned here.
+
+    Returns:
+        ATCA_SUCCESS on success, otherwise an error code.
+    """
+    c_ciphertext = create_string_buffer(plaintext_size)
+    if not isinstance(ciphertext, bytearray):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        status = get_cryptoauthlib().atcab_aes_gcm_encrypt_update(byref(ctx),
+                                                                  bytes(plaintext), plaintext_size, byref(c_ciphertext))
+        ciphertext[0:] = bytes(c_ciphertext.raw)
+    return status
+
+def atcab_aes_gcm_encrypt_finish(ctx, tag, tag_size):
+    """
+    Complete a GCM encrypt operation returning the authentication tag.
+
+    Args:
+        ctx                 AES GCM context structure.
+        tag                 Authentication tag is returned here.
+        tag_size            Tag size in bytes (12 to 16 bytes).
+
+    Returns:
+        ATCA_SUCCESS on success, otherwise an error code.
+    """
+    c_tag = create_string_buffer(tag_size)
+    if not isinstance(tag, bytearray):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        status = get_cryptoauthlib().atcab_aes_gcm_encrypt_finish(byref(ctx), byref(c_tag), tag_size)
+        tag[0:] = bytes(c_tag.raw)
+    return status
+
+def atcab_aes_gcm_decrypt_update(ctx, ciphertext, ciphertext_size, plaintext):
+    """
+    Decrypt data using GCM mode and a key within the ATECC608A device.
+    atcab_aes_gcm_init() or atcab_aes_gcm_init_rand() should be called
+    before the first use of this function.
+
+    Args:
+        ctx                 AES GCM context structure.
+        ciphertext          Ciphertext to be decrypted.
+        ciphertext_size     Size of ciphertext in bytes.
+        plaintext           Decrypted data is returned here.
+
+    Returns:
+        ATCA_SUCCESS on success, otherwise an error code.
+    """
+    c_plaintext = create_string_buffer(ciphertext_size)
+    if not isinstance(plaintext, bytearray):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        status = get_cryptoauthlib().atcab_aes_gcm_decrypt_update(byref(ctx), bytes(ciphertext),
+                                                                  ciphertext_size, byref(c_plaintext))
+        plaintext[0:] = bytes(c_plaintext.raw)
+    return status
+
+def atcab_aes_gcm_decrypt_finish(ctx, tag, tag_size, is_verified):
+    """
+    Complete a GCM decrypt operation verifying the authentication tag.
+
+    Args:
+        ctx                 AES GCM context structure.
+        tag                 Expected authentication tag.
+        tag_size            Size of tag in bytes (12 to 16 bytes).
+        is_verified         Returns whether or not the tag verified.
+
+    Returns:
+        ATCA_SUCCESS on success, otherwise an error code.
+    """
+    if not isinstance(is_verified, AtcaReference):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        c_is_verified = c_uint8(is_verified.value)
+        status = get_cryptoauthlib().atcab_aes_gcm_decrypt_finish(byref(ctx), bytes(tag),
+                                                                  tag_size, byref(c_is_verified))
+        is_verified.value = c_is_verified.value
+    return status
 
 # CryptoAuthLib Basic API methods for CheckMAC command.
 #
@@ -2552,5 +2727,6 @@ def atcab_write_config_counter(counter_id, counter_value):
 
 
 # Make module import * safe - keep at the end of the file
-__all__ = ['atca_aes_cbc_ctx', 'atca_aes_cmac_ctx', 'atca_aes_ctr_ctx', 'atca_sha256_ctx', 'atca_hmac_sha256_ctx_t']
+__all__ = ['atca_aes_cbc_ctx', 'atca_aes_cmac_ctx', 'atca_aes_ctr_ctx',
+           'atca_aes_gcm_ctx', 'atca_sha256_ctx', 'atca_hmac_sha256_ctx_t']
 __all__ += [x for x in dir() if x.startswith(__name__.split('.')[-1])]

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['i2cbuses',['I2CBuses',['../a03679.html',1,'']]]
+  ['i2cbuses',['I2CBuses',['../a01058.html',1,'']]]
 ];

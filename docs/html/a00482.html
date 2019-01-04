@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: kit_phy.h File Reference</title>
+<title>CryptoAuthLib: hal_win_kit_hid.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,40 +87,50 @@ $(document).ready(function(){initNavTree('a00482.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">kit_phy.h File Reference</div>  </div>
+<div class="title">hal_win_kit_hid.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer physical send &amp; receive function definitions.  
+<p>ATCA Hardware abstraction layer for Windows using kit protocol over a USB HID device.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00299_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;Windows.h&gt;</code><br />
 </div>
 <p><a href="a00482_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga11ee6ec0b2b7eb2ff2472f92208c3205"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03537.html#ga11ee6ec0b2b7eb2ff2472f92208c3205">kit_phy_num_found</a> (int8_t *num_found)</td></tr>
-<tr class="memdesc:ga11ee6ec0b2b7eb2ff2472f92208c3205"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of USB HID devices found.  <a href="a03537.html#ga11ee6ec0b2b7eb2ff2472f92208c3205">More...</a><br /></td></tr>
-<tr class="separator:ga11ee6ec0b2b7eb2ff2472f92208c3205"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga020fb0be6c73515122cf4b9f749fd97d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03537.html#ga020fb0be6c73515122cf4b9f749fd97d">kit_phy_send</a> (<a class="el" href="a03533.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, const char *txdata, int txlength)</td></tr>
-<tr class="memdesc:ga020fb0be6c73515122cf4b9f749fd97d"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol send .It is called by the top layer.  <a href="a03537.html#ga020fb0be6c73515122cf4b9f749fd97d">More...</a><br /></td></tr>
-<tr class="separator:ga020fb0be6c73515122cf4b9f749fd97d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaae5e94b6080d4279474eb3e98bc58901"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03537.html#gaae5e94b6080d4279474eb3e98bc58901">kit_phy_receive</a> (<a class="el" href="a03533.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, char *rxdata, int *rxsize)</td></tr>
-<tr class="memdesc:gaae5e94b6080d4279474eb3e98bc58901"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol receive data.It is called by the top layer.  <a href="a03537.html#gaae5e94b6080d4279474eb3e98bc58901">More...</a><br /></td></tr>
-<tr class="separator:gaae5e94b6080d4279474eb3e98bc58901"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01046.html">hid_device</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01030.html">atcahid</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga49053c3cd6d48fe5f468ce010ac0a9ef"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00912.html#ga49053c3cd6d48fe5f468ce010ac0a9ef">HID_DEVICES_MAX</a>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:ga49053c3cd6d48fe5f468ce010ac0a9ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6cdff3589b286ebcdd7771bb425fbf73"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00912.html#ga6cdff3589b286ebcdd7771bb425fbf73">HID_PACKET_MAX</a>&#160;&#160;&#160;512</td></tr>
+<tr class="separator:ga6cdff3589b286ebcdd7771bb425fbf73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga5f2f61628e945fd6538155628fc3a17a"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a01046.html">hid_device</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00912.html#ga5f2f61628e945fd6538155628fc3a17a">hid_device_t</a></td></tr>
+<tr class="separator:ga5f2f61628e945fd6538155628fc3a17a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2416cca7ee952e679d466e3349d65035"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a01030.html">atcahid</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00912.html#ga2416cca7ee952e679d466e3349d65035">atcahid_t</a></td></tr>
+<tr class="separator:ga2416cca7ee952e679d466e3349d65035"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer physical send &amp; receive function definitions. </p>
-<p>This is included for kit protocol implementations. It is included in the kit protocol callback to actually send and recieve bytes.</p>
+<div class="textblock"><p>ATCA Hardware abstraction layer for Windows using kit protocol over a USB HID device. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00482.html">kit_phy.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00482.html">hal_win_kit_hid.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

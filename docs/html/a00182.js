@@ -1,18 +1,18 @@
 var a00182 =
 [
-    [ "atcab_aes", "a03535.html#gad115ce255664a48b80e90ea19c156b79", null ],
-    [ "atcab_aes_cbc_decrypt_block", "a03535.html#ga7c66e1b8b31bb87be3de6c9a9084c21e", null ],
-    [ "atcab_aes_cbc_encrypt_block", "a03535.html#ga7414e3dc8215cedc1bffc6cf576d7d1e", null ],
-    [ "atcab_aes_cbc_init", "a03535.html#gabc41b824cdc9b10efa46bcbf74850184", null ],
-    [ "atcab_aes_cmac_finish", "a03535.html#gac0be51b283b107465dcf42758ca31687", null ],
-    [ "atcab_aes_cmac_init", "a03535.html#ga84506ff4105e63823c99527788d36d52", null ],
-    [ "atcab_aes_cmac_update", "a03535.html#ga0cf22e893c713890faeb9fa8784760b1", null ],
-    [ "atcab_aes_ctr_block", "a03535.html#ga76937b340e59be4dc1a30d8c7b76ebe0", null ],
-    [ "atcab_aes_ctr_decrypt_block", "a03535.html#gada9491be0c81fb18b021f71b9a6eda3e", null ],
-    [ "atcab_aes_ctr_encrypt_block", "a03535.html#ga7182e48a847f9c1b31f19c60f373e2da", null ],
-    [ "atcab_aes_ctr_init", "a03535.html#ga0db7d24f31dc2dd4805e3c433ae604ad", null ],
-    [ "atcab_aes_ctr_init_rand", "a03535.html#gae7558905ea6a82c4bd50d4b99e954d91", null ],
-    [ "atcab_aes_decrypt", "a03535.html#ga9658e84055727e6357cf7ef636b4e398", null ],
-    [ "atcab_aes_encrypt", "a03535.html#gacc9a58dc49f91674213f34fa7bbd05e1", null ],
-    [ "atcab_aes_gfm", "a03535.html#ga5554940ed4c7c7e28652ce6923cf9314", null ]
+    [ "MAX_BUSES", "a00182.html#a71478560014bace34a1ebdeab8875365", null ],
+    [ "_atcab_exit", "a00910.html#ga5802cd6847a837458604db5dbec4a6f0", null ],
+    [ "atcab_cfg_discover", "a00910.html#ga1518196e269b549eec78087abd130de7", null ],
+    [ "atcab_get_addr", "a00910.html#gabdfeb1f8d28039e9b30d4e39b8caa33a", null ],
+    [ "atcab_get_device", "a00910.html#ga4af82005556c549c30e1c4bd35d4f4e4", null ],
+    [ "atcab_get_zone_size", "a00910.html#ga7a823d2a391bf80ff336eb2ccbd37412", null ],
+    [ "atcab_idle", "a00910.html#gaf47433a371b9fcb8d65a4214cd9e4fa0", null ],
+    [ "atcab_init", "a00910.html#gacdc4fa3d2f2f6d197af8c10ab1f288b8", null ],
+    [ "atcab_init_device", "a00910.html#gab22d2a32e6c32c14c4e58ce794ff3ec4", null ],
+    [ "atcab_release", "a00910.html#ga3a061c1f96bb641b36fc56b6cb2dd4e4", null ],
+    [ "atcab_sleep", "a00910.html#ga9475e032c388144c5a0df45d1df182a5", null ],
+    [ "atcab_version", "a00910.html#gaff701132013eaac5600dd9fd6253505d", null ],
+    [ "atcab_wakeup", "a00910.html#gad3bc620aedd9322d160eece0d8d20c82", null ],
+    [ "_gDevice", "a00910.html#ga692423e9c45adde594c36360756b8882", null ],
+    [ "atca_version", "a00182.html#af135cce4a2e6bbf79b75840195c46de5", null ]
 ];

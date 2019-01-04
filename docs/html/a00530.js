@@ -1,9 +1,11 @@
 var a00530 =
 [
-    [ "atca_jwt_add_claim_numeric", "a03539.html#ga7073a7cfb7c77ad02923cdbb1226d2ad", null ],
-    [ "atca_jwt_add_claim_string", "a03539.html#ga3e6036b2c0e6dbc96a30f078e56cacff", null ],
-    [ "atca_jwt_check_payload_start", "a03539.html#ga167fe35631a0dd191293c6ad3a6485aa", null ],
-    [ "atca_jwt_finalize", "a03539.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b", null ],
-    [ "atca_jwt_init", "a03539.html#gad3ea09543f0569a5368130f4a3d7bce0", null ],
-    [ "atca_jwt_verify", "a03539.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b", null ]
+    [ "USART_BAUD_RATE", "a00530.html#ad462f78bb4839d01e6066bdac14a6680", null ],
+    [ "swi_uart_deinit", "a00912.html#ga0b1aad3936bf003686d8db7fa2be5132", null ],
+    [ "swi_uart_discover_buses", "a00912.html#gad640b598d581ee7c8a4c804bee602906", null ],
+    [ "swi_uart_init", "a00912.html#ga003b63648f1a5f9eba274760559688f2", null ],
+    [ "swi_uart_mode", "a00912.html#gacc2a96c86ce4c07249b81bc6a7eb2e41", null ],
+    [ "swi_uart_receive_byte", "a00912.html#ga93f3dab17c14f71641ca970998ede823", null ],
+    [ "swi_uart_send_byte", "a00912.html#ga4a4d491006d9683d67838963706ac9c1", null ],
+    [ "swi_uart_setbaud", "a00912.html#gaba296f70baf68b768d6c4bb9cf7ba67d", null ]
 ];

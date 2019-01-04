@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: crypto_device_app.h File Reference</title>
+<title>CryptoAuthLib: symmetric_authentication.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,153 +87,70 @@ $(document).ready(function(){initNavTree('a00014.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">crypto_device_app.h File Reference</div>  </div>
+<div class="title">symmetric_authentication.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Provides required interface between boot loader and secure boot.  
+<p>Contains API for performing the symmetric Authentication between the Host and the device.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00128_source.html">atca_status.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00101_source.html">atca_command.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00524_source.html">host/atca_host.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00320_source.html">cryptoauthlib.h</a>&quot;</code><br />
 </div>
 <p><a href="a00014_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a78d2d5f4d0c6ce2228e32d0ed1baddee"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a78d2d5f4d0c6ce2228e32d0ed1baddee">CRYPTO_DEVICE_ENABLE_SECURE_BOOT</a>&#160;&#160;&#160;true</td></tr>
-<tr class="separator:a78d2d5f4d0c6ce2228e32d0ed1baddee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6f08e0b0783a9989ae5c4584668fdcc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#aa6f08e0b0783a9989ae5c4584668fdcc">CRYPTO_DEVICE_LOAD_CONFIG_ENABLED</a>&#160;&#160;&#160;false</td></tr>
-<tr class="separator:aa6f08e0b0783a9989ae5c4584668fdcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60c58ea0ec675162d62034323c906b9b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a60c58ea0ec675162d62034323c906b9b">IO_PROTECTION_KEY_SLOT</a>&#160;&#160;&#160;4</td></tr>
-<tr class="separator:a60c58ea0ec675162d62034323c906b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0bb2754dfd3576e2db410a717cfefc98"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a0bb2754dfd3576e2db410a717cfefc98">SECURE_BOOT_PUBLIC_KEY_SLOT</a>&#160;&#160;&#160;11</td></tr>
-<tr class="separator:a0bb2754dfd3576e2db410a717cfefc98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3e25c542063abb044288e338e0df87a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ad3e25c542063abb044288e338e0df87a">SECURE_BOOT_SIGN_DIGEST_SLOT</a>&#160;&#160;&#160;12</td></tr>
-<tr class="separator:ad3e25c542063abb044288e338e0df87a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a19617ea9c26833614201b9695ec7a1ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a19617ea9c26833614201b9695ec7a1ca">crypto_device_verify_app</a> (void)</td></tr>
-<tr class="memdesc:a19617ea9c26833614201b9695ec7a1ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Takes care interface with secure boot and provides status about user application. This also takes care of device configuration if enabled.  <a href="#a19617ea9c26833614201b9695ec7a1ca">More...</a><br /></td></tr>
-<tr class="separator:a19617ea9c26833614201b9695ec7a1ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80d86458de1b0031747eeeffb6feee0b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a80d86458de1b0031747eeeffb6feee0b">crypto_device_load_configuration</a> (void)</td></tr>
-<tr class="separator:a80d86458de1b0031747eeeffb6feee0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a41d1600ffd22de067ded50447d359b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a9a41d1600ffd22de067ded50447d359b">symmetric_authenticate</a> (uint8_t slot, const uint8_t *master_key, const uint8_t *rand_number)</td></tr>
+<tr class="memdesc:a9a41d1600ffd22de067ded50447d359b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function which does the authentication between the host and device.  <a href="#a9a41d1600ffd22de067ded50447d359b">More...</a><br /></td></tr>
+<tr class="separator:a9a41d1600ffd22de067ded50447d359b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Provides required interface between boot loader and secure boot. </p>
+<div class="textblock"><p>Contains API for performing the symmetric Authentication between the Host and the device. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a78d2d5f4d0c6ce2228e32d0ed1baddee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78d2d5f4d0c6ce2228e32d0ed1baddee">&#9670;&nbsp;</a></span>CRYPTO_DEVICE_ENABLE_SECURE_BOOT</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a9a41d1600ffd22de067ded50447d359b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a41d1600ffd22de067ded50447d359b">&#9670;&nbsp;</a></span>symmetric_authenticate()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define CRYPTO_DEVICE_ENABLE_SECURE_BOOT&#160;&#160;&#160;true</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa6f08e0b0783a9989ae5c4584668fdcc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa6f08e0b0783a9989ae5c4584668fdcc">&#9670;&nbsp;</a></span>CRYPTO_DEVICE_LOAD_CONFIG_ENABLED</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CRYPTO_DEVICE_LOAD_CONFIG_ENABLED&#160;&#160;&#160;false</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a60c58ea0ec675162d62034323c906b9b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a60c58ea0ec675162d62034323c906b9b">&#9670;&nbsp;</a></span>IO_PROTECTION_KEY_SLOT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IO_PROTECTION_KEY_SLOT&#160;&#160;&#160;4</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0bb2754dfd3576e2db410a717cfefc98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0bb2754dfd3576e2db410a717cfefc98">&#9670;&nbsp;</a></span>SECURE_BOOT_PUBLIC_KEY_SLOT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SECURE_BOOT_PUBLIC_KEY_SLOT&#160;&#160;&#160;11</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad3e25c542063abb044288e338e0df87a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad3e25c542063abb044288e338e0df87a">&#9670;&nbsp;</a></span>SECURE_BOOT_SIGN_DIGEST_SLOT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SECURE_BOOT_SIGN_DIGEST_SLOT&#160;&#160;&#160;12</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a80d86458de1b0031747eeeffb6feee0b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a80d86458de1b0031747eeeffb6feee0b">&#9670;&nbsp;</a></span>crypto_device_load_configuration()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> crypto_device_load_configuration </td>
+          <td class="memname"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> symmetric_authenticate </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>slot</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a19617ea9c26833614201b9695ec7a1ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19617ea9c26833614201b9695ec7a1ca">&#9670;&nbsp;</a></span>crypto_device_verify_app()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> crypto_device_verify_app </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>master_key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>rand_number</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Takes care interface with secure boot and provides status about user application. This also takes care of device configuration if enabled. </p>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+<p>Function which does the authentication between the host and device. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">slot</td><td>The slot number used for the symmetric authentication. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">master_key</td><td>The master key used for the calculating the symmetric key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rand_number</td><td>The 20 byte rand_number from the host. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on successful authentication, otherwise an error code. </dd></dl>
 
 </div>
 </div>
@@ -242,7 +159,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d422163b96683743ed3963d4aac17747.html">app</a></li><li class="navelem"><a class="el" href="dir_0680cb466dcc0d680630f5d267d4b7d1.html">secure_boot</a></li><li class="navelem"><a class="el" href="a00014.html">crypto_device_app.h</a></li>
+    <li class="navelem"><a class="el" href="dir_d422163b96683743ed3963d4aac17747.html">app</a></li><li class="navelem"><a class="el" href="dir_87abda79916a436a3f9fdf465608c5f5.html">ip_protection</a></li><li class="navelem"><a class="el" href="a00014.html">symmetric_authentication.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

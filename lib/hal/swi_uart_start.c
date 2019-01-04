@@ -109,16 +109,16 @@ void swi_uart_mode(ATCASWIMaster_t *instance, uint8_t mode)
         // Set baudrate to 230400
         usart_sync_set_baud_rate(&(instance->USART_SWI), USART_BAUD_RATE(230400, instance->sercom_core_freq));
         // Disable Receiver
-        hri_sercomusart_clear_CTRLB_RXEN_bit(&(instance->USART_SWI.device.hw));
-        hri_sercomusart_set_CTRLB_TXEN_bit(&(instance->USART_SWI.device.hw));
+        hri_sercomusart_clear_CTRLB_RXEN_bit(instance->USART_SWI.device.hw);
+        hri_sercomusart_set_CTRLB_TXEN_bit(instance->USART_SWI.device.hw);
     }
     else if (mode == RECEIVE_MODE)
     {
         // Set baudrate to 160000
         usart_sync_set_baud_rate(&(instance->USART_SWI), USART_BAUD_RATE(170000, instance->sercom_core_freq));
         // Enable Receiver
-        hri_sercomusart_clear_CTRLB_TXEN_bit(&(instance->USART_SWI.device.hw));
-        hri_sercomusart_set_CTRLB_RXEN_bit(&(instance->USART_SWI.device.hw));
+        hri_sercomusart_clear_CTRLB_TXEN_bit(instance->USART_SWI.device.hw);
+        hri_sercomusart_set_CTRLB_RXEN_bit(instance->USART_SWI.device.hw);
     }
     usart_sync_enable(&(instance->USART_SWI));
     instance->bus_index &= 0x07;

@@ -1,8 +1,10 @@
 var a00266 =
 [
-    [ "ATCA_ECC_P256_FIELD_SIZE", "a03536.html#gab6935877a2675bfc95af283fb43affb5", null ],
-    [ "ATCA_ECC_P256_PRIVATE_KEY_SIZE", "a03536.html#gadb06f3adddd74993ab0da4be3ea71441", null ],
-    [ "ATCA_ECC_P256_PUBLIC_KEY_SIZE", "a03536.html#ga6bcf19f52fbceb7801fc3216d528fb3c", null ],
-    [ "ATCA_ECC_P256_SIGNATURE_SIZE", "a03536.html#ga6eba254effebfbbb95381511fc7d80d5", null ],
-    [ "atcac_sw_ecdsa_verify_p256", "a03536.html#gaa61eee6f208a1633d35cdf8d628a6835", null ]
+    [ "atcab_verify", "a00910.html#ga694d921c7bc17a0e158ef96e3d476700", null ],
+    [ "atcab_verify_extern", "a00910.html#ga2c3e18de900ba705192963d08b37f600", null ],
+    [ "atcab_verify_extern_mac", "a00910.html#ga17bf17c4786be097a0bb111a6f9d8ca6", null ],
+    [ "atcab_verify_invalidate", "a00910.html#ga9393b545b2fa1fdd539672a0428a30ab", null ],
+    [ "atcab_verify_stored", "a00910.html#gae8cc7670847805423ad591985eecd832", null ],
+    [ "atcab_verify_stored_mac", "a00910.html#gaa52cdbbfd2f089d8eb42ef2640204ca7", null ],
+    [ "atcab_verify_validate", "a00910.html#gacf9a0c7772ebb65b87c4a4788850702b", null ]
 ];

@@ -60,6 +60,11 @@ Examples
 
 Release notes
 -----------
+01/04/2019
+  - Added GCM functions
+  - Split AES modes into separate files
+  - Bug fix in SWI START driver
+
 10/25/2018
   - Added basic certificate functions to the python wrapper.
   - Added Espressif ESP32 I2C driver.

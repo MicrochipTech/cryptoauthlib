@@ -1,6 +1,10 @@
 var a00161 =
 [
-    [ "atcacert_gen_challenge_hw", "a03534.html#ga208c1ea765f192bd86b26964fbb5edcb", null ],
-    [ "atcacert_verify_cert_hw", "a03534.html#ga81e92ea606e86051afa84f2fac4898d6", null ],
-    [ "atcacert_verify_response_hw", "a03534.html#gafeffa7a36a7b5a343f5f568d090e8eed", null ]
+    [ "atcacert_der_adjust_length", "a00909.html#ga165018175f52421ea26fb33ccf335108", null ],
+    [ "atcacert_der_dec_ecdsa_sig_value", "a00909.html#gac3f22b75f15e8508f35d99b95d955842", null ],
+    [ "atcacert_der_dec_integer", "a00909.html#ga3b095e11adc55a61e3cfb2957d0c6c77", null ],
+    [ "atcacert_der_dec_length", "a00909.html#gaeee4091e249b8fc202d5126a8374eeb1", null ],
+    [ "atcacert_der_enc_ecdsa_sig_value", "a00909.html#ga3583ada6da51d31cfe819894e8a9deeb", null ],
+    [ "atcacert_der_enc_integer", "a00909.html#gaf156257cda87df879f54c07e80bc0e8d", null ],
+    [ "atcacert_der_enc_length", "a00909.html#gaafc9ef8e0164226481b670fde0223e13", null ]
 ];

@@ -1,10 +1,7 @@
 var a00296 =
 [
-    [ "sw_sha256_ctx", "a03643.html", "a03643" ],
-    [ "SHA256_BLOCK_SIZE", "a00296.html#a9c1fe69ad43d4ca74b84303a0ed64f2f", null ],
-    [ "SHA256_DIGEST_SIZE", "a00296.html#a81efbc0fc101b06a914f7ff9e2fbc0e9", null ],
-    [ "sw_sha256", "a00296.html#a5f6c75bec312e0d2faa7d645b62c3898", null ],
-    [ "sw_sha256_final", "a00296.html#ace8eb02759b23942f866ddcd2057390a", null ],
-    [ "sw_sha256_init", "a00296.html#acfb7028e6f10d29c548cbecdbfa53ac8", null ],
-    [ "sw_sha256_update", "a00296.html#a7f5d8ad85631d77bfdb10dfb728bfbce", null ]
+    [ "atcac_sw_sha1", "a00911.html#ga84b866657bf319dab2924c2db3a1e990", null ],
+    [ "atcac_sw_sha1_finish", "a00911.html#ga5589df2a639f61a4dc4ccedc9b5a5453", null ],
+    [ "atcac_sw_sha1_init", "a00911.html#gabed03bcc1228768534ef4ee49df0ad09", null ],
+    [ "atcac_sw_sha1_update", "a00911.html#ga65ff558306a88e0fbe2fc82bbe6a9c03", null ]
 ];

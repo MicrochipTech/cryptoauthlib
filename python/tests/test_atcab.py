@@ -153,6 +153,63 @@ def test_atcab_aes_ctr_decrypt_block(test_init):
     assert atcab_aes_ctr_decrypt_block(ctx, ciphertext, plaintext) == Status.ATCA_SUCCESS
     assert plaintext == bytearray(atcab_mock.r_aes_ctr_output)
 
+def test_atcab_aes_gcm_init(test_init):
+    ctx = atca_aes_gcm_ctx()
+    key_id = 2
+    key_block = 2
+    iv = bytearray(16)
+    iv_size = len(iv)
+    assert atcab_aes_gcm_init(ctx, key_id, key_block, iv, iv_size) == Status.ATCA_SUCCESS
+
+def test_atcab_aes_gcm_init_rand(test_init):
+    ctx = atca_aes_gcm_ctx()
+    key_id = 2
+    key_block = 2
+    rand_size = 11
+    free_field = bytearray(12)
+    free_field_size = len(free_field)
+    iv = bytearray(16)
+    assert atcab_aes_gcm_init_rand(ctx, key_id, key_block, rand_size, free_field, free_field_size, iv) == Status.ATCA_SUCCESS
+    assert iv == bytearray(atcab_mock.r_iv)
+
+def test_atcab_aes_gcm_aad_update(test_init):
+    ctx = atca_aes_gcm_ctx()
+    aad = bytearray(16)
+    aad_size = len(aad)
+    assert atcab_aes_gcm_aad_update(ctx, aad, aad_size) == Status.ATCA_SUCCESS
+
+def test_atcab_aes_gcm_encrypt_update(test_init):
+    ctx = atca_aes_gcm_ctx()
+    plaintext = bytearray(16)
+    plaintext_size = len(plaintext)
+    ciphertext = bytearray(16)
+    assert atcab_aes_gcm_encrypt_update(ctx, plaintext, plaintext_size, ciphertext) == Status.ATCA_SUCCESS
+    assert ciphertext == bytearray(atcab_mock.r_ciphertext)
+
+def test_atcab_aes_gcm_encrypt_finish(test_init):
+    ctx = atca_aes_gcm_ctx()
+    tag = bytearray(16)
+    tag_size = 16
+    assert atcab_aes_gcm_encrypt_finish(ctx, tag, tag_size) == Status.ATCA_SUCCESS
+    assert tag == bytearray(atcab_mock.r_tag)
+
+def test_atcab_aes_gcm_decrypt_update(test_init):
+    ctx = atca_aes_gcm_ctx()
+    ciphertext = bytearray(16)
+    ciphertext_size = len(ciphertext)
+    plaintext = bytearray(16)
+    assert atcab_aes_gcm_decrypt_update(ctx, ciphertext, ciphertext_size, plaintext) == Status.ATCA_SUCCESS
+    assert plaintext == bytearray(atcab_mock.r_plaintext)
+
+def test_atcab_aes_gcm_decrypt_finish(test_init):
+    ctx = atca_aes_gcm_ctx()
+    tag = bytearray(16)
+    tag_size = len(tag)
+    is_verified = AtcaReference(2)
+    assert atcab_aes_gcm_decrypt_finish(ctx, tag, tag_size, is_verified) == Status.ATCA_SUCCESS
+    assert is_verified.value == atcab_mock.r_is_verified.value
+
+
 # ---------------ATCA_BASIC_CHECKMAC--------------
 
 def test_atcab_checkmac(test_init):

@@ -1,5 +1,5 @@
 var a00356 =
 [
-    [ "MAX_I2C_BUSES", "a03537.html#gaf89a7a4080a47aa10a5504291db285bf", null ],
-    [ "ATCAI2CMaster_t", "a03537.html#gae8f36006f14bf6a9f4914bac69ed9f98", null ]
+    [ "atca_delay_ms", "a00356.html#a4b83848e938fac7ec4dde79e584b6f71", null ],
+    [ "ets_delay_us", "a00356.html#a7def86f0fbd90b451847d8534f21f5dc", null ]
 ];

@@ -1,18 +1,13 @@
 var a00458 =
 [
-    [ "HID_GUID", "a03537.html#gafa87510c678a9963da73988da4dd44f7", null ],
-    [ "hal_kit_hid_discover_buses", "a03537.html#ga549d0b53127f1bb10e7f34453b8a2d3c", null ],
-    [ "hal_kit_hid_discover_devices", "a03537.html#ga0121a73c96416c97ce07ed9077226588", null ],
-    [ "hal_kit_hid_idle", "a03537.html#gaacf6310945889a6119cab867a1ced5e2", null ],
-    [ "hal_kit_hid_init", "a03537.html#ga95b4e99655383680272a1d9354d42479", null ],
-    [ "hal_kit_hid_post_init", "a03537.html#ga6f06bc1662b3d0361f6a241e1b5612f2", null ],
-    [ "hal_kit_hid_receive", "a03537.html#gaa80dfd4a91f557329fa1daf16b0f05a8", null ],
-    [ "hal_kit_hid_release", "a03537.html#ga8c7b9adb28b4bbdee8d5cd78ab16255f", null ],
-    [ "hal_kit_hid_send", "a03537.html#ga47588dbefadcc1569513b053a156f3d6", null ],
-    [ "hal_kit_hid_sleep", "a03537.html#ga1aa3345cb5d3e8fc29defe2758904fed", null ],
-    [ "hal_kit_hid_wake", "a03537.html#ga65289262310f2662b2c47450b93c9580", null ],
-    [ "kit_phy_num_found", "a03537.html#ga11ee6ec0b2b7eb2ff2472f92208c3205", null ],
-    [ "kit_phy_receive", "a03537.html#gaae5e94b6080d4279474eb3e98bc58901", null ],
-    [ "kit_phy_send", "a03537.html#ga020fb0be6c73515122cf4b9f749fd97d", null ],
-    [ "_gHid", "a03537.html#gab97bfae6ae6051d081edf51bb45eea05", null ]
+    [ "hal_swi_discover_buses", "a00912.html#ga53864a301dac6efbdbdc3931aa79e23e", null ],
+    [ "hal_swi_discover_devices", "a00912.html#ga354e6fa757688b73e6fb5293bb835def", null ],
+    [ "hal_swi_idle", "a00912.html#ga618291172976da96c4f02dc9200c845c", null ],
+    [ "hal_swi_init", "a00912.html#gaf406053c1a3f2a86bdc887f2ff4b663d", null ],
+    [ "hal_swi_post_init", "a00912.html#ga9186e5235979216330ae580290872c77", null ],
+    [ "hal_swi_receive", "a00912.html#ga02e9f36723f0feb21d373898728de04b", null ],
+    [ "hal_swi_release", "a00912.html#ga196dbc62546b39ac3e556a0f7f6b7132", null ],
+    [ "hal_swi_send", "a00912.html#gaeb8b8857192a7710785acce0110e8016", null ],
+    [ "hal_swi_sleep", "a00912.html#ga252e365a30f2583dae8a8eac073a9f53", null ],
+    [ "hal_swi_wake", "a00912.html#gafc428980ec95e37eee94813db229fe70", null ]
 ];

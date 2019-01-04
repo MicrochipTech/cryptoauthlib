@@ -33,12 +33,34 @@
 
 #if defined(__clang__)
 /* Clang/LLVM. ---------------------------------------------- */
+#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+#define ATCA_UINT32_HOST_TO_BE(x)  (x)
+#define ATCA_UINT32_BE_TO_HOST(x)  (x)
+#define ATCA_UINT64_HOST_TO_BE(x)  (x)
+#define ATCA_UINT64_BE_TO_HOST(x)  (x)
+#else
+#define ATCA_UINT32_HOST_TO_BE(x)  __builtin_bswap32(x)
+#define ATCA_UINT32_BE_TO_HOST(x)  __builtin_bswap32(x)
+#define ATCA_UINT64_HOST_TO_BE(x)  __builtin_bswap64(x)
+#define ATCA_UINT64_BE_TO_HOST(x)  __builtin_bswap64(x)
+#endif
 
 #elif defined(__ICC) || defined(__INTEL_COMPILER)
 /* Intel ICC/ICPC. ------------------------------------------ */
 
 #elif defined(__GNUC__) || defined(__GNUG__)
 /* GNU GCC/G++. --------------------------------------------- */
+#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+#define ATCA_UINT32_HOST_TO_BE(x)  (x)
+#define ATCA_UINT32_BE_TO_HOST(x)  (x)
+#define ATCA_UINT64_HOST_TO_BE(x)  (x)
+#define ATCA_UINT64_BE_TO_HOST(x)  (x)
+#else
+#define ATCA_UINT32_HOST_TO_BE(x)  __builtin_bswap32(x)
+#define ATCA_UINT32_BE_TO_HOST(x)  __builtin_bswap32(x)
+#define ATCA_UINT64_HOST_TO_BE(x)  __builtin_bswap64(x)
+#define ATCA_UINT64_BE_TO_HOST(x)  __builtin_bswap64(x)
+#endif
 
 #elif defined(__HP_cc) || defined(__HP_aCC)
 /* Hewlett-Packard C/aC++. ---------------------------------- */
@@ -48,6 +70,12 @@
 
 #elif defined(_MSC_VER)
 /* Microsoft Visual Studio. --------------------------------- */
+// MSVC is usually always little-endian architecture
+#include <stdlib.h>
+#define ATCA_UINT32_HOST_TO_BE(x)  _byteswap_ulong(x)
+#define ATCA_UINT32_BE_TO_HOST(x)  _byteswap_ulong(x)
+#define ATCA_UINT64_HOST_TO_BE(x)  _byteswap_uint64(x)
+#define ATCA_UINT64_BE_TO_HOST(x)  _byteswap_uint64(x)
 
 #elif defined(__PGI)
 /* Portland Group PGCC/PGCPP. ------------------------------- */

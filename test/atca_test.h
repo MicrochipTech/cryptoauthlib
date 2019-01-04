@@ -58,6 +58,10 @@ void RunAllTests(t_test_case_info** tests_list);
 extern t_test_case_info startup_basic_test_info[];
 extern t_test_case_info info_basic_test_info[];
 extern t_test_case_info aes_basic_test_info[];
+extern t_test_case_info aes_cbc_basic_test_info[];
+extern t_test_case_info aes_cmac_basic_test_info[];
+extern t_test_case_info aes_ctr_basic_test_info[];
+extern t_test_case_info aes_gcm_basic_test_info[];
 extern t_test_case_info verify_basic_test_info[];
 extern t_test_case_info derivekey_basic_test_info[];
 extern t_test_case_info sha_basic_test_info[];
@@ -133,4 +137,7 @@ void RunBasicOtpZero(void);
 void RunAllBasicTests(void);
 void RunAllFeatureTests(void);
 
+#ifdef _WIN32
+void hex_to_data(const char* hex_str, uint8_t* data, size_t data_size);
+#endif
 #endif /* ATCA_TEST_H_ */

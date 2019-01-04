@@ -1,10 +1,13 @@
 var a00248 =
 [
-    [ "atcab_write", "a03535.html#gabf2b29b4d3ae926b63c403d084380dbe", null ],
-    [ "atcab_write_bytes_zone", "a03535.html#gac395a7e195aa3cf28b48de345755feb0", null ],
-    [ "atcab_write_config_counter", "a03535.html#gab25ca44957dff1c2df34607738ca3bf7", null ],
-    [ "atcab_write_config_zone", "a03535.html#ga0777a86aa412a97b19cc72a12c171b94", null ],
-    [ "atcab_write_enc", "a03535.html#ga14cf75d1be264ac1125087d76ee6344c", null ],
-    [ "atcab_write_pubkey", "a03535.html#ga47cbedeb3c3e9f7cbf2b9433cd60d1aa", null ],
-    [ "atcab_write_zone", "a03535.html#ga1f5a6bbcf4f840803635fb8951b3a7e2", null ]
+    [ "atcab_cmp_config_zone", "a00910.html#gadb91d2c3601b95f0ad413cf84a4dfd87", null ],
+    [ "atcab_is_locked", "a00910.html#gaefce484222bdbedef37787a9b10d4426", null ],
+    [ "atcab_is_slot_locked", "a00910.html#ga802de50265ff91dc30dd7c93d9e026e1", null ],
+    [ "atcab_read_bytes_zone", "a00910.html#ga750704332198726725a327344f4f7dd5", null ],
+    [ "atcab_read_config_zone", "a00910.html#ga8ef47330eef6bc72ae8f7a8ef026dae3", null ],
+    [ "atcab_read_enc", "a00910.html#ga778a262b86fa1f8a38139cbae34376e4", null ],
+    [ "atcab_read_pubkey", "a00910.html#ga782ca1e5b1574b2b6793c841be22b28b", null ],
+    [ "atcab_read_serial_number", "a00910.html#ga96c434878e1f435e2cda5b0b5fec444f", null ],
+    [ "atcab_read_sig", "a00910.html#ga098c4c2c724b90b7e2f4ecf12b9530b7", null ],
+    [ "atcab_read_zone", "a00910.html#ga3ce01f02f456c08891ca1d67cd3ed0eb", null ]
 ];

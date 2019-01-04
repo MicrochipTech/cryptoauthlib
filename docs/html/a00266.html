@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_crypto_sw_ecdsa.h File Reference</title>
+<title>CryptoAuthLib: atca_basic_verify.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,43 +87,53 @@ $(document).ready(function(){initNavTree('a00266.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_crypto_sw_ecdsa.h File Reference</div>  </div>
+<div class="title">atca_basic_verify.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="a00260_source.html">atca_crypto_sw.h</a>&quot;</code><br />
-<code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-</div>
-<p><a href="a00266_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gab6935877a2675bfc95af283fb43affb5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03536.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a>&#160;&#160;&#160;(256 / 8)</td></tr>
-<tr class="separator:gab6935877a2675bfc95af283fb43affb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadb06f3adddd74993ab0da4be3ea71441"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03536.html#gadb06f3adddd74993ab0da4be3ea71441">ATCA_ECC_P256_PRIVATE_KEY_SIZE</a>&#160;&#160;&#160;(<a class="el" href="a03536.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a>)</td></tr>
-<tr class="separator:gadb06f3adddd74993ab0da4be3ea71441"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6bcf19f52fbceb7801fc3216d528fb3c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03536.html#ga6bcf19f52fbceb7801fc3216d528fb3c">ATCA_ECC_P256_PUBLIC_KEY_SIZE</a>&#160;&#160;&#160;(<a class="el" href="a03536.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a> * 2)</td></tr>
-<tr class="separator:ga6bcf19f52fbceb7801fc3216d528fb3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6eba254effebfbbb95381511fc7d80d5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03536.html#ga6eba254effebfbbb95381511fc7d80d5">ATCA_ECC_P256_SIGNATURE_SIZE</a>&#160;&#160;&#160;(<a class="el" href="a03536.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a> * 2)</td></tr>
-<tr class="separator:ga6eba254effebfbbb95381511fc7d80d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
+
+<p>CryptoAuthLib Basic API methods for Verify command.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00185_source.html">atca_basic.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00125_source.html">atca_execution.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00545_source.html">host/atca_host.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaa61eee6f208a1633d35cdf8d628a6835"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03536.html#gaa61eee6f208a1633d35cdf8d628a6835">atcac_sw_ecdsa_verify_p256</a> (const uint8_t msg[<a class="el" href="a03536.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a>], const uint8_t signature[<a class="el" href="a03536.html#ga6eba254effebfbbb95381511fc7d80d5">ATCA_ECC_P256_SIGNATURE_SIZE</a>], const uint8_t public_key[<a class="el" href="a03536.html#ga6bcf19f52fbceb7801fc3216d528fb3c">ATCA_ECC_P256_PUBLIC_KEY_SIZE</a>])</td></tr>
-<tr class="memdesc:gaa61eee6f208a1633d35cdf8d628a6835"><td class="mdescLeft">&#160;</td><td class="mdescRight">return software generated ECDSA verification result and the function is currently not implemented  <a href="a03536.html#gaa61eee6f208a1633d35cdf8d628a6835">More...</a><br /></td></tr>
-<tr class="separator:gaa61eee6f208a1633d35cdf8d628a6835"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga694d921c7bc17a0e158ef96e3d476700"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga694d921c7bc17a0e158ef96e3d476700">atcab_verify</a> (uint8_t mode, uint16_t key_id, const uint8_t *signature, const uint8_t *public_key, const uint8_t *other_data, uint8_t *mac)</td></tr>
+<tr class="memdesc:ga694d921c7bc17a0e158ef96e3d476700"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command, which takes an ECDSA [R,S] signature and verifies that it is correctly generated from a given message and public key. In all cases, the signature is an input to the command.  <a href="a00910.html#ga694d921c7bc17a0e158ef96e3d476700">More...</a><br /></td></tr>
+<tr class="separator:ga694d921c7bc17a0e158ef96e3d476700"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2c3e18de900ba705192963d08b37f600"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga2c3e18de900ba705192963d08b37f600">atcab_verify_extern</a> (const uint8_t *message, const uint8_t *signature, const uint8_t *public_key, bool *is_verified)</td></tr>
+<tr class="memdesc:ga2c3e18de900ba705192963d08b37f600"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command, which verifies a signature (ECDSA verify operation) with all components (message, signature, and public key) supplied. The message to be signed will be loaded into the Message Digest Buffer to the ATECC608A device or TempKey for other devices.  <a href="a00910.html#ga2c3e18de900ba705192963d08b37f600">More...</a><br /></td></tr>
+<tr class="separator:ga2c3e18de900ba705192963d08b37f600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga17bf17c4786be097a0bb111a6f9d8ca6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga17bf17c4786be097a0bb111a6f9d8ca6">atcab_verify_extern_mac</a> (const uint8_t *message, const uint8_t *signature, const uint8_t *public_key, const uint8_t *num_in, const uint8_t *io_key, bool *is_verified)</td></tr>
+<tr class="memdesc:ga17bf17c4786be097a0bb111a6f9d8ca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command with verification MAC, which verifies a signature (ECDSA verify operation) with all components (message, signature, and public key) supplied. This function is only available on the ATECC608A.  <a href="a00910.html#ga17bf17c4786be097a0bb111a6f9d8ca6">More...</a><br /></td></tr>
+<tr class="separator:ga17bf17c4786be097a0bb111a6f9d8ca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae8cc7670847805423ad591985eecd832"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gae8cc7670847805423ad591985eecd832">atcab_verify_stored</a> (const uint8_t *message, const uint8_t *signature, uint16_t key_id, bool *is_verified)</td></tr>
+<tr class="memdesc:gae8cc7670847805423ad591985eecd832"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command, which verifies a signature (ECDSA verify operation) with a public key stored in the device. The message to be signed will be loaded into the Message Digest Buffer to the ATECC608A device or TempKey for other devices.  <a href="a00910.html#gae8cc7670847805423ad591985eecd832">More...</a><br /></td></tr>
+<tr class="separator:gae8cc7670847805423ad591985eecd832"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa52cdbbfd2f089d8eb42ef2640204ca7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gaa52cdbbfd2f089d8eb42ef2640204ca7">atcab_verify_stored_mac</a> (const uint8_t *message, const uint8_t *signature, uint16_t key_id, const uint8_t *num_in, const uint8_t *io_key, bool *is_verified)</td></tr>
+<tr class="memdesc:gaa52cdbbfd2f089d8eb42ef2640204ca7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command with verification MAC, which verifies a signature (ECDSA verify operation) with a public key stored in the device. This function is only available on the ATECC608A.  <a href="a00910.html#gaa52cdbbfd2f089d8eb42ef2640204ca7">More...</a><br /></td></tr>
+<tr class="separator:gaa52cdbbfd2f089d8eb42ef2640204ca7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf9a0c7772ebb65b87c4a4788850702b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gacf9a0c7772ebb65b87c4a4788850702b">atcab_verify_validate</a> (uint16_t key_id, const uint8_t *signature, const uint8_t *other_data, bool *is_verified)</td></tr>
+<tr class="memdesc:gacf9a0c7772ebb65b87c4a4788850702b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command in Validate mode to validate a public key stored in a slot.  <a href="a00910.html#gacf9a0c7772ebb65b87c4a4788850702b">More...</a><br /></td></tr>
+<tr class="separator:gacf9a0c7772ebb65b87c4a4788850702b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9393b545b2fa1fdd539672a0428a30ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga9393b545b2fa1fdd539672a0428a30ab">atcab_verify_invalidate</a> (uint16_t key_id, const uint8_t *signature, const uint8_t *other_data, bool *is_verified)</td></tr>
+<tr class="memdesc:ga9393b545b2fa1fdd539672a0428a30ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command in Invalidate mode which invalidates a previously validated public key stored in a slot.  <a href="a00910.html#ga9393b545b2fa1fdd539672a0428a30ab">More...</a><br /></td></tr>
+<tr class="separator:ga9393b545b2fa1fdd539672a0428a30ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for Verify command. </p>
+<p>The Verify command takes an ECDSA [R,S] signature and verifies that it is correctly generated given an input message digest and public key.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC108A, ATECC508A, and ATECC608A. There are differences in the modes that they support. Refer to device datasheet for full details.</dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="a00266.html">atca_crypto_sw_ecdsa.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00266.html">atca_basic_verify.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

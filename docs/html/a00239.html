@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_basic_sign.c File Reference</title>
+<title>CryptoAuthLib: atca_basic_nonce.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,38 +89,47 @@ $(document).ready(function(){initNavTree('a00239.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_basic_sign.c File Reference</div>  </div>
+<div class="title">atca_basic_nonce.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for Sign command.  
+<p>CryptoAuthLib Basic API methods for Nonce command.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00179_source.html">atca_basic.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00119_source.html">atca_execution.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00185_source.html">atca_basic.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00125_source.html">atca_execution.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga5c1e598bf3d4d25b522f42d6038a4268"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03535.html#ga5c1e598bf3d4d25b522f42d6038a4268">atcab_sign_base</a> (uint8_t mode, uint16_t key_id, uint8_t *signature)</td></tr>
-<tr class="memdesc:ga5c1e598bf3d4d25b522f42d6038a4268"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Sign command, which generates a signature using the ECDSA algorithm.  <a href="a03535.html#ga5c1e598bf3d4d25b522f42d6038a4268">More...</a><br /></td></tr>
-<tr class="separator:ga5c1e598bf3d4d25b522f42d6038a4268"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga69b8282d1b1e0c54b9a7d286fed503b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03535.html#ga69b8282d1b1e0c54b9a7d286fed503b8">atcab_sign</a> (uint16_t key_id, const uint8_t *msg, uint8_t *signature)</td></tr>
-<tr class="memdesc:ga69b8282d1b1e0c54b9a7d286fed503b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Sign command, to sign a 32-byte external message using the private key in the specified slot. The message to be signed will be loaded into the Message Digest Buffer to the ATECC608A device or TempKey for other devices.  <a href="a03535.html#ga69b8282d1b1e0c54b9a7d286fed503b8">More...</a><br /></td></tr>
-<tr class="separator:ga69b8282d1b1e0c54b9a7d286fed503b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga559add3e8b4f85a9d91fc0ed86aefa29"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03535.html#ga559add3e8b4f85a9d91fc0ed86aefa29">atcab_sign_internal</a> (uint16_t key_id, bool is_invalidate, bool is_full_sn, uint8_t *signature)</td></tr>
-<tr class="memdesc:ga559add3e8b4f85a9d91fc0ed86aefa29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Sign command to sign an internally generated message.  <a href="a03535.html#ga559add3e8b4f85a9d91fc0ed86aefa29">More...</a><br /></td></tr>
-<tr class="separator:ga559add3e8b4f85a9d91fc0ed86aefa29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf8e10791759a8a5e5dcd82774f4895d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gaf8e10791759a8a5e5dcd82774f4895d6">atcab_nonce_base</a> (uint8_t mode, uint16_t zero, const uint8_t *num_in, uint8_t *rand_out)</td></tr>
+<tr class="memdesc:gaf8e10791759a8a5e5dcd82774f4895d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Nonce command, which loads a random or fixed nonce/data into the device for use by subsequent commands.  <a href="a00910.html#gaf8e10791759a8a5e5dcd82774f4895d6">More...</a><br /></td></tr>
+<tr class="separator:gaf8e10791759a8a5e5dcd82774f4895d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2293df1c1c794496790bae25d3844fa5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga2293df1c1c794496790bae25d3844fa5">atcab_nonce</a> (const uint8_t *num_in)</td></tr>
+<tr class="memdesc:ga2293df1c1c794496790bae25d3844fa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command in pass-through mode to initialize TempKey to a specified value.  <a href="a00910.html#ga2293df1c1c794496790bae25d3844fa5">More...</a><br /></td></tr>
+<tr class="separator:ga2293df1c1c794496790bae25d3844fa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2239ae3a87c341a48aa108bd82a58552"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga2239ae3a87c341a48aa108bd82a58552">atcab_nonce_load</a> (uint8_t target, const uint8_t *num_in, uint16_t num_in_size)</td></tr>
+<tr class="memdesc:ga2239ae3a87c341a48aa108bd82a58552"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command in pass-through mode to load one of the device's internal buffers with a fixed value.  <a href="a00910.html#ga2239ae3a87c341a48aa108bd82a58552">More...</a><br /></td></tr>
+<tr class="separator:ga2239ae3a87c341a48aa108bd82a58552"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed67d447d547c67b7b8be6b958d1fb5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gaed67d447d547c67b7b8be6b958d1fb5c">atcab_nonce_rand</a> (const uint8_t *num_in, uint8_t *rand_out)</td></tr>
+<tr class="memdesc:gaed67d447d547c67b7b8be6b958d1fb5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command to generate a random nonce combining a host nonce (num_in) and a device random number.  <a href="a00910.html#gaed67d447d547c67b7b8be6b958d1fb5c">More...</a><br /></td></tr>
+<tr class="separator:gaed67d447d547c67b7b8be6b958d1fb5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga114a721517c95d5ba5fcac5b226669d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga114a721517c95d5ba5fcac5b226669d6">atcab_challenge</a> (const uint8_t *num_in)</td></tr>
+<tr class="memdesc:ga114a721517c95d5ba5fcac5b226669d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command in pass-through mode to initialize TempKey to a specified value.  <a href="a00910.html#ga114a721517c95d5ba5fcac5b226669d6">More...</a><br /></td></tr>
+<tr class="separator:ga114a721517c95d5ba5fcac5b226669d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaadde4309089c569fd87c24a1a2326cd4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gaadde4309089c569fd87c24a1a2326cd4">atcab_challenge_seed_update</a> (const uint8_t *num_in, uint8_t *rand_out)</td></tr>
+<tr class="memdesc:gaadde4309089c569fd87c24a1a2326cd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command to generate a random challenge combining a host nonce (num_in) and a device random number.  <a href="a00910.html#gaadde4309089c569fd87c24a1a2326cd4">More...</a><br /></td></tr>
+<tr class="separator:gaadde4309089c569fd87c24a1a2326cd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for Sign command. </p>
-<p>The Sign command generates a signature using the private key in slot with ECDSA algorithm.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC108A, ATECC508A, and ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for Nonce command. </p>
+<p>The Nonce command generates a nonce for use by a subsequent commands of the device by combining an internally generated random number with an input value from the system.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, and ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00239.html">atca_basic_sign.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00239.html">atca_basic_nonce.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

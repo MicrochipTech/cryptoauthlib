@@ -1,4 +1,6 @@
 var a00221 =
 [
-    [ "atcab_priv_write", "a03535.html#gad01e8e785073d8655de9116e7df8e7b5", null ]
+    [ "atcab_genkey", "a00910.html#ga617bdbdce7b5736351d93214d44c5b8f", null ],
+    [ "atcab_genkey_base", "a00910.html#gaa8b6953ad2c7f749e61566fd38fe6903", null ],
+    [ "atcab_get_pubkey", "a00910.html#gad2096a4618dd37c48ed48847fe63d844", null ]
 ];

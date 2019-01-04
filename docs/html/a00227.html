@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_basic_read.c File Reference</title>
+<title>CryptoAuthLib: atca_basic_info.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,60 +89,43 @@ $(document).ready(function(){initNavTree('a00227.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_basic_read.c File Reference</div>  </div>
+<div class="title">atca_basic_info.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for Read command.  
+<p>CryptoAuthLib Basic API methods for Info command.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00179_source.html">atca_basic.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00119_source.html">atca_execution.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00524_source.html">host/atca_host.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00185_source.html">atca_basic.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00125_source.html">atca_execution.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga3ce01f02f456c08891ca1d67cd3ed0eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03535.html#ga3ce01f02f456c08891ca1d67cd3ed0eb">atcab_read_zone</a> (uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint8_t *data, uint8_t len)</td></tr>
-<tr class="memdesc:ga3ce01f02f456c08891ca1d67cd3ed0eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command, which reads either 4 or 32 bytes of data from a given slot, configuration zone, or the OTP zone.  <a href="a03535.html#ga3ce01f02f456c08891ca1d67cd3ed0eb">More...</a><br /></td></tr>
-<tr class="separator:ga3ce01f02f456c08891ca1d67cd3ed0eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga96c434878e1f435e2cda5b0b5fec444f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03535.html#ga96c434878e1f435e2cda5b0b5fec444f">atcab_read_serial_number</a> (uint8_t *serial_number)</td></tr>
-<tr class="memdesc:ga96c434878e1f435e2cda5b0b5fec444f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command, which reads the 9 byte serial number of the device from the config zone.  <a href="a03535.html#ga96c434878e1f435e2cda5b0b5fec444f">More...</a><br /></td></tr>
-<tr class="separator:ga96c434878e1f435e2cda5b0b5fec444f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga802de50265ff91dc30dd7c93d9e026e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03535.html#ga802de50265ff91dc30dd7c93d9e026e1">atcab_is_slot_locked</a> (uint16_t slot, bool *is_locked)</td></tr>
-<tr class="memdesc:ga802de50265ff91dc30dd7c93d9e026e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command, which reads the configuration zone to see if the specified slot is locked.  <a href="a03535.html#ga802de50265ff91dc30dd7c93d9e026e1">More...</a><br /></td></tr>
-<tr class="separator:ga802de50265ff91dc30dd7c93d9e026e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaefce484222bdbedef37787a9b10d4426"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03535.html#gaefce484222bdbedef37787a9b10d4426">atcab_is_locked</a> (uint8_t zone, bool *is_locked)</td></tr>
-<tr class="memdesc:gaefce484222bdbedef37787a9b10d4426"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command, which reads the configuration zone to see if the specified zone is locked.  <a href="a03535.html#gaefce484222bdbedef37787a9b10d4426">More...</a><br /></td></tr>
-<tr class="separator:gaefce484222bdbedef37787a9b10d4426"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga778a262b86fa1f8a38139cbae34376e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03535.html#ga778a262b86fa1f8a38139cbae34376e4">atcab_read_enc</a> (uint16_t key_id, uint8_t block, uint8_t *data, const uint8_t *enc_key, const uint16_t enc_key_id)</td></tr>
-<tr class="memdesc:ga778a262b86fa1f8a38139cbae34376e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command on a slot configured for encrypted reads and decrypts the data to return it as plaintext.  <a href="a03535.html#ga778a262b86fa1f8a38139cbae34376e4">More...</a><br /></td></tr>
-<tr class="separator:ga778a262b86fa1f8a38139cbae34376e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8ef47330eef6bc72ae8f7a8ef026dae3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03535.html#ga8ef47330eef6bc72ae8f7a8ef026dae3">atcab_read_config_zone</a> (uint8_t *config_data)</td></tr>
-<tr class="memdesc:ga8ef47330eef6bc72ae8f7a8ef026dae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command to read the complete device configuration zone.  <a href="a03535.html#ga8ef47330eef6bc72ae8f7a8ef026dae3">More...</a><br /></td></tr>
-<tr class="separator:ga8ef47330eef6bc72ae8f7a8ef026dae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadb91d2c3601b95f0ad413cf84a4dfd87"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03535.html#gadb91d2c3601b95f0ad413cf84a4dfd87">atcab_cmp_config_zone</a> (uint8_t *config_data, bool *same_config)</td></tr>
-<tr class="memdesc:gadb91d2c3601b95f0ad413cf84a4dfd87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares a specified configuration zone with the configuration zone currently on the device.  <a href="a03535.html#gadb91d2c3601b95f0ad413cf84a4dfd87">More...</a><br /></td></tr>
-<tr class="separator:gadb91d2c3601b95f0ad413cf84a4dfd87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga098c4c2c724b90b7e2f4ecf12b9530b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03535.html#ga098c4c2c724b90b7e2f4ecf12b9530b7">atcab_read_sig</a> (uint16_t slot, uint8_t *sig)</td></tr>
-<tr class="memdesc:ga098c4c2c724b90b7e2f4ecf12b9530b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command to read a 64 byte ECDSA P256 signature from a slot configured for clear reads.  <a href="a03535.html#ga098c4c2c724b90b7e2f4ecf12b9530b7">More...</a><br /></td></tr>
-<tr class="separator:ga098c4c2c724b90b7e2f4ecf12b9530b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga782ca1e5b1574b2b6793c841be22b28b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03535.html#ga782ca1e5b1574b2b6793c841be22b28b">atcab_read_pubkey</a> (uint16_t slot, uint8_t *public_key)</td></tr>
-<tr class="memdesc:ga782ca1e5b1574b2b6793c841be22b28b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command to read an ECC P256 public key from a slot configured for clear reads.  <a href="a03535.html#ga782ca1e5b1574b2b6793c841be22b28b">More...</a><br /></td></tr>
-<tr class="separator:ga782ca1e5b1574b2b6793c841be22b28b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga750704332198726725a327344f4f7dd5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03535.html#ga750704332198726725a327344f4f7dd5">atcab_read_bytes_zone</a> (uint8_t zone, uint16_t slot, size_t offset, uint8_t *data, size_t length)</td></tr>
-<tr class="memdesc:ga750704332198726725a327344f4f7dd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to read an arbitrary number of bytes from any zone configured for clear reads.  <a href="a03535.html#ga750704332198726725a327344f4f7dd5">More...</a><br /></td></tr>
-<tr class="separator:ga750704332198726725a327344f4f7dd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga806d07982fda5c30755af6b5b4ef9314"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga806d07982fda5c30755af6b5b4ef9314">atcab_info_base</a> (uint8_t mode, uint16_t param2, uint8_t *out_data)</td></tr>
+<tr class="memdesc:ga806d07982fda5c30755af6b5b4ef9314"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues an Info command, which return internal device information and can control GPIO and the persistent latch.  <a href="a00910.html#ga806d07982fda5c30755af6b5b4ef9314">More...</a><br /></td></tr>
+<tr class="separator:ga806d07982fda5c30755af6b5b4ef9314"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6e19ecd60be4c74665d9ec142e460771"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga6e19ecd60be4c74665d9ec142e460771">atcab_info</a> (uint8_t *revision)</td></tr>
+<tr class="memdesc:ga6e19ecd60be4c74665d9ec142e460771"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the Info command to get the device revision (DevRev).  <a href="a00910.html#ga6e19ecd60be4c74665d9ec142e460771">More...</a><br /></td></tr>
+<tr class="separator:ga6e19ecd60be4c74665d9ec142e460771"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga376b6ae92f14c60fba4ca5c6461e0b48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga376b6ae92f14c60fba4ca5c6461e0b48">atcab_info_get_latch</a> (bool *state)</td></tr>
+<tr class="memdesc:ga376b6ae92f14c60fba4ca5c6461e0b48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the Info command to get the persistent latch current state for an ATECC608A device.  <a href="a00910.html#ga376b6ae92f14c60fba4ca5c6461e0b48">More...</a><br /></td></tr>
+<tr class="separator:ga376b6ae92f14c60fba4ca5c6461e0b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2649126606db8a0b64ae8e19d09f6600"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga2649126606db8a0b64ae8e19d09f6600">atcab_info_set_latch</a> (bool state)</td></tr>
+<tr class="memdesc:ga2649126606db8a0b64ae8e19d09f6600"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the Info command to set the persistent latch state for an ATECC608A device.  <a href="a00910.html#ga2649126606db8a0b64ae8e19d09f6600">More...</a><br /></td></tr>
+<tr class="separator:ga2649126606db8a0b64ae8e19d09f6600"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for Read command. </p>
-<p>The Read command reads words either 4-byte words or 32-byte blocks from one of the memory zones of the device. The data may optionally be encrypted before being returned to the system.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for Info command. </p>
+<p>Info command returns a variety of static and dynamic information about the device and its state. Also is used to control the GPIO pin and the persistent latch.</p>
+<dl class="section note"><dt>Note</dt><dd>The ATSHA204A refers to this command as DevRev instead of Info, however, the OpCode and operation is the same.</dd>
+<dd>
+List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A &amp; ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00227.html">atca_basic_read.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00227.html">atca_basic_info.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

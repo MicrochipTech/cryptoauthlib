@@ -1,10 +1,14 @@
 var a00440 =
 [
-    [ "ATCASWIMaster_t", "a03537.html#ga257ed552f7d68eb1e5d3ca7baa01559a", null ],
-    [ "swi_flag", "a03537.html#ga8759b00e645502d0f1c3b7330e20e52b", [
-      [ "SWI_FLAG_CMD", "a03537.html#gga8759b00e645502d0f1c3b7330e20e52babacdf58fcbc837d4c4e6d9640e157340", null ],
-      [ "SWI_FLAG_TX", "a03537.html#gga8759b00e645502d0f1c3b7330e20e52ba17fa7af18b61921986085f42fc05cc9f", null ],
-      [ "SWI_FLAG_IDLE", "a03537.html#gga8759b00e645502d0f1c3b7330e20e52baeb0778b0887019be95260a2c0420d21a", null ],
-      [ "SWI_FLAG_SLEEP", "a03537.html#gga8759b00e645502d0f1c3b7330e20e52ba1d93b236433ad7d6c2b82659009f42f7", null ]
-    ] ]
+    [ "change_i2c_speed", "a00912.html#gab7f613b378e0d01b80703df3ac662d6d", null ],
+    [ "hal_i2c_discover_buses", "a00912.html#ga05700385437884cc7b28c38d33e84f8c", null ],
+    [ "hal_i2c_discover_devices", "a00912.html#gac7644e62498a596c09952ee3b28017b9", null ],
+    [ "hal_i2c_idle", "a00912.html#ga9317303ada721ff3f97e7aad69437a30", null ],
+    [ "hal_i2c_init", "a00912.html#ga09e7f465a040fbd19ea136269571de3c", null ],
+    [ "hal_i2c_post_init", "a00912.html#gafbe53519362f18c2688d10da6f7c618f", null ],
+    [ "hal_i2c_receive", "a00912.html#ga7785bcc305c14e2dc188bb1b9a77814a", null ],
+    [ "hal_i2c_release", "a00912.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
+    [ "hal_i2c_send", "a00912.html#gacd0fb31f0f88ef3762665e26b5aa784b", null ],
+    [ "hal_i2c_sleep", "a00912.html#ga3f89bae6a625d5f37abdcc99408def27", null ],
+    [ "hal_i2c_wake", "a00912.html#gad4df1b6755e2d5b5d9e810371e45ca8c", null ]
 ];

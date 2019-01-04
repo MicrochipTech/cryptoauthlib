@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: io_protection_key.h File Reference</title>
+<title>CryptoAuthLib: crypto_device_app.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,60 +89,47 @@ $(document).ready(function(){initNavTree('a00017.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">io_protection_key.h File Reference</div>  </div>
+<div class="title">crypto_device_app.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Provides required interface to access IO protection key.  
+<p>Provides required interface between boot loader and secure boot.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00128_source.html">atca_status.h</a>&quot;</code><br />
-</div>
-<p><a href="a00017_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00320_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00029_source.html">secure_boot.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00023_source.html">io_protection_key.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00020_source.html">crypto_device_app.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:adb01c317f81145702f564ca1d46ec33b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#adb01c317f81145702f564ca1d46ec33b">io_protection_get_key</a> (uint8_t *io_key)</td></tr>
-<tr class="separator:adb01c317f81145702f564ca1d46ec33b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e02c996fdc083bb4c4444057e429a44"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a8e02c996fdc083bb4c4444057e429a44">io_protection_set_key</a> (uint8_t *io_key)</td></tr>
-<tr class="separator:a8e02c996fdc083bb4c4444057e429a44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19617ea9c26833614201b9695ec7a1ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a19617ea9c26833614201b9695ec7a1ca">crypto_device_verify_app</a> (void)</td></tr>
+<tr class="memdesc:a19617ea9c26833614201b9695ec7a1ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Takes care interface with secure boot and provides status about user application. This also takes care of device configuration if enabled.  <a href="#a19617ea9c26833614201b9695ec7a1ca">More...</a><br /></td></tr>
+<tr class="separator:a19617ea9c26833614201b9695ec7a1ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Provides required interface to access IO protection key. </p>
+<div class="textblock"><p>Provides required interface between boot loader and secure boot. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="adb01c317f81145702f564ca1d46ec33b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adb01c317f81145702f564ca1d46ec33b">&#9670;&nbsp;</a></span>io_protection_get_key()</h2>
+<a id="a19617ea9c26833614201b9695ec7a1ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19617ea9c26833614201b9695ec7a1ca">&#9670;&nbsp;</a></span>crypto_device_verify_app()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> io_protection_get_key </td>
+          <td class="memname"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> crypto_device_verify_app </td>
           <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>io_key</em></td><td>)</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a8e02c996fdc083bb4c4444057e429a44"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e02c996fdc083bb4c4444057e429a44">&#9670;&nbsp;</a></span>io_protection_set_key()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> io_protection_set_key </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>io_key</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>Takes care interface with secure boot and provides status about user application. This also takes care of device configuration if enabled. </p>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
 
 </div>
 </div>
@@ -151,7 +138,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d422163b96683743ed3963d4aac17747.html">app</a></li><li class="navelem"><a class="el" href="dir_0680cb466dcc0d680630f5d267d4b7d1.html">secure_boot</a></li><li class="navelem"><a class="el" href="a00017.html">io_protection_key.h</a></li>
+    <li class="navelem"><a class="el" href="dir_d422163b96683743ed3963d4aac17747.html">app</a></li><li class="navelem"><a class="el" href="dir_0680cb466dcc0d680630f5d267d4b7d1.html">secure_boot</a></li><li class="navelem"><a class="el" href="a00017.html">crypto_device_app.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
