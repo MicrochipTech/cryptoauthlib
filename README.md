@@ -60,6 +60,11 @@ Examples
 
 Release notes
 -----------
+01/25/2019
+  - Python JWT support
+  - Python configuration structures added
+  - Restructure of secure boot app
+
 01/04/2019
   - Added GCM functions
   - Split AES modes into separate files

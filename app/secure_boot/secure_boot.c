@@ -223,19 +223,21 @@ static ATCA_STATUS secure_boot_calc_app_digest(secure_boot_parameters* secure_bo
 
     return ATCA_SUCCESS;
 }
-
-ATCA_STATUS check_device_io_protection_key_generate(void)
+/** \brief Binds host MCU and Secure element with IO protection key.
+ *  \param[in]  slot    The slot number of IO protection Key.
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS bind_host_and_secure_element_with_io_protection(uint16_t slot)
 {
     bool is_locked;
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t io_prot_key[ATCA_KEY_SIZE];
 
     /*IO protection key is not on host... Get bind with device */
-
     do
     {
         /* First check Lock status on device */
-        if ((status = atcab_is_slot_locked(IO_PROTECTION_KEY_SLOT, &is_locked)) != ATCA_SUCCESS)
+        if ((status = atcab_is_slot_locked(slot, &is_locked)) != ATCA_SUCCESS)
         {
             break;
         }
@@ -253,9 +255,8 @@ ATCA_STATUS check_device_io_protection_key_generate(void)
             break;
         }
 
-
         /*Load the random number as IO Protection key on the device */
-        if ((status = atcab_write_zone(ATCA_ZONE_DATA, IO_PROTECTION_KEY_SLOT, 0, 0, io_prot_key, ATCA_KEY_SIZE)) != ATCA_SUCCESS)
+        if ((status = atcab_write_zone(ATCA_ZONE_DATA, slot, 0, 0, io_prot_key, ATCA_KEY_SIZE)) != ATCA_SUCCESS)
         {
             break;
         }
@@ -267,12 +268,10 @@ ATCA_STATUS check_device_io_protection_key_generate(void)
         }
 
         /*Lock IO protection key slot */
-        if ((status = atcab_lock_data_slot(IO_PROTECTION_KEY_SLOT)) != ATCA_SUCCESS)
+        if ((status = atcab_lock_data_slot(slot)) != ATCA_SUCCESS)
         {
             break;
         }
-
-
     }
     while (0);
 

@@ -1,4 +1,4 @@
 var a00218 =
 [
-    [ "atcab_gendig", "a00910.html#ga70751ea87f2cf913986bc7bca2cc661f", null ]
+    [ "atcab_hmac", "a00916.html#ga45f1d09a51f7a1f68916536ab5125b9d", null ]
 ];

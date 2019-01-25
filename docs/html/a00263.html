@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_basic_updateextra.c File Reference</title>
+<title>CryptoAuthLib: atca_basic_write.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,24 +89,43 @@ $(document).ready(function(){initNavTree('a00263.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_basic_updateextra.c File Reference</div>  </div>
+<div class="title">atca_basic_write.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for UpdateExtra command.  
+<p>CryptoAuthLib Basic API methods for Write command.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00185_source.html">atca_basic.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00125_source.html">atca_execution.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00179_source.html">atca_basic.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00119_source.html">atca_execution.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00539_source.html">host/atca_host.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga416e4aeacf3acc35b1d5b76028c6947d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga416e4aeacf3acc35b1d5b76028c6947d">atcab_updateextra</a> (uint8_t mode, uint16_t new_value)</td></tr>
-<tr class="memdesc:ga416e4aeacf3acc35b1d5b76028c6947d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes UpdateExtra command to update the values of the two extra bytes within the Configuration zone (bytes 84 and 85).  <a href="a00910.html#ga416e4aeacf3acc35b1d5b76028c6947d">More...</a><br /></td></tr>
-<tr class="separator:ga416e4aeacf3acc35b1d5b76028c6947d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabf2b29b4d3ae926b63c403d084380dbe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00916.html#gabf2b29b4d3ae926b63c403d084380dbe">atcab_write</a> (uint8_t zone, uint16_t address, const uint8_t *value, const uint8_t *mac)</td></tr>
+<tr class="memdesc:gabf2b29b4d3ae926b63c403d084380dbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Write command, which writes either one four byte word or a 32-byte block to one of the EEPROM zones on the device. Depending upon the value of the WriteConfig byte for this slot, the data may be required to be encrypted by the system prior to being sent to the device. This command cannot be used to write slots configured as ECC private keys.  <a href="a00916.html#gabf2b29b4d3ae926b63c403d084380dbe">More...</a><br /></td></tr>
+<tr class="separator:gabf2b29b4d3ae926b63c403d084380dbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1f5a6bbcf4f840803635fb8951b3a7e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00916.html#ga1f5a6bbcf4f840803635fb8951b3a7e2">atcab_write_zone</a> (uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, const uint8_t *data, uint8_t len)</td></tr>
+<tr class="memdesc:ga1f5a6bbcf4f840803635fb8951b3a7e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Write command, which writes either 4 or 32 bytes of data into a device zone.  <a href="a00916.html#ga1f5a6bbcf4f840803635fb8951b3a7e2">More...</a><br /></td></tr>
+<tr class="separator:ga1f5a6bbcf4f840803635fb8951b3a7e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga14cf75d1be264ac1125087d76ee6344c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00916.html#ga14cf75d1be264ac1125087d76ee6344c">atcab_write_enc</a> (uint16_t key_id, uint8_t block, const uint8_t *data, const uint8_t *enc_key, const uint16_t enc_key_id)</td></tr>
+<tr class="memdesc:ga14cf75d1be264ac1125087d76ee6344c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Write command, which performs an encrypted write of a 32 byte block into given slot.  <a href="a00916.html#ga14cf75d1be264ac1125087d76ee6344c">More...</a><br /></td></tr>
+<tr class="separator:ga14cf75d1be264ac1125087d76ee6344c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0777a86aa412a97b19cc72a12c171b94"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00916.html#ga0777a86aa412a97b19cc72a12c171b94">atcab_write_config_zone</a> (const uint8_t *config_data)</td></tr>
+<tr class="memdesc:ga0777a86aa412a97b19cc72a12c171b94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Write command, which writes the configuration zone.  <a href="a00916.html#ga0777a86aa412a97b19cc72a12c171b94">More...</a><br /></td></tr>
+<tr class="separator:ga0777a86aa412a97b19cc72a12c171b94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47cbedeb3c3e9f7cbf2b9433cd60d1aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00916.html#ga47cbedeb3c3e9f7cbf2b9433cd60d1aa">atcab_write_pubkey</a> (uint16_t slot, const uint8_t *public_key)</td></tr>
+<tr class="memdesc:ga47cbedeb3c3e9f7cbf2b9433cd60d1aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Write command, which writes a public key to a data slot in the device format.  <a href="a00916.html#ga47cbedeb3c3e9f7cbf2b9433cd60d1aa">More...</a><br /></td></tr>
+<tr class="separator:ga47cbedeb3c3e9f7cbf2b9433cd60d1aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac395a7e195aa3cf28b48de345755feb0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00916.html#gac395a7e195aa3cf28b48de345755feb0">atcab_write_bytes_zone</a> (uint8_t zone, uint16_t slot, size_t offset_bytes, const uint8_t *data, size_t length)</td></tr>
+<tr class="memdesc:gac395a7e195aa3cf28b48de345755feb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Write command, which writes data into the configuration, otp, or data zones with a given byte offset and length. Offset and length must be multiples of a word (4 bytes).  <a href="a00916.html#gac395a7e195aa3cf28b48de345755feb0">More...</a><br /></td></tr>
+<tr class="separator:gac395a7e195aa3cf28b48de345755feb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab25ca44957dff1c2df34607738ca3bf7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00916.html#gab25ca44957dff1c2df34607738ca3bf7">atcab_write_config_counter</a> (uint16_t counter_id, uint32_t counter_value)</td></tr>
+<tr class="memdesc:gab25ca44957dff1c2df34607738ca3bf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize one of the monotonic counters in device with a specific value.  <a href="a00916.html#gab25ca44957dff1c2df34607738ca3bf7">More...</a><br /></td></tr>
+<tr class="separator:gab25ca44957dff1c2df34607738ca3bf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for UpdateExtra command. </p>
-<p>The UpdateExtra command is used to update the values of the two extra bytes within the Configuration zone after the Configuration zone has been locked.</p>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for Write command. </p>
+<p>The Write command writes either one 4-byte word or a 32-byte block to one of the EEPROM zones on the device. Depending upon the value of the WriteConfig byte for a slot, the data may be required to be encrypted by the system prior to being sent to the device</p>
 <dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, and ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
@@ -114,7 +133,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00263.html">atca_basic_updateextra.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00263.html">atca_basic_write.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

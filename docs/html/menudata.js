@@ -143,8 +143,7 @@ var menudata={children:[
 {text:"Typedefs",url:"globals_type.html",children:[
 {text:"a",url:"globals_type.html#index_a"},
 {text:"c",url:"globals_type.html#index_c"},
-{text:"h",url:"globals_type.html#index_h"},
-{text:"s",url:"globals_type.html#index_s"}]},
+{text:"h",url:"globals_type.html#index_h"}]},
 {text:"Enumerations",url:"globals_enum.html"},
 {text:"Enumerator",url:"globals_eval.html",children:[
 {text:"a",url:"globals_eval.html#index_a"},

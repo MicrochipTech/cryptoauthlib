@@ -1,7 +1,9 @@
 var a00227 =
 [
-    [ "atcab_info", "a00910.html#ga6e19ecd60be4c74665d9ec142e460771", null ],
-    [ "atcab_info_base", "a00910.html#ga806d07982fda5c30755af6b5b4ef9314", null ],
-    [ "atcab_info_get_latch", "a00910.html#ga376b6ae92f14c60fba4ca5c6461e0b48", null ],
-    [ "atcab_info_set_latch", "a00910.html#ga2649126606db8a0b64ae8e19d09f6600", null ]
+    [ "atcab_lock", "a00916.html#ga25d2895192d93c524f5dba92a492cdfb", null ],
+    [ "atcab_lock_config_zone", "a00916.html#ga7cd67c03c7184ad041e2c0ad4f27db23", null ],
+    [ "atcab_lock_config_zone_crc", "a00916.html#ga0698e0c55ad700fe57498321e842cb38", null ],
+    [ "atcab_lock_data_slot", "a00916.html#ga958190a9182d1b54f82fbca8216406ea", null ],
+    [ "atcab_lock_data_zone", "a00916.html#ga8020aa89a5bed09ad35320b78e0fb890", null ],
+    [ "atcab_lock_data_zone_crc", "a00916.html#gaf29e398e2aca927ab4606aa1ec0308c6", null ]
 ];

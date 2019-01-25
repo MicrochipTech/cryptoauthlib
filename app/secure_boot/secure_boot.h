@@ -45,10 +45,17 @@ extern "C" {
 #define SECURE_BOOT_CONFIG_FULL_SIGN            2
 #define SECURE_BOOT_CONFIG_FULL_DIG             3
 
+#ifndef SECURE_BOOT_CONFIGURATION
 #define SECURE_BOOT_CONFIGURATION               SECURE_BOOT_CONFIG_FULL_DIG
-#define SECURE_BOOT_DIGEST_ENCRYPT_ENABLED      true
-#define SECURE_BOOT_UPGRADE_SUPPORT             true
+#endif
 
+#ifndef SECURE_BOOT_DIGEST_ENCRYPT_ENABLED
+#define SECURE_BOOT_DIGEST_ENCRYPT_ENABLED      true
+#endif
+
+#ifndef SECURE_BOOT_UPGRADE_SUPPORT
+#define SECURE_BOOT_UPGRADE_SUPPORT             true
+#endif
 
 typedef struct
 {
@@ -73,11 +80,8 @@ typedef struct
     #endif
 }secure_boot_parameters;
 
-typedef ATCA_STATUS (*secure_boot_handler)(secure_boot_parameters* secure_boot_params);
-
-
 ATCA_STATUS secure_boot_process(void);
-ATCA_STATUS check_device_io_protection_key_generate(void);
+ATCA_STATUS bind_host_and_secure_element_with_io_protection(uint16_t slot);
 extern ATCA_STATUS host_generate_random_number(uint8_t *rand);
 
 #ifdef __cplusplus

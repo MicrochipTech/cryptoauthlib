@@ -23,8 +23,8 @@ ATCACERT: classes and functions for interacting with compressed certificates
 
 import binascii
 from datetime import datetime
-from ctypes import Structure, c_int, c_uint8, c_uint16, c_char, POINTER, Array, create_string_buffer, c_uint32, byref
-from .library import get_cryptoauthlib, get_ctype_by_name, AtcaReference
+from ctypes import Structure, c_int, c_uint8, c_uint16, c_char, POINTER, create_string_buffer, c_uint32, byref
+from .library import get_cryptoauthlib, get_ctype_by_name, AtcaReference, AtcaStructure
 from .atcaenum import AtcaEnum
 from .status import Status
 
@@ -160,33 +160,6 @@ def _atcacert_convert_enum(kwargs, name, enum):
             kwargs[name] = int(getattr(enum, k))
 
 
-def _atcacert_convert_structure(kwargs, name, structure):
-    """
-    Internal Helper Function:  Convert dictionary into the correct ctypes structure for a given field
-    :param kwargs: kwargs dictionary
-    :param name: _field_ name that will be converted
-    :param structure: Conversion Class (resulting type)
-    :return:
-    """
-    k = kwargs.get(name)
-    if k is not None and isinstance(k, dict):
-        kwargs[name] = structure(**k)
-
-
-def _atcacert_convert_array(kwargs, name, array):
-    """
-    Internal Helper Function: Convert python list into ctype array
-    :param kwargs: kwargs dictionary
-    :param name: _field_ name that will be converted
-    :param array: Conversion Class (resulting type)
-    :return:
-    """
-    k = kwargs.get(name)
-    if k is not None:
-        a = [array._type_(**e) for e in k]     # pylint: disable-msg=protected-access
-        kwargs[name] = array(*a)
-
-
 class atcacert_device_loc_t(Structure):
     """
     CTypes mirror of atcacert_device_loc_t from atcacert_def.h
@@ -226,7 +199,7 @@ class atcacert_cert_element_t(Structure):
     ]
     _pack_ = 1
 
-class atcacert_def_t(Structure):
+class atcacert_def_t(AtcaStructure):
     """
     CTypes mirror of atcacert_def_t from atcacert_def.h
     """
@@ -240,12 +213,6 @@ class atcacert_def_t(Structure):
             _atcacert_convert_enum(kwargs, 'expire_date_format', atcacert_date_format_t)
 
             _atcacert_convert_bytes(kwargs, 'cert_template', POINTER(c_uint8))
-
-            for f in self._fields_:
-                if isinstance(f[1](), Structure):
-                    _atcacert_convert_structure(kwargs, f[0], f[1])
-                elif isinstance(f[1](), Array):
-                    _atcacert_convert_array(kwargs, f[0], f[1])
 
         super(atcacert_def_t, self).__init__(*args, **kwargs)
 

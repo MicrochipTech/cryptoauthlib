@@ -1,10 +1,26 @@
 var a00266 =
 [
-    [ "atcab_verify", "a00910.html#ga694d921c7bc17a0e158ef96e3d476700", null ],
-    [ "atcab_verify_extern", "a00910.html#ga2c3e18de900ba705192963d08b37f600", null ],
-    [ "atcab_verify_extern_mac", "a00910.html#ga17bf17c4786be097a0bb111a6f9d8ca6", null ],
-    [ "atcab_verify_invalidate", "a00910.html#ga9393b545b2fa1fdd539672a0428a30ab", null ],
-    [ "atcab_verify_stored", "a00910.html#gae8cc7670847805423ad591985eecd832", null ],
-    [ "atcab_verify_stored_mac", "a00910.html#gaa52cdbbfd2f089d8eb42ef2640204ca7", null ],
-    [ "atcab_verify_validate", "a00910.html#gacf9a0c7772ebb65b87c4a4788850702b", null ]
+    [ "B64_IS_EQUAL", "a00266.html#a42f1518aca295fab198d042b18fef075", null ],
+    [ "B64_IS_INVALID", "a00266.html#abd4bf9cd40bc547cd53e2ef325a1c8d0", null ],
+    [ "atcab_base64decode", "a00916.html#ga1593f87c555ab964d3ebd5edd49aeb0b", null ],
+    [ "atcab_base64decode_", "a00916.html#ga55ba8a1787f69d44d6e40db041fbd786", null ],
+    [ "atcab_base64encode", "a00916.html#ga4b7e341b530fcac3f4eaae874bb36422", null ],
+    [ "atcab_base64encode_", "a00916.html#gaeeff0177acf29e6e7b134a14d7119d69", null ],
+    [ "atcab_bin2hex", "a00916.html#gae31a9fd8e9deca79aa5fef0292fe5272", null ],
+    [ "atcab_bin2hex_", "a00916.html#ga121d8391484d9e0c8c0e3f6dbac8285c", null ],
+    [ "atcab_hex2bin", "a00916.html#ga481179181349c801c16fc1ab698f2f24", null ],
+    [ "base64Char", "a00916.html#ga3cf48d232ffbc9000c4d8547120f8b2d", null ],
+    [ "base64Index", "a00916.html#ga175f401662f82c1e2ef822a9e1fd0b57", null ],
+    [ "isAlpha", "a00916.html#ga592c23e94097ad5e212beb6390aa88c6", null ],
+    [ "isBase64", "a00916.html#gac873a37c53fdd922d5b36efd737e3ec3", null ],
+    [ "isBase64Digit", "a00916.html#gad10d15454308230fbef54bdd43001ed2", null ],
+    [ "isDigit", "a00916.html#ga7a929bf65cbc777bab7e533a2755cfad", null ],
+    [ "isHex", "a00916.html#gab7ca9ee391118aafe6f3cf7df4fa5de3", null ],
+    [ "isHexAlpha", "a00916.html#ga78abefc293c0a04d8ef649c94c8a1057", null ],
+    [ "isHexDigit", "a00916.html#ga39003da4dc8a0b8999f1325c2f96f641", null ],
+    [ "isWhiteSpace", "a00916.html#gab3db1b55b966b792e8308a1819933c0e", null ],
+    [ "packHex", "a00916.html#gad017ae33af5a7ea062cea7d54de675a8", null ],
+    [ "atcab_b64rules_default", "a00916.html#ga50731dca3906502d901f5762aa4d9e71", null ],
+    [ "atcab_b64rules_mime", "a00916.html#ga87ae4178e0a5543d5b2192f26e049bd2", null ],
+    [ "atcab_b64rules_urlsafe", "a00916.html#ga1cccbbcdbcb7230cc0f8ea8a596feebe", null ]
 ];

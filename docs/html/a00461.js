@@ -1,10 +1,9 @@
 var a00461 =
 [
-    [ "ATCASWIMaster_t", "a00912.html#ga257ed552f7d68eb1e5d3ca7baa01559a", null ],
-    [ "swi_flag", "a00912.html#ga8759b00e645502d0f1c3b7330e20e52b", [
-      [ "SWI_FLAG_CMD", "a00912.html#gga8759b00e645502d0f1c3b7330e20e52babacdf58fcbc837d4c4e6d9640e157340", null ],
-      [ "SWI_FLAG_TX", "a00912.html#gga8759b00e645502d0f1c3b7330e20e52ba17fa7af18b61921986085f42fc05cc9f", null ],
-      [ "SWI_FLAG_IDLE", "a00912.html#gga8759b00e645502d0f1c3b7330e20e52baeb0778b0887019be95260a2c0420d21a", null ],
-      [ "SWI_FLAG_SLEEP", "a00912.html#gga8759b00e645502d0f1c3b7330e20e52ba1d93b236433ad7d6c2b82659009f42f7", null ]
-    ] ]
+    [ "SWI_FLAG_CMD", "a00918.html#ga13c01ac16bb14fde75e9c00dcd1cc761", null ],
+    [ "SWI_FLAG_IDLE", "a00918.html#ga6219d68ef915fdcd734f51960ba08fb6", null ],
+    [ "SWI_FLAG_SLEEP", "a00918.html#ga13ef2322176ad9b7ba3d2e23b277cce6", null ],
+    [ "SWI_FLAG_TX", "a00918.html#ga20af8352e13a7357650ba1cbf41349ea", null ],
+    [ "SWI_WAKE_TOKEN", "a00918.html#ga8f12e3b749e7b3dc905114cc7b8d0b38", null ],
+    [ "hal_swi_send_flag", "a00918.html#gaae96ea936a2e85d0bcb81b7868ee007d", null ]
 ];

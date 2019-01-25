@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: kit_protocol.c File Reference</title>
+<title>CryptoAuthLib: swi_bitbang_samd21.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,68 +87,308 @@ $(document).ready(function(){initNavTree('a00506.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">kit_protocol.c File Reference</div>  </div>
+<div class="title">swi_bitbang_samd21.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Microchip Crypto Auth hardware interface object.  
+<p>Hardware Interface Functions - SWI bit-banged.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00503_source.html">kit_phy.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00509_source.html">kit_protocol.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00275_source.html">basic/atca_helpers.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;asf.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00509_source.html">swi_bitbang_samd21.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00101_source.html">atca_command.h</a>&quot;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga8d90399e7f84850d1e8d4cd5e9f67fa8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00912.html#ga8d90399e7f84850d1e8d4cd5e9f67fa8">KIT_MAX_SCAN_COUNT</a>&#160;&#160;&#160;4</td></tr>
-<tr class="separator:ga8d90399e7f84850d1e8d4cd5e9f67fa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc1b033607e06cff7464dc0a49df2744"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00912.html#gadc1b033607e06cff7464dc0a49df2744">KIT_MAX_TX_BUF</a>&#160;&#160;&#160;32</td></tr>
-<tr class="separator:gadc1b033607e06cff7464dc0a49df2744"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga1473b18d902ce22c6b22d04ff5a7ef02"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00912.html#ga1473b18d902ce22c6b22d04ff5a7ef02">strnchr</a> (const char *s, size_t count, int c)</td></tr>
-<tr class="separator:ga1473b18d902ce22c6b22d04ff5a7ef02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae9acffb3ff9a025924457fce5c24a709"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00912.html#gae9acffb3ff9a025924457fce5c24a709">kit_id_from_devtype</a> (<a class="el" href="a00907.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a> devtype)</td></tr>
-<tr class="separator:gae9acffb3ff9a025924457fce5c24a709"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8fb98d1c372e7e75f99a2f7d1182b877"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00912.html#ga8fb98d1c372e7e75f99a2f7d1182b877">kit_init</a> (<a class="el" href="a00908.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga8fb98d1c372e7e75f99a2f7d1182b877"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol init. This function calls back to the physical protocol to send the bytes.  <a href="a00912.html#ga8fb98d1c372e7e75f99a2f7d1182b877">More...</a><br /></td></tr>
-<tr class="separator:ga8fb98d1c372e7e75f99a2f7d1182b877"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac9dc79f9b5281fbe82c20b6af9de76b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00912.html#gac9dc79f9b5281fbe82c20b6af9de76b7">kit_send</a> (<a class="el" href="a00908.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, const uint8_t *txdata, int txlength)</td></tr>
-<tr class="memdesc:gac9dc79f9b5281fbe82c20b6af9de76b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol send. This function calls back to the physical protocol to send the bytes.  <a href="a00912.html#gac9dc79f9b5281fbe82c20b6af9de76b7">More...</a><br /></td></tr>
-<tr class="separator:gac9dc79f9b5281fbe82c20b6af9de76b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga09a86ccc517208f9c9a057ea569e2a18"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00912.html#ga09a86ccc517208f9c9a057ea569e2a18">kit_receive</a> (<a class="el" href="a00908.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t *rxdata, uint16_t *rxsize)</td></tr>
-<tr class="memdesc:ga09a86ccc517208f9c9a057ea569e2a18"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation to receive bytes and unwrap from kit protocol. This function calls back to the physical protocol to receive the bytes.  <a href="a00912.html#ga09a86ccc517208f9c9a057ea569e2a18">More...</a><br /></td></tr>
-<tr class="separator:ga09a86ccc517208f9c9a057ea569e2a18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf7ce58d02b067b956abd32127f5519e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00912.html#gaf7ce58d02b067b956abd32127f5519e9">kit_wake</a> (<a class="el" href="a00908.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:gaf7ce58d02b067b956abd32127f5519e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the wake for kit protocol.  <a href="a00912.html#gaf7ce58d02b067b956abd32127f5519e9">More...</a><br /></td></tr>
-<tr class="separator:gaf7ce58d02b067b956abd32127f5519e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeaee19ff7623f0eab9839e68dae583af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00912.html#gaeaee19ff7623f0eab9839e68dae583af">kit_idle</a> (<a class="el" href="a00908.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:gaeaee19ff7623f0eab9839e68dae583af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the idle for kit protocol.  <a href="a00912.html#gaeaee19ff7623f0eab9839e68dae583af">More...</a><br /></td></tr>
-<tr class="separator:gaeaee19ff7623f0eab9839e68dae583af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf6054a0c971830411d5008b94923bdd8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00912.html#gaf6054a0c971830411d5008b94923bdd8">kit_sleep</a> (<a class="el" href="a00908.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:gaf6054a0c971830411d5008b94923bdd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the sleep for kit protocol.  <a href="a00912.html#gaf6054a0c971830411d5008b94923bdd8">More...</a><br /></td></tr>
-<tr class="separator:gaf6054a0c971830411d5008b94923bdd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0f09f4b79c681f54b88a8f71bca0d4c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00912.html#ga0f09f4b79c681f54b88a8f71bca0d4c4">kit_wrap_cmd</a> (const uint8_t *txdata, int txlen, char *pkitcmd, int *nkitcmd, char target)</td></tr>
-<tr class="memdesc:ga0f09f4b79c681f54b88a8f71bca0d4c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrap binary bytes in ascii kit protocol.  <a href="a00912.html#ga0f09f4b79c681f54b88a8f71bca0d4c4">More...</a><br /></td></tr>
-<tr class="separator:ga0f09f4b79c681f54b88a8f71bca0d4c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8bf59f4218d312568b769b8b8e5c563e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00912.html#ga8bf59f4218d312568b769b8b8e5c563e">kit_parse_rsp</a> (const char *pkitbuf, int nkitbuf, uint8_t *kitstatus, uint8_t *rxdata, int *datasize)</td></tr>
-<tr class="memdesc:ga8bf59f4218d312568b769b8b8e5c563e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse the response ascii from the kit.  <a href="a00912.html#ga8bf59f4218d312568b769b8b8e5c563e">More...</a><br /></td></tr>
-<tr class="separator:ga8bf59f4218d312568b769b8b8e5c563e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a076fc28889d32327dd3372538106da92"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00506.html#a076fc28889d32327dd3372538106da92">swi_set_pin</a> (uint8_t id)</td></tr>
+<tr class="memdesc:a076fc28889d32327dd3372538106da92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set SWI signal pin. Other functions will use this pin.  <a href="#a076fc28889d32327dd3372538106da92">More...</a><br /></td></tr>
+<tr class="separator:a076fc28889d32327dd3372538106da92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad78929b51b34df503a37b4961577d5ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00506.html#ad78929b51b34df503a37b4961577d5ce">swi_enable</a> (void)</td></tr>
+<tr class="memdesc:ad78929b51b34df503a37b4961577d5ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure GPIO pin for SWI signal as output.  <a href="#ad78929b51b34df503a37b4961577d5ce">More...</a><br /></td></tr>
+<tr class="separator:ad78929b51b34df503a37b4961577d5ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af016fffdce9f520096de8631e6692707"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00506.html#af016fffdce9f520096de8631e6692707">swi_disable</a> (void)</td></tr>
+<tr class="memdesc:af016fffdce9f520096de8631e6692707"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure GPIO pin for SWI signal as input.  <a href="#af016fffdce9f520096de8631e6692707">More...</a><br /></td></tr>
+<tr class="separator:af016fffdce9f520096de8631e6692707"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79bc8f2b72647fce853274cf8474b41e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00506.html#a79bc8f2b72647fce853274cf8474b41e">swi_set_signal_pin</a> (uint8_t is_high)</td></tr>
+<tr class="memdesc:a79bc8f2b72647fce853274cf8474b41e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set signal pin Low or High.  <a href="#a79bc8f2b72647fce853274cf8474b41e">More...</a><br /></td></tr>
+<tr class="separator:a79bc8f2b72647fce853274cf8474b41e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada6b4629603758b67820568677ab2a19"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00506.html#ada6b4629603758b67820568677ab2a19">swi_send_wake_token</a> (void)</td></tr>
+<tr class="memdesc:ada6b4629603758b67820568677ab2a19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a Wake Token.  <a href="#ada6b4629603758b67820568677ab2a19">More...</a><br /></td></tr>
+<tr class="separator:ada6b4629603758b67820568677ab2a19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0382e26c4d83b0762b39d12c772dd2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00506.html#af0382e26c4d83b0762b39d12c772dd2e">swi_send_bytes</a> (uint8_t count, uint8_t *buffer)</td></tr>
+<tr class="memdesc:af0382e26c4d83b0762b39d12c772dd2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a number of bytes.This function should not be called directly ,instead should use <a class="el" href="a00918.html#gaeb8b8857192a7710785acce0110e8016" title="Send byte(s) via SWI. ">hal_swi_send()</a> which call this function.  <a href="#af0382e26c4d83b0762b39d12c772dd2e">More...</a><br /></td></tr>
+<tr class="separator:af0382e26c4d83b0762b39d12c772dd2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c5ab22e67923ee54eef0e33b227be0b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00506.html#a1c5ab22e67923ee54eef0e33b227be0b">swi_send_byte</a> (uint8_t byte)</td></tr>
+<tr class="memdesc:a1c5ab22e67923ee54eef0e33b227be0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send one byte.  <a href="#a1c5ab22e67923ee54eef0e33b227be0b">More...</a><br /></td></tr>
+<tr class="separator:a1c5ab22e67923ee54eef0e33b227be0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa009f7d683cb82293570a27d1f8ee10"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00506.html#afa009f7d683cb82293570a27d1f8ee10">swi_receive_bytes</a> (uint8_t count, uint8_t *buffer)</td></tr>
+<tr class="memdesc:afa009f7d683cb82293570a27d1f8ee10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive a number of bytes.This function should not be called directly ,instead should use <a class="el" href="a00918.html#ga02e9f36723f0feb21d373898728de04b" title="Receive byte(s) via SWI. ">hal_swi_receive()</a> which call this function.  <a href="#afa009f7d683cb82293570a27d1f8ee10">More...</a><br /></td></tr>
+<tr class="separator:afa009f7d683cb82293570a27d1f8ee10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a8ba5507b651724b4cdc74106a16b025c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01068.html">SWIBuses</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00506.html#a8ba5507b651724b4cdc74106a16b025c">swi_buses_default</a></td></tr>
+<tr class="separator:a8ba5507b651724b4cdc74106a16b025c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Microchip Crypto Auth hardware interface object. </p>
+<div class="textblock"><p>Hardware Interface Functions - SWI bit-banged. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="af016fffdce9f520096de8631e6692707"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af016fffdce9f520096de8631e6692707">&#9670;&nbsp;</a></span>swi_disable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void swi_disable </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Configure GPIO pin for SWI signal as input. </p>
+
+</div>
+</div>
+<a id="ad78929b51b34df503a37b4961577d5ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad78929b51b34df503a37b4961577d5ce">&#9670;&nbsp;</a></span>swi_enable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void swi_enable </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Configure GPIO pin for SWI signal as output. </p>
+
+</div>
+</div>
+<a id="afa009f7d683cb82293570a27d1f8ee10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa009f7d683cb82293570a27d1f8ee10">&#9670;&nbsp;</a></span>swi_receive_bytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> swi_receive_bytes </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>count</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buffer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Receive a number of bytes.This function should not be called directly ,instead should use <a class="el" href="a00918.html#ga02e9f36723f0feb21d373898728de04b" title="Receive byte(s) via SWI. ">hal_swi_receive()</a> which call this function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">count</td><td>number of bytes to receive </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">buffer</td><td>pointer to receive buffer</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+<p>Receive bits and store in buffer.</p>
+<p>Detect start bit.</p>
+<p>Wait for falling edge.</p>
+<p>Wait for rising edge.</p>
+<p>let's just wait the maximum time for the falling edge of a zero bit to arrive after we have detected the rising edge of the start bit. <br />
+<br />
+<br />
+<br />
+<br />
+ Detect possible edge indicating zero bit.</p>
+<p>Wait for rising edge of zero pulse before returning. Otherwise we might interpret its rising edge as the next start pulse. <br />
+<br />
+<br />
+ Update byte at current buffer index.</p>
+<p>received "one" bit</p>
+<p>Indicate that we timed out after having received at least one byte. </p>
+
+</div>
+</div>
+<a id="a1c5ab22e67923ee54eef0e33b227be0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c5ab22e67923ee54eef0e33b227be0b">&#9670;&nbsp;</a></span>swi_send_byte()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void swi_send_byte </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>byte</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Send one byte. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">byte</td><td>byte to send </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af0382e26c4d83b0762b39d12c772dd2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0382e26c4d83b0762b39d12c772dd2e">&#9670;&nbsp;</a></span>swi_send_bytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void swi_send_bytes </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>count</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buffer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Send a number of bytes.This function should not be called directly ,instead should use <a class="el" href="a00918.html#gaeb8b8857192a7710785acce0110e8016" title="Send byte(s) via SWI. ">hal_swi_send()</a> which call this function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">count</td><td>number of bytes to send. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buffer</td><td>pointer to buffer containing bytes to send </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>&lt; Send Logic 1 (7F)</p>
+<p>&lt; Send Logic 0 (7D) </p>
+
+</div>
+</div>
+<a id="ada6b4629603758b67820568677ab2a19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada6b4629603758b67820568677ab2a19">&#9670;&nbsp;</a></span>swi_send_wake_token()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void swi_send_wake_token </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Send a Wake Token. </p>
+
+</div>
+</div>
+<a id="a076fc28889d32327dd3372538106da92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a076fc28889d32327dd3372538106da92">&#9670;&nbsp;</a></span>swi_set_pin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void swi_set_pin </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set SWI signal pin. Other functions will use this pin. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">id</td><td>definition of GPIO pin to be used </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a79bc8f2b72647fce853274cf8474b41e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79bc8f2b72647fce853274cf8474b41e">&#9670;&nbsp;</a></span>swi_set_signal_pin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void swi_set_signal_pin </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>is_high</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set signal pin Low or High. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">is_high</td><td>0: Low, else: High. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a8ba5507b651724b4cdc74106a16b025c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ba5507b651724b4cdc74106a16b025c">&#9670;&nbsp;</a></span>swi_buses_default</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01068.html">SWIBuses</a> swi_buses_default</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    { EXT3_PIN_3, EXT3_PIN_9, EXT3_PIN_I2C_SDA, EXT3_PIN_13, EXT2_PIN_13, EXT2_PIN_5, EXT2_PIN_7, EXT2_PIN_9, EXT2_PIN_3, EXT2_PIN_15, EXT2_PIN_17, EXT1_PIN_3, EXT1_PIN_5, EXT1_PIN_7, EXT1_PIN_9, EXT1_PIN_13, EXT1_PIN_15, EXT1_PIN_17, EXT3_PIN_7, EXT3_PIN_10, EXT3_PIN_I2C_SCL, EXT3_PIN_14, EXT2_PIN_4, EXT2_PIN_6, EXT2_PIN_8, EXT2_PIN_10, EXT2_PIN_14, EXT2_PIN_16, EXT2_PIN_18, EXT1_PIN_4, EXT1_PIN_6, EXT1_PIN_8, EXT1_PIN_10, EXT1_PIN_14, EXT1_PIN_16, EXT1_PIN_18 }</div><div class="line">}</div></div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00506.html">kit_protocol.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00506.html">swi_bitbang_samd21.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

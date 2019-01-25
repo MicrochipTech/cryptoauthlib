@@ -1,7 +1,6 @@
 var a00320 =
 [
-    [ "BREAK", "a00320.html#a8f200e8d61725d588e0b7815efb0dc25", null ],
-    [ "DBGOUT", "a00320.html#a127536c92ac8b7d05d9a325cbec19805", null ],
-    [ "PRINT", "a00320.html#a41aa74b584c0a5946789bc6eded1e460", null ],
-    [ "RETURN", "a00320.html#a20a55a7bc081de346786a88d3e278952", null ]
+    [ "hal_check_wake", "a00918.html#ga6ce92f1d10000eb6618fc74c2ca92d76", null ],
+    [ "hal_iface_init", "a00918.html#gab77081d6d85ee3ab839a0882e80e9e87", null ],
+    [ "hal_iface_release", "a00918.html#ga4be1afccb41f28f6ce620b1d5197befc", null ]
 ];

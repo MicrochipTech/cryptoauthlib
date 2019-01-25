@@ -1,9 +1,6 @@
 var a00410 =
 [
-    [ "GetSystemClock", "a00912.html#ga2f50cb3bdd9fd741e11f2389ea1bff4a", null ],
-    [ "us_SCALE", "a00912.html#ga5a8416082aa7664c94099d3d787eee3c", null ],
-    [ "atca_delay_10us", "a00912.html#ga19891182689551cc3a88603135959351", null ],
-    [ "atca_delay_ms", "a00912.html#ga80a853a202b089064bfc4b159c3418b4", null ],
-    [ "atca_delay_us", "a00912.html#ga7598dfcd6dcac882836544d48356d02f", null ],
-    [ "delay_us", "a00912.html#gafd0e52ccc611a61fcd1b0b6cd1a19efd", null ]
+    [ "MAX_I2C_BUSES", "a00918.html#gaf89a7a4080a47aa10a5504291db285bf", null ],
+    [ "ATCAI2CMaster_t", "a00918.html#gae8f36006f14bf6a9f4914bac69ed9f98", null ],
+    [ "change_i2c_speed", "a00918.html#gab7f613b378e0d01b80703df3ac662d6d", null ]
 ];

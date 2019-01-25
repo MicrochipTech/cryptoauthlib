@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_basic_hmac.c File Reference</title>
+<title>CryptoAuthLib: atca_basic_kdf.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,32 +89,32 @@ $(document).ready(function(){initNavTree('a00224.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_basic_hmac.c File Reference</div>  </div>
+<div class="title">atca_basic_kdf.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for HMAC command.  
+<p>CryptoAuthLib Basic API methods for KDF command.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00185_source.html">atca_basic.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00125_source.html">atca_execution.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00179_source.html">atca_basic.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00119_source.html">atca_execution.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga45f1d09a51f7a1f68916536ab5125b9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga45f1d09a51f7a1f68916536ab5125b9d">atcab_hmac</a> (uint8_t mode, uint16_t key_id, uint8_t *digest)</td></tr>
-<tr class="memdesc:ga45f1d09a51f7a1f68916536ab5125b9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues a HMAC command, which computes an HMAC/SHA-256 digest of a key stored in the device, a challenge, and other information on the device.  <a href="a00910.html#ga45f1d09a51f7a1f68916536ab5125b9d">More...</a><br /></td></tr>
-<tr class="separator:ga45f1d09a51f7a1f68916536ab5125b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga40a6c01492a76366f9402302b527c4e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00916.html#ga40a6c01492a76366f9402302b527c4e1">atcab_kdf</a> (uint8_t mode, uint16_t key_id, const uint32_t details, const uint8_t *message, uint8_t *out_data, uint8_t *out_nonce)</td></tr>
+<tr class="memdesc:ga40a6c01492a76366f9402302b527c4e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the KDF command, which derives a new key in PRF, AES, or HKDF modes.  <a href="a00916.html#ga40a6c01492a76366f9402302b527c4e1">More...</a><br /></td></tr>
+<tr class="separator:ga40a6c01492a76366f9402302b527c4e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for HMAC command. </p>
-<p>The HMAC command computes an HMAC/SHA-256 digest using a key stored in the device over a challenge stored in the TempKey register, and/or other information stored within the device.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, and ATECC508A . There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for KDF command. </p>
+<p>The KDF command implements one of a number of Key Derivation Functions (KDF). Generally this function combines a source key with an input string and creates a result key/digest/array. Three algorithms are currently supported: PRF, HKDF and AES.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC608A. Refer to device datasheet for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00224.html">atca_basic_hmac.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_f987fb6e7cf85d8e48d70ffe78b3ebc1.html">basic</a></li><li class="navelem"><a class="el" href="a00224.html">atca_basic_kdf.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

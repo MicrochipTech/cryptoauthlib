@@ -95,6 +95,30 @@ def get_cryptoauthlib():
     return _CRYPTO_LIB
 
 
+def get_device_name(revision):
+    """
+    Returns the device name based on the info byte array values returned by atcab_info
+    """
+    devices = {0x10: 'ATECC108A',
+               0x50: 'ATECC508A',
+               0x60: 'ATECC608A',
+               0x00: 'ATSHA204A',
+               0x02: 'ATSHA204A'}
+    return devices.get(revision[2], 'UNKNOWN')
+
+
+def get_device_type_id(name):
+    """
+    Returns the ATCADeviceType value based on the device name
+    """
+    devices = {'ATSHA204A': 0,
+               'ATECC108A': 1,
+               'ATECC508A': 2,
+               'ATECC608A': 3,
+               'UNKNOWN': 0x20}
+    return devices.get(name.upper())
+
+
 def get_size_by_name(name):
     """
     Get the size of an object in the library using the name_size api from atca_utils_sizes.c
@@ -110,4 +134,51 @@ def get_ctype_by_name(name):
     return _CTYPES_BY_SIZE.get(get_size_by_name(name))
 
 
-__all__ = ['ATCA_NAMES', 'AtcaReference', 'load_cryptoauthlib']
+def get_ctype_structure_instance(structure, value):
+    """
+    Internal Helper Function:  Convert a value into the correct ctypes structure for a given field
+    :param value: Value to convert
+    :param structure: Conversion Class (resulting type)
+    :return:
+    """
+    # pylint: disable-msg=invalid-name
+    if isinstance(value, dict):
+        r = structure(**value)
+    elif isinstance(value, int):
+        r = structure.from_buffer_copy(ctypes.c_uint(value))
+    elif not isinstance(value, structure):
+        r = structure(value)
+    else:
+        r = value
+    return r
+
+
+def get_ctype_array_instance(array, value):
+    """
+    Internal Helper Function: Convert python list into ctype array
+    :param value: Value to convert
+    :param array: Conversion Class (resulting type)
+    :return:
+    """
+    # pylint: disable-msg=invalid-name, protected-access
+    t = array._type_
+    a = [get_ctype_structure_instance(t, e) for e in value]
+    return array(*a)
+
+
+class AtcaStructure(ctypes.Structure):
+    """ An extended ctypes structure to accept complex inputs """
+    # pylint: disable-msg=invalid-name, too-few-public-methods
+    def __init__(self, *args, **kwargs):
+        if kwargs is not None:
+            for f in self._fields_:
+                if f[0] in kwargs:
+                    if isinstance(f[1](), ctypes.Structure):
+                        kwargs[f[0]] = get_ctype_structure_instance(f[1], kwargs[f[0]])
+                    elif isinstance(f[1](), ctypes.Array):
+                        kwargs[f[0]] = get_ctype_array_instance(f[1], kwargs[f[0]])
+
+        super(AtcaStructure, self).__init__(*args, **kwargs)
+
+
+__all__ = ['ATCA_NAMES', 'AtcaReference', 'load_cryptoauthlib', 'get_device_name', 'get_device_type_id']

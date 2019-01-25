@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_crypto_sw_sha2.c File Reference</title>
+<title>CryptoAuthLib: sha1_routines.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,39 +89,221 @@ $(document).ready(function(){initNavTree('a00302.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_crypto_sw_sha2.c File Reference</div>  </div>
+<div class="title">sha1_routines.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Wrapper API for software SHA 256 routines.  
+<p>Software implementation of the SHA1 algorithm.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00305_source.html">atca_crypto_sw_sha2.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00317_source.html">hashes/sha2_routines.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00305_source.html">sha1_routines.h</a>&quot;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga58283666b662f084155ba693870c1077"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#ga58283666b662f084155ba693870c1077">atcac_sw_sha2_256_init</a> (<a class="el" href="a01014.html">atcac_sha2_256_ctx</a> *ctx)</td></tr>
-<tr class="memdesc:ga58283666b662f084155ba693870c1077"><td class="mdescLeft">&#160;</td><td class="mdescRight">initializes the SHA256 software  <a href="a00911.html#ga58283666b662f084155ba693870c1077">More...</a><br /></td></tr>
-<tr class="separator:ga58283666b662f084155ba693870c1077"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab1a09fa1d854722cc667cea319ca9984"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#gab1a09fa1d854722cc667cea319ca9984">atcac_sw_sha2_256_update</a> (<a class="el" href="a01014.html">atcac_sha2_256_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
-<tr class="memdesc:gab1a09fa1d854722cc667cea319ca9984"><td class="mdescLeft">&#160;</td><td class="mdescRight">updates the running hash with the next block of data, called iteratively for the entire stream of data to be hashed using the SHA256 software  <a href="a00911.html#gab1a09fa1d854722cc667cea319ca9984">More...</a><br /></td></tr>
-<tr class="separator:gab1a09fa1d854722cc667cea319ca9984"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae3a29931f2104cce481aa9ef1ab16fea"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#gae3a29931f2104cce481aa9ef1ab16fea">atcac_sw_sha2_256_finish</a> (<a class="el" href="a01014.html">atcac_sha2_256_ctx</a> *ctx, uint8_t digest[<a class="el" href="a00911.html#ga86364f6d07b86740f3170d9d1ca60641">ATCA_SHA2_256_DIGEST_SIZE</a>])</td></tr>
-<tr class="memdesc:gae3a29931f2104cce481aa9ef1ab16fea"><td class="mdescLeft">&#160;</td><td class="mdescRight">completes the final SHA256 calculation and returns the final digest/hash  <a href="a00911.html#gae3a29931f2104cce481aa9ef1ab16fea">More...</a><br /></td></tr>
-<tr class="separator:gae3a29931f2104cce481aa9ef1ab16fea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga63412270c4629874f2764171200c1b5c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#ga63412270c4629874f2764171200c1b5c">atcac_sw_sha2_256</a> (const uint8_t *data, size_t data_size, uint8_t digest[<a class="el" href="a00911.html#ga86364f6d07b86740f3170d9d1ca60641">ATCA_SHA2_256_DIGEST_SIZE</a>])</td></tr>
-<tr class="memdesc:ga63412270c4629874f2764171200c1b5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">single call convenience function which computes Hash of given data using SHA256 software  <a href="a00911.html#ga63412270c4629874f2764171200c1b5c">More...</a><br /></td></tr>
-<tr class="separator:ga63412270c4629874f2764171200c1b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affa9482d686cc435d640d67d7fa79772"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00302.html#affa9482d686cc435d640d67d7fa79772">CL_hashInit</a> (<a class="el" href="a01024.html">CL_HashContext</a> *ctx)</td></tr>
+<tr class="memdesc:affa9482d686cc435d640d67d7fa79772"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing SHA1 hash in software.  <a href="#affa9482d686cc435d640d67d7fa79772">More...</a><br /></td></tr>
+<tr class="separator:affa9482d686cc435d640d67d7fa79772"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55a33e7a22aff4aca4bccf39897bc5f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00302.html#a55a33e7a22aff4aca4bccf39897bc5f1">CL_hashUpdate</a> (<a class="el" href="a01024.html">CL_HashContext</a> *ctx, const <a class="el" href="a00305.html#a2c0958af86f0590374e4324757c537f2">U8</a> *src, int nbytes)</td></tr>
+<tr class="memdesc:a55a33e7a22aff4aca4bccf39897bc5f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add arbitrary data to a SHA1 hash.  <a href="#a55a33e7a22aff4aca4bccf39897bc5f1">More...</a><br /></td></tr>
+<tr class="separator:a55a33e7a22aff4aca4bccf39897bc5f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a672902e6406b4e4e2af33c70ec7a001c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00302.html#a672902e6406b4e4e2af33c70ec7a001c">CL_hashFinal</a> (<a class="el" href="a01024.html">CL_HashContext</a> *ctx, <a class="el" href="a00305.html#a2c0958af86f0590374e4324757c537f2">U8</a> *dest)</td></tr>
+<tr class="memdesc:a672902e6406b4e4e2af33c70ec7a001c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete the SHA1 hash in software and return the digest.  <a href="#a672902e6406b4e4e2af33c70ec7a001c">More...</a><br /></td></tr>
+<tr class="separator:a672902e6406b4e4e2af33c70ec7a001c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a955169bbbce9b4712cafb9b7372b5ffa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00302.html#a955169bbbce9b4712cafb9b7372b5ffa">CL_hash</a> (<a class="el" href="a00305.html#a2c0958af86f0590374e4324757c537f2">U8</a> *msg, int msgBytes, <a class="el" href="a00305.html#a2c0958af86f0590374e4324757c537f2">U8</a> *dest)</td></tr>
+<tr class="memdesc:a955169bbbce9b4712cafb9b7372b5ffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform SHA1 hash of data in software.  <a href="#a955169bbbce9b4712cafb9b7372b5ffa">More...</a><br /></td></tr>
+<tr class="separator:a955169bbbce9b4712cafb9b7372b5ffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f06fe48f7cacc212305b862b46fd9aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00302.html#a6f06fe48f7cacc212305b862b46fd9aa">shaEngine</a> (<a class="el" href="a00305.html#a8f953f379d243081b950adb7f194b2e8">U32</a> *buf, <a class="el" href="a00305.html#a8f953f379d243081b950adb7f194b2e8">U32</a> *h)</td></tr>
+<tr class="separator:a6f06fe48f7cacc212305b862b46fd9aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Wrapper API for software SHA 256 routines. </p>
+<div class="textblock"><p>Software implementation of the SHA1 algorithm. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a955169bbbce9b4712cafb9b7372b5ffa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a955169bbbce9b4712cafb9b7372b5ffa">&#9670;&nbsp;</a></span>CL_hash()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CL_hash </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00305.html#a2c0958af86f0590374e4324757c537f2">U8</a> *&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>msgBytes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00305.html#a2c0958af86f0590374e4324757c537f2">U8</a> *&#160;</td>
+          <td class="paramname"><em>dest</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Perform SHA1 hash of data in software. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">msg</td><td>Data to be hashed </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">msgBytes</td><td>Data size in bytes </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">dest</td><td>Digest is returned here (20 bytes) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a672902e6406b4e4e2af33c70ec7a001c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a672902e6406b4e4e2af33c70ec7a001c">&#9670;&nbsp;</a></span>CL_hashFinal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CL_hashFinal </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01024.html">CL_HashContext</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00305.html#a2c0958af86f0590374e4324757c537f2">U8</a> *&#160;</td>
+          <td class="paramname"><em>dest</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Complete the SHA1 hash in software and return the digest. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>Hash context </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">dest</td><td>Digest is returned here (20 bytes) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="affa9482d686cc435d640d67d7fa79772"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affa9482d686cc435d640d67d7fa79772">&#9670;&nbsp;</a></span>CL_hashInit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CL_hashInit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01024.html">CL_HashContext</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize context for performing SHA1 hash in software. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>Hash context </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a55a33e7a22aff4aca4bccf39897bc5f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55a33e7a22aff4aca4bccf39897bc5f1">&#9670;&nbsp;</a></span>CL_hashUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CL_hashUpdate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01024.html">CL_HashContext</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00305.html#a2c0958af86f0590374e4324757c537f2">U8</a> *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nbytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add arbitrary data to a SHA1 hash. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>Hash context </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">src</td><td>Data to be added to the hash </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nbytes</td><td>Data size in bytes </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6f06fe48f7cacc212305b862b46fd9aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f06fe48f7cacc212305b862b46fd9aa">&#9670;&nbsp;</a></span>shaEngine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void shaEngine </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00305.html#a8f953f379d243081b950adb7f194b2e8">U32</a> *&#160;</td>
+          <td class="paramname"><em>buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00305.html#a8f953f379d243081b950adb7f194b2e8">U32</a> *&#160;</td>
+          <td class="paramname"><em>h</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="a00302.html">atca_crypto_sw_sha2.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="dir_39966be8f8e069f6fa92c98611834f6b.html">hashes</a></li><li class="navelem"><a class="el" href="a00302.html">sha1_routines.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>

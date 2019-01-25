@@ -112,9 +112,9 @@ class CryptoAuthCommandBuildExt(build_ext):
     
         extdir = os.path.abspath(
             os.path.dirname(self.get_ext_fullpath(ext.name)) + os.path.sep + _NAME)
-        setupdir = os.path.dirname(os.path.abspath(__file__))
+        setupdir = os.path.dirname(os.path.abspath(__file__)) + os.path.sep
 
-        cmakelist_path = os.path.abspath(setupdir + os.path.sep + 'lib' if _sdist_build else '../lib')
+        cmakelist_path = os.path.abspath(setupdir + 'lib' if _sdist_build else '../lib')
 
         if not sys.platform.startswith('linux'):
             cfg = 'Debug' if self.debug else 'Release'
@@ -134,7 +134,7 @@ class CryptoAuthCommandBuildExt(build_ext):
         if sys.platform.startswith('linux'):
             cmake_args += ['-DATCA_HAL_I2C=ON']
 
-        cmake_args += ['-DATCACERT_DEF_SRC={}atca_utils_sizes.c'.format('' if _sdist_build else '../test/')]
+        cmake_args += ['-DATCACERT_DEF_SRC={}atca_utils_sizes.c'.format(setupdir.replace('\\','/') if _sdist_build else '../test/')]
 
         if not os.path.exists(self.build_temp):
             os.makedirs(self.build_temp)

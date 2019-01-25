@@ -1,4 +1,4 @@
 var a00206 =
 [
-    [ "atcab_checkmac", "a00910.html#ga5ba49c05f7b3fb5acaf55df993ccd3ee", null ]
+    [ "atcab_derivekey", "a00916.html#ga34b7b6d46868f0d63d195216ef9939b1", null ]
 ];

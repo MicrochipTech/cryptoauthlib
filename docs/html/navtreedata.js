@@ -25,12 +25,12 @@ var NAVTREE =
 [
   [ "CryptoAuthLib", "index.html", [
     [ "CryptoAuthLib - Microchip CryptoAuthentication Library", "index.html", null ],
-    [ "License", "a01151.html", null ],
-    [ "basic directory - Purpose", "a01152.html", null ],
-    [ "crypto directory - Purpose", "a01153.html", null ],
-    [ "HAL Directory - Purpose", "a01154.html", null ],
-    [ "IP Protection with Symmetric Authentication", "a01155.html", null ],
-    [ "app directory - Purpose", "a01156.html", null ],
+    [ "License", "a01157.html", null ],
+    [ "basic directory - Purpose", "a01158.html", null ],
+    [ "crypto directory - Purpose", "a01159.html", null ],
+    [ "HAL Directory - Purpose", "a01160.html", null ],
+    [ "IP Protection with Symmetric Authentication", "a01161.html", null ],
+    [ "app directory - Purpose", "a01162.html", null ],
     [ "Modules", "modules.html", "modules" ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
@@ -58,20 +58,20 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "a00011.html",
-"a00233.html",
-"a00500.html#a560b261db9a1d59e1cd72a73da03d06c",
-"a00906.html#ga2b2c07254f098dc8f8d87f2e09703adb",
-"a00906.html#ga7b2f5fb4edfbf4cb719aedbd7215b863",
-"a00906.html#gac0fb0edb797b754a069e12931a001257",
-"a00908.html#ga1feec3d6e0c3c8b23d87ce0bbefcacdb",
-"a00909.html#gaaf13dfd0ea4e563194cec6e62892b5c4",
-"a00910.html#ga416e4aeacf3acc35b1d5b76028c6947d",
-"a00910.html#gad115ce255664a48b80e90ea19c156b79",
-"a00912.html#ga31fd8170a49623686543f6247b883bd1",
-"a00912.html#gab77081d6d85ee3ab839a0882e80e9e87",
-"a00913.html#ga05323075c94849bf70e84f5a5931f058",
-"a00958.html#abdd7b8bd26139998d9da63a4fa562735",
-"a01130.html#ac21eed4200889cc115d16a781871d01c"
+"a00263.html",
+"a00494.html#abe70f8fe4c72329b89ec526c749f50d7",
+"a00912.html#ga2d04ced68d56c0db40b93b767de02089",
+"a00912.html#ga7e9ea268fbc8b0b5bb038ae30b5ec500",
+"a00912.html#gac3f89b5db216fd58ae2de3ebd52e26c5",
+"a00914.html#ga3a31087729a7a2e9a624572f234809fc",
+"a00915.html#gab5bbaaf84f1c19409ee276241e9e2f6d",
+"a00916.html#ga481179181349c801c16fc1ab698f2f24",
+"a00916.html#gadb91d2c3601b95f0ad413cf84a4dfd87",
+"a00918.html#ga3f3972f81de141ff0816b605054d775a",
+"a00918.html#gab7f613b378e0d01b80703df3ac662d6d",
+"a00919.html#ga1f445a11e4da099fec31efd43eadc234",
+"a00972.html#a107ad412023faa68c4ac0c7cfd921a02",
+"a01140.html#a714b07e0515fd9d20714a4fc2a16c03e"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

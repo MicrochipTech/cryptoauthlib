@@ -1,7 +1,7 @@
 var a00476 =
 [
-    [ "CDC_BUFFER_MAX", "a00476.html#a5ac8c9377f90d6ce3044f81f900a54fe", null ],
-    [ "CDC_DEVICES_MAX", "a00476.html#a08b6c05184266dc4d5c8727bb9c1c754", null ],
-    [ "atcacdc_t", "a00476.html#a2df85bfd309840b4c9a5087e053d4811", null ],
-    [ "cdc_device_t", "a00476.html#a99ee56102171adcbcecb8a78fb9fa895", null ]
+    [ "HID_DEVICES_MAX", "a00918.html#ga49053c3cd6d48fe5f468ce010ac0a9ef", null ],
+    [ "HID_PACKET_MAX", "a00918.html#ga6cdff3589b286ebcdd7771bb425fbf73", null ],
+    [ "atcahid_t", "a00918.html#ga2416cca7ee952e679d466e3349d65035", null ],
+    [ "hid_device_t", "a00918.html#ga5f2f61628e945fd6538155628fc3a17a", null ]
 ];

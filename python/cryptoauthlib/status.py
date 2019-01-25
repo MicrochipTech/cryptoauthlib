@@ -133,4 +133,13 @@ STATUS_EXCEPTION_MAP = {
     int(Status.ATCA_NOT_INIT): LibraryNotInitialized
 }
 
+
+def check_status(status, *args, **kwargs):
+    """
+    Look up the status return code from an API call and raise the exception that matches
+    """
+    ex = STATUS_EXCEPTION_MAP.get(status, None)
+    if ex is not None:
+        raise ex(*args, **kwargs)
+
 __all__ = ['Status']
