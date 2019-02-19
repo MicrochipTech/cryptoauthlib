@@ -358,7 +358,7 @@ TEST(atca_cmd_basic_test, kdf_hkdf_output)
     status = atcab_kdf(
         KDF_MODE_ALG_HKDF | KDF_MODE_SOURCE_TEMPKEY | KDF_MODE_TARGET_OUTPUT,
         0x0000,
-        KDF_DETAILS_HKDF_MSG_LOC_INPUT | ((uint32_t)sizeof(data_input_16) << 24),
+        KDF_DETAILS_HKDF_MSG_LOC_INPUT | ((uint32_t)sizeof(data_input_16) << 25),
         data_input_16,
         out_kdf_hkdf,
         NULL);
@@ -373,7 +373,7 @@ TEST(atca_cmd_basic_test, kdf_hkdf_output)
     status = atcab_kdf(
         KDF_MODE_ALG_HKDF | KDF_MODE_SOURCE_ALTKEYBUF | KDF_MODE_TARGET_TEMPKEY,
         0x0000,
-        KDF_DETAILS_HKDF_MSG_LOC_INPUT | ((uint32_t)sizeof(data_input_32) << 24),
+        KDF_DETAILS_HKDF_MSG_LOC_INPUT | ((uint32_t)sizeof(data_input_32) << 25),
         data_input_32,
         NULL,
         NULL);
@@ -388,7 +388,7 @@ TEST(atca_cmd_basic_test, kdf_hkdf_output)
     status = atcab_kdf(
         KDF_MODE_ALG_HKDF | KDF_MODE_SOURCE_TEMPKEY | KDF_MODE_TARGET_SLOT,
         0x0500,
-        KDF_DETAILS_HKDF_MSG_LOC_INPUT | ((uint32_t)sizeof(data_input_32) << 24),
+        KDF_DETAILS_HKDF_MSG_LOC_INPUT | ((uint32_t)sizeof(data_input_32) << 25),
         data_input_32,
         NULL,
         NULL);
@@ -403,7 +403,7 @@ TEST(atca_cmd_basic_test, kdf_hkdf_output)
     status = atcab_kdf(
         KDF_MODE_ALG_HKDF | KDF_MODE_SOURCE_TEMPKEY | KDF_MODE_TARGET_SLOT,
         0x0500,
-        KDF_DETAILS_HKDF_MSG_LOC_IV | ((uint32_t)sizeof(data_input_iv) << 24),
+        KDF_DETAILS_HKDF_MSG_LOC_IV | ((uint32_t)sizeof(data_input_iv) << 25),
         data_input_iv,
         NULL,
         NULL);
@@ -435,7 +435,7 @@ TEST(atca_cmd_basic_test, kdf_hkdf_output_encrypted)
     status = atcab_kdf(
         KDF_MODE_ALG_HKDF | KDF_MODE_SOURCE_TEMPKEY | KDF_MODE_TARGET_OUTPUT,
         0x1234,
-        KDF_DETAILS_HKDF_MSG_LOC_INPUT | ((uint32_t)sizeof(data_input_16) << 24),
+        KDF_DETAILS_HKDF_MSG_LOC_INPUT | ((uint32_t)sizeof(data_input_16) << 26),
         data_input_16,
         out_kdf_hkdf,
         NULL);
@@ -450,7 +450,7 @@ TEST(atca_cmd_basic_test, kdf_hkdf_output_encrypted)
     status = atcab_kdf(
         KDF_MODE_ALG_HKDF | KDF_MODE_SOURCE_TEMPKEY | KDF_MODE_TARGET_OUTPUT_ENC,
         0x1234,
-        KDF_DETAILS_HKDF_MSG_LOC_INPUT | ((uint32_t)sizeof(data_input_16) << 24),
+        KDF_DETAILS_HKDF_MSG_LOC_INPUT | ((uint32_t)sizeof(data_input_16) << 25),
         data_input_16,
         out_kdf_hkdf_encrypted,
         out_nonce);
@@ -486,4 +486,3 @@ t_test_case_info kdf_unit_test_info[] =
     { (fp_test_case)NULL,                    (uint8_t)0 },/* Array Termination element*/
 };
 // *INDENT-ON*
-
