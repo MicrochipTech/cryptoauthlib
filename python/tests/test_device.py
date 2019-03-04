@@ -4,7 +4,7 @@ Device.py tests. Covers the configuration structures
 import pytest
 import ctypes
 from cryptoauthlib.device import *
-from cryptoauthlib.library import load_cryptoauthlib, get_size_by_name
+from cryptoauthlib.library import load_cryptoauthlib, get_size_by_name, ctypes_to_bytes
 
 # ATSHA204A Test Data
 ATSHA204A_SER_NUM_VECTOR = bytearray.fromhex('01 23 6E AA CE FE 0B 8D EE')
@@ -58,8 +58,8 @@ ATECC508A_DEVICE_CONFIG = {
                    0x0F8F, 0x36C4, 0x0F9F, 0x2082,
                    0x0F0F, 0x44C4, 0x0F0F, 0x0F0F,
                    0x0F0F, 0x0F0F, 0x0F0F, 0x0F0F],
-    'Counter0': [0xFFFFFFFF, 0],
-    'Counter1': [0xFFFFFFFF, 0],
+    'Counter0': [0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00],
+    'Counter1': [0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00],
     'LastKeyUse': [0xFF, 0xFF, 0xFF, 0xFF,
                    0xFF, 0xFF, 0xFF, 0xFF,
                    0xFF, 0xFF, 0xFF, 0xFF,
@@ -97,8 +97,8 @@ ATECC608A_DEVICE_CONFIG = {
                    0x0F8F, 0x36C4, 0x0F9F, 0x2082,
                    0x0F0F, 0x44C4, 0x0F0F, 0x0F0F,
                    0x0F0F, 0x0F0F, 0x0F0F, 0x0F0F],
-    'Counter0': [0xFFFFFFFF, 0],
-    'Counter1': [0xFFFFFFFF, 0],
+    'Counter0': [0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00],
+    'Counter1': [0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00],
     'SlotLocked': 0xFFFF,
     'ChipOptions': {
         'IoProtectionKeyEnable': 1,
@@ -110,15 +110,6 @@ ATECC608A_DEVICE_CONFIG = {
                   0x003C, 0x003C, 0x003C, 0x0030,
                   0x003C, 0x003C, 0x003C, 0x0030]
 }
-
-
-def ctypes_to_bytes(s):
-    """
-    Convert a ctypes structure/array into bytes. This is for python2 compatibility
-    """
-    b = ctypes.create_string_buffer(ctypes.sizeof(s))
-    ctypes.memmove(b, ctypes.addressof(s), ctypes.sizeof(s))
-    return b.raw
 
 
 @pytest.mark.parametrize("config,size", [

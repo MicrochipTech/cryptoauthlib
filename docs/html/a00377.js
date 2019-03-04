@@ -1,9 +1,9 @@
 var a00377 =
 [
-    [ "CDC_BUFFER_MAX", "a00918.html#ga5ac8c9377f90d6ce3044f81f900a54fe", null ],
-    [ "CDC_DEVICES_MAX", "a00918.html#ga08b6c05184266dc4d5c8727bb9c1c754", null ],
-    [ "INVALID_HANDLE_VALUE", "a00918.html#ga5fdc7facea201bfce4ad308105f88d0c", null ],
-    [ "atcacdc_t", "a00918.html#ga2df85bfd309840b4c9a5087e053d4811", null ],
-    [ "cdc_device_t", "a00918.html#ga99ee56102171adcbcecb8a78fb9fa895", null ],
-    [ "HANDLE", "a00918.html#ga069bb8cb95b0528d5ce0304bb5561a40", null ]
+    [ "CDC_BUFFER_MAX", "a03666.html#ga5ac8c9377f90d6ce3044f81f900a54fe", null ],
+    [ "CDC_DEVICES_MAX", "a03666.html#ga08b6c05184266dc4d5c8727bb9c1c754", null ],
+    [ "INVALID_HANDLE_VALUE", "a03666.html#ga5fdc7facea201bfce4ad308105f88d0c", null ],
+    [ "atcacdc_t", "a03666.html#ga2df85bfd309840b4c9a5087e053d4811", null ],
+    [ "cdc_device_t", "a03666.html#ga99ee56102171adcbcecb8a78fb9fa895", null ],
+    [ "HANDLE", "a03666.html#ga069bb8cb95b0528d5ce0304bb5561a40", null ]
 ];

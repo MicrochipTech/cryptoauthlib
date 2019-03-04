@@ -22,7 +22,7 @@ Cryptoauthlib Device Configuration
 # THIS SOFTWARE.
 
 
-from ctypes import Structure, c_uint16, c_uint8, c_uint32
+from ctypes import Structure, c_uint16, c_uint8
 from .library import AtcaStructure
 
 # Because this module directly mirrors the C api the following is an exception to the python coding standard
@@ -138,7 +138,7 @@ class KeyConfig(Structure):
     """KeyConfig Field Definition """
     _fields_ = [('Private', c_uint16, 1),
                 ('PubInfo', c_uint16, 1),
-                ('KeyType', c_uint16, 2),
+                ('KeyType', c_uint16, 3),
                 ('Lockable', c_uint16, 1),
                 ('ReqRandom', c_uint16, 1),
                 ('ReqAuth', c_uint16, 1),
@@ -184,8 +184,8 @@ class Atecc508aConfig(AtcaStructure):
                 ('OTPmode', c_uint8),
                 ('ChipMode', ChipMode508),
                 ('SlotConfig', SlotConfig*16),
-                ('Counter0', c_uint32*2),
-                ('Counter1', c_uint32*2),
+                ('Counter0', c_uint8*8),
+                ('Counter1', c_uint8*8),
                 ('LastKeyUse', c_uint8*16),
                 ('UserExtra', c_uint8),
                 ('Selector', c_uint8),
@@ -211,8 +211,8 @@ class Atecc608aConfig(AtcaStructure):
                 ('CountMatch', CountMatch),
                 ('ChipMode', ChipMode608),
                 ('SlotConfig', SlotConfig*16),
-                ('Counter0', c_uint32*2),
-                ('Counter1', c_uint32*2),
+                ('Counter0', c_uint8*8),
+                ('Counter1', c_uint8*8),
                 ('UseLock', UseLock),
                 ('VolatileKeyPermission', VolatileKeyPermission),
                 ('SecureBoot', SecureBoot),

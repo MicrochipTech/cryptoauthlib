@@ -60,6 +60,10 @@ var searchData=
   ['atca_5fiface_2eh',['atca_iface.h',['../a00125.html',1,'']]],
   ['atca_5fjwt_2ec',['atca_jwt.c',['../a00542.html',1,'']]],
   ['atca_5fjwt_2eh',['atca_jwt.h',['../a00545.html',1,'']]],
+  ['atca_5fmbedtls_5fecdh_2ec',['atca_mbedtls_ecdh.c',['../a00548.html',1,'']]],
+  ['atca_5fmbedtls_5fecdsa_2ec',['atca_mbedtls_ecdsa.c',['../a00551.html',1,'']]],
+  ['atca_5fmbedtls_5fwrap_2ec',['atca_mbedtls_wrap.c',['../a00554.html',1,'']]],
+  ['atca_5fmbedtls_5fwrap_2eh',['atca_mbedtls_wrap.h',['../a00557.html',1,'']]],
   ['atca_5fstart_5fconfig_2eh',['atca_start_config.h',['../a00326.html',1,'']]],
   ['atca_5fstart_5fiface_2eh',['atca_start_iface.h',['../a00329.html',1,'']]],
   ['atca_5fstatus_2eh',['atca_status.h',['../a00128.html',1,'']]],
@@ -78,5 +82,5 @@ var searchData=
   ['atcacert_5fhost_5fsw_2eh',['atcacert_host_sw.h',['../a00167.html',1,'']]],
   ['atcacert_5fpem_2ec',['atcacert_pem.c',['../a00170.html',1,'']]],
   ['atcacert_5fpem_2eh',['atcacert_pem.h',['../a00173.html',1,'']]],
-  ['readme_2emd',['README.md',['../a01173.html',1,'(Global Namespace)'],['../a01176.html',1,'(Global Namespace)']]]
+  ['readme_2emd',['README.md',['../a03923.html',1,'(Global Namespace)'],['../a03926.html',1,'(Global Namespace)'],['../a03929.html',1,'(Global Namespace)']]]
 ];

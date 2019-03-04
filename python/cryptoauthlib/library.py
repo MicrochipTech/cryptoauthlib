@@ -181,4 +181,13 @@ class AtcaStructure(ctypes.Structure):
         super(AtcaStructure, self).__init__(*args, **kwargs)
 
 
+def ctypes_to_bytes(obj):
+    """
+    Convert a ctypes structure/array into bytes. This is for python2 compatibility
+    """
+    buf = ctypes.create_string_buffer(ctypes.sizeof(obj))
+    ctypes.memmove(buf, ctypes.addressof(obj), ctypes.sizeof(obj))
+    return buf.raw
+
+
 __all__ = ['ATCA_NAMES', 'AtcaReference', 'load_cryptoauthlib', 'get_device_name', 'get_device_type_id']

@@ -30,7 +30,7 @@
 #include "atca_basic.h"
 #include "host/atca_host.h"
 
-const char atca_version[] = { "20190125" };  // change for each release, yyyymmdd
+const char atca_version[] = { "20190304" };  // change for each release, yyyymmdd
 ATCADevice _gDevice = NULL;
 #ifdef ATCA_NO_HEAP
 struct atca_command g_atcab_command;
@@ -155,6 +155,21 @@ ATCA_STATUS atcab_release(void)
 ATCADevice atcab_get_device(void)
 {
     return _gDevice;
+}
+
+/** \brief Get the current device type.
+ *  \return Device type if basic api is initialized or ATCA_DEV_UNKNOWN.
+ */
+ATCADeviceType atcab_get_device_type(void)
+{
+    if (_gDevice)
+    {
+        return _gDevice->mIface->mIfaceCFG->devtype;
+    }
+    else
+    {
+        return ATCA_DEV_UNKNOWN;
+    }
 }
 
 /** \brief wakeup the CryptoAuth device

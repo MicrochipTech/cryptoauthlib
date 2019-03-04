@@ -139,6 +139,11 @@ THE SOFTWARE.
 
 
 ===============================================================================
+If using the mbed TLS wrapper, then the mbed TLS license is under the
+Apache 2.0 license.
+
+
+===============================================================================
                   GNU LESSER GENERAL PUBLIC LICENSE
                        Version 2.1, February 1999
 

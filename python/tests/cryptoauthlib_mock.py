@@ -4,12 +4,15 @@ from cryptoauthlib import *
 c_ptr = type(byref(create_string_buffer(1)))
 
 class atcab_mock(object):
-
     def atcab_init(self):
         return Status.ATCA_SUCCESS
 
     def atcab_release(self):
         return Status.ATCA_SUCCESS
+
+    r_devtype = 3
+    def atcab_get_device_type(self):
+        return self.r_devtype
 
     #--------------------------------------------------------------------#
     # atcab_aes(self, mode, key_id, aes_in, aes_out)

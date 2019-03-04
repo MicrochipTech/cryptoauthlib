@@ -89,21 +89,26 @@ def test_jwt_round_trip_ec_qa(test_jwt_init_live, slot, config):
 
 
 @pytest.mark.parametrize("slot, config", [
-    pytest.param(4, None, id='Normal'),
-    pytest.param(4, __config, id='Init/Reinit'),
+    pytest.param(1, None, id='Normal'),
+    pytest.param(1, __config, id='Init/Reinit'),
 ])
 def test_jwt_round_trip_hmac_qa(test_jwt_init_live, slot, config):
     """
     Check JWT with a symmetric key (SHA256 based HMAC)
     """
-
-    key = bytearray([0x37, 0x80, 0xe6, 0x3d, 0x49, 0x68, 0xad, 0xe5,
+    # Set write key
+    write_key = bytearray([0x37, 0x80, 0xe6, 0x3d, 0x49, 0x68, 0xad, 0xe5,
                            0xd8, 0x22, 0xc0, 0x13, 0xfc, 0xc3, 0x23, 0x84,
                            0x5d, 0x1b, 0x56, 0x9f, 0xe7, 0x05, 0xb6, 0x00,
                            0x06, 0xfe, 0xec, 0x14, 0x5a, 0x0d, 0xb1, 0xe3])
+    assert Status.ATCA_SUCCESS == atcab_write_zone(2, 4, 0, 0, write_key, 32);
 
-    # Write Key in the slot
-    status = atcab_write_zone(2, slot, 0, 0, key, 32);
+    # Write HMAC key
+    hmac_key = bytearray([0x73, 0x16, 0xe9, 0x64, 0x2b, 0x38, 0xfb, 0xad,
+                          0x5d, 0xb7, 0x0a, 0x1b, 0x33, 0xf0, 0xdc, 0xb9,
+                          0x4c, 0x35, 0x5e, 0x78, 0xd7, 0xf0, 0x00, 0xa9,
+                          0xb3, 0x19, 0x41, 0xa0, 0x36, 0x0d, 0x09, 0x61])
+    assert Status.ATCA_SUCCESS == atcab_write_enc(slot, 0, hmac_key, write_key, 4);
 
     claims = {
         # The time that the token was issued at
@@ -113,12 +118,12 @@ def test_jwt_round_trip_hmac_qa(test_jwt_init_live, slot, config):
         # A Dummy/Test Audience to verify against
         'aud': 'test_audience'
     }
-
+    
     token = PyJWT(slot, config)
     encoded = token.encode(claims, b'', algorithm='HS256')
 
     # If the audience does not match or the signature fails to verify the following will raise an exception
-    decoded = token.decode(encoded, bytes(key), audience=claims['aud'], algorithms=['HS256'])
+    decoded = token.decode(encoded, bytes(hmac_key), audience=claims['aud'], algorithms=['HS256'])
 
     assert claims == decoded
 

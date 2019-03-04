@@ -94,8 +94,12 @@ class Status(AtcaEnum):
     ATCA_NOT_LOCKED = 0xF8
     # For protocols that support device discovery (kit protocol), no devices were found
     ATCA_NO_DEVICES = 0xF9
-    # Indication that library or context was not initialized prior to an API call
-    ATCA_NOT_INIT = 0xFA
+    # Random number generator health test error
+    ATCA_HEALTH_TEST_ERROR = 0xFA
+    # Couldn't allocate required memory
+    ATCA_ALLOC_FAILURE = 0xFB
+    # The library has not been initialized so the command could not be executed
+    ATCA_NOT_INITIALIZED = 0xFC
 
 
 STATUS_EXCEPTION_MAP = {
@@ -130,7 +134,9 @@ STATUS_EXCEPTION_MAP = {
     int(Status.ATCA_TX_FAIL): TransmissionError,
     int(Status.ATCA_NOT_LOCKED): ZoneNotLockedError,
     int(Status.ATCA_NO_DEVICES): NoDevicesFoundError,
-    int(Status.ATCA_NOT_INIT): LibraryNotInitialized
+    int(Status.ATCA_HEALTH_TEST_ERROR): HealthTestError,
+    int(Status.ATCA_ALLOC_FAILURE): LibraryMemoryError,
+    int(Status.ATCA_NOT_INITIALIZED): LibraryNotInitialized
 }
 
 

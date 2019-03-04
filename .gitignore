@@ -57,3 +57,7 @@ build/
 *.pyc
 .dist/
 dist/
+/python/.coverage*
+/python/venv*
+/python/cryptoauthlib.egg-info
+/python/VERSION

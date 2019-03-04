@@ -1,6 +1,6 @@
 var a00494 =
 [
-    [ "I2CBuses", "a01064.html", "a01064" ],
+    [ "I2CBuses", "a03813.html", "a03813" ],
     [ "DISABLE_INTERRUPT", "a00494.html#a07adac5c5eb0d63bed4b79a50bcb676b", null ],
     [ "ENABLE_INTERRUPT", "a00494.html#a6b267a18dae3dc4d7a2a0b8fdb38e701", null ],
     [ "I2C_ACK_TIMEOUT", "a00494.html#a4f8a83ae9459703637408a0a194445ac", null ],

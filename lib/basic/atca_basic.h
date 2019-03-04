@@ -60,6 +60,7 @@ ATCA_STATUS atcab_init(ATCAIfaceCfg *cfg);
 ATCA_STATUS atcab_init_device(ATCADevice ca_device);
 ATCA_STATUS atcab_release(void);
 ATCADevice atcab_get_device(void);
+ATCADeviceType atcab_get_device_type(void);
 ATCA_STATUS _atcab_exit(void);
 ATCA_STATUS atcab_wakeup(void);
 ATCA_STATUS atcab_idle(void);

@@ -94,6 +94,13 @@ def atcab_release():
     return get_cryptoauthlib().atcab_release()
 
 
+def atcab_get_device_type():
+    """
+    Return the device type of the currently initialized device.
+    """
+    return get_cryptoauthlib().atcab_get_device_type()
+
+
 # CryptoAuthLib Basic API methods for AES command.
 #
 # The AES command supports 128-bit AES encryption or decryption of small
@@ -2109,7 +2116,7 @@ def atcab_hw_sha2_256(data, data_size, digest):
     Returns:
         Status code
     """
-    if not isinstance(data, bytearray):
+    if not isinstance(digest, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
         c_digest = create_string_buffer(32)

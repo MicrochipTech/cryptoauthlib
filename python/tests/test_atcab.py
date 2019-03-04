@@ -8,6 +8,9 @@ from cryptoauthlib_mock import atcab_mock
 def test_init():
     load_cryptoauthlib(atcab_mock())
 
+def test_atcab_get_device_type(test_init):
+    assert atcab_get_device_type() == atcab_mock.r_devtype
+
 #---------------ATCA_BASIC_AES--------------#
 
 def test_atcab_aes(test_init):

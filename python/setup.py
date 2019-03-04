@@ -102,6 +102,7 @@ class CryptoAuthCommandBuildExt(build_ext):
     def build_extension(self, ext):
         # Suppress cmake output
         devnull = open(os.devnull, 'r+b')
+        nousb = bool(os.environ.get('CRYPTOAUTHLIB_NOUSB', False))
 
         # Check if CMAKE is installed
         try:
@@ -122,7 +123,10 @@ class CryptoAuthCommandBuildExt(build_ext):
         else:
             build_args = []
 
-        cmake_args = ['-DATCA_HAL_KIT_HID=ON']
+        cmake_args = ['-DATCA_HAL_CUSTOM=ON']
+        if not nousb:
+            cmake_args += ['-DATCA_HAL_KIT_HID=ON']
+
         if 'win32' == sys.platform:
             cmake_args += ['-DCMAKE_LIBRARY_OUTPUT_DIRECTORY_%s=' % cfg.upper() + extdir,
                           '-DCMAKE_RUNTIME_OUTPUT_DIRECTORY_%s=' % cfg.upper() + extdir]
@@ -140,12 +144,25 @@ class CryptoAuthCommandBuildExt(build_ext):
             os.makedirs(self.build_temp)
 
         # Configure the library
-        subprocess.check_call(['cmake', cmakelist_path] + cmake_args, cwd=os.path.abspath(self.build_temp),
-            stdin=devnull, stdout=devnull, stderr=devnull, shell=False)
+        try:
+            subprocess.check_output(['cmake', cmakelist_path] + cmake_args, cwd=os.path.abspath(self.build_temp), stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            msg = e.output.decode('ascii')
+            if 'usb' in msg:
+                msg += '\n\n   USB libraries or headers were not located. If USB support is\n' \
+                       '   not required it can be disabled by setting the environment\n' \
+                       '   variable CRYPTOAUTHLIB_NOUSB to true before trying to install\n' \
+                       '   this package: \n\n' \
+                       '       $ export CRYPTOAUTHLIB_NOUSB=True\n\n' \
+                       '   Run setup.py clean before trying install again or use the pip \n' \
+                       '   option --no-cache-dir\n'
+            raise Exception(msg)
 
         # Build the library
-        subprocess.check_call(['cmake', '--build', '.'] + build_args, cwd=os.path.abspath(self.build_temp),
-            stdin=devnull, stdout=devnull, stderr=devnull, shell=False)
+        try:
+            subprocess.check_output(['cmake', '--build', '.'] + build_args, cwd=os.path.abspath(self.build_temp), stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            raise Exception(e.output.decode('ascii'))
 
 
 class CryptoAuthCommandInstall(install):

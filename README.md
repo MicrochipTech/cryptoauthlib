@@ -15,6 +15,7 @@ Online documentation is at https://microchiptech.github.io/cryptoauthlib/
 
 Latest software and examples can be found at:
   - http://www.microchip.com/SWLibraryWeb/product.aspx?product=CryptoAuthLib
+  - https://github.com/MicrochipTech/cryptoauthtools
 
 Prerequisite skills:
   - strong C programming and code reading
@@ -60,6 +61,10 @@ Examples
 
 Release notes
 -----------
+03/04/2019
+  - mbed TLS wrapper added
+  - Minor bug fixes
+
 01/25/2019
   - Python JWT support
   - Python configuration structures added
