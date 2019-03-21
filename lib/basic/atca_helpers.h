@@ -72,6 +72,8 @@ ATCA_STATUS atcab_base64decode(const char* encoded, size_t encoded_size, uint8_t
 ATCA_STATUS atcab_base64encode_(const uint8_t* data, size_t data_size, char* encoded, size_t* encoded_size, const uint8_t * rules);
 ATCA_STATUS atcab_base64encode(const uint8_t* data, size_t data_size, char* encoded, size_t* encoded_size);
 
+int atcab_memcmp(const void* const block1_, const void* const block2_, size_t num);
+
 #ifdef __cplusplus
 }
 #endif

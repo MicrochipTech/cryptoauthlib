@@ -213,7 +213,7 @@ ATCA_STATUS atcab_secureboot_mac(uint8_t mode, const uint8_t* digest, const uint
             break;
         }
 
-        *is_verified = (memcmp(host_mac, mac, SECUREBOOT_MAC_SIZE) == 0);
+        *is_verified = (atcab_memcmp(host_mac, mac, SECUREBOOT_MAC_SIZE) == 0);
     }
     while (0);
 

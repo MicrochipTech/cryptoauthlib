@@ -571,7 +571,7 @@ ATCA_STATUS atcab_aes_gcm_decrypt_finish(atca_aes_gcm_ctx_t* ctx, const uint8_t*
         RETURN(status, "Tag calculation failed");
     }
 
-    *is_verified = (memcmp(calc_tag, tag, tag_size) == 0);
+    *is_verified = (atcab_memcmp(calc_tag, tag, tag_size) == 0);
 
     return ATCA_SUCCESS;
 }

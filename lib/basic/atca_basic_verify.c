@@ -218,7 +218,7 @@ static ATCA_STATUS atcab_verify_extern_stored_mac(
             break;
         }
 
-        *is_verified = (memcmp(host_mac, mac, MAC_SIZE) == 0);
+        *is_verified = (atcab_memcmp(host_mac, mac, MAC_SIZE) == 0);
     }
     while (0);
 

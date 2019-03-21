@@ -124,7 +124,7 @@ ATCA_STATUS symmetric_authenticate(uint8_t slot, const uint8_t *master_key, cons
         }
 
         //Check whether the MAC calculated on host is same as that generated from the device
-        if (memcmp(device_mac, host_mac, 32) != 0)
+        if (atcab_memcmp(device_mac, host_mac, 32) != 0)
         {
             status = ATCA_CHECKMAC_VERIFY_FAILED;
         }

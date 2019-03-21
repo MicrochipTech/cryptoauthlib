@@ -779,11 +779,12 @@ ATCA_STATUS atcab_base64decode(const char* encoded, size_t encoded_len, uint8_t*
  *  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  *  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *  *
- * \brief Compare two blocks of memory in constant time. Functions like memcmp()
+ * \brief Compare two blocks of memory in constant time. Functions like memcmp(),
+ *     but won't leak any data about the relative values of the blocks.
  * \param[in] block1_  Pointer to block of memory
  * \param[in] block2_  Pointer to block of memory
  * \param[in] num       Number of bytes to compare
- * \return an integral value indicating the relationship between the content of the memory blocks.
+ * \return 0 if the blocks are identical, 0xFF otherwise
  */
 int atcab_memcmp(const void* const block1_, const void* const block2_, size_t num)
 {
