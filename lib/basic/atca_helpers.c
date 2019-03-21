@@ -760,4 +760,43 @@ ATCA_STATUS atcab_base64decode(const char* encoded, size_t encoded_len, uint8_t*
 }
 
 
+/**
+ * Function adapted from libsodium's sodium_memcmp()
+ *  * ISC License
+ *  *
+ *  * Copyright (c) 2013-2019
+ *  * Frank Denis <j at pureftpd dot org>
+ *  *
+ *  * Permission to use, copy, modify, and/or distribute this software for any
+ *  * purpose with or without fee is hereby granted, provided that the above
+ *  * copyright notice and this permission notice appear in all copies.
+ *  *
+ *  * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ *  * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ *  * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ *  * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ *  * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ *  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ *  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ *  *
+ * \brief Compare two blocks of memory in constant time. Functions like memcmp()
+ * \param[in] block1_  Pointer to block of memory
+ * \param[in] block2_  Pointer to block of memory
+ * \param[in] num       Number of bytes to compare
+ * \return an integral value indicating the relationship between the content of the memory blocks.
+ */
+int atcab_memcmp(const void* const block1_, const void* const block2_, size_t num)
+{
+    const volatile unsigned char* volatile block1 =
+            (const volatile unsigned char* volatile) block1_;
+    const volatile unsigned char* volatile block2 =
+            (const volatile unsigned char* volatile) block2_;
+    size_t i;
+    volatile unsigned char d = 0U;
 
+    for (i = 0U; i < num; i++)
+    {
+        d |= (unsigned)(block1[i] ^ block2[i]);
+    }
+    return (1U & ((d - 1U) >> 8U)) - 1;
+}
