@@ -50,7 +50,7 @@ else()
 message(FATAL_ERROR, "Missing Build Dependencies for ATCA_HAL_KIT_HID - install libusb-1.0-0-dev or libudev-dev")
 endif()
 else()
-set(LIBUSD_INCLUDE_DIR "")
+set(LIBUSB_INCLUDE_DIR "")
 endif()
 
 if(ATCA_HAL_KIT_HID)
