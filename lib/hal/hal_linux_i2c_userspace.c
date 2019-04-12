@@ -115,6 +115,8 @@ ATCA_STATUS hal_i2c_init(void* hal, ATCAIfaceCfg* cfg)
             {
             case 0: strcpy(i2c_hal_data[bus]->i2c_file, "/dev/i2c-0"); break;
             case 1: strcpy(i2c_hal_data[bus]->i2c_file, "/dev/i2c-1"); break;
+            case 2: strcpy(i2c_hal_data[bus]->i2c_file, "/dev/i2c-2"); break;
+            case 3: strcpy(i2c_hal_data[bus]->i2c_file, "/dev/i2c-3"); break;
             }
 
             // store this for use during the release phase
