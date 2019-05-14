@@ -418,7 +418,7 @@ static CK_RV pkcs11_config_parse_freeslots(pkcs11_slot_ctx_ptr slot_ctx, char* c
 
     pkcs11_config_split_string(cfgstr, ',', &argc, argv);
 
-    for (i = 0; i < 16; i++)
+    for (i = 0; i < argc; i++)
     {
         uint32_t slot = strtol(argv[i], NULL, 10);
         if (slot < 16)
