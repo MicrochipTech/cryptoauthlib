@@ -420,7 +420,7 @@ static CK_RV pkcs11_config_parse_freeslots(pkcs11_slot_ctx_ptr slot_ctx, char* c
 
     for (i = 0; i < 16; i++)
     {
-        uint32_t slot = strtol(argv[1], NULL, 10);
+        uint32_t slot = strtol(argv[i], NULL, 10);
         if (slot < 16)
         {
             slot_ctx->flags |= (1 << slot);
