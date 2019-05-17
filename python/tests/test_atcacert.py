@@ -288,6 +288,11 @@ def test_atcacert_create_csr_pem(test_atcacert_init):
     assert csr == bytearray(atcab_mock.r_csr)
     assert csr_size.value == atcab_mock.r_csr_size.value
 
+def test_atacert_max_cert_size(test_atcacert_init):
+    cert_def = atcacert_def_t()
+    max_cert_size = AtcaReference(0)
+    assert atcacert_max_cert_size(cert_def, max_cert_size) == CertStatus.ATCACERT_E_SUCCESS
+    assert max_cert_size.value == atcab_mock.r_max_cert_size.value
 
 # --------------------ATCACERT_DATE----------------------
 
@@ -406,8 +411,9 @@ def test_atcacert_round_trip_qa(test_atcacert_init_live):
     assert CertStatus.ATCACERT_E_SUCCESS == atcacert_write_cert(cert_def, cert, len(cert))
 
     # Read back the device certificate
-    qa_cert = bytearray(len(cert) + 8)
-    qa_cert_len = AtcaReference(len(qa_cert))
+    qa_cert_len = AtcaReference(0)
+    assert CertStatus.ATCACERT_E_SUCCESS == atcacert_max_cert_size(cert_def, qa_cert_len)
+    qa_cert = bytearray(qa_cert_len.value)
     assert CertStatus.ATCACERT_E_SUCCESS == atcacert_read_cert(cert_def, ca_pub_key, qa_cert, qa_cert_len)
 
     print('Input: ', len(cert))

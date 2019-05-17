@@ -1,8 +1,8 @@
 var a00353 =
 [
-    [ "ATCA_MUTEX_TIMEOUT", "a00353.html#acf61a669d2246c92200734be17bd5488", null ],
-    [ "hal_create_mutex", "a03666.html#gab289a3949663589ac6be71d72fb18278", null ],
-    [ "hal_destroy_mutex", "a03666.html#ga4589d7b3e951f40b7928f1cf31f7ddf3", null ],
-    [ "hal_lock_mutex", "a03666.html#gad4cd02ff7ae4e75844eab4e84eb61994", null ],
-    [ "hal_unlock_mutex", "a03666.html#ga31fd8170a49623686543f6247b883bd1", null ]
+    [ "rotate_right", "a00353.html#af34345520fa258a6a313f03c36c93fbd", null ],
+    [ "sw_sha256", "a00353.html#a5f6c75bec312e0d2faa7d645b62c3898", null ],
+    [ "sw_sha256_final", "a00353.html#ace8eb02759b23942f866ddcd2057390a", null ],
+    [ "sw_sha256_init", "a00353.html#acfb7028e6f10d29c548cbecdbfa53ac8", null ],
+    [ "sw_sha256_update", "a00353.html#a4d0c952ebe691b3337205829dc352e6e", null ]
 ];

@@ -358,6 +358,120 @@ static const char g_bin2hex_hex_no_pretty[] =
     "F8D82871F4819C2FCD1538C3D0B7F714"
     "BB6B83780F6F388F772FE36764334F74";
 
+static const char g_bin2hex_uppercase[] =
+    "017D781D95C60618BEE0";
+
+static const char g_bin2hex_lowercase[] =
+    "017d781d95c60618bee0";
+
+static const char g_bin2hex_uppercase_space[] =
+    "01 7D 78 1D 95 C6 06 18 BE E0";
+
+static const char g_bin2hex_lowercase_space[] =
+    "01 7d 78 1d 95 c6 06 18 be e0";
+
+static uint8_t reversed_data[10] = { 0xe0, 0xbe, 0x18, 0x06, 0xc6, 0x95, 0x1d, 0x78, 0x7d, 0x01 };
+
+TEST(atca_helper, transform_bin2hex_uppercase)
+{
+    char hex[10 * 3];
+    size_t hex_size = sizeof(hex);
+    ATCA_STATUS status;
+
+    memset(hex, 0xFF, sizeof(hex));
+
+    status = atcab_bin2hex_(g_bin2hex_bin, 10, hex, &hex_size, false, false, true);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(10 * 2, hex_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_bin2hex_uppercase, hex, hex_size);
+    TEST_ASSERT_EQUAL(NULL, hex[hex_size]);
+}
+
+TEST(atca_helper, transform_bin2hex_lowercase)
+{
+    char hex[10 * 3];
+    size_t hex_size = sizeof(hex);
+    ATCA_STATUS status;
+
+    memset(hex, 0xFF, sizeof(hex));
+
+    status = atcab_bin2hex_(g_bin2hex_bin, 10, hex, &hex_size, false, false, false);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(10 * 2, hex_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_bin2hex_lowercase, hex, hex_size);
+    TEST_ASSERT_EQUAL(NULL, hex[hex_size]);
+}
+
+TEST(atca_helper, transform_bin2hex_lowercase_space)
+{
+    char hex[10 * 3];
+    size_t hex_size = sizeof(hex);
+    ATCA_STATUS status;
+
+    memset(hex, 0xFF, sizeof(hex));
+
+    status = atcab_bin2hex_(g_bin2hex_bin, 10, hex, &hex_size, false, true, false);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL((10 * 3) - 1, hex_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_bin2hex_lowercase_space, hex, hex_size);
+    TEST_ASSERT_EQUAL(NULL, hex[hex_size]);
+}
+
+TEST(atca_helper, transform_bin2hex_uppercase_space)
+{
+    char hex[10 * 3];
+    size_t hex_size = sizeof(hex);
+    ATCA_STATUS status;
+
+    memset(hex, 0xFF, sizeof(hex));
+
+    status = atcab_bin2hex_(g_bin2hex_bin, 10, hex, &hex_size, false, true, true);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL((10 * 3) - 1, hex_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_bin2hex_uppercase_space, hex, hex_size);
+    TEST_ASSERT_EQUAL(NULL, hex[hex_size]);
+}
+
+TEST(atca_helper, transform_hex2bin)
+{
+    uint8_t bin[10];
+    size_t bin_size = sizeof(bin);
+    ATCA_STATUS status;
+
+    memset(bin, 0xFF, sizeof(bin));
+
+    status = atcab_hex2bin_(g_bin2hex_lowercase, 20, bin, &bin_size, false);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(20 / 2, bin_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_bin2hex_bin, bin, bin_size);
+}
+
+TEST(atca_helper, transform_hex2bin_space)
+{
+    uint8_t bin[10];
+    size_t bin_size = sizeof(bin);
+    ATCA_STATUS status;
+
+    memset(bin, 0xFF, sizeof(bin));
+
+    status = atcab_hex2bin_(g_bin2hex_lowercase_space, 29, bin, &bin_size, true);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(((29 - 2) / 3) + 1, bin_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_bin2hex_bin, bin, bin_size);
+}
+
+TEST(atca_helper, transform_reversal)
+{
+    uint8_t reverse[10];
+    size_t data_size = sizeof(reverse);
+    ATCA_STATUS status;
+
+    status = atcab_reversal(g_bin2hex_bin, 10, reverse, &data_size);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(10, data_size);
+    TEST_ASSERT_EQUAL_MEMORY(reversed_data, reverse, 10);
+}
+
 TEST(atca_helper, bin2hex_simple)
 {
     char hex[10 * 3];
@@ -444,7 +558,7 @@ TEST(atca_helper, bin2hex_no_pretty)
 
     memset(hex, 0xFF, sizeof(hex)); // Preset to non-null values to check ending null behavior
 
-    status = atcab_bin2hex_(g_bin2hex_bin, sizeof(g_bin2hex_bin), hex, &hex_size, false);
+    status = atcab_bin2hex_(g_bin2hex_bin, sizeof(g_bin2hex_bin), hex, &hex_size, false, false, true);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(sizeof(g_bin2hex_hex_no_pretty) - 1, hex_size);
     TEST_ASSERT_EQUAL_MEMORY(g_bin2hex_hex_no_pretty, hex, hex_size);
@@ -541,7 +655,13 @@ t_test_case_info helper_basic_test_info[] =
     { REGISTER_TEST_CASE(atca_helper, hex2bin_in_place),                   ATCA_TESTS_HELPER_DEVICES},
     { REGISTER_TEST_CASE(atca_helper, hex2bin_incomplete),                 ATCA_TESTS_HELPER_DEVICES},
     { REGISTER_TEST_CASE(atca_helper, hex2bin_small_buf),                  ATCA_TESTS_HELPER_DEVICES},
-
+    { REGISTER_TEST_CASE(atca_helper, transform_bin2hex_uppercase),        ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, transform_bin2hex_lowercase),        ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, transform_bin2hex_uppercase_space),  ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, transform_bin2hex_lowercase_space),  ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, transform_hex2bin),                  ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, transform_hex2bin_space),            ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, transform_reversal),                 ATCA_TESTS_HELPER_DEVICES},
     { (fp_test_case)NULL,             (uint8_t)0 },                        /* Array Termination element*/
 };
 // *INDENT-ON*

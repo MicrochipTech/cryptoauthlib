@@ -1,6 +1,6 @@
 var a00203 =
 [
-    [ "atcab_counter", "a03664.html#gabaaaef242649206029e1c10ac6d1fb7d", null ],
-    [ "atcab_counter_increment", "a03664.html#ga6e510e056ea16a0a34b405b7ca378f16", null ],
-    [ "atcab_counter_read", "a03664.html#gaeee666028a097659af69cc828a6bd68b", null ]
+    [ "atcacert_gen_challenge_hw", "a00990.html#ga208c1ea765f192bd86b26964fbb5edcb", null ],
+    [ "atcacert_verify_cert_hw", "a00990.html#ga81e92ea606e86051afa84f2fac4898d6", null ],
+    [ "atcacert_verify_response_hw", "a00990.html#gafeffa7a36a7b5a343f5f568d090e8eed", null ]
 ];

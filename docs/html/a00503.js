@@ -1,14 +1,14 @@
 var a00503 =
 [
-    [ "KIT_MSG_SIZE", "a03666.html#ga0810d89c328e48fd91eb604323cca4e9", null ],
-    [ "KIT_RX_WRAP_SIZE", "a03666.html#ga59e33124fc2fa800cc9c90a6ee3ff543", null ],
-    [ "KIT_TX_WRAP_SIZE", "a03666.html#ga8a649555029d4f23edfc15a8c01b2d3d", null ],
-    [ "kit_idle", "a03666.html#gaeaee19ff7623f0eab9839e68dae583af", null ],
-    [ "kit_init", "a03666.html#ga8fb98d1c372e7e75f99a2f7d1182b877", null ],
-    [ "kit_parse_rsp", "a03666.html#ga8bf59f4218d312568b769b8b8e5c563e", null ],
-    [ "kit_receive", "a03666.html#ga09a86ccc517208f9c9a057ea569e2a18", null ],
-    [ "kit_send", "a03666.html#gac9dc79f9b5281fbe82c20b6af9de76b7", null ],
-    [ "kit_sleep", "a03666.html#gaf6054a0c971830411d5008b94923bdd8", null ],
-    [ "kit_wake", "a03666.html#gaf7ce58d02b067b956abd32127f5519e9", null ],
-    [ "kit_wrap_cmd", "a03666.html#ga0f09f4b79c681f54b88a8f71bca0d4c4", null ]
+    [ "hal_swi_discover_buses", "a00993.html#ga53864a301dac6efbdbdc3931aa79e23e", null ],
+    [ "hal_swi_discover_devices", "a00993.html#ga354e6fa757688b73e6fb5293bb835def", null ],
+    [ "hal_swi_idle", "a00993.html#ga618291172976da96c4f02dc9200c845c", null ],
+    [ "hal_swi_init", "a00993.html#gaf406053c1a3f2a86bdc887f2ff4b663d", null ],
+    [ "hal_swi_post_init", "a00993.html#ga9186e5235979216330ae580290872c77", null ],
+    [ "hal_swi_receive", "a00993.html#ga02e9f36723f0feb21d373898728de04b", null ],
+    [ "hal_swi_release", "a00993.html#ga196dbc62546b39ac3e556a0f7f6b7132", null ],
+    [ "hal_swi_send", "a00993.html#gaeb8b8857192a7710785acce0110e8016", null ],
+    [ "hal_swi_send_flag", "a00993.html#gaae96ea936a2e85d0bcb81b7868ee007d", null ],
+    [ "hal_swi_sleep", "a00993.html#ga252e365a30f2583dae8a8eac073a9f53", null ],
+    [ "hal_swi_wake", "a00993.html#gafc428980ec95e37eee94813db229fe70", null ]
 ];

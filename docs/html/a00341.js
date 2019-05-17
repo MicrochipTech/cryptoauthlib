@@ -1,6 +1,7 @@
 var a00341 =
 [
-    [ "MAX_I2C_BUSES", "a03666.html#gaf89a7a4080a47aa10a5504291db285bf", null ],
-    [ "ATCAI2CMaster_t", "a03666.html#gae8f36006f14bf6a9f4914bac69ed9f98", null ],
-    [ "change_i2c_speed", "a03666.html#gab7f613b378e0d01b80703df3ac662d6d", null ]
+    [ "atcac_sw_sha2_256", "a00992.html#ga63412270c4629874f2764171200c1b5c", null ],
+    [ "atcac_sw_sha2_256_finish", "a00992.html#gae3a29931f2104cce481aa9ef1ab16fea", null ],
+    [ "atcac_sw_sha2_256_init", "a00992.html#ga58283666b662f084155ba693870c1077", null ],
+    [ "atcac_sw_sha2_256_update", "a00992.html#gab1a09fa1d854722cc667cea319ca9984", null ]
 ];

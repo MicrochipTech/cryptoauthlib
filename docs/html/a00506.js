@@ -1,12 +1,9 @@
 var a00506 =
 [
-    [ "swi_disable", "a00506.html#af016fffdce9f520096de8631e6692707", null ],
-    [ "swi_enable", "a00506.html#ad78929b51b34df503a37b4961577d5ce", null ],
-    [ "swi_receive_bytes", "a00506.html#afa009f7d683cb82293570a27d1f8ee10", null ],
-    [ "swi_send_byte", "a00506.html#a1c5ab22e67923ee54eef0e33b227be0b", null ],
-    [ "swi_send_bytes", "a00506.html#af0382e26c4d83b0762b39d12c772dd2e", null ],
-    [ "swi_send_wake_token", "a00506.html#ada6b4629603758b67820568677ab2a19", null ],
-    [ "swi_set_pin", "a00506.html#a076fc28889d32327dd3372538106da92", null ],
-    [ "swi_set_signal_pin", "a00506.html#a79bc8f2b72647fce853274cf8474b41e", null ],
-    [ "swi_buses_default", "a00506.html#a8ba5507b651724b4cdc74106a16b025c", null ]
+    [ "SWI_FLAG_CMD", "a00993.html#ga13c01ac16bb14fde75e9c00dcd1cc761", null ],
+    [ "SWI_FLAG_IDLE", "a00993.html#ga6219d68ef915fdcd734f51960ba08fb6", null ],
+    [ "SWI_FLAG_SLEEP", "a00993.html#ga13ef2322176ad9b7ba3d2e23b277cce6", null ],
+    [ "SWI_FLAG_TX", "a00993.html#ga20af8352e13a7357650ba1cbf41349ea", null ],
+    [ "SWI_WAKE_TOKEN", "a00993.html#ga8f12e3b749e7b3dc905114cc7b8d0b38", null ],
+    [ "hal_swi_send_flag", "a00993.html#gaae96ea936a2e85d0bcb81b7868ee007d", null ]
 ];

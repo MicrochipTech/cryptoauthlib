@@ -1,6 +1,5 @@
 var a00164 =
 [
-    [ "atcacert_gen_challenge_sw", "a03663.html#gaa9829e5aa1ece3d3a933db9827d3e8f3", null ],
-    [ "atcacert_verify_cert_sw", "a03663.html#gab78271af8c3e2837810fcdae6e3f5e28", null ],
-    [ "atcacert_verify_response_sw", "a03663.html#ga9d5bf9ec84d28a0412377818805c32c4", null ]
+    [ "ATCA_UNSUPPORTED_CMD", "a00164.html#aa025be8149d8f6e4d07aaa436b026db2", null ],
+    [ "atca_execute_command", "a00164.html#a9a6a7a38f14d486a4b2124d196fc6849", null ]
 ];

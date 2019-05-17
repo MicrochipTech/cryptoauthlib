@@ -112,6 +112,8 @@ extern t_test_case_info updateextra_unit_test_info[];
 extern t_test_case_info counter_unit_test_info[];
 extern t_test_case_info sboot_unit_test_info[];
 extern t_test_case_info jwt_unit_test_info[];
+extern t_test_case_info tng_atca_unit_test_info[];
+extern t_test_case_info tng_atcacert_client_unit_test_info[];
 
 void test_assert_interface_init(void);
 void test_assert_interface_deinit(void);
@@ -136,6 +138,8 @@ void RunAllHelperTests(void);
 void RunBasicOtpZero(void);
 void RunAllBasicTests(void);
 void RunAllFeatureTests(void);
+void RunTNG22Tests(void);
+void RunTNGTNTests(void);
 
 #ifdef _WIN32
 void hex_to_data(const char* hex_str, uint8_t* data, size_t data_size);

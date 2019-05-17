@@ -33,8 +33,6 @@
 #ifndef ATCA_BASIC_H_
 #define ATCA_BASIC_H_
 
-#define TBD   void
-
 /** \defgroup atcab_ Basic Crypto API methods (atcab_)
  *
  * \brief

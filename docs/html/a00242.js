@@ -1,13 +1,13 @@
 var a00242 =
 [
-    [ "atcab_cmp_config_zone", "a03664.html#gadb91d2c3601b95f0ad413cf84a4dfd87", null ],
-    [ "atcab_is_locked", "a03664.html#gaefce484222bdbedef37787a9b10d4426", null ],
-    [ "atcab_is_slot_locked", "a03664.html#ga802de50265ff91dc30dd7c93d9e026e1", null ],
-    [ "atcab_read_bytes_zone", "a03664.html#ga750704332198726725a327344f4f7dd5", null ],
-    [ "atcab_read_config_zone", "a03664.html#ga8ef47330eef6bc72ae8f7a8ef026dae3", null ],
-    [ "atcab_read_enc", "a03664.html#ga778a262b86fa1f8a38139cbae34376e4", null ],
-    [ "atcab_read_pubkey", "a03664.html#ga782ca1e5b1574b2b6793c841be22b28b", null ],
-    [ "atcab_read_serial_number", "a03664.html#ga96c434878e1f435e2cda5b0b5fec444f", null ],
-    [ "atcab_read_sig", "a03664.html#ga098c4c2c724b90b7e2f4ecf12b9530b7", null ],
-    [ "atcab_read_zone", "a03664.html#ga3ce01f02f456c08891ca1d67cd3ed0eb", null ]
+    [ "atca_aes_gcm_ctx", "a01085.html", "a01085" ],
+    [ "atca_aes_gcm_ctx_t", "a00242.html#ac77c63c0685b2cce6a89f607ea019065", null ],
+    [ "atcab_aes_gcm_aad_update", "a00242.html#a1d6fd831a8125a366504a0ab77b62da8", null ],
+    [ "atcab_aes_gcm_decrypt_finish", "a00242.html#aa86508958ff3d81f9bd8e79344537218", null ],
+    [ "atcab_aes_gcm_decrypt_update", "a00242.html#a2ad3270d8bebf6172dc02d0c7d9fb738", null ],
+    [ "atcab_aes_gcm_encrypt_finish", "a00242.html#ada2d38835826587970de3868ca48eaa4", null ],
+    [ "atcab_aes_gcm_encrypt_update", "a00242.html#ab3fda8219d17d1b7bc50b1040399a47d", null ],
+    [ "atcab_aes_gcm_init", "a00242.html#a4805112b62e86b5465e24648504dc374", null ],
+    [ "atcab_aes_gcm_init_rand", "a00242.html#ad71a5720ceaddf2c76476aead5f0c3e6", null ],
+    [ "atca_basic_aes_gcm_version", "a00991.html#gaa5990c6c2a55759960d25a1f8ad1973d", null ]
 ];

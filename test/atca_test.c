@@ -26,6 +26,9 @@
  */
 #include "atca_test.h"
 #include "atca_execution.h"
+#include "app/tng/tng_atca.h"
+
+extern tng_type_t g_tng_test_type;
 
 // gCfg must point to one of the cfg_ structures for any unit test to work.  this allows
 // the command console to switch device types at runtime.
@@ -205,6 +208,16 @@ t_test_case_info* helper_tests[] =
     (t_test_case_info*)NULL, /* Array Termination element*/
 };
 
+t_test_case_info* tng_tests[] =
+{
+    tng_atca_unit_test_info,
+#ifndef DO_NOT_TEST_CERT
+    tng_atcacert_client_unit_test_info,
+#endif
+    (t_test_case_info*)NULL, /* Array Termination element*/
+};
+
+
 void RunAllTests(t_test_case_info** tests_list)
 {
     t_test_case_info* sp_current_test;
@@ -258,6 +271,17 @@ void RunAllHelperTests(void)
     RunAllTests(helper_tests);
 }
 
+void RunTNG22Tests(void)
+{
+    g_tng_test_type = TNGTYPE_22;
+    RunAllTests(tng_tests);
+}
+
+void RunTNGTNTests(void)
+{
+    g_tng_test_type = TNGTYPE_TN;
+    RunAllTests(tng_tests);
+}
 
 
 static bool atcau_is_locked(uint8_t zone)

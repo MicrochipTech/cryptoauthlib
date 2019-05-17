@@ -1,10 +1,6 @@
 var a00455 =
 [
-    [ "ATCASWIMaster_t", "a03666.html#ga257ed552f7d68eb1e5d3ca7baa01559a", null ],
-    [ "swi_flag", "a03666.html#ga8759b00e645502d0f1c3b7330e20e52b", [
-      [ "SWI_FLAG_CMD", "a03666.html#gga8759b00e645502d0f1c3b7330e20e52babacdf58fcbc837d4c4e6d9640e157340", null ],
-      [ "SWI_FLAG_TX", "a03666.html#gga8759b00e645502d0f1c3b7330e20e52ba17fa7af18b61921986085f42fc05cc9f", null ],
-      [ "SWI_FLAG_IDLE", "a03666.html#gga8759b00e645502d0f1c3b7330e20e52baeb0778b0887019be95260a2c0420d21a", null ],
-      [ "SWI_FLAG_SLEEP", "a03666.html#gga8759b00e645502d0f1c3b7330e20e52ba1d93b236433ad7d6c2b82659009f42f7", null ]
-    ] ]
+    [ "MAX_I2C_BUSES", "a00993.html#gaf89a7a4080a47aa10a5504291db285bf", null ],
+    [ "ATCAI2CMaster_t", "a00993.html#gae8f36006f14bf6a9f4914bac69ed9f98", null ],
+    [ "change_i2c_speed", "a00993.html#gab7f613b378e0d01b80703df3ac662d6d", null ]
 ];

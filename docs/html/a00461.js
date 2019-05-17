@@ -1,9 +1,13 @@
 var a00461 =
 [
-    [ "SWI_FLAG_CMD", "a03666.html#ga13c01ac16bb14fde75e9c00dcd1cc761", null ],
-    [ "SWI_FLAG_IDLE", "a03666.html#ga6219d68ef915fdcd734f51960ba08fb6", null ],
-    [ "SWI_FLAG_SLEEP", "a03666.html#ga13ef2322176ad9b7ba3d2e23b277cce6", null ],
-    [ "SWI_FLAG_TX", "a03666.html#ga20af8352e13a7357650ba1cbf41349ea", null ],
-    [ "SWI_WAKE_TOKEN", "a03666.html#ga8f12e3b749e7b3dc905114cc7b8d0b38", null ],
-    [ "hal_swi_send_flag", "a03666.html#gaae96ea936a2e85d0bcb81b7868ee007d", null ]
+    [ "hal_i2c_discover_buses", "a00993.html#ga05700385437884cc7b28c38d33e84f8c", null ],
+    [ "hal_i2c_discover_devices", "a00993.html#gac7644e62498a596c09952ee3b28017b9", null ],
+    [ "hal_i2c_idle", "a00993.html#ga9317303ada721ff3f97e7aad69437a30", null ],
+    [ "hal_i2c_init", "a00993.html#ga09e7f465a040fbd19ea136269571de3c", null ],
+    [ "hal_i2c_post_init", "a00993.html#gafbe53519362f18c2688d10da6f7c618f", null ],
+    [ "hal_i2c_receive", "a00993.html#ga7785bcc305c14e2dc188bb1b9a77814a", null ],
+    [ "hal_i2c_release", "a00993.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
+    [ "hal_i2c_send", "a00993.html#gacd0fb31f0f88ef3762665e26b5aa784b", null ],
+    [ "hal_i2c_sleep", "a00993.html#ga3f89bae6a625d5f37abdcc99408def27", null ],
+    [ "hal_i2c_wake", "a00993.html#gad4df1b6755e2d5b5d9e810371e45ca8c", null ]
 ];

@@ -1,6 +1,9 @@
 var a00254 =
 [
-    [ "atcab_sign", "a03664.html#ga69b8282d1b1e0c54b9a7d286fed503b8", null ],
-    [ "atcab_sign_base", "a03664.html#ga5c1e598bf3d4d25b522f42d6038a4268", null ],
-    [ "atcab_sign_internal", "a03664.html#ga559add3e8b4f85a9d91fc0ed86aefa29", null ]
+    [ "atcab_ecdh", "a00991.html#ga6fc480ad2824df6309f4f370ffad15f9", null ],
+    [ "atcab_ecdh_base", "a00991.html#ga211c9405bb5049dd4a5da92d25c83f3c", null ],
+    [ "atcab_ecdh_enc", "a00991.html#gab6e0c175cbcb5f794b12a8ec22485176", null ],
+    [ "atcab_ecdh_ioenc", "a00991.html#ga975f7303086190d3b6f76c367583d622", null ],
+    [ "atcab_ecdh_tempkey", "a00991.html#gac244b83b061ffd8ae3d59b5f973baa53", null ],
+    [ "atcab_ecdh_tempkey_ioenc", "a00991.html#gafaccb0c9d12154b0c5b917f89f233721", null ]
 ];

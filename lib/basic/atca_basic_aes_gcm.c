@@ -35,6 +35,10 @@
 #include "atca_basic_aes_gcm.h"
 #include "atca_compiler.h"
 
+/** \ingroup atcab_
+ * @{
+ */
+
 const char* atca_basic_aes_gcm_version = "1.0";
 
 /** \brief Performs running GHASH calculations using the current hash value,
@@ -575,3 +579,5 @@ ATCA_STATUS atcab_aes_gcm_decrypt_finish(atca_aes_gcm_ctx_t* ctx, const uint8_t*
 
     return ATCA_SUCCESS;
 }
+
+/** @} */

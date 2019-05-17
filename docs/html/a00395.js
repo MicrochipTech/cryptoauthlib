@@ -1,9 +1,5 @@
 var a00395 =
 [
-    [ "CPU_CLOCK", "a03666.html#ga512016e5f1966a8fd45b3f1a81ba5b8f", null ],
-    [ "us_SCALE", "a03666.html#ga5a8416082aa7664c94099d3d787eee3c", null ],
-    [ "atca_delay_10us", "a03666.html#ga19891182689551cc3a88603135959351", null ],
-    [ "atca_delay_ms", "a03666.html#ga80a853a202b089064bfc4b159c3418b4", null ],
-    [ "atca_delay_us", "a03666.html#ga7598dfcd6dcac882836544d48356d02f", null ],
-    [ "delay_us", "a03666.html#ga31c35882825888bc79e420905830f25d", null ]
+    [ "atca_delay_ms", "a00395.html#a4b83848e938fac7ec4dde79e584b6f71", null ],
+    [ "ets_delay_us", "a00395.html#a7def86f0fbd90b451847d8534f21f5dc", null ]
 ];

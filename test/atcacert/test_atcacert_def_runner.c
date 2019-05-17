@@ -290,12 +290,19 @@ TEST_GROUP_RUNNER(atcacert_cert_build)
     RUN_TEST_CASE(atcacert_cert_build, process_device_comp_cert);
     RUN_TEST_CASE(atcacert_cert_build, process_device_comp_cert_new_expire);
     RUN_TEST_CASE(atcacert_cert_build, finish_device);
+    RUN_TEST_CASE(atcacert_cert_build, transform);
 
     RUN_TEST_CASE(atcacert_cert_build, start_small_buf);
     RUN_TEST_CASE(atcacert_cert_build, start_bad_params);
     RUN_TEST_CASE(atcacert_cert_build, process_bad_params);
     RUN_TEST_CASE(atcacert_cert_build, finish_missing_device_sn);
     RUN_TEST_CASE(atcacert_cert_build, finish_bad_params);
+
+    RUN_TEST_CASE(atcacert_cert_build, max_cert_size_x509);
+    RUN_TEST_CASE(atcacert_cert_build, max_cert_size_x509_dynamic_sn);
+    RUN_TEST_CASE(atcacert_cert_build, max_cert_size_x509_dynamic_sn_bad_size);
+    RUN_TEST_CASE(atcacert_cert_build, max_cert_size_custom);
+    RUN_TEST_CASE(atcacert_cert_build, max_cert_size_bad_params);
 }
 
 TEST_GROUP_RUNNER(atcacert_is_device_loc_overlap)

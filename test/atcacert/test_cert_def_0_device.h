@@ -5,4 +5,4 @@
 
 extern const atcacert_def_t g_test_cert_def_0_device;
 
-#endif // TEST_CERT_DEF_0_DEVICE_H
+#endif

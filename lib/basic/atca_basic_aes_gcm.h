@@ -29,6 +29,10 @@
 
 #include "cryptoauthlib.h"
 
+/** \ingroup atcab_
+ * @{
+ */
+
 extern const char* atca_basic_aes_gcm_version;
 
 /** Context structure for AES GCM operations.
@@ -57,5 +61,7 @@ ATCA_STATUS atcab_aes_gcm_encrypt_update(atca_aes_gcm_ctx_t* ctx, const uint8_t*
 ATCA_STATUS atcab_aes_gcm_encrypt_finish(atca_aes_gcm_ctx_t* ctx, uint8_t* tag, size_t tag_size);
 ATCA_STATUS atcab_aes_gcm_decrypt_update(atca_aes_gcm_ctx_t* ctx, const uint8_t* ciphertext, uint32_t ciphertext_size, uint8_t* plaintext);
 ATCA_STATUS atcab_aes_gcm_decrypt_finish(atca_aes_gcm_ctx_t* ctx, const uint8_t* tag, size_t tag_size, bool* is_verified);
+
+/** @} */
 
 #endif

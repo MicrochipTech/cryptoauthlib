@@ -1,6 +1,6 @@
 var a00365 =
 [
-    [ "MAX_I2C_BUSES", "a03666.html#gaf89a7a4080a47aa10a5504291db285bf", null ],
-    [ "ATCAI2CMaster_t", "a03666.html#gae8f36006f14bf6a9f4914bac69ed9f98", null ],
-    [ "change_i2c_speed", "a03666.html#gab7f613b378e0d01b80703df3ac662d6d", null ]
+    [ "hal_check_wake", "a00993.html#ga6ce92f1d10000eb6618fc74c2ca92d76", null ],
+    [ "hal_iface_init", "a00993.html#gab77081d6d85ee3ab839a0882e80e9e87", null ],
+    [ "hal_iface_release", "a00993.html#ga4be1afccb41f28f6ce620b1d5197befc", null ]
 ];

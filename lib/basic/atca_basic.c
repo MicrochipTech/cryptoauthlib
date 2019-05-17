@@ -30,7 +30,7 @@
 #include "atca_basic.h"
 #include "host/atca_host.h"
 
-const char atca_version[] = { "20190304" };  // change for each release, yyyymmdd
+const char atca_version[] = { "20190517" };  // change for each release, yyyymmdd
 ATCADevice _gDevice = NULL;
 #ifdef ATCA_NO_HEAP
 struct atca_command g_atcab_command;

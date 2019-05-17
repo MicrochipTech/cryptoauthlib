@@ -61,6 +61,10 @@ Examples
 
 Release notes
 -----------
+05/17/2019
+  - Added support for TNG devices (cert transforms, new API)
+  - atcab_write_pub_key() now works when the data zone is unlocked
+
 03/04/2019
   - mbed TLS wrapper added
   - Minor bug fixes

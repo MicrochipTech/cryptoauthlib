@@ -1,4 +1,4 @@
-from ctypes import c_uint8, create_string_buffer, memmove, byref, cast, c_void_p, c_uint32, POINTER
+from ctypes import c_uint8, create_string_buffer, memmove, byref, cast, c_void_p, c_uint32, POINTER, c_size_t, sizeof
 from cryptoauthlib import *
 
 c_ptr = type(byref(create_string_buffer(1)))
@@ -2023,10 +2023,9 @@ class atcab_mock(object):
     #--------------------------------------------------------------------#
     # atcacert_read_cert(cert_def, ca_public_key, cert, cert_size):
 
-    r_cert_size = c_uint8()
-    r_cert_size.value = 64
+    r_cert_size = c_size_t(64)
 
-    r_cert = create_string_buffer(64)
+    r_cert = create_string_buffer(r_cert_size.value)
     r_cert.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
                                     0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
                                     0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
@@ -2047,7 +2046,7 @@ class atcab_mock(object):
             raise ValueError
 
         memmove(cast(cert, c_void_p).value, cast(byref(self.r_cert), c_void_p).value, len(self.r_cert))
-        memmove(cast(cert_size, c_void_p).value, cast(byref(self.r_cert_size), c_void_p).value, 1)
+        memmove(cert_size, byref(self.r_cert_size), sizeof(self.r_cert_size))
 
         return Status.ATCA_SUCCESS
 
@@ -2092,15 +2091,6 @@ class atcab_mock(object):
 
     #--------------------------------------------------------------------#
     # atcacert_create_csr_pem(self, csr_def, csr, csr_size):
-
-    r_csr_size = c_uint8()
-    r_csr_size.value = 64
-
-    r_csr = create_string_buffer(64)
-    r_csr.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
     def atcacert_create_csr_pem(self, csr_def, csr, csr_size):
 
@@ -2196,3 +2186,151 @@ class atcab_mock(object):
         timestamp.tm_sec = 12
 
         return Status.ATCA_SUCCESS
+
+
+    r_max_cert_size = c_size_t(123)
+    
+    def atcacert_max_cert_size(self, cert_def, max_cert_size):
+    
+        if not isinstance(cert_def, c_ptr):
+            raise TypeError
+            
+        if not isinstance(max_cert_size, c_ptr):
+            raise TypeError
+            
+        memmove(max_cert_size, byref(self.r_max_cert_size), sizeof(self.r_max_cert_size))
+
+        return Status.ATCA_SUCCESS
+
+
+    r_tng_type = c_int(1)
+
+    def tng_get_type(self, tng_type):
+
+        if not isinstance(tng_type, c_ptr):
+            raise TypeError
+
+        memmove(tng_type, byref(self.r_tng_type), sizeof(self.r_tng_type))
+
+        return Status.ATCA_SUCCESS
+
+
+    def tng_get_device_pubkey(self, public_key):
+
+        if not isinstance(public_key, c_ptr):
+            raise TypeError
+
+        memmove(public_key, byref(self.r_genkey_pubkey), sizeof(self.r_genkey_pubkey))
+
+        return Status.ATCA_SUCCESS
+
+
+    def tng_atcacert_max_device_cert_size(self, max_cert_size):
+
+        if not isinstance(max_cert_size, c_ptr):
+            raise TypeError
+
+        memmove(max_cert_size, byref(self.r_max_cert_size), sizeof(self.r_max_cert_size))
+
+        return CertStatus.ATCACERT_E_SUCCESS
+
+
+    def tng_atcacert_read_device_cert(self, cert, cert_size, signer_cert):
+
+        if not isinstance(cert, c_ptr):
+            raise TypeError
+
+        if not isinstance(cert_size, c_ptr):
+            raise TypeError
+
+        if signer_cert is not None and not isinstance(signer_cert, bytes):
+            raise TypeError
+
+        memmove(cert, byref(self.r_cert), sizeof(self.r_cert))
+        memmove(cert_size, byref(self.r_cert_size), sizeof(self.r_cert_size))
+
+        return CertStatus.ATCACERT_E_SUCCESS
+
+
+    def tng_atcacert_device_public_key(self, public_key, cert):
+
+        if not isinstance(public_key, c_ptr):
+            raise TypeError
+
+        if cert is not None and not isinstance(cert, bytes):
+            raise TypeError
+
+        memmove(public_key, byref(self.r_genkey_pubkey), sizeof(self.r_genkey_pubkey))
+
+        return CertStatus.ATCACERT_E_SUCCESS
+
+
+    def tng_atcacert_max_signer_cert_size(self, max_cert_size):
+
+        if not isinstance(max_cert_size, c_ptr):
+            raise TypeError
+
+        memmove(max_cert_size, byref(self.r_max_cert_size), sizeof(self.r_max_cert_size))
+
+        return CertStatus.ATCACERT_E_SUCCESS
+
+
+    def tng_atcacert_read_signer_cert(self, cert, cert_size):
+
+        if not isinstance(cert, c_ptr):
+            raise TypeError
+
+        if not isinstance(cert_size, c_ptr):
+            raise TypeError
+
+        memmove(cert, byref(self.r_cert), sizeof(self.r_cert))
+        memmove(cert_size, byref(self.r_cert_size), sizeof(self.r_cert_size))
+
+        return CertStatus.ATCACERT_E_SUCCESS
+
+
+    def tng_atcacert_signer_public_key(self, public_key, cert):
+
+        if not isinstance(public_key, c_ptr):
+            raise TypeError
+
+        if cert is not None and not isinstance(cert, bytes):
+            raise TypeError
+
+        memmove(public_key, byref(self.r_genkey_pubkey), sizeof(self.r_genkey_pubkey))
+
+        return CertStatus.ATCACERT_E_SUCCESS
+
+
+    def tng_atcacert_root_cert_size(self, cert_size):
+
+        if not isinstance(cert_size, c_ptr):
+            raise TypeError
+
+        memmove(cert_size, byref(self.r_cert_size), sizeof(self.r_cert_size))
+
+        return CertStatus.ATCACERT_E_SUCCESS
+
+
+    def tng_atcacert_root_cert(self, cert, cert_size):
+
+        if not isinstance(cert, c_ptr):
+            raise TypeError
+
+        if not isinstance(cert_size, c_ptr):
+            raise TypeError
+
+        memmove(cert, byref(self.r_cert), sizeof(self.r_cert))
+        memmove(cert_size, byref(self.r_cert_size), sizeof(self.r_cert_size))
+
+        return CertStatus.ATCACERT_E_SUCCESS
+
+
+    def tng_atcacert_root_public_key(self, public_key):
+
+        if not isinstance(public_key, c_ptr):
+            raise TypeError
+
+        memmove(public_key, byref(self.r_genkey_pubkey), sizeof(self.r_genkey_pubkey))
+
+        return CertStatus.ATCACERT_E_SUCCESS
