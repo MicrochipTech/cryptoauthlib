@@ -11,7 +11,7 @@ extern "C" {
  *
  * \brief These methods provide some convenience functions (mostly around
  *        certificates) for TNG devices, which currently include
- *        ATECC608A-MAH22-T and ATECC608A-MAHTN-T.
+ *        ATECC608A-MAHTN-T.
  *
    @{ */
 
