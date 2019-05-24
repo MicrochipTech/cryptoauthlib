@@ -40,7 +40,7 @@
 
 /**
  * \defgroup pkcs11 Information (pkcs11_)
- @{ */
+   @{ */
 
 const char pkcs11_lib_manufacturer_id[] = "Microchip Technology Inc";
 const char pkcs11_lib_description[] = "Cryptoauthlib PKCS11 Interface";

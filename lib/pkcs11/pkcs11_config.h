@@ -68,13 +68,13 @@
 #endif
 
 /** Maximum number of slots allowed in the system - if static memory this will
-always be the number of slots */
+   always be the number of slots */
 #ifndef PKCS11_MAX_SLOTS_ALLOWED
 #define PKCS11_MAX_SLOTS_ALLOWED        1
 #endif
 
 /** Maximum number of total sessions allowed in the system - if using static
-memory then this many session contexts will be allocated */
+   memory then this many session contexts will be allocated */
 #ifndef PKCS11_MAX_SESSIONS_ALLOWED
 #define PKCS11_MAX_SESSIONS_ALLOWED     10
 #endif
@@ -93,17 +93,17 @@ memory then this many session contexts will be allocated */
 /* The following configuration options are for fine tuning of the library   */
 /****************************************************************************/
 
-/** Defines if the library will produce a static function list or use an 
-externally defined one. This is an optimization that allows for a statically
-linked library to include only the PKCS#11 functions that the application
-intends to use. Otherwise compilers will not be able to optimize out the unusued
-functions */
+/** Defines if the library will produce a static function list or use an
+   externally defined one. This is an optimization that allows for a statically
+   linked library to include only the PKCS#11 functions that the application
+   intends to use. Otherwise compilers will not be able to optimize out the unusued
+   functions */
 #ifndef PKCS11_EXTERNAL_FUNCTION_LIST
 #define PKCS11_EXTERNAL_FUNCTION_LIST    0
 #endif
 
 /** Static Search Attribute Cache in bytes (variable number of attributes based
-on size and memory requirements) */
+   on size and memory requirements) */
 #ifndef PKCS11_SEARCH_CACHE_SIZE
 #define PKCS11_SEARCH_CACHE_SIZE        128
 #endif

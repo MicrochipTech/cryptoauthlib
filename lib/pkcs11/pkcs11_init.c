@@ -40,7 +40,7 @@
 
 /**
  * \defgroup pkcs11 Initialization (pkcs11_)
- @{ */
+   @{ */
 
 /** Library intialization defaults if none were provided */
 static const CK_C_INITIALIZE_ARGS pkcs11_init_defaults = {
@@ -53,7 +53,7 @@ static const CK_C_INITIALIZE_ARGS pkcs11_init_defaults = {
 };
 
 /**
- * \brief Library Context - currently static but could be allocated 
+ * \brief Library Context - currently static but could be allocated
  */
 static pkcs11_lib_ctx pkcs11_context;
 
@@ -230,7 +230,7 @@ CK_RV pkcs11_init(CK_C_INITIALIZE_ARGS_PTR pInitArgs)
             return CKR_CANT_LOCK;
         }
     }
-    
+
     /* Initialize the Crypto device */
     lib_ctx->slots = pkcs11_slot_initslots(PKCS11_MAX_SLOTS_ALLOWED);
     if (lib_ctx->slots)
@@ -280,7 +280,7 @@ CK_RV pkcs11_deinit(CK_VOID_PTR pReserved)
     /* Release the crypto device */
     atcab_release();
 
-    /** \todo If other threads are waiting for something to happen this call should 
+    /** \todo If other threads are waiting for something to happen this call should
        cause those calls to unblock and return CKR_CRYPTOKI_NOT_INITIALIZED - How
        that is done by this simplified mutex API is yet to be determined */
 

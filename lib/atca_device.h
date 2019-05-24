@@ -40,86 +40,86 @@ extern "C" {
 
 #pragma pack(push, 1)
 
-    typedef struct _atsha204a_config
-    {
-        uint32_t SN03;
-        uint32_t RevNum;
-        uint32_t SN47;
-        uint8_t  SN8;
-        uint8_t  Reserved0;
-        uint8_t  I2C_Enable;
-        uint8_t  Reserved1;
-        uint8_t  I2C_Address;
-        uint8_t  Reserved2;
-        uint8_t  OTPmode;
-        uint8_t  ChipMode;
-        uint16_t SlotConfig[16];
-        uint16_t Counter[8];
-        uint8_t  LastKeyUse[16];
-        uint8_t  UserExtra;
-        uint8_t  Selector;
-        uint8_t  LockValue;
-        uint8_t  LockConfig;
-    } atsha204a_config_t;
+typedef struct _atsha204a_config
+{
+    uint32_t SN03;
+    uint32_t RevNum;
+    uint32_t SN47;
+    uint8_t  SN8;
+    uint8_t  Reserved0;
+    uint8_t  I2C_Enable;
+    uint8_t  Reserved1;
+    uint8_t  I2C_Address;
+    uint8_t  Reserved2;
+    uint8_t  OTPmode;
+    uint8_t  ChipMode;
+    uint16_t SlotConfig[16];
+    uint16_t Counter[8];
+    uint8_t  LastKeyUse[16];
+    uint8_t  UserExtra;
+    uint8_t  Selector;
+    uint8_t  LockValue;
+    uint8_t  LockConfig;
+} atsha204a_config_t;
 
-    typedef struct _atecc508a_config
-    {
-        uint32_t SN03;
-        uint32_t RevNum;
-        uint32_t SN47;
-        uint8_t  SN8;
-        uint8_t  Reserved0;
-        uint8_t  I2C_Enable;
-        uint8_t  Reserved1;
-        uint8_t  I2C_Address;
-        uint8_t  Reserved2;
-        uint8_t  OTPmode;
-        uint8_t  ChipMode;
-        uint16_t SlotConfig[16];
-        uint8_t  Counter0[8];
-        uint8_t  Counter1[8];
-        uint8_t  LastKeyUse[16];
-        uint8_t  UserExtra;
-        uint8_t  Selector;
-        uint8_t  LockValue;
-        uint8_t  LockConfig;
-        uint16_t SlotLocked;
-        uint16_t RFU;
-        uint32_t X509format;
-        uint16_t KeyConfig[16];
-    } atecc508a_config_t;
+typedef struct _atecc508a_config
+{
+    uint32_t SN03;
+    uint32_t RevNum;
+    uint32_t SN47;
+    uint8_t  SN8;
+    uint8_t  Reserved0;
+    uint8_t  I2C_Enable;
+    uint8_t  Reserved1;
+    uint8_t  I2C_Address;
+    uint8_t  Reserved2;
+    uint8_t  OTPmode;
+    uint8_t  ChipMode;
+    uint16_t SlotConfig[16];
+    uint8_t  Counter0[8];
+    uint8_t  Counter1[8];
+    uint8_t  LastKeyUse[16];
+    uint8_t  UserExtra;
+    uint8_t  Selector;
+    uint8_t  LockValue;
+    uint8_t  LockConfig;
+    uint16_t SlotLocked;
+    uint16_t RFU;
+    uint32_t X509format;
+    uint16_t KeyConfig[16];
+} atecc508a_config_t;
 
-    typedef struct _atecc608a_config
-    {
-        uint32_t SN03;
-        uint32_t RevNum;
-        uint32_t SN47;
-        uint8_t  SN8;
-        uint8_t  AES_Enable;
-        uint8_t  I2C_Enable;
-        uint8_t  Reserved1;
-        uint8_t  I2C_Address;
-        uint8_t  Reserved2;
-        uint8_t  CountMatch;
-        uint8_t  ChipMode;
-        uint16_t SlotConfig[16];
-        uint8_t  Counter0[8];
-        uint8_t  Counter1[8];
-        uint8_t  UseLock;
-        uint8_t  VolatileKeyPermission;
-        uint16_t SecureBoot;
-        uint8_t  KdflvLoc;
-        uint16_t KdflvStr;
-        uint8_t  Reserved3[9];
-        uint8_t  UserExtra;
-        uint8_t  UserExtraAdd;
-        uint8_t  LockValue;
-        uint8_t  LockConfig;
-        uint16_t SlotLocked;
-        uint16_t ChipOptions;
-        uint32_t X509format;
-        uint16_t KeyConfig[16];
-    } atecc608a_config_t;
+typedef struct _atecc608a_config
+{
+    uint32_t SN03;
+    uint32_t RevNum;
+    uint32_t SN47;
+    uint8_t  SN8;
+    uint8_t  AES_Enable;
+    uint8_t  I2C_Enable;
+    uint8_t  Reserved1;
+    uint8_t  I2C_Address;
+    uint8_t  Reserved2;
+    uint8_t  CountMatch;
+    uint8_t  ChipMode;
+    uint16_t SlotConfig[16];
+    uint8_t  Counter0[8];
+    uint8_t  Counter1[8];
+    uint8_t  UseLock;
+    uint8_t  VolatileKeyPermission;
+    uint16_t SecureBoot;
+    uint8_t  KdflvLoc;
+    uint16_t KdflvStr;
+    uint8_t  Reserved3[9];
+    uint8_t  UserExtra;
+    uint8_t  UserExtraAdd;
+    uint8_t  LockValue;
+    uint8_t  LockConfig;
+    uint16_t SlotLocked;
+    uint16_t ChipOptions;
+    uint32_t X509format;
+    uint16_t KeyConfig[16];
+} atecc608a_config_t;
 
 #pragma pack(pop)
 
@@ -174,7 +174,7 @@ ATCAIface atGetIFace(ATCADevice dev);
 
 /* General Purpose Slot Config (Not ECC Private Keys) */
 #define ATCA_SLOT_CONFIG_READKEY_SHIFT          (0)
-#define ATCA_SLOT_CONFIG_READKEY_MASK	        (0x0Fu << ATCA_SLOT_CONFIG_READKEY_SHIFT)
+#define ATCA_SLOT_CONFIG_READKEY_MASK           (0x0Fu << ATCA_SLOT_CONFIG_READKEY_SHIFT)
 #define ATCA_SLOT_CONFIG_READKEY(v)             (ATCA_SLOT_CONFIG_READKEY_MASK & (v << ATCA_SLOT_CONFIG_READKEY_SHIFT))
 #define ATCA_SLOT_CONFIG_NOMAC_SHIFT            (4)
 #define ATCA_SLOT_CONFIG_NOMAC_MASK             (0x01u << ATCA_SLOT_CONFIG_NOMAC_SHIFT)

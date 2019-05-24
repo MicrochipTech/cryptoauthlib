@@ -34,7 +34,7 @@
 
 /**
  * \defgroup pkcs11 OS Abstraction (pkcs11_so_)
- @{ */
+   @{ */
 
 /**
  * \brief Convert HAL return codes to PKCS11 return values
@@ -54,7 +54,7 @@ CK_RV pkcs11_os_create_mutex(CK_VOID_PTR_PTR ppMutex)
     return pkcs11_os_convert_rv(hal_create_mutex(ppMutex, "atpkcs11"));
 }
 
-/* 
+/*
  * \brief Application callback for destroying a mutex object
  * \param[IN] pMutex pointer to mutex
  */

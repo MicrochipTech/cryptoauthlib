@@ -61,7 +61,7 @@ typedef struct _pkcs11_lib_ctx
     CK_VOID_PTR     slots;
     CK_ULONG        slot_cnt;
 #if !PKCS11_USE_STATIC_CONFIG
-    CK_CHAR         config_path[200];
+    CK_CHAR config_path[200];
 #endif
 } pkcs11_lib_ctx, *pkcs11_lib_ctx_ptr;
 

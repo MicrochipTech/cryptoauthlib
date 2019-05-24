@@ -42,9 +42,9 @@
 
 /**
  * \defgroup pkcs11 Signature (pkcs11_signature_)
- @{ */
+   @{ */
 
- /**
+/**
  * \brief Initialize a signing operation using the specified key and mechanism
  */
 CK_RV pkcs11_signature_sign_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey)
@@ -82,8 +82,8 @@ CK_RV pkcs11_signature_sign_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pM
 }
 
 /**
-* \brief Sign the data in a single pass operation
-*/
+ * \brief Sign the data in a single pass operation
+ */
 CK_RV pkcs11_signature_sign(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pSignature, CK_ULONG_PTR pulSignatureLen)
 {
     pkcs11_lib_ctx_ptr pLibCtx = NULL;
@@ -117,17 +117,17 @@ CK_RV pkcs11_signature_sign(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_UL
     {
         if (pSignature)
         {
-	    if (CKR_OK != (rv = pkcs11_lock_context(pLibCtx)))
-	    {
-		    return rv;
-	    }
+            if (CKR_OK != (rv = pkcs11_lock_context(pLibCtx)))
+            {
+                return rv;
+            }
             status = atcab_sign(pKey->slot, pData, pSignature);
-	    (void)pkcs11_unlock_context(pLibCtx);
-	    if (status)
-	    {
-	            PKCS11_DEBUG("atcab_sign: %02X\n", status);
-		    return CKR_FUNCTION_FAILED;
-	    }
+            (void)pkcs11_unlock_context(pLibCtx);
+            if (status)
+            {
+                PKCS11_DEBUG("atcab_sign: %02X\n", status);
+                return CKR_FUNCTION_FAILED;
+            }
         }
         *pulSignatureLen = ATCA_SIG_SIZE;
     }
@@ -140,8 +140,8 @@ CK_RV pkcs11_signature_sign(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_UL
 }
 
 /**
-* \brief Continues a multiple-part signature operation
-*/
+ * \brief Continues a multiple-part signature operation
+ */
 CK_RV pkcs11_signature_sign_continue(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen)
 {
     ((void)hSession);
@@ -152,8 +152,8 @@ CK_RV pkcs11_signature_sign_continue(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPa
 }
 
 /**
-* \brief Finishes a multiple-part signature operation
-*/
+ * \brief Finishes a multiple-part signature operation
+ */
 CK_RV pkcs11_signature_sign_finish(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSignature, CK_ULONG_PTR pulSignatureLen)
 {
     ((void)hSession);
@@ -164,8 +164,8 @@ CK_RV pkcs11_signature_sign_finish(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSign
 }
 
 /**
-* \brief Initializes a verification operation using the specified key and mechanism
-*/
+ * \brief Initializes a verification operation using the specified key and mechanism
+ */
 CK_RV pkcs11_signature_verify_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey)
 {
     ((void)hSession);
@@ -176,8 +176,8 @@ CK_RV pkcs11_signature_verify_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR 
 }
 
 /**
-* \brief Verifies a signature on single-part data
-*/
+ * \brief Verifies a signature on single-part data
+ */
 CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pSignature, CK_ULONG ulSignatureLen)
 {
     ((void)hSession);
@@ -190,8 +190,8 @@ CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_
 }
 
 /**
-* \brief Continues a multiple-part verification operation
-*/
+ * \brief Continues a multiple-part verification operation
+ */
 CK_RV pkcs11_signature_verify_continue(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen)
 {
     ((void)hSession);
@@ -202,8 +202,8 @@ CK_RV pkcs11_signature_verify_continue(CK_SESSION_HANDLE hSession, CK_BYTE_PTR p
 }
 
 /**
-* \brief Finishes a multiple-part verification operation
-*/
+ * \brief Finishes a multiple-part verification operation
+ */
 CK_RV pkcs11_signature_verify_finish(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSignature, CK_ULONG ulSignatureLen)
 {
     ((void)hSession);

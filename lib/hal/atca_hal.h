@@ -163,7 +163,7 @@ ATCA_STATUS hal_destroy_mutex(void * pMutex);
 ATCA_STATUS hal_lock_mutex(void * pMutex);
 ATCA_STATUS hal_unlock_mutex(void * pMutex);
 
-#if defined(_WIN32)|| defined(__linux__)
+#if defined(_WIN32) || defined(__linux__)
 #define hal_malloc      malloc
 #define hal_free        free
 #else

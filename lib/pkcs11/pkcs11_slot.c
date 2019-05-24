@@ -47,7 +47,7 @@
 
 /**
  * \defgroup pkcs11 Slot Management (pkcs11_)
- @{ */
+   @{ */
 
 #if PKCS11_USE_STATIC_MEMORY
 static pkcs11_slot_ctx pkcs11_slot_cache[PKCS11_MAX_SLOTS_ALLOWED];
@@ -116,7 +116,7 @@ CK_RV pkcs11_slot_config(CK_SLOT_ID slotID)
 
 static ATCA_STATUS pkcs11_slot_check_device_type(ATCAIfaceCfg * ifacecfg)
 {
-    uint8_t info[4] = {0};
+    uint8_t info[4] = { 0 };
     ATCA_STATUS status = atcab_info(info);
 
     if (ATCA_SUCCESS == status)
@@ -167,7 +167,7 @@ CK_RV pkcs11_slot_init(CK_SLOT_ID slotID)
         return CKR_GENERAL_ERROR;
     }
 
-    if(!slot_ctx->initialized)
+    if (!slot_ctx->initialized)
     {
         ATCAIfaceCfg * ifacecfg = (ATCAIfaceCfg*)slot_ctx->interface_config;
 
@@ -184,10 +184,11 @@ CK_RV pkcs11_slot_init(CK_SLOT_ID slotID)
         do
         {
             /* If a PKCS11 was killed an left the device in the idle state then
-            starting up again will require the device to go back to a known state
-            that is accomplished here by retrying the initalization */
+               starting up again will require the device to go back to a known state
+               that is accomplished here by retrying the initalization */
             status = atcab_init(ifacecfg);
-        } while (retries-- && status);
+        }
+        while (retries-- && status);
 
     #ifdef ATCA_HAL_I2C
         if (ATCA_SUCCESS != status)
@@ -203,7 +204,8 @@ CK_RV pkcs11_slot_init(CK_SLOT_ID slotID)
                 {
                     /* Same as the above */
                     status = atcab_init(ifacecfg);
-                } while (retries-- && status);
+                }
+                while (retries-- && status);
             }
         }
     #endif
@@ -216,7 +218,7 @@ CK_RV pkcs11_slot_init(CK_SLOT_ID slotID)
         }
     #endif
 
-        if(ATCA_SUCCESS == status)
+        if (ATCA_SUCCESS == status)
         {
             status = atcab_read_config_zone((uint8_t*)&slot_ctx->cfg_zone);
         }
@@ -235,6 +237,7 @@ static CK_ULONG pkcs11_slot_get_active_count(pkcs11_lib_ctx_ptr lib_ctx)
 {
     CK_ULONG active_cnt = 0;
     CK_ULONG i;
+
     for (i = 0; i < lib_ctx->slot_cnt; i++)
     {
         if (((pkcs11_slot_ctx_ptr*)lib_ctx->slots)[i])
@@ -248,12 +251,13 @@ static CK_ULONG pkcs11_slot_get_active_count(pkcs11_lib_ctx_ptr lib_ctx)
 static void pkcs11_slot_fill_list(pkcs11_lib_ctx_ptr lib_ctx, CK_BBOOL tokenPresent, CK_SLOT_ID_PTR pSlotList)
 {
     CK_ULONG i;
-    CK_ULONG j=0;
+    CK_ULONG j = 0;
+
     for (i = 0; i < lib_ctx->slot_cnt; i++)
     {
         if (tokenPresent)
         {
-            if(((pkcs11_slot_ctx_ptr*)lib_ctx->slots)[i])
+            if (((pkcs11_slot_ctx_ptr*)lib_ctx->slots)[i])
             {
                 pSlotList[j++] = i;
             }
@@ -311,14 +315,14 @@ CK_RV pkcs11_slot_get_list(CK_BBOOL tokenPresent, CK_SLOT_ID_PTR pSlotList, CK_U
 }
 
 /**
-* \brief Obtains information about a particular slot
-*/
+ * \brief Obtains information about a particular slot
+ */
 CK_RV pkcs11_slot_get_info(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
 {
-    pkcs11_lib_ctx_ptr  lib_ctx = pkcs11_get_context();
+    pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
     pkcs11_slot_ctx_ptr slot_ctx;
-    ATCAIfaceCfg        *if_cfg_ptr;
-    CK_UTF8CHAR         buf[8];
+    ATCAIfaceCfg *if_cfg_ptr;
+    CK_UTF8CHAR buf[8];
 
     if (!lib_ctx || !lib_ctx->initialized)
     {
@@ -351,16 +355,16 @@ CK_RV pkcs11_slot_get_info(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
     if_cfg_ptr = (ATCAIfaceCfg*)slot_ctx->interface_config;
 
     /* Set up the flags - Always a hardware slot, only removable devices can
-    be listed as not present */
+       be listed as not present */
     pInfo->flags = CKF_HW_SLOT | CKF_TOKEN_PRESENT;
 
     /* So there a number of rules about what a slot can and can not be - this
-    means there needs to be a fixed configuration somewhere or a scan
-    operation when we intialize */
+       means there needs to be a fixed configuration somewhere or a scan
+       operation when we intialize */
     if (if_cfg_ptr)
     {
         /* if the interface is USB then it's removable otherwise assume it's not - This might require a
-        configuration API for cases where the device is used for consumable authentication */
+           configuration API for cases where the device is used for consumable authentication */
         if (ATCA_UART_IFACE == if_cfg_ptr->iface_type || ATCA_HID_IFACE == if_cfg_ptr->iface_type)
         {
             pInfo->flags |= CKF_REMOVABLE_DEVICE;
@@ -372,7 +376,7 @@ CK_RV pkcs11_slot_get_info(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
 
         /* Basic description of the expected interface based on the configuration */
         snprintf((char*)pInfo->slotDescription, sizeof(pInfo->slotDescription), "%d_%d_%d", (int)slotID,
-            (int)if_cfg_ptr->devtype, (int)if_cfg_ptr->iface_type);
+                 (int)if_cfg_ptr->devtype, (int)if_cfg_ptr->iface_type);
 
         if (slot_ctx->initialized)
         {

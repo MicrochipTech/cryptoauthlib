@@ -64,7 +64,7 @@ typedef struct _pkcs11_session_ctx
     CK_OBJECT_HANDLE    active_object;
     CK_BYTE             read_key[32];           /**< Accepted through C_Login as the user pin */
 } pkcs11_session_ctx, *pkcs11_session_ctx_ptr;
-    
+
 #ifdef __cplusplus
 }
 #endif

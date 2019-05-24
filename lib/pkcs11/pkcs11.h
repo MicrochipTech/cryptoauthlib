@@ -4,7 +4,7 @@
  * IMPLIED OR EXPRESS WARRANTY; there is no warranty of MERCHANTABILITY, FITNESS FOR A
  * PARTICULAR PURPOSE or NONINFRINGEMENT of the rights of others.
  */
-        
+
 /* Latest version of the specification:
  * http://docs.oasis-open.org/pkcs11/pkcs11-base/v2.40/pkcs11-base-v2.40.html
  */
@@ -187,7 +187,7 @@ extern "C" {
  */
 #include "pkcs11t.h"
 
-#define __PASTE(x,y)      x##y
+#define __PASTE(x, y)      x ## y
 
 
 /* ==============================================================
@@ -197,7 +197,7 @@ extern "C" {
 
 #define CK_NEED_ARG_LIST  1
 #define CK_PKCS11_FUNCTION_INFO(name) \
-  extern CK_DECLARE_FUNCTION(CK_RV, name)
+    extern CK_DECLARE_FUNCTION(CK_RV, name)
 
 /* pkcs11f.h has all the information about the Cryptoki
  * function prototypes.
@@ -217,7 +217,7 @@ extern "C" {
 
 #define CK_NEED_ARG_LIST  1
 #define CK_PKCS11_FUNCTION_INFO(name) \
-  typedef CK_DECLARE_FUNCTION_POINTER(CK_RV, __PASTE(CK_,name))
+    typedef CK_DECLARE_FUNCTION_POINTER (CK_RV, __PASTE (CK_, name))
 
 /* pkcs11f.h has all the information about the Cryptoki
  * function prototypes.
@@ -238,11 +238,12 @@ extern "C" {
  */
 
 #define CK_PKCS11_FUNCTION_INFO(name) \
-  __PASTE(CK_,name) name;
+    __PASTE(CK_, name) name;
 
-struct CK_FUNCTION_LIST {
+struct CK_FUNCTION_LIST
+{
 
-  CK_VERSION    version;  /* Cryptoki version */
+    CK_VERSION version;   /* Cryptoki version */
 
 /* Pile all the function pointers into the CK_FUNCTION_LIST. */
 /* pkcs11f.h has all the information about the Cryptoki

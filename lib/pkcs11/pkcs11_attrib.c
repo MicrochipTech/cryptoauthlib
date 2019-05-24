@@ -32,10 +32,10 @@
 #include "pkcs11_config.h"
 #include "pkcs11_attrib.h"
 #include "cryptoauthlib.h"
- 
+
 /**
  * \defgroup pkcs11 Attributes (pkcs11_attrib_)
- @{ */
+   @{ */
 
 
 /**
@@ -51,7 +51,7 @@
  * If any ulValueLen within the array isn't large enough, it will be set to CK_UNAVAILABLE_INFORMATION and the
  * function will return CKR_BUFFER_TOO_SMALL, as it does if an attribute in the pTemplate argument has ulValueLen
  * too small Note that any attribute whose value is an array of attributes is identifiable by virtue of the
- * attribute type having the CKF_ARRAY_ATTRIBUTE bit set. 
+ * attribute type having the CKF_ARRAY_ATTRIBUTE bit set.
  */
 CK_RV pkcs11_attrib_fill(CK_ATTRIBUTE_PTR pAttribute, const CK_VOID_PTR pData, const CK_ULONG ulSize)
 {
@@ -63,14 +63,14 @@ CK_RV pkcs11_attrib_fill(CK_ATTRIBUTE_PTR pAttribute, const CK_VOID_PTR pData, c
     if (pAttribute->pValue)
     {
         /* 1. If the specified attribute(i.e., the attribute specified by the type field) for the object cannot be revealed
-        because the object is sensitive or unextractable, then the ulValueLen field in that triple is modified to
-        hold the value CK_UNAVAILABLE_INFORMATION. //if (!rv) rv = CKR_ATTRIBUTE_SENSITIVE; */
+           because the object is sensitive or unextractable, then the ulValueLen field in that triple is modified to
+           hold the value CK_UNAVAILABLE_INFORMATION. //if (!rv) rv = CKR_ATTRIBUTE_SENSITIVE; */
 
         if (ulSize <= pAttribute->ulValueLen)
         {
             /* 4. Otherwise, if the length specified in ulValueLen is large enough to hold the value of the specified
-            attribute for the object, then that attribute is copied into the buffer located at pValue */
-            if(pData)
+               attribute for the object, then that attribute is copied into the buffer located at pValue */
+            if (pData)
             {
                 memcpy(pAttribute->pValue, pData, ulSize);
             }

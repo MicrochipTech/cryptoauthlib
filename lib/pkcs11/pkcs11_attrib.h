@@ -49,12 +49,12 @@ extern "C" {
 #endif
 
 /** Populate an attribute based on the "object" */
-typedef CK_RV(*attrib_f)(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute);
+typedef CK_RV (*attrib_f)(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute);
 
 typedef struct _pkcs11_attrib_model
 {
-    const CK_ATTRIBUTE_TYPE     type;
-    const attrib_f              func;
+    const CK_ATTRIBUTE_TYPE type;
+    const attrib_f          func;
 } pkcs11_attrib_model, *pkcs11_attrib_model_ptr;
 
 #ifdef __cplusplus

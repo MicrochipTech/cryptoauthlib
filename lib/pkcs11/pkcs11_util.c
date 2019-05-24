@@ -33,11 +33,11 @@
 
 /**
  * \defgroup pkcs11 Utilities (pkcs11_util_)
- @{ */
+   @{ */
 
 
 
-/* 
+/*
  * \brief Helper function to make sure buffers meet the special padding
  * requirements of PKCS11
  * \param[IN/OUT] buf   Target buffer, will be padded with spaces
@@ -58,7 +58,7 @@ void pkcs11_util_escape_string(CK_UTF8CHAR_PTR buf, CK_ULONG buf_len)
     }
 }
 
-/* 
+/*
  * \brief Helper function to convert cryptoauthlib return codes to
  * PKCS11 return codes
  */

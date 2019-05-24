@@ -53,12 +53,12 @@ extern "C" {
 /** Slot Context */
 typedef struct _pkcs11_slot_ctx
 {
-    CK_BBOOL                initialized;
-    CK_SLOT_ID              slot_id;
-    ATCAIfaceCfg*           interface_config;
-    CK_SESSION_HANDLE       session;
-    atecc608a_config_t      cfg_zone;
-    CK_FLAGS                flags;
+    CK_BBOOL           initialized;
+    CK_SLOT_ID         slot_id;
+    ATCAIfaceCfg*      interface_config;
+    CK_SESSION_HANDLE  session;
+    atecc608a_config_t cfg_zone;
+    CK_FLAGS           flags;
 } pkcs11_slot_ctx, *pkcs11_slot_ctx_ptr;
 
 #ifdef __cplusplus

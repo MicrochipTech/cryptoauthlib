@@ -102,7 +102,7 @@ ATCA_STATUS hal_create_mutex(void** ppMutex, const char *pName)
     return ATCA_SUCCESS;
 }
 
-/* 
+/*
  * \brief Application callback for destroying a mutex object
  * \param[IN] pMutex pointer to mutex
  */
@@ -140,8 +140,8 @@ ATCA_STATUS hal_lock_mutex(void* pMutex)
     }
     else if (WAIT_ABANDONED_0 == rv)
     {
-        /* Lock was obtained but its because another process terminated so the 
-        state is indeterminate and will probably need to be fixed */
+        /* Lock was obtained but its because another process terminated so the
+           state is indeterminate and will probably need to be fixed */
         return ATCA_FUNC_FAIL;
     }
     else

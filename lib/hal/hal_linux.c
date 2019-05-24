@@ -4,13 +4,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <unistd.h>
-#include <sys/types.h>   
+#include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
 #include <fcntl.h>
@@ -91,28 +91,28 @@ typedef struct
  */
 ATCA_STATUS hal_create_mutex(void ** ppMutex, char* pName)
 {
-    int                 fd;
-    bool                created = false;
-    
+    int fd;
+    bool created = false;
+
     if (!ppMutex)
     {
         return ATCA_BAD_PARAM;
     }
 
-    if(pName)
+    if (pName)
     {
         /* Set up a shared memory region */
         fd = shm_open(pName, O_RDWR | O_CREAT | O_EXCL, 0666);
-        if(0 > fd)
+        if (0 > fd)
         {
-            if(EEXIST == errno)
+            if (EEXIST == errno)
             {
                 fd = shm_open(pName, O_RDWR, 0666);
             }
         }
         else
         {
-            if(0 > ftruncate(fd, sizeof(hal_mutex_t)))
+            if (0 > ftruncate(fd, sizeof(hal_mutex_t)))
             {
                 close(fd);
                 fd = -1;
@@ -120,7 +120,7 @@ ATCA_STATUS hal_create_mutex(void ** ppMutex, char* pName)
             created = true;
         }
 
-        if(0 > fd)
+        if (0 > fd)
         {
             return ATCA_GEN_FAIL;
         }
@@ -136,14 +136,14 @@ ATCA_STATUS hal_create_mutex(void ** ppMutex, char* pName)
         created = true;
     }
 
-    if(created && *ppMutex)
+    if (created && *ppMutex)
     {
         pthread_mutexattr_t muattr;
         pthread_mutexattr_init(&muattr);
         pthread_mutexattr_settype(&muattr, PTHREAD_MUTEX_ERRORCHECK);
         pthread_mutexattr_setprotocol(&muattr, PTHREAD_PRIO_INHERIT);
         pthread_mutexattr_setrobust(&muattr, PTHREAD_MUTEX_ROBUST);
-        if(pName)
+        if (pName)
         {
             pthread_mutexattr_setpshared(&muattr, PTHREAD_PROCESS_SHARED);
             ((hal_mutex_t*)*ppMutex)->shared = 1;
@@ -151,7 +151,7 @@ ATCA_STATUS hal_create_mutex(void ** ppMutex, char* pName)
 
         if (pthread_mutex_init(*ppMutex, &muattr))
         {
-            if(pName)
+            if (pName)
             {
                 munmap(*ppMutex, sizeof(hal_mutex_t));
             }
@@ -172,7 +172,7 @@ ATCA_STATUS hal_create_mutex(void ** ppMutex, char* pName)
     return ATCA_SUCCESS;
 }
 
-/* 
+/*
  * \brief Application callback for destroying a mutex object
  * \param[IN] pMutex pointer to mutex
  */
@@ -183,7 +183,7 @@ ATCA_STATUS hal_destroy_mutex(void * pMutex)
         return ATCA_BAD_PARAM;
     }
 
-    if(((hal_mutex_t*)pMutex)->shared)
+    if (((hal_mutex_t*)pMutex)->shared)
     {
         return munmap(pMutex, sizeof(hal_mutex_t)) ? ATCA_GEN_FAIL : ATCA_SUCCESS;
     }
@@ -217,8 +217,8 @@ ATCA_STATUS hal_lock_mutex(void * pMutex)
     }
     else if (EOWNERDEAD == rv)
     {
-        /* Lock was obtained but its because another process terminated so the 
-        state is indeterminate and will probably need to be fixed */
+        /* Lock was obtained but its because another process terminated so the
+           state is indeterminate and will probably need to be fixed */
         pthread_mutex_consistent(pMutex);
         return ATCA_SUCCESS;
     }
@@ -253,7 +253,7 @@ ATCA_STATUS hal_unlock_mutex(void * pMutex)
  */
 ATCA_STATUS hal_create_mutex(void ** ppMutex, char* pName)
 {
-    sem_t *             sem;
+    sem_t * sem;
 
     if (!ppMutex)
     {
@@ -276,7 +276,7 @@ ATCA_STATUS hal_create_mutex(void ** ppMutex, char* pName)
     return ATCA_SUCCESS;
 }
 
-/* 
+/*
  * \brief Application callback for destroying a mutex object
  * \param[IN] pMutex pointer to mutex
  */
@@ -289,7 +289,7 @@ ATCA_STATUS hal_destroy_mutex(void * pMutex)
         return ATCA_BAD_PARAM;
     }
 
-    if ( -1 == sem_close(sem))
+    if (-1 == sem_close(sem))
     {
         return ATCA_GEN_FAIL;
     }
@@ -312,7 +312,7 @@ ATCA_STATUS hal_lock_mutex(void * pMutex)
     {
         return ATCA_BAD_PARAM;
     }
-    
+
     if (-1 == sem_wait(sem))
     {
         return ATCA_GEN_FAIL;

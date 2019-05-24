@@ -45,7 +45,7 @@
 
 /**
  * \defgroup pkcs11 Token Management (pkcs11_)
- @{ */
+   @{ */
 
 #if PKCS11_508_SUPPORT
 /** Standard Configuration Structure for ATECC508A devices */
@@ -77,22 +77,23 @@ static const uint8_t atecc608_config[] = {
 static char * pkcs11_token_device(uint8_t info[4])
 {
     char * rv = "unknown";
-    switch(info[2])
+
+    switch (info[2])
     {
-        case 0x00:
-            if(0x02 == info[1])
-            {
-                rv = "ATSHA204A";
-            }
-            break;
-        case 0x50:
-            rv = "ATECC508A";
-            break;
-        case 0x60:
-            rv = "ATECC608A";
-            break;
-        default:
-            break;
+    case 0x00:
+        if (0x02 == info[1])
+        {
+            rv = "ATSHA204A";
+        }
+        break;
+    case 0x50:
+        rv = "ATECC508A";
+        break;
+    case 0x60:
+        rv = "ATECC608A";
+        break;
+    default:
+        break;
     }
     return rv;
 }
@@ -103,8 +104,8 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
 {
     CK_RV rv;
     uint8_t buf[ATCA_ECC_CONFIG_SIZE];
-    bool    lock = false;
-    pkcs11_lib_ctx_ptr  pLibCtx;
+    bool lock = false;
+    pkcs11_lib_ctx_ptr pLibCtx;
     pkcs11_slot_ctx_ptr pSlotCtx;
 
     rv = pkcs11_init_check(&pLibCtx, FALSE);
@@ -115,21 +116,21 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
 
     /* Get the slot context */
     pSlotCtx = pkcs11_slot_get_context(pLibCtx, slotID);
-    if(!pSlotCtx)
+    if (!pSlotCtx)
     {
         return CKR_SLOT_ID_INVALID;
     }
 
     /* Lock the library */
     rv = pkcs11_lock_context(pLibCtx);
-    
+
     if (CKR_OK == rv)
     {
         /* Check the config zone lock status */
         rv = atcab_is_locked(ATCA_ZONE_CONFIG, &lock);
         printf("atcab_is_locked(config): %x\r\n", (unsigned int)rv);
     }
-    
+
     if (ATCA_SUCCESS == rv)
     {
         /* Get the device type */
@@ -140,22 +141,22 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
     /* Program the configuration zone */
     if (!lock)
     {
-        switch(buf[2])
+        switch (buf[2])
         {
 #if PKCS11_508_SUPPORT
-            case 0x50:
-                memcpy(&buf[16], atecc508_config, sizeof(atecc508_config));
-                break;
+        case 0x50:
+            memcpy(&buf[16], atecc508_config, sizeof(atecc508_config));
+            break;
 #endif
 #if PKCS11_608_SUPPORT
-            case 0x60:
-                memcpy(&buf[16], atecc608_config, sizeof(atecc608_config));
-                break;
+        case 0x60:
+            memcpy(&buf[16], atecc608_config, sizeof(atecc608_config));
+            break;
 #endif
-            default:
-                printf("Device is not recognized: 0x%02x\r\n", buf[2]);
-                rv = CKR_TOKEN_NOT_RECOGNIZED;
-                break;
+        default:
+            printf("Device is not recognized: 0x%02x\r\n", buf[2]);
+            rv = CKR_TOKEN_NOT_RECOGNIZED;
+            break;
         }
 
 #ifdef ATCA_I2C_ECC_ADDRESS
@@ -188,11 +189,11 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
     /* Lock the data zone */
     if (!lock)
     {
-       if (ATCA_SUCCESS == rv)
-       {
-           rv = atcab_lock_data_zone();
-           printf("atcab_lock_data_zone: %x\r\n", (unsigned int)rv);
-       }
+        if (ATCA_SUCCESS == rv)
+        {
+            rv = atcab_lock_data_zone();
+            printf("atcab_lock_data_zone: %x\r\n", (unsigned int)rv);
+        }
     }
 
     /* Generate new keys */
@@ -239,7 +240,7 @@ CK_RV pkcs11_token_get_access_type(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttrib
 
     if (obj_ptr)
     {
-        atecc508a_config_t * pConfig = (atecc508a_config_t *)obj_ptr->config;
+        atecc508a_config_t * pConfig = (atecc508a_config_t*)obj_ptr->config;
 
         if (ATCA_KEY_CONFIG_PRIVATE_MASK & pConfig->KeyConfig[obj_ptr->slot])
         {
@@ -260,7 +261,7 @@ CK_RV pkcs11_token_get_writable(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute
 
     if (obj_ptr)
     {
-        atecc508a_config_t * pConfig = (atecc508a_config_t *)obj_ptr->config;
+        atecc508a_config_t * pConfig = (atecc508a_config_t*)obj_ptr->config;
 
         if ((ATCA_KEY_CONFIG_PRIVATE_MASK & pConfig->KeyConfig[obj_ptr->slot]) ||
             (ATCA_SLOT_CONFIG_IS_SECRET_MASK & pConfig->SlotConfig[obj_ptr->slot]))
@@ -277,15 +278,15 @@ CK_RV pkcs11_token_get_writable(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute
 }
 
 /**
-* \brief Obtains information about a particular token
-*/
+ * \brief Obtains information about a particular token
+ */
 CK_RV pkcs11_token_get_info(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)
 {
     pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
     pkcs11_slot_ctx_ptr slot_ctx;
-    ATCAIfaceCfg        *if_cfg_ptr;
-    CK_UTF8CHAR         buf[16];
-    bool                lock = FALSE;
+    ATCAIfaceCfg *if_cfg_ptr;
+    CK_UTF8CHAR buf[16];
+    bool lock = FALSE;
 
     if (!lib_ctx || !lib_ctx->initialized)
     {
@@ -400,8 +401,8 @@ CK_RV pkcs11_token_get_info(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)
 }
 
 /**
-* \brief Generate the specified amount of random data
-*/
+ * \brief Generate the specified amount of random data
+ */
 CK_RV pkcs11_token_random(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pRandomData, CK_ULONG ulRandomLen)
 {
     pkcs11_session_ctx_ptr pSession;
@@ -450,7 +451,8 @@ CK_RV pkcs11_token_random(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pRandomData, C
             memcpy(pRandomData, buf, ulRandomLen);
             ulRandomLen = 0;
         }
-    } while (ulRandomLen);
+    }
+    while (ulRandomLen);
 
     return CKR_OK;
 }

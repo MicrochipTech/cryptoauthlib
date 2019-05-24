@@ -54,27 +54,27 @@ typedef struct _pkcs11_object
 {
 
     /** The Class Identifier */
-    CK_OBJECT_CLASS             class_id;
+    CK_OBJECT_CLASS class_id;
     /** The Class Type */
-    CK_ULONG                    class_type;
+    CK_ULONG class_type;
     /** List of attribute models this object possesses */
     pkcs11_attrib_model const * attributes;
     /** Count of attribute models */
-    CK_ULONG                    count;
-    CK_ULONG                    size;
-    CK_VOID_PTR                 config;
-    CK_BYTE                     slot;
-    CK_FLAGS                    flags;
-    CK_UTF8CHAR                 name[PKCS11_MAX_LABEL_SIZE+1];
-    void const *                data;
+    CK_ULONG     count;
+    CK_ULONG     size;
+    CK_VOID_PTR  config;
+    CK_BYTE      slot;
+    CK_FLAGS     flags;
+    CK_UTF8CHAR  name[PKCS11_MAX_LABEL_SIZE + 1];
+    void const * data;
 } pkcs11_object, *pkcs11_object_ptr;
 
 typedef struct _pkcs11_object_cache_t
 {
     /** Arbitrary (but unique) non-null identifier for an object */
-    CK_OBJECT_HANDLE            handle;
+    CK_OBJECT_HANDLE handle;
     /** The actual object  */
-    pkcs11_object_ptr           object;
+    pkcs11_object_ptr object;
 } pkcs11_object_cache_t;
 
 extern pkcs11_object_cache_t pkcs11_object_cache[];

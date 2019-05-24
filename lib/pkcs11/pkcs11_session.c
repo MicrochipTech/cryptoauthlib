@@ -38,21 +38,30 @@
 
 /**
  * \defgroup pkcs11 Session Management (pkcs11_)
- @{ */
+   @{ */
 
 #ifndef memset_s
 int memset_s(void *dest, size_t destsz, int ch, size_t count)
 {
-    if (dest == NULL) return -1;
-    if (destsz > SIZE_MAX) return -1;
-    if (count > destsz) return -1;
-    
+    if (dest == NULL)
+    {
+        return -1;
+    }
+    if (destsz > SIZE_MAX)
+    {
+        return -1;
+    }
+    if (count > destsz)
+    {
+        return -1;
+    }
+
     volatile unsigned char *p = dest;
     while (destsz-- && count--)
     {
         *p++ = ch;
     }
-    
+
     return 0;
 }
 #endif
@@ -65,6 +74,7 @@ static pkcs11_session_ctx pkcs11_session_cache[PKCS11_MAX_SESSIONS_ALLOWED];
 static pkcs11_session_ctx_ptr pkcs11_allocate_session_context(void)
 {
     pkcs11_session_ctx_ptr rv = NULL_PTR;
+
 #if PKCS11_USE_STATIC_MEMORY
     CK_ULONG i;
     for (i = 0; i < PKCS11_MAX_SESSIONS_ALLOWED; i++)
@@ -101,8 +111,8 @@ pkcs11_session_ctx_ptr pkcs11_get_session_context(CK_SESSION_HANDLE hSession)
 }
 
 /**
-* \brief Check if the session is initialized properly
-*/
+ * \brief Check if the session is initialized properly
+ */
 CK_RV pkcs11_session_check(pkcs11_session_ctx_ptr * pSession, CK_SESSION_HANDLE hSession)
 {
     pkcs11_session_ctx_ptr ctx = pkcs11_get_session_context(hSession);
@@ -135,12 +145,12 @@ CK_RV pkcs11_session_check(pkcs11_session_ctx_ptr * pSession, CK_SESSION_HANDLE 
 }
 
 CK_RV pkcs11_session_open(
-    CK_SLOT_ID slotID,
-    CK_FLAGS flags,
-    CK_VOID_PTR pApplication,
-    CK_NOTIFY notify,
+    CK_SLOT_ID            slotID,
+    CK_FLAGS              flags,
+    CK_VOID_PTR           pApplication,
+    CK_NOTIFY             notify,
     CK_SESSION_HANDLE_PTR phSession
-)
+    )
 {
     pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
     pkcs11_slot_ctx_ptr slot_ctx;
@@ -164,7 +174,7 @@ CK_RV pkcs11_session_open(
     {
         return CKR_SESSION_PARALLEL_NOT_SUPPORTED;
     }
-    
+
     /* Retrieve the slot context - i.e. the attached device (ECC508A, SHA256, etc) */
     slot_ctx = pkcs11_slot_get_context(lib_ctx, slotID);
 
@@ -270,7 +280,7 @@ CK_RV pkcs11_session_closeall(CK_SLOT_ID slotID)
 #if PKCS11_USE_STATIC_MEMORY
     {
         int i;
-        for (i=0; i<PKCS11_MAX_SESSIONS_ALLOWED; i++)
+        for (i = 0; i < PKCS11_MAX_SESSIONS_ALLOWED; i++)
         {
             pkcs11_session_close(pkcs11_session_cache[i].handle);
         }
@@ -281,8 +291,8 @@ CK_RV pkcs11_session_closeall(CK_SLOT_ID slotID)
 }
 
 /**
-* \brief Obtains information about a particular session
-*/
+ * \brief Obtains information about a particular session
+ */
 CK_RV pkcs11_session_get_info(CK_SESSION_HANDLE hSession, CK_SESSION_INFO_PTR pInfo)
 {
     pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
