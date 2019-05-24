@@ -234,28 +234,17 @@ def test_atcacert_init_live(test_init_with_device):
         raise Exception('Unable to connect to a device')
 
 
-def test_atcacert_device_loc_t_size(test_atcacert_init_lib):
-    assert sizeof(atcacert_device_loc_t) == get_size_by_name('atcacert_device_loc_t')
-
-
-def test_atcacert_cert_loc_t_size(test_atcacert_init_lib):
-    assert sizeof(atcacert_cert_loc_t) == get_size_by_name('atcacert_cert_loc_t')
-
-
-def test_atcacert_cert_element_t_size(test_atcacert_init_lib):
-    assert sizeof(atcacert_cert_element_t) == get_size_by_name('atcacert_cert_element_t')
-
-
-def test_atcacert_def_t_size(test_atcacert_init_lib):
-    assert sizeof(atcacert_def_t) == get_size_by_name('atcacert_def_t')
-
-
-def test_atcacert_tm_utc_t_size(test_atcacert_init_lib):
-    assert sizeof(atcacert_tm_utc_t) == get_size_by_name('atcacert_tm_utc_t')
-
+@pytest.mark.parametrize("struct_name", [
+    pytest.param('atcacert_device_loc_t'),
+    pytest.param('atcacert_cert_loc_t'),
+    pytest.param('atcacert_cert_element_t'),
+    pytest.param('atcacert_def_t'),
+    pytest.param('atcacert_tm_utc_t')
+])
+def test_atcacert_struct_sizes(test_atcacert_init_lib, struct_name):
+    assert sizeof(eval(struct_name)) == get_size_by_name(struct_name)
 
 # --------------------ATCACERT_DEF----------------------
-
 
 def test_atcacert_get_response(test_atcacert_init):
     device_private_key_slot = 1
@@ -299,6 +288,11 @@ def test_atcacert_create_csr_pem(test_atcacert_init):
     assert csr == bytearray(atcab_mock.r_csr)
     assert csr_size.value == atcab_mock.r_csr_size.value
 
+def test_atacert_max_cert_size(test_atcacert_init):
+    cert_def = atcacert_def_t()
+    max_cert_size = AtcaReference(0)
+    assert atcacert_max_cert_size(cert_def, max_cert_size) == CertStatus.ATCACERT_E_SUCCESS
+    assert max_cert_size.value == atcab_mock.r_max_cert_size.value
 
 # --------------------ATCACERT_DATE----------------------
 
@@ -321,32 +315,28 @@ def test_atcacert_tm_utc_t_empty_params():
     assert t.tm_mon == c.month - 1
 
 
-def test_atcacert_tm_utc_t_invalid_low():
+@pytest.mark.parametrize("sec,min,hour,day,mon,year", [
+    pytest.param(-1, 2, 3, 4, 5, 1990, id='Seconds'),
+    pytest.param(1, -1, 3, 4, 5, 1990, id='Minutes'),
+    pytest.param(1, 2, -1, 4, 5, 1990, id='Hours'),
+    pytest.param(1, 2, 3, 0, 5, 1990, id='Days'),
+    pytest.param(1, 2, 3, 4, -1, 1990, id='Months'),
+    pytest.param(1, 2, 3, 4, 5, -1, id='Years')
+])
+def test_atcacert_tm_utc_t_invalid_low(sec, min, hour, day, mon, year):
     with pytest.raises(ValueError):
-        timestamp = atcacert_tm_utc_t(-1, 2, 3, 4, 5, 1990)
-    with pytest.raises(ValueError):
-        timestamp = atcacert_tm_utc_t(1, -1, 3, 4, 5, 1990)
-    with pytest.raises(ValueError):
-        timestamp = atcacert_tm_utc_t(1, 2, -1, 4, 5, 1990)
-    with pytest.raises(ValueError):
-        timestamp = atcacert_tm_utc_t(1, 2, 3, 0, 5, 1990)
-    with pytest.raises(ValueError):
-        timestamp = atcacert_tm_utc_t(1, 2, 3, 4, -1, 1990)
-    with pytest.raises(ValueError):
-        timestamp = atcacert_tm_utc_t(1, 2, 3, 4, 5, -1)
+        timestamp = atcacert_tm_utc_t(sec, min, hour, day, mon, year)
 
-
-def test_atcacert_tm_utc_t_invalid_high():
+@pytest.mark.parametrize("sec,min,hour,day,mon,year", [
+    pytest.param(60, 2, 3, 4, 5, 1990, id='Seconds'),
+    pytest.param(1, 60, 3, 4, 5, 1990, id='Minutes'),
+    pytest.param(1, 2, 24, 4, 5, 1990, id='Hours'),
+    pytest.param(1, 2, 3, 32, 5, 1990, id='Days'),
+    pytest.param(1, 2, 3, 4, 12, 1990, id='Months'),
+])
+def test_atcacert_tm_utc_t_invalid_high(sec, min, hour, day, mon, year):
     with pytest.raises(ValueError):
-        timestamp = atcacert_tm_utc_t(60, 2, 3, 4, 5, 1990)
-    with pytest.raises(ValueError):
-        timestamp = atcacert_tm_utc_t(1, 60, 3, 4, 5, 1990)
-    with pytest.raises(ValueError):
-        timestamp = atcacert_tm_utc_t(1, 2, 24, 4, 5, 1990)
-    with pytest.raises(ValueError):
-        timestamp = atcacert_tm_utc_t(1, 2, 3, 32, 5, 1990)
-    with pytest.raises(ValueError):
-        timestamp = atcacert_tm_utc_t(1, 2, 3, 4, 12, 1990)
+        timestamp = atcacert_tm_utc_t(sec, min, hour, day, mon, year)
 
 
 def test_atcacert_date_enc(test_atcacert_init_lib):
@@ -421,8 +411,9 @@ def test_atcacert_round_trip_qa(test_atcacert_init_live):
     assert CertStatus.ATCACERT_E_SUCCESS == atcacert_write_cert(cert_def, cert, len(cert))
 
     # Read back the device certificate
-    qa_cert = bytearray(len(cert) + 8)
-    qa_cert_len = AtcaReference(len(qa_cert))
+    qa_cert_len = AtcaReference(0)
+    assert CertStatus.ATCACERT_E_SUCCESS == atcacert_max_cert_size(cert_def, qa_cert_len)
+    qa_cert = bytearray(qa_cert_len.value)
     assert CertStatus.ATCACERT_E_SUCCESS == atcacert_read_cert(cert_def, ca_pub_key, qa_cert, qa_cert_len)
 
     print('Input: ', len(cert))

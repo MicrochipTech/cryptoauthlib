@@ -1,8 +1,8 @@
 var a00338 =
 [
-    [ "ATCA_MUTEX_TIMEOUT", "a00338.html#acf61a669d2246c92200734be17bd5488", null ],
-    [ "hal_create_mutex", "a03537.html#gab289a3949663589ac6be71d72fb18278", null ],
-    [ "hal_destroy_mutex", "a03537.html#ga4589d7b3e951f40b7928f1cf31f7ddf3", null ],
-    [ "hal_lock_mutex", "a03537.html#gad4cd02ff7ae4e75844eab4e84eb61994", null ],
-    [ "hal_unlock_mutex", "a03537.html#ga31fd8170a49623686543f6247b883bd1", null ]
+    [ "ATCA_SHA1_DIGEST_SIZE", "a00992.html#gadb94a0991eb670ff1bf90253dfea0bfa", null ],
+    [ "atcac_sw_sha1", "a00992.html#ga84b866657bf319dab2924c2db3a1e990", null ],
+    [ "atcac_sw_sha1_finish", "a00992.html#ga5589df2a639f61a4dc4ccedc9b5a5453", null ],
+    [ "atcac_sw_sha1_init", "a00992.html#gabed03bcc1228768534ef4ee49df0ad09", null ],
+    [ "atcac_sw_sha1_update", "a00992.html#ga65ff558306a88e0fbe2fc82bbe6a9c03", null ]
 ];

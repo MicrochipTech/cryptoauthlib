@@ -147,5 +147,13 @@ class NoDevicesFoundError(CryptoError):
     """For protocols that support device discovery (kit protocol), no devices were found"""
 
 
+class HealthTestError(CryptoError):
+    """Random number generator health test error"""
+
+
+class LibraryMemoryError(CryptoError):
+    """CryptoAuthLib was unable to allocate memory"""
+
+
 class LibraryNotInitialized(CryptoError):
     """Indication that library or context was not initialized prior to an API call"""

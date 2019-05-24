@@ -40,7 +40,7 @@
 
 /**
  * \defgroup pkcs11 Find (pkcs11_find_)
- @{ */
+   @{ */
 
 #if PKCS11_USE_STATIC_MEMORY
 static CK_BYTE pkcs11_find_template_cache[PKCS11_SEARCH_CACHE_SIZE];
@@ -51,8 +51,8 @@ static CK_BYTE pkcs11_find_template_cache[PKCS11_SEARCH_CACHE_SIZE];
  */
 static CK_RV pkcs11_find_copy_template(CK_BYTE_PTR pBuffer, CK_ULONG ulBufSize, CK_ATTRIBUTE_PTR pTemplate, const CK_ULONG ulCount)
 {
-    CK_ULONG            bytes_required;
-    CK_ATTRIBUTE_PTR    pCopy;
+    CK_ULONG bytes_required;
+    CK_ATTRIBUTE_PTR pCopy;
     CK_ULONG i;
 
     if (!pBuffer || !ulBufSize || !pTemplate || !ulCount)
@@ -61,7 +61,7 @@ static CK_RV pkcs11_find_copy_template(CK_BYTE_PTR pBuffer, CK_ULONG ulBufSize, 
     }
 
     /* Start with the amount of memory required to hold the Array */
-    bytes_required = sizeof(CK_ATTRIBUTE)*ulCount;
+    bytes_required = sizeof(CK_ATTRIBUTE) * ulCount;
 
     /* Check the template pValue requirements */
     for (i = 0; i < ulCount; i++)
@@ -84,7 +84,7 @@ static CK_RV pkcs11_find_copy_template(CK_BYTE_PTR pBuffer, CK_ULONG ulBufSize, 
     }
 
     /* Good to copy */
-    bytes_required = sizeof(CK_ATTRIBUTE)*ulCount;
+    bytes_required = sizeof(CK_ATTRIBUTE) * ulCount;
 
     /* Set up the Copied Template */
     pCopy = (CK_ATTRIBUTE_PTR)pBuffer;
@@ -142,7 +142,7 @@ static pkcs11_attrib_model_ptr pkcs11_find_attrib_match(pkcs11_object_ptr pObjec
 
     pAttribute = pkcs11_find_attrib(pAttributeList, ulCount, pTemplate);
 
-    if(pAttribute && pObject)
+    if (pAttribute && pObject)
     {
         CK_BBOOL must_full_match = FALSE;
 
@@ -158,7 +158,7 @@ static pkcs11_attrib_model_ptr pkcs11_find_attrib_match(pkcs11_object_ptr pObjec
         /* Search criteria has a value to we must match it */
         if (pTemplate->pValue && pAttribute->func)
         {
-            CK_UTF8CHAR     buf[16];
+            CK_UTF8CHAR buf[PKCS11_MAX_LABEL_SIZE];
             CK_ATTRIBUTE temp = { 0, buf, sizeof(buf) };
 
             /* Get the attribute */
@@ -203,7 +203,7 @@ static CK_OBJECT_HANDLE pkcs11_find_handle(const CK_ATTRIBUTE_PTR pTemplate, CK_
             for (j = 0; j < ulCount; j++)
             {
                 /* See if a match failed */
-                if (!pkcs11_find_attrib_match(pObject, (const pkcs11_attrib_model_ptr)pObject->attributes, 
+                if (!pkcs11_find_attrib_match(pObject, (const pkcs11_attrib_model_ptr)pObject->attributes,
                                               pObject->count, &pTemplate[j]))
                 {
                     break;
@@ -219,7 +219,7 @@ static CK_OBJECT_HANDLE pkcs11_find_handle(const CK_ATTRIBUTE_PTR pTemplate, CK_
                 }
                 else if ((CKO_HW_FEATURE != pObject->class_id) && (CKO_MECHANISM != pObject->class_id))
                 {
-                    /* Special condition where ulCount is zero we match all 
+                    /* Special condition where ulCount is zero we match all
                        objects except HW Features and Mechanisms */
                     rv = pkcs11_object_cache[i].handle;
                     break;
@@ -242,7 +242,7 @@ CK_RV pkcs11_find_init(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pTemplate, C
     CK_ULONG index = 0;
     CK_RV rv;
     static int called;
-    
+
     rv = pkcs11_init_check(NULL, FALSE);
     if (rv)
     {
@@ -262,7 +262,7 @@ CK_RV pkcs11_find_init(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pTemplate, C
 
     pkcs11_debug_attributes(pTemplate, ulCount);
 
-    /* Check Public/Private Session info - although I don't think we can actually 
+    /* Check Public/Private Session info - although I don't think we can actually
         get private unless we're using a shared key system - and that will only be
         for secured data and not key info */
 
@@ -329,10 +329,10 @@ CK_RV pkcs11_find_continue(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE_PTR phOb
             *pulObjectCount = i;
             break;
         }
-         
+
         pSession->object_index++;
 
-        if(pSession->object_count)
+        if (pSession->object_count)
         {
             pSession->object_count--;
         }
@@ -400,13 +400,13 @@ CK_RV pkcs11_find_get_attribute(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hOb
 
     for (i = 0; i < ulCount; i++)
     {
-        pkcs11_attrib_model_ptr pAttribute = pkcs11_find_attrib((const pkcs11_attrib_model_ptr)pObject->attributes, 
+        pkcs11_attrib_model_ptr pAttribute = pkcs11_find_attrib((const pkcs11_attrib_model_ptr)pObject->attributes,
                                                                 pObject->count, &pTemplate[i]);
 
         if (!pAttribute)
         {
             /* 2. Otherwise, if the specified value for the object is invalid(the object does not possess such an
-            attribute), then the ulValueLen field in that triple is modified to hold the value CK_UNAVAILABLE_INFORMATION. */
+               attribute), then the ulValueLen field in that triple is modified to hold the value CK_UNAVAILABLE_INFORMATION. */
 
             pTemplate[i].ulValueLen = CK_UNAVAILABLE_INFORMATION;
             if (!rv)
@@ -414,9 +414,9 @@ CK_RV pkcs11_find_get_attribute(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hOb
                 rv = CKR_ATTRIBUTE_TYPE_INVALID;
             }
         }
-        else if(pAttribute->func)
+        else if (pAttribute->func)
         {
-            if(CKR_OK == pkcs11_lock_context(pLibCtx))
+            if (CKR_OK == pkcs11_lock_context(pLibCtx))
             {
                 /* Attribute function found so try to execute it */
                 CK_RV temp = pAttribute->func(pObject, &pTemplate[i]);

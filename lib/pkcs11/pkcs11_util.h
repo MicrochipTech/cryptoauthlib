@@ -46,7 +46,7 @@
 #include "cryptoki.h"
 #include "cryptoauthlib.h"
 
-#define PKCS11_UTIL_ARRAY_SIZE(x)   sizeof(x)/sizeof(x[0])
+#define PKCS11_UTIL_ARRAY_SIZE(x)   sizeof(x) / sizeof(x[0])
 
 void pkcs11_util_escape_string(CK_UTF8CHAR_PTR buf, CK_ULONG buf_len);
 CK_RV pkcs11_util_convert_rv(ATCA_STATUS status);

@@ -21,4 +21,6 @@ except LibraryLoadError as error:
 from .status import *
 from .atcab import *
 from .atcacert import *
+from .atjwt import *
 from .iface import *
+from .tng import *

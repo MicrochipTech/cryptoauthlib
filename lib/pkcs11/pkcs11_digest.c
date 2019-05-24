@@ -13,8 +13,8 @@ static bool pkcs11_digest_initalized;
 #endif
 
 /**
-* \brief Initializes a message-digesting operation using the specified mechanism in the specified session
-*/
+ * \brief Initializes a message-digesting operation using the specified mechanism in the specified session
+ */
 CK_RV pkcs11_digest_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism)
 {
     pkcs11_session_ctx_ptr pSession;
@@ -31,7 +31,7 @@ CK_RV pkcs11_digest_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism
         return CKR_ARGUMENTS_BAD;
     }
 
-    if(CKM_SHA256 != pMechanism->mechanism)
+    if (CKM_SHA256 != pMechanism->mechanism)
     {
         return CKR_MECHANISM_INVALID;
     }
@@ -56,8 +56,8 @@ CK_RV pkcs11_digest_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism
 }
 
 /**
-* \brief Digest the specified data in a one-pass operation and return the resulting digest
-*/
+ * \brief Digest the specified data in a one-pass operation and return the resulting digest
+ */
 CK_RV pkcs11_digest(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pDigest, CK_ULONG_PTR pulDigestLen)
 {
     pkcs11_session_ctx_ptr pSession;
@@ -113,8 +113,8 @@ CK_RV pkcs11_digest(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDa
 }
 
 /**
-* \brief Continues a multiple-part digesting operation
-*/
+ * \brief Continues a multiple-part digesting operation
+ */
 CK_RV pkcs11_digest_update(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen)
 {
     pkcs11_session_ctx_ptr pSession;
@@ -157,8 +157,8 @@ CK_RV pkcs11_digest_update(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULO
 }
 
 /**
-* \brief Finishes a multiple-part digesting operation
-*/
+ * \brief Finishes a multiple-part digesting operation
+ */
 CK_RV pkcs11_digest_final(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pDigest, CK_ULONG_PTR pulDigestLen)
 {
     pkcs11_session_ctx_ptr pSession;

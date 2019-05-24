@@ -275,6 +275,51 @@ TEST(atcacert_client, init)
     printf("Device Certificate:\r\n%s\r\n", disp_str);
 }
 
+TEST(atcacert_client, atcacert_read_device_loc_gen_key)
+{
+    int ret;
+    uint8_t public_key[ATCA_PUB_KEY_SIZE];
+    uint8_t data[sizeof(public_key)];
+    atcacert_device_loc_t device_loc = { DEVZONE_DATA, 0, TRUE, 0, 64 };
+
+    ret = atcab_get_pubkey(device_loc.slot, public_key);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+
+    ret = atcacert_read_device_loc(&device_loc, data);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+    TEST_ASSERT_EQUAL_MEMORY(&public_key[device_loc.offset], data, device_loc.count);
+}
+
+TEST(atcacert_client, atcacert_read_device_loc_gen_key_partial)
+{
+    int ret;
+    uint8_t public_key[ATCA_PUB_KEY_SIZE];
+    uint8_t data[sizeof(public_key)];
+    atcacert_device_loc_t device_loc = { DEVZONE_DATA, 0, TRUE, 5, 55 };
+
+    ret = atcab_get_pubkey(device_loc.slot, public_key);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+
+    ret = atcacert_read_device_loc(&device_loc, data);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+    TEST_ASSERT_EQUAL_MEMORY(&public_key[device_loc.offset], data, device_loc.count);
+}
+
+TEST(atcacert_client, atcacert_read_device_loc_data_partial)
+{
+    int ret;
+    uint8_t data_full[72];
+    uint8_t data[sizeof(data_full)];
+    atcacert_device_loc_t device_loc = { DEVZONE_DATA, 12, FALSE, 5, 55 };
+
+    ret = atcab_read_bytes_zone(device_loc.zone, device_loc.slot, 0, data_full, 72);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+
+    ret = atcacert_read_device_loc(&device_loc, data);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+    TEST_ASSERT_EQUAL_MEMORY(&data_full[device_loc.offset], data, device_loc.count);
+}
+
 TEST(atcacert_client, atcacert_read_cert_signer)
 {
     int ret = 0;

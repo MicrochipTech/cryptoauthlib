@@ -1,9 +1,6 @@
 var a00212 =
 [
-    [ "atcab_lock", "a03535.html#ga25d2895192d93c524f5dba92a492cdfb", null ],
-    [ "atcab_lock_config_zone", "a03535.html#ga7cd67c03c7184ad041e2c0ad4f27db23", null ],
-    [ "atcab_lock_config_zone_crc", "a03535.html#ga0698e0c55ad700fe57498321e842cb38", null ],
-    [ "atcab_lock_data_slot", "a03535.html#ga958190a9182d1b54f82fbca8216406ea", null ],
-    [ "atcab_lock_data_zone", "a03535.html#ga8020aa89a5bed09ad35320b78e0fb890", null ],
-    [ "atcab_lock_data_zone_crc", "a03535.html#gaf29e398e2aca927ab4606aa1ec0308c6", null ]
+    [ "atcacert_gen_challenge_sw", "a00990.html#gaa9829e5aa1ece3d3a933db9827d3e8f3", null ],
+    [ "atcacert_verify_cert_sw", "a00990.html#gab78271af8c3e2837810fcdae6e3f5e28", null ],
+    [ "atcacert_verify_response_sw", "a00990.html#ga9d5bf9ec84d28a0412377818805c32c4", null ]
 ];

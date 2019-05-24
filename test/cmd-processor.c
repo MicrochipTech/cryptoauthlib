@@ -79,6 +79,8 @@ static ATCA_STATUS set_chip_mode(uint8_t i2c_user_extra_add, uint8_t ttl_enable,
 static void set_clock_divider_m0(void);
 static void set_clock_divider_m1(void);
 static void set_clock_divider_m2(void);
+static void tng22_tests(void);
+static void tngtn_tests(void);
 
 static const char* argv[] = { "manual", "-v" };
 // *INDENT-OFF*  - Preserve formatting
@@ -98,6 +100,8 @@ static t_menu_info mas_menu_info[] =
     { "lockcfg",  "Lock the Config Zone",                           lock_config                          },
     { "lockdata", "Lock Data and OTP Zones",                        lock_data                            },
     { "all",      "Run all unit tests, locking as needed.",         run_all_tests                        },
+    { "tng22",    "Run unit tests on TNG 22 type part.",            tng22_tests                          },
+    { "tngtn",    "Run unit tests on TNG TN type part.",            tngtn_tests                          },
     #ifndef DO_NOT_TEST_BASIC_UNIT
     { "basic",    "Run Basic Test on Selected Device",              run_basic_tests                      },
     { "unit",     "Run Unit Test on Selected Device",               run_unit_tests                       },
@@ -1026,4 +1030,36 @@ static void set_clock_divider_m2(void)
     {
         printf("Set device to clock divider M2 (0x%02X) and watchdog to 13s nominal.\r\n", ATCA_CHIPMODE_CLOCK_DIV_M2 >> 3);
     }
+}
+
+static void tng22_tests(void)
+{
+    ATCA_STATUS status;
+
+    status = atcab_init(gCfg);
+    if (status != ATCA_SUCCESS)
+    {
+        printf("atcab_init() failed with ret=0x%08X\r\n", status);
+        return;
+    }
+
+    run_test(RunTNG22Tests);
+
+    atcab_release();
+}
+
+static void tngtn_tests(void)
+{
+    ATCA_STATUS status;
+
+    status = atcab_init(gCfg);
+    if (status != ATCA_SUCCESS)
+    {
+        printf("atcab_init() failed with ret=0x%08X\r\n", status);
+        return;
+    }
+
+    run_test(RunTNGTNTests);
+
+    atcab_release();
 }

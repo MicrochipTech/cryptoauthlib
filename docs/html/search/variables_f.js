@@ -1,20 +1,9 @@
 var searchData=
 [
-  ['p_5ftemp',['p_temp',['../a03538.html#gad87f95f0faf0c6fdfe94040efcb14860',1,'atca_include_data_in_out']]],
-  ['packetsize',['packetsize',['../a03555.html#aba242bb3690d4d5a7de01474f94cb4ab',1,'ATCAIfaceCfg']]],
-  ['pad',['pad',['../a03631.html#a06a3e722d630d33450465af7c41fa708',1,'atcac_sha1_ctx::pad()'],['../a03635.html#a517ae98c637466c44dc7e26a3abccf02',1,'atcac_sha2_256_ctx::pad()']]],
-  ['param1',['param1',['../a03547.html#aec4226da1b99c821237b6805c4e31333',1,'ATCAPacket']]],
-  ['param2',['param2',['../a03547.html#a16a7565b150a9c17a39c80fc932b9514',1,'ATCAPacket::param2()'],['../a03711.html#a16a7565b150a9c17a39c80fc932b9514',1,'atca_secureboot_mac_in_out::param2()']]],
-  ['parent_5fkey',['parent_key',['../a03731.html#a000599eef5677ed1279b025c42ae260e',1,'atca_derive_key_in_out::parent_key()'],['../a03735.html#a000599eef5677ed1279b025c42ae260e',1,'atca_derive_key_mac_in_out::parent_key()']]],
-  ['parity',['parity',['../a03555.html#aa0e72b59c63431c62f5b5eba36a65d17',1,'ATCAIfaceCfg']]],
-  ['pid',['pid',['../a03555.html#aec32162d9dc3fde2c76d766af522dae5',1,'ATCAIfaceCfg']]],
-  ['pin_5fconf',['pin_conf',['../a03537.html#gaab85cb460831e8b7e4d3a5315b31c596',1,'swi_uart_samd21_asf.c']]],
-  ['pin_5fscl',['pin_scl',['../a03655.html#a01c1392fd38975adfd6c1c7849b3fa50',1,'atcaI2Cmaster::pin_scl()'],['../a03679.html#acddd0c9305a0f679828010052db4f184',1,'I2CBuses::pin_scl()'],['../a00476.html#a30ad301ad2a35d50b2e4284a58b82b67',1,'pin_scl():&#160;i2c_bitbang_samd21.c'],['../a00479.html#a30ad301ad2a35d50b2e4284a58b82b67',1,'pin_scl():&#160;i2c_bitbang_samd21.c']]],
-  ['pin_5fsda',['pin_sda',['../a03655.html#ada591700ce06dd3a6bb9722a6eba38c4',1,'atcaI2Cmaster::pin_sda()'],['../a03675.html#afd6d53ef6b697533839248b40bc97861',1,'atcaSWImaster::pin_sda()'],['../a03679.html#a396018ddf66ce0e1263ed2b4729dc9b9',1,'I2CBuses::pin_sda()'],['../a03683.html#a7d0970077e95bd9d8ed8aac6b3e115ee',1,'SWIBuses::pin_sda()'],['../a00476.html#afd6d53ef6b697533839248b40bc97861',1,'pin_sda():&#160;i2c_bitbang_samd21.c'],['../a00479.html#afd6d53ef6b697533839248b40bc97861',1,'pin_sda():&#160;i2c_bitbang_samd21.c']]],
-  ['port',['port',['../a03555.html#a63c89c04d1feae07ca35558055155ffb',1,'ATCAIfaceCfg']]],
-  ['private_5fkey_5fslot',['private_key_slot',['../a03603.html#a641e13598992fc536e70b55cc8ee2ea5',1,'atcacert_def_s']]],
-  ['public_5fkey',['public_key',['../a03538.html#gacea547aa606ca17f8da337a1b58972a1',1,'atca_verify_in_out::public_key()'],['../a03751.html#a122aff75e4ff5cd19542117ba3fdb855',1,'atca_gen_key_in_out::public_key()']]],
-  ['public_5fkey_5fdev_5floc',['public_key_dev_loc',['../a03603.html#accd31930a2e1ff0b8122cbaa202127d3',1,'atcacert_def_s']]],
-  ['public_5fkey_5fsize',['public_key_size',['../a03751.html#aeaa21ee86ed67c665d190be7d12293c7',1,'atca_gen_key_in_out']]],
-  ['punitive',['PUNITIVE',['../a00533.html#ae35656295ea76cd15f566ddf5c9781a3',1,'license.txt']]]
+  ['offset',['offset',['../a01049.html#ac681806181c80437cfab37335f62ff39',1,'atcacert_device_loc_s::offset()'],['../a01053.html#ac681806181c80437cfab37335f62ff39',1,'atcacert_cert_loc_s::offset()']]],
+  ['opcode',['opcode',['../a01005.html#a5c1b56e6bccc2a95dbddf1a08e56e87d',1,'ATCAPacket']]],
+  ['other_5fdata',['other_data',['../a01165.html#ac76ac607fd679316fc17b16039a86b9c',1,'atca_verify_mac::other_data()'],['../a01185.html#ac76ac607fd679316fc17b16039a86b9c',1,'atca_gen_dig_in_out::other_data()'],['../a01205.html#ac76ac607fd679316fc17b16039a86b9c',1,'atca_check_mac_in_out::other_data()'],['../a01213.html#ac76ac607fd679316fc17b16039a86b9c',1,'atca_gen_key_in_out::other_data()']]],
+  ['otp',['otp',['../a00994.html#ga8712cb73a4d6b370658d8bc9a77fba3e',1,'atca_include_data_in_out::otp()'],['../a00994.html#ga8712cb73a4d6b370658d8bc9a77fba3e',1,'atca_mac_in_out::otp()'],['../a00994.html#ga8712cb73a4d6b370658d8bc9a77fba3e',1,'atca_hmac_in_out::otp()'],['../a01205.html#a4510889ef4b42470bf1a1d4e940a19a9',1,'atca_check_mac_in_out::otp()']]],
+  ['ott',['Ott',['../a00605.html#a6767a8d558623ea6d78553dad356c0de',1,'license.txt']]],
+  ['out_5fnonce',['out_nonce',['../a01161.html#a70a057043fcc9f4dc22455f6df43d710',1,'atca_io_decrypt_in_out']]]
 ];

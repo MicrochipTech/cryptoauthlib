@@ -36,11 +36,13 @@
 #include "pkcs11_init.h"
 #include "pkcs11_os.h"
 #include "pkcs11_slot.h"
+#include "pkcs11_object.h"
+#include "pkcs11_session.h"
 #include "cryptoauthlib.h"
 
 /**
  * \defgroup pkcs11 Initialization (pkcs11_)
- @{ */
+   @{ */
 
 /** Library intialization defaults if none were provided */
 static const CK_C_INITIALIZE_ARGS pkcs11_init_defaults = {
@@ -53,7 +55,7 @@ static const CK_C_INITIALIZE_ARGS pkcs11_init_defaults = {
 };
 
 /**
- * \brief Library Context - currently static but could be allocated 
+ * \brief Library Context - currently static but could be allocated
  */
 static pkcs11_lib_ctx pkcs11_context;
 
@@ -230,7 +232,7 @@ CK_RV pkcs11_init(CK_C_INITIALIZE_ARGS_PTR pInitArgs)
             return CKR_CANT_LOCK;
         }
     }
-    
+
     /* Initialize the Crypto device */
     lib_ctx->slots = pkcs11_slot_initslots(PKCS11_MAX_SLOTS_ALLOWED);
     if (lib_ctx->slots)
@@ -267,6 +269,8 @@ CK_RV pkcs11_init(CK_C_INITIALIZE_ARGS_PTR pInitArgs)
 /* Close the library */
 CK_RV pkcs11_deinit(CK_VOID_PTR pReserved)
 {
+    int i;
+
     if (pReserved)
     {
         return CKR_ARGUMENTS_BAD;
@@ -280,7 +284,20 @@ CK_RV pkcs11_deinit(CK_VOID_PTR pReserved)
     /* Release the crypto device */
     atcab_release();
 
-    /** \todo If other threads are waiting for something to happen this call should 
+    /* Close all the sessions that might be open */
+    for (i = 0; i < pkcs11_context.slot_cnt; i++)
+    {
+        pkcs11_slot_ctx_ptr slot_ctx_ptr = (pkcs11_slot_ctx_ptr)pkcs11_context.slots;
+        if (slot_ctx_ptr)
+        {
+            (void)pkcs11_session_closeall(slot_ctx_ptr->slot_id);
+        }
+    }
+
+    /* Clear the object cache */
+    (void)pkcs11_object_deinit(&pkcs11_context);
+
+    /** \todo If other threads are waiting for something to happen this call should
        cause those calls to unblock and return CKR_CRYPTOKI_NOT_INITIALIZED - How
        that is done by this simplified mutex API is yet to be determined */
 

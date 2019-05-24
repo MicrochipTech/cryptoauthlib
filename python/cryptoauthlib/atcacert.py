@@ -23,8 +23,8 @@ ATCACERT: classes and functions for interacting with compressed certificates
 
 import binascii
 from datetime import datetime
-from ctypes import Structure, c_int, c_uint8, c_uint16, c_char, POINTER, Array, create_string_buffer, c_uint32, byref
-from .library import get_cryptoauthlib, get_ctype_by_name, AtcaReference
+from ctypes import Structure, c_int, c_uint8, c_uint16, c_char, POINTER, create_string_buffer, c_uint32, byref, c_size_t
+from .library import get_cryptoauthlib, get_ctype_by_name, AtcaReference, AtcaStructure
 from .atcaenum import AtcaEnum
 from .status import Status
 
@@ -79,6 +79,21 @@ class atcacert_device_zone_t(AtcaEnum):
     DEVZONE_DATA = 0x02     # Data zone (slots).
     DEVZONE_NONE = 0x07     # Special value used to indicate there is no device location.
 
+
+class atcacert_transform_t(AtcaEnum):
+    """
+    Transforms for converting the device data.
+    """
+    TF_NONE = 0x00              # No transform, data is used byte for byte
+    TF_REVERSE = 0x01           # Reverse the bytes (e.g. change endianess)
+    TF_BIN2HEX_UC = 0x02        # Convert raw binary into ASCII hex, uppercase
+    TF_BIN2HEX_LC = 0x03        # Convert raw binary into ASCII hex, lowercase
+    TF_HEX2BIN_UC = 0x04        # Convert ASCII hex, uppercase to binary
+    TF_HEX2BIN_LC = 0x05        # Convert ASCII hex, lowercase to binary
+    TF_BIN2HEX_SPACE_UC = 0x06  # Convert raw binary into ASCII hex, uppercase space between bytes
+    TF_BIN2HEX_SPACE_LC = 0x07  # Convert raw binary into ASCII hex, lowercase space between bytes
+    TF_HEX2BIN_SPACE_UC = 0x08  # Convert ASCII hex, uppercase with spaces between bytes to binary
+    TF_HEX2BIN_SPACE_LC = 0x09  # Convert ASCII hex, lowercase with spaces between bytes to binary
 
 class atcacert_date_format_t(AtcaEnum):
     """
@@ -160,33 +175,6 @@ def _atcacert_convert_enum(kwargs, name, enum):
             kwargs[name] = int(getattr(enum, k))
 
 
-def _atcacert_convert_structure(kwargs, name, structure):
-    """
-    Internal Helper Function:  Convert dictionary into the correct ctypes structure for a given field
-    :param kwargs: kwargs dictionary
-    :param name: _field_ name that will be converted
-    :param structure: Conversion Class (resulting type)
-    :return:
-    """
-    k = kwargs.get(name)
-    if k is not None and isinstance(k, dict):
-        kwargs[name] = structure(**k)
-
-
-def _atcacert_convert_array(kwargs, name, array):
-    """
-    Internal Helper Function: Convert python list into ctype array
-    :param kwargs: kwargs dictionary
-    :param name: _field_ name that will be converted
-    :param array: Conversion Class (resulting type)
-    :return:
-    """
-    k = kwargs.get(name)
-    if k is not None:
-        a = [array._type_(**e) for e in k]     # pylint: disable-msg=protected-access
-        kwargs[name] = array(*a)
-
-
 class atcacert_device_loc_t(Structure):
     """
     CTypes mirror of atcacert_device_loc_t from atcacert_def.h
@@ -219,14 +207,23 @@ class atcacert_cert_element_t(Structure):
     """
     CTypes mirror of atcacert_cert_element_t from atcacert_def.h
     """
+    def __init__(self, *args, **kwargs):
+        if kwargs is not None:
+            _atcacert_convert_enum(kwargs, 'transforms', atcacert_transform_t)
+
+        super(atcacert_cert_element_t, self).__init__(*args, **kwargs)
+
     _fields_ = [
-        ('id', c_char * 16),  # ID identifying this element.
+        ('id', c_char * 25),  # ID identifying this element.
         ('device_loc', atcacert_device_loc_t),  # Location in the device for the element.
-        ('cert_loc', atcacert_cert_loc_t)  # Location in the certificate template for the element.
+        ('cert_loc', atcacert_cert_loc_t),  # Location in the certificate template for the element.
+        ('transforms', get_ctype_by_name('atcacert_transform_t') * 2)  # Transforms for converting the device data.
+
     ]
     _pack_ = 1
 
-class atcacert_def_t(Structure):
+
+class atcacert_def_t(AtcaStructure):
     """
     CTypes mirror of atcacert_def_t from atcacert_def.h
     """
@@ -240,12 +237,6 @@ class atcacert_def_t(Structure):
             _atcacert_convert_enum(kwargs, 'expire_date_format', atcacert_date_format_t)
 
             _atcacert_convert_bytes(kwargs, 'cert_template', POINTER(c_uint8))
-
-            for f in self._fields_:
-                if isinstance(f[1](), Structure):
-                    _atcacert_convert_structure(kwargs, f[0], f[1])
-                elif isinstance(f[1](), Array):
-                    _atcacert_convert_array(kwargs, f[0], f[1])
 
         super(atcacert_def_t, self).__init__(*args, **kwargs)
 
@@ -334,6 +325,30 @@ class atcacert_tm_utc_t(Structure):
 # Client side cert i/o methods. These declarations deal with the client-side, the node being authenticated,
 # of the authentication process. It is assumed the client has an ECC CryptoAuthentication device
 # (e.g. ATECC508A) and the certificates are stored on that device.
+
+
+def atcacert_max_cert_size(cert_def, max_cert_size):
+    """
+    Return the maximum possible certificate size in bytes for a given
+    cert def. Certificate can be variable size, so this gives an
+    appropriate buffer size when reading the certificates.
+
+    Args:
+        cert_def       Certificate definition to find a max size for.
+                       Expects atcacert_def_t.
+        max_cert_size  Maximum certificate size will be returned here in bytes.
+                       Expects AtcaReference.
+
+    Returns:
+        ATCACERT_E_SUCCESS on success, otherwise an error code.
+    """
+    if not isinstance(max_cert_size, AtcaReference):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        c_max_cert_size = c_size_t(0)
+        status = get_cryptoauthlib().atcacert_max_cert_size(byref(cert_def), byref(c_max_cert_size))
+        max_cert_size.value = c_max_cert_size.value
+    return status
 
 
 def atcacert_get_response(device_private_key_slot, challenge, response):

@@ -1,5 +1,5 @@
-#ifndef CERT_DEF_2_DEVICE_CSR_H
-#define CERT_DEF_2_DEVICE_CSR_H
+#ifndef TEST_CERT_DEF_2_DEVICE_CSR_H
+#define TEST_CERT_DEF_2_DEVICE_CSR_H
 
 #include "atcacert/atcacert_def.h"
 
@@ -13,4 +13,4 @@ extern const atcacert_def_t g_csr_def_2_device;
 }
 #endif
 
-#endif // CERT_DEF_2_DEVICE_CSR_H
+#endif

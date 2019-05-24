@@ -49,7 +49,18 @@
 #endif
 
 #ifndef ATCA_LIB_VER_MINOR
-#define ATCA_LIB_VER_MINOR  1
+#define ATCA_LIB_VER_MINOR  2
+#endif
+
+/** If an Auth-key or IoProtection Secret is to be used this is the
+ * slot number of it */
+#ifndef PKCS11_PIN_SLOT
+#define PKCS11_PIN_SLOT                 6
+#endif
+
+/** Define to lock the PIN slot after writing */
+#ifndef PKCS11_LOCK_PIN_SLOT
+#define PKCS11_LOCK_PIN_SLOT            0
 #endif
 
 /** Enable PKCS#11 Debugging Messages */
@@ -68,13 +79,13 @@
 #endif
 
 /** Maximum number of slots allowed in the system - if static memory this will
-always be the number of slots */
+   always be the number of slots */
 #ifndef PKCS11_MAX_SLOTS_ALLOWED
 #define PKCS11_MAX_SLOTS_ALLOWED        1
 #endif
 
 /** Maximum number of total sessions allowed in the system - if using static
-memory then this many session contexts will be allocated */
+   memory then this many session contexts will be allocated */
 #ifndef PKCS11_MAX_SESSIONS_ALLOWED
 #define PKCS11_MAX_SESSIONS_ALLOWED     10
 #endif
@@ -86,36 +97,41 @@ memory then this many session contexts will be allocated */
 
 /** Maximum label size in characters */
 #ifndef PKCS11_MAX_LABEL_SIZE
-#define PKCS11_MAX_LABEL_SIZE           10
+#define PKCS11_MAX_LABEL_SIZE           30
 #endif
 
 /****************************************************************************/
 /* The following configuration options are for fine tuning of the library   */
 /****************************************************************************/
 
-/** Defines if the library will produce a static function list or use an 
-externally defined one. This is an optimization that allows for a statically
-linked library to include only the PKCS#11 functions that the application
-intends to use. Otherwise compilers will not be able to optimize out the unusued
-functions */
+/** Defines if the library will produce a static function list or use an
+   externally defined one. This is an optimization that allows for a statically
+   linked library to include only the PKCS#11 functions that the application
+   intends to use. Otherwise compilers will not be able to optimize out the unusued
+   functions */
 #ifndef PKCS11_EXTERNAL_FUNCTION_LIST
 #define PKCS11_EXTERNAL_FUNCTION_LIST    0
 #endif
 
 /** Static Search Attribute Cache in bytes (variable number of attributes based
-on size and memory requirements) */
+   on size and memory requirements) */
 #ifndef PKCS11_SEARCH_CACHE_SIZE
 #define PKCS11_SEARCH_CACHE_SIZE        128
 #endif
 
 /** Device Support for ATECC508A */
 #ifndef PKCS11_508_SUPPORT
-#define PKCS11_508_SUPPORT              1
+#define PKCS11_508_SUPPORT              0
 #endif
 
 /** Device Support for ATECC608A */
 #ifndef PKCS11_608_SUPPORT
 #define PKCS11_608_SUPPORT              1
+#endif
+
+/** Support for configuring a "blank" or new device */
+#ifndef PKCS11_TOKEN_INIT_SUPPORT
+#define PKCS11_TOKEN_INIT_SUPPORT       0
 #endif
 
 /** Include the monotonic hardware feature as an object */
@@ -124,14 +140,20 @@ on size and memory requirements) */
 #endif
 
 
-#include "cryptoki.h"
+#include "pkcs11/cryptoki.h"
+#include <stddef.h>
 typedef struct _pkcs11_slot_ctx *pkcs11_slot_ctx_ptr;
 typedef struct _pkcs11_lib_ctx  *pkcs11_lib_ctx_ptr;
 typedef struct _pkcs11_object   *pkcs11_object_ptr;
 
+CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr pSlot);
 CK_RV pkcs11_config_load(pkcs11_slot_ctx_ptr slot_ctx);
 CK_RV pkcs11_config_cert(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pcLabel);
 CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pcLabel);
 CK_RV pkcs11_config_remove_object(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject);
+
+void pkcs11_config_init_private(pkcs11_object_ptr pObject, char * label, size_t len);
+void pkcs11_config_init_public(pkcs11_object_ptr pObject, char * label, size_t len);
+void pkcs11_config_init_cert(pkcs11_object_ptr pObject, char * label, size_t len);
 
 #endif /* PKCS11_CONFIG_H_ */

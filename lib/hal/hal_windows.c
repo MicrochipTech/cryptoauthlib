@@ -5,13 +5,13 @@
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
- * 
+ *
  * Subject to your compliance with these terms, you may use Microchip software
  * and any derivatives exclusively with Microchip products. It is your
  * responsibility to comply with third party license terms applicable to your
  * use of third party software (including open source software) that may
  * accompany Microchip software.
- * 
+ *
  * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
  * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
  * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
@@ -102,7 +102,7 @@ ATCA_STATUS hal_create_mutex(void** ppMutex, const char *pName)
     return ATCA_SUCCESS;
 }
 
-/* 
+/*
  * \brief Application callback for destroying a mutex object
  * \param[IN] pMutex pointer to mutex
  */
@@ -140,8 +140,8 @@ ATCA_STATUS hal_lock_mutex(void* pMutex)
     }
     else if (WAIT_ABANDONED_0 == rv)
     {
-        /* Lock was obtained but its because another process terminated so the 
-        state is indeterminate and will probably need to be fixed */
+        /* Lock was obtained but its because another process terminated so the
+           state is indeterminate and will probably need to be fixed */
         return ATCA_FUNC_FAIL;
     }
     else

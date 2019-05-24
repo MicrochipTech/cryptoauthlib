@@ -29,6 +29,7 @@
 #ifndef ATCA_HAL_H_
 #define ATCA_HAL_H_
 
+#include "atca_config.h"
 #include "atca_status.h"
 #include "atca_iface.h"
 #include "atca_start_config.h"
@@ -163,13 +164,14 @@ ATCA_STATUS hal_destroy_mutex(void * pMutex);
 ATCA_STATUS hal_lock_mutex(void * pMutex);
 ATCA_STATUS hal_unlock_mutex(void * pMutex);
 
-#if defined(_WIN32)|| defined(__linux__)
+#if defined(_WIN32) || defined(__linux__)
 #define hal_malloc      malloc
 #define hal_free        free
 #else
 void * hal_malloc(size_t size);
 void   hal_free(void * ptr);
 #endif
+
 /** \brief If an RTOS is being use make sure the delay definitions do not conflict */
 #ifdef ATCA_USE_RTOS_TIMER
 void atca_delay_ms_internal(uint32_t delay);

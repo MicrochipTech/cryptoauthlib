@@ -29,30 +29,42 @@
  * TERMS.
  */
 
+#include "cryptoauthlib.h"
+#include "host/atca_host.h"
+
 #include "pkcs11_config.h"
 #include "pkcs11_debug.h"
 #include "pkcs11_session.h"
 #include "pkcs11_init.h"
 #include "pkcs11_slot.h"
-#include "cryptoauthlib.h"
+#include "pkcs11_object.h"
 
 /**
  * \defgroup pkcs11 Session Management (pkcs11_)
- @{ */
+   @{ */
 
 #ifndef memset_s
 int memset_s(void *dest, size_t destsz, int ch, size_t count)
 {
-    if (dest == NULL) return -1;
-    if (destsz > SIZE_MAX) return -1;
-    if (count > destsz) return -1;
-    
+    if (dest == NULL)
+    {
+        return -1;
+    }
+    if (destsz > SIZE_MAX)
+    {
+        return -1;
+    }
+    if (count > destsz)
+    {
+        return -1;
+    }
+
     volatile unsigned char *p = dest;
     while (destsz-- && count--)
     {
         *p++ = ch;
     }
-    
+
     return 0;
 }
 #endif
@@ -65,6 +77,7 @@ static pkcs11_session_ctx pkcs11_session_cache[PKCS11_MAX_SESSIONS_ALLOWED];
 static pkcs11_session_ctx_ptr pkcs11_allocate_session_context(void)
 {
     pkcs11_session_ctx_ptr rv = NULL_PTR;
+
 #if PKCS11_USE_STATIC_MEMORY
     CK_ULONG i;
     for (i = 0; i < PKCS11_MAX_SESSIONS_ALLOWED; i++)
@@ -101,8 +114,8 @@ pkcs11_session_ctx_ptr pkcs11_get_session_context(CK_SESSION_HANDLE hSession)
 }
 
 /**
-* \brief Check if the session is initialized properly
-*/
+ * \brief Check if the session is initialized properly
+ */
 CK_RV pkcs11_session_check(pkcs11_session_ctx_ptr * pSession, CK_SESSION_HANDLE hSession)
 {
     pkcs11_session_ctx_ptr ctx = pkcs11_get_session_context(hSession);
@@ -135,12 +148,12 @@ CK_RV pkcs11_session_check(pkcs11_session_ctx_ptr * pSession, CK_SESSION_HANDLE 
 }
 
 CK_RV pkcs11_session_open(
-    CK_SLOT_ID slotID,
-    CK_FLAGS flags,
-    CK_VOID_PTR pApplication,
-    CK_NOTIFY notify,
+    CK_SLOT_ID            slotID,
+    CK_FLAGS              flags,
+    CK_VOID_PTR           pApplication,
+    CK_NOTIFY             notify,
     CK_SESSION_HANDLE_PTR phSession
-)
+    )
 {
     pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
     pkcs11_slot_ctx_ptr slot_ctx;
@@ -164,7 +177,7 @@ CK_RV pkcs11_session_open(
     {
         return CKR_SESSION_PARALLEL_NOT_SUPPORTED;
     }
-    
+
     /* Retrieve the slot context - i.e. the attached device (ECC508A, SHA256, etc) */
     slot_ctx = pkcs11_slot_get_context(lib_ctx, slotID);
 
@@ -270,7 +283,7 @@ CK_RV pkcs11_session_closeall(CK_SLOT_ID slotID)
 #if PKCS11_USE_STATIC_MEMORY
     {
         int i;
-        for (i=0; i<PKCS11_MAX_SESSIONS_ALLOWED; i++)
+        for (i = 0; i < PKCS11_MAX_SESSIONS_ALLOWED; i++)
         {
             pkcs11_session_close(pkcs11_session_cache[i].handle);
         }
@@ -281,8 +294,8 @@ CK_RV pkcs11_session_closeall(CK_SLOT_ID slotID)
 }
 
 /**
-* \brief Obtains information about a particular session
-*/
+ * \brief Obtains information about a particular session
+ */
 CK_RV pkcs11_session_get_info(CK_SESSION_HANDLE hSession, CK_SESSION_INFO_PTR pInfo)
 {
     pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
@@ -327,7 +340,7 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
 {
     pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
     pkcs11_session_ctx_ptr session_ctx = pkcs11_get_session_context(hSession);
-    int outlen;
+    size_t outlen;
 
     if (!lib_ctx || !lib_ctx->initialized)
     {
@@ -382,5 +395,111 @@ CK_RV pkcs11_session_logout(CK_SESSION_HANDLE hSession)
     return CKR_OK;
 }
 
+/* Authorize an object for use */
+CK_RV pkcs11_session_authorize(pkcs11_session_ctx_ptr pSession, CK_VOID_PTR pObject)
+{
+    pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
+    atecc508a_config_t * pConfig;
+
+    ATCA_STATUS status;
+    uint8_t response[MAC_SIZE];
+    uint8_t sn[ATCA_SERIAL_NUM_SIZE];
+    uint16_t key_id = PKCS11_PIN_SLOT;
+    atca_check_mac_in_out_t checkmac_params;
+    atca_temp_key_t temp_key;
+    atca_nonce_in_out_t nonce_params;
+    uint8_t num_in[NONCE_NUMIN_SIZE];
+    uint8_t rand_out[RANDOM_NUM_SIZE];
+    uint8_t other_data[CHECKMAC_OTHER_DATA_SIZE];
+
+    if (!pSession || !obj_ptr)
+    {
+        return CKR_ARGUMENTS_BAD;
+    }
+
+//    pConfig = (atecc508a_config_t *)obj_ptr->config;
+//
+//    if(!pConfig)
+//    {
+//        return CKR_GENERAL_ERROR;
+//    }
+
+//    if (ATCA_KEY_CONFIG_REQ_AUTH_MASK & pConfig->KeyConfig[obj_ptr->slot])
+//    {
+//        key_id = (pConfig->KeyConfig[obj_ptr->slot] &
+//                ATCA_KEY_CONFIG_AUTH_KEY_MASK) >> ATCA_KEY_CONFIG_AUTH_KEY_SHIFT;
+//    }
+//    else
+//    {
+//        /* No Authorization is required */
+//        return CKR_OK;
+//    }
+
+    /* Initialize the intermediate buffers */
+    memset(&temp_key, 0, sizeof(temp_key));
+    memset(&nonce_params, 0, sizeof(nonce_params));
+    memset(num_in, 0, sizeof(num_in));
+    memset(other_data, 0, sizeof(other_data));
+
+    /* Read Device Serial Number */
+    status = atcab_read_serial_number(sn);
+
+    if (ATCA_SUCCESS == status)
+    {
+        /* Perform random nonce and store it in tempkey */
+        nonce_params.mode = NONCE_MODE_SEED_UPDATE;
+        nonce_params.zero = 0;
+        nonce_params.num_in = num_in;
+        nonce_params.rand_out = rand_out;
+        nonce_params.temp_key = &temp_key;
+        status = atcab_nonce_rand(nonce_params.num_in, rand_out);
+    }
+
+    if (ATCA_SUCCESS == status)
+    {
+        /* Calculate nonce value of tempkey locally */
+        status = atcah_nonce(&nonce_params);
+    }
+
+    if (ATCA_SUCCESS == status)
+    {
+        /* Calculate the expected checkmac answer the host will provide */
+        other_data[0] = ATCA_MAC;
+        other_data[2] = (uint8_t)key_id;
+
+        checkmac_params.mode = CHECKMAC_MODE_BLOCK2_TEMPKEY;
+        checkmac_params.key_id = key_id;
+        checkmac_params.client_chal = NULL;
+        checkmac_params.client_resp = response;
+        checkmac_params.other_data = other_data;
+        checkmac_params.sn = sn;
+        checkmac_params.otp = NULL;
+        checkmac_params.slot_key = pSession->read_key;
+        checkmac_params.target_key = NULL;
+        checkmac_params.temp_key = &temp_key;
+        status = atcah_check_mac(&checkmac_params);
+    }
+
+    if (ATCA_SUCCESS == status)
+    {
+        /* Perform CheckMac which will compare the host provided
+         * mac against the internally computed one */
+        status = atcab_checkmac(
+            checkmac_params.mode,
+            checkmac_params.key_id,
+            checkmac_params.client_chal,
+            checkmac_params.client_resp,
+            checkmac_params.other_data);
+    }
+
+    if (ATCA_SUCCESS == status)
+    {
+        return CKR_OK;
+    }
+    else
+    {
+        return CKR_PIN_INCORRECT;
+    }
+}
 
 /** @} */

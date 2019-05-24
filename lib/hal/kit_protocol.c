@@ -434,7 +434,7 @@ ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlen, char* pkitcmd, int* n
     pkitcmd[0] = target;
 
     // Copy the ascii binary bytes
-    status = atcab_bin2hex_(txdata, txlen, &pkitcmd[cpyindex], &cmdAsciiLen, false);
+    status = atcab_bin2hex_(txdata, txlen, &pkitcmd[cpyindex], &cmdAsciiLen, false, false, true);
     if (status != ATCA_SUCCESS)
     {
         return status;

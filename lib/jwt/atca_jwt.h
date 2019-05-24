@@ -34,6 +34,10 @@
 
 #include "cryptoauthlib.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** \brief Structure to hold metadata information about the jwt being built */
 typedef struct
 {
@@ -50,5 +54,8 @@ void atca_jwt_check_payload_start(atca_jwt_t* jwt);
 ATCA_STATUS atca_jwt_verify(const char* buf, uint16_t buflen, const uint8_t* pubkey);
 
 /** @} */
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ATCA_JWT_H_ */

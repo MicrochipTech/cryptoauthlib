@@ -1,6 +1,6 @@
 var a00482 =
 [
-    [ "kit_phy_num_found", "a03537.html#ga11ee6ec0b2b7eb2ff2472f92208c3205", null ],
-    [ "kit_phy_receive", "a03537.html#gaae5e94b6080d4279474eb3e98bc58901", null ],
-    [ "kit_phy_send", "a03537.html#ga020fb0be6c73515122cf4b9f749fd97d", null ]
+    [ "MAX_I2C_BUSES", "a00993.html#gaf89a7a4080a47aa10a5504291db285bf", null ],
+    [ "ATCAI2CMaster_t", "a00993.html#gae8f36006f14bf6a9f4914bac69ed9f98", null ],
+    [ "change_i2c_speed", "a00993.html#gab7f613b378e0d01b80703df3ac662d6d", null ]
 ];

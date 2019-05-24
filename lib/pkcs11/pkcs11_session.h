@@ -64,7 +64,7 @@ typedef struct _pkcs11_session_ctx
     CK_OBJECT_HANDLE    active_object;
     CK_BYTE             read_key[32];           /**< Accepted through C_Login as the user pin */
 } pkcs11_session_ctx, *pkcs11_session_ctx_ptr;
-    
+
 #ifdef __cplusplus
 }
 #endif
@@ -78,6 +78,6 @@ CK_RV pkcs11_session_closeall(CK_SLOT_ID slotID);
 
 CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen);
 CK_RV pkcs11_session_logout(CK_SESSION_HANDLE hSession);
-
+CK_RV pkcs11_session_authorize(pkcs11_session_ctx_ptr pSession, CK_VOID_PTR pObject);
 
 #endif /* PKCS11_SESSION_H_ */

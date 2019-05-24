@@ -1,8 +1,7 @@
 var a00266 =
 [
-    [ "ATCA_ECC_P256_FIELD_SIZE", "a03536.html#gab6935877a2675bfc95af283fb43affb5", null ],
-    [ "ATCA_ECC_P256_PRIVATE_KEY_SIZE", "a03536.html#gadb06f3adddd74993ab0da4be3ea71441", null ],
-    [ "ATCA_ECC_P256_PUBLIC_KEY_SIZE", "a03536.html#ga6bcf19f52fbceb7801fc3216d528fb3c", null ],
-    [ "ATCA_ECC_P256_SIGNATURE_SIZE", "a03536.html#ga6eba254effebfbbb95381511fc7d80d5", null ],
-    [ "atcac_sw_ecdsa_verify_p256", "a03536.html#gaa61eee6f208a1633d35cdf8d628a6835", null ]
+    [ "atcab_info", "a00991.html#ga6e19ecd60be4c74665d9ec142e460771", null ],
+    [ "atcab_info_base", "a00991.html#ga806d07982fda5c30755af6b5b4ef9314", null ],
+    [ "atcab_info_get_latch", "a00991.html#ga376b6ae92f14c60fba4ca5c6461e0b48", null ],
+    [ "atcab_info_set_latch", "a00991.html#ga2649126606db8a0b64ae8e19d09f6600", null ]
 ];

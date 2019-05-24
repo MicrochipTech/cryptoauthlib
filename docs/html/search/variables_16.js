@@ -1,5 +1,9 @@
 var searchData=
 [
-  ['zero',['zero',['../a03538.html#ga876993158b491f4626155b468ffb6edc',1,'atca_nonce_in_out']]],
-  ['zone',['zone',['../a03591.html#a107ad412023faa68c4ac0c7cfd921a02',1,'atcacert_device_loc_s::zone()'],['../a03723.html#ac746c3d65092170bfaf5b0d9950d8438',1,'atca_gen_dig_in_out::zone()'],['../a03727.html#ac746c3d65092170bfaf5b0d9950d8438',1,'atca_write_mac_in_out::zone()']]]
+  ['wake_5fdelay',['wake_delay',['../a01013.html#a058e797431a238154c5347fa26982044',1,'ATCAIfaceCfg']]],
+  ['warranties',['WARRANTIES',['../a00605.html#a8c193cd81f81696b59e5c6e5bb38d91f',1,'license.txt']]],
+  ['warranty',['WARRANTY',['../a00605.html#a01d4ec73d916d67d085f3e63d1fdbd4b',1,'license.txt']]],
+  ['wordsize',['wordsize',['../a01013.html#ae696a833509f858d17988acdb1deb161',1,'ATCAIfaceCfg']]],
+  ['write_5fbufhandle',['write_bufHandle',['../a00443.html#a26a598d8070b8e4859fceb58f4212f78',1,'hal_pic32mz2048efm_i2c.c']]],
+  ['write_5fhandle',['write_handle',['../a01121.html#af11a0103eb96a026ea6782bfcad7548e',1,'cdc_device::write_handle()'],['../a01129.html#ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0',1,'hid_device::write_handle()'],['../a01129.html#af11a0103eb96a026ea6782bfcad7548e',1,'hid_device::write_handle()']]]
 ];

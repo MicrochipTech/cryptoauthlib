@@ -1,7 +1,6 @@
 var a00455 =
 [
-    [ "CDC_BUFFER_MAX", "a00455.html#a5ac8c9377f90d6ce3044f81f900a54fe", null ],
-    [ "CDC_DEVICES_MAX", "a00455.html#a08b6c05184266dc4d5c8727bb9c1c754", null ],
-    [ "atcacdc_t", "a00455.html#a2df85bfd309840b4c9a5087e053d4811", null ],
-    [ "cdc_device_t", "a00455.html#a99ee56102171adcbcecb8a78fb9fa895", null ]
+    [ "MAX_I2C_BUSES", "a00993.html#gaf89a7a4080a47aa10a5504291db285bf", null ],
+    [ "ATCAI2CMaster_t", "a00993.html#gae8f36006f14bf6a9f4914bac69ed9f98", null ],
+    [ "change_i2c_speed", "a00993.html#gab7f613b378e0d01b80703df3ac662d6d", null ]
 ];

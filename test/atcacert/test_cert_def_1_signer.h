@@ -6,4 +6,4 @@
 extern const uint8_t g_test_signer_1_ca_public_key[];
 extern const atcacert_def_t g_test_cert_def_1_signer;
 
-#endif // TEST_CERT_DEF_1_SIGNER_H
+#endif

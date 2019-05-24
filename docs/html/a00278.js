@@ -1,8 +1,9 @@
 var a00278 =
 [
-    [ "ATCA_SHA1_DIGEST_SIZE", "a03536.html#gadb94a0991eb670ff1bf90253dfea0bfa", null ],
-    [ "atcac_sw_sha1", "a03536.html#ga84b866657bf319dab2924c2db3a1e990", null ],
-    [ "atcac_sw_sha1_finish", "a03536.html#ga5589df2a639f61a4dc4ccedc9b5a5453", null ],
-    [ "atcac_sw_sha1_init", "a03536.html#gabed03bcc1228768534ef4ee49df0ad09", null ],
-    [ "atcac_sw_sha1_update", "a03536.html#ga65ff558306a88e0fbe2fc82bbe6a9c03", null ]
+    [ "atcab_challenge", "a00991.html#ga114a721517c95d5ba5fcac5b226669d6", null ],
+    [ "atcab_challenge_seed_update", "a00991.html#gaadde4309089c569fd87c24a1a2326cd4", null ],
+    [ "atcab_nonce", "a00991.html#ga2293df1c1c794496790bae25d3844fa5", null ],
+    [ "atcab_nonce_base", "a00991.html#gaf8e10791759a8a5e5dcd82774f4895d6", null ],
+    [ "atcab_nonce_load", "a00991.html#ga2239ae3a87c341a48aa108bd82a58552", null ],
+    [ "atcab_nonce_rand", "a00991.html#gaed67d447d547c67b7b8be6b958d1fb5c", null ]
 ];

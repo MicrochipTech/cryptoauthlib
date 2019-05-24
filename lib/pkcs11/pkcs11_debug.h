@@ -44,12 +44,12 @@ void pkcs11_debug_attributes(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount);
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/syscall.h>
-#define PKCS11_DEBUG_NOFILE(fmt, ...) { fflush(stdout); fprintf(stderr, "%d:%d:" fmt, getpid(), (int)syscall(SYS_gettid), ##__VA_ARGS__); fflush(stderr); }
+#define PKCS11_DEBUG_NOFILE(fmt, ...) { fflush(stdout); fprintf(stderr, "%d:%d:" fmt, getpid(), (int)syscall(SYS_gettid), ## __VA_ARGS__); fflush(stderr); }
 #else
-#define PKCS11_DEBUG_NOFILE(fmt, ...) { printf(fmt, ##__VA_ARGS__); }
+#define PKCS11_DEBUG_NOFILE(fmt, ...) { printf(fmt, ## __VA_ARGS__); }
 #endif
 
-#define PKCS11_DEBUG(fmt, ...)  PKCS11_DEBUG_NOFILE("%s:%d:" fmt, __FUNCTION__, __LINE__, ##__VA_ARGS__)
+#define PKCS11_DEBUG(fmt, ...)  PKCS11_DEBUG_NOFILE("%s:%d:" fmt, __FUNCTION__, __LINE__, ## __VA_ARGS__)
 #define PKCS11_DEBUG_RETURN(x)     { CK_RV __y = x; PKCS11_DEBUG("%s(%x)\n", pkcs11_debug_get_ckr_name(__y), (unsigned int)__y); return __y; }
 
 #else

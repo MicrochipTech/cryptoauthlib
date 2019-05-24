@@ -1,6 +1,8 @@
 var a00326 =
 [
-    [ "MAX_I2C_BUSES", "a03537.html#gaf89a7a4080a47aa10a5504291db285bf", null ],
-    [ "ATCAI2CMaster_t", "a03537.html#gae8f36006f14bf6a9f4914bac69ed9f98", null ],
-    [ "change_i2c_speed", "a03537.html#gab7f613b378e0d01b80703df3ac662d6d", null ]
+    [ "ATCA_ECC_P256_FIELD_SIZE", "a00992.html#gab6935877a2675bfc95af283fb43affb5", null ],
+    [ "ATCA_ECC_P256_PRIVATE_KEY_SIZE", "a00992.html#gadb06f3adddd74993ab0da4be3ea71441", null ],
+    [ "ATCA_ECC_P256_PUBLIC_KEY_SIZE", "a00992.html#ga6bcf19f52fbceb7801fc3216d528fb3c", null ],
+    [ "ATCA_ECC_P256_SIGNATURE_SIZE", "a00992.html#ga6eba254effebfbbb95381511fc7d80d5", null ],
+    [ "atcac_sw_ecdsa_verify_p256", "a00992.html#gaa61eee6f208a1633d35cdf8d628a6835", null ]
 ];

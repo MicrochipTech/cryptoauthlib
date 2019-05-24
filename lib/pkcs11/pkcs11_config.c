@@ -41,13 +41,13 @@
 
 /**
  * \defgroup pkcs11 Configuration (pkcs11_config_)
- @{ */
+   @{ */
 
-static void pkcs11_config_init_private(pkcs11_object_ptr pObject, char * label, size_t len)
+void pkcs11_config_init_private(pkcs11_object_ptr pObject, char * label, size_t len)
 {
-    if (len >= sizeof(pObject->name))
+    if (len >= PKCS11_MAX_LABEL_SIZE)
     {
-        len = sizeof(pObject->name) - 1;
+        len = PKCS11_MAX_LABEL_SIZE - 1;
     }
     memcpy(pObject->name, label, len);
     pObject->name[len] = '\0';
@@ -59,11 +59,11 @@ static void pkcs11_config_init_private(pkcs11_object_ptr pObject, char * label, 
     pObject->size = 16;
 }
 
-static void pkcs11_config_init_public(pkcs11_object_ptr pObject, char * label, size_t len)
+void pkcs11_config_init_public(pkcs11_object_ptr pObject, char * label, size_t len)
 {
-    if (len > sizeof(pObject->name))
+    if (len >= PKCS11_MAX_LABEL_SIZE)
     {
-        len = sizeof(pObject->name);
+        len = PKCS11_MAX_LABEL_SIZE - 1;
     }
     memcpy(pObject->name, label, len);
     pObject->name[len] = '\0';
@@ -75,194 +75,23 @@ static void pkcs11_config_init_public(pkcs11_object_ptr pObject, char * label, s
     pObject->size = 64;
 }
 
-
-#if PKCS11_USE_STATIC_CONFIG
-
-#include "portable/cert_def_1_signer.h"
-#include "portable/cert_def_2_device.h"
-
-#ifndef pkcs11configCLIENT_CERTIFICATE_LABEL
-#define pkcs11configCLIENT_CERTIFICATE_LABEL                    "device"
-#endif
-
-#ifndef pkcs11configJITR_DEVICE_CERTIFICATE_AUTHORITY_LABEL
-#define pkcs11configJITR_DEVICE_CERTIFICATE_AUTHORITY_LABEL     "signer"
-#endif
-
-#ifndef pkcs11configROOT_PUBLIC_KEY_LABEL
-#define pkcs11configROOT_PUBLIC_KEY_LABEL                       "root"
-#endif
-
-/* Helper function to assign the proper fields to an certificate object from a cert def */
-CK_RV pkcs11_config_cert(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pLabel)
+void pkcs11_config_init_cert(pkcs11_object_ptr pObject, char * label, size_t len)
 {
-    CK_RV rv = CKR_OK;
-	size_t len;
-
-    if (!pObject || !pLabel)
+    if (len >= PKCS11_MAX_LABEL_SIZE)
     {
-        return CKR_ARGUMENTS_BAD;
+        len = PKCS11_MAX_LABEL_SIZE - 1;
     }
-
-	len = strlen(pLabel->pValue);
-
-	if (len > PKCS11_MAX_LABEL_SIZE)
-	{
-		return CKR_ARGUMENTS_BAD;
-	}
-
-	if (!strcmp(pkcs11configCLIENT_CERTIFICATE_LABEL, (char*)pLabel->pValue))
-	{
-    	/* Slot 10 - Device Cert for Slot 0*/
-    	pObject->slot = 10;
-    	memmove(pObject->name, pcLabel, len);
-    	pObject->class_id = CKO_CERTIFICATE;
-    	pObject->class_type = CK_CERTIFICATE_CATEGORY_TOKEN_USER;
-    	pObject->attributes = pkcs11_cert_x509public_attributes;
-    	pObject->count = pkcs11_cert_x509public_attributes_count;
-    	pObject->size = g_cert_def_2_device.cert_template_size;
-    	pObject->data = &g_cert_def_2_device;
-	}
-	else if (!strcmp(pkcs11configJITR_DEVICE_CERTIFICATE_AUTHORITY_LABEL, (char*)pLabel->pValue))
-	{
-    	/* Slot 12 - Signer Cert for Slot 10 */
-    	pObject->slot = 12;
-    	memmove(pObject->name, pcLabel, len);
-    	pObject->class_id = CKO_CERTIFICATE;
-    	pObject->class_type = CK_CERTIFICATE_CATEGORY_AUTHORITY;
-    	pObject->attributes = pkcs11_cert_x509public_attributes;
-    	pObject->count = pkcs11_cert_x509public_attributes_count;
-    	pObject->size = g_cert_def_1_signer.cert_template_size;
-    	pObject->data = &g_cert_def_1_signer;
-	}
-    else
-    {
-        rv = CKR_ARGUMENTS_BAD;
-    }
-
-    return rv;
+    memcpy(pObject->name, label, len);
+    pObject->name[len] = '\0';
+    pObject->class_id = CKO_CERTIFICATE;
+    pObject->class_type = 0;
+    pObject->attributes = pkcs11_cert_x509public_attributes;
+    pObject->count = pkcs11_cert_x509public_attributes_count;
+    pObject->data = NULL;
+    pObject->size = 0;
 }
 
-/* Helper function to assign the proper fields to a key object */
-CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pLabel)
-{
-    CK_RV rv = CKR_OK;
-	size_t len;
-
-    if (!pObject || !pLabel)
-    {
-        return CKR_ARGUMENTS_BAD;
-    }
-
-	len = strlen(pLabel->pValue);
-
-	if (len > PKCS11_MAX_LABEL_SIZE)
-	{
-		return CKR_ARGUMENTS_BAD;
-	}
-
-    if (!strcmp(pkcs11configCLIENT_CERTIFICATE_LABEL, (char*)pLabel->pValue))
-    {
-		/* Slot 0 - Device Private Key */
-		pObject->slot = 0;
-		memmove(pObject->name, pcLabel, len);
-		pObject->class_id = CKO_PRIVATE_KEY;
-		pObject->class_type = CKK_EC;
-		pObject->attributes = pkcs11_key_private_attributes;
-		pObject->count = pkcs11_key_private_attributes_count;
-		pObject->size = 16;
-    }
-    else if (!strcmp(pkcs11configROOT_PUBLIC_KEY_LABEL, (char*)pLabel->pValue))
-    {
-        /* Slot 15 - Root Public Key */
-        pObject->slot = 15;
-        memmove(pObject->name, pcLabel, len);
-        pObject->class_id = CKO_PUBLIC_KEY;
-        pObject->class_type = CKK_EC;
-        pObject->attributes = pkcs11_key_public_attributes;
-        pObject->count = pkcs11_key_public_attributes_count;
-        pObject->data = &g_cert_def_0_root;
-        pObject->size = 64;
-    }
-    else
-    {
-        rv = CKR_ARGUMENTS_BAD;
-    }
-
-    return rv;
-}
-
-static CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
-{
-	pkcs11_object_ptr pObject;
-	CK_RV rv = CKR_OK;
-
-	if (CKR_OK == rv)
-	{
-		rv = pkcs11_object_alloc(&pObject);
-		if (pObject)
-		{
-			/* Slot 0 - Device Private Key */
-			pObject->config = &slot_ctx->cfg_zone;
-			pkcs11_config_key(pObject, (CK_BYTE_PTR)pkcs11configCLIENT_CERTIFICATE_LABEL);
-		}
-	}
-
-	if (CKR_OK == rv)
-	{
-		rv = pkcs11_object_alloc(&pObject);
-		if (pObject)
-		{
-			/* Slot 0 - Device Public Key */
-			pObject->slot = 0;
-			memcpy(pObject->name, pkcs11configCLIENT_CERTIFICATE_LABEL, sizeof(pkcs11configCLIENT_CERTIFICATE_LABEL));
-			pObject->class_id = CKO_PUBLIC_KEY;
-			pObject->class_type = CKK_EC;
-			pObject->attributes = pkcs11_key_public_attributes;
-			pObject->count = pkcs11_key_public_attributes_count;
-			pObject->data = NULL;
-			pObject->size = 64;
-			pObject->config = &slot_ctx->cfg_zone;
-		}
-	}
-
-	if (CKR_OK == rv)
-	{
-		rv = pkcs11_object_alloc(&pObject);
-		if (pObject)
-		{
-			/* Slot 10 - Device Cert for Slot 0*/
-			pObject->config = &slot_ctx->cfg_zone;
-			pkcs11_config_cert(pObject, (CK_BYTE_PTR)pkcs11configCLIENT_CERTIFICATE_LABEL);
-		}
-	}
-
-	if (CKR_OK == rv)
-	{
-		rv = pkcs11_object_alloc(&pObject);
-		if (pObject)
-		{
-			/* Slot 12 - Signer Cert for Slot 10 */
-			pObject->config = &slot_ctx->cfg_zone;
-			pkcs11_config_cert(pObject, (CK_BYTE_PTR)pkcs11configJITR_DEVICE_CERTIFICATE_AUTHORITY_LABEL);
-		}
-	}
-
-	if (CKR_OK == rv)
-	{
-		rv = pkcs11_object_alloc(&pObject);
-		PKCS11_DEBUG("pObjectTest: %p:%d\r\n", pObject, rv);
-		if (pObject)
-		{
-			/* Slot 15 - Root Public Key */
-			pObject->config = &slot_ctx->cfg_zone;
-			pkcs11_config_key(pObject, (CK_BYTE_PTR)pkcs11configROOT_PUBLIC_KEY_LABEL);
-		}
-	}
-
-	return rv;
-}
-#else
+#if !PKCS11_USE_STATIC_CONFIG
 
 #include <stdio.h>
 #include <ctype.h>
@@ -308,7 +137,7 @@ static int pkcs11_config_parse_buffer(char* buffer, size_t len, int argc, char* 
         return 0;
     }
 
-    for (s = buffer; s < (buffer+len) && args < argc; s++)
+    for (s = buffer; s < (buffer + len) && args < argc; s++)
     {
         switch (*s)
         {
@@ -363,7 +192,7 @@ static int pkcs11_config_parse_buffer(char* buffer, size_t len, int argc, char* 
 
 static void pkcs11_config_split_string(char* s, char splitter, int * argc, char* argv[])
 {
-    char * e; 
+    char * e;
     int args = 1;
 
     if (!s || !argc || !argv)
@@ -400,12 +229,24 @@ static CK_RV pkcs11_config_parse_interface(pkcs11_slot_ctx_ptr slot_ctx, char* c
         {
             cfg_ateccx08a_i2c_default.atcai2c.slave_address = (uint8_t)strtol(argv[1], NULL, 16);
         }
+        if (argc > 2)
+        {
+            cfg_ateccx08a_i2c_default.atcai2c.bus = (uint8_t)strtol(argv[2], NULL, 16);
+        }
+        if (argc > 3)
+        {
+            cfg_ateccx08a_i2c_default.atcai2c.baud = (uint8_t)strtol(argv[3], NULL, 10);
+        }
         rv = CKR_OK;
     }
     else if (!strcmp(argv[0], "hid"))
     {
         slot_ctx->interface_config = &cfg_ateccx08a_kithid_default;
         rv = CKR_OK;
+    }
+    else
+    {
+        PKCS11_DEBUG("Unrecognized interface: %s", argv[0]);
     }
     return rv;
 }
@@ -418,9 +259,9 @@ static CK_RV pkcs11_config_parse_freeslots(pkcs11_slot_ctx_ptr slot_ctx, char* c
 
     pkcs11_config_split_string(cfgstr, ',', &argc, argv);
 
-    for (i = 0; i < 16; i++)
+    for (i = 0; i < argc; i++)
     {
-        uint32_t slot = strtol(argv[1], NULL, 10);
+        uint32_t slot = strtol(argv[i], NULL, 10);
         if (slot < 16)
         {
             slot_ctx->flags |= (1 << slot);
@@ -502,6 +343,10 @@ static CK_RV pkcs11_config_parse_object(pkcs11_slot_ctx_ptr slot_ctx, char* cfgs
         }
     }
 #endif
+    else
+    {
+        PKCS11_DEBUG("Unrecognized object type: %s", argv[0]);
+    }
     return rv;
 }
 
@@ -510,7 +355,7 @@ static CK_RV pkcs11_config_parse_slot_file(pkcs11_slot_ctx_ptr slot_ctx, int arg
     CK_RV rv = CKR_GENERAL_ERROR;
     int i;
 
-    for (i = 0; i < argc; i+=2)
+    for (i = 0; i < argc; i += 2)
     {
         if (!strcmp(argv[i], "interface"))
         {
@@ -541,14 +386,14 @@ static CK_RV pkcs11_config_parse_object_file(pkcs11_slot_ctx_ptr slot_ctx, CK_BY
         pObject->slot = slot;
         pObject->flags = PKCS11_OBJECT_FLAG_DESTROYABLE;
         pObject->config = &slot_ctx->cfg_zone;
-	memset(pObject->name, 0, sizeof(pObject->name));
+        memset(pObject->name, 0, sizeof(pObject->name));
     }
 
     for (i = 0; i < argc; i += 2)
     {
         if (!strcmp(argv[i], "type"))
         {
-            if (!strcmp(argv[i+1], "private"))
+            if (!strcmp(argv[i + 1], "private"))
             {
                 privkey = TRUE;
                 pkcs11_config_init_private(pObject, "", 0);
@@ -563,7 +408,7 @@ static CK_RV pkcs11_config_parse_object_file(pkcs11_slot_ctx_ptr slot_ctx, CK_BY
         }
         else if (!strcmp(argv[i], "label"))
         {
-            strncpy(pObject->name, argv[i+1], sizeof(pObject->name));
+            strncpy(pObject->name, argv[i + 1], sizeof(pObject->name));
         }
     }
 
@@ -577,7 +422,7 @@ static CK_RV pkcs11_config_parse_object_file(pkcs11_slot_ctx_ptr slot_ctx, CK_BY
             pPubkey->slot = slot;
             pPubkey->flags = pObject->flags;
             pPubkey->config = &slot_ctx->cfg_zone;
-	    pkcs11_config_init_public(pPubkey, pObject->name, strlen(pObject->name));
+            pkcs11_config_init_public(pPubkey, pObject->name, strlen(pObject->name));
         }
         else
         {
@@ -608,14 +453,14 @@ CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, p
         if (pSlot->flags & (1 << i))
         {
             uint8_t keytype = (ATCA_KEY_CONFIG_KEY_TYPE_MASK & pSlot->cfg_zone.KeyConfig[i]) >> ATCA_KEY_CONFIG_KEY_TYPE_SHIFT;
-            bool privkey = (ATCA_KEY_CONFIG_PRIVATE_MASK & pSlot->cfg_zone.KeyConfig[i]) ? TRUE: FALSE;
+            bool privkey = (ATCA_KEY_CONFIG_PRIVATE_MASK & pSlot->cfg_zone.KeyConfig[i]) ? TRUE : FALSE;
 
             if (CKO_PRIVATE_KEY == pObject->class_id)
             {
                 if ((4 == keytype) && privkey)
                 {
                     pObject->slot = i;
-		    pObject->flags = PKCS11_OBJECT_FLAG_DESTROYABLE;
+                    pObject->flags = PKCS11_OBJECT_FLAG_DESTROYABLE;
                     pkcs11_config_init_private(pObject, pLabel->pValue, pLabel->ulValueLen);
                     objtype = "private";
                     break;
@@ -626,7 +471,7 @@ CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, p
                 if ((4 == keytype) && !privkey)
                 {
                     pObject->slot = i;
-		    pObject->flags = PKCS11_OBJECT_FLAG_DESTROYABLE;
+                    pObject->flags = PKCS11_OBJECT_FLAG_DESTROYABLE;
                     pkcs11_config_init_public(pObject, pLabel->pValue, pLabel->ulValueLen);
                     objtype = "public";
                     break;
@@ -637,12 +482,12 @@ CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, p
 
     if (i < 16)
     {
-        (void)snprintf(filename, sizeof(filename), "%s%d.%d.conf", pLibCtx->config_path, pSlot->slot_id ,i);
+        (void)snprintf(filename, sizeof(filename), "%s%d.%d.conf", pLibCtx->config_path, pSlot->slot_id, i);
         fp = fopen(filename, "wb");
         if (fp)
         {
             fprintf(fp, "type = %s\n", objtype);
-	    fprintf(fp, "label = %s\n", pObject->name);
+            fprintf(fp, "label = %s\n", pObject->name);
             fclose(fp);
         }
     }
@@ -661,7 +506,7 @@ CK_RV pkcs11_config_remove_object(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_pt
 }
 
 /* Load configuration from the filesystem */
-static CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
+CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
 {
     FILE* fp;
     char* buffer;
@@ -770,34 +615,34 @@ static CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
 /* Function to load/specify device configurations depending on platform */
 CK_RV pkcs11_config_load(pkcs11_slot_ctx_ptr slot_ctx)
 {
-	pkcs11_object_ptr pObject;
-	CK_RV rv = CKR_OK;
+    pkcs11_object_ptr pObject;
+    CK_RV rv = CKR_OK;
 
 #if PKCS11_MONOTONIC_ENABLE
-	if(CKR_OK == rv)
-	{
-		rv = pkcs11_object_alloc(&pObject);
-		if (pObject)
-		{
-			/* Hardware Feature */
-			pObject->slot = 0;
-			pObject->name = "counter";
-			pObject->class_id = CKO_HW_FEATURE;
-			pObject->class_type = CKH_MONOTONIC_COUNTER;
-			pObject->attributes = pkcs11_object_monotonic_attributes;
-			pObject->count = pkcs11_object_monotonic_attributes_count;
-			pObject->size = 4;
-			pObject->config = &slot_ctx->cfg_zone;
-		}
-	}
+    if (CKR_OK == rv)
+    {
+        rv = pkcs11_object_alloc(&pObject);
+        if (pObject)
+        {
+            /* Hardware Feature */
+            pObject->slot = 0;
+            pObject->name = "counter";
+            pObject->class_id = CKO_HW_FEATURE;
+            pObject->class_type = CKH_MONOTONIC_COUNTER;
+            pObject->attributes = pkcs11_object_monotonic_attributes;
+            pObject->count = pkcs11_object_monotonic_attributes_count;
+            pObject->size = 4;
+            pObject->config = &slot_ctx->cfg_zone;
+        }
+    }
 #endif
 
-	if (CKR_OK == rv)
-	{
-		rv = pkcs11_config_load_objects(slot_ctx);
-	}
+    if (CKR_OK == rv)
+    {
+        rv = pkcs11_config_load_objects(slot_ctx);
+    }
 
-	return rv;
+    return rv;
 }
 
 
