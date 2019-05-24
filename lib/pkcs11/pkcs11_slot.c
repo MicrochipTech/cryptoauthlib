@@ -76,6 +76,13 @@ pkcs11_slot_ctx_ptr pkcs11_slot_get_context(pkcs11_lib_ctx_ptr lib_ctx, CK_SLOT_
 CK_VOID_PTR pkcs11_slot_initslots(CK_ULONG pulCount)
 {
 #if PKCS11_USE_STATIC_MEMORY
+    int i;
+
+    for (i = 0; i < PKCS11_MAX_SLOTS_ALLOWED; i++)
+    {
+        memset(&pkcs11_slot_cache[i], 0, sizeof(pkcs11_slot_ctx));
+    }
+
     return &pkcs11_slot_cache;
 #endif
 }
@@ -147,7 +154,7 @@ CK_RV pkcs11_slot_init(CK_SLOT_ID slotID)
 {
     pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
     pkcs11_slot_ctx_ptr slot_ctx;
-    ATCA_STATUS status;
+    ATCA_STATUS status = CKR_OK;
     int retries;
 
     if (!lib_ctx)

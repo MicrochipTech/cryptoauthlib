@@ -299,24 +299,6 @@ int atcacert_cert_build_start(atcacert_build_state_t* build_state,
     *build_state->cert_size = build_state->cert_def->cert_template_size;
     memcpy(build_state->cert, build_state->cert_def->cert_template, build_state->cert_def->cert_template_size);
 
-    if (build_state->cert_def->type == CERTTYPE_X509)
-    {
-        // Set a fake signature that should result in the largest X.509 cert. This will ensure
-        // the cert buffer is large enough early in the cert rebuilding process.
-        uint8_t large_sig[64];
-        memset(large_sig, 0xFF, sizeof(large_sig));
-        ret = atcacert_set_signature(
-            build_state->cert_def,
-            build_state->cert,
-            build_state->cert_size,
-            build_state->max_cert_size,
-            large_sig);
-        if (ret != ATCACERT_E_SUCCESS)
-        {
-            return ret;
-        }
-    }
-
     if (ca_public_key != NULL)
     {
         // Set the authority key ID
@@ -430,9 +412,6 @@ int atcacert_cert_build_process(atcacert_build_state_t*      build_state,
     for (i = 0; i < build_state->cert_def->cert_elements_count; i++)
     {
         size_t j;
-
-
-
         data = atcacert_is_device_loc_match(&build_state->cert_def->cert_elements[i].device_loc, device_loc, device_data);
         if (data != NULL)
         {
@@ -1784,3 +1763,4 @@ int atcacert_max_cert_size(const atcacert_def_t* cert_def,
 
     return ATCACERT_E_SUCCESS;
 }
+

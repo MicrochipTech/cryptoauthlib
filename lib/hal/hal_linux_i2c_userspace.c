@@ -111,11 +111,7 @@ ATCA_STATUS hal_i2c_init(void* hal, ATCAIfaceCfg* cfg)
             i2c_hal_data[bus] = malloc(sizeof(ATCAI2CMaster_t) );
             i2c_hal_data[bus]->ref_ct = 1;  // buses are shared, this is the first instance
 
-            switch (bus)
-            {
-            case 0: strcpy(i2c_hal_data[bus]->i2c_file, "/dev/i2c-0"); break;
-            case 1: strcpy(i2c_hal_data[bus]->i2c_file, "/dev/i2c-1"); break;
-            }
+            snprintf(i2c_hal_data[bus]->i2c_file, sizeof(i2c_hal_data[bus]->i2c_file)-1, "/dev/i2c-%d", bus);
 
             // store this for use during the release phase
             i2c_hal_data[bus]->bus_index = bus;

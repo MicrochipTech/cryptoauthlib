@@ -158,7 +158,7 @@ static pkcs11_attrib_model_ptr pkcs11_find_attrib_match(pkcs11_object_ptr pObjec
         /* Search criteria has a value to we must match it */
         if (pTemplate->pValue && pAttribute->func)
         {
-            CK_UTF8CHAR buf[16];
+            CK_UTF8CHAR buf[PKCS11_MAX_LABEL_SIZE];
             CK_ATTRIBUTE temp = { 0, buf, sizeof(buf) };
 
             /* Get the attribute */

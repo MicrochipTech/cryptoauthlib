@@ -257,13 +257,8 @@ CK_RV C_SetPIN
     CK_ULONG          ulNewLen
 )
 {
-    ((void)hSession);
-    ((void)pOldPin);
-    ((void)ulOldLen);
-    ((void)pNewPin);
-    ((void)ulNewLen);
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(CKR_FUNCTION_NOT_SUPPORTED);
+    PKCS11_DEBUG_RETURN(pkcs11_token_set_pin(hSession, pOldPin, ulOldLen, pNewPin, ulNewLen));
 }
 
 /**

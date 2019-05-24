@@ -29,6 +29,7 @@
 #ifndef ATCA_HAL_H_
 #define ATCA_HAL_H_
 
+#include "atca_config.h"
 #include "atca_status.h"
 #include "atca_iface.h"
 #include "atca_start_config.h"

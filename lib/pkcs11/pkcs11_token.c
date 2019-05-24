@@ -48,29 +48,11 @@
    @{ */
 
 #if PKCS11_508_SUPPORT
-/** Standard Configuration Structure for ATECC508A devices */
-static const uint8_t atecc508_config[] = {
-    0xC0, 0x00, 0x55, 0x00, 0x8F, 0x20, 0xC4, 0x44, 0x87, 0x20, 0x87, 0x20, 0x8F, 0x0F, 0xC4, 0x36,
-    0x9F, 0x0F, 0x82, 0x20, 0x0F, 0x0F, 0xC4, 0x44, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F,
-    0x0F, 0x0F, 0x0F, 0x0F, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF,
-    0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-    0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x33, 0x00, 0x1C, 0x00, 0x13, 0x00, 0x13, 0x00, 0x7C, 0x00, 0x1C, 0x00, 0x3C, 0x00, 0x33, 0x00,
-    0x3C, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x30, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x30, 0x00
-};
+extern const uint8_t atecc508_config[];
 #endif
 
 #if PKCS11_608_SUPPORT
-/** Standard Configuration Structure for ATECC608A devices */
-static const uint8_t atecc608_config[] = {
-    0xC0, 0x00, 0x00, 0x01, 0x8F, 0x20, 0xC4, 0x44, 0x87, 0x20, 0x87, 0x20, 0x8F, 0x0F, 0xC4, 0x36,
-    0x9F, 0x0F, 0x82, 0x20, 0x0F, 0x0F, 0xC4, 0x44, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F,
-    0x0F, 0x0F, 0x0F, 0x0F, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x33, 0x00, 0x1C, 0x00, 0x13, 0x00, 0x13, 0x00, 0x7C, 0x00, 0x1C, 0x00, 0x3C, 0x00, 0x33, 0x00,
-    0x3C, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x30, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x30, 0x00,
-};
+extern const uint8_t atecc608_config[];
 #endif
 
 /** Get the device model number from the info word */
@@ -103,8 +85,10 @@ static char * pkcs11_token_device(uint8_t info[4])
 CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen, CK_UTF8CHAR_PTR pLabel)
 {
     CK_RV rv;
-    uint8_t buf[ATCA_ECC_CONFIG_SIZE];
+    uint8_t buf[32];
+    uint8_t * pConfig;
     bool lock = false;
+    ATCADeviceType devtype = ATCA_DEV_UNKNOWN;
     pkcs11_lib_ctx_ptr pLibCtx;
     pkcs11_slot_ctx_ptr pSlotCtx;
 
@@ -127,55 +111,53 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
     if (CKR_OK == rv)
     {
         /* Check the config zone lock status */
-        rv = atcab_is_locked(ATCA_ZONE_CONFIG, &lock);
-        printf("atcab_is_locked(config): %x\r\n", (unsigned int)rv);
+        rv = atcab_is_locked(LOCK_ZONE_CONFIG, &lock);
     }
 
     if (ATCA_SUCCESS == rv)
     {
         /* Get the device type */
         rv = atcab_info(buf);
-        printf("atcab_info: %x\r\n", (unsigned int)rv);
+    }
+
+    switch (buf[2])
+    {
+#if PKCS11_508_SUPPORT
+    case 0x50:
+        devtype = ATECC508A;
+        pConfig = atecc508_config;
+        break;
+#endif
+#if PKCS11_608_SUPPORT
+    case 0x60:
+        devtype = ATECC608A;
+        pConfig = atecc608_config;
+        break;
+#endif
+    default:
+        rv = CKR_TOKEN_NOT_RECOGNIZED;
+        break;
     }
 
     /* Program the configuration zone */
     if (!lock)
     {
-        switch (buf[2])
-        {
-#if PKCS11_508_SUPPORT
-        case 0x50:
-            memcpy(&buf[16], atecc508_config, sizeof(atecc508_config));
-            break;
-#endif
-#if PKCS11_608_SUPPORT
-        case 0x60:
-            memcpy(&buf[16], atecc608_config, sizeof(atecc608_config));
-            break;
-#endif
-        default:
-            printf("Device is not recognized: 0x%02x\r\n", buf[2]);
-            rv = CKR_TOKEN_NOT_RECOGNIZED;
-            break;
-        }
-
 #ifdef ATCA_I2C_ECC_ADDRESS
 #if (ATCA_I2C_ECC_ADDRESS == 0) || (ATCA_I2C_ECC_ADDRESS & 0x01) || (ATCA_I2C_ECC_ADDRESS > 0xFE)
 #error "Sanity Check Failure: ATCA_I2C_ECC_ADDRESS is invalid for the device"
 #endif
-        buf[16] = ATCA_I2C_ECC_ADDRESS;
+
+        buf[0] = ATCA_I2C_ECC_ADDRESS;
 #endif
 
         if (ATCA_SUCCESS == rv)
         {
-            rv = atcab_write_config_zone(buf);
-            printf("atcab_write_config_zone: %x\r\n", (unsigned int)rv);
+            rv = atcab_write_bytes_zone(ATCA_ZONE_CONFIG, 0, 16, pConfig, ATCA_ECC_CONFIG_SIZE - 16);
         }
 
         if (ATCA_SUCCESS == rv)
         {
             rv = atcab_lock_config_zone();
-            printf("atcab_lock_config_zone: %x\r\n", (unsigned int)rv);
         }
     }
 
@@ -183,46 +165,56 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
     {
         /* Check data zone lock */
         rv = atcab_is_locked(LOCK_ZONE_DATA, &lock);
-        printf("atcab_is_locked(data): %x\r\n", (unsigned int)rv);
     }
 
-    /* Lock the data zone */
+
     if (!lock)
     {
+        size_t buflen = sizeof(buf);
+
+        /* Generate New Keys */
+        for (int i = 0; (i < 16) && (ATCA_SUCCESS == rv); i++)
+        {
+            if (ATCA_KEY_CONFIG_PRIVATE_MASK & ((atecc608a_config_t*)pConfig)->KeyConfig[i])
+            {
+                rv = atcab_genkey(i, NULL);
+            }
+        }
+
+        /* Covert the pin to a key  */
+        if (CKR_OK == rv)
+        {
+            rv = atcab_hex2bin(ulPinLen, strlen(ulPinLen), buf, &buflen);
+        }
+
+        /* Write the default pin */
+        if (CKR_OK == rv)
+        {
+            rv = atcab_write_zone(ATCA_ZONE_DATA, PKCS11_PIN_SLOT, 0, 0, buf, buflen);
+        }
+
+        /* Lock the data zone */
         if (ATCA_SUCCESS == rv)
         {
             rv = atcab_lock_data_zone();
-            printf("atcab_lock_data_zone: %x\r\n", (unsigned int)rv);
         }
     }
 
-    /* Generate new keys */
-    if (ATCA_SUCCESS == rv)
-    {
-        rv = atcab_genkey_base(GENKEY_MODE_PRIVATE, 0, NULL, NULL);
-        printf("atcab_genkey(0): %x\r\n", (unsigned int)rv);
-    }
-
-    if (ATCA_SUCCESS == rv)
-    {
-        rv = atcab_genkey_base(GENKEY_MODE_PRIVATE, 2, NULL, NULL);
-        printf("atcab_genkey(2): %x\r\n", (unsigned int)rv);
-    }
-
-    if (ATCA_SUCCESS == rv)
-    {
-        rv = atcab_genkey_base(GENKEY_MODE_PRIVATE, 3, NULL, NULL);
-        printf("atcab_genkey(3): %x\r\n", (unsigned int)rv);
-    }
-
-    if (ATCA_SUCCESS == rv)
-    {
-        rv = atcab_genkey_base(GENKEY_MODE_PRIVATE, 7, NULL, NULL);
-        printf("atcab_genkey(7): %x\r\n", (unsigned int)rv);
-    }
+    /* If the I2C address changed it'll have to be put back to sleep before it'll
+       change */
+    (void)atcab_release();
 
     /* Release the lock on the library */
     (void)pkcs11_unlock_context(pLibCtx);
+
+    /* Trigger a reinitialization of the slot */
+    if (ATCA_SUCCESS == rv)
+    {
+        ATCAIfaceCfg * ifacecfg = (ATCAIfaceCfg*)pSlotCtx->interface_config;
+        ifacecfg->atcai2c.slave_address = ATCA_I2C_ECC_ADDRESS;
+        pSlotCtx->initialized = FALSE;
+        rv = pkcs11_slot_init(0);
+    }
 
     if (ATCA_SUCCESS != rv)
     {
@@ -320,28 +312,7 @@ CK_RV pkcs11_token_get_info(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)
     pInfo->ulFreePrivateMemory = CK_UNAVAILABLE_INFORMATION;
     pInfo->ulMaxPinLen = 0;
     pInfo->ulMinPinLen = 0;
-    pInfo->flags = CKF_USER_PIN_INITIALIZED;
-
-
-    /* Get the reference to the slot configuration structure that was used */
-    if_cfg_ptr = (ATCAIfaceCfg*)slot_ctx->interface_config;
-
-    if (if_cfg_ptr)
-    {
-        /* Set the flags based on the device capabilities */
-        if (ATSHA204A == if_cfg_ptr->devtype)
-        {
-            pInfo->flags = CKF_RNG;
-        }
-        else if (ATECC108A == if_cfg_ptr->devtype)
-        {
-            pInfo->flags = CKF_RNG;
-        }
-        else if (ATECC508A == if_cfg_ptr->devtype)
-        {
-            pInfo->flags = CKF_RNG;
-        }
-    }
+    pInfo->flags = CKF_RNG;
 
     pInfo->ulMaxSessionCount = 1;
     pInfo->ulMaxRwSessionCount = 1;
@@ -358,10 +329,10 @@ CK_RV pkcs11_token_get_info(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)
         /* Read the serial number */
         if (!atcab_read_serial_number(buf))
         {
-            int len = sizeof(pInfo->serialNumber);
+            size_t len = sizeof(pInfo->serialNumber);
 
             /* Bytes 2-7 are the unique serial number */
-            atcab_bin2hex_(&buf[2], 6, (char*)pInfo->serialNumber, &len, FALSE);
+            atcab_bin2hex_(&buf[2], 6, (char*)pInfo->serialNumber, &len, FALSE, FALSE, TRUE);
 
             /* Bytes 0, 1 & 8 is the customer code */
             snprintf((char*)pInfo->label, sizeof(pInfo->label), "%02X%02X%02X", buf[0], buf[1], buf[8]);
@@ -385,6 +356,16 @@ CK_RV pkcs11_token_get_info(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)
                 PKCS11_DEBUG("Token Locked\r\n");
             }
         }
+        /* Check if the device locks are set */
+        if (ATCA_SUCCESS == atcab_is_slot_locked(PKCS11_PIN_SLOT, &lock))
+        {
+            if (lock)
+            {
+                pInfo->flags |= CKF_USER_PIN_INITIALIZED;
+                PKCS11_DEBUG("Pin Slot Locked\r\n");
+            }
+        }
+
         (void)pkcs11_unlock_context(lib_ctx);
     }
 
@@ -457,5 +438,53 @@ CK_RV pkcs11_token_random(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pRandomData, C
     return CKR_OK;
 }
 
+CK_RV pkcs11_token_set_pin(CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pOldPin,
+                           CK_ULONG ulOldLen, CK_UTF8CHAR_PTR pNewPin, CK_ULONG ulNewLen)
+{
+    pkcs11_session_ctx_ptr pSession;
+    pkcs11_lib_ctx_ptr lib_ctx;
+    ATCA_STATUS status;
+    uint8_t buf[32];
+    size_t buflen = sizeof(buf);
+    CK_RV rv;
+
+    rv = pkcs11_init_check(&lib_ctx, FALSE);
+    if (rv)
+    {
+        return rv;
+    }
+
+    if (!pNewPin || !ulNewLen)
+    {
+        return CKR_ARGUMENTS_BAD;
+    }
+
+    rv = pkcs11_session_check(&pSession, hSession);
+    if (rv)
+    {
+        return rv;
+    }
+
+    /* Covert the pin to a key  */
+    if (CKR_OK == rv)
+    {
+        rv = atcab_hex2bin(pNewPin, ulNewLen, buf, &buflen);
+    }
+
+    if (CKR_OK == rv)
+    {
+        rv = atcab_write_zone(ATCA_ZONE_DATA, PKCS11_PIN_SLOT, 0, 0, buf, buflen);
+    }
+
+    /* Lock the pin once it has been written */
+#if PKCS11_LOCK_PIN_SLOT
+    if (CKR_OK == rv)
+    {
+        rv = atcab_lock_data_slot(PKCS11_PIN_SLOT);
+    }
+#endif
+
+    return rv;
+}
 
 /** @} */

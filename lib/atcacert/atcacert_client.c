@@ -363,4 +363,73 @@ int atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, size_t* csr
     return status;
 }
 
+int atcacert_read_subj_key_id(const atcacert_def_t* cert_def, uint8_t subj_key_id[20])
+{
+    int ret = ATCACERT_E_DECODING_ERROR;
+    uint8_t subj_public_key[72];
 
+    if (cert_def == NULL || subj_key_id == NULL)
+    {
+        return ATCACERT_E_BAD_PARAMS;
+    }
+
+    if (DEVZONE_DATA == cert_def->public_key_dev_loc.zone)
+    {
+        if (cert_def->public_key_dev_loc.is_genkey)
+        {
+            /* generate the key */
+            ret = atcab_get_pubkey(cert_def->public_key_dev_loc.slot, subj_public_key);
+        }
+        else
+        {
+            /* Load the public key from a slot */
+            ret = atcab_read_bytes_zone(cert_def->public_key_dev_loc.zone,
+                                        cert_def->public_key_dev_loc.slot,
+                                        cert_def->public_key_dev_loc.offset,
+                                        subj_public_key, cert_def->public_key_dev_loc.count);
+
+            /* IF the public key is stored in device public key format */
+            if ((ATCA_SUCCESS == ret) && (72 == cert_def->public_key_dev_loc.count))
+            {
+                atcacert_public_key_remove_padding(subj_public_key, subj_public_key);
+            }
+        }
+
+        if (ATCA_SUCCESS == ret)
+        {
+            /* Calculate the key_id */
+            ret = atcacert_get_key_id(subj_public_key, subj_key_id);
+        }
+    }
+    return ret;
+}
+
+int atcacert_read_cert_size(const atcacert_def_t* cert_def,
+                            size_t*               cert_size)
+{
+    uint8_t buffer[74];
+    size_t buflen = sizeof(buffer);
+    int ret = ATCACERT_E_SUCCESS;
+
+    if (!cert_def || !cert_size)
+    {
+        return ATCACERT_E_BAD_PARAMS;
+    }
+
+    if (ATCACERT_E_SUCCESS == ret)
+    {
+        ret = atcab_read_sig(cert_def->comp_cert_dev_loc.slot, &buffer[8]);
+    }
+
+    if (ATCACERT_E_SUCCESS == ret)
+    {
+        ret = atcacert_der_enc_ecdsa_sig_value(&buffer[8], buffer, &buflen);
+    }
+
+    if (ATCACERT_E_SUCCESS == ret)
+    {
+        *cert_size = cert_def->std_cert_elements[STDCERT_SIGNATURE].offset + buflen;
+    }
+
+    return ret;
+}

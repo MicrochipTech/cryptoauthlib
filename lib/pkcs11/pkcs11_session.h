@@ -78,6 +78,6 @@ CK_RV pkcs11_session_closeall(CK_SLOT_ID slotID);
 
 CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen);
 CK_RV pkcs11_session_logout(CK_SESSION_HANDLE hSession);
-
+CK_RV pkcs11_session_authorize(pkcs11_session_ctx_ptr pSession, CK_VOID_PTR pObject);
 
 #endif /* PKCS11_SESSION_H_ */

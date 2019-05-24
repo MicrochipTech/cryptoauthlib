@@ -35,7 +35,7 @@
  *
    @{ */
 
-#define MAX_I2C_BUSES   2   // Raspberry Pi has 2 TWI
+#define MAX_I2C_BUSES   4   // Raspberry Pi has 2 TWI
 
 // A structure to hold I2C information
 typedef struct atcaI2Cmaster

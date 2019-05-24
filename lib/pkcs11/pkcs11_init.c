@@ -36,6 +36,8 @@
 #include "pkcs11_init.h"
 #include "pkcs11_os.h"
 #include "pkcs11_slot.h"
+#include "pkcs11_object.h"
+#include "pkcs11_session.h"
 #include "cryptoauthlib.h"
 
 /**
@@ -267,6 +269,8 @@ CK_RV pkcs11_init(CK_C_INITIALIZE_ARGS_PTR pInitArgs)
 /* Close the library */
 CK_RV pkcs11_deinit(CK_VOID_PTR pReserved)
 {
+    int i;
+
     if (pReserved)
     {
         return CKR_ARGUMENTS_BAD;
@@ -279,6 +283,19 @@ CK_RV pkcs11_deinit(CK_VOID_PTR pReserved)
 
     /* Release the crypto device */
     atcab_release();
+
+    /* Close all the sessions that might be open */
+    for (i = 0; i < pkcs11_context.slot_cnt; i++)
+    {
+        pkcs11_slot_ctx_ptr slot_ctx_ptr = (pkcs11_slot_ctx_ptr)pkcs11_context.slots;
+        if (slot_ctx_ptr)
+        {
+            (void)pkcs11_session_closeall(slot_ctx_ptr->slot_id);
+        }
+    }
+
+    /* Clear the object cache */
+    (void)pkcs11_object_deinit(&pkcs11_context);
 
     /** \todo If other threads are waiting for something to happen this call should
        cause those calls to unblock and return CKR_CRYPTOKI_NOT_INITIALIZED - How

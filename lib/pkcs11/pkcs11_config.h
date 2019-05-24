@@ -49,7 +49,18 @@
 #endif
 
 #ifndef ATCA_LIB_VER_MINOR
-#define ATCA_LIB_VER_MINOR  1
+#define ATCA_LIB_VER_MINOR  2
+#endif
+
+/** If an Auth-key or IoProtection Secret is to be used this is the
+ * slot number of it */
+#ifndef PKCS11_PIN_SLOT
+#define PKCS11_PIN_SLOT                 6
+#endif
+
+/** Define to lock the PIN slot after writing */
+#ifndef PKCS11_LOCK_PIN_SLOT
+#define PKCS11_LOCK_PIN_SLOT            0
 #endif
 
 /** Enable PKCS#11 Debugging Messages */
@@ -86,7 +97,7 @@
 
 /** Maximum label size in characters */
 #ifndef PKCS11_MAX_LABEL_SIZE
-#define PKCS11_MAX_LABEL_SIZE           10
+#define PKCS11_MAX_LABEL_SIZE           30
 #endif
 
 /****************************************************************************/
@@ -110,7 +121,7 @@
 
 /** Device Support for ATECC508A */
 #ifndef PKCS11_508_SUPPORT
-#define PKCS11_508_SUPPORT              1
+#define PKCS11_508_SUPPORT              0
 #endif
 
 /** Device Support for ATECC608A */
@@ -124,14 +135,20 @@
 #endif
 
 
-#include "cryptoki.h"
+#include "pkcs11/cryptoki.h"
+#include <stddef.h>
 typedef struct _pkcs11_slot_ctx *pkcs11_slot_ctx_ptr;
 typedef struct _pkcs11_lib_ctx  *pkcs11_lib_ctx_ptr;
 typedef struct _pkcs11_object   *pkcs11_object_ptr;
 
+CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr pSlot);
 CK_RV pkcs11_config_load(pkcs11_slot_ctx_ptr slot_ctx);
 CK_RV pkcs11_config_cert(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pcLabel);
 CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pcLabel);
 CK_RV pkcs11_config_remove_object(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject);
+
+void pkcs11_config_init_private(pkcs11_object_ptr pObject, char * label, size_t len);
+void pkcs11_config_init_public(pkcs11_object_ptr pObject, char * label, size_t len);
+void pkcs11_config_init_cert(pkcs11_object_ptr pObject, char * label, size_t len);
 
 #endif /* PKCS11_CONFIG_H_ */

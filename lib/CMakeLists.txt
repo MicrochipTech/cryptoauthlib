@@ -9,6 +9,8 @@ option(ATCA_PRINTF "Enable Debug print statements in library")
 option(ATCA_PKCS11 "Build PKCS11 Library")
 option(ATCA_MBEDTLS "Integrate with mbedtls")
 option(ATCA_BUILD_SHARED_LIBS "Build CryptoAuthLib as shared library" ON)
+option(PKCS11_DEBUG_ENABLE "Enable PKCS11 Debug Output" OFF)
+
 set(BUILD_SHARED_LIBS ${ATCA_BUILD_SHARED_LIBS})
 
 # Collect Library Sources
@@ -83,6 +85,9 @@ add_library(cryptoauth ${CRYPTOAUTH_SRC} ${ATCACERT_DEF_SRC})
 # Add Remaining Sources depending on target library type
 if(ATCA_PKCS11)
 set_target_properties(cryptoauth PROPERTIES OUTPUT_NAME "ateccx08pkcs11")
+if(PKCS11_DEBUG_ENABLE)
+add_definitions(-DPKCS11_DEBUG_ENABLE)
+endif(PKCS11_DEBUG_ENABLE)
 endif(ATCA_PKCS11)
 
 if(ATCA_PRINTF)

@@ -168,11 +168,36 @@ CK_RV pkcs11_signature_sign_finish(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSign
  */
 CK_RV pkcs11_signature_verify_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey)
 {
-    ((void)hSession);
-    ((void)pMechanism);
-    ((void)hKey);
+    pkcs11_session_ctx_ptr pSession;
+    pkcs11_object_ptr pObject;
+    CK_RV rv;
 
-    return CKR_FUNCTION_NOT_SUPPORTED;
+    rv = pkcs11_init_check(NULL_PTR, FALSE);
+    if (rv)
+    {
+        return rv;
+    }
+
+    if (!pMechanism)
+    {
+        return CKR_ARGUMENTS_BAD;
+    }
+
+    rv = pkcs11_session_check(&pSession, hSession);
+    if (rv)
+    {
+        return rv;
+    }
+
+    rv = pkcs11_object_check(&pObject, hKey);
+    if (rv)
+    {
+        return rv;
+    }
+
+    pSession->active_object = hKey;
+
+    return CKR_OK;
 }
 
 /**
@@ -180,13 +205,80 @@ CK_RV pkcs11_signature_verify_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR 
  */
 CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pSignature, CK_ULONG ulSignatureLen)
 {
-    ((void)hSession);
-    ((void)pData);
-    ((void)ulDataLen);
-    ((void)pSignature);
-    ((void)ulSignatureLen);
+    pkcs11_lib_ctx_ptr pLibCtx = NULL;
+    pkcs11_session_ctx_ptr pSession;
+    pkcs11_object_ptr pKey;
+    atecc508a_config_t * pConfig;
+    ATCA_STATUS status;
+    bool verified = FALSE;
+    CK_RV rv;
 
-    return CKR_FUNCTION_NOT_SUPPORTED;
+    rv = pkcs11_init_check(&pLibCtx, FALSE);
+    if (rv)
+    {
+        return rv;
+    }
+
+    rv = pkcs11_session_check(&pSession, hSession);
+    if (rv)
+    {
+        return rv;
+    }
+
+    rv = pkcs11_object_check(&pKey, pSession->active_object);
+    if (rv)
+    {
+        return rv;
+    }
+
+    /* Check parameters */
+    if (!pData || ulDataLen != ATCA_SHA_DIGEST_SIZE || !pSignature || ulSignatureLen != VERIFY_256_SIGNATURE_SIZE)
+    {
+        return CKR_ARGUMENTS_BAD;
+    }
+
+    pConfig = (atecc508a_config_t*)pKey->config;
+    if (!pConfig)
+    {
+        return CKR_GENERAL_ERROR;
+    }
+
+    if (CKR_OK != (rv = pkcs11_lock_context(pLibCtx)))
+    {
+        return rv;
+    }
+
+    if (ATCA_KEY_CONFIG_PRIVATE_MASK & pConfig->KeyConfig[pKey->slot])
+    {
+        /* Device can't verify against a private key so ask the device for
+           the public key first then perform an external verify */
+        uint8_t pub_key[ATCA_PUB_KEY_SIZE];
+
+        status = atcab_get_pubkey(pKey->slot, pub_key);
+        if (ATCA_SUCCESS == status)
+        {
+            status = atcab_verify_extern(pData, pSignature, pub_key, &verified);
+        }
+    }
+    else
+    {
+        /* Assume Public Key has been stored properly and verify against
+           whatever is stored */
+        status = atcab_verify_stored(pData, pSignature, pKey->slot, &verified);
+    }
+
+    (void)pkcs11_unlock_context(pLibCtx);
+
+    if (ATCA_SUCCESS == status)
+    {
+        rv = verified ? CKR_OK : CKR_SIGNATURE_INVALID;
+    }
+    else
+    {
+        rv = CKR_DEVICE_ERROR;
+    }
+
+    return rv;
 }
 
 /**

@@ -70,16 +70,16 @@ static CK_OBJECT_HANDLE pkcs11_object_alloc_handle(void)
  */
 const pkcs11_attrib_model pkcs11_object_monotonic_attributes[] = {
     /** Object Class - CK_OBJECT_CLASS */
-    { CKA_CLASS,           pkcs11_object_get_class                        },
+    { CKA_CLASS,           pkcs11_object_get_class                                            },
     /** Hardware Feature Type - CK_HW_FEATURE_TYPE */
-    { CKA_HW_FEATURE_TYPE, pkcs11_object_get_type                         },
+    { CKA_HW_FEATURE_TYPE, pkcs11_object_get_type                                             },
     /** Counter will reset to a previously returned value if the token is
         initialized using C_InitToken. */
-    { CKA_RESET_ON_INIT,   pkcs11_attrib_false                            },
+    { CKA_RESET_ON_INIT,   pkcs11_attrib_false                                                },
     /** Counter has been reset at least once at some point in time. */
-    { CKA_HAS_RESET,       pkcs11_attrib_false                            },
+    { CKA_HAS_RESET,       pkcs11_attrib_false                                                },
     /** Current value of the monotonic counter. Big endian order. */
-    { CKA_VALUE,           NULL_PTR                                       },
+    { CKA_VALUE,           NULL_PTR                                                           },
 };
 
 const CK_ULONG pkcs11_object_monotonic_attributes_count = PKCS11_UTIL_ARRAY_SIZE(pkcs11_object_monotonic_attributes);
@@ -457,14 +457,14 @@ CK_RV pkcs11_object_create
             pObject->class_id = CKO_PUBLIC_KEY;
             if (CKR_OK == (rv = pkcs11_config_key(pLibCtx, pSession->slot, pObject, pLabel)))
             {
-                rv = pkcs11_key_write(pObject, pData);
+                rv = pkcs11_key_write(pSession, pObject, pData);
             }
             break;
         case CKO_PRIVATE_KEY:
             pObject->class_id = CKO_PRIVATE_KEY;
             if (CKR_OK == (rv = pkcs11_config_key(pLibCtx, pSession->slot, pObject, pLabel)))
             {
-                rv = pkcs11_key_write(pObject, pData);
+                rv = pkcs11_key_write(pSession, pObject, pData);
             }
             break;
         default:
