@@ -77,14 +77,10 @@ CK_RV pkcs11_cert_get_encoded(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
                     return CKR_DEVICE_ERROR;
                 }
 
-#if UINTPTR_MAX == UINT64_MAX
-                /* 64 Bit platforms require us to be more careful about data types */
                 size_t temp = pAttribute->ulValueLen;
                 status = atcacert_read_cert(obj_ptr->data, cert_cfg->ca_cert_def ? ca_key : NULL, pAttribute->pValue, &temp);
                 pAttribute->ulValueLen = (uint32_t)temp;
-#else
-                status = atcacert_read_cert(obj_ptr->data, cert_cfg->ca_cert_def ? ca_key : NULL, pAttribute->pValue, &pAttribute->ulValueLen);
-#endif
+
                 if (ATCACERT_E_DECODING_ERROR == status)
                 {
                     return CKR_DATA_INVALID;

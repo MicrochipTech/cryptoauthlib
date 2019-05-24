@@ -84,6 +84,7 @@ static char * pkcs11_token_device(uint8_t info[4])
 
 CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen, CK_UTF8CHAR_PTR pLabel)
 {
+#if PKCS11_TOKEN_INIT_SUPPORT
     CK_RV rv;
     uint8_t buf[32];
     uint8_t * pConfig;
@@ -125,13 +126,13 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
 #if PKCS11_508_SUPPORT
     case 0x50:
         devtype = ATECC508A;
-        pConfig = atecc508_config;
+        pConfig = (uint8_t*)atecc508_config;
         break;
 #endif
 #if PKCS11_608_SUPPORT
     case 0x60:
         devtype = ATECC608A;
-        pConfig = atecc608_config;
+        pConfig = (uint8_t*)atecc608_config;
         break;
 #endif
     default:
@@ -184,7 +185,7 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
         /* Covert the pin to a key  */
         if (CKR_OK == rv)
         {
-            rv = atcab_hex2bin(ulPinLen, strlen(ulPinLen), buf, &buflen);
+            rv = atcab_hex2bin(pPin, ulPinLen, buf, &buflen);
         }
 
         /* Write the default pin */
@@ -224,6 +225,9 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
     {
         return CKR_OK;
     }
+#else
+    return CKR_FUNCTION_NOT_SUPPORTED;
+#endif
 }
 
 CK_RV pkcs11_token_get_access_type(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)

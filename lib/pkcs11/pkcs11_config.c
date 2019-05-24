@@ -506,7 +506,7 @@ CK_RV pkcs11_config_remove_object(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_pt
 }
 
 /* Load configuration from the filesystem */
-static CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
+CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
 {
     FILE* fp;
     char* buffer;

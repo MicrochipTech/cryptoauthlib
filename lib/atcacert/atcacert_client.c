@@ -30,6 +30,7 @@
 
 #include <stdlib.h>
 #include "atcacert_client.h"
+#include "atcacert_der.h"
 #include "atcacert_pem.h"
 #include "cryptoauthlib.h"
 #include "basic/atca_basic.h"

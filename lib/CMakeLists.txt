@@ -3,8 +3,8 @@ project(cryptoauth)
 
 # Various Options for Build
 option(ATCA_HAL_KIT_HID "Include the HID HAL Driver")
-option(ATCA_HAL_I2C "Include the I2C Hal Driver - Linux & MCU only")
-option(ATCA_HAL_CUSTOM "Include support for Custom/Plug-in Hal Driver")
+option(ATCA_HAL_I2C "Include the I2C Hal Driver - Linux & MCU only" ON)
+option(ATCA_HAL_CUSTOM "Include support for Custom/Plug-in Hal Driver" ON)
 option(ATCA_PRINTF "Enable Debug print statements in library")
 option(ATCA_PKCS11 "Build PKCS11 Library")
 option(ATCA_MBEDTLS "Integrate with mbedtls")
@@ -78,17 +78,12 @@ endif()
 if(ATCA_PKCS11)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${PKCS11_SRC})
 add_definitions(-DATCA_LIBRARY_CONF="${DEFAULT_CONF_PATH}/${DEFAULT_CONF_FILE_NAME}")
-endif()
-
-add_library(cryptoauth ${CRYPTOAUTH_SRC} ${ATCACERT_DEF_SRC})
-
-# Add Remaining Sources depending on target library type
-if(ATCA_PKCS11)
-set_target_properties(cryptoauth PROPERTIES OUTPUT_NAME "ateccx08pkcs11")
 if(PKCS11_DEBUG_ENABLE)
 add_definitions(-DPKCS11_DEBUG_ENABLE)
 endif(PKCS11_DEBUG_ENABLE)
-endif(ATCA_PKCS11)
+endif()
+
+add_library(cryptoauth ${CRYPTOAUTH_SRC} ${ATCACERT_DEF_SRC})
 
 if(ATCA_PRINTF)
 add_definitions(-DATCAPRINTF)
