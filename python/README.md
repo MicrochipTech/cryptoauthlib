@@ -37,7 +37,7 @@ Microchip cryptoauthlib product page:
 
 ## Supported hardware
 - [AT88CK101](http://www.microchip.com/DevelopmentTools/ProductDetails/AT88CK101SK-MAH-XPRO)
-- [CryptoAuth-XSTK]()
+- [CryptoAuthentication SOIC XPRO Starter Kit (DM320109)](https://www.microchip.com/developmenttools/ProductDetails/DM320109)
 
 ## Supported devices
 The family of devices supported currently are:

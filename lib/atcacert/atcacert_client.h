@@ -48,6 +48,16 @@ extern "C" {
  *
    @{ */
 
+/** \brief Read the data from a device location.
+ *
+ * \param[in]  device_loc  Device location to read data from.
+ * \param[out] data        Data read is returned here.
+ *
+ * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
+ */
+int atcacert_read_device_loc(const atcacert_device_loc_t* device_loc,
+                             uint8_t*                     data);
+
 /**
  * \brief Reads the certificate specified by the certificate definition from the
  *        ATECC508A device.

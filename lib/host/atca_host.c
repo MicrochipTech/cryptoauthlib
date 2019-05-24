@@ -1330,7 +1330,7 @@ ATCA_STATUS atcah_config_to_sign_internal(ATCADeviceType device_type, struct atc
     {
         value = &config[52 + param->temp_key->key_id * 2];
         param->use_flag = value[0];
-        param->update_count = value[0];
+        param->update_count = value[1];
     }
     else
     {
@@ -1409,7 +1409,7 @@ ATCA_STATUS atcah_sign_internal_msg(ATCADeviceType device_type, struct atca_sign
 
     // If the slot contains a public key corresponding to a supported curve, and if PubInfo indicates this key must be
     // validated before being used by Verify, and if the validity bits have a value of 0x05, then the PubKey Valid byte
-    // will be 0x01.In all other cases, it will be 0.
+    // will be 0x01. In all other cases, it will be 0.
     msg[53] = param->for_invalidate ? 0x01 : 0x00;
 
     msg[54] = 0x00;

@@ -118,7 +118,7 @@ TEST(atca_cmd_basic_test, counter_match)
     // Read the current counter 0 value
     status = atcab_counter_read(0, &counter0_value);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    printf("Starting counter 0: %u\r\n", counter0_value);
+    printf("Starting counter 0: %u\r\n", (unsigned int)counter0_value);
 
     // Increase the counter 0 value so that it is aligned to multiple of 32-counter_limit
     while ((uint8_t)(counter0_value % 32) < (32 - 1))
@@ -126,7 +126,7 @@ TEST(atca_cmd_basic_test, counter_match)
         status = atcab_counter_increment(0, &counter0_value);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     }
-    printf("Incrementing counter 0 to 32-byte boundary: %u\r\n", counter0_value);
+    printf("Incrementing counter 0 to 32-byte boundary: %u\r\n", (unsigned int)counter0_value);
 
     // Update the counter match value
     counter_match = counter0_value + 1; // Calculate the counter match value to be written in slot
@@ -134,7 +134,7 @@ TEST(atca_cmd_basic_test, counter_match)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     status = atcab_write_bytes_zone(ATCA_ZONE_DATA, 10, 0, counter_match_slot_data, sizeof(counter_match_slot_data));
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    printf("Setting counter match to: %u\r\n", counter_match);
+    printf("Setting counter match to: %u\r\n", (unsigned int)counter_match);
 
     // Generate random message
     status = atcab_random(msg);
@@ -151,7 +151,7 @@ TEST(atca_cmd_basic_test, counter_match)
     // Validate counter change
     status = atcab_counter_read(0, &counter0_value);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    printf("Counter 0 after successful sign: %u\r\n", counter0_value);
+    printf("Counter 0 after successful sign: %u\r\n", (unsigned int)counter0_value);
     TEST_ASSERT_EQUAL(counter_match, counter0_value); // Counter should now equal the counter match value
 
     // Verify signature
@@ -166,7 +166,7 @@ TEST(atca_cmd_basic_test, counter_match)
     // Validate counter doesn't change
     status = atcab_counter_read(0, &counter0_value);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    printf("Counter 0 after failed sign: %u\r\n", counter0_value);
+    printf("Counter 0 after failed sign: %u\r\n", (unsigned int)counter0_value);
     TEST_ASSERT_EQUAL(counter_match, counter0_value); // Counter should not increment after reaching counter match
 
     // Set counter match value to high limit so the slot can be used for other tests

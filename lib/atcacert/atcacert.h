@@ -60,6 +60,7 @@
 #define ATCACERT_E_BAD_CERT             10  //!< Certificate structure is bad in some way.
 #define ATCACERT_E_WRONG_CERT_DEF       11
 #define ATCACERT_E_VERIFY_FAILED        12  //!< Certificate or challenge/response verification failed.
+#define ATCACERT_E_INVALID_TRANSFORM    13  //!< Invalid transform passed to function.
 
 /** @} */
 #endif

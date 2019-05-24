@@ -37,6 +37,10 @@ TEST_GROUP_RUNNER(atcacert_client)
     // Load certificate data onto the device
     RUN_TEST_CASE(atcacert_client, init);
 
+    RUN_TEST_CASE(atcacert_client, atcacert_read_device_loc_gen_key);
+    RUN_TEST_CASE(atcacert_client, atcacert_read_device_loc_gen_key_partial);
+    RUN_TEST_CASE(atcacert_client, atcacert_read_device_loc_data_partial);
+
     RUN_TEST_CASE(atcacert_client, atcacert_read_cert_signer);
     RUN_TEST_CASE(atcacert_client, atcacert_read_cert_device);
     RUN_TEST_CASE(atcacert_client, atcacert_read_cert_small_buf);

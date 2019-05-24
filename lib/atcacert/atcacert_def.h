@@ -43,6 +43,10 @@
 #include <stdint.h>
 #include "atcacert.h"
 #include "atcacert_date.h"
+#include "basic/atca_helpers.h"
+
+#define ATCA_MAX_TRANSFORMS 2
+
 
 /** \defgroup atcacert_ Certificate manipulation methods (atcacert_)
  *
@@ -88,6 +92,22 @@ typedef enum atcacert_device_zone_e
     DEVZONE_DATA   = 0x02,  //!< Data zone (slots).
     DEVZONE_NONE   = 0x07   //!< Special value used to indicate there is no device location.
 } atcacert_device_zone_t;
+
+/** \brief How to transform the data from the device to the certificate.
+ */
+typedef enum atcacert_transform_e
+{
+    TF_NONE,              //!< No transform, data is used byte for byte
+    TF_REVERSE,           //!< Reverse the bytes (e.g. change endianness)
+    TF_BIN2HEX_UC,        //!< Convert raw binary into ASCII hex, uppercase
+    TF_BIN2HEX_LC,        //!< Convert raw binary into ASCII hex, lowercase
+    TF_HEX2BIN_UC,        //!< Convert ASCII hex, uppercase to binary
+    TF_HEX2BIN_LC,        //!< Convert ASCII hex, lowercase to binary
+    TF_BIN2HEX_SPACE_UC,  //!< Convert raw binary into ASCII hex, uppercase space between bytes
+    TF_BIN2HEX_SPACE_LC,  //!< Convert raw binary into ASCII hex, lowercase space between bytes
+    TF_HEX2BIN_SPACE_UC,  //!< Convert ASCII hex, uppercase with spaces between bytes to binary
+    TF_HEX2BIN_SPACE_LC,  //!< Convert ASCII hex, lowercase with spaces between bytes to binary
+} atcacert_transform_t;
 
 /**
  * Standard dynamic certificate elements.
@@ -135,9 +155,10 @@ typedef struct atcacert_cert_loc_s
  */
 typedef struct atcacert_cert_element_s
 {
-    char                  id[16];       //!< ID identifying this element.
-    atcacert_device_loc_t device_loc;   //!< Location in the device for the element.
-    atcacert_cert_loc_t   cert_loc;     //!< Location in the certificate template for the element.
+    char                  id[25];                          //!< ID identifying this element.
+    atcacert_device_loc_t device_loc;                      //!< Location in the device for the element.
+    atcacert_cert_loc_t   cert_loc;                        //!< Location in the certificate template for the element.
+    atcacert_transform_t  transforms[ATCA_MAX_TRANSFORMS]; //!< List of transforms from device to cert for this element.
 } atcacert_cert_element_t;
 
 /**
@@ -319,17 +340,6 @@ int atcacert_get_subj_public_key(const atcacert_def_t * cert_def,
                                  const uint8_t *        cert,
                                  size_t                 cert_size,
                                  uint8_t                subj_public_key[64]);
-
-/**
- * \brief Gets the subject key ID based on a certificate definition.
- *
- * \param[in]  cert_def     Certificate definition
- * \param[out] subj_key_id  Subject key ID is returned in this buffer. 20 bytes.
- *
- * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
- */
-int atcacert_def_get_subj_key_id(const atcacert_def_t * cert_def,
-                                 uint8_t                subj_key_id[20]);
 
 /**
  * \brief Gets the subject key ID from a certificate.
@@ -671,7 +681,7 @@ int atcacert_set_cert_element(const atcacert_def_t*      cert_def,
 /**
  * \brief Gets an element from a certificate.
  *
- * \param[in]    cert_def       Certificate definition for the certificate.
+ * \param[in]    cert_def   Certificate definition for the certificate.
  * \param[in]    cert_loc   Certificate location for this element.
  * \param[in]    cert       Certificate to get element from.
  * \param[in]    cert_size  Size of the certificate (cert) in bytes.
@@ -735,6 +745,11 @@ int atcacert_merge_device_loc(atcacert_device_loc_t*       device_locs,
                               const atcacert_device_loc_t* device_loc,
                               size_t                       block_size);
 
+/** \brief Determines if the two device locations overlap.
+ *  \param[in] device_loc1  First device location to check.
+ *  \param[in] device_loc2  Second device location o check.
+ *  \return 0 (false) if they don't overlap, non-zero if the do overlap.
+ */
 int atcacert_is_device_loc_overlap(const atcacert_device_loc_t* device_loc1,
                                    const atcacert_device_loc_t* device_loc2);
 
@@ -762,6 +777,36 @@ void atcacert_public_key_add_padding(const uint8_t raw_key[64], uint8_t padded_k
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 void atcacert_public_key_remove_padding(const uint8_t padded_key[72], uint8_t raw_key[64]);
+
+/**
+ * \brief Apply the specified transform to the specified data.
+ *
+ * \param[in]    transform         Transform to be performed.
+ * \param[in]    data              Input data to be transformed.
+ * \param[in]    data_size         Size of the input data in bytes.
+ * \param[out]   destination       Destination buffer to hold the transformed data.
+ * \param[inout] destination_size  As input, the size of the destination buffer.
+ *                                 As output the size of the transformed data.
+ *
+ * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
+ */
+int atcacert_transform_data(atcacert_transform_t transform,
+                            const uint8_t*       data,
+                            size_t               data_size,
+                            uint8_t*             destination,
+                            size_t*              destination_size);
+
+/** \brief Return the maximum possible certificate size in bytes for a given
+ *         cert def. Certificate can be variable size, so this gives an
+ *         appropriate buffer size when reading the certificates.
+ *
+ * \param[in]  cert_def       Certificate definition to find a max size for.
+ * \param[out] max_cert_size  Maximum certificate size will be returned here in bytes.
+ *
+ * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
+ */
+int atcacert_max_cert_size(const atcacert_def_t* cert_def,
+                           size_t*               max_cert_size);
 
 /** @} */
 #ifdef __cplusplus

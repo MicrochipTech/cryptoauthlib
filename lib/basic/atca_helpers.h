@@ -30,12 +30,9 @@
 
 #include "cryptoauthlib.h"
 
-/** \defgroup atcab_ Basic Crypto API methods (atcab_)
- *
- * \brief
- * These methods provide the most convenient, simple API to CryptoAuth chips
- *
-   @{ */
+/** \ingroup atcab_
+ * @{
+ */
 
 #ifdef __cplusplus
 extern "C" {
@@ -43,8 +40,9 @@ extern "C" {
 
 ATCA_STATUS atcab_printbin(uint8_t* binary, size_t bin_len, bool add_space);
 ATCA_STATUS atcab_bin2hex(const uint8_t* bin, size_t bin_size, char* hex, size_t* hex_size);
-ATCA_STATUS atcab_bin2hex_(const uint8_t* bin, size_t bin_size, char* hex, size_t* hex_size, bool is_pretty);
+ATCA_STATUS atcab_bin2hex_(const uint8_t* bin, size_t bin_size, char* hex, size_t* hex_size, bool is_pretty, bool is_space, bool is_upper);
 ATCA_STATUS atcab_hex2bin(const char* ascii_hex, size_t ascii_hex_len, uint8_t* binary, size_t* bin_len);
+ATCA_STATUS atcab_hex2bin_(const char* hex, size_t hex_size, uint8_t* bin, size_t* bin_size, bool is_space);
 ATCA_STATUS atcab_printbin_sp(uint8_t* binary, size_t bin_len);
 ATCA_STATUS atcab_printbin_label(const char* label, uint8_t* binary, size_t bin_len);
 
@@ -71,6 +69,10 @@ ATCA_STATUS atcab_base64decode(const char* encoded, size_t encoded_size, uint8_t
 
 ATCA_STATUS atcab_base64encode_(const uint8_t* data, size_t data_size, char* encoded, size_t* encoded_size, const uint8_t * rules);
 ATCA_STATUS atcab_base64encode(const uint8_t* data, size_t data_size, char* encoded, size_t* encoded_size);
+
+
+ATCA_STATUS atcab_reversal(const uint8_t* bin, size_t bin_size, uint8_t* dest, size_t* dest_size);
+
 
 #ifdef __cplusplus
 }

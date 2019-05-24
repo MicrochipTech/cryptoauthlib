@@ -27,6 +27,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <ctype.h>
 #include "cryptoauthlib.h"
 #include "atca_helpers.h"
 
@@ -53,7 +54,7 @@ uint8_t atcab_b64rules_urlsafe[4]   = { '-', '_', 0, 0 };
  */
 ATCA_STATUS atcab_bin2hex(const uint8_t* bin, size_t bin_size, char* hex, size_t* hex_size)
 {
-    return atcab_bin2hex_(bin, bin_size, hex, hex_size, true);
+    return atcab_bin2hex_(bin, bin_size, hex, hex_size, true, true, true);
 }
 
 static void uint8_to_hex(uint8_t num, char* hex_str)
@@ -79,6 +80,64 @@ static void uint8_to_hex(uint8_t num, char* hex_str)
     }
 }
 
+static void hex_to_lowercase(char *buffer, size_t length)
+{
+    if ((buffer != NULL) && (length > 0))
+    {
+        for (size_t index = 0; index < length; index++)
+        {
+            buffer[index] = tolower(buffer[index]);
+        }
+    }
+}
+
+
+static void hex_to_uppercase(char *buffer, size_t length)
+{
+    if ((buffer != NULL) && (length > 0))
+    {
+        for (size_t index = 0; index < length; index++)
+        {
+            buffer[index] = toupper(buffer[index]);
+        }
+    }
+}
+
+/** \brief To reverse the input data.
+ *  \param[in]    bin        Input data to reverse.
+ *  \param[in]    bin_size   Size of data to reverse.
+ *  \param[out]   dest       Buffer to store reversed binary data.
+ *  \param[in]    dest_size  The size of the dest buffer.
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcab_reversal(const uint8_t* bin, size_t bin_size, uint8_t* dest, size_t* dest_size)
+{
+    size_t last, i;
+
+    // Verify the inputs
+    if ((bin == NULL) || (dest == NULL))
+    {
+        return ATCA_BAD_PARAM;
+    }
+
+    if (*dest_size < bin_size)
+    {
+        return ATCA_SMALL_BUFFER;
+    }
+
+    last = bin_size - 1;
+
+    for (i = 0; i < bin_size; i++)
+    {
+        dest[i] = bin[last];
+        last--;
+    }
+    *dest_size = bin_size;
+    return ATCA_SUCCESS;
+}
+
+
 /** \brief Function that converts a binary buffer to a hex string suitable for
  *         easy reading.
  *  \param[in]    bin        Input data to convert.
@@ -86,11 +145,14 @@ static void uint8_to_hex(uint8_t num, char* hex_str)
  *  \param[out]   hex        Buffer that receives hex string.
  *  \param[inout] hex_size   As input, the size of the hex buffer.
  *                           As output, the size of the output hex.
- *  \param[in]    is_pretty  Indicates whether spaces and new lines should be
+ *  \param[in]    is_pretty  Indicates whether new lines should be
  *                           added for pretty printing.
+ *  \param[in]	  is_space   Convert the output hex with space between it.
+ *  \param[in]	  is_upper   Convert the output hex to upper case.
+
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atcab_bin2hex_(const uint8_t* bin, size_t bin_size, char* hex, size_t* hex_size, bool is_pretty)
+ATCA_STATUS atcab_bin2hex_(const uint8_t* bin, size_t bin_size, char* hex, size_t* hex_size, bool is_pretty, bool is_space, bool is_upper)
 {
     size_t i;
     size_t cur_hex_size = 0;
@@ -112,9 +174,9 @@ ATCA_STATUS atcab_bin2hex_(const uint8_t* bin, size_t bin_size, char* hex, size_
         {
             break;
         }
-        if (is_pretty && i != 0)
+        if (i != 0)
         {
-            if (i % 16 == 0)
+            if (is_pretty && (i % 16 == 0))
             {
                 if (cur_hex_size + 2 > max_hex_size)
                 {
@@ -125,14 +187,18 @@ ATCA_STATUS atcab_bin2hex_(const uint8_t* bin, size_t bin_size, char* hex, size_
             }
             else
             {
-                if (cur_hex_size + 1 > max_hex_size)
+                if (is_space)
                 {
-                    return ATCA_SMALL_BUFFER;
+                    if (cur_hex_size + 1 > max_hex_size)
+                    {
+                        return ATCA_SMALL_BUFFER;
+                    }
+                    hex[cur_hex_size] = ' ';
+                    cur_hex_size += 1;
                 }
-                hex[cur_hex_size] = ' ';
-                cur_hex_size += 1;
             }
         }
+
         if (cur_hex_size + 2 > max_hex_size)
         {
             return ATCA_SMALL_BUFFER;
@@ -140,6 +206,16 @@ ATCA_STATUS atcab_bin2hex_(const uint8_t* bin, size_t bin_size, char* hex, size_
         uint8_to_hex(bin[i], &hex[cur_hex_size]);
         cur_hex_size += 2;
     }
+
+    if (is_upper)
+    {
+        hex_to_uppercase(hex, cur_hex_size);
+    }
+    else
+    {
+        hex_to_lowercase(hex, cur_hex_size);
+    }
+
     *hex_size = cur_hex_size;
     if (cur_hex_size < max_hex_size)
     {
@@ -168,15 +244,8 @@ inline static uint8_t hex_digit_to_num(char c)
     return 16;
 }
 
-/** \brief Function that converts a hex string to binary buffer
- *  \param[in]    hex       Input buffer to convert
- *  \param[in]    hex_size  Length of buffer to convert
- *  \param[out]   bin       Buffer that receives binary
- *  \param[inout] bin_size  As input, the size of the bin buffer.
- *                          As output, the size of the bin data.
- *  \return ATCA_SUCCESS on success, otherwise an error code.
- */
-ATCA_STATUS atcab_hex2bin(const char* hex, size_t hex_size, uint8_t* bin, size_t* bin_size)
+
+ATCA_STATUS atcab_hex2bin_(const char* hex, size_t hex_size, uint8_t* bin, size_t* bin_size, bool is_space)
 {
     size_t hex_index;
     size_t bin_index = 0;
@@ -186,6 +255,14 @@ ATCA_STATUS atcab_hex2bin(const char* hex, size_t hex_size, uint8_t* bin, size_t
     {
         if (!isHexDigit(hex[hex_index]))
         {
+            if (((hex_index + 1) % 3 == 0) && is_space)
+            {
+                if (hex[hex_index] != ' ')
+                {
+                    return ATCA_BAD_PARAM;
+                }
+            }
+
             continue; // Skip any non-hex character
         }
         if (bin_index >= *bin_size)
@@ -214,6 +291,19 @@ ATCA_STATUS atcab_hex2bin(const char* hex, size_t hex_size, uint8_t* bin, size_t
     *bin_size = bin_index;
 
     return ATCA_SUCCESS;
+}
+
+/** \brief Function that converts a hex string to binary buffer
+ *  \param[in]    hex       Input buffer to convert
+ *  \param[in]    hex_size  Length of buffer to convert
+ *  \param[out]   bin       Buffer that receives binary
+ *  \param[inout] bin_size  As input, the size of the bin buffer.
+ *                          As output, the size of the bin data.
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcab_hex2bin(const char* hex, size_t hex_size, uint8_t* bin, size_t* bin_size)
+{
+    return atcab_hex2bin_(hex, hex_size, bin, bin_size, false);
 }
 
 /**

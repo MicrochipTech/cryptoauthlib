@@ -33,8 +33,6 @@
 #ifndef ATCA_BASIC_H_
 #define ATCA_BASIC_H_
 
-#define TBD   void
-
 /** \defgroup atcab_ Basic Crypto API methods (atcab_)
  *
  * \brief
@@ -46,8 +44,11 @@
 extern "C" {
 #endif
 
-#define BLOCK_NUMBER(a) (a / 32)
-#define WORD_OFFSET(a)  ((a % 32) / 4)
+#define BLOCK_NUMBER(a)             (a / 32)
+#define WORD_OFFSET(a)              ((a % 32) / 4)
+
+#define ATCA_AES_GCM_IV_STD_LENGTH      12
+
 
 extern ATCADevice _gDevice;
 
@@ -57,6 +58,7 @@ ATCA_STATUS atcab_init(ATCAIfaceCfg *cfg);
 ATCA_STATUS atcab_init_device(ATCADevice ca_device);
 ATCA_STATUS atcab_release(void);
 ATCADevice atcab_get_device(void);
+ATCADeviceType atcab_get_device_type(void);
 ATCA_STATUS _atcab_exit(void);
 ATCA_STATUS atcab_wakeup(void);
 ATCA_STATUS atcab_idle(void);
@@ -97,7 +99,7 @@ typedef struct atca_aes_ctr_ctx
 {
     uint16_t key_id;             //!< Key location. Can either be a slot number or ATCA_TEMPKEY_KEYID for TempKey.
     uint8_t  key_block;          //!< Index of the 16-byte block to use within the key location for the actual key.
-    uint8_t  iv[AES_DATA_SIZE];  //!< Initialization vector, comprises of nonce + count value. (16 bytes)
+    uint8_t  cb[AES_DATA_SIZE];  //!< Counter block, comprises of nonce + count value (16 bytes).
     uint8_t  counter_size;       //!< Size of counter in the initialization vector.
 }atca_aes_ctr_ctx_t;
 
@@ -106,6 +108,7 @@ ATCA_STATUS atcab_aes_ctr_init_rand(atca_aes_ctr_ctx_t* ctx, uint16_t key_id, ui
 ATCA_STATUS atcab_aes_ctr_block(atca_aes_ctr_ctx_t* ctx, const uint8_t* input, uint8_t* output);
 ATCA_STATUS atcab_aes_ctr_encrypt_block(atca_aes_ctr_ctx_t* ctx, const uint8_t* plaintext, uint8_t* ciphertext);
 ATCA_STATUS atcab_aes_ctr_decrypt_block(atca_aes_ctr_ctx_t* ctx, const uint8_t* ciphertext, uint8_t* plaintext);
+ATCA_STATUS atcab_aes_ctr_increment(atca_aes_ctr_ctx_t* ctx);
 
 // CheckMAC command functions
 ATCA_STATUS atcab_checkmac(uint8_t mode, uint16_t key_id, const uint8_t *challenge, const uint8_t *response, const uint8_t *other_data);

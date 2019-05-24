@@ -1,15 +1,18 @@
-from ctypes import c_uint8, create_string_buffer, memmove, byref, cast, c_void_p, c_uint32, POINTER
+from ctypes import c_uint8, create_string_buffer, memmove, byref, cast, c_void_p, c_uint32, POINTER, c_size_t, sizeof
 from cryptoauthlib import *
 
 c_ptr = type(byref(create_string_buffer(1)))
 
 class atcab_mock(object):
-
     def atcab_init(self):
         return Status.ATCA_SUCCESS
 
     def atcab_release(self):
         return Status.ATCA_SUCCESS
+
+    r_devtype = 3
+    def atcab_get_device_type(self):
+        return self.r_devtype
 
     #--------------------------------------------------------------------#
     # atcab_aes(self, mode, key_id, aes_in, aes_out)
@@ -280,6 +283,148 @@ class atcab_mock(object):
             raise TypeError
 
         memmove(cast(plaintext, c_void_p).value, cast(byref(self.r_aes_ctr_output), c_void_p).value, len(self.r_aes_ctr_output))
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcab_aes_gcm_init(ctx, key_id, key_block, iv, iv_size):
+
+    def atcab_aes_gcm_init(self, ctx, key_id, key_block, iv, iv_size):
+
+        if not isinstance(key_id, int):
+            raise TypeError
+
+        if not isinstance(key_block, int):
+            raise TypeError
+
+        if not isinstance(iv, bytes):
+            raise TypeError
+
+        if not isinstance(iv_size, int):
+            raise TypeError
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcab_aes_gcm_init_rand(ctx, key_id, key_block, rand_size, free_field, free_field_size, iv):
+    r_iv = create_string_buffer(16)
+    r_iv.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                              0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
+
+    def atcab_aes_gcm_init_rand(self, ctx, key_id, key_block, rand_size, free_field, free_field_size, iv):
+
+        if not isinstance(key_id, int):
+            raise TypeError
+
+        if not isinstance(key_block, int):
+            raise TypeError
+
+        if not isinstance(rand_size, int):
+            raise TypeError
+
+        if not isinstance(free_field, bytes):
+            raise TypeError
+
+        if not isinstance(free_field_size, int):
+            raise TypeError
+
+        if not isinstance(iv, c_ptr):
+            raise TypeError
+
+        memmove(cast(iv, c_void_p).value, cast(byref(self.r_iv), c_void_p).value, len(self.r_iv))
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcab_aes_gcm_aad_update(ctx, aad, aad_size):
+
+    def atcab_aes_gcm_aad_update(self, ctx, aad, aad_size):
+
+        if not isinstance(aad, bytes):
+            raise TypeError
+
+        if not isinstance(aad_size, int):
+            raise TypeError
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcab_aes_gcm_encrypt_update(ctx, plaintext, plaintext_size, ciphertext):
+    r_ciphertext = create_string_buffer(16)
+    r_ciphertext.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                              0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
+
+    def atcab_aes_gcm_encrypt_update(self, ctx, plaintext, plaintext_size, ciphertext):
+
+        if not isinstance(plaintext, bytes):
+            raise TypeError
+
+        if not isinstance(plaintext_size, int):
+            raise TypeError
+
+        if not isinstance(ciphertext, c_ptr):
+            raise TypeError
+
+        memmove(cast(ciphertext, c_void_p).value, cast(byref(self.r_ciphertext), c_void_p).value, len(self.r_ciphertext))
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcab_aes_gcm_encrypt_finish(ctx, tag, tag_size):
+    r_tag = create_string_buffer(16)
+    r_tag.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                              0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
+
+    def atcab_aes_gcm_encrypt_finish(self, ctx, tag, tag_size):
+
+        if not isinstance(tag_size, int):
+            raise TypeError
+
+        if not isinstance(tag, c_ptr):
+            raise TypeError
+
+        memmove(cast(tag, c_void_p).value, cast(byref(self.r_tag), c_void_p).value, tag_size)
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcab_aes_gcm_decrypt_update(ctx, ciphertext, ciphertext_size, plaintext):
+
+    def atcab_aes_gcm_decrypt_update(self, ctx, ciphertext, ciphertext_size, plaintext):
+
+        r_plaintext= create_string_buffer(16)
+        r_plaintext.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                              0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
+
+        if not isinstance(ciphertext_size, int):
+            raise TypeError
+
+        if not isinstance(ciphertext, bytes):
+            raise TypeError
+
+        if not isinstance(plaintext, c_ptr):
+            raise TypeError
+
+        memmove(cast(plaintext, c_void_p).value, cast(byref(self.r_plaintext), c_void_p).value, len(self.r_plaintext))
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcab_aes_gcm_decrypt_finish(ctx, tag, tag_size, is_verified):
+    r_is_verified = c_uint8()
+    r_is_verified.value = 1
+    def atcab_aes_gcm_decrypt_finish(self, ctx, tag, tag_size, is_verified):
+
+        if not isinstance(tag, bytes):
+            raise TypeError
+
+        if not isinstance(tag_size, int):
+            raise TypeError
+
+        if not isinstance(is_verified, c_ptr):
+            raise TypeError
+
+        memmove(cast(is_verified, c_void_p).value, cast(byref(self.r_is_verified), c_void_p).value, 1)
 
         return Status.ATCA_SUCCESS
 
@@ -1878,10 +2023,9 @@ class atcab_mock(object):
     #--------------------------------------------------------------------#
     # atcacert_read_cert(cert_def, ca_public_key, cert, cert_size):
 
-    r_cert_size = c_uint8()
-    r_cert_size.value = 64
+    r_cert_size = c_size_t(64)
 
-    r_cert = create_string_buffer(64)
+    r_cert = create_string_buffer(r_cert_size.value)
     r_cert.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
                                     0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
                                     0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
@@ -1902,7 +2046,7 @@ class atcab_mock(object):
             raise ValueError
 
         memmove(cast(cert, c_void_p).value, cast(byref(self.r_cert), c_void_p).value, len(self.r_cert))
-        memmove(cast(cert_size, c_void_p).value, cast(byref(self.r_cert_size), c_void_p).value, 1)
+        memmove(cert_size, byref(self.r_cert_size), sizeof(self.r_cert_size))
 
         return Status.ATCA_SUCCESS
 
@@ -1947,15 +2091,6 @@ class atcab_mock(object):
 
     #--------------------------------------------------------------------#
     # atcacert_create_csr_pem(self, csr_def, csr, csr_size):
-
-    r_csr_size = c_uint8()
-    r_csr_size.value = 64
-
-    r_csr = create_string_buffer(64)
-    r_csr.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
     def atcacert_create_csr_pem(self, csr_def, csr, csr_size):
 
@@ -2051,3 +2186,151 @@ class atcab_mock(object):
         timestamp.tm_sec = 12
 
         return Status.ATCA_SUCCESS
+
+
+    r_max_cert_size = c_size_t(123)
+    
+    def atcacert_max_cert_size(self, cert_def, max_cert_size):
+    
+        if not isinstance(cert_def, c_ptr):
+            raise TypeError
+            
+        if not isinstance(max_cert_size, c_ptr):
+            raise TypeError
+            
+        memmove(max_cert_size, byref(self.r_max_cert_size), sizeof(self.r_max_cert_size))
+
+        return Status.ATCA_SUCCESS
+
+
+    r_tng_type = c_int(1)
+
+    def tng_get_type(self, tng_type):
+
+        if not isinstance(tng_type, c_ptr):
+            raise TypeError
+
+        memmove(tng_type, byref(self.r_tng_type), sizeof(self.r_tng_type))
+
+        return Status.ATCA_SUCCESS
+
+
+    def tng_get_device_pubkey(self, public_key):
+
+        if not isinstance(public_key, c_ptr):
+            raise TypeError
+
+        memmove(public_key, byref(self.r_genkey_pubkey), sizeof(self.r_genkey_pubkey))
+
+        return Status.ATCA_SUCCESS
+
+
+    def tng_atcacert_max_device_cert_size(self, max_cert_size):
+
+        if not isinstance(max_cert_size, c_ptr):
+            raise TypeError
+
+        memmove(max_cert_size, byref(self.r_max_cert_size), sizeof(self.r_max_cert_size))
+
+        return CertStatus.ATCACERT_E_SUCCESS
+
+
+    def tng_atcacert_read_device_cert(self, cert, cert_size, signer_cert):
+
+        if not isinstance(cert, c_ptr):
+            raise TypeError
+
+        if not isinstance(cert_size, c_ptr):
+            raise TypeError
+
+        if signer_cert is not None and not isinstance(signer_cert, bytes):
+            raise TypeError
+
+        memmove(cert, byref(self.r_cert), sizeof(self.r_cert))
+        memmove(cert_size, byref(self.r_cert_size), sizeof(self.r_cert_size))
+
+        return CertStatus.ATCACERT_E_SUCCESS
+
+
+    def tng_atcacert_device_public_key(self, public_key, cert):
+
+        if not isinstance(public_key, c_ptr):
+            raise TypeError
+
+        if cert is not None and not isinstance(cert, bytes):
+            raise TypeError
+
+        memmove(public_key, byref(self.r_genkey_pubkey), sizeof(self.r_genkey_pubkey))
+
+        return CertStatus.ATCACERT_E_SUCCESS
+
+
+    def tng_atcacert_max_signer_cert_size(self, max_cert_size):
+
+        if not isinstance(max_cert_size, c_ptr):
+            raise TypeError
+
+        memmove(max_cert_size, byref(self.r_max_cert_size), sizeof(self.r_max_cert_size))
+
+        return CertStatus.ATCACERT_E_SUCCESS
+
+
+    def tng_atcacert_read_signer_cert(self, cert, cert_size):
+
+        if not isinstance(cert, c_ptr):
+            raise TypeError
+
+        if not isinstance(cert_size, c_ptr):
+            raise TypeError
+
+        memmove(cert, byref(self.r_cert), sizeof(self.r_cert))
+        memmove(cert_size, byref(self.r_cert_size), sizeof(self.r_cert_size))
+
+        return CertStatus.ATCACERT_E_SUCCESS
+
+
+    def tng_atcacert_signer_public_key(self, public_key, cert):
+
+        if not isinstance(public_key, c_ptr):
+            raise TypeError
+
+        if cert is not None and not isinstance(cert, bytes):
+            raise TypeError
+
+        memmove(public_key, byref(self.r_genkey_pubkey), sizeof(self.r_genkey_pubkey))
+
+        return CertStatus.ATCACERT_E_SUCCESS
+
+
+    def tng_atcacert_root_cert_size(self, cert_size):
+
+        if not isinstance(cert_size, c_ptr):
+            raise TypeError
+
+        memmove(cert_size, byref(self.r_cert_size), sizeof(self.r_cert_size))
+
+        return CertStatus.ATCACERT_E_SUCCESS
+
+
+    def tng_atcacert_root_cert(self, cert, cert_size):
+
+        if not isinstance(cert, c_ptr):
+            raise TypeError
+
+        if not isinstance(cert_size, c_ptr):
+            raise TypeError
+
+        memmove(cert, byref(self.r_cert), sizeof(self.r_cert))
+        memmove(cert_size, byref(self.r_cert_size), sizeof(self.r_cert_size))
+
+        return CertStatus.ATCACERT_E_SUCCESS
+
+
+    def tng_atcacert_root_public_key(self, public_key):
+
+        if not isinstance(public_key, c_ptr):
+            raise TypeError
+
+        memmove(public_key, byref(self.r_genkey_pubkey), sizeof(self.r_genkey_pubkey))
+
+        return CertStatus.ATCACERT_E_SUCCESS

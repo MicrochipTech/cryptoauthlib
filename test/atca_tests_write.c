@@ -584,6 +584,35 @@ TEST(atca_cmd_basic_test, write_config_zone)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
 
+TEST(atca_cmd_basic_test, atcab_write_pubkey)
+{
+    const uint16_t public_key_id = 11;
+    ATCA_STATUS status = ATCA_GEN_FAIL;
+    bool is_data_locked;
+    const uint8_t public_key_ref[64] = {
+        0x44, 0xCE, 0xAE, 0x5E, 0x80, 0x2E, 0xE7, 0x16, 0x9D, 0x77, 0xDB, 0x0A, 0x55, 0x5A, 0x38, 0xED,
+        0xB2, 0x88, 0xAC, 0x73, 0x61, 0x56, 0xCA, 0x5B, 0x20, 0x0B, 0x57, 0x94, 0x7A, 0x48, 0x63, 0x50,
+        0xE9, 0x72, 0xC4, 0x11, 0x3D, 0x71, 0x9A, 0xAF, 0x83, 0x72, 0x0E, 0xEF, 0x94, 0x3B, 0xDA, 0x69,
+        0xD8, 0x39, 0x20, 0xD5, 0x23, 0xB8, 0x1C, 0x96, 0x49, 0x7C, 0x26, 0x62, 0x00, 0x3B, 0x7C, 0x01
+    };
+    uint8_t public_key[sizeof(public_key_ref)];
+
+    test_assert_config_is_locked();
+
+    status = atcab_write_pubkey(public_key_id, public_key_ref);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    status = atcab_is_locked(LOCK_ZONE_DATA, &is_data_locked);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    if (is_data_locked)
+    {
+        status = atcab_read_pubkey(public_key_id, public_key);
+        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+        TEST_ASSERT_EQUAL_MEMORY(public_key_ref, public_key, sizeof(public_key_ref));
+    }
+}
+
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info write_basic_test_info[] =
 {
@@ -602,6 +631,7 @@ t_test_case_info write_basic_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_basic_test, write_enc_data_unlock),       DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, write_zone),                  DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, write_config_zone),           DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, atcab_write_pubkey),                                   DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
     { (fp_test_case)NULL,                     (uint8_t)0 },                 /* Array Termination element*/
 };
 

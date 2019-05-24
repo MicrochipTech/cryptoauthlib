@@ -30,6 +30,10 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define PEM_CERT_BEGIN "-----BEGIN CERTIFICATE-----"
 #define PEM_CERT_END   "-----END CERTIFICATE-----"
 #define PEM_CSR_BEGIN  "-----BEGIN CERTIFICATE REQUEST-----"
@@ -114,5 +118,9 @@ int atcacert_encode_pem_csr(const uint8_t* der_csr, size_t der_csr_size, char* p
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 int atcacert_decode_pem_csr(const char* pem_csr, size_t pem_csr_size, uint8_t* der_csr, size_t* der_csr_size);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

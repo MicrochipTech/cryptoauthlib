@@ -30,8 +30,8 @@
 #include "crypto/atca_crypto_sw_sha2.h"
 #include "atcacert_der.h"
 #include "atcacert_date.h"
-#include "cryptoauthlib.h"
 #include <string.h>
+#include "basic/atca_helpers.h"
 
 #define ATCACERT_MIN(x, y) ((x) < (y) ? (x) : (y))
 #define ATCACERT_MAX(x, y) ((x) >= (y) ? (x) : (y))
@@ -429,20 +429,71 @@ int atcacert_cert_build_process(atcacert_build_state_t*      build_state,
     }
     for (i = 0; i < build_state->cert_def->cert_elements_count; i++)
     {
+        size_t j;
+
+
+
         data = atcacert_is_device_loc_match(&build_state->cert_def->cert_elements[i].device_loc, device_loc, device_data);
         if (data != NULL)
         {
-            if (build_state->cert_def->cert_elements[i].device_loc.count != build_state->cert_def->cert_elements[i].cert_loc.count)
+            uint8_t tf_buffer1[256];
+            uint8_t tf_buffer2[256];
+            uint8_t *dest_pt;
+
+            size_t data_size = build_state->cert_def->cert_elements[i].cert_loc.count;
+            dest_pt = tf_buffer1;
+
+            for (j = 0; j < sizeof(build_state->cert_def->cert_elements[i].transforms) / sizeof(atcacert_transform_t); j++)
             {
-                return ATCACERT_E_BAD_CERT;
+                size_t destination_size;
+                atcacert_transform_t transform;
+
+                destination_size =  sizeof(tf_buffer1);
+                transform = build_state->cert_def->cert_elements[i].transforms[j];
+
+                if (transform == TF_NONE)
+                {
+                    break;
+                }
+
+                if (j == 0)
+                {
+                    data_size = build_state->cert_def->cert_elements[i].device_loc.count;
+                }
+
+                if ((ret = atcacert_transform_data(transform, data, data_size, dest_pt, &destination_size)) != ATCACERT_E_SUCCESS)
+                {
+                    return ret;
+                }
+
+                data_size = destination_size;
+
+                /* The below logic switches between the buffer tf_buffer1 & tf_buffer2 for the transform input & output.
+                   The first transform stores output data to tf_buffer1 and the second transform takes the tf_buffer1 as input &
+                   stores the output in tf_buffer2.
+                 */
+
+                if ((j % 2) == 0)
+                {
+                    data = dest_pt;
+                    dest_pt = tf_buffer2;
+                }
+                else
+                {
+                    data = tf_buffer2;
+                    dest_pt = tf_buffer1;
+
+                }
+
             }
+
             ret = atcacert_set_cert_element(
                 build_state->cert_def,
                 &build_state->cert_def->cert_elements[i].cert_loc,
                 build_state->cert,
                 *build_state->cert_size,
                 data,
-                build_state->cert_def->cert_elements[i].cert_loc.count);
+                data_size);
             if (ret != ATCACERT_E_SUCCESS)
             {
                 return ret;
@@ -657,47 +708,6 @@ int atcacert_get_subj_public_key(const atcacert_def_t* cert_def,
     return atcacert_get_cert_element(cert_def, &cert_def->std_cert_elements[STDCERT_PUBLIC_KEY], cert, cert_size, subj_public_key, 64);
 }
 
-int atcacert_def_get_subj_key_id(const atcacert_def_t* cert_def,
-                                 uint8_t               subj_key_id[20])
-{
-    int     ret = ATCACERT_E_DECODING_ERROR;
-    uint8_t subj_public_key[72];
-
-    if (cert_def == NULL || subj_key_id == NULL)
-    {
-        return ATCACERT_E_BAD_PARAMS;
-    }
-
-    if(DEVZONE_DATA == cert_def->public_key_dev_loc.zone)
-    {
-        if (cert_def->public_key_dev_loc.is_genkey)
-        {
-            /* generate the key */
-            ret = atcab_get_pubkey(cert_def->public_key_dev_loc.slot, subj_public_key);
-        }
-        else
-        {
-            /* Load the public key from a slot */
-            ret = atcab_read_bytes_zone(cert_def->public_key_dev_loc.zone, 
-                                        cert_def->public_key_dev_loc.slot, 
-                                        cert_def->public_key_dev_loc.offset, 
-                                        subj_public_key, cert_def->public_key_dev_loc.count);
-
-            /* IF the public key is stored in device public key format */
-            if ((ATCA_SUCCESS == ret) && (72 == cert_def->public_key_dev_loc.count) )
-            {
-                atcacert_public_key_remove_padding(subj_public_key, subj_public_key);
-            }
-        }
-
-        if (ATCA_SUCCESS == ret)
-        {
-            /* Calculate the key_id */
-            ret = atcacert_get_key_id(subj_public_key, subj_key_id);
-        }
-    }
-    return ret;
-}
 int atcacert_get_subj_key_id(const atcacert_def_t* cert_def,
                              const uint8_t*        cert,
                              size_t                cert_size,
@@ -1673,4 +1683,104 @@ void atcacert_public_key_remove_padding(const uint8_t padded_key[72], uint8_t ra
 {
     memmove(&raw_key[0], &padded_key[4], 32);   // Move X
     memmove(&raw_key[32], &padded_key[40], 32); // Move Y
+}
+
+int atcacert_transform_data(atcacert_transform_t transform,
+                            const uint8_t*       data,
+                            size_t               data_size,
+                            uint8_t*             destination,
+                            size_t*              destination_size)
+{
+    int status = ATCACERT_E_INVALID_TRANSFORM;
+
+    if (destination == NULL || destination_size == NULL)
+    {
+        return ATCACERT_E_BAD_PARAMS;
+    }
+
+    switch (transform)
+    {
+    case TF_NONE:
+        if (*destination_size >= data_size)
+        {
+            memcpy(destination, data, data_size);
+            *destination_size = data_size;
+        }
+        else
+        {
+            status = ATCA_SMALL_BUFFER;
+        }
+    case TF_REVERSE:
+        status = atcab_reversal(data, data_size, destination, destination_size);
+        break;
+    case TF_BIN2HEX_UC:
+        status = atcab_bin2hex_(data, data_size, (char*)destination, destination_size, false, false, true);
+        break;
+    case TF_BIN2HEX_LC:
+        status = atcab_bin2hex_(data, data_size, (char*)destination, destination_size, false, false, false);
+        break;
+    case TF_HEX2BIN_UC:
+        status = atcab_hex2bin_((const char*)data, data_size, destination, destination_size, false);
+        break;
+    case TF_HEX2BIN_LC:
+        status = atcab_hex2bin_((const char*)data, data_size, destination, destination_size, false);
+        break;
+    case TF_BIN2HEX_SPACE_UC:
+        status = atcab_bin2hex_(data, data_size, (char*)destination, destination_size, false, true, true);
+        break;
+    case TF_BIN2HEX_SPACE_LC:
+        status = atcab_bin2hex_(data, data_size, (char*)destination, destination_size, false, true, false);
+        break;
+    case TF_HEX2BIN_SPACE_UC:
+        status = atcab_hex2bin_((const char*)data, data_size, destination, destination_size, true);
+        break;
+    case TF_HEX2BIN_SPACE_LC:
+        status = atcab_hex2bin_((const char*)data, data_size, destination, destination_size, true);
+        break;
+    default:
+        status = ATCACERT_E_INVALID_TRANSFORM;
+        break;
+    }
+
+    return status;
+}
+
+int atcacert_max_cert_size(const atcacert_def_t* cert_def,
+                           size_t*               max_cert_size)
+{
+    uint8_t template_sn_size;
+
+    if (cert_def == NULL || max_cert_size == NULL)
+    {
+        return ATCACERT_E_BAD_PARAMS;
+    }
+
+    if (cert_def->type == CERTTYPE_X509)
+    {
+        // Signature offset plus the largest P-256 ECDSA-Sig-Value Bit String (zero padded R and S)
+        *max_cert_size = cert_def->std_cert_elements[STDCERT_SIGNATURE].offset + 75;
+
+        if (cert_def->sn_source == SNSRC_STORED_DYNAMIC)
+        {
+            // Certificate definition uses a variable sized serial number
+            template_sn_size = cert_def->cert_template[cert_def->std_cert_elements[STDCERT_CERT_SN].offset];
+            if (template_sn_size > 127)
+            {
+                // Certificate serial number is larger than expected. Multi-byte sizes not handled
+                // as this should never happen.
+                return ATCACERT_E_BAD_CERT;
+            }
+
+            // Add the max possible serial number to the max size
+            *max_cert_size += 128 - template_sn_size;
+        }
+    }
+    else
+    {
+        // There are no variable length elements in custom certs, so the cert
+        // size is simply the template size
+        *max_cert_size = cert_def->cert_template_size;
+    }
+
+    return ATCACERT_E_SUCCESS;
 }

@@ -1,5 +1,5 @@
 var a00020 =
 [
-    [ "check_device_io_protection_key_generate", "a00020.html#a67e11e4c8a5491952d9cdea3dee7308a", null ],
+    [ "bind_host_and_secure_element_with_io_protection", "a00020.html#af086e6ea3beaf8711ec855ff7dce40b1", null ],
     [ "secure_boot_process", "a00020.html#a861a785461af4116bca9343019225abd", null ]
 ];

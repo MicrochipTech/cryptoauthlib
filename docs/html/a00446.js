@@ -1,9 +1,6 @@
 var a00446 =
 [
-    [ "SWI_FLAG_CMD", "a03537.html#ga13c01ac16bb14fde75e9c00dcd1cc761", null ],
-    [ "SWI_FLAG_IDLE", "a03537.html#ga6219d68ef915fdcd734f51960ba08fb6", null ],
-    [ "SWI_FLAG_SLEEP", "a03537.html#ga13ef2322176ad9b7ba3d2e23b277cce6", null ],
-    [ "SWI_FLAG_TX", "a03537.html#ga20af8352e13a7357650ba1cbf41349ea", null ],
-    [ "SWI_WAKE_TOKEN", "a03537.html#ga8f12e3b749e7b3dc905114cc7b8d0b38", null ],
-    [ "hal_swi_send_flag", "a03537.html#gaae96ea936a2e85d0bcb81b7868ee007d", null ]
+    [ "HARMONY_I2C_DRIVER", "a00993.html#ga779f5e5d060c6d43dd09752eeb2a2bb3", null ],
+    [ "MAX_I2C_BUSES", "a00993.html#gaf89a7a4080a47aa10a5504291db285bf", null ],
+    [ "ATCAI2CMaster_t", "a00993.html#gae8f36006f14bf6a9f4914bac69ed9f98", null ]
 ];

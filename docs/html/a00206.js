@@ -1,7 +1,6 @@
 var a00206 =
 [
-    [ "atcab_info", "a03535.html#ga6e19ecd60be4c74665d9ec142e460771", null ],
-    [ "atcab_info_base", "a03535.html#ga806d07982fda5c30755af6b5b4ef9314", null ],
-    [ "atcab_info_get_latch", "a03535.html#ga376b6ae92f14c60fba4ca5c6461e0b48", null ],
-    [ "atcab_info_set_latch", "a03535.html#ga2649126606db8a0b64ae8e19d09f6600", null ]
+    [ "atcacert_gen_challenge_hw", "a00990.html#ga208c1ea765f192bd86b26964fbb5edcb", null ],
+    [ "atcacert_verify_cert_hw", "a00990.html#ga81e92ea606e86051afa84f2fac4898d6", null ],
+    [ "atcacert_verify_response_hw", "a00990.html#gafeffa7a36a7b5a343f5f568d090e8eed", null ]
 ];

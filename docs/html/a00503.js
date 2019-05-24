@@ -1,11 +1,14 @@
 var a00503 =
 [
-    [ "swi_uart_deinit", "a03537.html#ga0b1aad3936bf003686d8db7fa2be5132", null ],
-    [ "swi_uart_discover_buses", "a03537.html#gad640b598d581ee7c8a4c804bee602906", null ],
-    [ "swi_uart_init", "a03537.html#ga003b63648f1a5f9eba274760559688f2", null ],
-    [ "swi_uart_mode", "a03537.html#gacc2a96c86ce4c07249b81bc6a7eb2e41", null ],
-    [ "swi_uart_receive_byte", "a03537.html#ga93f3dab17c14f71641ca970998ede823", null ],
-    [ "swi_uart_send_byte", "a03537.html#ga4a4d491006d9683d67838963706ac9c1", null ],
-    [ "swi_uart_setbaud", "a03537.html#gaba296f70baf68b768d6c4bb9cf7ba67d", null ],
-    [ "pin_conf", "a03537.html#gaab85cb460831e8b7e4d3a5315b31c596", null ]
+    [ "hal_swi_discover_buses", "a00993.html#ga53864a301dac6efbdbdc3931aa79e23e", null ],
+    [ "hal_swi_discover_devices", "a00993.html#ga354e6fa757688b73e6fb5293bb835def", null ],
+    [ "hal_swi_idle", "a00993.html#ga618291172976da96c4f02dc9200c845c", null ],
+    [ "hal_swi_init", "a00993.html#gaf406053c1a3f2a86bdc887f2ff4b663d", null ],
+    [ "hal_swi_post_init", "a00993.html#ga9186e5235979216330ae580290872c77", null ],
+    [ "hal_swi_receive", "a00993.html#ga02e9f36723f0feb21d373898728de04b", null ],
+    [ "hal_swi_release", "a00993.html#ga196dbc62546b39ac3e556a0f7f6b7132", null ],
+    [ "hal_swi_send", "a00993.html#gaeb8b8857192a7710785acce0110e8016", null ],
+    [ "hal_swi_send_flag", "a00993.html#gaae96ea936a2e85d0bcb81b7868ee007d", null ],
+    [ "hal_swi_sleep", "a00993.html#ga252e365a30f2583dae8a8eac073a9f53", null ],
+    [ "hal_swi_wake", "a00993.html#gafc428980ec95e37eee94813db229fe70", null ]
 ];

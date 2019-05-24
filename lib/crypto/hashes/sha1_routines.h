@@ -66,6 +66,10 @@
 #define _NOP()
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct
 {
     U32 h[20 / 4];      // Ensure it's word aligned
@@ -81,6 +85,10 @@ void CL_hashInit(CL_HashContext *ctx);
 void CL_hashUpdate(CL_HashContext *ctx, const U8 *src, int nbytes);
 void CL_hashFinal(CL_HashContext *ctx, U8 *dest);
 void CL_hash(U8 *msg, int msgBytes, U8 *dest);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // __SHA1_ROUTINES_DOT_H__
 

@@ -170,6 +170,7 @@ ATCA_STATUS hal_unlock_mutex(void * pMutex);
 void * hal_malloc(size_t size);
 void   hal_free(void * ptr);
 #endif
+
 /** \brief If an RTOS is being use make sure the delay definitions do not conflict */
 #ifdef ATCA_USE_RTOS_TIMER
 void atca_delay_ms_internal(uint32_t delay);

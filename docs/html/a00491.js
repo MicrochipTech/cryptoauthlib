@@ -1,12 +1,6 @@
 var a00491 =
 [
-    [ "swi_disable", "a00491.html#af016fffdce9f520096de8631e6692707", null ],
-    [ "swi_enable", "a00491.html#ad78929b51b34df503a37b4961577d5ce", null ],
-    [ "swi_receive_bytes", "a00491.html#afa009f7d683cb82293570a27d1f8ee10", null ],
-    [ "swi_send_byte", "a00491.html#a1c5ab22e67923ee54eef0e33b227be0b", null ],
-    [ "swi_send_bytes", "a00491.html#af0382e26c4d83b0762b39d12c772dd2e", null ],
-    [ "swi_send_wake_token", "a00491.html#ada6b4629603758b67820568677ab2a19", null ],
-    [ "swi_set_pin", "a00491.html#a076fc28889d32327dd3372538106da92", null ],
-    [ "swi_set_signal_pin", "a00491.html#a79bc8f2b72647fce853274cf8474b41e", null ],
-    [ "swi_buses_default", "a00491.html#a8ba5507b651724b4cdc74106a16b025c", null ]
+    [ "MAX_I2C_BUSES", "a00993.html#gaf89a7a4080a47aa10a5504291db285bf", null ],
+    [ "ATCAI2CMaster_t", "a00993.html#gae8f36006f14bf6a9f4914bac69ed9f98", null ],
+    [ "change_i2c_speed", "a00993.html#gab7f613b378e0d01b80703df3ac662d6d", null ]
 ];
