@@ -71,19 +71,19 @@ typedef struct
 
     union                           // each instance of an iface cfg defines a single type of interface
     {
-        struct ATCAI2C
+        struct
         {
             uint8_t  slave_address; // 8-bit slave address
             uint8_t  bus;           // logical i2c bus number, 0-based - HAL will map this to a pin pair for SDA SCL
             uint32_t baud;          // typically 400000
         } atcai2c;
 
-        struct ATCASWI
+        struct
         {
             uint8_t bus;        // logical SWI bus - HAL will map this to a pin	or uart port
         } atcaswi;
 
-        struct ATCAUART
+        struct
         {
             int      port;      // logic port number
             uint32_t baud;      // typically 115200
@@ -92,7 +92,7 @@ typedef struct
             uint8_t  stopbits;  // 0,1,2
         } atcauart;
 
-        struct ATCAHID
+        struct
         {
             int      idx;           // HID enumeration index
             uint32_t vid;           // Vendor ID of kit (0x03EB for CK101)
@@ -101,7 +101,7 @@ typedef struct
             uint8_t  guid[16];      // The GUID for this HID device
         } atcahid;
 
-        struct ATCACUSTOM
+        struct
         {
             ATCA_STATUS (*halinit)(void *hal, void *cfg);
             ATCA_STATUS (*halpostinit)(void *iface);
