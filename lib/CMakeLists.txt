@@ -61,10 +61,10 @@ add_definitions(-DATCA_HAL_KIT_HID)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/kit_protocol.c hal/hal_all_platforms_kit_hidapi.c ${HID_SRC})
 endif(ATCA_HAL_KIT_HID)
 
-if(ATCA_HAL_I2C)
+if(LINUX AND ATCA_HAL_I2C)
 add_definitions(-DATCA_HAL_I2C)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${TWI_SRC})
-endif(ATCA_HAL_I2C)
+endif(LINUX AND ATCA_HAL_I2C)
 
 if(ATCA_HAL_CUSTOM)
 add_definitions(-DATCA_HAL_CUSTOM)
