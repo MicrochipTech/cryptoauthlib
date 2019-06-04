@@ -429,6 +429,7 @@ CK_RV pkcs11_token_random(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pRandomData, C
         if (32 < ulRandomLen)
         {
             memcpy(pRandomData, buf, 32);
+	    pRandomData += 32;
             ulRandomLen -= 32;
         }
         else
