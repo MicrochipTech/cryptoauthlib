@@ -131,7 +131,7 @@
 
 /** Support for configuring a "blank" or new device */
 #ifndef PKCS11_TOKEN_INIT_SUPPORT
-#define PKCS11_TOKEN_INIT_SUPPORT       0
+#define PKCS11_TOKEN_INIT_SUPPORT       1
 #endif
 
 /** Include the monotonic hardware feature as an object */
