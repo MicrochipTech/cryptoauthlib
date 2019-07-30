@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6.4)
+cmake_minimum_required(VERSION 3.1.0)
 project(cryptoauth)
 
 # Various Options for Build
@@ -85,6 +85,8 @@ endif()
 
 add_library(cryptoauth ${CRYPTOAUTH_SRC} ${ATCACERT_DEF_SRC})
 
+set_property(TARGET cryptoauth PROPERTY C_STANDARD 99)
+
 if(ATCA_PRINTF)
 add_definitions(-DATCAPRINTF)
 endif(ATCA_PRINTF)
@@ -106,7 +108,7 @@ if(LINUX)
 add_definitions(-DATCA_USE_SHARED_MUTEX)
 if(HAS_LIBUSB AND ATCA_HAL_KIT_HID)
 target_link_libraries(cryptoauth usb-1.0)
-elseif(HAS_UDEV AND ATCA_HAL_KIT_HID)
+elseif(HAS_LIBUDEV AND ATCA_HAL_KIT_HID)
 target_link_libraries(cryptoauth udev)
 endif()
 target_link_libraries(cryptoauth rt)
