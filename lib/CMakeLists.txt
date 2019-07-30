@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6.4)
+cmake_minimum_required(VERSION 3.1.0)
 project(cryptoauth)
 
 # Various Options for Build
@@ -79,6 +79,8 @@ endif()
 
 add_library(cryptoauth ${CRYPTOAUTH_SRC} ${ATCACERT_DEF_SRC})
 
+set_property(TARGET cryptoauth PROPERTY C_STANDARD 99)
+
 # Add Remaining Sources depending on target library type
 if(ATCA_PKCS11)
 set_target_properties(cryptoauth PROPERTIES OUTPUT_NAME "ateccx08pkcs11")
@@ -104,7 +106,7 @@ endif()
 if(LINUX)
 if(HAS_LIBUSB AND ATCA_HAL_KIT_HID)
 target_link_libraries(cryptoauth usb-1.0)
-elseif(HAS_UDEV AND ATCA_HAL_KIT_HID)
+elseif(HAS_LIBUDEV AND ATCA_HAL_KIT_HID)
 target_link_libraries(cryptoauth udev)
 endif()
 target_link_libraries(cryptoauth rt)

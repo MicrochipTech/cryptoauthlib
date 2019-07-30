@@ -147,7 +147,7 @@ class CryptoAuthCommandBuildExt(build_ext):
         try:
             subprocess.check_output(['cmake', cmakelist_path] + cmake_args, cwd=os.path.abspath(self.build_temp), stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
-            msg = e.output.decode('ascii')
+            msg = e.output.decode('utf-8')
             if 'usb' in msg:
                 msg += '\n\n   USB libraries or headers were not located. If USB support is\n' \
                        '   not required it can be disabled by setting the environment\n' \
@@ -156,13 +156,16 @@ class CryptoAuthCommandBuildExt(build_ext):
                        '       $ export CRYPTOAUTHLIB_NOUSB=True\n\n' \
                        '   Run setup.py clean before trying install again or use the pip \n' \
                        '   option --no-cache-dir\n'
-            raise Exception(msg)
+            raise RuntimeError(msg)
 
         # Build the library
         try:
             subprocess.check_output(['cmake', '--build', '.'] + build_args, cwd=os.path.abspath(self.build_temp), stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
-            raise Exception(e.output.decode('ascii'))
+            if sys.version_info[0] <= 2:
+                raise RuntimeError(e.output)  # Python 2 doesn't handle unicode exceptions
+            else:
+                raise RuntimeError(e.output.decode('utf-8'))
 
 
 class CryptoAuthCommandInstall(install):
