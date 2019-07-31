@@ -1710,6 +1710,7 @@ int atcacert_transform_data(atcacert_transform_t transform,
         {
             status = ATCA_SMALL_BUFFER;
         }
+        break;
     case TF_REVERSE:
         status = atcab_reversal(data, data_size, destination, destination_size);
         break;
