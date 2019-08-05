@@ -406,8 +406,9 @@ ATCA_STATUS hal_i2c_release(void *hal_data)
     // if the use count for this bus has gone to 0 references, disable it.  protect against an unbracketed release
     if (hal && --(hal->ref_ct) <= 0 && i2c_hal_data[hal->bus_index] != NULL)
     {
-        free(i2c_hal_data[hal->bus_index]);
-        i2c_hal_data[hal->bus_index] = NULL;
+        int busnum = hal->bus_index;
+        free(i2c_hal_data[busnum]);
+        i2c_hal_data[busnum] = NULL;
     }
 
     return ATCA_SUCCESS;
