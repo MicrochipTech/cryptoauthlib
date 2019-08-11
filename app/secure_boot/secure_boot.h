@@ -36,7 +36,7 @@ extern "C" {
 #include "atca_status.h"
 #include "secure_boot_memory.h"
 #include "atca_command.h"
-#include "crypto\atca_crypto_sw_sha2.h"
+#include "crypto/atca_crypto_sw_sha2.h"
 #include "host/atca_host.h"
 
 
