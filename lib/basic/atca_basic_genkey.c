@@ -79,7 +79,10 @@ ATCA_STATUS atcab_genkey_base(uint8_t mode, uint16_t key_id, const uint8_t* othe
 
         if (public_key && packet.data[ATCA_COUNT_IDX] > 4)
         {
-            memcpy(public_key, &packet.data[ATCA_RSP_DATA_IDX], packet.data[ATCA_COUNT_IDX] - 3);
+            if (packet.data[ATCA_COUNT_IDX] != 64 + ATCA_PACKET_OVERHEAD) {
+                return ATCA_ASSERT_FAILURE;
+            }
+            memcpy(public_key, &packet.data[ATCA_RSP_DATA_IDX], 64);
         }
     }
     while (0);
