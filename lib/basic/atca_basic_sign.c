@@ -75,7 +75,10 @@ ATCA_STATUS atcab_sign_base(uint8_t mode, uint16_t key_id, uint8_t *signature)
 
         if (packet.data[ATCA_COUNT_IDX] > 4)
         {
-            memcpy(signature, &packet.data[ATCA_RSP_DATA_IDX], packet.data[ATCA_COUNT_IDX] - ATCA_PACKET_OVERHEAD);
+            if (packet.data[ATCA_COUNT_IDX] != 64 + ATCA_PACKET_OVERHEAD) {
+                return ATCA_ASSERT_FAILURE;
+            }
+            memcpy(signature, &packet.data[ATCA_RSP_DATA_IDX], 64);
         }
 
     }
