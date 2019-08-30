@@ -61,7 +61,7 @@ Examples
 
 Release notes
 -----------
-Next Release
+08/30/2019
   - Added big-endian architecture support
   - Fixes to atcah_gen_dig() and atcah_nonce()
 
