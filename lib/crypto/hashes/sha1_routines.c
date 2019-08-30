@@ -27,7 +27,7 @@
 
 #include "sha1_routines.h"
 #include <string.h>
-
+#include "atca_compiler.h"
 
 /**
  * \brief Initialize context for performing SHA1 hash in software.
@@ -147,6 +147,8 @@ void CL_hashFinal(CL_HashContext *ctx, U8 *dest)
     U8 i;
     U8 nbytes;
     U32 temp;
+    U32* dest_addr = (U32*)dest;
+
     U8 *ptr;
 
     /* Append pad byte, clear trailing bytes */
@@ -193,13 +195,10 @@ void CL_hashFinal(CL_HashContext *ctx, U8 *dest)
     shaEngine(ctx->buf, ctx->h);
 
     /* Unpack chaining variables to dest bytes. */
-    memcpy(dest, ctx->h, 20);
     for (i = 0; i < 5; i++)
     {
-        dest[i * 4 + 0] = (ctx->h[i] >> 24) & 0xFF;
-        dest[i * 4 + 1] = (ctx->h[i] >> 16) & 0xFF;
-        dest[i * 4 + 2] = (ctx->h[i] >>  8) & 0xFF;
-        dest[i * 4 + 3] = (ctx->h[i] >>  0) & 0xFF;
+        dest_addr[i] = ATCA_UINT32_BE_TO_HOST(ctx->h[i]);
+
     }
 }
 

@@ -28,6 +28,8 @@
 #ifndef TNG_ROOT_CERT_H
 #define TNG_ROOT_CERT_H
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif

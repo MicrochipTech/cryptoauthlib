@@ -41,6 +41,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include "atca_compiler.h"
 #include "atcacert.h"
 #include "atcacert_date.h"
 #include "basic/atca_helpers.h"
@@ -126,13 +127,17 @@ typedef enum atcacert_std_cert_element_e
 } atcacert_std_cert_element_t;
 
 // Some of these structures may need to be byte-accurate
-
+#ifndef ATCA_NO_PRAGMA_PACK
 #pragma pack(push, 1)
+#define ATCA_PACKED
+#else
+#define ATCA_PACKED     __attribute__ ((packed))
+#endif
 
 /**
  * Defines a chunk of data in an ATECC device.
  */
-typedef struct atcacert_device_loc_s
+typedef struct ATCA_PACKED atcacert_device_loc_s
 {
     atcacert_device_zone_t zone;        //!< Zone in the device.
     uint8_t                slot;        //!< Slot within the data zone. Only applies if zone is DEVZONE_DATA.
@@ -144,7 +149,7 @@ typedef struct atcacert_device_loc_s
 /**
  * Defines a chunk of data in a certificate template.
  */
-typedef struct atcacert_cert_loc_s
+typedef struct ATCA_PACKED atcacert_cert_loc_s
 {
     uint16_t offset;    //!< Byte offset in the certificate template.
     uint16_t count;     //!< Byte count. Set to 0 if it doesn't exist.
@@ -153,8 +158,7 @@ typedef struct atcacert_cert_loc_s
 /**
  * Defines a generic dynamic element for a certificate including the device and template locations.
  */
-
-typedef struct atcacert_cert_element_s
+typedef struct ATCA_PACKED atcacert_cert_element_s
 {
     char                  id[25];                          //!< ID identifying this element.
     atcacert_device_loc_t device_loc;                      //!< Location in the device for the element.
@@ -168,7 +172,7 @@ typedef struct atcacert_cert_element_s
  * If any of the standard certificate elements (std_cert_elements) are not a part of the certificate
  * definition, set their count to 0 to indicate their absence.
  */
-typedef struct atcacert_def_s
+typedef struct ATCA_PACKED atcacert_def_s
 {
     atcacert_cert_type_t           type;                                    //!< Certificate type.
     uint8_t                        template_id;                             //!< ID for the this certificate definition (4-bit value).
@@ -193,7 +197,8 @@ typedef struct atcacert_def_s
 /**
  * Tracks the state of a certificate as it's being rebuilt from device information.
  */
-typedef struct atcacert_build_state_s
+
+typedef struct ATCA_PACKED atcacert_build_state_s
 {
     const atcacert_def_t* cert_def;             //!< Certificate definition for the certificate being rebuilt.
     uint8_t*              cert;                 //!< Buffer to contain the rebuilt certificate.
@@ -203,7 +208,9 @@ typedef struct atcacert_build_state_s
     uint8_t               device_sn[9];         //!< Storage for the device SN, when it's found.
 } atcacert_build_state_t;
 
+#ifndef ATCA_NO_PRAGMA_PACK
 #pragma pack(pop)
+#endif
 
 // Inform function naming when compiling in C++
 #ifdef __cplusplus

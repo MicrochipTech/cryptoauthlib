@@ -288,7 +288,7 @@ ATCA_STATUS atcab_hw_sha2_256_finish(atca_sha256_ctx_t* ctx, uint8_t* digest)
 
         // Calculate the total message size in bits
         ctx->total_msg_size += ctx->block_size;
-        msg_size_bits = ctx->total_msg_size * 8;
+        msg_size_bits = (ctx->total_msg_size * 8);
 
         // Calculate the number of padding zero bytes required between the 1 bit byte and the  ATCA_SHA256_BLOCK_SIZEbit message size in bits.
         pad_zero_count = (ATCA_SHA256_BLOCK_SIZE - ((ctx->block_size + 9) % ATCA_SHA256_BLOCK_SIZE)) % ATCA_SHA256_BLOCK_SIZE;

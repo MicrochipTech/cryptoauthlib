@@ -1,6 +1,8 @@
 /**
  * \file
- * \brief ATCA Hardware abstraction layer for Linux using I2C.
+ * \brief ATCA Hardware abstraction layer for SAM4S I2C over ASF drivers.
+ *
+ * Prerequisite: add "Delay routines (service)" module to application in Atmel Studio
  *
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
@@ -25,25 +27,56 @@
  * THIS SOFTWARE.
  */
 
-#ifndef HAL_LINUX_I2C_USERSPACE_H_
-#define HAL_LINUX_I2C_USERSPACE_H_
+#include <asf.h>
+#include <delay.h>
+#include "atca_hal.h"
 
-/** \defgroup hal_ Hardware abstraction layer (hal_)
+
+/* ASF already have delay_us and delay_ms - see delay.h */
+
+/**
+ * \defgroup hal_ Hardware abstraction layer (hal_)
  *
  * \brief
  * These methods define the hardware abstraction layer for communicating with a CryptoAuth device
  *
    @{ */
 
-#define MAX_I2C_BUSES   2   // Raspberry Pi has 2 TWI
-
-// A structure to hold I2C information
-typedef struct atcaI2Cmaster
+/**
+ * \brief This function delays for a number of microseconds.
+ *
+ * \param[in] delay number of 0.001 milliseconds to delay
+ */
+void atca_delay_us(uint32_t delay)
 {
-    char i2c_file[16];
-    int  ref_ct;
-} ATCAI2CMaster_t;
+    // use ASF supplied delay
+    delay_us(delay);
+}
+
+/**
+ * \brief This function delays for a number of tens of microseconds.
+ *
+ * \param[in] delay number of 0.01 milliseconds to delay
+ */
+void atca_delay_10us(uint32_t delay)
+{
+    // use ASF supplied delay
+    delay_us(delay * 10);
+
+}
+
+/**
+ * \brief This function delays for a number of milliseconds.
+ *
+ *        You can override this function if you like to do
+ *        something else in your system while delaying.
+ *
+ * \param[in] delay number of milliseconds to delay
+ */
+void atca_delay_ms(uint32_t delay)
+{
+    // use ASF supplied delay
+    delay_ms(delay);
+}
 
 /** @} */
-
-#endif /* HAL_LINUX_I2C_H_ */

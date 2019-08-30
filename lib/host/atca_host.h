@@ -273,6 +273,10 @@ typedef struct atca_gen_dig_in_out
 {
     uint8_t               zone;         //!< [in] Zone/Param1 for the GenDig command
     uint16_t              key_id;       //!< [in] KeyId/Param2 for the GenDig command
+    uint16_t              slot_conf;    //!< [in] Slot config for the GenDig command
+    uint16_t              key_conf;     //!< [in] Key config for the GenDig command
+    uint8_t               slot_locked;  //!< [in] slot locked for the GenDig command
+    uint32_t              counter;      //!< [in] counter for the GenDig command
     bool                  is_key_nomac; //!< [in] Set to true if the slot pointed to be key_id has the SotConfig.NoMac bit set
     const uint8_t *       sn;           //!< [in] Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though.
     const uint8_t *       stored_value; //!< [in] 32-byte slot value, config block, OTP block as specified by the Zone/KeyId parameters
