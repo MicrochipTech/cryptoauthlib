@@ -91,6 +91,7 @@ ATCA_STATUS atcab_aes_ctr_init(atca_aes_ctr_ctx_t* ctx, uint16_t key_id, uint8_t
 ATCA_STATUS atcab_aes_ctr_init_rand(atca_aes_ctr_ctx_t* ctx, uint16_t key_id, uint8_t key_block, uint8_t counter_size, uint8_t* iv)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
+    uint8_t nonce_size;
 
     if (ctx == NULL || iv == NULL || counter_size > AES_DATA_SIZE)
     {
@@ -102,7 +103,7 @@ ATCA_STATUS atcab_aes_ctr_init_rand(atca_aes_ctr_ctx_t* ctx, uint16_t key_id, ui
     ctx->counter_size = counter_size;
 
     // Generate random nonce
-    uint8_t nonce_size = AES_DATA_SIZE - ctx->counter_size;
+    nonce_size = AES_DATA_SIZE - ctx->counter_size;
     if (nonce_size != 0)
     {
         uint8_t random_nonce[32];

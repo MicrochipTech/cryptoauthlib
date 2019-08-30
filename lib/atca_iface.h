@@ -53,6 +53,16 @@ typedef enum
     ATCA_UNKNOWN_IFACE,
 } ATCAIfaceType;
 
+
+/*The types are used within the kit protocol to identify the correct interface*/
+typedef enum
+{   ATCA_KIT_AUTO_IFACE,        //Selects the first device if the Kit interface is not defined
+    ATCA_KIT_I2C_IFACE,
+    ATCA_KIT_SWI_IFACE,
+    ATCA_KIT_UNKNOWN_IFACE, } ATCAKitType;
+
+
+
 /* ATCAIfaceCfg is a mediator object between a completely abstract notion of a
    physical interface and an actual physical interface.
 
@@ -94,11 +104,13 @@ typedef struct
 
         struct ATCAHID
         {
-            int      idx;           // HID enumeration index
-            uint32_t vid;           // Vendor ID of kit (0x03EB for CK101)
-            uint32_t pid;           // Product ID of kit (0x2312 for CK101)
-            uint32_t packetsize;    // Size of the USB packet
-            uint8_t  guid[16];      // The GUID for this HID device
+            int         idx;           // HID enumeration index
+            ATCAKitType dev_interface; // Kit interface type
+            uint8_t     dev_identity;  // I2C address for the I2C interface device or the bus number for the SWI interface device.
+            uint32_t    vid;           // Vendor ID of kit (0x03EB for CK101)
+            uint32_t    pid;           // Product ID of kit (0x2312 for CK101)
+            uint32_t    packetsize;    // Size of the USB packet
+            uint8_t     guid[16];      // The GUID for this HID device
         } atcahid;
 
         struct ATCACUSTOM

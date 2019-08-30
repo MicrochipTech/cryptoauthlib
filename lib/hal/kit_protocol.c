@@ -62,20 +62,35 @@ char * strnchr(const char * s, size_t count, int c)
 #endif
 
 /** Kit Protocol is key */
-char kit_id_from_devtype(ATCADeviceType devtype)
+const char * kit_id_from_devtype(ATCADeviceType devtype)
 {
     switch (devtype)
     {
     case ATSHA204A:
-        return 'S';
+        return "SHA204A";
     case ATECC108A:
-    /* fallthrough */
+        return "ECC108A";
     case ATECC508A:
-    /* fallthrough */
+        return "ECC508A";
     case ATECC608A:
-        return 'E';
+        return "ECC608A";
     default:
-        return 'd';
+        return "unknown";
+    }
+}
+
+
+/** Kit interface from device */
+const char * kit_interface_from_kittype(ATCAKitType kittype)
+{
+    switch (kittype)
+    {
+    case ATCA_KIT_I2C_IFACE:
+        return "TWI";
+    case ATCA_KIT_SWI_IFACE:
+        return "SWI";
+    default:
+        return "unknown";
     }
 }
 
@@ -92,10 +107,14 @@ ATCA_STATUS kit_init(ATCAIface iface)
     int txlen;
     char rxbuf[KIT_RX_WRAP_SIZE + 4];
     int rxlen;
-    char match;
+    char* device_match, *interface_match;
+    char *dev_type, *dev_interface;
+    char delim[] = " ";
     int i;
+    int address;
 
-    match = kit_id_from_devtype(iface->mIfaceCFG->devtype);
+    device_match = kit_id_from_devtype(iface->mIfaceCFG->devtype);
+    interface_match = kit_interface_from_kittype(iface->mIfaceCFG->atcahid.dev_interface);
 
     /* Iterate to find the target device */
     for (i = 0; i < KIT_MAX_SCAN_COUNT; i++)
@@ -120,25 +139,28 @@ ATCA_STATUS kit_init(ATCAIface iface)
             break;
         }
 
-        /* If the device type is correct the device has to be "selected" use the
-            returned I2C address */
-        if (match == rxbuf[0])
+        dev_type = strtok(rxbuf, delim);
+        dev_interface = strtok(NULL, delim);
+        char * addr = strnchr(rxbuf, rxlen, '('); /* Gets the identity from the kit used for selecting the device*/
+        address = 0;
+
+        if (!addr)
         {
-            char * addr = strnchr(rxbuf, rxlen, '(');
-            int address = 0;
-            if (!addr)
-            {
-                status = ATCA_GEN_FAIL;
-                break;
-            }
+            status = ATCA_GEN_FAIL;
+            break;
+        }
 
-            if (1 != sscanf(addr, "(%02X)", &address))
-            {
-                status = ATCA_GEN_FAIL;
-                break;
-            }
+        if (1 != sscanf(addr, "(%02X)", &address))
+        {
+            status = ATCA_GEN_FAIL;
+            break;
+        }
 
-            txlen = snprintf(txbuf, sizeof(txbuf) - 1, kit_device_select, match, address);
+        /*Selects the first device type if both device interface and device identity is not defined*/
+        if (iface->mIfaceCFG->atcahid.dev_interface == ATCA_KIT_AUTO_IFACE && iface->mIfaceCFG->atcahid.dev_identity == 0 && (strcmp(device_match, dev_type) == 0))
+        {
+
+            txlen = snprintf(txbuf, sizeof(txbuf) - 1, kit_device_select, device_match[0], address);
             txbuf[sizeof(txbuf) - 1] = '\0';
             if (txlen < 0)
             {
@@ -154,6 +176,36 @@ ATCA_STATUS kit_init(ATCAIface iface)
             rxlen = sizeof(rxbuf);
             status = kit_phy_receive(iface, rxbuf, &rxlen);
             break;
+
+
+        }
+
+        else
+        {
+
+
+            /*Selects the device only if the device type, device interface and device identity matches*/
+            if ((strcmp(device_match, dev_type) == 0) && (iface->mIfaceCFG->atcahid.dev_identity == address) && (strcmp(interface_match, dev_interface) == 0))
+            {
+
+
+                txlen = snprintf(txbuf, sizeof(txbuf) - 1, kit_device_select, device_match[0], address);
+                txbuf[sizeof(txbuf) - 1] = '\0';
+                if (txlen < 0)
+                {
+                    status = ATCA_INVALID_SIZE;
+                    break;
+                }
+
+                if (ATCA_SUCCESS != (status = kit_phy_send(iface, txbuf, txlen)))
+                {
+                    break;
+                }
+
+                rxlen = sizeof(rxbuf);
+                status = kit_phy_receive(iface, rxbuf, &rxlen);
+                break;
+            }
         }
     }
 
@@ -176,6 +228,7 @@ ATCA_STATUS kit_send(ATCAIface iface, const uint8_t* txdata, int txlength)
     ATCA_STATUS status = ATCA_SUCCESS;
     int nkitbuf = txlength * 2 + KIT_TX_WRAP_SIZE;
     char* pkitbuf = NULL;
+    char *target;
 
     // Check the pointers
     if (txdata == NULL)
@@ -185,8 +238,8 @@ ATCA_STATUS kit_send(ATCAIface iface, const uint8_t* txdata, int txlength)
     // Wrap in kit protocol
     pkitbuf = malloc(nkitbuf);
     memset(pkitbuf, 0, nkitbuf);
-    status = kit_wrap_cmd(&txdata[1], txlength, pkitbuf, &nkitbuf,
-                          kit_id_from_devtype(iface->mIfaceCFG->devtype));
+    target = kit_id_from_devtype(iface->mIfaceCFG->devtype);
+    status = kit_wrap_cmd(&txdata[1], txlength, pkitbuf, &nkitbuf, target[0]);
     if (status != ATCA_SUCCESS)
     {
         free(pkitbuf);
@@ -270,8 +323,10 @@ ATCA_STATUS kit_wake(ATCAIface iface)
     int replysize = sizeof(reply);
     uint8_t rxdata[10];
     int rxsize = sizeof(rxdata);
+    char *target;
 
-    wake[0] = kit_id_from_devtype(iface->mIfaceCFG->devtype);
+    target = kit_id_from_devtype(iface->mIfaceCFG->devtype);
+    wake[0] = target[0];
 
     // Send the bytes
     status = kit_phy_send(iface, wake, wakesize);
@@ -315,8 +370,10 @@ ATCA_STATUS kit_idle(ATCAIface iface)
     int replysize = sizeof(reply);
     uint8_t rxdata[10];
     int rxsize = sizeof(rxdata);
+    char *target;
 
-    idle[0] = kit_id_from_devtype(iface->mIfaceCFG->devtype);
+    target = kit_id_from_devtype(iface->mIfaceCFG->devtype);
+    idle[0] = target[0];
 
     // Send the bytes
     status = kit_phy_send(iface, idle, idlesize);
@@ -361,8 +418,10 @@ ATCA_STATUS kit_sleep(ATCAIface iface)
     int replysize = sizeof(reply);
     uint8_t rxdata[10];
     int rxsize = sizeof(rxdata);
+    char* target;
 
-    sleep[0] = kit_id_from_devtype(iface->mIfaceCFG->devtype);
+    target = kit_id_from_devtype(iface->mIfaceCFG->devtype);
+    sleep[0] = target[0];
 
     // Send the bytes
     status = kit_phy_send(iface, sleep, sleepsize);

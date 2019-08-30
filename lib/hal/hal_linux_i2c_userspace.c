@@ -47,10 +47,6 @@
  *
    @{ */
 
-// File scope globals
-ATCAI2CMaster_t *i2c_hal_data[MAX_I2C_BUSES]; // map logical, 0-based bus number to index
-int i2c_bus_ref_ct = 0;                       // total in-use count across buses
-
 /** \brief discover i2c buses available for this hardware
  * this maintains a list of logical to physical bus mappings freeing the application
  * of the a-priori knowledge.This function is not implemented.
@@ -88,50 +84,46 @@ ATCA_STATUS hal_i2c_discover_devices(int bus_num, ATCAIfaceCfg cfg[], int *found
 
 ATCA_STATUS hal_i2c_init(void* hal, ATCAIfaceCfg* cfg)
 {
-    int bus = cfg->atcai2c.bus; // 0-based logical bus number
-    ATCAHAL_t *phal = (ATCAHAL_t*)hal;
-    uint8_t i;
+    ATCAHAL_t *pHal = (ATCAHAL_t*)hal;
+    ATCA_STATUS ret = ATCA_BAD_PARAM;
 
-    if (i2c_bus_ref_ct == 0)    // power up state, no i2c buses will have been used
-
+    if (!pHal || !cfg)
     {
-        for (i = 0; i < MAX_I2C_BUSES; i++)
-        {
-            i2c_hal_data[i] = NULL;
-        }
+        return ret;
     }
 
-    i2c_bus_ref_ct++;       // total across buses
-
-    if (bus >= 0 && bus < MAX_I2C_BUSES)
+    if (pHal->hal_data)
     {
-        // if this is the first time this bus and interface has been created, do the physical work of enabling it
-        if (i2c_hal_data[bus] == NULL)
+        ATCAI2CMaster_t * hal_data = (ATCAI2CMaster_t*)pHal->hal_data;
+
+        // Assume the bus had already been initialized
+        hal_data->ref_ct++;
+
+        ret = ATCA_SUCCESS;
+    }
+    else
+    {
+        ATCAI2CMaster_t * hal_data = malloc(sizeof(ATCAI2CMaster_t));
+        int bus = cfg->atcai2c.bus; // 0-based logical bus number
+
+        if (hal_data)
         {
-            i2c_hal_data[bus] = malloc(sizeof(ATCAI2CMaster_t) );
-            i2c_hal_data[bus]->ref_ct = 1;  // buses are shared, this is the first instance
+            hal_data->ref_ct = 1;  // buses are shared, this is the first instance
 
-            switch (bus)
-            {
-            case 0: strcpy(i2c_hal_data[bus]->i2c_file, "/dev/i2c-0"); break;
-            case 1: strcpy(i2c_hal_data[bus]->i2c_file, "/dev/i2c-1"); break;
-            }
+            (void)snprintf(hal_data->i2c_file, sizeof(hal_data->i2c_file) - 1, "/dev/i2c-%d", bus);
 
-            // store this for use during the release phase
-            i2c_hal_data[bus]->bus_index = bus;
+            pHal->hal_data = hal_data;
+
+            ret = ATCA_SUCCESS;
         }
         else
         {
-            // otherwise, another interface already initialized the bus, so this interface will share it and any different
-            // cfg parameters will be ignored...first one to initialize this sets the configuration
-            i2c_hal_data[bus]->ref_ct++;
+            ret = ATCA_ALLOC_FAILURE;
         }
-
-        phal->hal_data = i2c_hal_data[bus];
-
-        return ATCA_SUCCESS;
     }
-    return ATCA_COMM_FAIL;
+
+    return ret;
+
 }
 
 /** \brief HAL implementation of I2C post init
@@ -153,7 +145,7 @@ ATCA_STATUS hal_i2c_post_init(ATCAIface iface)
 ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t *txdata, int txlength)
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
-    int bus = cfg->atcai2c.bus;
+    ATCAI2CMaster_t * hal_data = (ATCAI2CMaster_t*)atgetifacehaldat(iface);
     int f_i2c;  // I2C file descriptor
 
     // for this implementation of I2C with CryptoAuth chips, txdata is assumed to have ATCAPacket format
@@ -165,7 +157,7 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t *txdata, int txlength)
     txlength++;       // account for word address value byte.
 
     // Initiate I2C communication
-    if ( (f_i2c = open(i2c_hal_data[bus]->i2c_file, O_RDWR)) < 0)
+    if ( (f_i2c = open(hal_data->i2c_file, O_RDWR)) < 0)
     {
         return ATCA_COMM_FAIL;
     }
@@ -198,7 +190,7 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t *txdata, int txlength)
 ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t *rxdata, uint16_t *rxlength)
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
-    int bus = cfg->atcai2c.bus;
+    ATCAI2CMaster_t * hal_data = (ATCAI2CMaster_t*)atgetifacehaldat(iface);
     int f_i2c;  // I2C file descriptor
     uint16_t count;
     uint16_t rxdata_max_size = *rxlength;
@@ -210,7 +202,7 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t *rxdata, uint16_t *rxlength
     }
 
     // Initiate I2C communication
-    if ( (f_i2c = open(i2c_hal_data[bus]->i2c_file, O_RDWR)) < 0)
+    if ( (f_i2c = open(hal_data->i2c_file, O_RDWR)) < 0)
     {
         return ATCA_COMM_FAIL;
     }
@@ -271,13 +263,13 @@ void change_i2c_speed(ATCAIface iface, uint32_t speed)
 ATCA_STATUS hal_i2c_wake(ATCAIface iface)
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
-    int bus = cfg->atcai2c.bus;
+    ATCAI2CMaster_t * hal_data = (ATCAI2CMaster_t*)atgetifacehaldat(iface);
     int f_i2c;  // I2C file descriptor
     uint8_t data[4];
     uint8_t dummy_byte = 0x00;
 
     // Initiate I2C communication
-    if ( (f_i2c = open(i2c_hal_data[bus]->i2c_file, O_RDWR)) < 0)
+    if ( (f_i2c = open(hal_data->i2c_file, O_RDWR)) < 0)
     {
         return ATCA_COMM_FAIL;
     }
@@ -328,12 +320,12 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
 ATCA_STATUS hal_i2c_idle(ATCAIface iface)
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
-    int bus = cfg->atcai2c.bus;
+    ATCAI2CMaster_t * hal_data = (ATCAI2CMaster_t*)atgetifacehaldat(iface);
     uint8_t data = 0x02; // idle word address value
     int f_i2c;           // I2C file descriptor
 
     // Initiate I2C communication
-    if ( (f_i2c = open(i2c_hal_data[bus]->i2c_file, O_RDWR) ) < 0)
+    if ( (f_i2c = open(hal_data->i2c_file, O_RDWR) ) < 0)
     {
         return ATCA_COMM_FAIL;
     }
@@ -364,12 +356,12 @@ ATCA_STATUS hal_i2c_idle(ATCAIface iface)
 ATCA_STATUS hal_i2c_sleep(ATCAIface iface)
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
-    int bus = cfg->atcai2c.bus;
+    ATCAI2CMaster_t * hal_data = (ATCAI2CMaster_t*)atgetifacehaldat(iface);
     uint8_t data = 0x01; // sleep word address value
     int f_i2c;           // I2C file descriptor
 
     // Initiate I2C communication
-    if ( (f_i2c = open(i2c_hal_data[bus]->i2c_file, O_RDWR)) < 0)
+    if ( (f_i2c = open(hal_data->i2c_file, O_RDWR)) < 0)
     {
         return ATCA_COMM_FAIL;
     }
@@ -401,13 +393,10 @@ ATCA_STATUS hal_i2c_release(void *hal_data)
 {
     ATCAI2CMaster_t *hal = (ATCAI2CMaster_t*)hal_data;
 
-    i2c_bus_ref_ct--;   // track total i2c bus interface instances for consistency checking and debugging
-
     // if the use count for this bus has gone to 0 references, disable it.  protect against an unbracketed release
-    if (hal && --(hal->ref_ct) <= 0 && i2c_hal_data[hal->bus_index] != NULL)
+    if (hal && --(hal->ref_ct) <= 0)
     {
-        free(i2c_hal_data[hal->bus_index]);
-        i2c_hal_data[hal->bus_index] = NULL;
+        free(hal);
     }
 
     return ATCA_SUCCESS;

@@ -84,7 +84,7 @@ int atcacert_read_device_loc(const atcacert_device_loc_t* device_loc,
         {
             return ret;
         }
-        if (device_loc->offset + device_loc->count > zone_size)
+        if (device_loc->offset + device_loc->count > (uint16_t)zone_size)
         {
             if (device_loc->offset > zone_size)
             {
