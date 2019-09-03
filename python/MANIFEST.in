@@ -1,3 +1,4 @@
 recursive-include lib *.c *.h CMakeLists.txt 90-cryptohid.rules
 recursive-include third_party *.c *.h
+recursive-include app *.c *.h
 include MANIFEST.in setup.py setup.cfg README.md VERSION atca_utils_sizes.c
