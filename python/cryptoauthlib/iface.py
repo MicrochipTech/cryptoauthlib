@@ -39,6 +39,14 @@ class ATCAIfaceType(AtcaEnum):
     ATCA_SPI_IFACE = 3
     ATCA_HID_IFACE = 4
 
+class ATCAKitType(AtcaEnum):
+    """
+    Interface Type Enumerations for Kit devices
+    """
+    ATCA_KIT_AUTO_IFACE = 0
+    ATCA_KIT_I2C_IFACE = 1
+    ATCA_KIT_SWI_IFACE = 2
+    ATCA_KIT_UNKNOWN_IFACE = 3
 
 class ATCADeviceType(AtcaEnum):
     """
@@ -78,10 +86,11 @@ class _ATCAUART(Structure):
 class _ATCAHID(Structure):
     """USB (HID) HAL configuration"""
     _fields_ = [('idx', c_int),
+                ('dev_interface', get_ctype_by_name('ATCAKitType')),
+                ('dev_identity', c_uint8),
                 ('vid', c_uint32),
                 ('pid', c_uint32),
-                ('packetsize', c_uint32),
-                ('guid', c_uint8*16)]
+                ('packetsize', c_uint32)]
 
 
 class _ATCACUSTOM(Structure):
@@ -146,4 +155,5 @@ def cfg_atsha204a_kithid_default():
 
 
 # Make module import * safe - keep at the end of the file
-__all__ = ['ATCAIfaceCfg', 'ATCAIfaceType', 'ATCADeviceType'] + [x for x in dir() if x.startswith('cfg_')]
+__all__ = (['ATCAIfaceCfg', 'ATCAIfaceType', 'ATCADeviceType', 'ATCAKitType']
+           + [x for x in dir() if x.startswith('cfg_')])

@@ -648,6 +648,8 @@ void atCalcCrc(ATCAPacket *packet)
 {
     uint8_t length, *crc;
 
+    packet->param2 = ATCA_UINT16_HOST_TO_LE(packet->param2);
+
     length = packet->txsize - ATCA_CRC_SIZE;
     // computer pointer to CRC in the packet
     crc = &(packet->txsize) + length;

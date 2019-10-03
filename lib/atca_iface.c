@@ -227,12 +227,15 @@ void* atgetifacehaldat(ATCAIface ca_iface)
  */
 ATCA_STATUS releaseATCAIface(ATCAIface ca_iface)
 {
-    if (ca_iface == NULL)
+    ATCA_STATUS ret = ATCA_BAD_PARAM;
+
+    if (ca_iface)
     {
-        return ATCA_BAD_PARAM;
+        ret = hal_iface_release(ca_iface->mType, ca_iface->hal_data);
+        ca_iface->hal_data = NULL;
     }
 
-    return hal_iface_release(ca_iface->mType, ca_iface->hal_data);
+    return ret;
 }
 
 #ifndef ATCA_NO_HEAP

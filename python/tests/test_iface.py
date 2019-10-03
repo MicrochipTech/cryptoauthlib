@@ -22,7 +22,7 @@ def test_iface_cfg_size(test_iface_init):
 def test_iface_cfg_ateccx08a_i2c(test_iface_init):
     cfg = cfg_ateccx08a_i2c_default()
     assert cfg.iface_type == ATCAIfaceType.ATCA_I2C_IFACE
-    assert cfg.devtype == ATCADeviceType.ATECC508A
+    assert cfg.devtype == ATCADeviceType.ATECC608A
     assert cfg.cfg.atcai2c.slave_address == 0xC0
     assert cfg.cfg.atcai2c.bus == 2
     assert cfg.cfg.atcai2c.baud == 400000
@@ -31,14 +31,14 @@ def test_iface_cfg_ateccx08a_i2c(test_iface_init):
 def test_iface_cfg_ateccx08a_swi(test_iface_init):
     cfg = cfg_ateccx08a_swi_default()
     assert cfg.iface_type == ATCAIfaceType.ATCA_SWI_IFACE
-    assert cfg.devtype == ATCADeviceType.ATECC508A
+    assert cfg.devtype == ATCADeviceType.ATECC608A
     assert cfg.cfg.atcaswi.bus == 4
 
 
 def test_iface_cfg_ateccx08a_kithid(test_iface_init):
     cfg = cfg_ateccx08a_kithid_default()
     assert cfg.iface_type == ATCAIfaceType.ATCA_HID_IFACE
-    assert cfg.devtype == ATCADeviceType.ATECC508A
+    assert cfg.devtype == ATCADeviceType.ATECC608A
     assert cfg.cfg.atcahid.vid == 0x03EB
     assert cfg.cfg.atcahid.pid == 0x2312
 

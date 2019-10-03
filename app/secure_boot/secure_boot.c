@@ -26,14 +26,10 @@
  * THIS SOFTWARE.
  */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include <string.h>
 #include "secure_boot.h"
-#include "atca_iface.h"
-#include "hal/atca_hal.h"
-#include "test/atca_test.h"
 #include "io_protection_key.h"
-#include "crypto_device_app.h"
+#include "basic/atca_basic.h"
 
 /*Initialization routines */
 static ATCA_STATUS secure_boot_init(secure_boot_parameters* secure_boot_params);

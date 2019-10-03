@@ -61,6 +61,10 @@ Examples
 
 Release notes
 -----------
+08/30/2019
+  - Added big-endian architecture support
+  - Fixes to atcah_gen_dig() and atcah_nonce()
+
 05/17/2019
   - Added support for TNG devices (cert transforms, new API)
   - atcab_write_pub_key() now works when the data zone is unlocked
