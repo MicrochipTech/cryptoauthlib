@@ -51,4 +51,6 @@
 void pkcs11_util_escape_string(CK_UTF8CHAR_PTR buf, CK_ULONG buf_len);
 CK_RV pkcs11_util_convert_rv(ATCA_STATUS status);
 
+int pkcs11_util_memset(void *dest, size_t destsz, int ch, size_t count);
+
 #endif /* PKCS11_UTIL_H_ */

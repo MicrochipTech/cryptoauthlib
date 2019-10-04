@@ -934,14 +934,8 @@ CK_RV C_DeriveKey
     CK_OBJECT_HANDLE_PTR phKey
 )
 {
-    ((void)hSession);
-    ((void)pMechanism);
-    ((void)hBaseKey);
-    ((void)pTemplate);
-    ((void)ulCount);
-    ((void)phKey);
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(CKR_FUNCTION_NOT_SUPPORTED);
+    PKCS11_DEBUG_RETURN(pkcs11_key_derive(hSession, pMechanism, hBaseKey, pTemplate, ulCount, phKey));
 }
 
 /**

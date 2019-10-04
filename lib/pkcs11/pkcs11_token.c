@@ -304,6 +304,20 @@ CK_RV pkcs11_token_get_writable(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute
     return CKR_ARGUMENTS_BAD;
 }
 
+CK_RV pkcs11_token_get_storage(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+{
+    pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
+
+    if (obj_ptr->slot == 0xFFFF)
+    {
+        return pkcs11_attrib_false(pObject, pAttribute);
+    }
+    else
+    {
+        return pkcs11_attrib_true(pObject, pAttribute);
+    }
+}
+
 /**
  * \brief Obtains information about a particular token
  */

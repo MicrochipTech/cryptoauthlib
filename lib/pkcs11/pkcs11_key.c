@@ -37,13 +37,15 @@
 #include "pkcs11_session.h"
 #include "pkcs11_slot.h"
 #include "pkcs11_util.h"
+
 #include "cryptoauthlib.h"
+#include "crypto/atca_crypto_sw_sha1.h"
 
 /**
  * \defgroup pkcs11 Key (pkcs11_key_)
    @{ */
 
-CK_RV pkcs11_key_get_derivekey_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+static CK_RV pkcs11_key_get_derivekey_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
 {
     pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
 
@@ -56,7 +58,7 @@ CK_RV pkcs11_key_get_derivekey_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttri
             return CKR_GENERAL_ERROR;
         }
 
-        if (ATCA_SLOT_CONFIG_GEN_KEY_MASK & pConfig->SlotConfig[obj_ptr->slot])
+        if (ATCA_SLOT_CONFIG_ECDH_MASK & pConfig->SlotConfig[obj_ptr->slot])
         {
             return pkcs11_attrib_true(NULL, pAttribute);
         }
@@ -69,7 +71,7 @@ CK_RV pkcs11_key_get_derivekey_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttri
     return CKR_ARGUMENTS_BAD;
 }
 
-CK_RV pkcs11_key_get_local_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+static CK_RV pkcs11_key_get_local_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
 {
     pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
 
@@ -95,7 +97,7 @@ CK_RV pkcs11_key_get_local_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute
     return CKR_ARGUMENTS_BAD;
 }
 
-CK_RV pkcs11_key_get_gen_mechanism(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+static CK_RV pkcs11_key_get_gen_mechanism(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
 {
     ((void)pObject);
     ((void)pAttribute);
@@ -113,7 +115,7 @@ static const CK_MECHANISM_TYPE pkcs11_key_508_private_mech[] = {
     CKM_ECDSA_SHA256
 };
 
-CK_RV pkcs11_key_get_allowed_mechanisms(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+static CK_RV pkcs11_key_get_allowed_mechanisms(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
 {
     pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
 
@@ -157,7 +159,7 @@ static const uint8_t ec_x962_asn1_header[] = {
 /**
  * \brief Extract a public key and convert it to the asn.1 format
  */
-CK_RV pkcs11_key_get_public_key(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+static CK_RV pkcs11_key_get_public_key(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
 {
     pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
     atecc508a_config_t * pConfig;
@@ -199,12 +201,12 @@ CK_RV pkcs11_key_get_public_key(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute
 
 static const uint8_t pkcs11_key_ec_params[] = { 0x06, 0x08, 0x2a, 0x86, 0x48, 0xce, 0x3d, 0x03, 0x01, 0x07 };
 
-CK_RV pkcs11_key_get_ec_params(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+static CK_RV pkcs11_key_get_ec_params(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
 {
     return pkcs11_attrib_fill(pAttribute, (CK_VOID_PTR)pkcs11_key_ec_params, sizeof(pkcs11_key_ec_params));
 }
 
-CK_RV pkcs11_key_get_ec_point(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+static CK_RV pkcs11_key_get_ec_point(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
 {
     pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
     atecc508a_config_t * pConfig;
@@ -245,6 +247,54 @@ CK_RV pkcs11_key_get_ec_point(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
     else
     {
         return CKR_FUNCTION_FAILED;
+    }
+}
+
+static CK_RV pkcs11_key_get_secret(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+{
+    pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
+    if (obj_ptr)
+    {
+        return pkcs11_attrib_fill(pAttribute, (const CK_VOID_PTR)obj_ptr->data, obj_ptr->size);
+    }
+    else
+    {
+        return CKR_ARGUMENTS_BAD;
+    }
+}
+
+static CK_RV pkcs11_key_get_secret_length(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+{
+    pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
+
+    if (obj_ptr)
+    {
+        return pkcs11_attrib_fill(pAttribute, (const CK_VOID_PTR)obj_ptr->size, sizeof(CK_ULONG));
+    }
+    else
+    {
+        return CKR_ARGUMENTS_BAD;
+    }
+}
+
+static CK_RV pkcs11_key_get_check_value(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+{
+    pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
+    if (obj_ptr)
+    {
+        uint8_t sha1_digest[ATCA_SHA1_DIGEST_SIZE];
+        if(ATCA_SUCCESS == atcac_sw_sha1(obj_ptr->data, obj_ptr->size, sha1_digest))
+        {
+            return pkcs11_attrib_fill(pAttribute, sha1_digest, 3);
+        }
+        else
+        {
+            return CKR_GENERAL_ERROR;
+        }
+    }
+    else
+    {
+        return CKR_ARGUMENTS_BAD;
     }
 }
 
@@ -458,13 +508,13 @@ const pkcs11_attrib_model pkcs11_key_ec_private_attributes[] = {
 
 
 /**
- * CKO_SECRET_KEY - Private Key Object Base Model
+ * CKO_SECRET_KEY - Secret Key Object Base Model
  */
 const pkcs11_attrib_model pkcs11_key_secret_attributes[] = {
     /** Object Class - CK_OBJECT_CLASS */
     { CKA_CLASS,              pkcs11_object_get_class                                                             },
     /** CK_TRUE if object is a token object; CK_FALSE if object is a session object. Default is CK_FALSE. */
-    { CKA_TOKEN,              pkcs11_attrib_true                                                                  },
+    { CKA_TOKEN,              pkcs11_token_get_storage                                                            },
     /** CK_TRUE if object is a private object; CK_FALSE if object is a public object. */
     { CKA_PRIVATE,            pkcs11_token_get_access_type                                                        },
     /** CK_TRUE if object can be modified. Default is CK_TRUE. */
@@ -484,7 +534,7 @@ const pkcs11_attrib_model pkcs11_key_secret_attributes[] = {
     /** End date for the key (default empty) */
     { CKA_END_DATE,           pkcs11_attrib_empty                                                                 },
     /** CK_TRUE if key supports key derivation (i.e., if other keys can be derived from this one (default CK_FALSE) */
-    { CKA_DERIVE,             pkcs11_key_get_derivekey_flag                                                       },
+    { CKA_DERIVE,             pkcs11_attrib_true                                                                  },
     /** CK_TRUE only if key was either generated locally (i.e., on the token)
        with a C_GenerateKey or C_GenerateKeyPair call created with a C_CopyObject
        call as a copy of a key which had its CKA_LOCAL attribute set to CK_TRUE */
@@ -518,7 +568,7 @@ const pkcs11_attrib_model pkcs11_key_secret_attributes[] = {
     /** CK_TRUE if key has never had the CKA_EXTRACTABLE attribute set to CK_TRUE  */
     { CKA_NEVER_EXTRACTABLE,  NULL_PTR                                                                            },
     /** Key checksum */
-    { CKA_CHECK_VALUE,        NULL_PTR                                                                            },
+    { CKA_CHECK_VALUE,        pkcs11_key_get_check_value                                                          },
     /** CK_TRUE if the key can only be wrapped with a wrapping key that has CKA_TRUSTED set to CK_TRUE. Default is CK_FALSE. */
     { CKA_WRAP_WITH_TRUSTED,  NULL_PTR                                                                            },
     /**  The wrapping key can be used to wrap keys with CKA_WRAP_WITH_TRUSTED set to CK_TRUE. */
@@ -534,6 +584,10 @@ const pkcs11_attrib_model pkcs11_key_secret_attributes[] = {
         attributes in the array is the ulValueLen component of the attribute
         divided by the size of CK_ATTRIBUTE.  */
     { CKA_UNWRAP_TEMPLATE,    NULL_PTR                                                                            },
+    /* Key value */
+    { CKA_VALUE,              pkcs11_key_get_secret                                                               },
+    /* Length in bytes of the key */
+    { CKA_VALUE_LEN,          pkcs11_key_get_secret_length                                                        },
 };
 
 const CK_ULONG pkcs11_key_secret_attributes_count = PKCS11_UTIL_ARRAY_SIZE(pkcs11_key_secret_attributes);
@@ -703,7 +757,11 @@ CK_RV pkcs11_key_generate_pair
         pPublic->size = 64;
         pPublic->config = &((pkcs11_slot_ctx_ptr)pSession->slot)->cfg_zone;
 
-        rv = pkcs11_util_convert_rv(atcab_genkey(pPrivate->slot, NULL));
+        if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
+        {
+            rv = pkcs11_util_convert_rv(atcab_genkey(pPrivate->slot, NULL));
+            (void)pkcs11_unlock_context(pLibCtx);
+        }
     }
 
     if (CKR_OK == rv)
@@ -721,6 +779,142 @@ CK_RV pkcs11_key_generate_pair
         {
             pkcs11_object_free(pPublic);
         }
+    }
+
+    return rv;
+}
+
+static uint8_t key_cache[32];
+
+CK_RV pkcs11_key_derive
+(
+    CK_SESSION_HANDLE hSession,
+    CK_MECHANISM_PTR pMechanism,
+    CK_OBJECT_HANDLE hBaseKey,
+    CK_ATTRIBUTE_PTR pTemplate,
+    CK_ULONG ulCount,
+    CK_OBJECT_HANDLE_PTR phKey
+)
+{
+    pkcs11_session_ctx_ptr pSession;
+    pkcs11_lib_ctx_ptr pLibCtx;
+    pkcs11_object_ptr pBaseKey = NULL;
+    pkcs11_object_ptr pSecretKey = NULL;
+    CK_ECDH1_DERIVE_PARAMS_PTR pEcdhParameters;
+    CK_RV rv = CKR_OK;
+
+    rv = pkcs11_init_check(&pLibCtx, FALSE);
+    if (rv)
+    {
+        return rv;
+    }
+
+    if (!hSession || !pMechanism || !hBaseKey ||
+        !pTemplate || !ulCount || !phKey )
+    {
+        return CKR_ARGUMENTS_BAD;
+    }
+
+    *phKey = CK_INVALID_HANDLE;
+
+    if (CKM_ECDH1_DERIVE == pMechanism->mechanism || CKM_ECDH1_COFACTOR_DERIVE == pMechanism->mechanism)
+    {
+        if (sizeof(CK_ECDH1_DERIVE_PARAMS) != pMechanism->ulParameterLen ||
+            !pMechanism->pParameter)
+        {
+            rv = CKR_ARGUMENTS_BAD;
+        }
+        else
+        {
+            pEcdhParameters = (CK_ECDH1_DERIVE_PARAMS_PTR)pMechanism->pParameter;
+            if(!pEcdhParameters->pPublicData)
+            {
+                rv = CKR_ARGUMENTS_BAD;
+            }
+        }
+    }
+    else
+    {
+        rv = CKR_FUNCTION_NOT_SUPPORTED;
+    }
+
+    if (CKR_OK == rv)
+    {
+        rv = pkcs11_session_check(&pSession, hSession);
+    }
+
+    if (CKR_OK == rv)
+    {
+        rv = pkcs11_object_check(&pBaseKey, hBaseKey);
+    }
+
+    if (CKR_OK == rv)
+    {
+        rv = pkcs11_object_alloc(&pSecretKey);
+    }
+
+    for (int i = 0; (i < ulCount) && (CKR_OK == rv); i++)
+    {
+        if (CKA_LABEL == pTemplate[i].type)
+        {
+            if(pTemplate[i].pValue && pTemplate[i].ulValueLen > PKCS11_MAX_LABEL_SIZE)
+            {
+                rv = CKR_TEMPLATE_INCONSISTENT;
+            }
+            else
+            {
+                memcpy(pSecretKey->name, pTemplate[i].pValue, pTemplate[i].ulValueLen);
+            }
+        }
+        else if (CKA_CLASS == pTemplate[i].type)
+        {
+            if (sizeof(pSecretKey->class_id) != pTemplate[i].ulValueLen)
+            {
+                rv = CKR_TEMPLATE_INCONSISTENT;
+            }
+            else
+            {
+                memcpy(&pSecretKey->class_id, pTemplate[i].pValue, sizeof(pSecretKey->class_id));
+            }
+        }
+        else if (CKA_KEY_TYPE == pTemplate[i].type)
+        {
+            if (sizeof(pSecretKey->class_type) != pTemplate[i].ulValueLen)
+            {
+                rv = CKR_TEMPLATE_INCONSISTENT;
+            }
+            else
+            {
+                memcpy(&pSecretKey->class_type, pTemplate[i].pValue, sizeof(pSecretKey->class_type));
+            }
+        }
+    }
+
+    if (CKR_OK == rv)
+    {
+        /* Use the tempkey slot id */
+        pSecretKey->slot = 0xFFFF;
+        pSecretKey->attributes = pkcs11_key_secret_attributes;
+        pSecretKey->count = pkcs11_key_secret_attributes_count;
+        pSecretKey->size = 32;
+        pSecretKey->config = &((pkcs11_slot_ctx_ptr)pSession->slot)->cfg_zone;
+        pSecretKey->flags = PKCS11_OBJECT_FLAG_DESTROYABLE;
+        pSecretKey->data = key_cache;
+
+        if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
+        {
+            rv = pkcs11_util_convert_rv(atcab_ecdh(pBaseKey->slot, &pEcdhParameters->pPublicData[1], key_cache));
+            (void)pkcs11_unlock_context(pLibCtx);
+        }
+    }
+
+    if (CKR_OK == rv)
+    {
+        pkcs11_object_get_handle(pSecretKey, phKey);
+    }
+    else if (pSecretKey)
+    {
+        pkcs11_object_free(pSecretKey);
     }
 
     return rv;

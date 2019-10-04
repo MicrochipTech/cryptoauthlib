@@ -38,37 +38,11 @@
 #include "pkcs11_init.h"
 #include "pkcs11_slot.h"
 #include "pkcs11_object.h"
+#include "pkcs11_util.h"
 
 /**
  * \defgroup pkcs11 Session Management (pkcs11_)
    @{ */
-
-#ifndef memset_s
-int memset_s(void *dest, size_t destsz, int ch, size_t count)
-{
-    if (dest == NULL)
-    {
-        return -1;
-    }
-    if (destsz > SIZE_MAX)
-    {
-        return -1;
-    }
-    if (count > destsz)
-    {
-        return -1;
-    }
-
-    volatile unsigned char *p = dest;
-    while (destsz-- && count--)
-    {
-        *p++ = ch;
-    }
-
-    return 0;
-}
-#endif
-
 
 #if PKCS11_USE_STATIC_MEMORY
 static pkcs11_session_ctx pkcs11_session_cache[PKCS11_MAX_SESSIONS_ALLOWED];
@@ -253,7 +227,7 @@ CK_RV pkcs11_session_close(CK_SESSION_HANDLE hSession)
     }
 
     /* Free the session */
-    memset_s(session_ctx, sizeof(pkcs11_session_ctx), 0, sizeof(pkcs11_session_ctx));
+    (void)pkcs11_util_memset(session_ctx, sizeof(pkcs11_session_ctx), 0, sizeof(pkcs11_session_ctx));
 
     return CKR_OK;
 }
@@ -390,7 +364,7 @@ CK_RV pkcs11_session_logout(CK_SESSION_HANDLE hSession)
     }
 
     /* Wipe the io protection secret */
-    memset_s(session_ctx->read_key, sizeof(session_ctx->read_key), 0, sizeof(session_ctx->read_key));
+    (void)pkcs11_util_memset(session_ctx->read_key, sizeof(session_ctx->read_key), 0, sizeof(session_ctx->read_key));
 
     return CKR_OK;
 }
