@@ -181,7 +181,7 @@ ATCA_STATUS atcab_write_enc(uint16_t key_id, uint8_t block, const uint8_t *data,
     atca_write_mac_in_out_t write_mac_param;
     atca_temp_key_t temp_key;
     uint8_t serial_num[32];
-    uint8_t num_in[NONCE_NUMIN_SIZE] = { 0 };
+    const uint8_t num_in[NONCE_NUMIN_SIZE] = { 0 };
     uint8_t rand_out[RANDOM_NUM_SIZE] = { 0 };
     uint8_t cipher_text[ATCA_KEY_SIZE] = { 0 };
     uint8_t mac[WRITE_MAC_SIZE] = { 0 };
@@ -211,8 +211,8 @@ ATCA_STATUS atcab_write_enc(uint16_t key_id, uint8_t block, const uint8_t *data,
         memset(&nonce_params, 0, sizeof(nonce_params));
         nonce_params.mode = NONCE_MODE_SEED_UPDATE;
         nonce_params.zero = 0;
-        nonce_params.num_in = (uint8_t*)&num_in;
-        nonce_params.rand_out = (uint8_t*)&rand_out;
+        nonce_params.num_in = num_in;
+        nonce_params.rand_out = rand_out;
         nonce_params.temp_key = &temp_key;
 
         // Send the random Nonce command

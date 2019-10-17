@@ -237,7 +237,7 @@ ATCA_STATUS atcab_read_enc(uint16_t key_id, uint8_t block, uint8_t *data, const 
     atca_gen_dig_in_out_t gen_dig_param;
     atca_temp_key_t temp_key;
     uint8_t serial_num[32];
-    uint8_t num_in[NONCE_NUMIN_SIZE] = { 0 };
+    const uint8_t num_in[NONCE_NUMIN_SIZE] = { 0 };
     uint8_t rand_out[RANDOM_NUM_SIZE] = { 0 };
     uint8_t other_data[4] = { 0 };
     int i = 0;
@@ -270,8 +270,8 @@ ATCA_STATUS atcab_read_enc(uint16_t key_id, uint8_t block, uint8_t *data, const 
         memset(&nonce_params, 0, sizeof(nonce_params));
         nonce_params.mode = NONCE_MODE_SEED_UPDATE;
         nonce_params.zero = 0;
-        nonce_params.num_in = (uint8_t*)&num_in;
-        nonce_params.rand_out = (uint8_t*)&rand_out;
+        nonce_params.num_in = num_in;
+        nonce_params.rand_out = rand_out;
         nonce_params.temp_key = &temp_key;
         if ((status = atcah_nonce(&nonce_params)) != ATCA_SUCCESS)
         {
