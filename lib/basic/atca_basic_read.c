@@ -226,10 +226,12 @@ ATCA_STATUS atcab_is_locked(uint8_t zone, bool *is_locked)
  *                          here (32 bytes).
  *  \param[in]  enc_key     32 byte ReadKey for the slot being read.
  *  \param[in]  enc_key_id  KeyID of the ReadKey being used.
+ *  \param[in]  num_in      NONCE_NUMIN_SIZE host input bytes to contribute to the generation of the
+ *                          encryption key. If NULL, defaults to zero.
  *
  *  returns ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atcab_read_enc(uint16_t key_id, uint8_t block, uint8_t *data, const uint8_t* enc_key, const uint16_t enc_key_id)
+ATCA_STATUS atcab_read_enc(uint16_t key_id, uint8_t block, uint8_t *data, const uint8_t* enc_key, const uint16_t enc_key_id, const uint8_t* num_in)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t zone = ATCA_ZONE_DATA | ATCA_ZONE_READWRITE_32;
@@ -237,7 +239,10 @@ ATCA_STATUS atcab_read_enc(uint16_t key_id, uint8_t block, uint8_t *data, const 
     atca_gen_dig_in_out_t gen_dig_param;
     atca_temp_key_t temp_key;
     uint8_t serial_num[32];
-    const uint8_t num_in[NONCE_NUMIN_SIZE] = { 0 };
+    const uint8_t num_in_default[NONCE_NUMIN_SIZE] = { 0 };
+    if (num_in == NULL) {
+        num_in = num_in_default;
+    }
     uint8_t rand_out[RANDOM_NUM_SIZE] = { 0 };
     uint8_t other_data[4] = { 0 };
     int i = 0;

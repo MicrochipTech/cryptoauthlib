@@ -184,7 +184,7 @@ ATCA_STATUS atcab_read_pubkey(uint16_t slot, uint8_t *public_key);
 ATCA_STATUS atcab_read_sig(uint16_t slot, uint8_t *sig);
 ATCA_STATUS atcab_read_config_zone(uint8_t* config_data);
 ATCA_STATUS atcab_cmp_config_zone(uint8_t* config_data, bool* same_config);
-ATCA_STATUS atcab_read_enc(uint16_t key_id, uint8_t block, uint8_t *data, const uint8_t* enc_key, const uint16_t enc_key_id);
+ATCA_STATUS atcab_read_enc(uint16_t key_id, uint8_t block, uint8_t *data, const uint8_t* enc_key, const uint16_t enc_key_id, const uint8_t* num_in);
 
 // SecureBoot command functions
 ATCA_STATUS atcab_secureboot(uint8_t mode, uint16_t param2, const uint8_t* digest, const uint8_t* signature, uint8_t* mac);
