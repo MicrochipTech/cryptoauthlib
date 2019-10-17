@@ -278,7 +278,7 @@ ATCA_STATUS atcab_read_enc(uint16_t key_id, uint8_t block, uint8_t *data, const 
         nonce_params.mode = NONCE_MODE_SEED_UPDATE;
         nonce_params.zero = 0;
         nonce_params.num_in = (uint8_t*)&num_in[0];
-        nonce_params.rand_out = (uint8_t*)&rand_out;
+        nonce_params.rand_out = rand_out;
         nonce_params.temp_key = &temp_key;
         if ((status = atcah_nonce(&nonce_params)) != ATCA_SUCCESS)
         {
