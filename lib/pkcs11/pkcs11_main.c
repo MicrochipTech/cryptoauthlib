@@ -238,11 +238,8 @@ CK_RV C_InitToken(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen, CK
  */
 CK_RV C_InitPIN(CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen)
 {
-    ((void)hSession);
-    ((void)pPin);
-    ((void)ulPinLen);
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(CKR_FUNCTION_NOT_SUPPORTED);
+    PKCS11_DEBUG_RETURN(pkcs11_token_set_pin(hSession, NULL, 0, pPin, ulPinLen));
 }
 
 /**

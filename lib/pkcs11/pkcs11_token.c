@@ -359,9 +359,9 @@ CK_RV pkcs11_token_get_info(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)
     pInfo->ulFreePublicMemory = CK_UNAVAILABLE_INFORMATION;
     pInfo->ulTotalPrivateMemory = CK_UNAVAILABLE_INFORMATION;
     pInfo->ulFreePrivateMemory = CK_UNAVAILABLE_INFORMATION;
-    pInfo->ulMaxPinLen = 0;
+    pInfo->ulMaxPinLen = 128;
     pInfo->ulMinPinLen = 0;
-    pInfo->flags = CKF_RNG;
+    pInfo->flags = CKF_RNG | CKF_LOGIN_REQUIRED;
 
     pInfo->ulMaxSessionCount = 1;
     pInfo->ulMaxRwSessionCount = 1;
@@ -488,17 +488,61 @@ CK_RV pkcs11_token_random(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pRandomData, C
     return CKR_OK;
 }
 
+CK_RV pkcs11_token_convert_pin_to_key(
+    const CK_UTF8CHAR_PTR pPin,
+    const CK_ULONG ulPinLen, 
+    const CK_UTF8CHAR_PTR pSalt, 
+    const CK_ULONG ulSaltLen, 
+    CK_BYTE_PTR pKey, 
+    CK_ULONG ulKeyLen
+    )
+{
+    ATCA_STATUS status = ATCA_SUCCESS;
+
+    if (!pPin || !ulPinLen || !pKey || 32 != ulKeyLen)
+    {
+        return CKR_ARGUMENTS_BAD;
+    }
+
+    if (64 != ulPinLen)
+    {
+        atcac_sha2_256_ctx ctx;
+        status = atcac_sw_sha2_256_init(&ctx);
+
+        if (ATCA_SUCCESS == status)
+        {
+            status = atcac_sw_sha2_256_update(&ctx, pPin, ulPinLen);
+        }
+
+        if (ATCA_SUCCESS == status)
+        {
+            status = atcac_sw_sha2_256_update(&ctx, pSalt, ulSaltLen);
+        }
+
+        if (ATCA_SUCCESS == status)
+        {
+            status = atcac_sw_sha2_256_finish(&ctx, pKey);
+        }
+    }
+    else
+    {
+        status = atcab_hex2bin(pPin, ulPinLen, pKey, &ulKeyLen);
+    }
+
+    return pkcs11_util_convert_rv(status);
+}
+
+#include <stdio.h>
 CK_RV pkcs11_token_set_pin(CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pOldPin,
                            CK_ULONG ulOldLen, CK_UTF8CHAR_PTR pNewPin, CK_ULONG ulNewLen)
 {
     pkcs11_session_ctx_ptr pSession;
-    pkcs11_lib_ctx_ptr lib_ctx;
-    ATCA_STATUS status;
+    pkcs11_lib_ctx_ptr pLibCtx;
+    uint16_t pin_slot;
     uint8_t buf[32];
-    size_t buflen = sizeof(buf);
     CK_RV rv;
 
-    rv = pkcs11_init_check(&lib_ctx, FALSE);
+    rv = pkcs11_init_check(&pLibCtx, FALSE);
     if (rv)
     {
         return rv;
@@ -515,22 +559,37 @@ CK_RV pkcs11_token_set_pin(CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pOldPin,
         return rv;
     }
 
-    /* Covert the pin to a key  */
-    if (CKR_OK == rv)
+    if (64 != ulNewLen)
     {
-        rv = atcab_hex2bin(pNewPin, ulNewLen, buf, &buflen);
+        if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
+        {
+            rv = pkcs11_util_convert_rv(atcab_read_serial_number(buf));
+            (void)pkcs11_unlock_context(pLibCtx);
+        }
+
+        if (CKR_OK == rv)
+        {
+            rv = pkcs11_token_convert_pin_to_key(pNewPin, ulNewLen, buf, ATCA_SERIAL_NUM_SIZE, 
+                                buf, (CK_LONG)sizeof(buf));
+        }
     }
+    else
+    {
+        rv = pkcs11_token_convert_pin_to_key(pNewPin, ulNewLen, NULL, 0, buf, (CK_LONG)sizeof(buf));
+    }
+
+    pin_slot = (ATCA_CHIP_OPT_IO_PROT_KEY_MASK & pSession->slot->cfg_zone.ChipOptions) >> ATCA_CHIP_OPT_IO_PROT_KEY_SHIFT;
 
     if (CKR_OK == rv)
     {
-        rv = atcab_write_zone(ATCA_ZONE_DATA, PKCS11_PIN_SLOT, 0, 0, buf, buflen);
+        rv = atcab_write_zone(ATCA_ZONE_DATA, pin_slot, 0, 0, buf, sizeof(buf));
     }
 
     /* Lock the pin once it has been written */
 #if PKCS11_LOCK_PIN_SLOT
     if (CKR_OK == rv)
     {
-        rv = atcab_lock_data_slot(PKCS11_PIN_SLOT);
+        rv = atcab_lock_data_slot(pin_slot);
     }
 #endif
 

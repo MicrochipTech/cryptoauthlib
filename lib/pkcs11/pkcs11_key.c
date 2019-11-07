@@ -784,7 +784,24 @@ CK_RV pkcs11_key_generate_pair
     return rv;
 }
 
-static uint8_t key_cache[32];
+#if PKCS11_USE_STATIC_MEMORY
+static uint8_t pkcs11_key_cache[32];
+
+static uint8_t pkcs11_key_used(uint8_t * key, size_t keylen)
+{
+    if (key)
+    {
+        for(int i=0; i<keylen; i++)
+        {
+            if (key[i])
+            {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+#endif
 
 CK_RV pkcs11_key_derive
 (
@@ -893,18 +910,75 @@ CK_RV pkcs11_key_derive
     if (CKR_OK == rv)
     {
         /* Use the tempkey slot id */
-        pSecretKey->slot = 0xFFFF;
+        pSecretKey->slot = ATCA_TEMPKEY_KEYID;
         pSecretKey->attributes = pkcs11_key_secret_attributes;
         pSecretKey->count = pkcs11_key_secret_attributes_count;
         pSecretKey->size = 32;
         pSecretKey->config = &((pkcs11_slot_ctx_ptr)pSession->slot)->cfg_zone;
-        pSecretKey->flags = PKCS11_OBJECT_FLAG_DESTROYABLE;
-        pSecretKey->data = key_cache;
+        pSecretKey->flags = PKCS11_OBJECT_FLAG_DESTROYABLE | PKCS11_OBJECT_FLAG_SENSITIVE;
+#if PKCS11_USE_STATIC_MEMORY
+        if(!pkcs11_key_used(pkcs11_key_cache, sizeof(pkcs11_key_cache)))
+        {
+            pSecretKey->data = pkcs11_key_cache;
+        }
+#else
+        pSecretKey->data = pkcs11_os_malloc(pSecretKey->size);
+#endif
+        if(!pSecretKey->data)
+        {
+            rv = CKR_HOST_MEMORY;
+        }
+    }
 
+    if (CKR_OK == rv)
+    {
         if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
         {
-            rv = pkcs11_util_convert_rv(atcab_ecdh(pBaseKey->slot, &pEcdhParameters->pPublicData[1], key_cache));
+            ATCA_STATUS status = ATCA_SUCCESS;
+
+            /* Because of the number of ECDH options this function unfortunately has a complex bit of logic
+               to walk through to select the proper ECDH command. Normally this would be left up to the user
+               to chose */
+
+            if (ATCA_TEMPKEY_KEYID == pBaseKey->slot)
+            {
+                if (pSession->logged_in)
+                {
+                    status = atcab_ecdh_tempkey_ioenc(&pEcdhParameters->pPublicData[1], pSecretKey->data, pSession->read_key);
+                }
+                else
+                {
+                    status = atcab_ecdh_tempkey(&pEcdhParameters->pPublicData[1], pSecretKey->data);
+                }
+            }
+            else if (16 > pBaseKey->slot)
+            {
+                if (ATCA_SLOT_CONFIG_WRITE_ECDH_MASK & pSession->slot->cfg_zone.SlotConfig[pBaseKey->slot])
+                {
+                    uint16_t read_key_id = (ATCA_SLOT_CONFIG_READKEY_MASK & pSession->slot->cfg_zone.SlotConfig[pBaseKey->slot]) 
+                                            >> ATCA_SLOT_CONFIG_READKEY_SHIFT;
+                    status = atcab_ecdh_enc(pBaseKey->slot, &pEcdhParameters->pPublicData[1], pSecretKey->data,
+                                            pSession->read_key, read_key_id);
+                }
+                else if ((ATECC508A != pSession->slot->interface_config->devtype) &&
+                         (ATCA_CHIP_OPT_IO_PROT_EN_MASK & pSession->slot->cfg_zone.ChipOptions) &&
+                         pSession->logged_in)
+                {
+                    status = atcab_ecdh_ioenc(pBaseKey->slot, &pEcdhParameters->pPublicData[1], pSecretKey->data, pSession->read_key);
+                }
+                else
+                {
+                    status = atcab_ecdh(pBaseKey->slot, &pEcdhParameters->pPublicData[1], pSecretKey->data);
+                }
+            }
+            else
+            {
+                status = ATCA_GEN_FAIL;
+            }
+
             (void)pkcs11_unlock_context(pLibCtx);
+
+            rv = pkcs11_util_convert_rv(status);
         }
     }
 
