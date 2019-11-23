@@ -1,6 +1,4 @@
 var a00059 =
 [
-    [ "CRYPTOAUTH_ROOT_CA_002_PUBLIC_KEY_OFFSET", "a06487.html#ga9d67f287321c5821711e9cc0ef332b3b", null ],
-    [ "g_cryptoauth_root_ca_002_cert", "a06487.html#ga5c01e37d1f10dbf90d50208cbc5bc8ab", null ],
-    [ "g_cryptoauth_root_ca_002_cert_size", "a06487.html#gabff789f84f8f178a30ce06792fe47771", null ]
+    [ "g_tnglora_cert_def_2_device", "a11686.html#ga2782386bf16b0d23cb84bd371e010ac1", null ]
 ];

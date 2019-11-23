@@ -1,5 +1,5 @@
 var a00044 =
 [
-    [ "tng_get_device_pubkey", "a06487.html#ga6bdd6b8ace7a98b7efbc13f85ffaac1a", null ],
-    [ "tng_get_type", "a06487.html#ga421d9b1fd3aba60c947d6b3efb122390", null ]
+    [ "g_cryptoauth_root_ca_002_cert", "a00044.html#ac8701381ff8ac8a30fded35b8ef38920", null ],
+    [ "g_cryptoauth_root_ca_002_cert_size", "a00044.html#abff789f84f8f178a30ce06792fe47771", null ]
 ];

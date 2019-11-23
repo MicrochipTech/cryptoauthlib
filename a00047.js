@@ -1,12 +1,6 @@
 var a00047 =
 [
-    [ "TNG22_PRIMARY_KEY_SLOT", "a06487.html#gadc3504154ad83e140440f65534c15c63", null ],
-    [ "TNGTN_PRIMARY_KEY_SLOT", "a06487.html#ga7f5e2986348fe1200f43e5456dd90cc7", null ],
-    [ "tng_type_t", "a06487.html#ga91acea350b146040fc32c64eac8054f7", [
-      [ "TNGTYPE_UNKNOWN", "a06487.html#gga91acea350b146040fc32c64eac8054f7a5b74509d0d64689d7acb7abf01a60f3e", null ],
-      [ "TNGTYPE_22", "a06487.html#gga91acea350b146040fc32c64eac8054f7a977c3f9fab34c7b46991dc1b2c84cb56", null ],
-      [ "TNGTYPE_TN", "a06487.html#gga91acea350b146040fc32c64eac8054f7a08422f2a9b83a26469ab56fa3f3cfa7c", null ]
-    ] ],
-    [ "tng_get_device_pubkey", "a06487.html#ga6bdd6b8ace7a98b7efbc13f85ffaac1a", null ],
-    [ "tng_get_type", "a06487.html#ga421d9b1fd3aba60c947d6b3efb122390", null ]
+    [ "CRYPTOAUTH_ROOT_CA_002_PUBLIC_KEY_OFFSET", "a11686.html#ga9d67f287321c5821711e9cc0ef332b3b", null ],
+    [ "g_cryptoauth_root_ca_002_cert", "a11686.html#ga5c01e37d1f10dbf90d50208cbc5bc8ab", null ],
+    [ "g_cryptoauth_root_ca_002_cert_size", "a11686.html#gabff789f84f8f178a30ce06792fe47771", null ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: tng_atca.c File Reference</title>
+<title>CryptoAuthLib: tng_root_cert.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,28 +87,62 @@ $(document).ready(function(){initNavTree('a00044.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">tng_atca.c File Reference</div>  </div>
+<div class="title">tng_root_cert.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="a00047_source.html">tng_atca.h</a>&quot;</code><br />
+
+<p>TNG root certificate (DER)  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;stddef.h&gt;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga421d9b1fd3aba60c947d6b3efb122390"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a05657.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a06487.html#ga421d9b1fd3aba60c947d6b3efb122390">tng_get_type</a> (<a class="el" href="a06487.html#ga91acea350b146040fc32c64eac8054f7">tng_type_t</a> *type)</td></tr>
-<tr class="memdesc:ga421d9b1fd3aba60c947d6b3efb122390"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the type of TNG device.  <a href="a06487.html#ga421d9b1fd3aba60c947d6b3efb122390">More...</a><br /></td></tr>
-<tr class="separator:ga421d9b1fd3aba60c947d6b3efb122390"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6bdd6b8ace7a98b7efbc13f85ffaac1a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a05657.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a06487.html#ga6bdd6b8ace7a98b7efbc13f85ffaac1a">tng_get_device_pubkey</a> (uint8_t *public_key)</td></tr>
-<tr class="memdesc:ga6bdd6b8ace7a98b7efbc13f85ffaac1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses GenKey command to calculate the public key from the primary device public key.  <a href="a06487.html#ga6bdd6b8ace7a98b7efbc13f85ffaac1a">More...</a><br /></td></tr>
-<tr class="separator:ga6bdd6b8ace7a98b7efbc13f85ffaac1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ac8701381ff8ac8a30fded35b8ef38920"><td class="memItemLeft" align="right" valign="top">const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ac8701381ff8ac8a30fded35b8ef38920">g_cryptoauth_root_ca_002_cert</a> [501]</td></tr>
+<tr class="separator:ac8701381ff8ac8a30fded35b8ef38920"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abff789f84f8f178a30ce06792fe47771"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#abff789f84f8f178a30ce06792fe47771">g_cryptoauth_root_ca_002_cert_size</a> = sizeof(<a class="el" href="a11686.html#ga5c01e37d1f10dbf90d50208cbc5bc8ab">g_cryptoauth_root_ca_002_cert</a>)</td></tr>
+<tr class="separator:abff789f84f8f178a30ce06792fe47771"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>TNG root certificate (DER) </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2019 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+</div><h2 class="groupheader">Variable Documentation</h2>
+<a id="ac8701381ff8ac8a30fded35b8ef38920"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8701381ff8ac8a30fded35b8ef38920">&#9670;&nbsp;</a></span>g_cryptoauth_root_ca_002_cert</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint8_t g_cryptoauth_root_ca_002_cert[501]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abff789f84f8f178a30ce06792fe47771"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abff789f84f8f178a30ce06792fe47771">&#9670;&nbsp;</a></span>g_cryptoauth_root_ca_002_cert_size</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const size_t g_cryptoauth_root_ca_002_cert_size = sizeof(<a class="el" href="a11686.html#ga5c01e37d1f10dbf90d50208cbc5bc8ab">g_cryptoauth_root_ca_002_cert</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d422163b96683743ed3963d4aac17747.html">app</a></li><li class="navelem"><a class="el" href="dir_6319b470d978b666f57c44c2de446197.html">tng</a></li><li class="navelem"><a class="el" href="a00044.html">tng_atca.c</a></li>
+    <li class="navelem"><a class="el" href="dir_d422163b96683743ed3963d4aac17747.html">app</a></li><li class="navelem"><a class="el" href="dir_6319b470d978b666f57c44c2de446197.html">tng</a></li><li class="navelem"><a class="el" href="a00044.html">tng_root_cert.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.16 </li>

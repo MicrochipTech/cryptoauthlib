@@ -124,9 +124,15 @@ $(document).ready(function(){initNavTree('index.html','');});
 <li>Node Authentication Example Using Asymmetric PKI is a complete, all-in-one example demonstrating all the stages of crypto authentication starting from provisioning the Crypto Authentication device ATECC608A/ATECC508A with keys and certificates to demonstrating an authentication sequence using asymmetric techniques. <a href="http://www.microchip.com/SWLibraryWeb/product.aspx?product=CryptoAuthLib">http://www.microchip.com/SWLibraryWeb/product.aspx?product=CryptoAuthLib</a></li>
 </ul>
 <h1>Release notes </h1>
-<p>Next Release</p><ul>
+<p>11/22/2019</p><ul>
+<li>Patches for CVE-2019-16128 &amp; CVE-2019-16129: Ensure reported packet length is valid for the packet being processed.</li>
+<li>Improvement to encrypted read operations to allow supply of a host nonce (prevent replay of a read sequence to the host). Default API is changed but can be reverted by setting the option ATCA_USE_CONSTANT_HOST_NONCE</li>
+<li>Added Azure compatible TNGTLS and TNGLORA certificates. Use the TNG client API to retrieve the proper certificate based on the device.</li>
+<li>Misc Python updates (updated APIs for encrypted reads to match the C-API change) atcacert_cert_element_t now initializes properly</li>
+</ul>
+<p>08/30/2019</p><ul>
 <li>Added big-endian architecture support</li>
-<li>Fixes to <a class="el" href="a06484.html#ga6f6043ba8eebbaab6e6f3b4fa5e31ad4" title="This function combines the current TempKey with a stored value.">atcah_gen_dig()</a> and <a class="el" href="a06484.html#ga9ee18575f8b4c1560f9e5c741403ef1b" title="This function calculates host side nonce with the parameters passed.">atcah_nonce()</a></li>
+<li>Fixes to <a class="el" href="a11683.html#ga6f6043ba8eebbaab6e6f3b4fa5e31ad4" title="This function combines the current TempKey with a stored value.">atcah_gen_dig()</a> and <a class="el" href="a11683.html#ga9ee18575f8b4c1560f9e5c741403ef1b" title="This function calculates host side nonce with the parameters passed.">atcah_nonce()</a></li>
 </ul>
 <p>05/17/2019</p><ul>
 <li>Added support for TNG devices (cert transforms, new API)</li>
@@ -164,14 +170,14 @@ $(document).ready(function(){initNavTree('index.html','');});
 <li>Added ATCA_NO_HEAP define to remove use of malloc/free.</li>
 <li>Moved PEM functions to their own file in atcacert.</li>
 <li>Added wake retry to accomodate power on self test delay.</li>
-<li>Added ca_cert_def member to <a class="el" href="a06551.html">atcacert_def_s</a> so cert chains can be traversed as a linked list.</li>
+<li>Added ca_cert_def member to <a class="el" href="a11750.html">atcacert_def_s</a> so cert chains can be traversed as a linked list.</li>
 </ul>
 <p>03/29/2018</p><ul>
 <li>Added support for response polling by default, which will make commands return faster (define ATCA_NO_POLL to use old delay method).</li>
 <li>Removed atcatls related files as they were of limited value.</li>
 <li>Test framework generates a prompt before locking test configuration.</li>
 <li>Test framework puts device to sleep between tests.</li>
-<li>Fixed mode parameter issue in <a class="el" href="a06484.html#gabf2abd4bd62f47537756c9ab109050c0" title="Calculate the PubKey digest created by GenKey and saved to TempKey.">atcah_gen_key_msg()</a>.</li>
+<li>Fixed mode parameter issue in <a class="el" href="a11683.html#gabf2abd4bd62f47537756c9ab109050c0" title="Calculate the PubKey digest created by GenKey and saved to TempKey.">atcah_gen_key_msg()</a>.</li>
 <li>ATECC608A health test error code added.</li>
 </ul>
 <p>01/15/2018</p><ul>
@@ -187,38 +193,38 @@ $(document).ready(function(){initNavTree('index.html','');});
 <li>atca_basic functions and tests now split into multiple files based on command</li>
 <li>Added support for multiple base64 encoding rules</li>
 <li>Added support for JSON Web Tokens (jwt)</li>
-<li>Fixed <a class="el" href="a06481.html#ga14cf75d1be264ac1125087d76ee6344c" title="Executes the Write command, which performs an encrypted write of a 32 byte block into given slot.">atcab_write_enc()</a> function to encrypt the data even when the device is unlocked</li>
-<li>Fixed <a class="el" href="a05795.html#aeeff0177acf29e6e7b134a14d7119d69" title="Encode data as base64 string with ruleset option.">atcab_base64encode_()</a> for the extra newline</li>
-<li>Updated <a class="el" href="a06481.html#gab6e0c175cbcb5f794b12a8ec22485176" title="ECDH command with a private key in a slot and the premaster secret is read from the next slot.">atcab_ecdh_enc()</a> to work more consistently</li>
+<li>Fixed <a class="el" href="a11680.html#ga80527ef059ce0a2765c2ee316b04e09b" title="Executes the Write command, which performs an encrypted write of a 32 byte block into given slot.">atcab_write_enc()</a> function to encrypt the data even when the device is unlocked</li>
+<li>Fixed <a class="el" href="a10991.html#aeeff0177acf29e6e7b134a14d7119d69" title="Encode data as base64 string with ruleset option.">atcab_base64encode_()</a> for the extra newline</li>
+<li>Updated <a class="el" href="a11680.html#ga8b560281d2e130a123e701c22bccd200" title="ECDH command with a private key in a slot and the premaster secret is read from the next slot.">atcab_ecdh_enc()</a> to work more consistently</li>
 </ul>
 <p>07/01/2017</p><ul>
 <li>Removed assumption of SN[0:1]=0123, SN[8]=EE. SN now needs to be passed in for functions in atca_host and atca_basic functions will now read the config zone for the SN if needed.</li>
-<li>Renamed atcab_gendig_host() to <a class="el" href="a06481.html#ga70751ea87f2cf913986bc7bca2cc661f" title="Issues a GenDig command, which performs a SHA256 hash on the source data indicated by zone with the c...">atcab_gendig()</a> since it's not a host function. Removed original <a class="el" href="a06481.html#ga70751ea87f2cf913986bc7bca2cc661f" title="Issues a GenDig command, which performs a SHA256 hash on the source data indicated by zone with the c...">atcab_gendig()</a>, which had limited scope.</li>
-<li>Fixed <a class="el" href="a06484.html#gab17435577e546d2954bd697f21e6d3cc" title="This function generates an HMAC / SHA-256 hash of a key and other information.">atcah_hmac()</a> for host side HMAC calculations. Added <a class="el" href="a06481.html#ga45f1d09a51f7a1f68916536ab5125b9d" title="Issues a HMAC command, which computes an HMAC/SHA-256 digest of a key stored in the device,...">atcab_hmac()</a>.</li>
+<li>Renamed atcab_gendig_host() to <a class="el" href="a11680.html#ga70751ea87f2cf913986bc7bca2cc661f" title="Issues a GenDig command, which performs a SHA256 hash on the source data indicated by zone with the c...">atcab_gendig()</a> since it's not a host function. Removed original <a class="el" href="a11680.html#ga70751ea87f2cf913986bc7bca2cc661f" title="Issues a GenDig command, which performs a SHA256 hash on the source data indicated by zone with the c...">atcab_gendig()</a>, which had limited scope.</li>
+<li>Fixed <a class="el" href="a11683.html#gab17435577e546d2954bd697f21e6d3cc" title="This function generates an HMAC / SHA-256 hash of a key and other information.">atcah_hmac()</a> for host side HMAC calculations. Added <a class="el" href="a11680.html#ga45f1d09a51f7a1f68916536ab5125b9d" title="Issues a HMAC command, which computes an HMAC/SHA-256 digest of a key stored in the device,...">atcab_hmac()</a>.</li>
 <li>Removed unnecessary ATCADeviceType parameters from some atca_basic functions.</li>
-<li>Added <a class="el" href="a06480.html#gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6" title="Creates a CSR specified by the CSR definition from the ATECC508A device. This process involves readin...">atcacert_create_csr()</a> to create a signed CSR.</li>
+<li>Added <a class="el" href="a11679.html#gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6" title="Creates a CSR specified by the CSR definition from the ATECC508A device. This process involves readin...">atcacert_create_csr()</a> to create a signed CSR.</li>
 <li>New HAL implementation for Kit protocol over HID on Linux. Please see the Incorporating CryptoAuthLib in a Linux project using USB HID devices section in this file for more information.</li>
-<li>Added <a class="el" href="a06480.html#ga71ea9d7c93c2fecb87a36b1343397fad" title="Take a full certificate and write it to the ATECC508A device according to the certificate definition.">atcacert_write_cert()</a> for writing certificates to the device.</li>
+<li>Added <a class="el" href="a11679.html#ga71ea9d7c93c2fecb87a36b1343397fad" title="Take a full certificate and write it to the ATECC508A device according to the certificate definition.">atcacert_write_cert()</a> for writing certificates to the device.</li>
 <li>Added support for dynamic length certificate serial numbers in atcacert.</li>
-<li>Added <a class="el" href="a06481.html#gabf2b29b4d3ae926b63c403d084380dbe" title="Executes the Write command, which writes either one four byte word or a 32-byte block to one of the E...">atcab_write()</a> for lower level write commands.</li>
-<li>Fixed <a class="el" href="a06484.html#ga47853951c57803eff1432780bf360057" title="This function calculates the input MAC for the Write command.">atcah_write_auth_mac()</a>, which had wrong OpCode.</li>
-<li>Added <a class="el" href="a06481.html#ga694d921c7bc17a0e158ef96e3d476700" title="Executes the Verify command, which takes an ECDSA [R,S] signature and verifies that it is correctly g...">atcab_verify()</a> command for lower level verify commands.</li>
-<li>Added <a class="el" href="a06481.html#gae8cc7670847805423ad591985eecd832" title="Executes the Verify command, which verifies a signature (ECDSA verify operation) with a public key st...">atcab_verify_stored()</a> for verifying data with a stored public key.</li>
-<li>Removed atcab_write_bytes_slot(). Use <a class="el" href="a06481.html#gac395a7e195aa3cf28b48de345755feb0" title="Executes the Write command, which writes data into the configuration, otp, or data zones with a given...">atcab_write_bytes_zone()</a> instead.</li>
-<li>Modified <a class="el" href="a06481.html#gac395a7e195aa3cf28b48de345755feb0" title="Executes the Write command, which writes data into the configuration, otp, or data zones with a given...">atcab_write_bytes_zone()</a> and <a class="el" href="a06481.html#ga750704332198726725a327344f4f7dd5" title="Used to read an arbitrary number of bytes from any zone configured for clear reads.">atcab_read_bytes_zone()</a> to specify a slot</li>
-<li>Added <a class="el" href="a06481.html#gacf9a0c7772ebb65b87c4a4788850702b" title="Executes the Verify command in Validate mode to validate a public key stored in a slot.">atcab_verify_validate()</a> and <a class="el" href="a06481.html#ga9393b545b2fa1fdd539672a0428a30ab" title="Executes the Verify command in Invalidate mode which invalidates a previously validated public key st...">atcab_verify_invalidate()</a></li>
+<li>Added <a class="el" href="a11680.html#gabf2b29b4d3ae926b63c403d084380dbe" title="Executes the Write command, which writes either one four byte word or a 32-byte block to one of the E...">atcab_write()</a> for lower level write commands.</li>
+<li>Fixed <a class="el" href="a11683.html#ga47853951c57803eff1432780bf360057" title="This function calculates the input MAC for the Write command.">atcah_write_auth_mac()</a>, which had wrong OpCode.</li>
+<li>Added <a class="el" href="a11680.html#ga694d921c7bc17a0e158ef96e3d476700" title="Executes the Verify command, which takes an ECDSA [R,S] signature and verifies that it is correctly g...">atcab_verify()</a> command for lower level verify commands.</li>
+<li>Added <a class="el" href="a11680.html#gae8cc7670847805423ad591985eecd832" title="Executes the Verify command, which verifies a signature (ECDSA verify operation) with a public key st...">atcab_verify_stored()</a> for verifying data with a stored public key.</li>
+<li>Removed atcab_write_bytes_slot(). Use <a class="el" href="a11680.html#gac395a7e195aa3cf28b48de345755feb0" title="Executes the Write command, which writes data into the configuration, otp, or data zones with a given...">atcab_write_bytes_zone()</a> instead.</li>
+<li>Modified <a class="el" href="a11680.html#gac395a7e195aa3cf28b48de345755feb0" title="Executes the Write command, which writes data into the configuration, otp, or data zones with a given...">atcab_write_bytes_zone()</a> and <a class="el" href="a11680.html#ga750704332198726725a327344f4f7dd5" title="Used to read an arbitrary number of bytes from any zone configured for clear reads.">atcab_read_bytes_zone()</a> to specify a slot</li>
+<li>Added <a class="el" href="a11680.html#gacf9a0c7772ebb65b87c4a4788850702b" title="Executes the Verify command in Validate mode to validate a public key stored in a slot.">atcab_verify_validate()</a> and <a class="el" href="a11680.html#ga9393b545b2fa1fdd539672a0428a30ab" title="Executes the Verify command in Invalidate mode which invalidates a previously validated public key st...">atcab_verify_invalidate()</a></li>
 <li>Improvements to host functions to handle more cases.</li>
-<li>Added <a class="el" href="a06481.html#ga416e4aeacf3acc35b1d5b76028c6947d" title="Executes UpdateExtra command to update the values of the two extra bytes within the Configuration zon...">atcab_updateextra()</a>, atcab_derive_key()</li>
+<li>Added <a class="el" href="a11680.html#ga416e4aeacf3acc35b1d5b76028c6947d" title="Executes UpdateExtra command to update the values of the two extra bytes within the Configuration zon...">atcab_updateextra()</a>, atcab_derive_key()</li>
 <li>Added support for more certificate formats.</li>
-<li>Added general purpose hardware SHA256 functions. See <a class="el" href="a06481.html#ga4bf8b665fe1712626a480742c2daa16b" title="Use the SHA command to compute a SHA-256 digest.">atcab_hw_sha2_256()</a>.</li>
+<li>Added general purpose hardware SHA256 functions. See <a class="el" href="a11680.html#ga4bf8b665fe1712626a480742c2daa16b" title="Use the SHA command to compute a SHA-256 digest.">atcab_hw_sha2_256()</a>.</li>
 <li>Removed device specific config read/write. Generic now handles both.</li>
 <li>Removed unnecessary response parameter from lock commands.</li>
 <li>Enhanced and added unit tests.</li>
 <li>Encrypted read and write functions now handle keys with SlotConfig.NoMac set</li>
-<li><a class="el" href="a06481.html#gadb91d2c3601b95f0ad413cf84a4dfd87" title="Compares a specified configuration zone with the configuration zone currently on the device.">atcab_cmp_config_zone()</a> handles all devices now.</li>
-<li>Fixed some edge cases in <a class="el" href="a06481.html#ga750704332198726725a327344f4f7dd5" title="Used to read an arbitrary number of bytes from any zone configured for clear reads.">atcab_read_bytes_zone()</a>.</li>
-<li>Updated <a class="el" href="a06477.html#ga44ad135152469c980f9bf36a5f1477bb" title="ATCACommand SHA method.">atSHA()</a> to work with all devices.</li>
-<li>Fixed <a class="el" href="a06480.html#ga84f1aeed7b88889d5bf01f21dbaaf398" title="Add all the device locations required to rebuild the specified certificate (cert_def) to a device loc...">atcacert_get_device_locs()</a> when using stored sn.</li>
+<li><a class="el" href="a11680.html#gadb91d2c3601b95f0ad413cf84a4dfd87" title="Compares a specified configuration zone with the configuration zone currently on the device.">atcab_cmp_config_zone()</a> handles all devices now.</li>
+<li>Fixed some edge cases in <a class="el" href="a11680.html#ga750704332198726725a327344f4f7dd5" title="Used to read an arbitrary number of bytes from any zone configured for clear reads.">atcab_read_bytes_zone()</a>.</li>
+<li>Updated <a class="el" href="a11676.html#ga44ad135152469c980f9bf36a5f1477bb" title="ATCACommand SHA method.">atSHA()</a> to work with all devices.</li>
+<li>Fixed <a class="el" href="a11679.html#ga84f1aeed7b88889d5bf01f21dbaaf398" title="Add all the device locations required to rebuild the specified certificate (cert_def) to a device loc...">atcacert_get_device_locs()</a> when using stored sn.</li>
 </ul>
 <p>01/08/2016</p><ul>
 <li>New HAL implementations for<ul>
@@ -227,7 +233,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <li>XMega A3Bu HAL implementation</li>
 </ul>
 </li>
-<li>Added <a class="el" href="a06481.html#gaff701132013eaac5600dd9fd6253505d" title="basic API methods are all prefixed with atcab_ (CryptoAuthLib Basic) the fundamental premise of the b...">atcab_version()</a> method to return current version string of libary to application</li>
+<li>Added <a class="el" href="a11680.html#gaff701132013eaac5600dd9fd6253505d" title="basic API methods are all prefixed with atcab_ (CryptoAuthLib Basic) the fundamental premise of the b...">atcab_version()</a> method to return current version string of libary to application</li>
 <li>New Bus and Discovery API<ul>
 <li>returns a list of ATCA device configurations for each CryptoAuth device found</li>
 <li>currently implemented on SAMD21/R21 I2C, SAMV71</li>
@@ -238,7 +244,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <li>Added missing doxygen documentation for some CryptoAuthLib methods</li>
 <li>Stubs for HAL SPI removed as they are unused for SHA204A and ECC508A support</li>
 <li>bug fixes</li>
-<li>updated <a class="el" href="a06481.html#ga31d269ccdafd08519a899a8aebf53df1" title="Use the SHA command to compute a SHA-256 digest.">atcab_sha()</a> to accept a variable length message that is &gt; 64 bytes and not a multiple of 64 bytes (the SHA block size).</li>
+<li>updated <a class="el" href="a11680.html#ga31d269ccdafd08519a899a8aebf53df1" title="Use the SHA command to compute a SHA-256 digest.">atcab_sha()</a> to accept a variable length message that is &gt; 64 bytes and not a multiple of 64 bytes (the SHA block size).</li>
 <li>refactored Cert I/O and Cert Data tests to be smaller</li>
 <li>'uncrustify' source formatting</li>
 <li>published on GitHub</li>

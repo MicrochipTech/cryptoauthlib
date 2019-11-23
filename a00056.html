@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: tng_root_cert.c File Reference</title>
+<title>CryptoAuthLib: tnglora_cert_def_2_device.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,48 +89,51 @@ $(document).ready(function(){initNavTree('a00056.html','');});
   <div class="summary">
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">tng_root_cert.c File Reference</div>  </div>
+<div class="title">tnglora_cert_def_2_device.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>TNG root certificate (DER)  
+<p>TNG LORA device certificate definition.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &lt;stddef.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a10874_source.html">atcacert/atcacert_def.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00077_source.html">tngtls_cert_def_2_device.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00053_source.html">tnglora_cert_def_1_signer.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ac8701381ff8ac8a30fded35b8ef38920"><td class="memItemLeft" align="right" valign="top">const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ac8701381ff8ac8a30fded35b8ef38920">g_cryptoauth_root_ca_002_cert</a> [501]</td></tr>
-<tr class="separator:ac8701381ff8ac8a30fded35b8ef38920"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abff789f84f8f178a30ce06792fe47771"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#abff789f84f8f178a30ce06792fe47771">g_cryptoauth_root_ca_002_cert_size</a> = sizeof(<a class="el" href="a06487.html#ga5c01e37d1f10dbf90d50208cbc5bc8ab">g_cryptoauth_root_ca_002_cert</a>)</td></tr>
-<tr class="separator:abff789f84f8f178a30ce06792fe47771"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35b19c12e9a87b9f3667fba9212dfe99"><td class="memItemLeft" align="right" valign="top">const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a35b19c12e9a87b9f3667fba9212dfe99">g_tngtls_cert_template_2_device</a> []</td></tr>
+<tr class="separator:a35b19c12e9a87b9f3667fba9212dfe99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98503c5a8aa46b64b1964c3b4023acf3"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a11679.html#ga852f443dfd1323f3c4543106977dee67">atcacert_cert_element_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a98503c5a8aa46b64b1964c3b4023acf3">g_tngtls_cert_elements_2_device</a> []</td></tr>
+<tr class="separator:a98503c5a8aa46b64b1964c3b4023acf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2782386bf16b0d23cb84bd371e010ac1"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a11679.html#ga45936a152da14fdc147cefb70a81e78d">atcacert_def_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a11686.html#ga2782386bf16b0d23cb84bd371e010ac1">g_tnglora_cert_def_2_device</a></td></tr>
+<tr class="separator:ga2782386bf16b0d23cb84bd371e010ac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>TNG root certificate (DER) </p>
+<div class="textblock"><p>TNG LORA device certificate definition. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2019 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div><h2 class="groupheader">Variable Documentation</h2>
-<a id="ac8701381ff8ac8a30fded35b8ef38920"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac8701381ff8ac8a30fded35b8ef38920">&#9670;&nbsp;</a></span>g_cryptoauth_root_ca_002_cert</h2>
+<a id="a98503c5a8aa46b64b1964c3b4023acf3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98503c5a8aa46b64b1964c3b4023acf3">&#9670;&nbsp;</a></span>g_tngtls_cert_elements_2_device</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint8_t g_cryptoauth_root_ca_002_cert[501]</td>
+          <td class="memname">const <a class="el" href="a11679.html#ga852f443dfd1323f3c4543106977dee67">atcacert_cert_element_t</a> g_tngtls_cert_elements_2_device[]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="abff789f84f8f178a30ce06792fe47771"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abff789f84f8f178a30ce06792fe47771">&#9670;&nbsp;</a></span>g_cryptoauth_root_ca_002_cert_size</h2>
+<a id="a35b19c12e9a87b9f3667fba9212dfe99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35b19c12e9a87b9f3667fba9212dfe99">&#9670;&nbsp;</a></span>g_tngtls_cert_template_2_device</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const size_t g_cryptoauth_root_ca_002_cert_size = sizeof(<a class="el" href="a06487.html#ga5c01e37d1f10dbf90d50208cbc5bc8ab">g_cryptoauth_root_ca_002_cert</a>)</td>
+          <td class="memname">const uint8_t g_tngtls_cert_template_2_device[]</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -142,7 +145,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d422163b96683743ed3963d4aac17747.html">app</a></li><li class="navelem"><a class="el" href="dir_6319b470d978b666f57c44c2de446197.html">tng</a></li><li class="navelem"><a class="el" href="a00056.html">tng_root_cert.c</a></li>
+    <li class="navelem"><a class="el" href="dir_d422163b96683743ed3963d4aac17747.html">app</a></li><li class="navelem"><a class="el" href="dir_6319b470d978b666f57c44c2de446197.html">tng</a></li><li class="navelem"><a class="el" href="a00056.html">tnglora_cert_def_2_device.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.16 </li>

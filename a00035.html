@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: tng22_cert_def_1_signer.h File Reference</title>
+<title>CryptoAuthLib: tng_atca.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -86,31 +86,52 @@ $(document).ready(function(){initNavTree('a00035.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">tng22_cert_def_1_signer.h File Reference</div>  </div>
+<div class="title">tng_atca.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>TNG 22 signer certificate definition.  
-<a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a05678_source.html">atcacert/atcacert_def.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a10904_source.html">basic/atca_basic.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a10874_source.html">atcacert/atcacert_def.h</a>&quot;</code><br />
 </div>
 <p><a href="a00035_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="memitem:ga7f91d8121c07bfeea37599ddaf73d7b7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a06487.html#ga7f91d8121c07bfeea37599ddaf73d7b7">TNG22_CERT_TEMPLATE_1_SIGNER_SIZE</a>&#160;&#160;&#160;520</td></tr>
-<tr class="separator:ga7f91d8121c07bfeea37599ddaf73d7b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaecb2b4ecc54a70681f2f254f26b5a7e3"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a06480.html#ga45936a152da14fdc147cefb70a81e78d">atcacert_def_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a06487.html#gaecb2b4ecc54a70681f2f254f26b5a7e3">g_tng22_cert_def_1_signer</a></td></tr>
-<tr class="separator:gaecb2b4ecc54a70681f2f254f26b5a7e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga3c58083e5e094a79031e7edaeccbeed1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a11686.html#ga3c58083e5e094a79031e7edaeccbeed1">TNGTLS_PRIMARY_KEY_SLOT</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:ga3c58083e5e094a79031e7edaeccbeed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb6e4c40ca7a5a6051b63ccf102e9794"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a11686.html#gadb6e4c40ca7a5a6051b63ccf102e9794">TNGLORA_PRIMARY_KEY_SLOT</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:gadb6e4c40ca7a5a6051b63ccf102e9794"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga91acea350b146040fc32c64eac8054f7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a11686.html#ga91acea350b146040fc32c64eac8054f7">tng_type_t</a> { <a class="el" href="a11686.html#gga91acea350b146040fc32c64eac8054f7a5b74509d0d64689d7acb7abf01a60f3e">TNGTYPE_UNKNOWN</a>, 
+<a class="el" href="a11686.html#gga91acea350b146040fc32c64eac8054f7aa6fb47f65af76e0bf7dc739416f5071f">TNGTYPE_TLS</a>, 
+<a class="el" href="a11686.html#gga91acea350b146040fc32c64eac8054f7a43dfe8819e10a121c5bda31c47d32b6f">TNGTYPE_LORA</a>
+ }</td></tr>
+<tr class="separator:ga91acea350b146040fc32c64eac8054f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga421d9b1fd3aba60c947d6b3efb122390"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a10850.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a11686.html#ga421d9b1fd3aba60c947d6b3efb122390">tng_get_type</a> (<a class="el" href="a11686.html#ga91acea350b146040fc32c64eac8054f7">tng_type_t</a> *type)</td></tr>
+<tr class="memdesc:ga421d9b1fd3aba60c947d6b3efb122390"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the type of TNG device.  <a href="a11686.html#ga421d9b1fd3aba60c947d6b3efb122390">More...</a><br /></td></tr>
+<tr class="separator:ga421d9b1fd3aba60c947d6b3efb122390"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga28c369c92f1a7c2f61512cde463b8ff5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a10850.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a11686.html#ga28c369c92f1a7c2f61512cde463b8ff5">tng_get_device_cert_def</a> (const <a class="el" href="a11679.html#ga45936a152da14fdc147cefb70a81e78d">atcacert_def_t</a> **cert_def)</td></tr>
+<tr class="memdesc:ga28c369c92f1a7c2f61512cde463b8ff5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the TNG device certificate definition.  <a href="a11686.html#ga28c369c92f1a7c2f61512cde463b8ff5">More...</a><br /></td></tr>
+<tr class="separator:ga28c369c92f1a7c2f61512cde463b8ff5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6bdd6b8ace7a98b7efbc13f85ffaac1a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a10850.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a11686.html#ga6bdd6b8ace7a98b7efbc13f85ffaac1a">tng_get_device_pubkey</a> (uint8_t *public_key)</td></tr>
+<tr class="memdesc:ga6bdd6b8ace7a98b7efbc13f85ffaac1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses GenKey command to calculate the public key from the primary device public key.  <a href="a11686.html#ga6bdd6b8ace7a98b7efbc13f85ffaac1a">More...</a><br /></td></tr>
+<tr class="separator:ga6bdd6b8ace7a98b7efbc13f85ffaac1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>TNG 22 signer certificate definition. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2019 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d422163b96683743ed3963d4aac17747.html">app</a></li><li class="navelem"><a class="el" href="dir_6319b470d978b666f57c44c2de446197.html">tng</a></li><li class="navelem"><a class="el" href="a00035.html">tng22_cert_def_1_signer.h</a></li>
+    <li class="navelem"><a class="el" href="dir_d422163b96683743ed3963d4aac17747.html">app</a></li><li class="navelem"><a class="el" href="dir_6319b470d978b666f57c44c2de446197.html">tng</a></li><li class="navelem"><a class="el" href="a00035.html">tng_atca.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.16 </li>
