@@ -79,8 +79,8 @@ static ATCA_STATUS set_chip_mode(uint8_t i2c_user_extra_add, uint8_t ttl_enable,
 static void set_clock_divider_m0(void);
 static void set_clock_divider_m1(void);
 static void set_clock_divider_m2(void);
-static void tng22_tests(void);
-static void tngtn_tests(void);
+static void tngtls_tests(void);
+static void tnglora_tests(void);
 #if defined(_WIN32) || defined(__linux__) || defined(__APPLE__)
 static void call_exit(int code);
 #endif
@@ -103,8 +103,8 @@ static t_menu_info mas_menu_info[] =
     { "lockcfg",  "Lock the Config Zone",                           lock_config                          },
     { "lockdata", "Lock Data and OTP Zones",                        lock_data                            },
     { "all",      "Run all unit tests, locking as needed.",         run_all_tests                        },
-    { "tng22",    "Run unit tests on TNG 22 type part.",            tng22_tests                          },
-    { "tngtn",    "Run unit tests on TNG TN type part.",            tngtn_tests                          },
+    { "tngtls",   "Run unit tests on TNG TLS type part.",           tngtls_tests                          },
+    { "tnglora",  "Run unit tests on TNG LORA type part.",          tnglora_tests                          },
     #ifndef DO_NOT_TEST_BASIC_UNIT
     { "basic",    "Run Basic Test on Selected Device",              run_basic_tests                      },
     { "unit",     "Run Unit Test on Selected Device",               run_unit_tests                       },
@@ -1046,7 +1046,7 @@ static void set_clock_divider_m2(void)
     }
 }
 
-static void tng22_tests(void)
+static void tngtls_tests(void)
 {
     ATCA_STATUS status;
 
@@ -1057,12 +1057,12 @@ static void tng22_tests(void)
         return;
     }
 
-    run_test(RunTNG22Tests);
+    run_test(RunTNGTLSTests);
 
     atcab_release();
 }
 
-static void tngtn_tests(void)
+static void tnglora_tests(void)
 {
     ATCA_STATUS status;
 
@@ -1073,7 +1073,7 @@ static void tngtn_tests(void)
         return;
     }
 
-    run_test(RunTNGTNTests);
+    run_test(RunTNGLORATests);
 
     atcab_release();
 }

@@ -69,12 +69,20 @@ ATCA_STATUS atcab_counter(uint8_t mode, uint16_t counter_id, uint32_t *counter_v
             break;
         }
 
-        if (counter_value != NULL && packet.data[ATCA_COUNT_IDX] >= 7)
+        if (counter_value != NULL)
         {
-            *counter_value = ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 0] <<  0) |
-                             ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 1] <<  8) |
-                             ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 2] << 16) |
-                             ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 3] << 24);
+            if (packet.data[ATCA_COUNT_IDX] == 7)
+            {
+                *counter_value = ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 0] <<  0) |
+                                 ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 1] <<  8) |
+                                 ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 2] << 16) |
+                                 ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 3] << 24);
+            }
+            else
+            {
+                status = ATCA_RX_FAIL;
+            }
+
         }
     }
     while (0);

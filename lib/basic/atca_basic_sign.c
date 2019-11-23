@@ -73,11 +73,18 @@ ATCA_STATUS atcab_sign_base(uint8_t mode, uint16_t key_id, uint8_t *signature)
             break;
         }
 
-        if (packet.data[ATCA_COUNT_IDX] > 4)
+        if (signature != NULL)
         {
-            memcpy(signature, &packet.data[ATCA_RSP_DATA_IDX], packet.data[ATCA_COUNT_IDX] - ATCA_PACKET_OVERHEAD);
-        }
+            if (packet.data[ATCA_COUNT_IDX] == (ATCA_SIG_SIZE + ATCA_PACKET_OVERHEAD))
+            {
+                memcpy(signature, &packet.data[ATCA_RSP_DATA_IDX], ATCA_SIG_SIZE);
+            }
+            else
+            {
+                status = ATCA_RX_FAIL;
+            }
 
+        }
     }
     while (0);
 

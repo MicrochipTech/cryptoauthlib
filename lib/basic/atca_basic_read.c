@@ -226,18 +226,25 @@ ATCA_STATUS atcab_is_locked(uint8_t zone, bool *is_locked)
  *                          here (32 bytes).
  *  \param[in]  enc_key     32 byte ReadKey for the slot being read.
  *  \param[in]  enc_key_id  KeyID of the ReadKey being used.
+ *  \param[in]  num_in      20 byte host nonce to inject into Nonce calculation
  *
  *  returns ATCA_SUCCESS on success, otherwise an error code.
  */
+#if defined(ATCA_USE_CONSTANT_HOST_NONCE)
 ATCA_STATUS atcab_read_enc(uint16_t key_id, uint8_t block, uint8_t *data, const uint8_t* enc_key, const uint16_t enc_key_id)
 {
+    uint8_t num_in[NONCE_NUMIN_SIZE] = { 0 };
+
+#else
+ATCA_STATUS atcab_read_enc(uint16_t key_id, uint8_t block, uint8_t *data, const uint8_t* enc_key, const uint16_t enc_key_id, const uint8_t num_in[NONCE_NUMIN_SIZE])
+{
+#endif
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t zone = ATCA_ZONE_DATA | ATCA_ZONE_READWRITE_32;
     atca_nonce_in_out_t nonce_params;
     atca_gen_dig_in_out_t gen_dig_param;
     atca_temp_key_t temp_key;
     uint8_t serial_num[32];
-    uint8_t num_in[NONCE_NUMIN_SIZE] = { 0 };
     uint8_t rand_out[RANDOM_NUM_SIZE] = { 0 };
     uint8_t other_data[4] = { 0 };
     int i = 0;
@@ -270,7 +277,7 @@ ATCA_STATUS atcab_read_enc(uint16_t key_id, uint8_t block, uint8_t *data, const 
         memset(&nonce_params, 0, sizeof(nonce_params));
         nonce_params.mode = NONCE_MODE_SEED_UPDATE;
         nonce_params.zero = 0;
-        nonce_params.num_in = (uint8_t*)&num_in;
+        nonce_params.num_in = (uint8_t*)&num_in[0];
         nonce_params.rand_out = (uint8_t*)&rand_out;
         nonce_params.temp_key = &temp_key;
         if ((status = atcah_nonce(&nonce_params)) != ATCA_SUCCESS)

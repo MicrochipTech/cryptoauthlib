@@ -91,6 +91,7 @@ TEST(atca_cmd_basic_test, derivekey)
     };
     uint8_t response[32];
     atca_check_mac_in_out_t checkmac_params;
+    uint8_t host_num_in[NONCE_NUMIN_SIZE] = { 0 };
 
     test_assert_data_is_locked();
 
@@ -99,7 +100,11 @@ TEST(atca_cmd_basic_test, derivekey)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Initialize the slot with a known key
+#if defined(ATCA_USE_CONSTANT_HOST_NONCE)
     status = atcab_write_enc(target_key_id, 0, parent_key, g_slot4_key, 4);
+#else
+    status = atcab_write_enc(target_key_id, 0, parent_key, g_slot4_key, 4, host_num_in);
+#endif
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     memset(&temp_key_params, 0, sizeof(temp_key_params));

@@ -71,11 +71,16 @@ TEST(atca_cmd_basic_test, priv_write_unencrypted)
         0x60, 0x73, 0x04, 0x61, 0x19, 0xAD, 0x5E, 0x11, 0xA9, 0x0A, 0xA4, 0x97, 0x73, 0xAE, 0xAC, 0x86
     };
     uint8_t public_key[64];
+    uint8_t host_num_in[NONCE_NUMIN_SIZE] = { 0 };
 
     test_assert_config_is_locked();
     test_assert_data_is_unlocked();
 
+#if defined(ATCA_USE_CONSTANT_HOST_NONCE)
     status = atcab_priv_write(0, private_key, 0, NULL);
+#else
+    status = atcab_priv_write(0, private_key, 0, NULL, host_num_in);
+#endif
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     status = atcab_get_pubkey(0, public_key);
@@ -101,10 +106,15 @@ TEST(atca_cmd_basic_test, priv_write_encrypted)
         0xE5, 0xC6, 0x4F, 0xCD, 0x2F, 0xD1, 0x26, 0x98, 0x54, 0x4D, 0xE0, 0x37, 0x95, 0x17, 0x26, 0x66,
         0x60, 0x73, 0x04, 0x61, 0x19, 0xAD, 0x5E, 0x11, 0xA9, 0x0A, 0xA4, 0x97, 0x73, 0xAE, 0xAC, 0x86
     };
+    uint8_t host_num_in[NONCE_NUMIN_SIZE] = { 0 };
 
     test_assert_data_is_locked();
 
+#if defined(ATCA_USE_CONSTANT_HOST_NONCE)
     status = atcab_priv_write(0x07, private_key, write_key_id, g_slot4_key);
+#else
+    status = atcab_priv_write(0x07, private_key, write_key_id, g_slot4_key, host_num_in);
+#endif
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     status = atcab_get_pubkey(0x07, public_key);

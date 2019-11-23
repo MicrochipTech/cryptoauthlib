@@ -26,8 +26,8 @@
 #include "test/unity_fixture.h"
 #include "test/atca_test.h"
 #include "app/tng/tng_atcacert_client.h"
-#include "app/tng/tng22_cert_def_1_signer.h"
-#include "app/tng/tng22_cert_def_2_device.h"
+#include "app/tng/tngtls_cert_def_1_signer.h"
+#include "app/tng/tngtls_cert_def_2_device.h"
 #include "atcacert/atcacert_def.h"
 
 TEST_GROUP(tng_atcacert_client);
@@ -128,14 +128,14 @@ TEST(tng_atcacert_client, tng_atcacert_read_signer_cert)
     // the same once reconstructed
 
     ret = atcacert_get_tbs_digest(
-        &g_tng22_cert_def_1_signer,
+        &g_tngtls_cert_def_1_signer,
         cert,
         cert_size,
         tbs_digest);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
     ret = atcacert_get_signature(
-        &g_tng22_cert_def_1_signer,
+        &g_tngtls_cert_def_1_signer,
         cert,
         cert_size,
         signature);
@@ -164,7 +164,7 @@ TEST(tng_atcacert_client, tng_atcacert_signer_public_key_no_cert)
     // TNG 22 cert def will work for both 22 and TG here as the certificate is
     // the same once reconstructed
     ret = atcacert_get_subj_public_key(
-        &g_tng22_cert_def_1_signer,
+        &g_tngtls_cert_def_1_signer,
         cert,
         cert_size,
         cert_public_key);
@@ -193,7 +193,7 @@ TEST(tng_atcacert_client, tng_atcacert_signer_public_key_cert)
     // TNG 22 cert def will work for both 22 and TG here as the certificate is
     // the same once reconstructed
     ret = atcacert_get_subj_public_key(
-        &g_tng22_cert_def_1_signer,
+        &g_tngtls_cert_def_1_signer,
         cert,
         cert_size,
         cert_public_key);
@@ -238,14 +238,14 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_no_signer)
     // the same once reconstructed
 
     ret = atcacert_get_tbs_digest(
-        &g_tng22_cert_def_2_device,
+        &g_tngtls_cert_def_2_device,
         cert,
         cert_size,
         tbs_digest);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
     ret = atcacert_get_signature(
-        &g_tng22_cert_def_2_device,
+        &g_tngtls_cert_def_2_device,
         cert,
         cert_size,
         signature);
@@ -289,14 +289,14 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_signer)
     // the same once reconstructed
 
     ret = atcacert_get_tbs_digest(
-        &g_tng22_cert_def_2_device,
+        &g_tngtls_cert_def_2_device,
         cert,
         cert_size,
         tbs_digest);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
     ret = atcacert_get_signature(
-        &g_tng22_cert_def_2_device,
+        &g_tngtls_cert_def_2_device,
         cert,
         cert_size,
         signature);
@@ -324,7 +324,7 @@ TEST(tng_atcacert_client, tng_atcacert_device_public_key_no_cert)
     // TNG 22 cert def will work for both 22 and TG here as the certificate is
     // the same once reconstructed
     ret = atcacert_get_subj_public_key(
-        &g_tng22_cert_def_2_device,
+        &g_tngtls_cert_def_2_device,
         cert,
         cert_size,
         cert_public_key);
@@ -352,7 +352,7 @@ TEST(tng_atcacert_client, tng_atcacert_device_public_key_cert)
     // TNG 22 cert def will work for both 22 and TG here as the certificate is
     // the same once reconstructed
     ret = atcacert_get_subj_public_key(
-        &g_tng22_cert_def_2_device,
+        &g_tngtls_cert_def_2_device,
         cert,
         cert_size,
         cert_public_key);

@@ -28,6 +28,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include "atca_compiler.h"
 #include "kit_phy.h"
 #include "kit_protocol.h"
 #include "basic/atca_helpers.h"
@@ -110,6 +111,7 @@ ATCA_STATUS kit_init(ATCAIface iface)
     char* device_match, *interface_match;
     char *dev_type, *dev_interface;
     char delim[] = " ";
+    char *token; /* string token */
     int i;
     int address;
 
@@ -139,8 +141,10 @@ ATCA_STATUS kit_init(ATCAIface iface)
             break;
         }
 
-        dev_type = strtok(rxbuf, delim);
-        dev_interface = strtok(NULL, delim);
+        token = rxbuf;
+        dev_type = strtok_r(NULL, delim, &token);
+        dev_interface = strtok_r(NULL, delim, &token);
+
         char * addr = strnchr(rxbuf, rxlen, '('); /* Gets the identity from the kit used for selecting the device*/
         address = 0;
 

@@ -123,9 +123,14 @@ ATCA_STATUS atcab_ecdh(uint16_t key_id, const uint8_t* public_key, uint8_t* pms)
  *                           (32 bytes).
  *  \param[in]  read_key     Read key for the premaster secret slot (key_id|1).
  *  \param[in]  read_key_id  Read key slot for read_key.
+ *  \param[in]  num_in       20 byte host nonce to inject into Nonce calculation
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if defined(ATCA_USE_CONSTANT_HOST_NONCE)
 ATCA_STATUS atcab_ecdh_enc(uint16_t key_id, const uint8_t* public_key, uint8_t* pms, const uint8_t* read_key, uint16_t read_key_id)
+#else
+ATCA_STATUS atcab_ecdh_enc(uint16_t key_id, const uint8_t* public_key, uint8_t* pms, const uint8_t* read_key, uint16_t read_key_id, const uint8_t num_in[NONCE_NUMIN_SIZE])
+#endif
 {
     ATCA_STATUS status = ATCA_SUCCESS;
 
@@ -143,8 +148,11 @@ ATCA_STATUS atcab_ecdh_enc(uint16_t key_id, const uint8_t* public_key, uint8_t* 
         {
             BREAK(status, "ECDH Failed");
         }
-
+#if defined(ATCA_USE_CONSTANT_HOST_NONCE)
         if ((status = atcab_read_enc(key_id | 0x0001, 0, pms, read_key, read_key_id)) != ATCA_SUCCESS)
+#else
+        if ((status = atcab_read_enc(key_id | 0x0001, 0, pms, read_key, read_key_id, num_in)) != ATCA_SUCCESS)
+#endif
         {
             BREAK(status, "Encrypted read failed");
         }

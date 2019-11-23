@@ -24,6 +24,7 @@ Cryptoauthlib Library Management
 import os.path
 import ctypes
 from .exceptions import LibraryLoadError
+from .atcaenum import AtcaEnum
 
 # Maps common name to the specific name used internally
 ATCA_NAMES = {'i2c': 'i2c', 'hid': 'kithid', 'sha': 'sha204', 'ecc': 'eccx08'}
@@ -83,8 +84,11 @@ def load_cryptoauthlib(lib=None):
         elif os.path.exists(os.path.join(curr_path, "libcryptoauth.dylib")):
             _CRYPTO_LIB = ctypes.cdll.LoadLibrary(os.path.join(curr_path, "libcryptoauth.dylib"))
         else:
-            _CRYPTO_LIB = None
-            raise LibraryLoadError('Unable to find library in {}'.format(curr_path))
+            # Try to find a system installed version
+            try:
+                _CRYPTO_LIB = ctypes.cdll.LoadLibrary('libcryptoauth.so')
+            except:
+                raise LibraryLoadError('Unable to find cryptoauthlib. You may need to reinstall')
 
 
 def get_cryptoauthlib():
@@ -146,6 +150,8 @@ def get_ctype_structure_instance(structure, value):
         r = structure(**value)
     elif isinstance(value, int):
         r = structure.from_buffer_copy(ctypes.c_uint(value))
+    elif isinstance(value, AtcaEnum):
+        r = structure.from_buffer_copy(ctypes.c_uint(int(value)))
     elif not isinstance(value, structure):
         r = structure(value)
     else:
@@ -162,8 +168,15 @@ def get_ctype_array_instance(array, value):
     """
     # pylint: disable-msg=invalid-name, protected-access
     t = array._type_
-    a = [get_ctype_structure_instance(t, e) for e in value]
-    return array(*a)
+    if t is ctypes.c_char:
+        # Strings are special
+        if isinstance(value, str):
+            a = value.encode('ascii')
+        else:
+            a = bytes(value)
+    else:
+        a = array(*[get_ctype_structure_instance(t, e) for e in value])
+    return a
 
 
 class AtcaStructure(ctypes.Structure):

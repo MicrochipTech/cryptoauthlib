@@ -100,6 +100,7 @@
 #define ATCA_UINT32_BE_TO_HOST(x)  _byteswap_ulong(x)
 #define ATCA_UINT64_HOST_TO_BE(x)  _byteswap_uint64(x)
 #define ATCA_UINT64_BE_TO_HOST(x)  _byteswap_uint64(x)
+#define strtok_r                   strtok_s
 
 #elif defined(__PGI)
 /* Portland Group PGCC/PGCPP. ------------------------------- */

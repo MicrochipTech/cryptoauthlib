@@ -273,15 +273,15 @@ void RunAllHelperTests(void)
     RunAllTests(helper_tests);
 }
 
-void RunTNG22Tests(void)
+void RunTNGTLSTests(void)
 {
-    g_tng_test_type = TNGTYPE_22;
+    g_tng_test_type = TNGTYPE_TLS;
     RunAllTests(tng_tests);
 }
 
-void RunTNGTNTests(void)
+void RunTNGLORATests(void)
 {
-    g_tng_test_type = TNGTYPE_TN;
+    g_tng_test_type = TNGTYPE_LORA;
     RunAllTests(tng_tests);
 }
 

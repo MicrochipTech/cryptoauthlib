@@ -28,9 +28,18 @@
 
 
 #include "atca_basic.h"
+#include "atca_version.h"
 #include "host/atca_host.h"
 
-const char atca_version[] = { "20190517" };  // change for each release, yyyymmdd
+#if defined(ATCA_USE_CONSTANT_HOST_NONCE)
+#if defined(_MSC_VER)
+#pragma message("Warning : Using a constant host nonce with atcab_read_enc, atcab_write_enc, etcc., can allow spoofing of a device by replaying previously recorded messages")
+#else
+#warning "Using a constant host nonce with atcab_read_enc, atcab_write_enc, etcc., can allow spoofing of a device by replaying previously recorded messages"
+#endif
+#endif
+
+const char atca_version[] = ATCA_LIBRARY_VERSION;
 ATCADevice _gDevice = NULL;
 #ifdef ATCA_NO_HEAP
 struct atca_command g_atcab_command;

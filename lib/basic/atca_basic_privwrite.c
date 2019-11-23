@@ -45,11 +45,19 @@
  *  \param[in] write_key     Write key (32 bytes). If NULL, perform an
  *                           unencrypted PrivWrite, which is only available when
  *                           the data zone is unlocked.
+ *  \param[in]  num_in       20 byte host nonce to inject into Nonce calculation
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if defined(ATCA_USE_CONSTANT_HOST_NONCE)
 ATCA_STATUS atcab_priv_write(uint16_t key_id, const uint8_t priv_key[36], uint16_t write_key_id, const uint8_t write_key[32])
 {
+    uint8_t num_in[NONCE_NUMIN_SIZE] = { 0 };
+
+#else
+ATCA_STATUS atcab_priv_write(uint16_t key_id, const uint8_t priv_key[36], uint16_t write_key_id, const uint8_t write_key[32], const uint8_t num_in[NONCE_NUMIN_SIZE])
+{
+#endif
     ATCAPacket packet;
     ATCACommand ca_cmd = _gDevice->mCommands;
     ATCA_STATUS status = ATCA_GEN_FAIL;
@@ -58,7 +66,6 @@ ATCA_STATUS atcab_priv_write(uint16_t key_id, const uint8_t priv_key[36], uint16
     atca_write_mac_in_out_t host_mac_param;
     atca_temp_key_t temp_key;
     uint8_t serial_num[32]; // Buffer is larger than the 9 bytes required to make reads easier
-    uint8_t num_in[NONCE_NUMIN_SIZE] = { 0 };
     uint8_t rand_out[RANDOM_NUM_SIZE] = { 0 };
     uint8_t cipher_text[36] = { 0 };
     uint8_t host_mac[MAC_SIZE] = { 0 };
@@ -102,7 +109,7 @@ ATCA_STATUS atcab_priv_write(uint16_t key_id, const uint8_t priv_key[36], uint16
             memset(&nonce_params, 0, sizeof(nonce_params));
             nonce_params.mode = NONCE_MODE_SEED_UPDATE;
             nonce_params.zero = 0;
-            nonce_params.num_in = num_in;
+            nonce_params.num_in = &num_in[0];
             nonce_params.rand_out = rand_out;
             nonce_params.temp_key = &temp_key;
             if ((status = atcah_nonce(&nonce_params)) != ATCA_SUCCESS)

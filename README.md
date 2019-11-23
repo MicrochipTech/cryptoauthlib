@@ -61,6 +61,17 @@ Examples
 
 Release notes
 -----------
+11/22/2019
+  - Patches for CVE-2019-16128 & CVE-2019-16129: Ensure reported packet length
+    is valid for the packet being processed.
+  - Improvement to encrypted read operations to allow supply of a host nonce
+    (prevent replay of a read sequence to the host). Default API is changed
+    but can be reverted by setting the option ATCA_USE_CONSTANT_HOST_NONCE
+  - Added Azure compatible TNGTLS and TNGLORA certificates. Use the TNG client
+    API to retrieve the proper certificate based on the device.
+  - Misc Python updates (updated APIs for encrypted reads to match the C-API change)
+    atcacert_cert_element_t now initializes properly 
+
 08/30/2019
   - Added big-endian architecture support
   - Fixes to atcah_gen_dig() and atcah_nonce()

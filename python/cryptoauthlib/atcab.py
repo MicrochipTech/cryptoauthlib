@@ -789,7 +789,7 @@ def atcab_ecdh(key_id, public_key, pms):
     return status
 
 
-def atcab_ecdh_enc(key_id, public_key, pms, read_key, read_key_id):
+def atcab_ecdh_enc(key_id, public_key, pms, read_key, read_key_id, num_in=None):
     """
     ECDH command with a private key in a slot and the premaster secret
     is read from the next slot. This function only works for even
@@ -805,17 +805,19 @@ def atcab_ecdh_enc(key_id, public_key, pms, read_key, read_key_id):
         read_key_id         Read key slot for read_key. (int)
         pms                 ByteArray - Computed ECDH premaster secret is returned
                             here (32 bytes).(Expects bytearray of size 32)
-
+        num_in              Bytearray - Host nonce used to calculate nonce (20 bytes)
     Returns:
         Status code
     """
     c_pms = create_string_buffer(32)
+    if num_in is None:
+        num_in = bytearray(20)
 
     if not isinstance(pms, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
         status = get_cryptoauthlib().atcab_ecdh_enc(key_id, bytes(public_key),
-                                                    byref(c_pms), bytes(read_key), read_key_id)
+                                                    byref(c_pms), bytes(read_key), read_key_id, bytes(num_in))
         pms[0:] = bytes(c_pms.raw)
     return status
 
@@ -1480,7 +1482,7 @@ def atcab_challenge_seed_update(num_in, rand_out):
 # into the device.
 
 
-def atcab_priv_write(key_id, priv_key, write_key_id, write_key):
+def atcab_priv_write(key_id, priv_key, write_key_id, write_key, num_in=None):
     """
     Executes PrivWrite command, to write externally generated ECC
     private keys into the device.
@@ -1494,11 +1496,15 @@ def atcab_priv_write(key_id, priv_key, write_key_id, write_key):
         write_key           Write key (32 bytes). If NULL, perform an
                             unencrypted PrivWrite, which is only available when
                             the data zone is unlocked. (bytearray or bytes)
-
+        num_in              Bytearray - Host nonce used to calculate nonce (20 bytes)
     Returns:
         Status code
     """
-    status = get_cryptoauthlib().atcab_priv_write(key_id, bytes(priv_key), write_key_id, bytes(write_key))
+    if num_in is None:
+        num_in = bytearray(20)
+
+    status = get_cryptoauthlib().atcab_priv_write(key_id, bytes(priv_key), write_key_id, bytes(write_key),
+                                                  bytes(num_in))
     return status
 
 
@@ -1631,7 +1637,7 @@ def atcab_is_locked(zone, is_locked):
     return status
 
 
-def atcab_read_enc(key_id, block, data, enc_key, enc_key_id):
+def atcab_read_enc(key_id, block, data, enc_key, enc_key_id, num_in=None):
     """
     Executes Read command on a slot configured for encrypted reads and
     decrypts the data to return it as plaintext.
@@ -1646,15 +1652,19 @@ def atcab_read_enc(key_id, block, data, enc_key, enc_key_id):
         enc_key_id          KeyID of the ReadKey being used.(int)
         data                Decrypted (plaintext) data from the read is returned
                             here (32 bytes). (Expects bytearray)
-
+        num_in              Bytearray - Host nonce used to calculate nonce (20 byte)
     Returns:
         Status code
     """
     c_data = create_string_buffer(32)
+    if num_in is None:
+        num_in = bytearray(20)
+
     if not isinstance(data, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = get_cryptoauthlib().atcab_read_enc(key_id, block, byref(c_data), bytes(enc_key), enc_key_id)
+        status = get_cryptoauthlib().atcab_read_enc(key_id, block, byref(c_data), bytes(enc_key), enc_key_id,
+                                                    bytes(num_in))
         data[0:] = bytes(c_data.raw)
     return status
 
@@ -2630,7 +2640,7 @@ def atcab_write_zone(zone, slot, block, offset, data, length):
     return status
 
 
-def atcab_write_enc(key_id, block, data, enc_key, enc_key_id):
+def atcab_write_enc(key_id, block, data, enc_key, enc_key_id, num_in=None):
     """
     Executes the Write command, which performs an encrypted write of a 32 byte block into
     given slot. The function takes clear text bytes and encrypts them for writing over the
@@ -2645,11 +2655,14 @@ def atcab_write_enc(key_id, block, data, enc_key, enc_key_id):
         enc_key             WriteKey to encrypt with for writing
                             (bytearray or bytes)
         enc_key_id          The KeyID of the WriteKey (int)
-
+        num_in              Bytearray - Host nonce used to calculate nonce (20 bytes)
     Returns:
         Status code
     """
-    status = get_cryptoauthlib().atcab_write_enc(key_id, block, bytes(data), bytes(enc_key), enc_key_id)
+    if num_in is None:
+        num_in = bytearray(20)
+
+    status = get_cryptoauthlib().atcab_write_enc(key_id, block, bytes(data), bytes(enc_key), enc_key_id, bytes(num_in))
     return status
 
 

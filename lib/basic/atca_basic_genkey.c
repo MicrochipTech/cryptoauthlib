@@ -77,9 +77,16 @@ ATCA_STATUS atcab_genkey_base(uint8_t mode, uint16_t key_id, const uint8_t* othe
             break;
         }
 
-        if (public_key && packet.data[ATCA_COUNT_IDX] > 4)
+        if (public_key != NULL)
         {
-            memcpy(public_key, &packet.data[ATCA_RSP_DATA_IDX], packet.data[ATCA_COUNT_IDX] - 3);
+            if (packet.data[ATCA_COUNT_IDX] == (ATCA_PUB_KEY_SIZE + ATCA_PACKET_OVERHEAD))
+            {
+                memcpy(public_key, &packet.data[ATCA_RSP_DATA_IDX], ATCA_PUB_KEY_SIZE);
+            }
+            else
+            {
+                status = ATCA_RX_FAIL;
+            }
         }
     }
     while (0);

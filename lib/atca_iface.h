@@ -59,7 +59,8 @@ typedef enum
 {   ATCA_KIT_AUTO_IFACE,        //Selects the first device if the Kit interface is not defined
     ATCA_KIT_I2C_IFACE,
     ATCA_KIT_SWI_IFACE,
-    ATCA_KIT_UNKNOWN_IFACE, } ATCAKitType;
+    ATCA_KIT_UNKNOWN_IFACE,
+} ATCAKitType;
 
 
 
@@ -110,7 +111,6 @@ typedef struct
             uint32_t    vid;           // Vendor ID of kit (0x03EB for CK101)
             uint32_t    pid;           // Product ID of kit (0x2312 for CK101)
             uint32_t    packetsize;    // Size of the USB packet
-            uint8_t     guid[16];      // The GUID for this HID device
         } atcahid;
 
         struct ATCACUSTOM

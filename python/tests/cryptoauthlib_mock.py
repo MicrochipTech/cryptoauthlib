@@ -573,9 +573,9 @@ class atcab_mock(object):
         return Status.ATCA_SUCCESS
 
     #--------------------------------------------------------------------#
-    # atcab_ecdh_enc(key_id, public_key, pms, read_key, read_key_id):
+    # atcab_ecdh_enc(key_id, public_key, pms, read_key, read_key_id, num_in):
 
-    def atcab_ecdh_enc(self, key_id, public_key, pms, read_key, read_key_id):
+    def atcab_ecdh_enc(self, key_id, public_key, pms, read_key, read_key_id, num_in):
 
         if not isinstance(key_id, int):
             raise TypeError
@@ -590,6 +590,9 @@ class atcab_mock(object):
             raise TypeError
 
         if not isinstance(read_key_id, int):
+            raise TypeError
+
+        if not isinstance(num_in, bytes):
             raise TypeError
 
         memmove(cast(pms, c_void_p).value, cast(byref(self.r_ecdh_pms), c_void_p).value, len(self.r_ecdh_pms))
@@ -1020,9 +1023,9 @@ class atcab_mock(object):
         return Status.ATCA_SUCCESS
 
     #--------------------------------------------------------------------#
-    # atcab_priv_write(key_id, priv_key, write_key_id, write_key):
+    # atcab_priv_write(key_id, priv_key, write_key_id, write_key, num_in):
 
-    def atcab_priv_write(self, key_id, priv_key, write_key_id, write_key):
+    def atcab_priv_write(self, key_id, priv_key, write_key_id, write_key, num_in):
 
         if not isinstance(key_id, int):
             raise TypeError
@@ -1034,6 +1037,9 @@ class atcab_mock(object):
             raise TypeError
 
         if not isinstance(write_key, bytes):
+            raise TypeError
+
+        if not isinstance(num_in, bytes):
             raise TypeError
 
         return Status.ATCA_SUCCESS
@@ -1140,7 +1146,7 @@ class atcab_mock(object):
         return Status.ATCA_SUCCESS
 
     #--------------------------------------------------------------------#
-    # atcab_read_enc(key_id, block, data, enc_key, enc_key_id):
+    # atcab_read_enc(key_id, block, data, enc_key, enc_key_id, num_in):
 
     r_read_enc_data = create_string_buffer(32)
     r_read_enc_data.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
@@ -1148,7 +1154,7 @@ class atcab_mock(object):
                                              0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
                                              0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
 
-    def atcab_read_enc(self, key_id, block, data, enc_key, enc_key_id):
+    def atcab_read_enc(self, key_id, block, data, enc_key, enc_key_id, num_in):
 
         if not isinstance(key_id, int):
             raise TypeError
@@ -1163,6 +1169,9 @@ class atcab_mock(object):
             raise TypeError
 
         if not isinstance(enc_key_id, int):
+            raise TypeError
+
+        if not isinstance(num_in, bytes):
             raise TypeError
 
         memmove(cast(data, c_void_p).value, cast(byref(self.r_read_enc_data), c_void_p).value, len(self.r_read_enc_data))
@@ -1917,9 +1926,9 @@ class atcab_mock(object):
         return Status.ATCA_SUCCESS
 
     #--------------------------------------------------------------------#
-    # atcab_write_enc(key_id, block, data, enc_key, enc_key_id):
+    # atcab_write_enc(key_id, block, data, enc_key, enc_key_id, num_in):
 
-    def atcab_write_enc(self, key_id, block, data, enc_key, enc_key_id):
+    def atcab_write_enc(self, key_id, block, data, enc_key, enc_key_id, num_in):
 
         if not isinstance(key_id, int):
             raise TypeError
@@ -1936,6 +1945,9 @@ class atcab_mock(object):
         if not isinstance(enc_key_id, int):
             raise TypeError
 
+        if not isinstance(num_in, bytes):
+            raise TypeError
+    
         return Status.ATCA_SUCCESS
 
     #--------------------------------------------------------------------#

@@ -175,7 +175,7 @@ def _atcacert_convert_enum(kwargs, name, enum):
             kwargs[name] = int(getattr(enum, k))
 
 
-class atcacert_device_loc_t(Structure):
+class atcacert_device_loc_t(AtcaStructure):
     """
     CTypes mirror of atcacert_device_loc_t from atcacert_def.h
     """
@@ -195,7 +195,7 @@ class atcacert_device_loc_t(Structure):
         super(atcacert_device_loc_t, self).__init__(*args, **kwargs)
 
 
-class atcacert_cert_loc_t(Structure):
+class atcacert_cert_loc_t(AtcaStructure):
     """
     CTypes mirror of atcacert_cert_loc_t from atcacert_def.h
     """
@@ -203,16 +203,10 @@ class atcacert_cert_loc_t(Structure):
     _pack_ = 1
 
 
-class atcacert_cert_element_t(Structure):
+class atcacert_cert_element_t(AtcaStructure):
     """
     CTypes mirror of atcacert_cert_element_t from atcacert_def.h
     """
-    def __init__(self, *args, **kwargs):
-        if kwargs is not None:
-            _atcacert_convert_enum(kwargs, 'transforms', atcacert_transform_t)
-
-        super(atcacert_cert_element_t, self).__init__(*args, **kwargs)
-
     _fields_ = [
         ('id', c_char * 25),  # ID identifying this element.
         ('device_loc', atcacert_device_loc_t),  # Location in the device for the element.

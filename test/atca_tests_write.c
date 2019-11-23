@@ -474,6 +474,7 @@ TEST(atca_cmd_basic_test, write_enc)
     uint8_t block = 5;
     uint8_t write_data[ATCA_KEY_SIZE];
     uint8_t read_data[ATCA_KEY_SIZE];
+    uint8_t host_num_in[NONCE_NUMIN_SIZE] = { 0 };
 
     test_assert_data_is_locked();
 
@@ -485,11 +486,18 @@ TEST(atca_cmd_basic_test, write_enc)
 
     status = atcab_random(&write_data[0]);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
+#if defined(ATCA_USE_CONSTANT_HOST_NONCE)
     status = atcab_write_enc(key_id, block, write_data, g_slot4_key, 4);
+#else
+    status = atcab_write_enc(key_id, block, write_data, g_slot4_key, 4, host_num_in);
+#endif
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
+#if defined(ATCA_USE_CONSTANT_HOST_NONCE)
     status = atcab_read_enc(key_id, block, read_data, g_slot4_key, 4);
+#else
+    status = atcab_read_enc(key_id, block, read_data, g_slot4_key, 4, host_num_in);
+#endif
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     TEST_ASSERT_EQUAL_MEMORY(write_data, read_data, sizeof(write_data));
@@ -505,6 +513,7 @@ TEST(atca_cmd_basic_test, write_enc_data_unlock)
     uint16_t key_id = 8;
     uint8_t block = 0;
     uint8_t write_data[ATCA_KEY_SIZE];
+    uint8_t host_num_in[NONCE_NUMIN_SIZE] = { 0 };
 
     uint8_t other_data[13];
     uint8_t response[32];
@@ -522,7 +531,12 @@ TEST(atca_cmd_basic_test, write_enc_data_unlock)
     /*Get random data and do encrypted write*/
     status = atcab_random(&write_data[0]);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+#if defined(ATCA_USE_CONSTANT_HOST_NONCE)
     status = atcab_write_enc(key_id, block, write_data, g_slot4_key, 4);
+#else
+    status = atcab_write_enc(key_id, block, write_data, g_slot4_key, 4, host_num_in);
+#endif
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     /*Verify write using Checkmac*/

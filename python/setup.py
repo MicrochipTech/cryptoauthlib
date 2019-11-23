@@ -28,6 +28,7 @@ _CLASSIFIERS = [
     'Programming Language :: Python :: 3',
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
+    'Programming Language :: Python :: 3.7',
     'Operating System :: OS Independent',
 ]
 
@@ -53,7 +54,10 @@ else:
 
 # See if the library is already installed
 try:
-    cdll.LoadLibrary('libcryptoauth.so')
+    lib = cdll.LoadLibrary('libcryptoauth.so')
+    # Test to ensure it has the required features to support the 
+    # python wrapper. It may change later to a version check
+    assert 0 != lib.ATCAIfacecfg_size
     _EXTENSIONS = None
 except:
     _EXTENSIONS = [Extension('cryptoauthlib', sources=[])]

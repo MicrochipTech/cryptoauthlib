@@ -275,7 +275,8 @@ def test_atcab_ecdh_enc(test_init):
     pms = bytearray(32)
     readkey = bytearray(32)
     readkey_id = 7
-    assert atcab_ecdh_enc(key_id, public_key, pms, readkey, readkey_id) == Status.ATCA_SUCCESS
+    num_in = bytearray(20)
+    assert atcab_ecdh_enc(key_id, public_key, pms, readkey, readkey_id, num_in) == Status.ATCA_SUCCESS
     assert pms == bytearray(atcab_mock.r_ecdh_pms)
 
 def test_atcab_ecdh_ioenc(test_init):
@@ -453,7 +454,8 @@ def test_atcab_priv_write(test_init):
     priv_key = bytearray(36)
     write_key_id = 5
     write_key = bytearray(32)
-    assert atcab_priv_write(key_id, priv_key, write_key_id, write_key) == Status.ATCA_SUCCESS
+    num_in = bytearray(20)
+    assert atcab_priv_write(key_id, priv_key, write_key_id, write_key, num_in) == Status.ATCA_SUCCESS
 
 #-----------------ATCA_BASIC_RANDOM-------------------#
 
@@ -497,7 +499,8 @@ def test_atcab_read_enc(test_init):
     data = bytearray(32)
     enc_key = bytearray(32)
     enc_key_id = 4
-    assert atcab_read_enc(key_id, block, data, enc_key, enc_key_id) == Status.ATCA_SUCCESS
+    num_in = bytearray(20)
+    assert atcab_read_enc(key_id, block, data, enc_key, enc_key_id, num_in) == Status.ATCA_SUCCESS
     assert data == bytearray(atcab_mock.r_read_enc_data)
 
 def test_atcab_read_config_zone(test_init):
@@ -789,7 +792,8 @@ def test_atcab_write_enc(test_init):
     data = bytearray(32)
     enc_key = bytearray(32)
     enc_key_id = 4
-    assert atcab_write_enc(key_id, block, data, enc_key, enc_key_id) == Status.ATCA_SUCCESS
+    num_in = bytearray(20)
+    assert atcab_write_enc(key_id, block, data, enc_key, enc_key_id, num_in) == Status.ATCA_SUCCESS
 
 def test_atcab_write_config_zone(test_init):
     conf = bytearray(128)

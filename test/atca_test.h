@@ -138,8 +138,8 @@ void RunAllHelperTests(void);
 void RunBasicOtpZero(void);
 void RunAllBasicTests(void);
 void RunAllFeatureTests(void);
-void RunTNG22Tests(void);
-void RunTNGTNTests(void);
+void RunTNGTLSTests(void);
+void RunTNGLORATests(void);
 
 #ifdef _WIN32
 void hex_to_data(const char* hex_str, uint8_t* data, size_t data_size);

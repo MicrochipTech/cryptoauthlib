@@ -190,6 +190,7 @@ TEST(atca_cmd_basic_test, ecdh)
     char displaystr[256];
     uint8_t frag[4] = { 0x44, 0x44, 0x44, 0x44 };
     size_t displen = sizeof(displaystr);
+    uint8_t host_num_in[NONCE_NUMIN_SIZE] = { 0 };
 
     test_assert_data_is_locked();
 
@@ -221,7 +222,11 @@ TEST(atca_cmd_basic_test, ecdh)
 
     // slot 0 is a non-clear response - "Write Slot N|1" is in slot config
     // generate premaster secret from alice's key and bob's pubkey
+#if defined(ATCA_USE_CONSTANT_HOST_NONCE)
     status = atcab_ecdh_enc(key_id_alice, pub_bob, pms_alice, g_slot4_key, read_key_id);
+#else
+    status = atcab_ecdh_enc(key_id_alice, pub_bob, pms_alice, g_slot4_key, read_key_id, host_num_in);
+#endif
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_NOT_EQUAL(0, memcmp(pub_alice, frag, sizeof(frag)));
 
