@@ -448,7 +448,7 @@ CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, p
 
     /* Find a free slot that matches the object type */
 
-    for (i = 0; i < 16; i++)
+    for (i = 0; i < PKCS11_MAX_OBJECTS_ALLOWED; i++)
     {
         if (pSlot->flags & (1 << i))
         {
@@ -490,8 +490,12 @@ CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, p
             fprintf(fp, "label = %s\n", pObject->name);
             fclose(fp);
         }
+        return CKR_OK;
     }
-    return CKR_OK;
+    else
+    {
+        return CKR_FUNCTION_FAILED;
+    }
 }
 
 CK_RV pkcs11_config_remove_object(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject)
@@ -501,6 +505,8 @@ CK_RV pkcs11_config_remove_object(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_pt
     (void)snprintf(filename, sizeof(filename), "%s%d.%d.conf", pLibCtx->config_path, pSlot->slot_id, pObject->slot);
 
     remove(filename);
+
+    pSlot->flags |= (1 << pObject->slot);
 
     return CKR_OK;
 }
