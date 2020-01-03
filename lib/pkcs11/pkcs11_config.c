@@ -480,7 +480,7 @@ CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, p
         }
     }
 
-    if (i < 16)
+    if (i < PKCS11_MAX_OBJECTS_ALLOWED)
     {
         (void)snprintf(filename, sizeof(filename), "%s%d.%d.conf", pLibCtx->config_path, pSlot->slot_id, i);
         fp = fopen(filename, "wb");
