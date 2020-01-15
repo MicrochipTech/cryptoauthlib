@@ -482,13 +482,18 @@ CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, p
 
     if (i < 16)
     {
-        (void)snprintf(filename, sizeof(filename), "%s%d.%d.conf", pLibCtx->config_path, pSlot->slot_id, i);
-        fp = fopen(filename, "wb");
-        if (fp)
+        int ret = snprintf(filename, sizeof(filename), "%s%d.%d.conf", pLibCtx->config_path,
+                           (int)pSlot->slot_id, (int)i);
+
+        if (ret > 0 && ret < sizeof(filename))
         {
-            fprintf(fp, "type = %s\n", objtype);
-            fprintf(fp, "label = %s\n", pObject->name);
-            fclose(fp);
+            fp = fopen(filename, "wb");
+            if (fp)
+            {
+                fprintf(fp, "type = %s\n", objtype);
+                fprintf(fp, "label = %s\n", pObject->name);
+                fclose(fp);
+            }
         }
     }
     return CKR_OK;
@@ -498,9 +503,13 @@ CK_RV pkcs11_config_remove_object(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_pt
 {
     char filename[200];
 
-    (void)snprintf(filename, sizeof(filename), "%s%d.%d.conf", pLibCtx->config_path, pSlot->slot_id, pObject->slot);
+    int ret = snprintf(filename, sizeof(filename), "%s%d.%d.conf", pLibCtx->config_path,
+                        (int)pSlot->slot_id, (int)pObject->slot);
 
-    remove(filename);
+    if (ret > 0 && ret < sizeof(filename))
+    {
+        remove(filename);
+    }
 
     return CKR_OK;
 }
@@ -554,8 +563,16 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
     rv = 0;
     for (i = 0; i < PKCS11_MAX_SLOTS_ALLOWED && !rv; i++)
     {
-        (void)snprintf(filename, sizeof(filename), "%s%d.conf", pLibCtx->config_path, i);
-        fp = fopen(filename, "rb");
+        int ret = snprintf(filename, sizeof(filename), "%s%d.conf", pLibCtx->config_path, i);
+
+        if (ret > 0 && ret < sizeof(filename))
+        {
+            fp = fopen(filename, "rb");
+        }
+        else
+        {
+            fp = NULL;
+        }
 
         if (fp)
         {
@@ -579,8 +596,16 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
 
         for (j = 0; j < 16; j++)
         {
-            (void)snprintf(filename, sizeof(filename), "%s%d.%d.conf", pLibCtx->config_path, i, j);
-            fp = fopen(filename, "rb");
+            int ret = snprintf(filename, sizeof(filename), "%s%d.%d.conf", pLibCtx->config_path, i, j);
+            if (ret > 0 && ret < sizeof(filename))
+            {
+                fp = fopen(filename, "rb");
+            }
+            else
+            {
+                fp = NULL;
+            }
+
             if (fp)
             {
                 buflen = pkcs11_config_load_file(fp, &buffer);

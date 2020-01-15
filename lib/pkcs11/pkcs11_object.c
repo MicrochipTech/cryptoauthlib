@@ -140,7 +140,7 @@ CK_RV pkcs11_object_alloc(pkcs11_object_ptr * ppObject)
 #if PKCS11_USE_STATIC_MEMORY
             *ppObject = &pkcs11_object_store[i];
 #else
-            /* Use dynamic memory functions from OS abstraction layer */
+            *ppObject = pkcs11_os_malloc(sizeof(pkcs11_object));
 #endif
             if (*ppObject)
             {
@@ -148,6 +148,11 @@ CK_RV pkcs11_object_alloc(pkcs11_object_ptr * ppObject)
                 pkcs11_object_cache[i].handle = pkcs11_object_alloc_handle();
                 pkcs11_object_cache[i].object = *ppObject;
             }
+            else
+            {
+                rv = CKR_HOST_MEMORY;
+            }
+
             break;
         }
     }
@@ -176,14 +181,24 @@ CK_RV pkcs11_object_free(pkcs11_object_ptr pObject)
 
     if (pObject)
     {
-#if PKCS11_USE_STATIC_MEMORY
-        memset(pObject, 0, sizeof(pkcs11_object));
-#else
-        if (pObject->data && (pObject->flags & PKCS11_OBJECT_FLAG_DYNAMIC))
+        if (pObject->data)
         {
-            pkcs11_os_free(pObject->data);
+            if (pObject->flags & PKCS11_OBJECT_FLAG_SENSITIVE)
+            {
+                (void)pkcs11_util_memset((CK_VOID_PTR)pObject->data, pObject->size, 0, pObject->size);
+            }
+#if !PKCS11_USE_STATIC_MEMORY
+            if (pObject->data && (pObject->flags & PKCS11_OBJECT_FLAG_DYNAMIC))
+            {
+                pkcs11_os_free(pObject->data);
+            }
+#endif
         }
-        /* Use dynamic memory functions from OS abstraction layer */
+
+        (void)pkcs11_util_memset(pObject, sizeof(pkcs11_object), 0, sizeof(pkcs11_object) );
+
+#if !PKCS11_USE_STATIC_MEMORY
+        pkcs11_os_free(pObject);
 #endif
     }
 

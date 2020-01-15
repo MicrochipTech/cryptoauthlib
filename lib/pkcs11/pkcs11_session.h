@@ -62,6 +62,7 @@ typedef struct _pkcs11_session_ctx
     CK_ULONG            object_index;
     CK_ULONG            object_count;
     CK_OBJECT_HANDLE    active_object;
+    CK_BBOOL            logged_in;
     CK_BYTE             read_key[32];           /**< Accepted through C_Login as the user pin */
 } pkcs11_session_ctx, *pkcs11_session_ctx_ptr;
 

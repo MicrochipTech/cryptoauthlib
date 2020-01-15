@@ -42,6 +42,7 @@
 #ifndef PKCS11_OBJECT_H_
 #define PKCS11_OBJECT_H_
 
+#include <stdint.h>
 #include "cryptoki.h"
 #include "pkcs11_config.h"
 #include "pkcs11_attrib.h"
@@ -63,10 +64,10 @@ typedef struct _pkcs11_object
     CK_ULONG     count;
     CK_ULONG     size;
     CK_VOID_PTR  config;
-    CK_BYTE      slot;
+    uint16_t     slot;
     CK_FLAGS     flags;
     CK_UTF8CHAR  name[PKCS11_MAX_LABEL_SIZE + 1];
-    void const * data;
+    CK_VOID_PTR  data;
 } pkcs11_object, *pkcs11_object_ptr;
 
 typedef struct _pkcs11_object_cache_t
@@ -85,6 +86,7 @@ extern const CK_ULONG pkcs11_object_monotonic_attributes_count;
 #define PKCS11_OBJECT_FLAG_DESTROYABLE      0x01
 #define PKCS11_OBJECT_FLAG_MODIFIABLE       0x02
 #define PKCS11_OBJECT_FLAG_DYNAMIC          0x04
+#define PKCS11_OBJECT_FLAG_SENSITIVE        0x08
 
 CK_RV pkcs11_object_alloc(pkcs11_object_ptr * ppObject);
 CK_RV pkcs11_object_free(pkcs11_object_ptr pObject);

@@ -73,5 +73,32 @@ CK_RV pkcs11_util_convert_rv(ATCA_STATUS status)
     }
 }
 
+int pkcs11_util_memset(void *dest, size_t destsz, int ch, size_t count)
+{
+#ifndef memset_s
+    if (dest == NULL)
+    {
+        return -1;
+    }
+    if (destsz > SIZE_MAX)
+    {
+        return -1;
+    }
+    if (count > destsz)
+    {
+        return -1;
+    }
+
+    volatile unsigned char *p = dest;
+    while (destsz-- && count--)
+    {
+        *p++ = ch;
+    }
+
+    return 0;
+#else
+    return memset_s(dest, destsz, ch, count);
+#endif
+}
 
 /** @} */

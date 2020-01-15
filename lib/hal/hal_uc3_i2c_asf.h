@@ -1,6 +1,8 @@
 /**
  * \file
- * \brief ATCA Hardware abstraction layer for Linux using I2C.
+ * \brief ATCA Hardware abstraction layer for SAMV71 I2C over ASF drivers.
+ *
+ * Prerequisite: add SERCOM I2C Master Polled support to application in Atmel Studio
  *
  * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
  *
@@ -25,25 +27,35 @@
  * THIS SOFTWARE.
  */
 
-#ifndef HAL_LINUX_I2C_USERSPACE_H_
-#define HAL_LINUX_I2C_USERSPACE_H_
+#ifndef HAL_SAMV71_I2C_ASF_H_
+#define HAL_SAMV71_I2C_ASF_H_
+
+#include <asf.h>
+#include "twi.h"
 
 /** \defgroup hal_ Hardware abstraction layer (hal_)
  *
  * \brief
  * These methods define the hardware abstraction layer for communicating with a CryptoAuth device
+ * using I2C driver of ASF.
  *
    @{ */
 
-#define MAX_I2C_BUSES   4   // Raspberry Pi has 2 TWI
 
-// A structure to hold I2C information
+#define MAX_I2C_BUSES    3
+
+/** \brief this is the hal_data for ATCA HAL for ASF SERCOM
+ */
 typedef struct atcaI2Cmaster
 {
-    char i2c_file[16];
-    int  ref_ct;
+    uint8_t       twi_id;
+    avr32_twi_t * twi_master_instance;
+    int           ref_ct;
+    // for conveniences during interface release phase
+    int bus_index;
 } ATCAI2CMaster_t;
 
-/** @} */
+ATCA_STATUS change_i2c_speed(ATCAIface iface, uint32_t speed);
 
-#endif /* HAL_LINUX_I2C_H_ */
+/** @} */
+#endif /* HAL_SAMD21_I2C_ASF_H_ */

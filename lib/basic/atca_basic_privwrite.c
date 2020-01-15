@@ -76,10 +76,10 @@ ATCA_STATUS atcab_priv_write(uint16_t key_id, const uint8_t priv_key[36], uint16
         {
             // Caller requested an unencrypted PrivWrite, which is only allowed when the data zone is unlocked
             // build an PrivWrite command
-            packet.param1 = 0x00;                   // Mode is unencrypted write
-            packet.param2 = key_id;                 // Key ID
-            memcpy(&packet.data[0], priv_key, 36);  // Private key
-            memset(&packet.data[36], 0, 32);        // MAC (ignored for unencrypted write)
+            packet.param1 = 0x00;                           // Mode is unencrypted write
+            packet.param2 = key_id;                         // Key ID
+            memcpy(&packet.data[0], priv_key, 36);          // Private key
+            memset(&packet.data[36], 0, 32);                // MAC (ignored for unencrypted write)
         }
         else
         {
@@ -153,8 +153,8 @@ ATCA_STATUS atcab_priv_write(uint16_t key_id, const uint8_t priv_key[36], uint16
             }
 
             // build a write command for encrypted writes
-            packet.param1 = PRIVWRITE_MODE_ENCRYPT; // Mode is encrypted write
-            packet.param2 = key_id;                 // Key ID
+            packet.param1 = PRIVWRITE_MODE_ENCRYPT;            // Mode is encrypted write
+            packet.param2 = key_id;                            // Key ID
             memcpy(&packet.data[0], cipher_text, sizeof(cipher_text));
             memcpy(&packet.data[sizeof(cipher_text)], host_mac, sizeof(host_mac));
         }

@@ -22,6 +22,8 @@ script:
   - cp -r ../lib .
   - cp -r ../third_party .
   - cp ../test/atca_utils_sizes.c .
+  - mkdir app
+  - cp -r ../app/tng app
   - $PIP install wheel
   - $PYTHON setup.py sdist --dist-dir wheelhouse
   - $PIP install cibuildwheel

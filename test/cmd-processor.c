@@ -81,6 +81,9 @@ static void set_clock_divider_m1(void);
 static void set_clock_divider_m2(void);
 static void tng22_tests(void);
 static void tngtn_tests(void);
+#if defined(_WIN32) || defined(__linux__) || defined(__APPLE__)
+static void call_exit(int code);
+#endif
 
 static const char* argv[] = { "manual", "-v" };
 // *INDENT-OFF*  - Preserve formatting
@@ -118,6 +121,9 @@ static t_menu_info mas_menu_info[] =
     #ifndef DO_NOT_TEST_SW_CRYPTO
     { "crypto",   "Run Unit Tests for Software Crypto Functions",   (fp_menu_handler)atca_crypto_sw_tests},
     #endif
+    #if defined(_WIN32) || defined(__linux__) || defined(__APPLE__)
+    { "exit",     "Exit the test application",                      call_exit                            },
+    #endif
     { NULL,       NULL,                                             NULL                                 },
 };
 // *INDENT-ON*
@@ -126,11 +132,19 @@ static t_menu_info mas_menu_info[] =
 #include <stdio.h>
 #include <stdlib.h>
 #include "cmd-processor.h"
+
+static int exit_code;
+
+static void call_exit(int code)
+{
+    exit_code = code;
+}
+
 int main(int argc, char* argv[])
 {
     char buffer[1024];
 
-    while (true)
+    while (!exit_code)
     {
         printf("$ ");
         if (fgets(buffer, sizeof(buffer), stdin))
@@ -139,7 +153,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    return 0;
+    return exit_code;
 }
 #else
 int processCmd(void)

@@ -82,9 +82,11 @@ static void uint8_to_hex(uint8_t num, char* hex_str)
 
 static void hex_to_lowercase(char *buffer, size_t length)
 {
+    size_t index;
+
     if ((buffer != NULL) && (length > 0))
     {
-        for (size_t index = 0; index < length; index++)
+        for (index = 0; index < length; index++)
         {
             buffer[index] = tolower(buffer[index]);
         }
@@ -94,9 +96,11 @@ static void hex_to_lowercase(char *buffer, size_t length)
 
 static void hex_to_uppercase(char *buffer, size_t length)
 {
+    size_t index;
+
     if ((buffer != NULL) && (length > 0))
     {
-        for (size_t index = 0; index < length; index++)
+        for (index = 0; index < length; index++)
         {
             buffer[index] = toupper(buffer[index]);
         }

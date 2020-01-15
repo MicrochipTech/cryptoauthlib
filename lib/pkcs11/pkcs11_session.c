@@ -35,40 +35,15 @@
 #include "pkcs11_config.h"
 #include "pkcs11_debug.h"
 #include "pkcs11_session.h"
+#include "pkcs11_token.h"
 #include "pkcs11_init.h"
 #include "pkcs11_slot.h"
 #include "pkcs11_object.h"
+#include "pkcs11_util.h"
 
 /**
  * \defgroup pkcs11 Session Management (pkcs11_)
    @{ */
-
-#ifndef memset_s
-int memset_s(void *dest, size_t destsz, int ch, size_t count)
-{
-    if (dest == NULL)
-    {
-        return -1;
-    }
-    if (destsz > SIZE_MAX)
-    {
-        return -1;
-    }
-    if (count > destsz)
-    {
-        return -1;
-    }
-
-    volatile unsigned char *p = dest;
-    while (destsz-- && count--)
-    {
-        *p++ = ch;
-    }
-
-    return 0;
-}
-#endif
-
 
 #if PKCS11_USE_STATIC_MEMORY
 static pkcs11_session_ctx pkcs11_session_cache[PKCS11_MAX_SESSIONS_ALLOWED];
@@ -253,7 +228,7 @@ CK_RV pkcs11_session_close(CK_SESSION_HANDLE hSession)
     }
 
     /* Free the session */
-    memset_s(session_ctx, sizeof(pkcs11_session_ctx), 0, sizeof(pkcs11_session_ctx));
+    (void)pkcs11_util_memset(session_ctx, sizeof(pkcs11_session_ctx), 0, sizeof(pkcs11_session_ctx));
 
     return CKR_OK;
 }
@@ -338,16 +313,17 @@ CK_RV pkcs11_session_get_info(CK_SESSION_HANDLE hSession, CK_SESSION_INFO_PTR pI
 
 CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen)
 {
-    pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
+    pkcs11_lib_ctx_ptr pLibCtx = pkcs11_get_context();
     pkcs11_session_ctx_ptr session_ctx = pkcs11_get_session_context(hSession);
-    size_t outlen;
+    uint8_t sn[ATCA_SERIAL_NUM_SIZE];
+    CK_RV rv;
 
-    if (!lib_ctx || !lib_ctx->initialized)
+    if (!pLibCtx || !pLibCtx->initialized)
     {
         return CKR_CRYPTOKI_NOT_INITIALIZED;
     }
 
-    if (!pPin || ulPinLen != 64)
+    if (!pPin || !ulPinLen)
     {
         return CKR_ARGUMENTS_BAD;
     }
@@ -362,11 +338,32 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
         return CKR_SESSION_CLOSED;
     }
 
-    /* Decode the hex string pin into a binary io protection key */
-    outlen = sizeof(session_ctx->read_key);
-    (void)atcab_hex2bin((const char*)pPin, ulPinLen, session_ctx->read_key, &outlen);
+    if (64 != ulPinLen)
+    {
+        if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
+        {
+            rv = pkcs11_util_convert_rv(atcab_read_serial_number(sn));
+            (void)pkcs11_unlock_context(pLibCtx);
+        }
 
-    return CKR_OK;
+        if (CKR_OK == rv)
+        {
+            rv = pkcs11_token_convert_pin_to_key(pPin, ulPinLen, sn, (CK_LONG)sizeof(sn), 
+                                session_ctx->read_key, (CK_LONG)sizeof(session_ctx->read_key));
+        }
+    }
+    else
+    {
+        rv = pkcs11_token_convert_pin_to_key(pPin, ulPinLen, NULL, 0, session_ctx->read_key, 
+                                             (CK_LONG)sizeof(session_ctx->read_key));
+    }
+
+    if (CKR_OK == rv)
+    {
+        session_ctx->logged_in = TRUE;
+    }
+
+    return rv;
 }
 
 CK_RV pkcs11_session_logout(CK_SESSION_HANDLE hSession)
@@ -390,7 +387,9 @@ CK_RV pkcs11_session_logout(CK_SESSION_HANDLE hSession)
     }
 
     /* Wipe the io protection secret */
-    memset_s(session_ctx->read_key, sizeof(session_ctx->read_key), 0, sizeof(session_ctx->read_key));
+    (void)pkcs11_util_memset(session_ctx->read_key, sizeof(session_ctx->read_key), 0, sizeof(session_ctx->read_key));
+
+    session_ctx->logged_in = FALSE;
 
     return CKR_OK;
 }

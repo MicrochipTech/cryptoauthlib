@@ -150,26 +150,45 @@ ATCA_STATUS atcah_nonce(struct atca_nonce_in_out *param)
         // Update TempKey to only 32 bytes
         param->temp_key->is_64 = 0;
     }
-    else if (param->mode == NONCE_MODE_PASSTHROUGH && (param->mode & NONCE_MODE_TARGET_MASK) != NONCE_MODE_TARGET_TEMPKEY)
+    else if ((param->mode & NONCE_MODE_MASK) == NONCE_MODE_PASSTHROUGH)
     {
-        // Pass-through mode for TempKey (other targets have no effect on TempKey)
-        if ((param->mode & NONCE_MODE_INPUT_LEN_MASK) == NONCE_MODE_INPUT_LEN_64)
-        {
-            memcpy(param->temp_key->value, param->num_in, 64);
-            param->temp_key->is_64 = 1;
-        }
-        else
-        {
-            memcpy(param->temp_key->value, param->num_in, 32);
-            param->temp_key->is_64 = 0;
-        }
 
-        // Update TempKey flags
-        param->temp_key->source_flag = 1; // Not Random
-        param->temp_key->key_id = 0;
-        param->temp_key->gen_dig_data = 0;
-        param->temp_key->no_mac_flag = 0;
-        param->temp_key->valid = 1;
+        if ((param->mode & NONCE_MODE_TARGET_MASK) == NONCE_MODE_TARGET_TEMPKEY)
+        {
+            // Pass-through mode for TempKey (other targets have no effect on TempKey)
+            if ((param->mode & NONCE_MODE_INPUT_LEN_MASK) == NONCE_MODE_INPUT_LEN_64)
+            {
+                memcpy(param->temp_key->value, param->num_in, 64);
+                param->temp_key->is_64 = 1;
+            }
+            else
+            {
+                memcpy(param->temp_key->value, param->num_in, 32);
+                param->temp_key->is_64 = 0;
+            }
+
+            // Update TempKey flags
+            param->temp_key->source_flag = 1; // Not Random
+            param->temp_key->key_id = 0;
+            param->temp_key->gen_dig_data = 0;
+            param->temp_key->no_mac_flag = 0;
+            param->temp_key->valid = 1;
+        }
+        else //In the case of ECC608A, passthrough message may be stored in message digest buffer/ Alternate Key buffer
+        {
+
+            // Update TempKey flags
+            param->temp_key->source_flag = 1; //Not Random
+            param->temp_key->key_id = 0;
+            param->temp_key->gen_dig_data = 0;
+            param->temp_key->no_mac_flag = 0;
+            param->temp_key->valid = 0;
+
+        }
+    }
+    else
+    {
+        return ATCA_BAD_PARAM;
     }
 
     return ATCA_SUCCESS;
@@ -703,14 +722,16 @@ ATCA_STATUS atcah_gen_dig(struct atca_gen_dig_in_out *param)
     {
         return ATCA_BAD_PARAM;
     }
-    if (param->zone != GENDIG_ZONE_SHARED_NONCE && param->stored_value == NULL)
+    if ((param->zone <= GENDIG_ZONE_DATA) && (param->stored_value == NULL))
     {
-        return ATCA_BAD_PARAM;  // Stored value can only be null with the shared_nonce mode
+        return ATCA_BAD_PARAM;  // Stored value cannot be null for Config,OTP and Data
     }
+
     if ((param->zone == GENDIG_ZONE_SHARED_NONCE || (param->zone == GENDIG_ZONE_DATA && param->is_key_nomac)) && param->other_data == NULL)
     {
         return ATCA_BAD_PARAM;  // Other data is required in these cases
     }
+
     if (param->zone > 5)
     {
         return ATCA_BAD_PARAM;  // Unknown zone
@@ -719,16 +740,33 @@ ATCA_STATUS atcah_gen_dig(struct atca_gen_dig_in_out *param)
     // Start calculation
     p_temp = temporary;
 
+
     // (1) 32 bytes inputKey
-    if (param->zone == GENDIG_ZONE_SHARED_NONCE && param->key_id & 0x8000)
+    if (param->zone == GENDIG_ZONE_SHARED_NONCE)
     {
-        memcpy(p_temp, param->other_data, ATCA_KEY_SIZE);
+        if (param->key_id & 0x8000)
+        {
+            memcpy(p_temp, param->temp_key->value, ATCA_KEY_SIZE);  // 32 bytes TempKey
+        }
+        else
+        {
+            memcpy(p_temp, param->other_data, ATCA_KEY_SIZE);       // 32 bytes other data
+
+        }
+    }
+    else if (param->zone == GENDIG_ZONE_COUNTER || param->zone == GENDIG_ZONE_KEY_CONFIG)
+    {
+        memset(p_temp, 0x00, ATCA_KEY_SIZE);                        // 32 bytes of zero.
+
     }
     else
     {
-        memcpy(p_temp, param->stored_value, ATCA_KEY_SIZE);
+        memcpy(p_temp, param->stored_value, ATCA_KEY_SIZE);     // 32 bytes of stored data
+
     }
+
     p_temp += ATCA_KEY_SIZE;
+
 
     if (param->zone == GENDIG_ZONE_DATA && param->is_key_nomac)
     {
@@ -744,9 +782,18 @@ ATCA_STATUS atcah_gen_dig(struct atca_gen_dig_in_out *param)
         // (3) 1 byte Param1 (zone)
         *p_temp++ = param->zone;
 
-        // (4) 2 bytes Param2 (keyID)
+        // (4) 1 byte LSB of Param2 (keyID)
         *p_temp++ = (uint8_t)(param->key_id & 0xFF);
-        *p_temp++ = (uint8_t)(param->key_id >> 8);
+        if (param->zone == GENDIG_ZONE_SHARED_NONCE)
+        {
+            //(4) 1 byte zero for shared nonce mode
+            *p_temp++ = 0;
+        }
+        else
+        {
+            //(4)  1 byte MSB of Param2 (keyID) for other modes
+            *p_temp++ = (uint8_t)(param->key_id >> 8);
+        }
     }
 
     // (5) 1 byte SN[8]
@@ -756,21 +803,66 @@ ATCA_STATUS atcah_gen_dig(struct atca_gen_dig_in_out *param)
     *p_temp++ = param->sn[0];
     *p_temp++ = param->sn[1];
 
-    // (7) 25 zeros
-    memset(p_temp, 0, ATCA_GENDIG_ZEROS_SIZE);
-    p_temp += ATCA_GENDIG_ZEROS_SIZE;
 
-    if (param->zone == GENDIG_ZONE_SHARED_NONCE && !(param->key_id & 0x8000))
+    // (7)
+    if (param->zone == GENDIG_ZONE_COUNTER)
     {
-        memcpy(p_temp, param->other_data, ATCA_KEY_SIZE);       // (8) 32 bytes OtherData
+        *p_temp++ = 0;
+        *p_temp++ = (uint8_t)(param->counter & 0xFF);   // (7) 4 bytes of counter
+        *p_temp++ = (uint8_t)(param->counter >> 8);
+        *p_temp++ = (uint8_t)(param->counter >> 16);
+        *p_temp++ = (uint8_t)(param->counter >> 24);
+
+        memset(p_temp, 0x00, 20);                       // (7) 20 bytes of zero
+        p_temp += 20;
+
+    }
+    else if (param->zone == GENDIG_ZONE_KEY_CONFIG)
+    {
+        *p_temp++ = 0;
+        *p_temp++ = param->slot_conf & 0xFF;            // (7) 2 bytes of Slot config
+        *p_temp++ = (uint8_t)(param->slot_conf >> 8);
+
+        *p_temp++ = param->key_conf & 0xFF;
+        *p_temp++ = (uint8_t)(param->key_conf >> 8);   // (7) 2 bytes of key config
+
+        *p_temp++ = param->slot_locked;                // (7) 1 byte of slot locked
+
+        memset(p_temp, 0x00, 19);                      // (7) 19 bytes of zero
+        p_temp += 19;
+
+
     }
     else
     {
-        memcpy(p_temp, param->temp_key->value, ATCA_KEY_SIZE);  // (8) 32 bytes TempKey
+
+        memset(p_temp, 0, ATCA_GENDIG_ZEROS_SIZE);       // (7) 25 zeros
+        p_temp += ATCA_GENDIG_ZEROS_SIZE;
 
     }
+
+
+
+
+    if (param->zone == GENDIG_ZONE_SHARED_NONCE && (param->key_id & 0x8000))
+    {
+        memcpy(p_temp, param->other_data, ATCA_KEY_SIZE);           // (8) 32 bytes OtherData
+        p_temp += ATCA_KEY_SIZE;
+
+    }
+    else
+    {
+        memcpy(p_temp, param->temp_key->value, ATCA_KEY_SIZE);      // (8) 32 bytes TempKey
+        p_temp += ATCA_KEY_SIZE;
+
+    }
+
+
+
+
+
     // Calculate SHA256 to get the new TempKey
-    atcac_sw_sha2_256(temporary, ATCA_MSG_SIZE_GEN_DIG, param->temp_key->value);
+    atcac_sw_sha2_256(temporary, (p_temp - temporary), param->temp_key->value);
 
     // Update TempKey fields
     param->temp_key->valid = 1;
@@ -779,6 +871,10 @@ ATCA_STATUS atcah_gen_dig(struct atca_gen_dig_in_out *param)
     {
         param->temp_key->gen_dig_data = 1;
         param->temp_key->key_id = (param->key_id & 0xF);    // mask lower 4-bit only
+        if (param->is_key_nomac == 1)
+        {
+            param->temp_key->no_mac_flag = 1;
+        }
     }
     else
     {
