@@ -1,12 +1,13 @@
 var a00041 =
 [
-    [ "tng_atcacert_device_public_key", "a11686.html#ga01bf19754baee6ce82ec46f966528262", null ],
-    [ "tng_atcacert_max_device_cert_size", "a11686.html#ga67606649a5f2261cb6b55478d72bf805", null ],
-    [ "tng_atcacert_max_signer_cert_size", "a11686.html#ga857aacbb70f2ea18411f1ca478a0e37f", null ],
-    [ "tng_atcacert_read_device_cert", "a11686.html#ga22c7ea083197410f396d18fa808e8e0c", null ],
-    [ "tng_atcacert_read_signer_cert", "a11686.html#ga82d3c529ed81119a956957052c06e8d7", null ],
-    [ "tng_atcacert_root_cert", "a11686.html#ga31cf63afba3c936d279a325d71691a68", null ],
-    [ "tng_atcacert_root_cert_size", "a11686.html#gaa3a0387ff2a71684a2992d4661c53331", null ],
-    [ "tng_atcacert_root_public_key", "a11686.html#ga8cd0d450da1bf23d0f6784446d35c556", null ],
-    [ "tng_atcacert_signer_public_key", "a11686.html#gaa4c31ab35807d8ed51fbecc48866aa04", null ]
+    [ "TNGLORA_PRIMARY_KEY_SLOT", "a01999.html#gadb6e4c40ca7a5a6051b63ccf102e9794", null ],
+    [ "TNGTLS_PRIMARY_KEY_SLOT", "a01999.html#ga3c58083e5e094a79031e7edaeccbeed1", null ],
+    [ "tng_type_t", "a01999.html#ga91acea350b146040fc32c64eac8054f7", [
+      [ "TNGTYPE_UNKNOWN", "a01999.html#gga91acea350b146040fc32c64eac8054f7a5b74509d0d64689d7acb7abf01a60f3e", null ],
+      [ "TNGTYPE_TLS", "a01999.html#gga91acea350b146040fc32c64eac8054f7aa6fb47f65af76e0bf7dc739416f5071f", null ],
+      [ "TNGTYPE_LORA", "a01999.html#gga91acea350b146040fc32c64eac8054f7a43dfe8819e10a121c5bda31c47d32b6f", null ]
+    ] ],
+    [ "tng_get_device_cert_def", "a01999.html#ga28c369c92f1a7c2f61512cde463b8ff5", null ],
+    [ "tng_get_device_pubkey", "a01999.html#ga6bdd6b8ace7a98b7efbc13f85ffaac1a", null ],
+    [ "tng_get_type", "a01999.html#ga421d9b1fd3aba60c947d6b3efb122390", null ]
 ];

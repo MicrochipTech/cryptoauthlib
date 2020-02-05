@@ -1,6 +1,6 @@
 var a00062 =
 [
-    [ "g_tnglora_cert_def_4_device", "a00062.html#a7c769b8f59f4430b372c0801768ad3a1", null ],
-    [ "g_tnglora_cert_elements_4_device", "a00062.html#a5a2cf578e4b475a324178389fc26bc13", null ],
-    [ "g_tnglora_cert_template_4_device", "a00062.html#aeec7511bbbb596497ce2ae2881de2b2f", null ]
+    [ "g_tnglora_cert_def_2_device", "a01999.html#ga2782386bf16b0d23cb84bd371e010ac1", null ],
+    [ "g_tngtls_cert_elements_2_device", "a00062.html#a98503c5a8aa46b64b1964c3b4023acf3", null ],
+    [ "g_tngtls_cert_template_2_device", "a00062.html#a35b19c12e9a87b9f3667fba9212dfe99", null ]
 ];

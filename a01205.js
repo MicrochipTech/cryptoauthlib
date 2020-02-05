@@ -1,13 +1,13 @@
 var a01205 =
 [
-    [ "client_chal", "a01205.html#a218f1c30c4a21b348dbe1817a2c14896", null ],
-    [ "client_resp", "a01205.html#a430a448768d687a94e3daaa00dce63ce", null ],
-    [ "key_id", "a01205.html#ac21eed4200889cc115d16a781871d01c", null ],
-    [ "mode", "a01205.html#a37e90f5e3bd99fac2021fb3a326607d4", null ],
-    [ "other_data", "a01205.html#ac76ac607fd679316fc17b16039a86b9c", null ],
-    [ "otp", "a01205.html#a4510889ef4b42470bf1a1d4e940a19a9", null ],
-    [ "slot_key", "a01205.html#aa23b467edf1809a2a8b1b530a0159c45", null ],
-    [ "sn", "a01205.html#aef45bac2efcd5394c4ed79f73ee16d23", null ],
-    [ "target_key", "a01205.html#ab15c5e89189b9eea6fab7da58cc03967", null ],
-    [ "temp_key", "a01205.html#a72fae3d62889ef224f09c57a7646e061", null ]
+    [ "PEM_CERT_BEGIN", "a01205.html#aefb573f85f8692759f6c82587a948d71", null ],
+    [ "PEM_CERT_END", "a01205.html#afbe03d95d1d6a651c01d1ef74daa4063", null ],
+    [ "PEM_CSR_BEGIN", "a01205.html#a006df03d5e86c2d586f02362ca66566e", null ],
+    [ "PEM_CSR_END", "a01205.html#ad7521d8913a097b0a910d00fdb664210", null ],
+    [ "atcacert_decode_pem", "a01205.html#a67998c5401898020391dc6f02b11d2bd", null ],
+    [ "atcacert_decode_pem_cert", "a01205.html#a47e68bdf906458409c7eff1aed0dff3a", null ],
+    [ "atcacert_decode_pem_csr", "a01205.html#afbccc09407aeb4d7b626b28da120211a", null ],
+    [ "atcacert_encode_pem", "a01205.html#abd464bace94353a8ff767e5a9bdc66ce", null ],
+    [ "atcacert_encode_pem_cert", "a01205.html#a5f893d8f40bc8126a3802ad435bba895", null ],
+    [ "atcacert_encode_pem_csr", "a01205.html#ab148948a885c6a7c9c95494e48e45cb1", null ]
 ];

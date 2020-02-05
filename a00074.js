@@ -1,6 +1,5 @@
 var a00074 =
 [
-    [ "g_tngtls_cert_def_2_device", "a00074.html#a625574144ea012fd9ec04b4a402e87f4", null ],
-    [ "g_tngtls_cert_elements_2_device", "a00074.html#a55035090c79d1f8421c8aae325560f66", null ],
-    [ "g_tngtls_cert_template_2_device", "a00074.html#a697d3c44e4c88edec725f1f486de0094", null ]
+    [ "g_tngtls_cert_def_1_signer", "a00074.html#ae40ebd42591d016e71b6cbd7aaa4196a", null ],
+    [ "g_tngtls_cert_template_1_signer", "a00074.html#ad5dfff0bec35062ade0857b65cb0f73b", null ]
 ];
