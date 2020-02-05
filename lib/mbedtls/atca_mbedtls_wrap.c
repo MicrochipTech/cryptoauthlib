@@ -3,7 +3,7 @@
  * \brief Wrapper functions to replace cryptoauthlib software crypto functions
  *        with the mbedTLS equivalent
  *
- * \copyright (c) 2015-2019 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *

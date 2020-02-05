@@ -937,8 +937,7 @@ def atcab_gendig(zone, key_id, other_data, other_data_size):
 # The GenKey command is used for creating ECC private keys, generating ECC
 # public keys, and for digest calculations involving public keys.
 
-
-def atcab_genkey_base(mode, key_id, other_data, public_key):
+def atcab_genkey_base(mode, key_id, other_data, public_key=None):
     """
     Issues GenKey command, which can generate a private key, compute a
     public key, nd/or compute a digest of a public key.
@@ -957,11 +956,12 @@ def atcab_genkey_base(mode, key_id, other_data, public_key):
     Returns:
         Status code
     """
-    c_public_key = create_string_buffer(64)
-
-    if not isinstance(public_key, bytearray):
+    if public_key is None:
+        status = get_cryptoauthlib().atcab_genkey_base(mode, key_id, bytes(other_data), None)
+    elif not isinstance(public_key, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
+        c_public_key = create_string_buffer(64)
         status = get_cryptoauthlib().atcab_genkey_base(mode, key_id, bytes(other_data), byref(c_public_key))
         public_key[0:] = bytes(c_public_key.raw)
     return status

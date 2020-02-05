@@ -9,7 +9,7 @@
  * The caller should first fill in the parameters required in the ATCAPacket parameter given to the command.
  * The command builder will deal with the mechanics of creating a valid packet using the parameter information.
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -36,6 +36,7 @@
 #include <string.h>
 #include "atca_command.h"
 #include "atca_devtypes.h"
+#include "atca_config.h"
 
 /** \brief ATCACommand CheckMAC method
  * \param[in] ca_cmd   instance
@@ -686,6 +687,7 @@ bool atIsSHAFamily(ATCADeviceType device_type)
     switch (device_type)
     {
     case ATSHA204A:
+    case ATSHA206A:
     case ATECC108A:
     case ATECC508A:
     case ATECC608A:

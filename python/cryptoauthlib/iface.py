@@ -56,6 +56,7 @@ class ATCADeviceType(AtcaEnum):
     ATECC108A = 1
     ATECC508A = 2
     ATECC608A = 3
+    ATSHA206A = 4
     ATCA_DEV_UNKNOWN = 0x20
 
 
@@ -139,19 +140,19 @@ def cfg_ateccx08a_kithid_default():
     return ATCAIfaceCfg.in_dll(get_cryptoauthlib(), 'cfg_ateccx08a_kithid_default')
 
 
-def cfg_atsha204a_i2c_default():
+def cfg_atsha20xa_i2c_default():
     """Default configuration for a SHA204A device on the first logical I2C bus"""
-    return ATCAIfaceCfg.in_dll(get_cryptoauthlib(), 'cfg_atsha204a_i2c_default')
+    return ATCAIfaceCfg.in_dll(get_cryptoauthlib(), 'cfg_atsha20xa_i2c_default')
 
 
-def cfg_atsha204a_swi_default():
+def cfg_atsha20xa_swi_default():
     """Default configuration for an SHA204A device on the logical SWI bus over UART"""
-    return ATCAIfaceCfg.in_dll(get_cryptoauthlib(), 'cfg_atsha204a_swi_default')
+    return ATCAIfaceCfg.in_dll(get_cryptoauthlib(), 'cfg_atsha20xa_swi_default')
 
 
-def cfg_atsha204a_kithid_default():
+def cfg_atsha20xa_kithid_default():
     """Default configuration for Kit protocol over a HID interface for SHA204"""
-    return ATCAIfaceCfg.in_dll(get_cryptoauthlib(), 'cfg_atsha204a_kithid_default')
+    return ATCAIfaceCfg.in_dll(get_cryptoauthlib(), 'cfg_atsha20xa_kithid_default')
 
 
 # Make module import * safe - keep at the end of the file

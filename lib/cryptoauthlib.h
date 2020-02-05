@@ -2,7 +2,7 @@
  * \file
  * \brief Single aggregation point for all CryptoAuthLib header files
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -30,6 +30,21 @@
 
 #include <stddef.h>
 #include <string.h>
+
+/** Library Configuration File - All build attributes should be included in
+    atca_config.h */
+#include "atca_config.h"
+
+/* Configuration Macros */
+#define ATCA_SHA_SUPPORT    (defined(ATCA_ATSHA204A_SUPPORT) \
+                             || defined(ATCA_ATSHA206A_SUPPORT))
+#define ATCA_ECC_SUPPORT    (defined(ATCA_ATECC108A_SUPPORT) \
+                             || defined(ATCA_ATECC508A_SUPPORT) \
+                             || defined(ATCA_ATECC608A_SUPPORT))
+
+#define ATCA_CA_SUPPORT     (ATCA_SHA_SUPPORT || ATCA_ECC_SUPPORT)
+#define ATCA_TA_SUPPORT     defined(ATCA_TA100_SUPPORT)
+
 
 #include "hal/atca_hal.h"
 #include "atca_status.h"

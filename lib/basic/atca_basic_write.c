@@ -11,7 +11,7 @@
  *       ATECC508A, and ATECC608A. There are differences in the modes that they
  *       support. Refer to device datasheets for full details.
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -219,7 +219,7 @@ ATCA_STATUS atcab_write_enc(uint16_t key_id, uint8_t block, const uint8_t *data,
         nonce_params.mode = NONCE_MODE_SEED_UPDATE;
         nonce_params.zero = 0;
         nonce_params.num_in = (uint8_t*)&num_in[0];
-        nonce_params.rand_out = (uint8_t*)&rand_out;
+        nonce_params.rand_out = rand_out;
         nonce_params.temp_key = &temp_key;
 
         // Send the random Nonce command

@@ -83,23 +83,16 @@ set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/kit_protocol.c)
 endif()
 
 if(ATCA_HAL_KIT_HID)
-add_definitions(-DATCA_HAL_KIT_HID)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${HID_SRC} hal/hal_all_platforms_kit_hidapi.c)
 endif(ATCA_HAL_KIT_HID)
 
 if(ATCA_HAL_KIT_CDC)
-add_definitions(-DATCA_HAL_KIT_CDC)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${CDC_SRC})
 endif(ATCA_HAL_KIT_CDC)
 
 if(ATCA_HAL_I2C)
-add_definitions(-DATCA_HAL_I2C)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${TWI_SRC})
 endif(ATCA_HAL_I2C)
-
-if(ATCA_HAL_CUSTOM)
-add_definitions(-DATCA_HAL_CUSTOM)
-endif()
 
 # Add Remaining Sources depending on target library type
 if(ATCA_MBEDTLS)
@@ -119,11 +112,9 @@ if(ATCA_PKCS11)
 set_target_properties(cryptoauth PROPERTIES OUTPUT_NAME "ateccx08pkcs11")
 endif(ATCA_PKCS11)
 
-if(ATCA_PRINTF)
-add_definitions(-DATCAPRINTF)
-endif(ATCA_PRINTF)
+configure_file(atca_config.h.in atca_config.h @ONLY)
 
-include_directories(cryptoauth PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ../third_party/hidapi/hidapi ${USB_INCLUDE_DIR})
+include_directories(cryptoauth PUBLIC ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ../third_party/hidapi/hidapi ${USB_INCLUDE_DIR})
 
 if(WIN32)
 set_target_properties(cryptoauth PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)

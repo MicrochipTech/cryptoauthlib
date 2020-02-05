@@ -18,7 +18,7 @@ matrix:
 
 script:
   - cd python
-  - git describe --tags >VERSION
+  - git describe --exclude v* --tags --abbrev=0 >VERSION
   - cp -r ../lib .
   - cp -r ../third_party .
   - cp ../test/atca_utils_sizes.c .
@@ -31,7 +31,7 @@ script:
   - export CIBW_BUILD_VERBOSITY=3
   - cibuildwheel --output-dir wheelhouse
   - |
-    if [[ $TRAVIS_TAG ]]; then
+    if [[ $TRAVIS_TAG  =~ ^[0-9]+$ ]]; then
       $PIP install twine
       $PYTHON -m twine upload wheelhouse/* --skip-existing
     fi

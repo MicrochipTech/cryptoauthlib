@@ -6,13 +6,21 @@ environment:
 
   matrix:
     - PYTHON: "C:\\Python27"
+      TAG_SCENARIO: true
     - PYTHON: "C:\\Python27-x64"
+      TAG_SCENARIO: true
     - PYTHON: "C:\\Python35"
+      TAG_SCENARIO: true
     - PYTHON: "C:\\Python35-x64"
+      TAG_SCENARIO: true
     - PYTHON: "C:\\Python36"
+      TAG_SCENARIO: true
     - PYTHON: "C:\\Python36-x64"
+      TAG_SCENARIO: true
     - PYTHON: "C:\\Python37"
+      TAG_SCENARIO: true
     - PYTHON: "C:\\Python37-x64"
+      TAG_SCENARIO: true
 
 install:
     - cmd: "%PYTHON%\\python.exe -m pip install --upgrade pip"
@@ -24,7 +32,7 @@ install:
 
 before_build:
     - cd python
-    - cmd: "git describe --tags >VERSION"
+    - cmd: "git describe --exclude v* --tags --abbrev=0 >VERSION"
 
 build_script:
     - cmd: "%PYTHON%\\python.exe setup.py bdist_wheel"
@@ -37,4 +45,12 @@ artifacts:
 #  See Appveyor's documentation for more details. Or you can simply
 #  access your wheels from the Appveyor "artifacts" tab for your build.
 deploy_script:
-    - ps: if ($env:APPVEYOR_REPO_TAG -eq $TRUE) { & ${env:PYTHON}\python.exe -m twine upload "dist\*.whl" --skip-existing }
+    - ps: if ($env:APPVEYOR_REPO_TAG -eq $TRUE -and $env:APPVEYOR_REPO_TAG_NAME -notlike "v*") { & ${env:PYTHON}\python.exe -m twine upload "dist\*.whl" --skip-existing }
+
+for:
+-
+  matrix:
+    only:
+      - TAG_SCENARIO: true
+
+  skip_non_tags: true

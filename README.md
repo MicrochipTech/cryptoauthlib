@@ -59,8 +59,49 @@ Examples
     asymmetric techniques.
     http://www.microchip.com/SWLibraryWeb/product.aspx?product=CryptoAuthLib
 
+Configuration
+-----------
+In order to properly configured the library there must be a header file in your
+project named `atca_config.h` at minimum this needs to contain defines for the
+hal and device types being used:
+
+```
+/* Cryptoauthlib Configuration File */
+#ifndef ATCA_CONFIG_H
+#define ATCA_CONFIG_H
+
+/* Include HALS */
+#define ATCA_HAL_I2C
+
+/* Included device support */
+#define ATCA_ATECC608A_SUPPORT
+
+/* \brief How long to wait after an initial wake failure for the POST to
+ *         complete.
+ * If Power-on self test (POST) is enabled, the self test will run on waking
+ * from sleep or during power-on, which delays the wake reply.
+ */
+#ifndef ATCA_POST_DELAY_MSEC
+#define ATCA_POST_DELAY_MSEC 25
+#endif
+
+#endif // ATCA_CONFIG_H
+```
+
+
 Release notes
 -----------
+02/05/2020 (v3.1.0)
+  - The library is now semantic versioned along with the legacy date versioning.
+    Python will continue to be released with the date version. Version APIs have
+    been updated.
+  - Configuration is done via a configuration file atca_config.h rather than
+    global compiler options. You have to add this file to your project to support
+    this version of the library. 
+  - Harmony 3 support has been added. Update harmony configurator (and content
+    loader) or manually clone crytoauthlib into your harmony directory.
+  - Additional Compiler support has been added for IAR-ARM and ARMCC
+
 11/22/2019
   - Patches for CVE-2019-16128 & CVE-2019-16129: Ensure reported packet length
     is valid for the packet being processed.

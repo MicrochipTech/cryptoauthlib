@@ -3,7 +3,7 @@
  *
  * \brief  Microchip Crypto Auth hardware interface object
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -28,6 +28,7 @@
 
 #ifndef ATCA_IFACE_H
 #define ATCA_IFACE_H
+/*lint +flb */
 
 /** \defgroup interface ATCAIface (atca_)
  *  \brief Abstract interface to all CryptoAuth device types.  This interface
@@ -50,7 +51,7 @@ typedef enum
     ATCA_HID_IFACE,
     ATCA_CUSTOM_IFACE,
     // additional physical interface types here
-    ATCA_UNKNOWN_IFACE,
+    ATCA_UNKNOWN_IFACE
 } ATCAIfaceType;
 
 
@@ -59,8 +60,7 @@ typedef enum
 {   ATCA_KIT_AUTO_IFACE,        //Selects the first device if the Kit interface is not defined
     ATCA_KIT_I2C_IFACE,
     ATCA_KIT_SWI_IFACE,
-    ATCA_KIT_UNKNOWN_IFACE,
-} ATCAKitType;
+    ATCA_KIT_UNKNOWN_IFACE } ATCAKitType;
 
 
 
@@ -82,19 +82,19 @@ typedef struct
 
     union                           // each instance of an iface cfg defines a single type of interface
     {
-        struct ATCAI2C
+        struct
         {
             uint8_t  slave_address; // 8-bit slave address
             uint8_t  bus;           // logical i2c bus number, 0-based - HAL will map this to a pin pair for SDA SCL
             uint32_t baud;          // typically 400000
         } atcai2c;
 
-        struct ATCASWI
+        struct
         {
             uint8_t bus;        // logical SWI bus - HAL will map this to a pin	or uart port
         } atcaswi;
 
-        struct ATCAUART
+        struct
         {
             int      port;      // logic port number
             uint32_t baud;      // typically 115200
@@ -103,7 +103,7 @@ typedef struct
             uint8_t  stopbits;  // 0,1,2
         } atcauart;
 
-        struct ATCAHID
+        struct
         {
             int         idx;           // HID enumeration index
             ATCAKitType dev_interface; // Kit interface type
@@ -113,7 +113,7 @@ typedef struct
             uint32_t    packetsize;    // Size of the USB packet
         } atcahid;
 
-        struct ATCACUSTOM
+        struct
         {
             ATCA_STATUS (*halinit)(void *hal, void *cfg);
             ATCA_STATUS (*halpostinit)(void *iface);
@@ -178,6 +178,7 @@ void* atgetifacehaldat(ATCAIface ca_iface);
 #ifdef __cplusplus
 }
 #endif
+/*lint -flb*/
 /** @} */
 #endif
 

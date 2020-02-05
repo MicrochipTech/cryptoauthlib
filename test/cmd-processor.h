@@ -3,7 +3,7 @@
  *
  * \brief  simple command processor for test console
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -56,6 +56,7 @@ typedef struct
 int run_tests(int test);
 
 #if defined(ATCA_HAL_CUSTOM)
+extern ATCAIfaceCfg g_cfg_atsha206a_custom;
 extern ATCAIfaceCfg g_cfg_atsha204a_custom;
 extern ATCAIfaceCfg g_cfg_atecc108a_custom;
 extern ATCAIfaceCfg g_cfg_atecc508a_custom;

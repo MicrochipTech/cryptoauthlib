@@ -2,7 +2,7 @@
  * \file
  * \brief functions required to work with DER encoded data related to X.509 certificates.
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *

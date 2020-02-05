@@ -3,7 +3,7 @@
  *
  * \brief  Microchip Crypto Auth hardware interface object
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -75,6 +75,8 @@ const char * kit_id_from_devtype(ATCADeviceType devtype)
         return "ECC508A";
     case ATECC608A:
         return "ECC608A";
+    case ATSHA206A:
+        return "SHA206A";
     default:
         return "unknown";
     }

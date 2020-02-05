@@ -8,7 +8,7 @@
  * The command list is a superset of all device commands for this family.  The command object
  * differentiates the packet contents based on specific device type within the family.
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -30,6 +30,7 @@
  * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
  * THIS SOFTWARE.
  */
+/* lint --e{755} */
 
 #ifndef ATCA_COMMAND_H
 #define ATCA_COMMAND_H
@@ -726,7 +727,7 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define VERIFY_256_SIGNATURE_SIZE      ( 64)                //!< Verify signature size for 256-bit key
 #define VERIFY_283_SIGNATURE_SIZE      ( 72)                //!< Verify signature size for 283-bit key
 #define VERIFY_OTHER_DATA_SIZE         ( 19)                //!< Verify size of "other data"
-#define VERIFY_MODE_MASK               ((uint8_t)0x03)      //!< Verify mode bits 2 to 7 are 0
+#define VERIFY_MODE_MASK               ((uint8_t)0x07)      //!< Verify mode bits 3 to 7 are 0
 #define VERIFY_MODE_STORED             ((uint8_t)0x00)      //!< Verify mode: stored
 #define VERIFY_MODE_VALIDATE_EXTERNAL  ((uint8_t)0x01)      //!< Verify mode: validate external
 #define VERIFY_MODE_EXTERNAL           ((uint8_t)0x02)      //!< Verify mode: external

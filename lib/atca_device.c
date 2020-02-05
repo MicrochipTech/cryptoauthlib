@@ -2,7 +2,7 @@
  * \file
  * \brief  Microchip CryptoAuth device object
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -27,6 +27,7 @@
 
 #include <stdlib.h>
 #include "atca_device.h"
+#include "atca_config.h"
 
 /** \defgroup device ATCADevice (atca_)
  * \brief ATCADevice object - composite of command and interface objects

@@ -4,7 +4,7 @@
  *        non-Microchip architectures and compiler environments. This file is
  *        for isolating compiler specific macros.
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -51,7 +51,7 @@
 #define ATCA_UINT64_BE_TO_HOST(x)  __builtin_bswap64(x)
 #endif
 
-#elif defined(__ICC) || defined(__INTEL_COMPILER)
+//#elif defined(__ICC) || defined(__INTEL_COMPILER)
 /* Intel ICC/ICPC. ------------------------------------------ */
 
 #elif defined(__GNUC__) || defined(__GNUG__)
@@ -83,10 +83,10 @@
 #define ATCA_UINT64_BE_TO_HOST(x)  __builtin_bswap64(x)
 #endif
 
-#elif defined(__HP_cc) || defined(__HP_aCC)
+//#elif defined(__HP_cc) || defined(__HP_aCC)
 /* Hewlett-Packard C/aC++. ---------------------------------- */
 
-#elif defined(__IBMC__) || defined(__IBMCPP__)
+//#elif defined(__IBMC__) || defined(__IBMCPP__)
 /* IBM XL C/C++. -------------------------------------------- */
 
 #elif defined(_MSC_VER)
@@ -102,11 +102,52 @@
 #define ATCA_UINT64_BE_TO_HOST(x)  _byteswap_uint64(x)
 #define strtok_r                   strtok_s
 
-#elif defined(__PGI)
+//#elif defined(__PGI)
 /* Portland Group PGCC/PGCPP. ------------------------------- */
 
-#elif defined(__SUNPRO_C) || defined(__SUNPRO_CC)
+//#elif defined(__SUNPRO_C) || defined(__SUNPRO_CC)
 /* Oracle Solaris Studio. ----------------------------------- */
+
+#elif defined __CC_ARM
+/* ARMCC/RealView ------------------------------------------- */
+#ifdef __BIG_ENDIAN
+#define ATCA_UINT16_HOST_TO_LE(x)  ((x >> 8) | ((x & 0xFF) << 8))
+#define ATCA_UINT16_LE_TO_HOST(x)  ((x >> 8) | ((x & 0xFF) << 8))
+#define ATCA_UINT32_HOST_TO_LE(x)  __rev(x)
+#define ATCA_UINT32_HOST_TO_BE(x)  (x)
+#define ATCA_UINT32_BE_TO_HOST(x)  (x)
+#define ATCA_UINT64_HOST_TO_BE(x)  (x)
+#define ATCA_UINT64_BE_TO_HOST(x)  (x)
+#else
+#define ATCA_UINT16_HOST_TO_LE(x)  (x)
+#define ATCA_UINT16_LE_TO_HOST(x)  (x)
+#define ATCA_UINT32_HOST_TO_LE(x)  (x)
+#define ATCA_UINT32_HOST_TO_BE(x)  __rev(x)
+#define ATCA_UINT32_BE_TO_HOST(x)  __rev(x)
+#define ATCA_UINT64_HOST_TO_BE(x)  (((uint64_t)__rev((uint32_t)x) << 32) | (uint64_t)__rev((uint32_t)(x >> 32)))
+#define ATCA_UINT64_BE_TO_HOST(x)  (((uint64_t)__rev((uint32_t)x) << 32) | (uint64_t)__rev((uint32_t)(x >> 32)))
+#endif
+
+#elif defined __ICCARM__
+/* IAR ARM ------------------------------------------- */
+#include <intrinsics.h>
+#if __LITTLE_ENDIAN__ == 0
+#define ATCA_UINT16_HOST_TO_LE(x)  __REV16(x)
+#define ATCA_UINT16_LE_TO_HOST(x)  __REV16(x)
+#define ATCA_UINT32_HOST_TO_LE(x)  __REV(x)
+#define ATCA_UINT32_HOST_TO_BE(x)  (x)
+#define ATCA_UINT32_BE_TO_HOST(x)  (x)
+#define ATCA_UINT64_HOST_TO_BE(x)  (x)
+#define ATCA_UINT64_BE_TO_HOST(x)  (x)
+#else
+#define ATCA_UINT16_HOST_TO_LE(x)  (x)
+#define ATCA_UINT16_LE_TO_HOST(x)  (x)
+#define ATCA_UINT32_HOST_TO_LE(x)  (x)
+#define ATCA_UINT32_HOST_TO_BE(x)  __REV(x)
+#define ATCA_UINT32_BE_TO_HOST(x)  __REV(x)
+#define ATCA_UINT64_HOST_TO_BE(x)  (((uint64_t)__REV((uint32_t)x) << 32) | (uint64_t)__REV((uint32_t)(x >> 32)))
+#define ATCA_UINT64_BE_TO_HOST(x)  (((uint64_t)__REV((uint32_t)x) << 32) | (uint64_t)__REV((uint32_t)(x >> 32)))
+#endif
 
 #endif
 

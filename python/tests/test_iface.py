@@ -44,7 +44,7 @@ def test_iface_cfg_ateccx08a_kithid(test_iface_init):
 
 
 def test_iface_cfg_atsha204a_i2c(test_iface_init):
-    cfg = cfg_atsha204a_i2c_default()
+    cfg = cfg_atsha20xa_i2c_default()
     assert cfg.iface_type == ATCAIfaceType.ATCA_I2C_IFACE
     assert cfg.devtype == ATCADeviceType.ATSHA204A
     assert cfg.cfg.atcai2c.slave_address == 0xC8
@@ -53,14 +53,14 @@ def test_iface_cfg_atsha204a_i2c(test_iface_init):
 
 
 def test_iface_cfg_atsha204a_swi(test_iface_init):
-    cfg = cfg_atsha204a_swi_default()
+    cfg = cfg_atsha20xa_swi_default()
     assert cfg.iface_type == ATCAIfaceType.ATCA_SWI_IFACE
     assert cfg.devtype == ATCADeviceType.ATSHA204A
     assert cfg.cfg.atcaswi.bus == 4
 
 
 def test_iface_cfg_atsha204a_kithid(test_iface_init):
-    cfg = cfg_atsha204a_kithid_default()
+    cfg = cfg_atsha20xa_kithid_default()
     assert cfg.iface_type == ATCAIfaceType.ATCA_HID_IFACE
     assert cfg.devtype == ATCADeviceType.ATSHA204A
     assert cfg.cfg.atcahid.vid == 0x03EB

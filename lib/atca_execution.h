@@ -9,7 +9,7 @@
  *
  * This handler supports the ATSHA and ATECC device family.
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -39,6 +39,7 @@
 #include "atca_status.h"
 #include "atca_command.h"
 #include "atca_device.h"
+#include "atca_config.h"
 
 #ifdef __cplusplus
 extern "C" {

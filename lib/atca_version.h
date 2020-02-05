@@ -3,7 +3,7 @@
  *
  * \brief  Microchip CryptoAuth Library Version
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -30,6 +30,9 @@
 #define _ATCA_VERSION_H
 
 // Version format yyyymmdd
-#define ATCA_LIBRARY_VERSION    "20191122"
+#define ATCA_LIBRARY_VERSION_DATE   "20200203"
+#define ATCA_LIBRARY_VERSION_MAJOR  3
+#define ATCA_LIBRARY_VERSION_MINOR  1
+#define ATCA_LIBRARY_VERSION_BUILD  0
 
 #endif /* _ATCA_VERSION_H */

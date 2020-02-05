@@ -1,7 +1,7 @@
 /** \file
  * \brief simple command processor for test console
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -65,6 +65,7 @@ static void discover(void);
 static void select_device(ATCADeviceType device_type);
 static int run_test(void* fptest);
 static void select_204(void);
+static void select_206(void);
 static void select_108(void);
 static void select_508(void);
 static void select_608(void);
@@ -92,6 +93,7 @@ static t_menu_info mas_menu_info[] =
     { "help",     "Display Menu",                                   help                                 },
     { "discover", "Discover Buses and Devices",                     discover                             },
     { "204",      "Set Target Device to ATSHA204A",                 select_204                           },
+    { "206",      "Set Target Device to ATSHA206A",                 select_206                           },
     { "108",      "Set Target Device to ATECC108A",                 select_108                           },
     { "508",      "Set Target Device to ATECC508A",                 select_508                           },
     { "608",      "Set Target Device to ATECC608A",                 select_608                           },
@@ -103,8 +105,8 @@ static t_menu_info mas_menu_info[] =
     { "lockcfg",  "Lock the Config Zone",                           lock_config                          },
     { "lockdata", "Lock Data and OTP Zones",                        lock_data                            },
     { "all",      "Run all unit tests, locking as needed.",         run_all_tests                        },
-    { "tngtls",   "Run unit tests on TNG TLS type part.",           tngtls_tests                          },
-    { "tnglora",  "Run unit tests on TNG LORA type part.",          tnglora_tests                          },
+    { "tngtls",   "Run unit tests on TNG TLS type part.",           tngtls_tests                         },
+    { "tnglora",  "Run unit tests on TNG LORA type part.",          tnglora_tests                        },
     #ifndef DO_NOT_TEST_BASIC_UNIT
     { "basic",    "Run Basic Test on Selected Device",              run_basic_tests                      },
     { "unit",     "Run Unit Test on Selected Device",               run_unit_tests                       },
@@ -219,6 +221,10 @@ static void help(void)
 static void select_204(void)
 {
     select_device(ATSHA204A);
+}
+static void select_206(void)
+{
+    select_device(ATSHA206A);
 }
 static void select_108(void)
 {
@@ -417,6 +423,12 @@ static ATCA_STATUS do_randoms(void)
     size_t displen = sizeof(displayStr);
     int i;
 
+    if (gCfg->devtype == ATSHA206A)
+    {
+        printf("ATSHA206A doesn't support random command\r\n");
+        return ATCA_GEN_FAIL;
+    }
+
     status = atcab_init(gCfg);
     if (status != ATCA_SUCCESS)
     {
@@ -450,7 +462,7 @@ static void discover(void)
 {
     ATCAIfaceCfg ifaceCfgs[10];
     int i;
-    const char *devname[] = { "ATSHA204A", "ATECC108A", "ATECC508A", "ATECC608A" };  // indexed by ATCADeviceType
+    const char *devname[] = { "ATSHA204A", "ATECC108A", "ATECC508A", "ATECC608A", "ATSHA206A" };  // indexed by ATCADeviceType
 
     for (i = 0; i < (int)(sizeof(ifaceCfgs) / sizeof(ATCAIfaceCfg)); i++)
     {
@@ -545,6 +557,12 @@ static ATCA_STATUS lock_config_zone(void)
 
     uint8_t ch = 0;
 
+    if (gCfg->devtype == ATSHA206A)
+    {
+        printf("ATSHA206A doesn't support lock command\r\n");
+        return ATCA_GEN_FAIL;
+    }
+
     printf("Locking with test configuration, which is suitable only for unit tests... \r\nConfirm by typing Y\r\n");
     do
     {
@@ -590,6 +608,12 @@ static ATCA_STATUS lock_data_zone(void)
     if (!((ch == 'Y') || (ch == 'y')))
     {
         printf("Skipping Data Zone Lock on request.\r\n");
+        return ATCA_GEN_FAIL;
+    }
+
+    if (gCfg->devtype == ATSHA206A)
+    {
+        printf("ATSHA206A doesn't support lock command\r\n");
         return ATCA_GEN_FAIL;
     }
 
@@ -844,15 +868,37 @@ static ATCA_STATUS set_test_config(ATCADeviceType deviceType)
     {
     case ATSHA204A:
 #if defined(ATCA_HAL_I2C)
-        *gCfg = cfg_atsha204a_i2c_default;
+        *gCfg = cfg_atsha20xa_i2c_default;
 #elif defined(ATCA_HAL_SWI)
-        *gCfg = cfg_atsha204a_swi_default;
+        *gCfg = cfg_atsha20xa_swi_default;
+        gCfg->devtype = deviceType;
 #elif defined(ATCA_HAL_KIT_HID)
-        *gCfg = cfg_atsha204a_kithid_default;
+        *gCfg = cfg_atsha20xa_kithid_default;
+        gCfg->devtype = deviceType;
 #elif defined(ATCA_HAL_KIT_CDC)
-        *gCfg = cfg_atsha204a_kitcdc_default;
+        *gCfg = cfg_atsha20xa_kitcdc_default;
+        gCfg->devtype = deviceType;
 #elif defined(ATCA_HAL_CUSTOM)
         *gCfg = g_cfg_atsha204a_custom;
+#else
+#error "HAL interface is not selected";
+#endif
+        break;
+
+    case ATSHA206A:
+#if defined(ATCA_HAL_I2C)
+        *gCfg = cfg_atsha20xa_i2c_default;
+#elif defined(ATCA_HAL_SWI)
+        *gCfg = cfg_atsha20xa_swi_default;
+        gCfg->devtype = deviceType;
+#elif defined(ATCA_HAL_KIT_HID)
+        *gCfg = cfg_atsha20xa_kithid_default;
+        gCfg->devtype = deviceType;
+#elif defined(ATCA_HAL_KIT_CDC)
+        *gCfg = cfg_atsha20xa_kitcdc_default;
+        gCfg->devtype = deviceType;
+#elif defined(ATCA_HAL_CUSTOM)
+        *gCfg = g_cfg_atsha206a_custom;
 #else
 #error "HAL interface is not selected";
 #endif

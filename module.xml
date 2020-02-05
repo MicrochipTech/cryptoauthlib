@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Module name="CryptoAuthLib" id="22CD4B8F-11B5-4FC1-92E7-31A6970852FA" version="3.1.0">
+    <ConfigRoot path="harmony/module.py"/>    
+</Module>

@@ -2,7 +2,7 @@
  * \file
  * \brief low-level HAL - methods used to setup indirection to physical layer interface
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -28,6 +28,8 @@
 
 #ifndef ATCA_HAL_H_
 #define ATCA_HAL_H_
+
+#include "atca_config.h"
 
 #include "atca_status.h"
 #include "atca_iface.h"
@@ -152,10 +154,19 @@ ATCA_STATUS hal_kit_hid_discover_buses(int hid_buses[], int max_buses);
 ATCA_STATUS hal_kit_hid_discover_devices(int bus_num, ATCAIfaceCfg *cfg, int *found);
 #endif
 
+/** \brief Timer API for legacy implementations */
+#ifndef atca_delay_ms
+void atca_delay_ms(uint32_t ms);
+#endif
+
+#ifndef atca_delay_us
+void atca_delay_us(uint32_t us);
+#endif
+
 /** \brief Timer API implemented at the HAL level */
-void atca_delay_us(uint32_t delay);
-void atca_delay_10us(uint32_t delay);
-void atca_delay_ms(uint32_t delay);
+void hal_rtos_delay_ms(uint32_t ms);
+void hal_delay_ms(uint32_t ms);
+void hal_delay_us(uint32_t us);
 
 /** \brief Optional hal interfaces */
 ATCA_STATUS hal_create_mutex(void ** ppMutex, char* pName);
@@ -163,10 +174,6 @@ ATCA_STATUS hal_destroy_mutex(void * pMutex);
 ATCA_STATUS hal_lock_mutex(void * pMutex);
 ATCA_STATUS hal_unlock_mutex(void * pMutex);
 
-/** \brief If an RTOS is being use make sure the delay definitions do not conflict */
-#ifdef ATCA_USE_RTOS_TIMER
-void atca_delay_ms_internal(uint32_t delay);
-#endif
 
 #ifdef __cplusplus
 }

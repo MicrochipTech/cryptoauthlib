@@ -4,7 +4,7 @@
  * These methods manage a global ATCADevice object behind the scenes. They also
  * manage the wake/idle state transitions so callers don't need to.
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *

@@ -8,6 +8,7 @@ import subprocess
 import os
 import glob
 import shutil
+import re
 from ctypes import cdll
 
 _NAME = 'cryptoauthlib'
@@ -15,8 +16,9 @@ _DESCRIPTION = 'Python Wrapper Library for Microchip Security Products'
 _AUTHOR = 'Microchip Technology Inc'
 _AUTHOR_EMAIL = 'support@microchip.com'
 _LICENSE = 'Other'
+_VERSION = ""
 _URL = 'https://github.com/MicrochipTech/cryptoauthlib'
-_VERSION = open('VERSION', 'r').read().strip()
+
 _DOWNLOAD_URL = '%s/archive/%s.tar.gz' % (_URL, _VERSION)
 _CLASSIFIERS = [
     'Development Status :: 4 - Beta',
@@ -61,6 +63,14 @@ try:
     _EXTENSIONS = None
 except:
     _EXTENSIONS = [Extension('cryptoauthlib', sources=[])]
+
+# Try to load the version
+try:
+    _VERSION = open('VERSION', 'r').read().strip()
+except FileNotFoundError:
+    with open('../lib/atca_version.h', 'r') as f:
+        m = re.search(r'ATCA_LIBRARY_VERSION_DATE\s+\"([0-9]+)\"', f.read(), re.M)
+        _VERSION = m.groups()[0]
 
 
 def copy_udev_rules(target):

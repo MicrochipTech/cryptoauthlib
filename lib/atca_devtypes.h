@@ -2,7 +2,7 @@
  * \file
  * \brief  Microchip Crypto Auth
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -44,6 +44,7 @@ typedef enum
     ATECC108A,
     ATECC508A,
     ATECC608A,
+    ATSHA206A,
     ATCA_DEV_UNKNOWN = 0x20
 } ATCADeviceType;
 

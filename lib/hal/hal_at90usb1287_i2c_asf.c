@@ -6,7 +6,7 @@
  *  this HAL implementation assumes you've included the ASF I2C libraries in your project, otherwise,
  *  the HAL layer will not compile because the ASF I2C drivers are a dependency
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *

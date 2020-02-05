@@ -7,7 +7,7 @@
  *
  * Prerequisite: add "TWI - Two-Wire Interface (Common API) (service)" module to application in Atmel Studio
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *

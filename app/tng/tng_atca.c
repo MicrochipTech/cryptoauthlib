@@ -1,3 +1,30 @@
+/**
+ * \file
+ * \brief TNG Helper Functions
+ *
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ *
+ * \page License
+ *
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ *
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
+ */
+
 #include <string.h>
 #include "tng_atca.h"
 #include "tnglora_cert_def_2_device.h"
@@ -38,7 +65,7 @@ ATCA_STATUS tng_get_device_cert_def(const atcacert_def_t **cert_def)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     uint8_t sn[ATCA_SERIAL_NUM_SIZE];
-    uint8_t otpcode[32];
+    char otpcode[32];
 
     if (cert_def == NULL)
     {
@@ -56,7 +83,7 @@ ATCA_STATUS tng_get_device_cert_def(const atcacert_def_t **cert_def)
 
     if (sn[8] == 0x01 || sn[8] == 0x10 || sn[8] == 0x27)
     {
-        status = atcab_read_zone(ATCA_ZONE_OTP, 0, 0, 0, otpcode, 32);
+        status = atcab_read_zone(ATCA_ZONE_OTP, 0, 0, 0, (uint8_t*)otpcode, 32);
         if (status != ATCA_SUCCESS)
         {
             return status;

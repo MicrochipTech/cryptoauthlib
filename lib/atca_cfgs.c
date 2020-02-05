@@ -2,7 +2,7 @@
  * \file
  * \brief a set of default configurations for various ATCA devices and interfaces
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -26,6 +26,7 @@
  */
 
 #include <stddef.h>
+#include "cryptoauthlib.h"
 #include "atca_cfgs.h"
 #include "atca_iface.h"
 #include "atca_device.h"
@@ -36,6 +37,7 @@
 
 /* if the number of these configurations grows large, we can #ifdef them based on required device support */
 
+#if defined(ATCA_ECC_SUPPORT) && defined(ATCA_HAL_I2C)
 /** \brief default configuration for an ECCx08A device */
 ATCAIfaceCfg cfg_ateccx08a_i2c_default = {
     .iface_type                 = ATCA_I2C_IFACE,
@@ -49,7 +51,9 @@ ATCAIfaceCfg cfg_ateccx08a_i2c_default = {
     .wake_delay                 = 1500,
     .rx_retries                 = 20
 };
+#endif
 
+#if defined(ATCA_ECC_SUPPORT) && defined(ATCA_HAL_SWI)
 /** \brief default configuration for an ECCx08A device on the logical SWI bus over UART*/
 ATCAIfaceCfg cfg_ateccx08a_swi_default = {
     .iface_type         = ATCA_SWI_IFACE,
@@ -60,7 +64,9 @@ ATCAIfaceCfg cfg_ateccx08a_swi_default = {
     .wake_delay         = 1500,
     .rx_retries         = 10
 };
+#endif
 
+#if defined(ATCA_ECC_SUPPORT) && defined(ATCA_HAL_KIT_CDC)
 /** \brief default configuration for Kit protocol over the device's async interface */
 ATCAIfaceCfg cfg_ateccx08a_kitcdc_default = {
     .iface_type             = ATCA_UART_IFACE,
@@ -74,7 +80,9 @@ ATCAIfaceCfg cfg_ateccx08a_kitcdc_default = {
     },
     .rx_retries             = 1,
 };
+#endif
 
+#if defined(ATCA_ECC_SUPPORT) && defined(ATCA_HAL_KIT_HID)
 /** \brief default configuration for Kit protocol over the device's async interface */
 ATCAIfaceCfg cfg_ateccx08a_kithid_default = {
     .iface_type                  = ATCA_HID_IFACE,
@@ -88,10 +96,11 @@ ATCAIfaceCfg cfg_ateccx08a_kithid_default = {
         .atcahid.packetsize      = 64,
     }
 };
+#endif
 
-
+#if defined(ATCA_SHA_SUPPORT) && defined(ATCA_HAL_I2C)
 /** \brief default configuration for a SHA204A device on the first logical I2C bus */
-ATCAIfaceCfg cfg_atsha204a_i2c_default = {
+ATCAIfaceCfg cfg_atsha20xa_i2c_default = {
     .iface_type                 = ATCA_I2C_IFACE,
     .devtype                    = ATSHA204A,
     {
@@ -102,9 +111,11 @@ ATCAIfaceCfg cfg_atsha204a_i2c_default = {
     .wake_delay                 = 2560,
     .rx_retries                 = 20
 };
+#endif
 
-/** \brief default configuration for an SHA204A device on the logical SWI bus over UART*/
-ATCAIfaceCfg cfg_atsha204a_swi_default = {
+#if defined(ATCA_SHA_SUPPORT) && defined(ATCA_HAL_SWI)
+/** \brief default configuration for an SHA20xA device on the logical SWI bus over UART*/
+ATCAIfaceCfg cfg_atsha20xa_swi_default = {
     .iface_type       = ATCA_SWI_IFACE,
     .devtype          = ATSHA204A,
     {
@@ -113,9 +124,11 @@ ATCAIfaceCfg cfg_atsha204a_swi_default = {
     .wake_delay       = 2560,
     .rx_retries       = 10
 };
+#endif
 
+#if defined(ATCA_SHA_SUPPORT) && defined(ATCA_HAL_KIT_CDC)
 /** \brief default configuration for Kit protocol over the device's async interface */
-ATCAIfaceCfg cfg_atsha204a_kitcdc_default = {
+ATCAIfaceCfg cfg_atsha20xa_kitcdc_default = {
     .iface_type            = ATCA_UART_IFACE,
     .devtype               = ATSHA204A,
     {
@@ -127,9 +140,11 @@ ATCAIfaceCfg cfg_atsha204a_kitcdc_default = {
     },
     .rx_retries            = 1,
 };
+#endif
 
+#if defined(ATCA_SHA_SUPPORT) && defined(ATCA_HAL_KIT_HID)
 /** \brief default configuration for Kit protocol over the device's async interface */
-ATCAIfaceCfg cfg_atsha204a_kithid_default = {
+ATCAIfaceCfg cfg_atsha20xa_kithid_default = {
     .iface_type            = ATCA_HID_IFACE,
     .devtype               = ATSHA204A,
     .atcahid.dev_interface = ATCA_KIT_AUTO_IFACE,
@@ -139,5 +154,6 @@ ATCAIfaceCfg cfg_atsha204a_kithid_default = {
     .atcahid.pid           = 0x2312,
     .atcahid.packetsize    = 64,
 };
+#endif
 
 /** @} */

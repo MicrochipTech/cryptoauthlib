@@ -8,7 +8,7 @@
  * however, by defining the ATCA_NO_POLL symbol the code will instead wait an
  * estimated max execution time before requesting the result.
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -68,6 +68,15 @@ static const device_execution_time_t device_execution_time_204[] = {
     { ATCA_READ,         5},
     { ATCA_SHA,          22},
     { ATCA_UPDATE_EXTRA, 12},
+    { ATCA_WRITE,        42}
+};
+
+/*Execution times for ATSHA206A supported commands...*/
+static const device_execution_time_t device_execution_time_206[] = {
+    { ATCA_DERIVE_KEY,   62},
+    { ATCA_INFO,         2},
+    { ATCA_MAC,          35},
+    { ATCA_READ,         5},
     { ATCA_WRITE,        42}
 };
 
@@ -216,6 +225,11 @@ ATCA_STATUS atGetExecTime(uint8_t opcode, ATCACommand ca_cmd)
     case ATSHA204A:
         execution_times = device_execution_time_204;
         no_of_commands = sizeof(device_execution_time_204) / sizeof(device_execution_time_t);
+        break;
+
+    case ATSHA206A:
+        execution_times = device_execution_time_206;
+        no_of_commands = sizeof(device_execution_time_206) / sizeof(device_execution_time_t);
         break;
 
     case ATECC108A:

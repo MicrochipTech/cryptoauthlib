@@ -3,7 +3,7 @@
  * \brief CryptoAuthLib Basic API methods. These methods provide a simpler way
  *        to access the core crypto methods.
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -39,7 +39,7 @@
 #endif
 #endif
 
-const char atca_version[] = ATCA_LIBRARY_VERSION;
+const char atca_version[] = ATCA_LIBRARY_VERSION_DATE;
 ATCADevice _gDevice = NULL;
 #ifdef ATCA_NO_HEAP
 struct atca_command g_atcab_command;
@@ -393,6 +393,16 @@ ATCA_STATUS atcab_get_zone_size(uint8_t zone, uint16_t slot, size_t* size)
         {
         case ATCA_ZONE_CONFIG: *size = 88; break;
         case ATCA_ZONE_OTP:    *size = 64; break;
+        case ATCA_ZONE_DATA:   *size = 32; break;
+        default: status = ATCA_BAD_PARAM; break;
+        }
+    }
+    else if (_gDevice->mIface->mIfaceCFG->devtype == ATSHA206A)
+    {
+        switch (zone)
+        {
+        case ATCA_ZONE_CONFIG: *size = 88; break;
+        case ATCA_ZONE_OTP:    *size = 0; break;
         case ATCA_ZONE_DATA:   *size = 32; break;
         default: status = ATCA_BAD_PARAM; break;
         }
