@@ -142,7 +142,6 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t *txdata, int txlength)
 
     txdata[0] = 0x03;   // insert the Word Address Value, Command token
     txlength++;         // account for word address value byte.
-    uint8_t tx = cfg->atcai2c.slave_address;
     write_bufHandle = DRV_I2C_Transmit(drvI2CMasterHandle, cfg->atcai2c.slave_address, txdata, txlength, NULL);
     if ( ((DRV_I2C_BUFFER_HANDLE)(-1)) == write_bufHandle)
     {
@@ -294,7 +293,6 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
     }
     else
     {
-        DRV_I2C_BUFFER_EVENT statusevent;
         // Send the wake by writing to an address of 0x00
         write_bufHandle = DRV_I2C_Transmit(drvI2CMasterHandle, cfg->atcai2c.slave_address, &data, 1, NULL);
         if ( ((DRV_I2C_BUFFER_HANDLE)(-1)) == write_bufHandle)
