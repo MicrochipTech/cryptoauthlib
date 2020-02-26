@@ -181,7 +181,8 @@ int atca_mbedtls_cert_add(mbedtls_x509_crt * cert, const atcacert_def_t * cert_d
         }
     }
 
-    if (NULL == (cert_buf = mbedtls_calloc(1, cert_def->cert_template_size + 8)))
+    cert_len = cert_def->cert_template_size + 8;
+    if (NULL == (cert_buf = mbedtls_calloc(1, cert_len)))
     {
         ret = -1;
     }
