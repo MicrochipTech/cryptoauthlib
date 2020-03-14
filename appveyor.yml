@@ -5,47 +5,44 @@ environment:
     secure: nGYP/oqo/DSfCQduEhhKGg==
 
   matrix:
-    - PYTHON: "C:\\Python27"
-      TAG_SCENARIO: true
-    - PYTHON: "C:\\Python27-x64"
-      TAG_SCENARIO: true
-    - PYTHON: "C:\\Python35"
-      TAG_SCENARIO: true
-    - PYTHON: "C:\\Python35-x64"
-      TAG_SCENARIO: true
-    - PYTHON: "C:\\Python36"
-      TAG_SCENARIO: true
-    - PYTHON: "C:\\Python36-x64"
-      TAG_SCENARIO: true
-    - PYTHON: "C:\\Python37"
-      TAG_SCENARIO: true
-    - PYTHON: "C:\\Python37-x64"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      APPVEYOR_JOB_NAME: "python37-x64-vs2017"
       TAG_SCENARIO: true
 
+stack: python 3.7
+
+init:
+    - cmd: set PATH=C:\Python37;C:\Python37\Scripts;%PATH%
+
 install:
-    - cmd: "%PYTHON%\\python.exe -m pip install --upgrade pip"
-    - cmd: "%PYTHON%\\python.exe -m pip install --upgrade setuptools"
-    - cmd: "%PYTHON%\\python.exe -m pip install --upgrade wheel"
-    - cmd: "%PYTHON%\\python.exe -m pip install --upgrade pytest"
-    - cmd: "%PYTHON%\\python.exe -m pip install --upgrade enum34"
-    - cmd: "%PYTHON%\\python.exe -m pip install --upgrade twine"
+    - python -m pip install --upgrade twine
+    - python -m pip install --upgrade cibuildwheel
+
 
 before_build:
     - cd python
+    - mkdir lib
+    - mkdir app
+    - mkdir third_party
+    - xcopy /S ..\lib lib
+    - xcopy /S ..\third_party third_party
+    - xcopy /S ..\app\tng app
+    - copy ..\test\atca_utils_sizes.c .
     - cmd: "git describe --exclude v* --tags --abbrev=0 >VERSION"
 
 build_script:
-    - cmd: "%PYTHON%\\python.exe setup.py bdist_wheel"
+    - python -m cibuildwheel --output-dir wheelhouse
 
 artifacts:
-    - path: python\dist\*.whl
+    - path: python\wheelhouse\*.whl
+      name: Wheels
 
 #on_success:
 #  You can use this step to upload your artifacts to a public website.
 #  See Appveyor's documentation for more details. Or you can simply
 #  access your wheels from the Appveyor "artifacts" tab for your build.
 deploy_script:
-    - ps: if ($env:APPVEYOR_REPO_TAG -eq $TRUE -and $env:APPVEYOR_REPO_TAG_NAME -notlike "v*") { & ${env:PYTHON}\python.exe -m twine upload "dist\*.whl" --skip-existing }
+    - ps: if ($env:APPVEYOR_REPO_TAG -eq $TRUE -and $env:APPVEYOR_REPO_TAG_NAME -notlike "v*") { & python -m twine upload "wheelhouse\*.whl" --skip-existing }
 
 for:
 -

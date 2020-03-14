@@ -219,9 +219,8 @@ if __name__ == '__main__':
         include_package_data=True,
         distclass=BinaryDistribution,
         cmdclass=_COMMANDS,
-        setup_requires=['setuptools>=38.6.0', 'wheel'],
         install_requires=['enum34;python_version<"3.4"'],
         ext_modules=_EXTENSIONS,
-        python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4',
+        python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, <4',
         zip_safe=False
     )
