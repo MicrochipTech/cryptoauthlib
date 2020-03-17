@@ -22,11 +22,11 @@ install:
 before_build:
     - cd python
     - mkdir lib
-    - mkdir app
+    - mkdir app\tng
     - mkdir third_party
     - xcopy /S ..\lib lib
     - xcopy /S ..\third_party third_party
-    - xcopy /S ..\app\tng app
+    - xcopy /S ..\app\tng app\tng
     - copy ..\test\atca_utils_sizes.c .
     - cmd: "git describe --exclude v* --tags --abbrev=0 >VERSION"
 
