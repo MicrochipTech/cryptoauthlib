@@ -3,7 +3,8 @@
 # These are processed in order. Configuration parameters must be comma
 # delimited and may not contain spaces
 
-interface = i2c,0xB0
+# Use I2C bus 0, address 0xB0, baud rate 400 KHz
+interface = i2c,0xB0,0,400000
 freeslots = 1,2,3
 
 # Slot 0 is the primary private key
