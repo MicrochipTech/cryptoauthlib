@@ -153,9 +153,31 @@ Then edit 0.conf to match the device configuration being used.
 
 
 #### interface
-Allows values: 'hid', 'i2c'
-If using i2c specify the address in hex for the device. This is in the device format (upper
-7 bits define the address) so will not appear the same as the i2cdetect address (lower 7 bits)
+Required values: must be one of:
+```text
+    interface = i2c
+```
+
+```text
+    interface = hid
+```
+
+Optional values:
+If using i2c, one may update the default i2c configuration
+(cfg_ateccx08a_i2c_default) by specifying the address of the device, the i2c
+bus number and the i2c baud rate.
+
+```text
+    # Use I2C bus 2, address 0xC0, baud rate 1 MHz
+    interface = i2c,0xC0,2,1000000
+```
+
+The address of the device is in the device format (upper 7 bits define the
+address: 0xC0 in the example), so will not appear the same as the i2cdetect
+address (lower 7 bits: 0x60 in the example).
+
+hid interface will use the cfg_ateccx08a_kithid_default configuration and it
+can not be amended.
 
 #### freeslots
 This is a list of slots that may be used by the library when a pkcs11 operation that creates
