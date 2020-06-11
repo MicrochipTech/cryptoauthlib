@@ -26,13 +26,12 @@
  */
 
 #include "cryptoauthlib.h"
-#include "atca_execution.h"
 #include "atcacert/atcacert_date.h"
 #include "atcacert/atcacert_def.h"
 #include "host/atca_host.h"
 
-#define SIZE_OF_API_T(x)  size_t x ## _size(void) { return sizeof( x ); }
-#define SIZE_OF_API_S(x)  size_t x ## _size(void) { return sizeof(struct x ); }
+#define SIZE_OF_API_T(x)  size_t x ## _size(void); size_t x ## _size(void) { return sizeof( x ); }
+#define SIZE_OF_API_S(x)  size_t x ## _size(void); size_t x ## _size(void) { return sizeof(struct x ); }
 
 /* atcacert_date.h */
 SIZE_OF_API_T(atcacert_tm_utc_t)
@@ -78,8 +77,10 @@ SIZE_OF_API_T(atca_sign_internal_in_out_t)
 SIZE_OF_API_T(bool)
 
 /* atca_command.h */
+#if ATCA_CA_SUPPORT
 SIZE_OF_API_S(atca_command)
 SIZE_OF_API_T(ATCAPacket)
+#endif
 
 /* atca_device.h */
 SIZE_OF_API_S(atca_device)
@@ -87,8 +88,9 @@ SIZE_OF_API_S(atca_device)
 /* atca_devtypes.h */
 SIZE_OF_API_T(ATCADeviceType)
 
-/* atca_execution.h */
+/* calib_execution.h */
 #ifdef ATCA_NO_POLL
+#include "calib/calib_execution.h"
 SIZE_OF_API_T(device_execution_time_t)
 #endif
 

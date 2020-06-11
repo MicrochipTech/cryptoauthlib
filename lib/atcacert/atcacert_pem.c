@@ -30,7 +30,7 @@
 
 #include "atcacert.h"
 #include "atcacert_pem.h"
-#include "basic/atca_helpers.h"
+#include "atca_helpers.h"
 
 int atcacert_encode_pem(const uint8_t* der,
                         size_t         der_size,

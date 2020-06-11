@@ -49,11 +49,11 @@ atcahid_t _gHid;
 /** \brief discover cdc buses available for this hardware
  * this maintains a list of logical to physical bus mappings freeing the application
  * of the a-priori knowledge
- * \param[in] cdc_buses - an array of logical bus numbers
+ * \param[in] hid_buses - an array of logical bus numbers
  * \param[in] max_buses - maximum number of buses the app wants to attempt to discover
  */
 
-ATCA_STATUS hal_kit_hid_discover_buses(int i2c_buses[], int max_buses)
+ATCA_STATUS hal_kit_hid_discover_buses(int hid_buses[], int max_buses)
 {
     return ATCA_UNIMPLEMENTED;
 }
@@ -168,7 +168,10 @@ ATCA_STATUS hal_kit_hid_post_init(ATCAIface iface)
 #ifdef KIT_DEBUG
         { printf("kit_init() Failed"); }
 #endif
-        { BREAK(status, "kit_init() failed"); }
+        {
+            ATCA_TRACE(status, "kit_init() failed");
+            break;
+        }
     }
 
     return status;
@@ -209,7 +212,7 @@ ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength)
     {
         memset(buffer, 0, (HID_PACKET_MAX));
 
-        if (bytes_left >= cfg->atcahid.packetsize)
+        if (bytes_left >= (int)cfg->atcahid.packetsize)
         {
             bytes_to_send = cfg->atcahid.packetsize;
         }
@@ -235,7 +238,7 @@ ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength)
 /** \brief HAL implementation of kit protocol send over USB HID
  * \param[in]    iface   instance
  * \param[out]   rxdata  pointer to space to receive the data
- * \param[inout] rxsize  ptr to expected number of receive bytes to request
+ * \param[in,out] rxsize  ptr to expected number of receive bytes to request
  * \return ATCA_STATUS
  */
 ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxsize)
@@ -300,7 +303,7 @@ ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxsize)
 }
 
 /** \brief Number of USB HID devices found
- *  \param[out] num_found
+ *  \param[out] num_found   return number of USB HID devices found
  *  \return ATCA_STATUS
  */
 ATCA_STATUS kit_phy_num_found(int8_t* num_found)
@@ -311,27 +314,29 @@ ATCA_STATUS kit_phy_num_found(int8_t* num_found)
 }
 
 /** \brief HAL implementation of kit protocol send over USB HID
- *  \param[in] iface     instance
- *  \param[in] txdata    pointer to bytes to send
- *  \param[in] txlength  number of bytes to send
+ *  \param[in] iface          instance
+ *  \param[in] word_address   determine device transaction type
+ *  \param[in] txdata         pointer to bytes to send
+ *  \param[in] txlength       number of bytes to send
  *  \return ATCA_STATUS
  */
-ATCA_STATUS hal_kit_hid_send(ATCAIface iface, uint8_t* txdata, int txlength)
+ATCA_STATUS hal_kit_hid_send(ATCAIface iface, uint8_t word_address, uint8_t* txdata, int txlength)
 {
     // Call the kit_send() function that will call phy_send() implemented below
-    return kit_send(iface, txdata, txlength);
+    return kit_send(iface, word_address, txdata, txlength);
 }
 
 /** \brief HAL implementation of send over USB HID
- * \param[in]    iface   instance
- * \param[in]    rxdata  pointer to space to receive the data
- * \param[inout] rxsize  ptr to expected number of receive bytes to request
+ * \param[in]    iface          instance
+ * \param[in]    word_address   determine device transaction type
+ * \param[in]    rxdata         pointer to space to receive the data
+ * \param[in,out] rxsize        ptr to expected number of receive bytes to request
  * \return ATCA_STATUS
  */
-ATCA_STATUS hal_kit_hid_receive(ATCAIface iface, uint8_t* rxdata, uint16_t* rxsize)
+ATCA_STATUS hal_kit_hid_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, uint16_t* rxsize)
 {
     // Call the kit_receive() function that will call phy_receive() implemented below
-    return kit_receive(iface, rxdata, rxsize);
+    return kit_receive(iface, word_address, rxdata, rxsize);
 }
 
 /** \brief Call the wake for kit protocol

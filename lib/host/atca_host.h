@@ -31,6 +31,7 @@
 
 #include <stdint.h>
 #include "cryptoauthlib.h"  // contains definitions used by chip and these routines
+#include "calib/calib_basic.h"
 
 /** \defgroup atcah Host side crypto methods (atcah_)
  *
@@ -84,7 +85,7 @@
 #define ATCA_PRIVWRITE_MAC_ZEROS_SIZE  (21)
 #define ATCA_PRIVWRITE_PLAIN_TEXT_SIZE (36)
 #define ATCA_DERIVE_KEY_ZEROS_SIZE     (25)
-#define HMAC_BLOCK_SIZE                 (64)
+#define ATCA_HMAC_BLOCK_SIZE           (64)
 #define ENCRYPTION_KEY_SIZE             (64)
 
 /** @} */

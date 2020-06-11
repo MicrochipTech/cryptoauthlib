@@ -24,12 +24,10 @@
  * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
  * THIS SOFTWARE.
  */
-
-
+#include "atca_test.h"
+#ifndef DO_NOT_TEST_CERT
 
 #include "atcacert/atcacert_der.h"
-#include "test/unity.h"
-#include "test/unity_fixture.h"
 
 TEST_GROUP(atcacert_der_enc_ecdsa_sig_value);
 
@@ -677,3 +675,5 @@ TEST(atcacert_der_dec_ecdsa_sig_value, bad_sint_too_large)
     ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, raw_sig);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_DECODING_ERROR, ret, "Expected ATCACERT_E_DECODING_ERROR");
 }
+
+#endif

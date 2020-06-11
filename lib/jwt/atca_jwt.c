@@ -26,7 +26,7 @@
  */
 
 #include "cryptoauthlib.h"
-#include "basic/atca_helpers.h"
+#include "atca_helpers.h"
 #include "crypto/atca_crypto_sw_sha2.h"
 #include "jwt/atca_jwt.h"
 #include <stdio.h>
@@ -135,7 +135,7 @@ ATCA_STATUS atca_jwt_finalize(
     }
 
     /* Make sure there is enough remaining buffer given base64 4/3 expansion */
-    rem = (jwt->cur - i + ATCA_SIG_SIZE) * 4;
+    rem = (jwt->cur - i + ATCA_ECCP256_SIG_SIZE) * 4;
     rem /= 3;
 
     /* Increase Count to accomodate: 1 for the '.', 1 for the null terminator,
@@ -179,7 +179,7 @@ ATCA_STATUS atca_jwt_finalize(
     }
 
     /* Create ECSDA signature of the digest and store it back in the buffer */
-    status = atcab_sign(key_id, (const uint8_t*)(jwt->buf + jwt->buflen - ATCA_SHA_DIGEST_SIZE),
+    status = atcab_sign(key_id, (const uint8_t*)(jwt->buf + jwt->buflen - ATCA_SHA256_DIGEST_SIZE),
                         (uint8_t*)(jwt->buf + jwt->buflen - 64));
     if (ATCA_SUCCESS != status)
     {
@@ -191,7 +191,7 @@ ATCA_STATUS atca_jwt_finalize(
 
     /* Encode the signature and store it in the buffer */
     tSize = jwt->buflen - jwt->cur;
-    atcab_base64encode_((const uint8_t*)(jwt->buf + jwt->buflen - ATCA_SIG_SIZE), ATCA_SIG_SIZE,
+    atcab_base64encode_((const uint8_t*)(jwt->buf + jwt->buflen - ATCA_ECCP256_SIG_SIZE), ATCA_ECCP256_SIG_SIZE,
                         &jwt->buf[jwt->cur], &tSize, atcab_b64rules_urlsafe);
     jwt->cur += (uint16_t)tSize;
 
@@ -289,8 +289,8 @@ ATCA_STATUS atca_jwt_verify(
     )
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
-    uint8_t digest[ATCA_KEY_SIZE];
-    uint8_t signature[ATCA_SIG_SIZE];
+    uint8_t digest[ATCA_SHA256_DIGEST_SIZE];
+    uint8_t signature[ATCA_ECCP256_SIG_SIZE];
     size_t sig_len = sizeof(signature);
     const char* pStr = buf;
 

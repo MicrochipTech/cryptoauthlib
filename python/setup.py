@@ -100,15 +100,6 @@ def load_readme():
     with open('README.md', 'r') as f:
         read_me = f.read()
 
-    if not _sdist_build:
-        with open('../README.md', 'r') as f:
-            notes = f.read()
-
-        read_me += notes[notes.find('Release notes'):notes.find('Host Device Support')]
-
-        with open('README.md', 'w') as f:
-            f.write(read_me)
-
     return read_me
 
 
@@ -137,7 +128,10 @@ class CryptoAuthCommandBuildExt(build_ext):
         else:
             build_args = []
 
-        cmake_args = ['-DATCA_HAL_CUSTOM=ON']
+        cmake_args = ['-DATCA_HAL_CUSTOM=ON', '-DATCA_TNGTLS_SUPPORT=ON',
+                      '-DATCA_TNGLORA_SUPPORT=ON', '-DATCA_TFLEX_SUPPORT=ON',
+                      '-DATCA_TNG_LEGACY_SUPPORT=ON', '-DATCA_USE_ATCAB_FUNCTIONS=ON']
+
         if not nousb:
             cmake_args += ['-DATCA_HAL_KIT_HID=ON']
 
@@ -221,6 +215,6 @@ if __name__ == '__main__':
         cmdclass=_COMMANDS,
         install_requires=['enum34;python_version<"3.4"'],
         ext_modules=_EXTENSIONS,
-        python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, <4',
+        python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4',
         zip_safe=False
     )

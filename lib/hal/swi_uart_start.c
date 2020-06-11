@@ -30,7 +30,7 @@
 #include <stdio.h>
 #include <peripheral_clk_config.h>
 #include "swi_uart_start.h"
-#include "basic/atca_helpers.h"
+#include "atca_helpers.h"
 
 #define USART_BAUD_RATE(baud, sercom_freq)      (65536 - ((65536 * 16.0F * baud) / sercom_freq))
 

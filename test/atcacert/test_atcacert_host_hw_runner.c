@@ -23,9 +23,8 @@
  * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
  * THIS SOFTWARE.
  */
-
-#include "test/unity.h"
-#include "test/unity_fixture.h"
+#include "atca_test.h"
+#ifndef DO_NOT_TEST_CERT
 
 #ifdef __GNUC__
 // Unity macros trigger this warning
@@ -50,3 +49,4 @@ TEST_GROUP_RUNNER(atcacert_host_hw)
     RUN_TEST_CASE(atcacert_host_hw, atcacert_verify_response_hw_malformed_public_key);
     RUN_TEST_CASE(atcacert_host_hw, atcacert_verify_response_hw_bad_params);
 }
+#endif

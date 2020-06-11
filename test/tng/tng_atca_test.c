@@ -23,11 +23,10 @@
  * THIS SOFTWARE.
  */
 
-#include "test/unity_fixture.h"
-#include "test/atca_test.h"
+#include "third_party/unity/unity_fixture.h"
+#include "atca_test.h"
 #include "app/tng/tng_atca.h"
 
-tng_type_t g_tng_test_type;
 
 TEST_GROUP(tng_atca);
 
@@ -39,20 +38,11 @@ TEST_TEAR_DOWN(tng_atca)
 {
 }
 
-TEST(tng_atca, tng_get_type)
-{
-    ATCA_STATUS status;
-    tng_type_t type;
-
-    status = tng_get_type(&type);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT_EQUAL(g_tng_test_type, type);
-}
 
 TEST(tng_atca, tng_get_device_pubkey)
 {
     ATCA_STATUS status;
-    uint8_t public_key[ATCA_PUB_KEY_SIZE];
+    uint8_t public_key[ATCA_ECCP256_PUBKEY_SIZE];
     size_t i;
     bool is_all_zero;
 
@@ -77,7 +67,6 @@ TEST(tng_atca, tng_get_device_pubkey)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info tng_atca_unit_test_info[] =
 {
-    { REGISTER_TEST_CASE(tng_atca, tng_get_type),          DEVICE_MASK(ATECC608A)},
     { REGISTER_TEST_CASE(tng_atca, tng_get_device_pubkey), DEVICE_MASK(ATECC608A)},
     { (fp_test_case)NULL,                                  (uint8_t)0 },
 };

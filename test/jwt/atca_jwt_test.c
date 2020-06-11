@@ -23,8 +23,8 @@
  * THIS SOFTWARE.
  */
 
-#include "test/unity_fixture.h"
-#include "test/atca_test.h"
+#include "third_party/unity/unity_fixture.h"
+#include "atca_test.h"
 #include "jwt/atca_jwt.h"
 
 /* Configuration Options */
@@ -42,7 +42,7 @@ static const char atca_jwt_test_vector_payload_aud[] = "audience";
 static const char atca_jwt_test_vector_payload[] =
     "eyJpYXQiOjEyMzQ1Njc4OSwiZXhwIjoyMzQ1Njc4OTAsImF1ZCI6ImF1ZGllbmNlIn0.";
 
-static const uint8_t atca_jwt_test_vector_pubkey[ATCA_PUB_KEY_SIZE] = {
+static const uint8_t atca_jwt_test_vector_pubkey[ATCA_ECCP256_PUBKEY_SIZE] = {
     0x01, 0x31, 0x95, 0xB2, 0x30, 0x4D, 0xC7, 0x7E, 0xC0, 0x94, 0x6A, 0x02, 0xE0, 0x4E, 0xDC, 0x51,
     0xED, 0xF7, 0xE8, 0x77, 0x9D, 0x44, 0xC9, 0x2B, 0x90, 0xB8, 0xF7, 0xC3, 0x4B, 0x72, 0x9B, 0xD8,
     0x11, 0x74, 0x6E, 0x88, 0x31, 0x9A, 0xE5, 0xC9, 0xEF, 0x68, 0x34, 0x51, 0x34, 0x7F, 0xAB, 0xF9,
@@ -225,7 +225,7 @@ TEST(atca_jwt, claim_add_numeric_invalid_params)
 TEST(atca_jwt, verify_invalid_params)
 {
     char buf[512];
-    uint8_t pubkey[ATCA_PUB_KEY_SIZE];
+    uint8_t pubkey[ATCA_ECCP256_PUBKEY_SIZE];
 
     TEST_ASSERT_EQUAL(ATCA_BAD_PARAM, atca_jwt_verify(NULL, sizeof(buf), pubkey));
 
@@ -316,7 +316,7 @@ TEST(atca_jwt_crypto, finalize)
     size_t len;
     char * payload;
     char * sig;
-    uint8_t pubkey[ATCA_PUB_KEY_SIZE];
+    uint8_t pubkey[ATCA_ECCP256_PUBKEY_SIZE];
 
     /* Build the JWT */
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, atca_jwt_init(&jwt, buf, sizeof(buf)));

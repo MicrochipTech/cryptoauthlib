@@ -32,11 +32,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "atca_config.h"
-#include "atca_hal.h"
-#include "atca_device.h"
-#include "atca_execution.h"
-#include "definitions.h"
+#include "cryptoauthlib.h"
 
 /** \defgroup hal_ Hardware abstraction layer (hal_)
  *
@@ -54,7 +50,7 @@
 
 /** \brief discover i2c buses available for this hardware
  * this maintains a list of logical to physical bus mappings freeing the application
- * of the a-priori knowledge
+ * of the a-prior knowledge
  * \param[in] i2c_buses - an array of logical bus numbers
  * \param[in] max_buses - maximum number of buses the app wants to attempt to discover
  * \return ATCA_SUCCESS
@@ -112,50 +108,42 @@ ATCA_STATUS hal_i2c_post_init(ATCAIface iface)
 }
 
 /** \brief HAL implementation of I2C send over START
- * \param[in] iface     instance
- * \param[in] txdata    pointer to space to bytes to send
- * \param[in] txlength  number of bytes to send
+ * \param[in] iface         instance
+ * \param[in] word_address  device transaction type
+ * \param[in] txdata        pointer to space to bytes to send
+ * \param[in] txlength      number of bytes to send
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
-ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t *txdata, int txlength)
+ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength)
 {
     ATCAIfaceCfg* cfg = atgetifacecfg(iface);
-    atca_plib_api_t * plib;
+    atca_plib_i2c_api_t * plib;
 
     if (!cfg)
     {
         return ATCA_BAD_PARAM;
     }
 
-    plib = (atca_plib_api_t*)cfg->cfg_data;
+    plib = (atca_plib_i2c_api_t*)cfg->cfg_data;
     if (!plib)
     {
         return ATCA_BAD_PARAM;
     }
 
-    // for this implementation of I2C with CryptoAuth chips, txdata is assumed to have ATCAPacket format
-
-    // other device types that don't require i/o tokens on the front end of a command need a different hal_i2c_send and wire it up instead of this one
-    // this covers devices such as ATSHA204A and ATECCx08A that require a word address value pre-pended to the packet
-    // txdata[0] is using _reserved byte of the ATCAPacket
-
-    txdata[0] = 0x03;   // insert the Word Address Value, Command token
-    txlength++;         // account for word address value byte.
-
-    /* Wait for the I2C bus to be ready */
-    while (plib->is_busy() == true)
+    if (0xFF != word_address)
     {
-        ;
+        txdata[0] = word_address;   // insert the Word Address Value, Command token
+        txlength++;                 // account for word address value byte.
     }
 
-    if (plib->write(cfg->atcai2c.slave_address >> 1, txdata, txlength) == true)
+    /* Wait for the I2C bus to be ready */
+    while (plib->is_busy() == true);
+
+    if (plib->write(cfg->atcai2c.slave_address>>1, txdata, txlength) == true)
     {
         /* Wait for the I2C transfer to complete */
-        while (plib->is_busy() == true)
-        {
-            ;
-        }
+        while (plib->is_busy() == true);
 
         /* Transfer complete. Check if the transfer was successful */
         if (plib->error_get() != PLIB_I2C_ERROR_NONE)
@@ -172,119 +160,145 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t *txdata, int txlength)
 }
 
 /** \brief HAL implementation of I2C receive function for START I2C
- * \param[in]    iface     Device to interact with.
- * \param[out]   rxdata    Data received will be returned here.
- * \param[inout] rxlength  As input, the size of the rxdata buffer.
- *                         As output, the number of bytes received.
+ * \param[in]    iface         Device to interact with.
+ * \param[in]    word_address  device transaction type
+ * \param[out]   rxdata        Data received will be returned here.
+ * \param[in,out] rxlength     As input, the size of the rxdata buffer.
+ *                             As output, the number of bytes received.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t *rxdata, uint16_t *rxlength)
+ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)
 {
+    ATCA_STATUS status = !ATCA_SUCCESS;
     ATCAIfaceCfg* cfg = atgetifacecfg(iface);
+    uint16_t rxdata_max_size;
+    uint16_t read_length = 2;
+    uint8_t min_resp_size = 4;
+    atca_plib_i2c_api_t * plib;
     int retries;
-    uint16_t count;
-    uint16_t rxdata_max_size = *rxlength;
-    bool isSuccess = false;
 
-    atca_plib_api_t * plib;
-
-    if (!cfg)
+    if ((NULL == cfg) || (NULL == rxlength) || (NULL == rxdata))
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_INVALID_POINTER, "NULL pointer encountered");
     }
 
-    plib = (atca_plib_api_t*)cfg->cfg_data;
-    if (!plib)
+    if(NULL == (plib = (atca_plib_i2c_api_t*)cfg->cfg_data))
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_INVALID_POINTER, "NULL pointer encountered");
     }
 
-    retries = cfg->rx_retries;
+    rxdata_max_size = *rxlength;
     *rxlength = 0;
-    if (rxdata_max_size < 1)
-    {
-        return ATCA_SMALL_BUFFER;
-    }
 
-    /* Wait for the I2C bus to be ready */
-    while (plib->is_busy() == true)
+    do
     {
-        ;
-    }
+        /*Send Word address to device...*/
+        retries = cfg->rx_retries;
+        while (retries-- > 0 && status != ATCA_SUCCESS)
+        {
+            status = hal_i2c_send(iface, word_address, &word_address, 0);
+        }
+        if(ATCA_SUCCESS != status)
+        {
+            ATCA_TRACE(status, "hal_i2c_send - failed");
+            break;
+        }
 
-    while (retries-- > 0 && isSuccess == false)
-    {
-        if (plib->read(cfg->atcai2c.slave_address >> 1, rxdata, 1) == true)
+#if ATCA_TA_SUPPORT
+        /*Set read length.. Check for register reads or 1 byte reads*/
+        if((word_address == ATCA_MAIN_PROCESSOR_RD_CSR) || (word_address == ATCA_FAST_CRYPTO_RD_FSR)
+            || (rxdata_max_size == 1))
+        {
+            read_length = 1;
+        }
+#endif
+
+        /* Read length bytes to know number of bytes to read */
+        status = ATCA_COMM_FAIL;
+        if (plib->read(cfg->atcai2c.slave_address>>1, rxdata, read_length) == true)
         {
             /* Wait for the I2C transfer to complete */
-            while (plib->is_busy() == true)
-            {
-                ;
-            }
-
+            while (plib->is_busy() == true);
             /* Transfer complete. Check if the transfer was successful */
             if (plib->error_get() == PLIB_I2C_ERROR_NONE)
             {
-                isSuccess = true;
+                status = ATCA_SUCCESS;
             }
         }
-    }
-    if (isSuccess == false)
-    {
-        return ATCA_COMM_FAIL;
-    }
-
-    if (rxdata[0] < ATCA_RSP_SIZE_MIN)
-    {
-        return ATCA_INVALID_SIZE;
-    }
-    if (rxdata[0] > rxdata_max_size)
-    {
-        return ATCA_SMALL_BUFFER;
-    }
-
-    count = rxdata[0] - 1;
-
-    if (plib->read(cfg->atcai2c.slave_address >> 1, &rxdata[1], count) == true)
-    {
-        /* Wait for the I2C transfer to complete */
-        while (plib->is_busy() == true)
+        if(ATCA_SUCCESS != status)
         {
-            ;
+            ATCA_TRACE(status, "plib->read - failed");
+            break;
         }
 
-        /* Transfer complete. Check if the transfer was successful */
-        if (plib->error_get() != PLIB_I2C_ERROR_NONE)
+        if(1 == read_length)
         {
-            return ATCA_COMM_FAIL;
+            ATCA_TRACE(status, "1 byte read completed");
+            break;
+        }
+
+        /*Calculate bytes to read based on device response*/
+        if(cfg->devtype == TA100)
+        {
+            read_length = ((uint16_t)rxdata[0] * 256) + rxdata[1];
+            min_resp_size += 1;
+        }
+        else
+        {
+            read_length =  rxdata[0];
+        }
+
+        if (read_length > rxdata_max_size)
+        {
+            status = ATCA_TRACE(ATCA_SMALL_BUFFER, "rxdata is small buffer");
+            break;
+        }
+
+        if (read_length < min_resp_size)
+        {
+            status = ATCA_TRACE(ATCA_RX_FAIL, "packet size is invalid");
+            break;
+        }
+        
+        /* Read given length bytes from device */
+        status = ATCA_COMM_FAIL;
+        if (plib->read(cfg->atcai2c.slave_address>>1, &rxdata[2], read_length - 2) == true)
+        {
+            /* Wait for the I2C transfer to complete */
+            while (plib->is_busy() == true);
+            /* Transfer complete. Check if the transfer was successful */
+            if (plib->error_get() == PLIB_I2C_ERROR_NONE)
+            {
+                status = ATCA_SUCCESS;
+            }
+        }
+        if(ATCA_SUCCESS != status)
+        {
+            status = ATCA_TRACE(status, "plib->read - failed");
+            break;
         }
     }
-    else
-    {
-        return ATCA_COMM_FAIL;
-    }
+    while (0);
 
-    *rxlength = rxdata[0];
-
-    return ATCA_SUCCESS;
+    *rxlength = read_length;
+    return status;
 }
 
 /** \brief method to change the bus speec of I2C
  * \param[in] iface  interface on which to change bus speed
  * \param[in] speed  baud rate (typically 100000 or 400000)
  */
-
 void change_i2c_speed(ATCAIface iface, uint32_t speed)
 {
     ATCAIfaceCfg* cfg = atgetifacecfg(iface);
-    atca_plib_api_t * plib;
+    atca_plib_i2c_api_t * plib;
 
     if (!cfg)
     {
         return;
     }
 
-    plib = (atca_plib_api_t*)cfg->cfg_data;
+    plib = (atca_plib_i2c_api_t*)cfg->cfg_data;
     if (!plib)
     {
         return;
@@ -294,10 +308,7 @@ void change_i2c_speed(ATCAIface iface, uint32_t speed)
     setup.clkSpeed = speed;
 
     /* Make sure I2C is not busy before changing the I2C clock speed */
-    while (plib->is_busy() == true)
-    {
-        ;
-    }
+    while (plib->is_busy() == true);
 
     (void)plib->transfer_setup(&setup, 0);
 }
@@ -310,10 +321,10 @@ void change_i2c_speed(ATCAIface iface, uint32_t speed)
 ATCA_STATUS hal_i2c_wake(ATCAIface iface)
 {
     ATCAIfaceCfg* cfg = atgetifacecfg(iface);
-    atca_plib_api_t * plib;
+    atca_plib_i2c_api_t * plib;
     int retries;
     uint32_t bdrt;
-    uint8_t data[4] = { 0 };
+    uint8_t data[4] = {0};
     bool isSuccess = false;
 
     if (!cfg)
@@ -321,7 +332,7 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
         return ATCA_BAD_PARAM;
     }
 
-    plib = (atca_plib_api_t*)cfg->cfg_data;
+    plib = (atca_plib_i2c_api_t*)cfg->cfg_data;
     if (!plib)
     {
         return ATCA_BAD_PARAM;
@@ -335,32 +346,23 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
         change_i2c_speed(iface, 100000);
     }
 
-    while (plib->is_busy() == true)
-    {
-        ;
-    }
+    while (plib->is_busy() == true);
 
     // Send the 00 address as the wake pulse; part will NACK, so don't check for status
     (void)plib->write(0x00, (uint8_t*)&data[0], 1);
 
     /* Wait for the I2C transfer to complete */
-    while (plib->is_busy() == true)
-    {
-        ;
-    }
+    while (plib->is_busy() == true);
 
     // wait tWHI + tWLO which is configured based on device type and configuration structure
     atca_delay_us(cfg->wake_delay);
 
     while (retries-- > 0 && isSuccess == false)
     {
-        if (plib->read(cfg->atcai2c.slave_address >> 1, (uint8_t*)&data[0], 4) == true)
+        if (plib->read(cfg->atcai2c.slave_address>>1, (uint8_t*)&data[0], 4) == true)
         {
             /* Wait for the I2C transfer to complete */
-            while (plib->is_busy() == true)
-            {
-                ;
-            }
+            while (plib->is_busy() == true);
 
             /* Transfer complete. Check if the transfer was successful */
             if (plib->error_get() == PLIB_I2C_ERROR_NONE)
@@ -394,7 +396,7 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
 ATCA_STATUS hal_i2c_idle(ATCAIface iface)
 {
     ATCAIfaceCfg* cfg = atgetifacecfg(iface);
-    atca_plib_api_t * plib;
+    atca_plib_i2c_api_t * plib;
     uint8_t data[1];
 
     if (!cfg)
@@ -402,7 +404,7 @@ ATCA_STATUS hal_i2c_idle(ATCAIface iface)
         return ATCA_BAD_PARAM;
     }
 
-    plib = (atca_plib_api_t*)cfg->cfg_data;
+    plib = (atca_plib_i2c_api_t*)cfg->cfg_data;
     if (!plib)
     {
         return ATCA_BAD_PARAM;
@@ -411,18 +413,12 @@ ATCA_STATUS hal_i2c_idle(ATCAIface iface)
     data[0] = 0x02;  // idle word address value
 
     /* Wait for the I2C bus to be ready */
-    while (plib->is_busy() == true)
-    {
-        ;
-    }
+    while (plib->is_busy() == true);
 
-    if (plib->write(cfg->atcai2c.slave_address >> 1, (uint8_t*)&data[0], 1) == true)
+    if (plib->write(cfg->atcai2c.slave_address>>1, (uint8_t*)&data[0], 1) == true)
     {
         /* Wait for the I2C transfer to complete */
-        while (plib->is_busy() == true)
-        {
-            ;
-        }
+        while (plib->is_busy() == true);
 
         /* Transfer complete. Check if the transfer was successful */
         if (plib->error_get() != PLIB_I2C_ERROR_NONE)
@@ -446,7 +442,7 @@ ATCA_STATUS hal_i2c_idle(ATCAIface iface)
 ATCA_STATUS hal_i2c_sleep(ATCAIface iface)
 {
     ATCAIfaceCfg* cfg = atgetifacecfg(iface);
-    atca_plib_api_t * plib;
+    atca_plib_i2c_api_t * plib;
     uint8_t data[4];
 
     if (!cfg)
@@ -454,7 +450,7 @@ ATCA_STATUS hal_i2c_sleep(ATCAIface iface)
         return ATCA_BAD_PARAM;
     }
 
-    plib = (atca_plib_api_t*)cfg->cfg_data;
+    plib = (atca_plib_i2c_api_t*)cfg->cfg_data;
     if (!plib)
     {
         return ATCA_BAD_PARAM;
@@ -463,18 +459,12 @@ ATCA_STATUS hal_i2c_sleep(ATCAIface iface)
     data[0] = 0x01;  // sleep word address value
 
     /* Wait for the I2C bus to be ready */
-    while (plib->is_busy() == true)
-    {
-        ;
-    }
+    while (plib->is_busy() == true);
 
-    if (plib->write(cfg->atcai2c.slave_address >> 1, (uint8_t*)&data[0], 1) == true)
+    if (plib->write(cfg->atcai2c.slave_address>>1, (uint8_t*)&data[0], 1) == true)
     {
         /* Wait for the I2C transfer to complete */
-        while (plib->is_busy() == true)
-        {
-            ;
-        }
+        while (plib->is_busy() == true);
 
         /* Transfer complete. Check if the transfer was successful */
         if (plib->error_get() != PLIB_I2C_ERROR_NONE)

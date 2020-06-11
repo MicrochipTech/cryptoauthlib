@@ -40,7 +40,7 @@
 
 /* Cryptoauthlib Includes */
 #include "cryptoauthlib.h"
-#include "basic/atca_basic.h"
+#include "atca_basic.h"
 #include "atca_mbedtls_wrap.h"
 #include <string.h>
 

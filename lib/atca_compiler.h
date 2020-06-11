@@ -51,6 +51,14 @@
 #define ATCA_UINT64_BE_TO_HOST(x)  __builtin_bswap64(x)
 #endif
 
+#ifdef (WIN32)
+#define SHARED_LIB_EXPORT       __declspec(dllexport)
+#define SHARED_LIB_IMPORT       __declspec(dllimport)
+#else
+#define SHARED_LIB_EXPORT
+#define SHARED_LIB_IMPORT       extern
+#endif
+
 //#elif defined(__ICC) || defined(__INTEL_COMPILER)
 /* Intel ICC/ICPC. ------------------------------------------ */
 
@@ -60,6 +68,8 @@
 #define ATCA_UINT16_HOST_TO_LE(x)  __builtin_bswap_16(x)
 #define ATCA_UINT16_LE_TO_HOST(x)  __builtin_bswap_16(x)
 #define ATCA_UINT32_HOST_TO_LE(x)  __builtin_bswap_32(x)
+#define ATCA_UINT16_HOST_TO_BE(x)  (x)
+#define ATCA_UINT16_BE_TO_HOST(x)  (x)
 #define ATCA_UINT32_HOST_TO_BE(x)  (x)
 #define ATCA_UINT32_BE_TO_HOST(x)  (x)
 #define ATCA_UINT64_HOST_TO_BE(x)  (x)
@@ -68,12 +78,16 @@
 #elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 #define ATCA_UINT16_HOST_TO_LE(x)  __builtin_bswap16(x)
 #define ATCA_UINT16_LE_TO_HOST(x)  __builtin_bswap16(x)
+#define ATCA_UINT16_HOST_TO_BE(x)  (x)
+#define ATCA_UINT16_BE_TO_HOST(x)  (x)
 #define ATCA_UINT32_HOST_TO_LE(x)  __builtin_bswap32(x)
 #define ATCA_UINT32_HOST_TO_BE(x)  (x)
 #define ATCA_UINT32_BE_TO_HOST(x)  (x)
 #define ATCA_UINT64_HOST_TO_BE(x)  (x)
 #define ATCA_UINT64_BE_TO_HOST(x)  (x)
 #else
+#define ATCA_UINT16_HOST_TO_BE(x)  __builtin_bswap16(x)
+#define ATCA_UINT16_BE_TO_HOST(x)  __builtin_bswap16(x)
 #define ATCA_UINT16_HOST_TO_LE(x)  (x)
 #define ATCA_UINT16_LE_TO_HOST(x)  (x)
 #define ATCA_UINT32_HOST_TO_LE(x)  (x)
@@ -82,6 +96,15 @@
 #define ATCA_UINT64_HOST_TO_BE(x)  __builtin_bswap64(x)
 #define ATCA_UINT64_BE_TO_HOST(x)  __builtin_bswap64(x)
 #endif
+
+#ifdef WIN32
+#define SHARED_LIB_EXPORT       __declspec(dllexport)
+#define SHARED_LIB_IMPORT       __declspec(dllimport)
+#else
+#define SHARED_LIB_EXPORT
+#define SHARED_LIB_IMPORT       extern
+#endif
+
 
 //#elif defined(__HP_cc) || defined(__HP_aCC)
 /* Hewlett-Packard C/aC++. ---------------------------------- */
@@ -93,6 +116,8 @@
 /* Microsoft Visual Studio. --------------------------------- */
 // MSVC is usually always little-endian architecture
 #include <stdlib.h>
+#define ATCA_UINT16_HOST_TO_BE(x)  _byteswap_ushort(x)
+#define ATCA_UINT16_BE_TO_HOST(x)  _byteswap_ushort(x)
 #define ATCA_UINT16_HOST_TO_LE(x)  (x)
 #define ATCA_UINT16_LE_TO_HOST(x)  (x)
 #define ATCA_UINT32_HOST_TO_LE(x)  (x)
@@ -101,6 +126,9 @@
 #define ATCA_UINT64_HOST_TO_BE(x)  _byteswap_uint64(x)
 #define ATCA_UINT64_BE_TO_HOST(x)  _byteswap_uint64(x)
 #define strtok_r                   strtok_s
+
+#define SHARED_LIB_EXPORT       __declspec(dllexport)
+#define SHARED_LIB_IMPORT       __declspec(dllimport)
 
 //#elif defined(__PGI)
 /* Portland Group PGCC/PGCPP. ------------------------------- */
@@ -128,6 +156,9 @@
 #define ATCA_UINT64_BE_TO_HOST(x)  (((uint64_t)__rev((uint32_t)x) << 32) | (uint64_t)__rev((uint32_t)(x >> 32)))
 #endif
 
+#define SHARED_LIB_EXPORT
+#define SHARED_LIB_IMPORT       extern
+
 #elif defined __ICCARM__
 /* IAR ARM ------------------------------------------- */
 #include <intrinsics.h>
@@ -148,6 +179,9 @@
 #define ATCA_UINT64_HOST_TO_BE(x)  (((uint64_t)__REV((uint32_t)x) << 32) | (uint64_t)__REV((uint32_t)(x >> 32)))
 #define ATCA_UINT64_BE_TO_HOST(x)  (((uint64_t)__REV((uint32_t)x) << 32) | (uint64_t)__REV((uint32_t)(x >> 32)))
 #endif
+
+#define SHARED_LIB_EXPORT
+#define SHARED_LIB_IMPORT       extern
 
 #endif
 

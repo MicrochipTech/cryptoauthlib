@@ -24,12 +24,10 @@
  * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
  * THIS SOFTWARE.
  */
-
-
+#include "atca_test.h"
+#ifndef DO_NOT_TEST_CERT
 
 #include "atcacert/atcacert_der.h"
-#include "test/unity.h"
-#include "test/unity_fixture.h"
 
 TEST_GROUP(atcacert_der_enc_length);
 
@@ -348,3 +346,4 @@ TEST(atcacert_der_dec_length, bad_params)
     ret = atcacert_der_dec_length(NULL, NULL, &length);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
+#endif

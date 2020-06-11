@@ -29,6 +29,7 @@
 #include "tngtls_cert_def_1_signer.h"
 
 extern const uint8_t g_tngtls_cert_template_1_signer[];
+extern const atcacert_cert_element_t g_tngtls_cert_elements_1_signer[];
 
 const atcacert_def_t g_tnglora_cert_def_1_signer = {
     .type                = CERTTYPE_X509,
@@ -98,8 +99,8 @@ const atcacert_def_t g_tnglora_cert_def_1_signer = {
             .count       = 20
         }
     },
-    .cert_elements       = NULL,
-    .cert_elements_count = 0,
+    .cert_elements       = g_tngtls_cert_elements_1_signer,
+    .cert_elements_count = 1,
     .cert_template       = g_tngtls_cert_template_1_signer,
     .cert_template_size  = TNGTLS_CERT_TEMPLATE_1_SIGNER_SIZE,
     .ca_cert_def         = NULL

@@ -25,57 +25,26 @@
  * THIS SOFTWARE.
  */
 #include "atca_test.h"
-#include "atca_execution.h"
+#include "cryptoauthlib.h"
+#if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
 #include "app/tng/tng_atca.h"
+#define ATCA_TEST_TNG
+#endif
+#if ATCA_CA_SUPPORT
+#include "api_calib/test_calib.h"
+#endif
+#if ATCA_TA_SUPPORT
+#include "api_talib/test_talib.h"
+#endif
 
-extern tng_type_t g_tng_test_type;
+const char* ATCA_TEST_HELPER_FILE = "In helper: " __FILE__;
 
-// gCfg must point to one of the cfg_ structures for any unit test to work.  this allows
-// the command console to switch device types at runtime.
-ATCAIfaceCfg g_iface_config = {
-    .iface_type            = ATCA_UNKNOWN_IFACE,
-    .devtype               = ATCA_DEV_UNKNOWN,
-    {
-        .atcai2c           = {
-            .slave_address = 0xC0,
-            .bus           = 2,
-            .baud          = 400000,
-        },
-    },
-    .wake_delay            = 1500,
-    .rx_retries            = 20
-};
+const char* TEST_GROUP_atca_cmd_basic_test = "atca_cmd_basic_test";
+const char* TEST_GROUP_atca_cmd_unit_test = "atca_cmd_unit_test";
 
-ATCAIfaceCfg *gCfg = &g_iface_config;
+bool g_atca_test_quiet_mode = false;
 
-const uint8_t g_slot4_key[] = {
-    0x37, 0x80, 0xe6, 0x3d, 0x49, 0x68, 0xad, 0xe5,
-    0xd8, 0x22, 0xc0, 0x13, 0xfc, 0xc3, 0x23, 0x84,
-    0x5d, 0x1b, 0x56, 0x9f, 0xe7, 0x05, 0xb6, 0x00,
-    0x06, 0xfe, 0xec, 0x14, 0x5a, 0x0d, 0xb1, 0xe3
-};
-
-uint8_t test_ecc608_configdata[ATCA_ECC_CONFIG_SIZE] = {
-    0x01, 0x23, 0x00, 0x00, 0x00, 0x00, 0x60, 0x00, 0x04, 0x05, 0x06, 0x07, 0xEE, 0x01, 0x01, 0x00,  //15
-    0xC0, 0x00, 0xA1, 0x00, 0xAF, 0x2F, 0xC4, 0x44, 0x87, 0x20, 0xC4, 0xF4, 0x8F, 0x0F, 0x0F, 0x0F,  //31, 5
-    0x9F, 0x8F, 0x83, 0x64, 0xC4, 0x44, 0xC4, 0x64, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F,  //47
-    0x0F, 0x0F, 0x0F, 0x0F, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF,  //63
-    0x00, 0x00, 0x00, 0x00, 0xFF, 0x84, 0x03, 0xBC, 0x09, 0x69, 0x76, 0x00, 0x00, 0x00, 0x00, 0x00,  //79
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0x0E, 0x40, 0x00, 0x00, 0x00, 0x00,  //95
-    0x33, 0x00, 0x1C, 0x00, 0x13, 0x00, 0x1C, 0x00, 0x3C, 0x00, 0x3E, 0x00, 0x1C, 0x00, 0x33, 0x00,  //111
-    0x1C, 0x00, 0x1C, 0x00, 0x38, 0x10, 0x30, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x32, 0x00, 0x30, 0x00   //127
-};
-
-const uint8_t test_ecc_configdata[ATCA_ECC_CONFIG_SIZE] = {
-    0x01, 0x23, 0x00, 0x00, 0x00, 0x00, 0x50, 0x00, 0x04, 0x05, 0x06, 0x07, 0xEE, 0x00, 0x01, 0x00, //15
-    0xC0, 0x00, 0x55, 0x00, 0x8F, 0x2F, 0xC4, 0x44, 0x87, 0x20, 0xC4, 0xF4, 0x8F, 0x0F, 0x8F, 0x8F, //31, 5
-    0x9F, 0x8F, 0x83, 0x64, 0xC4, 0x44, 0xC4, 0x64, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, //47
-    0x0F, 0x0F, 0x0F, 0x0F, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, //63
-    0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, //79
-    0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, //95
-    0x33, 0x00, 0x1C, 0x00, 0x13, 0x00, 0x1C, 0x00, 0x3C, 0x00, 0x1C, 0x00, 0x1C, 0x00, 0x33, 0x00, //111
-    0x1C, 0x00, 0x1C, 0x00, 0x3C, 0x00, 0x30, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x32, 0x00, 0x30, 0x00  //127
-};
+#ifdef ATCA_SHA_SUPPORT
 
 const uint8_t sha204_default_config[ATCA_SHA_CONFIG_SIZE] = {
     // block 0
@@ -110,6 +79,7 @@ const uint8_t sha204_default_config[ATCA_SHA_CONFIG_SIZE] = {
     // Not Written: UserExtra, Selector, LockData, LockConfig (word offset = 5)
     0x00, 0x00, 0x55, 0x55,
 };
+#endif
 
 // These keys are chosen specifically to test the CMAC subkey generation code.
 // When the keys are used to encrypt an all-zero block we need all bit
@@ -162,40 +132,19 @@ t_test_case_info* basic_tests[] =
     gendig_basic_test_info,
     random_basic_test_info,
     nonce_basic_test_info,
-    pause_basic_test_info,
     updateextra_basic_test_info,
     counter_basic_test_info,
     (t_test_case_info*)NULL, /* Array Termination element*/
 };
 
+#if ATCA_CA_SUPPORT
 t_test_case_info* unit_tests[] =
 {
-    startup_unit_test_info,
-    info_unit_test_info,
-    aes_unit_test_info,
-    verify_unit_test_info,
-    derivekey_unit_test_info,
-    sha_unit_test_info,
-    hmac_unit_test_info,
-    sign_unit_test_info,
-    mac_unit_test_info,
-    ecdh_unit_test_info,
-    write_unit_test_info,
-    read_unit_test_info,
-    genkey_unit_test_info,
-    privwrite_unit_test_info,
-    lock_unit_test_info,
-    kdf_unit_test_info,
-    sboot_unit_test_info,
-    selftest_unit_test_info,
-    gendig_unit_test_info,
-    random_unit_test_info,
-    nonce_unit_test_info,
-    pause_unit_test_info,
-    updateextra_unit_test_info,
-    counter_unit_test_info,
+    calib_commands_info,
+    calib_packet_info,
     (t_test_case_info*)NULL, /* Array Termination element*/
 };
+#endif
 
 t_test_case_info* otpzero_tests[] =
 {
@@ -212,9 +161,11 @@ t_test_case_info* helper_tests[] =
 
 t_test_case_info* tng_tests[] =
 {
+#ifdef ATCA_TEST_TNG
     tng_atca_unit_test_info,
 #ifndef DO_NOT_TEST_CERT
     tng_atcacert_client_unit_test_info,
+#endif
 #endif
     (t_test_case_info*)NULL, /* Array Termination element*/
 };
@@ -223,7 +174,7 @@ t_test_case_info* tng_tests[] =
 void RunAllTests(t_test_case_info** tests_list)
 {
     t_test_case_info* sp_current_test;
-    uint8_t support_device_mask;
+    uint32_t support_device_mask;
 
     /*Loop through all the commands test info*/
     while (*tests_list != NULL)
@@ -260,7 +211,9 @@ void RunAllBasicTests(void)
 
 void RunAllFeatureTests(void)
 {
+#if ATCA_CA_SUPPORT
     RunAllTests(unit_tests);
+#endif
 }
 
 void RunBasicOtpZero(void)
@@ -273,19 +226,12 @@ void RunAllHelperTests(void)
     RunAllTests(helper_tests);
 }
 
-void RunTNGTLSTests(void)
+void RunTNGTests(void)
 {
-    g_tng_test_type = TNGTYPE_TLS;
     RunAllTests(tng_tests);
 }
 
-void RunTNGLORATests(void)
-{
-    g_tng_test_type = TNGTYPE_LORA;
-    RunAllTests(tng_tests);
-}
-
-
+#if 0 // ATCA_CA_SUPPORT
 static bool atcau_is_locked(uint8_t zone)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
@@ -313,20 +259,21 @@ static bool atcau_is_locked(uint8_t zone)
         TEST_FAIL_MESSAGE("Invalid lock zone");
         break;
     }
-
     return false;
 }
+#endif
 
 #ifdef ATCA_NO_HEAP
-extern struct atca_device g_atcab_device;
-extern struct atca_command g_atcab_command;
-extern struct atca_iface g_atcab_iface;
+ATCA_DLL ATCADevice _gDevice;
+ATCA_DLL struct atca_device g_atcab_device;
+ATCA_DLL struct atca_command g_atcab_command;
+ATCA_DLL struct atca_iface g_atcab_iface;
 #endif
 
 /**
  * \brief Initialize the interface and check it was successful
  */
-void test_assert_interface_init(void)
+void test_assert_interface_init()
 {
 #ifdef ATCA_NO_HEAP
     ATCA_STATUS status;
@@ -340,7 +287,7 @@ void test_assert_interface_init(void)
         _gDevice = NULL;
 #else
         deleteATCADevice(&_gDevice);
-        TEST_ASSERT_NULL(_gDevice);
+        TEST_ASSERT_NULL_MESSAGE(_gDevice, ATCA_TEST_HELPER_FILE);
 #endif
     }
 
@@ -353,14 +300,16 @@ void test_assert_interface_init(void)
     _gDevice = &g_atcab_device;
 #else
     _gDevice = newATCADevice(gCfg);
-    TEST_ASSERT_NOT_NULL(_gDevice);
+    TEST_ASSERT_NOT_NULL_MESSAGE(_gDevice, ATCA_TEST_HELPER_FILE);
 #endif
 
+#ifdef ATCA_ATECC608A_SUPPORT
     if (_gDevice->mCommands->dt == ATECC608A)
     {
         // Set the clock divider, which should be the same value as the test config
         _gDevice->mCommands->clock_divider = test_ecc608_configdata[ATCA_CHIPMODE_OFFSET] & ATCA_CHIPMODE_CLOCK_DIV_MASK;
     }
+#endif
 }
 
 /**
@@ -388,10 +337,10 @@ void test_assert_interface_deinit(void)
 #endif
 }
 
-void test_assert_config_is_unlocked(void)
+void atca_test_assert_config_is_unlocked(UNITY_LINE_TYPE from_line)
 {
     bool is_locked = false;
-    ATCA_STATUS status = atcab_is_locked(LOCK_ZONE_CONFIG, &is_locked);
+    ATCA_STATUS status = atcab_is_config_locked(&is_locked);
 
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -401,10 +350,10 @@ void test_assert_config_is_unlocked(void)
     }
 }
 
-void test_assert_config_is_locked(void)
+void atca_test_assert_config_is_locked(UNITY_LINE_TYPE from_line)
 {
     bool is_locked = false;
-    ATCA_STATUS status = atcab_is_locked(LOCK_ZONE_CONFIG, &is_locked);
+    ATCA_STATUS status = atcab_is_config_locked(&is_locked);
 
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -414,10 +363,10 @@ void test_assert_config_is_locked(void)
     }
 }
 
-void test_assert_data_is_unlocked(void)
+void atca_test_assert_data_is_unlocked(UNITY_LINE_TYPE from_line)
 {
     bool is_locked = false;
-    ATCA_STATUS status = atcab_is_locked(LOCK_ZONE_DATA, &is_locked);
+    ATCA_STATUS status = atcab_is_data_locked(&is_locked);
 
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -427,12 +376,12 @@ void test_assert_data_is_unlocked(void)
     }
 }
 
-void test_assert_data_is_locked(void)
+void atca_test_assert_data_is_locked(UNITY_LINE_TYPE from_line)
 {
     bool is_locked = false;
-    ATCA_STATUS status = atcab_is_locked(LOCK_ZONE_DATA, &is_locked);
+    ATCA_STATUS status = atcab_is_data_locked(&is_locked);
 
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    UNITY_TEST_ASSERT_EQUAL_INT(ATCA_SUCCESS, status, from_line, NULL);
 
     if (!is_locked)
     {
@@ -442,50 +391,91 @@ void test_assert_data_is_locked(void)
 
 
 //The Function checks the AES_ENABLE byte in configuration zone , if it is not set, it skips the test
-void check_config_aes_enable(void)
+void atca_test_assert_aes_enabled(UNITY_LINE_TYPE from_line)
+{
+    if (TA100 != gCfg->devtype)
+    {
+        ATCA_STATUS status;
+        uint8_t aes_enable;
+
+        // Byte 13 of the config zone contains the AES enable bit
+        status = atcab_read_bytes_zone(ATCA_ZONE_CONFIG, 0, 13, &aes_enable, 1);
+        UNITY_TEST_ASSERT_EQUAL_INT(ATCA_SUCCESS, status, from_line, NULL);
+
+        if ((aes_enable & AES_CONFIG_ENABLE_BIT_MASK) == 0)
+        {
+            TEST_IGNORE_MESSAGE("Ignoring the test, AES is not enabled in config zone");
+        }
+    }
+}
+
+ATCA_STATUS atca_test_config_get_id(uint8_t test_type, uint16_t* handle)
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+    if (test_type && handle)
+    {
+        switch (gCfg->devtype)
+        {
+#if ATCA_CA_SUPPORT
+        case ATSHA204A:
+            /* fallthrough */
+        case ATECC108A:
+            /* fallthrough */
+        case ATECC508A:
+            /* fallthrough */
+        case ATECC608A:
+            status = calib_config_get_slot_by_test(test_type, handle);
+            break;
+#endif
+#if ATCA_TA_SUPPORT
+        case TA100:
+            status = talib_config_get_handle_by_test(test_type, handle);
+            break;
+#endif
+        default:
+            break;
+        }
+    }
+
+    if (ATCA_UNIMPLEMENTED == status)
+    {
+        TEST_IGNORE_MESSAGE("Device Configuration does not support this test");
+    }
+
+    return status;
+}
+
+TEST_SETUP(atca_cmd_basic_test)
+{
+    UnityMalloc_StartTest();
+
+    ATCA_STATUS status = atcab_init(gCfg);
+
+    TEST_ASSERT_EQUAL_INT_MESSAGE(ATCA_SUCCESS, status, ATCA_TEST_HELPER_FILE);
+}
+
+TEST_TEAR_DOWN(atca_cmd_basic_test)
 {
     ATCA_STATUS status;
-    uint8_t aes_enable;
 
-    // Byte 13 of the config zone contains the AES enable bit
-    status = atcab_read_bytes_zone(ATCA_ZONE_CONFIG, 0, 13, &aes_enable, 1);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    status = atcab_wakeup();
+    TEST_ASSERT_EQUAL_INT_MESSAGE(ATCA_SUCCESS, status, ATCA_TEST_HELPER_FILE);
 
-    if ((aes_enable & AES_CONFIG_ENABLE_BIT_MASK) == 0)
-    {
-        TEST_IGNORE_MESSAGE("Ignoring the test, AES is not enabled in config zone");
-    }
+    status = atcab_sleep();
+    TEST_ASSERT_EQUAL_INT_MESSAGE(ATCA_SUCCESS, status, ATCA_TEST_HELPER_FILE);
+
+    status = atcab_release();
+    TEST_ASSERT_EQUAL_INT_MESSAGE(ATCA_SUCCESS, status, ATCA_TEST_HELPER_FILE);
+
+    UnityMalloc_EndTest();
 }
 
-void unit_test_assert_config_is_locked(void)
+TEST_SETUP(atca_cmd_unit_test)
 {
-    if (!atcau_is_locked(LOCK_ZONE_CONFIG))
-    {
-        TEST_IGNORE_MESSAGE("Config zone must be locked for this test.");
-    }
+    test_assert_interface_init();
 }
-void unit_test_assert_config_is_unlocked(void)
+
+TEST_TEAR_DOWN(atca_cmd_unit_test)
 {
-    if (atcau_is_locked(LOCK_ZONE_CONFIG))
-    {
-        TEST_IGNORE_MESSAGE("Config zone must be unlocked for this test.");
-    }
+    test_assert_interface_deinit();
 }
-
-void unit_test_assert_data_is_locked(void)
-{
-    if (!atcau_is_locked(LOCK_ZONE_DATA))
-    {
-        TEST_IGNORE_MESSAGE("Data zone must be locked for this test.");
-    }
-}
-
-void unit_test_assert_data_is_unlocked(void)
-{
-    if (atcau_is_locked(LOCK_ZONE_DATA))
-    {
-        TEST_IGNORE_MESSAGE("Data zone must be unlocked for this test.");
-    }
-}
-
-

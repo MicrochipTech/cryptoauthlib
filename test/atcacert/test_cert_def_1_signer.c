@@ -1,3 +1,6 @@
+#include "atca_test.h"
+#ifndef DO_NOT_TEST_CERT
+
 #include "atcacert/atcacert_def.h"
 
 const uint8_t g_test_signer_1_ca_public_key[64] = {
@@ -111,4 +114,4 @@ const atcacert_def_t g_test_cert_def_1_signer = {
     .cert_template              = g_test_cert_template_1_signer,
     .cert_template_size         = sizeof(g_test_cert_template_1_signer)
 };
-
+#endif

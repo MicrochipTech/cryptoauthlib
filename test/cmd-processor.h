@@ -33,8 +33,11 @@
 #include "cryptoauthlib.h"
 
 #define cmdQ_SIZE    512
+#define CMD_PROCESSOR_MAX_ARGS  10
 
+int processCmd_interactive(void);
 int processCmd(void);
+int parse_cmd_string(char* buffer, const size_t buf_len, const int argc, char* argv[]);
 
 volatile struct
 {
@@ -43,24 +46,17 @@ volatile struct
     uint8_t m_entry[ cmdQ_SIZE ];
 } cmdQ;
 
-typedef void (*fp_menu_handler)(void);
+typedef int (*fp_menu_handler)(int argc, char* argv[]);
 
 typedef struct
 {
     const char*     menu_cmd;
     const char*     menu_cmd_description;
     fp_menu_handler fp_handler;
-}t_menu_info;
+} t_menu_info;
 
 
 int run_tests(int test);
 
-#if defined(ATCA_HAL_CUSTOM)
-extern ATCAIfaceCfg g_cfg_atsha206a_custom;
-extern ATCAIfaceCfg g_cfg_atsha204a_custom;
-extern ATCAIfaceCfg g_cfg_atecc108a_custom;
-extern ATCAIfaceCfg g_cfg_atecc508a_custom;
-extern ATCAIfaceCfg g_cfg_atecc608a_custom;
-#endif
 
 #endif /* CMD-PROCESSOR_H_ */

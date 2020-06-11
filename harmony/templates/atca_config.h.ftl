@@ -5,10 +5,28 @@
 /* MPLAB Harmony Common Include */
 #include "definitions.h"
 
-/* Enable HAL I2C */
+<#assign pliblist = CAL_PLIB_LIST?word_list>
+<#if pliblist?size != 0>
+<#list pliblist as plib_id>
+<#assign plib_info = plib_id?split("_")>
+<#if plib_info?size == 1 || plib_info[1] == "i2c">
+<#assign atca_hal_i2c = true>
+<#elseif plib_info[1] == "spi">
+<#assign atca_hal_spi = true>
+</#if>
+</#list>
+</#if>
+
+<#if atca_hal_i2c??>
 #ifndef ATCA_HAL_I2C
 #define ATCA_HAL_I2C
 #endif
+</#if>
+<#if atca_hal_spi??>
+#ifndef ATCA_HAL_SPI
+#define ATCA_HAL_SPI
+#endif
+</#if>
 
 <#assign devices = CAL_DEVICE_LIST?word_list>
 <#if devices?size != 0>
@@ -74,6 +92,8 @@
 <#assign pliblist = CAL_PLIB_LIST?word_list>
 <#if pliblist?size != 0>
 <#assign size_var = "size_t">
+
+<#if atca_hal_i2c??>
 <#if pliblist[0]?contains("sercom")>
 #define PLIB_I2C_ERROR          SERCOM_I2C_ERROR
 #define PLIB_I2C_ERROR_NONE     SERCOM_I2C_ERROR_NONE
@@ -106,11 +126,50 @@ typedef struct atca_plib_api
     atca_i2c_plib_is_busy           is_busy;
     atca_i2c_error_get              error_get;
     atca_i2c_plib_transfer_setup    transfer_setup;
-} atca_plib_api_t;
+} atca_plib_i2c_api_t;
+</#if>
+<#if atca_hal_spi??>
+typedef bool (* atca_spi_plib_read)( void * , size_t );
+typedef bool (* atca_spi_plib_write)( void *, size_t );
+typedef bool (* atca_spi_plib_is_busy)( void );
+typedef void (* atca_spi_plib_select)(uint32_t pin, bool value);
+
+typedef struct atca_plib_spi_api
+{
+    atca_spi_plib_read              read;
+    atca_spi_plib_write             write;
+    atca_spi_plib_is_busy           is_busy;
+    atca_spi_plib_select            select;
+} atca_plib_spi_api_t;
+</#if>
 
 <#list pliblist as plib_id>
-extern atca_plib_api_t ${plib_id}_plib_api;
+<#assign plib_info = plib_id?split("_")>
+extern atca_plib_${plib_info[1]!"i2c"}_api_t ${plib_info[0]}_plib_${plib_info[1]!"i2c"}_api;
 </#list>
 </#if>
+
+<#if cryptoauthlib_tng??>
+/** Define certificate templates to be supported. */
+<#if cryptoauthlib_tng.CAL_TNGTLS_SUPPORT>
+#define ATCA_TNGTLS_SUPPORT
+</#if>
+<#if cryptoauthlib_tng.CAL_TNGLORA_SUPPORT>
+#define ATCA_TNGLORA_SUPPORT
+</#if>
+<#if cryptoauthlib_tng.CAL_TFLEX_SUPPORT>
+#define ATCA_TFLEX_SUPPORT
+</#if>
+<#if cryptoauthlib_tng.CAL_TNG_LEGACY_SUPPORT>
+#define ATCA_TNG_LEGACY_SUPPORT
+</#if>
+</#if>
+
+<#if CAL_ENABLE_WOLFCRYPTO>
+/** Define Software Crypto Library to Use - if none are defined use the
+    cryptoauthlib version where applicable */
+#define ATCA_WOLFSSL
+</#if>
+
 
 #endif // ATCA_CONFIG_H

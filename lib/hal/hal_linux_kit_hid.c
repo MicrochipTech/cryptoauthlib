@@ -47,7 +47,7 @@ atcahid_t _gHid;
 /** \brief discover hid buses available for this hardware
  * this maintains a list of logical to physical bus mappings freeing the application
  * of the a-priori knowledge.This function is currently not implemented.
- * \param[in] cdc_buses - an array of logical bus numbers
+ * \param[in] hid_buses - an array of logical bus numbers
  * \param[in] max_buses - maximum number of buses the app wants to attempt to discover
  * \return ATCA_UNIMPLEMENTED
  */
@@ -234,7 +234,8 @@ ATCA_STATUS hal_kit_hid_post_init(ATCAIface iface)
         status = kit_init(iface);
         if (status != ATCA_SUCCESS)
         {
-            BREAK(status, "kit_init() Failed");
+            ATCA_TRACE(status, "kit_init() Failed");
+            break;
         }
     }
 
@@ -281,7 +282,7 @@ ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength)
 /** \brief HAL implementation of kit protocol receive.This function is called by the top layer.
  * \param[in]    iface   instance
  * \param[out]   rxdata  pointer to space to receive the data
- * \param[inout] rxsize  ptr to expected number of receive bytes to request
+ * \param[in,out] rxsize  ptr to expected number of receive bytes to request
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxsize)
@@ -346,22 +347,22 @@ ATCA_STATUS kit_phy_num_found(int8_t* num_found)
  *  \param[in] txlength  number of bytes to send
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS hal_kit_hid_send(ATCAIface iface, uint8_t* txdata, int txlength)
+ATCA_STATUS hal_kit_hid_send(ATCAIface iface, uint8_t word_address, uint8_t* txdata, int txlength)
 {
     // Call the kit_send() function that will call phy_send() implemented below
-    return kit_send(iface, txdata, txlength);
+    return kit_send(iface, word_address, txdata, txlength);
 }
 
 /** \brief HAL implementation of send over USB HID
  * \param[in]    iface   instance
  * \param[in]    rxdata  pointer to space to receive the data
- * \param[inout] rxsize  ptr to expected number of receive bytes to request
+ * \param[in,out] rxsize  ptr to expected number of receive bytes to request
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS hal_kit_hid_receive(ATCAIface iface, uint8_t* rxdata, uint16_t* rxsize)
+ATCA_STATUS hal_kit_hid_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, uint16_t* rxsize)
 {
     // Call the kit_receive() function that will call phy_receive() implemented below
-    return kit_receive(iface, rxdata, rxsize);
+    return kit_receive(iface, word_address, rxdata, rxsize);
 }
 
 /** \brief Call the wake for kit protocol over USB HID

@@ -26,6 +26,31 @@ import os
 fileSymbolName = "CAL_FILE_SRC_TNG_"
 numFileCntr = 0
 
+_tng_type_tracker = {}
+
+
+def updateTracker(id, src):
+    global _tng_type_tracker
+    _tng_type_tracker[src] = id
+
+    values = set(_tng_type_tracker.values())
+
+    tngtls = Database.getComponentByID('cryptoauthlib_tng').getSymbolByID('CAL_TNGTLS_SUPPORT')
+    tngtls.setValue('TNGTLS' in values)
+
+    tnglora = Database.getComponentByID('cryptoauthlib_tng').getSymbolByID('CAL_TNGLORA_SUPPORT')
+    tnglora.setValue('TNGLORA' in values)
+
+    trustflex = Database.getComponentByID('cryptoauthlib_tng').getSymbolByID('CAL_TFLEX_SUPPORT')
+    trustflex.setValue('TFLEX' in values)
+
+
+def handleMessage(messageID, args):
+    if (messageID == 'UPDATE_TNG_TYPE'):
+        if isinstance(args, dict):
+            updateTracker(**args)
+
+    return {}
 
 def AddFile(component, src_path, dest_path, proj_path, file_type = "SOURCE", isMarkup = False):
     global fileSymbolName
@@ -35,6 +60,7 @@ def AddFile(component, src_path, dest_path, proj_path, file_type = "SOURCE", isM
     srcFile.setDestPath(dest_path)
     srcFile.setProjectPath(proj_path)
     srcFile.setType(file_type)
+    srcFile.setOutputName(os.path.basename(src_path))
     srcFile.setMarkup(isMarkup)
     numFileCntr += 1
 
@@ -53,6 +79,7 @@ def AddFilesDir(component, configName, dirPath):
                 AddFile(component, source_path , destination_path, project_path, "HEADER")
 
 
+
 def onAttachmentConnected(source, target):
     pass
 
@@ -67,5 +94,20 @@ def instantiateComponent(tngComponent):
 
     AddFilesDir(tngComponent, configName, 'app/tng')
 
+    # List of Certificates that will be included based on device connections
+    tngtls = tngComponent.createBooleanSymbol("CAL_TNGTLS_SUPPORT", None)
+    tngtls.setLabel("TNGTLS Certificates?")
+    tngtls.setVisible(True)
 
+    tnglora = tngComponent.createBooleanSymbol("CAL_TNGLORA_SUPPORT", None)
+    tnglora.setLabel("TNGLORA Certificates?")
+    tnglora.setVisible(True)
+
+    trustflex = tngComponent.createBooleanSymbol("CAL_TFLEX_SUPPORT", None)
+    trustflex.setLabel("Trust Flex Certificates?")
+    trustflex.setVisible(True)
+
+    trustlegacy = tngComponent.createBooleanSymbol("CAL_TNG_LEGACY_SUPPORT", None)
+    trustlegacy.setLabel("Legacy Trust Certificates?")
+    trustlegacy.setVisible(True)
 

@@ -25,11 +25,11 @@
  * THIS SOFTWARE.
  */
 
-
+#include "atca_test.h"
+#ifndef DO_NOT_TEST_CERT
 
 #include "atcacert/atcacert_date.h"
-#include "test/unity.h"
-#include "test/unity_fixture.h"
+
 #include <string.h>
 
 #undef min
@@ -2032,3 +2032,4 @@ TEST(atcacert_date_dec, bad_params)
     ret = atcacert_date_dec(DATEFMT_RFC5280_GEN, NULL, ts_str_size, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
+#endif

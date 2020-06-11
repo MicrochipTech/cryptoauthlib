@@ -40,12 +40,7 @@
  *
    @{ */
 
-#define ATCA_SHA1_DIGEST_SIZE (20)
 
-typedef struct
-{
-    uint32_t pad[32]; //!< Filler value to make sure the actual implementation has enough room to store its context. uint32_t is used to remove some alignment warnings.
-} atcac_sha1_ctx;
 
 #ifdef __cplusplus
 extern "C" {

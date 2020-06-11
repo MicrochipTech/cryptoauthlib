@@ -28,9 +28,9 @@
 #ifndef ATCA_CRYPTO_TESTS_H_
 #define ATCA_CRYPTO_TESTS_H_
 
-#include "unity.h"
+#include "third_party/unity/unity.h"
 
-int atca_crypto_sw_tests(void);
+int atca_crypto_sw_tests(int argc, char* argv[]);
 
 void test_atcac_sw_sha1_nist1(void);
 void test_atcac_sw_sha1_nist2(void);
@@ -45,5 +45,9 @@ void test_atcac_sw_sha2_256_nist_short(void);
 void test_atcac_sw_sha2_256_nist_long(void);
 void test_atcac_sw_sha2_256_nist_monte(void);
 
+void test_atcac_aes128_gcm(void);
+void test_atcac_aes128_cmac(void);
+void test_atcac_sha256_hmac(void);
+void test_atcac_sha256_hmac_nist(void);
 
 #endif

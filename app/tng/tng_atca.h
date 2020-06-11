@@ -28,7 +28,7 @@
 #ifndef TNG_ATCA_H
 #define TNG_ATCA_H
 
-#include "basic/atca_basic.h"
+#include "atca_basic.h"
 #include "atcacert/atcacert_def.h"
 
 #ifdef __cplusplus
@@ -43,23 +43,13 @@ extern "C" {
  *
    @{ */
 
-#define TNGTLS_PRIMARY_KEY_SLOT 0
-#define TNGLORA_PRIMARY_KEY_SLOT 1
-
-typedef enum
-{
-    TNGTYPE_UNKNOWN,
-    TNGTYPE_TLS,
-    TNGTYPE_LORA
-} tng_type_t;
-
-/** \brief Get the type of TNG device.
+/** \brief Helper function to iterate through all trust cert definitions
  *
- * \param[out] type  TNG device type is returned here.
+ * \param[in] index Map index
  *
- * \return ATCA_SUCCESS on success, otherwise an error code.
+ * \return non-null value if success, otherwise NULL
  */
-ATCA_STATUS tng_get_type(tng_type_t* type);
+const atcacert_def_t* tng_map_get_device_cert_def(int index);
 
 /** \brief Get the TNG device certificate definition.
  *

@@ -1,3 +1,6 @@
+#include "atca_test.h"
+#ifndef DO_NOT_TEST_CERT
+
 #include "atcacert/atcacert_def.h"
 
 const uint8_t g_test_cert_template_0_device[] = {
@@ -101,3 +104,4 @@ const atcacert_def_t g_test_cert_def_0_device = {
     .cert_template              = g_test_cert_template_0_device,
     .cert_template_size         = sizeof(g_test_cert_template_0_device),
 };
+#endif

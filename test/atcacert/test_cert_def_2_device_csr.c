@@ -1,3 +1,5 @@
+#include "atca_test.h"
+#ifndef DO_NOT_TEST_CERT
 
 #include "atcacert/atcacert_def.h"
 
@@ -93,4 +95,4 @@ const atcacert_def_t g_csr_def_2_device = {
     .cert_template          = g_csr_template_2_device,
     .cert_template_size     = sizeof(g_csr_template_2_device)
 };
-
+#endif

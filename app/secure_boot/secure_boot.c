@@ -133,7 +133,7 @@ ATCA_STATUS secure_boot_process(void)
 }
 
 /** \brief Verifies configuration as well as memory initialization.
- *  \param[inout] secure_boot_params  Secure boot parameters
+ *  \param[in,out] secure_boot_params  Secure boot parameters
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 static ATCA_STATUS secure_boot_init(secure_boot_parameters* secure_boot_params)
@@ -168,7 +168,7 @@ static ATCA_STATUS secure_boot_init(secure_boot_parameters* secure_boot_params)
 }
 /** \brief Calculates the application digest using software SHA256
  *         implementation.
- *  \param[inout] secure_boot_params  Secure boot parameters
+ *  \param[in,out] secure_boot_params  Secure boot parameters
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 static ATCA_STATUS secure_boot_calc_app_digest(secure_boot_parameters* secure_boot_params)

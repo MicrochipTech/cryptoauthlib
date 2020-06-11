@@ -26,7 +26,7 @@
  */
 
 #include "atcacert_host_hw.h"
-#include "basic/atca_basic.h"
+#include "atca_basic.h"
 #include "crypto/atca_crypto_sw_sha2.h"
 
 

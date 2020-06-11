@@ -64,6 +64,19 @@ const uint8_t g_tngtls_cert_template_1_signer[TNGTLS_CERT_TEMPLATE_1_SIGNER_SIZE
     0xbf, 0x3b, 0x22, 0x78, 0x8e, 0x75, 0x41, 0x86
 };
 
+const atcacert_cert_element_t g_tngtls_cert_elements_1_signer[] = {
+    {
+        .id = "subject",
+        .device_loc ={
+            .zone      = DEVZONE_NONE,
+        },
+        .cert_loc ={
+            .offset = 158,
+            .count  = 81
+        }
+    }
+};
+
 const atcacert_def_t g_tngtls_cert_def_1_signer = {
     .type                = CERTTYPE_X509,
     .template_id         = 1,
@@ -132,8 +145,8 @@ const atcacert_def_t g_tngtls_cert_def_1_signer = {
             .count       = 20
         }
     },
-    .cert_elements       = NULL,
-    .cert_elements_count = 0,
+    .cert_elements       = g_tngtls_cert_elements_1_signer,
+    .cert_elements_count = 1,
     .cert_template       = g_tngtls_cert_template_1_signer,
     .cert_template_size  = sizeof(g_tngtls_cert_template_1_signer),
     .ca_cert_def         = NULL

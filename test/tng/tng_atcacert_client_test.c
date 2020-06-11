@@ -23,8 +23,9 @@
  * THIS SOFTWARE.
  */
 
-#include "test/unity_fixture.h"
-#include "test/atca_test.h"
+#include "third_party/unity/unity_fixture.h"
+#include "atca_test.h"
+#include "app/tng/tng_atca.h"
 #include "app/tng/tng_atcacert_client.h"
 #include "app/tng/tngtls_cert_def_1_signer.h"
 #include "app/tng/tngtls_cert_def_2_device.h"
@@ -43,7 +44,7 @@ TEST_TEAR_DOWN(tng_atcacert_client)
 TEST(tng_atcacert_client, tng_atcacert_root_public_key)
 {
     int ret;
-    uint8_t public_key[ATCA_PUB_KEY_SIZE];
+    uint8_t public_key[ATCA_ECCP256_PUBKEY_SIZE];
     size_t i;
     bool is_all_zero;
 
@@ -109,9 +110,9 @@ TEST(tng_atcacert_client, tng_atcacert_read_signer_cert)
     int ret;
     uint8_t cert[1024];
     size_t cert_size = 0;
-    uint8_t ca_public_key[ATCA_PUB_KEY_SIZE];
+    uint8_t ca_public_key[ATCA_ECCP256_PUBKEY_SIZE];
     uint8_t tbs_digest[ATCA_SHA2_256_DIGEST_SIZE];
-    uint8_t signature[ATCA_SIG_SIZE];
+    uint8_t signature[ATCA_ECCP256_SIG_SIZE];
     bool is_verified = false;
 
     ret = tng_atcacert_max_signer_cert_size(&cert_size);
@@ -151,8 +152,8 @@ TEST(tng_atcacert_client, tng_atcacert_signer_public_key_no_cert)
     int ret;
     uint8_t cert[1024];
     size_t cert_size = 0;
-    uint8_t public_key[ATCA_PUB_KEY_SIZE];
-    uint8_t cert_public_key[ATCA_PUB_KEY_SIZE];
+    uint8_t public_key[ATCA_ECCP256_PUBKEY_SIZE];
+    uint8_t cert_public_key[ATCA_ECCP256_PUBKEY_SIZE];
 
     ret = tng_atcacert_max_signer_cert_size(&cert_size);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
@@ -180,8 +181,8 @@ TEST(tng_atcacert_client, tng_atcacert_signer_public_key_cert)
     int ret;
     uint8_t cert[1024];
     size_t cert_size = 0;
-    uint8_t public_key[ATCA_PUB_KEY_SIZE];
-    uint8_t cert_public_key[ATCA_PUB_KEY_SIZE];
+    uint8_t public_key[ATCA_ECCP256_PUBKEY_SIZE];
+    uint8_t cert_public_key[ATCA_ECCP256_PUBKEY_SIZE];
 
     ret = tng_atcacert_max_signer_cert_size(&cert_size);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
@@ -219,9 +220,10 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_no_signer)
     int ret;
     uint8_t cert[1024];
     size_t cert_size = 0;
-    uint8_t ca_public_key[ATCA_PUB_KEY_SIZE];
+    const atcacert_def_t* cert_def = NULL;
+    uint8_t ca_public_key[ATCA_ECCP256_PUBKEY_SIZE];
     uint8_t tbs_digest[ATCA_SHA2_256_DIGEST_SIZE];
-    uint8_t signature[ATCA_SIG_SIZE];
+    uint8_t signature[ATCA_ECCP256_SIG_SIZE];
     bool is_verified = false;
 
     ret = tng_atcacert_max_device_cert_size(&cert_size);
@@ -234,18 +236,18 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_no_signer)
     ret = tng_atcacert_signer_public_key(ca_public_key, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
-    // TNG 22 cert def will work for both 22 and TG here as the certificate is
-    // the same once reconstructed
+    ret = (int)tng_get_device_cert_def(&cert_def);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     ret = atcacert_get_tbs_digest(
-        &g_tngtls_cert_def_2_device,
+        cert_def,
         cert,
         cert_size,
         tbs_digest);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
     ret = atcacert_get_signature(
-        &g_tngtls_cert_def_2_device,
+        cert_def,
         cert,
         cert_size,
         signature);
@@ -263,9 +265,10 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_signer)
     size_t signer_cert_size = 0;
     uint8_t cert[1024];
     size_t cert_size = 0;
-    uint8_t ca_public_key[ATCA_PUB_KEY_SIZE];
+    const atcacert_def_t* cert_def = NULL;
+    uint8_t ca_public_key[ATCA_ECCP256_PUBKEY_SIZE];
     uint8_t tbs_digest[ATCA_SHA2_256_DIGEST_SIZE];
-    uint8_t signature[ATCA_SIG_SIZE];
+    uint8_t signature[ATCA_ECCP256_SIG_SIZE];
     bool is_verified = false;
 
     ret = tng_atcacert_max_signer_cert_size(&signer_cert_size);
@@ -285,18 +288,18 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_signer)
     ret = tng_atcacert_signer_public_key(ca_public_key, signer_cert);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
-    // TNG 22 cert def will work for both 22 and TG here as the certificate is
-    // the same once reconstructed
+    ret = (int)tng_get_device_cert_def(&cert_def);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     ret = atcacert_get_tbs_digest(
-        &g_tngtls_cert_def_2_device,
+        cert_def,
         cert,
         cert_size,
         tbs_digest);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
     ret = atcacert_get_signature(
-        &g_tngtls_cert_def_2_device,
+        cert_def,
         cert,
         cert_size,
         signature);
@@ -312,8 +315,9 @@ TEST(tng_atcacert_client, tng_atcacert_device_public_key_no_cert)
     int ret;
     uint8_t cert[1024];
     size_t cert_size = 0;
-    uint8_t public_key[ATCA_PUB_KEY_SIZE];
-    uint8_t cert_public_key[ATCA_PUB_KEY_SIZE];
+    const atcacert_def_t* cert_def = NULL;
+    uint8_t public_key[ATCA_ECCP256_PUBKEY_SIZE];
+    uint8_t cert_public_key[ATCA_ECCP256_PUBKEY_SIZE];
 
     ret = tng_atcacert_max_device_cert_size(&cert_size);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
@@ -321,10 +325,11 @@ TEST(tng_atcacert_client, tng_atcacert_device_public_key_no_cert)
     ret = tng_atcacert_read_device_cert(cert, &cert_size, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
-    // TNG 22 cert def will work for both 22 and TG here as the certificate is
-    // the same once reconstructed
+    ret = (int)tng_get_device_cert_def(&cert_def);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
     ret = atcacert_get_subj_public_key(
-        &g_tngtls_cert_def_2_device,
+        cert_def,
         cert,
         cert_size,
         cert_public_key);
@@ -340,8 +345,9 @@ TEST(tng_atcacert_client, tng_atcacert_device_public_key_cert)
     int ret;
     uint8_t cert[1024];
     size_t cert_size = 0;
-    uint8_t public_key[ATCA_PUB_KEY_SIZE];
-    uint8_t cert_public_key[ATCA_PUB_KEY_SIZE];
+    const atcacert_def_t* cert_def = NULL;
+    uint8_t public_key[ATCA_ECCP256_PUBKEY_SIZE];
+    uint8_t cert_public_key[ATCA_ECCP256_PUBKEY_SIZE];
 
     ret = tng_atcacert_max_device_cert_size(&cert_size);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
@@ -349,10 +355,11 @@ TEST(tng_atcacert_client, tng_atcacert_device_public_key_cert)
     ret = tng_atcacert_read_device_cert(cert, &cert_size, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
-    // TNG 22 cert def will work for both 22 and TG here as the certificate is
-    // the same once reconstructed
+    ret = (int)tng_get_device_cert_def(&cert_def);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
     ret = atcacert_get_subj_public_key(
-        &g_tngtls_cert_def_2_device,
+        cert_def,
         cert,
         cert_size,
         cert_public_key);

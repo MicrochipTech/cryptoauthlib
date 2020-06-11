@@ -24,15 +24,15 @@
  * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
  * THIS SOFTWARE.
  */
-
+#include "atca_test.h"
+#ifndef DO_NOT_TEST_CERT
 
 #include "atcacert/atcacert_client.h"
 #include "atcacert/atcacert_pem.h"
-#include "test/unity.h"
-#include "test/unity_fixture.h"
+#include "third_party/unity/unity.h"
+#include "third_party/unity/unity_fixture.h"
 #include <string.h>
-#include "cryptoauthlib.h"
-#include "basic/atca_basic.h"
+#include "atca_basic.h"
 #include "crypto/atca_crypto_sw_sha2.h"
 #include "test_cert_def_0_device.h"
 #include "test_cert_def_1_signer.h"
@@ -159,14 +159,14 @@ TEST_SETUP(atcacert_client)
     ret = atcab_init(gCfg);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
-    ret = atcab_is_locked(LOCK_ZONE_CONFIG, &lockstate);
+    ret = atcab_is_config_locked(&lockstate);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     if (!lockstate)
     {
         TEST_IGNORE_MESSAGE("Config zone must be locked for this test.");
     }
 
-    ret = atcab_is_locked(LOCK_ZONE_DATA, &lockstate);
+    ret = atcab_is_data_locked(&lockstate);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     if (!lockstate)
     {
@@ -223,21 +223,21 @@ TEST(atcacert_client, init)
     ret = atcab_genkey(signer_ca_private_key_slot, g_signer_ca_public_key);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     disp_size = sizeof(disp_str);
-    ret = atcab_bin2hex(g_signer_ca_public_key, ATCA_PUB_KEY_SIZE, disp_str, &disp_size);
+    ret = atcab_bin2hex(g_signer_ca_public_key, ATCA_ECCP256_PUBKEY_SIZE, disp_str, &disp_size);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     printf("Signer CA Public Key:\r\n%s\r\n", disp_str);
 
     ret = atcab_genkey(signer_private_key_slot, g_signer_public_key);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     disp_size = sizeof(disp_str);
-    ret = atcab_bin2hex(g_signer_public_key, ATCA_PUB_KEY_SIZE, disp_str, &disp_size);
+    ret = atcab_bin2hex(g_signer_public_key, ATCA_ECCP256_PUBKEY_SIZE, disp_str, &disp_size);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     printf("Signer Public Key:\r\n%s\r\n", disp_str);
 
     ret = atcab_genkey(device_private_key_slot, g_device_public_key);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     disp_size = sizeof(disp_str);
-    ret = atcab_bin2hex(g_device_public_key, ATCA_PUB_KEY_SIZE, disp_str, &disp_size);
+    ret = atcab_bin2hex(g_device_public_key, ATCA_ECCP256_PUBKEY_SIZE, disp_str, &disp_size);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     printf("Device Public Key:\r\n%s\r\n", disp_str);
 
@@ -278,7 +278,7 @@ TEST(atcacert_client, init)
 TEST(atcacert_client, atcacert_read_device_loc_gen_key)
 {
     int ret;
-    uint8_t public_key[ATCA_PUB_KEY_SIZE];
+    uint8_t public_key[ATCA_ECCP256_PUBKEY_SIZE];
     uint8_t data[sizeof(public_key)];
     atcacert_device_loc_t device_loc = { DEVZONE_DATA, 0, TRUE, 0, 64 };
 
@@ -293,7 +293,7 @@ TEST(atcacert_client, atcacert_read_device_loc_gen_key)
 TEST(atcacert_client, atcacert_read_device_loc_gen_key_partial)
 {
     int ret;
-    uint8_t public_key[ATCA_PUB_KEY_SIZE];
+    uint8_t public_key[ATCA_ECCP256_PUBKEY_SIZE];
     uint8_t data[sizeof(public_key)];
     atcacert_device_loc_t device_loc = { DEVZONE_DATA, 0, TRUE, 5, 55 };
 
@@ -344,13 +344,46 @@ TEST(atcacert_client, atcacert_read_cert_device)
     TEST_ASSERT_EQUAL_MEMORY(g_device_cert_ref, cert, cert_size);
 }
 
+TEST(atcacert_client, atcacert_read_subj_key_id)
+{
+    int ret = 0;
+    uint8_t cert[512];
+    size_t cert_size = sizeof(cert);
+    uint8_t key_id_ref[20];
+    uint8_t key_id[20];
+
+    ret = atcacert_read_cert(&g_test_cert_def_1_signer, g_signer_ca_public_key, cert, &cert_size);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL(g_signer_cert_ref_size, cert_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_signer_cert_ref, cert, cert_size);
+
+    ret = atcacert_get_subj_key_id(&g_test_cert_def_1_signer, cert, cert_size, key_id_ref);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    ret = atcacert_read_subj_key_id(&g_test_cert_def_1_signer, key_id);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL_MEMORY(key_id_ref, key_id, sizeof(key_id));
+}
+
 TEST(atcacert_client, atcacert_read_cert_small_buf)
 {
     int ret = 0;
-    uint8_t cert[64];
+    uint8_t cert[512];
     size_t cert_size = sizeof(cert);
 
-    ret = atcacert_read_cert(&g_test_cert_def_1_signer, g_signer_ca_public_key, cert, &cert_size);
+    // Getting the actual buffer size needed for the certificate
+    ret = atcacert_read_cert(&g_test_cert_def_0_device, g_signer_public_key, NULL, &cert_size);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    // Read the device certificate
+    ret = atcacert_read_cert(&g_test_cert_def_0_device, g_signer_public_key, cert, &cert_size);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL(g_device_cert_ref_size, cert_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_device_cert_ref, cert, cert_size);
+
+    // Decrease the size of the buffer needed for device certificate
+    cert_size -= 1;
+    ret = atcacert_read_cert(&g_test_cert_def_0_device, g_signer_public_key, cert, &cert_size);
     TEST_ASSERT_EQUAL(ATCACERT_E_BUFFER_TOO_SMALL, ret);
 }
 
@@ -366,13 +399,7 @@ TEST(atcacert_client, atcacert_read_cert_bad_params)
     ret = atcacert_read_cert(NULL, NULL, cert, &cert_size);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_read_cert(&g_test_cert_def_0_device, g_signer_public_key, NULL, &cert_size);
-    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
-
     ret = atcacert_read_cert(NULL, g_signer_public_key, NULL, &cert_size);
-    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
-
-    ret = atcacert_read_cert(&g_test_cert_def_0_device, NULL, NULL, &cert_size);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
     ret = atcacert_read_cert(NULL, NULL, NULL, &cert_size);
@@ -474,7 +501,7 @@ TEST(atcacert_client, atcacert_generate_device_csr)
     uint8_t pub_key[64];
     size_t csr_der_buffer_length = 0;
     bool is_verified = false;
-    uint8_t csr_digest[ATCA_BLOCK_SIZE];
+    uint8_t csr_digest[ATCA_SHA256_DIGEST_SIZE];
     char disp_str[1024];
     size_t disp_size = sizeof(disp_str);
     const atcacert_cert_loc_t* pub_loc = NULL;
@@ -493,7 +520,7 @@ TEST(atcacert_client, atcacert_generate_device_csr)
 
     // Get the public key from CSR
     pub_loc =  &(g_csr_def_2_device.std_cert_elements[STDCERT_PUBLIC_KEY]);
-    ret = atcacert_get_cert_element(&g_csr_def_2_device, pub_loc, csr_der_buffer, csr_der_buffer_length, pub_key, ATCA_PUB_KEY_SIZE);
+    ret = atcacert_get_cert_element(&g_csr_def_2_device, pub_loc, csr_der_buffer, csr_der_buffer_length, pub_key, ATCA_ECCP256_PUBKEY_SIZE);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     // Get the digest of the CSR
@@ -519,7 +546,7 @@ TEST(atcacert_client, atcacert_generate_device_csr_pem)
     size_t csr_der_buffer_length = 0;
     size_t csr_pem_buffer_length = 0;
     bool is_verified = false;
-    uint8_t csr_digest[ATCA_BLOCK_SIZE] = { 0 };
+    uint8_t csr_digest[ATCA_SHA256_DIGEST_SIZE] = { 0 };
     const atcacert_cert_loc_t* pub_loc = NULL;
     int ret = 0;
 
@@ -540,7 +567,7 @@ TEST(atcacert_client, atcacert_generate_device_csr_pem)
 
     // Get the public key from CSR
     pub_loc =  &(g_csr_def_2_device.std_cert_elements[STDCERT_PUBLIC_KEY]);
-    ret = atcacert_get_cert_element(&g_csr_def_2_device, pub_loc, csr_der_buffer, csr_der_buffer_length, pub_key, ATCA_PUB_KEY_SIZE);
+    ret = atcacert_get_cert_element(&g_csr_def_2_device, pub_loc, csr_der_buffer, csr_der_buffer_length, pub_key, ATCA_ECCP256_PUBKEY_SIZE);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     // Get the digest of the CSR
@@ -555,3 +582,4 @@ TEST(atcacert_client, atcacert_generate_device_csr_pem)
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT(is_verified);
 }
+#endif

@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "swi_uart_samd21_asf.h"
-#include "basic/atca_helpers.h"
+#include "atca_helpers.h"
 
 /** \defgroup hal_ Hardware abstraction layer (hal_)
  *

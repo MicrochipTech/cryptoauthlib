@@ -41,8 +41,8 @@
  *
    @{ */
 
-// The number of bytes to wrap a command in kit protocol.  sizeof("s:t()\n<null>")
-#define KIT_TX_WRAP_SIZE    (7)
+// The number of bytes to wrap a command in kit protocol.  sizeof("d:send()\n<null>")
+#define KIT_TX_WRAP_SIZE    (10)
 
 // The number of bytes to wrap a response in kit protocol.  sizeof("<KIT_MSG_SIZE>00()\n<null>")
 #define KIT_MSG_SIZE        (32)
@@ -54,8 +54,8 @@ extern "C" {
 
 ATCA_STATUS kit_init(ATCAIface iface);
 
-ATCA_STATUS kit_send(ATCAIface iface, const uint8_t* txdata, int txlength);
-ATCA_STATUS kit_receive(ATCAIface iface, uint8_t* rxdata, uint16_t* rxsize);
+ATCA_STATUS kit_send(ATCAIface iface, uint8_t word_address, uint8_t* txdata, int txlength);
+ATCA_STATUS kit_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, uint16_t* rxsize);
 
 ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlength, char* pkitbuf, int* nkitbuf, char target);
 ATCA_STATUS kit_parse_rsp(const char* pkitbuf, int nkitbuf, uint8_t* kitstatus, uint8_t* rxdata, int* nrxdata);

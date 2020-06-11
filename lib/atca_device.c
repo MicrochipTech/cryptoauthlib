@@ -25,9 +25,7 @@
  * THIS SOFTWARE.
  */
 
-#include <stdlib.h>
-#include "atca_device.h"
-#include "atca_config.h"
+#include <cryptoauthlib.h>
 
 /** \defgroup device ATCADevice (atca_)
  * \brief ATCADevice object - composite of command and interface objects
@@ -54,6 +52,8 @@ ATCADevice newATCADevice(ATCAIfaceCfg *cfg)
     {
         return NULL;
     }
+
+    memset(ca_dev, 0, sizeof(struct atca_device));
 
     ca_dev->mCommands = (ATCACommand)malloc(sizeof(*(ca_dev->mCommands)));
     if (ca_dev->mCommands == NULL)
@@ -111,7 +111,7 @@ void deleteATCADevice(ATCADevice *ca_dev)
 
 /** \brief Initializer for an Microchip CryptoAuth device
  * \param[in]    cfg     pointer to an interface configuration object
- * \param[inout] ca_dev  As input, pre-allocated structure to be initialized.
+ * \param[in,out] ca_dev  As input, pre-allocated structure to be initialized.
  *                       mCommands and mIface members should point to existing
  *                       structures to be initialized.
  * \return ATCA_SUCCESS on success, otherwise an error code.

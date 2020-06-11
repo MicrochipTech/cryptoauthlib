@@ -25,6 +25,8 @@
  * THIS SOFTWARE.
  */
 
+#include <cryptoauthlib.h>
+
 #include <linux/i2c-dev.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
@@ -136,25 +138,24 @@ ATCA_STATUS hal_i2c_post_init(ATCAIface iface)
 }
 
 /** \brief HAL implementation of I2C send
- * \param[in] iface     instance
- * \param[in] txdata    pointer to space to bytes to send
- * \param[in] txlength  number of bytes to send
+ * \param[in] iface         instance
+ * \param[in] word_address  device transaction type
+ * \param[in] txdata        pointer to space to bytes to send
+ * \param[in] txlength      number of bytes to send
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
-ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t *txdata, int txlength)
+ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength)
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
     ATCAI2CMaster_t * hal_data = (ATCAI2CMaster_t*)atgetifacehaldat(iface);
     int f_i2c;  // I2C file descriptor
 
-    // for this implementation of I2C with CryptoAuth chips, txdata is assumed to have ATCAPacket format
-
-    // other device types that don't require i/o tokens on the front end of a command need a different hal_i2c_send and wire it up instead of this one
-    // this covers devices such as ATSHA204A and ATECCx08A that require a word address value pre-pended to the packet
-    // txdata[0] is using _reserved byte of the ATCAPacket
-    txdata[0] = 0x03; // insert the Word Address Value, Command token
-    txlength++;       // account for word address value byte.
+    if (0xFF != word_address)
+    {
+        txdata[0] = word_address;   // insert the Word Address Value, Command token
+        txlength++;                 // account for word address value byte.
+    }
 
     // Initiate I2C communication
     if ( (f_i2c = open(hal_data->i2c_file, O_RDWR)) < 0)
@@ -181,18 +182,20 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t *txdata, int txlength)
 }
 
 /** \brief HAL implementation of I2C receive function
- * \param[in]    iface     Device to interact with.
- * \param[out]   rxdata    Data received will be returned here.
- * \param[inout] rxlength  As input, the size of the rxdata buffer.
- *                         As output, the number of bytes received.
+ * \param[in]    iface          Device to interact with.
+ * \param[in]    word_address   device transaction type
+ * \param[out]   rxdata         Data received will be returned here.
+ * \param[in,out] rxlength      As input, the size of the rxdata buffer.
+ *                              As output, the number of bytes received.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t *rxdata, uint16_t *rxlength)
+ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
     ATCAI2CMaster_t * hal_data = (ATCAI2CMaster_t*)atgetifacehaldat(iface);
     int f_i2c;  // I2C file descriptor
-    uint16_t count;
+    uint16_t read_length = 2;
+    uint8_t min_resp_size = 4;
     uint16_t rxdata_max_size = *rxlength;
 
     *rxlength = 0;
@@ -214,32 +217,66 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t *rxdata, uint16_t *rxlength
         return ATCA_COMM_FAIL;
     }
 
-    // Receive count
-    count = 1;
-    if (read(f_i2c, rxdata, count) != count)
+    // Send data
+    if (write(f_i2c, &word_address, 1) != 1)
     {
         close(f_i2c);
         return ATCA_COMM_FAIL;
     }
 
-    if (rxdata[0] < ATCA_RSP_SIZE_MIN)
+#if ATCA_TA_SUPPORT
+    /*Set read length.. Check for register reads or 1 byte reads*/
+    if ((word_address == ATCA_MAIN_PROCESSOR_RD_CSR) || (word_address == ATCA_FAST_CRYPTO_RD_FSR)
+        || (rxdata_max_size == 1))
     {
-        return ATCA_INVALID_SIZE;
+        read_length = 1;
     }
-    if (rxdata[0] > rxdata_max_size)
+#endif
+
+    if (read(f_i2c, rxdata, read_length) != read_length)
     {
+        close(f_i2c);
+        return ATCA_COMM_FAIL;
+    }
+
+    if (1 == read_length)
+    {
+        close(f_i2c);
+        *rxlength = read_length;
+        return ATCA_SUCCESS;
+    }
+
+    /*Calculate bytes to read based on device response*/
+    if (cfg->devtype == TA100)
+    {
+        read_length = ((uint16_t)rxdata[0] * 256) + rxdata[1];
+        min_resp_size += 1;
+    }
+    else
+    {
+        read_length =  rxdata[0];
+    }
+
+    if (read_length > rxdata_max_size)
+    {
+        close(f_i2c);
         return ATCA_SMALL_BUFFER;
     }
 
-    count = rxdata[0] - 1;
+    if (read_length < min_resp_size)
+    {
+        close(f_i2c);
+        return ATCA_RX_FAIL;
+    }
+
     // Receive data
-    if (read(f_i2c, &rxdata[1], count) != count)
+    if (read(f_i2c, &rxdata[2], read_length - 2) != read_length - 2)
     {
         close(f_i2c);
         return ATCA_COMM_FAIL;
     }
 
-    *rxlength = rxdata[0];
+    *rxlength = read_length;
 
     close(f_i2c);
     return ATCA_SUCCESS;

@@ -23,9 +23,8 @@
  * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
  * THIS SOFTWARE.
  */
-
-#include "test/unity.h"
-#include "test/unity_fixture.h"
+#include "atca_test.h"
+#ifndef DO_NOT_TEST_CERT
 
 #ifdef __GNUC__
 // Unity macros trigger this warning
@@ -321,3 +320,4 @@ TEST_GROUP_RUNNER(atcacert_get_device_data)
 {
     RUN_TEST_CASE(atcacert_get_device_data, flow);
 }
+#endif

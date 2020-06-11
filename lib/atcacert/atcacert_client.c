@@ -30,9 +30,10 @@
 
 #include <stdlib.h>
 #include "atcacert_client.h"
+#include "atcacert_der.h"
 #include "atcacert_pem.h"
 #include "cryptoauthlib.h"
-#include "basic/atca_basic.h"
+#include "calib/calib_basic.h"
 
 // Perform floor integer division (-1 / 2 == -1) instead of truncate towards zero (-1 / 2 == 0)
 static int floor_div(int a, int b)
@@ -119,9 +120,14 @@ int atcacert_read_cert(const atcacert_def_t* cert_def,
     size_t i = 0;
     atcacert_build_state_t build_state;
 
-    if (cert_def == NULL || cert == NULL || cert_size == NULL)
+    if (cert_def == NULL || cert_size == NULL)
     {
         return ATCACERT_E_BAD_PARAMS;
+    }
+
+    if (cert == NULL)
+    {
+        return atcacert_read_cert_size(cert_def, cert_size);
     }
 
     ret = atcacert_get_device_locs(
@@ -288,13 +294,13 @@ int atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, size_t* csr
         if (csr_def == NULL || csr == NULL || csr == NULL || csr_size == NULL)
         {
             status = ATCACERT_E_BAD_PARAMS;
-            BREAK(status, "Null input parameter");
+            ATCA_TRACE(status, "Null input parameter"); break;
         }
         // Check the csr buffer size
         if (*csr_size < csr_def->cert_template_size)
         {
             status = ATCACERT_E_BUFFER_TOO_SMALL;
-            BREAK(status, "CSR buffer size too small");
+            ATCA_TRACE(status, "CSR buffer size too small"); break;
         }
         // Copy the CSR template into the CSR that will be returned
         memcpy(csr, csr_def->cert_template, csr_def->cert_template_size);
@@ -314,7 +320,7 @@ int atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, size_t* csr
             status = atcab_get_pubkey(key_slot, pub_key);
             if (status != ATCA_SUCCESS)
             {
-                BREAK(status, "Could not generate public key");
+                ATCA_TRACE(status, "Could not generate public key"); break;
             }
         }
         else
@@ -323,35 +329,35 @@ int atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, size_t* csr
             status = atcab_read_pubkey(key_slot, pub_key);
             if (status != ATCA_SUCCESS)
             {
-                BREAK(status, "Could not read public key");
+                ATCA_TRACE(status, "Could not read public key"); break;
             }
         }
         // Insert the public key into the CSR template
         status = atcacert_set_cert_element(csr_def, pub_loc, csr, *csr_size, pub_key, ATCA_PUB_KEY_SIZE);
         if (status != ATCA_SUCCESS)
         {
-            BREAK(status, "Setting CSR public key failed");
+            ATCA_TRACE(status, "Setting CSR public key failed"); break;
         }
 
         // Get the CSR TBS digest
         status = atcacert_get_tbs_digest(csr_def, csr, *csr_size, tbs_digest);
         if (status != ATCA_SUCCESS)
         {
-            BREAK(status, "Get TBS digest failed");
+            ATCA_TRACE(status, "Get TBS digest failed"); break;
         }
 
         // Sign the TBS digest
         status = atcab_sign(priv_key_slot, tbs_digest, sig);
         if (status != ATCA_SUCCESS)
         {
-            BREAK(status, "Signing CSR failed");
+            ATCA_TRACE(status, "Signing CSR failed"); break;
         }
 
         // Insert the signature into the CSR template
         status = atcacert_set_signature(csr_def, csr, csr_size, csr_max_size, sig);
         if (status != ATCA_SUCCESS)
         {
-            BREAK(status, "Setting CSR signature failed");
+            ATCA_TRACE(status, "Setting CSR signature failed"); break;
         }
 
         // The exact size of the csr cannot be determined until after adding the signature
@@ -363,4 +369,73 @@ int atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, size_t* csr
     return status;
 }
 
+int atcacert_read_subj_key_id(const atcacert_def_t* cert_def, uint8_t subj_key_id[20])
+{
+    int ret = ATCACERT_E_DECODING_ERROR;
+    uint8_t subj_public_key[72];
 
+    if (cert_def == NULL || subj_key_id == NULL)
+    {
+        return ATCACERT_E_BAD_PARAMS;
+    }
+
+    if (DEVZONE_DATA == cert_def->public_key_dev_loc.zone)
+    {
+        if (cert_def->public_key_dev_loc.is_genkey)
+        {
+            /* generate the key */
+            ret = atcab_get_pubkey(cert_def->public_key_dev_loc.slot, subj_public_key);
+        }
+        else
+        {
+            /* Load the public key from a slot */
+            ret = atcab_read_bytes_zone(cert_def->public_key_dev_loc.zone,
+                                        cert_def->public_key_dev_loc.slot,
+                                        cert_def->public_key_dev_loc.offset,
+                                        subj_public_key, cert_def->public_key_dev_loc.count);
+
+            /* IF the public key is stored in device public key format */
+            if ((ATCA_SUCCESS == ret) && (72 == cert_def->public_key_dev_loc.count))
+            {
+                atcacert_public_key_remove_padding(subj_public_key, subj_public_key);
+            }
+        }
+
+        if (ATCA_SUCCESS == ret)
+        {
+            /* Calculate the key_id */
+            ret = atcacert_get_key_id(subj_public_key, subj_key_id);
+        }
+    }
+    return ret;
+}
+
+int atcacert_read_cert_size(const atcacert_def_t* cert_def,
+                            size_t*               cert_size)
+{
+    uint8_t buffer[75];
+    size_t buflen = sizeof(buffer);
+    int ret = ATCACERT_E_SUCCESS;
+
+    if (!cert_def || !cert_size)
+    {
+        return ATCACERT_E_BAD_PARAMS;
+    }
+
+    if (ATCACERT_E_SUCCESS == ret)
+    {
+        ret = atcab_read_sig(cert_def->comp_cert_dev_loc.slot, &buffer[8]);
+    }
+
+    if (ATCACERT_E_SUCCESS == ret)
+    {
+        ret = atcacert_der_enc_ecdsa_sig_value(&buffer[8], buffer, &buflen);
+    }
+
+    if (ATCACERT_E_SUCCESS == ret)
+    {
+        *cert_size = cert_def->std_cert_elements[STDCERT_SIGNATURE].offset + buflen;
+    }
+
+    return ret;
+}

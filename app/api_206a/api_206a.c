@@ -30,6 +30,8 @@
 #include "cryptoauthlib.h"
 #include "api_206a.h"
 
+#ifdef ATCA_ATSHA206A_SUPPORT
+
 /** \brief Computes the diversified key based on the parent key provided and device serial number
  *  \param[in]  parent_key      parent key to be diversified
  *  \param[out] diversified_key diversified parent key
@@ -496,7 +498,7 @@ ATCA_STATUS sha206a_read_data_store(uint8_t slot, uint8_t* data, uint8_t offset,
 ATCA_STATUS sha206a_get_data_store_lock_status(uint8_t slot, uint8_t* is_locked)
 {
     ATCA_STATUS status;
-    uint16_t read_buf[2];
+    uint8_t read_buf[4];
 
     if ((is_locked == NULL) || (slot < SHA206A_DATA_STORE1) || (slot > SHA206A_DATA_STORE2))
     {
@@ -505,19 +507,21 @@ ATCA_STATUS sha206a_get_data_store_lock_status(uint8_t slot, uint8_t* is_locked)
 
     *is_locked = true;
 
-    if ((status = atcab_read_bytes_zone(ATCA_ZONE_CONFIG, 0, 4, read_buf, sizeof(read_buf))) != ATCA_SUCCESS)
+    if ((status = atcab_read_bytes_zone(ATCA_ZONE_CONFIG, 0, 4, &read_buf[0], sizeof(read_buf))) != ATCA_SUCCESS)
     {
         return status;
     }
 
     if (slot == SHA206A_DATA_STORE1)
     {
-        *is_locked = read_buf[0] == 0x5555 ? false : true;
+        *is_locked = ((read_buf[0] == 0x55) && (read_buf[1] == 0x55)) ? false : true;
     }
     else
     {
-        *is_locked = read_buf[1] == 0x5555 ? false : true;
+        *is_locked = ((read_buf[2] == 0x55) && (read_buf[3] == 0x55)) ? false : true;
     }
 
     return status;
 }
+
+#endif

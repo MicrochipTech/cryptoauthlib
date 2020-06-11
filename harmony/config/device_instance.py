@@ -22,45 +22,81 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
-_DEFAULT_I2C_ADDRESS = {'ecc': 0xC0, 'sha': 0xC8}
+_DEFAULT_I2C_ADDRESS = {'ecc': 0xC0, 'sha': 0xC8, 'ta100': 0x2e}
+_SWI_DEVICES = ['ATSHA204A', 'ATSHA206A', 'ATECC108A', 'ATECC508A', 'ATECC608A']
+_I2C_DEVICES = ['ATSHA204A', 'ATECC108A', 'ATECC508A', 'ATECC608A', 'TA100']
+_SPI_DEVICES = ['TA100']
+
 
 def updateSercomPlibList(plib, inc):
     Database.sendMessage('cryptoauthlib', 'UPDATE_PLIB_LIST', {'id': plib.lower(), 'inc': inc})
 
 
-def updatePartType(symbol, event):
-    symObj = event["symbol"]
+def updateTngCapability(id, src):
+    Database.sendMessage('cryptoauthlib_tng', 'UPDATE_TNG_TYPE', {'id': id, 'src': src})
 
-    if symObj.getSelectedKey() == "TNGTLS":
-        Database.activateComponents(['cryptoauthlib_tng'])
-        symbol.setValue(0x6A)
-    elif symObj.getSelectedKey() == "TNGLORA":
-        Database.activateComponents(['cryptoauthlib_tng'])
-        symbol.setValue(0xB2)
-    else:
-        symbol.setValue(0xC0)
+
+def updatePartInterfaceSettings(symbol, event):
+    symObj = event['symbol']
+    updateId = event['id'].upper()
+    selected_key = symObj.getSelectedKey()
+    
+    if updateId == 'INTERFACE':
+        if selected_key == 'ATCA_SPI_IFACE':
+            symbol.setVisible('SPI' in symbol.getID())
+        elif selected_key == 'ATCA_I2C_IFACE':
+            symbol.setVisible('I2C' in symbol.getID())
+    elif updateId == 'PART_TYPE':
+        if selected_key == "TNGTLS":
+            Database.activateComponents(['cryptoauthlib_tng'])
+            symbol.setValue(0x6A)
+        elif selected_key == "TFLEX":
+            Database.activateComponents(['cryptoauthlib_tng'])
+            symbol.setValue(0x6C)
+        elif selected_key == "TNGLORA":
+            Database.activateComponents(['cryptoauthlib_tng'])
+            symbol.setValue(0xB2)
+        else:
+            symbol.setValue(0xC0)
+
+        updateTngCapability(selected_key, event['namespace'])
+
+
+def sort_alphanumeric(l):
+    import re
+    convert = lambda text: int(text) if text.isdigit() else text.lower()
+    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
+    return sorted(l, key = alphanum_key)
 
 
 def instantiateComponent(deviceComponent, index):
-    global devicePartType
     deviceID = deviceComponent.getID().upper()
+    deviceType = deviceID.split('_')[0]
     configName = Variables.get('__CONFIGURATION_NAME')
 
     #I2C Configuration
-    devicePLIB = deviceComponent.createStringSymbol("DRV_I2C_PLIB", None)
+    devicePLIB = deviceComponent.createStringSymbol("HAL_INTERFACE", None)
     devicePLIB.setLabel("PLIB Used")
     devicePLIB.setReadOnly(True)
     devicePLIB.setDefaultValue("")
 
-    interfaceType = deviceComponent.createStringSymbol('INTERFACE', None)
+    interfaceType = deviceComponent.createKeyValueSetSymbol('INTERFACE', None)
     interfaceType.setLabel('Interface Type')
-    interfaceType.setReadOnly(True)
-    interfaceType.setDefaultValue('')
+    if deviceType in _I2C_DEVICES:
+        interfaceType.addKey("ATCA_I2C_IFACE", "0", "I2C")
+#    if deviceType in _SWI_DEVICES:    
+#        interfaceType.addKey("ATCA_SWI_IFACE", "1", "SWI")
+    if deviceType in _SPI_DEVICES:
+        interfaceType.addKey("ATCA_SPI_IFACE", "2", "SPI")
+    interfaceType.setDefaultValue(0)
+    interfaceType.setOutputMode("Key")
+    interfaceType.setDisplayMode("Description")
 
     if '608' in deviceID:
-        devicePartType = deviceComponent.createKeyValueSetSymbol("PART_TYPE", None)
+        devicePartType = deviceComponent.createKeyValueSetSymbol("PART_TYPE", interfaceType)
         devicePartType.setLabel("Select Part Type")
         devicePartType.addKey("Custom", "0", "Trust Custom")
+        devicePartType.addKey("TFLEX", "3", "Trust Flex")
         devicePartType.addKey("TNGTLS", "1", "Trust & Go: TLS")
         devicePartType.addKey("TNGLORA", "2", "Trust & Go: LORA")
         devicePartType.setDefaultValue(0)
@@ -70,15 +106,40 @@ def instantiateComponent(deviceComponent, index):
         deviceAddress = deviceComponent.createHexSymbol("I2C_ADDR", devicePartType)
         deviceAddress.setLabel("I2C Address")
         deviceAddress.setDefaultValue(0xC0)
-        deviceAddress.setDependencies(updatePartType, ["PART_TYPE"])
     else:
-        deviceAddress = deviceComponent.createHexSymbol("I2C_ADDR", None)
+        deviceAddress = deviceComponent.createHexSymbol("I2C_ADDR", interfaceType)
         deviceAddress.setLabel("I2C Address")
        
         if 'ECC' in deviceID:
             deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['ecc'])
         elif 'SHA' in deviceID:
             deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['sha'])
+        elif 'TA' in deviceID:
+            deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['ta100'])
+
+    deviceAddress.setDependencies(updatePartInterfaceSettings, ["PART_TYPE"])
+
+    spiCsComment = deviceComponent.createCommentSymbol("SPI_CS_PINS_COMMENT", interfaceType)
+    spiCsComment.setLabel("!!! Configure the Chip Select pin as GPIO OUTPUT in Pin Settings.!!! ")
+    spiCsComment.setDependencies(updatePartInterfaceSettings, ["INTERFACE"])
+    spiCsComment.setVisible(False)
+
+    spiChipSelectPin = deviceComponent.createKeyValueSetSymbol("SPI_CS_PIN", interfaceType)
+    spiChipSelectPin.setLabel("Chip Select Pin")
+    spiChipSelectPin.setDefaultValue(0)
+    spiChipSelectPin.setOutputMode("Key")
+    spiChipSelectPin.setDisplayMode("Description")
+    spiChipSelectPin.setDependencies(updatePartInterfaceSettings, ["INTERFACE"])
+    spiChipSelectPin.setVisible(False)
+
+    availablePinDictionary = {}
+    availablePinDictionary = Database.sendMessage("core", "PIN_LIST", availablePinDictionary)
+
+    for pad in sort_alphanumeric(availablePinDictionary.values()):
+        key = pad
+        value = list(availablePinDictionary.keys())[list(availablePinDictionary.values()).index(pad)]
+        description = pad
+        spiChipSelectPin.addKey(key, value, description)
 
     wakeupDelay = deviceComponent.createIntegerSymbol("WAKEUP_DELAY", None)
     wakeupDelay.setLabel("Wakeup Delay (us)")
@@ -111,9 +172,15 @@ def onAttachmentConnected(source, target):
     targetID = target['component'].getID().upper()
 
     if 'I2C' in sourceID:
-        source['component'].getSymbolByID('DRV_I2C_PLIB').setValue(targetID)
-        source['component'].getSymbolByID('INTERFACE').setValue('ATCA_I2C_IFACE')
-        updateSercomPlibList(targetID, True)
+        source['component'].getSymbolByID('HAL_INTERFACE').setValue(targetID)
+        source['component'].getSymbolByID('INTERFACE').setReadOnly(True)
+        source['component'].getSymbolByID('INTERFACE').setSelectedKey('ATCA_I2C_IFACE', 0)
+        updateSercomPlibList(target['id'], True)
+    elif 'SPI' in sourceID:
+        source['component'].getSymbolByID('HAL_INTERFACE').setValue(targetID)
+        source['component'].getSymbolByID('INTERFACE').setReadOnly(True)
+        source['component'].getSymbolByID('INTERFACE').setSelectedKey('ATCA_SPI_IFACE', 1)
+        updateSercomPlibList(target['id'], True)
 
 
 def onAttachmentDisconnected(source, target):
@@ -122,11 +189,21 @@ def onAttachmentDisconnected(source, target):
 
     if 'I2C' in sourceID:
         try:
-            source['component'].getSymbolByID('DRV_I2C_PLIB').clearValue()
+            source['component'].getSymbolByID('HAL_INTERFACE').clearValue()
             source['component'].getSymbolByID('INTERFACE').clearValue()
+            source['component'].getSymbolByID('INTERFACE').setReadOnly(False)
         except AttributeError:
             # Happens when the instance is deleted while attached
             pass
-        updateSercomPlibList(targetID, False)
+        updateSercomPlibList(target['id'], False)
+    elif 'SPI' in sourceID:
+        try:
+            source['component'].getSymbolByID('HAL_INTERFACE').clearValue()
+            source['component'].getSymbolByID('INTERFACE').clearValue()
+            source['component'].getSymbolByID('INTERFACE').setReadOnly(False)
+        except AttributeError:
+            # Happens when the instance is deleted while attached
+            pass
+        updateSercomPlibList(target['id'], False)
 
 

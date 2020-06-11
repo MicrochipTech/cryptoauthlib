@@ -1,45 +1,169 @@
 cmake_minimum_required(VERSION 3.1.0)
 project(cryptoauth)
 
+include(CMakeDependentOption)
+include(CheckSymbolExists)
+
 # Various Options for Build
 option(ATCA_HAL_KIT_HID "Include the HID HAL Driver")
 option(ATCA_HAL_KIT_CDC "Include the CDC HAL Driver (Legacy)" OFF)
 option(ATCA_HAL_I2C "Include the I2C Hal Driver - Linux & MCU only")
+option(ATCA_HAL_SPI "Include the SPI HAL Driver - Linux & MCU only")
 option(ATCA_HAL_CUSTOM "Include support for Custom/Plug-in Hal Driver")
 option(ATCA_PRINTF "Enable Debug print statements in library")
 option(ATCA_PKCS11 "Build PKCS11 Library")
-option(ATCA_MBEDTLS "Integrate with mbedtls")
+option(ATCA_MBEDTLS "Integrate with mbedtls" OFF)
+option(ATCA_WOLFSSL "Integrate with WolfSSL" OFF)
+option(ATCA_OPENSSL "Integration with OpenSSL" OFF)
+option(ATCA_TNGTLS_SUPPORT "Include Trust & Go TLS Certificates")
+option(ATCA_TNGLORA_SUPPORT "Include Trust & Go LORA Certificates")
+option(ATCA_TFLEX_SUPPORT "Include Trust Flex Certificates")
+option(ATCA_TNG_LEGACY_SUPPORT "Include previous version of Trust & Go Certificates")
+option(ATCA_ATSHA204A_SUPPORT "Include support for ATSHA204A device" ON)
+option(ATCA_ATSHA206A_SUPPORT "Include support for ATSHA206A device" ON)
+option(ATCA_ATECC108A_SUPPORT "Include support for ATECC108A device" ON)
+option(ATCA_ATECC508A_SUPPORT "Include support for ATECC508A device" ON)
+option(ATCA_ATECC608A_SUPPORT "Include support for ATECC608A device" ON)
+option(ATCA_TA100_SUPPORT "Include support for TA100 device" OFF)
+cmake_dependent_option(ATCA_TA100_AES_AUTH_SUPPORT "Include Encrypted (GCM) and CMAC Auth session support" ON "ATCA_TA100_SUPPORT" OFF)
 option(ATCA_BUILD_SHARED_LIBS "Build CryptoAuthLib as shared library" ON)
+option(ATCA_NO_HEAP "Do not use dynamic (heap) allocation functions" OFF)
+option(ATCA_USE_ATCAB_FUNCTIONS "Build the atcab_ api functions rather than using macros" OFF)
+
+# Check Options
+if (ATCA_MBEDTLS AND (ATCA_WOLFSSL OR ATCA_OPENSSL))
+message(FATAL_ERROR "Only one external SSL/TLS library can be supported")
+elseif (ATCA_WOLFSSL AND (ATCA_MBEDTLS OR ATCA_OPENSSL))
+message(FATAL_ERROR "Only one external SSL/TLS library can be supported")
+endif()
+
+if (ATCA_TA100_SUPPORT AND ATCA_TA100_AES_AUTH_SUPPORT AND NOT (ATCA_MBEDTLS OR ATCA_WOLFSSL OR ATCA_OPENSSL))
+message(FATAL_ERROR "Encrypted (GCM) and CMAC uthorization sessions with the TA100 require a linked crypto library")
+endif()
+
+# Check Platform Information
+check_symbol_exists(malloc "stdlib.h" HAS_MALLOC)
+check_symbol_exists(free "stdlib.h" HAS_FREE)
+
+
 set(BUILD_SHARED_LIBS ${ATCA_BUILD_SHARED_LIBS})
 
 # Collect Library Sources
 file(GLOB LIB_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.c")
 file(GLOB ATCACERT_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "atcacert/*.c")
-file(GLOB BASIC_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "basic/*.c")
+file(GLOB CALIB_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "calib/*.c")
+file(GLOB TALIB_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "talib/*.c")
 file(GLOB_RECURSE CRYPTO_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "crypto/*.c")
 file(GLOB HOST_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "host/*.c")
 file(GLOB JWT_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "jwt/*.c")
 file(GLOB PKCS11_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "pkcs11/*.c")
-file(GLOB MBEDTLS_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mbedtls/*.c")
 file(GLOB TNG_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../app/tng/*.c")
+file(GLOB SHA206_API_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../app/api_206a/*.c")
+
+
+if(ATCA_PKCS11 AND (ATCA_TNGTLS_SUPPORT OR ATCA_TNGLORA_SUPPORT OR ATCA_TFLEX_SUPPORT))
+SET(TNG_SRC ${TNG_SRC} ../app/pkcs11/trust_pkcs11_config.c)
+endif()
+
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${ATCACERT_SRC})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${CALIB_SRC})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TALIB_SRC})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${CRYPTO_SRC})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${HOST_SRC})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${JWT_SRC})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${PKCS11_SRC})
+source_group("App/Tng" FILES ${TNG_SRC})
+
+if (ATCA_MBEDTLS)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../third_party/CMakeLists-mbedtls.txt.in ${CMAKE_BINARY_DIR}/${DEPENDENCY_DIR}/mbedtls_downloader/CMakeLists.txt)
+execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/${DEPENDENCY_DIR}/mbedtls_downloader/)
+execute_process(COMMAND ${CMAKE_COMMAND} --build .
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/${DEPENDENCY_DIR}/mbedtls_downloader/)
+
+file(GLOB MBEDTLS_LIB_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../third_party/mbedtls/library/*.c")
+add_library(mbedtls STATIC ${MBEDTLS_LIB_SRC})
+target_compile_definitions(mbedtls PUBLIC -DMBEDTLS_CMAC_C)
+include_directories(mbedtls PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+                                    ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/mbedtls/include)
+
+
+file(GLOB MBEDTLS_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mbedtls/*.c")
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${MBEDTLS_SRC})
+endif(ATCA_MBEDTLS)
+
+if (ATCA_WOLFSSL)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../third_party/CMakeLists-wolfssl.txt.in ${CMAKE_BINARY_DIR}/${DEPENDENCY_DIR}/wolfssl_downloader/CMakeLists.txt)
+execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/${DEPENDENCY_DIR}/wolfssl_downloader/)
+execute_process(COMMAND ${CMAKE_COMMAND} --build .
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/${DEPENDENCY_DIR}/wolfssl_downloader/)
+        
+#file(GLOB WOLFSSL_LIB_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../third_party/wolfssl/wolfcrypt/src/*.c")
+
+set(WOLFSSL_LIB_SRC ../third_party/wolfssl/wolfcrypt/src/aes.c
+                    ../third_party/wolfssl/wolfcrypt/src/cmac.c
+                    ../third_party/wolfssl/wolfcrypt/src/hmac.c
+                    ../third_party/wolfssl/wolfcrypt/src/sha.c
+                    ../third_party/wolfssl/wolfcrypt/src/sha256.c
+                    )
+
+
+add_library(wolfssl STATIC ${WOLFSSL_LIB_SRC})
+target_compile_definitions(wolfssl PRIVATE -DWC_NO_RNG -DWOLFSSL_AES_DIRECT -DHAVE_AESGCM -DWOLFSSL_CMAC -DNO_OLD_TLS -DNO_MD5)
+include_directories(wolfssl PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+                                    ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/wolfssl)
+
+
+file(GLOB WOLFSSL_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "wolfssl/*.c")
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${WOLFSSL_SRC})
+endif(ATCA_WOLFSSL)
+
+if (ATCA_OPENSSL)
+file(GLOB OPENSSL_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "openssl/*.c")
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${OPENSSL_SRC})
+find_package(OpenSSL REQUIRED)
+endif(ATCA_OPENSSL)
+
+if (ATCA_ATSHA204A_SUPPORT OR ATCA_ATSHA206A_SUPPORT OR
+    ATCA_ATECC108A_SUPPORT OR ATCA_ATECC508A_SUPPORT OR ATCA_ATECC608A_SUPPORT)
+set(LIB_SRC ${LIB_SRC} ${CALIB_SRC} ${HOST_SRC})
+endif()
+
+if (ATCA_ATSHA206A_SUPPORT)
+set(LIB_SRC ${LIB_SRC} ${SHA206_API_SRC})
+endif()
+
+if (ATCA_TA100_SUPPORT)
+set(LIB_SRC ${LIB_SRC} ${TALIB_SRC})
+endif()
 
 # Add the basic sources to the library
-set(CRYPTOAUTH_SRC ${LIB_SRC} ${ATCACERT_SRC} ${BASIC_SRC} ${CRYPTO_SRC} ${HOST_SRC} ${JWT_SRC} hal/atca_hal.c ${TNG_SRC})
+set(CRYPTOAUTH_SRC ${LIB_SRC}
+                   ${ATCACERT_SRC}
+                   ${CRYPTO_SRC}
+                   ${JWT_SRC}
+                   ${TNG_SRC}
+                   ${MBEDTLS_SRC}
+                   ${WOLFSSL_SRC}
+                   ${OPENSSL_SRC}
+                   hal/atca_hal.c )
 
 if(ATCA_HAL_KIT_HID OR ATCA_HAL_KIT_CDC)
 set(NEED_USB true)
 endif()
 
 if(WIN32)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_win_timer.c)
+set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_windows.c)
 set(HID_SRC ../third_party/hidapi/windows/hid.c)
 set(CDC_SRC hal/hal_win_kit_cdc.c)
 elseif(APPLE)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_linux_timer.c)
+set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_linux.c)
 set(HID_SRC ../third_party/hidapi/mac/hid.c)
 elseif(UNIX)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_linux_timer.c)
+set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_linux.c)
 set(TWI_SRC hal/hal_linux_i2c_userspace.c)
+set(SPI_SRC hal/hal_linux_spi_userspace.c)
 set(LINUX TRUE)
 endif()
 
@@ -57,7 +181,7 @@ if(HAS_LIBUDEV AND LIBUDEV_INCLUDE_DIR)
 set(LIBUDEV_GOOD TRUE)
 endif()
 
-if(ATCA_HAL_KIT_CDC AND LIBUDEV_GOOD)
+if(LIBUDEV_GOOD)
 set(USE_UDEV TRUE)
 elseif(LIBUSB_GOOD AND NOT ATCA_HAL_KIT_CDC)
 set(USE_LIBUSB TRUE)
@@ -94,6 +218,10 @@ if(ATCA_HAL_I2C)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${TWI_SRC})
 endif(ATCA_HAL_I2C)
 
+if(ATCA_HAL_SPI)
+set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${SPI_SRC})
+endif(ATCA_HAL_SPI)
+
 # Add Remaining Sources depending on target library type
 if(ATCA_MBEDTLS)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${MBEDTLS_SRC})
@@ -101,20 +229,53 @@ endif()
 
 if(ATCA_PKCS11)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${PKCS11_SRC})
+set(ATCA_LIBRARY_CONF ${DEFAULT_CONF_PATH}/${DEFAULT_CONF_FILE_NAME} CACHE STRING "" FORCE)
+if(PKCS11_DEBUG_ENABLE)
+add_definitions(-DPKCS11_DEBUG_ENABLE)
+endif(PKCS11_DEBUG_ENABLE)
 endif()
 
+if(ATCA_BUILD_SHARED_LIBS)
+add_definitions(-DATCA_BUILD_SHARED_LIBS)
+endif(ATCA_BUILD_SHARED_LIBS)
+
+#source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${CRYPTOAUTH_SRC})
 add_library(cryptoauth ${CRYPTOAUTH_SRC} ${ATCACERT_DEF_SRC})
 
 set_property(TARGET cryptoauth PROPERTY C_STANDARD 99)
 
-# Add Remaining Sources depending on target library type
-if(ATCA_PKCS11)
-set_target_properties(cryptoauth PROPERTIES OUTPUT_NAME "ateccx08pkcs11")
-endif(ATCA_PKCS11)
+if(HAS_MALLOC)
+set(ATCA_PLATFORM_MALLOC malloc CACHE STRING "" FORCE)
+endif(HAS_MALLOC)
+
+if(HAS_FREE)
+set(ATCA_PLATFORM_FREE free CACHE STRING "" FORCE)
+endif(HAS_FREE)
+
+if(BUILD_TESTS)
+set(ATCA_TESTS_ENABLED ON CACHE INTERNAL "")
+endif(BUILD_TESTS)
 
 configure_file(atca_config.h.in atca_config.h @ONLY)
 
-include_directories(cryptoauth PUBLIC ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ../third_party/hidapi/hidapi ${USB_INCLUDE_DIR})
+if(ATCA_PKCS11)
+configure_file(pkcs11/pkcs11_config.h.in pkcs11_config.h @ONLY)
+endif()
+
+include_directories(cryptoauth PUBLIC ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ../app/tng ../third_party/hidapi/hidapi ${USB_INCLUDE_DIR})
+
+if(ATCA_MBEDTLS)
+target_link_libraries(cryptoauth mbedtls)
+endif()
+
+if(ATCA_WOLFSSL)
+target_link_libraries(cryptoauth wolfssl)
+endif()
+
+if(ATCA_OPENSSL)
+include_directories(cryptoauth PUBLIC ${OPENSSL_INCLUDE_DIR})
+target_link_libraries(cryptoauth ${OPENSSL_CRYPTO_LIBRARY})
+endif()
 
 if(WIN32)
 set_target_properties(cryptoauth PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
@@ -128,6 +289,7 @@ target_link_libraries(cryptoauth ${IO_KIT_LIB} ${CORE_LIB})
 endif()
 
 if(LINUX)
+add_definitions(-DATCA_USE_SHARED_MUTEX)
 if(USE_LIBUSB)
 target_link_libraries(cryptoauth usb-1.0)
 elseif(USE_UDEV)
@@ -136,3 +298,6 @@ endif()
 target_link_libraries(cryptoauth rt)
 endif(LINUX)
 
+if(DEFAULT_LIB_PATH)
+install(TARGETS ${PROJECT_NAME} DESTINATION ${DEFAULT_LIB_PATH})
+endif()

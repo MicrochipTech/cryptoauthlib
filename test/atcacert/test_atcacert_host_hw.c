@@ -23,11 +23,11 @@
  * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
  * THIS SOFTWARE.
  */
+#include "atca_test.h"
+#ifndef DO_NOT_TEST_CERT
 
 #include "atcacert/atcacert_host_hw.h"
-#include "test/unity.h"
-#include "test/unity_fixture.h"
-#include "basic/atca_basic.h"
+#include "atca_basic.h"
 #include "test_cert_def_0_device.h"
 #include "test_cert_def_1_signer.h"
 #include <string.h>
@@ -332,3 +332,4 @@ TEST(atcacert_host_hw, atcacert_verify_response_hw_bad_params)
     ret = atcacert_verify_response_hw(NULL, NULL, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
+#endif

@@ -39,7 +39,7 @@ extern "C" {
  */
 
 #define TNGTLS_CERT_TEMPLATE_1_SIGNER_SIZE 520
-extern const atcacert_def_t g_tngtls_cert_def_1_signer;
+ATCA_DLL const atcacert_def_t g_tngtls_cert_def_1_signer;
 
 /** @} */
 
