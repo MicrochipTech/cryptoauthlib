@@ -1,10 +1,9 @@
 var a01487 =
 [
-    [ "ATCASWIMaster_t", "a01995.html#ga257ed552f7d68eb1e5d3ca7baa01559a", null ],
-    [ "swi_flag", "a01995.html#ga8759b00e645502d0f1c3b7330e20e52b", [
-      [ "SWI_FLAG_CMD", "a01995.html#gga8759b00e645502d0f1c3b7330e20e52babacdf58fcbc837d4c4e6d9640e157340", null ],
-      [ "SWI_FLAG_TX", "a01995.html#gga8759b00e645502d0f1c3b7330e20e52ba17fa7af18b61921986085f42fc05cc9f", null ],
-      [ "SWI_FLAG_IDLE", "a01995.html#gga8759b00e645502d0f1c3b7330e20e52baeb0778b0887019be95260a2c0420d21a", null ],
-      [ "SWI_FLAG_SLEEP", "a01995.html#gga8759b00e645502d0f1c3b7330e20e52ba1d93b236433ad7d6c2b82659009f42f7", null ]
-    ] ]
+    [ "atca_jwt_add_claim_numeric", "a07535.html#ga7073a7cfb7c77ad02923cdbb1226d2ad", null ],
+    [ "atca_jwt_add_claim_string", "a07535.html#ga3e6036b2c0e6dbc96a30f078e56cacff", null ],
+    [ "atca_jwt_check_payload_start", "a07535.html#ga167fe35631a0dd191293c6ad3a6485aa", null ],
+    [ "atca_jwt_finalize", "a07535.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b", null ],
+    [ "atca_jwt_init", "a07535.html#gad3ea09543f0569a5368130f4a3d7bce0", null ],
+    [ "atca_jwt_verify", "a07535.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b", null ]
 ];

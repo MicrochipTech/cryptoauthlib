@@ -1,9 +1,5 @@
 var a01409 =
 [
-    [ "CDC_BUFFER_MAX", "a01995.html#ga5ac8c9377f90d6ce3044f81f900a54fe", null ],
-    [ "CDC_DEVICES_MAX", "a01995.html#ga08b6c05184266dc4d5c8727bb9c1c754", null ],
-    [ "INVALID_HANDLE_VALUE", "a01995.html#ga5fdc7facea201bfce4ad308105f88d0c", null ],
-    [ "atcacdc_t", "a01995.html#ga2df85bfd309840b4c9a5087e053d4811", null ],
-    [ "cdc_device_t", "a01995.html#ga99ee56102171adcbcecb8a78fb9fa895", null ],
-    [ "HANDLE", "a01995.html#ga069bb8cb95b0528d5ce0304bb5561a40", null ]
+    [ "MAX_SPI_BUSES", "a07533.html#gafa761049508beb5d347d5b5e890b6bad", null ],
+    [ "ATCASPIMaster_t", "a07533.html#ga6e0318ed8ca99fa808e6b73b572d9891", null ]
 ];

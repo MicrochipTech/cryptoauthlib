@@ -1,6 +1,6 @@
 var a00080 =
 [
-    [ "g_tngtls_cert_def_2_device", "a00080.html#a625574144ea012fd9ec04b4a402e87f4", null ],
-    [ "g_tngtls_cert_elements_2_device", "a00080.html#a55035090c79d1f8421c8aae325560f66", null ],
-    [ "g_tngtls_cert_template_2_device", "a00080.html#a697d3c44e4c88edec725f1f486de0094", null ]
+    [ "CRYPTOAUTH_ROOT_CA_002_PUBLIC_KEY_OFFSET", "a07538.html#ga9d67f287321c5821711e9cc0ef332b3b", null ],
+    [ "g_cryptoauth_root_ca_002_cert", "a07538.html#ga5c01e37d1f10dbf90d50208cbc5bc8ab", null ],
+    [ "g_cryptoauth_root_ca_002_cert_size", "a07538.html#gabff789f84f8f178a30ce06792fe47771", null ]
 ];

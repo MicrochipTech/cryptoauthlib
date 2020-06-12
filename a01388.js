@@ -1,8 +1,5 @@
 var a01388 =
 [
-    [ "ATCAI2CMaster_t", "a01995.html#gae8f36006f14bf6a9f4914bac69ed9f98", null ],
-    [ "i2c_read_write_flag", "a01995.html#gaa3e90779b37cd1b3a4d32321d9d8b772", [
-      [ "I2C_WRITE", "a01995.html#ggaa3e90779b37cd1b3a4d32321d9d8b772adbf6337ed546b3c21fd08c397a346bb2", null ],
-      [ "I2C_READ", "a01995.html#ggaa3e90779b37cd1b3a4d32321d9d8b772a30040082a257338fe25e5bd5136bc9a8", null ]
-    ] ]
+    [ "i2c_start_instance_t", "a07533.html#gab4ad18d30b921f27b4879ca71181491f", null ],
+    [ "start_change_baudrate", "a07533.html#gaf5c1d7b7fca31a8c1102814e4732c373", null ]
 ];

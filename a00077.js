@@ -1,5 +1,5 @@
 var a00077 =
 [
-    [ "TNGTLS_CERT_TEMPLATE_1_SIGNER_SIZE", "a01999.html#ga6102cfce0327af728b151a6b5828cfeb", null ],
-    [ "g_tngtls_cert_def_1_signer", "a01999.html#gae40ebd42591d016e71b6cbd7aaa4196a", null ]
+    [ "g_cryptoauth_root_ca_002_cert", "a00077.html#ac8701381ff8ac8a30fded35b8ef38920", null ],
+    [ "g_cryptoauth_root_ca_002_cert_size", "a00077.html#abff789f84f8f178a30ce06792fe47771", null ]
 ];

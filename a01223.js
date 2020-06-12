@@ -1,9 +1,6 @@
 var a01223 =
 [
-    [ "atcab_aes_ctr_block", "a01993.html#ga76937b340e59be4dc1a30d8c7b76ebe0", null ],
-    [ "atcab_aes_ctr_decrypt_block", "a01993.html#gada9491be0c81fb18b021f71b9a6eda3e", null ],
-    [ "atcab_aes_ctr_encrypt_block", "a01993.html#ga7182e48a847f9c1b31f19c60f373e2da", null ],
-    [ "atcab_aes_ctr_increment", "a01993.html#ga475b72450dcd21c822de5cb366197927", null ],
-    [ "atcab_aes_ctr_init", "a01993.html#ga0db7d24f31dc2dd4805e3c433ae604ad", null ],
-    [ "atcab_aes_ctr_init_rand", "a01993.html#gae7558905ea6a82c4bd50d4b99e954d91", null ]
+    [ "calib_counter", "a07531.html#ga51c2df6734379b2cc2459b04d2ad4928", null ],
+    [ "calib_counter_increment", "a07531.html#gad686b27c12c150be4f499ce3b5821a8c", null ],
+    [ "calib_counter_read", "a07531.html#ga2ce6735118e98aae3bf5e53004dcb203", null ]
 ];

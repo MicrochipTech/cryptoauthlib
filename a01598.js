@@ -1,7 +1,9 @@
 var a01598 =
 [
-    [ "atca_mbedtls_cert_add", "a01998.html#ga1180b0ded84f7edb4b36d14730366a64", null ],
-    [ "atca_mbedtls_ecdh_ioprot_cb", "a01998.html#gaa35682dc98e33ce3d6fad1fc902cdff0", null ],
-    [ "atca_mbedtls_ecdh_slot_cb", "a01998.html#ga98d684683ccecd3d56bdf5dc27ae999c", null ],
-    [ "atca_mbedtls_pk_init", "a01998.html#ga72da31831a3647e287543634e3f78aca", null ]
+    [ "pkcs11_slot_config", "a07537.html#ga29fdbbe0188137ec327678742a3aea01", null ],
+    [ "pkcs11_slot_get_context", "a07537.html#ga987853011908614aba0db7c5933b0a20", null ],
+    [ "pkcs11_slot_get_info", "a07537.html#ga3bba79e03141bfb7a9ec76c273db63d2", null ],
+    [ "pkcs11_slot_get_list", "a07537.html#ga0b1860dd97a6c0afd3056ac6bd10d38d", null ],
+    [ "pkcs11_slot_init", "a07537.html#ga418414364e88d0673b4f6c90cd62ebed", null ],
+    [ "pkcs11_slot_initslots", "a07537.html#ga8bdf7c43e464ac6214411d11d82ac317", null ]
 ];

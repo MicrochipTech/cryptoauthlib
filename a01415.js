@@ -1,7 +1,6 @@
 var a01415 =
 [
-    [ "HID_DEVICES_MAX", "a01995.html#ga49053c3cd6d48fe5f468ce010ac0a9ef", null ],
-    [ "HID_PACKET_MAX", "a01995.html#ga6cdff3589b286ebcdd7771bb425fbf73", null ],
-    [ "atcahid_t", "a01995.html#ga2416cca7ee952e679d466e3349d65035", null ],
-    [ "hid_device_t", "a01995.html#ga5f2f61628e945fd6538155628fc3a17a", null ]
+    [ "i2c_sam0_instance", "a07690.html", "a07690" ],
+    [ "i2c_sam0_instance_t", "a01415.html#abc52bbb3cf5a8db38f9929b63d8d2171", null ],
+    [ "sam0_change_baudrate", "a01415.html#aa09b1baa19c0d9232b191bffe0a200c0", null ]
 ];

@@ -1,13 +1,18 @@
 var a01448 =
 [
-    [ "hal_i2c_discover_buses", "a01995.html#ga05700385437884cc7b28c38d33e84f8c", null ],
-    [ "hal_i2c_discover_devices", "a01995.html#gac7644e62498a596c09952ee3b28017b9", null ],
-    [ "hal_i2c_idle", "a01995.html#ga9317303ada721ff3f97e7aad69437a30", null ],
-    [ "hal_i2c_init", "a01995.html#ga09e7f465a040fbd19ea136269571de3c", null ],
-    [ "hal_i2c_post_init", "a01995.html#gafbe53519362f18c2688d10da6f7c618f", null ],
-    [ "hal_i2c_receive", "a01995.html#ga7785bcc305c14e2dc188bb1b9a77814a", null ],
-    [ "hal_i2c_release", "a01995.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
-    [ "hal_i2c_send", "a01995.html#gacd0fb31f0f88ef3762665e26b5aa784b", null ],
-    [ "hal_i2c_sleep", "a01995.html#ga3f89bae6a625d5f37abdcc99408def27", null ],
-    [ "hal_i2c_wake", "a01995.html#gad4df1b6755e2d5b5d9e810371e45ca8c", null ]
+    [ "HID_GUID", "a07533.html#gafa87510c678a9963da73988da4dd44f7", null ],
+    [ "hal_kit_hid_discover_buses", "a07533.html#gaec415116564275f0ed9ef020a973bb10", null ],
+    [ "hal_kit_hid_discover_devices", "a07533.html#ga0121a73c96416c97ce07ed9077226588", null ],
+    [ "hal_kit_hid_idle", "a07533.html#gaacf6310945889a6119cab867a1ced5e2", null ],
+    [ "hal_kit_hid_init", "a07533.html#ga95b4e99655383680272a1d9354d42479", null ],
+    [ "hal_kit_hid_post_init", "a07533.html#ga6f06bc1662b3d0361f6a241e1b5612f2", null ],
+    [ "hal_kit_hid_receive", "a07533.html#ga4aa0c2792203529b7a07154229c355a3", null ],
+    [ "hal_kit_hid_release", "a07533.html#ga8c7b9adb28b4bbdee8d5cd78ab16255f", null ],
+    [ "hal_kit_hid_send", "a07533.html#ga3fd44b390fe7558c882c97faa783c018", null ],
+    [ "hal_kit_hid_sleep", "a07533.html#ga1aa3345cb5d3e8fc29defe2758904fed", null ],
+    [ "hal_kit_hid_wake", "a07533.html#ga65289262310f2662b2c47450b93c9580", null ],
+    [ "kit_phy_num_found", "a07533.html#ga11ee6ec0b2b7eb2ff2472f92208c3205", null ],
+    [ "kit_phy_receive", "a07533.html#gaae5e94b6080d4279474eb3e98bc58901", null ],
+    [ "kit_phy_send", "a07533.html#ga020fb0be6c73515122cf4b9f749fd97d", null ],
+    [ "_gHid", "a07533.html#gab97bfae6ae6051d081edf51bb45eea05", null ]
 ];

@@ -1,16 +1,20 @@
 var a01574 =
 [
-    [ "MAX_SWI_BUSES", "a01995.html#gaf9d9d027ce20f528edea144203141714", null ],
-    [ "RECEIVE_MODE", "a01995.html#gab45577245cf4a8ead70e2d56965f2df3", null ],
-    [ "RX_DELAY", "a01995.html#gac55a27e4c3eae59bb1687eb7e8d1fe4b", null ],
-    [ "TRANSMIT_MODE", "a01995.html#ga4b85133b317e72410ea0762d637d3460", null ],
-    [ "TX_DELAY", "a01995.html#ga3f3816567a2f513dd0e1f9eb17992fb2", null ],
-    [ "ATCASWIMaster_t", "a01995.html#ga257ed552f7d68eb1e5d3ca7baa01559a", null ],
-    [ "swi_uart_deinit", "a01995.html#ga0b1aad3936bf003686d8db7fa2be5132", null ],
-    [ "swi_uart_discover_buses", "a01995.html#gad640b598d581ee7c8a4c804bee602906", null ],
-    [ "swi_uart_init", "a01995.html#ga003b63648f1a5f9eba274760559688f2", null ],
-    [ "swi_uart_mode", "a01995.html#gacc2a96c86ce4c07249b81bc6a7eb2e41", null ],
-    [ "swi_uart_receive_byte", "a01995.html#ga93f3dab17c14f71641ca970998ede823", null ],
-    [ "swi_uart_send_byte", "a01995.html#ga4a4d491006d9683d67838963706ac9c1", null ],
-    [ "swi_uart_setbaud", "a01995.html#gaba296f70baf68b768d6c4bb9cf7ba67d", null ]
+    [ "pkcs11_object_alloc", "a07537.html#gacd13c46d7ed7be3dcfdd29c0e78ced3b", null ],
+    [ "pkcs11_object_check", "a07537.html#ga620279f183828bdd33ce94e0cd6f2150", null ],
+    [ "pkcs11_object_create", "a07537.html#ga5cdd6e87496f480f42c44430250794bb", null ],
+    [ "pkcs11_object_deinit", "a07537.html#ga2bed41875de97c71ac141b524175539b", null ],
+    [ "pkcs11_object_destroy", "a07537.html#ga34dbd233b6ac0bf1d2aa2be541d66b25", null ],
+    [ "pkcs11_object_find", "a07537.html#ga09ecdbfaf02822cf5ba6e0f98d3f51df", null ],
+    [ "pkcs11_object_free", "a07537.html#gaf781d0cb96ac95bc8af0e7a2cb2e18f3", null ],
+    [ "pkcs11_object_get_class", "a07537.html#ga551df2c3ba9a2aca7fd017eeb52d7d40", null ],
+    [ "pkcs11_object_get_destroyable", "a07537.html#gadd62d46b440f6a3be0e421eb3dfa20e4", null ],
+    [ "pkcs11_object_get_handle", "a07537.html#ga2a3ee790dbccb44b16d3031688b5aa45", null ],
+    [ "pkcs11_object_get_name", "a07537.html#ga7aee11eff64481426c348ea476508801", null ],
+    [ "pkcs11_object_get_size", "a07537.html#ga5d8c37a9938253cbd4179371cd5f663d", null ],
+    [ "pkcs11_object_get_type", "a07537.html#gaf2006af505de40376cee6817ccb69f59", null ],
+    [ "pkcs11_object_load_handle_info", "a07537.html#ga46af2d77773dcb56478ef7e14a0e81a6", null ],
+    [ "pkcs11_object_cache", "a07537.html#gaca0a5860e29d12831540eb7af43d3659", null ],
+    [ "pkcs11_object_monotonic_attributes", "a07537.html#ga230747fbe3b7a13dfda75980844c3e9d", null ],
+    [ "pkcs11_object_monotonic_attributes_count", "a07537.html#ga5e9308296fc3e124c3a4552134b674ee", null ]
 ];

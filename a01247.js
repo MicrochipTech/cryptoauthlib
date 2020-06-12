@@ -1,6 +1,7 @@
 var a01247 =
 [
-    [ "atcab_genkey", "a01993.html#ga617bdbdce7b5736351d93214d44c5b8f", null ],
-    [ "atcab_genkey_base", "a01993.html#gaa8b6953ad2c7f749e61566fd38fe6903", null ],
-    [ "atcab_get_pubkey", "a01993.html#gad2096a4618dd37c48ed48847fe63d844", null ]
+    [ "calib_info", "a07531.html#ga132cfbb5c581c5cc5adf5350d4161966", null ],
+    [ "calib_info_base", "a07531.html#gabc7aff4f1707fbe0a05cf416955f43b0", null ],
+    [ "calib_info_get_latch", "a07531.html#gab0335f0c23df27d5a4cb51a05bb7fb00", null ],
+    [ "calib_info_set_latch", "a07531.html#gab08ad37a48da6aee1448939f9e59d8db", null ]
 ];

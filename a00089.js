@@ -1,5 +1,6 @@
 var a00089 =
 [
-    [ "TNGTLS_CERT_TEMPLATE_3_DEVICE_SIZE", "a01999.html#ga67423e8649f02085c3daf1cde0e3483c", null ],
-    [ "g_tngtls_cert_def_3_device", "a01999.html#ga2a3957dc0c59b0733de6473be6b95b9d", null ]
+    [ "g_tnglora_cert_def_2_device", "a07538.html#ga2782386bf16b0d23cb84bd371e010ac1", null ],
+    [ "g_tngtls_cert_elements_2_device", "a00089.html#a98503c5a8aa46b64b1964c3b4023acf3", null ],
+    [ "g_tngtls_cert_template_2_device", "a00089.html#a35b19c12e9a87b9f3667fba9212dfe99", null ]
 ];

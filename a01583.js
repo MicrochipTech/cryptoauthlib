@@ -1,9 +1,9 @@
 var a01583 =
 [
-    [ "atca_jwt_add_claim_numeric", "a01997.html#ga7073a7cfb7c77ad02923cdbb1226d2ad", null ],
-    [ "atca_jwt_add_claim_string", "a01997.html#ga3e6036b2c0e6dbc96a30f078e56cacff", null ],
-    [ "atca_jwt_check_payload_start", "a01997.html#ga167fe35631a0dd191293c6ad3a6485aa", null ],
-    [ "atca_jwt_finalize", "a01997.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b", null ],
-    [ "atca_jwt_init", "a01997.html#gad3ea09543f0569a5368130f4a3d7bce0", null ],
-    [ "atca_jwt_verify", "a01997.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b", null ]
+    [ "pkcs11_os_free", "a01583.html#a6dc4b364c3d11f22e08cc67adbcd70c6", null ],
+    [ "pkcs11_os_malloc", "a01583.html#add8754c49398ab1c3a26a581188e074c", null ],
+    [ "pkcs11_os_create_mutex", "a07537.html#gaf5f1c5e6c5bf8d91f2090ee4bbe20362", null ],
+    [ "pkcs11_os_destroy_mutex", "a07537.html#ga0b79ce15416271adde1bb832f6faa16b", null ],
+    [ "pkcs11_os_lock_mutex", "a07537.html#gae27d029f16c6710a0a168e1d1057a4e3", null ],
+    [ "pkcs11_os_unlock_mutex", "a07537.html#ga6f868fabdbf3e115a72e1d126e5356b5", null ]
 ];

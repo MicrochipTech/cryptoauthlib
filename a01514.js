@@ -1,18 +1,12 @@
 var a01514 =
 [
-    [ "HID_GUID", "a01995.html#gafa87510c678a9963da73988da4dd44f7", null ],
-    [ "hal_kit_hid_discover_buses", "a01995.html#ga549d0b53127f1bb10e7f34453b8a2d3c", null ],
-    [ "hal_kit_hid_discover_devices", "a01995.html#ga0121a73c96416c97ce07ed9077226588", null ],
-    [ "hal_kit_hid_idle", "a01995.html#gaacf6310945889a6119cab867a1ced5e2", null ],
-    [ "hal_kit_hid_init", "a01995.html#ga95b4e99655383680272a1d9354d42479", null ],
-    [ "hal_kit_hid_post_init", "a01995.html#ga6f06bc1662b3d0361f6a241e1b5612f2", null ],
-    [ "hal_kit_hid_receive", "a01995.html#gaa80dfd4a91f557329fa1daf16b0f05a8", null ],
-    [ "hal_kit_hid_release", "a01995.html#ga8c7b9adb28b4bbdee8d5cd78ab16255f", null ],
-    [ "hal_kit_hid_send", "a01995.html#ga47588dbefadcc1569513b053a156f3d6", null ],
-    [ "hal_kit_hid_sleep", "a01995.html#ga1aa3345cb5d3e8fc29defe2758904fed", null ],
-    [ "hal_kit_hid_wake", "a01995.html#ga65289262310f2662b2c47450b93c9580", null ],
-    [ "kit_phy_num_found", "a01995.html#ga11ee6ec0b2b7eb2ff2472f92208c3205", null ],
-    [ "kit_phy_receive", "a01995.html#gaae5e94b6080d4279474eb3e98bc58901", null ],
-    [ "kit_phy_send", "a01995.html#ga020fb0be6c73515122cf4b9f749fd97d", null ],
-    [ "_gHid", "a01995.html#gab97bfae6ae6051d081edf51bb45eea05", null ]
+    [ "_pkcs11_attrib_model", "a07782.html", "a07782" ],
+    [ "attrib_f", "a01514.html#a5a0b1cd7e76456a031118d97060eecb9", null ],
+    [ "pkcs11_attrib_model", "a01514.html#a5808b2771bb5bd3fdb344fd9b33b48ed", null ],
+    [ "pkcs11_attrib_model_ptr", "a01514.html#a989f60ace1b798f527c3065087a21162", null ],
+    [ "pkcs11_attrib_empty", "a07537.html#ga89c04713bd2e0df331bd4f8f5abf14ab", null ],
+    [ "pkcs11_attrib_false", "a07537.html#ga3bebbc6283e197f203ea5905ab5caee3", null ],
+    [ "pkcs11_attrib_fill", "a07537.html#gae518fd798cd7352bd7e1ea47cc9d8d33", null ],
+    [ "pkcs11_attrib_true", "a07537.html#ga0bfb7c14a9c1daf120a61a65499bdc55", null ],
+    [ "pkcs11_attrib_value", "a07537.html#ga50e9c64b899d1b2f78c9634298225303", null ]
 ];

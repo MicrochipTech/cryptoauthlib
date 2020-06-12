@@ -1,4 +1,0 @@
-var searchData=
-[
-  ['or_2430',['or',['../a01601.html#a12da3acd04e3589c2114dc5d0853f811',1,'license.txt']]]
-];

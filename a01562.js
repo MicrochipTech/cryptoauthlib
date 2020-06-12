@@ -1,18 +1,12 @@
 var a01562 =
 [
-    [ "DEBUG_PIN_1", "a01995.html#gab12a92582aefe426bb194e0c298e8f98", null ],
-    [ "DEBUG_PIN_2", "a01995.html#ga6a2579114d13238c7ba20d147a74090a", null ],
-    [ "MAX_SWI_BUSES", "a01995.html#gaf9d9d027ce20f528edea144203141714", null ],
-    [ "RECEIVE_MODE", "a01995.html#gab45577245cf4a8ead70e2d56965f2df3", null ],
-    [ "RX_DELAY", "a01995.html#gac55a27e4c3eae59bb1687eb7e8d1fe4b", null ],
-    [ "TRANSMIT_MODE", "a01995.html#ga4b85133b317e72410ea0762d637d3460", null ],
-    [ "TX_DELAY", "a01995.html#ga3f3816567a2f513dd0e1f9eb17992fb2", null ],
-    [ "ATCASWIMaster_t", "a01995.html#ga257ed552f7d68eb1e5d3ca7baa01559a", null ],
-    [ "swi_uart_deinit", "a01995.html#ga0b1aad3936bf003686d8db7fa2be5132", null ],
-    [ "swi_uart_discover_buses", "a01995.html#gad640b598d581ee7c8a4c804bee602906", null ],
-    [ "swi_uart_init", "a01995.html#ga003b63648f1a5f9eba274760559688f2", null ],
-    [ "swi_uart_mode", "a01995.html#gacc2a96c86ce4c07249b81bc6a7eb2e41", null ],
-    [ "swi_uart_receive_byte", "a01995.html#ga93f3dab17c14f71641ca970998ede823", null ],
-    [ "swi_uart_send_byte", "a01995.html#ga4a4d491006d9683d67838963706ac9c1", null ],
-    [ "swi_uart_setbaud", "a01995.html#gaba296f70baf68b768d6c4bb9cf7ba67d", null ]
+    [ "pkcs11_key_derive", "a07537.html#ga8ace04a2049a5d7e527558da10e68dcd", null ],
+    [ "pkcs11_key_generate_pair", "a07537.html#gaac5c7d6ae9b8262fb705083302efd90a", null ],
+    [ "pkcs11_key_write", "a07537.html#gaf3fdce991fe05099aa8552912e26dee7", null ],
+    [ "pkcs11_key_private_attributes", "a07537.html#ga40d8e67ef0fae7bdc2dca013ad8410aa", null ],
+    [ "pkcs11_key_private_attributes_count", "a07537.html#gaf358031996abf87fc21bc259e1e90644", null ],
+    [ "pkcs11_key_public_attributes", "a07537.html#gadf3e8d1e6b01d9fe85f54c9478d8d215", null ],
+    [ "pkcs11_key_public_attributes_count", "a07537.html#gadc78586c61388b3756395f0098fa4505", null ],
+    [ "pkcs11_key_secret_attributes", "a07537.html#ga6ef03269a32699359d90901cc84954f3", null ],
+    [ "pkcs11_key_secret_attributes_count", "a07537.html#ga55a0ac12b2ed4daefadaf3fa94edf78e", null ]
 ];

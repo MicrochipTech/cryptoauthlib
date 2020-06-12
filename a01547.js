@@ -1,12 +1,6 @@
 var a01547 =
 [
-    [ "swi_disable", "a01547.html#af016fffdce9f520096de8631e6692707", null ],
-    [ "swi_enable", "a01547.html#ad78929b51b34df503a37b4961577d5ce", null ],
-    [ "swi_receive_bytes", "a01547.html#afa009f7d683cb82293570a27d1f8ee10", null ],
-    [ "swi_send_byte", "a01547.html#a1c5ab22e67923ee54eef0e33b227be0b", null ],
-    [ "swi_send_bytes", "a01547.html#af0382e26c4d83b0762b39d12c772dd2e", null ],
-    [ "swi_send_wake_token", "a01547.html#ada6b4629603758b67820568677ab2a19", null ],
-    [ "swi_set_pin", "a01547.html#a076fc28889d32327dd3372538106da92", null ],
-    [ "swi_set_signal_pin", "a01547.html#a79bc8f2b72647fce853274cf8474b41e", null ],
-    [ "swi_buses_default", "a01547.html#a8ba5507b651724b4cdc74106a16b025c", null ]
+    [ "pkcs11_get_lib_info", "a07537.html#gaae56826104269ca730066136fb3eb995", null ],
+    [ "pkcs11_lib_description", "a07537.html#ga47daad4918afdf7ec808a5a57a4bce9d", null ],
+    [ "pkcs11_lib_manufacturer_id", "a07537.html#ga8ac50a3d8a0c4f1ddf04cdf02c757030", null ]
 ];

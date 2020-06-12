@@ -1,10 +1,9 @@
 var a01553 =
 [
-    [ "swi_uart_deinit", "a01995.html#ga0b1aad3936bf003686d8db7fa2be5132", null ],
-    [ "swi_uart_discover_buses", "a01995.html#gad640b598d581ee7c8a4c804bee602906", null ],
-    [ "swi_uart_init", "a01995.html#ga003b63648f1a5f9eba274760559688f2", null ],
-    [ "swi_uart_mode", "a01995.html#gacc2a96c86ce4c07249b81bc6a7eb2e41", null ],
-    [ "swi_uart_receive_byte", "a01995.html#ga93f3dab17c14f71641ca970998ede823", null ],
-    [ "swi_uart_send_byte", "a01995.html#ga4a4d491006d9683d67838963706ac9c1", null ],
-    [ "swi_uart_setbaud", "a01995.html#gaba296f70baf68b768d6c4bb9cf7ba67d", null ]
+    [ "pkcs11_deinit", "a07537.html#gabff89fd0af2e75ee2db858f9fe934ac4", null ],
+    [ "pkcs11_get_context", "a07537.html#gae0e3060e6ae0dfc17a35881c223d8123", null ],
+    [ "pkcs11_init", "a07537.html#ga21e0ec91eccb3f92b45cb2536b3889b1", null ],
+    [ "pkcs11_init_check", "a07537.html#gadd899ffeae0146c08b249e3f551e21f8", null ],
+    [ "pkcs11_lock_context", "a07537.html#gaf0e755fd7df13be2aa1f706de5b0f24b", null ],
+    [ "pkcs11_unlock_context", "a07537.html#ga750f93d0a3c67f5d0e28c9c50ad990a8", null ]
 ];
