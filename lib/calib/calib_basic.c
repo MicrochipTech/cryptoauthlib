@@ -254,7 +254,7 @@ ATCA_STATUS calib_get_zone_size(ATCADevice device, uint8_t zone, uint16_t slot, 
         default: status = ATCA_BAD_PARAM; break;
         }
     }
-    else if (_gDevice->mIface->mIfaceCFG->devtype == ATSHA206A)
+    else if (device->mIface->mIfaceCFG->devtype == ATSHA206A)
     {
         switch (zone)
         {

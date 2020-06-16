@@ -258,7 +258,7 @@ ATCA_STATUS calib_verify_extern(ATCADevice device, const uint8_t *message, const
     do
     {
         // Load message into device
-        if (_gDevice->mCommands->dt == ATECC608A)
+        if (device->mCommands->dt == ATECC608A)
         {
             // Use the Message Digest Buffer for the ATECC608A
             nonce_target = NONCE_MODE_TARGET_MSGDIGBUF;
@@ -348,7 +348,7 @@ ATCA_STATUS calib_verify_stored(ATCADevice device, const uint8_t *message, const
     do
     {
         // Load message into device
-        if (_gDevice->mCommands->dt == ATECC608A)
+        if (device->mCommands->dt == ATECC608A)
         {
             // Use the Message Digest Buffer for the ATECC608A
             nonce_target = NONCE_MODE_TARGET_MSGDIGBUF;
