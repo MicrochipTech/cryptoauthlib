@@ -11,6 +11,10 @@
  *
    @{ */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 ATCA_STATUS calib_wakeup(ATCADevice device);
 ATCA_STATUS calib_idle(ATCADevice device);
 ATCA_STATUS calib_sleep(ATCADevice device);
@@ -182,6 +186,10 @@ ATCA_STATUS calib_write_enc(ATCADevice device, uint16_t key_id, uint8_t block, c
 #endif
 
 ATCA_STATUS calib_write_config_counter(ATCADevice device, uint16_t counter_id, uint32_t counter_value);
+
+#ifdef __cplusplus
+}
+#endif
 
 /** @} */
 
