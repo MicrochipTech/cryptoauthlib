@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_build_state_s Struct Reference</title>
+<title>CryptoAuthLib: atca_device Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,129 +87,141 @@ $(document).ready(function(){initNavTree('a02425.html',''); initResizable(); });
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atcacert_build_state_s Struct Reference<div class="ingroups"><a class="el" href="a02337.html">Certificate manipulation methods (atcacert_)</a></div></div>  </div>
+<div class="title">atca_device Struct Reference<div class="ingroups"><a class="el" href="a02395.html">ATCADevice (atca_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="a01115_source.html">atcacert_def.h</a>&gt;</code></p>
+<p><a class="el" href="a02425.html" title="atca_device is the C object backing ATCADevice. See the atca_device.h file for details on the ATCADev...">atca_device</a> is the C object backing ATCADevice. See the <a class="el" href="a01073.html" title="Microchip Crypto Auth device object.">atca_device.h</a> file for details on the ATCADevice methods  
+ <a href="a02425.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="a01073_source.html">atca_device.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:abaf4bb65d962f53a31b943c663eaf3b9"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02337.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02425.html#abaf4bb65d962f53a31b943c663eaf3b9">cert_def</a></td></tr>
-<tr class="memdesc:abaf4bb65d962f53a31b943c663eaf3b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Certificate definition for the certificate being rebuilt.  <a href="a02425.html#abaf4bb65d962f53a31b943c663eaf3b9">More...</a><br /></td></tr>
-<tr class="separator:abaf4bb65d962f53a31b943c663eaf3b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa09eb68c2656a44748cad406cf960f7c"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02425.html#aa09eb68c2656a44748cad406cf960f7c">cert</a></td></tr>
-<tr class="memdesc:aa09eb68c2656a44748cad406cf960f7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer to contain the rebuilt certificate.  <a href="a02425.html#aa09eb68c2656a44748cad406cf960f7c">More...</a><br /></td></tr>
-<tr class="separator:aa09eb68c2656a44748cad406cf960f7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a083f29531821a0ef698b452cb2b7f5b4"><td class="memItemLeft" align="right" valign="top">size_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02425.html#a083f29531821a0ef698b452cb2b7f5b4">cert_size</a></td></tr>
-<tr class="memdesc:a083f29531821a0ef698b452cb2b7f5b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current size of the certificate in bytes.  <a href="a02425.html#a083f29531821a0ef698b452cb2b7f5b4">More...</a><br /></td></tr>
-<tr class="separator:a083f29531821a0ef698b452cb2b7f5b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbc4bbcc72558a31f830df7df2df53b8"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02425.html#abbc4bbcc72558a31f830df7df2df53b8">max_cert_size</a></td></tr>
-<tr class="memdesc:abbc4bbcc72558a31f830df7df2df53b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max size of the cert buffer in bytes.  <a href="a02425.html#abbc4bbcc72558a31f830df7df2df53b8">More...</a><br /></td></tr>
-<tr class="separator:abbc4bbcc72558a31f830df7df2df53b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3969ddf030fd0524b62c572070bb3edc"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02425.html#a3969ddf030fd0524b62c572070bb3edc">is_device_sn</a></td></tr>
-<tr class="memdesc:a3969ddf030fd0524b62c572070bb3edc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates the structure contains the device SN.  <a href="a02425.html#a3969ddf030fd0524b62c572070bb3edc">More...</a><br /></td></tr>
-<tr class="separator:a3969ddf030fd0524b62c572070bb3edc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5aa8a40126b53aa3748ba0d00de61e60"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02425.html#a5aa8a40126b53aa3748ba0d00de61e60">device_sn</a> [9]</td></tr>
-<tr class="memdesc:a5aa8a40126b53aa3748ba0d00de61e60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storage for the device SN, when it's found.  <a href="a02425.html#a5aa8a40126b53aa3748ba0d00de61e60">More...</a><br /></td></tr>
-<tr class="separator:a5aa8a40126b53aa3748ba0d00de61e60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac7a3ed180ba0fcf0d86f7b54ebc1379"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02394.html#gaebeafc249bfe2b00b6809d5c328841d9">ATCACommand</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02425.html#aac7a3ed180ba0fcf0d86f7b54ebc1379">mCommands</a></td></tr>
+<tr class="memdesc:aac7a3ed180ba0fcf0d86f7b54ebc1379"><td class="mdescLeft">&#160;</td><td class="mdescRight">Command set for a given CryptoAuth device.  <a href="a02425.html#aac7a3ed180ba0fcf0d86f7b54ebc1379">More...</a><br /></td></tr>
+<tr class="separator:aac7a3ed180ba0fcf0d86f7b54ebc1379"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca75c68806e47e95144dc86a3f50d236"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02396.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02425.html#aca75c68806e47e95144dc86a3f50d236">mIface</a></td></tr>
+<tr class="memdesc:aca75c68806e47e95144dc86a3f50d236"><td class="mdescLeft">&#160;</td><td class="mdescRight">Physical interface.  <a href="a02425.html#aca75c68806e47e95144dc86a3f50d236">More...</a><br /></td></tr>
+<tr class="separator:aca75c68806e47e95144dc86a3f50d236"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1301458ea318d4490606cabf83347e8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02425.html#aa1301458ea318d4490606cabf83347e8">session_state</a></td></tr>
+<tr class="separator:aa1301458ea318d4490606cabf83347e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3c84d39a7fff0cc234170025093263c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02425.html#ac3c84d39a7fff0cc234170025093263c">session_counter</a></td></tr>
+<tr class="separator:ac3c84d39a7fff0cc234170025093263c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaceccacc3e55463dfc93714de6b71310"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02425.html#aaceccacc3e55463dfc93714de6b71310">session_key_id</a></td></tr>
+<tr class="separator:aaceccacc3e55463dfc93714de6b71310"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0eb7c2ff3319fef6b1a83561b70fa195"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02425.html#a0eb7c2ff3319fef6b1a83561b70fa195">session_key</a></td></tr>
+<tr class="separator:a0eb7c2ff3319fef6b1a83561b70fa195"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4d3a55b803dabb444fb5c3b26ddbc91"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02425.html#ae4d3a55b803dabb444fb5c3b26ddbc91">session_key_len</a></td></tr>
+<tr class="separator:ae4d3a55b803dabb444fb5c3b26ddbc91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Tracks the state of a certificate as it's being rebuilt from device information. </p>
+<div class="textblock"><p><a class="el" href="a02425.html" title="atca_device is the C object backing ATCADevice. See the atca_device.h file for details on the ATCADev...">atca_device</a> is the C object backing ATCADevice. See the <a class="el" href="a01073.html" title="Microchip Crypto Auth device object.">atca_device.h</a> file for details on the ATCADevice methods </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="aa09eb68c2656a44748cad406cf960f7c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa09eb68c2656a44748cad406cf960f7c">&#9670;&nbsp;</a></span>cert</h2>
+<a id="aac7a3ed180ba0fcf0d86f7b54ebc1379"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac7a3ed180ba0fcf0d86f7b54ebc1379">&#9670;&nbsp;</a></span>mCommands</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* cert</td>
+          <td class="memname"><a class="el" href="a02394.html#gaebeafc249bfe2b00b6809d5c328841d9">ATCACommand</a> mCommands</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Buffer to contain the rebuilt certificate. </p>
+<p>Command set for a given CryptoAuth device. </p>
 
 </div>
 </div>
-<a id="abaf4bb65d962f53a31b943c663eaf3b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abaf4bb65d962f53a31b943c663eaf3b9">&#9670;&nbsp;</a></span>cert_def</h2>
+<a id="aca75c68806e47e95144dc86a3f50d236"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca75c68806e47e95144dc86a3f50d236">&#9670;&nbsp;</a></span>mIface</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="a02337.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a>* cert_def</td>
+          <td class="memname"><a class="el" href="a02396.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> mIface</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Certificate definition for the certificate being rebuilt. </p>
+<p>Physical interface. </p>
 
 </div>
 </div>
-<a id="a083f29531821a0ef698b452cb2b7f5b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a083f29531821a0ef698b452cb2b7f5b4">&#9670;&nbsp;</a></span>cert_size</h2>
+<a id="ac3c84d39a7fff0cc234170025093263c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3c84d39a7fff0cc234170025093263c">&#9670;&nbsp;</a></span>session_counter</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t* cert_size</td>
+          <td class="memname">uint16_t session_counter</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Current size of the certificate in bytes. </p>
+<p>Secure Session Message Count </p>
 
 </div>
 </div>
-<a id="a5aa8a40126b53aa3748ba0d00de61e60"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5aa8a40126b53aa3748ba0d00de61e60">&#9670;&nbsp;</a></span>device_sn</h2>
+<a id="a0eb7c2ff3319fef6b1a83561b70fa195"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0eb7c2ff3319fef6b1a83561b70fa195">&#9670;&nbsp;</a></span>session_key</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t device_sn[9]</td>
+          <td class="memname">uint8_t* session_key</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Storage for the device SN, when it's found. </p>
+<p>Session Key </p>
 
 </div>
 </div>
-<a id="a3969ddf030fd0524b62c572070bb3edc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3969ddf030fd0524b62c572070bb3edc">&#9670;&nbsp;</a></span>is_device_sn</h2>
+<a id="aaceccacc3e55463dfc93714de6b71310"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaceccacc3e55463dfc93714de6b71310">&#9670;&nbsp;</a></span>session_key_id</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t is_device_sn</td>
+          <td class="memname">uint16_t session_key_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Indicates the structure contains the device SN. </p>
+<p>Key ID used for a secure sesison </p>
 
 </div>
 </div>
-<a id="abbc4bbcc72558a31f830df7df2df53b8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abbc4bbcc72558a31f830df7df2df53b8">&#9670;&nbsp;</a></span>max_cert_size</h2>
+<a id="ae4d3a55b803dabb444fb5c3b26ddbc91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4d3a55b803dabb444fb5c3b26ddbc91">&#9670;&nbsp;</a></span>session_key_len</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t max_cert_size</td>
+          <td class="memname">uint8_t session_key_len</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Length of key used for the session in bytes </p>
 
-<p>Max size of the cert buffer in bytes. </p>
+</div>
+</div>
+<a id="aa1301458ea318d4490606cabf83347e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1301458ea318d4490606cabf83347e8">&#9670;&nbsp;</a></span>session_state</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t session_state</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Secure Session State </p>
 
 </div>
 </div>
@@ -218,7 +230,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02425.html">atcacert_build_state_s</a></li>
+    <li class="navelem"><a class="el" href="a02425.html">atca_device</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

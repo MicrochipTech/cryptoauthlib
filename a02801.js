@@ -1,5 +1,5 @@
 var a02801 =
 [
-    [ "pParams", "a02801.html#ae702aa2c42c408bb705f91d9c49fa5e8", null ],
-    [ "ulCount", "a02801.html#a73e6f982fe59a1c2076faeb67da64cf6", null ]
+    [ "pVersion", "a02801.html#aed57d5f7aedb25da376592d85af67c44", null ],
+    [ "RandomInfo", "a02801.html#a82305146a206e94b4f3d0ac948555f81", null ]
 ];

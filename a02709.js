@@ -1,6 +1,6 @@
 var a02709 =
 [
-    [ "ulMacLength", "a02709.html#a7c666619b471e4c6c6083a50adab5272", null ],
-    [ "ulRounds", "a02709.html#abccd916df6f88f2628b639341735dc43", null ],
-    [ "ulWordsize", "a02709.html#adec9abac2456557fc3fa3ee9b93c074b", null ]
+    [ "flags", "a02709.html#aab168fc251b8b32a3bb0639f4986fce1", null ],
+    [ "ulMaxKeySize", "a02709.html#a4e2b8a1f4f9d06088d311cbf92d551a9", null ],
+    [ "ulMinKeySize", "a02709.html#af8c548a9b682f948b3c751cec8bb4968", null ]
 ];

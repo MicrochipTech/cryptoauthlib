@@ -1,7 +1,7 @@
 var a01295 =
 [
-    [ "atcab_aes_cbc_decrypt_block", "a07525.html#ga7c66e1b8b31bb87be3de6c9a9084c21e", null ],
-    [ "atcab_aes_cbc_encrypt_block", "a07525.html#ga7414e3dc8215cedc1bffc6cf576d7d1e", null ],
-    [ "atcab_aes_cbc_init", "a07525.html#gabc41b824cdc9b10efa46bcbf74850184", null ],
-    [ "atcab_aes_cbc_init_ext", "a07525.html#ga13efae9f9f9c7aa5c5647119b0f3d1cb", null ]
+    [ "hal_check_wake", "a02400.html#ga6ce92f1d10000eb6618fc74c2ca92d76", null ],
+    [ "hal_iface_init", "a02400.html#ga16cd484ad27e94872f9eec83f85153ce", null ],
+    [ "hal_iface_register_hal", "a02400.html#gab464e383eb0e94ed0cb2c6746c8fd5a6", null ],
+    [ "hal_iface_release", "a02400.html#ga4be1afccb41f28f6ce620b1d5197befc", null ]
 ];

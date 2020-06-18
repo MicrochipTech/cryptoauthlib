@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_host_hw.h File Reference</title>
+<title>CryptoAuthLib: calib_gendig.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,39 +87,31 @@ $(document).ready(function(){initNavTree('a01184.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atcacert_host_hw.h File Reference</div>  </div>
+<div class="title">calib_gendig.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>host side methods using CryptoAuth hardware  
+<p>CryptoAuthLib Basic API methods for GenDig command.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a01172_source.html">atcacert_def.h</a>&quot;</code><br />
-</div>
-<p><a href="a01184_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a01289_source.html">cryptoauthlib.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga81e92ea606e86051afa84f2fac4898d6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07530.html#ga81e92ea606e86051afa84f2fac4898d6">atcacert_verify_cert_hw</a> (const <a class="el" href="a07530.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, const uint8_t ca_public_key[64])</td></tr>
-<tr class="memdesc:ga81e92ea606e86051afa84f2fac4898d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a certificate against its certificate authority's public key using the host's ATECC device for crypto functions.  <a href="a07530.html#ga81e92ea606e86051afa84f2fac4898d6">More...</a><br /></td></tr>
-<tr class="separator:ga81e92ea606e86051afa84f2fac4898d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga208c1ea765f192bd86b26964fbb5edcb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07530.html#ga208c1ea765f192bd86b26964fbb5edcb">atcacert_gen_challenge_hw</a> (uint8_t challenge[32])</td></tr>
-<tr class="memdesc:ga208c1ea765f192bd86b26964fbb5edcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a random challenge to be sent to the client using the RNG on the host's ATECC device.  <a href="a07530.html#ga208c1ea765f192bd86b26964fbb5edcb">More...</a><br /></td></tr>
-<tr class="separator:ga208c1ea765f192bd86b26964fbb5edcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafeffa7a36a7b5a343f5f568d090e8eed"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07530.html#gafeffa7a36a7b5a343f5f568d090e8eed">atcacert_verify_response_hw</a> (const uint8_t device_public_key[64], const uint8_t challenge[32], const uint8_t response[64])</td></tr>
-<tr class="memdesc:gafeffa7a36a7b5a343f5f568d090e8eed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a client's response to a challenge using the host's ATECC device for crypto functions.  <a href="a07530.html#gafeffa7a36a7b5a343f5f568d090e8eed">More...</a><br /></td></tr>
-<tr class="separator:gafeffa7a36a7b5a343f5f568d090e8eed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga574916fbc77d017ee829b262e741b11b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga574916fbc77d017ee829b262e741b11b">calib_gendig</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t zone, uint16_t key_id, const uint8_t *other_data, uint8_t other_data_size)</td></tr>
+<tr class="memdesc:ga574916fbc77d017ee829b262e741b11b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues a GenDig command, which performs a SHA256 hash on the source data indicated by zone with the contents of TempKey. See the CryptoAuth datasheet for your chip to see what the values of zone correspond to.  <a href="a02398.html#ga574916fbc77d017ee829b262e741b11b">More...</a><br /></td></tr>
+<tr class="separator:ga574916fbc77d017ee829b262e741b11b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>host side methods using CryptoAuth hardware </p>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for GenDig command. </p>
+<p>The GenDig command uses SHA-256 to combine a stored value with the contents of TempKey, which must have been valid prior to the execution of this command.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, and ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_65edf1b561f102319ae2d8c3ccfc1a4c.html">atcacert</a></li><li class="navelem"><a class="el" href="a01184.html">atcacert_host_hw.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_a7c83ffe4cbb7b846faed985dac26a17.html">calib</a></li><li class="navelem"><a class="el" href="a01184.html">calib_gendig.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

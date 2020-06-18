@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_verify.c File Reference</title>
+<title>CryptoAuthLib: sha2_routines.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,52 +85,237 @@ $(document).ready(function(){initNavTree('a01286.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">calib_verify.c File Reference</div>  </div>
+<div class="title">sha2_routines.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for Verify command.  
+<p>Software implementation of the SHA256 algorithm.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01343_source.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01481_source.html">host/atca_host.h</a>&quot;</code><br />
-</div><table class="memberdecls">
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+</div>
+<p><a href="a01286_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02521.html">sw_sha256_ctx</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a81efbc0fc101b06a914f7ff9e2fbc0e9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01286.html#a81efbc0fc101b06a914f7ff9e2fbc0e9">SHA256_DIGEST_SIZE</a>&#160;&#160;&#160;(32)</td></tr>
+<tr class="separator:a81efbc0fc101b06a914f7ff9e2fbc0e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c1fe69ad43d4ca74b84303a0ed64f2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01286.html#a9c1fe69ad43d4ca74b84303a0ed64f2f">SHA256_BLOCK_SIZE</a>&#160;&#160;&#160;(64)</td></tr>
+<tr class="separator:a9c1fe69ad43d4ca74b84303a0ed64f2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gae7339d13bf06e7a5d8abd50ed7654b87"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#gae7339d13bf06e7a5d8abd50ed7654b87">calib_verify</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t key_id, const uint8_t *signature, const uint8_t *public_key, const uint8_t *other_data, uint8_t *mac)</td></tr>
-<tr class="memdesc:gae7339d13bf06e7a5d8abd50ed7654b87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command, which takes an ECDSA [R,S] signature and verifies that it is correctly generated from a given message and public key. In all cases, the signature is an input to the command.  <a href="a07531.html#gae7339d13bf06e7a5d8abd50ed7654b87">More...</a><br /></td></tr>
-<tr class="separator:gae7339d13bf06e7a5d8abd50ed7654b87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabb7a48cb662f6229e864764a4fc16b2f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#gabb7a48cb662f6229e864764a4fc16b2f">calib_verify_extern</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *message, const uint8_t *signature, const uint8_t *public_key, bool *is_verified)</td></tr>
-<tr class="memdesc:gabb7a48cb662f6229e864764a4fc16b2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command, which verifies a signature (ECDSA verify operation) with all components (message, signature, and public key) supplied. The message to be signed will be loaded into the Message Digest Buffer to the ATECC608A device or TempKey for other devices.  <a href="a07531.html#gabb7a48cb662f6229e864764a4fc16b2f">More...</a><br /></td></tr>
-<tr class="separator:gabb7a48cb662f6229e864764a4fc16b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa0d9e4b8decddca603fa6a0f00130714"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#gaa0d9e4b8decddca603fa6a0f00130714">calib_verify_extern_mac</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *message, const uint8_t *signature, const uint8_t *public_key, const uint8_t *num_in, const uint8_t *io_key, bool *is_verified)</td></tr>
-<tr class="memdesc:gaa0d9e4b8decddca603fa6a0f00130714"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command with verification MAC, which verifies a signature (ECDSA verify operation) with all components (message, signature, and public key) supplied. This function is only available on the ATECC608A.  <a href="a07531.html#gaa0d9e4b8decddca603fa6a0f00130714">More...</a><br /></td></tr>
-<tr class="separator:gaa0d9e4b8decddca603fa6a0f00130714"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7c18378e7e634aef3f7cd5124b172f1e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga7c18378e7e634aef3f7cd5124b172f1e">calib_verify_stored</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *message, const uint8_t *signature, uint16_t key_id, bool *is_verified)</td></tr>
-<tr class="memdesc:ga7c18378e7e634aef3f7cd5124b172f1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command, which verifies a signature (ECDSA verify operation) with a public key stored in the device. The message to be signed will be loaded into the Message Digest Buffer to the ATECC608A device or TempKey for other devices.  <a href="a07531.html#ga7c18378e7e634aef3f7cd5124b172f1e">More...</a><br /></td></tr>
-<tr class="separator:ga7c18378e7e634aef3f7cd5124b172f1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga93620b7a951daa744e1c47dff7af2f5a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga93620b7a951daa744e1c47dff7af2f5a">calib_verify_stored_mac</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *message, const uint8_t *signature, uint16_t key_id, const uint8_t *num_in, const uint8_t *io_key, bool *is_verified)</td></tr>
-<tr class="memdesc:ga93620b7a951daa744e1c47dff7af2f5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command with verification MAC, which verifies a signature (ECDSA verify operation) with a public key stored in the device. This function is only available on the ATECC608A.  <a href="a07531.html#ga93620b7a951daa744e1c47dff7af2f5a">More...</a><br /></td></tr>
-<tr class="separator:ga93620b7a951daa744e1c47dff7af2f5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0e0e60a885d0a4910d273d2b820f74ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga0e0e60a885d0a4910d273d2b820f74ce">calib_verify_validate</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, const uint8_t *signature, const uint8_t *other_data, bool *is_verified)</td></tr>
-<tr class="memdesc:ga0e0e60a885d0a4910d273d2b820f74ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command in Validate mode to validate a public key stored in a slot.  <a href="a07531.html#ga0e0e60a885d0a4910d273d2b820f74ce">More...</a><br /></td></tr>
-<tr class="separator:ga0e0e60a885d0a4910d273d2b820f74ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab2c78ae47cda2f9d3ad0f24b7e3695c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#gab2c78ae47cda2f9d3ad0f24b7e3695c5">calib_verify_invalidate</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, const uint8_t *signature, const uint8_t *other_data, bool *is_verified)</td></tr>
-<tr class="memdesc:gab2c78ae47cda2f9d3ad0f24b7e3695c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command in Invalidate mode which invalidates a previously validated public key stored in a slot.  <a href="a07531.html#gab2c78ae47cda2f9d3ad0f24b7e3695c5">More...</a><br /></td></tr>
-<tr class="separator:gab2c78ae47cda2f9d3ad0f24b7e3695c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfb7028e6f10d29c548cbecdbfa53ac8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01286.html#acfb7028e6f10d29c548cbecdbfa53ac8">sw_sha256_init</a> (<a class="el" href="a02521.html">sw_sha256_ctx</a> *ctx)</td></tr>
+<tr class="memdesc:acfb7028e6f10d29c548cbecdbfa53ac8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Intialize the software SHA256.  <a href="a01286.html#acfb7028e6f10d29c548cbecdbfa53ac8">More...</a><br /></td></tr>
+<tr class="separator:acfb7028e6f10d29c548cbecdbfa53ac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f5d8ad85631d77bfdb10dfb728bfbce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01286.html#a7f5d8ad85631d77bfdb10dfb728bfbce">sw_sha256_update</a> (<a class="el" href="a02521.html">sw_sha256_ctx</a> *ctx, const uint8_t *message, uint32_t len)</td></tr>
+<tr class="memdesc:a7f5d8ad85631d77bfdb10dfb728bfbce"><td class="mdescLeft">&#160;</td><td class="mdescRight">updates the running hash with the next block of data, called iteratively for the entire stream of data to be hashed using the SHA256 software  <a href="a01286.html#a7f5d8ad85631d77bfdb10dfb728bfbce">More...</a><br /></td></tr>
+<tr class="separator:a7f5d8ad85631d77bfdb10dfb728bfbce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a594b8b10c408cb1103da9c09b1367a51"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01286.html#a594b8b10c408cb1103da9c09b1367a51">sw_sha256_final</a> (<a class="el" href="a02521.html">sw_sha256_ctx</a> *ctx, uint8_t digest[(32)])</td></tr>
+<tr class="memdesc:a594b8b10c408cb1103da9c09b1367a51"><td class="mdescLeft">&#160;</td><td class="mdescRight">completes the final SHA256 calculation and returns the final digest/hash  <a href="a01286.html#a594b8b10c408cb1103da9c09b1367a51">More...</a><br /></td></tr>
+<tr class="separator:a594b8b10c408cb1103da9c09b1367a51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90a76445beb1a0eadea22bb7e3c8ad60"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01286.html#a90a76445beb1a0eadea22bb7e3c8ad60">sw_sha256</a> (const uint8_t *message, unsigned int len, uint8_t digest[(32)])</td></tr>
+<tr class="memdesc:a90a76445beb1a0eadea22bb7e3c8ad60"><td class="mdescLeft">&#160;</td><td class="mdescRight">single call convenience function which computes Hash of given data using SHA256 software  <a href="a01286.html#a90a76445beb1a0eadea22bb7e3c8ad60">More...</a><br /></td></tr>
+<tr class="separator:a90a76445beb1a0eadea22bb7e3c8ad60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for Verify command. </p>
-<p>The Verify command takes an ECDSA [R,S] signature and verifies that it is correctly generated given an input message digest and public key.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC108A, ATECC508A, and ATECC608A. There are differences in the modes that they support. Refer to device datasheet for full details.</dd></dl>
+<div class="textblock"><p>Software implementation of the SHA256 algorithm. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a9c1fe69ad43d4ca74b84303a0ed64f2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c1fe69ad43d4ca74b84303a0ed64f2f">&#9670;&nbsp;</a></span>SHA256_BLOCK_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHA256_BLOCK_SIZE&#160;&#160;&#160;(64)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a81efbc0fc101b06a914f7ff9e2fbc0e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81efbc0fc101b06a914f7ff9e2fbc0e9">&#9670;&nbsp;</a></span>SHA256_DIGEST_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHA256_DIGEST_SIZE&#160;&#160;&#160;(32)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a90a76445beb1a0eadea22bb7e3c8ad60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90a76445beb1a0eadea22bb7e3c8ad60">&#9670;&nbsp;</a></span>sw_sha256()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sw_sha256 </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>digest</em>[(32)]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>single call convenience function which computes Hash of given data using SHA256 software </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">message</td><td>pointer to stream of data to hash </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>size of data stream to hash </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">digest</td><td>result </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a594b8b10c408cb1103da9c09b1367a51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a594b8b10c408cb1103da9c09b1367a51">&#9670;&nbsp;</a></span>sw_sha256_final()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sw_sha256_final </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02521.html">sw_sha256_ctx</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>digest</em>[(32)]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>completes the final SHA256 calculation and returns the final digest/hash </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>ptr to context data structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">digest</td><td>receives the computed digest of the SHA 256 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acfb7028e6f10d29c548cbecdbfa53ac8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfb7028e6f10d29c548cbecdbfa53ac8">&#9670;&nbsp;</a></span>sw_sha256_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sw_sha256_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02521.html">sw_sha256_ctx</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Intialize the software SHA256. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>SHA256 hash context </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7f5d8ad85631d77bfdb10dfb728bfbce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f5d8ad85631d77bfdb10dfb728bfbce">&#9670;&nbsp;</a></span>sw_sha256_update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sw_sha256_update </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02521.html">sw_sha256_ctx</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>msg_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>updates the running hash with the next block of data, called iteratively for the entire stream of data to be hashed using the SHA256 software </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>SHA256 hash context </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">msg</td><td>Raw blocks to be processed </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">msg_size</td><td>The size of the message passed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_a7c83ffe4cbb7b846faed985dac26a17.html">calib</a></li><li class="navelem"><a class="el" href="a01286.html">calib_verify.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_0d284ebe0a46982303565525253d36b8.html">crypto</a></li><li class="navelem"><a class="el" href="dir_d3d4a6b49a98e373fd2a2e5f3f68abbc.html">hashes</a></li><li class="navelem"><a class="el" href="a01286.html">sha2_routines.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

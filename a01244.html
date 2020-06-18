@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_hmac.c File Reference</title>
+<title>CryptoAuthLib: atca_crypto_hw_aes_cmac.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,31 +87,41 @@ $(document).ready(function(){initNavTree('a01244.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">calib_hmac.c File Reference</div>  </div>
+<div class="title">atca_crypto_hw_aes_cmac.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for HMAC command.  
+<p>CryptoAuthLib Basic API methods for AES CBC_MAC mode.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01343_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a01289_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01238_source.html">atca_crypto_hw_aes.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaf2a3d2083992c399f6da6efee006cfc8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#gaf2a3d2083992c399f6da6efee006cfc8">calib_hmac</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t key_id, uint8_t *digest)</td></tr>
-<tr class="memdesc:gaf2a3d2083992c399f6da6efee006cfc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues a HMAC command, which computes an HMAC/SHA-256 digest of a key stored in the device, a challenge, and other information on the device.  <a href="a07531.html#gaf2a3d2083992c399f6da6efee006cfc8">More...</a><br /></td></tr>
-<tr class="separator:gaf2a3d2083992c399f6da6efee006cfc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8da20fcd2c98c0738b32379d87b14843"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02392.html#ga8da20fcd2c98c0738b32379d87b14843">atcab_aes_cmac_init_ext</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a01238.html#a71a000f89238de0205da742995a0cb34">atca_aes_cmac_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block)</td></tr>
+<tr class="memdesc:ga8da20fcd2c98c0738b32379d87b14843"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a CMAC calculation using an AES-128 key in the device.  <a href="a02392.html#ga8da20fcd2c98c0738b32379d87b14843">More...</a><br /></td></tr>
+<tr class="separator:ga8da20fcd2c98c0738b32379d87b14843"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84506ff4105e63823c99527788d36d52"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02392.html#ga84506ff4105e63823c99527788d36d52">atcab_aes_cmac_init</a> (<a class="el" href="a01238.html#a71a000f89238de0205da742995a0cb34">atca_aes_cmac_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block)</td></tr>
+<tr class="memdesc:ga84506ff4105e63823c99527788d36d52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a CMAC calculation using an AES-128 key in the device.  <a href="a02392.html#ga84506ff4105e63823c99527788d36d52">More...</a><br /></td></tr>
+<tr class="separator:ga84506ff4105e63823c99527788d36d52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0cf22e893c713890faeb9fa8784760b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02392.html#ga0cf22e893c713890faeb9fa8784760b1">atcab_aes_cmac_update</a> (<a class="el" href="a01238.html#a71a000f89238de0205da742995a0cb34">atca_aes_cmac_ctx_t</a> *ctx, const uint8_t *data, uint32_t data_size)</td></tr>
+<tr class="memdesc:ga0cf22e893c713890faeb9fa8784760b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add data to an initialized CMAC calculation.  <a href="a02392.html#ga0cf22e893c713890faeb9fa8784760b1">More...</a><br /></td></tr>
+<tr class="separator:ga0cf22e893c713890faeb9fa8784760b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac0be51b283b107465dcf42758ca31687"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02392.html#gac0be51b283b107465dcf42758ca31687">atcab_aes_cmac_finish</a> (<a class="el" href="a01238.html#a71a000f89238de0205da742995a0cb34">atca_aes_cmac_ctx_t</a> *ctx, uint8_t *cmac, uint32_t cmac_size)</td></tr>
+<tr class="memdesc:gac0be51b283b107465dcf42758ca31687"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finish a CMAC operation returning the CMAC value.  <a href="a02392.html#gac0be51b283b107465dcf42758ca31687">More...</a><br /></td></tr>
+<tr class="separator:gac0be51b283b107465dcf42758ca31687"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for HMAC command. </p>
-<p>The HMAC command computes an HMAC/SHA-256 digest using a key stored in the device over a challenge stored in the TempKey register, and/or other information stored within the device.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, and ATECC508A . There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for AES CBC_MAC mode. </p>
+<p>The AES command supports 128-bit AES encryption or decryption of small messages or data packets in ECB mode.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC608A &amp; TA100. Refer to device datasheet for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_a7c83ffe4cbb7b846faed985dac26a17.html">calib</a></li><li class="navelem"><a class="el" href="a01244.html">calib_hmac.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_0d284ebe0a46982303565525253d36b8.html">crypto</a></li><li class="navelem"><a class="el" href="a01244.html">atca_crypto_hw_aes_cmac.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_read.c File Reference</title>
+<title>CryptoAuthLib: atca_crypto_sw_sha1.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,134 +87,41 @@ $(document).ready(function(){initNavTree('a01268.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">calib_read.c File Reference</div>  </div>
+<div class="title">atca_crypto_sw_sha1.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for Read command.  
+<p>Wrapper API for SHA 1 routines.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01343_source.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01481_source.html">host/atca_host.h</a>&quot;</code><br />
-</div><table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a01250_source.html">atca_crypto_sw.h</a>&quot;</code><br />
+<code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+</div>
+<p><a href="a01268_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gae08bb5c72c5f100144a7ccb8dba18dc7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#gae08bb5c72c5f100144a7ccb8dba18dc7">calib_read_zone</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint8_t *data, uint8_t len)</td></tr>
-<tr class="memdesc:gae08bb5c72c5f100144a7ccb8dba18dc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command, which reads either 4 or 32 bytes of data from a given slot, configuration zone, or the OTP zone.  <a href="a07531.html#gae08bb5c72c5f100144a7ccb8dba18dc7">More...</a><br /></td></tr>
-<tr class="separator:gae08bb5c72c5f100144a7ccb8dba18dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3247f37c13984694c621c88e0e3840ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga3247f37c13984694c621c88e0e3840ea">calib_read_serial_number</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t *serial_number)</td></tr>
-<tr class="memdesc:ga3247f37c13984694c621c88e0e3840ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command, which reads the 9 byte serial number of the device from the config zone.  <a href="a07531.html#ga3247f37c13984694c621c88e0e3840ea">More...</a><br /></td></tr>
-<tr class="separator:ga3247f37c13984694c621c88e0e3840ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadfd40a59b7398ab8a963aa5869a00eab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#gadfd40a59b7398ab8a963aa5869a00eab">calib_is_slot_locked</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t slot, bool *is_locked)</td></tr>
-<tr class="memdesc:gadfd40a59b7398ab8a963aa5869a00eab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command, which reads the configuration zone to see if the specified slot is locked.  <a href="a07531.html#gadfd40a59b7398ab8a963aa5869a00eab">More...</a><br /></td></tr>
-<tr class="separator:gadfd40a59b7398ab8a963aa5869a00eab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga53d3cce5a7f1edfb8386c92d63d3cb5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga53d3cce5a7f1edfb8386c92d63d3cb5c">calib_is_locked</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t zone, bool *is_locked)</td></tr>
-<tr class="memdesc:ga53d3cce5a7f1edfb8386c92d63d3cb5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command, which reads the configuration zone to see if the specified zone is locked.  <a href="a07531.html#ga53d3cce5a7f1edfb8386c92d63d3cb5c">More...</a><br /></td></tr>
-<tr class="separator:ga53d3cce5a7f1edfb8386c92d63d3cb5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58b432beb5c7a034f9fe0e4333d1eaf3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01268.html#a58b432beb5c7a034f9fe0e4333d1eaf3">calib_read_enc</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, uint8_t block, uint8_t *data, const uint8_t *enc_key, const uint16_t enc_key_id, const uint8_t num_in[<a class="el" href="a01220.html#ad0c3da8203a3be6755e86cda96e00228">NONCE_NUMIN_SIZE</a>])</td></tr>
-<tr class="memdesc:a58b432beb5c7a034f9fe0e4333d1eaf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command on a slot configured for encrypted reads and decrypts the data to return it as plaintext.  <a href="a01268.html#a58b432beb5c7a034f9fe0e4333d1eaf3">More...</a><br /></td></tr>
-<tr class="separator:a58b432beb5c7a034f9fe0e4333d1eaf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab555925b22a0490252778600c91cb67d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#gab555925b22a0490252778600c91cb67d">calib_read_config_zone</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t *config_data)</td></tr>
-<tr class="memdesc:gab555925b22a0490252778600c91cb67d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command to read the complete device configuration zone.  <a href="a07531.html#gab555925b22a0490252778600c91cb67d">More...</a><br /></td></tr>
-<tr class="separator:gab555925b22a0490252778600c91cb67d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab5ea7eb264a8518d62174000c9cbef19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#gab5ea7eb264a8518d62174000c9cbef19">calib_cmp_config_zone</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t *config_data, bool *same_config)</td></tr>
-<tr class="memdesc:gab5ea7eb264a8518d62174000c9cbef19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares a specified configuration zone with the configuration zone currently on the device.  <a href="a07531.html#gab5ea7eb264a8518d62174000c9cbef19">More...</a><br /></td></tr>
-<tr class="separator:gab5ea7eb264a8518d62174000c9cbef19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf06f8426afbc3eca5b00e6f42d197492"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#gaf06f8426afbc3eca5b00e6f42d197492">calib_read_sig</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t slot, uint8_t *sig)</td></tr>
-<tr class="memdesc:gaf06f8426afbc3eca5b00e6f42d197492"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command to read a 64 byte ECDSA P256 signature from a slot configured for clear reads.  <a href="a07531.html#gaf06f8426afbc3eca5b00e6f42d197492">More...</a><br /></td></tr>
-<tr class="separator:gaf06f8426afbc3eca5b00e6f42d197492"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5e069fd857436bd88e0441ef4bcf4557"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga5e069fd857436bd88e0441ef4bcf4557">calib_read_pubkey</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t slot, uint8_t *public_key)</td></tr>
-<tr class="memdesc:ga5e069fd857436bd88e0441ef4bcf4557"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command to read an ECC P256 public key from a slot configured for clear reads.  <a href="a07531.html#ga5e069fd857436bd88e0441ef4bcf4557">More...</a><br /></td></tr>
-<tr class="separator:ga5e069fd857436bd88e0441ef4bcf4557"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga24aaf479dedf2c21cc7af270186805ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga24aaf479dedf2c21cc7af270186805ae">calib_read_bytes_zone</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t zone, uint16_t slot, size_t offset, uint8_t *data, size_t length)</td></tr>
-<tr class="memdesc:ga24aaf479dedf2c21cc7af270186805ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to read an arbitrary number of bytes from any zone configured for clear reads.  <a href="a07531.html#ga24aaf479dedf2c21cc7af270186805ae">More...</a><br /></td></tr>
-<tr class="separator:ga24aaf479dedf2c21cc7af270186805ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabed03bcc1228768534ef4ee49df0ad09"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02399.html#gabed03bcc1228768534ef4ee49df0ad09">atcac_sw_sha1_init</a> (<a class="el" href="a01250.html#ab385f86dae5ecf97530c41da2c730dda">atcac_sha1_ctx</a> *ctx)</td></tr>
+<tr class="memdesc:gabed03bcc1228768534ef4ee49df0ad09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing SHA1 hash in software.  <a href="a02399.html#gabed03bcc1228768534ef4ee49df0ad09">More...</a><br /></td></tr>
+<tr class="separator:gabed03bcc1228768534ef4ee49df0ad09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga65ff558306a88e0fbe2fc82bbe6a9c03"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02399.html#ga65ff558306a88e0fbe2fc82bbe6a9c03">atcac_sw_sha1_update</a> (<a class="el" href="a01250.html#ab385f86dae5ecf97530c41da2c730dda">atcac_sha1_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
+<tr class="memdesc:ga65ff558306a88e0fbe2fc82bbe6a9c03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add data to a SHA1 hash.  <a href="a02399.html#ga65ff558306a88e0fbe2fc82bbe6a9c03">More...</a><br /></td></tr>
+<tr class="separator:ga65ff558306a88e0fbe2fc82bbe6a9c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3124f25e05eb4300557d5794a7a88e61"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02399.html#ga3124f25e05eb4300557d5794a7a88e61">atcac_sw_sha1_finish</a> (<a class="el" href="a01250.html#ab385f86dae5ecf97530c41da2c730dda">atcac_sha1_ctx</a> *ctx, uint8_t digest[(20)])</td></tr>
+<tr class="separator:ga3124f25e05eb4300557d5794a7a88e61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga65fdb8b2a2da178fd417232bf9f0ea48"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02399.html#ga65fdb8b2a2da178fd417232bf9f0ea48">atcac_sw_sha1</a> (const uint8_t *data, size_t data_size, uint8_t digest[(20)])</td></tr>
+<tr class="memdesc:ga65fdb8b2a2da178fd417232bf9f0ea48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform SHA1 hash of data in software.  <a href="a02399.html#ga65fdb8b2a2da178fd417232bf9f0ea48">More...</a><br /></td></tr>
+<tr class="separator:ga65fdb8b2a2da178fd417232bf9f0ea48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for Read command. </p>
-<p>The Read command reads words either 4-byte words or 32-byte blocks from one of the memory zones of the device. The data may optionally be encrypted before being returned to the system.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>Wrapper API for SHA 1 routines. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="a58b432beb5c7a034f9fe0e4333d1eaf3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a58b432beb5c7a034f9fe0e4333d1eaf3">&#9670;&nbsp;</a></span>calib_read_enc()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_read_enc </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td>
-          <td class="paramname"><em>device</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>key_id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>block</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>enc_key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint16_t&#160;</td>
-          <td class="paramname"><em>enc_key_id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>num_in</em>[NONCE_NUMIN_SIZE]&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Executes Read command on a slot configured for encrypted reads and decrypts the data to return it as plaintext. </p>
-<p>Data zone must be locked for this command to succeed. Can only read 32 byte blocks.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">key_id</td><td>The slot ID to read from. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">block</td><td>Index of the 32 byte block within the slot to read. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">data</td><td>Decrypted (plaintext) data from the read is returned here (32 bytes). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">enc_key</td><td>32 byte ReadKey for the slot being read. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">enc_key_id</td><td>KeyID of the ReadKey being used. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">num_in</td><td>20 byte host nonce to inject into Nonce calculation</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>returns ATCA_SUCCESS on success, otherwise an error code. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_a7c83ffe4cbb7b846faed985dac26a17.html">calib</a></li><li class="navelem"><a class="el" href="a01268.html">calib_read.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_0d284ebe0a46982303565525253d36b8.html">crypto</a></li><li class="navelem"><a class="el" href="a01268.html">atca_crypto_sw_sha1.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

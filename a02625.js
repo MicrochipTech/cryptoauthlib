@@ -1,8 +1,13 @@
 var a02625 =
 [
-    [ "firmwareVersion", "a02625.html#a60a4109f4e2c04a2cd38f2b2b32c86f7", null ],
-    [ "flags", "a02625.html#aab168fc251b8b32a3bb0639f4986fce1", null ],
-    [ "hardwareVersion", "a02625.html#a13aace04822afda5af556b8eccfc447d", null ],
-    [ "manufacturerID", "a02625.html#a734f9aeeb46b5b72f35f7624900a7efe", null ],
-    [ "slotDescription", "a02625.html#a97ee7d9024c62ceb7a06ff010dd153bb", null ]
+    [ "client_chal", "a02625.html#a218f1c30c4a21b348dbe1817a2c14896", null ],
+    [ "client_resp", "a02625.html#a430a448768d687a94e3daaa00dce63ce", null ],
+    [ "key_id", "a02625.html#ac21eed4200889cc115d16a781871d01c", null ],
+    [ "mode", "a02625.html#a37e90f5e3bd99fac2021fb3a326607d4", null ],
+    [ "other_data", "a02625.html#ac76ac607fd679316fc17b16039a86b9c", null ],
+    [ "otp", "a02625.html#a4510889ef4b42470bf1a1d4e940a19a9", null ],
+    [ "slot_key", "a02625.html#aa23b467edf1809a2a8b1b530a0159c45", null ],
+    [ "sn", "a02625.html#aef45bac2efcd5394c4ed79f73ee16d23", null ],
+    [ "target_key", "a02625.html#ab15c5e89189b9eea6fab7da58cc03967", null ],
+    [ "temp_key", "a02625.html#a72fae3d62889ef224f09c57a7646e061", null ]
 ];

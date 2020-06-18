@@ -1,8 +1,7 @@
 var a02505 =
 [
-    [ "bus_index", "a02505.html#af5c011e6c2e8d49675f7029e8ec2c0a6", null ],
-    [ "ref_ct", "a02505.html#ad72ba8c994f4d0e5ce354e17f7c427c0", null ],
-    [ "sercom_core_freq", "a02505.html#ab04a0cec69f9a7ed47f3f9cb46084e59", null ],
-    [ "usart_instance", "a02505.html#a2d29ab9b8f0842ee9a2906302b20011d", null ],
-    [ "USART_SWI", "a02505.html#a7758bb1b871f6094e6d2f0c2ce10b18c", null ]
+    [ "ciphertext", "a02505.html#afc0d08bec9a3c5cea20e51d4a311f54f", null ],
+    [ "device", "a02505.html#a564f8446306dcd02184ff973a1c671c2", null ],
+    [ "key_block", "a02505.html#a2ec310210422989027a46428a61fb1c1", null ],
+    [ "key_id", "a02505.html#ac21eed4200889cc115d16a781871d01c", null ]
 ];

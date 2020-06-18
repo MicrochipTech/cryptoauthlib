@@ -1,9 +1,11 @@
 var a01553 =
 [
-    [ "pkcs11_deinit", "a07537.html#gabff89fd0af2e75ee2db858f9fe934ac4", null ],
-    [ "pkcs11_get_context", "a07537.html#gae0e3060e6ae0dfc17a35881c223d8123", null ],
-    [ "pkcs11_init", "a07537.html#ga21e0ec91eccb3f92b45cb2536b3889b1", null ],
-    [ "pkcs11_init_check", "a07537.html#gadd899ffeae0146c08b249e3f551e21f8", null ],
-    [ "pkcs11_lock_context", "a07537.html#gaf0e755fd7df13be2aa1f706de5b0f24b", null ],
-    [ "pkcs11_unlock_context", "a07537.html#ga750f93d0a3c67f5d0e28c9c50ad990a8", null ]
+    [ "pkcs11_token_convert_pin_to_key", "a02404.html#ga9e4aef0d030b3b8d4a0f77a1fec4ed3d", null ],
+    [ "pkcs11_token_get_access_type", "a02404.html#ga6f92db83ad7904096b24c6b25774f4b7", null ],
+    [ "pkcs11_token_get_info", "a02404.html#ga7bf2fea766cab4645fe615661bcf0db9", null ],
+    [ "pkcs11_token_get_storage", "a02404.html#gabf87951ca453a2eaff25df22bc136a57", null ],
+    [ "pkcs11_token_get_writable", "a02404.html#ga5521260e489c703aea4f15912f52ad31", null ],
+    [ "pkcs11_token_init", "a02404.html#ga7e207adf2d26c1d6ea64f7c60252bf45", null ],
+    [ "pkcs11_token_random", "a02404.html#gaf4c0c6a2d12d879308f2d42cc61ef401", null ],
+    [ "pkcs11_token_set_pin", "a02404.html#ga75272ae3120c6d9fc42862ac8b52da17", null ]
 ];

@@ -1,9 +1,10 @@
 var a02425 =
 [
-    [ "cert", "a02425.html#aa09eb68c2656a44748cad406cf960f7c", null ],
-    [ "cert_def", "a02425.html#abaf4bb65d962f53a31b943c663eaf3b9", null ],
-    [ "cert_size", "a02425.html#a083f29531821a0ef698b452cb2b7f5b4", null ],
-    [ "device_sn", "a02425.html#a5aa8a40126b53aa3748ba0d00de61e60", null ],
-    [ "is_device_sn", "a02425.html#a3969ddf030fd0524b62c572070bb3edc", null ],
-    [ "max_cert_size", "a02425.html#abbc4bbcc72558a31f830df7df2df53b8", null ]
+    [ "mCommands", "a02425.html#aac7a3ed180ba0fcf0d86f7b54ebc1379", null ],
+    [ "mIface", "a02425.html#aca75c68806e47e95144dc86a3f50d236", null ],
+    [ "session_counter", "a02425.html#ac3c84d39a7fff0cc234170025093263c", null ],
+    [ "session_key", "a02425.html#a0eb7c2ff3319fef6b1a83561b70fa195", null ],
+    [ "session_key_id", "a02425.html#aaceccacc3e55463dfc93714de6b71310", null ],
+    [ "session_key_len", "a02425.html#ae4d3a55b803dabb444fb5c3b26ddbc91", null ],
+    [ "session_state", "a02425.html#aa1301458ea318d4490606cabf83347e8", null ]
 ];

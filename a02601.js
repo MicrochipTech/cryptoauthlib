@@ -1,14 +1,10 @@
 var a02601 =
 [
-    [ "attributes", "a02601.html#a7958e2f7da2ff152cbc04f798e4de864", null ],
-    [ "class_id", "a02601.html#aafc7db5317928deedbcf419b0b0664c2", null ],
-    [ "class_type", "a02601.html#a67f70545862c8942a8197d4abe9c019e", null ],
-    [ "config", "a02601.html#a4d216e0113081c145e739f8198831485", null ],
-    [ "count", "a02601.html#aed09b1d9b9654879b4181956740803a2", null ],
-    [ "data", "a02601.html#a9b4fd5e974a8fafb77bd95b51d4f0026", null ],
-    [ "flags", "a02601.html#aab168fc251b8b32a3bb0639f4986fce1", null ],
-    [ "handle_info", "a02601.html#a9e7ae3e9a303e5c8b82b0ca0a7afed77", null ],
-    [ "name", "a02601.html#a255abf4e11b571feba58773386483ec4", null ],
-    [ "size", "a02601.html#af75c32a63f981b0bc3b054172086a482", null ],
-    [ "slot", "a02601.html#a6838bbceac6278b9b361cc0aff6f0495", null ]
+    [ "key", "a02401.html#gab0d96f9d852c2058c2546a1338e87544", null ],
+    [ "key_id", "a02401.html#ga3eedc11953a89e931ede529eb72592ac", null ],
+    [ "mode", "a02401.html#ga1a6b6fb557d8d37d59700faf4e4c9167", null ],
+    [ "otp", "a02401.html#ga8712cb73a4d6b370658d8bc9a77fba3e", null ],
+    [ "response", "a02401.html#ga8ab7bcb35ce5bba05608c72da6b4a0d3", null ],
+    [ "sn", "a02401.html#ga7276bd20c5842e712da638d25ceb6d92", null ],
+    [ "temp_key", "a02401.html#gaa17e031da4b22938bed1c21161ba371a", null ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_crypto_sw_rand.h File Reference</title>
+<title>CryptoAuthLib: hal_esp32_timer.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,29 +87,63 @@ $(document).ready(function(){initNavTree('a01316.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_crypto_sw_rand.h File Reference</div>  </div>
+<div class="title">hal_esp32_timer.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="a01304_source.html">atca_crypto_sw.h</a>&quot;</code><br />
-<code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-</div>
-<p><a href="a01316_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a01298_source.html">atca_hal.h</a>&quot;</code><br />
+<code>#include &quot;freertos/FreeRTOS.h&quot;</code><br />
+<code>#include &quot;freertos/task.h&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga0710d8bf5e92403c4026c32af39ad79e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07532.html#ga0710d8bf5e92403c4026c32af39ad79e">atcac_sw_random</a> (uint8_t *data, size_t data_size)</td></tr>
-<tr class="memdesc:ga0710d8bf5e92403c4026c32af39ad79e"><td class="mdescLeft">&#160;</td><td class="mdescRight">return software generated random number and the function is currently not implemented  <a href="a07532.html#ga0710d8bf5e92403c4026c32af39ad79e">More...</a><br /></td></tr>
-<tr class="separator:ga0710d8bf5e92403c4026c32af39ad79e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7def86f0fbd90b451847d8534f21f5dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01316.html#a7def86f0fbd90b451847d8534f21f5dc">ets_delay_us</a> (uint32_t)</td></tr>
+<tr class="separator:a7def86f0fbd90b451847d8534f21f5dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b83848e938fac7ec4dde79e584b6f71"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01316.html#a4b83848e938fac7ec4dde79e584b6f71">atca_delay_ms</a> (uint32_t msec)</td></tr>
+<tr class="separator:a4b83848e938fac7ec4dde79e584b6f71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a4b83848e938fac7ec4dde79e584b6f71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b83848e938fac7ec4dde79e584b6f71">&#9670;&nbsp;</a></span>atca_delay_ms()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void atca_delay_ms </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>msec</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7def86f0fbd90b451847d8534f21f5dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7def86f0fbd90b451847d8534f21f5dc">&#9670;&nbsp;</a></span>ets_delay_us()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ets_delay_us </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_0d284ebe0a46982303565525253d36b8.html">crypto</a></li><li class="navelem"><a class="el" href="a01316.html">atca_crypto_sw_rand.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_36432077327cc0f3c76187c9e6e34627.html">hal</a></li><li class="navelem"><a class="el" href="a01316.html">hal_esp32_timer.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

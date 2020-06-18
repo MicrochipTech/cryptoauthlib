@@ -1,9 +1,9 @@
 var a02813 =
 [
-    [ "pAAD", "a02813.html#a0816b397709ad49300a6649032d36ae8", null ],
-    [ "pIv", "a02813.html#a484f89086d16b6136e768608356cf411", null ],
-    [ "ulAADLen", "a02813.html#aa04b948f1abaa06fd4fc5d5bc7e8388e", null ],
-    [ "ulIvBits", "a02813.html#aed408fc7d4fb70e358cd4bf7beabdc50", null ],
-    [ "ulIvLen", "a02813.html#a369e27367725ae54a5b066d87ad6e0b6", null ],
-    [ "ulTagBits", "a02813.html#a2bcb11fc26e296e7e0292f93d0138f37", null ]
+    [ "pLabel", "a02813.html#acc06b421a1d57263bcad8c4796778d74", null ],
+    [ "pOutput", "a02813.html#a7966f75c9f62ca16efa96499a79fe84e", null ],
+    [ "pSeed", "a02813.html#a746d217a79b917ce5fa51eabcb998d16", null ],
+    [ "pulOutputLen", "a02813.html#a2b14f7d601d0892a0c0c686469b81d9b", null ],
+    [ "ulLabelLen", "a02813.html#af94cd759bd8713fcadb1fcd995ff5c1b", null ],
+    [ "ulSeedLen", "a02813.html#af289f68610b16b9c3ca1fb7ced1f2f8c", null ]
 ];

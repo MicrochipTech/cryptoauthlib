@@ -1,13 +1,8 @@
 var a02685 =
 [
-    [ "hPrivateData", "a02685.html#a2f6769e4ceda4853db07b96b8e5770a0", null ],
-    [ "kdf", "a02685.html#acc8cd375637e8d4baa461093eda95473", null ],
-    [ "pOtherInfo", "a02685.html#a0bdadab84c1177e86014fccfbf43e50f", null ],
-    [ "pPublicData", "a02685.html#a5b5ab88b8cf93cfa701f56237f237292", null ],
-    [ "pPublicData2", "a02685.html#a807f984f215aef03dc5ac126804618dd", null ],
-    [ "publicKey", "a02685.html#afefc9f01b422602a32acbd4fd4bb9ccc", null ],
-    [ "ulOtherInfoLen", "a02685.html#ace81f9dea6ea647a99eb5fffb98621ea", null ],
-    [ "ulPrivateDataLen", "a02685.html#a298011aaedd3c092f893e8bbba354cf9", null ],
-    [ "ulPublicDataLen", "a02685.html#ae9ccaf64b51247d789c8e4d78b64b54c", null ],
-    [ "ulPublicDataLen2", "a02685.html#a883bd3806b7c0e47291bc8efce44ccc1", null ]
+    [ "firmwareVersion", "a02685.html#a60a4109f4e2c04a2cd38f2b2b32c86f7", null ],
+    [ "flags", "a02685.html#aab168fc251b8b32a3bb0639f4986fce1", null ],
+    [ "hardwareVersion", "a02685.html#a13aace04822afda5af556b8eccfc447d", null ],
+    [ "manufacturerID", "a02685.html#a734f9aeeb46b5b72f35f7624900a7efe", null ],
+    [ "slotDescription", "a02685.html#a97ee7d9024c62ceb7a06ff010dd153bb", null ]
 ];

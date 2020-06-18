@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_crypto_sw_sha1.c File Reference</title>
+<title>CryptoAuthLib: hal_freertos.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,32 +85,64 @@ $(document).ready(function(){initNavTree('a01319.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_crypto_sw_sha1.c File Reference</div>  </div>
+<div class="title">hal_freertos.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Wrapper API for SHA 1 routines.  
+<p>FreeRTOS Hardware/OS Abstration Layer.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01322_source.html">atca_crypto_sw_sha1.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01334_source.html">hashes/sha1_routines.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a01298_source.html">atca_hal.h</a>&quot;</code><br />
+<code>#include &quot;FreeRTOS.h&quot;</code><br />
+<code>#include &quot;semphr.h&quot;</code><br />
+<code>#include &quot;task.h&quot;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:acf61a669d2246c92200734be17bd5488"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01319.html#acf61a669d2246c92200734be17bd5488">ATCA_MUTEX_TIMEOUT</a>&#160;&#160;&#160;portMAX_DELAY</td></tr>
+<tr class="separator:acf61a669d2246c92200734be17bd5488"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga65fdb8b2a2da178fd417232bf9f0ea48"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07532.html#ga65fdb8b2a2da178fd417232bf9f0ea48">atcac_sw_sha1</a> (const uint8_t *data, size_t data_size, uint8_t digest[(20)])</td></tr>
-<tr class="memdesc:ga65fdb8b2a2da178fd417232bf9f0ea48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform SHA1 hash of data in software.  <a href="a07532.html#ga65fdb8b2a2da178fd417232bf9f0ea48">More...</a><br /></td></tr>
-<tr class="separator:ga65fdb8b2a2da178fd417232bf9f0ea48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3df335e46c7e798a1d4b8949d00c13d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02400.html#ga3df335e46c7e798a1d4b8949d00c13d3">hal_rtos_delay_ms</a> (uint32_t ms)</td></tr>
+<tr class="memdesc:ga3df335e46c7e798a1d4b8949d00c13d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API implemented at the HAL level.  <a href="a02400.html#ga3df335e46c7e798a1d4b8949d00c13d3">More...</a><br /></td></tr>
+<tr class="separator:ga3df335e46c7e798a1d4b8949d00c13d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab289a3949663589ac6be71d72fb18278"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02400.html#gab289a3949663589ac6be71d72fb18278">hal_create_mutex</a> (void **ppMutex, char *pName)</td></tr>
+<tr class="memdesc:gab289a3949663589ac6be71d72fb18278"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional hal interfaces.  <a href="a02400.html#gab289a3949663589ac6be71d72fb18278">More...</a><br /></td></tr>
+<tr class="separator:gab289a3949663589ac6be71d72fb18278"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02400.html#ga4589d7b3e951f40b7928f1cf31f7ddf3">hal_destroy_mutex</a> (void *pMutex)</td></tr>
+<tr class="separator:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02400.html#gad4cd02ff7ae4e75844eab4e84eb61994">hal_lock_mutex</a> (void *pMutex)</td></tr>
+<tr class="separator:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31fd8170a49623686543f6247b883bd1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02400.html#ga31fd8170a49623686543f6247b883bd1">hal_unlock_mutex</a> (void *pMutex)</td></tr>
+<tr class="separator:ga31fd8170a49623686543f6247b883bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Wrapper API for SHA 1 routines. </p>
+<div class="textblock"><p>FreeRTOS Hardware/OS Abstration Layer. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="acf61a669d2246c92200734be17bd5488"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf61a669d2246c92200734be17bd5488">&#9670;&nbsp;</a></span>ATCA_MUTEX_TIMEOUT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_MUTEX_TIMEOUT&#160;&#160;&#160;portMAX_DELAY</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_0d284ebe0a46982303565525253d36b8.html">crypto</a></li><li class="navelem"><a class="el" href="a01319.html">atca_crypto_sw_sha1.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_36432077327cc0f3c76187c9e6e34627.html">hal</a></li><li class="navelem"><a class="el" href="a01319.html">hal_freertos.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

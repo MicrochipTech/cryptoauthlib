@@ -1,9 +1,13 @@
 var a02745 =
 [
-    [ "hClientKey", "a02745.html#a56acdecbc9f199ec00a13cae8f7b2430", null ],
-    [ "hClientMacSecret", "a02745.html#ae06165859f1a2f3de8e335b81757610e", null ],
-    [ "hServerKey", "a02745.html#a5980d692dfc46593fe38f13624b82bd4", null ],
-    [ "hServerMacSecret", "a02745.html#a2c95f41daaa425212b2f179a0e030cca", null ],
-    [ "pIVClient", "a02745.html#adf3ed65402146a8e952013448e419aec", null ],
-    [ "pIVServer", "a02745.html#ab5d66f6e655c1563ff11d36ef5a73725", null ]
+    [ "hPrivateData", "a02745.html#a2f6769e4ceda4853db07b96b8e5770a0", null ],
+    [ "kdf", "a02745.html#acc8cd375637e8d4baa461093eda95473", null ],
+    [ "pOtherInfo", "a02745.html#a0bdadab84c1177e86014fccfbf43e50f", null ],
+    [ "pPublicData", "a02745.html#a5b5ab88b8cf93cfa701f56237f237292", null ],
+    [ "pPublicData2", "a02745.html#a807f984f215aef03dc5ac126804618dd", null ],
+    [ "publicKey", "a02745.html#afefc9f01b422602a32acbd4fd4bb9ccc", null ],
+    [ "ulOtherInfoLen", "a02745.html#ace81f9dea6ea647a99eb5fffb98621ea", null ],
+    [ "ulPrivateDataLen", "a02745.html#a298011aaedd3c092f893e8bbba354cf9", null ],
+    [ "ulPublicDataLen", "a02745.html#ae9ccaf64b51247d789c8e4d78b64b54c", null ],
+    [ "ulPublicDataLen2", "a02745.html#a883bd3806b7c0e47291bc8efce44ccc1", null ]
 ];

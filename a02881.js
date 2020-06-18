@@ -1,10 +1,9 @@
 var a02881 =
 [
-    [ "secure_boot_mode", "a02881.html#a159545ee58a6feff4210207e945ed8a6", null ],
-    [ "secure_boot_persistent_enable", "a02881.html#a29997e53feca6ea2ceb53bd12ccb7397", null ],
-    [ "secure_boot_pub_key", "a02881.html#a0d4d608806c7df6022d7e08df3ead4f3", null ],
-    [ "secure_boot_rand_nonce", "a02881.html#af0322cbed208460dead1ab2aaf42f35e", null ],
-    [ "secure_boot_reserved1", "a02881.html#aef6eee6b683ef0108fca05b531719f86", null ],
-    [ "secure_boot_reserved2", "a02881.html#ad94b92f8d5650653e8b6d7d3c9e50ba4", null ],
-    [ "secure_boot_sig_dig", "a02881.html#a454c1e8a0b9b0c4b56aa415ad1856889", null ]
+    [ "pAAD", "a02881.html#a0816b397709ad49300a6649032d36ae8", null ],
+    [ "pIv", "a02881.html#a484f89086d16b6136e768608356cf411", null ],
+    [ "ulAADLen", "a02881.html#aa04b948f1abaa06fd4fc5d5bc7e8388e", null ],
+    [ "ulIvBits", "a02881.html#aed408fc7d4fb70e358cd4bf7beabdc50", null ],
+    [ "ulIvLen", "a02881.html#a369e27367725ae54a5b066d87ad6e0b6", null ],
+    [ "ulTagBits", "a02881.html#a2bcb11fc26e296e7e0292f93d0138f37", null ]
 ];

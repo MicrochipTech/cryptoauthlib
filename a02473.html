@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcaI2Cmaster Struct Reference</title>
+<title>CryptoAuthLib: atcacert_cert_loc_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,114 +87,53 @@ $(document).ready(function(){initNavTree('a02473.html',''); initResizable(); });
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atcaI2Cmaster Struct Reference<div class="ingroups"><a class="el" href="a02340.html">Hardware abstraction layer (hal_)</a></div></div>  </div>
+<div class="title">atcacert_cert_loc_s Struct Reference<div class="ingroups"><a class="el" href="a02397.html">Certificate manipulation methods (atcacert_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>this is the hal_data for ATCA HAL for ASF SERCOM  
- <a href="a02473.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="a01340_source.html">hal_linux_i2c_userspace.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a01118_source.html">atcacert_def.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a7441ef0865bcb3db9b8064dd7375c1ea"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02473.html#a7441ef0865bcb3db9b8064dd7375c1ea">id</a></td></tr>
-<tr class="separator:a7441ef0865bcb3db9b8064dd7375c1ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad72ba8c994f4d0e5ce354e17f7c427c0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02473.html#ad72ba8c994f4d0e5ce354e17f7c427c0">ref_ct</a></td></tr>
-<tr class="separator:ad72ba8c994f4d0e5ce354e17f7c427c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5c011e6c2e8d49675f7029e8ec2c0a6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02473.html#af5c011e6c2e8d49675f7029e8ec2c0a6">bus_index</a></td></tr>
-<tr class="separator:af5c011e6c2e8d49675f7029e8ec2c0a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a386ecc3f01d8b317bc512cab194d844f"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02473.html#a386ecc3f01d8b317bc512cab194d844f">i2c_file</a> [16]</td></tr>
-<tr class="separator:a386ecc3f01d8b317bc512cab194d844f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3592aa831cd642b3e53af87537944d5a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02473.html#a3592aa831cd642b3e53af87537944d5a">twi_id</a></td></tr>
-<tr class="separator:a3592aa831cd642b3e53af87537944d5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f03d6b609fdcf7623a985087e4bdc31"><td class="memItemLeft" align="right" valign="top">avr32_twi_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02473.html#a9f03d6b609fdcf7623a985087e4bdc31">twi_master_instance</a></td></tr>
-<tr class="separator:a9f03d6b609fdcf7623a985087e4bdc31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac681806181c80437cfab37335f62ff39"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02473.html#ac681806181c80437cfab37335f62ff39">offset</a></td></tr>
+<tr class="memdesc:ac681806181c80437cfab37335f62ff39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Byte offset in the certificate template.  <a href="a02473.html#ac681806181c80437cfab37335f62ff39">More...</a><br /></td></tr>
+<tr class="separator:ac681806181c80437cfab37335f62ff39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6a39bfc7e1dc3b6f9c997c1c43fa996"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02473.html#af6a39bfc7e1dc3b6f9c997c1c43fa996">count</a></td></tr>
+<tr class="memdesc:af6a39bfc7e1dc3b6f9c997c1c43fa996"><td class="mdescLeft">&#160;</td><td class="mdescRight">Byte count. Set to 0 if it doesn't exist.  <a href="a02473.html#af6a39bfc7e1dc3b6f9c997c1c43fa996">More...</a><br /></td></tr>
+<tr class="separator:af6a39bfc7e1dc3b6f9c997c1c43fa996"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>this is the hal_data for ATCA HAL for ASF SERCOM </p>
+<div class="textblock"><p>Defines a chunk of data in a certificate template. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="af5c011e6c2e8d49675f7029e8ec2c0a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af5c011e6c2e8d49675f7029e8ec2c0a6">&#9670;&nbsp;</a></span>bus_index</h2>
+<a id="af6a39bfc7e1dc3b6f9c997c1c43fa996"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6a39bfc7e1dc3b6f9c997c1c43fa996">&#9670;&nbsp;</a></span>count</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int bus_index</td>
+          <td class="memname">uint16_t count</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Byte count. Set to 0 if it doesn't exist. </p>
+
 </div>
 </div>
-<a id="a386ecc3f01d8b317bc512cab194d844f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a386ecc3f01d8b317bc512cab194d844f">&#9670;&nbsp;</a></span>i2c_file</h2>
+<a id="ac681806181c80437cfab37335f62ff39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac681806181c80437cfab37335f62ff39">&#9670;&nbsp;</a></span>offset</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char i2c_file[16]</td>
+          <td class="memname">uint16_t offset</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a7441ef0865bcb3db9b8064dd7375c1ea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7441ef0865bcb3db9b8064dd7375c1ea">&#9670;&nbsp;</a></span>id</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int id</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad72ba8c994f4d0e5ce354e17f7c427c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad72ba8c994f4d0e5ce354e17f7c427c0">&#9670;&nbsp;</a></span>ref_ct</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int ref_ct</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3592aa831cd642b3e53af87537944d5a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3592aa831cd642b3e53af87537944d5a">&#9670;&nbsp;</a></span>twi_id</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t twi_id</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a9f03d6b609fdcf7623a985087e4bdc31"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f03d6b609fdcf7623a985087e4bdc31">&#9670;&nbsp;</a></span>twi_master_instance</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">avr32_twi_t* twi_master_instance</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>Byte offset in the certificate template. </p>
 
 </div>
 </div>
@@ -203,7 +142,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02473.html">atcaI2Cmaster</a></li>
+    <li class="navelem"><a class="el" href="a02473.html">atcacert_cert_loc_s</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

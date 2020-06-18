@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: _pkcs11_session_ctx Struct Reference</title>
+<title>CryptoAuthLib: atca_write_mac_in_out Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,208 +87,151 @@ $(document).ready(function(){initNavTree('a02609.html',''); initResizable(); });
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">_pkcs11_session_ctx Struct Reference</div>  </div>
+<div class="title">atca_write_mac_in_out Struct Reference<div class="ingroups"><a class="el" href="a02401.html">Host side crypto methods (atcah_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="a01532_source.html">pkcs11_session.h</a>&gt;</code></p>
+<p>Input/output parameters for function <a class="el" href="a02401.html#ga47853951c57803eff1432780bf360057" title="This function calculates the input MAC for the Write command.">atcah_write_auth_mac()</a> and <a class="el" href="a02401.html#gaed8aa58875c6bdf46a937313e69c6ebb" title="This function calculates the input MAC for the PrivWrite command.">atcah_privwrite_auth_mac()</a>.  
+ <a href="a02609.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="a01427_source.html">atca_host.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a1160c303d9370f4187e6f48d6ac336c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#abd07a1bba363f8083080b9328e67b491">CK_BBOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02609.html#a1160c303d9370f4187e6f48d6ac336c1">initialized</a></td></tr>
-<tr class="separator:a1160c303d9370f4187e6f48d6ac336c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6284cb4cba404c572c2911394e9150db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01544.html#ac77ca422293b6ec4789d1746b276eeaf">pkcs11_slot_ctx_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02609.html#a6284cb4cba404c572c2911394e9150db">slot</a></td></tr>
-<tr class="separator:a6284cb4cba404c572c2911394e9150db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48777f0b0a0b56141bd6a03e992ed893"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02609.html#a48777f0b0a0b56141bd6a03e992ed893">handle</a></td></tr>
-<tr class="separator:a48777f0b0a0b56141bd6a03e992ed893"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1940765200d80bc2f37ec2335d2ac185"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#aed206032672e4a4edcce33a364ff0445">CK_STATE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02609.html#a1940765200d80bc2f37ec2335d2ac185">state</a></td></tr>
-<tr class="separator:a1940765200d80bc2f37ec2335d2ac185"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa71801867b929b0b67bbf658967d27d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02609.html#aa71801867b929b0b67bbf658967d27d4">error</a></td></tr>
-<tr class="separator:aa71801867b929b0b67bbf658967d27d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89a668d83c5fbcd422bf727f6fa1971b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02609.html#a89a668d83c5fbcd422bf727f6fa1971b">attrib_list</a></td></tr>
-<tr class="separator:a89a668d83c5fbcd422bf727f6fa1971b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93c255adcc4d76366af3cfde6b18faaa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02609.html#a93c255adcc4d76366af3cfde6b18faaa">attrib_count</a></td></tr>
-<tr class="separator:a93c255adcc4d76366af3cfde6b18faaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b3c004db0bdd022af57a97c624df438"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02609.html#a4b3c004db0bdd022af57a97c624df438">object_index</a></td></tr>
-<tr class="separator:a4b3c004db0bdd022af57a97c624df438"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87d388953ff8b277843b13faca78beeb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02609.html#a87d388953ff8b277843b13faca78beeb">object_count</a></td></tr>
-<tr class="separator:a87d388953ff8b277843b13faca78beeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a40f8323d808232817b70acc58112d0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#ad1cdd703196214cd34e6f9f52bc67683">CK_OBJECT_HANDLE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02609.html#a7a40f8323d808232817b70acc58112d0">active_object</a></td></tr>
-<tr class="separator:a7a40f8323d808232817b70acc58112d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2539b0d6a45d7cd1796cbfc7890b3540"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#abd07a1bba363f8083080b9328e67b491">CK_BBOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02609.html#a2539b0d6a45d7cd1796cbfc7890b3540">logged_in</a></td></tr>
-<tr class="separator:a2539b0d6a45d7cd1796cbfc7890b3540"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a578db367a160ec9c6c7169442b70aeac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#a51e605f881c86838bf12d70707b57b85">CK_BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02609.html#a578db367a160ec9c6c7169442b70aeac">read_key</a> [32]</td></tr>
-<tr class="separator:a578db367a160ec9c6c7169442b70aeac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac746c3d65092170bfaf5b0d9950d8438"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02609.html#ac746c3d65092170bfaf5b0d9950d8438">zone</a></td></tr>
+<tr class="memdesc:ac746c3d65092170bfaf5b0d9950d8438"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zone/Param1 for the Write or PrivWrite command.  <a href="a02609.html#ac746c3d65092170bfaf5b0d9950d8438">More...</a><br /></td></tr>
+<tr class="separator:ac746c3d65092170bfaf5b0d9950d8438"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac21eed4200889cc115d16a781871d01c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02609.html#ac21eed4200889cc115d16a781871d01c">key_id</a></td></tr>
+<tr class="memdesc:ac21eed4200889cc115d16a781871d01c"><td class="mdescLeft">&#160;</td><td class="mdescRight">KeyID/Param2 for the Write or PrivWrite command.  <a href="a02609.html#ac21eed4200889cc115d16a781871d01c">More...</a><br /></td></tr>
+<tr class="separator:ac21eed4200889cc115d16a781871d01c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef45bac2efcd5394c4ed79f73ee16d23"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02609.html#aef45bac2efcd5394c4ed79f73ee16d23">sn</a></td></tr>
+<tr class="memdesc:aef45bac2efcd5394c4ed79f73ee16d23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though.  <a href="a02609.html#aef45bac2efcd5394c4ed79f73ee16d23">More...</a><br /></td></tr>
+<tr class="separator:aef45bac2efcd5394c4ed79f73ee16d23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a699b6e4448b505a2664025ccca3522f5"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02609.html#a699b6e4448b505a2664025ccca3522f5">input_data</a></td></tr>
+<tr class="memdesc:a699b6e4448b505a2664025ccca3522f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data to be encrypted. 32 bytes for Write command, 36 bytes for PrivWrite command.  <a href="a02609.html#a699b6e4448b505a2664025ccca3522f5">More...</a><br /></td></tr>
+<tr class="separator:a699b6e4448b505a2664025ccca3522f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c2a094baeab96152cea462ba9677887"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02609.html#a8c2a094baeab96152cea462ba9677887">encrypted_data</a></td></tr>
+<tr class="memdesc:a8c2a094baeab96152cea462ba9677887"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypted version of input_data will be returned here. 32 bytes for Write command, 36 bytes for PrivWrite command.  <a href="a02609.html#a8c2a094baeab96152cea462ba9677887">More...</a><br /></td></tr>
+<tr class="separator:a8c2a094baeab96152cea462ba9677887"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f11512564ff4aeaf5f9d0646d971ed2"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02609.html#a9f11512564ff4aeaf5f9d0646d971ed2">auth_mac</a></td></tr>
+<tr class="memdesc:a9f11512564ff4aeaf5f9d0646d971ed2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write MAC will be returned here. 32 bytes.  <a href="a02609.html#a9f11512564ff4aeaf5f9d0646d971ed2">More...</a><br /></td></tr>
+<tr class="separator:a9f11512564ff4aeaf5f9d0646d971ed2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72fae3d62889ef224f09c57a7646e061"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a02569.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02609.html#a72fae3d62889ef224f09c57a7646e061">temp_key</a></td></tr>
+<tr class="memdesc:a72fae3d62889ef224f09c57a7646e061"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current state of TempKey.  <a href="a02609.html#a72fae3d62889ef224f09c57a7646e061">More...</a><br /></td></tr>
+<tr class="separator:a72fae3d62889ef224f09c57a7646e061"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Session Context </p>
+<div class="textblock"><p>Input/output parameters for function <a class="el" href="a02401.html#ga47853951c57803eff1432780bf360057" title="This function calculates the input MAC for the Write command.">atcah_write_auth_mac()</a> and <a class="el" href="a02401.html#gaed8aa58875c6bdf46a937313e69c6ebb" title="This function calculates the input MAC for the PrivWrite command.">atcah_privwrite_auth_mac()</a>. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="a7a40f8323d808232817b70acc58112d0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a40f8323d808232817b70acc58112d0">&#9670;&nbsp;</a></span>active_object</h2>
+<a id="a9f11512564ff4aeaf5f9d0646d971ed2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f11512564ff4aeaf5f9d0646d971ed2">&#9670;&nbsp;</a></span>auth_mac</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01562.html#ad1cdd703196214cd34e6f9f52bc67683">CK_OBJECT_HANDLE</a> active_object</td>
+          <td class="memname">uint8_t* auth_mac</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Write MAC will be returned here. 32 bytes. </p>
+
 </div>
 </div>
-<a id="a93c255adcc4d76366af3cfde6b18faaa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a93c255adcc4d76366af3cfde6b18faaa">&#9670;&nbsp;</a></span>attrib_count</h2>
+<a id="a8c2a094baeab96152cea462ba9677887"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c2a094baeab96152cea462ba9677887">&#9670;&nbsp;</a></span>encrypted_data</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01562.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> attrib_count</td>
+          <td class="memname">uint8_t* encrypted_data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Encrypted version of input_data will be returned here. 32 bytes for Write command, 36 bytes for PrivWrite command. </p>
+
 </div>
 </div>
-<a id="a89a668d83c5fbcd422bf727f6fa1971b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89a668d83c5fbcd422bf727f6fa1971b">&#9670;&nbsp;</a></span>attrib_list</h2>
+<a id="a699b6e4448b505a2664025ccca3522f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a699b6e4448b505a2664025ccca3522f5">&#9670;&nbsp;</a></span>input_data</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01562.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> attrib_list</td>
+          <td class="memname">const uint8_t* input_data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Data to be encrypted. 32 bytes for Write command, 36 bytes for PrivWrite command. </p>
+
 </div>
 </div>
-<a id="aa71801867b929b0b67bbf658967d27d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa71801867b929b0b67bbf658967d27d4">&#9670;&nbsp;</a></span>error</h2>
+<a id="ac21eed4200889cc115d16a781871d01c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac21eed4200889cc115d16a781871d01c">&#9670;&nbsp;</a></span>key_id</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01562.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> error</td>
+          <td class="memname">uint16_t key_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>KeyID/Param2 for the Write or PrivWrite command. </p>
+
 </div>
 </div>
-<a id="a48777f0b0a0b56141bd6a03e992ed893"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48777f0b0a0b56141bd6a03e992ed893">&#9670;&nbsp;</a></span>handle</h2>
+<a id="aef45bac2efcd5394c4ed79f73ee16d23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef45bac2efcd5394c4ed79f73ee16d23">&#9670;&nbsp;</a></span>sn</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01562.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> handle</td>
+          <td class="memname">const uint8_t* sn</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though. </p>
+
 </div>
 </div>
-<a id="a1160c303d9370f4187e6f48d6ac336c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1160c303d9370f4187e6f48d6ac336c1">&#9670;&nbsp;</a></span>initialized</h2>
+<a id="a72fae3d62889ef224f09c57a7646e061"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72fae3d62889ef224f09c57a7646e061">&#9670;&nbsp;</a></span>temp_key</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01562.html#abd07a1bba363f8083080b9328e67b491">CK_BBOOL</a> initialized</td>
+          <td class="memname">struct <a class="el" href="a02569.html">atca_temp_key</a>* temp_key</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Current state of TempKey. </p>
+
 </div>
 </div>
-<a id="a2539b0d6a45d7cd1796cbfc7890b3540"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2539b0d6a45d7cd1796cbfc7890b3540">&#9670;&nbsp;</a></span>logged_in</h2>
+<a id="ac746c3d65092170bfaf5b0d9950d8438"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac746c3d65092170bfaf5b0d9950d8438">&#9670;&nbsp;</a></span>zone</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01562.html#abd07a1bba363f8083080b9328e67b491">CK_BBOOL</a> logged_in</td>
+          <td class="memname">uint8_t zone</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a87d388953ff8b277843b13faca78beeb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a87d388953ff8b277843b13faca78beeb">&#9670;&nbsp;</a></span>object_count</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01562.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> object_count</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a4b3c004db0bdd022af57a97c624df438"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b3c004db0bdd022af57a97c624df438">&#9670;&nbsp;</a></span>object_index</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01562.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> object_index</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a578db367a160ec9c6c7169442b70aeac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a578db367a160ec9c6c7169442b70aeac">&#9670;&nbsp;</a></span>read_key</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01562.html#a51e605f881c86838bf12d70707b57b85">CK_BYTE</a> read_key[32]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Accepted through C_Login as the user pin </p>
-
-</div>
-</div>
-<a id="a6284cb4cba404c572c2911394e9150db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6284cb4cba404c572c2911394e9150db">&#9670;&nbsp;</a></span>slot</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01544.html#ac77ca422293b6ec4789d1746b276eeaf">pkcs11_slot_ctx_ptr</a> slot</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1940765200d80bc2f37ec2335d2ac185"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1940765200d80bc2f37ec2335d2ac185">&#9670;&nbsp;</a></span>state</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01562.html#aed206032672e4a4edcce33a364ff0445">CK_STATE</a> state</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>Zone/Param1 for the Write or PrivWrite command. </p>
 
 </div>
 </div>
@@ -297,7 +240,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02609.html">_pkcs11_session_ctx</a></li>
+    <li class="navelem"><a class="el" href="a02609.html">atca_write_mac_in_out</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

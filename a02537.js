@@ -1,11 +1,8 @@
 var a02537 =
 [
-    [ "challenge", "a02341.html#ga88d82c85f774fa04ccf768e566fec194", null ],
-    [ "key", "a02341.html#gab0d96f9d852c2058c2546a1338e87544", null ],
-    [ "key_id", "a02341.html#ga3eedc11953a89e931ede529eb72592ac", null ],
-    [ "mode", "a02341.html#ga1a6b6fb557d8d37d59700faf4e4c9167", null ],
-    [ "otp", "a02341.html#ga8712cb73a4d6b370658d8bc9a77fba3e", null ],
-    [ "response", "a02341.html#ga8ab7bcb35ce5bba05608c72da6b4a0d3", null ],
-    [ "sn", "a02341.html#ga7276bd20c5842e712da638d25ceb6d92", null ],
-    [ "temp_key", "a02341.html#gaa17e031da4b22938bed1c21161ba371a", null ]
+    [ "error_get", "a02537.html#a6464c070d16231ac42491b8c9484722f", null ],
+    [ "is_busy", "a02537.html#a90b6818e0943e85191beda2a7e8822f0", null ],
+    [ "read", "a02537.html#a381cd65d4c34e50e098ddd6e7daeb56e", null ],
+    [ "transfer_setup", "a02537.html#ab2c82f79b50de67a4acadc64813c76c5", null ],
+    [ "write", "a02537.html#a602fe1e3767e1a59c9fe1a3b80fcbe34", null ]
 ];

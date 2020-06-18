@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: sha1_routines.h File Reference</title>
+<title>CryptoAuthLib: hal_i2c_start.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -86,385 +86,42 @@ $(document).ready(function(){initNavTree('a01334.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">sha1_routines.h File Reference</div>  </div>
+<div class="title">hal_i2c_start.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Software implementation of the SHA1 algorithm.  
+<p>ATCA Hardware abstraction layer for SAMD21 I2C over START drivers.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;atmel_start.h&quot;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a01289_source.html">cryptoauthlib.h</a>&quot;</code><br />
 </div>
 <p><a href="a01334_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07650.html">CL_HashContext</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02545.html">i2c_start_instance</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a2c0958af86f0590374e4324757c537f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01334.html#a2c0958af86f0590374e4324757c537f2">U8</a>&#160;&#160;&#160;uint8_t</td></tr>
-<tr class="separator:a2c0958af86f0590374e4324757c537f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0b4d315e0f0b5d356886ec69d4bed08"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01334.html#ad0b4d315e0f0b5d356886ec69d4bed08">U16</a>&#160;&#160;&#160;uint16_t</td></tr>
-<tr class="separator:ad0b4d315e0f0b5d356886ec69d4bed08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f953f379d243081b950adb7f194b2e8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01334.html#a8f953f379d243081b950adb7f194b2e8">U32</a>&#160;&#160;&#160;uint32_t</td></tr>
-<tr class="separator:a8f953f379d243081b950adb7f194b2e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3015d84f1e64c03564961de070d25328"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01334.html#a3015d84f1e64c03564961de070d25328">memcpy_P</a>&#160;&#160;&#160;memmove</td></tr>
-<tr class="separator:a3015d84f1e64c03564961de070d25328"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3541bc4d0b928b2faa9ca63a100d1b75"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01334.html#a3541bc4d0b928b2faa9ca63a100d1b75">strcpy_P</a>&#160;&#160;&#160;strcpy</td></tr>
-<tr class="separator:a3541bc4d0b928b2faa9ca63a100d1b75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45e79c30522d47f4c30922b3d5b06b46"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01334.html#a45e79c30522d47f4c30922b3d5b06b46">_WDRESET</a>()</td></tr>
-<tr class="separator:a45e79c30522d47f4c30922b3d5b06b46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46388d9db8422abfea56ae2323f7a77c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01334.html#a46388d9db8422abfea56ae2323f7a77c">_NOP</a>()</td></tr>
-<tr class="separator:a46388d9db8422abfea56ae2323f7a77c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56a88d6165ee36c482ddc9b82826dd47"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01334.html#a56a88d6165ee36c482ddc9b82826dd47">leftRotate</a>(x,  n)&#160;&#160;&#160;(x) = (((x) &lt;&lt; (n)) | ((x) &gt;&gt; (32 - (n))))</td></tr>
-<tr class="separator:a56a88d6165ee36c482ddc9b82826dd47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:aa7f5cbdb2069995d6ad84228b4896b59"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01334.html#aa7f5cbdb2069995d6ad84228b4896b59">shaEngine</a> (uint32_t *buf, uint32_t *h)</td></tr>
-<tr class="separator:aa7f5cbdb2069995d6ad84228b4896b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affa9482d686cc435d640d67d7fa79772"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01334.html#affa9482d686cc435d640d67d7fa79772">CL_hashInit</a> (<a class="el" href="a07650.html">CL_HashContext</a> *ctx)</td></tr>
-<tr class="memdesc:affa9482d686cc435d640d67d7fa79772"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing SHA1 hash in software.  <a href="a01334.html#affa9482d686cc435d640d67d7fa79772">More...</a><br /></td></tr>
-<tr class="separator:affa9482d686cc435d640d67d7fa79772"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac647bbe11bef33bf113a08b8ea9ee799"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01334.html#ac647bbe11bef33bf113a08b8ea9ee799">CL_hashUpdate</a> (<a class="el" href="a07650.html">CL_HashContext</a> *ctx, const uint8_t *src, int nbytes)</td></tr>
-<tr class="memdesc:ac647bbe11bef33bf113a08b8ea9ee799"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add arbitrary data to a SHA1 hash.  <a href="a01334.html#ac647bbe11bef33bf113a08b8ea9ee799">More...</a><br /></td></tr>
-<tr class="separator:ac647bbe11bef33bf113a08b8ea9ee799"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f3bb1870c15bf1facf14c6b92549ce7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01334.html#a6f3bb1870c15bf1facf14c6b92549ce7">CL_hashFinal</a> (<a class="el" href="a07650.html">CL_HashContext</a> *ctx, uint8_t *dest)</td></tr>
-<tr class="memdesc:a6f3bb1870c15bf1facf14c6b92549ce7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete the SHA1 hash in software and return the digest.  <a href="a01334.html#a6f3bb1870c15bf1facf14c6b92549ce7">More...</a><br /></td></tr>
-<tr class="separator:a6f3bb1870c15bf1facf14c6b92549ce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50e72be6699b178f50b13857cdbb1ad5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01334.html#a50e72be6699b178f50b13857cdbb1ad5">CL_hash</a> (uint8_t *msg, int msgBytes, uint8_t *dest)</td></tr>
-<tr class="memdesc:a50e72be6699b178f50b13857cdbb1ad5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform SHA1 hash of data in software.  <a href="a01334.html#a50e72be6699b178f50b13857cdbb1ad5">More...</a><br /></td></tr>
-<tr class="separator:a50e72be6699b178f50b13857cdbb1ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaf5c1d7b7fca31a8c1102814e4732c373"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02400.html#gaf5c1d7b7fca31a8c1102814e4732c373">start_change_baudrate</a>) (<a class="el" href="a02396.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint32_t speed)</td></tr>
+<tr class="separator:gaf5c1d7b7fca31a8c1102814e4732c373"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab4ad18d30b921f27b4879ca71181491f"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a02545.html">i2c_start_instance</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02400.html#gab4ad18d30b921f27b4879ca71181491f">i2c_start_instance_t</a></td></tr>
+<tr class="separator:gab4ad18d30b921f27b4879ca71181491f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Software implementation of the SHA1 algorithm. </p>
+<div class="textblock"><p>ATCA Hardware abstraction layer for SAMD21 I2C over START drivers. </p>
+<p>Prerequisite: add SERCOM I2C Master Polled support to application in Atmel Studio</p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a46388d9db8422abfea56ae2323f7a77c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46388d9db8422abfea56ae2323f7a77c">&#9670;&nbsp;</a></span>_NOP</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define _NOP</td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a45e79c30522d47f4c30922b3d5b06b46"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a45e79c30522d47f4c30922b3d5b06b46">&#9670;&nbsp;</a></span>_WDRESET</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define _WDRESET</td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a56a88d6165ee36c482ddc9b82826dd47"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a56a88d6165ee36c482ddc9b82826dd47">&#9670;&nbsp;</a></span>leftRotate</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define leftRotate</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">x, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">n&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;(x) = (((x) &lt;&lt; (n)) | ((x) &gt;&gt; (32 - (n))))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3015d84f1e64c03564961de070d25328"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3015d84f1e64c03564961de070d25328">&#9670;&nbsp;</a></span>memcpy_P</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define memcpy_P&#160;&#160;&#160;memmove</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3541bc4d0b928b2faa9ca63a100d1b75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3541bc4d0b928b2faa9ca63a100d1b75">&#9670;&nbsp;</a></span>strcpy_P</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define strcpy_P&#160;&#160;&#160;strcpy</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad0b4d315e0f0b5d356886ec69d4bed08"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad0b4d315e0f0b5d356886ec69d4bed08">&#9670;&nbsp;</a></span>U16</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define U16&#160;&#160;&#160;uint16_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8f953f379d243081b950adb7f194b2e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f953f379d243081b950adb7f194b2e8">&#9670;&nbsp;</a></span>U32</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define U32&#160;&#160;&#160;uint32_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a2c0958af86f0590374e4324757c537f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c0958af86f0590374e4324757c537f2">&#9670;&nbsp;</a></span>U8</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define U8&#160;&#160;&#160;uint8_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a50e72be6699b178f50b13857cdbb1ad5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a50e72be6699b178f50b13857cdbb1ad5">&#9670;&nbsp;</a></span>CL_hash()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CL_hash </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>msg</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>msgBytes</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>dest</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Perform SHA1 hash of data in software. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">msg</td><td>Data to be hashed </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">msgBytes</td><td>Data size in bytes </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">dest</td><td>Digest is returned here (20 bytes) </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a6f3bb1870c15bf1facf14c6b92549ce7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f3bb1870c15bf1facf14c6b92549ce7">&#9670;&nbsp;</a></span>CL_hashFinal()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CL_hashFinal </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a07650.html">CL_HashContext</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>dest</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Complete the SHA1 hash in software and return the digest. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>Hash context </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">dest</td><td>Digest is returned here (20 bytes) </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="affa9482d686cc435d640d67d7fa79772"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#affa9482d686cc435d640d67d7fa79772">&#9670;&nbsp;</a></span>CL_hashInit()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CL_hashInit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a07650.html">CL_HashContext</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Initialize context for performing SHA1 hash in software. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>Hash context </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ac647bbe11bef33bf113a08b8ea9ee799"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac647bbe11bef33bf113a08b8ea9ee799">&#9670;&nbsp;</a></span>CL_hashUpdate()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CL_hashUpdate </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a07650.html">CL_HashContext</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>src</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>nbytes</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Add arbitrary data to a SHA1 hash. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>Hash context </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">src</td><td>Data to be added to the hash </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">nbytes</td><td>Data size in bytes </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="aa7f5cbdb2069995d6ad84228b4896b59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7f5cbdb2069995d6ad84228b4896b59">&#9670;&nbsp;</a></span>shaEngine()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void shaEngine </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>h</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_0d284ebe0a46982303565525253d36b8.html">crypto</a></li><li class="navelem"><a class="el" href="dir_d3d4a6b49a98e373fd2a2e5f3f68abbc.html">hashes</a></li><li class="navelem"><a class="el" href="a01334.html">sha1_routines.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_36432077327cc0f3c76187c9e6e34627.html">hal</a></li><li class="navelem"><a class="el" href="a01334.html">hal_i2c_start.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

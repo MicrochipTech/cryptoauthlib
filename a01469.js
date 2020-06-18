@@ -1,18 +1,11 @@
 var a01469 =
 [
-    [ "DEBUG_PIN_1", "a07533.html#gab12a92582aefe426bb194e0c298e8f98", null ],
-    [ "DEBUG_PIN_2", "a07533.html#ga6a2579114d13238c7ba20d147a74090a", null ],
-    [ "MAX_SWI_BUSES", "a07533.html#gaf9d9d027ce20f528edea144203141714", null ],
-    [ "RECEIVE_MODE", "a07533.html#gab45577245cf4a8ead70e2d56965f2df3", null ],
-    [ "RX_DELAY", "a07533.html#gac55a27e4c3eae59bb1687eb7e8d1fe4b", null ],
-    [ "TRANSMIT_MODE", "a07533.html#ga4b85133b317e72410ea0762d637d3460", null ],
-    [ "TX_DELAY", "a07533.html#ga3f3816567a2f513dd0e1f9eb17992fb2", null ],
-    [ "ATCASWIMaster_t", "a07533.html#ga626ead73d3ae1cc2ed09d5fa509f80ff", null ],
-    [ "swi_uart_deinit", "a07533.html#ga0b1aad3936bf003686d8db7fa2be5132", null ],
-    [ "swi_uart_discover_buses", "a07533.html#gad640b598d581ee7c8a4c804bee602906", null ],
-    [ "swi_uart_init", "a07533.html#ga003b63648f1a5f9eba274760559688f2", null ],
-    [ "swi_uart_mode", "a07533.html#gacc2a96c86ce4c07249b81bc6a7eb2e41", null ],
-    [ "swi_uart_receive_byte", "a07533.html#ga93f3dab17c14f71641ca970998ede823", null ],
-    [ "swi_uart_send_byte", "a07533.html#ga4a4d491006d9683d67838963706ac9c1", null ],
-    [ "swi_uart_setbaud", "a07533.html#gaba296f70baf68b768d6c4bb9cf7ba67d", null ]
+    [ "pkcs11_config_cert", "a02404.html#ga7afb784fad2dd8b8b2befd6159e2a053", null ],
+    [ "pkcs11_config_init_cert", "a02404.html#ga1de4cccdfd83ce723eb050e09266a3ae", null ],
+    [ "pkcs11_config_init_private", "a02404.html#gab36c9d4f392c0eb613fb3833dd852495", null ],
+    [ "pkcs11_config_init_public", "a02404.html#gad8164c3b6e1c4287b665ce18c143bdd3", null ],
+    [ "pkcs11_config_key", "a02404.html#ga0e5ec966dd01f9eb6f1cc2f4b3085f9f", null ],
+    [ "pkcs11_config_load", "a02404.html#ga4804f397bd49dd23ec903e4249e22d9e", null ],
+    [ "pkcs11_config_load_objects", "a02404.html#gafbf88cd1298ee01568385688019ba80c", null ],
+    [ "pkcs11_config_remove_object", "a02404.html#ga02347d90fe77c323677712e685aa8c6a", null ]
 ];

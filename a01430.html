@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_swi_uart.c File Reference</title>
+<title>CryptoAuthLib: atca_jwt.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,64 +87,48 @@ $(document).ready(function(){initNavTree('a01430.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">hal_swi_uart.c File Reference</div>  </div>
+<div class="title">atca_jwt.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for SWI over UART drivers.  
+<p>Utilities to create and verify a JSON Web Token (JWT)  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;string.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a01289_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01082_source.html">atca_helpers.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01274_source.html">crypto/atca_crypto_sw_sha2.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01433_source.html">jwt/atca_jwt.h</a>&quot;</code><br />
 <code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a01352_source.html">atca_hal.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01433_source.html">hal_swi_uart.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01130_source.html">atca_device.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01235_source.html">calib/calib_execution.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga53864a301dac6efbdbdc3931aa79e23e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga53864a301dac6efbdbdc3931aa79e23e">hal_swi_discover_buses</a> (int swi_buses[], int max_buses)</td></tr>
-<tr class="memdesc:ga53864a301dac6efbdbdc3931aa79e23e"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover swi buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge  <a href="a07533.html#ga53864a301dac6efbdbdc3931aa79e23e">More...</a><br /></td></tr>
-<tr class="separator:ga53864a301dac6efbdbdc3931aa79e23e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga354e6fa757688b73e6fb5293bb835def"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga354e6fa757688b73e6fb5293bb835def">hal_swi_discover_devices</a> (int bus_num, <a class="el" href="a07562.html">ATCAIfaceCfg</a> cfg[], int *found)</td></tr>
-<tr class="memdesc:ga354e6fa757688b73e6fb5293bb835def"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover any CryptoAuth devices on a given logical bus number  <a href="a07533.html#ga354e6fa757688b73e6fb5293bb835def">More...</a><br /></td></tr>
-<tr class="separator:ga354e6fa757688b73e6fb5293bb835def"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf406053c1a3f2a86bdc887f2ff4b663d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#gaf406053c1a3f2a86bdc887f2ff4b663d">hal_swi_init</a> (void *hal, <a class="el" href="a07562.html">ATCAIfaceCfg</a> *cfg)</td></tr>
-<tr class="memdesc:gaf406053c1a3f2a86bdc887f2ff4b663d"><td class="mdescLeft">&#160;</td><td class="mdescRight">hal_swi_init manages requests to initialize a physical interface. it manages use counts so when an interface has released the physical layer, it will disable the interface for some other use. You can have multiple ATCAIFace instances using the same bus, and you can have multiple ATCAIFace instances on multiple swi buses, so hal_swi_init manages these things and ATCAIFace is abstracted from the physical details.  <a href="a07533.html#gaf406053c1a3f2a86bdc887f2ff4b663d">More...</a><br /></td></tr>
-<tr class="separator:gaf406053c1a3f2a86bdc887f2ff4b663d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9186e5235979216330ae580290872c77"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga9186e5235979216330ae580290872c77">hal_swi_post_init</a> (<a class="el" href="a07529.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga9186e5235979216330ae580290872c77"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI post init.  <a href="a07533.html#ga9186e5235979216330ae580290872c77">More...</a><br /></td></tr>
-<tr class="separator:ga9186e5235979216330ae580290872c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaae96ea936a2e85d0bcb81b7868ee007d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#gaae96ea936a2e85d0bcb81b7868ee007d">hal_swi_send_flag</a> (<a class="el" href="a07529.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t data)</td></tr>
-<tr class="memdesc:gaae96ea936a2e85d0bcb81b7868ee007d"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI send one byte over UART.  <a href="a07533.html#gaae96ea936a2e85d0bcb81b7868ee007d">More...</a><br /></td></tr>
-<tr class="separator:gaae96ea936a2e85d0bcb81b7868ee007d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9df4dbd666a87efe49578842e53ad91e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga9df4dbd666a87efe49578842e53ad91e">hal_swi_send</a> (<a class="el" href="a07529.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
-<tr class="memdesc:ga9df4dbd666a87efe49578842e53ad91e"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI send command over UART.  <a href="a07533.html#ga9df4dbd666a87efe49578842e53ad91e">More...</a><br /></td></tr>
-<tr class="separator:ga9df4dbd666a87efe49578842e53ad91e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga159bdf9c24e429d54800da1eb1c21058"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga159bdf9c24e429d54800da1eb1c21058">hal_swi_receive</a> (<a class="el" href="a07529.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
-<tr class="memdesc:ga159bdf9c24e429d54800da1eb1c21058"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI receive function over UART.  <a href="a07533.html#ga159bdf9c24e429d54800da1eb1c21058">More...</a><br /></td></tr>
-<tr class="separator:ga159bdf9c24e429d54800da1eb1c21058"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafc428980ec95e37eee94813db229fe70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#gafc428980ec95e37eee94813db229fe70">hal_swi_wake</a> (<a class="el" href="a07529.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:gafc428980ec95e37eee94813db229fe70"><td class="mdescLeft">&#160;</td><td class="mdescRight">wake up CryptoAuth device using SWI interface  <a href="a07533.html#gafc428980ec95e37eee94813db229fe70">More...</a><br /></td></tr>
-<tr class="separator:gafc428980ec95e37eee94813db229fe70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga618291172976da96c4f02dc9200c845c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga618291172976da96c4f02dc9200c845c">hal_swi_idle</a> (<a class="el" href="a07529.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga618291172976da96c4f02dc9200c845c"><td class="mdescLeft">&#160;</td><td class="mdescRight">idle CryptoAuth device using SWI interface  <a href="a07533.html#ga618291172976da96c4f02dc9200c845c">More...</a><br /></td></tr>
-<tr class="separator:ga618291172976da96c4f02dc9200c845c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga252e365a30f2583dae8a8eac073a9f53"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga252e365a30f2583dae8a8eac073a9f53">hal_swi_sleep</a> (<a class="el" href="a07529.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga252e365a30f2583dae8a8eac073a9f53"><td class="mdescLeft">&#160;</td><td class="mdescRight">sleep CryptoAuth device using SWI interface  <a href="a07533.html#ga252e365a30f2583dae8a8eac073a9f53">More...</a><br /></td></tr>
-<tr class="separator:ga252e365a30f2583dae8a8eac073a9f53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga196dbc62546b39ac3e556a0f7f6b7132"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga196dbc62546b39ac3e556a0f7f6b7132">hal_swi_release</a> (void *hal_data)</td></tr>
-<tr class="memdesc:ga196dbc62546b39ac3e556a0f7f6b7132"><td class="mdescLeft">&#160;</td><td class="mdescRight">manages reference count on given bus and releases resource if no more refences exist  <a href="a07533.html#ga196dbc62546b39ac3e556a0f7f6b7132">More...</a><br /></td></tr>
-<tr class="separator:ga196dbc62546b39ac3e556a0f7f6b7132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga167fe35631a0dd191293c6ad3a6485aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02402.html#ga167fe35631a0dd191293c6ad3a6485aa">atca_jwt_check_payload_start</a> (<a class="el" href="a02641.html">atca_jwt_t</a> *jwt)</td></tr>
+<tr class="memdesc:ga167fe35631a0dd191293c6ad3a6485aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the provided context to see what character needs to be added in order to append a claim.  <a href="a02402.html#ga167fe35631a0dd191293c6ad3a6485aa">More...</a><br /></td></tr>
+<tr class="separator:ga167fe35631a0dd191293c6ad3a6485aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad3ea09543f0569a5368130f4a3d7bce0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02402.html#gad3ea09543f0569a5368130f4a3d7bce0">atca_jwt_init</a> (<a class="el" href="a02641.html">atca_jwt_t</a> *jwt, char *buf, uint16_t buflen)</td></tr>
+<tr class="memdesc:gad3ea09543f0569a5368130f4a3d7bce0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a JWT structure.  <a href="a02402.html#gad3ea09543f0569a5368130f4a3d7bce0">More...</a><br /></td></tr>
+<tr class="separator:gad3ea09543f0569a5368130f4a3d7bce0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6d1bf5c8bf4fb49e1e80c19911157d4b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02402.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b">atca_jwt_finalize</a> (<a class="el" href="a02641.html">atca_jwt_t</a> *jwt, uint16_t key_id)</td></tr>
+<tr class="memdesc:ga6d1bf5c8bf4fb49e1e80c19911157d4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the claims of a token, encode them, then sign the result.  <a href="a02402.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b">More...</a><br /></td></tr>
+<tr class="separator:ga6d1bf5c8bf4fb49e1e80c19911157d4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3e6036b2c0e6dbc96a30f078e56cacff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02402.html#ga3e6036b2c0e6dbc96a30f078e56cacff">atca_jwt_add_claim_string</a> (<a class="el" href="a02641.html">atca_jwt_t</a> *jwt, const char *claim, const char *value)</td></tr>
+<tr class="memdesc:ga3e6036b2c0e6dbc96a30f078e56cacff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a string claim to a token.  <a href="a02402.html#ga3e6036b2c0e6dbc96a30f078e56cacff">More...</a><br /></td></tr>
+<tr class="separator:ga3e6036b2c0e6dbc96a30f078e56cacff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7073a7cfb7c77ad02923cdbb1226d2ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02402.html#ga7073a7cfb7c77ad02923cdbb1226d2ad">atca_jwt_add_claim_numeric</a> (<a class="el" href="a02641.html">atca_jwt_t</a> *jwt, const char *claim, int32_t value)</td></tr>
+<tr class="memdesc:ga7073a7cfb7c77ad02923cdbb1226d2ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a numeric claim to a token.  <a href="a02402.html#ga7073a7cfb7c77ad02923cdbb1226d2ad">More...</a><br /></td></tr>
+<tr class="separator:ga7073a7cfb7c77ad02923cdbb1226d2ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0e2ca8c9bd4954e004cd10cdc29c9a9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02402.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b">atca_jwt_verify</a> (const char *buf, uint16_t buflen, const uint8_t *pubkey)</td></tr>
+<tr class="memdesc:ga0e2ca8c9bd4954e004cd10cdc29c9a9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies the signature of a jwt using the provided public key.  <a href="a02402.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b">More...</a><br /></td></tr>
+<tr class="separator:ga0e2ca8c9bd4954e004cd10cdc29c9a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for SWI over UART drivers. </p>
+<div class="textblock"><p>Utilities to create and verify a JSON Web Token (JWT) </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_36432077327cc0f3c76187c9e6e34627.html">hal</a></li><li class="navelem"><a class="el" href="a01430.html">hal_swi_uart.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_bf0da05a620233299b46c571285f5d4e.html">jwt</a></li><li class="navelem"><a class="el" href="a01430.html">atca_jwt.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

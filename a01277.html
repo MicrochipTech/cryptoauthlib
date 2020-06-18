@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_sha.c File Reference</title>
+<title>CryptoAuthLib: sha1_routines.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,81 +85,224 @@ $(document).ready(function(){initNavTree('a01277.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">calib_sha.c File Reference</div>  </div>
+<div class="title">sha1_routines.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for SHA command.  
+<p>Software implementation of the SHA1 algorithm.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01343_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a01280_source.html">sha1_routines.h</a>&quot;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a01058_source.html">atca_compiler.h</a>&quot;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07634.html">hw_sha256_ctx</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga0dba7f8f64110f7e08f4e924246f12ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga0dba7f8f64110f7e08f4e924246f12ea">calib_sha_base</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t length, const uint8_t *message, uint8_t *data_out, uint16_t *data_out_size)</td></tr>
-<tr class="memdesc:ga0dba7f8f64110f7e08f4e924246f12ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command, which computes a SHA-256 or HMAC/SHA-256 digest for general purpose use by the host system.  <a href="a07531.html#ga0dba7f8f64110f7e08f4e924246f12ea">More...</a><br /></td></tr>
-<tr class="separator:ga0dba7f8f64110f7e08f4e924246f12ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga39d5cc0ddb695bf9c4d23e90e0d3d296"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga39d5cc0ddb695bf9c4d23e90e0d3d296">calib_sha_start</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
-<tr class="memdesc:ga39d5cc0ddb695bf9c4d23e90e0d3d296"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to initialize SHA-256 calculation engine.  <a href="a07531.html#ga39d5cc0ddb695bf9c4d23e90e0d3d296">More...</a><br /></td></tr>
-<tr class="separator:ga39d5cc0ddb695bf9c4d23e90e0d3d296"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7c2814ae00b7e6ef4bf8b1830d4eabc5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga7c2814ae00b7e6ef4bf8b1830d4eabc5">calib_sha_update</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *message)</td></tr>
-<tr class="memdesc:ga7c2814ae00b7e6ef4bf8b1830d4eabc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to add 64 bytes of message data to the current context.  <a href="a07531.html#ga7c2814ae00b7e6ef4bf8b1830d4eabc5">More...</a><br /></td></tr>
-<tr class="separator:ga7c2814ae00b7e6ef4bf8b1830d4eabc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga55670a11ebdb67c97e37e76a26bac65c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga55670a11ebdb67c97e37e76a26bac65c">calib_sha_end</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t *digest, uint16_t length, const uint8_t *message)</td></tr>
-<tr class="memdesc:ga55670a11ebdb67c97e37e76a26bac65c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to complete SHA-256 or HMAC/SHA-256 operation.  <a href="a07531.html#ga55670a11ebdb67c97e37e76a26bac65c">More...</a><br /></td></tr>
-<tr class="separator:ga55670a11ebdb67c97e37e76a26bac65c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga386101050bd2c033457a179971c72c3d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga386101050bd2c033457a179971c72c3d">calib_sha_read_context</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t *context, uint16_t *context_size)</td></tr>
-<tr class="memdesc:ga386101050bd2c033457a179971c72c3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to read the SHA-256 context back. Only for ATECC608A with SHA-256 contexts. HMAC not supported.  <a href="a07531.html#ga386101050bd2c033457a179971c72c3d">More...</a><br /></td></tr>
-<tr class="separator:ga386101050bd2c033457a179971c72c3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga04ea40bc761db46291571e31d0dc050b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga04ea40bc761db46291571e31d0dc050b">calib_sha_write_context</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *context, uint16_t context_size)</td></tr>
-<tr class="memdesc:ga04ea40bc761db46291571e31d0dc050b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to write (restore) a SHA-256 context into the the device. Only supported for ATECC608A with SHA-256 contexts.  <a href="a07531.html#ga04ea40bc761db46291571e31d0dc050b">More...</a><br /></td></tr>
-<tr class="separator:ga04ea40bc761db46291571e31d0dc050b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga76470faf5d311b715ccdacba7548e2f5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga76470faf5d311b715ccdacba7548e2f5">calib_sha</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t length, const uint8_t *message, uint8_t *digest)</td></tr>
-<tr class="memdesc:ga76470faf5d311b715ccdacba7548e2f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the SHA command to compute a SHA-256 digest.  <a href="a07531.html#ga76470faf5d311b715ccdacba7548e2f5">More...</a><br /></td></tr>
-<tr class="separator:ga76470faf5d311b715ccdacba7548e2f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2d38b103472bd99e6f2d5bc85b8d509d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga2d38b103472bd99e6f2d5bc85b8d509d">calib_hw_sha2_256_init</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a07531.html#ga7dc326cdf6fbade0eee6081225a379de">atca_sha256_ctx_t</a> *ctx)</td></tr>
-<tr class="memdesc:ga2d38b103472bd99e6f2d5bc85b8d509d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a SHA context for performing a hardware SHA-256 operation on a device. Note that only one SHA operation can be run at a time.  <a href="a07531.html#ga2d38b103472bd99e6f2d5bc85b8d509d">More...</a><br /></td></tr>
-<tr class="separator:ga2d38b103472bd99e6f2d5bc85b8d509d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31246b38ff9c3824ac2dbb968ae1fa27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga31246b38ff9c3824ac2dbb968ae1fa27">calib_hw_sha2_256_update</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a07531.html#ga7dc326cdf6fbade0eee6081225a379de">atca_sha256_ctx_t</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
-<tr class="memdesc:ga31246b38ff9c3824ac2dbb968ae1fa27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add message data to a SHA context for performing a hardware SHA-256 operation on a device.  <a href="a07531.html#ga31246b38ff9c3824ac2dbb968ae1fa27">More...</a><br /></td></tr>
-<tr class="separator:ga31246b38ff9c3824ac2dbb968ae1fa27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0bc02fd5631101eef76422779feb417b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga0bc02fd5631101eef76422779feb417b">calib_hw_sha2_256_finish</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a07531.html#ga7dc326cdf6fbade0eee6081225a379de">atca_sha256_ctx_t</a> *ctx, uint8_t *digest)</td></tr>
-<tr class="memdesc:ga0bc02fd5631101eef76422779feb417b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finish SHA-256 digest for a SHA context for performing a hardware SHA-256 operation on a device.  <a href="a07531.html#ga0bc02fd5631101eef76422779feb417b">More...</a><br /></td></tr>
-<tr class="separator:ga0bc02fd5631101eef76422779feb417b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac65d56a4ea11f345e76309ca1432b0c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#gac65d56a4ea11f345e76309ca1432b0c1">calib_hw_sha2_256</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *data, size_t data_size, uint8_t *digest)</td></tr>
-<tr class="memdesc:gac65d56a4ea11f345e76309ca1432b0c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the SHA command to compute a SHA-256 digest.  <a href="a07531.html#gac65d56a4ea11f345e76309ca1432b0c1">More...</a><br /></td></tr>
-<tr class="separator:gac65d56a4ea11f345e76309ca1432b0c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7f2d006812bec40ac0ef5b02498bec6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga7f2d006812bec40ac0ef5b02498bec6e">calib_sha_hmac_init</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a07531.html#ga4c1f62e502c168be9261d2af921e78ba">atca_hmac_sha256_ctx_t</a> *ctx, uint16_t key_slot)</td></tr>
-<tr class="memdesc:ga7f2d006812bec40ac0ef5b02498bec6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to start an HMAC/SHA-256 operation.  <a href="a07531.html#ga7f2d006812bec40ac0ef5b02498bec6e">More...</a><br /></td></tr>
-<tr class="separator:ga7f2d006812bec40ac0ef5b02498bec6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8f2fa75050c0a6cd944d37a7d63ed618"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga8f2fa75050c0a6cd944d37a7d63ed618">calib_sha_hmac_update</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a07531.html#ga4c1f62e502c168be9261d2af921e78ba">atca_hmac_sha256_ctx_t</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
-<tr class="memdesc:ga8f2fa75050c0a6cd944d37a7d63ed618"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to add an arbitrary amount of message data to a HMAC/SHA-256 operation.  <a href="a07531.html#ga8f2fa75050c0a6cd944d37a7d63ed618">More...</a><br /></td></tr>
-<tr class="separator:ga8f2fa75050c0a6cd944d37a7d63ed618"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadadfd6a9da548fa63d6c69b9fe4839b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#gadadfd6a9da548fa63d6c69b9fe4839b8">calib_sha_hmac_finish</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a07531.html#ga4c1f62e502c168be9261d2af921e78ba">atca_hmac_sha256_ctx_t</a> *ctx, uint8_t *digest, uint8_t target)</td></tr>
-<tr class="memdesc:gadadfd6a9da548fa63d6c69b9fe4839b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to complete a HMAC/SHA-256 operation.  <a href="a07531.html#gadadfd6a9da548fa63d6c69b9fe4839b8">More...</a><br /></td></tr>
-<tr class="separator:gadadfd6a9da548fa63d6c69b9fe4839b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6e8094a3c5cebae7cdd2467ea0309df3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga6e8094a3c5cebae7cdd2467ea0309df3">calib_sha_hmac</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *data, size_t data_size, uint16_t key_slot, uint8_t *digest, uint8_t target)</td></tr>
-<tr class="memdesc:ga6e8094a3c5cebae7cdd2467ea0309df3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the SHA command to compute an HMAC/SHA-256 operation.  <a href="a07531.html#ga6e8094a3c5cebae7cdd2467ea0309df3">More...</a><br /></td></tr>
-<tr class="separator:ga6e8094a3c5cebae7cdd2467ea0309df3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affa9482d686cc435d640d67d7fa79772"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01277.html#affa9482d686cc435d640d67d7fa79772">CL_hashInit</a> (<a class="el" href="a02517.html">CL_HashContext</a> *ctx)</td></tr>
+<tr class="memdesc:affa9482d686cc435d640d67d7fa79772"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing SHA1 hash in software.  <a href="a01277.html#affa9482d686cc435d640d67d7fa79772">More...</a><br /></td></tr>
+<tr class="separator:affa9482d686cc435d640d67d7fa79772"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac647bbe11bef33bf113a08b8ea9ee799"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01277.html#ac647bbe11bef33bf113a08b8ea9ee799">CL_hashUpdate</a> (<a class="el" href="a02517.html">CL_HashContext</a> *ctx, const uint8_t *src, int nbytes)</td></tr>
+<tr class="memdesc:ac647bbe11bef33bf113a08b8ea9ee799"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add arbitrary data to a SHA1 hash.  <a href="a01277.html#ac647bbe11bef33bf113a08b8ea9ee799">More...</a><br /></td></tr>
+<tr class="separator:ac647bbe11bef33bf113a08b8ea9ee799"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f3bb1870c15bf1facf14c6b92549ce7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01277.html#a6f3bb1870c15bf1facf14c6b92549ce7">CL_hashFinal</a> (<a class="el" href="a02517.html">CL_HashContext</a> *ctx, uint8_t *dest)</td></tr>
+<tr class="memdesc:a6f3bb1870c15bf1facf14c6b92549ce7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete the SHA1 hash in software and return the digest.  <a href="a01277.html#a6f3bb1870c15bf1facf14c6b92549ce7">More...</a><br /></td></tr>
+<tr class="separator:a6f3bb1870c15bf1facf14c6b92549ce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50e72be6699b178f50b13857cdbb1ad5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01277.html#a50e72be6699b178f50b13857cdbb1ad5">CL_hash</a> (uint8_t *msg, int msgBytes, uint8_t *dest)</td></tr>
+<tr class="memdesc:a50e72be6699b178f50b13857cdbb1ad5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform SHA1 hash of data in software.  <a href="a01277.html#a50e72be6699b178f50b13857cdbb1ad5">More...</a><br /></td></tr>
+<tr class="separator:a50e72be6699b178f50b13857cdbb1ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7f5cbdb2069995d6ad84228b4896b59"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01277.html#aa7f5cbdb2069995d6ad84228b4896b59">shaEngine</a> (uint32_t *buf, uint32_t *h)</td></tr>
+<tr class="separator:aa7f5cbdb2069995d6ad84228b4896b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for SHA command. </p>
-<p>The SHA command Computes a SHA-256 or HMAC/SHA digest for general purpose use by the host system.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, and ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>Software implementation of the SHA1 algorithm. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a50e72be6699b178f50b13857cdbb1ad5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50e72be6699b178f50b13857cdbb1ad5">&#9670;&nbsp;</a></span>CL_hash()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CL_hash </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>msgBytes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>dest</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Perform SHA1 hash of data in software. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">msg</td><td>Data to be hashed </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">msgBytes</td><td>Data size in bytes </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">dest</td><td>Digest is returned here (20 bytes) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6f3bb1870c15bf1facf14c6b92549ce7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f3bb1870c15bf1facf14c6b92549ce7">&#9670;&nbsp;</a></span>CL_hashFinal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CL_hashFinal </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02517.html">CL_HashContext</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>dest</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Complete the SHA1 hash in software and return the digest. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>Hash context </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">dest</td><td>Digest is returned here (20 bytes) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="affa9482d686cc435d640d67d7fa79772"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affa9482d686cc435d640d67d7fa79772">&#9670;&nbsp;</a></span>CL_hashInit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CL_hashInit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02517.html">CL_HashContext</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize context for performing SHA1 hash in software. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>Hash context </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac647bbe11bef33bf113a08b8ea9ee799"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac647bbe11bef33bf113a08b8ea9ee799">&#9670;&nbsp;</a></span>CL_hashUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CL_hashUpdate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02517.html">CL_HashContext</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nbytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add arbitrary data to a SHA1 hash. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>Hash context </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">src</td><td>Data to be added to the hash </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nbytes</td><td>Data size in bytes </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa7f5cbdb2069995d6ad84228b4896b59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7f5cbdb2069995d6ad84228b4896b59">&#9670;&nbsp;</a></span>shaEngine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void shaEngine </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>h</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_a7c83ffe4cbb7b846faed985dac26a17.html">calib</a></li><li class="navelem"><a class="el" href="a01277.html">calib_sha.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_0d284ebe0a46982303565525253d36b8.html">crypto</a></li><li class="navelem"><a class="el" href="dir_d3d4a6b49a98e373fd2a2e5f3f68abbc.html">hashes</a></li><li class="navelem"><a class="el" href="a01277.html">sha1_routines.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

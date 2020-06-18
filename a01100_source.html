@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_bool.h Source File</title>
+<title>CryptoAuthLib: atcacert.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,31 +85,46 @@ $(document).ready(function(){initNavTree('a01100_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">atca_bool.h</div>  </div>
+<div class="title">atcacert.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a01100.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#ifndef _ATCA_BOOL_H</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#define _ATCA_BOOL_H</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#if defined(_MSC_VER) &amp;&amp; (_MSC_VER &lt;= 1700)</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">// VS2012 and earlier don&#39;t support stdbool.h</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">    #ifndef __cplusplus</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">        #define bool    unsigned char</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">        #define false   0</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">        #define true    1</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">    #endif</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">    #include &lt;stdbool.h&gt;</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef ATCACERT_H</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define ATCACERT_H</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#ifndef FALSE</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#define FALSE (0)</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="a02397.html#gaa93f0eb578d23995850d61f7d61c55c1">   45</a></span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#ifndef TRUE</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#define TRUE (1)</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="a02397.html#gaa8cecfc5c5c054d2875c03e77b7be15d">   48</a></span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#define ATCACERT_E_SUCCESS              0   </span></div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="a02397.html#ga7bd1ad830360fc8b988f855da6d0d5ba">   51</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_ERROR                1   </span></div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="a02397.html#ga048a6bb9781dbbc402409a172f976f74">   52</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_BAD_PARAMS           2   </span></div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="a02397.html#ga47509d283523ab1892fb8746d6f4e37d">   53</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_BUFFER_TOO_SMALL     3   </span></div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="a02397.html#ga7a2e774fc8b12c4045dea335a86afca6">   54</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_DECODING_ERROR       4   </span></div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="a02397.html#gaea155533fdd352d6602d3e2fc717930f">   55</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_INVALID_DATE         5   </span></div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="a02397.html#gaafd66d6744314225ead24b3901bd6372">   56</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_UNIMPLEMENTED        6   </span></div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="a02397.html#ga4b6db1523875a2b1453ef5e16989ecd4">   57</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_UNEXPECTED_ELEM_SIZE 7   </span></div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="a02397.html#ga5a7cb98e18ad338f2eaf6594acb67c32">   58</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_ELEM_MISSING         8   </span></div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="a02397.html#ga8e3e7c64650c92364bbac17f6a75474a">   59</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_ELEM_OUT_OF_BOUNDS   9   </span></div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="a02397.html#ga62604c78d688530173e203b02df180fa">   60</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_BAD_CERT             10  </span></div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="a02397.html#ga822ee0620c8d2d12ff971b9b35f9f5cd">   61</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_WRONG_CERT_DEF       11</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="a02397.html#ga01010ef58d52a05292f6a70ff3d53ce8">   62</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_VERIFY_FAILED        12  </span></div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="a02397.html#gae1da5e02cd9b4ee7b8617d7bce0a5b5d">   63</a></span>&#160;<span class="preprocessor">#define ATCACERT_E_INVALID_TRANSFORM    13  </span></div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="a02397.html#ga2396e500bd36c2316a1a6e13e3117958">   64</a></span>&#160;<span class="preprocessor"></span> </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="a01100.html">atca_bool.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_65edf1b561f102319ae2d8c3ccfc1a4c.html">atcacert</a></li><li class="navelem"><a class="el" href="a01100.html">atcacert.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

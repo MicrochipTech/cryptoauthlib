@@ -1,13 +1,12 @@
 var a02673 =
 [
-    [ "hPrivateData", "a02673.html#a2f6769e4ceda4853db07b96b8e5770a0", null ],
-    [ "kdf", "a02673.html#a0b7cdb5c49b5009e5d66ca1d6b6ead43", null ],
-    [ "pPublicData", "a02673.html#a5b5ab88b8cf93cfa701f56237f237292", null ],
-    [ "pPublicData2", "a02673.html#a807f984f215aef03dc5ac126804618dd", null ],
-    [ "pSharedData", "a02673.html#acab261b5f4c0104ea7011d671b371ab1", null ],
-    [ "publicKey", "a02673.html#afefc9f01b422602a32acbd4fd4bb9ccc", null ],
-    [ "ulPrivateDataLen", "a02673.html#a298011aaedd3c092f893e8bbba354cf9", null ],
-    [ "ulPublicDataLen", "a02673.html#ae9ccaf64b51247d789c8e4d78b64b54c", null ],
-    [ "ulPublicDataLen2", "a02673.html#a883bd3806b7c0e47291bc8efce44ccc1", null ],
-    [ "ulSharedDataLen", "a02673.html#a95606c7e5bb43c1d62f41791c98d7f7f", null ]
+    [ "cfg_zone", "a02673.html#ae24de6f9c8f57c923a91b284c16a6975", null ],
+    [ "device_ctx", "a02673.html#a40b0d1b98f428fd7214ae525ec55f6b4", null ],
+    [ "flags", "a02673.html#aab168fc251b8b32a3bb0639f4986fce1", null ],
+    [ "initialized", "a02673.html#a1160c303d9370f4187e6f48d6ac336c1", null ],
+    [ "interface_config", "a02673.html#a6e24c5737f64f4fe557f5c30ae5d3c50", null ],
+    [ "session", "a02673.html#abb9edae3d27b84bc0db377df35f5e670", null ],
+    [ "slot_id", "a02673.html#a43f1872df8023026a7cfcba48af95a29", null ],
+    [ "so_pin_handle", "a02673.html#a6fd883a4701d995f5a342a3fdcf1ece7", null ],
+    [ "user_pin_handle", "a02673.html#a820417dd771ed3d24ea01be5da94e7ec", null ]
 ];

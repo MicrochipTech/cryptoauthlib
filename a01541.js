@@ -1,7 +1,11 @@
 var a01541 =
 [
-    [ "pkcs11_find_continue", "a07537.html#ga5dbe038da3069861b8de9f77d0c06de1", null ],
-    [ "pkcs11_find_finish", "a07537.html#gacc5c7a788f0c4eafd4f0c1da2aaf0d60", null ],
-    [ "pkcs11_find_get_attribute", "a07537.html#ga0e2b3b381504c39a017a4232a35b672d", null ],
-    [ "pkcs11_find_init", "a07537.html#ga6fd109c0919489909cc4073866d1c466", null ]
+    [ "pkcs11_signature_sign", "a02404.html#ga4641a3dd4da46f801565310f3784a41e", null ],
+    [ "pkcs11_signature_sign_continue", "a02404.html#ga9c471f7e2ca3330cf6d2fa70e12db38a", null ],
+    [ "pkcs11_signature_sign_finish", "a02404.html#gadb52d31f30bb8f6a66d1851ba0052dc7", null ],
+    [ "pkcs11_signature_sign_init", "a02404.html#ga742c35812a444a87e35150e2332be0c2", null ],
+    [ "pkcs11_signature_verify", "a02404.html#ga27b3652fb8a87f7f40fff10c63316b35", null ],
+    [ "pkcs11_signature_verify_continue", "a02404.html#gab735278cab8e184d682b4ed8b12dbb1b", null ],
+    [ "pkcs11_signature_verify_finish", "a02404.html#ga2aac39ede2b43021b63ed6bc7f3f20da", null ],
+    [ "pkcs11_signature_verify_init", "a02404.html#ga852f9badf3176a60bfb874fb5d118791", null ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: _pkcs11_slot_ctx Struct Reference</title>
+<title>CryptoAuthLib: atca_derive_key_in_out Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,159 +87,132 @@ $(document).ready(function(){initNavTree('a02613.html',''); initResizable(); });
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">_pkcs11_slot_ctx Struct Reference</div>  </div>
+<div class="title">atca_derive_key_in_out Struct Reference<div class="ingroups"><a class="el" href="a02401.html">Host side crypto methods (atcah_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="a01544_source.html">pkcs11_slot.h</a>&gt;</code></p>
+<p>Input/output parameters for function <a class="el" href="a02401.html#ga02b3479eaee1bd1741675c2a1249ffda" title="This function derives a key with a key and TempKey.">atcah_derive_key()</a>.  
+ <a href="a02613.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="a01427_source.html">atca_host.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a1160c303d9370f4187e6f48d6ac336c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#abd07a1bba363f8083080b9328e67b491">CK_BBOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02613.html#a1160c303d9370f4187e6f48d6ac336c1">initialized</a></td></tr>
-<tr class="separator:a1160c303d9370f4187e6f48d6ac336c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43f1872df8023026a7cfcba48af95a29"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#a53398953158f3b452e0513a0b78a0c5a">CK_SLOT_ID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02613.html#a43f1872df8023026a7cfcba48af95a29">slot_id</a></td></tr>
-<tr class="separator:a43f1872df8023026a7cfcba48af95a29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40b0d1b98f428fd7214ae525ec55f6b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02335.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02613.html#a40b0d1b98f428fd7214ae525ec55f6b4">device_ctx</a></td></tr>
-<tr class="separator:a40b0d1b98f428fd7214ae525ec55f6b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e24c5737f64f4fe557f5c30ae5d3c50"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02369.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02613.html#a6e24c5737f64f4fe557f5c30ae5d3c50">interface_config</a></td></tr>
-<tr class="separator:a6e24c5737f64f4fe557f5c30ae5d3c50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb9edae3d27b84bc0db377df35f5e670"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02613.html#abb9edae3d27b84bc0db377df35f5e670">session</a></td></tr>
-<tr class="separator:abb9edae3d27b84bc0db377df35f5e670"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae24de6f9c8f57c923a91b284c16a6975"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02335.html#gaa79c67819d119906fe10784efd3fd59e">atecc608a_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02613.html#ae24de6f9c8f57c923a91b284c16a6975">cfg_zone</a></td></tr>
-<tr class="separator:ae24de6f9c8f57c923a91b284c16a6975"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab168fc251b8b32a3bb0639f4986fce1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#a53850492c1ba57aca4332be791a3c6a3">CK_FLAGS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02613.html#aab168fc251b8b32a3bb0639f4986fce1">flags</a></td></tr>
-<tr class="separator:aab168fc251b8b32a3bb0639f4986fce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a820417dd771ed3d24ea01be5da94e7ec"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02613.html#a820417dd771ed3d24ea01be5da94e7ec">user_pin_handle</a></td></tr>
-<tr class="separator:a820417dd771ed3d24ea01be5da94e7ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fd883a4701d995f5a342a3fdcf1ece7"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02613.html#a6fd883a4701d995f5a342a3fdcf1ece7">so_pin_handle</a></td></tr>
-<tr class="separator:a6fd883a4701d995f5a342a3fdcf1ece7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37e90f5e3bd99fac2021fb3a326607d4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02613.html#a37e90f5e3bd99fac2021fb3a326607d4">mode</a></td></tr>
+<tr class="memdesc:a37e90f5e3bd99fac2021fb3a326607d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mode (param 1) of the derive key command.  <a href="a02613.html#a37e90f5e3bd99fac2021fb3a326607d4">More...</a><br /></td></tr>
+<tr class="separator:a37e90f5e3bd99fac2021fb3a326607d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41104a8c85cd12c0fde0d791c3276a48"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02613.html#a41104a8c85cd12c0fde0d791c3276a48">target_key_id</a></td></tr>
+<tr class="memdesc:a41104a8c85cd12c0fde0d791c3276a48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key ID (param 2) of the target slot to run the command on.  <a href="a02613.html#a41104a8c85cd12c0fde0d791c3276a48">More...</a><br /></td></tr>
+<tr class="separator:a41104a8c85cd12c0fde0d791c3276a48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef45bac2efcd5394c4ed79f73ee16d23"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02613.html#aef45bac2efcd5394c4ed79f73ee16d23">sn</a></td></tr>
+<tr class="memdesc:aef45bac2efcd5394c4ed79f73ee16d23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though.  <a href="a02613.html#aef45bac2efcd5394c4ed79f73ee16d23">More...</a><br /></td></tr>
+<tr class="separator:aef45bac2efcd5394c4ed79f73ee16d23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a000599eef5677ed1279b025c42ae260e"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02613.html#a000599eef5677ed1279b025c42ae260e">parent_key</a></td></tr>
+<tr class="memdesc:a000599eef5677ed1279b025c42ae260e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parent key to be used in the derive key calculation (32 bytes).  <a href="a02613.html#a000599eef5677ed1279b025c42ae260e">More...</a><br /></td></tr>
+<tr class="separator:a000599eef5677ed1279b025c42ae260e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afca67d3e5d5a7c772262731cc08880b1"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02613.html#afca67d3e5d5a7c772262731cc08880b1">target_key</a></td></tr>
+<tr class="memdesc:afca67d3e5d5a7c772262731cc08880b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Derived key will be returned here (32 bytes).  <a href="a02613.html#afca67d3e5d5a7c772262731cc08880b1">More...</a><br /></td></tr>
+<tr class="separator:afca67d3e5d5a7c772262731cc08880b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72fae3d62889ef224f09c57a7646e061"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a02569.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02613.html#a72fae3d62889ef224f09c57a7646e061">temp_key</a></td></tr>
+<tr class="memdesc:a72fae3d62889ef224f09c57a7646e061"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current state of TempKey.  <a href="a02613.html#a72fae3d62889ef224f09c57a7646e061">More...</a><br /></td></tr>
+<tr class="separator:a72fae3d62889ef224f09c57a7646e061"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Slot Context </p>
+<div class="textblock"><p>Input/output parameters for function <a class="el" href="a02401.html#ga02b3479eaee1bd1741675c2a1249ffda" title="This function derives a key with a key and TempKey.">atcah_derive_key()</a>. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="ae24de6f9c8f57c923a91b284c16a6975"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae24de6f9c8f57c923a91b284c16a6975">&#9670;&nbsp;</a></span>cfg_zone</h2>
+<a id="a37e90f5e3bd99fac2021fb3a326607d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37e90f5e3bd99fac2021fb3a326607d4">&#9670;&nbsp;</a></span>mode</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a02335.html#gaa79c67819d119906fe10784efd3fd59e">atecc608a_config_t</a> cfg_zone</td>
+          <td class="memname">uint8_t mode</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Mode (param 1) of the derive key command. </p>
+
 </div>
 </div>
-<a id="a40b0d1b98f428fd7214ae525ec55f6b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a40b0d1b98f428fd7214ae525ec55f6b4">&#9670;&nbsp;</a></span>device_ctx</h2>
+<a id="a000599eef5677ed1279b025c42ae260e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a000599eef5677ed1279b025c42ae260e">&#9670;&nbsp;</a></span>parent_key</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a02335.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device_ctx</td>
+          <td class="memname">const uint8_t* parent_key</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Parent key to be used in the derive key calculation (32 bytes). </p>
+
 </div>
 </div>
-<a id="aab168fc251b8b32a3bb0639f4986fce1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab168fc251b8b32a3bb0639f4986fce1">&#9670;&nbsp;</a></span>flags</h2>
+<a id="aef45bac2efcd5394c4ed79f73ee16d23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef45bac2efcd5394c4ed79f73ee16d23">&#9670;&nbsp;</a></span>sn</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01562.html#a53850492c1ba57aca4332be791a3c6a3">CK_FLAGS</a> flags</td>
+          <td class="memname">const uint8_t* sn</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though. </p>
+
 </div>
 </div>
-<a id="a1160c303d9370f4187e6f48d6ac336c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1160c303d9370f4187e6f48d6ac336c1">&#9670;&nbsp;</a></span>initialized</h2>
+<a id="afca67d3e5d5a7c772262731cc08880b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afca67d3e5d5a7c772262731cc08880b1">&#9670;&nbsp;</a></span>target_key</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01562.html#abd07a1bba363f8083080b9328e67b491">CK_BBOOL</a> initialized</td>
+          <td class="memname">uint8_t* target_key</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Derived key will be returned here (32 bytes). </p>
+
 </div>
 </div>
-<a id="a6e24c5737f64f4fe557f5c30ae5d3c50"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e24c5737f64f4fe557f5c30ae5d3c50">&#9670;&nbsp;</a></span>interface_config</h2>
+<a id="a41104a8c85cd12c0fde0d791c3276a48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41104a8c85cd12c0fde0d791c3276a48">&#9670;&nbsp;</a></span>target_key_id</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a02369.html">ATCAIfaceCfg</a> interface_config</td>
+          <td class="memname">uint16_t target_key_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Key ID (param 2) of the target slot to run the command on. </p>
+
 </div>
 </div>
-<a id="abb9edae3d27b84bc0db377df35f5e670"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb9edae3d27b84bc0db377df35f5e670">&#9670;&nbsp;</a></span>session</h2>
+<a id="a72fae3d62889ef224f09c57a7646e061"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72fae3d62889ef224f09c57a7646e061">&#9670;&nbsp;</a></span>temp_key</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01562.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> session</td>
+          <td class="memname">struct <a class="el" href="a02569.html">atca_temp_key</a>* temp_key</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a43f1872df8023026a7cfcba48af95a29"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a43f1872df8023026a7cfcba48af95a29">&#9670;&nbsp;</a></span>slot_id</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01562.html#a53398953158f3b452e0513a0b78a0c5a">CK_SLOT_ID</a> slot_id</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a6fd883a4701d995f5a342a3fdcf1ece7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6fd883a4701d995f5a342a3fdcf1ece7">&#9670;&nbsp;</a></span>so_pin_handle</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t so_pin_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a820417dd771ed3d24ea01be5da94e7ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a820417dd771ed3d24ea01be5da94e7ec">&#9670;&nbsp;</a></span>user_pin_handle</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t user_pin_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>Current state of TempKey. </p>
 
 </div>
 </div>
@@ -248,7 +221,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02613.html">_pkcs11_slot_ctx</a></li>
+    <li class="navelem"><a class="el" href="a02613.html">atca_derive_key_in_out</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

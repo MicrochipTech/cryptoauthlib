@@ -1,19 +1,11 @@
 var a01154 =
 [
-    [ "ATCACERT_E_BAD_CERT", "a07530.html#ga822ee0620c8d2d12ff971b9b35f9f5cd", null ],
-    [ "ATCACERT_E_BAD_PARAMS", "a07530.html#ga47509d283523ab1892fb8746d6f4e37d", null ],
-    [ "ATCACERT_E_BUFFER_TOO_SMALL", "a07530.html#ga7a2e774fc8b12c4045dea335a86afca6", null ],
-    [ "ATCACERT_E_DECODING_ERROR", "a07530.html#gaea155533fdd352d6602d3e2fc717930f", null ],
-    [ "ATCACERT_E_ELEM_MISSING", "a07530.html#ga8e3e7c64650c92364bbac17f6a75474a", null ],
-    [ "ATCACERT_E_ELEM_OUT_OF_BOUNDS", "a07530.html#ga62604c78d688530173e203b02df180fa", null ],
-    [ "ATCACERT_E_ERROR", "a07530.html#ga048a6bb9781dbbc402409a172f976f74", null ],
-    [ "ATCACERT_E_INVALID_DATE", "a07530.html#gaafd66d6744314225ead24b3901bd6372", null ],
-    [ "ATCACERT_E_INVALID_TRANSFORM", "a07530.html#ga2396e500bd36c2316a1a6e13e3117958", null ],
-    [ "ATCACERT_E_SUCCESS", "a07530.html#ga7bd1ad830360fc8b988f855da6d0d5ba", null ],
-    [ "ATCACERT_E_UNEXPECTED_ELEM_SIZE", "a07530.html#ga5a7cb98e18ad338f2eaf6594acb67c32", null ],
-    [ "ATCACERT_E_UNIMPLEMENTED", "a07530.html#ga4b6db1523875a2b1453ef5e16989ecd4", null ],
-    [ "ATCACERT_E_VERIFY_FAILED", "a07530.html#gae1da5e02cd9b4ee7b8617d7bce0a5b5d", null ],
-    [ "ATCACERT_E_WRONG_CERT_DEF", "a07530.html#ga01010ef58d52a05292f6a70ff3d53ce8", null ],
-    [ "FALSE", "a07530.html#gaa93f0eb578d23995850d61f7d61c55c1", null ],
-    [ "TRUE", "a07530.html#gaa8cecfc5c5c054d2875c03e77b7be15d", null ]
+    [ "MAX_BUSES", "a01154.html#a71478560014bace34a1ebdeab8875365", null ],
+    [ "_calib_exit", "a02398.html#ga2167248c704fb8d6864760c066bec13b", null ],
+    [ "calib_cfg_discover", "a02398.html#ga78cfdfa5c6afa83804fd344eae3f0105", null ],
+    [ "calib_get_addr", "a02398.html#gae51a67781e9e4618e669db1c999e6ec2", null ],
+    [ "calib_get_zone_size", "a02398.html#ga023735b1c0b10e70832d9a957bc99ae3", null ],
+    [ "calib_idle", "a02398.html#ga59750d83d93368b2944f57bb38bf4d1f", null ],
+    [ "calib_sleep", "a02398.html#gad26b70951a0da6d80fb98027faae7a1f", null ],
+    [ "calib_wakeup", "a02398.html#gafbc037d57a4cc4fec6a2f291736170cb", null ]
 ];

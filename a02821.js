@@ -1,9 +1,6 @@
 var a02821 =
 [
-    [ "pAAD", "a02821.html#a0816b397709ad49300a6649032d36ae8", null ],
-    [ "pIv", "a02821.html#a484f89086d16b6136e768608356cf411", null ],
-    [ "ulAADLen", "a02821.html#aa04b948f1abaa06fd4fc5d5bc7e8388e", null ],
-    [ "ulIvBits", "a02821.html#aed408fc7d4fb70e358cd4bf7beabdc50", null ],
-    [ "ulIvLen", "a02821.html#a369e27367725ae54a5b066d87ad6e0b6", null ],
-    [ "ulTagBits", "a02821.html#a2bcb11fc26e296e7e0292f93d0138f37", null ]
+    [ "DigestMechanism", "a02821.html#aac90f57c5853d865005b0114fbb1a5be", null ],
+    [ "pVersion", "a02821.html#a24538e0f029b27ff31f3352af437a2b0", null ],
+    [ "RandomInfo", "a02821.html#a36f44234ef19f65a90e293f6b20ba4e0", null ]
 ];

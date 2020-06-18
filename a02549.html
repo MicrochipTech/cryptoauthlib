@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_write_mac_in_out Struct Reference</title>
+<title>CryptoAuthLib: hid_device Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,151 +87,83 @@ $(document).ready(function(){initNavTree('a02549.html',''); initResizable(); });
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atca_write_mac_in_out Struct Reference<div class="ingroups"><a class="el" href="a02341.html">Host side crypto methods (atcah_)</a></div></div>  </div>
+<div class="title">hid_device Struct Reference<div class="ingroups"><a class="el" href="a02400.html">Hardware abstraction layer (hal_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Input/output parameters for function <a class="el" href="a02341.html#ga47853951c57803eff1432780bf360057" title="This function calculates the input MAC for the Write command.">atcah_write_auth_mac()</a> and <a class="el" href="a02341.html#gaed8aa58875c6bdf46a937313e69c6ebb" title="This function calculates the input MAC for the PrivWrite command.">atcah_privwrite_auth_mac()</a>.  
- <a href="a02549.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="a01424_source.html">atca_host.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a01349_source.html">hal_linux_kit_hid.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac746c3d65092170bfaf5b0d9950d8438"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02549.html#ac746c3d65092170bfaf5b0d9950d8438">zone</a></td></tr>
-<tr class="memdesc:ac746c3d65092170bfaf5b0d9950d8438"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zone/Param1 for the Write or PrivWrite command.  <a href="a02549.html#ac746c3d65092170bfaf5b0d9950d8438">More...</a><br /></td></tr>
-<tr class="separator:ac746c3d65092170bfaf5b0d9950d8438"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac21eed4200889cc115d16a781871d01c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02549.html#ac21eed4200889cc115d16a781871d01c">key_id</a></td></tr>
-<tr class="memdesc:ac21eed4200889cc115d16a781871d01c"><td class="mdescLeft">&#160;</td><td class="mdescRight">KeyID/Param2 for the Write or PrivWrite command.  <a href="a02549.html#ac21eed4200889cc115d16a781871d01c">More...</a><br /></td></tr>
-<tr class="separator:ac21eed4200889cc115d16a781871d01c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef45bac2efcd5394c4ed79f73ee16d23"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02549.html#aef45bac2efcd5394c4ed79f73ee16d23">sn</a></td></tr>
-<tr class="memdesc:aef45bac2efcd5394c4ed79f73ee16d23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though.  <a href="a02549.html#aef45bac2efcd5394c4ed79f73ee16d23">More...</a><br /></td></tr>
-<tr class="separator:aef45bac2efcd5394c4ed79f73ee16d23"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a699b6e4448b505a2664025ccca3522f5"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02549.html#a699b6e4448b505a2664025ccca3522f5">input_data</a></td></tr>
-<tr class="memdesc:a699b6e4448b505a2664025ccca3522f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data to be encrypted. 32 bytes for Write command, 36 bytes for PrivWrite command.  <a href="a02549.html#a699b6e4448b505a2664025ccca3522f5">More...</a><br /></td></tr>
-<tr class="separator:a699b6e4448b505a2664025ccca3522f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c2a094baeab96152cea462ba9677887"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02549.html#a8c2a094baeab96152cea462ba9677887">encrypted_data</a></td></tr>
-<tr class="memdesc:a8c2a094baeab96152cea462ba9677887"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypted version of input_data will be returned here. 32 bytes for Write command, 36 bytes for PrivWrite command.  <a href="a02549.html#a8c2a094baeab96152cea462ba9677887">More...</a><br /></td></tr>
-<tr class="separator:a8c2a094baeab96152cea462ba9677887"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f11512564ff4aeaf5f9d0646d971ed2"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02549.html#a9f11512564ff4aeaf5f9d0646d971ed2">auth_mac</a></td></tr>
-<tr class="memdesc:a9f11512564ff4aeaf5f9d0646d971ed2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write MAC will be returned here. 32 bytes.  <a href="a02549.html#a9f11512564ff4aeaf5f9d0646d971ed2">More...</a><br /></td></tr>
-<tr class="separator:a9f11512564ff4aeaf5f9d0646d971ed2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72fae3d62889ef224f09c57a7646e061"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a02509.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02549.html#a72fae3d62889ef224f09c57a7646e061">temp_key</a></td></tr>
-<tr class="memdesc:a72fae3d62889ef224f09c57a7646e061"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current state of TempKey.  <a href="a02549.html#a72fae3d62889ef224f09c57a7646e061">More...</a><br /></td></tr>
-<tr class="separator:a72fae3d62889ef224f09c57a7646e061"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72bac4e370ad82aef68188c521d2020d"><td class="memItemLeft" align="right" valign="top">FILE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02549.html#a72bac4e370ad82aef68188c521d2020d">read_handle</a></td></tr>
+<tr class="separator:a72bac4e370ad82aef68188c521d2020d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0"><td class="memItemLeft" align="right" valign="top">FILE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02549.html#ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0">write_handle</a></td></tr>
+<tr class="memdesc:ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The kit USB read file handle.  <a href="a02549.html#ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0">More...</a><br /></td></tr>
+<tr class="separator:ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79525e0d472c02e26e7c4aa4a780c1d9"><td class="memItemLeft" align="right" valign="top">HANDLE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02549.html#a79525e0d472c02e26e7c4aa4a780c1d9">read_handle</a></td></tr>
+<tr class="separator:a79525e0d472c02e26e7c4aa4a780c1d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af11a0103eb96a026ea6782bfcad7548e"><td class="memItemLeft" align="right" valign="top">HANDLE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02549.html#af11a0103eb96a026ea6782bfcad7548e">write_handle</a></td></tr>
+<tr class="memdesc:af11a0103eb96a026ea6782bfcad7548e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The kit USB read file handle.  <a href="a02549.html#af11a0103eb96a026ea6782bfcad7548e">More...</a><br /></td></tr>
+<tr class="separator:af11a0103eb96a026ea6782bfcad7548e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input/output parameters for function <a class="el" href="a02341.html#ga47853951c57803eff1432780bf360057" title="This function calculates the input MAC for the Write command.">atcah_write_auth_mac()</a> and <a class="el" href="a02341.html#gaed8aa58875c6bdf46a937313e69c6ebb" title="This function calculates the input MAC for the PrivWrite command.">atcah_privwrite_auth_mac()</a>. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a id="a9f11512564ff4aeaf5f9d0646d971ed2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f11512564ff4aeaf5f9d0646d971ed2">&#9670;&nbsp;</a></span>auth_mac</h2>
+<h2 class="groupheader">Field Documentation</h2>
+<a id="a72bac4e370ad82aef68188c521d2020d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72bac4e370ad82aef68188c521d2020d">&#9670;&nbsp;</a></span>read_handle <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* auth_mac</td>
+          <td class="memname">FILE* read_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Write MAC will be returned here. 32 bytes. </p>
-
 </div>
 </div>
-<a id="a8c2a094baeab96152cea462ba9677887"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c2a094baeab96152cea462ba9677887">&#9670;&nbsp;</a></span>encrypted_data</h2>
+<a id="a79525e0d472c02e26e7c4aa4a780c1d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79525e0d472c02e26e7c4aa4a780c1d9">&#9670;&nbsp;</a></span>read_handle <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* encrypted_data</td>
+          <td class="memname">HANDLE read_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encrypted version of input_data will be returned here. 32 bytes for Write command, 36 bytes for PrivWrite command. </p>
-
 </div>
 </div>
-<a id="a699b6e4448b505a2664025ccca3522f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a699b6e4448b505a2664025ccca3522f5">&#9670;&nbsp;</a></span>input_data</h2>
+<a id="ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0">&#9670;&nbsp;</a></span>write_handle <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint8_t* input_data</td>
+          <td class="memname">FILE* write_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Data to be encrypted. 32 bytes for Write command, 36 bytes for PrivWrite command. </p>
+<p>The kit USB read file handle. </p>
 
 </div>
 </div>
-<a id="ac21eed4200889cc115d16a781871d01c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac21eed4200889cc115d16a781871d01c">&#9670;&nbsp;</a></span>key_id</h2>
+<a id="af11a0103eb96a026ea6782bfcad7548e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af11a0103eb96a026ea6782bfcad7548e">&#9670;&nbsp;</a></span>write_handle <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t key_id</td>
+          <td class="memname">HANDLE write_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>KeyID/Param2 for the Write or PrivWrite command. </p>
-
-</div>
-</div>
-<a id="aef45bac2efcd5394c4ed79f73ee16d23"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef45bac2efcd5394c4ed79f73ee16d23">&#9670;&nbsp;</a></span>sn</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const uint8_t* sn</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though. </p>
-
-</div>
-</div>
-<a id="a72fae3d62889ef224f09c57a7646e061"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72fae3d62889ef224f09c57a7646e061">&#9670;&nbsp;</a></span>temp_key</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct <a class="el" href="a02509.html">atca_temp_key</a>* temp_key</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Current state of TempKey. </p>
-
-</div>
-</div>
-<a id="ac746c3d65092170bfaf5b0d9950d8438"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac746c3d65092170bfaf5b0d9950d8438">&#9670;&nbsp;</a></span>zone</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t zone</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Zone/Param1 for the Write or PrivWrite command. </p>
+<p>The kit USB read file handle. </p>
 
 </div>
 </div>
@@ -240,7 +172,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02549.html">atca_write_mac_in_out</a></li>
+    <li class="navelem"><a class="el" href="a02549.html">hid_device</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

@@ -1,5 +1,5 @@
 var a02561 =
 [
-    [ "crypto_data", "a02341.html#ga4155a23e70d1bf07de5d316efebeaee7", null ],
-    [ "temp_key", "a02341.html#gaa17e031da4b22938bed1c21161ba371a", null ]
+    [ "change_baudrate", "a02561.html#aa50b662a49ed98cb27c809f4b2027ac9", null ],
+    [ "i2c_instance", "a02561.html#a5a633e42035bd009af942b508acaf3d9", null ]
 ];

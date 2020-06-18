@@ -1,7 +1,14 @@
 var a01535 =
 [
-    [ "pkcs11_digest", "a01535.html#a81936ce8429c7a97bc42921589c1522e", null ],
-    [ "pkcs11_digest_final", "a01535.html#abd1c9ccc6899b550d241f007fd023d6b", null ],
-    [ "pkcs11_digest_init", "a01535.html#a903aed9c7d096dced1233a11539c781d", null ],
-    [ "pkcs11_digest_update", "a01535.html#a87a4b63b1a4ced5e40a1cc0bbc88599d", null ]
+    [ "_pkcs11_session_ctx", "a02669.html", "a02669" ],
+    [ "pkcs11_session_ctx", "a01535.html#ace788f45b1b41ff633b00645960a1e56", null ],
+    [ "pkcs11_session_ctx_ptr", "a01535.html#a4088a7eeba6972be68d129b499a30161", null ],
+    [ "pkcs11_session_authorize", "a01535.html#ac31d85d2efc0eadb6b0c7b5264554a59", null ],
+    [ "pkcs11_session_check", "a02404.html#ga7eb04614661e0cedf6cb926787f5ff9b", null ],
+    [ "pkcs11_session_close", "a02404.html#gac082a1a5af11c561af58d333414f4a27", null ],
+    [ "pkcs11_session_closeall", "a02404.html#ga43525e77f9049b545fa09129cacf9c9a", null ],
+    [ "pkcs11_session_get_info", "a02404.html#ga236a002e179ed36a0b81399a3e11fcb8", null ],
+    [ "pkcs11_session_login", "a02404.html#ga4d70fd7e9799d0428c308a3e1ed146df", null ],
+    [ "pkcs11_session_logout", "a02404.html#gafefc70d16edaf998a521daf6b8aed3e6", null ],
+    [ "pkcs11_session_open", "a02404.html#gad015e297476bdc4df61870f8d1209ddb", null ]
 ];

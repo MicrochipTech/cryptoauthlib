@@ -1,6 +1,8 @@
 var a02469 =
 [
-    [ "kits", "a02469.html#a2bd4dbcb2ab2d6802f2df0d067a4389a", null ],
-    [ "kits", "a02469.html#ab18469d917784316fd480ea543d58fcb", null ],
-    [ "num_kits_found", "a02469.html#a9bb0ee74044865538adfcc5d5ae8f621", null ]
+    [ "count", "a02469.html#af6a39bfc7e1dc3b6f9c997c1c43fa996", null ],
+    [ "is_genkey", "a02469.html#ab0cedc80cd8670d02eee4b6e31500f5f", null ],
+    [ "offset", "a02469.html#ac681806181c80437cfab37335f62ff39", null ],
+    [ "slot", "a02469.html#ad23984515efd99983fa4baf3754082a1", null ],
+    [ "zone", "a02469.html#a107ad412023faa68c4ac0c7cfd921a02", null ]
 ];

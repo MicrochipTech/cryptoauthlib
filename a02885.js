@@ -1,6 +1,9 @@
 var a02885 =
 [
-    [ "app_digest", "a02885.html#a15de5c1cdbe015c9927c51026a44c15d", null ],
-    [ "memory_params", "a02885.html#a42beed23912c5ea5307c11701c6883ab", null ],
-    [ "s_sha_context", "a02885.html#af9fb5ef2eb0843381351919dc0f7cafd", null ]
+    [ "pAAD", "a02885.html#a0816b397709ad49300a6649032d36ae8", null ],
+    [ "pNonce", "a02885.html#a6e7f7bf02efd71e06e1802de3edadb13", null ],
+    [ "ulAADLen", "a02885.html#aa04b948f1abaa06fd4fc5d5bc7e8388e", null ],
+    [ "ulDataLen", "a02885.html#a62d039e4b113a3d3c7f0bbc2c3b42d26", null ],
+    [ "ulMACLen", "a02885.html#ad0bc5ca369eeddb99026d9e37995e64e", null ],
+    [ "ulNonceLen", "a02885.html#a8b619dd7c13298513d1bc09da9643ae0", null ]
 ];

@@ -1,7 +1,12 @@
 var a02845 =
 [
-    [ "kdf", "a02845.html#a0b7cdb5c49b5009e5d66ca1d6b6ead43", null ],
-    [ "pSharedData", "a02845.html#acab261b5f4c0104ea7011d671b371ab1", null ],
-    [ "ulAESKeyBits", "a02845.html#ac8075c8f3f94719d47edb473eab6c32e", null ],
-    [ "ulSharedDataLen", "a02845.html#a95606c7e5bb43c1d62f41791c98d7f7f", null ]
+    [ "iterations", "a02845.html#a352fc400a3f5db127e58d7c7d932bfb0", null ],
+    [ "pPassword", "a02845.html#afcd59d3f53ba9541d524b464e52db6c3", null ],
+    [ "pPrfData", "a02845.html#a14f642c2ba93297d4e77495ad99eb0d8", null ],
+    [ "prf", "a02845.html#a486ca470e94c331b0d6b3ce2b2e629dd", null ],
+    [ "pSaltSourceData", "a02845.html#ad6406240587bc71085ca34aec5cad74c", null ],
+    [ "saltSource", "a02845.html#a3c1860ea40de62a89a8b653b1192c38c", null ],
+    [ "ulPasswordLen", "a02845.html#a187120073a07b34463f0dadce07b26f0", null ],
+    [ "ulPrfDataLen", "a02845.html#a59632ecf883e3c71e3eefff1a93a326e", null ],
+    [ "ulSaltSourceDataLen", "a02845.html#accc283cca246fe250eb584e580bc9770", null ]
 ];

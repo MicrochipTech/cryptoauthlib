@@ -1,7 +1,8 @@
 var a02737 =
 [
-    [ "pClientRandom", "a02737.html#af5fd07536af0e6e8bf504a95ecfe2a86", null ],
-    [ "pServerRandom", "a02737.html#a173c062aa1f129650eddb41ddf9651bb", null ],
-    [ "ulClientRandomLen", "a02737.html#a82f31573a36ada66c5951454e5fc9bfd", null ],
-    [ "ulServerRandomLen", "a02737.html#a06c78ab50a4a6ba078e8f5d4f2584e2d", null ]
+    [ "kdf", "a02737.html#acc8cd375637e8d4baa461093eda95473", null ],
+    [ "pOtherInfo", "a02737.html#a0bdadab84c1177e86014fccfbf43e50f", null ],
+    [ "pPublicData", "a02737.html#a5b5ab88b8cf93cfa701f56237f237292", null ],
+    [ "ulOtherInfoLen", "a02737.html#ace81f9dea6ea647a99eb5fffb98621ea", null ],
+    [ "ulPublicDataLen", "a02737.html#ae9ccaf64b51247d789c8e4d78b64b54c", null ]
 ];

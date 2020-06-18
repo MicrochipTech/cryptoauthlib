@@ -1,7 +1,5 @@
 var a02841 =
 [
-    [ "hash", "a02841.html#aa01b5f166c5da63da53e495f9b3dc46e", null ],
-    [ "pSeed", "a02841.html#a746d217a79b917ce5fa51eabcb998d16", null ],
-    [ "ulIndex", "a02841.html#ab745e0ccd1ed4865c0747882153622c8", null ],
-    [ "ulSeedLen", "a02841.html#af289f68610b16b9c3ca1fb7ced1f2f8c", null ]
+    [ "pData", "a02841.html#a2afec599e1873a4d7f34ff1e7acb57ae", null ],
+    [ "ulLen", "a02841.html#aa52e024c15ba8c4cfad47a1cc5d98b5e", null ]
 ];

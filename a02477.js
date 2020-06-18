@@ -1,8 +1,7 @@
 var a02477 =
 [
-    [ "error_get", "a02477.html#a6464c070d16231ac42491b8c9484722f", null ],
-    [ "is_busy", "a02477.html#a90b6818e0943e85191beda2a7e8822f0", null ],
-    [ "read", "a02477.html#a381cd65d4c34e50e098ddd6e7daeb56e", null ],
-    [ "transfer_setup", "a02477.html#ab2c82f79b50de67a4acadc64813c76c5", null ],
-    [ "write", "a02477.html#a602fe1e3767e1a59c9fe1a3b80fcbe34", null ]
+    [ "cert_loc", "a02477.html#af74e55b0689356f989d8330ae3072376", null ],
+    [ "device_loc", "a02477.html#aa36729eb861afe13bb70974147bc403b", null ],
+    [ "id", "a02477.html#a51d291314bf1da3f9ac4479963a4fadd", null ],
+    [ "transforms", "a02477.html#a9ff490a757aa10f8f7828af70c103fad", null ]
 ];

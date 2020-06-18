@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: CK_C_INITIALIZE_ARGS Struct Reference</title>
+<title>CryptoAuthLib: _pkcs11_lib_ctx Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,106 +87,156 @@ $(document).ready(function(){initNavTree('a02653.html',''); initResizable(); });
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">CK_C_INITIALIZE_ARGS Struct Reference</div>  </div>
+<div class="title">_pkcs11_lib_ctx Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="a01562_source.html">pkcs11t.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a01502_source.html">pkcs11_init.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:acb26fcaab3de0a50d349a6772bc492e3"><td class="memItemLeft" align="right" valign="top">CK_CREATEMUTEX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02653.html#acb26fcaab3de0a50d349a6772bc492e3">CreateMutex</a></td></tr>
-<tr class="separator:acb26fcaab3de0a50d349a6772bc492e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3bc914ae5e94b20ed5f6772b20a2f412"><td class="memItemLeft" align="right" valign="top">CK_DESTROYMUTEX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02653.html#a3bc914ae5e94b20ed5f6772b20a2f412">DestroyMutex</a></td></tr>
-<tr class="separator:a3bc914ae5e94b20ed5f6772b20a2f412"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2d841455965ecfc948621ba2f6c9573"><td class="memItemLeft" align="right" valign="top">CK_LOCKMUTEX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02653.html#ab2d841455965ecfc948621ba2f6c9573">LockMutex</a></td></tr>
-<tr class="separator:ab2d841455965ecfc948621ba2f6c9573"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91a759efa3a828734a55218299aeece4"><td class="memItemLeft" align="right" valign="top">CK_UNLOCKMUTEX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02653.html#a91a759efa3a828734a55218299aeece4">UnlockMutex</a></td></tr>
-<tr class="separator:a91a759efa3a828734a55218299aeece4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab168fc251b8b32a3bb0639f4986fce1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#a53850492c1ba57aca4332be791a3c6a3">CK_FLAGS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02653.html#aab168fc251b8b32a3bb0639f4986fce1">flags</a></td></tr>
-<tr class="separator:aab168fc251b8b32a3bb0639f4986fce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a29104d1d45c0dbe5e3af2005c6d9bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02653.html#a9a29104d1d45c0dbe5e3af2005c6d9bc">pReserved</a></td></tr>
-<tr class="separator:a9a29104d1d45c0dbe5e3af2005c6d9bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1160c303d9370f4187e6f48d6ac336c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#abd07a1bba363f8083080b9328e67b491">CK_BBOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02653.html#a1160c303d9370f4187e6f48d6ac336c1">initialized</a></td></tr>
+<tr class="separator:a1160c303d9370f4187e6f48d6ac336c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ba826e6414189c8bd1f0969fcfbd26e"><td class="memItemLeft" align="right" valign="top">CK_CREATEMUTEX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02653.html#a0ba826e6414189c8bd1f0969fcfbd26e">create_mutex</a></td></tr>
+<tr class="separator:a0ba826e6414189c8bd1f0969fcfbd26e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e1ca260281eb86e4052a47cecd917fe"><td class="memItemLeft" align="right" valign="top">CK_DESTROYMUTEX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02653.html#a1e1ca260281eb86e4052a47cecd917fe">destroy_mutex</a></td></tr>
+<tr class="separator:a1e1ca260281eb86e4052a47cecd917fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa17f239b10354b3d4d510856eb8deff6"><td class="memItemLeft" align="right" valign="top">CK_LOCKMUTEX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02653.html#aa17f239b10354b3d4d510856eb8deff6">lock_mutex</a></td></tr>
+<tr class="separator:aa17f239b10354b3d4d510856eb8deff6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adca7f4ab475b78bedef202c334a700b7"><td class="memItemLeft" align="right" valign="top">CK_UNLOCKMUTEX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02653.html#adca7f4ab475b78bedef202c334a700b7">unlock_mutex</a></td></tr>
+<tr class="separator:adca7f4ab475b78bedef202c334a700b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1dd2e58c44f73ef2d3214bd159a8265"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02653.html#ae1dd2e58c44f73ef2d3214bd159a8265">mutex</a></td></tr>
+<tr class="separator:ae1dd2e58c44f73ef2d3214bd159a8265"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c3f6b7e795d6e1f40853ab4cfe68781"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02653.html#a1c3f6b7e795d6e1f40853ab4cfe68781">slots</a></td></tr>
+<tr class="separator:a1c3f6b7e795d6e1f40853ab4cfe68781"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab10ec5af66dc12a7a47c50ab92708cb0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02653.html#ab10ec5af66dc12a7a47c50ab92708cb0">slot_cnt</a></td></tr>
+<tr class="separator:ab10ec5af66dc12a7a47c50ab92708cb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a431e6b797cb83b2bde7ad45f80d55ae1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a0ed4ef152a55e26f435b876927145580">CK_CHAR</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02653.html#a431e6b797cb83b2bde7ad45f80d55ae1">config_path</a> [200]</td></tr>
+<tr class="separator:a431e6b797cb83b2bde7ad45f80d55ae1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Field Documentation</h2>
-<a id="acb26fcaab3de0a50d349a6772bc492e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb26fcaab3de0a50d349a6772bc492e3">&#9670;&nbsp;</a></span>CreateMutex</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Library Context </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a id="a431e6b797cb83b2bde7ad45f80d55ae1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a431e6b797cb83b2bde7ad45f80d55ae1">&#9670;&nbsp;</a></span>config_path</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">CK_CREATEMUTEX CreateMutex</td>
+          <td class="memname"><a class="el" href="a01565.html#a0ed4ef152a55e26f435b876927145580">CK_CHAR</a> config_path[200]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a3bc914ae5e94b20ed5f6772b20a2f412"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3bc914ae5e94b20ed5f6772b20a2f412">&#9670;&nbsp;</a></span>DestroyMutex</h2>
+<a id="a0ba826e6414189c8bd1f0969fcfbd26e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ba826e6414189c8bd1f0969fcfbd26e">&#9670;&nbsp;</a></span>create_mutex</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">CK_DESTROYMUTEX DestroyMutex</td>
+          <td class="memname">CK_CREATEMUTEX create_mutex</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="aab168fc251b8b32a3bb0639f4986fce1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab168fc251b8b32a3bb0639f4986fce1">&#9670;&nbsp;</a></span>flags</h2>
+<a id="a1e1ca260281eb86e4052a47cecd917fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e1ca260281eb86e4052a47cecd917fe">&#9670;&nbsp;</a></span>destroy_mutex</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01562.html#a53850492c1ba57aca4332be791a3c6a3">CK_FLAGS</a> flags</td>
+          <td class="memname">CK_DESTROYMUTEX destroy_mutex</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ab2d841455965ecfc948621ba2f6c9573"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2d841455965ecfc948621ba2f6c9573">&#9670;&nbsp;</a></span>LockMutex</h2>
+<a id="a1160c303d9370f4187e6f48d6ac336c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1160c303d9370f4187e6f48d6ac336c1">&#9670;&nbsp;</a></span>initialized</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">CK_LOCKMUTEX LockMutex</td>
+          <td class="memname"><a class="el" href="a01565.html#abd07a1bba363f8083080b9328e67b491">CK_BBOOL</a> initialized</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a9a29104d1d45c0dbe5e3af2005c6d9bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9a29104d1d45c0dbe5e3af2005c6d9bc">&#9670;&nbsp;</a></span>pReserved</h2>
+<a id="aa17f239b10354b3d4d510856eb8deff6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa17f239b10354b3d4d510856eb8deff6">&#9670;&nbsp;</a></span>lock_mutex</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01562.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pReserved</td>
+          <td class="memname">CK_LOCKMUTEX lock_mutex</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a91a759efa3a828734a55218299aeece4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91a759efa3a828734a55218299aeece4">&#9670;&nbsp;</a></span>UnlockMutex</h2>
+<a id="ae1dd2e58c44f73ef2d3214bd159a8265"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1dd2e58c44f73ef2d3214bd159a8265">&#9670;&nbsp;</a></span>mutex</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">CK_UNLOCKMUTEX UnlockMutex</td>
+          <td class="memname"><a class="el" href="a01565.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> mutex</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab10ec5af66dc12a7a47c50ab92708cb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab10ec5af66dc12a7a47c50ab92708cb0">&#9670;&nbsp;</a></span>slot_cnt</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> slot_cnt</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1c3f6b7e795d6e1f40853ab4cfe68781"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c3f6b7e795d6e1f40853ab4cfe68781">&#9670;&nbsp;</a></span>slots</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01565.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> slots</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adca7f4ab475b78bedef202c334a700b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adca7f4ab475b78bedef202c334a700b7">&#9670;&nbsp;</a></span>unlock_mutex</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CK_UNLOCKMUTEX unlock_mutex</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -198,7 +248,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02653.html">CK_C_INITIALIZE_ARGS</a></li>
+    <li class="navelem"><a class="el" href="a02653.html">_pkcs11_lib_ctx</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

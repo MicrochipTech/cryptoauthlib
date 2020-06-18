@@ -1,12 +1,17 @@
 var a02785 =
 [
-    [ "iterations", "a02785.html#a352fc400a3f5db127e58d7c7d932bfb0", null ],
-    [ "pPassword", "a02785.html#afcd59d3f53ba9541d524b464e52db6c3", null ],
-    [ "pPrfData", "a02785.html#a14f642c2ba93297d4e77495ad99eb0d8", null ],
-    [ "prf", "a02785.html#a486ca470e94c331b0d6b3ce2b2e629dd", null ],
-    [ "pSaltSourceData", "a02785.html#ad6406240587bc71085ca34aec5cad74c", null ],
-    [ "saltSource", "a02785.html#a3c1860ea40de62a89a8b653b1192c38c", null ],
-    [ "ulPasswordLen", "a02785.html#a187120073a07b34463f0dadce07b26f0", null ],
-    [ "ulPrfDataLen", "a02785.html#a59632ecf883e3c71e3eefff1a93a326e", null ],
-    [ "ulSaltSourceDataLen", "a02785.html#accc283cca246fe250eb584e580bc9770", null ]
+    [ "pNewPassword", "a02785.html#a57eb4fc15619633f034118e2ebf0c049", null ],
+    [ "pNewPublicData", "a02785.html#a4213f41b59658caf27fa4f6a48a6acbe", null ],
+    [ "pNewRandomA", "a02785.html#aac2f3b9bfbef00d0b000ee978c26deed", null ],
+    [ "pOldPassword", "a02785.html#aa5768b5821839305e62ded58a4adb4c7", null ],
+    [ "pOldPublicData", "a02785.html#a49f4cdf5ffabdadb1e1335242b05c150", null ],
+    [ "pOldRandomA", "a02785.html#ac3978e19be0d7b37469e8a0533656469", null ],
+    [ "pOldWrappedX", "a02785.html#ab66d64eff24b0fb44c976cbd06eb4813", null ],
+    [ "ulNewPasswordLen", "a02785.html#a8e424df37706c0c5dc6b6f6e4bc47902", null ],
+    [ "ulNewPublicDataLen", "a02785.html#a3b8260daaaf7c82eebde5d6a9619c87c", null ],
+    [ "ulNewRandomLen", "a02785.html#a9c9eb19eea6e2d16c2ef58cf7b6f3261", null ],
+    [ "ulOldPasswordLen", "a02785.html#a22aca150dbcc8624d4baf16654e818b0", null ],
+    [ "ulOldPublicDataLen", "a02785.html#ab198fd92d80e111db8b47946178867fc", null ],
+    [ "ulOldRandomLen", "a02785.html#ab59f51b5a5a26679244adcd0b3fe71e1", null ],
+    [ "ulOldWrappedXLen", "a02785.html#aaebfa9ee1efa17e01385e912f131dbce", null ]
 ];

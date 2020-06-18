@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_version.h File Reference</title>
+<title>CryptoAuthLib: calib_aes_gcm.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,94 +85,58 @@ $(document).ready(function(){initNavTree('a01151.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#nested-classes">Data Structures</a>  </div>
   <div class="headertitle">
-<div class="title">atca_version.h File Reference</div>  </div>
+<div class="title">calib_aes_gcm.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Microchip CryptoAuth Library Version.  
+<p>Unity tests for the cryptoauthlib AES GCM functions.  
 <a href="#details">More...</a></p>
 
 <p><a href="a01151_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:aceddbd0ae1c41554eb2f0fabc0a2dc0c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01151.html#aceddbd0ae1c41554eb2f0fabc0a2dc0c">ATCA_LIBRARY_VERSION_DATE</a>&#160;&#160;&#160;&quot;20200610&quot;</td></tr>
-<tr class="separator:aceddbd0ae1c41554eb2f0fabc0a2dc0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4634f4de0131c8eee8f064dc3e9064b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01151.html#ab4634f4de0131c8eee8f064dc3e9064b">ATCA_LIBRARY_VERSION_MAJOR</a>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:ab4634f4de0131c8eee8f064dc3e9064b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ec591139c9e733853063ea898bac376"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01151.html#a0ec591139c9e733853063ea898bac376">ATCA_LIBRARY_VERSION_MINOR</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:a0ec591139c9e733853063ea898bac376"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78849ac2eed512d15a0b22ca781f83e8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01151.html#a78849ac2eed512d15a0b22ca781f83e8">ATCA_LIBRARY_VERSION_BUILD</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a78849ac2eed512d15a0b22ca781f83e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02489.html">atca_aes_gcm_ctx</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4d0b05dd9b5d0987e24eef9674922ce"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02392.html#gad4d0b05dd9b5d0987e24eef9674922ce">ATCA_AES_GCM_IV_STD_LENGTH</a>&#160;&#160;&#160;12</td></tr>
+<tr class="separator:gad4d0b05dd9b5d0987e24eef9674922ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6105ecbb8ccbbbc50a0bca14d2d51718"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a02489.html">atca_aes_gcm_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02392.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a></td></tr>
+<tr class="separator:ga6105ecbb8ccbbbc50a0bca14d2d51718"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa5990c6c2a55759960d25a1f8ad1973d"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02392.html#gaa5990c6c2a55759960d25a1f8ad1973d">atca_basic_aes_gcm_version</a></td></tr>
+<tr class="separator:gaa5990c6c2a55759960d25a1f8ad1973d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga049b1d6c0e21e011a90c783fbc2932be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02392.html#ga049b1d6c0e21e011a90c783fbc2932be">calib_aes_gcm_init</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a02392.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block, const uint8_t *iv, size_t iv_size)</td></tr>
+<tr class="memdesc:ga049b1d6c0e21e011a90c783fbc2932be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for AES GCM operation with an existing IV, which is common when starting a decrypt operation.  <a href="a02392.html#ga049b1d6c0e21e011a90c783fbc2932be">More...</a><br /></td></tr>
+<tr class="separator:ga049b1d6c0e21e011a90c783fbc2932be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f2bb3db5006b0b7fd1f4c48a167f6af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02392.html#ga6f2bb3db5006b0b7fd1f4c48a167f6af">calib_aes_gcm_init_rand</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a02392.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block, size_t rand_size, const uint8_t *free_field, size_t free_field_size, uint8_t *iv)</td></tr>
+<tr class="memdesc:ga6f2bb3db5006b0b7fd1f4c48a167f6af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for AES GCM operation with a IV composed of a random and optional fixed(free) field, which is common when starting an encrypt operation.  <a href="a02392.html#ga6f2bb3db5006b0b7fd1f4c48a167f6af">More...</a><br /></td></tr>
+<tr class="separator:ga6f2bb3db5006b0b7fd1f4c48a167f6af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga465c622e2dc00fa7d6b12e72b5e18163"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02392.html#ga465c622e2dc00fa7d6b12e72b5e18163">calib_aes_gcm_aad_update</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a02392.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *ctx, const uint8_t *aad, uint32_t aad_size)</td></tr>
+<tr class="memdesc:ga465c622e2dc00fa7d6b12e72b5e18163"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process Additional Authenticated Data (AAD) using GCM mode and a key within the ATECC608A device.  <a href="a02392.html#ga465c622e2dc00fa7d6b12e72b5e18163">More...</a><br /></td></tr>
+<tr class="separator:ga465c622e2dc00fa7d6b12e72b5e18163"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5403947bb6b0caa35d77a555493a10d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02392.html#ga5403947bb6b0caa35d77a555493a10d9">calib_aes_gcm_encrypt_update</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a02392.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *ctx, const uint8_t *plaintext, uint32_t plaintext_size, uint8_t *ciphertext)</td></tr>
+<tr class="memdesc:ga5403947bb6b0caa35d77a555493a10d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypt data using GCM mode and a key within the ATECC608A device. <a class="el" href="a02392.html#ga4805112b62e86b5465e24648504dc374" title="Initialize context for AES GCM operation with an existing IV, which is common when starting a decrypt...">atcab_aes_gcm_init()</a> or <a class="el" href="a02392.html#gad71a5720ceaddf2c76476aead5f0c3e6" title="Initialize context for AES GCM operation with a IV composed of a random and optional fixed(free) fiel...">atcab_aes_gcm_init_rand()</a> should be called before the first use of this function.  <a href="a02392.html#ga5403947bb6b0caa35d77a555493a10d9">More...</a><br /></td></tr>
+<tr class="separator:ga5403947bb6b0caa35d77a555493a10d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga405cedf561a767000251a76088f2d63f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02392.html#ga405cedf561a767000251a76088f2d63f">calib_aes_gcm_encrypt_finish</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a02392.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *ctx, uint8_t *tag, size_t tag_size)</td></tr>
+<tr class="memdesc:ga405cedf561a767000251a76088f2d63f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete a GCM encrypt operation returning the authentication tag.  <a href="a02392.html#ga405cedf561a767000251a76088f2d63f">More...</a><br /></td></tr>
+<tr class="separator:ga405cedf561a767000251a76088f2d63f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga689c84bd0d7b914a551763d2e9bf8995"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02392.html#ga689c84bd0d7b914a551763d2e9bf8995">calib_aes_gcm_decrypt_update</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a02392.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *ctx, const uint8_t *ciphertext, uint32_t ciphertext_size, uint8_t *plaintext)</td></tr>
+<tr class="memdesc:ga689c84bd0d7b914a551763d2e9bf8995"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypt data using GCM mode and a key within the ATECC608A device. <a class="el" href="a02392.html#ga4805112b62e86b5465e24648504dc374" title="Initialize context for AES GCM operation with an existing IV, which is common when starting a decrypt...">atcab_aes_gcm_init()</a> or <a class="el" href="a02392.html#gad71a5720ceaddf2c76476aead5f0c3e6" title="Initialize context for AES GCM operation with a IV composed of a random and optional fixed(free) fiel...">atcab_aes_gcm_init_rand()</a> should be called before the first use of this function.  <a href="a02392.html#ga689c84bd0d7b914a551763d2e9bf8995">More...</a><br /></td></tr>
+<tr class="separator:ga689c84bd0d7b914a551763d2e9bf8995"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga503c84eaf2b95e3524477e366ad31fb7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02392.html#ga503c84eaf2b95e3524477e366ad31fb7">calib_aes_gcm_decrypt_finish</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a02392.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *ctx, const uint8_t *tag, size_t tag_size, bool *is_verified)</td></tr>
+<tr class="memdesc:ga503c84eaf2b95e3524477e366ad31fb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete a GCM decrypt operation verifying the authentication tag.  <a href="a02392.html#ga503c84eaf2b95e3524477e366ad31fb7">More...</a><br /></td></tr>
+<tr class="separator:ga503c84eaf2b95e3524477e366ad31fb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Microchip CryptoAuth Library Version. </p>
+<div class="textblock"><p>Unity tests for the cryptoauthlib AES GCM functions. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a78849ac2eed512d15a0b22ca781f83e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78849ac2eed512d15a0b22ca781f83e8">&#9670;&nbsp;</a></span>ATCA_LIBRARY_VERSION_BUILD</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_LIBRARY_VERSION_BUILD&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aceddbd0ae1c41554eb2f0fabc0a2dc0c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aceddbd0ae1c41554eb2f0fabc0a2dc0c">&#9670;&nbsp;</a></span>ATCA_LIBRARY_VERSION_DATE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_LIBRARY_VERSION_DATE&#160;&#160;&#160;&quot;20200610&quot;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ab4634f4de0131c8eee8f064dc3e9064b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab4634f4de0131c8eee8f064dc3e9064b">&#9670;&nbsp;</a></span>ATCA_LIBRARY_VERSION_MAJOR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_LIBRARY_VERSION_MAJOR&#160;&#160;&#160;3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0ec591139c9e733853063ea898bac376"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ec591139c9e733853063ea898bac376">&#9670;&nbsp;</a></span>ATCA_LIBRARY_VERSION_MINOR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_LIBRARY_VERSION_MINOR&#160;&#160;&#160;2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="a01151.html">atca_version.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_a7c83ffe4cbb7b846faed985dac26a17.html">calib</a></li><li class="navelem"><a class="el" href="a01151.html">calib_aes_gcm.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

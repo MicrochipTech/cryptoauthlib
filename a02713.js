@@ -1,6 +1,9 @@
 var a02713 =
 [
-    [ "iv", "a02713.html#a2239539c030d3babf0bb4ad53f3d8642", null ],
-    [ "length", "a02713.html#a77c49c75435001694bf7d0434c1605ca", null ],
-    [ "pData", "a02713.html#a2afec599e1873a4d7f34ff1e7acb57ae", null ]
+    [ "CreateMutex", "a02713.html#acb26fcaab3de0a50d349a6772bc492e3", null ],
+    [ "DestroyMutex", "a02713.html#a3bc914ae5e94b20ed5f6772b20a2f412", null ],
+    [ "flags", "a02713.html#aab168fc251b8b32a3bb0639f4986fce1", null ],
+    [ "LockMutex", "a02713.html#ab2d841455965ecfc948621ba2f6c9573", null ],
+    [ "pReserved", "a02713.html#a9a29104d1d45c0dbe5e3af2005c6d9bc", null ],
+    [ "UnlockMutex", "a02713.html#a91a759efa3a828734a55218299aeece4", null ]
 ];

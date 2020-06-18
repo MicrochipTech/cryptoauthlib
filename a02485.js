@@ -1,5 +1,9 @@
 var a02485 =
 [
-    [ "change_baudrate", "a02485.html#a0c3e028b53b36cb3d4f829d556c77900", null ],
-    [ "i2c_descriptor", "a02485.html#ae1d5ca17e25b1c02c8d0a14b09ccd0c6", null ]
+    [ "cert", "a02485.html#aa09eb68c2656a44748cad406cf960f7c", null ],
+    [ "cert_def", "a02485.html#abaf4bb65d962f53a31b943c663eaf3b9", null ],
+    [ "cert_size", "a02485.html#a083f29531821a0ef698b452cb2b7f5b4", null ],
+    [ "device_sn", "a02485.html#a5aa8a40126b53aa3748ba0d00de61e60", null ],
+    [ "is_device_sn", "a02485.html#a3969ddf030fd0524b62c572070bb3edc", null ],
+    [ "max_cert_size", "a02485.html#abbc4bbcc72558a31f830df7df2df53b8", null ]
 ];

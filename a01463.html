@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: kit_protocol.h File Reference</title>
+<title>CryptoAuthLib: pkcs11_cert.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,60 +85,66 @@ $(document).ready(function(){initNavTree('a01463.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">kit_protocol.h File Reference</div>  </div>
+<div class="title">pkcs11_cert.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="a01343_source.html">cryptoauthlib.h</a>&quot;</code><br />
-</div>
-<p><a href="a01463_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga8a649555029d4f23edfc15a8c01b2d3d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga8a649555029d4f23edfc15a8c01b2d3d">KIT_TX_WRAP_SIZE</a>&#160;&#160;&#160;(10)</td></tr>
-<tr class="separator:ga8a649555029d4f23edfc15a8c01b2d3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0810d89c328e48fd91eb604323cca4e9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga0810d89c328e48fd91eb604323cca4e9">KIT_MSG_SIZE</a>&#160;&#160;&#160;(32)</td></tr>
-<tr class="separator:ga0810d89c328e48fd91eb604323cca4e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga59e33124fc2fa800cc9c90a6ee3ff543"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga59e33124fc2fa800cc9c90a6ee3ff543">KIT_RX_WRAP_SIZE</a>&#160;&#160;&#160;(<a class="el" href="a07533.html#ga0810d89c328e48fd91eb604323cca4e9">KIT_MSG_SIZE</a> + 6)</td></tr>
-<tr class="separator:ga59e33124fc2fa800cc9c90a6ee3ff543"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
+
+<p>PKCS11 Library Certificate Handling.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="a01289_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01118_source.html">atcacert/atcacert_def.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01106_source.html">atcacert/atcacert_client.h</a>&quot;</code><br />
+<code>#include &quot;pkcs11_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01478_source.html">pkcs11_debug.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01553_source.html">pkcs11_token.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01466_source.html">pkcs11_cert.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01529_source.html">pkcs11_os.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01559_source.html">pkcs11_util.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga8fb98d1c372e7e75f99a2f7d1182b877"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga8fb98d1c372e7e75f99a2f7d1182b877">kit_init</a> (<a class="el" href="a07529.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga8fb98d1c372e7e75f99a2f7d1182b877"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol init. This function calls back to the physical protocol to send the bytes.  <a href="a07533.html#ga8fb98d1c372e7e75f99a2f7d1182b877">More...</a><br /></td></tr>
-<tr class="separator:ga8fb98d1c372e7e75f99a2f7d1182b877"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacd6849349e1ba6ccbb4587a1d80562c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#gacd6849349e1ba6ccbb4587a1d80562c8">kit_send</a> (<a class="el" href="a07529.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
-<tr class="memdesc:gacd6849349e1ba6ccbb4587a1d80562c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol send. This function calls back to the physical protocol to send the bytes.  <a href="a07533.html#gacd6849349e1ba6ccbb4587a1d80562c8">More...</a><br /></td></tr>
-<tr class="separator:gacd6849349e1ba6ccbb4587a1d80562c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac31292c951353a25a81c7fe1308589c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#gac31292c951353a25a81c7fe1308589c0">kit_receive</a> (<a class="el" href="a07529.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxsize)</td></tr>
-<tr class="memdesc:gac31292c951353a25a81c7fe1308589c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation to receive bytes and unwrap from kit protocol. This function calls back to the physical protocol to receive the bytes.  <a href="a07533.html#gac31292c951353a25a81c7fe1308589c0">More...</a><br /></td></tr>
-<tr class="separator:gac31292c951353a25a81c7fe1308589c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0f09f4b79c681f54b88a8f71bca0d4c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga0f09f4b79c681f54b88a8f71bca0d4c4">kit_wrap_cmd</a> (const uint8_t *txdata, int txlen, char *pkitcmd, int *nkitcmd, char target)</td></tr>
-<tr class="memdesc:ga0f09f4b79c681f54b88a8f71bca0d4c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrap binary bytes in ascii kit protocol.  <a href="a07533.html#ga0f09f4b79c681f54b88a8f71bca0d4c4">More...</a><br /></td></tr>
-<tr class="separator:ga0f09f4b79c681f54b88a8f71bca0d4c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8bf59f4218d312568b769b8b8e5c563e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga8bf59f4218d312568b769b8b8e5c563e">kit_parse_rsp</a> (const char *pkitbuf, int nkitbuf, uint8_t *kitstatus, uint8_t *rxdata, int *datasize)</td></tr>
-<tr class="memdesc:ga8bf59f4218d312568b769b8b8e5c563e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse the response ascii from the kit.  <a href="a07533.html#ga8bf59f4218d312568b769b8b8e5c563e">More...</a><br /></td></tr>
-<tr class="separator:ga8bf59f4218d312568b769b8b8e5c563e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf7ce58d02b067b956abd32127f5519e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#gaf7ce58d02b067b956abd32127f5519e9">kit_wake</a> (<a class="el" href="a07529.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:gaf7ce58d02b067b956abd32127f5519e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the wake for kit protocol.  <a href="a07533.html#gaf7ce58d02b067b956abd32127f5519e9">More...</a><br /></td></tr>
-<tr class="separator:gaf7ce58d02b067b956abd32127f5519e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeaee19ff7623f0eab9839e68dae583af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#gaeaee19ff7623f0eab9839e68dae583af">kit_idle</a> (<a class="el" href="a07529.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:gaeaee19ff7623f0eab9839e68dae583af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the idle for kit protocol.  <a href="a07533.html#gaeaee19ff7623f0eab9839e68dae583af">More...</a><br /></td></tr>
-<tr class="separator:gaeaee19ff7623f0eab9839e68dae583af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf6054a0c971830411d5008b94923bdd8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#gaf6054a0c971830411d5008b94923bdd8">kit_sleep</a> (<a class="el" href="a07529.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:gaf6054a0c971830411d5008b94923bdd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the sleep for kit protocol.  <a href="a07533.html#gaf6054a0c971830411d5008b94923bdd8">More...</a><br /></td></tr>
-<tr class="separator:gaf6054a0c971830411d5008b94923bdd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c1c4563e1c3b21f009966bfbeb90541"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga7c1c4563e1c3b21f009966bfbeb90541">pkcs11_cert_get_encoded</a> (<a class="el" href="a01565.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01565.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:ga7c1c4563e1c3b21f009966bfbeb90541"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga80a4d4deaad0e8893ff9b6cecb594c5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga80a4d4deaad0e8893ff9b6cecb594c5c">pkcs11_cert_get_type</a> (<a class="el" href="a01565.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01565.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:ga80a4d4deaad0e8893ff9b6cecb594c5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga710c95124c627373e383d123c0ab5b1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga710c95124c627373e383d123c0ab5b1f">pkcs11_cert_get_subject</a> (<a class="el" href="a01565.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01565.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:ga710c95124c627373e383d123c0ab5b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae42580eee339e29aab9698251c3e7e2a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#gae42580eee339e29aab9698251c3e7e2a">pkcs11_cert_get_subject_key_id</a> (<a class="el" href="a01565.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01565.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:gae42580eee339e29aab9698251c3e7e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8615e62ff44d3df242534e5805e26a82"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga8615e62ff44d3df242534e5805e26a82">pkcs11_cert_get_authority_key_id</a> (<a class="el" href="a01565.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01565.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:ga8615e62ff44d3df242534e5805e26a82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga96af56861fd0c9e00b96ff6243b84447"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga96af56861fd0c9e00b96ff6243b84447">pkcs11_cert_get_trusted_flag</a> (<a class="el" href="a01565.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01565.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:ga96af56861fd0c9e00b96ff6243b84447"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga34fcca1dafb0a410d242fcb5ff3d69a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga34fcca1dafb0a410d242fcb5ff3d69a5">pkcs11_cert_x509_write</a> (<a class="el" href="a01565.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01565.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:ga34fcca1dafb0a410d242fcb5ff3d69a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga8de4193ede04a12ab4e44b8df9eec478"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01460.html#a5808b2771bb5bd3fdb344fd9b33b48ed">pkcs11_attrib_model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga8de4193ede04a12ab4e44b8df9eec478">pkcs11_cert_x509public_attributes</a> []</td></tr>
+<tr class="separator:ga8de4193ede04a12ab4e44b8df9eec478"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd21e04ab9248b3d58c3f5e4bd076ac9"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#gafd21e04ab9248b3d58c3f5e4bd076ac9">pkcs11_cert_x509public_attributes_count</a> = sizeof( <a class="el" href="a02404.html#ga8de4193ede04a12ab4e44b8df9eec478">pkcs11_cert_x509public_attributes</a> ) / sizeof( <a class="el" href="a02404.html#ga8de4193ede04a12ab4e44b8df9eec478">pkcs11_cert_x509public_attributes</a> [0])</td></tr>
+<tr class="separator:gafd21e04ab9248b3d58c3f5e4bd076ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc10a1f1b90bc7d2fb047db0af539e80"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01460.html#a5808b2771bb5bd3fdb344fd9b33b48ed">pkcs11_attrib_model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#gabc10a1f1b90bc7d2fb047db0af539e80">pkcs11_cert_wtlspublic_attributes</a> []</td></tr>
+<tr class="separator:gabc10a1f1b90bc7d2fb047db0af539e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad8232cd440c12745d24471e2676a117f"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#gad8232cd440c12745d24471e2676a117f">pkcs11_cert_wtlspublic_attributes_count</a> = sizeof( <a class="el" href="a02404.html#gabc10a1f1b90bc7d2fb047db0af539e80">pkcs11_cert_wtlspublic_attributes</a> ) / sizeof( <a class="el" href="a02404.html#gabc10a1f1b90bc7d2fb047db0af539e80">pkcs11_cert_wtlspublic_attributes</a> [0])</td></tr>
+<tr class="separator:gad8232cd440c12745d24471e2676a117f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa471eb33699e2cba5dc3cc50a2d8df7"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01460.html#a5808b2771bb5bd3fdb344fd9b33b48ed">pkcs11_attrib_model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#gafa471eb33699e2cba5dc3cc50a2d8df7">pkcs11_cert_x509_attributes</a> []</td></tr>
+<tr class="separator:gafa471eb33699e2cba5dc3cc50a2d8df7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc2b14c7a052fdc0bb751259d28dfdc0"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#gadc2b14c7a052fdc0bb751259d28dfdc0">pkcs11_cert_x509_attributes_count</a> = sizeof( <a class="el" href="a02404.html#gafa471eb33699e2cba5dc3cc50a2d8df7">pkcs11_cert_x509_attributes</a> ) / sizeof( <a class="el" href="a02404.html#gafa471eb33699e2cba5dc3cc50a2d8df7">pkcs11_cert_x509_attributes</a> [0])</td></tr>
+<tr class="separator:gadc2b14c7a052fdc0bb751259d28dfdc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+<div class="textblock"><p>PKCS11 Library Certificate Handling. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_36432077327cc0f3c76187c9e6e34627.html">hal</a></li><li class="navelem"><a class="el" href="a01463.html">kit_protocol.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_6682b35b7acdc4aaff3ce21f801977b3.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01463.html">pkcs11_cert.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

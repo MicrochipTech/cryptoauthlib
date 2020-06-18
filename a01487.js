@@ -1,9 +1,7 @@
 var a01487 =
 [
-    [ "atca_jwt_add_claim_numeric", "a07535.html#ga7073a7cfb7c77ad02923cdbb1226d2ad", null ],
-    [ "atca_jwt_add_claim_string", "a07535.html#ga3e6036b2c0e6dbc96a30f078e56cacff", null ],
-    [ "atca_jwt_check_payload_start", "a07535.html#ga167fe35631a0dd191293c6ad3a6485aa", null ],
-    [ "atca_jwt_finalize", "a07535.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b", null ],
-    [ "atca_jwt_init", "a07535.html#gad3ea09543f0569a5368130f4a3d7bce0", null ],
-    [ "atca_jwt_verify", "a07535.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b", null ]
+    [ "pkcs11_find_continue", "a02404.html#ga5dbe038da3069861b8de9f77d0c06de1", null ],
+    [ "pkcs11_find_finish", "a02404.html#gacc5c7a788f0c4eafd4f0c1da2aaf0d60", null ],
+    [ "pkcs11_find_get_attribute", "a02404.html#ga0e2b3b381504c39a017a4232a35b672d", null ],
+    [ "pkcs11_find_init", "a02404.html#ga6fd109c0919489909cc4073866d1c466", null ]
 ];

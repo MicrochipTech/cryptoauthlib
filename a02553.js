@@ -1,9 +1,5 @@
 var a02553 =
 [
-    [ "mode", "a02553.html#a37e90f5e3bd99fac2021fb3a326607d4", null ],
-    [ "parent_key", "a02553.html#a000599eef5677ed1279b025c42ae260e", null ],
-    [ "sn", "a02553.html#aef45bac2efcd5394c4ed79f73ee16d23", null ],
-    [ "target_key", "a02553.html#afca67d3e5d5a7c772262731cc08880b1", null ],
-    [ "target_key_id", "a02553.html#a41104a8c85cd12c0fde0d791c3276a48", null ],
-    [ "temp_key", "a02553.html#a72fae3d62889ef224f09c57a7646e061", null ]
+    [ "ref_ct", "a02553.html#ad72ba8c994f4d0e5ce354e17f7c427c0", null ],
+    [ "spi_file", "a02553.html#a2cd9a7b710ae29883c5a1799d2012792", null ]
 ];

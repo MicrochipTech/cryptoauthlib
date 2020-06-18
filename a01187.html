@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_host_sw.c File Reference</title>
+<title>CryptoAuthLib: calib_genkey.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,38 +87,37 @@ $(document).ready(function(){initNavTree('a01187.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atcacert_host_sw.c File Reference</div>  </div>
+<div class="title">calib_genkey.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>host side methods using software implementations  
+<p>CryptoAuthLib Basic API methods for GenKey command.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01190_source.html">atcacert_host_sw.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01328_source.html">crypto/atca_crypto_sw_sha2.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01310_source.html">crypto/atca_crypto_sw_ecdsa.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01316_source.html">crypto/atca_crypto_sw_rand.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a01289_source.html">cryptoauthlib.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gab78271af8c3e2837810fcdae6e3f5e28"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07530.html#gab78271af8c3e2837810fcdae6e3f5e28">atcacert_verify_cert_sw</a> (const <a class="el" href="a07530.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, const uint8_t ca_public_key[64])</td></tr>
-<tr class="memdesc:gab78271af8c3e2837810fcdae6e3f5e28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a certificate against its certificate authority's public key using software crypto functions.The function is currently not implemented.  <a href="a07530.html#gab78271af8c3e2837810fcdae6e3f5e28">More...</a><br /></td></tr>
-<tr class="separator:gab78271af8c3e2837810fcdae6e3f5e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa9829e5aa1ece3d3a933db9827d3e8f3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07530.html#gaa9829e5aa1ece3d3a933db9827d3e8f3">atcacert_gen_challenge_sw</a> (uint8_t challenge[32])</td></tr>
-<tr class="memdesc:gaa9829e5aa1ece3d3a933db9827d3e8f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a random challenge to be sent to the client using a software PRNG.The function is currently not implemented.  <a href="a07530.html#gaa9829e5aa1ece3d3a933db9827d3e8f3">More...</a><br /></td></tr>
-<tr class="separator:gaa9829e5aa1ece3d3a933db9827d3e8f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9d5bf9ec84d28a0412377818805c32c4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07530.html#ga9d5bf9ec84d28a0412377818805c32c4">atcacert_verify_response_sw</a> (const uint8_t device_public_key[64], const uint8_t challenge[32], const uint8_t response[64])</td></tr>
-<tr class="memdesc:ga9d5bf9ec84d28a0412377818805c32c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a client's response to a challenge using software crypto functions.The function is currently not implemented.  <a href="a07530.html#ga9d5bf9ec84d28a0412377818805c32c4">More...</a><br /></td></tr>
-<tr class="separator:ga9d5bf9ec84d28a0412377818805c32c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d87bd17122bc323bb0e47db8341c6d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga1d87bd17122bc323bb0e47db8341c6d8">calib_genkey_base</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t key_id, const uint8_t *other_data, uint8_t *public_key)</td></tr>
+<tr class="memdesc:ga1d87bd17122bc323bb0e47db8341c6d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues GenKey command, which can generate a private key, compute a public key, nd/or compute a digest of a public key.  <a href="a02398.html#ga1d87bd17122bc323bb0e47db8341c6d8">More...</a><br /></td></tr>
+<tr class="separator:ga1d87bd17122bc323bb0e47db8341c6d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5fa08c0fb0fd4de0137bd82c7ed410cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga5fa08c0fb0fd4de0137bd82c7ed410cb">calib_genkey</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, uint8_t *public_key)</td></tr>
+<tr class="memdesc:ga5fa08c0fb0fd4de0137bd82c7ed410cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues GenKey command, which generates a new random private key in slot and returns the public key.  <a href="a02398.html#ga5fa08c0fb0fd4de0137bd82c7ed410cb">More...</a><br /></td></tr>
+<tr class="separator:ga5fa08c0fb0fd4de0137bd82c7ed410cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad902a2fe308340751b52ae249a38d688"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#gad902a2fe308340751b52ae249a38d688">calib_get_pubkey</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, uint8_t *public_key)</td></tr>
+<tr class="memdesc:gad902a2fe308340751b52ae249a38d688"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses GenKey command to calculate the public key from an existing private key in a slot.  <a href="a02398.html#gad902a2fe308340751b52ae249a38d688">More...</a><br /></td></tr>
+<tr class="separator:gad902a2fe308340751b52ae249a38d688"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>host side methods using software implementations </p>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for GenKey command. </p>
+<p>The GenKey command is used for creating ECC private keys, generating ECC public keys, and for digest calculations involving public keys.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC108A, ATECC508A, ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_65edf1b561f102319ae2d8c3ccfc1a4c.html">atcacert</a></li><li class="navelem"><a class="el" href="a01187.html">atcacert_host_sw.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_a7c83ffe4cbb7b846faed985dac26a17.html">calib</a></li><li class="navelem"><a class="el" href="a01187.html">calib_genkey.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

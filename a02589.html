@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: _pkcs11_attrib_model Struct Reference</title>
+<title>CryptoAuthLib: atca_secureboot_enc_in_out Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,45 +87,108 @@ $(document).ready(function(){initNavTree('a02589.html',''); initResizable(); });
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">_pkcs11_attrib_model Struct Reference</div>  </div>
+<div class="title">atca_secureboot_enc_in_out Struct Reference<div class="ingroups"><a class="el" href="a02401.html">Host side crypto methods (atcah_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="a01457_source.html">pkcs11_attrib.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a01427_source.html">atca_host.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ae0c8aa34f550a71d97c0d0ca3b4eb98a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01562.html#ad95456bab28dc2208c2d0e1d01f8ae8a">CK_ATTRIBUTE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02589.html#ae0c8aa34f550a71d97c0d0ca3b4eb98a">type</a></td></tr>
-<tr class="separator:ae0c8aa34f550a71d97c0d0ca3b4eb98a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ce2da5ba866bfb3b9412de7ccdb76f7"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01457.html#a5a0b1cd7e76456a031118d97060eecb9">attrib_f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02589.html#a5ce2da5ba866bfb3b9412de7ccdb76f7">func</a></td></tr>
-<tr class="separator:a5ce2da5ba866bfb3b9412de7ccdb76f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a130c5ab3a3f978b77641faa7813aa5d2"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02589.html#a130c5ab3a3f978b77641faa7813aa5d2">io_key</a></td></tr>
+<tr class="memdesc:a130c5ab3a3f978b77641faa7813aa5d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO protection key value (32 bytes)  <a href="a02589.html#a130c5ab3a3f978b77641faa7813aa5d2">More...</a><br /></td></tr>
+<tr class="separator:a130c5ab3a3f978b77641faa7813aa5d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a714b07e0515fd9d20714a4fc2a16c03e"><td class="memItemLeft" align="right" valign="top">const struct <a class="el" href="a02569.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02589.html#a714b07e0515fd9d20714a4fc2a16c03e">temp_key</a></td></tr>
+<tr class="memdesc:a714b07e0515fd9d20714a4fc2a16c03e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current value of TempKey.  <a href="a02589.html#a714b07e0515fd9d20714a4fc2a16c03e">More...</a><br /></td></tr>
+<tr class="separator:a714b07e0515fd9d20714a4fc2a16c03e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff3a2b64b0d86058508f766de59438d1"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02589.html#aff3a2b64b0d86058508f766de59438d1">digest</a></td></tr>
+<tr class="memdesc:aff3a2b64b0d86058508f766de59438d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plaintext digest as input.  <a href="a02589.html#aff3a2b64b0d86058508f766de59438d1">More...</a><br /></td></tr>
+<tr class="separator:aff3a2b64b0d86058508f766de59438d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e3f2b3f58d04cbc9d85d936b039170e"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02589.html#a4e3f2b3f58d04cbc9d85d936b039170e">hashed_key</a></td></tr>
+<tr class="memdesc:a4e3f2b3f58d04cbc9d85d936b039170e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculated key is returned here (32 bytes)  <a href="a02589.html#a4e3f2b3f58d04cbc9d85d936b039170e">More...</a><br /></td></tr>
+<tr class="separator:a4e3f2b3f58d04cbc9d85d936b039170e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9a9b371e24a757dba2cf1f87d03b31e"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02589.html#aa9a9b371e24a757dba2cf1f87d03b31e">digest_enc</a></td></tr>
+<tr class="memdesc:aa9a9b371e24a757dba2cf1f87d03b31e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypted (ciphertext) digest is return here (32 bytes)  <a href="a02589.html#aa9a9b371e24a757dba2cf1f87d03b31e">More...</a><br /></td></tr>
+<tr class="separator:aa9a9b371e24a757dba2cf1f87d03b31e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="a5ce2da5ba866bfb3b9412de7ccdb76f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ce2da5ba866bfb3b9412de7ccdb76f7">&#9670;&nbsp;</a></span>func</h2>
+<a id="aff3a2b64b0d86058508f766de59438d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff3a2b64b0d86058508f766de59438d1">&#9670;&nbsp;</a></span>digest</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="a01457.html#a5a0b1cd7e76456a031118d97060eecb9">attrib_f</a> func</td>
+          <td class="memname">const uint8_t* digest</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Plaintext digest as input. </p>
+
 </div>
 </div>
-<a id="ae0c8aa34f550a71d97c0d0ca3b4eb98a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae0c8aa34f550a71d97c0d0ca3b4eb98a">&#9670;&nbsp;</a></span>type</h2>
+<a id="aa9a9b371e24a757dba2cf1f87d03b31e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9a9b371e24a757dba2cf1f87d03b31e">&#9670;&nbsp;</a></span>digest_enc</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="a01562.html#ad95456bab28dc2208c2d0e1d01f8ae8a">CK_ATTRIBUTE_TYPE</a> type</td>
+          <td class="memname">uint8_t* digest_enc</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Encrypted (ciphertext) digest is return here (32 bytes) </p>
+
+</div>
+</div>
+<a id="a4e3f2b3f58d04cbc9d85d936b039170e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e3f2b3f58d04cbc9d85d936b039170e">&#9670;&nbsp;</a></span>hashed_key</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* hashed_key</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculated key is returned here (32 bytes) </p>
+
+</div>
+</div>
+<a id="a130c5ab3a3f978b77641faa7813aa5d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a130c5ab3a3f978b77641faa7813aa5d2">&#9670;&nbsp;</a></span>io_key</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint8_t* io_key</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>IO protection key value (32 bytes) </p>
+
+</div>
+</div>
+<a id="a714b07e0515fd9d20714a4fc2a16c03e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a714b07e0515fd9d20714a4fc2a16c03e">&#9670;&nbsp;</a></span>temp_key</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const struct <a class="el" href="a02569.html">atca_temp_key</a>* temp_key</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Current value of TempKey. </p>
 
 </div>
 </div>
@@ -134,7 +197,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02589.html">_pkcs11_attrib_model</a></li>
+    <li class="navelem"><a class="el" href="a02589.html">atca_secureboot_enc_in_out</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

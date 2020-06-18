@@ -9,7 +9,7 @@ var a01082 =
     [ "atcab_hex2bin", "a01082.html#a481179181349c801c16fc1ab698f2f24", null ],
     [ "atcab_hex2bin_", "a01082.html#a4ef30ca351b13623043917b5ed86cbb8", null ],
     [ "atcab_memset_s", "a01082.html#ac37b319dabc5b9492a422f6d3d4e118b", null ],
-    [ "atcab_printbin", "a02332.html#ga72601de415fd0bbc73faa1ddbc52e56e", null ],
+    [ "atcab_printbin", "a02392.html#ga72601de415fd0bbc73faa1ddbc52e56e", null ],
     [ "atcab_printbin_label", "a01082.html#a248355e3b4bcdd5d728f214fc2eb79e4", null ],
     [ "atcab_printbin_sp", "a01082.html#a1f88c481b376a7be9112ff081c4ad854", null ],
     [ "atcab_reversal", "a01082.html#a7371f490659b6fd68739d2b1fee50696", null ],

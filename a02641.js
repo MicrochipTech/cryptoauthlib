@@ -1,6 +1,6 @@
 var a02641 =
 [
-    [ "day", "a02641.html#ab39893eae400a1e130d7a275d033a5f2", null ],
-    [ "month", "a02641.html#a1f8387dcc52026c2edcd616562053164", null ],
-    [ "year", "a02641.html#a2741ea8c5dcaccccdf431005b457331a", null ]
+    [ "buf", "a02641.html#a1fe855c208bc17a51a4d34fefdb2d5b1", null ],
+    [ "buflen", "a02641.html#a892366b22e8ea42d95e49308022eef4d", null ],
+    [ "cur", "a02641.html#aee7e8f6f5f1a4b5b402473cf99d3042a", null ]
 ];

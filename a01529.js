@@ -1,11 +1,9 @@
 var a01529 =
 [
-    [ "pkcs11_get_session_context", "a02344.html#ga33b843d3e0cb28b80d38056f18fe9519", null ],
-    [ "pkcs11_session_check", "a02344.html#ga7eb04614661e0cedf6cb926787f5ff9b", null ],
-    [ "pkcs11_session_close", "a02344.html#gac082a1a5af11c561af58d333414f4a27", null ],
-    [ "pkcs11_session_closeall", "a02344.html#ga43525e77f9049b545fa09129cacf9c9a", null ],
-    [ "pkcs11_session_get_info", "a02344.html#ga236a002e179ed36a0b81399a3e11fcb8", null ],
-    [ "pkcs11_session_login", "a02344.html#ga4d70fd7e9799d0428c308a3e1ed146df", null ],
-    [ "pkcs11_session_logout", "a02344.html#gafefc70d16edaf998a521daf6b8aed3e6", null ],
-    [ "pkcs11_session_open", "a02344.html#gad015e297476bdc4df61870f8d1209ddb", null ]
+    [ "pkcs11_os_free", "a01529.html#a6dc4b364c3d11f22e08cc67adbcd70c6", null ],
+    [ "pkcs11_os_malloc", "a01529.html#add8754c49398ab1c3a26a581188e074c", null ],
+    [ "pkcs11_os_create_mutex", "a02404.html#gaf5f1c5e6c5bf8d91f2090ee4bbe20362", null ],
+    [ "pkcs11_os_destroy_mutex", "a02404.html#ga0b79ce15416271adde1bb832f6faa16b", null ],
+    [ "pkcs11_os_lock_mutex", "a02404.html#gae27d029f16c6710a0a168e1d1057a4e3", null ],
+    [ "pkcs11_os_unlock_mutex", "a02404.html#ga6f868fabdbf3e115a72e1d126e5356b5", null ]
 ];

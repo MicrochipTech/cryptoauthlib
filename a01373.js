@@ -1,9 +1,13 @@
 var a01373 =
 [
-    [ "ATCA_MUTEX_TIMEOUT", "a01373.html#acf61a669d2246c92200734be17bd5488", null ],
-    [ "hal_create_mutex", "a07533.html#gab289a3949663589ac6be71d72fb18278", null ],
-    [ "hal_destroy_mutex", "a07533.html#ga4589d7b3e951f40b7928f1cf31f7ddf3", null ],
-    [ "hal_lock_mutex", "a07533.html#gad4cd02ff7ae4e75844eab4e84eb61994", null ],
-    [ "hal_rtos_delay_ms", "a07533.html#ga3df335e46c7e798a1d4b8949d00c13d3", null ],
-    [ "hal_unlock_mutex", "a07533.html#ga31fd8170a49623686543f6247b883bd1", null ]
+    [ "hal_spi_discover_buses", "a02400.html#ga92cecc8e30a88dee1cbedd49141bc209", null ],
+    [ "hal_spi_discover_devices", "a02400.html#ga6cf45c115bcb721e951e8792e0feb3f0", null ],
+    [ "hal_spi_idle", "a02400.html#ga470458f44feb9f6dfb7845851d821182", null ],
+    [ "hal_spi_init", "a02400.html#ga6c7a1471361e74b4bf6ad7f0388715c2", null ],
+    [ "hal_spi_post_init", "a02400.html#gaeb831d9894ce11146bd00c79a98b7f0f", null ],
+    [ "hal_spi_receive", "a02400.html#ga410c24762579358a576a58610a877e63", null ],
+    [ "hal_spi_release", "a02400.html#ga8c3f1c6c20d939c4ca976fdda6279359", null ],
+    [ "hal_spi_send", "a02400.html#ga16661176757d0ef155155b07267a44ed", null ],
+    [ "hal_spi_sleep", "a02400.html#gae97ef6e553aed5ba6ac0e65476d82308", null ],
+    [ "hal_spi_wake", "a02400.html#ga182f605fabb3a02f9d4a0e433496290b", null ]
 ];

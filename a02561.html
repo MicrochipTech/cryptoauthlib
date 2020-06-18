@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_decrypt_in_out Struct Reference</title>
+<title>CryptoAuthLib: i2c_sam_instance Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,32 +87,54 @@ $(document).ready(function(){initNavTree('a02561.html',''); initResizable(); });
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atca_decrypt_in_out Struct Reference<div class="ingroups"><a class="el" href="a02341.html">Host side crypto methods (atcah_)</a></div></div>  </div>
+<div class="title">i2c_sam_instance Struct Reference<div class="ingroups"><a class="el" href="a02400.html">Hardware abstraction layer (hal_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Input/output parameters for function atca_decrypt().  
- <a href="a02561.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="a01424_source.html">atca_host.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a01367_source.html">hal_sam_i2c_asf.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ga4155a23e70d1bf07de5d316efebeaee7"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02341.html#ga4155a23e70d1bf07de5d316efebeaee7">crypto_data</a></td></tr>
-<tr class="memdesc:ga4155a23e70d1bf07de5d316efebeaee7"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in,out] Pointer to 32-byte data. Input encrypted data from Read command (Contents field), output decrypted.  <a href="a02341.html#ga4155a23e70d1bf07de5d316efebeaee7">More...</a><br /></td></tr>
-<tr class="separator:ga4155a23e70d1bf07de5d316efebeaee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa17e031da4b22938bed1c21161ba371a"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a02509.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02341.html#gaa17e031da4b22938bed1c21161ba371a">temp_key</a></td></tr>
-<tr class="memdesc:gaa17e031da4b22938bed1c21161ba371a"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in,out] Pointer to TempKey structure.  <a href="a02341.html#gaa17e031da4b22938bed1c21161ba371a">More...</a><br /></td></tr>
-<tr class="separator:gaa17e031da4b22938bed1c21161ba371a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a633e42035bd009af942b508acaf3d9"><td class="memItemLeft" align="right" valign="top">Twi *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02561.html#a5a633e42035bd009af942b508acaf3d9">i2c_instance</a></td></tr>
+<tr class="separator:a5a633e42035bd009af942b508acaf3d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa50b662a49ed98cb27c809f4b2027ac9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02400.html#gae597ddf62e19ba0f85e4444df939a88b">sam_change_baudrate</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02561.html#aa50b662a49ed98cb27c809f4b2027ac9">change_baudrate</a></td></tr>
+<tr class="separator:aa50b662a49ed98cb27c809f4b2027ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input/output parameters for function atca_decrypt(). </p>
-</div></div><!-- contents -->
+<h2 class="groupheader">Field Documentation</h2>
+<a id="aa50b662a49ed98cb27c809f4b2027ac9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa50b662a49ed98cb27c809f4b2027ac9">&#9670;&nbsp;</a></span>change_baudrate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02400.html#gae597ddf62e19ba0f85e4444df939a88b">sam_change_baudrate</a> change_baudrate</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5a633e42035bd009af942b508acaf3d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a633e42035bd009af942b508acaf3d9">&#9670;&nbsp;</a></span>i2c_instance</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Twi* i2c_instance</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02561.html">atca_decrypt_in_out</a></li>
+    <li class="navelem"><a class="el" href="a02561.html">i2c_sam_instance</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

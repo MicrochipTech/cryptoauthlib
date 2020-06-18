@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_digest.h File Reference</title>
+<title>CryptoAuthLib: pkcs11_signature.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,191 +87,58 @@ $(document).ready(function(){initNavTree('a01538.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">pkcs11_digest.h File Reference</div>  </div>
+<div class="title">pkcs11_signature.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Library Digest (SHA256) Handling.  
+<p>PKCS11 Library Sign/Verify Handling.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01505_source.html">cryptoki.h</a>&quot;</code><br />
-</div>
-<p><a href="a01538_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
+<div class="textblock"><code>#include &quot;pkcs11_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01478_source.html">pkcs11_debug.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01502_source.html">pkcs11_init.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01541_source.html">pkcs11_signature.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01523_source.html">pkcs11_object.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01535_source.html">pkcs11_session.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01559_source.html">pkcs11_util.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01289_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01124_source.html">atcacert/atcacert_der.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a903aed9c7d096dced1233a11539c781d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01619.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01538.html#a903aed9c7d096dced1233a11539c781d">pkcs11_digest_init</a> (<a class="el" href="a01619.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01619.html#afa4c48ba8a588833ea04f0910583592e">CK_MECHANISM_PTR</a> pMechanism)</td></tr>
-<tr class="memdesc:a903aed9c7d096dced1233a11539c781d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a message-digesting operation using the specified mechanism in the specified session.  <a href="a01538.html#a903aed9c7d096dced1233a11539c781d">More...</a><br /></td></tr>
-<tr class="separator:a903aed9c7d096dced1233a11539c781d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81936ce8429c7a97bc42921589c1522e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01619.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01538.html#a81936ce8429c7a97bc42921589c1522e">pkcs11_digest</a> (<a class="el" href="a01619.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01619.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pData, <a class="el" href="a01619.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulDataLen, <a class="el" href="a01619.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pDigest, <a class="el" href="a01619.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulDigestLen)</td></tr>
-<tr class="memdesc:a81936ce8429c7a97bc42921589c1522e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Digest the specified data in a one-pass operation and return the resulting digest.  <a href="a01538.html#a81936ce8429c7a97bc42921589c1522e">More...</a><br /></td></tr>
-<tr class="separator:a81936ce8429c7a97bc42921589c1522e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87a4b63b1a4ced5e40a1cc0bbc88599d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01619.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01538.html#a87a4b63b1a4ced5e40a1cc0bbc88599d">pkcs11_digest_update</a> (<a class="el" href="a01619.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01619.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pPart, <a class="el" href="a01619.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulPartLen)</td></tr>
-<tr class="memdesc:a87a4b63b1a4ced5e40a1cc0bbc88599d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues a multiple-part digesting operation.  <a href="a01538.html#a87a4b63b1a4ced5e40a1cc0bbc88599d">More...</a><br /></td></tr>
-<tr class="separator:a87a4b63b1a4ced5e40a1cc0bbc88599d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd1c9ccc6899b550d241f007fd023d6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01619.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01538.html#abd1c9ccc6899b550d241f007fd023d6b">pkcs11_digest_final</a> (<a class="el" href="a01619.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01619.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pDigest, <a class="el" href="a01619.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulDigestLen)</td></tr>
-<tr class="memdesc:abd1c9ccc6899b550d241f007fd023d6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part digesting operation.  <a href="a01538.html#abd1c9ccc6899b550d241f007fd023d6b">More...</a><br /></td></tr>
-<tr class="separator:abd1c9ccc6899b550d241f007fd023d6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga742c35812a444a87e35150e2332be0c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga742c35812a444a87e35150e2332be0c2">pkcs11_signature_sign_init</a> (<a class="el" href="a01565.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01565.html#afa4c48ba8a588833ea04f0910583592e">CK_MECHANISM_PTR</a> pMechanism, <a class="el" href="a01565.html#ad1cdd703196214cd34e6f9f52bc67683">CK_OBJECT_HANDLE</a> hKey)</td></tr>
+<tr class="memdesc:ga742c35812a444a87e35150e2332be0c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a signing operation using the specified key and mechanism.  <a href="a02404.html#ga742c35812a444a87e35150e2332be0c2">More...</a><br /></td></tr>
+<tr class="separator:ga742c35812a444a87e35150e2332be0c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4641a3dd4da46f801565310f3784a41e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga4641a3dd4da46f801565310f3784a41e">pkcs11_signature_sign</a> (<a class="el" href="a01565.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01565.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pData, <a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulDataLen, <a class="el" href="a01565.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pSignature, <a class="el" href="a01565.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulSignatureLen)</td></tr>
+<tr class="memdesc:ga4641a3dd4da46f801565310f3784a41e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sign the data in a single pass operation.  <a href="a02404.html#ga4641a3dd4da46f801565310f3784a41e">More...</a><br /></td></tr>
+<tr class="separator:ga4641a3dd4da46f801565310f3784a41e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9c471f7e2ca3330cf6d2fa70e12db38a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga9c471f7e2ca3330cf6d2fa70e12db38a">pkcs11_signature_sign_continue</a> (<a class="el" href="a01565.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01565.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pPart, <a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulPartLen)</td></tr>
+<tr class="memdesc:ga9c471f7e2ca3330cf6d2fa70e12db38a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues a multiple-part signature operation.  <a href="a02404.html#ga9c471f7e2ca3330cf6d2fa70e12db38a">More...</a><br /></td></tr>
+<tr class="separator:ga9c471f7e2ca3330cf6d2fa70e12db38a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb52d31f30bb8f6a66d1851ba0052dc7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#gadb52d31f30bb8f6a66d1851ba0052dc7">pkcs11_signature_sign_finish</a> (<a class="el" href="a01565.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01565.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pSignature, <a class="el" href="a01565.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulSignatureLen)</td></tr>
+<tr class="memdesc:gadb52d31f30bb8f6a66d1851ba0052dc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part signature operation.  <a href="a02404.html#gadb52d31f30bb8f6a66d1851ba0052dc7">More...</a><br /></td></tr>
+<tr class="separator:gadb52d31f30bb8f6a66d1851ba0052dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga852f9badf3176a60bfb874fb5d118791"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga852f9badf3176a60bfb874fb5d118791">pkcs11_signature_verify_init</a> (<a class="el" href="a01565.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01565.html#afa4c48ba8a588833ea04f0910583592e">CK_MECHANISM_PTR</a> pMechanism, <a class="el" href="a01565.html#ad1cdd703196214cd34e6f9f52bc67683">CK_OBJECT_HANDLE</a> hKey)</td></tr>
+<tr class="memdesc:ga852f9badf3176a60bfb874fb5d118791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a verification operation using the specified key and mechanism.  <a href="a02404.html#ga852f9badf3176a60bfb874fb5d118791">More...</a><br /></td></tr>
+<tr class="separator:ga852f9badf3176a60bfb874fb5d118791"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga27b3652fb8a87f7f40fff10c63316b35"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga27b3652fb8a87f7f40fff10c63316b35">pkcs11_signature_verify</a> (<a class="el" href="a01565.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01565.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pData, <a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulDataLen, <a class="el" href="a01565.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pSignature, <a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulSignatureLen)</td></tr>
+<tr class="memdesc:ga27b3652fb8a87f7f40fff10c63316b35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies a signature on single-part data.  <a href="a02404.html#ga27b3652fb8a87f7f40fff10c63316b35">More...</a><br /></td></tr>
+<tr class="separator:ga27b3652fb8a87f7f40fff10c63316b35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab735278cab8e184d682b4ed8b12dbb1b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#gab735278cab8e184d682b4ed8b12dbb1b">pkcs11_signature_verify_continue</a> (<a class="el" href="a01565.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01565.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pPart, <a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulPartLen)</td></tr>
+<tr class="memdesc:gab735278cab8e184d682b4ed8b12dbb1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues a multiple-part verification operation.  <a href="a02404.html#gab735278cab8e184d682b4ed8b12dbb1b">More...</a><br /></td></tr>
+<tr class="separator:gab735278cab8e184d682b4ed8b12dbb1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2aac39ede2b43021b63ed6bc7f3f20da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga2aac39ede2b43021b63ed6bc7f3f20da">pkcs11_signature_verify_finish</a> (<a class="el" href="a01565.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01565.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pSignature, <a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulSignatureLen)</td></tr>
+<tr class="memdesc:ga2aac39ede2b43021b63ed6bc7f3f20da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part verification operation.  <a href="a02404.html#ga2aac39ede2b43021b63ed6bc7f3f20da">More...</a><br /></td></tr>
+<tr class="separator:ga2aac39ede2b43021b63ed6bc7f3f20da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Library Digest (SHA256) Handling. </p>
+<div class="textblock"><p>PKCS11 Library Sign/Verify Handling. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="a81936ce8429c7a97bc42921589c1522e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a81936ce8429c7a97bc42921589c1522e">&#9670;&nbsp;</a></span>pkcs11_digest()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01619.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> pkcs11_digest </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01619.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a>&#160;</td>
-          <td class="paramname"><em>hSession</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01619.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a>&#160;</td>
-          <td class="paramname"><em>pData</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01619.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td>
-          <td class="paramname"><em>ulDataLen</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01619.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a>&#160;</td>
-          <td class="paramname"><em>pDigest</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01619.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a>&#160;</td>
-          <td class="paramname"><em>pulDigestLen</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Digest the specified data in a one-pass operation and return the resulting digest. </p>
-
-</div>
-</div>
-<a id="abd1c9ccc6899b550d241f007fd023d6b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd1c9ccc6899b550d241f007fd023d6b">&#9670;&nbsp;</a></span>pkcs11_digest_final()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01619.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> pkcs11_digest_final </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01619.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a>&#160;</td>
-          <td class="paramname"><em>hSession</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01619.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a>&#160;</td>
-          <td class="paramname"><em>pDigest</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01619.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a>&#160;</td>
-          <td class="paramname"><em>pulDigestLen</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Finishes a multiple-part digesting operation. </p>
-
-</div>
-</div>
-<a id="a903aed9c7d096dced1233a11539c781d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a903aed9c7d096dced1233a11539c781d">&#9670;&nbsp;</a></span>pkcs11_digest_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01619.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> pkcs11_digest_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01619.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a>&#160;</td>
-          <td class="paramname"><em>hSession</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01619.html#afa4c48ba8a588833ea04f0910583592e">CK_MECHANISM_PTR</a>&#160;</td>
-          <td class="paramname"><em>pMechanism</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Initializes a message-digesting operation using the specified mechanism in the specified session. </p>
-
-</div>
-</div>
-<a id="a87a4b63b1a4ced5e40a1cc0bbc88599d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a87a4b63b1a4ced5e40a1cc0bbc88599d">&#9670;&nbsp;</a></span>pkcs11_digest_update()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01619.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> pkcs11_digest_update </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01619.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a>&#160;</td>
-          <td class="paramname"><em>hSession</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01619.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a>&#160;</td>
-          <td class="paramname"><em>pPart</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01619.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td>
-          <td class="paramname"><em>ulPartLen</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Continues a multiple-part digesting operation. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_6682b35b7acdc4aaff3ce21f801977b3.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01538.html">pkcs11_digest.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_6682b35b7acdc4aaff3ce21f801977b3.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01538.html">pkcs11_signature.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

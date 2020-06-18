@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_mbedtls_wrap.h File Reference</title>
+<title>CryptoAuthLib: pkcs11_init.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,32 +87,49 @@ $(document).ready(function(){initNavTree('a01499.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_mbedtls_wrap.h File Reference</div>  </div>
+<div class="title">pkcs11_init.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><a href="a01499_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
+<p>PKCS11 Library Init/Deinit.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;pkcs11_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01478_source.html">pkcs11_debug.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01502_source.html">pkcs11_init.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01529_source.html">pkcs11_os.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01547_source.html">pkcs11_slot.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01523_source.html">pkcs11_object.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01535_source.html">pkcs11_session.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01289_source.html">cryptoauthlib.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga72da31831a3647e287543634e3f78aca"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07536.html#ga72da31831a3647e287543634e3f78aca">atca_mbedtls_pk_init</a> (struct mbedtls_pk_context *pkey, const uint16_t slotid)</td></tr>
-<tr class="memdesc:ga72da31831a3647e287543634e3f78aca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an mbedtls pk context for use with EC operations.  <a href="a07536.html#ga72da31831a3647e287543634e3f78aca">More...</a><br /></td></tr>
-<tr class="separator:ga72da31831a3647e287543634e3f78aca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1180b0ded84f7edb4b36d14730366a64"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07536.html#ga1180b0ded84f7edb4b36d14730366a64">atca_mbedtls_cert_add</a> (struct mbedtls_x509_crt *cert, const struct <a class="el" href="a07614.html">atcacert_def_s</a> *cert_def)</td></tr>
-<tr class="separator:ga1180b0ded84f7edb4b36d14730366a64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga98d684683ccecd3d56bdf5dc27ae999c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07536.html#ga98d684683ccecd3d56bdf5dc27ae999c">atca_mbedtls_ecdh_slot_cb</a> (void)</td></tr>
-<tr class="memdesc:ga98d684683ccecd3d56bdf5dc27ae999c"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH Callback to obtain the "slot" used in ECDH operations from the application.  <a href="a07536.html#ga98d684683ccecd3d56bdf5dc27ae999c">More...</a><br /></td></tr>
-<tr class="separator:ga98d684683ccecd3d56bdf5dc27ae999c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa35682dc98e33ce3d6fad1fc902cdff0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07536.html#gaa35682dc98e33ce3d6fad1fc902cdff0">atca_mbedtls_ecdh_ioprot_cb</a> (uint8_t secret[32])</td></tr>
-<tr class="memdesc:gaa35682dc98e33ce3d6fad1fc902cdff0"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH Callback to obtain the IO Protection secret from the application.  <a href="a07536.html#gaa35682dc98e33ce3d6fad1fc902cdff0">More...</a><br /></td></tr>
-<tr class="separator:gaa35682dc98e33ce3d6fad1fc902cdff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae0e3060e6ae0dfc17a35881c223d8123"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01502.html#adb828773fc77a4f1dbb559ddedcc99c4">pkcs11_lib_ctx_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#gae0e3060e6ae0dfc17a35881c223d8123">pkcs11_get_context</a> (void)</td></tr>
+<tr class="memdesc:gae0e3060e6ae0dfc17a35881c223d8123"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the current library context.  <a href="a02404.html#gae0e3060e6ae0dfc17a35881c223d8123">More...</a><br /></td></tr>
+<tr class="separator:gae0e3060e6ae0dfc17a35881c223d8123"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0e755fd7df13be2aa1f706de5b0f24b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#gaf0e755fd7df13be2aa1f706de5b0f24b">pkcs11_lock_context</a> (<a class="el" href="a01502.html#adb828773fc77a4f1dbb559ddedcc99c4">pkcs11_lib_ctx_ptr</a> pContext)</td></tr>
+<tr class="separator:gaf0e755fd7df13be2aa1f706de5b0f24b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga750f93d0a3c67f5d0e28c9c50ad990a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga750f93d0a3c67f5d0e28c9c50ad990a8">pkcs11_unlock_context</a> (<a class="el" href="a01502.html#adb828773fc77a4f1dbb559ddedcc99c4">pkcs11_lib_ctx_ptr</a> pContext)</td></tr>
+<tr class="separator:ga750f93d0a3c67f5d0e28c9c50ad990a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadd899ffeae0146c08b249e3f551e21f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#gadd899ffeae0146c08b249e3f551e21f8">pkcs11_init_check</a> (<a class="el" href="a01502.html#adb828773fc77a4f1dbb559ddedcc99c4">pkcs11_lib_ctx_ptr</a> *ppContext, <a class="el" href="a01565.html#abd07a1bba363f8083080b9328e67b491">CK_BBOOL</a> lock)</td></tr>
+<tr class="memdesc:gadd899ffeae0146c08b249e3f551e21f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the library is initialized properly.  <a href="a02404.html#gadd899ffeae0146c08b249e3f551e21f8">More...</a><br /></td></tr>
+<tr class="separator:gadd899ffeae0146c08b249e3f551e21f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga21e0ec91eccb3f92b45cb2536b3889b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga21e0ec91eccb3f92b45cb2536b3889b1">pkcs11_init</a> (<a class="el" href="a01565.html#a394b45a487689aa422a6cf5f048bc85c">CK_C_INITIALIZE_ARGS_PTR</a> pInitArgs)</td></tr>
+<tr class="memdesc:ga21e0ec91eccb3f92b45cb2536b3889b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the PKCS11 API Library for Cryptoauthlib.  <a href="a02404.html#ga21e0ec91eccb3f92b45cb2536b3889b1">More...</a><br /></td></tr>
+<tr class="separator:ga21e0ec91eccb3f92b45cb2536b3889b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabff89fd0af2e75ee2db858f9fe934ac4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#gabff89fd0af2e75ee2db858f9fe934ac4">pkcs11_deinit</a> (<a class="el" href="a01565.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pReserved)</td></tr>
+<tr class="separator:gabff89fd0af2e75ee2db858f9fe934ac4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>PKCS11 Library Init/Deinit. </p>
+<p>Copyright (c) 2017 Microchip Technology Inc. All rights reserved.</p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_dc51b425ebbafda9ba904ce077f0c40d.html">mbedtls</a></li><li class="navelem"><a class="el" href="a01499.html">atca_mbedtls_wrap.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_6682b35b7acdc4aaff3ce21f801977b3.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01499.html">pkcs11_init.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

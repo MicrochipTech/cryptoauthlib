@@ -1,7 +1,7 @@
 var a02521 =
 [
-    [ "data", "a02521.html#abe222f6d3581e7920dcad5306cc906a8", null ],
-    [ "data_size", "a02521.html#ad6bc120bffc64dfc5230863a8ba96596", null ],
-    [ "io_key", "a02521.html#a130c5ab3a3f978b77641faa7813aa5d2", null ],
-    [ "out_nonce", "a02521.html#a70a057043fcc9f4dc22455f6df43d710", null ]
+    [ "block", "a02521.html#a3eda0262ee911faf6be5f756aae6b799", null ],
+    [ "block_size", "a02521.html#a9e3fb1e50a1c71b2337df296222d9553", null ],
+    [ "hash", "a02521.html#a135f34ef1efee1401582f12744220dbb", null ],
+    [ "total_msg_size", "a02521.html#a8ee7e642376903508dd6b4df9eacc2de", null ]
 ];

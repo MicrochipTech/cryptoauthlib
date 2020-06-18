@@ -1,12 +1,10 @@
 var a02593 =
 [
-    [ "config_path", "a02593.html#a431e6b797cb83b2bde7ad45f80d55ae1", null ],
-    [ "create_mutex", "a02593.html#a0ba826e6414189c8bd1f0969fcfbd26e", null ],
-    [ "destroy_mutex", "a02593.html#a1e1ca260281eb86e4052a47cecd917fe", null ],
-    [ "initialized", "a02593.html#a1160c303d9370f4187e6f48d6ac336c1", null ],
-    [ "lock_mutex", "a02593.html#aa17f239b10354b3d4d510856eb8deff6", null ],
-    [ "mutex", "a02593.html#ae1dd2e58c44f73ef2d3214bd159a8265", null ],
-    [ "slot_cnt", "a02593.html#ab10ec5af66dc12a7a47c50ab92708cb0", null ],
-    [ "slots", "a02593.html#a1c3f6b7e795d6e1f40853ab4cfe68781", null ],
-    [ "unlock_mutex", "a02593.html#adca7f4ab475b78bedef202c334a700b7", null ]
+    [ "digest", "a02593.html#aff3a2b64b0d86058508f766de59438d1", null ],
+    [ "hashed_key", "a02593.html#a1f1ddb903087eec963d0faf82a3283a4", null ],
+    [ "mac", "a02593.html#aa5a9ad86915dfcef6db90b858690212a", null ],
+    [ "mode", "a02593.html#a37e90f5e3bd99fac2021fb3a326607d4", null ],
+    [ "param2", "a02593.html#a16a7565b150a9c17a39c80fc932b9514", null ],
+    [ "secure_boot_config", "a02593.html#a6abd57960eb27eecadcf1163a1441fb1", null ],
+    [ "signature", "a02593.html#a35388d4dff80916a7409fd0554ac58b6", null ]
 ];

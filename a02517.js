@@ -1,8 +1,7 @@
 var a02517 =
 [
-    [ "mode", "a02341.html#ga1a6b6fb557d8d37d59700faf4e4c9167", null ],
-    [ "num_in", "a02341.html#ga02a9d64ea363dc3b231b8cc0b317de8a", null ],
-    [ "rand_out", "a02341.html#ga75f7197e2840bcf9fe00722e739fdd9c", null ],
-    [ "temp_key", "a02341.html#gaa17e031da4b22938bed1c21161ba371a", null ],
-    [ "zero", "a02341.html#ga876993158b491f4626155b468ffb6edc", null ]
+    [ "buf", "a02517.html#ad129019065c848df2daa8c524faf8102", null ],
+    [ "byteCount", "a02517.html#aab2b8d46fc5660a5ab68496fe0d7d16b", null ],
+    [ "byteCountHi", "a02517.html#a64c87717f7dbc11cbc3b189f59a04604", null ],
+    [ "h", "a02517.html#a70819d8d63ba6620211984d432fd89ad", null ]
 ];

@@ -1,5 +1,6 @@
 var a01388 =
 [
-    [ "i2c_start_instance_t", "a07533.html#gab4ad18d30b921f27b4879ca71181491f", null ],
-    [ "start_change_baudrate", "a07533.html#gaf5c1d7b7fca31a8c1102814e4732c373", null ]
+    [ "MAX_I2C_BUSES", "a02400.html#gaf89a7a4080a47aa10a5504291db285bf", null ],
+    [ "ATCAI2CMaster_t", "a02400.html#ga06b19a932aea9cf3a5165fefacb24f7b", null ],
+    [ "change_i2c_speed", "a02400.html#gadc420e4b166a1b339d1a2687e0f12cb1", null ]
 ];

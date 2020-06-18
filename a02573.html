@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_gen_key_in_out Struct Reference</title>
+<title>CryptoAuthLib: atca_include_data_in_out Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,58 +87,32 @@ $(document).ready(function(){initNavTree('a02573.html',''); initResizable(); });
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atca_gen_key_in_out Struct Reference<div class="ingroups"><a class="el" href="a02341.html">Host side crypto methods (atcah_)</a></div></div>  </div>
+<div class="title">atca_include_data_in_out Struct Reference<div class="ingroups"><a class="el" href="a02401.html">Host side crypto methods (atcah_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Input/output parameters for calculating the PubKey digest put into TempKey by the GenKey command with the <a class="el" href="a02341.html#gabf2abd4bd62f47537756c9ab109050c0" title="Calculate the PubKey digest created by GenKey and saved to TempKey.">atcah_gen_key_msg()</a> function.  
+<p>Input / output parameters for function atca_include_data().  
  <a href="a02573.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="a01424_source.html">atca_host.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a01427_source.html">atca_host.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
+<tr class="memitem:gad87f95f0faf0c6fdfe94040efcb14860"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02401.html#gad87f95f0faf0c6fdfe94040efcb14860">p_temp</a></td></tr>
+<tr class="memdesc:gad87f95f0faf0c6fdfe94040efcb14860"><td class="mdescLeft">&#160;</td><td class="mdescRight">[out] pointer to output buffer  <a href="a02401.html#gad87f95f0faf0c6fdfe94040efcb14860">More...</a><br /></td></tr>
+<tr class="separator:gad87f95f0faf0c6fdfe94040efcb14860"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8712cb73a4d6b370658d8bc9a77fba3e"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02401.html#ga8712cb73a4d6b370658d8bc9a77fba3e">otp</a></td></tr>
+<tr class="memdesc:ga8712cb73a4d6b370658d8bc9a77fba3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] pointer to one-time-programming data  <a href="a02401.html#ga8712cb73a4d6b370658d8bc9a77fba3e">More...</a><br /></td></tr>
+<tr class="separator:ga8712cb73a4d6b370658d8bc9a77fba3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7276bd20c5842e712da638d25ceb6d92"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02401.html#ga7276bd20c5842e712da638d25ceb6d92">sn</a></td></tr>
+<tr class="memdesc:ga7276bd20c5842e712da638d25ceb6d92"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] pointer to serial number data  <a href="a02401.html#ga7276bd20c5842e712da638d25ceb6d92">More...</a><br /></td></tr>
+<tr class="separator:ga7276bd20c5842e712da638d25ceb6d92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37e90f5e3bd99fac2021fb3a326607d4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02573.html#a37e90f5e3bd99fac2021fb3a326607d4">mode</a></td></tr>
-<tr class="memdesc:a37e90f5e3bd99fac2021fb3a326607d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] GenKey Mode  <a href="a02573.html#a37e90f5e3bd99fac2021fb3a326607d4">More...</a><br /></td></tr>
 <tr class="separator:a37e90f5e3bd99fac2021fb3a326607d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac21eed4200889cc115d16a781871d01c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02573.html#ac21eed4200889cc115d16a781871d01c">key_id</a></td></tr>
-<tr class="memdesc:ac21eed4200889cc115d16a781871d01c"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] GenKey KeyID  <a href="a02573.html#ac21eed4200889cc115d16a781871d01c">More...</a><br /></td></tr>
-<tr class="separator:ac21eed4200889cc115d16a781871d01c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a122aff75e4ff5cd19542117ba3fdb855"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02573.html#a122aff75e4ff5cd19542117ba3fdb855">public_key</a></td></tr>
-<tr class="memdesc:a122aff75e4ff5cd19542117ba3fdb855"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Public key to be used in the PubKey digest. X and Y integers in big-endian format. 64 bytes for P256 curve.  <a href="a02573.html#a122aff75e4ff5cd19542117ba3fdb855">More...</a><br /></td></tr>
-<tr class="separator:a122aff75e4ff5cd19542117ba3fdb855"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeaa21ee86ed67c665d190be7d12293c7"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02573.html#aeaa21ee86ed67c665d190be7d12293c7">public_key_size</a></td></tr>
-<tr class="memdesc:aeaa21ee86ed67c665d190be7d12293c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Total number of bytes in the public key. 64 bytes for P256 curve.  <a href="a02573.html#aeaa21ee86ed67c665d190be7d12293c7">More...</a><br /></td></tr>
-<tr class="separator:aeaa21ee86ed67c665d190be7d12293c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac76ac607fd679316fc17b16039a86b9c"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02573.html#ac76ac607fd679316fc17b16039a86b9c">other_data</a></td></tr>
-<tr class="memdesc:ac76ac607fd679316fc17b16039a86b9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] 3 bytes required when bit 4 of the mode is set. Can be NULL otherwise.  <a href="a02573.html#ac76ac607fd679316fc17b16039a86b9c">More...</a><br /></td></tr>
-<tr class="separator:ac76ac607fd679316fc17b16039a86b9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef45bac2efcd5394c4ed79f73ee16d23"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02573.html#aef45bac2efcd5394c4ed79f73ee16d23">sn</a></td></tr>
-<tr class="memdesc:aef45bac2efcd5394c4ed79f73ee16d23"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Device serial number SN[0:8] (9 bytes). Only SN[0:1] and SN[8] are required though.  <a href="a02573.html#aef45bac2efcd5394c4ed79f73ee16d23">More...</a><br /></td></tr>
-<tr class="separator:aef45bac2efcd5394c4ed79f73ee16d23"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72fae3d62889ef224f09c57a7646e061"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a02509.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02573.html#a72fae3d62889ef224f09c57a7646e061">temp_key</a></td></tr>
-<tr class="memdesc:a72fae3d62889ef224f09c57a7646e061"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in,out] As input the current state of TempKey. As output, the resulting PubKEy digest.  <a href="a02573.html#a72fae3d62889ef224f09c57a7646e061">More...</a><br /></td></tr>
-<tr class="separator:a72fae3d62889ef224f09c57a7646e061"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input/output parameters for calculating the PubKey digest put into TempKey by the GenKey command with the <a class="el" href="a02341.html#gabf2abd4bd62f47537756c9ab109050c0" title="Calculate the PubKey digest created by GenKey and saved to TempKey.">atcah_gen_key_msg()</a> function. </p>
+<div class="textblock"><p>Input / output parameters for function atca_include_data(). </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="ac21eed4200889cc115d16a781871d01c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac21eed4200889cc115d16a781871d01c">&#9670;&nbsp;</a></span>key_id</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t key_id</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>[in] GenKey KeyID </p>
-
-</div>
-</div>
 <a id="a37e90f5e3bd99fac2021fb3a326607d4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a37e90f5e3bd99fac2021fb3a326607d4">&#9670;&nbsp;</a></span>mode</h2>
 
@@ -151,88 +125,6 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>[in] GenKey Mode </p>
-
-</div>
-</div>
-<a id="ac76ac607fd679316fc17b16039a86b9c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac76ac607fd679316fc17b16039a86b9c">&#9670;&nbsp;</a></span>other_data</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const uint8_t* other_data</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>[in] 3 bytes required when bit 4 of the mode is set. Can be NULL otherwise. </p>
-
-</div>
-</div>
-<a id="a122aff75e4ff5cd19542117ba3fdb855"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a122aff75e4ff5cd19542117ba3fdb855">&#9670;&nbsp;</a></span>public_key</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const uint8_t* public_key</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>[in] Public key to be used in the PubKey digest. X and Y integers in big-endian format. 64 bytes for P256 curve. </p>
-
-</div>
-</div>
-<a id="aeaa21ee86ed67c665d190be7d12293c7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeaa21ee86ed67c665d190be7d12293c7">&#9670;&nbsp;</a></span>public_key_size</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t public_key_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>[in] Total number of bytes in the public key. 64 bytes for P256 curve. </p>
-
-</div>
-</div>
-<a id="aef45bac2efcd5394c4ed79f73ee16d23"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef45bac2efcd5394c4ed79f73ee16d23">&#9670;&nbsp;</a></span>sn</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const uint8_t* sn</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>[in] Device serial number SN[0:8] (9 bytes). Only SN[0:1] and SN[8] are required though. </p>
-
-</div>
-</div>
-<a id="a72fae3d62889ef224f09c57a7646e061"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72fae3d62889ef224f09c57a7646e061">&#9670;&nbsp;</a></span>temp_key</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct <a class="el" href="a02509.html">atca_temp_key</a>* temp_key</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>[in,out] As input the current state of TempKey. As output, the resulting PubKEy digest. </p>
-
 </div>
 </div>
 </div><!-- contents -->
@@ -240,7 +132,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02573.html">atca_gen_key_in_out</a></li>
+    <li class="navelem"><a class="el" href="a02573.html">atca_include_data_in_out</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

@@ -1,6 +1,7 @@
 var a02865 =
 [
-    [ "prfHashMechanism", "a02865.html#af6032721b07ee767d731e63edab47893", null ],
-    [ "ulMacLength", "a02865.html#a7c666619b471e4c6c6083a50adab5272", null ],
-    [ "ulServerOrClient", "a02865.html#a6de30966ba383a261c0dd3ed55a62580", null ]
+    [ "hKey", "a02865.html#a569917f6c37fe21336a3e1d9fcb77277", null ],
+    [ "pMechanism", "a02865.html#a4c42a48676ad3a402544d41224c52c9a", null ],
+    [ "pSeed", "a02865.html#a746d217a79b917ce5fa51eabcb998d16", null ],
+    [ "ulSeedLen", "a02865.html#af289f68610b16b9c3ca1fb7ced1f2f8c", null ]
 ];

@@ -1,6 +1,6 @@
 var a02769 =
 [
-    [ "hKey", "a02769.html#a569917f6c37fe21336a3e1d9fcb77277", null ],
-    [ "hMacSecret", "a02769.html#adcdd17469e38c3cbfff41f88ed6fafbc", null ],
-    [ "pIV", "a02769.html#aa37bdbe535987b5e013607006a10fe62", null ]
+    [ "ulMacLength", "a02769.html#a7c666619b471e4c6c6083a50adab5272", null ],
+    [ "ulRounds", "a02769.html#abccd916df6f88f2628b639341735dc43", null ],
+    [ "ulWordsize", "a02769.html#adec9abac2456557fc3fa3ee9b93c074b", null ]
 ];

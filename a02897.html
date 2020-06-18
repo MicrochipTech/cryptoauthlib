@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: HAL Directory - Purpose</title>
+<title>CryptoAuthLib: CK_ARIA_CBC_ENCRYPT_DATA_PARAMS Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -83,84 +83,74 @@ $(document).ready(function(){initNavTree('a02897.html',''); initResizable(); });
 </iframe>
 </div>
 
-<div class="PageDoc"><div class="header">
+<div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">HAL Directory - Purpose </div>  </div>
+<div class="title">CK_ARIA_CBC_ENCRYPT_DATA_PARAMS Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This directory contains all the Hardware Abstraction Layer (HAL) files used to adapt the upper levels of atca-ng and abstractions to physical hardware.</p>
-<p>HAL contains physical implementations for I2C, SWI, SPI, UART and timers for specific hardware platforms.</p>
-<p><b>Include just those HAL files you require based on platform type.</b></p>
-<h1>CryptoAuthLib Supported HAL Layers </h1>
-<p>HAL Layers files are combined into groups. Initial group is generic files that are typically included in a project. Files are then broken out by uController Family and or Operating System Interface.</p>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Protocol Files </th><th class="markdownTableHeadNone">Interface </th><th class="markdownTableHeadNone">Files </th><th class="markdownTableHeadNone">API </th><th class="markdownTableHeadNone">Notes  </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">atca </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a01292.html" title="low-level HAL - methods used to setup indirection to physical layer interface. this level does the di...">atca_hal.c</a>/h </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">For all projects  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">kit protocol </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a01403.html" title="Microchip Crypto Auth hardware interface object.">kit_protocol.c</a>/h </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">For all Kit Protocol projects  </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a01400.html" title="ATCA Hardware abstraction layer physical send &amp; receive function definitions.">kit_phy.h</a> </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+
+<p><code>#include &lt;<a class="el" href="a01565_source.html">pkcs11t.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:a6b26d576d1ca1f3009756bd2c48ffe66"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a51e605f881c86838bf12d70707b57b85">CK_BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02897.html#a6b26d576d1ca1f3009756bd2c48ffe66">iv</a> [16]</td></tr>
+<tr class="separator:a6b26d576d1ca1f3009756bd2c48ffe66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2afec599e1873a4d7f34ff1e7acb57ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02897.html#a2afec599e1873a4d7f34ff1e7acb57ae">pData</a></td></tr>
+<tr class="separator:a2afec599e1873a4d7f34ff1e7acb57ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77c49c75435001694bf7d0434c1605ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02897.html#a77c49c75435001694bf7d0434c1605ca">length</a></td></tr>
+<tr class="separator:a77c49c75435001694bf7d0434c1605ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2>Microchip Harmony 3 for all PIC32 &amp; ARM products - Use the Harmony 3 Configurator to generate and configure prjects </h2>
-<p>Obtain library and configure using <a href="https://github.com/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/wiki">Harmony 3</a></p>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Interface </th><th class="markdownTableHeadNone">Files </th><th class="markdownTableHeadNone">API </th><th class="markdownTableHeadNone">Notes  </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">I2C </td><td class="markdownTableBodyNone"><a class="el" href="a01322.html" title="ATCA Hardware abstraction layer for SAMD21 I2C over Harmony PLIB.">hal_i2c_harmony.c</a> </td><td class="markdownTableBodyNone">plib.h </td><td class="markdownTableBodyNone">For all Harmony 3 based projects  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">SPI </td><td class="markdownTableBodyNone"><a class="el" href="a01370.html" title="ATCA Hardware abstraction layer for SPI over Harmony PLIB.">hal_spi_harmony.c</a> </td><td class="markdownTableBodyNone">plib.h </td><td class="markdownTableBodyNone"></td></tr>
-</table>
-<h2>Microchip 8 &amp; 16 bit products - AVR, PIC16/18, PIC24/DSPIC </h2>
-<p>Obtain library and integration through <a href="https://www.microchip.com/mplab/mplab-code-configurator">Microchip Code Configurator</a></p>
-<h2>OS &amp; RTOS integrations </h2>
-<p>Use <a href="https://cmake.org/download/">CMake</a> to configure the library in Linux, Windows, and MacOS environments</p>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">OS </th><th class="markdownTableHeadNone">Interface </th><th class="markdownTableHeadNone">Files </th><th class="markdownTableHeadNone">API </th><th class="markdownTableHeadNone">Notes  </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Linux </td><td class="markdownTableBodyNone">I2C </td><td class="markdownTableBodyNone"><a class="el" href="a01337.html" title="ATCA Hardware abstraction layer for Linux using I2C.">hal_linux_i2c_userspace.c</a>/h </td><td class="markdownTableBodyNone">i2c-dev </td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Linux </td><td class="markdownTableBodyNone">SPI </td><td class="markdownTableBodyNone"><a class="el" href="a01349.html">hal_linux_spi_userspace.c</a>/h </td><td class="markdownTableBodyNone">spidev </td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Linux/Mac </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a01334.html" title="Timer Utility Functions for Linux.">hal_linux.c</a> </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">For all Linux/Mac projects  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Windows </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a01397.html" title="ATCA Hardware abstraction layer for windows timer functions.">hal_windows.c</a> </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">For all Windows projects  </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">All </td><td class="markdownTableBodyNone">kit-hid </td><td class="markdownTableBodyNone"><a class="el" href="a01304.html" title="HAL for kit protocol over HID for any platform.">hal_all_platforms_kit_hidapi.c</a>/h </td><td class="markdownTableBodyNone">hidapi </td><td class="markdownTableBodyNone">Works for Windows, Linux, and Mac  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">freeRTOS </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a01316.html" title="FreeRTOS Hardware/OS Abstration Layer.">hal_freertos.c</a> </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">freeRTOS common routines  </td></tr>
-</table>
-<h2>Legacy Support - <a href="https://www.microchip.com/start">Atmel START</a> for AVR, ARM based processesors (SAM) </h2>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Interface </th><th class="markdownTableHeadNone">Files </th><th class="markdownTableHeadNone">API </th><th class="markdownTableHeadNone">Notes  </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a01379.html" title="ATCA Hardware abstraction layer for SAMD21 I2C over START drivers.">hal_timer_start.c</a> </td><td class="markdownTableBodyNone">START </td><td class="markdownTableBodyNone">Timer implementation  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">I2C </td><td class="markdownTableBodyNone"><a class="el" href="a01328.html" title="ATCA Hardware abstraction layer for SAMD21 I2C over START drivers.">hal_i2c_start.c</a>/h </td><td class="markdownTableBodyNone">START </td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">SWI </td><td class="markdownTableBodyNone"><a class="el" href="a01415.html">swi_uart_start.c</a>/h </td><td class="markdownTableBodyNone">START </td><td class="markdownTableBodyNone">SWI using UART  </td></tr>
-</table>
-<h2>Legacy Support - ASF3 for ARM Cortex-m0 &amp; Cortex-m based processors (SAM) </h2>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">SAM Micros </th><th class="markdownTableHeadNone">Interface </th><th class="markdownTableHeadNone">Files </th><th class="markdownTableHeadNone">API </th><th class="markdownTableHeadNone">Notes  </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">cortex-m0 </td><td class="markdownTableBodyNone">I2C </td><td class="markdownTableBodyNone"><a class="el" href="a01355.html" title="ATCA Hardware abstraction layer for SAMD21 I2C over ASF drivers.">hal_sam0_i2c_asf.c</a>/h </td><td class="markdownTableBodyNone">ASF3 </td><td class="markdownTableBodyNone">SAMD21, SAMB11, etc  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">cortex-m3/4/7 </td><td class="markdownTableBodyNone">I2C </td><td class="markdownTableBodyNone"><a class="el" href="a01361.html" title="ATCA Hardware abstraction layer for SAM flexcom &amp; twi I2C over ASF drivers.">hal_sam_i2c_asf.c</a>/h </td><td class="markdownTableBodyNone">ASF3 </td><td class="markdownTableBodyNone">SAM4S, SAMG55, SAMV71, etc  </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">all </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><a class="el" href="a01367.html" title="ATCA Hardware abstraction layer for SAMD21 timer/delay over ASF drivers.">hal_sam_timer_asf.c</a> </td><td class="markdownTableBodyNone">ASF3 </td><td class="markdownTableBodyNone">Common timer hal for all platforms  </td></tr>
-</table>
-</div></div><!-- contents -->
-</div><!-- PageDoc -->
+<h2 class="groupheader">Field Documentation</h2>
+<a id="a6b26d576d1ca1f3009756bd2c48ffe66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b26d576d1ca1f3009756bd2c48ffe66">&#9670;&nbsp;</a></span>iv</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01565.html#a51e605f881c86838bf12d70707b57b85">CK_BYTE</a> iv[16]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a77c49c75435001694bf7d0434c1605ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77c49c75435001694bf7d0434c1605ca">&#9670;&nbsp;</a></span>length</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> length</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2afec599e1873a4d7f34ff1e7acb57ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2afec599e1873a4d7f34ff1e7acb57ae">&#9670;&nbsp;</a></span>pData</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01565.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="a02897.html">CK_ARIA_CBC_ENCRYPT_DATA_PARAMS</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

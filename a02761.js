@@ -1,6 +1,5 @@
 var a02761 =
 [
-    [ "DigestMechanism", "a02761.html#aac90f57c5853d865005b0114fbb1a5be", null ],
-    [ "pVersion", "a02761.html#a24538e0f029b27ff31f3352af437a2b0", null ],
-    [ "RandomInfo", "a02761.html#a36f44234ef19f65a90e293f6b20ba4e0", null ]
+    [ "ulRounds", "a02761.html#abccd916df6f88f2628b639341735dc43", null ],
+    [ "ulWordsize", "a02761.html#adec9abac2456557fc3fa3ee9b93c074b", null ]
 ];

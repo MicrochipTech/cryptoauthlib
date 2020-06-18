@@ -1,10 +1,7 @@
 var a02573 =
 [
-    [ "key_id", "a02573.html#ac21eed4200889cc115d16a781871d01c", null ],
     [ "mode", "a02573.html#a37e90f5e3bd99fac2021fb3a326607d4", null ],
-    [ "other_data", "a02573.html#ac76ac607fd679316fc17b16039a86b9c", null ],
-    [ "public_key", "a02573.html#a122aff75e4ff5cd19542117ba3fdb855", null ],
-    [ "public_key_size", "a02573.html#aeaa21ee86ed67c665d190be7d12293c7", null ],
-    [ "sn", "a02573.html#aef45bac2efcd5394c4ed79f73ee16d23", null ],
-    [ "temp_key", "a02573.html#a72fae3d62889ef224f09c57a7646e061", null ]
+    [ "otp", "a02401.html#ga8712cb73a4d6b370658d8bc9a77fba3e", null ],
+    [ "p_temp", "a02401.html#gad87f95f0faf0c6fdfe94040efcb14860", null ],
+    [ "sn", "a02401.html#ga7276bd20c5842e712da638d25ceb6d92", null ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_device_loc_s Struct Reference</title>
+<title>CryptoAuthLib: atca_command Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,110 +87,66 @@ $(document).ready(function(){initNavTree('a02409.html',''); initResizable(); });
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atcacert_device_loc_s Struct Reference<div class="ingroups"><a class="el" href="a02337.html">Certificate manipulation methods (atcacert_)</a></div></div>  </div>
+<div class="title">atca_command Struct Reference<div class="ingroups"><a class="el" href="a02394.html">ATCACommand (atca_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="a01115_source.html">atcacert_def.h</a>&gt;</code></p>
+<p><a class="el" href="a02409.html" title="atca_command is the C object backing ATCACommand.">atca_command</a> is the C object backing ATCACommand.  
+ <a href="a02409.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="a01055_source.html">atca_command.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a107ad412023faa68c4ac0c7cfd921a02"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02337.html#ga63df515d393c9ebb6979d53208263458">atcacert_device_zone_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02409.html#a107ad412023faa68c4ac0c7cfd921a02">zone</a></td></tr>
-<tr class="memdesc:a107ad412023faa68c4ac0c7cfd921a02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zone in the device.  <a href="a02409.html#a107ad412023faa68c4ac0c7cfd921a02">More...</a><br /></td></tr>
-<tr class="separator:a107ad412023faa68c4ac0c7cfd921a02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad23984515efd99983fa4baf3754082a1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02409.html#ad23984515efd99983fa4baf3754082a1">slot</a></td></tr>
-<tr class="memdesc:ad23984515efd99983fa4baf3754082a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slot within the data zone. Only applies if zone is DEVZONE_DATA.  <a href="a02409.html#ad23984515efd99983fa4baf3754082a1">More...</a><br /></td></tr>
-<tr class="separator:ad23984515efd99983fa4baf3754082a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0cedc80cd8670d02eee4b6e31500f5f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02409.html#ab0cedc80cd8670d02eee4b6e31500f5f">is_genkey</a></td></tr>
-<tr class="memdesc:ab0cedc80cd8670d02eee4b6e31500f5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">If true, use GenKey command to get the contents instead of Read.  <a href="a02409.html#ab0cedc80cd8670d02eee4b6e31500f5f">More...</a><br /></td></tr>
-<tr class="separator:ab0cedc80cd8670d02eee4b6e31500f5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac681806181c80437cfab37335f62ff39"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02409.html#ac681806181c80437cfab37335f62ff39">offset</a></td></tr>
-<tr class="memdesc:ac681806181c80437cfab37335f62ff39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Byte offset in the zone.  <a href="a02409.html#ac681806181c80437cfab37335f62ff39">More...</a><br /></td></tr>
-<tr class="separator:ac681806181c80437cfab37335f62ff39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6a39bfc7e1dc3b6f9c997c1c43fa996"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02409.html#af6a39bfc7e1dc3b6f9c997c1c43fa996">count</a></td></tr>
-<tr class="memdesc:af6a39bfc7e1dc3b6f9c997c1c43fa996"><td class="mdescLeft">&#160;</td><td class="mdescRight">Byte count.  <a href="a02409.html#af6a39bfc7e1dc3b6f9c997c1c43fa996">More...</a><br /></td></tr>
-<tr class="separator:af6a39bfc7e1dc3b6f9c997c1c43fa996"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebea355958c50f7d6a7d946f33ddc0aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02395.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02409.html#aebea355958c50f7d6a7d946f33ddc0aa">dt</a></td></tr>
+<tr class="separator:aebea355958c50f7d6a7d946f33ddc0aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a380510ad0d2dbde608f38387436db3bc"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02409.html#a380510ad0d2dbde608f38387436db3bc">clock_divider</a></td></tr>
+<tr class="separator:a380510ad0d2dbde608f38387436db3bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77632045612dbd0a5ac4488567c14dd3"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02409.html#a77632045612dbd0a5ac4488567c14dd3">execution_time_msec</a></td></tr>
+<tr class="separator:a77632045612dbd0a5ac4488567c14dd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Defines a chunk of data in an ATECC device. </p>
+<div class="textblock"><p><a class="el" href="a02409.html" title="atca_command is the C object backing ATCACommand.">atca_command</a> is the C object backing ATCACommand. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="af6a39bfc7e1dc3b6f9c997c1c43fa996"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af6a39bfc7e1dc3b6f9c997c1c43fa996">&#9670;&nbsp;</a></span>count</h2>
+<a id="a380510ad0d2dbde608f38387436db3bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a380510ad0d2dbde608f38387436db3bc">&#9670;&nbsp;</a></span>clock_divider</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t count</td>
+          <td class="memname">uint8_t clock_divider</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Byte count. </p>
-
 </div>
 </div>
-<a id="ab0cedc80cd8670d02eee4b6e31500f5f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0cedc80cd8670d02eee4b6e31500f5f">&#9670;&nbsp;</a></span>is_genkey</h2>
+<a id="aebea355958c50f7d6a7d946f33ddc0aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebea355958c50f7d6a7d946f33ddc0aa">&#9670;&nbsp;</a></span>dt</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t is_genkey</td>
+          <td class="memname"><a class="el" href="a02395.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a> dt</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>If true, use GenKey command to get the contents instead of Read. </p>
-
 </div>
 </div>
-<a id="ac681806181c80437cfab37335f62ff39"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac681806181c80437cfab37335f62ff39">&#9670;&nbsp;</a></span>offset</h2>
+<a id="a77632045612dbd0a5ac4488567c14dd3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77632045612dbd0a5ac4488567c14dd3">&#9670;&nbsp;</a></span>execution_time_msec</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t offset</td>
+          <td class="memname">uint16_t execution_time_msec</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Byte offset in the zone. </p>
-
-</div>
-</div>
-<a id="ad23984515efd99983fa4baf3754082a1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad23984515efd99983fa4baf3754082a1">&#9670;&nbsp;</a></span>slot</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t slot</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Slot within the data zone. Only applies if zone is DEVZONE_DATA. </p>
-
-</div>
-</div>
-<a id="a107ad412023faa68c4ac0c7cfd921a02"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a107ad412023faa68c4ac0c7cfd921a02">&#9670;&nbsp;</a></span>zone</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02337.html#ga63df515d393c9ebb6979d53208263458">atcacert_device_zone_t</a> zone</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Zone in the device. </p>
 
 </div>
 </div>
@@ -199,7 +155,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02409.html">atcacert_device_loc_s</a></li>
+    <li class="navelem"><a class="el" href="a02409.html">atca_command</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

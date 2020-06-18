@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_mbedtls_ecdsa.c File Reference</title>
+<title>CryptoAuthLib: pkcs11_info.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -84,17 +84,46 @@ $(document).ready(function(){initNavTree('a01493.html',''); initResizable(); });
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">atca_mbedtls_ecdsa.c File Reference</div>  </div>
+<div class="title">pkcs11_info.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;mbedtls/config.h&quot;</code><br />
+
+<p>PKCS11 Library Information Functions.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="a01289_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;pkcs11_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01502_source.html">pkcs11_init.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01547_source.html">pkcs11_slot.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01535_source.html">pkcs11_session.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01559_source.html">pkcs11_util.h</a>&quot;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaae56826104269ca730066136fb3eb995"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#gaae56826104269ca730066136fb3eb995">pkcs11_get_lib_info</a> (<a class="el" href="a01565.html#a2d8a8dcb105d17ae3a86aced319789fd">CK_INFO_PTR</a> pInfo)</td></tr>
+<tr class="memdesc:gaae56826104269ca730066136fb3eb995"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains general information about Cryptoki.  <a href="a02404.html#gaae56826104269ca730066136fb3eb995">More...</a><br /></td></tr>
+<tr class="separator:gaae56826104269ca730066136fb3eb995"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga8ac50a3d8a0c4f1ddf04cdf02c757030"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga8ac50a3d8a0c4f1ddf04cdf02c757030">pkcs11_lib_manufacturer_id</a> [] = &quot;Microchip Technology Inc&quot;</td></tr>
+<tr class="separator:ga8ac50a3d8a0c4f1ddf04cdf02c757030"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47daad4918afdf7ec808a5a57a4bce9d"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga47daad4918afdf7ec808a5a57a4bce9d">pkcs11_lib_description</a> [] = &quot;Cryptoauthlib PKCS11 Interface&quot;</td></tr>
+<tr class="separator:ga47daad4918afdf7ec808a5a57a4bce9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>PKCS11 Library Information Functions. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_dc51b425ebbafda9ba904ce077f0c40d.html">mbedtls</a></li><li class="navelem"><a class="el" href="a01493.html">atca_mbedtls_ecdsa.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_6682b35b7acdc4aaff3ce21f801977b3.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01493.html">pkcs11_info.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

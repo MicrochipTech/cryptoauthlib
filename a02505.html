@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcaSWImaster Struct Reference</title>
+<title>CryptoAuthLib: atca_aes_cbc_ctx Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,98 +87,89 @@ $(document).ready(function(){initNavTree('a02505.html',''); initResizable(); });
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atcaSWImaster Struct Reference<div class="ingroups"><a class="el" href="a02340.html">Hardware abstraction layer (hal_)</a></div></div>  </div>
+<div class="title">atca_aes_cbc_ctx Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>this is the hal_data for ATCA HAL for ASF SERCOM  
- <a href="a02505.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="a01412_source.html">swi_uart_samd21_asf.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a01238_source.html">atca_crypto_hw_aes.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a2d29ab9b8f0842ee9a2906302b20011d"><td class="memItemLeft" align="right" valign="top">struct usart_module&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02505.html#a2d29ab9b8f0842ee9a2906302b20011d">usart_instance</a></td></tr>
-<tr class="separator:a2d29ab9b8f0842ee9a2906302b20011d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad72ba8c994f4d0e5ce354e17f7c427c0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02505.html#ad72ba8c994f4d0e5ce354e17f7c427c0">ref_ct</a></td></tr>
-<tr class="separator:ad72ba8c994f4d0e5ce354e17f7c427c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5c011e6c2e8d49675f7029e8ec2c0a6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02505.html#af5c011e6c2e8d49675f7029e8ec2c0a6">bus_index</a></td></tr>
-<tr class="separator:af5c011e6c2e8d49675f7029e8ec2c0a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7758bb1b871f6094e6d2f0c2ce10b18c"><td class="memItemLeft" align="right" valign="top">struct usart_sync_descriptor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02505.html#a7758bb1b871f6094e6d2f0c2ce10b18c">USART_SWI</a></td></tr>
-<tr class="separator:a7758bb1b871f6094e6d2f0c2ce10b18c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab04a0cec69f9a7ed47f3f9cb46084e59"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02505.html#ab04a0cec69f9a7ed47f3f9cb46084e59">sercom_core_freq</a></td></tr>
-<tr class="separator:ab04a0cec69f9a7ed47f3f9cb46084e59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a564f8446306dcd02184ff973a1c671c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02505.html#a564f8446306dcd02184ff973a1c671c2">device</a></td></tr>
+<tr class="memdesc:a564f8446306dcd02184ff973a1c671c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Context Pointer.  <a href="a02505.html#a564f8446306dcd02184ff973a1c671c2">More...</a><br /></td></tr>
+<tr class="separator:a564f8446306dcd02184ff973a1c671c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac21eed4200889cc115d16a781871d01c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02505.html#ac21eed4200889cc115d16a781871d01c">key_id</a></td></tr>
+<tr class="memdesc:ac21eed4200889cc115d16a781871d01c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key location. Can either be a slot number or ATCA_TEMPKEY_KEYID for TempKey.  <a href="a02505.html#ac21eed4200889cc115d16a781871d01c">More...</a><br /></td></tr>
+<tr class="separator:ac21eed4200889cc115d16a781871d01c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ec310210422989027a46428a61fb1c1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02505.html#a2ec310210422989027a46428a61fb1c1">key_block</a></td></tr>
+<tr class="memdesc:a2ec310210422989027a46428a61fb1c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of the 16-byte block to use within the key location for the actual key.  <a href="a02505.html#a2ec310210422989027a46428a61fb1c1">More...</a><br /></td></tr>
+<tr class="separator:a2ec310210422989027a46428a61fb1c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc0d08bec9a3c5cea20e51d4a311f54f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02505.html#afc0d08bec9a3c5cea20e51d4a311f54f">ciphertext</a> [<a class="el" href="a01289.html#a71e52612e6d56f7412a113fcc4fb57d4">ATCA_AES128_BLOCK_SIZE</a>]</td></tr>
+<tr class="memdesc:afc0d08bec9a3c5cea20e51d4a311f54f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ciphertext from last operation.  <a href="a02505.html#afc0d08bec9a3c5cea20e51d4a311f54f">More...</a><br /></td></tr>
+<tr class="separator:afc0d08bec9a3c5cea20e51d4a311f54f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>this is the hal_data for ATCA HAL for ASF SERCOM </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a id="af5c011e6c2e8d49675f7029e8ec2c0a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af5c011e6c2e8d49675f7029e8ec2c0a6">&#9670;&nbsp;</a></span>bus_index</h2>
+<h2 class="groupheader">Field Documentation</h2>
+<a id="afc0d08bec9a3c5cea20e51d4a311f54f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc0d08bec9a3c5cea20e51d4a311f54f">&#9670;&nbsp;</a></span>ciphertext</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int bus_index</td>
+          <td class="memname">uint8_t ciphertext[<a class="el" href="a01289.html#a71e52612e6d56f7412a113fcc4fb57d4">ATCA_AES128_BLOCK_SIZE</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Ciphertext from last operation. </p>
+
 </div>
 </div>
-<a id="ad72ba8c994f4d0e5ce354e17f7c427c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad72ba8c994f4d0e5ce354e17f7c427c0">&#9670;&nbsp;</a></span>ref_ct</h2>
+<a id="a564f8446306dcd02184ff973a1c671c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a564f8446306dcd02184ff973a1c671c2">&#9670;&nbsp;</a></span>device</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int ref_ct</td>
+          <td class="memname"><a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Device Context Pointer. </p>
+
 </div>
 </div>
-<a id="ab04a0cec69f9a7ed47f3f9cb46084e59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab04a0cec69f9a7ed47f3f9cb46084e59">&#9670;&nbsp;</a></span>sercom_core_freq</h2>
+<a id="a2ec310210422989027a46428a61fb1c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ec310210422989027a46428a61fb1c1">&#9670;&nbsp;</a></span>key_block</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sercom_core_freq</td>
+          <td class="memname">uint8_t key_block</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Index of the 16-byte block to use within the key location for the actual key. </p>
+
 </div>
 </div>
-<a id="a2d29ab9b8f0842ee9a2906302b20011d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d29ab9b8f0842ee9a2906302b20011d">&#9670;&nbsp;</a></span>usart_instance</h2>
+<a id="ac21eed4200889cc115d16a781871d01c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac21eed4200889cc115d16a781871d01c">&#9670;&nbsp;</a></span>key_id</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct usart_module usart_instance</td>
+          <td class="memname">uint16_t key_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a7758bb1b871f6094e6d2f0c2ce10b18c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7758bb1b871f6094e6d2f0c2ce10b18c">&#9670;&nbsp;</a></span>USART_SWI</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct usart_sync_descriptor USART_SWI</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>Key location. Can either be a slot number or ATCA_TEMPKEY_KEYID for TempKey. </p>
 
 </div>
 </div>
@@ -187,7 +178,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02505.html">atcaSWImaster</a></li>
+    <li class="navelem"><a class="el" href="a02505.html">atca_aes_cbc_ctx</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

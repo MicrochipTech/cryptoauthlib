@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: CK_ARIA_CBC_ENCRYPT_DATA_PARAMS Struct Reference</title>
+<title>CryptoAuthLib: CK_CMS_SIG_PARAMS Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,58 +87,138 @@ $(document).ready(function(){initNavTree('a02837.html',''); initResizable(); });
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">CK_ARIA_CBC_ENCRYPT_DATA_PARAMS Struct Reference</div>  </div>
+<div class="title">CK_CMS_SIG_PARAMS Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="a01562_source.html">pkcs11t.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a01565_source.html">pkcs11t.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a6b26d576d1ca1f3009756bd2c48ffe66"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#a51e605f881c86838bf12d70707b57b85">CK_BYTE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02837.html#a6b26d576d1ca1f3009756bd2c48ffe66">iv</a> [16]</td></tr>
-<tr class="separator:a6b26d576d1ca1f3009756bd2c48ffe66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2afec599e1873a4d7f34ff1e7acb57ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02837.html#a2afec599e1873a4d7f34ff1e7acb57ae">pData</a></td></tr>
-<tr class="separator:a2afec599e1873a4d7f34ff1e7acb57ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77c49c75435001694bf7d0434c1605ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02837.html#a77c49c75435001694bf7d0434c1605ca">length</a></td></tr>
-<tr class="separator:a77c49c75435001694bf7d0434c1605ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fd00d41adcc689686888eddefc9c2f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#ad1cdd703196214cd34e6f9f52bc67683">CK_OBJECT_HANDLE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02837.html#a9fd00d41adcc689686888eddefc9c2f8">certificateHandle</a></td></tr>
+<tr class="separator:a9fd00d41adcc689686888eddefc9c2f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa195f44f7ad444bb25d87bcc6c9f8192"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#afa4c48ba8a588833ea04f0910583592e">CK_MECHANISM_PTR</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02837.html#aa195f44f7ad444bb25d87bcc6c9f8192">pSigningMechanism</a></td></tr>
+<tr class="separator:aa195f44f7ad444bb25d87bcc6c9f8192"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb38b0cdc5ef09553401cbcf225fb8e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#afa4c48ba8a588833ea04f0910583592e">CK_MECHANISM_PTR</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02837.html#aeb38b0cdc5ef09553401cbcf225fb8e8">pDigestMechanism</a></td></tr>
+<tr class="separator:aeb38b0cdc5ef09553401cbcf225fb8e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fd9109738e5d8c9c9ff024e9475e72c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#af25c3841a3f605e6414f4c9ef5592ed9">CK_UTF8CHAR_PTR</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02837.html#a1fd9109738e5d8c9c9ff024e9475e72c">pContentType</a></td></tr>
+<tr class="separator:a1fd9109738e5d8c9c9ff024e9475e72c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cc90c02100572f9f95ad6e50bed4f2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02837.html#a0cc90c02100572f9f95ad6e50bed4f2d">pRequestedAttributes</a></td></tr>
+<tr class="separator:a0cc90c02100572f9f95ad6e50bed4f2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b0e04eaf7efec9d4237a7872f86ec0e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02837.html#a9b0e04eaf7efec9d4237a7872f86ec0e">ulRequestedAttributesLen</a></td></tr>
+<tr class="separator:a9b0e04eaf7efec9d4237a7872f86ec0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdf2f6f496d60f14e660d72b016b0111"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02837.html#abdf2f6f496d60f14e660d72b016b0111">pRequiredAttributes</a></td></tr>
+<tr class="separator:abdf2f6f496d60f14e660d72b016b0111"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96403b7ece6f1a007a6ecdd8f0ab35d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02837.html#a96403b7ece6f1a007a6ecdd8f0ab35d1">ulRequiredAttributesLen</a></td></tr>
+<tr class="separator:a96403b7ece6f1a007a6ecdd8f0ab35d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="a6b26d576d1ca1f3009756bd2c48ffe66"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b26d576d1ca1f3009756bd2c48ffe66">&#9670;&nbsp;</a></span>iv</h2>
+<a id="a9fd00d41adcc689686888eddefc9c2f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fd00d41adcc689686888eddefc9c2f8">&#9670;&nbsp;</a></span>certificateHandle</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01562.html#a51e605f881c86838bf12d70707b57b85">CK_BYTE</a> iv[16]</td>
+          <td class="memname"><a class="el" href="a01565.html#ad1cdd703196214cd34e6f9f52bc67683">CK_OBJECT_HANDLE</a> certificateHandle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a77c49c75435001694bf7d0434c1605ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a77c49c75435001694bf7d0434c1605ca">&#9670;&nbsp;</a></span>length</h2>
+<a id="a1fd9109738e5d8c9c9ff024e9475e72c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fd9109738e5d8c9c9ff024e9475e72c">&#9670;&nbsp;</a></span>pContentType</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01562.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> length</td>
+          <td class="memname"><a class="el" href="a01565.html#af25c3841a3f605e6414f4c9ef5592ed9">CK_UTF8CHAR_PTR</a> pContentType</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a2afec599e1873a4d7f34ff1e7acb57ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2afec599e1873a4d7f34ff1e7acb57ae">&#9670;&nbsp;</a></span>pData</h2>
+<a id="aeb38b0cdc5ef09553401cbcf225fb8e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb38b0cdc5ef09553401cbcf225fb8e8">&#9670;&nbsp;</a></span>pDigestMechanism</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01562.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pData</td>
+          <td class="memname"><a class="el" href="a01565.html#afa4c48ba8a588833ea04f0910583592e">CK_MECHANISM_PTR</a> pDigestMechanism</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0cc90c02100572f9f95ad6e50bed4f2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cc90c02100572f9f95ad6e50bed4f2d">&#9670;&nbsp;</a></span>pRequestedAttributes</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01565.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pRequestedAttributes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abdf2f6f496d60f14e660d72b016b0111"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdf2f6f496d60f14e660d72b016b0111">&#9670;&nbsp;</a></span>pRequiredAttributes</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01565.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pRequiredAttributes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa195f44f7ad444bb25d87bcc6c9f8192"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa195f44f7ad444bb25d87bcc6c9f8192">&#9670;&nbsp;</a></span>pSigningMechanism</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01565.html#afa4c48ba8a588833ea04f0910583592e">CK_MECHANISM_PTR</a> pSigningMechanism</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9b0e04eaf7efec9d4237a7872f86ec0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b0e04eaf7efec9d4237a7872f86ec0e">&#9670;&nbsp;</a></span>ulRequestedAttributesLen</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulRequestedAttributesLen</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a96403b7ece6f1a007a6ecdd8f0ab35d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96403b7ece6f1a007a6ecdd8f0ab35d1">&#9670;&nbsp;</a></span>ulRequiredAttributesLen</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulRequiredAttributesLen</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -150,7 +230,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02837.html">CK_ARIA_CBC_ENCRYPT_DATA_PARAMS</a></li>
+    <li class="navelem"><a class="el" href="a02837.html">CK_CMS_SIG_PARAMS</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

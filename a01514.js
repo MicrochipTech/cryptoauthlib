@@ -1,12 +1,9 @@
 var a01514 =
 [
-    [ "_pkcs11_attrib_model", "a07782.html", "a07782" ],
-    [ "attrib_f", "a01514.html#a5a0b1cd7e76456a031118d97060eecb9", null ],
-    [ "pkcs11_attrib_model", "a01514.html#a5808b2771bb5bd3fdb344fd9b33b48ed", null ],
-    [ "pkcs11_attrib_model_ptr", "a01514.html#a989f60ace1b798f527c3065087a21162", null ],
-    [ "pkcs11_attrib_empty", "a07537.html#ga89c04713bd2e0df331bd4f8f5abf14ab", null ],
-    [ "pkcs11_attrib_false", "a07537.html#ga3bebbc6283e197f203ea5905ab5caee3", null ],
-    [ "pkcs11_attrib_fill", "a07537.html#gae518fd798cd7352bd7e1ea47cc9d8d33", null ],
-    [ "pkcs11_attrib_true", "a07537.html#ga0bfb7c14a9c1daf120a61a65499bdc55", null ],
-    [ "pkcs11_attrib_value", "a07537.html#ga50e9c64b899d1b2f78c9634298225303", null ]
+    [ "PCKS11_MECH_ECC508_EC_CAPABILITY", "a02404.html#ga148b7615f20d8432f0e5ac4e6683aa7d", null ],
+    [ "TABLE_SIZE", "a02404.html#ga178ac9759ade77839a52329537e3784b", null ],
+    [ "pcks11_mech_table_e", "a02404.html#gadbb018cf35cbcf4935ee405f069dbdb9", null ],
+    [ "pcks11_mech_table_ptr", "a02404.html#ga8fa74592503b8d6fee8164d6ffbc1df0", null ],
+    [ "pkcs11_mech_get_list", "a02404.html#ga9678c431b8d5479e53417b109b32c20f", null ],
+    [ "pkcs_mech_get_info", "a02404.html#gac66d133f84b945f9c26727ee9f7a7d57", null ]
 ];

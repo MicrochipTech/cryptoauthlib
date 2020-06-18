@@ -1,11 +1,10 @@
 var a01466 =
 [
-    [ "swi_uart_deinit", "a07533.html#ga0b1aad3936bf003686d8db7fa2be5132", null ],
-    [ "swi_uart_discover_buses", "a07533.html#gad640b598d581ee7c8a4c804bee602906", null ],
-    [ "swi_uart_init", "a07533.html#ga003b63648f1a5f9eba274760559688f2", null ],
-    [ "swi_uart_mode", "a07533.html#gacc2a96c86ce4c07249b81bc6a7eb2e41", null ],
-    [ "swi_uart_receive_byte", "a07533.html#ga93f3dab17c14f71641ca970998ede823", null ],
-    [ "swi_uart_send_byte", "a07533.html#ga4a4d491006d9683d67838963706ac9c1", null ],
-    [ "swi_uart_setbaud", "a07533.html#gaba296f70baf68b768d6c4bb9cf7ba67d", null ],
-    [ "pin_conf", "a07533.html#gaab85cb460831e8b7e4d3a5315b31c596", null ]
+    [ "pkcs11_cert_x509_write", "a02404.html#ga34fcca1dafb0a410d242fcb5ff3d69a5", null ],
+    [ "pkcs11_cert_wtlspublic_attributes", "a02404.html#gabc10a1f1b90bc7d2fb047db0af539e80", null ],
+    [ "pkcs11_cert_wtlspublic_attributes_count", "a02404.html#gad8232cd440c12745d24471e2676a117f", null ],
+    [ "pkcs11_cert_x509_attributes", "a02404.html#gafa471eb33699e2cba5dc3cc50a2d8df7", null ],
+    [ "pkcs11_cert_x509_attributes_count", "a02404.html#gadc2b14c7a052fdc0bb751259d28dfdc0", null ],
+    [ "pkcs11_cert_x509public_attributes", "a02404.html#ga8de4193ede04a12ab4e44b8df9eec478", null ],
+    [ "pkcs11_cert_x509public_attributes_count", "a02404.html#gafd21e04ab9248b3d58c3f5e4bd076ac9", null ]
 ];

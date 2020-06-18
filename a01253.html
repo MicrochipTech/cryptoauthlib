@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_lock.c File Reference</title>
+<title>CryptoAuthLib: atca_crypto_sw_ecdsa.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,46 +87,29 @@ $(document).ready(function(){initNavTree('a01253.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">calib_lock.c File Reference</div>  </div>
+<div class="title">atca_crypto_sw_ecdsa.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for Lock command.  
+<p>API wrapper for software ECDSA verify. Currently unimplemented but could be implemented via a 3rd party library such as MicroECC.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01343_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a01256_source.html">atca_crypto_sw_ecdsa.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaedcd432286630b9b0b05aef743fcf140"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#gaedcd432286630b9b0b05aef743fcf140">calib_lock</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t summary_crc)</td></tr>
-<tr class="memdesc:gaedcd432286630b9b0b05aef743fcf140"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Lock command prevents future modifications of the Configuration and/or Data and OTP zones. If the device is so configured, then this command can be used to lock individual data slots. This command fails if the designated area is already locked.  <a href="a07531.html#gaedcd432286630b9b0b05aef743fcf140">More...</a><br /></td></tr>
-<tr class="separator:gaedcd432286630b9b0b05aef743fcf140"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad59ce160afe0d695a51f3bb1869f8f9f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#gad59ce160afe0d695a51f3bb1869f8f9f">calib_lock_config_zone</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
-<tr class="memdesc:gad59ce160afe0d695a51f3bb1869f8f9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unconditionally (no CRC required) lock the config zone.  <a href="a07531.html#gad59ce160afe0d695a51f3bb1869f8f9f">More...</a><br /></td></tr>
-<tr class="separator:gad59ce160afe0d695a51f3bb1869f8f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaedd7f6f6e9a6b5e58fac18416b9cb8e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#gaedd7f6f6e9a6b5e58fac18416b9cb8e8">calib_lock_config_zone_crc</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t summary_crc)</td></tr>
-<tr class="memdesc:gaedd7f6f6e9a6b5e58fac18416b9cb8e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock the config zone with summary CRC.  <a href="a07531.html#gaedd7f6f6e9a6b5e58fac18416b9cb8e8">More...</a><br /></td></tr>
-<tr class="separator:gaedd7f6f6e9a6b5e58fac18416b9cb8e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8b43d1fe63cc9c5349bd0eacab073f05"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga8b43d1fe63cc9c5349bd0eacab073f05">calib_lock_data_zone</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
-<tr class="memdesc:ga8b43d1fe63cc9c5349bd0eacab073f05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unconditionally (no CRC required) lock the data zone (slots and OTP).  <a href="a07531.html#ga8b43d1fe63cc9c5349bd0eacab073f05">More...</a><br /></td></tr>
-<tr class="separator:ga8b43d1fe63cc9c5349bd0eacab073f05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga54f25b26b532c6f2cee224ebfd8d53c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga54f25b26b532c6f2cee224ebfd8d53c5">calib_lock_data_zone_crc</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t summary_crc)</td></tr>
-<tr class="memdesc:ga54f25b26b532c6f2cee224ebfd8d53c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock the data zone (slots and OTP) with summary CRC.  <a href="a07531.html#ga54f25b26b532c6f2cee224ebfd8d53c5">More...</a><br /></td></tr>
-<tr class="separator:ga54f25b26b532c6f2cee224ebfd8d53c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf8b5f9e30a712d0740f1a258ff6481d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#gaf8b5f9e30a712d0740f1a258ff6481d5">calib_lock_data_slot</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t slot)</td></tr>
-<tr class="memdesc:gaf8b5f9e30a712d0740f1a258ff6481d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock an individual slot in the data zone on an ATECC device. Not available for ATSHA devices. Slot must be configured to be slot lockable (KeyConfig.Lockable=1).  <a href="a07531.html#gaf8b5f9e30a712d0740f1a258ff6481d5">More...</a><br /></td></tr>
-<tr class="separator:gaf8b5f9e30a712d0740f1a258ff6481d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaea3d9b4507e2f87de5204fc905b8123a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02399.html#gaea3d9b4507e2f87de5204fc905b8123a">atcac_sw_ecdsa_verify_p256</a> (const uint8_t msg[(256/8)], const uint8_t signature[((256/8) *2)], const uint8_t public_key[((256/8) *2)])</td></tr>
+<tr class="memdesc:gaea3d9b4507e2f87de5204fc905b8123a"><td class="mdescLeft">&#160;</td><td class="mdescRight">return software generated ECDSA verification result and the function is currently not implemented  <a href="a02399.html#gaea3d9b4507e2f87de5204fc905b8123a">More...</a><br /></td></tr>
+<tr class="separator:gaea3d9b4507e2f87de5204fc905b8123a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for Lock command. </p>
-<p>The Lock command prevents future modifications of the Configuration zone, enables configured policies for Data and OTP zones, and can render individual slots read-only regardless of configuration.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>API wrapper for software ECDSA verify. Currently unimplemented but could be implemented via a 3rd party library such as MicroECC. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_a7c83ffe4cbb7b846faed985dac26a17.html">calib</a></li><li class="navelem"><a class="el" href="a01253.html">calib_lock.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_0d284ebe0a46982303565525253d36b8.html">crypto</a></li><li class="navelem"><a class="el" href="a01253.html">atca_crypto_sw_ecdsa.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

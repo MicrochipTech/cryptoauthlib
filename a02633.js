@@ -1,7 +1,10 @@
 var a02633 =
 [
-    [ "flags", "a02633.html#aab168fc251b8b32a3bb0639f4986fce1", null ],
-    [ "slotID", "a02633.html#ab4c6d0426f7dede81bd82715f74c2cbb", null ],
-    [ "state", "a02633.html#a1940765200d80bc2f37ec2335d2ac185", null ],
-    [ "ulDeviceError", "a02633.html#a68db637bb951d29e21f2e44639ce5017", null ]
+    [ "key_id", "a02633.html#ac21eed4200889cc115d16a781871d01c", null ],
+    [ "mode", "a02633.html#a37e90f5e3bd99fac2021fb3a326607d4", null ],
+    [ "other_data", "a02633.html#ac76ac607fd679316fc17b16039a86b9c", null ],
+    [ "public_key", "a02633.html#a122aff75e4ff5cd19542117ba3fdb855", null ],
+    [ "public_key_size", "a02633.html#aeaa21ee86ed67c665d190be7d12293c7", null ],
+    [ "sn", "a02633.html#aef45bac2efcd5394c4ed79f73ee16d23", null ],
+    [ "temp_key", "a02633.html#a72fae3d62889ef224f09c57a7646e061", null ]
 ];

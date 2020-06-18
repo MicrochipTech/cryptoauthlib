@@ -1,8 +1,21 @@
 var a02481 =
 [
-    [ "error_get", "a02481.html#ad37a4b38e0f6e77550415c485bf3f447", null ],
-    [ "is_busy", "a02481.html#ae643818eb9a233d4ab03aafd294f33f9", null ],
-    [ "read", "a02481.html#a6eb60810a16d853157b9c48683c3c948", null ],
-    [ "transfer_setup", "a02481.html#abffa8feb395a0397e35032b0a1ebe02d", null ],
-    [ "write", "a02481.html#a461cfbd8c989171860b100278082c94f", null ]
+    [ "ca_cert_def", "a02481.html#aa5cb3f21e0d4d77567550388a7f08768", null ],
+    [ "cert_elements", "a02481.html#aa9a44f95411d86a78a93e650a9c19f53", null ],
+    [ "cert_elements_count", "a02481.html#afe2b347e101c9f7be9f73b8fda53de29", null ],
+    [ "cert_sn_dev_loc", "a02481.html#ab02a37cdd6671ab98d0124c5b91623b0", null ],
+    [ "cert_template", "a02481.html#acb91631744ba06809269dc2f137c835c", null ],
+    [ "cert_template_size", "a02481.html#a67c40218f646b70740c0d2027eb152a0", null ],
+    [ "chain_id", "a02481.html#af383252a42d77882d0f3aac7f6ee5048", null ],
+    [ "comp_cert_dev_loc", "a02481.html#a2d5a033a5aa1227c536ec1aa71a84fa5", null ],
+    [ "expire_date_format", "a02481.html#a6367c516be990bdce86047b5d9acda14", null ],
+    [ "expire_years", "a02481.html#a7dcbb1ab3db4003c7f2414e262853e6d", null ],
+    [ "issue_date_format", "a02481.html#a61f951f9c4366391012057d591888f32", null ],
+    [ "private_key_slot", "a02481.html#a641e13598992fc536e70b55cc8ee2ea5", null ],
+    [ "public_key_dev_loc", "a02481.html#accd31930a2e1ff0b8122cbaa202127d3", null ],
+    [ "sn_source", "a02481.html#af44c31e823af19e6efe6b418a13fafe3", null ],
+    [ "std_cert_elements", "a02481.html#a7e2ecd6c0b4cef9637e3b281d29200ce", null ],
+    [ "tbs_cert_loc", "a02481.html#a3a8aede64cc4e17e9495ada7a64ab24f", null ],
+    [ "template_id", "a02481.html#a44b6808e0d081cb5fd82f58f7de32e4a", null ],
+    [ "type", "a02481.html#ad158ea4479470d5470412d504428459b", null ]
 ];

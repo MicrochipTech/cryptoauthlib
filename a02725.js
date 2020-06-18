@@ -1,17 +1,8 @@
 var a02725 =
 [
-    [ "pNewPassword", "a02725.html#a57eb4fc15619633f034118e2ebf0c049", null ],
-    [ "pNewPublicData", "a02725.html#a4213f41b59658caf27fa4f6a48a6acbe", null ],
-    [ "pNewRandomA", "a02725.html#aac2f3b9bfbef00d0b000ee978c26deed", null ],
-    [ "pOldPassword", "a02725.html#aa5768b5821839305e62ded58a4adb4c7", null ],
-    [ "pOldPublicData", "a02725.html#a49f4cdf5ffabdadb1e1335242b05c150", null ],
-    [ "pOldRandomA", "a02725.html#ac3978e19be0d7b37469e8a0533656469", null ],
-    [ "pOldWrappedX", "a02725.html#ab66d64eff24b0fb44c976cbd06eb4813", null ],
-    [ "ulNewPasswordLen", "a02725.html#a8e424df37706c0c5dc6b6f6e4bc47902", null ],
-    [ "ulNewPublicDataLen", "a02725.html#a3b8260daaaf7c82eebde5d6a9619c87c", null ],
-    [ "ulNewRandomLen", "a02725.html#a9c9eb19eea6e2d16c2ef58cf7b6f3261", null ],
-    [ "ulOldPasswordLen", "a02725.html#a22aca150dbcc8624d4baf16654e818b0", null ],
-    [ "ulOldPublicDataLen", "a02725.html#ab198fd92d80e111db8b47946178867fc", null ],
-    [ "ulOldRandomLen", "a02725.html#ab59f51b5a5a26679244adcd0b3fe71e1", null ],
-    [ "ulOldWrappedXLen", "a02725.html#aaebfa9ee1efa17e01385e912f131dbce", null ]
+    [ "kdf", "a02725.html#a0b7cdb5c49b5009e5d66ca1d6b6ead43", null ],
+    [ "pPublicData", "a02725.html#a5b5ab88b8cf93cfa701f56237f237292", null ],
+    [ "pSharedData", "a02725.html#acab261b5f4c0104ea7011d671b371ab1", null ],
+    [ "ulPublicDataLen", "a02725.html#ae9ccaf64b51247d789c8e4d78b64b54c", null ],
+    [ "ulSharedDataLen", "a02725.html#a95606c7e5bb43c1d62f41791c98d7f7f", null ]
 ];

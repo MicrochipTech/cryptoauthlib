@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_jwt.h File Reference</title>
+<title>CryptoAuthLib: pkcs11_find.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,55 +85,44 @@ $(document).ready(function(){initNavTree('a01487.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_jwt.h File Reference</div>  </div>
+<div class="title">pkcs11_find.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Utilities to create and verify a JSON Web Token (JWT)  
+<p>PKCS11 Library Object Find/Searching.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01343_source.html">cryptoauthlib.h</a>&quot;</code><br />
-</div>
-<p><a href="a01487_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07774.html">atca_jwt_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to hold metadata information about the jwt being built.  <a href="a07774.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a01289_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;pkcs11_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01478_source.html">pkcs11_debug.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01502_source.html">pkcs11_init.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01529_source.html">pkcs11_os.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01547_source.html">pkcs11_slot.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01535_source.html">pkcs11_session.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01490_source.html">pkcs11_find.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01559_source.html">pkcs11_util.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gad3ea09543f0569a5368130f4a3d7bce0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07535.html#gad3ea09543f0569a5368130f4a3d7bce0">atca_jwt_init</a> (<a class="el" href="a07774.html">atca_jwt_t</a> *jwt, char *buf, uint16_t buflen)</td></tr>
-<tr class="memdesc:gad3ea09543f0569a5368130f4a3d7bce0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a JWT structure.  <a href="a07535.html#gad3ea09543f0569a5368130f4a3d7bce0">More...</a><br /></td></tr>
-<tr class="separator:gad3ea09543f0569a5368130f4a3d7bce0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3e6036b2c0e6dbc96a30f078e56cacff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07535.html#ga3e6036b2c0e6dbc96a30f078e56cacff">atca_jwt_add_claim_string</a> (<a class="el" href="a07774.html">atca_jwt_t</a> *jwt, const char *claim, const char *value)</td></tr>
-<tr class="memdesc:ga3e6036b2c0e6dbc96a30f078e56cacff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a string claim to a token.  <a href="a07535.html#ga3e6036b2c0e6dbc96a30f078e56cacff">More...</a><br /></td></tr>
-<tr class="separator:ga3e6036b2c0e6dbc96a30f078e56cacff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7073a7cfb7c77ad02923cdbb1226d2ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07535.html#ga7073a7cfb7c77ad02923cdbb1226d2ad">atca_jwt_add_claim_numeric</a> (<a class="el" href="a07774.html">atca_jwt_t</a> *jwt, const char *claim, int32_t value)</td></tr>
-<tr class="memdesc:ga7073a7cfb7c77ad02923cdbb1226d2ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a numeric claim to a token.  <a href="a07535.html#ga7073a7cfb7c77ad02923cdbb1226d2ad">More...</a><br /></td></tr>
-<tr class="separator:ga7073a7cfb7c77ad02923cdbb1226d2ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6d1bf5c8bf4fb49e1e80c19911157d4b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07535.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b">atca_jwt_finalize</a> (<a class="el" href="a07774.html">atca_jwt_t</a> *jwt, uint16_t key_id)</td></tr>
-<tr class="memdesc:ga6d1bf5c8bf4fb49e1e80c19911157d4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the claims of a token, encode them, then sign the result.  <a href="a07535.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b">More...</a><br /></td></tr>
-<tr class="separator:ga6d1bf5c8bf4fb49e1e80c19911157d4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga167fe35631a0dd191293c6ad3a6485aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07535.html#ga167fe35631a0dd191293c6ad3a6485aa">atca_jwt_check_payload_start</a> (<a class="el" href="a07774.html">atca_jwt_t</a> *jwt)</td></tr>
-<tr class="memdesc:ga167fe35631a0dd191293c6ad3a6485aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the provided context to see what character needs to be added in order to append a claim.  <a href="a07535.html#ga167fe35631a0dd191293c6ad3a6485aa">More...</a><br /></td></tr>
-<tr class="separator:ga167fe35631a0dd191293c6ad3a6485aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0e2ca8c9bd4954e004cd10cdc29c9a9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07535.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b">atca_jwt_verify</a> (const char *buf, uint16_t buflen, const uint8_t *pubkey)</td></tr>
-<tr class="memdesc:ga0e2ca8c9bd4954e004cd10cdc29c9a9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies the signature of a jwt using the provided public key.  <a href="a07535.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b">More...</a><br /></td></tr>
-<tr class="separator:ga0e2ca8c9bd4954e004cd10cdc29c9a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6fd109c0919489909cc4073866d1c466"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga6fd109c0919489909cc4073866d1c466">pkcs11_find_init</a> (<a class="el" href="a01565.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01565.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pTemplate, <a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulCount)</td></tr>
+<tr class="separator:ga6fd109c0919489909cc4073866d1c466"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5dbe038da3069861b8de9f77d0c06de1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga5dbe038da3069861b8de9f77d0c06de1">pkcs11_find_continue</a> (<a class="el" href="a01565.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01565.html#a42a298b2f343261d27b87140090106d4">CK_OBJECT_HANDLE_PTR</a> phObject, <a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulMaxObjectCount, <a class="el" href="a01565.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulObjectCount)</td></tr>
+<tr class="separator:ga5dbe038da3069861b8de9f77d0c06de1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacc5c7a788f0c4eafd4f0c1da2aaf0d60"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#gacc5c7a788f0c4eafd4f0c1da2aaf0d60">pkcs11_find_finish</a> (<a class="el" href="a01565.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession)</td></tr>
+<tr class="separator:gacc5c7a788f0c4eafd4f0c1da2aaf0d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0e2b3b381504c39a017a4232a35b672d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html#ga0e2b3b381504c39a017a4232a35b672d">pkcs11_find_get_attribute</a> (<a class="el" href="a01565.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01565.html#ad1cdd703196214cd34e6f9f52bc67683">CK_OBJECT_HANDLE</a> hObject, <a class="el" href="a01565.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pTemplate, <a class="el" href="a01565.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulCount)</td></tr>
+<tr class="separator:ga0e2b3b381504c39a017a4232a35b672d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Utilities to create and verify a JSON Web Token (JWT) </p>
+<div class="textblock"><p>PKCS11 Library Object Find/Searching. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_bf0da05a620233299b46c571285f5d4e.html">jwt</a></li><li class="navelem"><a class="el" href="a01487.html">atca_jwt.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_6682b35b7acdc4aaff3ce21f801977b3.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01487.html">pkcs11_find.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

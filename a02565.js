@@ -1,13 +1,8 @@
 var a02565 =
 [
-    [ "client_chal", "a02565.html#a218f1c30c4a21b348dbe1817a2c14896", null ],
-    [ "client_resp", "a02565.html#a430a448768d687a94e3daaa00dce63ce", null ],
-    [ "key_id", "a02565.html#ac21eed4200889cc115d16a781871d01c", null ],
-    [ "mode", "a02565.html#a37e90f5e3bd99fac2021fb3a326607d4", null ],
-    [ "other_data", "a02565.html#ac76ac607fd679316fc17b16039a86b9c", null ],
-    [ "otp", "a02565.html#a4510889ef4b42470bf1a1d4e940a19a9", null ],
-    [ "slot_key", "a02565.html#aa23b467edf1809a2a8b1b530a0159c45", null ],
-    [ "sn", "a02565.html#aef45bac2efcd5394c4ed79f73ee16d23", null ],
-    [ "target_key", "a02565.html#ab15c5e89189b9eea6fab7da58cc03967", null ],
-    [ "temp_key", "a02565.html#a72fae3d62889ef224f09c57a7646e061", null ]
+    [ "bus_index", "a02565.html#af5c011e6c2e8d49675f7029e8ec2c0a6", null ],
+    [ "ref_ct", "a02565.html#ad72ba8c994f4d0e5ce354e17f7c427c0", null ],
+    [ "sercom_core_freq", "a02565.html#ab04a0cec69f9a7ed47f3f9cb46084e59", null ],
+    [ "usart_instance", "a02565.html#a2d29ab9b8f0842ee9a2906302b20011d", null ],
+    [ "USART_SWI", "a02565.html#a7758bb1b871f6094e6d2f0c2ce10b18c", null ]
 ];

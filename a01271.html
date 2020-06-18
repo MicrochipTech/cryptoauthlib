@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_secureboot.c File Reference</title>
+<title>CryptoAuthLib: atca_crypto_sw_sha2.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,35 +87,31 @@ $(document).ready(function(){initNavTree('a01271.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">calib_secureboot.c File Reference</div>  </div>
+<div class="title">atca_crypto_sw_sha2.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for SecureBoot command.  
+<p>Wrapper API for software SHA 256 routines.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01343_source.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01481_source.html">host/atca_host.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a01289_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01274_source.html">atca_crypto_sw_sha2.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01286_source.html">hashes/sha2_routines.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga85ff79334f1b8e877c0e3bbb31d87f43"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga85ff79334f1b8e877c0e3bbb31d87f43">calib_secureboot</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t param2, const uint8_t *digest, const uint8_t *signature, uint8_t *mac)</td></tr>
-<tr class="memdesc:ga85ff79334f1b8e877c0e3bbb31d87f43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Secure Boot command, which provides support for secure boot of an external MCU or MPU.  <a href="a07531.html#ga85ff79334f1b8e877c0e3bbb31d87f43">More...</a><br /></td></tr>
-<tr class="separator:ga85ff79334f1b8e877c0e3bbb31d87f43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0c79b36f050621e8df14f9804a990162"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07531.html#ga0c79b36f050621e8df14f9804a990162">calib_secureboot_mac</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, const uint8_t *digest, const uint8_t *signature, const uint8_t *num_in, const uint8_t *io_key, bool *is_verified)</td></tr>
-<tr class="memdesc:ga0c79b36f050621e8df14f9804a990162"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Secure Boot command with encrypted digest and validated MAC response using the IO protection key.  <a href="a07531.html#ga0c79b36f050621e8df14f9804a990162">More...</a><br /></td></tr>
-<tr class="separator:ga0c79b36f050621e8df14f9804a990162"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga72ceba9df57d884c85321abe92994c4f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02399.html#ga72ceba9df57d884c85321abe92994c4f">atcac_sw_sha2_256</a> (const uint8_t *data, size_t data_size, uint8_t digest[(32)])</td></tr>
+<tr class="memdesc:ga72ceba9df57d884c85321abe92994c4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">single call convenience function which computes Hash of given data using SHA256 software  <a href="a02399.html#ga72ceba9df57d884c85321abe92994c4f">More...</a><br /></td></tr>
+<tr class="separator:ga72ceba9df57d884c85321abe92994c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for SecureBoot command. </p>
-<p>The SecureBoot command provides support for secure boot of an external MCU or MPU.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC608A. Refer to device datasheet for full details.</dd></dl>
+<div class="textblock"><p>Wrapper API for software SHA 256 routines. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_a7c83ffe4cbb7b846faed985dac26a17.html">calib</a></li><li class="navelem"><a class="el" href="a01271.html">calib_secureboot.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_0d284ebe0a46982303565525253d36b8.html">crypto</a></li><li class="navelem"><a class="el" href="a01271.html">atca_crypto_sw_sha2.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

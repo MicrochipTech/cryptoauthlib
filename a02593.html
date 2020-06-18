@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: _pkcs11_lib_ctx Struct Reference</title>
+<title>CryptoAuthLib: atca_secureboot_mac_in_out Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,159 +87,146 @@ $(document).ready(function(){initNavTree('a02593.html',''); initResizable(); });
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">_pkcs11_lib_ctx Struct Reference</div>  </div>
+<div class="title">atca_secureboot_mac_in_out Struct Reference<div class="ingroups"><a class="el" href="a02401.html">Host side crypto methods (atcah_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="a01499_source.html">pkcs11_init.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a01427_source.html">atca_host.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a1160c303d9370f4187e6f48d6ac336c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#abd07a1bba363f8083080b9328e67b491">CK_BBOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02593.html#a1160c303d9370f4187e6f48d6ac336c1">initialized</a></td></tr>
-<tr class="separator:a1160c303d9370f4187e6f48d6ac336c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ba826e6414189c8bd1f0969fcfbd26e"><td class="memItemLeft" align="right" valign="top">CK_CREATEMUTEX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02593.html#a0ba826e6414189c8bd1f0969fcfbd26e">create_mutex</a></td></tr>
-<tr class="separator:a0ba826e6414189c8bd1f0969fcfbd26e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e1ca260281eb86e4052a47cecd917fe"><td class="memItemLeft" align="right" valign="top">CK_DESTROYMUTEX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02593.html#a1e1ca260281eb86e4052a47cecd917fe">destroy_mutex</a></td></tr>
-<tr class="separator:a1e1ca260281eb86e4052a47cecd917fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa17f239b10354b3d4d510856eb8deff6"><td class="memItemLeft" align="right" valign="top">CK_LOCKMUTEX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02593.html#aa17f239b10354b3d4d510856eb8deff6">lock_mutex</a></td></tr>
-<tr class="separator:aa17f239b10354b3d4d510856eb8deff6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adca7f4ab475b78bedef202c334a700b7"><td class="memItemLeft" align="right" valign="top">CK_UNLOCKMUTEX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02593.html#adca7f4ab475b78bedef202c334a700b7">unlock_mutex</a></td></tr>
-<tr class="separator:adca7f4ab475b78bedef202c334a700b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1dd2e58c44f73ef2d3214bd159a8265"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02593.html#ae1dd2e58c44f73ef2d3214bd159a8265">mutex</a></td></tr>
-<tr class="separator:ae1dd2e58c44f73ef2d3214bd159a8265"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c3f6b7e795d6e1f40853ab4cfe68781"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02593.html#a1c3f6b7e795d6e1f40853ab4cfe68781">slots</a></td></tr>
-<tr class="separator:a1c3f6b7e795d6e1f40853ab4cfe68781"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab10ec5af66dc12a7a47c50ab92708cb0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02593.html#ab10ec5af66dc12a7a47c50ab92708cb0">slot_cnt</a></td></tr>
-<tr class="separator:ab10ec5af66dc12a7a47c50ab92708cb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a431e6b797cb83b2bde7ad45f80d55ae1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01562.html#a0ed4ef152a55e26f435b876927145580">CK_CHAR</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02593.html#a431e6b797cb83b2bde7ad45f80d55ae1">config_path</a> [200]</td></tr>
-<tr class="separator:a431e6b797cb83b2bde7ad45f80d55ae1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37e90f5e3bd99fac2021fb3a326607d4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02593.html#a37e90f5e3bd99fac2021fb3a326607d4">mode</a></td></tr>
+<tr class="memdesc:a37e90f5e3bd99fac2021fb3a326607d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">SecureBoot mode (param1)  <a href="a02593.html#a37e90f5e3bd99fac2021fb3a326607d4">More...</a><br /></td></tr>
+<tr class="separator:a37e90f5e3bd99fac2021fb3a326607d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16a7565b150a9c17a39c80fc932b9514"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02593.html#a16a7565b150a9c17a39c80fc932b9514">param2</a></td></tr>
+<tr class="memdesc:a16a7565b150a9c17a39c80fc932b9514"><td class="mdescLeft">&#160;</td><td class="mdescRight">SecureBoot param2.  <a href="a02593.html#a16a7565b150a9c17a39c80fc932b9514">More...</a><br /></td></tr>
+<tr class="separator:a16a7565b150a9c17a39c80fc932b9514"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6abd57960eb27eecadcf1163a1441fb1"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02593.html#a6abd57960eb27eecadcf1163a1441fb1">secure_boot_config</a></td></tr>
+<tr class="memdesc:a6abd57960eb27eecadcf1163a1441fb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">SecureBootConfig value from configuration zone.  <a href="a02593.html#a6abd57960eb27eecadcf1163a1441fb1">More...</a><br /></td></tr>
+<tr class="separator:a6abd57960eb27eecadcf1163a1441fb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f1ddb903087eec963d0faf82a3283a4"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02593.html#a1f1ddb903087eec963d0faf82a3283a4">hashed_key</a></td></tr>
+<tr class="memdesc:a1f1ddb903087eec963d0faf82a3283a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashed key. SHA256(IO Protection Key | TempKey)  <a href="a02593.html#a1f1ddb903087eec963d0faf82a3283a4">More...</a><br /></td></tr>
+<tr class="separator:a1f1ddb903087eec963d0faf82a3283a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff3a2b64b0d86058508f766de59438d1"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02593.html#aff3a2b64b0d86058508f766de59438d1">digest</a></td></tr>
+<tr class="memdesc:aff3a2b64b0d86058508f766de59438d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Digest (unencrypted)  <a href="a02593.html#aff3a2b64b0d86058508f766de59438d1">More...</a><br /></td></tr>
+<tr class="separator:aff3a2b64b0d86058508f766de59438d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35388d4dff80916a7409fd0554ac58b6"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02593.html#a35388d4dff80916a7409fd0554ac58b6">signature</a></td></tr>
+<tr class="memdesc:a35388d4dff80916a7409fd0554ac58b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signature (can be NULL if not required)  <a href="a02593.html#a35388d4dff80916a7409fd0554ac58b6">More...</a><br /></td></tr>
+<tr class="separator:a35388d4dff80916a7409fd0554ac58b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5a9ad86915dfcef6db90b858690212a"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02593.html#aa5a9ad86915dfcef6db90b858690212a">mac</a></td></tr>
+<tr class="memdesc:aa5a9ad86915dfcef6db90b858690212a"><td class="mdescLeft">&#160;</td><td class="mdescRight">MAC is returned here.  <a href="a02593.html#aa5a9ad86915dfcef6db90b858690212a">More...</a><br /></td></tr>
+<tr class="separator:aa5a9ad86915dfcef6db90b858690212a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Library Context </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a id="a431e6b797cb83b2bde7ad45f80d55ae1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a431e6b797cb83b2bde7ad45f80d55ae1">&#9670;&nbsp;</a></span>config_path</h2>
+<h2 class="groupheader">Field Documentation</h2>
+<a id="aff3a2b64b0d86058508f766de59438d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff3a2b64b0d86058508f766de59438d1">&#9670;&nbsp;</a></span>digest</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01562.html#a0ed4ef152a55e26f435b876927145580">CK_CHAR</a> config_path[200]</td>
+          <td class="memname">const uint8_t* digest</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Digest (unencrypted) </p>
+
 </div>
 </div>
-<a id="a0ba826e6414189c8bd1f0969fcfbd26e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ba826e6414189c8bd1f0969fcfbd26e">&#9670;&nbsp;</a></span>create_mutex</h2>
+<a id="a1f1ddb903087eec963d0faf82a3283a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f1ddb903087eec963d0faf82a3283a4">&#9670;&nbsp;</a></span>hashed_key</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">CK_CREATEMUTEX create_mutex</td>
+          <td class="memname">const uint8_t* hashed_key</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Hashed key. SHA256(IO Protection Key | TempKey) </p>
+
 </div>
 </div>
-<a id="a1e1ca260281eb86e4052a47cecd917fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e1ca260281eb86e4052a47cecd917fe">&#9670;&nbsp;</a></span>destroy_mutex</h2>
+<a id="aa5a9ad86915dfcef6db90b858690212a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5a9ad86915dfcef6db90b858690212a">&#9670;&nbsp;</a></span>mac</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">CK_DESTROYMUTEX destroy_mutex</td>
+          <td class="memname">uint8_t* mac</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>MAC is returned here. </p>
+
 </div>
 </div>
-<a id="a1160c303d9370f4187e6f48d6ac336c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1160c303d9370f4187e6f48d6ac336c1">&#9670;&nbsp;</a></span>initialized</h2>
+<a id="a37e90f5e3bd99fac2021fb3a326607d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37e90f5e3bd99fac2021fb3a326607d4">&#9670;&nbsp;</a></span>mode</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01562.html#abd07a1bba363f8083080b9328e67b491">CK_BBOOL</a> initialized</td>
+          <td class="memname">uint8_t mode</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>SecureBoot mode (param1) </p>
+
 </div>
 </div>
-<a id="aa17f239b10354b3d4d510856eb8deff6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa17f239b10354b3d4d510856eb8deff6">&#9670;&nbsp;</a></span>lock_mutex</h2>
+<a id="a16a7565b150a9c17a39c80fc932b9514"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16a7565b150a9c17a39c80fc932b9514">&#9670;&nbsp;</a></span>param2</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">CK_LOCKMUTEX lock_mutex</td>
+          <td class="memname">uint16_t param2</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>SecureBoot param2. </p>
+
 </div>
 </div>
-<a id="ae1dd2e58c44f73ef2d3214bd159a8265"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae1dd2e58c44f73ef2d3214bd159a8265">&#9670;&nbsp;</a></span>mutex</h2>
+<a id="a6abd57960eb27eecadcf1163a1441fb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6abd57960eb27eecadcf1163a1441fb1">&#9670;&nbsp;</a></span>secure_boot_config</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01562.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> mutex</td>
+          <td class="memname">uint16_t secure_boot_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>SecureBootConfig value from configuration zone. </p>
+
 </div>
 </div>
-<a id="ab10ec5af66dc12a7a47c50ab92708cb0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab10ec5af66dc12a7a47c50ab92708cb0">&#9670;&nbsp;</a></span>slot_cnt</h2>
+<a id="a35388d4dff80916a7409fd0554ac58b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35388d4dff80916a7409fd0554ac58b6">&#9670;&nbsp;</a></span>signature</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01562.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> slot_cnt</td>
+          <td class="memname">const uint8_t* signature</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a1c3f6b7e795d6e1f40853ab4cfe68781"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1c3f6b7e795d6e1f40853ab4cfe68781">&#9670;&nbsp;</a></span>slots</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01562.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> slots</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="adca7f4ab475b78bedef202c334a700b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adca7f4ab475b78bedef202c334a700b7">&#9670;&nbsp;</a></span>unlock_mutex</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">CK_UNLOCKMUTEX unlock_mutex</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>Signature (can be NULL if not required) </p>
 
 </div>
 </div>
@@ -248,7 +235,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02593.html">_pkcs11_lib_ctx</a></li>
+    <li class="navelem"><a class="el" href="a02593.html">atca_secureboot_mac_in_out</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

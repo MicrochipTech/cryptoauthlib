@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_derive_key_mac_in_out Struct Reference</title>
+<title>CryptoAuthLib: i2c_sam0_instance Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,113 +87,45 @@ $(document).ready(function(){initNavTree('a02557.html',''); initResizable(); });
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atca_derive_key_mac_in_out Struct Reference<div class="ingroups"><a class="el" href="a02341.html">Host side crypto methods (atcah_)</a></div></div>  </div>
+<div class="title">i2c_sam0_instance Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Input/output parameters for function <a class="el" href="a02341.html#ga60fc543b3df6fa1dedfbf59e5bde554b" title="This function calculates the input MAC for a DeriveKey command.">atcah_derive_key_mac()</a>.  
- <a href="a02557.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="a01424_source.html">atca_host.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a01361_source.html">hal_sam0_i2c_asf.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a37e90f5e3bd99fac2021fb3a326607d4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02557.html#a37e90f5e3bd99fac2021fb3a326607d4">mode</a></td></tr>
-<tr class="memdesc:a37e90f5e3bd99fac2021fb3a326607d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mode (param 1) of the derive key command.  <a href="a02557.html#a37e90f5e3bd99fac2021fb3a326607d4">More...</a><br /></td></tr>
-<tr class="separator:a37e90f5e3bd99fac2021fb3a326607d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41104a8c85cd12c0fde0d791c3276a48"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02557.html#a41104a8c85cd12c0fde0d791c3276a48">target_key_id</a></td></tr>
-<tr class="memdesc:a41104a8c85cd12c0fde0d791c3276a48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key ID (param 2) of the target slot to run the command on.  <a href="a02557.html#a41104a8c85cd12c0fde0d791c3276a48">More...</a><br /></td></tr>
-<tr class="separator:a41104a8c85cd12c0fde0d791c3276a48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef45bac2efcd5394c4ed79f73ee16d23"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02557.html#aef45bac2efcd5394c4ed79f73ee16d23">sn</a></td></tr>
-<tr class="memdesc:aef45bac2efcd5394c4ed79f73ee16d23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though.  <a href="a02557.html#aef45bac2efcd5394c4ed79f73ee16d23">More...</a><br /></td></tr>
-<tr class="separator:aef45bac2efcd5394c4ed79f73ee16d23"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a000599eef5677ed1279b025c42ae260e"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02557.html#a000599eef5677ed1279b025c42ae260e">parent_key</a></td></tr>
-<tr class="memdesc:a000599eef5677ed1279b025c42ae260e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parent key to be used in the derive key calculation (32 bytes).  <a href="a02557.html#a000599eef5677ed1279b025c42ae260e">More...</a><br /></td></tr>
-<tr class="separator:a000599eef5677ed1279b025c42ae260e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5a9ad86915dfcef6db90b858690212a"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02557.html#aa5a9ad86915dfcef6db90b858690212a">mac</a></td></tr>
-<tr class="memdesc:aa5a9ad86915dfcef6db90b858690212a"><td class="mdescLeft">&#160;</td><td class="mdescRight">DeriveKey MAC will be returned here.  <a href="a02557.html#aa5a9ad86915dfcef6db90b858690212a">More...</a><br /></td></tr>
-<tr class="separator:aa5a9ad86915dfcef6db90b858690212a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49a13e733e8e0648165ff24419fa91c7"><td class="memItemLeft" align="right" valign="top">struct i2c_master_module *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02557.html#a49a13e733e8e0648165ff24419fa91c7">i2c_instance</a></td></tr>
+<tr class="separator:a49a13e733e8e0648165ff24419fa91c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa057010ec9186041e48d78e6879e317a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01361.html#aa09b1baa19c0d9232b191bffe0a200c0">sam0_change_baudrate</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02557.html#aa057010ec9186041e48d78e6879e317a">change_baudrate</a></td></tr>
+<tr class="separator:aa057010ec9186041e48d78e6879e317a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input/output parameters for function <a class="el" href="a02341.html#ga60fc543b3df6fa1dedfbf59e5bde554b" title="This function calculates the input MAC for a DeriveKey command.">atcah_derive_key_mac()</a>. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a id="aa5a9ad86915dfcef6db90b858690212a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa5a9ad86915dfcef6db90b858690212a">&#9670;&nbsp;</a></span>mac</h2>
+<h2 class="groupheader">Field Documentation</h2>
+<a id="aa057010ec9186041e48d78e6879e317a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa057010ec9186041e48d78e6879e317a">&#9670;&nbsp;</a></span>change_baudrate</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* mac</td>
+          <td class="memname"><a class="el" href="a01361.html#aa09b1baa19c0d9232b191bffe0a200c0">sam0_change_baudrate</a> change_baudrate</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>DeriveKey MAC will be returned here. </p>
-
 </div>
 </div>
-<a id="a37e90f5e3bd99fac2021fb3a326607d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37e90f5e3bd99fac2021fb3a326607d4">&#9670;&nbsp;</a></span>mode</h2>
+<a id="a49a13e733e8e0648165ff24419fa91c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49a13e733e8e0648165ff24419fa91c7">&#9670;&nbsp;</a></span>i2c_instance</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t mode</td>
+          <td class="memname">struct i2c_master_module* i2c_instance</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Mode (param 1) of the derive key command. </p>
-
-</div>
-</div>
-<a id="a000599eef5677ed1279b025c42ae260e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a000599eef5677ed1279b025c42ae260e">&#9670;&nbsp;</a></span>parent_key</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const uint8_t* parent_key</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Parent key to be used in the derive key calculation (32 bytes). </p>
-
-</div>
-</div>
-<a id="aef45bac2efcd5394c4ed79f73ee16d23"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef45bac2efcd5394c4ed79f73ee16d23">&#9670;&nbsp;</a></span>sn</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const uint8_t* sn</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though. </p>
-
-</div>
-</div>
-<a id="a41104a8c85cd12c0fde0d791c3276a48"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a41104a8c85cd12c0fde0d791c3276a48">&#9670;&nbsp;</a></span>target_key_id</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t target_key_id</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Key ID (param 2) of the target slot to run the command on. </p>
 
 </div>
 </div>
@@ -202,7 +134,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02557.html">atca_derive_key_mac_in_out</a></li>
+    <li class="navelem"><a class="el" href="a02557.html">i2c_sam0_instance</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

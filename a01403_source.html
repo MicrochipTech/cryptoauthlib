@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_linux_kit_hid.h Source File</title>
+<title>CryptoAuthLib: kit_phy.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,48 +85,41 @@ $(document).ready(function(){initNavTree('a01403_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">hal_linux_kit_hid.h</div>  </div>
+<div class="title">kit_phy.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a01403.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef HAL_LINUX_KIT_HID_H_</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define HAL_LINUX_KIT_HID_H_</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">// Kit USB defines</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#define HID_DEVICES_MAX     10      </span></div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="a07533.html#ga49053c3cd6d48fe5f468ce010ac0a9ef">   40</a></span>&#160;<span class="preprocessor">#define HID_PACKET_MAX      512     </span></div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="a07533.html#ga6cdff3589b286ebcdd7771bb425fbf73">   41</a></span>&#160;<span class="preprocessor"></span> </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment">// Each device that is found will have a read handle and a write handle</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="a07682.html">   43</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="a07682.html">hid_device</a></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;{</div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="a07682.html#a72bac4e370ad82aef68188c521d2020d">   45</a></span>&#160;    FILE *<a class="code" href="a07682.html#a72bac4e370ad82aef68188c521d2020d">read_handle</a>;         </div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="a07682.html#ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0">   46</a></span>&#160;    FILE *<a class="code" href="a07682.html#ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0">write_handle</a>;        </div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="a07533.html#gabac5505cae96829653fa6054af0372b3">   47</a></span>&#160;} <a class="code" href="a07533.html#gabac5505cae96829653fa6054af0372b3">hid_device_t</a>;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">// A structure to hold HID information</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="a07662.html">atcahid</a></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;{</div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="a07662.html#ab18469d917784316fd480ea543d58fcb">   53</a></span>&#160;    <a class="code" href="a07682.html">hid_device_t</a> <a class="code" href="a07662.html#a2bd4dbcb2ab2d6802f2df0d067a4389a">kits</a>[<a class="code" href="a07533.html#ga49053c3cd6d48fe5f468ce010ac0a9ef">HID_DEVICES_MAX</a>];</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    int8_t       <a class="code" href="a07662.html#a9bb0ee74044865538adfcc5d5ae8f621">num_kits_found</a>;</div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="a07533.html#gabb3ee8f7daf1cd68f8173981271ac37a">   55</a></span>&#160;} <a class="code" href="a07533.html#gabb3ee8f7daf1cd68f8173981271ac37a">atcahid_t</a>;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAL_LINUX_KIT_HID_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#ifndef KIT_PHY_H_</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#define KIT_PHY_H_</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01289.html">cryptoauthlib.h</a>&quot;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<a class="code" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a02400.html#ga11ee6ec0b2b7eb2ff2472f92208c3205">kit_phy_num_found</a>(int8_t* num_found);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<a class="code" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a02400.html#gabd452e3edb32ea0d22653c182b4e1198">kit_phy_send</a>(<a class="code" href="a02461.html">ATCAIface</a> iface, <span class="keyword">const</span> <span class="keywordtype">char</span> *txdata, <span class="keywordtype">int</span> txlength);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<a class="code" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a02400.html#gabb507252b1011037d6d2cce7d91b01d0">kit_phy_receive</a>(<a class="code" href="a02461.html">ATCAIface</a> iface, <span class="keywordtype">char</span>* rxdata, <span class="keywordtype">int</span>* rxlength);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* ATCA_HAL_PHY_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aa07533_html_gabb3ee8f7daf1cd68f8173981271ac37a"><div class="ttname"><a href="a07533.html#gabb3ee8f7daf1cd68f8173981271ac37a">atcahid_t</a></div><div class="ttdeci">struct atcahid atcahid_t</div></div>
-<div class="ttc" id="aa07682_html_ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0"><div class="ttname"><a href="a07682.html#ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0">hid_device::write_handle</a></div><div class="ttdeci">FILE * write_handle</div><div class="ttdoc">The kit USB read file handle.</div><div class="ttdef"><b>Definition:</b> hal_linux_kit_hid.h:46</div></div>
-<div class="ttc" id="aa07533_html_gabac5505cae96829653fa6054af0372b3"><div class="ttname"><a href="a07533.html#gabac5505cae96829653fa6054af0372b3">hid_device_t</a></div><div class="ttdeci">struct hid_device hid_device_t</div></div>
-<div class="ttc" id="aa07662_html_a9bb0ee74044865538adfcc5d5ae8f621"><div class="ttname"><a href="a07662.html#a9bb0ee74044865538adfcc5d5ae8f621">atcahid::num_kits_found</a></div><div class="ttdeci">int8_t num_kits_found</div><div class="ttdef"><b>Definition:</b> hal_all_platforms_kit_hidapi.h:51</div></div>
-<div class="ttc" id="aa07682_html_a72bac4e370ad82aef68188c521d2020d"><div class="ttname"><a href="a07682.html#a72bac4e370ad82aef68188c521d2020d">hid_device::read_handle</a></div><div class="ttdeci">FILE * read_handle</div><div class="ttdef"><b>Definition:</b> hal_linux_kit_hid.h:45</div></div>
-<div class="ttc" id="aa07533_html_ga49053c3cd6d48fe5f468ce010ac0a9ef"><div class="ttname"><a href="a07533.html#ga49053c3cd6d48fe5f468ce010ac0a9ef">HID_DEVICES_MAX</a></div><div class="ttdeci">#define HID_DEVICES_MAX</div><div class="ttdef"><b>Definition:</b> hal_linux_kit_hid.h:39</div></div>
-<div class="ttc" id="aa07682_html"><div class="ttname"><a href="a07682.html">hid_device</a></div><div class="ttdef"><b>Definition:</b> hal_linux_kit_hid.h:44</div></div>
-<div class="ttc" id="aa07662_html"><div class="ttname"><a href="a07662.html">atcahid</a></div><div class="ttdef"><b>Definition:</b> hal_all_platforms_kit_hidapi.h:49</div></div>
-<div class="ttc" id="aa07662_html_a2bd4dbcb2ab2d6802f2df0d067a4389a"><div class="ttname"><a href="a07662.html#a2bd4dbcb2ab2d6802f2df0d067a4389a">atcahid::kits</a></div><div class="ttdeci">hid_device * kits[10]</div><div class="ttdef"><b>Definition:</b> hal_all_platforms_kit_hidapi.h:50</div></div>
+<div class="ttc" id="aa02400_html_gabd452e3edb32ea0d22653c182b4e1198"><div class="ttname"><a href="a02400.html#gabd452e3edb32ea0d22653c182b4e1198">kit_phy_send</a></div><div class="ttdeci">ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t *txdata, int txlength)</div><div class="ttdoc">HAL implementation of send over USB HID.</div><div class="ttdef"><b>Definition:</b> hal_all_platforms_kit_hidapi.c:186</div></div>
+<div class="ttc" id="aa02400_html_gabb507252b1011037d6d2cce7d91b01d0"><div class="ttname"><a href="a02400.html#gabb507252b1011037d6d2cce7d91b01d0">kit_phy_receive</a></div><div class="ttdeci">ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t *rxdata, int *rxsize)</div><div class="ttdoc">HAL implementation of kit protocol send over USB HID.</div><div class="ttdef"><b>Definition:</b> hal_all_platforms_kit_hidapi.c:244</div></div>
+<div class="ttc" id="aa02461_html"><div class="ttname"><a href="a02461.html">atca_iface</a></div><div class="ttdoc">atca_iface is the C object backing ATCAIface. See the atca_iface.h file for details on the ATCAIface ...</div><div class="ttdef"><b>Definition:</b> atca_iface.h:153</div></div>
+<div class="ttc" id="aa02400_html_ga11ee6ec0b2b7eb2ff2472f92208c3205"><div class="ttname"><a href="a02400.html#ga11ee6ec0b2b7eb2ff2472f92208c3205">kit_phy_num_found</a></div><div class="ttdeci">ATCA_STATUS kit_phy_num_found(int8_t *num_found)</div><div class="ttdoc">Number of USB HID devices found.</div><div class="ttdef"><b>Definition:</b> hal_all_platforms_kit_hidapi.c:309</div></div>
+<div class="ttc" id="aa01289_html"><div class="ttname"><a href="a01289.html">cryptoauthlib.h</a></div><div class="ttdoc">Single aggregation point for all CryptoAuthLib header files.</div></div>
+<div class="ttc" id="aa01091_html_a22bd6643f31f1d75dc3e7ea939f468cd"><div class="ttname"><a href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a></div><div class="ttdeci">ATCA_STATUS</div><div class="ttdef"><b>Definition:</b> atca_status.h:43</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_36432077327cc0f3c76187c9e6e34627.html">hal</a></li><li class="navelem"><a class="el" href="a01403.html">hal_linux_kit_hid.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_36432077327cc0f3c76187c9e6e34627.html">hal</a></li><li class="navelem"><a class="el" href="a01403.html">kit_phy.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

@@ -1,12 +1,9 @@
 var a02789 =
 [
-    [ "iterations", "a02789.html#a352fc400a3f5db127e58d7c7d932bfb0", null ],
+    [ "pInitVector", "a02789.html#a612c89f901f58cad3d1d0d8089aa0060", null ],
     [ "pPassword", "a02789.html#afcd59d3f53ba9541d524b464e52db6c3", null ],
-    [ "pPrfData", "a02789.html#a14f642c2ba93297d4e77495ad99eb0d8", null ],
-    [ "prf", "a02789.html#a486ca470e94c331b0d6b3ce2b2e629dd", null ],
-    [ "pSaltSourceData", "a02789.html#ad6406240587bc71085ca34aec5cad74c", null ],
-    [ "saltSource", "a02789.html#a3c1860ea40de62a89a8b653b1192c38c", null ],
+    [ "pSalt", "a02789.html#abe4a9572f77ba45b587a125d643c5b72", null ],
+    [ "ulIteration", "a02789.html#ad9c12921654a58f48b32e71c3742026d", null ],
     [ "ulPasswordLen", "a02789.html#a89c0c27f6cec1370f47936875a8cc1b5", null ],
-    [ "ulPrfDataLen", "a02789.html#a59632ecf883e3c71e3eefff1a93a326e", null ],
-    [ "ulSaltSourceDataLen", "a02789.html#accc283cca246fe250eb584e580bc9770", null ]
+    [ "ulSaltLen", "a02789.html#a4d206c4f8551e261f4bbd21409ffb631", null ]
 ];

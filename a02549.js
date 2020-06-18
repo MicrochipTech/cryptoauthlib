@@ -1,10 +1,7 @@
 var a02549 =
 [
-    [ "auth_mac", "a02549.html#a9f11512564ff4aeaf5f9d0646d971ed2", null ],
-    [ "encrypted_data", "a02549.html#a8c2a094baeab96152cea462ba9677887", null ],
-    [ "input_data", "a02549.html#a699b6e4448b505a2664025ccca3522f5", null ],
-    [ "key_id", "a02549.html#ac21eed4200889cc115d16a781871d01c", null ],
-    [ "sn", "a02549.html#aef45bac2efcd5394c4ed79f73ee16d23", null ],
-    [ "temp_key", "a02549.html#a72fae3d62889ef224f09c57a7646e061", null ],
-    [ "zone", "a02549.html#ac746c3d65092170bfaf5b0d9950d8438", null ]
+    [ "read_handle", "a02549.html#a72bac4e370ad82aef68188c521d2020d", null ],
+    [ "read_handle", "a02549.html#a79525e0d472c02e26e7c4aa4a780c1d9", null ],
+    [ "write_handle", "a02549.html#ad0e471ff3d3f7c4ea0a7cc3e10e6b1b0", null ],
+    [ "write_handle", "a02549.html#af11a0103eb96a026ea6782bfcad7548e", null ]
 ];

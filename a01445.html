@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_uc3_timer_asf.c File Reference</title>
+<title>CryptoAuthLib: atca_mbedtls_wrap.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,38 +87,32 @@ $(document).ready(function(){initNavTree('a01445.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">hal_uc3_timer_asf.c File Reference</div>  </div>
+<div class="title">atca_mbedtls_wrap.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for SAM4S I2C over ASF drivers.  
-<a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;asf.h&gt;</code><br />
-<code>#include &lt;delay.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a01352_source.html">atca_hal.h</a>&quot;</code><br />
-</div><table class="memberdecls">
+<p><a href="a01445_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga7598dfcd6dcac882836544d48356d02f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga7598dfcd6dcac882836544d48356d02f">atca_delay_us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga7598dfcd6dcac882836544d48356d02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of microseconds.  <a href="a07533.html#ga7598dfcd6dcac882836544d48356d02f">More...</a><br /></td></tr>
-<tr class="separator:ga7598dfcd6dcac882836544d48356d02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga19891182689551cc3a88603135959351"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga19891182689551cc3a88603135959351">atca_delay_10us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga19891182689551cc3a88603135959351"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of tens of microseconds.  <a href="a07533.html#ga19891182689551cc3a88603135959351">More...</a><br /></td></tr>
-<tr class="separator:ga19891182689551cc3a88603135959351"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0544f36422b5e9a8890fb9c90fc5eb55"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga0544f36422b5e9a8890fb9c90fc5eb55">atca_delay_ms</a> (uint32_t ms)</td></tr>
-<tr class="memdesc:ga0544f36422b5e9a8890fb9c90fc5eb55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API for legacy implementations.  <a href="a07533.html#ga0544f36422b5e9a8890fb9c90fc5eb55">More...</a><br /></td></tr>
-<tr class="separator:ga0544f36422b5e9a8890fb9c90fc5eb55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga72da31831a3647e287543634e3f78aca"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02403.html#ga72da31831a3647e287543634e3f78aca">atca_mbedtls_pk_init</a> (struct mbedtls_pk_context *pkey, const uint16_t slotid)</td></tr>
+<tr class="memdesc:ga72da31831a3647e287543634e3f78aca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an mbedtls pk context for use with EC operations.  <a href="a02403.html#ga72da31831a3647e287543634e3f78aca">More...</a><br /></td></tr>
+<tr class="separator:ga72da31831a3647e287543634e3f78aca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1180b0ded84f7edb4b36d14730366a64"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02403.html#ga1180b0ded84f7edb4b36d14730366a64">atca_mbedtls_cert_add</a> (struct mbedtls_x509_crt *cert, const struct <a class="el" href="a02481.html">atcacert_def_s</a> *cert_def)</td></tr>
+<tr class="separator:ga1180b0ded84f7edb4b36d14730366a64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98d684683ccecd3d56bdf5dc27ae999c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02403.html#ga98d684683ccecd3d56bdf5dc27ae999c">atca_mbedtls_ecdh_slot_cb</a> (void)</td></tr>
+<tr class="memdesc:ga98d684683ccecd3d56bdf5dc27ae999c"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH Callback to obtain the "slot" used in ECDH operations from the application.  <a href="a02403.html#ga98d684683ccecd3d56bdf5dc27ae999c">More...</a><br /></td></tr>
+<tr class="separator:ga98d684683ccecd3d56bdf5dc27ae999c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa35682dc98e33ce3d6fad1fc902cdff0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02403.html#gaa35682dc98e33ce3d6fad1fc902cdff0">atca_mbedtls_ecdh_ioprot_cb</a> (uint8_t secret[32])</td></tr>
+<tr class="memdesc:gaa35682dc98e33ce3d6fad1fc902cdff0"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH Callback to obtain the IO Protection secret from the application.  <a href="a02403.html#gaa35682dc98e33ce3d6fad1fc902cdff0">More...</a><br /></td></tr>
+<tr class="separator:gaa35682dc98e33ce3d6fad1fc902cdff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for SAM4S I2C over ASF drivers. </p>
-<p>Prerequisite: add "Delay routines (service)" module to application in Atmel Studio</p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_36432077327cc0f3c76187c9e6e34627.html">hal</a></li><li class="navelem"><a class="el" href="a01445.html">hal_uc3_timer_asf.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_dc51b425ebbafda9ba904ce077f0c40d.html">mbedtls</a></li><li class="navelem"><a class="el" href="a01445.html">atca_mbedtls_wrap.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

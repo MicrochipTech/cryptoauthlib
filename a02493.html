@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcaSPImaster Struct Reference</title>
+<title>CryptoAuthLib: atca_sha256_ctx Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,45 +87,70 @@ $(document).ready(function(){initNavTree('a02493.html',''); initResizable(); });
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atcaSPImaster Struct Reference<div class="ingroups"><a class="el" href="a02340.html">Hardware abstraction layer (hal_)</a></div></div>  </div>
+<div class="title">atca_sha256_ctx Struct Reference<div class="ingroups"><a class="el" href="a02398.html">Basic Crypto API methods for CryptoAuth Devices (calib_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="a01352_source.html">hal_linux_spi_userspace.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a01157_source.html">calib_basic.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a2cd9a7b710ae29883c5a1799d2012792"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02493.html#a2cd9a7b710ae29883c5a1799d2012792">spi_file</a> [16]</td></tr>
-<tr class="separator:a2cd9a7b710ae29883c5a1799d2012792"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad72ba8c994f4d0e5ce354e17f7c427c0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02493.html#ad72ba8c994f4d0e5ce354e17f7c427c0">ref_ct</a></td></tr>
-<tr class="separator:ad72ba8c994f4d0e5ce354e17f7c427c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ee7e642376903508dd6b4df9eacc2de"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02493.html#a8ee7e642376903508dd6b4df9eacc2de">total_msg_size</a></td></tr>
+<tr class="memdesc:a8ee7e642376903508dd6b4df9eacc2de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total number of message bytes processed.  <a href="a02493.html#a8ee7e642376903508dd6b4df9eacc2de">More...</a><br /></td></tr>
+<tr class="separator:a8ee7e642376903508dd6b4df9eacc2de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e3fb1e50a1c71b2337df296222d9553"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02493.html#a9e3fb1e50a1c71b2337df296222d9553">block_size</a></td></tr>
+<tr class="memdesc:a9e3fb1e50a1c71b2337df296222d9553"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes in current block.  <a href="a02493.html#a9e3fb1e50a1c71b2337df296222d9553">More...</a><br /></td></tr>
+<tr class="separator:a9e3fb1e50a1c71b2337df296222d9553"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a407f9109b29f2f3a4c9f7d1de450ad41"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02493.html#a407f9109b29f2f3a4c9f7d1de450ad41">block</a> [<a class="el" href="a01289.html#a85e0a506bd6fdae6ce32d5df3a48ac1c">ATCA_SHA256_BLOCK_SIZE</a> *2]</td></tr>
+<tr class="memdesc:a407f9109b29f2f3a4c9f7d1de450ad41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unprocessed message storage.  <a href="a02493.html#a407f9109b29f2f3a4c9f7d1de450ad41">More...</a><br /></td></tr>
+<tr class="separator:a407f9109b29f2f3a4c9f7d1de450ad41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="ad72ba8c994f4d0e5ce354e17f7c427c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad72ba8c994f4d0e5ce354e17f7c427c0">&#9670;&nbsp;</a></span>ref_ct</h2>
+<a id="a407f9109b29f2f3a4c9f7d1de450ad41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a407f9109b29f2f3a4c9f7d1de450ad41">&#9670;&nbsp;</a></span>block</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int ref_ct</td>
+          <td class="memname">uint8_t block[<a class="el" href="a01289.html#a85e0a506bd6fdae6ce32d5df3a48ac1c">ATCA_SHA256_BLOCK_SIZE</a> *2]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Unprocessed message storage. </p>
+
 </div>
 </div>
-<a id="a2cd9a7b710ae29883c5a1799d2012792"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2cd9a7b710ae29883c5a1799d2012792">&#9670;&nbsp;</a></span>spi_file</h2>
+<a id="a9e3fb1e50a1c71b2337df296222d9553"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e3fb1e50a1c71b2337df296222d9553">&#9670;&nbsp;</a></span>block_size</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char spi_file[16]</td>
+          <td class="memname">uint32_t block_size</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Number of bytes in current block. </p>
+
+</div>
+</div>
+<a id="a8ee7e642376903508dd6b4df9eacc2de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ee7e642376903508dd6b4df9eacc2de">&#9670;&nbsp;</a></span>total_msg_size</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t total_msg_size</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Total number of message bytes processed. </p>
 
 </div>
 </div>
@@ -134,7 +159,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02493.html">atcaSPImaster</a></li>
+    <li class="navelem"><a class="el" href="a02493.html">atca_sha256_ctx</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

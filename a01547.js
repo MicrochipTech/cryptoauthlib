@@ -1,6 +1,12 @@
 var a01547 =
 [
-    [ "pkcs11_get_lib_info", "a07537.html#gaae56826104269ca730066136fb3eb995", null ],
-    [ "pkcs11_lib_description", "a07537.html#ga47daad4918afdf7ec808a5a57a4bce9d", null ],
-    [ "pkcs11_lib_manufacturer_id", "a07537.html#ga8ac50a3d8a0c4f1ddf04cdf02c757030", null ]
+    [ "_pkcs11_slot_ctx", "a02673.html", "a02673" ],
+    [ "pkcs11_slot_ctx", "a01547.html#a9b5b23b61a4f50fc832f535fbd24b123", null ],
+    [ "pkcs11_slot_ctx_ptr", "a01547.html#ac77ca422293b6ec4789d1746b276eeaf", null ],
+    [ "pkcs11_slot_config", "a02404.html#ga29fdbbe0188137ec327678742a3aea01", null ],
+    [ "pkcs11_slot_get_context", "a02404.html#ga987853011908614aba0db7c5933b0a20", null ],
+    [ "pkcs11_slot_get_info", "a02404.html#ga3bba79e03141bfb7a9ec76c273db63d2", null ],
+    [ "pkcs11_slot_get_list", "a02404.html#ga0b1860dd97a6c0afd3056ac6bd10d38d", null ],
+    [ "pkcs11_slot_init", "a02404.html#ga418414364e88d0673b4f6c90cd62ebed", null ],
+    [ "pkcs11_slot_initslots", "a02404.html#ga8bdf7c43e464ac6214411d11d82ac317", null ]
 ];

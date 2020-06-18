@@ -1,12 +1,15 @@
 var a02669 =
 [
-    [ "hPrivateData", "a02669.html#a2f6769e4ceda4853db07b96b8e5770a0", null ],
-    [ "kdf", "a02669.html#a0b7cdb5c49b5009e5d66ca1d6b6ead43", null ],
-    [ "pPublicData", "a02669.html#a5b5ab88b8cf93cfa701f56237f237292", null ],
-    [ "pPublicData2", "a02669.html#a807f984f215aef03dc5ac126804618dd", null ],
-    [ "pSharedData", "a02669.html#acab261b5f4c0104ea7011d671b371ab1", null ],
-    [ "ulPrivateDataLen", "a02669.html#a298011aaedd3c092f893e8bbba354cf9", null ],
-    [ "ulPublicDataLen", "a02669.html#ae9ccaf64b51247d789c8e4d78b64b54c", null ],
-    [ "ulPublicDataLen2", "a02669.html#a883bd3806b7c0e47291bc8efce44ccc1", null ],
-    [ "ulSharedDataLen", "a02669.html#a95606c7e5bb43c1d62f41791c98d7f7f", null ]
+    [ "active_object", "a02669.html#a7a40f8323d808232817b70acc58112d0", null ],
+    [ "attrib_count", "a02669.html#a93c255adcc4d76366af3cfde6b18faaa", null ],
+    [ "attrib_list", "a02669.html#a89a668d83c5fbcd422bf727f6fa1971b", null ],
+    [ "error", "a02669.html#aa71801867b929b0b67bbf658967d27d4", null ],
+    [ "handle", "a02669.html#a48777f0b0a0b56141bd6a03e992ed893", null ],
+    [ "initialized", "a02669.html#a1160c303d9370f4187e6f48d6ac336c1", null ],
+    [ "logged_in", "a02669.html#a2539b0d6a45d7cd1796cbfc7890b3540", null ],
+    [ "object_count", "a02669.html#a87d388953ff8b277843b13faca78beeb", null ],
+    [ "object_index", "a02669.html#a4b3c004db0bdd022af57a97c624df438", null ],
+    [ "read_key", "a02669.html#a578db367a160ec9c6c7169442b70aeac", null ],
+    [ "slot", "a02669.html#a6284cb4cba404c572c2911394e9150db", null ],
+    [ "state", "a02669.html#a1940765200d80bc2f37ec2335d2ac185", null ]
 ];

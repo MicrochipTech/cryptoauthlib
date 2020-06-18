@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_crypto_sw_rand.c File Reference</title>
+<title>CryptoAuthLib: hal_esp32_i2c.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,31 +85,833 @@ $(document).ready(function(){initNavTree('a01313.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">atca_crypto_sw_rand.c File Reference</div>  </div>
+<div class="title">hal_esp32_i2c.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>API wrapper for software random.  
-<a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01316_source.html">atca_crypto_sw_rand.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;driver/i2c.h&gt;</code><br />
+<code>#include &quot;esp_err.h&quot;</code><br />
+<code>#include &quot;esp_log.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01289_source.html">cryptoauthlib.h</a>&quot;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02533.html">atcaI2Cmaster</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">this is the hal_data for ATCA HAL for ASF SERCOM  <a href="a02533.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a526d580d324bce60a3e964066fae77e3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#a526d580d324bce60a3e964066fae77e3">SDA_PIN</a>&#160;&#160;&#160;16</td></tr>
+<tr class="separator:a526d580d324bce60a3e964066fae77e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06c967e78bcedcee909a70764f879433"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#a06c967e78bcedcee909a70764f879433">SCL_PIN</a>&#160;&#160;&#160;17</td></tr>
+<tr class="separator:a06c967e78bcedcee909a70764f879433"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dd22b838d2b1f22d367e6cdef04ccc3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#a7dd22b838d2b1f22d367e6cdef04ccc3">ACK_CHECK_EN</a>&#160;&#160;&#160;0x1</td></tr>
+<tr class="separator:a7dd22b838d2b1f22d367e6cdef04ccc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ad7ceb373ce664b1c2482a66537e7c0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#a8ad7ceb373ce664b1c2482a66537e7c0">ACK_CHECK_DIS</a>&#160;&#160;&#160;0x0</td></tr>
+<tr class="separator:a8ad7ceb373ce664b1c2482a66537e7c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d64a546dacc15052a6c4887f9d0020f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#a1d64a546dacc15052a6c4887f9d0020f">ACK_VAL</a>&#160;&#160;&#160;0x0</td></tr>
+<tr class="separator:a1d64a546dacc15052a6c4887f9d0020f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae20bf16f65c41237e2d620ef49890781"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#ae20bf16f65c41237e2d620ef49890781">NACK_VAL</a>&#160;&#160;&#160;0x1</td></tr>
+<tr class="separator:ae20bf16f65c41237e2d620ef49890781"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5155a7b7465dd9b5e6167122827d0158"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#a5155a7b7465dd9b5e6167122827d0158">LOG_LOCAL_LEVEL</a>&#160;&#160;&#160;ESP_LOG_INFO</td></tr>
+<tr class="separator:a5155a7b7465dd9b5e6167122827d0158"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af89a7a4080a47aa10a5504291db285bf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#af89a7a4080a47aa10a5504291db285bf">MAX_I2C_BUSES</a>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:af89a7a4080a47aa10a5504291db285bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a06b19a932aea9cf3a5165fefacb24f7b"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a02533.html">atcaI2Cmaster</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#a06b19a932aea9cf3a5165fefacb24f7b">ATCAI2CMaster_t</a></td></tr>
+<tr class="separator:a06b19a932aea9cf3a5165fefacb24f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga0710d8bf5e92403c4026c32af39ad79e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07532.html#ga0710d8bf5e92403c4026c32af39ad79e">atcac_sw_random</a> (uint8_t *data, size_t data_size)</td></tr>
-<tr class="memdesc:ga0710d8bf5e92403c4026c32af39ad79e"><td class="mdescLeft">&#160;</td><td class="mdescRight">return software generated random number and the function is currently not implemented  <a href="a07532.html#ga0710d8bf5e92403c4026c32af39ad79e">More...</a><br /></td></tr>
-<tr class="separator:ga0710d8bf5e92403c4026c32af39ad79e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98107f7cba849e44395b87a7e15fbec3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#a98107f7cba849e44395b87a7e15fbec3">hal_i2c_change_baud</a> (<a class="el" href="a02396.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint32_t speed)</td></tr>
+<tr class="memdesc:a98107f7cba849e44395b87a7e15fbec3"><td class="mdescLeft">&#160;</td><td class="mdescRight">method to change the bus speec of I2C  <a href="a01313.html#a98107f7cba849e44395b87a7e15fbec3">More...</a><br /></td></tr>
+<tr class="separator:a98107f7cba849e44395b87a7e15fbec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga09e7f465a040fbd19ea136269571de3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#ga09e7f465a040fbd19ea136269571de3c">hal_i2c_init</a> (void *hal, <a class="el" href="a02429.html">ATCAIfaceCfg</a> *cfg)</td></tr>
+<tr class="memdesc:ga09e7f465a040fbd19ea136269571de3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">hal_i2c_init manages requests to initialize a physical interface. it manages use counts so when an interface has released the physical layer, it will disable the interface for some other use. You can have multiple ATCAIFace instances using the same bus, and you can have multiple ATCAIFace instances on multiple i2c buses, so hal_i2c_init manages these things and ATCAIFace is abstracted from the physical details.  <a href="a01313.html#ga09e7f465a040fbd19ea136269571de3c">More...</a><br /></td></tr>
+<tr class="separator:ga09e7f465a040fbd19ea136269571de3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafbe53519362f18c2688d10da6f7c618f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#gafbe53519362f18c2688d10da6f7c618f">hal_i2c_post_init</a> (<a class="el" href="a02396.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:gafbe53519362f18c2688d10da6f7c618f"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of I2C post init.  <a href="a01313.html#gafbe53519362f18c2688d10da6f7c618f">More...</a><br /></td></tr>
+<tr class="separator:gafbe53519362f18c2688d10da6f7c618f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacc9a889e19d2f1a475a39391565b66dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#gacc9a889e19d2f1a475a39391565b66dd">hal_i2c_send</a> (<a class="el" href="a02396.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
+<tr class="memdesc:gacc9a889e19d2f1a475a39391565b66dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of I2C send.  <a href="a01313.html#gacc9a889e19d2f1a475a39391565b66dd">More...</a><br /></td></tr>
+<tr class="separator:gacc9a889e19d2f1a475a39391565b66dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga41a2b07d55558b9726abe28fd8431e90"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#ga41a2b07d55558b9726abe28fd8431e90">hal_i2c_receive</a> (<a class="el" href="a02396.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
+<tr class="memdesc:ga41a2b07d55558b9726abe28fd8431e90"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of I2C receive function.  <a href="a01313.html#ga41a2b07d55558b9726abe28fd8431e90">More...</a><br /></td></tr>
+<tr class="separator:ga41a2b07d55558b9726abe28fd8431e90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac382cc4431d2d1c721c21a453ba36c22"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#gac382cc4431d2d1c721c21a453ba36c22">hal_i2c_release</a> (void *hal_data)</td></tr>
+<tr class="memdesc:gac382cc4431d2d1c721c21a453ba36c22"><td class="mdescLeft">&#160;</td><td class="mdescRight">manages reference count on given bus and releases resource if no more refences exist  <a href="a01313.html#gac382cc4431d2d1c721c21a453ba36c22">More...</a><br /></td></tr>
+<tr class="separator:gac382cc4431d2d1c721c21a453ba36c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4df1b6755e2d5b5d9e810371e45ca8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#gad4df1b6755e2d5b5d9e810371e45ca8c">hal_i2c_wake</a> (<a class="el" href="a02396.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:gad4df1b6755e2d5b5d9e810371e45ca8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">wake up CryptoAuth device using I2C bus  <a href="a01313.html#gad4df1b6755e2d5b5d9e810371e45ca8c">More...</a><br /></td></tr>
+<tr class="separator:gad4df1b6755e2d5b5d9e810371e45ca8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9317303ada721ff3f97e7aad69437a30"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#ga9317303ada721ff3f97e7aad69437a30">hal_i2c_idle</a> (<a class="el" href="a02396.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:ga9317303ada721ff3f97e7aad69437a30"><td class="mdescLeft">&#160;</td><td class="mdescRight">idle CryptoAuth device using I2C bus  <a href="a01313.html#ga9317303ada721ff3f97e7aad69437a30">More...</a><br /></td></tr>
+<tr class="separator:ga9317303ada721ff3f97e7aad69437a30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f89bae6a625d5f37abdcc99408def27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#ga3f89bae6a625d5f37abdcc99408def27">hal_i2c_sleep</a> (<a class="el" href="a02396.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:ga3f89bae6a625d5f37abdcc99408def27"><td class="mdescLeft">&#160;</td><td class="mdescRight">sleep CryptoAuth device using I2C bus  <a href="a01313.html#ga3f89bae6a625d5f37abdcc99408def27">More...</a><br /></td></tr>
+<tr class="separator:ga3f89bae6a625d5f37abdcc99408def27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga05700385437884cc7b28c38d33e84f8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#ga05700385437884cc7b28c38d33e84f8c">hal_i2c_discover_buses</a> (int i2c_buses[], int max_buses)</td></tr>
+<tr class="memdesc:ga05700385437884cc7b28c38d33e84f8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover i2c buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge  <a href="a01313.html#ga05700385437884cc7b28c38d33e84f8c">More...</a><br /></td></tr>
+<tr class="separator:ga05700385437884cc7b28c38d33e84f8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae68c90497ef6f7edbf78daa3a094028a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#ae68c90497ef6f7edbf78daa3a094028a">hal_i2c_discover_devices</a> (int bus_num, <a class="el" href="a02429.html">ATCAIfaceCfg</a> *cfg, int *found)</td></tr>
+<tr class="memdesc:ae68c90497ef6f7edbf78daa3a094028a"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover any CryptoAuth devices on a given logical bus number  <a href="a01313.html#ae68c90497ef6f7edbf78daa3a094028a">More...</a><br /></td></tr>
+<tr class="separator:ae68c90497ef6f7edbf78daa3a094028a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a9674349a244eaba3852b4101c93454be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01313.html#a06b19a932aea9cf3a5165fefacb24f7b">ATCAI2CMaster_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#a9674349a244eaba3852b4101c93454be">i2c_hal_data</a> [2]</td></tr>
+<tr class="separator:a9674349a244eaba3852b4101c93454be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7deec7f5d89dfb4f9746d050b0926f9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#aa7deec7f5d89dfb4f9746d050b0926f9">i2c_bus_ref_ct</a> = 0</td></tr>
+<tr class="separator:aa7deec7f5d89dfb4f9746d050b0926f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa09ddc709367c497fc081a29aa2d12fe"><td class="memItemLeft" align="right" valign="top">i2c_config_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#aa09ddc709367c497fc081a29aa2d12fe">conf</a></td></tr>
+<tr class="separator:aa09ddc709367c497fc081a29aa2d12fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a85b9c772bbeb480b209a3e6ea92b4c"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01313.html#a5a85b9c772bbeb480b209a3e6ea92b4c">TAG</a> = &quot;HAL_I2C&quot;</td></tr>
+<tr class="separator:a5a85b9c772bbeb480b209a3e6ea92b4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>API wrapper for software random. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a8ad7ceb373ce664b1c2482a66537e7c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ad7ceb373ce664b1c2482a66537e7c0">&#9670;&nbsp;</a></span>ACK_CHECK_DIS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ACK_CHECK_DIS&#160;&#160;&#160;0x0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>I2C master will not check ack from slave </p>
+
+</div>
+</div>
+<a id="a7dd22b838d2b1f22d367e6cdef04ccc3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7dd22b838d2b1f22d367e6cdef04ccc3">&#9670;&nbsp;</a></span>ACK_CHECK_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ACK_CHECK_EN&#160;&#160;&#160;0x1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>I2C master will check ack from slave </p>
+
+</div>
+</div>
+<a id="a1d64a546dacc15052a6c4887f9d0020f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d64a546dacc15052a6c4887f9d0020f">&#9670;&nbsp;</a></span>ACK_VAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ACK_VAL&#160;&#160;&#160;0x0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>I2C ack value </p>
+
+</div>
+</div>
+<a id="a5155a7b7465dd9b5e6167122827d0158"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5155a7b7465dd9b5e6167122827d0158">&#9670;&nbsp;</a></span>LOG_LOCAL_LEVEL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LOG_LOCAL_LEVEL&#160;&#160;&#160;ESP_LOG_INFO</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af89a7a4080a47aa10a5504291db285bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af89a7a4080a47aa10a5504291db285bf">&#9670;&nbsp;</a></span>MAX_I2C_BUSES</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_I2C_BUSES&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae20bf16f65c41237e2d620ef49890781"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae20bf16f65c41237e2d620ef49890781">&#9670;&nbsp;</a></span>NACK_VAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define NACK_VAL&#160;&#160;&#160;0x1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>I2C nack value </p>
+
+</div>
+</div>
+<a id="a06c967e78bcedcee909a70764f879433"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06c967e78bcedcee909a70764f879433">&#9670;&nbsp;</a></span>SCL_PIN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SCL_PIN&#160;&#160;&#160;17</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a526d580d324bce60a3e964066fae77e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a526d580d324bce60a3e964066fae77e3">&#9670;&nbsp;</a></span>SDA_PIN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SDA_PIN&#160;&#160;&#160;16</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a06b19a932aea9cf3a5165fefacb24f7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06b19a932aea9cf3a5165fefacb24f7b">&#9670;&nbsp;</a></span>ATCAI2CMaster_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a02533.html">atcaI2Cmaster</a> <a class="el" href="a01313.html#a06b19a932aea9cf3a5165fefacb24f7b">ATCAI2CMaster_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a98107f7cba849e44395b87a7e15fbec3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98107f7cba849e44395b87a7e15fbec3">&#9670;&nbsp;</a></span>hal_i2c_change_baud()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hal_i2c_change_baud </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02396.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>speed</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>method to change the bus speec of I2C </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>interface on which to change bus speed </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">speed</td><td>baud rate (typically 100000 or 400000) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga05700385437884cc7b28c38d33e84f8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga05700385437884cc7b28c38d33e84f8c">&#9670;&nbsp;</a></span>hal_i2c_discover_buses()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_i2c_discover_buses </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i2c_buses</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>max_buses</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>discover i2c buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge </p>
+<p>This HAL implementation assumes you've included the ASF TWI libraries in your project, otherwise, the HAL layer will not compile because the ASF TWI drivers are a dependency.</p>
+<p>logical to physical bus mapping structure</p>
+<p>discover i2c buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge.This function is not implemented.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">i2c_buses</td><td>- an array of logical bus numbers </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">max_buses</td><td>- maximum number of buses the app wants to attempt to discover </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">i2c_buses</td><td>- an array of logical bus numbers </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">max_buses</td><td>- maximum number of buses the app wants to attempt to discover </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_UNIMPLEMENTED</dd></dl>
+<p>discover i2c buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">i2c_buses</td><td>- an array of logical bus numbers </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">max_buses</td><td>- maximum number of buses the app wants to attempt to discover </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS</dd></dl>
+<p>discover i2c buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">i2c_buses</td><td>- an array of logical bus numbers </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">max_buses</td><td>- maximum number of buses the app wants to attempt to discover return ATCA_SUCCESS </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae68c90497ef6f7edbf78daa3a094028a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae68c90497ef6f7edbf78daa3a094028a">&#9670;&nbsp;</a></span>hal_i2c_discover_devices()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_i2c_discover_devices </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>bus_num</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a02429.html">ATCAIfaceCfg</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>found</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>discover any CryptoAuth devices on a given logical bus number </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bus_num</td><td>logical bus number on which to look for CryptoAuth devices </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">cfg</td><td>pointer to head of an array of interface config structures which get filled in by this method </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">found</td><td>number of devices found on this bus </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS </dd></dl>
+
+</div>
+</div>
+<a id="ga9317303ada721ff3f97e7aad69437a30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9317303ada721ff3f97e7aad69437a30">&#9670;&nbsp;</a></span>hal_i2c_idle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_i2c_idle </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02396.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>idle CryptoAuth device using I2C bus </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>interface to logical device to idle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+<p>&lt; I2C master will check ack from slave</p>
+<p>&lt; I2C master will not check ack from slave</p>
+
+</div>
+</div>
+<a id="ga09e7f465a040fbd19ea136269571de3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga09e7f465a040fbd19ea136269571de3c">&#9670;&nbsp;</a></span>hal_i2c_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_i2c_init </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>hal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a02429.html">ATCAIfaceCfg</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>hal_i2c_init manages requests to initialize a physical interface. it manages use counts so when an interface has released the physical layer, it will disable the interface for some other use. You can have multiple ATCAIFace instances using the same bus, and you can have multiple ATCAIFace instances on multiple i2c buses, so hal_i2c_init manages these things and ATCAIFace is abstracted from the physical details. </p>
+<p>hal_i2c_init manages requests to initialize a physical interface. It manages use counts so when an interface has released the physical layer, it will disable the interface for some other use. You can have multiple ATCAIFace instances using the same bus, and you can have multiple ATCAIFace instances on multiple i2c buses, so hal_i2c_init manages these things and ATCAIFace is abstracted from the physical details.</p>
+<p>initialize an I2C interface using given config</p>
+<p>HAL implementation of I2C init.</p>
+<ul>
+<li>this HAL implementation assumes you've included the START Twi libraries in your project, otherwise, the HAL layer will not compile because the START TWI drivers are a dependency *</li>
+</ul>
+<p>initialize an I2C interface using given config </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hal</td><td>- opaque ptr to HAL data </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>- interface configuration </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code.</dd></dl>
+<p>this implementation assumes I2C peripheral has been enabled by user. It only initialize an I2C interface using given config.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hal</td><td>pointer to HAL specific data that is maintained by this HAL </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>pointer to HAL specific configuration data that is used to initialize this HAL </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code.</dd></dl>
+<ul>
+<li>this HAL implementation assumes you've included the ASF SERCOM I2C libraries in your project, otherwise, the HAL layer will not compile because the ASF I2C drivers are a dependency * <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hal</td><td>- opaque ptr to HAL data </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>- interface configuration </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code.</dd></dl>
+initialize an I2C interface using given config</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hal</td><td>- opaque ptr to HAL data </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>- interface configuration</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code.</dd></dl>
+<ul>
+<li>this HAL implementation assumes you've included the ASF Twi libraries in your project, otherwise, the HAL layer will not compile because the ASF TWI drivers are a dependency *</li>
+</ul>
+<p>initialize an I2C interface using given config </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hal</td><td>- opaque ptr to HAL data </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>- interface configuration </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="gafbe53519362f18c2688d10da6f7c618f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafbe53519362f18c2688d10da6f7c618f">&#9670;&nbsp;</a></span>hal_i2c_post_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_i2c_post_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02396.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>HAL implementation of I2C post init. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>instance </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>instance </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="ga41a2b07d55558b9726abe28fd8431e90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga41a2b07d55558b9726abe28fd8431e90">&#9670;&nbsp;</a></span>hal_i2c_receive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_i2c_receive </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02396.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>word_address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>rxdata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramname"><em>rxlength</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>HAL implementation of I2C receive function. </p>
+<p>HAL implementation of I2C receive function for ASF I2C.</p>
+<p>HAL implementation of I2C receive function for START I2C.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>Device to interact with. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">word_address</td><td>device transaction type </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">rxdata</td><td>Data received will be returned here. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">rxlength</td><td>As input, the size of the rxdata buffer. As output, the number of bytes received. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>Device to interact with. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">rxdata</td><td>Data received will be returned here. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">rxlength</td><td>As input, the size of the rxdata buffer. As output, the number of bytes received. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>Device to interact with. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">word_address</td><td>device word address </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">rxdata</td><td>Data received will be returned here. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">rxlength</td><td>As input, the size of the rxdata buffer. As output, the number of bytes received. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+<p>&lt; I2C master will check ack from slave</p>
+<p>&lt; I2C nack value</p>
+<p>&lt; I2C ack value</p>
+<p>&lt; I2C ack value</p>
+<p>&lt; I2C nack value</p>
+
+</div>
+</div>
+<a id="gac382cc4431d2d1c721c21a453ba36c22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac382cc4431d2d1c721c21a453ba36c22">&#9670;&nbsp;</a></span>hal_i2c_release()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_i2c_release </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>hal_data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>manages reference count on given bus and releases resource if no more refences exist </p>
+<p>manages reference count on given bus and releases resource if no more refernces exist</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hal_data</td><td>- opaque pointer to hal data structure - known only to the HAL implementation </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hal_data</td><td>- opaque pointer to hal data structure - known only to the HAL implementation return ATCA_SUCCESS</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hal_data</td><td>- opaque pointer to hal data structure - known only to the HAL implementation </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS </dd></dl>
+
+</div>
+</div>
+<a id="gacc9a889e19d2f1a475a39391565b66dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacc9a889e19d2f1a475a39391565b66dd">&#9670;&nbsp;</a></span>hal_i2c_send()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_i2c_send </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02396.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>word_address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>txdata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>txlength</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>HAL implementation of I2C send. </p>
+<p>HAL implementation of I2C send over ASF.</p>
+<p>HAL implementation of I2C send over START.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">word_address</td><td>device transaction type </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">txdata</td><td>pointer to space to bytes to send </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">txlength</td><td>number of bytes to send </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">txdata</td><td>pointer to space to bytes to send </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">txlength</td><td>number of bytes to send </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">word_address</td><td>device word address </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">txdata</td><td>pointer to space to bytes to send </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">txlength</td><td>number of bytes to send</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+<p>&lt; I2C master will check ack from slave</p>
+<p>&lt; I2C master will check ack from slave</p>
+
+</div>
+</div>
+<a id="ga3f89bae6a625d5f37abdcc99408def27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3f89bae6a625d5f37abdcc99408def27">&#9670;&nbsp;</a></span>hal_i2c_sleep()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_i2c_sleep </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02396.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>sleep CryptoAuth device using I2C bus </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>interface to logical device to sleep </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+<p>&lt; I2C master will check ack from slave</p>
+<p>&lt; I2C master will not check ack from slave</p>
+
+</div>
+</div>
+<a id="gad4df1b6755e2d5b5d9e810371e45ca8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad4df1b6755e2d5b5d9e810371e45ca8c">&#9670;&nbsp;</a></span>hal_i2c_wake()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_i2c_wake </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02396.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>wake up CryptoAuth device using I2C bus </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>interface to logical device to wakeup </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+<p>&lt; I2C master will not check ack from slave</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="aa09ddc709367c497fc081a29aa2d12fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa09ddc709367c497fc081a29aa2d12fe">&#9670;&nbsp;</a></span>conf</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">i2c_config_t conf</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa7deec7f5d89dfb4f9746d050b0926f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7deec7f5d89dfb4f9746d050b0926f9">&#9670;&nbsp;</a></span>i2c_bus_ref_ct</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int i2c_bus_ref_ct = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9674349a244eaba3852b4101c93454be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9674349a244eaba3852b4101c93454be">&#9670;&nbsp;</a></span>i2c_hal_data</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01313.html#a06b19a932aea9cf3a5165fefacb24f7b">ATCAI2CMaster_t</a>* i2c_hal_data[2]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5a85b9c772bbeb480b209a3e6ea92b4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a85b9c772bbeb480b209a3e6ea92b4c">&#9670;&nbsp;</a></span>TAG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* TAG = &quot;HAL_I2C&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_0d284ebe0a46982303565525253d36b8.html">crypto</a></li><li class="navelem"><a class="el" href="a01313.html">atca_crypto_sw_rand.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_36432077327cc0f3c76187c9e6e34627.html">hal</a></li><li class="navelem"><a class="el" href="a01313.html">hal_esp32_i2c.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

@@ -1,9 +1,10 @@
 var a02825 =
 [
-    [ "pAAD", "a02825.html#a0816b397709ad49300a6649032d36ae8", null ],
-    [ "pNonce", "a02825.html#a6e7f7bf02efd71e06e1802de3edadb13", null ],
-    [ "ulAADLen", "a02825.html#aa04b948f1abaa06fd4fc5d5bc7e8388e", null ],
-    [ "ulDataLen", "a02825.html#a62d039e4b113a3d3c7f0bbc2c3b42d26", null ],
-    [ "ulMACLen", "a02825.html#ad0bc5ca369eeddb99026d9e37995e64e", null ],
-    [ "ulNonceLen", "a02825.html#a8b619dd7c13298513d1bc09da9643ae0", null ]
+    [ "DigestMechanism", "a02825.html#aac90f57c5853d865005b0114fbb1a5be", null ],
+    [ "pLabel", "a02825.html#acc06b421a1d57263bcad8c4796778d74", null ],
+    [ "pOutput", "a02825.html#a7966f75c9f62ca16efa96499a79fe84e", null ],
+    [ "pSeed", "a02825.html#a746d217a79b917ce5fa51eabcb998d16", null ],
+    [ "pulOutputLen", "a02825.html#a2b14f7d601d0892a0c0c686469b81d9b", null ],
+    [ "ulLabelLen", "a02825.html#af94cd759bd8713fcadb1fcd995ff5c1b", null ],
+    [ "ulSeedLen", "a02825.html#af289f68610b16b9c3ca1fb7ced1f2f8c", null ]
 ];

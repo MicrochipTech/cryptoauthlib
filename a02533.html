@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_secureboot_mac_in_out Struct Reference</title>
+<title>CryptoAuthLib: atcaI2Cmaster Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,146 +87,114 @@ $(document).ready(function(){initNavTree('a02533.html',''); initResizable(); });
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atca_secureboot_mac_in_out Struct Reference<div class="ingroups"><a class="el" href="a02341.html">Host side crypto methods (atcah_)</a></div></div>  </div>
+<div class="title">atcaI2Cmaster Struct Reference<div class="ingroups"><a class="el" href="a02400.html">Hardware abstraction layer (hal_)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="a01424_source.html">atca_host.h</a>&gt;</code></p>
+<p>this is the hal_data for ATCA HAL for ASF SERCOM  
+ <a href="a02533.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="a01343_source.html">hal_linux_i2c_userspace.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a37e90f5e3bd99fac2021fb3a326607d4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02533.html#a37e90f5e3bd99fac2021fb3a326607d4">mode</a></td></tr>
-<tr class="memdesc:a37e90f5e3bd99fac2021fb3a326607d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">SecureBoot mode (param1)  <a href="a02533.html#a37e90f5e3bd99fac2021fb3a326607d4">More...</a><br /></td></tr>
-<tr class="separator:a37e90f5e3bd99fac2021fb3a326607d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16a7565b150a9c17a39c80fc932b9514"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02533.html#a16a7565b150a9c17a39c80fc932b9514">param2</a></td></tr>
-<tr class="memdesc:a16a7565b150a9c17a39c80fc932b9514"><td class="mdescLeft">&#160;</td><td class="mdescRight">SecureBoot param2.  <a href="a02533.html#a16a7565b150a9c17a39c80fc932b9514">More...</a><br /></td></tr>
-<tr class="separator:a16a7565b150a9c17a39c80fc932b9514"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6abd57960eb27eecadcf1163a1441fb1"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02533.html#a6abd57960eb27eecadcf1163a1441fb1">secure_boot_config</a></td></tr>
-<tr class="memdesc:a6abd57960eb27eecadcf1163a1441fb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">SecureBootConfig value from configuration zone.  <a href="a02533.html#a6abd57960eb27eecadcf1163a1441fb1">More...</a><br /></td></tr>
-<tr class="separator:a6abd57960eb27eecadcf1163a1441fb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f1ddb903087eec963d0faf82a3283a4"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02533.html#a1f1ddb903087eec963d0faf82a3283a4">hashed_key</a></td></tr>
-<tr class="memdesc:a1f1ddb903087eec963d0faf82a3283a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashed key. SHA256(IO Protection Key | TempKey)  <a href="a02533.html#a1f1ddb903087eec963d0faf82a3283a4">More...</a><br /></td></tr>
-<tr class="separator:a1f1ddb903087eec963d0faf82a3283a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff3a2b64b0d86058508f766de59438d1"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02533.html#aff3a2b64b0d86058508f766de59438d1">digest</a></td></tr>
-<tr class="memdesc:aff3a2b64b0d86058508f766de59438d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Digest (unencrypted)  <a href="a02533.html#aff3a2b64b0d86058508f766de59438d1">More...</a><br /></td></tr>
-<tr class="separator:aff3a2b64b0d86058508f766de59438d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35388d4dff80916a7409fd0554ac58b6"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02533.html#a35388d4dff80916a7409fd0554ac58b6">signature</a></td></tr>
-<tr class="memdesc:a35388d4dff80916a7409fd0554ac58b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signature (can be NULL if not required)  <a href="a02533.html#a35388d4dff80916a7409fd0554ac58b6">More...</a><br /></td></tr>
-<tr class="separator:a35388d4dff80916a7409fd0554ac58b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5a9ad86915dfcef6db90b858690212a"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02533.html#aa5a9ad86915dfcef6db90b858690212a">mac</a></td></tr>
-<tr class="memdesc:aa5a9ad86915dfcef6db90b858690212a"><td class="mdescLeft">&#160;</td><td class="mdescRight">MAC is returned here.  <a href="a02533.html#aa5a9ad86915dfcef6db90b858690212a">More...</a><br /></td></tr>
-<tr class="separator:aa5a9ad86915dfcef6db90b858690212a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7441ef0865bcb3db9b8064dd7375c1ea"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02533.html#a7441ef0865bcb3db9b8064dd7375c1ea">id</a></td></tr>
+<tr class="separator:a7441ef0865bcb3db9b8064dd7375c1ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad72ba8c994f4d0e5ce354e17f7c427c0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02533.html#ad72ba8c994f4d0e5ce354e17f7c427c0">ref_ct</a></td></tr>
+<tr class="separator:ad72ba8c994f4d0e5ce354e17f7c427c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5c011e6c2e8d49675f7029e8ec2c0a6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02533.html#af5c011e6c2e8d49675f7029e8ec2c0a6">bus_index</a></td></tr>
+<tr class="separator:af5c011e6c2e8d49675f7029e8ec2c0a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a386ecc3f01d8b317bc512cab194d844f"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02533.html#a386ecc3f01d8b317bc512cab194d844f">i2c_file</a> [16]</td></tr>
+<tr class="separator:a386ecc3f01d8b317bc512cab194d844f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3592aa831cd642b3e53af87537944d5a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02533.html#a3592aa831cd642b3e53af87537944d5a">twi_id</a></td></tr>
+<tr class="separator:a3592aa831cd642b3e53af87537944d5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f03d6b609fdcf7623a985087e4bdc31"><td class="memItemLeft" align="right" valign="top">avr32_twi_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02533.html#a9f03d6b609fdcf7623a985087e4bdc31">twi_master_instance</a></td></tr>
+<tr class="separator:a9f03d6b609fdcf7623a985087e4bdc31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Field Documentation</h2>
-<a id="aff3a2b64b0d86058508f766de59438d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff3a2b64b0d86058508f766de59438d1">&#9670;&nbsp;</a></span>digest</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>this is the hal_data for ATCA HAL for ASF SERCOM </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a id="af5c011e6c2e8d49675f7029e8ec2c0a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5c011e6c2e8d49675f7029e8ec2c0a6">&#9670;&nbsp;</a></span>bus_index</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint8_t* digest</td>
+          <td class="memname">int bus_index</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Digest (unencrypted) </p>
-
 </div>
 </div>
-<a id="a1f1ddb903087eec963d0faf82a3283a4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1f1ddb903087eec963d0faf82a3283a4">&#9670;&nbsp;</a></span>hashed_key</h2>
+<a id="a386ecc3f01d8b317bc512cab194d844f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a386ecc3f01d8b317bc512cab194d844f">&#9670;&nbsp;</a></span>i2c_file</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint8_t* hashed_key</td>
+          <td class="memname">char i2c_file[16]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Hashed key. SHA256(IO Protection Key | TempKey) </p>
-
 </div>
 </div>
-<a id="aa5a9ad86915dfcef6db90b858690212a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa5a9ad86915dfcef6db90b858690212a">&#9670;&nbsp;</a></span>mac</h2>
+<a id="a7441ef0865bcb3db9b8064dd7375c1ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7441ef0865bcb3db9b8064dd7375c1ea">&#9670;&nbsp;</a></span>id</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* mac</td>
+          <td class="memname">int id</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>MAC is returned here. </p>
-
 </div>
 </div>
-<a id="a37e90f5e3bd99fac2021fb3a326607d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37e90f5e3bd99fac2021fb3a326607d4">&#9670;&nbsp;</a></span>mode</h2>
+<a id="ad72ba8c994f4d0e5ce354e17f7c427c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad72ba8c994f4d0e5ce354e17f7c427c0">&#9670;&nbsp;</a></span>ref_ct</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t mode</td>
+          <td class="memname">int ref_ct</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>SecureBoot mode (param1) </p>
-
 </div>
 </div>
-<a id="a16a7565b150a9c17a39c80fc932b9514"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a16a7565b150a9c17a39c80fc932b9514">&#9670;&nbsp;</a></span>param2</h2>
+<a id="a3592aa831cd642b3e53af87537944d5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3592aa831cd642b3e53af87537944d5a">&#9670;&nbsp;</a></span>twi_id</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t param2</td>
+          <td class="memname">uint8_t twi_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>SecureBoot param2. </p>
-
 </div>
 </div>
-<a id="a6abd57960eb27eecadcf1163a1441fb1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6abd57960eb27eecadcf1163a1441fb1">&#9670;&nbsp;</a></span>secure_boot_config</h2>
+<a id="a9f03d6b609fdcf7623a985087e4bdc31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f03d6b609fdcf7623a985087e4bdc31">&#9670;&nbsp;</a></span>twi_master_instance</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t secure_boot_config</td>
+          <td class="memname">avr32_twi_t* twi_master_instance</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>SecureBootConfig value from configuration zone. </p>
-
-</div>
-</div>
-<a id="a35388d4dff80916a7409fd0554ac58b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35388d4dff80916a7409fd0554ac58b6">&#9670;&nbsp;</a></span>signature</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const uint8_t* signature</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Signature (can be NULL if not required) </p>
 
 </div>
 </div>
@@ -235,7 +203,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02533.html">atca_secureboot_mac_in_out</a></li>
+    <li class="navelem"><a class="el" href="a02533.html">atcaI2Cmaster</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

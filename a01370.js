@@ -1,5 +1,6 @@
 var a01370 =
 [
-    [ "atca_delay_ms", "a01370.html#a4b83848e938fac7ec4dde79e584b6f71", null ],
-    [ "ets_delay_us", "a01370.html#a7def86f0fbd90b451847d8534f21f5dc", null ]
+    [ "atca_delay_10us", "a02400.html#ga19891182689551cc3a88603135959351", null ],
+    [ "atca_delay_ms", "a02400.html#ga0544f36422b5e9a8890fb9c90fc5eb55", null ],
+    [ "atca_delay_us", "a02400.html#ga7598dfcd6dcac882836544d48356d02f", null ]
 ];

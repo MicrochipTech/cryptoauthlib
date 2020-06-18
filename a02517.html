@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_nonce_in_out Struct Reference</title>
+<title>CryptoAuthLib: CL_HashContext Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,41 +87,86 @@ $(document).ready(function(){initNavTree('a02517.html',''); initResizable(); });
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atca_nonce_in_out Struct Reference<div class="ingroups"><a class="el" href="a02341.html">Host side crypto methods (atcah_)</a></div></div>  </div>
+<div class="title">CL_HashContext Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Input/output parameters for function atca_nonce().  
- <a href="a02517.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="a01424_source.html">atca_host.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a01280_source.html">sha1_routines.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ga1a6b6fb557d8d37d59700faf4e4c9167"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02341.html#ga1a6b6fb557d8d37d59700faf4e4c9167">mode</a></td></tr>
-<tr class="memdesc:ga1a6b6fb557d8d37d59700faf4e4c9167"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Mode parameter used in Nonce command (Param1).  <a href="a02341.html#ga1a6b6fb557d8d37d59700faf4e4c9167">More...</a><br /></td></tr>
-<tr class="separator:ga1a6b6fb557d8d37d59700faf4e4c9167"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga876993158b491f4626155b468ffb6edc"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02341.html#ga876993158b491f4626155b468ffb6edc">zero</a></td></tr>
-<tr class="memdesc:ga876993158b491f4626155b468ffb6edc"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Zero parameter used in Nonce command (Param2).  <a href="a02341.html#ga876993158b491f4626155b468ffb6edc">More...</a><br /></td></tr>
-<tr class="separator:ga876993158b491f4626155b468ffb6edc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga02a9d64ea363dc3b231b8cc0b317de8a"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02341.html#ga02a9d64ea363dc3b231b8cc0b317de8a">num_in</a></td></tr>
-<tr class="memdesc:ga02a9d64ea363dc3b231b8cc0b317de8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 20-byte NumIn data used in Nonce command.  <a href="a02341.html#ga02a9d64ea363dc3b231b8cc0b317de8a">More...</a><br /></td></tr>
-<tr class="separator:ga02a9d64ea363dc3b231b8cc0b317de8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga75f7197e2840bcf9fe00722e739fdd9c"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02341.html#ga75f7197e2840bcf9fe00722e739fdd9c">rand_out</a></td></tr>
-<tr class="memdesc:ga75f7197e2840bcf9fe00722e739fdd9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 32-byte RandOut data from Nonce command.  <a href="a02341.html#ga75f7197e2840bcf9fe00722e739fdd9c">More...</a><br /></td></tr>
-<tr class="separator:ga75f7197e2840bcf9fe00722e739fdd9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa17e031da4b22938bed1c21161ba371a"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a02509.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02341.html#gaa17e031da4b22938bed1c21161ba371a">temp_key</a></td></tr>
-<tr class="memdesc:gaa17e031da4b22938bed1c21161ba371a"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in,out] Pointer to TempKey structure.  <a href="a02341.html#gaa17e031da4b22938bed1c21161ba371a">More...</a><br /></td></tr>
-<tr class="separator:gaa17e031da4b22938bed1c21161ba371a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70819d8d63ba6620211984d432fd89ad"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02517.html#a70819d8d63ba6620211984d432fd89ad">h</a> [20/4]</td></tr>
+<tr class="separator:a70819d8d63ba6620211984d432fd89ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad129019065c848df2daa8c524faf8102"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02517.html#ad129019065c848df2daa8c524faf8102">buf</a> [64/4]</td></tr>
+<tr class="separator:ad129019065c848df2daa8c524faf8102"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab2b8d46fc5660a5ab68496fe0d7d16b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02517.html#aab2b8d46fc5660a5ab68496fe0d7d16b">byteCount</a></td></tr>
+<tr class="separator:aab2b8d46fc5660a5ab68496fe0d7d16b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64c87717f7dbc11cbc3b189f59a04604"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02517.html#a64c87717f7dbc11cbc3b189f59a04604">byteCountHi</a></td></tr>
+<tr class="separator:a64c87717f7dbc11cbc3b189f59a04604"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input/output parameters for function atca_nonce(). </p>
-</div></div><!-- contents -->
+<h2 class="groupheader">Field Documentation</h2>
+<a id="ad129019065c848df2daa8c524faf8102"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad129019065c848df2daa8c524faf8102">&#9670;&nbsp;</a></span>buf</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t buf[64/4]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aab2b8d46fc5660a5ab68496fe0d7d16b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab2b8d46fc5660a5ab68496fe0d7d16b">&#9670;&nbsp;</a></span>byteCount</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t byteCount</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a64c87717f7dbc11cbc3b189f59a04604"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64c87717f7dbc11cbc3b189f59a04604">&#9670;&nbsp;</a></span>byteCountHi</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t byteCountHi</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a70819d8d63ba6620211984d432fd89ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70819d8d63ba6620211984d432fd89ad">&#9670;&nbsp;</a></span>h</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t h[20/4]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02517.html">atca_nonce_in_out</a></li>
+    <li class="navelem"><a class="el" href="a02517.html">CL_HashContext</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

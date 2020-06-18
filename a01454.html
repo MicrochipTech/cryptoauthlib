@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_windows.c File Reference</title>
+<title>CryptoAuthLib: pkcs11.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,48 +85,154 @@ $(document).ready(function(){initNavTree('a01454.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">hal_windows.c File Reference</div>  </div>
+<div class="title">pkcs11.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>ATCA Hardware abstraction layer for windows timer functions.  
-<a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;windows.h&gt;</code><br />
-<code>#include &lt;math.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a01352_source.html">atca_hal.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga7e9019810ba5ab81b256282392cd5079"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga7e9019810ba5ab81b256282392cd5079">hal_delay_us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga7e9019810ba5ab81b256282392cd5079"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of microseconds.  <a href="a07533.html#ga7e9019810ba5ab81b256282392cd5079">More...</a><br /></td></tr>
-<tr class="separator:ga7e9019810ba5ab81b256282392cd5079"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa7df07f9efb18d8cef1d9602372aca8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#gaa7df07f9efb18d8cef1d9602372aca8c">hal_delay_10us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:gaa7df07f9efb18d8cef1d9602372aca8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of tens of microseconds.  <a href="a07533.html#gaa7df07f9efb18d8cef1d9602372aca8c">More...</a><br /></td></tr>
-<tr class="separator:gaa7df07f9efb18d8cef1d9602372aca8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#gadc23b8130e72a445f76c68d62e8c95c5">hal_delay_ms</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:gadc23b8130e72a445f76c68d62e8c95c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of milliseconds.  <a href="a07533.html#gadc23b8130e72a445f76c68d62e8c95c5">More...</a><br /></td></tr>
-<tr class="separator:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab289a3949663589ac6be71d72fb18278"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#gab289a3949663589ac6be71d72fb18278">hal_create_mutex</a> (void **ppMutex, char *pName)</td></tr>
-<tr class="memdesc:gab289a3949663589ac6be71d72fb18278"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional hal interfaces.  <a href="a07533.html#gab289a3949663589ac6be71d72fb18278">More...</a><br /></td></tr>
-<tr class="separator:gab289a3949663589ac6be71d72fb18278"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga4589d7b3e951f40b7928f1cf31f7ddf3">hal_destroy_mutex</a> (void *pMutex)</td></tr>
-<tr class="separator:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#gad4cd02ff7ae4e75844eab4e84eb61994">hal_lock_mutex</a> (void *pMutex)</td></tr>
-<tr class="separator:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31fd8170a49623686543f6247b883bd1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07533.html#ga31fd8170a49623686543f6247b883bd1">hal_unlock_mutex</a> (void *pMutex)</td></tr>
-<tr class="separator:ga31fd8170a49623686543f6247b883bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><code>#include &quot;<a class="el" href="a01565_source.html">pkcs11t.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01562_source.html">pkcs11f.h</a>&quot;</code><br />
+</div>
+<p><a href="a01454_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02645.html">CK_FUNCTION_LIST</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ac3ae5768889bec57a63f08b6a6e5f58d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01454.html#ac3ae5768889bec57a63f08b6a6e5f58d">__PASTE</a>(x,  y)&#160;&#160;&#160;x ## y</td></tr>
+<tr class="separator:ac3ae5768889bec57a63f08b6a6e5f58d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a427a6a11246534e2c0d569e21cc854b9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01454.html#a427a6a11246534e2c0d569e21cc854b9">CK_NEED_ARG_LIST</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a427a6a11246534e2c0d569e21cc854b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac496f7959ba2c28cd7a2b5f5ac34628b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01454.html#ac496f7959ba2c28cd7a2b5f5ac34628b">CK_PKCS11_FUNCTION_INFO</a>(name)&#160;&#160;&#160;extern <a class="el" href="a01451.html#a30315d302108bcfb354196f37b16a492">CK_DECLARE_FUNCTION</a>(<a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>, name)</td></tr>
+<tr class="separator:ac496f7959ba2c28cd7a2b5f5ac34628b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a427a6a11246534e2c0d569e21cc854b9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01454.html#a427a6a11246534e2c0d569e21cc854b9">CK_NEED_ARG_LIST</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a427a6a11246534e2c0d569e21cc854b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac496f7959ba2c28cd7a2b5f5ac34628b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01454.html#ac496f7959ba2c28cd7a2b5f5ac34628b">CK_PKCS11_FUNCTION_INFO</a>(name)&#160;&#160;&#160;typedef <a class="el" href="a01451.html#aad472a68fb8e3eb9ba40169f5180b3b7">CK_DECLARE_FUNCTION_POINTER</a> (<a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>, <a class="el" href="a01454.html#ac3ae5768889bec57a63f08b6a6e5f58d">__PASTE</a> (CK_, name))</td></tr>
+<tr class="separator:ac496f7959ba2c28cd7a2b5f5ac34628b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac496f7959ba2c28cd7a2b5f5ac34628b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01454.html#ac496f7959ba2c28cd7a2b5f5ac34628b">CK_PKCS11_FUNCTION_INFO</a>(name)&#160;&#160;&#160;<a class="el" href="a01454.html#ac3ae5768889bec57a63f08b6a6e5f58d">__PASTE</a>(CK_, name) name;</td></tr>
+<tr class="separator:ac496f7959ba2c28cd7a2b5f5ac34628b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for windows timer functions. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ac3ae5768889bec57a63f08b6a6e5f58d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3ae5768889bec57a63f08b6a6e5f58d">&#9670;&nbsp;</a></span>__PASTE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __PASTE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">y&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;x ## y</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a427a6a11246534e2c0d569e21cc854b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a427a6a11246534e2c0d569e21cc854b9">&#9670;&nbsp;</a></span>CK_NEED_ARG_LIST <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CK_NEED_ARG_LIST&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a427a6a11246534e2c0d569e21cc854b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a427a6a11246534e2c0d569e21cc854b9">&#9670;&nbsp;</a></span>CK_NEED_ARG_LIST <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CK_NEED_ARG_LIST&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac496f7959ba2c28cd7a2b5f5ac34628b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac496f7959ba2c28cd7a2b5f5ac34628b">&#9670;&nbsp;</a></span>CK_PKCS11_FUNCTION_INFO <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CK_PKCS11_FUNCTION_INFO</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name</td><td>)</td>
+          <td>&#160;&#160;&#160;extern <a class="el" href="a01451.html#a30315d302108bcfb354196f37b16a492">CK_DECLARE_FUNCTION</a>(<a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>, name)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac496f7959ba2c28cd7a2b5f5ac34628b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac496f7959ba2c28cd7a2b5f5ac34628b">&#9670;&nbsp;</a></span>CK_PKCS11_FUNCTION_INFO <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CK_PKCS11_FUNCTION_INFO</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name</td><td>)</td>
+          <td>&#160;&#160;&#160;typedef <a class="el" href="a01451.html#aad472a68fb8e3eb9ba40169f5180b3b7">CK_DECLARE_FUNCTION_POINTER</a> (<a class="el" href="a01565.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>, <a class="el" href="a01454.html#ac3ae5768889bec57a63f08b6a6e5f58d">__PASTE</a> (CK_, name))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac496f7959ba2c28cd7a2b5f5ac34628b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac496f7959ba2c28cd7a2b5f5ac34628b">&#9670;&nbsp;</a></span>CK_PKCS11_FUNCTION_INFO <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CK_PKCS11_FUNCTION_INFO</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name</td><td>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="a01454.html#ac3ae5768889bec57a63f08b6a6e5f58d">__PASTE</a>(CK_, name) name;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_36432077327cc0f3c76187c9e6e34627.html">hal</a></li><li class="navelem"><a class="el" href="a01454.html">hal_windows.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_6682b35b7acdc4aaff3ce21f801977b3.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01454.html">pkcs11.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

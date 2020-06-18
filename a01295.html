@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_crypto_hw_aes_cbc.c File Reference</title>
+<title>CryptoAuthLib: atca_hal.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,41 +87,39 @@ $(document).ready(function(){initNavTree('a01295.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_crypto_hw_aes_cbc.c File Reference</div>  </div>
+<div class="title">atca_hal.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for AES CBC mode.  
+<p>low-level HAL - methods used to setup indirection to physical layer interface. this level does the dirty work of abstracting the higher level ATCAIFace methods from the low-level physical interfaces. Its main goal is to keep low-level details from bleeding into the logical interface implemetation.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01343_source.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01292_source.html">atca_crypto_hw_aes.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a01289_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01298_source.html">atca_hal.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga13efae9f9f9c7aa5c5647119b0f3d1cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07525.html#ga13efae9f9f9c7aa5c5647119b0f3d1cb">atcab_aes_cbc_init_ext</a> (<a class="el" href="a07528.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a01292.html#a927afea55b7a5011e14795d735b47ad7">atca_aes_cbc_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block, const uint8_t *iv)</td></tr>
-<tr class="memdesc:ga13efae9f9f9c7aa5c5647119b0f3d1cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for AES CBC operation.  <a href="a07525.html#ga13efae9f9f9c7aa5c5647119b0f3d1cb">More...</a><br /></td></tr>
-<tr class="separator:ga13efae9f9f9c7aa5c5647119b0f3d1cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabc41b824cdc9b10efa46bcbf74850184"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07525.html#gabc41b824cdc9b10efa46bcbf74850184">atcab_aes_cbc_init</a> (<a class="el" href="a01292.html#a927afea55b7a5011e14795d735b47ad7">atca_aes_cbc_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block, const uint8_t *iv)</td></tr>
-<tr class="memdesc:gabc41b824cdc9b10efa46bcbf74850184"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for AES CBC operation.  <a href="a07525.html#gabc41b824cdc9b10efa46bcbf74850184">More...</a><br /></td></tr>
-<tr class="separator:gabc41b824cdc9b10efa46bcbf74850184"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7414e3dc8215cedc1bffc6cf576d7d1e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07525.html#ga7414e3dc8215cedc1bffc6cf576d7d1e">atcab_aes_cbc_encrypt_block</a> (<a class="el" href="a01292.html#a927afea55b7a5011e14795d735b47ad7">atca_aes_cbc_ctx_t</a> *ctx, const uint8_t *plaintext, uint8_t *ciphertext)</td></tr>
-<tr class="memdesc:ga7414e3dc8215cedc1bffc6cf576d7d1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypt a block of data using CBC mode and a key within the device. <a class="el" href="a07525.html#gabc41b824cdc9b10efa46bcbf74850184" title="Initialize context for AES CBC operation.">atcab_aes_cbc_init()</a> should be called before the first use of this function.  <a href="a07525.html#ga7414e3dc8215cedc1bffc6cf576d7d1e">More...</a><br /></td></tr>
-<tr class="separator:ga7414e3dc8215cedc1bffc6cf576d7d1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7c66e1b8b31bb87be3de6c9a9084c21e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07525.html#ga7c66e1b8b31bb87be3de6c9a9084c21e">atcab_aes_cbc_decrypt_block</a> (<a class="el" href="a01292.html#a927afea55b7a5011e14795d735b47ad7">atca_aes_cbc_ctx_t</a> *ctx, const uint8_t *ciphertext, uint8_t *plaintext)</td></tr>
-<tr class="memdesc:ga7c66e1b8b31bb87be3de6c9a9084c21e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypt a block of data using CBC mode and a key within the device. <a class="el" href="a07525.html#gabc41b824cdc9b10efa46bcbf74850184" title="Initialize context for AES CBC operation.">atcab_aes_cbc_init()</a> should be called before the first use of this function.  <a href="a07525.html#ga7c66e1b8b31bb87be3de6c9a9084c21e">More...</a><br /></td></tr>
-<tr class="separator:ga7c66e1b8b31bb87be3de6c9a9084c21e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab464e383eb0e94ed0cb2c6746c8fd5a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02400.html#gab464e383eb0e94ed0cb2c6746c8fd5a6">hal_iface_register_hal</a> (<a class="el" href="a02396.html#gac7f674d4a0afb12d2f3c9c5e98cb1089">ATCAIfaceType</a> iface_type, <a class="el" href="a02525.html">ATCAHAL_t</a> *hal, <a class="el" href="a02525.html">ATCAHAL_t</a> **old)</td></tr>
+<tr class="memdesc:gab464e383eb0e94ed0cb2c6746c8fd5a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register/Replace a HAL with a.  <a href="a02400.html#gab464e383eb0e94ed0cb2c6746c8fd5a6">More...</a><br /></td></tr>
+<tr class="separator:gab464e383eb0e94ed0cb2c6746c8fd5a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga16cd484ad27e94872f9eec83f85153ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02400.html#ga16cd484ad27e94872f9eec83f85153ce">hal_iface_init</a> (<a class="el" href="a02429.html">ATCAIfaceCfg</a> *cfg, <a class="el" href="a02525.html">ATCAHAL_t</a> **hal)</td></tr>
+<tr class="memdesc:ga16cd484ad27e94872f9eec83f85153ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard HAL API for ATCA to initialize a physical interface.  <a href="a02400.html#ga16cd484ad27e94872f9eec83f85153ce">More...</a><br /></td></tr>
+<tr class="separator:ga16cd484ad27e94872f9eec83f85153ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4be1afccb41f28f6ce620b1d5197befc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02400.html#ga4be1afccb41f28f6ce620b1d5197befc">hal_iface_release</a> (<a class="el" href="a02396.html#gac7f674d4a0afb12d2f3c9c5e98cb1089">ATCAIfaceType</a> iface_type, void *hal_data)</td></tr>
+<tr class="memdesc:ga4be1afccb41f28f6ce620b1d5197befc"><td class="mdescLeft">&#160;</td><td class="mdescRight">releases a physical interface, HAL knows how to interpret hal_data  <a href="a02400.html#ga4be1afccb41f28f6ce620b1d5197befc">More...</a><br /></td></tr>
+<tr class="separator:ga4be1afccb41f28f6ce620b1d5197befc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6ce92f1d10000eb6618fc74c2ca92d76"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02400.html#ga6ce92f1d10000eb6618fc74c2ca92d76">hal_check_wake</a> (const uint8_t *response, int response_size)</td></tr>
+<tr class="memdesc:ga6ce92f1d10000eb6618fc74c2ca92d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility function for hal_wake to check the reply.  <a href="a02400.html#ga6ce92f1d10000eb6618fc74c2ca92d76">More...</a><br /></td></tr>
+<tr class="separator:ga6ce92f1d10000eb6618fc74c2ca92d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for AES CBC mode. </p>
-<p>The AES command supports 128-bit AES encryption or decryption of small messages or data packets in ECB mode.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC608A &amp; TA100. Refer to device datasheet for full details.</dd></dl>
+<div class="textblock"><p>low-level HAL - methods used to setup indirection to physical layer interface. this level does the dirty work of abstracting the higher level ATCAIFace methods from the low-level physical interfaces. Its main goal is to keep low-level details from bleeding into the logical interface implemetation. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_0d284ebe0a46982303565525253d36b8.html">crypto</a></li><li class="navelem"><a class="el" href="a01295.html">atca_crypto_hw_aes_cbc.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_36432077327cc0f3c76187c9e6e34627.html">hal</a></li><li class="navelem"><a class="el" href="a01295.html">atca_hal.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

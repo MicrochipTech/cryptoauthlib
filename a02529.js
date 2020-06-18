@@ -1,8 +1,6 @@
 var a02529 =
 [
-    [ "digest", "a02529.html#aff3a2b64b0d86058508f766de59438d1", null ],
-    [ "digest_enc", "a02529.html#aa9a9b371e24a757dba2cf1f87d03b31e", null ],
-    [ "hashed_key", "a02529.html#a4e3f2b3f58d04cbc9d85d936b039170e", null ],
-    [ "io_key", "a02529.html#a130c5ab3a3f978b77641faa7813aa5d2", null ],
-    [ "temp_key", "a02529.html#a714b07e0515fd9d20714a4fc2a16c03e", null ]
+    [ "kits", "a02529.html#a2bd4dbcb2ab2d6802f2df0d067a4389a", null ],
+    [ "kits", "a02529.html#ab18469d917784316fd480ea543d58fcb", null ],
+    [ "num_kits_found", "a02529.html#a9bb0ee74044865538adfcc5d5ae8f621", null ]
 ];

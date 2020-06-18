@@ -1,8 +1,10 @@
 var a01337 =
 [
-    [ "rotate_right", "a01337.html#af34345520fa258a6a313f03c36c93fbd", null ],
-    [ "sw_sha256", "a01337.html#a90a76445beb1a0eadea22bb7e3c8ad60", null ],
-    [ "sw_sha256_final", "a01337.html#a594b8b10c408cb1103da9c09b1367a51", null ],
-    [ "sw_sha256_init", "a01337.html#acfb7028e6f10d29c548cbecdbfa53ac8", null ],
-    [ "sw_sha256_update", "a01337.html#a4d0c952ebe691b3337205829dc352e6e", null ]
+    [ "hal_create_mutex", "a02400.html#gab289a3949663589ac6be71d72fb18278", null ],
+    [ "hal_delay_10us", "a02400.html#gaa7df07f9efb18d8cef1d9602372aca8c", null ],
+    [ "hal_delay_ms", "a02400.html#gadc23b8130e72a445f76c68d62e8c95c5", null ],
+    [ "hal_delay_us", "a02400.html#ga7e9019810ba5ab81b256282392cd5079", null ],
+    [ "hal_destroy_mutex", "a02400.html#ga4589d7b3e951f40b7928f1cf31f7ddf3", null ],
+    [ "hal_lock_mutex", "a02400.html#gad4cd02ff7ae4e75844eab4e84eb61994", null ],
+    [ "hal_unlock_mutex", "a02400.html#ga31fd8170a49623686543f6247b883bd1", null ]
 ];

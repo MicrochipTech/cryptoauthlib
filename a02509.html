@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_temp_key Struct Reference</title>
+<title>CryptoAuthLib: atca_aes_cmac_ctx Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,170 +87,70 @@ $(document).ready(function(){initNavTree('a02509.html',''); initResizable(); });
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atca_temp_key Struct Reference<div class="ingroups"><a class="el" href="a02341.html">Host side crypto methods (atcah_)</a></div></div>  </div>
+<div class="title">atca_aes_cmac_ctx Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure to hold TempKey fields.  
- <a href="a02509.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="a01424_source.html">atca_host.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a01238_source.html">atca_crypto_hw_aes.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a9d39af90116e75f8805942afa953046f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02509.html#a9d39af90116e75f8805942afa953046f">value</a> [<a class="el" href="a01163.html#a66a410dde8f388c582495ba315284276">ATCA_KEY_SIZE</a> *2]</td></tr>
-<tr class="memdesc:a9d39af90116e75f8805942afa953046f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value of TempKey (64 bytes for ATECC608A only)  <a href="a02509.html#a9d39af90116e75f8805942afa953046f">More...</a><br /></td></tr>
-<tr class="separator:a9d39af90116e75f8805942afa953046f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae687014ee9436f24d700229432e7edfd"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02509.html#ae687014ee9436f24d700229432e7edfd">key_id</a>: 4</td></tr>
-<tr class="memdesc:ae687014ee9436f24d700229432e7edfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">If TempKey was derived from a slot or transport key (GenDig or GenKey), that key ID is saved here.  <a href="a02509.html#ae687014ee9436f24d700229432e7edfd">More...</a><br /></td></tr>
-<tr class="separator:ae687014ee9436f24d700229432e7edfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ffc3c1a03eda290c709dc78b7e8b51e"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02509.html#a2ffc3c1a03eda290c709dc78b7e8b51e">source_flag</a>: 1</td></tr>
-<tr class="memdesc:a2ffc3c1a03eda290c709dc78b7e8b51e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates id TempKey started from a random nonce (0) or not (1).  <a href="a02509.html#a2ffc3c1a03eda290c709dc78b7e8b51e">More...</a><br /></td></tr>
-<tr class="separator:a2ffc3c1a03eda290c709dc78b7e8b51e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ea476753a7de128cb33adb56e0692c6"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02509.html#a0ea476753a7de128cb33adb56e0692c6">gen_dig_data</a>: 1</td></tr>
-<tr class="memdesc:a0ea476753a7de128cb33adb56e0692c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">TempKey was derived from the GenDig command.  <a href="a02509.html#a0ea476753a7de128cb33adb56e0692c6">More...</a><br /></td></tr>
-<tr class="separator:a0ea476753a7de128cb33adb56e0692c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f0f70b7f0590654fde170e1e392b4f7"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02509.html#a1f0f70b7f0590654fde170e1e392b4f7">gen_key_data</a>: 1</td></tr>
-<tr class="memdesc:a1f0f70b7f0590654fde170e1e392b4f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">TempKey was derived from the GenKey command (ATECC devices only).  <a href="a02509.html#a1f0f70b7f0590654fde170e1e392b4f7">More...</a><br /></td></tr>
-<tr class="separator:a1f0f70b7f0590654fde170e1e392b4f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e432dd218a88686e01e0c43cda30d2b"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02509.html#a7e432dd218a88686e01e0c43cda30d2b">no_mac_flag</a>: 1</td></tr>
-<tr class="memdesc:a7e432dd218a88686e01e0c43cda30d2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">TempKey was derived from a key that has the NoMac bit set preventing the use of the MAC command. Known as CheckFlag in ATSHA devices).  <a href="a02509.html#a7e432dd218a88686e01e0c43cda30d2b">More...</a><br /></td></tr>
-<tr class="separator:a7e432dd218a88686e01e0c43cda30d2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b455a7e89f8a891cd7e3b66d1b17b67"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02509.html#a6b455a7e89f8a891cd7e3b66d1b17b67">valid</a>: 1</td></tr>
-<tr class="memdesc:a6b455a7e89f8a891cd7e3b66d1b17b67"><td class="mdescLeft">&#160;</td><td class="mdescRight">TempKey is valid.  <a href="a02509.html#a6b455a7e89f8a891cd7e3b66d1b17b67">More...</a><br /></td></tr>
-<tr class="separator:a6b455a7e89f8a891cd7e3b66d1b17b67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f6d684924e3635e6e57441b66b98978"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02509.html#a3f6d684924e3635e6e57441b66b98978">is_64</a></td></tr>
-<tr class="memdesc:a3f6d684924e3635e6e57441b66b98978"><td class="mdescLeft">&#160;</td><td class="mdescRight">TempKey has 64 bytes of valid data.  <a href="a02509.html#a3f6d684924e3635e6e57441b66b98978">More...</a><br /></td></tr>
-<tr class="separator:a3f6d684924e3635e6e57441b66b98978"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9246ae6d7229247b3e9b5e540a26ac05"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01238.html#a927afea55b7a5011e14795d735b47ad7">atca_aes_cbc_ctx_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02509.html#a9246ae6d7229247b3e9b5e540a26ac05">cbc_ctx</a></td></tr>
+<tr class="memdesc:a9246ae6d7229247b3e9b5e540a26ac05"><td class="mdescLeft">&#160;</td><td class="mdescRight">CBC context.  <a href="a02509.html#a9246ae6d7229247b3e9b5e540a26ac05">More...</a><br /></td></tr>
+<tr class="separator:a9246ae6d7229247b3e9b5e540a26ac05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e3fb1e50a1c71b2337df296222d9553"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02509.html#a9e3fb1e50a1c71b2337df296222d9553">block_size</a></td></tr>
+<tr class="memdesc:a9e3fb1e50a1c71b2337df296222d9553"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes in current block.  <a href="a02509.html#a9e3fb1e50a1c71b2337df296222d9553">More...</a><br /></td></tr>
+<tr class="separator:a9e3fb1e50a1c71b2337df296222d9553"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab28b7d8b40bb6cfe6d6ac2af4958cb1a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02509.html#ab28b7d8b40bb6cfe6d6ac2af4958cb1a">block</a> [<a class="el" href="a01289.html#a71e52612e6d56f7412a113fcc4fb57d4">ATCA_AES128_BLOCK_SIZE</a>]</td></tr>
+<tr class="memdesc:ab28b7d8b40bb6cfe6d6ac2af4958cb1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unprocessed message storage.  <a href="a02509.html#ab28b7d8b40bb6cfe6d6ac2af4958cb1a">More...</a><br /></td></tr>
+<tr class="separator:ab28b7d8b40bb6cfe6d6ac2af4958cb1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure to hold TempKey fields. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a id="a0ea476753a7de128cb33adb56e0692c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ea476753a7de128cb33adb56e0692c6">&#9670;&nbsp;</a></span>gen_dig_data</h2>
+<h2 class="groupheader">Field Documentation</h2>
+<a id="ab28b7d8b40bb6cfe6d6ac2af4958cb1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab28b7d8b40bb6cfe6d6ac2af4958cb1a">&#9670;&nbsp;</a></span>block</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned gen_dig_data</td>
+          <td class="memname">uint8_t block[<a class="el" href="a01289.html#a71e52612e6d56f7412a113fcc4fb57d4">ATCA_AES128_BLOCK_SIZE</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>TempKey was derived from the GenDig command. </p>
+<p>Unprocessed message storage. </p>
 
 </div>
 </div>
-<a id="a1f0f70b7f0590654fde170e1e392b4f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1f0f70b7f0590654fde170e1e392b4f7">&#9670;&nbsp;</a></span>gen_key_data</h2>
+<a id="a9e3fb1e50a1c71b2337df296222d9553"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e3fb1e50a1c71b2337df296222d9553">&#9670;&nbsp;</a></span>block_size</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned gen_key_data</td>
+          <td class="memname">uint32_t block_size</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>TempKey was derived from the GenKey command (ATECC devices only). </p>
+<p>Number of bytes in current block. </p>
 
 </div>
 </div>
-<a id="a3f6d684924e3635e6e57441b66b98978"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f6d684924e3635e6e57441b66b98978">&#9670;&nbsp;</a></span>is_64</h2>
+<a id="a9246ae6d7229247b3e9b5e540a26ac05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9246ae6d7229247b3e9b5e540a26ac05">&#9670;&nbsp;</a></span>cbc_ctx</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t is_64</td>
+          <td class="memname"><a class="el" href="a01238.html#a927afea55b7a5011e14795d735b47ad7">atca_aes_cbc_ctx_t</a> cbc_ctx</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>TempKey has 64 bytes of valid data. </p>
-
-</div>
-</div>
-<a id="ae687014ee9436f24d700229432e7edfd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae687014ee9436f24d700229432e7edfd">&#9670;&nbsp;</a></span>key_id</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned key_id</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>If TempKey was derived from a slot or transport key (GenDig or GenKey), that key ID is saved here. </p>
-
-</div>
-</div>
-<a id="a7e432dd218a88686e01e0c43cda30d2b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e432dd218a88686e01e0c43cda30d2b">&#9670;&nbsp;</a></span>no_mac_flag</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned no_mac_flag</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>TempKey was derived from a key that has the NoMac bit set preventing the use of the MAC command. Known as CheckFlag in ATSHA devices). </p>
-
-</div>
-</div>
-<a id="a2ffc3c1a03eda290c709dc78b7e8b51e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ffc3c1a03eda290c709dc78b7e8b51e">&#9670;&nbsp;</a></span>source_flag</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned source_flag</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Indicates id TempKey started from a random nonce (0) or not (1). </p>
-
-</div>
-</div>
-<a id="a6b455a7e89f8a891cd7e3b66d1b17b67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b455a7e89f8a891cd7e3b66d1b17b67">&#9670;&nbsp;</a></span>valid</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned valid</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>TempKey is valid. </p>
-
-</div>
-</div>
-<a id="a9d39af90116e75f8805942afa953046f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9d39af90116e75f8805942afa953046f">&#9670;&nbsp;</a></span>value</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t value[<a class="el" href="a01163.html#a66a410dde8f388c582495ba315284276">ATCA_KEY_SIZE</a> *2]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Value of TempKey (64 bytes for ATECC608A only) </p>
+<p>CBC context. </p>
 
 </div>
 </div>
@@ -259,7 +159,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02509.html">atca_temp_key</a></li>
+    <li class="navelem"><a class="el" href="a02509.html">atca_aes_cmac_ctx</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

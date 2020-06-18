@@ -1,5 +1,6 @@
 var a02829 =
 [
-    [ "cb", "a02829.html#a5aec444b400754a955b5f3ee31383579", null ],
-    [ "ulCounterBits", "a02829.html#a05c0d9d7bae9600e2ddd08d87c5f1657", null ]
+    [ "hKey", "a02829.html#a569917f6c37fe21336a3e1d9fcb77277", null ],
+    [ "hMacSecret", "a02829.html#adcdd17469e38c3cbfff41f88ed6fafbc", null ],
+    [ "pIV", "a02829.html#aa37bdbe535987b5e013607006a10fe62", null ]
 ];

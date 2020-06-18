@@ -1,10 +1,6 @@
 var a01391 =
 [
-    [ "hal_create_mutex", "a07533.html#gab289a3949663589ac6be71d72fb18278", null ],
-    [ "hal_delay_10us", "a07533.html#gaa7df07f9efb18d8cef1d9602372aca8c", null ],
-    [ "hal_delay_ms", "a07533.html#gadc23b8130e72a445f76c68d62e8c95c5", null ],
-    [ "hal_delay_us", "a07533.html#ga7e9019810ba5ab81b256282392cd5079", null ],
-    [ "hal_destroy_mutex", "a07533.html#ga4589d7b3e951f40b7928f1cf31f7ddf3", null ],
-    [ "hal_lock_mutex", "a07533.html#gad4cd02ff7ae4e75844eab4e84eb61994", null ],
-    [ "hal_unlock_mutex", "a07533.html#ga31fd8170a49623686543f6247b883bd1", null ]
+    [ "atca_delay_10us", "a02400.html#ga19891182689551cc3a88603135959351", null ],
+    [ "atca_delay_ms", "a02400.html#ga0544f36422b5e9a8890fb9c90fc5eb55", null ],
+    [ "atca_delay_us", "a02400.html#ga7598dfcd6dcac882836544d48356d02f", null ]
 ];

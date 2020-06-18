@@ -1,6 +1,7 @@
 var a02581 =
 [
-    [ "buf", "a02581.html#a1fe855c208bc17a51a4d34fefdb2d5b1", null ],
-    [ "buflen", "a02581.html#a892366b22e8ea42d95e49308022eef4d", null ],
-    [ "cur", "a02581.html#aee7e8f6f5f1a4b5b402473cf99d3042a", null ]
+    [ "data", "a02581.html#abe222f6d3581e7920dcad5306cc906a8", null ],
+    [ "data_size", "a02581.html#ad6bc120bffc64dfc5230863a8ba96596", null ],
+    [ "io_key", "a02581.html#a130c5ab3a3f978b77641faa7813aa5d2", null ],
+    [ "out_nonce", "a02581.html#a70a057043fcc9f4dc22455f6df43d710", null ]
 ];

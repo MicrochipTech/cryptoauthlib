@@ -1,15 +1,10 @@
 var a02609 =
 [
-    [ "active_object", "a02609.html#a7a40f8323d808232817b70acc58112d0", null ],
-    [ "attrib_count", "a02609.html#a93c255adcc4d76366af3cfde6b18faaa", null ],
-    [ "attrib_list", "a02609.html#a89a668d83c5fbcd422bf727f6fa1971b", null ],
-    [ "error", "a02609.html#aa71801867b929b0b67bbf658967d27d4", null ],
-    [ "handle", "a02609.html#a48777f0b0a0b56141bd6a03e992ed893", null ],
-    [ "initialized", "a02609.html#a1160c303d9370f4187e6f48d6ac336c1", null ],
-    [ "logged_in", "a02609.html#a2539b0d6a45d7cd1796cbfc7890b3540", null ],
-    [ "object_count", "a02609.html#a87d388953ff8b277843b13faca78beeb", null ],
-    [ "object_index", "a02609.html#a4b3c004db0bdd022af57a97c624df438", null ],
-    [ "read_key", "a02609.html#a578db367a160ec9c6c7169442b70aeac", null ],
-    [ "slot", "a02609.html#a6284cb4cba404c572c2911394e9150db", null ],
-    [ "state", "a02609.html#a1940765200d80bc2f37ec2335d2ac185", null ]
+    [ "auth_mac", "a02609.html#a9f11512564ff4aeaf5f9d0646d971ed2", null ],
+    [ "encrypted_data", "a02609.html#a8c2a094baeab96152cea462ba9677887", null ],
+    [ "input_data", "a02609.html#a699b6e4448b505a2664025ccca3522f5", null ],
+    [ "key_id", "a02609.html#ac21eed4200889cc115d16a781871d01c", null ],
+    [ "sn", "a02609.html#aef45bac2efcd5394c4ed79f73ee16d23", null ],
+    [ "temp_key", "a02609.html#a72fae3d62889ef224f09c57a7646e061", null ],
+    [ "zone", "a02609.html#ac746c3d65092170bfaf5b0d9950d8438", null ]
 ];

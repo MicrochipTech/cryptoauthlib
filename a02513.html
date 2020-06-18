@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_include_data_in_out Struct Reference</title>
+<title>CryptoAuthLib: atca_aes_ctr_ctx Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,43 +87,108 @@ $(document).ready(function(){initNavTree('a02513.html',''); initResizable(); });
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">atca_include_data_in_out Struct Reference<div class="ingroups"><a class="el" href="a02341.html">Host side crypto methods (atcah_)</a></div></div>  </div>
+<div class="title">atca_aes_ctr_ctx Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Input / output parameters for function atca_include_data().  
- <a href="a02513.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="a01424_source.html">atca_host.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a01238_source.html">atca_crypto_hw_aes.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:gad87f95f0faf0c6fdfe94040efcb14860"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02341.html#gad87f95f0faf0c6fdfe94040efcb14860">p_temp</a></td></tr>
-<tr class="memdesc:gad87f95f0faf0c6fdfe94040efcb14860"><td class="mdescLeft">&#160;</td><td class="mdescRight">[out] pointer to output buffer  <a href="a02341.html#gad87f95f0faf0c6fdfe94040efcb14860">More...</a><br /></td></tr>
-<tr class="separator:gad87f95f0faf0c6fdfe94040efcb14860"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8712cb73a4d6b370658d8bc9a77fba3e"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02341.html#ga8712cb73a4d6b370658d8bc9a77fba3e">otp</a></td></tr>
-<tr class="memdesc:ga8712cb73a4d6b370658d8bc9a77fba3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] pointer to one-time-programming data  <a href="a02341.html#ga8712cb73a4d6b370658d8bc9a77fba3e">More...</a><br /></td></tr>
-<tr class="separator:ga8712cb73a4d6b370658d8bc9a77fba3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7276bd20c5842e712da638d25ceb6d92"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02341.html#ga7276bd20c5842e712da638d25ceb6d92">sn</a></td></tr>
-<tr class="memdesc:ga7276bd20c5842e712da638d25ceb6d92"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] pointer to serial number data  <a href="a02341.html#ga7276bd20c5842e712da638d25ceb6d92">More...</a><br /></td></tr>
-<tr class="separator:ga7276bd20c5842e712da638d25ceb6d92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37e90f5e3bd99fac2021fb3a326607d4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02513.html#a37e90f5e3bd99fac2021fb3a326607d4">mode</a></td></tr>
-<tr class="separator:a37e90f5e3bd99fac2021fb3a326607d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a564f8446306dcd02184ff973a1c671c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02513.html#a564f8446306dcd02184ff973a1c671c2">device</a></td></tr>
+<tr class="memdesc:a564f8446306dcd02184ff973a1c671c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Context Pointer.  <a href="a02513.html#a564f8446306dcd02184ff973a1c671c2">More...</a><br /></td></tr>
+<tr class="separator:a564f8446306dcd02184ff973a1c671c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac21eed4200889cc115d16a781871d01c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02513.html#ac21eed4200889cc115d16a781871d01c">key_id</a></td></tr>
+<tr class="memdesc:ac21eed4200889cc115d16a781871d01c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key location. Can either be a slot number or ATCA_TEMPKEY_KEYID for TempKey.  <a href="a02513.html#ac21eed4200889cc115d16a781871d01c">More...</a><br /></td></tr>
+<tr class="separator:ac21eed4200889cc115d16a781871d01c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ec310210422989027a46428a61fb1c1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02513.html#a2ec310210422989027a46428a61fb1c1">key_block</a></td></tr>
+<tr class="memdesc:a2ec310210422989027a46428a61fb1c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of the 16-byte block to use within the key location for the actual key.  <a href="a02513.html#a2ec310210422989027a46428a61fb1c1">More...</a><br /></td></tr>
+<tr class="separator:a2ec310210422989027a46428a61fb1c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c3cb743c990b8d3449337852b40cf1d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02513.html#a6c3cb743c990b8d3449337852b40cf1d">cb</a> [<a class="el" href="a01289.html#a71e52612e6d56f7412a113fcc4fb57d4">ATCA_AES128_BLOCK_SIZE</a>]</td></tr>
+<tr class="memdesc:a6c3cb743c990b8d3449337852b40cf1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counter block, comprises of nonce + count value (16 bytes).  <a href="a02513.html#a6c3cb743c990b8d3449337852b40cf1d">More...</a><br /></td></tr>
+<tr class="separator:a6c3cb743c990b8d3449337852b40cf1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab645bb8a04ce16b6ab3c843dd4d1c177"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02513.html#ab645bb8a04ce16b6ab3c843dd4d1c177">counter_size</a></td></tr>
+<tr class="memdesc:ab645bb8a04ce16b6ab3c843dd4d1c177"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of counter in the initialization vector.  <a href="a02513.html#ab645bb8a04ce16b6ab3c843dd4d1c177">More...</a><br /></td></tr>
+<tr class="separator:ab645bb8a04ce16b6ab3c843dd4d1c177"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input / output parameters for function atca_include_data(). </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a id="a37e90f5e3bd99fac2021fb3a326607d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37e90f5e3bd99fac2021fb3a326607d4">&#9670;&nbsp;</a></span>mode</h2>
+<h2 class="groupheader">Field Documentation</h2>
+<a id="a6c3cb743c990b8d3449337852b40cf1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c3cb743c990b8d3449337852b40cf1d">&#9670;&nbsp;</a></span>cb</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t mode</td>
+          <td class="memname">uint8_t cb[<a class="el" href="a01289.html#a71e52612e6d56f7412a113fcc4fb57d4">ATCA_AES128_BLOCK_SIZE</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Counter block, comprises of nonce + count value (16 bytes). </p>
+
+</div>
+</div>
+<a id="ab645bb8a04ce16b6ab3c843dd4d1c177"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab645bb8a04ce16b6ab3c843dd4d1c177">&#9670;&nbsp;</a></span>counter_size</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t counter_size</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Size of counter in the initialization vector. </p>
+
+</div>
+</div>
+<a id="a564f8446306dcd02184ff973a1c671c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a564f8446306dcd02184ff973a1c671c2">&#9670;&nbsp;</a></span>device</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Device Context Pointer. </p>
+
+</div>
+</div>
+<a id="a2ec310210422989027a46428a61fb1c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ec310210422989027a46428a61fb1c1">&#9670;&nbsp;</a></span>key_block</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t key_block</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Index of the 16-byte block to use within the key location for the actual key. </p>
+
+</div>
+</div>
+<a id="ac21eed4200889cc115d16a781871d01c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac21eed4200889cc115d16a781871d01c">&#9670;&nbsp;</a></span>key_id</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t key_id</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Key location. Can either be a slot number or ATCA_TEMPKEY_KEYID for TempKey. </p>
 
 </div>
 </div>
@@ -132,7 +197,7 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02513.html">atca_include_data_in_out</a></li>
+    <li class="navelem"><a class="el" href="a02513.html">atca_aes_ctr_ctx</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

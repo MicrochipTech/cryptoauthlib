@@ -1,6 +1,6 @@
 var a02793 =
 [
-    [ "pValue", "a02793.html#a0584f1322464eff525d957753fd09734", null ],
-    [ "type", "a02793.html#abeb3330a90a2509e6d62eb9915f0a360", null ],
-    [ "ulValueLen", "a02793.html#a5f80a21c442e2b07633dbac15714459b", null ]
+    [ "bBC", "a02793.html#ab2faf620b1a87b8aff40aa7863ef23ae", null ],
+    [ "pX", "a02793.html#a0fbadb71e1340059f259d497c06830d8", null ],
+    [ "ulXLen", "a02793.html#a862ba0222874033b65d60dc20602fc56", null ]
 ];

@@ -1,5 +1,6 @@
 var a02893 =
 [
-    [ "cert_def", "a02893.html#abaf4bb65d962f53a31b943c663eaf3b9", null ],
-    [ "otpcode", "a02893.html#ab3a056aaffd074ebfb687441f645e8c9", null ]
+    [ "iv", "a02893.html#a6b26d576d1ca1f3009756bd2c48ffe66", null ],
+    [ "length", "a02893.html#a77c49c75435001694bf7d0434c1605ca", null ],
+    [ "pData", "a02893.html#a2afec599e1873a4d7f34ff1e7acb57ae", null ]
 ];
