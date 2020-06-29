@@ -361,7 +361,7 @@ ATCA_STATUS calib_read_config_zone(ATCADevice device, uint8_t* config_data)
             break;
         }
 
-        if ((_gDevice->mIface->mIfaceCFG->devtype == ATSHA204A) || (_gDevice->mIface->mIfaceCFG->devtype == ATSHA206A))
+        if ((device->mIface->mIfaceCFG->devtype == ATSHA204A) || (device->mIface->mIfaceCFG->devtype == ATSHA206A))
         {
             status = calib_read_bytes_zone(device, ATCA_ZONE_CONFIG, 0, 0x00, config_data, ATCA_SHA_CONFIG_SIZE);
         }
@@ -432,7 +432,7 @@ ATCA_STATUS calib_cmp_config_zone(ATCADevice device, uint8_t* config_data, bool*
             break;
         }
 
-        if (_gDevice->mIface->mIfaceCFG->devtype == ATECC608A)
+        if (device->mIface->mIfaceCFG->devtype == ATECC608A)
         {
             /* Skip Counter[0], Counter[1], which can change during operation */
 

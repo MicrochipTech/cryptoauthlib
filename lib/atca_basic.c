@@ -78,7 +78,7 @@ ATCA_STATUS atcab_init_ext(ATCADevice* device, ATCAIfaceCfg *cfg)
         // If a device has already been initialized, release it
         if (*device)
         {
-            atcab_release();
+            atcab_release_ext(device);
         }
 
 #ifdef ATCA_NO_HEAP
@@ -165,12 +165,12 @@ ATCA_STATUS atcab_init_device(ATCADevice ca_device)
 ATCA_STATUS atcab_release_ext(ATCADevice* device)
 {
 #ifdef ATCA_NO_HEAP
-    ATCA_STATUS status = releaseATCADevice(_gDevice);
+    ATCA_STATUS status = releaseATCADevice(*device);
     if (status != ATCA_SUCCESS)
     {
         return status;
     }
-    _gDevice = NULL;
+    *device = NULL;
 #else
     deleteATCADevice(device);
 #endif

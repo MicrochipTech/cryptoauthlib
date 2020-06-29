@@ -135,7 +135,7 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr pSlot)
             xLabel.pValue = pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS;
             xLabel.ulValueLen = strlen(xLabel.pValue);
             xLabel.type = CKA_LABEL;
-            pkcs11_config_key(NULL, pSlot, pObject, &xLabel);
+            rv = pkcs11_config_key(NULL, pSlot, pObject, &xLabel);
         }
     }
 
@@ -148,7 +148,7 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr pSlot)
             xLabel.pValue = pkcs11configLABEL_DEVICE_PUBLIC_KEY_FOR_TLS;
             xLabel.ulValueLen = strlen(xLabel.pValue);
             xLabel.type = CKA_LABEL;
-            pkcs11_config_key(NULL, pSlot, pObject, &xLabel);
+            rv = pkcs11_config_key(NULL, pSlot, pObject, &xLabel);
         }
     }
 

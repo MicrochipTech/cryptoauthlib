@@ -413,7 +413,7 @@ CK_RV pkcs11_object_create
 )
 {
     CK_RV rv;
-    pkcs11_object_ptr pObject;
+    pkcs11_object_ptr pObject = NULL;
     CK_ATTRIBUTE_PTR pLabel = NULL;
     CK_OBJECT_CLASS_PTR pClass = NULL;
     CK_ATTRIBUTE_PTR pData = NULL;
@@ -456,7 +456,12 @@ CK_RV pkcs11_object_create
 
     rv =  pkcs11_object_find(&pObject, pTemplate, ulCount);
 
-    if (rv)
+	if (rv)
+    {
+        return rv;
+    }
+	
+    if (!pObject)
     {
         /* Allocate a new object */
         rv = pkcs11_object_alloc(&pObject);

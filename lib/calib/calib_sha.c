@@ -286,7 +286,7 @@ ATCA_STATUS calib_hw_sha2_256_finish(ATCADevice device, atca_sha256_ctx_t* ctx, 
     uint32_t pad_zero_count;
     uint16_t digest_size;
 
-    if (_gDevice->mIface->mIfaceCFG->devtype == ATSHA204A)
+    if (device->mIface->mIfaceCFG->devtype == ATSHA204A)
     {
         // ATSHA204A only implements the raw 64-byte block operation, but
         // doesn't add in the final footer information. So we do that manually
@@ -456,7 +456,7 @@ ATCA_STATUS calib_sha_hmac_finish(ATCADevice device, atca_hmac_sha256_ctx_t *ctx
     uint8_t mode = SHA_MODE_HMAC_END;
     uint16_t digest_size = 32;
 
-    if (ATECC608A == _gDevice->mIface->mIfaceCFG->devtype)
+    if (ATECC608A == device->mIface->mIfaceCFG->devtype)
     {
         mode = SHA_MODE_608_HMAC_END;
     }

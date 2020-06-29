@@ -49,7 +49,7 @@
 ATCA_STATUS calib_aes(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* aes_in, uint8_t* aes_out)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = _gDevice->mCommands;
+    ATCACommand ca_cmd = device->mCommands;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     do

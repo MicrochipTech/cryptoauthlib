@@ -91,6 +91,10 @@ def instantiateComponent(calPkcs11Component):
     calPkcs11DebugPrint.setLabel("Enable Debug Print?")
     calPkcs11DebugPrint.setDefaultValue(False)
 
+    calPkcs11AwsFreeRTOS = calPkcs11Component.createBooleanSymbol("CAL_PKCS11_AWS_FREERTOS", None)
+    calPkcs11AwsFreeRTOS.setLabel("Enable AWS FreeRTOS Modifications?")
+    calPkcs11AwsFreeRTOS.setDefaultValue(False)
+
     calPkcs11MaxSlots = calPkcs11Component.createIntegerSymbol('CAL_PKCS11_MAX_SLOTS', None)
     calPkcs11MaxSlots.setLabel('Maximum number of PKCS11 slots')
     calPkcs11MaxSlots.setDefaultValue(1)

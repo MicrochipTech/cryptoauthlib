@@ -1,12 +1,21 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.2.1 (06/29/2020)
+
+### Fixes
+  - PKCS11 configuration option to set token label to the device serial number
+  - Fix OSX CLANG macro error
+  - Add missing c++ wrapper macros to calib_basic.h
+  - Ensure atcab_init_ext calls atcab_release_ext rather than atcab_release
+
+
 ## Release v3.2.0 (06/10/2020)
 
 ### New features
   - TA100 device support (requires NDA, consult with your FAE or submit a
     request through your myMicrochip account)
-  - Extension of the existin API to support device context retention to allow
+  - Extension of the existing API to support device context retention to allow
     multiple independent contexts to be maintained. The application still needs
     to ensure concurrency protections are used in the application to guard bus
     communication.

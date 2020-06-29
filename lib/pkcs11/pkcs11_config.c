@@ -351,6 +351,26 @@ static CK_RV pkcs11_config_parse_interface(pkcs11_slot_ctx_ptr slot_ctx, char* c
     return rv;
 }
 
+#ifndef PKCS11_LABEL_IS_SERNUM
+static CK_RV pkcs11_config_parse_label(pkcs11_slot_ctx_ptr slot_ctx, char* cfgstr)
+{
+    CK_RV rv = CKR_OK;
+    size_t len = strlen(cfgstr);
+
+    if (len && (len < PKCS11_MAX_LABEL_SIZE))
+    {
+        memcpy(slot_ctx->label, cfgstr, len);
+        slot_ctx->label[PKCS11_MAX_LABEL_SIZE] = 0;
+    }
+    else
+    {
+        rv = CKR_ARGUMENTS_BAD;
+    }
+
+    return rv;
+}
+#endif
+
 static CK_RV pkcs11_config_parse_freeslots(pkcs11_slot_ctx_ptr slot_ctx, char* cfgstr)
 {
     int argc = 16;
@@ -486,6 +506,12 @@ static CK_RV pkcs11_config_parse_slot_file(pkcs11_slot_ctx_ptr slot_ctx, int arg
         {
             rv = pkcs11_config_parse_interface(slot_ctx, argv[i + 1]);
         }
+#ifndef PKCS11_LABEL_IS_SERNUM
+        else if (!strcmp(argv[i], "label"))
+        {
+            rv = pkcs11_config_parse_label(slot_ctx, argv[i + 1]);
+        }
+#endif
         else if (!strcmp(argv[i], "freeslots"))
         {
             rv = pkcs11_config_parse_freeslots(slot_ctx, argv[i + 1]);
@@ -578,6 +604,7 @@ CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, p
     char *objtype = "";
     char filename[200];
     int i;
+    CK_RV rv = CKR_FUNCTION_FAILED;
 
     /* Find a free slot that matches the object type */
 
@@ -626,10 +653,12 @@ CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, p
                 fprintf(fp, "type = %s\n", objtype);
                 fprintf(fp, "label = %s\n", pObject->name);
                 fclose(fp);
+                rv = CKR_OK;
             }
         }
     }
-    return CKR_OK;
+
+    return rv;
 }
 
 CK_RV pkcs11_config_remove_object(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject)
@@ -642,6 +671,7 @@ CK_RV pkcs11_config_remove_object(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_pt
     if (ret > 0 && ret < sizeof(filename))
     {
         remove(filename);
+        pSlot->flags |= (1 << pObject->slot);
     }
 
     return CKR_OK;
@@ -723,6 +753,16 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
                 {
                     PKCS11_DEBUG("Failed to parse the slot configuration file");
                 }
+#ifndef PKCS11_LABEL_IS_SERNUM
+                if (CKR_OK == rv)
+                {
+                    /* If a label wasn't set - configure a default */
+                    if (!slot_ctx->label[0])
+                    {
+                        snprintf((char*)slot_ctx->label, sizeof(slot_ctx->label)-1, "%02XABC", (uint8_t)i);
+                    }
+                }
+#endif
                 pkcs11_os_free(buffer);
             }
         }

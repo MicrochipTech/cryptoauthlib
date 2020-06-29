@@ -43,6 +43,10 @@
 #define PKCS11_DEBUG_ENABLE             ${CAL_PKCS11_ENABLE_DEBUG_PRINT?then(1,0)}
 #endif
 
+<#if CAL_PKCS11_AWS_FREERTOS>
+#define PKCS11_LABEL_IS_SERNUM          1
+</#if>
+
 /** Use a compiled configuration rather than loading from a filestore */
 #ifndef PKCS11_USE_STATIC_CONFIG
 #define PKCS11_USE_STATIC_CONFIG        1

@@ -122,7 +122,7 @@ ATCA_STATUS calib_sign(ATCADevice device, uint16_t key_id, const uint8_t *msg, u
         }
 
         // Load message into device
-        if (_gDevice->mCommands->dt == ATECC608A)
+        if (device->mCommands->dt == ATECC608A)
         {
             // Use the Message Digest Buffer for the ATECC608A
             nonce_target = NONCE_MODE_TARGET_MSGDIGBUF;

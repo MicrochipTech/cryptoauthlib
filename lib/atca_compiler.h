@@ -51,7 +51,7 @@
 #define ATCA_UINT64_BE_TO_HOST(x)  __builtin_bswap64(x)
 #endif
 
-#ifdef (WIN32)
+#ifdef WIN32
 #define SHARED_LIB_EXPORT       __declspec(dllexport)
 #define SHARED_LIB_IMPORT       __declspec(dllimport)
 #else

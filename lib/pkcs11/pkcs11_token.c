@@ -432,14 +432,19 @@ CK_RV pkcs11_token_get_info(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)
         /* Read the serial number */
         if (!atcab_read_serial_number(buf))
         {
+#ifdef PKCS11_LABEL_IS_SERNUM
+            size_t len = sizeof(pInfo->label);
+            (void)atcab_bin2hex_(buf, 9, (char*)pInfo->label, &len, FALSE, FALSE, TRUE);
+            memcpy(pInfo->serialNumber, &pInfo->label[2], sizeof(pInfo->serialNumber));
+#else
             size_t len = sizeof(pInfo->serialNumber);
-
-            /* Bytes 2-7 are the unique serial number */
-            atcab_bin2hex_(&buf[2], 6, (char*)pInfo->serialNumber, &len, FALSE, FALSE, TRUE);
-
-            /* Bytes 0, 1 & 8 is the customer code */
-            snprintf((char*)pInfo->label, sizeof(pInfo->label), "%02XABC", (uint8_t)slotID);
+            (void)atcab_bin2hex_(&buf[1], 8, (char*)pInfo->serialNumber, &len, FALSE, FALSE, TRUE);
+#endif
         }
+
+#ifndef PKCS11_LABEL_IS_SERNUM
+        memcpy(pInfo->label, slot_ctx->label, strlen(slot_ctx->label));
+#endif
 
         /* Read the hardware revision data */
         if (!atcab_info(buf))
