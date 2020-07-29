@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_cfgs.c File Reference</title>
+<title>CryptoAuthLib: calib_sign.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -84,27 +84,40 @@ $(document).ready(function(){initNavTree('a01046.html',''); initResizable(); });
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_cfgs.c File Reference</div>  </div>
+<div class="title">calib_sign.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>a set of default configurations for various ATCA devices and interfaces  
+<p>CryptoAuthLib Basic API methods for Sign command.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a01289_source.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01049_source.html">atca_cfgs.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01088_source.html">atca_iface.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01073_source.html">atca_device.h</a>&quot;</code><br />
-</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>a set of default configurations for various ATCA devices and interfaces </p>
+<div class="textblock"><code>#include &quot;<a class="el" href="a01109_source.html">cryptoauthlib.h</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gae453fe5f7e7fd31573ca0c21e61cd918"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02161.html#gae453fe5f7e7fd31573ca0c21e61cd918">calib_sign_base</a> (<a class="el" href="a02158.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t key_id, uint8_t *signature)</td></tr>
+<tr class="memdesc:gae453fe5f7e7fd31573ca0c21e61cd918"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Sign command, which generates a signature using the ECDSA algorithm.  <a href="a02161.html#gae453fe5f7e7fd31573ca0c21e61cd918">More...</a><br /></td></tr>
+<tr class="separator:gae453fe5f7e7fd31573ca0c21e61cd918"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga15d3f1059e6d1dc17382c29c84130873"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02161.html#ga15d3f1059e6d1dc17382c29c84130873">calib_sign</a> (<a class="el" href="a02158.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, const uint8_t *msg, uint8_t *signature)</td></tr>
+<tr class="memdesc:ga15d3f1059e6d1dc17382c29c84130873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Sign command, to sign a 32-byte external message using the private key in the specified slot. The message to be signed will be loaded into the Message Digest Buffer to the ATECC608 device or TempKey for other devices.  <a href="a02161.html#ga15d3f1059e6d1dc17382c29c84130873">More...</a><br /></td></tr>
+<tr class="separator:ga15d3f1059e6d1dc17382c29c84130873"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf74bbc8f13821ea025aecbf8fc6248f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02161.html#gaf74bbc8f13821ea025aecbf8fc6248f2">calib_sign_internal</a> (<a class="el" href="a02158.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, bool is_invalidate, bool is_full_sn, uint8_t *signature)</td></tr>
+<tr class="memdesc:gaf74bbc8f13821ea025aecbf8fc6248f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Sign command to sign an internally generated message.  <a href="a02161.html#gaf74bbc8f13821ea025aecbf8fc6248f2">More...</a><br /></td></tr>
+<tr class="separator:gaf74bbc8f13821ea025aecbf8fc6248f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for Sign command. </p>
+<p>The Sign command generates a signature using the private key in slot with ECDSA algorithm.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC108A, ATECC508A, and ATECC608A/B. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="a01046.html">atca_cfgs.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_43516305313559734335e10167142b3b.html">calib</a></li><li class="navelem"><a class="el" href="a01046.html">calib_sign.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_devtypes.h Source File</title>
+<title>CryptoAuthLib: atca_crypto_sw_ecdsa.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,48 +85,46 @@ $(document).ready(function(){initNavTree('a01076_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">atca_devtypes.h</div>  </div>
+<div class="title">atca_crypto_sw_ecdsa.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a01076.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#ifndef ATCA_DEVTYPES_H_</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#define ATCA_DEVTYPES_H_</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#ifndef ATCA_CRYPTO_SW_ECDSA_H</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#define ATCA_CRYPTO_SW_ECDSA_H</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="a02395.html#gafb234ccd6a80d09c0efbe336c2354267">   41</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;{</div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268">   43</a></span>&#160;    <a class="code" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268">ATSHA204A</a>,</div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a20efd97b5b1001eec4a52e0ed5bf594c">   44</a></span>&#160;    <a class="code" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a20efd97b5b1001eec4a52e0ed5bf594c">ATECC108A</a>,</div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae">   45</a></span>&#160;    <a class="code" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae">ATECC508A</a>,</div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a183a6224a93e6c2b82c6dc0e132398bf">   46</a></span>&#160;    <a class="code" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a183a6224a93e6c2b82c6dc0e132398bf">ATECC608A</a>,</div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a6816489510886c97abe08d80c7207f3f">   47</a></span>&#160;    <a class="code" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a6816489510886c97abe08d80c7207f3f">ATSHA206A</a>,</div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a4af1fa9171e503676c56f45144d3b2f0">   48</a></span>&#160;    <a class="code" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a4af1fa9171e503676c56f45144d3b2f0">TA100</a> = 0x10,</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a3488f672341dda0ad20508ad888280ad">ATCA_DEV_UNKNOWN</a> = 0x20</div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a3488f672341dda0ad20508ad888280ad">   50</a></span>&#160;} <a class="code" href="a02395.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* ATCA_DEVTYPES_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01070.html">atca_crypto_sw.h</a>&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#define ATCA_ECC_P256_FIELD_SIZE       (256 / 8)</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="a02162.html#gab6935877a2675bfc95af283fb43affb5">   45</a></span>&#160;<span class="preprocessor">#define ATCA_ECC_P256_PRIVATE_KEY_SIZE (ATCA_ECC_P256_FIELD_SIZE)</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="a02162.html#gadb06f3adddd74993ab0da4be3ea71441">   46</a></span>&#160;<span class="preprocessor">#define ATCA_ECC_P256_PUBLIC_KEY_SIZE  (ATCA_ECC_P256_FIELD_SIZE * 2)</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="a02162.html#ga6bcf19f52fbceb7801fc3216d528fb3c">   47</a></span>&#160;<span class="preprocessor">#define ATCA_ECC_P256_SIGNATURE_SIZE   (ATCA_ECC_P256_FIELD_SIZE * 2)</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="a02162.html#ga6eba254effebfbbb95381511fc7d80d5">   48</a></span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a02162.html#gaea3d9b4507e2f87de5204fc905b8123a">atcac_sw_ecdsa_verify_p256</a>(<span class="keyword">const</span> uint8_t msg[<a class="code" href="a02162.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a>],</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                               <span class="keyword">const</span> uint8_t signature[<a class="code" href="a02162.html#ga6eba254effebfbbb95381511fc7d80d5">ATCA_ECC_P256_SIGNATURE_SIZE</a>],</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                               <span class="keyword">const</span> uint8_t public_key[<a class="code" href="a02162.html#ga6bcf19f52fbceb7801fc3216d528fb3c">ATCA_ECC_P256_PUBLIC_KEY_SIZE</a>]);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aa02395_html_ggafb234ccd6a80d09c0efbe336c2354267a3488f672341dda0ad20508ad888280ad"><div class="ttname"><a href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a3488f672341dda0ad20508ad888280ad">ATCA_DEV_UNKNOWN</a></div><div class="ttdeci">@ ATCA_DEV_UNKNOWN</div><div class="ttdef"><b>Definition:</b> atca_devtypes.h:49</div></div>
-<div class="ttc" id="aa02395_html_ggafb234ccd6a80d09c0efbe336c2354267a20efd97b5b1001eec4a52e0ed5bf594c"><div class="ttname"><a href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a20efd97b5b1001eec4a52e0ed5bf594c">ATECC108A</a></div><div class="ttdeci">@ ATECC108A</div><div class="ttdef"><b>Definition:</b> atca_devtypes.h:44</div></div>
-<div class="ttc" id="aa02395_html_ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae"><div class="ttname"><a href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae">ATECC508A</a></div><div class="ttdeci">@ ATECC508A</div><div class="ttdef"><b>Definition:</b> atca_devtypes.h:45</div></div>
-<div class="ttc" id="aa02395_html_gafb234ccd6a80d09c0efbe336c2354267"><div class="ttname"><a href="a02395.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a></div><div class="ttdeci">ATCADeviceType</div><div class="ttdoc">The supported Device type in Cryptoauthlib library.</div><div class="ttdef"><b>Definition:</b> atca_devtypes.h:42</div></div>
-<div class="ttc" id="aa02395_html_ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268"><div class="ttname"><a href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268">ATSHA204A</a></div><div class="ttdeci">@ ATSHA204A</div><div class="ttdef"><b>Definition:</b> atca_devtypes.h:43</div></div>
-<div class="ttc" id="aa02395_html_ggafb234ccd6a80d09c0efbe336c2354267a183a6224a93e6c2b82c6dc0e132398bf"><div class="ttname"><a href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a183a6224a93e6c2b82c6dc0e132398bf">ATECC608A</a></div><div class="ttdeci">@ ATECC608A</div><div class="ttdef"><b>Definition:</b> atca_devtypes.h:46</div></div>
-<div class="ttc" id="aa02395_html_ggafb234ccd6a80d09c0efbe336c2354267a4af1fa9171e503676c56f45144d3b2f0"><div class="ttname"><a href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a4af1fa9171e503676c56f45144d3b2f0">TA100</a></div><div class="ttdeci">@ TA100</div><div class="ttdef"><b>Definition:</b> atca_devtypes.h:48</div></div>
-<div class="ttc" id="aa02395_html_ggafb234ccd6a80d09c0efbe336c2354267a6816489510886c97abe08d80c7207f3f"><div class="ttname"><a href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a6816489510886c97abe08d80c7207f3f">ATSHA206A</a></div><div class="ttdeci">@ ATSHA206A</div><div class="ttdef"><b>Definition:</b> atca_devtypes.h:47</div></div>
+<div class="ttc" id="aa02162_html_ga6bcf19f52fbceb7801fc3216d528fb3c"><div class="ttname"><a href="a02162.html#ga6bcf19f52fbceb7801fc3216d528fb3c">ATCA_ECC_P256_PUBLIC_KEY_SIZE</a></div><div class="ttdeci">#define ATCA_ECC_P256_PUBLIC_KEY_SIZE</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_ecdsa.h:46</div></div>
+<div class="ttc" id="aa02162_html_gaea3d9b4507e2f87de5204fc905b8123a"><div class="ttname"><a href="a02162.html#gaea3d9b4507e2f87de5204fc905b8123a">atcac_sw_ecdsa_verify_p256</a></div><div class="ttdeci">int atcac_sw_ecdsa_verify_p256(const uint8_t msg[(256/8)], const uint8_t signature[((256/8) *2)], const uint8_t public_key[((256/8) *2)])</div><div class="ttdoc">return software generated ECDSA verification result and the function is currently not implemented</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_ecdsa.c:39</div></div>
+<div class="ttc" id="aa02162_html_ga6eba254effebfbbb95381511fc7d80d5"><div class="ttname"><a href="a02162.html#ga6eba254effebfbbb95381511fc7d80d5">ATCA_ECC_P256_SIGNATURE_SIZE</a></div><div class="ttdeci">#define ATCA_ECC_P256_SIGNATURE_SIZE</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_ecdsa.h:47</div></div>
+<div class="ttc" id="aa02162_html_gab6935877a2675bfc95af283fb43affb5"><div class="ttname"><a href="a02162.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a></div><div class="ttdeci">#define ATCA_ECC_P256_FIELD_SIZE</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_ecdsa.h:44</div></div>
+<div class="ttc" id="aa01070_html"><div class="ttname"><a href="a01070.html">atca_crypto_sw.h</a></div><div class="ttdoc">Common defines for CryptoAuthLib software crypto wrappers.</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="a01076.html">atca_devtypes.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_326d8b13f324561f6416ae81b79d529c.html">crypto</a></li><li class="navelem"><a class="el" href="a01076.html">atca_crypto_sw_ecdsa.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

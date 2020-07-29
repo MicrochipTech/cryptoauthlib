@@ -1,12 +1,8 @@
 var a01076 =
 [
-    [ "ATCADeviceType", "a02395.html#gafb234ccd6a80d09c0efbe336c2354267", [
-      [ "ATSHA204A", "a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268", null ],
-      [ "ATECC108A", "a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a20efd97b5b1001eec4a52e0ed5bf594c", null ],
-      [ "ATECC508A", "a02395.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae", null ],
-      [ "ATECC608A", "a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a183a6224a93e6c2b82c6dc0e132398bf", null ],
-      [ "ATSHA206A", "a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a6816489510886c97abe08d80c7207f3f", null ],
-      [ "TA100", "a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a4af1fa9171e503676c56f45144d3b2f0", null ],
-      [ "ATCA_DEV_UNKNOWN", "a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a3488f672341dda0ad20508ad888280ad", null ]
-    ] ]
+    [ "ATCA_ECC_P256_FIELD_SIZE", "a02162.html#gab6935877a2675bfc95af283fb43affb5", null ],
+    [ "ATCA_ECC_P256_PRIVATE_KEY_SIZE", "a02162.html#gadb06f3adddd74993ab0da4be3ea71441", null ],
+    [ "ATCA_ECC_P256_PUBLIC_KEY_SIZE", "a02162.html#ga6bcf19f52fbceb7801fc3216d528fb3c", null ],
+    [ "ATCA_ECC_P256_SIGNATURE_SIZE", "a02162.html#ga6eba254effebfbbb95381511fc7d80d5", null ],
+    [ "atcac_sw_ecdsa_verify_p256", "a02162.html#gaea3d9b4507e2f87de5204fc905b8123a", null ]
 ];

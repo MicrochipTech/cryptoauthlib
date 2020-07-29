@@ -1,11 +1,9 @@
 var a01247 =
 [
-    [ "atcab_aes_ctr_block", "a02392.html#ga76937b340e59be4dc1a30d8c7b76ebe0", null ],
-    [ "atcab_aes_ctr_decrypt_block", "a02392.html#gada9491be0c81fb18b021f71b9a6eda3e", null ],
-    [ "atcab_aes_ctr_encrypt_block", "a02392.html#ga7182e48a847f9c1b31f19c60f373e2da", null ],
-    [ "atcab_aes_ctr_increment", "a02392.html#ga475b72450dcd21c822de5cb366197927", null ],
-    [ "atcab_aes_ctr_init", "a02392.html#ga0db7d24f31dc2dd4805e3c433ae604ad", null ],
-    [ "atcab_aes_ctr_init_ext", "a02392.html#gad9ec3a1272f4a565aa5db79bb97ac3f0", null ],
-    [ "atcab_aes_ctr_init_rand", "a02392.html#gae7558905ea6a82c4bd50d4b99e954d91", null ],
-    [ "atcab_aes_ctr_init_rand_ext", "a02392.html#ga247a0af683b50965457e22e6a7b8c458", null ]
+    [ "atca_jwt_add_claim_numeric", "a02165.html#ga7073a7cfb7c77ad02923cdbb1226d2ad", null ],
+    [ "atca_jwt_add_claim_string", "a02165.html#ga3e6036b2c0e6dbc96a30f078e56cacff", null ],
+    [ "atca_jwt_check_payload_start", "a02165.html#ga167fe35631a0dd191293c6ad3a6485aa", null ],
+    [ "atca_jwt_finalize", "a02165.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b", null ],
+    [ "atca_jwt_init", "a02165.html#gad3ea09543f0569a5368130f4a3d7bce0", null ],
+    [ "atca_jwt_verify", "a02165.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b", null ]
 ];

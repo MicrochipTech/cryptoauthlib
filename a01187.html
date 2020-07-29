@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_genkey.c File Reference</title>
+<title>CryptoAuthLib: hal_spi_harmony.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -87,37 +87,65 @@ $(document).ready(function(){initNavTree('a01187.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">calib_genkey.c File Reference</div>  </div>
+<div class="title">hal_spi_harmony.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for GenKey command.  
+<p>ATCA Hardware abstraction layer for SPI over Harmony PLIB.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01289_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &quot;atca_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01109_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01118_source.html">atca_hal.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00896_source.html">atca_device.h</a>&quot;</code><br />
+<code>#include &quot;definitions.h&quot;</code><br />
+<code>#include &quot;talib/talib_defines.h&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga1d87bd17122bc323bb0e47db8341c6d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga1d87bd17122bc323bb0e47db8341c6d8">calib_genkey_base</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t key_id, const uint8_t *other_data, uint8_t *public_key)</td></tr>
-<tr class="memdesc:ga1d87bd17122bc323bb0e47db8341c6d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues GenKey command, which can generate a private key, compute a public key, nd/or compute a digest of a public key.  <a href="a02398.html#ga1d87bd17122bc323bb0e47db8341c6d8">More...</a><br /></td></tr>
-<tr class="separator:ga1d87bd17122bc323bb0e47db8341c6d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5fa08c0fb0fd4de0137bd82c7ed410cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga5fa08c0fb0fd4de0137bd82c7ed410cb">calib_genkey</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, uint8_t *public_key)</td></tr>
-<tr class="memdesc:ga5fa08c0fb0fd4de0137bd82c7ed410cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues GenKey command, which generates a new random private key in slot and returns the public key.  <a href="a02398.html#ga5fa08c0fb0fd4de0137bd82c7ed410cb">More...</a><br /></td></tr>
-<tr class="separator:ga5fa08c0fb0fd4de0137bd82c7ed410cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad902a2fe308340751b52ae249a38d688"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#gad902a2fe308340751b52ae249a38d688">calib_get_pubkey</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, uint8_t *public_key)</td></tr>
-<tr class="memdesc:gad902a2fe308340751b52ae249a38d688"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses GenKey command to calculate the public key from an existing private key in a slot.  <a href="a02398.html#gad902a2fe308340751b52ae249a38d688">More...</a><br /></td></tr>
-<tr class="separator:gad902a2fe308340751b52ae249a38d688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga92cecc8e30a88dee1cbedd49141bc209"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga92cecc8e30a88dee1cbedd49141bc209">hal_spi_discover_buses</a> (int spi_buses[], int max_buses)</td></tr>
+<tr class="memdesc:ga92cecc8e30a88dee1cbedd49141bc209"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover spi buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge  <a href="a02163.html#ga92cecc8e30a88dee1cbedd49141bc209">More...</a><br /></td></tr>
+<tr class="separator:ga92cecc8e30a88dee1cbedd49141bc209"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6cf45c115bcb721e951e8792e0feb3f0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga6cf45c115bcb721e951e8792e0feb3f0">hal_spi_discover_devices</a> (int bus_num, <a class="el" href="a02192.html">ATCAIfaceCfg</a> cfg[], int *found)</td></tr>
+<tr class="memdesc:ga6cf45c115bcb721e951e8792e0feb3f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover any TA100 devices on a given logical bus number  <a href="a02163.html#ga6cf45c115bcb721e951e8792e0feb3f0">More...</a><br /></td></tr>
+<tr class="separator:ga6cf45c115bcb721e951e8792e0feb3f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6c7a1471361e74b4bf6ad7f0388715c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga6c7a1471361e74b4bf6ad7f0388715c2">hal_spi_init</a> (void *hal, <a class="el" href="a02192.html">ATCAIfaceCfg</a> *cfg)</td></tr>
+<tr class="memdesc:ga6c7a1471361e74b4bf6ad7f0388715c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize an SPI interface using given config  <a href="a02163.html#ga6c7a1471361e74b4bf6ad7f0388715c2">More...</a><br /></td></tr>
+<tr class="separator:ga6c7a1471361e74b4bf6ad7f0388715c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb831d9894ce11146bd00c79a98b7f0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#gaeb831d9894ce11146bd00c79a98b7f0f">hal_spi_post_init</a> (<a class="el" href="a02159.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:gaeb831d9894ce11146bd00c79a98b7f0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SPI post init.  <a href="a02163.html#gaeb831d9894ce11146bd00c79a98b7f0f">More...</a><br /></td></tr>
+<tr class="separator:gaeb831d9894ce11146bd00c79a98b7f0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga16661176757d0ef155155b07267a44ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga16661176757d0ef155155b07267a44ed">hal_spi_send</a> (<a class="el" href="a02159.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
+<tr class="memdesc:ga16661176757d0ef155155b07267a44ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SPI send over Harmony.  <a href="a02163.html#ga16661176757d0ef155155b07267a44ed">More...</a><br /></td></tr>
+<tr class="separator:ga16661176757d0ef155155b07267a44ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga410c24762579358a576a58610a877e63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga410c24762579358a576a58610a877e63">hal_spi_receive</a> (<a class="el" href="a02159.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
+<tr class="memdesc:ga410c24762579358a576a58610a877e63"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SPI receive function for HARMONY SPI.  <a href="a02163.html#ga410c24762579358a576a58610a877e63">More...</a><br /></td></tr>
+<tr class="separator:ga410c24762579358a576a58610a877e63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga182f605fabb3a02f9d4a0e433496290b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga182f605fabb3a02f9d4a0e433496290b">hal_spi_wake</a> (<a class="el" href="a02159.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:ga182f605fabb3a02f9d4a0e433496290b"><td class="mdescLeft">&#160;</td><td class="mdescRight">wake up TA100 device using SPI bus  <a href="a02163.html#ga182f605fabb3a02f9d4a0e433496290b">More...</a><br /></td></tr>
+<tr class="separator:ga182f605fabb3a02f9d4a0e433496290b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga470458f44feb9f6dfb7845851d821182"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga470458f44feb9f6dfb7845851d821182">hal_spi_idle</a> (<a class="el" href="a02159.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:ga470458f44feb9f6dfb7845851d821182"><td class="mdescLeft">&#160;</td><td class="mdescRight">idle TA100 device using SPI bus  <a href="a02163.html#ga470458f44feb9f6dfb7845851d821182">More...</a><br /></td></tr>
+<tr class="separator:ga470458f44feb9f6dfb7845851d821182"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae97ef6e553aed5ba6ac0e65476d82308"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#gae97ef6e553aed5ba6ac0e65476d82308">hal_spi_sleep</a> (<a class="el" href="a02159.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:gae97ef6e553aed5ba6ac0e65476d82308"><td class="mdescLeft">&#160;</td><td class="mdescRight">sleep TA100 device using SPI bus  <a href="a02163.html#gae97ef6e553aed5ba6ac0e65476d82308">More...</a><br /></td></tr>
+<tr class="separator:gae97ef6e553aed5ba6ac0e65476d82308"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c3f1c6c20d939c4ca976fdda6279359"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga8c3f1c6c20d939c4ca976fdda6279359">hal_spi_release</a> (void *hal_data)</td></tr>
+<tr class="memdesc:ga8c3f1c6c20d939c4ca976fdda6279359"><td class="mdescLeft">&#160;</td><td class="mdescRight">manages reference count on given bus and releases resource if no more refences exist  <a href="a02163.html#ga8c3f1c6c20d939c4ca976fdda6279359">More...</a><br /></td></tr>
+<tr class="separator:ga8c3f1c6c20d939c4ca976fdda6279359"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for GenKey command. </p>
-<p>The GenKey command is used for creating ECC private keys, generating ECC public keys, and for digest calculations involving public keys.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC108A, ATECC508A, ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>ATCA Hardware abstraction layer for SPI over Harmony PLIB. </p>
+<p>This code is structured in two parts. Part 1 is the connection of the ATCA HAL API to the physical SPI implementation. Part 2 is the Harmony SPI primitives to set up the interface.</p>
+<p>Prerequisite: add SERCOM SPI Master Interrupt support to application in Mplab Harmony 3</p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_a7c83ffe4cbb7b846faed985dac26a17.html">calib</a></li><li class="navelem"><a class="el" href="a01187.html">calib_genkey.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_a05a22e5f002d7c1de78eecb12447d7f.html">hal</a></li><li class="navelem"><a class="el" href="a01187.html">hal_spi_harmony.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

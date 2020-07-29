@@ -1,27 +1,9 @@
 var a01313 =
 [
-    [ "ACK_CHECK_DIS", "a01313.html#a8ad7ceb373ce664b1c2482a66537e7c0", null ],
-    [ "ACK_CHECK_EN", "a01313.html#a7dd22b838d2b1f22d367e6cdef04ccc3", null ],
-    [ "ACK_VAL", "a01313.html#a1d64a546dacc15052a6c4887f9d0020f", null ],
-    [ "LOG_LOCAL_LEVEL", "a01313.html#a5155a7b7465dd9b5e6167122827d0158", null ],
-    [ "MAX_I2C_BUSES", "a01313.html#af89a7a4080a47aa10a5504291db285bf", null ],
-    [ "NACK_VAL", "a01313.html#ae20bf16f65c41237e2d620ef49890781", null ],
-    [ "SCL_PIN", "a01313.html#a06c967e78bcedcee909a70764f879433", null ],
-    [ "SDA_PIN", "a01313.html#a526d580d324bce60a3e964066fae77e3", null ],
-    [ "ATCAI2CMaster_t", "a01313.html#a06b19a932aea9cf3a5165fefacb24f7b", null ],
-    [ "hal_i2c_change_baud", "a01313.html#a98107f7cba849e44395b87a7e15fbec3", null ],
-    [ "hal_i2c_discover_buses", "a01313.html#ga05700385437884cc7b28c38d33e84f8c", null ],
-    [ "hal_i2c_discover_devices", "a01313.html#ae68c90497ef6f7edbf78daa3a094028a", null ],
-    [ "hal_i2c_idle", "a01313.html#ga9317303ada721ff3f97e7aad69437a30", null ],
-    [ "hal_i2c_init", "a01313.html#ga09e7f465a040fbd19ea136269571de3c", null ],
-    [ "hal_i2c_post_init", "a01313.html#gafbe53519362f18c2688d10da6f7c618f", null ],
-    [ "hal_i2c_receive", "a01313.html#ga41a2b07d55558b9726abe28fd8431e90", null ],
-    [ "hal_i2c_release", "a01313.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
-    [ "hal_i2c_send", "a01313.html#gacc9a889e19d2f1a475a39391565b66dd", null ],
-    [ "hal_i2c_sleep", "a01313.html#ga3f89bae6a625d5f37abdcc99408def27", null ],
-    [ "hal_i2c_wake", "a01313.html#gad4df1b6755e2d5b5d9e810371e45ca8c", null ],
-    [ "conf", "a01313.html#aa09ddc709367c497fc081a29aa2d12fe", null ],
-    [ "i2c_bus_ref_ct", "a01313.html#aa7deec7f5d89dfb4f9746d050b0926f9", null ],
-    [ "i2c_hal_data", "a01313.html#a9674349a244eaba3852b4101c93454be", null ],
-    [ "TAG", "a01313.html#a5a85b9c772bbeb480b209a3e6ea92b4c", null ]
+    [ "pkcs11_deinit", "a02167.html#gabff89fd0af2e75ee2db858f9fe934ac4", null ],
+    [ "pkcs11_get_context", "a02167.html#gae0e3060e6ae0dfc17a35881c223d8123", null ],
+    [ "pkcs11_init", "a02167.html#ga21e0ec91eccb3f92b45cb2536b3889b1", null ],
+    [ "pkcs11_init_check", "a02167.html#gadd899ffeae0146c08b249e3f551e21f8", null ],
+    [ "pkcs11_lock_context", "a02167.html#gaf0e755fd7df13be2aa1f706de5b0f24b", null ],
+    [ "pkcs11_unlock_context", "a02167.html#ga750f93d0a3c67f5d0e28c9c50ad990a8", null ]
 ];

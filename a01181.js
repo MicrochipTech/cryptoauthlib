@@ -1,5 +1,5 @@
 var a01181 =
 [
-    [ "ATCA_UNSUPPORTED_CMD", "a01181.html#aa025be8149d8f6e4d07aaa436b026db2", null ],
-    [ "calib_execute_command", "a01181.html#a19fc558e09f03a2f8f5ee89b1e396b2e", null ]
+    [ "i2c_sam_instance_t", "a02163.html#ga2253297ba3f655a35cd1253e22ba5171", null ],
+    [ "sam_change_baudrate", "a02163.html#gae597ddf62e19ba0f85e4444df939a88b", null ]
 ];

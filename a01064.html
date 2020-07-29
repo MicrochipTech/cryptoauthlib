@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_debug.c File Reference</title>
+<title>CryptoAuthLib: atca_crypto_hw_aes_cmac.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,120 +85,43 @@ $(document).ready(function(){initNavTree('a01064.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_debug.c File Reference</div>  </div>
+<div class="title">atca_crypto_hw_aes_cmac.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Debug/Trace for CryptoAuthLib calls.  
+<p>CryptoAuthLib Basic API methods for AES CBC_MAC mode.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;<a class="el" href="a01289_source.html">cryptoauthlib.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a01109_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01058_source.html">atca_crypto_hw_aes.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aaf7947b74c12dac486d03bb6f6b148d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01064.html#aaf7947b74c12dac486d03bb6f6b148d9">atca_trace_config</a> (FILE *fp)</td></tr>
-<tr class="separator:aaf7947b74c12dac486d03bb6f6b148d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60326372db8190ddb9f191fca5bdc38a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01064.html#a60326372db8190ddb9f191fca5bdc38a">atca_trace</a> (<a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> status)</td></tr>
-<tr class="separator:a60326372db8190ddb9f191fca5bdc38a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37c973beed068b00d261521bfe29299a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01064.html#a37c973beed068b00d261521bfe29299a">atca_trace_msg</a> (<a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> status, const char *msg)</td></tr>
-<tr class="separator:a37c973beed068b00d261521bfe29299a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a3a81f3cd1d6204da295b87e92c7a039e"><td class="memItemLeft" align="right" valign="top">FILE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01064.html#a3a81f3cd1d6204da295b87e92c7a039e">g_trace_fp</a></td></tr>
-<tr class="separator:a3a81f3cd1d6204da295b87e92c7a039e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8da20fcd2c98c0738b32379d87b14843"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02155.html#ga8da20fcd2c98c0738b32379d87b14843">atcab_aes_cmac_init_ext</a> (<a class="el" href="a02158.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a01058.html#a71a000f89238de0205da742995a0cb34">atca_aes_cmac_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block)</td></tr>
+<tr class="memdesc:ga8da20fcd2c98c0738b32379d87b14843"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a CMAC calculation using an AES-128 key in the device.  <a href="a02155.html#ga8da20fcd2c98c0738b32379d87b14843">More...</a><br /></td></tr>
+<tr class="separator:ga8da20fcd2c98c0738b32379d87b14843"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84506ff4105e63823c99527788d36d52"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02155.html#ga84506ff4105e63823c99527788d36d52">atcab_aes_cmac_init</a> (<a class="el" href="a01058.html#a71a000f89238de0205da742995a0cb34">atca_aes_cmac_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block)</td></tr>
+<tr class="memdesc:ga84506ff4105e63823c99527788d36d52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a CMAC calculation using an AES-128 key in the device.  <a href="a02155.html#ga84506ff4105e63823c99527788d36d52">More...</a><br /></td></tr>
+<tr class="separator:ga84506ff4105e63823c99527788d36d52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0cf22e893c713890faeb9fa8784760b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02155.html#ga0cf22e893c713890faeb9fa8784760b1">atcab_aes_cmac_update</a> (<a class="el" href="a01058.html#a71a000f89238de0205da742995a0cb34">atca_aes_cmac_ctx_t</a> *ctx, const uint8_t *data, uint32_t data_size)</td></tr>
+<tr class="memdesc:ga0cf22e893c713890faeb9fa8784760b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add data to an initialized CMAC calculation.  <a href="a02155.html#ga0cf22e893c713890faeb9fa8784760b1">More...</a><br /></td></tr>
+<tr class="separator:ga0cf22e893c713890faeb9fa8784760b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac0be51b283b107465dcf42758ca31687"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02155.html#gac0be51b283b107465dcf42758ca31687">atcab_aes_cmac_finish</a> (<a class="el" href="a01058.html#a71a000f89238de0205da742995a0cb34">atca_aes_cmac_ctx_t</a> *ctx, uint8_t *cmac, uint32_t cmac_size)</td></tr>
+<tr class="memdesc:gac0be51b283b107465dcf42758ca31687"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finish a CMAC operation returning the CMAC value.  <a href="a02155.html#gac0be51b283b107465dcf42758ca31687">More...</a><br /></td></tr>
+<tr class="separator:gac0be51b283b107465dcf42758ca31687"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Debug/Trace for CryptoAuthLib calls. </p>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for AES CBC_MAC mode. </p>
+<p>The AES command supports 128-bit AES encryption or decryption of small messages or data packets in ECB mode.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC608A, ATECC608B, &amp; TA100. Refer to device datasheet for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="a60326372db8190ddb9f191fca5bdc38a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a60326372db8190ddb9f191fca5bdc38a">&#9670;&nbsp;</a></span>atca_trace()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atca_trace </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td>
-          <td class="paramname"><em>status</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aaf7947b74c12dac486d03bb6f6b148d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf7947b74c12dac486d03bb6f6b148d9">&#9670;&nbsp;</a></span>atca_trace_config()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void atca_trace_config </td>
-          <td>(</td>
-          <td class="paramtype">FILE *&#160;</td>
-          <td class="paramname"><em>fp</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a37c973beed068b00d261521bfe29299a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37c973beed068b00d261521bfe29299a">&#9670;&nbsp;</a></span>atca_trace_msg()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atca_trace_msg </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td>
-          <td class="paramname"><em>status</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>msg</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="a3a81f3cd1d6204da295b87e92c7a039e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a81f3cd1d6204da295b87e92c7a039e">&#9670;&nbsp;</a></span>g_trace_fp</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">FILE* g_trace_fp</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="a01064.html">atca_debug.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_326d8b13f324561f6416ae81b79d529c.html">crypto</a></li><li class="navelem"><a class="el" href="a01064.html">atca_crypto_hw_aes_cmac.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

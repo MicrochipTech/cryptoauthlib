@@ -1,9 +1,9 @@
 var a01139 =
 [
-    [ "atcacert_decode_pem", "a01139.html#a67998c5401898020391dc6f02b11d2bd", null ],
-    [ "atcacert_decode_pem_cert", "a01139.html#a47e68bdf906458409c7eff1aed0dff3a", null ],
-    [ "atcacert_decode_pem_csr", "a01139.html#afbccc09407aeb4d7b626b28da120211a", null ],
-    [ "atcacert_encode_pem", "a01139.html#abd464bace94353a8ff767e5a9bdc66ce", null ],
-    [ "atcacert_encode_pem_cert", "a01139.html#a5f893d8f40bc8126a3802ad435bba895", null ],
-    [ "atcacert_encode_pem_csr", "a01139.html#ab148948a885c6a7c9c95494e48e45cb1", null ]
+    [ "ATCA_MUTEX_TIMEOUT", "a01139.html#acf61a669d2246c92200734be17bd5488", null ],
+    [ "hal_create_mutex", "a02163.html#gab289a3949663589ac6be71d72fb18278", null ],
+    [ "hal_destroy_mutex", "a02163.html#ga4589d7b3e951f40b7928f1cf31f7ddf3", null ],
+    [ "hal_lock_mutex", "a02163.html#gad4cd02ff7ae4e75844eab4e84eb61994", null ],
+    [ "hal_rtos_delay_ms", "a02163.html#ga3df335e46c7e798a1d4b8949d00c13d3", null ],
+    [ "hal_unlock_mutex", "a02163.html#ga31fd8170a49623686543f6247b883bd1", null ]
 ];

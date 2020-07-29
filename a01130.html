@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_host_hw.h File Reference</title>
+<title>CryptoAuthLib: hal_all_platforms_kit_hidapi.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,41 +85,46 @@ $(document).ready(function(){initNavTree('a01130.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">atcacert_host_hw.h File Reference</div>  </div>
+<div class="title">hal_all_platforms_kit_hidapi.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>host side methods using CryptoAuth hardware  
+<p>HAL for kit protocol over HID for any platform.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a01118_source.html">atcacert_def.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;hidapi.h&quot;</code><br />
 </div>
 <p><a href="a01130_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga81e92ea606e86051afa84f2fac4898d6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02397.html#ga81e92ea606e86051afa84f2fac4898d6">atcacert_verify_cert_hw</a> (const <a class="el" href="a02397.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, const uint8_t ca_public_key[64])</td></tr>
-<tr class="memdesc:ga81e92ea606e86051afa84f2fac4898d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a certificate against its certificate authority's public key using the host's ATECC device for crypto functions.  <a href="a02397.html#ga81e92ea606e86051afa84f2fac4898d6">More...</a><br /></td></tr>
-<tr class="separator:ga81e92ea606e86051afa84f2fac4898d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga208c1ea765f192bd86b26964fbb5edcb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02397.html#ga208c1ea765f192bd86b26964fbb5edcb">atcacert_gen_challenge_hw</a> (uint8_t challenge[32])</td></tr>
-<tr class="memdesc:ga208c1ea765f192bd86b26964fbb5edcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a random challenge to be sent to the client using the RNG on the host's ATECC device.  <a href="a02397.html#ga208c1ea765f192bd86b26964fbb5edcb">More...</a><br /></td></tr>
-<tr class="separator:ga208c1ea765f192bd86b26964fbb5edcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafeffa7a36a7b5a343f5f568d090e8eed"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02397.html#gafeffa7a36a7b5a343f5f568d090e8eed">atcacert_verify_response_hw</a> (const uint8_t device_public_key[64], const uint8_t challenge[32], const uint8_t response[64])</td></tr>
-<tr class="memdesc:gafeffa7a36a7b5a343f5f568d090e8eed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a client's response to a challenge using the host's ATECC device for crypto functions.  <a href="a02397.html#gafeffa7a36a7b5a343f5f568d090e8eed">More...</a><br /></td></tr>
-<tr class="separator:gafeffa7a36a7b5a343f5f568d090e8eed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02292.html">atcahid</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga49053c3cd6d48fe5f468ce010ac0a9ef"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga49053c3cd6d48fe5f468ce010ac0a9ef">HID_DEVICES_MAX</a>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:ga49053c3cd6d48fe5f468ce010ac0a9ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6cdff3589b286ebcdd7771bb425fbf73"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga6cdff3589b286ebcdd7771bb425fbf73">HID_PACKET_MAX</a>&#160;&#160;&#160;512</td></tr>
+<tr class="separator:ga6cdff3589b286ebcdd7771bb425fbf73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gabb3ee8f7daf1cd68f8173981271ac37a"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a02292.html">atcahid</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#gabb3ee8f7daf1cd68f8173981271ac37a">atcahid_t</a></td></tr>
+<tr class="separator:gabb3ee8f7daf1cd68f8173981271ac37a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>host side methods using CryptoAuth hardware </p>
+<div class="textblock"><p>HAL for kit protocol over HID for any platform. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_65edf1b561f102319ae2d8c3ccfc1a4c.html">atcacert</a></li><li class="navelem"><a class="el" href="a01130.html">atcacert_host_hw.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_a05a22e5f002d7c1de78eecb12447d7f.html">hal</a></li><li class="navelem"><a class="el" href="a01130.html">hal_all_platforms_kit_hidapi.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

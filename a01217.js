@@ -1,5 +1,6 @@
 var a01217 =
 [
-    [ "calib_secureboot", "a02398.html#ga85ff79334f1b8e877c0e3bbb31d87f43", null ],
-    [ "calib_secureboot_mac", "a02398.html#ga0c79b36f050621e8df14f9804a990162", null ]
+    [ "kit_phy_num_found", "a02163.html#ga11ee6ec0b2b7eb2ff2472f92208c3205", null ],
+    [ "kit_phy_receive", "a02163.html#gaae5e94b6080d4279474eb3e98bc58901", null ],
+    [ "kit_phy_send", "a02163.html#ga020fb0be6c73515122cf4b9f749fd97d", null ]
 ];

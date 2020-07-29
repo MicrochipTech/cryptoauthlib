@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: sha2_routines.c File Reference</title>
+<title>CryptoAuthLib: pkcs11_config.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,229 +85,54 @@ $(document).ready(function(){initNavTree('a01283.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">sha2_routines.c File Reference</div>  </div>
+<div class="title">pkcs11_config.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Software implementation of the SHA256 algorithm.  
+<p>PKCS11 Library Configuration.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;string.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a01286_source.html">sha2_routines.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01058_source.html">atca_compiler.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;pkcs11_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01292_source.html">pkcs11_debug.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01109_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01361_source.html">pkcs11_slot.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01337_source.html">pkcs11_object.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01322_source.html">pkcs11_key.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01280_source.html">pkcs11_cert.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01343_source.html">pkcs11_os.h</a>&quot;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;ctype.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:af34345520fa258a6a313f03c36c93fbd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01283.html#af34345520fa258a6a313f03c36c93fbd">rotate_right</a>(value,  places)&#160;&#160;&#160;((value &gt;&gt; places) | (value &lt;&lt; (32 - places)))</td></tr>
-<tr class="separator:af34345520fa258a6a313f03c36c93fbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:acfb7028e6f10d29c548cbecdbfa53ac8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01283.html#acfb7028e6f10d29c548cbecdbfa53ac8">sw_sha256_init</a> (<a class="el" href="a02521.html">sw_sha256_ctx</a> *ctx)</td></tr>
-<tr class="memdesc:acfb7028e6f10d29c548cbecdbfa53ac8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Intialize the software SHA256.  <a href="a01283.html#acfb7028e6f10d29c548cbecdbfa53ac8">More...</a><br /></td></tr>
-<tr class="separator:acfb7028e6f10d29c548cbecdbfa53ac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d0c952ebe691b3337205829dc352e6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01283.html#a4d0c952ebe691b3337205829dc352e6e">sw_sha256_update</a> (<a class="el" href="a02521.html">sw_sha256_ctx</a> *ctx, const uint8_t *msg, uint32_t msg_size)</td></tr>
-<tr class="memdesc:a4d0c952ebe691b3337205829dc352e6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">updates the running hash with the next block of data, called iteratively for the entire stream of data to be hashed using the SHA256 software  <a href="a01283.html#a4d0c952ebe691b3337205829dc352e6e">More...</a><br /></td></tr>
-<tr class="separator:a4d0c952ebe691b3337205829dc352e6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a594b8b10c408cb1103da9c09b1367a51"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01283.html#a594b8b10c408cb1103da9c09b1367a51">sw_sha256_final</a> (<a class="el" href="a02521.html">sw_sha256_ctx</a> *ctx, uint8_t digest[(32)])</td></tr>
-<tr class="memdesc:a594b8b10c408cb1103da9c09b1367a51"><td class="mdescLeft">&#160;</td><td class="mdescRight">completes the final SHA256 calculation and returns the final digest/hash  <a href="a01283.html#a594b8b10c408cb1103da9c09b1367a51">More...</a><br /></td></tr>
-<tr class="separator:a594b8b10c408cb1103da9c09b1367a51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90a76445beb1a0eadea22bb7e3c8ad60"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01283.html#a90a76445beb1a0eadea22bb7e3c8ad60">sw_sha256</a> (const uint8_t *message, unsigned int len, uint8_t digest[(32)])</td></tr>
-<tr class="memdesc:a90a76445beb1a0eadea22bb7e3c8ad60"><td class="mdescLeft">&#160;</td><td class="mdescRight">single call convenience function which computes Hash of given data using SHA256 software  <a href="a01283.html#a90a76445beb1a0eadea22bb7e3c8ad60">More...</a><br /></td></tr>
-<tr class="separator:a90a76445beb1a0eadea22bb7e3c8ad60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab36c9d4f392c0eb613fb3833dd852495"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#gab36c9d4f392c0eb613fb3833dd852495">pkcs11_config_init_private</a> (<a class="el" href="a01337.html#a6cb03ffd9272d5924a1ef6cee8e3dab1">pkcs11_object_ptr</a> pObject, char *label, size_t len)</td></tr>
+<tr class="separator:gab36c9d4f392c0eb613fb3833dd852495"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad8164c3b6e1c4287b665ce18c143bdd3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#gad8164c3b6e1c4287b665ce18c143bdd3">pkcs11_config_init_public</a> (<a class="el" href="a01337.html#a6cb03ffd9272d5924a1ef6cee8e3dab1">pkcs11_object_ptr</a> pObject, char *label, size_t len)</td></tr>
+<tr class="separator:gad8164c3b6e1c4287b665ce18c143bdd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1de4cccdfd83ce723eb050e09266a3ae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#ga1de4cccdfd83ce723eb050e09266a3ae">pkcs11_config_init_cert</a> (<a class="el" href="a01337.html#a6cb03ffd9272d5924a1ef6cee8e3dab1">pkcs11_object_ptr</a> pObject, char *label, size_t len)</td></tr>
+<tr class="separator:ga1de4cccdfd83ce723eb050e09266a3ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7afb784fad2dd8b8b2befd6159e2a053"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#ga7afb784fad2dd8b8b2befd6159e2a053">pkcs11_config_cert</a> (<a class="el" href="a01316.html#adb828773fc77a4f1dbb559ddedcc99c4">pkcs11_lib_ctx_ptr</a> pLibCtx, <a class="el" href="a01361.html#ac77ca422293b6ec4789d1746b276eeaf">pkcs11_slot_ctx_ptr</a> pSlot, <a class="el" href="a01337.html#a6cb03ffd9272d5924a1ef6cee8e3dab1">pkcs11_object_ptr</a> pObject, <a class="el" href="a01379.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pLabel)</td></tr>
+<tr class="separator:ga7afb784fad2dd8b8b2befd6159e2a053"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0e5ec966dd01f9eb6f1cc2f4b3085f9f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#ga0e5ec966dd01f9eb6f1cc2f4b3085f9f">pkcs11_config_key</a> (<a class="el" href="a01316.html#adb828773fc77a4f1dbb559ddedcc99c4">pkcs11_lib_ctx_ptr</a> pLibCtx, <a class="el" href="a01361.html#ac77ca422293b6ec4789d1746b276eeaf">pkcs11_slot_ctx_ptr</a> pSlot, <a class="el" href="a01337.html#a6cb03ffd9272d5924a1ef6cee8e3dab1">pkcs11_object_ptr</a> pObject, <a class="el" href="a01379.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pLabel)</td></tr>
+<tr class="separator:ga0e5ec966dd01f9eb6f1cc2f4b3085f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02347d90fe77c323677712e685aa8c6a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#ga02347d90fe77c323677712e685aa8c6a">pkcs11_config_remove_object</a> (<a class="el" href="a01316.html#adb828773fc77a4f1dbb559ddedcc99c4">pkcs11_lib_ctx_ptr</a> pLibCtx, <a class="el" href="a01361.html#ac77ca422293b6ec4789d1746b276eeaf">pkcs11_slot_ctx_ptr</a> pSlot, <a class="el" href="a01337.html#a6cb03ffd9272d5924a1ef6cee8e3dab1">pkcs11_object_ptr</a> pObject)</td></tr>
+<tr class="separator:ga02347d90fe77c323677712e685aa8c6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafbf88cd1298ee01568385688019ba80c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#gafbf88cd1298ee01568385688019ba80c">pkcs11_config_load_objects</a> (<a class="el" href="a01361.html#ac77ca422293b6ec4789d1746b276eeaf">pkcs11_slot_ctx_ptr</a> slot_ctx)</td></tr>
+<tr class="separator:gafbf88cd1298ee01568385688019ba80c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4804f397bd49dd23ec903e4249e22d9e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#ga4804f397bd49dd23ec903e4249e22d9e">pkcs11_config_load</a> (<a class="el" href="a01361.html#ac77ca422293b6ec4789d1746b276eeaf">pkcs11_slot_ctx_ptr</a> slot_ctx)</td></tr>
+<tr class="separator:ga4804f397bd49dd23ec903e4249e22d9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Software implementation of the SHA256 algorithm. </p>
+<div class="textblock"><p>PKCS11 Library Configuration. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="af34345520fa258a6a313f03c36c93fbd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af34345520fa258a6a313f03c36c93fbd">&#9670;&nbsp;</a></span>rotate_right</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define rotate_right</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">value, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">places&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;((value &gt;&gt; places) | (value &lt;&lt; (32 - places)))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a90a76445beb1a0eadea22bb7e3c8ad60"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90a76445beb1a0eadea22bb7e3c8ad60">&#9670;&nbsp;</a></span>sw_sha256()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void sw_sha256 </td>
-          <td>(</td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>message</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>digest</em>[(32)]&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>single call convenience function which computes Hash of given data using SHA256 software </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">message</td><td>pointer to stream of data to hash </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>size of data stream to hash </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">digest</td><td>result </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a594b8b10c408cb1103da9c09b1367a51"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a594b8b10c408cb1103da9c09b1367a51">&#9670;&nbsp;</a></span>sw_sha256_final()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void sw_sha256_final </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02521.html">sw_sha256_ctx</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>digest</em>[(32)]&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>completes the final SHA256 calculation and returns the final digest/hash </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>ptr to context data structure </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">digest</td><td>receives the computed digest of the SHA 256 </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="acfb7028e6f10d29c548cbecdbfa53ac8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acfb7028e6f10d29c548cbecdbfa53ac8">&#9670;&nbsp;</a></span>sw_sha256_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void sw_sha256_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02521.html">sw_sha256_ctx</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Intialize the software SHA256. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>SHA256 hash context </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a4d0c952ebe691b3337205829dc352e6e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d0c952ebe691b3337205829dc352e6e">&#9670;&nbsp;</a></span>sw_sha256_update()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void sw_sha256_update </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02521.html">sw_sha256_ctx</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>msg</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>msg_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>updates the running hash with the next block of data, called iteratively for the entire stream of data to be hashed using the SHA256 software </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>SHA256 hash context </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">msg</td><td>Raw blocks to be processed </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">msg_size</td><td>The size of the message passed </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_0d284ebe0a46982303565525253d36b8.html">crypto</a></li><li class="navelem"><a class="el" href="dir_d3d4a6b49a98e373fd2a2e5f3f68abbc.html">hashes</a></li><li class="navelem"><a class="el" href="a01283.html">sha2_routines.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_231ca3caf32f66fb77d3d96bdb6ade1d.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01283.html">pkcs11_config.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

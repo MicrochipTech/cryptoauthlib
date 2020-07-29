@@ -1,7 +1,9 @@
 var a01193 =
 [
-    [ "calib_info", "a02398.html#ga132cfbb5c581c5cc5adf5350d4161966", null ],
-    [ "calib_info_base", "a02398.html#gabc7aff4f1707fbe0a05cf416955f43b0", null ],
-    [ "calib_info_get_latch", "a02398.html#gab0335f0c23df27d5a4cb51a05bb7fb00", null ],
-    [ "calib_info_set_latch", "a02398.html#gab08ad37a48da6aee1448939f9e59d8db", null ]
+    [ "SWI_FLAG_CMD", "a02163.html#ga13c01ac16bb14fde75e9c00dcd1cc761", null ],
+    [ "SWI_FLAG_IDLE", "a02163.html#ga6219d68ef915fdcd734f51960ba08fb6", null ],
+    [ "SWI_FLAG_SLEEP", "a02163.html#ga13ef2322176ad9b7ba3d2e23b277cce6", null ],
+    [ "SWI_FLAG_TX", "a02163.html#ga20af8352e13a7357650ba1cbf41349ea", null ],
+    [ "SWI_WAKE_TOKEN", "a02163.html#ga8f12e3b749e7b3dc905114cc7b8d0b38", null ],
+    [ "hal_swi_send_flag", "a02163.html#gaae96ea936a2e85d0bcb81b7868ee007d", null ]
 ];

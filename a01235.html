@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_write.c File Reference</title>
+<title>CryptoAuthLib: swi_uart_start.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,127 +85,77 @@ $(document).ready(function(){initNavTree('a01235.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">calib_write.c File Reference</div>  </div>
+<div class="title">swi_uart_start.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>CryptoAuthLib Basic API methods for Write command.  
-<a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01289_source.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01427_source.html">host/atca_host.h</a>&quot;</code><br />
-</div><table class="memberdecls">
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &quot;atmel_start.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01109_source.html">cryptoauthlib.h</a>&quot;</code><br />
+</div>
+<p><a href="a01235_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02320.html">atcaSWImaster</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">this is the hal_data for ATCA HAL for ASF SERCOM  <a href="a02320.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaf9d9d027ce20f528edea144203141714"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#gaf9d9d027ce20f528edea144203141714">MAX_SWI_BUSES</a>&#160;&#160;&#160;6</td></tr>
+<tr class="separator:gaf9d9d027ce20f528edea144203141714"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab45577245cf4a8ead70e2d56965f2df3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#gab45577245cf4a8ead70e2d56965f2df3">RECEIVE_MODE</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:gab45577245cf4a8ead70e2d56965f2df3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b85133b317e72410ea0762d637d3460"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga4b85133b317e72410ea0762d637d3460">TRANSMIT_MODE</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:ga4b85133b317e72410ea0762d637d3460"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac55a27e4c3eae59bb1687eb7e8d1fe4b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#gac55a27e4c3eae59bb1687eb7e8d1fe4b">RX_DELAY</a>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:gac55a27e4c3eae59bb1687eb7e8d1fe4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f3816567a2f513dd0e1f9eb17992fb2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga3f3816567a2f513dd0e1f9eb17992fb2">TX_DELAY</a>&#160;&#160;&#160;93</td></tr>
+<tr class="separator:ga3f3816567a2f513dd0e1f9eb17992fb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga626ead73d3ae1cc2ed09d5fa509f80ff"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a02320.html">atcaSWImaster</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a></td></tr>
+<tr class="memdesc:ga626ead73d3ae1cc2ed09d5fa509f80ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">this is the hal_data for ATCA HAL for ASF SERCOM  <a href="a02163.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">More...</a><br /></td></tr>
+<tr class="separator:ga626ead73d3ae1cc2ed09d5fa509f80ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga4791634e3df2b2a2746fec15b3c036cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga4791634e3df2b2a2746fec15b3c036cb">calib_write</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t zone, uint16_t address, const uint8_t *value, const uint8_t *mac)</td></tr>
-<tr class="memdesc:ga4791634e3df2b2a2746fec15b3c036cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Write command, which writes either one four byte word or a 32-byte block to one of the EEPROM zones on the device. Depending upon the value of the WriteConfig byte for this slot, the data may be required to be encrypted by the system prior to being sent to the device. This command cannot be used to write slots configured as ECC private keys.  <a href="a02398.html#ga4791634e3df2b2a2746fec15b3c036cb">More...</a><br /></td></tr>
-<tr class="separator:ga4791634e3df2b2a2746fec15b3c036cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac5046bb4ec9b6f7747b70ae9fb8a5922"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#gac5046bb4ec9b6f7747b70ae9fb8a5922">calib_write_zone</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, const uint8_t *data, uint8_t len)</td></tr>
-<tr class="memdesc:gac5046bb4ec9b6f7747b70ae9fb8a5922"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Write command, which writes either 4 or 32 bytes of data into a device zone.  <a href="a02398.html#gac5046bb4ec9b6f7747b70ae9fb8a5922">More...</a><br /></td></tr>
-<tr class="separator:gac5046bb4ec9b6f7747b70ae9fb8a5922"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12fd5170de4f8bf9c08d47be4a047254"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01235.html#a12fd5170de4f8bf9c08d47be4a047254">calib_write_enc</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, uint8_t block, const uint8_t *data, const uint8_t *enc_key, const uint16_t enc_key_id, const uint8_t num_in[<a class="el" href="a01166.html#ad0c3da8203a3be6755e86cda96e00228">NONCE_NUMIN_SIZE</a>])</td></tr>
-<tr class="memdesc:a12fd5170de4f8bf9c08d47be4a047254"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Write command, which performs an encrypted write of a 32 byte block into given slot.  <a href="a01235.html#a12fd5170de4f8bf9c08d47be4a047254">More...</a><br /></td></tr>
-<tr class="separator:a12fd5170de4f8bf9c08d47be4a047254"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga81f049d53107034808416e8f09e927f3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga81f049d53107034808416e8f09e927f3">calib_write_config_zone</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *config_data)</td></tr>
-<tr class="memdesc:ga81f049d53107034808416e8f09e927f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Write command, which writes the configuration zone.  <a href="a02398.html#ga81f049d53107034808416e8f09e927f3">More...</a><br /></td></tr>
-<tr class="separator:ga81f049d53107034808416e8f09e927f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4408e08f86cd3bd48868ffaa0e966b09"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga4408e08f86cd3bd48868ffaa0e966b09">calib_write_pubkey</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t slot, const uint8_t *public_key)</td></tr>
-<tr class="memdesc:ga4408e08f86cd3bd48868ffaa0e966b09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses the write command to write a public key to a slot in the proper format.  <a href="a02398.html#ga4408e08f86cd3bd48868ffaa0e966b09">More...</a><br /></td></tr>
-<tr class="separator:ga4408e08f86cd3bd48868ffaa0e966b09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga39bfa045068f0a9d2badf844862df2f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga39bfa045068f0a9d2badf844862df2f2">calib_write_bytes_zone</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t zone, uint16_t slot, size_t offset_bytes, const uint8_t *data, size_t length)</td></tr>
-<tr class="memdesc:ga39bfa045068f0a9d2badf844862df2f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Write command, which writes data into the configuration, otp, or data zones with a given byte offset and length. Offset and length must be multiples of a word (4 bytes).  <a href="a02398.html#ga39bfa045068f0a9d2badf844862df2f2">More...</a><br /></td></tr>
-<tr class="separator:ga39bfa045068f0a9d2badf844862df2f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa5238e0fac86dcb164f3c79d42e97976"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#gaa5238e0fac86dcb164f3c79d42e97976">calib_write_config_counter</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t counter_id, uint32_t counter_value)</td></tr>
-<tr class="memdesc:gaa5238e0fac86dcb164f3c79d42e97976"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize one of the monotonic counters in device with a specific value.  <a href="a02398.html#gaa5238e0fac86dcb164f3c79d42e97976">More...</a><br /></td></tr>
-<tr class="separator:gaa5238e0fac86dcb164f3c79d42e97976"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga003b63648f1a5f9eba274760559688f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga003b63648f1a5f9eba274760559688f2">swi_uart_init</a> (<a class="el" href="a02163.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance)</td></tr>
+<tr class="memdesc:ga003b63648f1a5f9eba274760559688f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of SWI UART init.  <a href="a02163.html#ga003b63648f1a5f9eba274760559688f2">More...</a><br /></td></tr>
+<tr class="separator:ga003b63648f1a5f9eba274760559688f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b1aad3936bf003686d8db7fa2be5132"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga0b1aad3936bf003686d8db7fa2be5132">swi_uart_deinit</a> (<a class="el" href="a02163.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance)</td></tr>
+<tr class="memdesc:ga0b1aad3936bf003686d8db7fa2be5132"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of SWI UART deinit.  <a href="a02163.html#ga0b1aad3936bf003686d8db7fa2be5132">More...</a><br /></td></tr>
+<tr class="separator:ga0b1aad3936bf003686d8db7fa2be5132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#gaba296f70baf68b768d6c4bb9cf7ba67d">swi_uart_setbaud</a> (<a class="el" href="a02163.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance, uint32_t baudrate)</td></tr>
+<tr class="memdesc:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="mdescLeft">&#160;</td><td class="mdescRight">implementation of SWI UART change baudrate.  <a href="a02163.html#gaba296f70baf68b768d6c4bb9cf7ba67d">More...</a><br /></td></tr>
+<tr class="separator:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#gacc2a96c86ce4c07249b81bc6a7eb2e41">swi_uart_mode</a> (<a class="el" href="a02163.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance, uint8_t mode)</td></tr>
+<tr class="memdesc:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="mdescLeft">&#160;</td><td class="mdescRight">implementation of SWI UART change mode.  <a href="a02163.html#gacc2a96c86ce4c07249b81bc6a7eb2e41">More...</a><br /></td></tr>
+<tr class="separator:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad640b598d581ee7c8a4c804bee602906"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#gad640b598d581ee7c8a4c804bee602906">swi_uart_discover_buses</a> (int swi_uart_buses[], int max_buses)</td></tr>
+<tr class="memdesc:gad640b598d581ee7c8a4c804bee602906"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover UART buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge  <a href="a02163.html#gad640b598d581ee7c8a4c804bee602906">More...</a><br /></td></tr>
+<tr class="separator:gad640b598d581ee7c8a4c804bee602906"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4a4d491006d9683d67838963706ac9c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga4a4d491006d9683d67838963706ac9c1">swi_uart_send_byte</a> (<a class="el" href="a02163.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance, uint8_t data)</td></tr>
+<tr class="memdesc:ga4a4d491006d9683d67838963706ac9c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI UART send byte over ASF. This function send one byte over UART.  <a href="a02163.html#ga4a4d491006d9683d67838963706ac9c1">More...</a><br /></td></tr>
+<tr class="separator:ga4a4d491006d9683d67838963706ac9c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga93f3dab17c14f71641ca970998ede823"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga93f3dab17c14f71641ca970998ede823">swi_uart_receive_byte</a> (<a class="el" href="a02163.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance, uint8_t *data)</td></tr>
+<tr class="memdesc:ga93f3dab17c14f71641ca970998ede823"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI UART receive bytes over ASF. This function receive one byte over UART.  <a href="a02163.html#ga93f3dab17c14f71641ca970998ede823">More...</a><br /></td></tr>
+<tr class="separator:ga93f3dab17c14f71641ca970998ede823"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for Write command. </p>
-<p>The Write command writes either one 4-byte word or a 32-byte block to one of the EEPROM zones on the device. Depending upon the value of the WriteConfig byte for a slot, the data may be required to be encrypted by the system prior to being sent to the device</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, and ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="a12fd5170de4f8bf9c08d47be4a047254"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a12fd5170de4f8bf9c08d47be4a047254">&#9670;&nbsp;</a></span>calib_write_enc()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_write_enc </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td>
-          <td class="paramname"><em>device</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>key_id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>block</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>enc_key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint16_t&#160;</td>
-          <td class="paramname"><em>enc_key_id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>num_in</em>[NONCE_NUMIN_SIZE]&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Executes the Write command, which performs an encrypted write of a 32 byte block into given slot. </p>
-<p>The function takes clear text bytes and encrypts them for writing over the wire. Data zone must be locked and the slot configuration must be set to encrypted write for the block to be successfully written.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">key_id</td><td>Slot ID to write to. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">block</td><td>Index of the 32 byte block to write in the slot. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>32 bytes of clear text data to be written to the slot </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">enc_key</td><td>WriteKey to encrypt with for writing </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">enc_key_id</td><td>The KeyID of the WriteKey </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">num_in</td><td>20 byte host nonce to inject into Nonce calculation</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>returns ATCA_SUCCESS on success, otherwise an error code. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_a7c83ffe4cbb7b846faed985dac26a17.html">calib</a></li><li class="navelem"><a class="el" href="a01235.html">calib_write.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_a05a22e5f002d7c1de78eecb12447d7f.html">hal</a></li><li class="navelem"><a class="el" href="a01235.html">swi_uart_start.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

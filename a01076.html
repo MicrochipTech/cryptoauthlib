@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_devtypes.h File Reference</title>
+<title>CryptoAuthLib: atca_crypto_sw_ecdsa.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,42 +85,43 @@ $(document).ready(function(){initNavTree('a01076.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_devtypes.h File Reference</div>  </div>
+<div class="title">atca_crypto_sw_ecdsa.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Microchip Crypto Auth.  
-<a href="#details">More...</a></p>
-
+<div class="textblock"><code>#include &quot;<a class="el" href="a01070_source.html">atca_crypto_sw.h</a>&quot;</code><br />
+<code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+</div>
 <p><a href="a01076_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gafb234ccd6a80d09c0efbe336c2354267"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02395.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a> { <br />
-&#160;&#160;<a class="el" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268">ATSHA204A</a>, 
-<a class="el" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a20efd97b5b1001eec4a52e0ed5bf594c">ATECC108A</a>, 
-<a class="el" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae">ATECC508A</a>, 
-<a class="el" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a183a6224a93e6c2b82c6dc0e132398bf">ATECC608A</a>, 
-<br />
-&#160;&#160;<a class="el" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a6816489510886c97abe08d80c7207f3f">ATSHA206A</a>, 
-<a class="el" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a4af1fa9171e503676c56f45144d3b2f0">TA100</a> = 0x10, 
-<a class="el" href="a02395.html#ggafb234ccd6a80d09c0efbe336c2354267a3488f672341dda0ad20508ad888280ad">ATCA_DEV_UNKNOWN</a> = 0x20
-<br />
- }</td></tr>
-<tr class="memdesc:gafb234ccd6a80d09c0efbe336c2354267"><td class="mdescLeft">&#160;</td><td class="mdescRight">The supported Device type in Cryptoauthlib library.  <a href="a02395.html#gafb234ccd6a80d09c0efbe336c2354267">More...</a><br /></td></tr>
-<tr class="separator:gafb234ccd6a80d09c0efbe336c2354267"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gab6935877a2675bfc95af283fb43affb5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02162.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a>&#160;&#160;&#160;(256 / 8)</td></tr>
+<tr class="separator:gab6935877a2675bfc95af283fb43affb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb06f3adddd74993ab0da4be3ea71441"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02162.html#gadb06f3adddd74993ab0da4be3ea71441">ATCA_ECC_P256_PRIVATE_KEY_SIZE</a>&#160;&#160;&#160;(<a class="el" href="a02162.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a>)</td></tr>
+<tr class="separator:gadb06f3adddd74993ab0da4be3ea71441"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6bcf19f52fbceb7801fc3216d528fb3c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02162.html#ga6bcf19f52fbceb7801fc3216d528fb3c">ATCA_ECC_P256_PUBLIC_KEY_SIZE</a>&#160;&#160;&#160;(<a class="el" href="a02162.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a> * 2)</td></tr>
+<tr class="separator:ga6bcf19f52fbceb7801fc3216d528fb3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6eba254effebfbbb95381511fc7d80d5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02162.html#ga6eba254effebfbbb95381511fc7d80d5">ATCA_ECC_P256_SIGNATURE_SIZE</a>&#160;&#160;&#160;(<a class="el" href="a02162.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a> * 2)</td></tr>
+<tr class="separator:ga6eba254effebfbbb95381511fc7d80d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaea3d9b4507e2f87de5204fc905b8123a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02162.html#gaea3d9b4507e2f87de5204fc905b8123a">atcac_sw_ecdsa_verify_p256</a> (const uint8_t msg[(256/8)], const uint8_t signature[((256/8) *2)], const uint8_t public_key[((256/8) *2)])</td></tr>
+<tr class="memdesc:gaea3d9b4507e2f87de5204fc905b8123a"><td class="mdescLeft">&#160;</td><td class="mdescRight">return software generated ECDSA verification result and the function is currently not implemented  <a href="a02162.html#gaea3d9b4507e2f87de5204fc905b8123a">More...</a><br /></td></tr>
+<tr class="separator:gaea3d9b4507e2f87de5204fc905b8123a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Microchip Crypto Auth. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+<div class="textblock"><dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="a01076.html">atca_devtypes.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_326d8b13f324561f6416ae81b79d529c.html">crypto</a></li><li class="navelem"><a class="el" href="a01076.html">atca_crypto_sw_ecdsa.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

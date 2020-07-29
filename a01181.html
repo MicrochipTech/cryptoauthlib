@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_execution.h File Reference</title>
+<title>CryptoAuthLib: hal_sam_i2c_asf.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,98 +85,42 @@ $(document).ready(function(){initNavTree('a01181.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">calib_execution.h File Reference</div>  </div>
+<div class="title">hal_sam_i2c_asf.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Defines an execution handler that executes a given command on a device and returns the results.  
+<p>ATCA Hardware abstraction layer for SAMG55 I2C over ASF drivers.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01091_source.html">atca_status.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01166_source.html">calib_command.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01073_source.html">atca_device.h</a>&quot;</code><br />
-<code>#include &quot;atca_config.h&quot;</code><br />
+<div class="textblock"><code>#include &lt;asf.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a01109_source.html">cryptoauthlib.h</a>&quot;</code><br />
 </div>
 <p><a href="a01181_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:aa025be8149d8f6e4d07aaa436b026db2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01181.html#aa025be8149d8f6e4d07aaa436b026db2">ATCA_UNSUPPORTED_CMD</a>&#160;&#160;&#160;((uint16_t)0xFFFF)</td></tr>
-<tr class="separator:aa025be8149d8f6e4d07aaa436b026db2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02316.html">i2c_sam_instance</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a19fc558e09f03a2f8f5ee89b1e396b2e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01181.html#a19fc558e09f03a2f8f5ee89b1e396b2e">calib_execute_command</a> (<a class="el" href="a02497.html">ATCAPacket</a> *packet, <a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
-<tr class="memdesc:a19fc558e09f03a2f8f5ee89b1e396b2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wakes up device, sends the packet, waits for command completion, receives response, and puts the device into the idle state.  <a href="a01181.html#a19fc558e09f03a2f8f5ee89b1e396b2e">More...</a><br /></td></tr>
-<tr class="separator:a19fc558e09f03a2f8f5ee89b1e396b2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gae597ddf62e19ba0f85e4444df939a88b"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#gae597ddf62e19ba0f85e4444df939a88b">sam_change_baudrate</a>) (<a class="el" href="a02159.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint32_t speed)</td></tr>
+<tr class="separator:gae597ddf62e19ba0f85e4444df939a88b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2253297ba3f655a35cd1253e22ba5171"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a02316.html">i2c_sam_instance</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga2253297ba3f655a35cd1253e22ba5171">i2c_sam_instance_t</a></td></tr>
+<tr class="separator:ga2253297ba3f655a35cd1253e22ba5171"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Defines an execution handler that executes a given command on a device and returns the results. </p>
-<p>The basic flow is to wake the device, send the command, wait/poll for completion, and finally receives the response from the device and does basic checks before returning to caller.</p>
-<p>This handler supports the ATSHA and ATECC device family.</p>
+<div class="textblock"><p>ATCA Hardware abstraction layer for SAMG55 I2C over ASF drivers. </p>
+<p>Prerequisite: add "TWI - Two-Wire Interface (Common API) (service)" module to application in Atmel Studio</p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="aa025be8149d8f6e4d07aaa436b026db2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa025be8149d8f6e4d07aaa436b026db2">&#9670;&nbsp;</a></span>ATCA_UNSUPPORTED_CMD</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_UNSUPPORTED_CMD&#160;&#160;&#160;((uint16_t)0xFFFF)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a19fc558e09f03a2f8f5ee89b1e396b2e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19fc558e09f03a2f8f5ee89b1e396b2e">&#9670;&nbsp;</a></span>calib_execute_command()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_execute_command </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02497.html">ATCAPacket</a> *&#160;</td>
-          <td class="paramname"><em>packet</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td>
-          <td class="paramname"><em>device</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Wakes up device, sends the packet, waits for command completion, receives response, and puts the device into the idle state. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">packet</td><td>As input, the packet to be sent. As output, the data buffer in the packet structure will contain the response. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>CryptoAuthentication device to send the command to.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_a7c83ffe4cbb7b846faed985dac26a17.html">calib</a></li><li class="navelem"><a class="el" href="a01181.html">calib_execution.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_a05a22e5f002d7c1de78eecb12447d7f.html">hal</a></li><li class="navelem"><a class="el" href="a01181.html">hal_sam_i2c_asf.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

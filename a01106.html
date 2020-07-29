@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_client.h File Reference</title>
+<title>CryptoAuthLib: sha2_routines.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,56 +85,237 @@ $(document).ready(function(){initNavTree('a01106.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atcacert_client.h File Reference</div>  </div>
+<div class="title">sha2_routines.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Client side cert i/o methods. These declarations deal with the client-side, the node being authenticated, of the authentication process. It is assumed the client has an ECC CryptoAuthentication device (e.g. ATECC508A) and the certificates are stored on that device.  
+<p>Software implementation of the SHA256 algorithm.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a01118_source.html">atcacert_def.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
 </div>
 <p><a href="a01106_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02284.html">sw_sha256_ctx</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a81efbc0fc101b06a914f7ff9e2fbc0e9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01106.html#a81efbc0fc101b06a914f7ff9e2fbc0e9">SHA256_DIGEST_SIZE</a>&#160;&#160;&#160;(32)</td></tr>
+<tr class="separator:a81efbc0fc101b06a914f7ff9e2fbc0e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c1fe69ad43d4ca74b84303a0ed64f2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01106.html#a9c1fe69ad43d4ca74b84303a0ed64f2f">SHA256_BLOCK_SIZE</a>&#160;&#160;&#160;(64)</td></tr>
+<tr class="separator:a9c1fe69ad43d4ca74b84303a0ed64f2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga9a6222ede3a3f3f331882b613066b8a8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02397.html#ga9a6222ede3a3f3f331882b613066b8a8">atcacert_read_device_loc</a> (const <a class="el" href="a02397.html#ga7d54259db5c5ea4f20016264867971ae">atcacert_device_loc_t</a> *device_loc, uint8_t *data)</td></tr>
-<tr class="memdesc:ga9a6222ede3a3f3f331882b613066b8a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the data from a device location.  <a href="a02397.html#ga9a6222ede3a3f3f331882b613066b8a8">More...</a><br /></td></tr>
-<tr class="separator:ga9a6222ede3a3f3f331882b613066b8a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaf13dfd0ea4e563194cec6e62892b5c4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02397.html#gaaf13dfd0ea4e563194cec6e62892b5c4">atcacert_read_cert</a> (const <a class="el" href="a02397.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t ca_public_key[64], uint8_t *cert, size_t *cert_size)</td></tr>
-<tr class="memdesc:gaaf13dfd0ea4e563194cec6e62892b5c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the certificate specified by the certificate definition from the ATECC508A device.  <a href="a02397.html#gaaf13dfd0ea4e563194cec6e62892b5c4">More...</a><br /></td></tr>
-<tr class="separator:gaaf13dfd0ea4e563194cec6e62892b5c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga71ea9d7c93c2fecb87a36b1343397fad"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02397.html#ga71ea9d7c93c2fecb87a36b1343397fad">atcacert_write_cert</a> (const <a class="el" href="a02397.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size)</td></tr>
-<tr class="memdesc:ga71ea9d7c93c2fecb87a36b1343397fad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take a full certificate and write it to the ATECC508A device according to the certificate definition.  <a href="a02397.html#ga71ea9d7c93c2fecb87a36b1343397fad">More...</a><br /></td></tr>
-<tr class="separator:ga71ea9d7c93c2fecb87a36b1343397fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02397.html#gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6">atcacert_create_csr</a> (const <a class="el" href="a02397.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *csr_def, uint8_t *csr, size_t *csr_size)</td></tr>
-<tr class="memdesc:gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a CSR specified by the CSR definition from the ATECC508A device. This process involves reading the dynamic CSR data from the device and combining it with the template found in the CSR definition, then signing it. Return the CSR int der format.  <a href="a02397.html#gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6">More...</a><br /></td></tr>
-<tr class="separator:gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0b492025e27a705b1792b6276eeaaf68"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02397.html#ga0b492025e27a705b1792b6276eeaaf68">atcacert_create_csr_pem</a> (const <a class="el" href="a02397.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *csr_def, char *csr, size_t *csr_size)</td></tr>
-<tr class="memdesc:ga0b492025e27a705b1792b6276eeaaf68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a CSR specified by the CSR definition from the ATECC508A device. This process involves reading the dynamic CSR data from the device and combining it with the template found in the CSR definition, then signing it. Return the CSR int der format.  <a href="a02397.html#ga0b492025e27a705b1792b6276eeaaf68">More...</a><br /></td></tr>
-<tr class="separator:ga0b492025e27a705b1792b6276eeaaf68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9f7223a578ce5c07a831638106c6ff6c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02397.html#ga9f7223a578ce5c07a831638106c6ff6c">atcacert_get_response</a> (uint8_t device_private_key_slot, const uint8_t challenge[32], uint8_t response[64])</td></tr>
-<tr class="memdesc:ga9f7223a578ce5c07a831638106c6ff6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the response to a challenge sent from the host.  <a href="a02397.html#ga9f7223a578ce5c07a831638106c6ff6c">More...</a><br /></td></tr>
-<tr class="separator:ga9f7223a578ce5c07a831638106c6ff6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga83897818bb9152464dbaa4ad2b85ce10"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02397.html#ga83897818bb9152464dbaa4ad2b85ce10">atcacert_read_subj_key_id</a> (const <a class="el" href="a02397.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, uint8_t subj_key_id[20])</td></tr>
-<tr class="memdesc:ga83897818bb9152464dbaa4ad2b85ce10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the subject key ID based on a certificate definition.  <a href="a02397.html#ga83897818bb9152464dbaa4ad2b85ce10">More...</a><br /></td></tr>
-<tr class="separator:ga83897818bb9152464dbaa4ad2b85ce10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7af0248a5c3857e56e51b7cac88c882f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02397.html#ga7af0248a5c3857e56e51b7cac88c882f">atcacert_read_cert_size</a> (const <a class="el" href="a02397.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, size_t *cert_size)</td></tr>
-<tr class="memdesc:ga7af0248a5c3857e56e51b7cac88c882f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the actual certificate size in bytes for a given cert def. Certificate can be variable size, so this gives the absolute buffer size when reading the certificates.  <a href="a02397.html#ga7af0248a5c3857e56e51b7cac88c882f">More...</a><br /></td></tr>
-<tr class="separator:ga7af0248a5c3857e56e51b7cac88c882f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfb7028e6f10d29c548cbecdbfa53ac8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01106.html#acfb7028e6f10d29c548cbecdbfa53ac8">sw_sha256_init</a> (<a class="el" href="a02284.html">sw_sha256_ctx</a> *ctx)</td></tr>
+<tr class="memdesc:acfb7028e6f10d29c548cbecdbfa53ac8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Intialize the software SHA256.  <a href="a01106.html#acfb7028e6f10d29c548cbecdbfa53ac8">More...</a><br /></td></tr>
+<tr class="separator:acfb7028e6f10d29c548cbecdbfa53ac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f5d8ad85631d77bfdb10dfb728bfbce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01106.html#a7f5d8ad85631d77bfdb10dfb728bfbce">sw_sha256_update</a> (<a class="el" href="a02284.html">sw_sha256_ctx</a> *ctx, const uint8_t *message, uint32_t len)</td></tr>
+<tr class="memdesc:a7f5d8ad85631d77bfdb10dfb728bfbce"><td class="mdescLeft">&#160;</td><td class="mdescRight">updates the running hash with the next block of data, called iteratively for the entire stream of data to be hashed using the SHA256 software  <a href="a01106.html#a7f5d8ad85631d77bfdb10dfb728bfbce">More...</a><br /></td></tr>
+<tr class="separator:a7f5d8ad85631d77bfdb10dfb728bfbce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a594b8b10c408cb1103da9c09b1367a51"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01106.html#a594b8b10c408cb1103da9c09b1367a51">sw_sha256_final</a> (<a class="el" href="a02284.html">sw_sha256_ctx</a> *ctx, uint8_t digest[(32)])</td></tr>
+<tr class="memdesc:a594b8b10c408cb1103da9c09b1367a51"><td class="mdescLeft">&#160;</td><td class="mdescRight">completes the final SHA256 calculation and returns the final digest/hash  <a href="a01106.html#a594b8b10c408cb1103da9c09b1367a51">More...</a><br /></td></tr>
+<tr class="separator:a594b8b10c408cb1103da9c09b1367a51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90a76445beb1a0eadea22bb7e3c8ad60"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01106.html#a90a76445beb1a0eadea22bb7e3c8ad60">sw_sha256</a> (const uint8_t *message, unsigned int len, uint8_t digest[(32)])</td></tr>
+<tr class="memdesc:a90a76445beb1a0eadea22bb7e3c8ad60"><td class="mdescLeft">&#160;</td><td class="mdescRight">single call convenience function which computes Hash of given data using SHA256 software  <a href="a01106.html#a90a76445beb1a0eadea22bb7e3c8ad60">More...</a><br /></td></tr>
+<tr class="separator:a90a76445beb1a0eadea22bb7e3c8ad60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Client side cert i/o methods. These declarations deal with the client-side, the node being authenticated, of the authentication process. It is assumed the client has an ECC CryptoAuthentication device (e.g. ATECC508A) and the certificates are stored on that device. </p>
+<div class="textblock"><p>Software implementation of the SHA256 algorithm. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a9c1fe69ad43d4ca74b84303a0ed64f2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c1fe69ad43d4ca74b84303a0ed64f2f">&#9670;&nbsp;</a></span>SHA256_BLOCK_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHA256_BLOCK_SIZE&#160;&#160;&#160;(64)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a81efbc0fc101b06a914f7ff9e2fbc0e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81efbc0fc101b06a914f7ff9e2fbc0e9">&#9670;&nbsp;</a></span>SHA256_DIGEST_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHA256_DIGEST_SIZE&#160;&#160;&#160;(32)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a90a76445beb1a0eadea22bb7e3c8ad60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90a76445beb1a0eadea22bb7e3c8ad60">&#9670;&nbsp;</a></span>sw_sha256()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sw_sha256 </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>digest</em>[(32)]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>single call convenience function which computes Hash of given data using SHA256 software </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">message</td><td>pointer to stream of data to hash </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>size of data stream to hash </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">digest</td><td>result </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a594b8b10c408cb1103da9c09b1367a51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a594b8b10c408cb1103da9c09b1367a51">&#9670;&nbsp;</a></span>sw_sha256_final()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sw_sha256_final </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02284.html">sw_sha256_ctx</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>digest</em>[(32)]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>completes the final SHA256 calculation and returns the final digest/hash </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>ptr to context data structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">digest</td><td>receives the computed digest of the SHA 256 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acfb7028e6f10d29c548cbecdbfa53ac8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfb7028e6f10d29c548cbecdbfa53ac8">&#9670;&nbsp;</a></span>sw_sha256_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sw_sha256_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02284.html">sw_sha256_ctx</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Intialize the software SHA256. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>SHA256 hash context </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7f5d8ad85631d77bfdb10dfb728bfbce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f5d8ad85631d77bfdb10dfb728bfbce">&#9670;&nbsp;</a></span>sw_sha256_update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sw_sha256_update </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02284.html">sw_sha256_ctx</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>msg_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>updates the running hash with the next block of data, called iteratively for the entire stream of data to be hashed using the SHA256 software </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>SHA256 hash context </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">msg</td><td>Raw blocks to be processed </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">msg_size</td><td>The size of the message passed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_65edf1b561f102319ae2d8c3ccfc1a4c.html">atcacert</a></li><li class="navelem"><a class="el" href="a01106.html">atcacert_client.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_326d8b13f324561f6416ae81b79d529c.html">crypto</a></li><li class="navelem"><a class="el" href="dir_fcc9ad4889e5264096f88a0e7f25f004.html">hashes</a></li><li class="navelem"><a class="el" href="a01106.html">sha2_routines.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

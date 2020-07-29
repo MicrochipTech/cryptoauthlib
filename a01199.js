@@ -1,9 +1,14 @@
 var a01199 =
 [
-    [ "calib_lock", "a02398.html#gaedcd432286630b9b0b05aef743fcf140", null ],
-    [ "calib_lock_config_zone", "a02398.html#gad59ce160afe0d695a51f3bb1869f8f9f", null ],
-    [ "calib_lock_config_zone_crc", "a02398.html#gaedd7f6f6e9a6b5e58fac18416b9cb8e8", null ],
-    [ "calib_lock_data_slot", "a02398.html#gaf8b5f9e30a712d0740f1a258ff6481d5", null ],
-    [ "calib_lock_data_zone", "a02398.html#ga8b43d1fe63cc9c5349bd0eacab073f05", null ],
-    [ "calib_lock_data_zone_crc", "a02398.html#ga54f25b26b532c6f2cee224ebfd8d53c5", null ]
+    [ "change_i2c_speed", "a02163.html#gadc420e4b166a1b339d1a2687e0f12cb1", null ],
+    [ "hal_i2c_discover_buses", "a02163.html#ga05700385437884cc7b28c38d33e84f8c", null ],
+    [ "hal_i2c_discover_devices", "a02163.html#gac7644e62498a596c09952ee3b28017b9", null ],
+    [ "hal_i2c_idle", "a02163.html#ga9317303ada721ff3f97e7aad69437a30", null ],
+    [ "hal_i2c_init", "a02163.html#ga09e7f465a040fbd19ea136269571de3c", null ],
+    [ "hal_i2c_post_init", "a02163.html#gafbe53519362f18c2688d10da6f7c618f", null ],
+    [ "hal_i2c_receive", "a02163.html#ga41a2b07d55558b9726abe28fd8431e90", null ],
+    [ "hal_i2c_release", "a02163.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
+    [ "hal_i2c_send", "a02163.html#gacc9a889e19d2f1a475a39391565b66dd", null ],
+    [ "hal_i2c_sleep", "a02163.html#ga3f89bae6a625d5f37abdcc99408def27", null ],
+    [ "hal_i2c_wake", "a02163.html#gad4df1b6755e2d5b5d9e810371e45ca8c", null ]
 ];

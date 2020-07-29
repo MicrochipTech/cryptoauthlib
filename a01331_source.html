@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_i2c_start.h Source File</title>
+<title>CryptoAuthLib: pkcs11_mech.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,39 +85,43 @@ $(document).ready(function(){initNavTree('a01331_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">hal_i2c_start.h</div>  </div>
+<div class="title">pkcs11_mech.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a01331.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef HAL_SAMD21_I2C_START_H_</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define HAL_SAMD21_I2C_START_H_</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef PKCS11_MECH_H_</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define PKCS11_MECH_H_</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01265.html">cryptoki.h</a>&quot;</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;atmel_start.h&quot;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01286.html">cryptoauthlib.h</a>&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="a02340.html#gaf5c1d7b7fca31a8c1102814e4732c373">   46</a></span>&#160;<span class="keyword">typedef</span> void (* <a class="code" href="a02340.html#gaf5c1d7b7fca31a8c1102814e4732c373">start_change_baudrate</a>)(<a class="code" href="a02401.html">ATCAIface</a> iface, uint32_t speed);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="a02485.html">   48</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="a02485.html">i2c_start_instance</a></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;{</div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="a02485.html#ae1d5ca17e25b1c02c8d0a14b09ccd0c6">   50</a></span>&#160;    <span class="keyword">struct </span>i2c_m_sync_desc * <a class="code" href="a02485.html#ae1d5ca17e25b1c02c8d0a14b09ccd0c6">i2c_descriptor</a>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="a02485.html#a0c3e028b53b36cb3d4f829d556c77900">   51</a></span>&#160;    <a class="code" href="a02340.html#gaf5c1d7b7fca31a8c1102814e4732c373">start_change_baudrate</a>    <a class="code" href="a02485.html#a0c3e028b53b36cb3d4f829d556c77900">change_baudrate</a>;</div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="a02340.html#gab4ad18d30b921f27b4879ca71181491f">   52</a></span>&#160;} <a class="code" href="a02340.html#gab4ad18d30b921f27b4879ca71181491f">i2c_start_instance_t</a>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAL_SAMD21_I2C_START_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<a class="code" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a02167.html#ga9678c431b8d5479e53417b109b32c20f">pkcs11_mech_get_list</a>(<a class="code" href="a01379.html#a53398953158f3b452e0513a0b78a0c5a">CK_SLOT_ID</a> slotID, <a class="code" href="a01379.html#a653265da2fe1c5336cadced022575156">CK_MECHANISM_TYPE_PTR</a> pMechanismList, <a class="code" href="a01379.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulCount);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<a class="code" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a02167.html#gac66d133f84b945f9c26727ee9f7a7d57">pkcs_mech_get_info</a>(<a class="code" href="a01379.html#a53398953158f3b452e0513a0b78a0c5a">CK_SLOT_ID</a> slotID, <a class="code" href="a01379.html#aaf1084907f5cc09a3e0b85ab022a240d">CK_MECHANISM_TYPE</a> type, <a class="code" href="a01379.html#a81131602c4689b717951c9c59f827661">CK_MECHANISM_INFO_PTR</a> pInfo);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PKCS11_MECH_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aa01286_html"><div class="ttname"><a href="a01286.html">cryptoauthlib.h</a></div><div class="ttdoc">Single aggregation point for all CryptoAuthLib header files.</div></div>
-<div class="ttc" id="aa02401_html"><div class="ttname"><a href="a02401.html">atca_iface</a></div><div class="ttdoc">atca_iface is the C object backing ATCAIface. See the atca_iface.h file for details on the ATCAIface ...</div><div class="ttdef"><b>Definition:</b> atca_iface.h:153</div></div>
-<div class="ttc" id="aa02485_html_ae1d5ca17e25b1c02c8d0a14b09ccd0c6"><div class="ttname"><a href="a02485.html#ae1d5ca17e25b1c02c8d0a14b09ccd0c6">i2c_start_instance::i2c_descriptor</a></div><div class="ttdeci">struct i2c_m_sync_desc * i2c_descriptor</div><div class="ttdef"><b>Definition:</b> hal_i2c_start.h:50</div></div>
-<div class="ttc" id="aa02340_html_gaf5c1d7b7fca31a8c1102814e4732c373"><div class="ttname"><a href="a02340.html#gaf5c1d7b7fca31a8c1102814e4732c373">start_change_baudrate</a></div><div class="ttdeci">void(* start_change_baudrate)(ATCAIface iface, uint32_t speed)</div><div class="ttdef"><b>Definition:</b> hal_i2c_start.h:46</div></div>
-<div class="ttc" id="aa02485_html_a0c3e028b53b36cb3d4f829d556c77900"><div class="ttname"><a href="a02485.html#a0c3e028b53b36cb3d4f829d556c77900">i2c_start_instance::change_baudrate</a></div><div class="ttdeci">start_change_baudrate change_baudrate</div><div class="ttdef"><b>Definition:</b> hal_i2c_start.h:51</div></div>
-<div class="ttc" id="aa02340_html_gab4ad18d30b921f27b4879ca71181491f"><div class="ttname"><a href="a02340.html#gab4ad18d30b921f27b4879ca71181491f">i2c_start_instance_t</a></div><div class="ttdeci">struct i2c_start_instance i2c_start_instance_t</div></div>
-<div class="ttc" id="aa02485_html"><div class="ttname"><a href="a02485.html">i2c_start_instance</a></div><div class="ttdef"><b>Definition:</b> hal_i2c_start.h:49</div></div>
+<div class="ttc" id="aa01265_html"><div class="ttname"><a href="a01265.html">cryptoki.h</a></div></div>
+<div class="ttc" id="aa01379_html_a81131602c4689b717951c9c59f827661"><div class="ttname"><a href="a01379.html#a81131602c4689b717951c9c59f827661">CK_MECHANISM_INFO_PTR</a></div><div class="ttdeci">CK_MECHANISM_INFO CK_PTR CK_MECHANISM_INFO_PTR</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:1041</div></div>
+<div class="ttc" id="aa01379_html_a653265da2fe1c5336cadced022575156"><div class="ttname"><a href="a01379.html#a653265da2fe1c5336cadced022575156">CK_MECHANISM_TYPE_PTR</a></div><div class="ttdeci">CK_MECHANISM_TYPE CK_PTR CK_MECHANISM_TYPE_PTR</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:985</div></div>
+<div class="ttc" id="aa01379_html_af18ced3aa6adcd9f76ae8c132ed2eeb9"><div class="ttname"><a href="a01379.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a></div><div class="ttdeci">CK_ULONG CK_PTR CK_ULONG_PTR</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:66</div></div>
+<div class="ttc" id="aa01379_html_aaf1084907f5cc09a3e0b85ab022a240d"><div class="ttname"><a href="a01379.html#aaf1084907f5cc09a3e0b85ab022a240d">CK_MECHANISM_TYPE</a></div><div class="ttdeci">CK_ULONG CK_MECHANISM_TYPE</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:591</div></div>
+<div class="ttc" id="aa02167_html_gac66d133f84b945f9c26727ee9f7a7d57"><div class="ttname"><a href="a02167.html#gac66d133f84b945f9c26727ee9f7a7d57">pkcs_mech_get_info</a></div><div class="ttdeci">CK_RV pkcs_mech_get_info(CK_SLOT_ID slotID, CK_MECHANISM_TYPE type, CK_MECHANISM_INFO_PTR pInfo)</div><div class="ttdef"><b>Definition:</b> pkcs11_mech.c:315</div></div>
+<div class="ttc" id="aa01379_html_a33839c131011ca3849dc35c11f69c39d"><div class="ttname"><a href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a></div><div class="ttdeci">CK_ULONG CK_RV</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:1046</div></div>
+<div class="ttc" id="aa02167_html_ga9678c431b8d5479e53417b109b32c20f"><div class="ttname"><a href="a02167.html#ga9678c431b8d5479e53417b109b32c20f">pkcs11_mech_get_list</a></div><div class="ttdeci">CK_RV pkcs11_mech_get_list(CK_SLOT_ID slotID, CK_MECHANISM_TYPE_PTR pMechanismList, CK_ULONG_PTR pulCount)</div><div class="ttdef"><b>Definition:</b> pkcs11_mech.c:256</div></div>
+<div class="ttc" id="aa01379_html_a53398953158f3b452e0513a0b78a0c5a"><div class="ttname"><a href="a01379.html#a53398953158f3b452e0513a0b78a0c5a">CK_SLOT_ID</a></div><div class="ttdeci">CK_ULONG CK_SLOT_ID</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:107</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_36432077327cc0f3c76187c9e6e34627.html">hal</a></li><li class="navelem"><a class="el" href="a01331.html">hal_i2c_start.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_231ca3caf32f66fb77d3d96bdb6ade1d.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01331.html">pkcs11_mech.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

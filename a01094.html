@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_version.h File Reference</title>
+<title>CryptoAuthLib: atca_crypto_sw_sha2.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,94 +85,52 @@ $(document).ready(function(){initNavTree('a01094.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_version.h File Reference</div>  </div>
+<div class="title">atca_crypto_sw_sha2.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Microchip CryptoAuth Library Version.  
+<p>Wrapper API for software SHA 256 routines.  
 <a href="#details">More...</a></p>
-
+<div class="textblock"><code>#include &quot;<a class="el" href="a01070_source.html">atca_crypto_sw.h</a>&quot;</code><br />
+<code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+</div>
 <p><a href="a01094_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:aceddbd0ae1c41554eb2f0fabc0a2dc0c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01094.html#aceddbd0ae1c41554eb2f0fabc0a2dc0c">ATCA_LIBRARY_VERSION_DATE</a>&#160;&#160;&#160;&quot;20200610&quot;</td></tr>
-<tr class="separator:aceddbd0ae1c41554eb2f0fabc0a2dc0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4634f4de0131c8eee8f064dc3e9064b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01094.html#ab4634f4de0131c8eee8f064dc3e9064b">ATCA_LIBRARY_VERSION_MAJOR</a>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:ab4634f4de0131c8eee8f064dc3e9064b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ec591139c9e733853063ea898bac376"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01094.html#a0ec591139c9e733853063ea898bac376">ATCA_LIBRARY_VERSION_MINOR</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:a0ec591139c9e733853063ea898bac376"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78849ac2eed512d15a0b22ca781f83e8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01094.html#a78849ac2eed512d15a0b22ca781f83e8">ATCA_LIBRARY_VERSION_BUILD</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a78849ac2eed512d15a0b22ca781f83e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga58283666b662f084155ba693870c1077"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02162.html#ga58283666b662f084155ba693870c1077">atcac_sw_sha2_256_init</a> (<a class="el" href="a01070.html#ab5f0f06be68e024307d6b8bf0f0b81b8">atcac_sha2_256_ctx</a> *ctx)</td></tr>
+<tr class="memdesc:ga58283666b662f084155ba693870c1077"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing SHA256 hash in software.  <a href="a02162.html#ga58283666b662f084155ba693870c1077">More...</a><br /></td></tr>
+<tr class="separator:ga58283666b662f084155ba693870c1077"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1a09fa1d854722cc667cea319ca9984"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02162.html#gab1a09fa1d854722cc667cea319ca9984">atcac_sw_sha2_256_update</a> (<a class="el" href="a01070.html#ab5f0f06be68e024307d6b8bf0f0b81b8">atcac_sha2_256_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
+<tr class="memdesc:gab1a09fa1d854722cc667cea319ca9984"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add data to a SHA256 hash.  <a href="a02162.html#gab1a09fa1d854722cc667cea319ca9984">More...</a><br /></td></tr>
+<tr class="separator:gab1a09fa1d854722cc667cea319ca9984"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga135e9b88fe057af52d4116b1352be822"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02162.html#ga135e9b88fe057af52d4116b1352be822">atcac_sw_sha2_256_finish</a> (<a class="el" href="a01070.html#ab5f0f06be68e024307d6b8bf0f0b81b8">atcac_sha2_256_ctx</a> *ctx, uint8_t digest[(32)])</td></tr>
+<tr class="separator:ga135e9b88fe057af52d4116b1352be822"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga72ceba9df57d884c85321abe92994c4f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02162.html#ga72ceba9df57d884c85321abe92994c4f">atcac_sw_sha2_256</a> (const uint8_t *data, size_t data_size, uint8_t digest[(32)])</td></tr>
+<tr class="memdesc:ga72ceba9df57d884c85321abe92994c4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">single call convenience function which computes Hash of given data using SHA256 software  <a href="a02162.html#ga72ceba9df57d884c85321abe92994c4f">More...</a><br /></td></tr>
+<tr class="separator:ga72ceba9df57d884c85321abe92994c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4e23a2ff2f57f730a1490afaac2ea3dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02162.html#ga4e23a2ff2f57f730a1490afaac2ea3dc">atcac_sha256_hmac_init</a> (<a class="el" href="a01070.html#a253fe8619eb230171220d72f8fc4d6b9">atcac_hmac_sha256_ctx</a> *ctx, const uint8_t *key, const uint8_t key_len)</td></tr>
+<tr class="memdesc:ga4e23a2ff2f57f730a1490afaac2ea3dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing HMAC (sha256) in software.  <a href="a02162.html#ga4e23a2ff2f57f730a1490afaac2ea3dc">More...</a><br /></td></tr>
+<tr class="separator:ga4e23a2ff2f57f730a1490afaac2ea3dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4493b637590b0d3f5da0bd66b386d8a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02162.html#gaa4493b637590b0d3f5da0bd66b386d8a">atcac_sha256_hmac_update</a> (<a class="el" href="a01070.html#a253fe8619eb230171220d72f8fc4d6b9">atcac_hmac_sha256_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
+<tr class="memdesc:gaa4493b637590b0d3f5da0bd66b386d8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update HMAC context with input data.  <a href="a02162.html#gaa4493b637590b0d3f5da0bd66b386d8a">More...</a><br /></td></tr>
+<tr class="separator:gaa4493b637590b0d3f5da0bd66b386d8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4aabb5258b261af2802b45a817fb7113"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02162.html#ga4aabb5258b261af2802b45a817fb7113">atcac_sha256_hmac_finish</a> (<a class="el" href="a01070.html#a253fe8619eb230171220d72f8fc4d6b9">atcac_hmac_sha256_ctx</a> *ctx, uint8_t *digest, size_t *digest_len)</td></tr>
+<tr class="memdesc:ga4aabb5258b261af2802b45a817fb7113"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finish CMAC calculation and clear the HMAC context.  <a href="a02162.html#ga4aabb5258b261af2802b45a817fb7113">More...</a><br /></td></tr>
+<tr class="separator:ga4aabb5258b261af2802b45a817fb7113"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Microchip CryptoAuth Library Version. </p>
+<div class="textblock"><p>Wrapper API for software SHA 256 routines. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a78849ac2eed512d15a0b22ca781f83e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78849ac2eed512d15a0b22ca781f83e8">&#9670;&nbsp;</a></span>ATCA_LIBRARY_VERSION_BUILD</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_LIBRARY_VERSION_BUILD&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aceddbd0ae1c41554eb2f0fabc0a2dc0c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aceddbd0ae1c41554eb2f0fabc0a2dc0c">&#9670;&nbsp;</a></span>ATCA_LIBRARY_VERSION_DATE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_LIBRARY_VERSION_DATE&#160;&#160;&#160;&quot;20200610&quot;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ab4634f4de0131c8eee8f064dc3e9064b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab4634f4de0131c8eee8f064dc3e9064b">&#9670;&nbsp;</a></span>ATCA_LIBRARY_VERSION_MAJOR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_LIBRARY_VERSION_MAJOR&#160;&#160;&#160;3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0ec591139c9e733853063ea898bac376"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ec591139c9e733853063ea898bac376">&#9670;&nbsp;</a></span>ATCA_LIBRARY_VERSION_MINOR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_LIBRARY_VERSION_MINOR&#160;&#160;&#160;2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="a01094.html">atca_version.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_326d8b13f324561f6416ae81b79d529c.html">crypto</a></li><li class="navelem"><a class="el" href="a01094.html">atca_crypto_sw_sha2.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

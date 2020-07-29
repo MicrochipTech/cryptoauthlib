@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_crypto_hw_aes.h File Reference</title>
+<title>CryptoAuthLib: pkcs11_debug.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,77 +85,109 @@ $(document).ready(function(){initNavTree('a01292.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">atca_crypto_hw_aes.h File Reference</div>  </div>
+<div class="title">pkcs11_debug.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>AES CTR, CBC &amp; CMAC structure definitions.  
+<p>PKCS11 Library Debugging.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01343_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;pkcs11_config.h&quot;</code><br />
 </div>
 <p><a href="a01292_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07638.html">atca_aes_cbc_ctx</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07642.html">atca_aes_cmac_ctx</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07646.html">atca_aes_ctr_ctx</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a927afea55b7a5011e14795d735b47ad7"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a07638.html">atca_aes_cbc_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01292.html#a927afea55b7a5011e14795d735b47ad7">atca_aes_cbc_ctx_t</a></td></tr>
-<tr class="separator:a927afea55b7a5011e14795d735b47ad7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71a000f89238de0205da742995a0cb34"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a07642.html">atca_aes_cmac_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01292.html#a71a000f89238de0205da742995a0cb34">atca_aes_cmac_ctx_t</a></td></tr>
-<tr class="separator:a71a000f89238de0205da742995a0cb34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52b18f051752d214a2d5b485270f5b15"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a07646.html">atca_aes_ctr_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01292.html#a52b18f051752d214a2d5b485270f5b15">atca_aes_ctr_ctx_t</a></td></tr>
-<tr class="separator:a52b18f051752d214a2d5b485270f5b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a747bc19e378f56f24664e615ecd996bd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01292.html#a747bc19e378f56f24664e615ecd996bd">PKCS11_DEBUG_NOFILE</a>(...)</td></tr>
+<tr class="separator:a747bc19e378f56f24664e615ecd996bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a660e603d036b884434faff8d5a6bb443"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01292.html#a660e603d036b884434faff8d5a6bb443">PKCS11_DEBUG</a>(...)</td></tr>
+<tr class="separator:a660e603d036b884434faff8d5a6bb443"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c844aa5e64c02064e137f20d82f0313"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01292.html#a9c844aa5e64c02064e137f20d82f0313">PKCS11_DEBUG_RETURN</a>(x)&#160;&#160;&#160;{ return x; }</td></tr>
+<tr class="separator:a9c844aa5e64c02064e137f20d82f0313"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2549fbb058dd2934f6a3b4bf983bfa5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01292.html#ac2549fbb058dd2934f6a3b4bf983bfa5">pkcs11_debug_attributes</a>(x,  y)</td></tr>
+<tr class="separator:ac2549fbb058dd2934f6a3b4bf983bfa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>AES CTR, CBC &amp; CMAC structure definitions. </p>
+<div class="textblock"><p>PKCS11 Library Debugging. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="a927afea55b7a5011e14795d735b47ad7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a927afea55b7a5011e14795d735b47ad7">&#9670;&nbsp;</a></span>atca_aes_cbc_ctx_t</h2>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a660e603d036b884434faff8d5a6bb443"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a660e603d036b884434faff8d5a6bb443">&#9670;&nbsp;</a></span>PKCS11_DEBUG</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef struct <a class="el" href="a07638.html">atca_aes_cbc_ctx</a> <a class="el" href="a01292.html#a927afea55b7a5011e14795d735b47ad7">atca_aes_cbc_ctx_t</a></td>
+          <td class="memname">#define PKCS11_DEBUG</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a71a000f89238de0205da742995a0cb34"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71a000f89238de0205da742995a0cb34">&#9670;&nbsp;</a></span>atca_aes_cmac_ctx_t</h2>
+<a id="ac2549fbb058dd2934f6a3b4bf983bfa5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2549fbb058dd2934f6a3b4bf983bfa5">&#9670;&nbsp;</a></span>pkcs11_debug_attributes</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef struct <a class="el" href="a07642.html">atca_aes_cmac_ctx</a> <a class="el" href="a01292.html#a71a000f89238de0205da742995a0cb34">atca_aes_cmac_ctx_t</a></td>
+          <td class="memname">#define pkcs11_debug_attributes</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">y&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a52b18f051752d214a2d5b485270f5b15"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52b18f051752d214a2d5b485270f5b15">&#9670;&nbsp;</a></span>atca_aes_ctr_ctx_t</h2>
+<a id="a747bc19e378f56f24664e615ecd996bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a747bc19e378f56f24664e615ecd996bd">&#9670;&nbsp;</a></span>PKCS11_DEBUG_NOFILE</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef struct <a class="el" href="a07646.html">atca_aes_ctr_ctx</a> <a class="el" href="a01292.html#a52b18f051752d214a2d5b485270f5b15">atca_aes_ctr_ctx_t</a></td>
+          <td class="memname">#define PKCS11_DEBUG_NOFILE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9c844aa5e64c02064e137f20d82f0313"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c844aa5e64c02064e137f20d82f0313">&#9670;&nbsp;</a></span>PKCS11_DEBUG_RETURN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PKCS11_DEBUG_RETURN</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x</td><td>)</td>
+          <td>&#160;&#160;&#160;{ return x; }</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -167,7 +199,7 @@ Typedefs</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_0d284ebe0a46982303565525253d36b8.html">crypto</a></li><li class="navelem"><a class="el" href="a01292.html">atca_crypto_hw_aes.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_231ca3caf32f66fb77d3d96bdb6ade1d.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01292.html">pkcs11_debug.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

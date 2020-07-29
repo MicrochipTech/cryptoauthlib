@@ -1,6 +1,6 @@
 var a01310 =
 [
-    [ "HID_DEVICES_MAX", "a02400.html#ga49053c3cd6d48fe5f468ce010ac0a9ef", null ],
-    [ "HID_PACKET_MAX", "a02400.html#ga6cdff3589b286ebcdd7771bb425fbf73", null ],
-    [ "atcahid_t", "a02400.html#gabb3ee8f7daf1cd68f8173981271ac37a", null ]
+    [ "pkcs11_get_lib_info", "a02167.html#gaae56826104269ca730066136fb3eb995", null ],
+    [ "pkcs11_lib_description", "a02167.html#ga47daad4918afdf7ec808a5a57a4bce9d", null ],
+    [ "pkcs11_lib_manufacturer_id", "a02167.html#ga8ac50a3d8a0c4f1ddf04cdf02c757030", null ]
 ];

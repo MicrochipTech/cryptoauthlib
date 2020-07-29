@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_linux_i2c_userspace.h Source File</title>
+<title>CryptoAuthLib: pkcs11_os.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,33 +85,41 @@ $(document).ready(function(){initNavTree('a01343_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">hal_linux_i2c_userspace.h</div>  </div>
+<div class="title">pkcs11_os.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a01343.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef HAL_LINUX_I2C_USERSPACE_H_</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define HAL_LINUX_I2C_USERSPACE_H_</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef PKCS11_OS_H_</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define PKCS11_OS_H_</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#define MAX_I2C_BUSES   2   // Raspberry Pi has 2 TWI</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="a02400.html#gaf89a7a4080a47aa10a5504291db285bf">   39</a></span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">// A structure to hold I2C information</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="a02533.html">atcaI2Cmaster</a></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;{</div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="a02533.html#a386ecc3f01d8b317bc512cab194d844f">   43</a></span>&#160;    <span class="keywordtype">char</span> <a class="code" href="a02533.html#a386ecc3f01d8b317bc512cab194d844f">i2c_file</a>[16];</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">int</span>  <a class="code" href="a02533.html#ad72ba8c994f4d0e5ce354e17f7c427c0">ref_ct</a>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="a02400.html#ga06b19a932aea9cf3a5165fefacb24f7b">   45</a></span>&#160;} <a class="code" href="a02400.html#ga06b19a932aea9cf3a5165fefacb24f7b">ATCAI2CMaster_t</a>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAL_LINUX_I2C_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01265.html">cryptoki.h</a>&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01109.html">cryptoauthlib.h</a>&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<a class="code" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a02167.html#gaf5f1c5e6c5bf8d91f2090ee4bbe20362">pkcs11_os_create_mutex</a>(<a class="code" href="a01379.html#ae0b1b81b8173ec1695352ff3c44f1254">CK_VOID_PTR_PTR</a> ppMutex);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<a class="code" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a02167.html#ga0b79ce15416271adde1bb832f6faa16b">pkcs11_os_destroy_mutex</a>(<a class="code" href="a01379.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pMutex);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<a class="code" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a02167.html#gae27d029f16c6710a0a168e1d1057a4e3">pkcs11_os_lock_mutex</a>(<a class="code" href="a01379.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pMutex);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<a class="code" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a02167.html#ga6f868fabdbf3e115a72e1d126e5356b5">pkcs11_os_unlock_mutex</a>(<a class="code" href="a01379.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pMutex);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#define pkcs11_os_malloc    hal_malloc</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="a01343.html#add8754c49398ab1c3a26a581188e074c">   40</a></span>&#160;<span class="preprocessor">#define pkcs11_os_free      hal_free</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="a01343.html#a6dc4b364c3d11f22e08cc67adbcd70c6">   41</a></span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PKCS11_OS_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aa02400_html_ga06b19a932aea9cf3a5165fefacb24f7b"><div class="ttname"><a href="a02400.html#ga06b19a932aea9cf3a5165fefacb24f7b">ATCAI2CMaster_t</a></div><div class="ttdeci">struct atcaI2Cmaster ATCAI2CMaster_t</div></div>
-<div class="ttc" id="aa02533_html_ad72ba8c994f4d0e5ce354e17f7c427c0"><div class="ttname"><a href="a02533.html#ad72ba8c994f4d0e5ce354e17f7c427c0">atcaI2Cmaster::ref_ct</a></div><div class="ttdeci">int ref_ct</div><div class="ttdef"><b>Definition:</b> hal_esp32_i2c.c:39</div></div>
-<div class="ttc" id="aa02533_html"><div class="ttname"><a href="a02533.html">atcaI2Cmaster</a></div><div class="ttdoc">this is the hal_data for ATCA HAL for ASF SERCOM</div><div class="ttdef"><b>Definition:</b> hal_esp32_i2c.c:37</div></div>
-<div class="ttc" id="aa02533_html_a386ecc3f01d8b317bc512cab194d844f"><div class="ttname"><a href="a02533.html#a386ecc3f01d8b317bc512cab194d844f">atcaI2Cmaster::i2c_file</a></div><div class="ttdeci">char i2c_file[16]</div><div class="ttdef"><b>Definition:</b> hal_linux_i2c_userspace.h:43</div></div>
+<div class="ttc" id="aa01265_html"><div class="ttname"><a href="a01265.html">cryptoki.h</a></div></div>
+<div class="ttc" id="aa02167_html_gae27d029f16c6710a0a168e1d1057a4e3"><div class="ttname"><a href="a02167.html#gae27d029f16c6710a0a168e1d1057a4e3">pkcs11_os_lock_mutex</a></div><div class="ttdeci">CK_RV pkcs11_os_lock_mutex(CK_VOID_PTR pMutex)</div><div class="ttdef"><b>Definition:</b> pkcs11_os.c:66</div></div>
+<div class="ttc" id="aa01109_html"><div class="ttname"><a href="a01109.html">cryptoauthlib.h</a></div><div class="ttdoc">Single aggregation point for all CryptoAuthLib header files.</div></div>
+<div class="ttc" id="aa01379_html_ace49359127edfc5665608140005b9a96"><div class="ttname"><a href="a01379.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a></div><div class="ttdeci">void CK_PTR CK_VOID_PTR</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:67</div></div>
+<div class="ttc" id="aa02167_html_ga0b79ce15416271adde1bb832f6faa16b"><div class="ttname"><a href="a02167.html#ga0b79ce15416271adde1bb832f6faa16b">pkcs11_os_destroy_mutex</a></div><div class="ttdeci">CK_RV pkcs11_os_destroy_mutex(CK_VOID_PTR pMutex)</div><div class="ttdef"><b>Definition:</b> pkcs11_os.c:57</div></div>
+<div class="ttc" id="aa01379_html_ae0b1b81b8173ec1695352ff3c44f1254"><div class="ttname"><a href="a01379.html#ae0b1b81b8173ec1695352ff3c44f1254">CK_VOID_PTR_PTR</a></div><div class="ttdeci">CK_VOID_PTR CK_PTR CK_VOID_PTR_PTR</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:70</div></div>
+<div class="ttc" id="aa02167_html_ga6f868fabdbf3e115a72e1d126e5356b5"><div class="ttname"><a href="a02167.html#ga6f868fabdbf3e115a72e1d126e5356b5">pkcs11_os_unlock_mutex</a></div><div class="ttdeci">CK_RV pkcs11_os_unlock_mutex(CK_VOID_PTR pMutex)</div><div class="ttdef"><b>Definition:</b> pkcs11_os.c:75</div></div>
+<div class="ttc" id="aa02167_html_gaf5f1c5e6c5bf8d91f2090ee4bbe20362"><div class="ttname"><a href="a02167.html#gaf5f1c5e6c5bf8d91f2090ee4bbe20362">pkcs11_os_create_mutex</a></div><div class="ttdeci">CK_RV pkcs11_os_create_mutex(CK_VOID_PTR_PTR ppMutex)</div><div class="ttdoc">Application callback for creating a mutex object.</div><div class="ttdef"><b>Definition:</b> pkcs11_os.c:48</div></div>
+<div class="ttc" id="aa01379_html_a33839c131011ca3849dc35c11f69c39d"><div class="ttname"><a href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a></div><div class="ttdeci">CK_ULONG CK_RV</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:1046</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_36432077327cc0f3c76187c9e6e34627.html">hal</a></li><li class="navelem"><a class="el" href="a01343.html">hal_linux_i2c_userspace.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_231ca3caf32f66fb77d3d96bdb6ade1d.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01343.html">pkcs11_os.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

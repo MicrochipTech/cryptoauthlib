@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_crypto_sw_rand.h Source File</title>
+<title>CryptoAuthLib: pkcs11_init.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,36 +85,79 @@ $(document).ready(function(){initNavTree('a01316_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">atca_crypto_sw_rand.h</div>  </div>
+<div class="title">pkcs11_init.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a01316.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef ATCA_CRYPTO_SW_RAND_H</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define ATCA_CRYPTO_SW_RAND_H</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef PKCS11_INIT_H_</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define PKCS11_INIT_H_</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01304.html">atca_crypto_sw.h</a>&quot;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a07532.html#ga0710d8bf5e92403c4026c32af39ad79e">atcac_sw_random</a>(uint8_t* data, <span class="keywordtype">size_t</span> data_size);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01265.html">cryptoki.h</a>&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;pkcs11_config.h&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="a02408.html">   39</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="a02408.html">_pkcs11_lib_ctx</a></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;{</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="a02408.html#a1160c303d9370f4187e6f48d6ac336c1">   41</a></span>&#160;    <a class="code" href="a01379.html#abd07a1bba363f8083080b9328e67b491">CK_BBOOL</a>        <a class="code" href="a02408.html#a1160c303d9370f4187e6f48d6ac336c1">initialized</a>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="a02408.html#a0ba826e6414189c8bd1f0969fcfbd26e">   42</a></span>&#160;    CK_CREATEMUTEX  <a class="code" href="a02408.html#a0ba826e6414189c8bd1f0969fcfbd26e">create_mutex</a>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="a02408.html#a1e1ca260281eb86e4052a47cecd917fe">   43</a></span>&#160;    CK_DESTROYMUTEX <a class="code" href="a02408.html#a1e1ca260281eb86e4052a47cecd917fe">destroy_mutex</a>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="a02408.html#aa17f239b10354b3d4d510856eb8deff6">   44</a></span>&#160;    CK_LOCKMUTEX    <a class="code" href="a02408.html#aa17f239b10354b3d4d510856eb8deff6">lock_mutex</a>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="a02408.html#adca7f4ab475b78bedef202c334a700b7">   45</a></span>&#160;    CK_UNLOCKMUTEX  <a class="code" href="a02408.html#adca7f4ab475b78bedef202c334a700b7">unlock_mutex</a>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="a02408.html#ae1dd2e58c44f73ef2d3214bd159a8265">   46</a></span>&#160;    <a class="code" href="a01379.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a>     <a class="code" href="a02408.html#ae1dd2e58c44f73ef2d3214bd159a8265">mutex</a>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="a02408.html#a1c3f6b7e795d6e1f40853ab4cfe68781">   47</a></span>&#160;    <a class="code" href="a01379.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a>     <a class="code" href="a02408.html#a1c3f6b7e795d6e1f40853ab4cfe68781">slots</a>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="a02408.html#ab10ec5af66dc12a7a47c50ab92708cb0">   48</a></span>&#160;    <a class="code" href="a01379.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>        <a class="code" href="a02408.html#ab10ec5af66dc12a7a47c50ab92708cb0">slot_cnt</a>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#if !PKCS11_USE_STATIC_CONFIG</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="a02408.html#a431e6b797cb83b2bde7ad45f80d55ae1">   50</a></span>&#160;    <a class="code" href="a01379.html#a0ed4ef152a55e26f435b876927145580">CK_CHAR</a> <a class="code" href="a02408.html#a431e6b797cb83b2bde7ad45f80d55ae1">config_path</a>[200];</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="a01316.html#adb828773fc77a4f1dbb559ddedcc99c4">   52</a></span>&#160;} <a class="code" href="a01316.html#a6442956560b04724d849e98b9b782e23">pkcs11_lib_ctx</a>, *<a class="code" href="a01316.html#adb828773fc77a4f1dbb559ddedcc99c4">pkcs11_lib_ctx_ptr</a>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<a class="code" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a02167.html#ga21e0ec91eccb3f92b45cb2536b3889b1">pkcs11_init</a>(<a class="code" href="a01379.html#a394b45a487689aa422a6cf5f048bc85c">CK_C_INITIALIZE_ARGS_PTR</a> pInitArgs);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<a class="code" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a02167.html#gabff89fd0af2e75ee2db858f9fe934ac4">pkcs11_deinit</a>(<a class="code" href="a01379.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pReserved);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<a class="code" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a02167.html#gadd899ffeae0146c08b249e3f551e21f8">pkcs11_init_check</a>(<a class="code" href="a02408.html">pkcs11_lib_ctx_ptr</a> * ppContext, <a class="code" href="a01379.html#abd07a1bba363f8083080b9328e67b491">CK_BBOOL</a> lock);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<a class="code" href="a02408.html">pkcs11_lib_ctx_ptr</a> <a class="code" href="a02167.html#gae0e3060e6ae0dfc17a35881c223d8123">pkcs11_get_context</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<a class="code" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a02167.html#gaf0e755fd7df13be2aa1f706de5b0f24b">pkcs11_lock_context</a>(<a class="code" href="a02408.html">pkcs11_lib_ctx_ptr</a> pContext);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<a class="code" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a02167.html#ga750f93d0a3c67f5d0e28c9c50ad990a8">pkcs11_unlock_context</a>(<a class="code" href="a02408.html">pkcs11_lib_ctx_ptr</a> pContext);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PKCS11_INIT_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aa07532_html_ga0710d8bf5e92403c4026c32af39ad79e"><div class="ttname"><a href="a07532.html#ga0710d8bf5e92403c4026c32af39ad79e">atcac_sw_random</a></div><div class="ttdeci">int atcac_sw_random(uint8_t *data, size_t data_size)</div><div class="ttdoc">return software generated random number and the function is currently not implemented</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_rand.c:36</div></div>
-<div class="ttc" id="aa01304_html"><div class="ttname"><a href="a01304.html">atca_crypto_sw.h</a></div><div class="ttdoc">Common defines for CryptoAuthLib software crypto wrappers.</div></div>
+<div class="ttc" id="aa02408_html_a1c3f6b7e795d6e1f40853ab4cfe68781"><div class="ttname"><a href="a02408.html#a1c3f6b7e795d6e1f40853ab4cfe68781">_pkcs11_lib_ctx::slots</a></div><div class="ttdeci">CK_VOID_PTR slots</div><div class="ttdef"><b>Definition:</b> pkcs11_init.h:47</div></div>
+<div class="ttc" id="aa01265_html"><div class="ttname"><a href="a01265.html">cryptoki.h</a></div></div>
+<div class="ttc" id="aa01379_html_abd07a1bba363f8083080b9328e67b491"><div class="ttname"><a href="a01379.html#abd07a1bba363f8083080b9328e67b491">CK_BBOOL</a></div><div class="ttdeci">CK_BYTE CK_BBOOL</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:46</div></div>
+<div class="ttc" id="aa02167_html_gae0e3060e6ae0dfc17a35881c223d8123"><div class="ttname"><a href="a02167.html#gae0e3060e6ae0dfc17a35881c223d8123">pkcs11_get_context</a></div><div class="ttdeci">pkcs11_lib_ctx_ptr pkcs11_get_context(void)</div><div class="ttdoc">Retrieve the current library context.</div><div class="ttdef"><b>Definition:</b> pkcs11_init.c:65</div></div>
+<div class="ttc" id="aa02408_html_ae1dd2e58c44f73ef2d3214bd159a8265"><div class="ttname"><a href="a02408.html#ae1dd2e58c44f73ef2d3214bd159a8265">_pkcs11_lib_ctx::mutex</a></div><div class="ttdeci">CK_VOID_PTR mutex</div><div class="ttdef"><b>Definition:</b> pkcs11_init.h:46</div></div>
+<div class="ttc" id="aa02408_html"><div class="ttname"><a href="a02408.html">_pkcs11_lib_ctx</a></div><div class="ttdef"><b>Definition:</b> pkcs11_init.h:40</div></div>
+<div class="ttc" id="aa01379_html_a35181858a3b7a0a81f49d180d8f446ef"><div class="ttname"><a href="a01379.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a></div><div class="ttdeci">unsigned long int CK_ULONG</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:49</div></div>
+<div class="ttc" id="aa02408_html_ab10ec5af66dc12a7a47c50ab92708cb0"><div class="ttname"><a href="a02408.html#ab10ec5af66dc12a7a47c50ab92708cb0">_pkcs11_lib_ctx::slot_cnt</a></div><div class="ttdeci">CK_ULONG slot_cnt</div><div class="ttdef"><b>Definition:</b> pkcs11_init.h:48</div></div>
+<div class="ttc" id="aa01316_html_adb828773fc77a4f1dbb559ddedcc99c4"><div class="ttname"><a href="a01316.html#adb828773fc77a4f1dbb559ddedcc99c4">pkcs11_lib_ctx_ptr</a></div><div class="ttdeci">struct _pkcs11_lib_ctx * pkcs11_lib_ctx_ptr</div></div>
+<div class="ttc" id="aa02167_html_ga750f93d0a3c67f5d0e28c9c50ad990a8"><div class="ttname"><a href="a02167.html#ga750f93d0a3c67f5d0e28c9c50ad990a8">pkcs11_unlock_context</a></div><div class="ttdeci">CK_RV pkcs11_unlock_context(pkcs11_lib_ctx_ptr pContext)</div><div class="ttdef"><b>Definition:</b> pkcs11_init.c:90</div></div>
+<div class="ttc" id="aa01379_html_a394b45a487689aa422a6cf5f048bc85c"><div class="ttname"><a href="a01379.html#a394b45a487689aa422a6cf5f048bc85c">CK_C_INITIALIZE_ARGS_PTR</a></div><div class="ttdeci">CK_C_INITIALIZE_ARGS CK_PTR CK_C_INITIALIZE_ARGS_PTR</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:1239</div></div>
+<div class="ttc" id="aa01316_html_a6442956560b04724d849e98b9b782e23"><div class="ttname"><a href="a01316.html#a6442956560b04724d849e98b9b782e23">pkcs11_lib_ctx</a></div><div class="ttdeci">struct _pkcs11_lib_ctx pkcs11_lib_ctx</div></div>
+<div class="ttc" id="aa02408_html_a431e6b797cb83b2bde7ad45f80d55ae1"><div class="ttname"><a href="a02408.html#a431e6b797cb83b2bde7ad45f80d55ae1">_pkcs11_lib_ctx::config_path</a></div><div class="ttdeci">CK_CHAR config_path[200]</div><div class="ttdef"><b>Definition:</b> pkcs11_init.h:50</div></div>
+<div class="ttc" id="aa02408_html_adca7f4ab475b78bedef202c334a700b7"><div class="ttname"><a href="a02408.html#adca7f4ab475b78bedef202c334a700b7">_pkcs11_lib_ctx::unlock_mutex</a></div><div class="ttdeci">CK_UNLOCKMUTEX unlock_mutex</div><div class="ttdef"><b>Definition:</b> pkcs11_init.h:45</div></div>
+<div class="ttc" id="aa01379_html_ace49359127edfc5665608140005b9a96"><div class="ttname"><a href="a01379.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a></div><div class="ttdeci">void CK_PTR CK_VOID_PTR</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:67</div></div>
+<div class="ttc" id="aa02167_html_gaf0e755fd7df13be2aa1f706de5b0f24b"><div class="ttname"><a href="a02167.html#gaf0e755fd7df13be2aa1f706de5b0f24b">pkcs11_lock_context</a></div><div class="ttdeci">CK_RV pkcs11_lock_context(pkcs11_lib_ctx_ptr pContext)</div><div class="ttdef"><b>Definition:</b> pkcs11_init.c:70</div></div>
+<div class="ttc" id="aa01379_html_a0ed4ef152a55e26f435b876927145580"><div class="ttname"><a href="a01379.html#a0ed4ef152a55e26f435b876927145580">CK_CHAR</a></div><div class="ttdeci">CK_BYTE CK_CHAR</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:40</div></div>
+<div class="ttc" id="aa02408_html_a0ba826e6414189c8bd1f0969fcfbd26e"><div class="ttname"><a href="a02408.html#a0ba826e6414189c8bd1f0969fcfbd26e">_pkcs11_lib_ctx::create_mutex</a></div><div class="ttdeci">CK_CREATEMUTEX create_mutex</div><div class="ttdef"><b>Definition:</b> pkcs11_init.h:42</div></div>
+<div class="ttc" id="aa02408_html_a1e1ca260281eb86e4052a47cecd917fe"><div class="ttname"><a href="a02408.html#a1e1ca260281eb86e4052a47cecd917fe">_pkcs11_lib_ctx::destroy_mutex</a></div><div class="ttdeci">CK_DESTROYMUTEX destroy_mutex</div><div class="ttdef"><b>Definition:</b> pkcs11_init.h:43</div></div>
+<div class="ttc" id="aa02167_html_gadd899ffeae0146c08b249e3f551e21f8"><div class="ttname"><a href="a02167.html#gadd899ffeae0146c08b249e3f551e21f8">pkcs11_init_check</a></div><div class="ttdeci">CK_RV pkcs11_init_check(pkcs11_lib_ctx_ptr *ppContext, CK_BBOOL lock)</div><div class="ttdoc">Check if the library is initialized properly.</div><div class="ttdef"><b>Definition:</b> pkcs11_init.c:119</div></div>
+<div class="ttc" id="aa02408_html_a1160c303d9370f4187e6f48d6ac336c1"><div class="ttname"><a href="a02408.html#a1160c303d9370f4187e6f48d6ac336c1">_pkcs11_lib_ctx::initialized</a></div><div class="ttdeci">CK_BBOOL initialized</div><div class="ttdef"><b>Definition:</b> pkcs11_init.h:41</div></div>
+<div class="ttc" id="aa02167_html_gabff89fd0af2e75ee2db858f9fe934ac4"><div class="ttname"><a href="a02167.html#gabff89fd0af2e75ee2db858f9fe934ac4">pkcs11_deinit</a></div><div class="ttdeci">CK_RV pkcs11_deinit(CK_VOID_PTR pReserved)</div><div class="ttdef"><b>Definition:</b> pkcs11_init.c:270</div></div>
+<div class="ttc" id="aa01379_html_a33839c131011ca3849dc35c11f69c39d"><div class="ttname"><a href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a></div><div class="ttdeci">CK_ULONG CK_RV</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:1046</div></div>
+<div class="ttc" id="aa02167_html_ga21e0ec91eccb3f92b45cb2536b3889b1"><div class="ttname"><a href="a02167.html#ga21e0ec91eccb3f92b45cb2536b3889b1">pkcs11_init</a></div><div class="ttdeci">CK_RV pkcs11_init(CK_C_INITIALIZE_ARGS_PTR pInitArgs)</div><div class="ttdoc">Initializes the PKCS11 API Library for Cryptoauthlib.</div><div class="ttdef"><b>Definition:</b> pkcs11_init.c:154</div></div>
+<div class="ttc" id="aa02408_html_aa17f239b10354b3d4d510856eb8deff6"><div class="ttname"><a href="a02408.html#aa17f239b10354b3d4d510856eb8deff6">_pkcs11_lib_ctx::lock_mutex</a></div><div class="ttdeci">CK_LOCKMUTEX lock_mutex</div><div class="ttdef"><b>Definition:</b> pkcs11_init.h:44</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_0d284ebe0a46982303565525253d36b8.html">crypto</a></li><li class="navelem"><a class="el" href="a01316.html">atca_crypto_sw_rand.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_231ca3caf32f66fb77d3d96bdb6ade1d.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01316.html">pkcs11_init.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_all_platforms_kit_hidapi.h Source File</title>
+<title>CryptoAuthLib: pkcs11_info.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,42 +85,33 @@ $(document).ready(function(){initNavTree('a01310_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">hal_all_platforms_kit_hidapi.h</div>  </div>
+<div class="title">pkcs11_info.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a01310.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef HAL_MACOS_KIT_HID_H_</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define HAL_MACOS_KIT_HID_H_</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef PKCS11_INFO_H_</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define PKCS11_INFO_H_</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;hidapi.h&quot;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01265.html">cryptoki.h</a>&quot;</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">// Kit USB defines</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#define HID_DEVICES_MAX     10      </span></div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="a02400.html#ga49053c3cd6d48fe5f468ce010ac0a9ef">   42</a></span>&#160;<span class="preprocessor">#define HID_PACKET_MAX      512     </span></div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="a02400.html#ga6cdff3589b286ebcdd7771bb425fbf73">   43</a></span>&#160;<span class="preprocessor"></span> </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">// A structure to hold HID information</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="a02529.html">   48</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="a02529.html">atcahid</a></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;{</div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="a02529.html#a2bd4dbcb2ab2d6802f2df0d067a4389a">   50</a></span>&#160;    <a class="code" href="a02549.html">hid_device</a>* <a class="code" href="a02529.html#a2bd4dbcb2ab2d6802f2df0d067a4389a">kits</a>[<a class="code" href="a02400.html#ga49053c3cd6d48fe5f468ce010ac0a9ef">HID_DEVICES_MAX</a>];</div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="a02529.html#a9bb0ee74044865538adfcc5d5ae8f621">   51</a></span>&#160;    int8_t      <a class="code" href="a02529.html#a9bb0ee74044865538adfcc5d5ae8f621">num_kits_found</a>;</div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="a02400.html#gabb3ee8f7daf1cd68f8173981271ac37a">   52</a></span>&#160;} <a class="code" href="a02400.html#gabb3ee8f7daf1cd68f8173981271ac37a">atcahid_t</a>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAL_LINUX_KIT_HID_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">char</span> <a class="code" href="a02167.html#ga8ac50a3d8a0c4f1ddf04cdf02c757030">pkcs11_lib_manufacturer_id</a>[];</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">char</span> <a class="code" href="a02167.html#ga47daad4918afdf7ec808a5a57a4bce9d">pkcs11_lib_description</a>[];</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<a class="code" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a02167.html#gaae56826104269ca730066136fb3eb995">pkcs11_get_lib_info</a>(<a class="code" href="a01379.html#a2d8a8dcb105d17ae3a86aced319789fd">CK_INFO_PTR</a> pInfo);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PKCS11_INFO_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aa02529_html_a9bb0ee74044865538adfcc5d5ae8f621"><div class="ttname"><a href="a02529.html#a9bb0ee74044865538adfcc5d5ae8f621">atcahid::num_kits_found</a></div><div class="ttdeci">int8_t num_kits_found</div><div class="ttdef"><b>Definition:</b> hal_all_platforms_kit_hidapi.h:51</div></div>
-<div class="ttc" id="aa02549_html"><div class="ttname"><a href="a02549.html">hid_device</a></div><div class="ttdef"><b>Definition:</b> hal_linux_kit_hid.h:44</div></div>
-<div class="ttc" id="aa02400_html_ga49053c3cd6d48fe5f468ce010ac0a9ef"><div class="ttname"><a href="a02400.html#ga49053c3cd6d48fe5f468ce010ac0a9ef">HID_DEVICES_MAX</a></div><div class="ttdeci">#define HID_DEVICES_MAX</div><div class="ttdef"><b>Definition:</b> hal_all_platforms_kit_hidapi.h:41</div></div>
-<div class="ttc" id="aa02529_html"><div class="ttname"><a href="a02529.html">atcahid</a></div><div class="ttdef"><b>Definition:</b> hal_all_platforms_kit_hidapi.h:49</div></div>
-<div class="ttc" id="aa02400_html_gabb3ee8f7daf1cd68f8173981271ac37a"><div class="ttname"><a href="a02400.html#gabb3ee8f7daf1cd68f8173981271ac37a">atcahid_t</a></div><div class="ttdeci">struct atcahid atcahid_t</div></div>
-<div class="ttc" id="aa02529_html_a2bd4dbcb2ab2d6802f2df0d067a4389a"><div class="ttname"><a href="a02529.html#a2bd4dbcb2ab2d6802f2df0d067a4389a">atcahid::kits</a></div><div class="ttdeci">hid_device * kits[10]</div><div class="ttdef"><b>Definition:</b> hal_all_platforms_kit_hidapi.h:50</div></div>
+<div class="ttc" id="aa01265_html"><div class="ttname"><a href="a01265.html">cryptoki.h</a></div></div>
+<div class="ttc" id="aa02167_html_ga47daad4918afdf7ec808a5a57a4bce9d"><div class="ttname"><a href="a02167.html#ga47daad4918afdf7ec808a5a57a4bce9d">pkcs11_lib_description</a></div><div class="ttdeci">const char pkcs11_lib_description[]</div><div class="ttdef"><b>Definition:</b> pkcs11_info.c:42</div></div>
+<div class="ttc" id="aa02167_html_gaae56826104269ca730066136fb3eb995"><div class="ttname"><a href="a02167.html#gaae56826104269ca730066136fb3eb995">pkcs11_get_lib_info</a></div><div class="ttdeci">CK_RV pkcs11_get_lib_info(CK_INFO_PTR pInfo)</div><div class="ttdoc">Obtains general information about Cryptoki.</div><div class="ttdef"><b>Definition:</b> pkcs11_info.c:47</div></div>
+<div class="ttc" id="aa02167_html_ga8ac50a3d8a0c4f1ddf04cdf02c757030"><div class="ttname"><a href="a02167.html#ga8ac50a3d8a0c4f1ddf04cdf02c757030">pkcs11_lib_manufacturer_id</a></div><div class="ttdeci">const char pkcs11_lib_manufacturer_id[]</div><div class="ttdef"><b>Definition:</b> pkcs11_info.c:41</div></div>
+<div class="ttc" id="aa01379_html_a2d8a8dcb105d17ae3a86aced319789fd"><div class="ttname"><a href="a01379.html#a2d8a8dcb105d17ae3a86aced319789fd">CK_INFO_PTR</a></div><div class="ttdeci">CK_INFO CK_PTR CK_INFO_PTR</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:97</div></div>
+<div class="ttc" id="aa01379_html_a33839c131011ca3849dc35c11f69c39d"><div class="ttname"><a href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a></div><div class="ttdeci">CK_ULONG CK_RV</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:1046</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_36432077327cc0f3c76187c9e6e34627.html">hal</a></li><li class="navelem"><a class="el" href="a01310.html">hal_all_platforms_kit_hidapi.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_231ca3caf32f66fb77d3d96bdb6ade1d.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01310.html">pkcs11_info.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_crypto_sw_sha2.h File Reference</title>
+<title>CryptoAuthLib: pkcs11_mech.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,52 +85,59 @@ $(document).ready(function(){initNavTree('a01328.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_crypto_sw_sha2.h File Reference</div>  </div>
+<div class="title">pkcs11_mech.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Wrapper API for software SHA 256 routines.  
+<p>PKCS11 Library Mechanism Handling.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01304_source.html">atca_crypto_sw.h</a>&quot;</code><br />
-<code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-</div>
-<p><a href="a01328_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
+<div class="textblock"><code>#include &quot;pkcs11_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01292_source.html">pkcs11_debug.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01316_source.html">pkcs11_init.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01331_source.html">pkcs11_mech.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01361_source.html">pkcs11_slot.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01109_source.html">cryptoauthlib.h</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02412.html">_pcks11_mech_table_e</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga148b7615f20d8432f0e5ac4e6683aa7d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#ga148b7615f20d8432f0e5ac4e6683aa7d">PCKS11_MECH_ECC508_EC_CAPABILITY</a>&#160;&#160;&#160;(<a class="el" href="a01379.html#a605a609c288ffcd840a307f4d4458cbb">CKF_EC_F_P</a> | <a class="el" href="a01379.html#afa127ac10a423b09246f36946d6ea788">CKF_EC_NAMEDCURVE</a> | <a class="el" href="a01379.html#a1084ffbde21a69579b39084c3ec866de">CKF_EC_UNCOMPRESS</a>)</td></tr>
+<tr class="separator:ga148b7615f20d8432f0e5ac4e6683aa7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga178ac9759ade77839a52329537e3784b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#ga178ac9759ade77839a52329537e3784b">TABLE_SIZE</a>(x)&#160;&#160;&#160;sizeof(x) / sizeof(x[0])</td></tr>
+<tr class="separator:ga178ac9759ade77839a52329537e3784b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gadbb018cf35cbcf4935ee405f069dbdb9"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a02412.html">_pcks11_mech_table_e</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#gadbb018cf35cbcf4935ee405f069dbdb9">pcks11_mech_table_e</a></td></tr>
+<tr class="separator:gadbb018cf35cbcf4935ee405f069dbdb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8fa74592503b8d6fee8164d6ffbc1df0"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a02412.html">_pcks11_mech_table_e</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#ga8fa74592503b8d6fee8164d6ffbc1df0">pcks11_mech_table_ptr</a></td></tr>
+<tr class="separator:ga8fa74592503b8d6fee8164d6ffbc1df0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga58283666b662f084155ba693870c1077"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07532.html#ga58283666b662f084155ba693870c1077">atcac_sw_sha2_256_init</a> (<a class="el" href="a01304.html#ab5f0f06be68e024307d6b8bf0f0b81b8">atcac_sha2_256_ctx</a> *ctx)</td></tr>
-<tr class="memdesc:ga58283666b662f084155ba693870c1077"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing SHA256 hash in software.  <a href="a07532.html#ga58283666b662f084155ba693870c1077">More...</a><br /></td></tr>
-<tr class="separator:ga58283666b662f084155ba693870c1077"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab1a09fa1d854722cc667cea319ca9984"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07532.html#gab1a09fa1d854722cc667cea319ca9984">atcac_sw_sha2_256_update</a> (<a class="el" href="a01304.html#ab5f0f06be68e024307d6b8bf0f0b81b8">atcac_sha2_256_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
-<tr class="memdesc:gab1a09fa1d854722cc667cea319ca9984"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add data to a SHA256 hash.  <a href="a07532.html#gab1a09fa1d854722cc667cea319ca9984">More...</a><br /></td></tr>
-<tr class="separator:gab1a09fa1d854722cc667cea319ca9984"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga135e9b88fe057af52d4116b1352be822"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07532.html#ga135e9b88fe057af52d4116b1352be822">atcac_sw_sha2_256_finish</a> (<a class="el" href="a01304.html#ab5f0f06be68e024307d6b8bf0f0b81b8">atcac_sha2_256_ctx</a> *ctx, uint8_t digest[(32)])</td></tr>
-<tr class="separator:ga135e9b88fe057af52d4116b1352be822"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga72ceba9df57d884c85321abe92994c4f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07532.html#ga72ceba9df57d884c85321abe92994c4f">atcac_sw_sha2_256</a> (const uint8_t *data, size_t data_size, uint8_t digest[(32)])</td></tr>
-<tr class="memdesc:ga72ceba9df57d884c85321abe92994c4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">single call convenience function which computes Hash of given data using SHA256 software  <a href="a07532.html#ga72ceba9df57d884c85321abe92994c4f">More...</a><br /></td></tr>
-<tr class="separator:ga72ceba9df57d884c85321abe92994c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4e23a2ff2f57f730a1490afaac2ea3dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07532.html#ga4e23a2ff2f57f730a1490afaac2ea3dc">atcac_sha256_hmac_init</a> (<a class="el" href="a01304.html#a253fe8619eb230171220d72f8fc4d6b9">atcac_hmac_sha256_ctx</a> *ctx, const uint8_t *key, const uint8_t key_len)</td></tr>
-<tr class="memdesc:ga4e23a2ff2f57f730a1490afaac2ea3dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing HMAC (sha256) in software.  <a href="a07532.html#ga4e23a2ff2f57f730a1490afaac2ea3dc">More...</a><br /></td></tr>
-<tr class="separator:ga4e23a2ff2f57f730a1490afaac2ea3dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa4493b637590b0d3f5da0bd66b386d8a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07532.html#gaa4493b637590b0d3f5da0bd66b386d8a">atcac_sha256_hmac_update</a> (<a class="el" href="a01304.html#a253fe8619eb230171220d72f8fc4d6b9">atcac_hmac_sha256_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
-<tr class="memdesc:gaa4493b637590b0d3f5da0bd66b386d8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update HMAC context with input data.  <a href="a07532.html#gaa4493b637590b0d3f5da0bd66b386d8a">More...</a><br /></td></tr>
-<tr class="separator:gaa4493b637590b0d3f5da0bd66b386d8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4aabb5258b261af2802b45a817fb7113"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01148.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a07532.html#ga4aabb5258b261af2802b45a817fb7113">atcac_sha256_hmac_finish</a> (<a class="el" href="a01304.html#a253fe8619eb230171220d72f8fc4d6b9">atcac_hmac_sha256_ctx</a> *ctx, uint8_t *digest, size_t *digest_len)</td></tr>
-<tr class="memdesc:ga4aabb5258b261af2802b45a817fb7113"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finish CMAC calculation and clear the HMAC context.  <a href="a07532.html#ga4aabb5258b261af2802b45a817fb7113">More...</a><br /></td></tr>
-<tr class="separator:ga4aabb5258b261af2802b45a817fb7113"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9678c431b8d5479e53417b109b32c20f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#ga9678c431b8d5479e53417b109b32c20f">pkcs11_mech_get_list</a> (<a class="el" href="a01379.html#a53398953158f3b452e0513a0b78a0c5a">CK_SLOT_ID</a> slotID, <a class="el" href="a01379.html#a653265da2fe1c5336cadced022575156">CK_MECHANISM_TYPE_PTR</a> pMechanismList, <a class="el" href="a01379.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulCount)</td></tr>
+<tr class="separator:ga9678c431b8d5479e53417b109b32c20f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac66d133f84b945f9c26727ee9f7a7d57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#gac66d133f84b945f9c26727ee9f7a7d57">pkcs_mech_get_info</a> (<a class="el" href="a01379.html#a53398953158f3b452e0513a0b78a0c5a">CK_SLOT_ID</a> slotID, <a class="el" href="a01379.html#aaf1084907f5cc09a3e0b85ab022a240d">CK_MECHANISM_TYPE</a> type, <a class="el" href="a01379.html#a81131602c4689b717951c9c59f827661">CK_MECHANISM_INFO_PTR</a> pInfo)</td></tr>
+<tr class="separator:gac66d133f84b945f9c26727ee9f7a7d57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Wrapper API for software SHA 256 routines. </p>
+<div class="textblock"><p>PKCS11 Library Mechanism Handling. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_0d284ebe0a46982303565525253d36b8.html">crypto</a></li><li class="navelem"><a class="el" href="a01328.html">atca_crypto_sw_sha2.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_231ca3caf32f66fb77d3d96bdb6ade1d.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01328.html">pkcs11_mech.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

@@ -1,6 +1,13 @@
 var a01187 =
 [
-    [ "calib_genkey", "a02398.html#ga5fa08c0fb0fd4de0137bd82c7ed410cb", null ],
-    [ "calib_genkey_base", "a02398.html#ga1d87bd17122bc323bb0e47db8341c6d8", null ],
-    [ "calib_get_pubkey", "a02398.html#gad902a2fe308340751b52ae249a38d688", null ]
+    [ "hal_spi_discover_buses", "a02163.html#ga92cecc8e30a88dee1cbedd49141bc209", null ],
+    [ "hal_spi_discover_devices", "a02163.html#ga6cf45c115bcb721e951e8792e0feb3f0", null ],
+    [ "hal_spi_idle", "a02163.html#ga470458f44feb9f6dfb7845851d821182", null ],
+    [ "hal_spi_init", "a02163.html#ga6c7a1471361e74b4bf6ad7f0388715c2", null ],
+    [ "hal_spi_post_init", "a02163.html#gaeb831d9894ce11146bd00c79a98b7f0f", null ],
+    [ "hal_spi_receive", "a02163.html#ga410c24762579358a576a58610a877e63", null ],
+    [ "hal_spi_release", "a02163.html#ga8c3f1c6c20d939c4ca976fdda6279359", null ],
+    [ "hal_spi_send", "a02163.html#ga16661176757d0ef155155b07267a44ed", null ],
+    [ "hal_spi_sleep", "a02163.html#gae97ef6e553aed5ba6ac0e65476d82308", null ],
+    [ "hal_spi_wake", "a02163.html#ga182f605fabb3a02f9d4a0e433496290b", null ]
 ];

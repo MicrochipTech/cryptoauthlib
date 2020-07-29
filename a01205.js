@@ -1,9 +1,6 @@
 var a01205 =
 [
-    [ "calib_challenge", "a02398.html#ga527688ba64f8a45663b920ff3333bf06", null ],
-    [ "calib_challenge_seed_update", "a02398.html#ga3599eb3352da9d7dc527e5ff9935bd49", null ],
-    [ "calib_nonce", "a02398.html#gad4e9ba79d8d9d65263d8dd7d5df6fd53", null ],
-    [ "calib_nonce_base", "a02398.html#ga0e63b42b9f17b12d9296ac019f9dfd10", null ],
-    [ "calib_nonce_load", "a02398.html#ga2ec82eed30721cfed86d8c33ad8e9385", null ],
-    [ "calib_nonce_rand", "a02398.html#ga9cc318c2497c9781c42df7a9c54fe234", null ]
+    [ "atca_delay_10us", "a02163.html#ga19891182689551cc3a88603135959351", null ],
+    [ "atca_delay_ms", "a02163.html#ga0544f36422b5e9a8890fb9c90fc5eb55", null ],
+    [ "atca_delay_us", "a02163.html#ga7598dfcd6dcac882836544d48356d02f", null ]
 ];

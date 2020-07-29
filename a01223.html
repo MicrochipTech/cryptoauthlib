@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_sha.c File Reference</title>
+<title>CryptoAuthLib: kit_protocol.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,81 +85,60 @@ $(document).ready(function(){initNavTree('a01223.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">calib_sha.c File Reference</div>  </div>
+<div class="title">kit_protocol.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>CryptoAuthLib Basic API methods for SHA command.  
-<a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01289_source.html">cryptoauthlib.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02501.html">hw_sha256_ctx</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><code>#include &quot;<a class="el" href="a01109_source.html">cryptoauthlib.h</a>&quot;</code><br />
+</div>
+<p><a href="a01223_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga8a649555029d4f23edfc15a8c01b2d3d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga8a649555029d4f23edfc15a8c01b2d3d">KIT_TX_WRAP_SIZE</a>&#160;&#160;&#160;(10)</td></tr>
+<tr class="separator:ga8a649555029d4f23edfc15a8c01b2d3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0810d89c328e48fd91eb604323cca4e9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga0810d89c328e48fd91eb604323cca4e9">KIT_MSG_SIZE</a>&#160;&#160;&#160;(32)</td></tr>
+<tr class="separator:ga0810d89c328e48fd91eb604323cca4e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59e33124fc2fa800cc9c90a6ee3ff543"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga59e33124fc2fa800cc9c90a6ee3ff543">KIT_RX_WRAP_SIZE</a>&#160;&#160;&#160;(<a class="el" href="a02163.html#ga0810d89c328e48fd91eb604323cca4e9">KIT_MSG_SIZE</a> + 6)</td></tr>
+<tr class="separator:ga59e33124fc2fa800cc9c90a6ee3ff543"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga0dba7f8f64110f7e08f4e924246f12ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga0dba7f8f64110f7e08f4e924246f12ea">calib_sha_base</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t length, const uint8_t *message, uint8_t *data_out, uint16_t *data_out_size)</td></tr>
-<tr class="memdesc:ga0dba7f8f64110f7e08f4e924246f12ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command, which computes a SHA-256 or HMAC/SHA-256 digest for general purpose use by the host system.  <a href="a02398.html#ga0dba7f8f64110f7e08f4e924246f12ea">More...</a><br /></td></tr>
-<tr class="separator:ga0dba7f8f64110f7e08f4e924246f12ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga39d5cc0ddb695bf9c4d23e90e0d3d296"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga39d5cc0ddb695bf9c4d23e90e0d3d296">calib_sha_start</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
-<tr class="memdesc:ga39d5cc0ddb695bf9c4d23e90e0d3d296"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to initialize SHA-256 calculation engine.  <a href="a02398.html#ga39d5cc0ddb695bf9c4d23e90e0d3d296">More...</a><br /></td></tr>
-<tr class="separator:ga39d5cc0ddb695bf9c4d23e90e0d3d296"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7c2814ae00b7e6ef4bf8b1830d4eabc5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga7c2814ae00b7e6ef4bf8b1830d4eabc5">calib_sha_update</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *message)</td></tr>
-<tr class="memdesc:ga7c2814ae00b7e6ef4bf8b1830d4eabc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to add 64 bytes of message data to the current context.  <a href="a02398.html#ga7c2814ae00b7e6ef4bf8b1830d4eabc5">More...</a><br /></td></tr>
-<tr class="separator:ga7c2814ae00b7e6ef4bf8b1830d4eabc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga55670a11ebdb67c97e37e76a26bac65c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga55670a11ebdb67c97e37e76a26bac65c">calib_sha_end</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t *digest, uint16_t length, const uint8_t *message)</td></tr>
-<tr class="memdesc:ga55670a11ebdb67c97e37e76a26bac65c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to complete SHA-256 or HMAC/SHA-256 operation.  <a href="a02398.html#ga55670a11ebdb67c97e37e76a26bac65c">More...</a><br /></td></tr>
-<tr class="separator:ga55670a11ebdb67c97e37e76a26bac65c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga386101050bd2c033457a179971c72c3d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga386101050bd2c033457a179971c72c3d">calib_sha_read_context</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t *context, uint16_t *context_size)</td></tr>
-<tr class="memdesc:ga386101050bd2c033457a179971c72c3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to read the SHA-256 context back. Only for ATECC608A with SHA-256 contexts. HMAC not supported.  <a href="a02398.html#ga386101050bd2c033457a179971c72c3d">More...</a><br /></td></tr>
-<tr class="separator:ga386101050bd2c033457a179971c72c3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga04ea40bc761db46291571e31d0dc050b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga04ea40bc761db46291571e31d0dc050b">calib_sha_write_context</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *context, uint16_t context_size)</td></tr>
-<tr class="memdesc:ga04ea40bc761db46291571e31d0dc050b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to write (restore) a SHA-256 context into the the device. Only supported for ATECC608A with SHA-256 contexts.  <a href="a02398.html#ga04ea40bc761db46291571e31d0dc050b">More...</a><br /></td></tr>
-<tr class="separator:ga04ea40bc761db46291571e31d0dc050b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga76470faf5d311b715ccdacba7548e2f5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga76470faf5d311b715ccdacba7548e2f5">calib_sha</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t length, const uint8_t *message, uint8_t *digest)</td></tr>
-<tr class="memdesc:ga76470faf5d311b715ccdacba7548e2f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the SHA command to compute a SHA-256 digest.  <a href="a02398.html#ga76470faf5d311b715ccdacba7548e2f5">More...</a><br /></td></tr>
-<tr class="separator:ga76470faf5d311b715ccdacba7548e2f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2d38b103472bd99e6f2d5bc85b8d509d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga2d38b103472bd99e6f2d5bc85b8d509d">calib_hw_sha2_256_init</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a02398.html#ga7dc326cdf6fbade0eee6081225a379de">atca_sha256_ctx_t</a> *ctx)</td></tr>
-<tr class="memdesc:ga2d38b103472bd99e6f2d5bc85b8d509d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a SHA context for performing a hardware SHA-256 operation on a device. Note that only one SHA operation can be run at a time.  <a href="a02398.html#ga2d38b103472bd99e6f2d5bc85b8d509d">More...</a><br /></td></tr>
-<tr class="separator:ga2d38b103472bd99e6f2d5bc85b8d509d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31246b38ff9c3824ac2dbb968ae1fa27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga31246b38ff9c3824ac2dbb968ae1fa27">calib_hw_sha2_256_update</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a02398.html#ga7dc326cdf6fbade0eee6081225a379de">atca_sha256_ctx_t</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
-<tr class="memdesc:ga31246b38ff9c3824ac2dbb968ae1fa27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add message data to a SHA context for performing a hardware SHA-256 operation on a device.  <a href="a02398.html#ga31246b38ff9c3824ac2dbb968ae1fa27">More...</a><br /></td></tr>
-<tr class="separator:ga31246b38ff9c3824ac2dbb968ae1fa27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0bc02fd5631101eef76422779feb417b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga0bc02fd5631101eef76422779feb417b">calib_hw_sha2_256_finish</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a02398.html#ga7dc326cdf6fbade0eee6081225a379de">atca_sha256_ctx_t</a> *ctx, uint8_t *digest)</td></tr>
-<tr class="memdesc:ga0bc02fd5631101eef76422779feb417b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finish SHA-256 digest for a SHA context for performing a hardware SHA-256 operation on a device.  <a href="a02398.html#ga0bc02fd5631101eef76422779feb417b">More...</a><br /></td></tr>
-<tr class="separator:ga0bc02fd5631101eef76422779feb417b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac65d56a4ea11f345e76309ca1432b0c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#gac65d56a4ea11f345e76309ca1432b0c1">calib_hw_sha2_256</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *data, size_t data_size, uint8_t *digest)</td></tr>
-<tr class="memdesc:gac65d56a4ea11f345e76309ca1432b0c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the SHA command to compute a SHA-256 digest.  <a href="a02398.html#gac65d56a4ea11f345e76309ca1432b0c1">More...</a><br /></td></tr>
-<tr class="separator:gac65d56a4ea11f345e76309ca1432b0c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7f2d006812bec40ac0ef5b02498bec6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga7f2d006812bec40ac0ef5b02498bec6e">calib_sha_hmac_init</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a02398.html#ga4c1f62e502c168be9261d2af921e78ba">atca_hmac_sha256_ctx_t</a> *ctx, uint16_t key_slot)</td></tr>
-<tr class="memdesc:ga7f2d006812bec40ac0ef5b02498bec6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to start an HMAC/SHA-256 operation.  <a href="a02398.html#ga7f2d006812bec40ac0ef5b02498bec6e">More...</a><br /></td></tr>
-<tr class="separator:ga7f2d006812bec40ac0ef5b02498bec6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8f2fa75050c0a6cd944d37a7d63ed618"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga8f2fa75050c0a6cd944d37a7d63ed618">calib_sha_hmac_update</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a02398.html#ga4c1f62e502c168be9261d2af921e78ba">atca_hmac_sha256_ctx_t</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
-<tr class="memdesc:ga8f2fa75050c0a6cd944d37a7d63ed618"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to add an arbitrary amount of message data to a HMAC/SHA-256 operation.  <a href="a02398.html#ga8f2fa75050c0a6cd944d37a7d63ed618">More...</a><br /></td></tr>
-<tr class="separator:ga8f2fa75050c0a6cd944d37a7d63ed618"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadadfd6a9da548fa63d6c69b9fe4839b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#gadadfd6a9da548fa63d6c69b9fe4839b8">calib_sha_hmac_finish</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a02398.html#ga4c1f62e502c168be9261d2af921e78ba">atca_hmac_sha256_ctx_t</a> *ctx, uint8_t *digest, uint8_t target)</td></tr>
-<tr class="memdesc:gadadfd6a9da548fa63d6c69b9fe4839b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to complete a HMAC/SHA-256 operation.  <a href="a02398.html#gadadfd6a9da548fa63d6c69b9fe4839b8">More...</a><br /></td></tr>
-<tr class="separator:gadadfd6a9da548fa63d6c69b9fe4839b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6e8094a3c5cebae7cdd2467ea0309df3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga6e8094a3c5cebae7cdd2467ea0309df3">calib_sha_hmac</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *data, size_t data_size, uint16_t key_slot, uint8_t *digest, uint8_t target)</td></tr>
-<tr class="memdesc:ga6e8094a3c5cebae7cdd2467ea0309df3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the SHA command to compute an HMAC/SHA-256 operation.  <a href="a02398.html#ga6e8094a3c5cebae7cdd2467ea0309df3">More...</a><br /></td></tr>
-<tr class="separator:ga6e8094a3c5cebae7cdd2467ea0309df3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8fb98d1c372e7e75f99a2f7d1182b877"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga8fb98d1c372e7e75f99a2f7d1182b877">kit_init</a> (<a class="el" href="a02159.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:ga8fb98d1c372e7e75f99a2f7d1182b877"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol init. This function calls back to the physical protocol to send the bytes.  <a href="a02163.html#ga8fb98d1c372e7e75f99a2f7d1182b877">More...</a><br /></td></tr>
+<tr class="separator:ga8fb98d1c372e7e75f99a2f7d1182b877"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacd6849349e1ba6ccbb4587a1d80562c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#gacd6849349e1ba6ccbb4587a1d80562c8">kit_send</a> (<a class="el" href="a02159.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
+<tr class="memdesc:gacd6849349e1ba6ccbb4587a1d80562c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol send. This function calls back to the physical protocol to send the bytes.  <a href="a02163.html#gacd6849349e1ba6ccbb4587a1d80562c8">More...</a><br /></td></tr>
+<tr class="separator:gacd6849349e1ba6ccbb4587a1d80562c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac31292c951353a25a81c7fe1308589c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#gac31292c951353a25a81c7fe1308589c0">kit_receive</a> (<a class="el" href="a02159.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxsize)</td></tr>
+<tr class="memdesc:gac31292c951353a25a81c7fe1308589c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation to receive bytes and unwrap from kit protocol. This function calls back to the physical protocol to receive the bytes.  <a href="a02163.html#gac31292c951353a25a81c7fe1308589c0">More...</a><br /></td></tr>
+<tr class="separator:gac31292c951353a25a81c7fe1308589c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0f09f4b79c681f54b88a8f71bca0d4c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga0f09f4b79c681f54b88a8f71bca0d4c4">kit_wrap_cmd</a> (const uint8_t *txdata, int txlen, char *pkitcmd, int *nkitcmd, char target)</td></tr>
+<tr class="memdesc:ga0f09f4b79c681f54b88a8f71bca0d4c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrap binary bytes in ascii kit protocol.  <a href="a02163.html#ga0f09f4b79c681f54b88a8f71bca0d4c4">More...</a><br /></td></tr>
+<tr class="separator:ga0f09f4b79c681f54b88a8f71bca0d4c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8bf59f4218d312568b769b8b8e5c563e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga8bf59f4218d312568b769b8b8e5c563e">kit_parse_rsp</a> (const char *pkitbuf, int nkitbuf, uint8_t *kitstatus, uint8_t *rxdata, int *datasize)</td></tr>
+<tr class="memdesc:ga8bf59f4218d312568b769b8b8e5c563e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse the response ascii from the kit.  <a href="a02163.html#ga8bf59f4218d312568b769b8b8e5c563e">More...</a><br /></td></tr>
+<tr class="separator:ga8bf59f4218d312568b769b8b8e5c563e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf7ce58d02b067b956abd32127f5519e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#gaf7ce58d02b067b956abd32127f5519e9">kit_wake</a> (<a class="el" href="a02159.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:gaf7ce58d02b067b956abd32127f5519e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the wake for kit protocol.  <a href="a02163.html#gaf7ce58d02b067b956abd32127f5519e9">More...</a><br /></td></tr>
+<tr class="separator:gaf7ce58d02b067b956abd32127f5519e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeaee19ff7623f0eab9839e68dae583af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#gaeaee19ff7623f0eab9839e68dae583af">kit_idle</a> (<a class="el" href="a02159.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:gaeaee19ff7623f0eab9839e68dae583af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the idle for kit protocol.  <a href="a02163.html#gaeaee19ff7623f0eab9839e68dae583af">More...</a><br /></td></tr>
+<tr class="separator:gaeaee19ff7623f0eab9839e68dae583af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf6054a0c971830411d5008b94923bdd8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#gaf6054a0c971830411d5008b94923bdd8">kit_sleep</a> (<a class="el" href="a02159.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:gaf6054a0c971830411d5008b94923bdd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the sleep for kit protocol.  <a href="a02163.html#gaf6054a0c971830411d5008b94923bdd8">More...</a><br /></td></tr>
+<tr class="separator:gaf6054a0c971830411d5008b94923bdd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for SHA command. </p>
-<p>The SHA command Computes a SHA-256 or HMAC/SHA digest for general purpose use by the host system.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, and ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+<div class="textblock"><dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_a7c83ffe4cbb7b846faed985dac26a17.html">calib</a></li><li class="navelem"><a class="el" href="a01223.html">calib_sha.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_a05a22e5f002d7c1de78eecb12447d7f.html">hal</a></li><li class="navelem"><a class="el" href="a01223.html">kit_protocol.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

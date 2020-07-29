@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_host_sw.h File Reference</title>
+<title>CryptoAuthLib: hal_esp32_timer.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -87,39 +87,63 @@ $(document).ready(function(){initNavTree('a01136.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atcacert_host_sw.h File Reference</div>  </div>
+<div class="title">hal_esp32_timer.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Host side methods using software implementations. host-side, the one authenticating a client, of the authentication process. Crypto functions are performed using a software library.  
-<a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a01118_source.html">atcacert_def.h</a>&quot;</code><br />
-</div>
-<p><a href="a01136_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a01118_source.html">atca_hal.h</a>&quot;</code><br />
+<code>#include &quot;freertos/FreeRTOS.h&quot;</code><br />
+<code>#include &quot;freertos/task.h&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gab78271af8c3e2837810fcdae6e3f5e28"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02397.html#gab78271af8c3e2837810fcdae6e3f5e28">atcacert_verify_cert_sw</a> (const <a class="el" href="a02397.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, const uint8_t ca_public_key[64])</td></tr>
-<tr class="memdesc:gab78271af8c3e2837810fcdae6e3f5e28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a certificate against its certificate authority's public key using software crypto functions.The function is currently not implemented.  <a href="a02397.html#gab78271af8c3e2837810fcdae6e3f5e28">More...</a><br /></td></tr>
-<tr class="separator:gab78271af8c3e2837810fcdae6e3f5e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa9829e5aa1ece3d3a933db9827d3e8f3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02397.html#gaa9829e5aa1ece3d3a933db9827d3e8f3">atcacert_gen_challenge_sw</a> (uint8_t challenge[32])</td></tr>
-<tr class="memdesc:gaa9829e5aa1ece3d3a933db9827d3e8f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a random challenge to be sent to the client using a software PRNG.The function is currently not implemented.  <a href="a02397.html#gaa9829e5aa1ece3d3a933db9827d3e8f3">More...</a><br /></td></tr>
-<tr class="separator:gaa9829e5aa1ece3d3a933db9827d3e8f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9d5bf9ec84d28a0412377818805c32c4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02397.html#ga9d5bf9ec84d28a0412377818805c32c4">atcacert_verify_response_sw</a> (const uint8_t device_public_key[64], const uint8_t challenge[32], const uint8_t response[64])</td></tr>
-<tr class="memdesc:ga9d5bf9ec84d28a0412377818805c32c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a client's response to a challenge using software crypto functions.The function is currently not implemented.  <a href="a02397.html#ga9d5bf9ec84d28a0412377818805c32c4">More...</a><br /></td></tr>
-<tr class="separator:ga9d5bf9ec84d28a0412377818805c32c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7def86f0fbd90b451847d8534f21f5dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01136.html#a7def86f0fbd90b451847d8534f21f5dc">ets_delay_us</a> (uint32_t)</td></tr>
+<tr class="separator:a7def86f0fbd90b451847d8534f21f5dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b83848e938fac7ec4dde79e584b6f71"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01136.html#a4b83848e938fac7ec4dde79e584b6f71">atca_delay_ms</a> (uint32_t msec)</td></tr>
+<tr class="separator:a4b83848e938fac7ec4dde79e584b6f71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Host side methods using software implementations. host-side, the one authenticating a client, of the authentication process. Crypto functions are performed using a software library. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a4b83848e938fac7ec4dde79e584b6f71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b83848e938fac7ec4dde79e584b6f71">&#9670;&nbsp;</a></span>atca_delay_ms()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void atca_delay_ms </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>msec</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7def86f0fbd90b451847d8534f21f5dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7def86f0fbd90b451847d8534f21f5dc">&#9670;&nbsp;</a></span>ets_delay_us()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ets_delay_us </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_65edf1b561f102319ae2d8c3ccfc1a4c.html">atcacert</a></li><li class="navelem"><a class="el" href="a01136.html">atcacert_host_sw.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_a05a22e5f002d7c1de78eecb12447d7f.html">hal</a></li><li class="navelem"><a class="el" href="a01136.html">hal_esp32_timer.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

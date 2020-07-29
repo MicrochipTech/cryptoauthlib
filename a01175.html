@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_ecdh.c File Reference</title>
+<title>CryptoAuthLib: hal_sam0_i2c_asf.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,115 +85,62 @@ $(document).ready(function(){initNavTree('a01175.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">calib_ecdh.c File Reference</div>  </div>
+<div class="title">hal_sam0_i2c_asf.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for ECDH command.  
+<p>ATCA Hardware abstraction layer for SAMD21 I2C over ASF drivers.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01289_source.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01427_source.html">host/atca_host.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga3f93c7e589cd2bd5750de31fcac50c0c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga3f93c7e589cd2bd5750de31fcac50c0c">calib_ecdh_base</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t key_id, const uint8_t *public_key, uint8_t *pms, uint8_t *out_nonce)</td></tr>
-<tr class="memdesc:ga3f93c7e589cd2bd5750de31fcac50c0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base function for generating premaster secret key using ECDH.  <a href="a02398.html#ga3f93c7e589cd2bd5750de31fcac50c0c">More...</a><br /></td></tr>
-<tr class="separator:ga3f93c7e589cd2bd5750de31fcac50c0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4aef47665ce6b1c83b9a00bc605e1d37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga4aef47665ce6b1c83b9a00bc605e1d37">calib_ecdh</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, const uint8_t *public_key, uint8_t *pms)</td></tr>
-<tr class="memdesc:ga4aef47665ce6b1c83b9a00bc605e1d37"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in a slot and the premaster secret is returned in the clear.  <a href="a02398.html#ga4aef47665ce6b1c83b9a00bc605e1d37">More...</a><br /></td></tr>
-<tr class="separator:ga4aef47665ce6b1c83b9a00bc605e1d37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f1282acc041575a16a745a337ebb4a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01175.html#a5f1282acc041575a16a745a337ebb4a5">calib_ecdh_enc</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, const uint8_t *public_key, uint8_t *pms, const uint8_t *read_key, uint16_t read_key_id, const uint8_t num_in[<a class="el" href="a01166.html#ad0c3da8203a3be6755e86cda96e00228">NONCE_NUMIN_SIZE</a>])</td></tr>
-<tr class="memdesc:a5f1282acc041575a16a745a337ebb4a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in a slot and the premaster secret is read from the next slot.  <a href="a01175.html#a5f1282acc041575a16a745a337ebb4a5">More...</a><br /></td></tr>
-<tr class="separator:a5f1282acc041575a16a745a337ebb4a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad18289d81bc0120dc7fdb15beaedcb24"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#gad18289d81bc0120dc7fdb15beaedcb24">calib_ecdh_ioenc</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, const uint8_t *public_key, uint8_t *pms, const uint8_t *io_key)</td></tr>
-<tr class="memdesc:gad18289d81bc0120dc7fdb15beaedcb24"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in a slot and the premaster secret is returned encrypted using the IO protection key.  <a href="a02398.html#gad18289d81bc0120dc7fdb15beaedcb24">More...</a><br /></td></tr>
-<tr class="separator:gad18289d81bc0120dc7fdb15beaedcb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5ec19f484a19ed7d9bf5ac4a1a35644f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga5ec19f484a19ed7d9bf5ac4a1a35644f">calib_ecdh_tempkey</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *public_key, uint8_t *pms)</td></tr>
-<tr class="memdesc:ga5ec19f484a19ed7d9bf5ac4a1a35644f"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in TempKey and the premaster secret is returned in the clear.  <a href="a02398.html#ga5ec19f484a19ed7d9bf5ac4a1a35644f">More...</a><br /></td></tr>
-<tr class="separator:ga5ec19f484a19ed7d9bf5ac4a1a35644f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ed4b0410333cf93ecc8e665b89f3a03"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02398.html#ga9ed4b0410333cf93ecc8e665b89f3a03">calib_ecdh_tempkey_ioenc</a> (<a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *public_key, uint8_t *pms, const uint8_t *io_key)</td></tr>
-<tr class="memdesc:ga9ed4b0410333cf93ecc8e665b89f3a03"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in TempKey and the premaster secret is returned encrypted using the IO protection key.  <a href="a02398.html#ga9ed4b0410333cf93ecc8e665b89f3a03">More...</a><br /></td></tr>
-<tr class="separator:ga9ed4b0410333cf93ecc8e665b89f3a03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><code>#include &lt;asf.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a01109_source.html">cryptoauthlib.h</a>&quot;</code><br />
+</div>
+<p><a href="a01175_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02312.html">i2c_sam0_instance</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:aa09b1baa19c0d9232b191bffe0a200c0"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01175.html#aa09b1baa19c0d9232b191bffe0a200c0">sam0_change_baudrate</a>) (<a class="el" href="a02159.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint32_t speed)</td></tr>
+<tr class="separator:aa09b1baa19c0d9232b191bffe0a200c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc52bbb3cf5a8db38f9929b63d8d2171"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a02312.html">i2c_sam0_instance</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01175.html#abc52bbb3cf5a8db38f9929b63d8d2171">i2c_sam0_instance_t</a></td></tr>
+<tr class="separator:abc52bbb3cf5a8db38f9929b63d8d2171"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for ECDH command. </p>
-<p>The ECDH command implements the Elliptic Curve Diffie-Hellman algorithm to combine an internal private key with an external public key to calculate a shared secret.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC508A, ATECC608A. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>ATCA Hardware abstraction layer for SAMD21 I2C over ASF drivers. </p>
+<p>Prerequisite: add SERCOM I2C Master Polled support to application in Atmel Studio</p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="a5f1282acc041575a16a745a337ebb4a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5f1282acc041575a16a745a337ebb4a5">&#9670;&nbsp;</a></span>calib_ecdh_enc()</h2>
+</div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="abc52bbb3cf5a8db38f9929b63d8d2171"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc52bbb3cf5a8db38f9929b63d8d2171">&#9670;&nbsp;</a></span>i2c_sam0_instance_t</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01091.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecdh_enc </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02395.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td>
-          <td class="paramname"><em>device</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>key_id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>public_key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>pms</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>read_key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>read_key_id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>num_in</em>[NONCE_NUMIN_SIZE]&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">typedef struct <a class="el" href="a02312.html">i2c_sam0_instance</a> <a class="el" href="a01175.html#abc52bbb3cf5a8db38f9929b63d8d2171">i2c_sam0_instance_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>ECDH command with a private key in a slot and the premaster secret is read from the next slot. </p>
-<p>This function only works for even numbered slots with the proper configuration.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">key_id</td><td>Slot of key for ECDH computation </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">public_key</td><td>Public key input to ECDH calculation. X and Y integers in big-endian format. 64 bytes for P256 key. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pms</td><td>Computed ECDH premaster secret is returned here (32 bytes). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">read_key</td><td>Read key for the premaster secret slot (key_id|1). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">read_key_id</td><td>Read key slot for read_key. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">num_in</td><td>20 byte host nonce to inject into Nonce calculation </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+</div>
+</div>
+<a id="aa09b1baa19c0d9232b191bffe0a200c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa09b1baa19c0d9232b191bffe0a200c0">&#9670;&nbsp;</a></span>sam0_change_baudrate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* sam0_change_baudrate) (<a class="el" href="a02159.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint32_t speed)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -202,7 +149,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_a7c83ffe4cbb7b846faed985dac26a17.html">calib</a></li><li class="navelem"><a class="el" href="a01175.html">calib_ecdh.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_a05a22e5f002d7c1de78eecb12447d7f.html">hal</a></li><li class="navelem"><a class="el" href="a01175.html">hal_sam0_i2c_asf.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

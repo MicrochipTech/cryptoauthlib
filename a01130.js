@@ -1,6 +1,6 @@
 var a01130 =
 [
-    [ "atcacert_gen_challenge_hw", "a02397.html#ga208c1ea765f192bd86b26964fbb5edcb", null ],
-    [ "atcacert_verify_cert_hw", "a02397.html#ga81e92ea606e86051afa84f2fac4898d6", null ],
-    [ "atcacert_verify_response_hw", "a02397.html#gafeffa7a36a7b5a343f5f568d090e8eed", null ]
+    [ "HID_DEVICES_MAX", "a02163.html#ga49053c3cd6d48fe5f468ce010ac0a9ef", null ],
+    [ "HID_PACKET_MAX", "a02163.html#ga6cdff3589b286ebcdd7771bb425fbf73", null ],
+    [ "atcahid_t", "a02163.html#gabb3ee8f7daf1cd68f8173981271ac37a", null ]
 ];

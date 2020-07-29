@@ -1,9 +1,15 @@
 var a01319 =
 [
-    [ "ATCA_MUTEX_TIMEOUT", "a01319.html#acf61a669d2246c92200734be17bd5488", null ],
-    [ "hal_create_mutex", "a02400.html#gab289a3949663589ac6be71d72fb18278", null ],
-    [ "hal_destroy_mutex", "a02400.html#ga4589d7b3e951f40b7928f1cf31f7ddf3", null ],
-    [ "hal_lock_mutex", "a02400.html#gad4cd02ff7ae4e75844eab4e84eb61994", null ],
-    [ "hal_rtos_delay_ms", "a02400.html#ga3df335e46c7e798a1d4b8949d00c13d3", null ],
-    [ "hal_unlock_mutex", "a02400.html#ga31fd8170a49623686543f6247b883bd1", null ]
+    [ "pkcs11_key_derive", "a02167.html#ga8ace04a2049a5d7e527558da10e68dcd", null ],
+    [ "pkcs11_key_generate_pair", "a02167.html#gaac5c7d6ae9b8262fb705083302efd90a", null ],
+    [ "pkcs11_key_write", "a02167.html#gaf3fdce991fe05099aa8552912e26dee7", null ],
+    [ "pkcs11_key_ec_private_attributes", "a02167.html#ga81d2f955c95147300f3403de8a0f5ad2", null ],
+    [ "pkcs11_key_ec_public_attributes", "a02167.html#ga5ad7cbddd090156dbfb6a885def9c3cc", null ],
+    [ "pkcs11_key_private_attributes", "a02167.html#ga40d8e67ef0fae7bdc2dca013ad8410aa", null ],
+    [ "pkcs11_key_private_attributes_count", "a02167.html#gaf358031996abf87fc21bc259e1e90644", null ],
+    [ "pkcs11_key_public_attributes", "a02167.html#gadf3e8d1e6b01d9fe85f54c9478d8d215", null ],
+    [ "pkcs11_key_public_attributes_count", "a02167.html#gadc78586c61388b3756395f0098fa4505", null ],
+    [ "pkcs11_key_rsa_private_attributes", "a02167.html#ga298dc33f25bcb9484bceff564f15f4ab", null ],
+    [ "pkcs11_key_secret_attributes", "a02167.html#ga6ef03269a32699359d90901cc84954f3", null ],
+    [ "pkcs11_key_secret_attributes_count", "a02167.html#ga55a0ac12b2ed4daefadaf3fa94edf78e", null ]
 ];

@@ -1,6 +1,5 @@
 var a01136 =
 [
-    [ "atcacert_gen_challenge_sw", "a02397.html#gaa9829e5aa1ece3d3a933db9827d3e8f3", null ],
-    [ "atcacert_verify_cert_sw", "a02397.html#gab78271af8c3e2837810fcdae6e3f5e28", null ],
-    [ "atcacert_verify_response_sw", "a02397.html#ga9d5bf9ec84d28a0412377818805c32c4", null ]
+    [ "atca_delay_ms", "a01136.html#a4b83848e938fac7ec4dde79e584b6f71", null ],
+    [ "ets_delay_us", "a01136.html#a7def86f0fbd90b451847d8534f21f5dc", null ]
 ];

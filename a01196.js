@@ -1,4 +1,6 @@
 var a01196 =
 [
-    [ "calib_kdf", "a02398.html#ga3e89694762b85f8507a3cdaa11fdb415", null ]
+    [ "atca_delay_10us", "a02163.html#ga19891182689551cc3a88603135959351", null ],
+    [ "atca_delay_ms", "a02163.html#ga0544f36422b5e9a8890fb9c90fc5eb55", null ],
+    [ "atca_delay_us", "a02163.html#ga7598dfcd6dcac882836544d48356d02f", null ]
 ];

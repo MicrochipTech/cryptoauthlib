@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_crypto_sw_rand.h Source File</title>
+<title>CryptoAuthLib: atca_mbedtls_wrap.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,36 +85,47 @@ $(document).ready(function(){initNavTree('a01259_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">atca_crypto_sw_rand.h</div>  </div>
+<div class="title">atca_mbedtls_wrap.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a01259.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef ATCA_CRYPTO_SW_RAND_H</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define ATCA_CRYPTO_SW_RAND_H</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef _ATCA_MBEDTLS_WRAP_H_</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define _ATCA_MBEDTLS_WRAP_H_</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01247.html">atca_crypto_sw.h</a>&quot;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">struct </span>mbedtls_pk_context;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">struct </span>mbedtls_x509_crt;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">struct </span><a class="code" href="a02244.html">atcacert_def_s</a>;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a02339.html#ga0710d8bf5e92403c4026c32af39ad79e">atcac_sw_random</a>(uint8_t* data, <span class="keywordtype">size_t</span> data_size);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">/* Wrapper Functions */</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a02166.html#ga72da31831a3647e287543634e3f78aca">atca_mbedtls_pk_init</a>(<span class="keyword">struct</span> mbedtls_pk_context * pkey, <span class="keyword">const</span> uint16_t slotid);</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="a02166.html#ga1180b0ded84f7edb4b36d14730366a64">   48</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a02166.html#ga1180b0ded84f7edb4b36d14730366a64">atca_mbedtls_cert_add</a>(<span class="keyword">struct</span> mbedtls_x509_crt * cert, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="a02244.html">atcacert_def_s</a> * cert_def);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">/* Application Callback definitions */</span></div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="a02166.html#ga98d684683ccecd3d56bdf5dc27ae999c">   56</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a02166.html#ga98d684683ccecd3d56bdf5dc27ae999c">atca_mbedtls_ecdh_slot_cb</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="a02166.html#gaa35682dc98e33ce3d6fad1fc902cdff0">   62</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a02166.html#gaa35682dc98e33ce3d6fad1fc902cdff0">atca_mbedtls_ecdh_ioprot_cb</a>(uint8_t secret[32]);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;}</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* _ATCA_MBEDTLS_WRAP_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aa02339_html_ga0710d8bf5e92403c4026c32af39ad79e"><div class="ttname"><a href="a02339.html#ga0710d8bf5e92403c4026c32af39ad79e">atcac_sw_random</a></div><div class="ttdeci">int atcac_sw_random(uint8_t *data, size_t data_size)</div><div class="ttdoc">return software generated random number and the function is currently not implemented</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_rand.c:36</div></div>
-<div class="ttc" id="aa01247_html"><div class="ttname"><a href="a01247.html">atca_crypto_sw.h</a></div><div class="ttdoc">Common defines for CryptoAuthLib software crypto wrappers.</div></div>
+<div class="ttc" id="aa02244_html"><div class="ttname"><a href="a02244.html">atcacert_def_s</a></div><div class="ttdef"><b>Definition:</b> atcacert_def.h:176</div></div>
+<div class="ttc" id="aa02166_html_ga1180b0ded84f7edb4b36d14730366a64"><div class="ttname"><a href="a02166.html#ga1180b0ded84f7edb4b36d14730366a64">atca_mbedtls_cert_add</a></div><div class="ttdeci">int atca_mbedtls_cert_add(struct mbedtls_x509_crt *cert, const struct atcacert_def_s *cert_def)</div></div>
+<div class="ttc" id="aa02166_html_gaa35682dc98e33ce3d6fad1fc902cdff0"><div class="ttname"><a href="a02166.html#gaa35682dc98e33ce3d6fad1fc902cdff0">atca_mbedtls_ecdh_ioprot_cb</a></div><div class="ttdeci">int atca_mbedtls_ecdh_ioprot_cb(uint8_t secret[32])</div><div class="ttdoc">ECDH Callback to obtain the IO Protection secret from the application.</div></div>
+<div class="ttc" id="aa02166_html_ga98d684683ccecd3d56bdf5dc27ae999c"><div class="ttname"><a href="a02166.html#ga98d684683ccecd3d56bdf5dc27ae999c">atca_mbedtls_ecdh_slot_cb</a></div><div class="ttdeci">int atca_mbedtls_ecdh_slot_cb(void)</div><div class="ttdoc">ECDH Callback to obtain the &quot;slot&quot; used in ECDH operations from the application.</div></div>
+<div class="ttc" id="aa02166_html_ga72da31831a3647e287543634e3f78aca"><div class="ttname"><a href="a02166.html#ga72da31831a3647e287543634e3f78aca">atca_mbedtls_pk_init</a></div><div class="ttdeci">int atca_mbedtls_pk_init(struct mbedtls_pk_context *pkey, const uint16_t slotid)</div><div class="ttdoc">Initializes an mbedtls pk context for use with EC operations.</div><div class="ttdef"><b>Definition:</b> atca_mbedtls_wrap.c:561</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_0d284ebe0a46982303565525253d36b8.html">crypto</a></li><li class="navelem"><a class="el" href="a01259.html">atca_crypto_sw_rand.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_e9245f9af770ccd2887f79213e861d63.html">mbedtls</a></li><li class="navelem"><a class="el" href="a01259.html">atca_mbedtls_wrap.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_host_hw.h Source File</title>
+<title>CryptoAuthLib: hal_all_platforms_kit_hidapi.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.0</span>
+   &#160;<span id="projectnumber">v3.2.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,51 +85,42 @@ $(document).ready(function(){initNavTree('a01130_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">atcacert_host_hw.h</div>  </div>
+<div class="title">hal_all_platforms_kit_hidapi.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a01130.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#ifndef ATCACERT_HOST_HA_H</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#define ATCACERT_HOST_HA_H</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01118.html">atcacert_def.h</a>&quot;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">// Inform function naming when compiling in C++</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a02397.html#ga81e92ea606e86051afa84f2fac4898d6">atcacert_verify_cert_hw</a>(<span class="keyword">const</span> <a class="code" href="a02481.html">atcacert_def_t</a>* cert_def,</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                            <span class="keyword">const</span> uint8_t*        cert,</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                            <span class="keywordtype">size_t</span>                cert_size,</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                            <span class="keyword">const</span> uint8_t         ca_public_key[64]);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a02397.html#ga208c1ea765f192bd86b26964fbb5edcb">atcacert_gen_challenge_hw</a>(uint8_t challenge[32]);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a02397.html#gafeffa7a36a7b5a343f5f568d090e8eed">atcacert_verify_response_hw</a>(<span class="keyword">const</span> uint8_t device_public_key[64],</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                                <span class="keyword">const</span> uint8_t challenge[32],</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                                <span class="keyword">const</span> uint8_t response[64]);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;}</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef HAL_MACOS_KIT_HID_H_</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define HAL_MACOS_KIT_HID_H_</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;hidapi.h&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">// Kit USB defines</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#define HID_DEVICES_MAX     10      </span></div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="a02163.html#ga49053c3cd6d48fe5f468ce010ac0a9ef">   42</a></span>&#160;<span class="preprocessor">#define HID_PACKET_MAX      512     </span></div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="a02163.html#ga6cdff3589b286ebcdd7771bb425fbf73">   43</a></span>&#160;<span class="preprocessor"></span> </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">// A structure to hold HID information</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="a02292.html">   48</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="a02292.html">atcahid</a></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;{</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="a02292.html#a2bd4dbcb2ab2d6802f2df0d067a4389a">   50</a></span>&#160;    <a class="code" href="a02304.html">hid_device</a>* <a class="code" href="a02292.html#a2bd4dbcb2ab2d6802f2df0d067a4389a">kits</a>[<a class="code" href="a02163.html#ga49053c3cd6d48fe5f468ce010ac0a9ef">HID_DEVICES_MAX</a>];</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="a02292.html#a9bb0ee74044865538adfcc5d5ae8f621">   51</a></span>&#160;    int8_t      <a class="code" href="a02292.html#a9bb0ee74044865538adfcc5d5ae8f621">num_kits_found</a>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="a02163.html#gabb3ee8f7daf1cd68f8173981271ac37a">   52</a></span>&#160;} <a class="code" href="a02163.html#gabb3ee8f7daf1cd68f8173981271ac37a">atcahid_t</a>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAL_LINUX_KIT_HID_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aa02397_html_ga208c1ea765f192bd86b26964fbb5edcb"><div class="ttname"><a href="a02397.html#ga208c1ea765f192bd86b26964fbb5edcb">atcacert_gen_challenge_hw</a></div><div class="ttdeci">int atcacert_gen_challenge_hw(uint8_t challenge[32])</div><div class="ttdoc">Generate a random challenge to be sent to the client using the RNG on the host's ATECC device.</div><div class="ttdef"><b>Definition:</b> atcacert_host_hw.c:75</div></div>
-<div class="ttc" id="aa02397_html_gafeffa7a36a7b5a343f5f568d090e8eed"><div class="ttname"><a href="a02397.html#gafeffa7a36a7b5a343f5f568d090e8eed">atcacert_verify_response_hw</a></div><div class="ttdeci">int atcacert_verify_response_hw(const uint8_t device_public_key[64], const uint8_t challenge[32], const uint8_t response[64])</div><div class="ttdoc">Verify a client's response to a challenge using the host's ATECC device for crypto functions.</div><div class="ttdef"><b>Definition:</b> atcacert_host_hw.c:86</div></div>
-<div class="ttc" id="aa02481_html"><div class="ttname"><a href="a02481.html">atcacert_def_s</a></div><div class="ttdef"><b>Definition:</b> atcacert_def.h:176</div></div>
-<div class="ttc" id="aa01118_html"><div class="ttname"><a href="a01118.html">atcacert_def.h</a></div><div class="ttdoc">Declarations for certificates related to ECC CryptoAuthentication devices. These are the definitions ...</div></div>
-<div class="ttc" id="aa02397_html_ga81e92ea606e86051afa84f2fac4898d6"><div class="ttname"><a href="a02397.html#ga81e92ea606e86051afa84f2fac4898d6">atcacert_verify_cert_hw</a></div><div class="ttdeci">int atcacert_verify_cert_hw(const atcacert_def_t *cert_def, const uint8_t *cert, size_t cert_size, const uint8_t ca_public_key[64])</div><div class="ttdoc">Verify a certificate against its certificate authority's public key using the host's ATECC device for...</div><div class="ttdef"><b>Definition:</b> atcacert_host_hw.c:36</div></div>
+<div class="ttc" id="aa02292_html"><div class="ttname"><a href="a02292.html">atcahid</a></div><div class="ttdef"><b>Definition:</b> hal_all_platforms_kit_hidapi.h:49</div></div>
+<div class="ttc" id="aa02292_html_a2bd4dbcb2ab2d6802f2df0d067a4389a"><div class="ttname"><a href="a02292.html#a2bd4dbcb2ab2d6802f2df0d067a4389a">atcahid::kits</a></div><div class="ttdeci">hid_device * kits[10]</div><div class="ttdef"><b>Definition:</b> hal_all_platforms_kit_hidapi.h:50</div></div>
+<div class="ttc" id="aa02304_html"><div class="ttname"><a href="a02304.html">hid_device</a></div><div class="ttdef"><b>Definition:</b> hal_linux_kit_hid.h:44</div></div>
+<div class="ttc" id="aa02292_html_a9bb0ee74044865538adfcc5d5ae8f621"><div class="ttname"><a href="a02292.html#a9bb0ee74044865538adfcc5d5ae8f621">atcahid::num_kits_found</a></div><div class="ttdeci">int8_t num_kits_found</div><div class="ttdef"><b>Definition:</b> hal_all_platforms_kit_hidapi.h:51</div></div>
+<div class="ttc" id="aa02163_html_ga49053c3cd6d48fe5f468ce010ac0a9ef"><div class="ttname"><a href="a02163.html#ga49053c3cd6d48fe5f468ce010ac0a9ef">HID_DEVICES_MAX</a></div><div class="ttdeci">#define HID_DEVICES_MAX</div><div class="ttdef"><b>Definition:</b> hal_all_platforms_kit_hidapi.h:41</div></div>
+<div class="ttc" id="aa02163_html_gabb3ee8f7daf1cd68f8173981271ac37a"><div class="ttname"><a href="a02163.html#gabb3ee8f7daf1cd68f8173981271ac37a">atcahid_t</a></div><div class="ttdeci">struct atcahid atcahid_t</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_072f1b99cdc59fcbbcb2c4c6f191fe69.html">cryptauthlib-v3.2.0_</a></li><li class="navelem"><a class="el" href="dir_f759c304a1fdad548adcf215b5c22cc9.html">lib</a></li><li class="navelem"><a class="el" href="dir_65edf1b561f102319ae2d8c3ccfc1a4c.html">atcacert</a></li><li class="navelem"><a class="el" href="a01130.html">atcacert_host_hw.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_a05a22e5f002d7c1de78eecb12447d7f.html">hal</a></li><li class="navelem"><a class="el" href="a01130.html">hal_all_platforms_kit_hidapi.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>
