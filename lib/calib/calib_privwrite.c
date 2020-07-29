@@ -6,7 +6,7 @@
  * into the device.
  *
  * \note List of devices that support this command - ATECC108A, ATECC508A, and
- *       ATECC608A. There are differences in the modes that they support. Refer
+ *       ATECC608A/B. There are differences in the modes that they support. Refer
  *       to device datasheets for full details.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -60,7 +60,7 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
 {
 #endif
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
     atca_nonce_in_out_t nonce_params;
     atca_gen_dig_in_out_t gen_dig_param;
@@ -72,13 +72,14 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
     uint8_t host_mac[MAC_SIZE] = { 0 };
     uint8_t other_data[4] = { 0 };
 
-    if (key_id > 15 || priv_key == NULL)
+    if ((device == NULL) || (priv_key == NULL) || (key_id > 15))
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Either NULL pointer or invalid slot received");
     }
 
     do
     {
+        ca_cmd = device->mCommands;
 
         if (write_key == NULL)
         {
@@ -94,6 +95,7 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
             // Read the device SN
             if ((status = atcab_read_zone(ATCA_ZONE_CONFIG, 0, 0, 0, serial_num, 32)) != ATCA_SUCCESS)
             {
+                ATCA_TRACE(status, "atcab_read_zone - failed");
                 break;
             }
             // Make the SN continuous by moving SN[4:8] right after SN[0:3]
@@ -102,6 +104,7 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
             // Send the random Nonce command
             if ((status = atcab_nonce_rand(num_in, rand_out)) != ATCA_SUCCESS)
             {
+                ATCA_TRACE(status, "atcab_nonce_rand - failed");
                 break;
             }
 
@@ -115,6 +118,7 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
             nonce_params.temp_key = &temp_key;
             if ((status = atcah_nonce(&nonce_params)) != ATCA_SUCCESS)
             {
+                ATCA_TRACE(status, "atcah_nonce - failed");
                 break;
             }
 
@@ -127,6 +131,7 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
             // Send the GenDig command
             if ((status = atcab_gendig(GENDIG_ZONE_DATA, write_key_id, other_data, sizeof(other_data))) != ATCA_SUCCESS)
             {
+                ATCA_TRACE(status, "atcab_gendig - failed");
                 break;
             }
 
@@ -143,6 +148,7 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
             gen_dig_param.temp_key = &temp_key;
             if ((status = atcah_gen_dig(&gen_dig_param)) != ATCA_SUCCESS)
             {
+                ATCA_TRACE(status, "atcah_gen_dig - failed");
                 break;
             }
 
@@ -157,6 +163,7 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
             host_mac_param.temp_key = &temp_key;
             if ((status = atcah_privwrite_auth_mac(&host_mac_param)) != ATCA_SUCCESS)
             {
+                ATCA_TRACE(status, "atcah_privwrite_auth_mac - failed");
                 break;
             }
 
@@ -169,11 +176,13 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
 
         if ((status = atPrivWrite(ca_cmd, &packet)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atPrivWrite - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_priv_write - execution failed");
             break;
         }
 

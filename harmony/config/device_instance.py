@@ -23,8 +23,8 @@
 *****************************************************************************"""
 
 _DEFAULT_I2C_ADDRESS = {'ecc': 0xC0, 'sha': 0xC8, 'ta100': 0x2e}
-_SWI_DEVICES = ['ATSHA204A', 'ATSHA206A', 'ATECC108A', 'ATECC508A', 'ATECC608A']
-_I2C_DEVICES = ['ATSHA204A', 'ATECC108A', 'ATECC508A', 'ATECC608A', 'TA100']
+_SWI_DEVICES = ['ATSHA204A', 'ATSHA206A', 'ATECC108A', 'ATECC508A', 'ATECC608']
+_I2C_DEVICES = ['ATSHA204A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'TA100']
 _SPI_DEVICES = ['TA100']
 
 
@@ -40,7 +40,7 @@ def updatePartInterfaceSettings(symbol, event):
     symObj = event['symbol']
     updateId = event['id'].upper()
     selected_key = symObj.getSelectedKey()
-    
+
     if updateId == 'INTERFACE':
         if selected_key == 'ATCA_SPI_IFACE':
             symbol.setVisible('SPI' in symbol.getID())
@@ -84,7 +84,7 @@ def instantiateComponent(deviceComponent, index):
     interfaceType.setLabel('Interface Type')
     if deviceType in _I2C_DEVICES:
         interfaceType.addKey("ATCA_I2C_IFACE", "0", "I2C")
-#    if deviceType in _SWI_DEVICES:    
+#    if deviceType in _SWI_DEVICES:
 #        interfaceType.addKey("ATCA_SWI_IFACE", "1", "SWI")
     if deviceType in _SPI_DEVICES:
         interfaceType.addKey("ATCA_SPI_IFACE", "2", "SPI")
@@ -109,7 +109,7 @@ def instantiateComponent(deviceComponent, index):
     else:
         deviceAddress = deviceComponent.createHexSymbol("I2C_ADDR", interfaceType)
         deviceAddress.setLabel("I2C Address")
-       
+
         if 'ECC' in deviceID:
             deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['ecc'])
         elif 'SHA' in deviceID:

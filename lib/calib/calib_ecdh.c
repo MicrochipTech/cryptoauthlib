@@ -6,7 +6,7 @@
  * combine an internal private key with an external public key to calculate a
  * shared secret.
  *
- * \note List of devices that support this command - ATECC508A, ATECC608A.
+ * \note List of devices that support this command - ATECC508A, ATECC608A/B.
  *       There are differences in  the modes that they support. Refer to device
  *       datasheets for full details.
  *
@@ -56,6 +56,12 @@ ATCA_STATUS calib_ecdh_base(ATCADevice device, uint8_t mode, uint16_t key_id, co
 
     do
     {
+        if (device == NULL)
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
+        }
+
         // Build Command
         packet.param1 = mode;
         packet.param2 = key_id;
@@ -63,11 +69,13 @@ ATCA_STATUS calib_ecdh_base(ATCADevice device, uint8_t mode, uint16_t key_id, co
 
         if ((status = atECDH(device->mCommands, &packet)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atECDH - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_ecdh_base - execution failed");
             break;
         }
 
@@ -141,8 +149,8 @@ ATCA_STATUS calib_ecdh_enc(ATCADevice device, uint16_t key_id, const uint8_t* pu
         // Check the inputs
         if (public_key == NULL || pms == NULL || read_key == NULL)
         {
-            status = ATCA_BAD_PARAM;
-            ATCA_TRACE(status, "Bad input parameters"); break;
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
         }
 
         // Send the ECDH command with the public key provided
@@ -188,7 +196,7 @@ ATCA_STATUS calib_ecdh_ioenc(ATCADevice device, uint16_t key_id, const uint8_t* 
     // Perform ECDH operation requesting output buffer encryption
     if (ATCA_SUCCESS != (status = calib_ecdh_base(device, mode, key_id, public_key, pms, out_nonce)))
     {
-        return status;
+        return ATCA_TRACE(status, "calib_ecdh_base - failed");
     }
 
     // Decrypt PMS
@@ -199,7 +207,7 @@ ATCA_STATUS calib_ecdh_ioenc(ATCADevice device, uint16_t key_id, const uint8_t* 
     io_dec_params.data_size = 32;
     if (ATCA_SUCCESS != (status = atcah_io_decrypt(&io_dec_params)))
     {
-        return status;
+        return ATCA_TRACE(status, "atcah_io_decrypt - failed");
     }
 
     return status;
@@ -248,7 +256,7 @@ ATCA_STATUS calib_ecdh_tempkey_ioenc(ATCADevice device, const uint8_t* public_ke
     // Perform ECDH operation requesting output buffer encryption
     if (ATCA_SUCCESS != (status = calib_ecdh_base(device, mode, 0x0000, public_key, pms, out_nonce)))
     {
-        return status;
+        return ATCA_TRACE(status, "calib_ecdh_base - failed");
     }
 
     // Decrypt PMS
@@ -259,7 +267,7 @@ ATCA_STATUS calib_ecdh_tempkey_ioenc(ATCADevice device, const uint8_t* public_ke
     io_dec_params.data_size = 32;
     if (ATCA_SUCCESS != (status = atcah_io_decrypt(&io_dec_params)))
     {
-        return status;
+        return ATCA_TRACE(status, "atcah_io_decrypt - failed");
     }
 
     return status;

@@ -373,17 +373,17 @@ TEST(tng_atcacert_client, tng_atcacert_device_public_key_cert)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info tng_atcacert_client_unit_test_info[] =
 {
-    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_root_public_key),            DEVICE_MASK(ATECC608A)},
-    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_root_cert),                  DEVICE_MASK(ATECC608A)},
-    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_max_signer_cert_size),       DEVICE_MASK(ATECC608A)},
-    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_read_signer_cert),           DEVICE_MASK(ATECC608A)},
-    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_signer_public_key_no_cert),  DEVICE_MASK(ATECC608A)},
-    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_signer_public_key_cert),     DEVICE_MASK(ATECC608A)},
-    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_max_device_cert_size),       DEVICE_MASK(ATECC608A)},
-    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_read_device_cert_no_signer), DEVICE_MASK(ATECC608A)},
-    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_read_device_cert_signer),    DEVICE_MASK(ATECC608A)},
-    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_device_public_key_no_cert),  DEVICE_MASK(ATECC608A)},
-    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_device_public_key_cert),     DEVICE_MASK(ATECC608A)},
+    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_root_public_key),            DEVICE_MASK(ATECC608)},
+    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_root_cert),                  DEVICE_MASK(ATECC608)},
+    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_max_signer_cert_size),       DEVICE_MASK(ATECC608)},
+    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_read_signer_cert),           DEVICE_MASK(ATECC608)},
+    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_signer_public_key_no_cert),  DEVICE_MASK(ATECC608)},
+    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_signer_public_key_cert),     DEVICE_MASK(ATECC608)},
+    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_max_device_cert_size),       DEVICE_MASK(ATECC608)},
+    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_read_device_cert_no_signer), DEVICE_MASK(ATECC608)},
+    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_read_device_cert_signer),    DEVICE_MASK(ATECC608)},
+    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_device_public_key_no_cert),  DEVICE_MASK(ATECC608)},
+    { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_device_public_key_cert),     DEVICE_MASK(ATECC608)},
     { (fp_test_case)NULL,                                                               (uint8_t)0 },
 };
 // *INDENT-ON*

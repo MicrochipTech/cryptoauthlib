@@ -7,7 +7,7 @@
  * is the digest of this message.
  *
  * \note List of devices that support this command - ATSHA204A, ATECC108A,
- *       ATECC508A, and ATECC608A. There are differences in the modes that they
+ *       ATECC508A, and ATECC608A/B. There are differences in the modes that they
  *       support. Refer to device datasheets for full details.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -52,16 +52,18 @@
 ATCA_STATUS calib_mac(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* challenge, uint8_t* digest)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     do
     {
-        if (digest == NULL)
+        if ((device == NULL) || (digest == NULL))
         {
-            return ATCA_BAD_PARAM;
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
         }
 
+        ca_cmd = device->mCommands;
         // build mac command
         packet.param1 = mode;
         packet.param2 = key_id;
@@ -69,18 +71,20 @@ ATCA_STATUS calib_mac(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
         {
             if (challenge == NULL)
             {
-                return ATCA_BAD_PARAM;
+                return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             }
             memcpy(&packet.data[0], challenge, 32);  // a 32-byte challenge
         }
 
         if ((status = atMAC(ca_cmd, &packet)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atMAC - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_mac - execution failed");
             break;
         }
 

@@ -104,7 +104,7 @@ ATCA_STATUS hal_swi_discover_devices(int bus_num, ATCAIfaceCfg cfg[], int *found
 #endif
     ATCAPacket packet;
     ATCA_STATUS status;
-    uint8_t revs608[][4] = { { 0x00, 0x00, 0x60, 0x01 }, { 0x00, 0x00, 0x60, 0x02 } };
+    uint8_t revs608[][4] = { { 0x00, 0x00, 0x60, 0x01 }, { 0x00, 0x00, 0x60, 0x02 }, { 0x00, 0x00, 0x60, 0x03 } };
     uint8_t revs508[][4] = { { 0x00, 0x00, 0x50, 0x00 } };
     uint8_t revs108[][4] = { { 0x80, 0x00, 0x10, 0x01 } };
     uint8_t revs204[][4] = { { 0x00, 0x02, 0x00, 0x08 }, { 0x00, 0x02, 0x00, 0x09 }, { 0x00, 0x04, 0x05, 0x00 } };
@@ -160,7 +160,7 @@ ATCA_STATUS hal_swi_discover_devices(int bus_num, ATCAIfaceCfg cfg[], int *found
     {
         if (memcmp(&packet.data[1], &revs608[i], 4) == 0)
         {
-            discoverCfg.devtype = ATECC608A;
+            discoverCfg.devtype = ATECC608;
             break;
         }
     }

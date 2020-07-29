@@ -43,7 +43,7 @@ Examples
     for new examples coming online.
   - Node Authentication Example Using Asymmetric PKI is a complete, all-in-one
     example demonstrating all the stages of crypto authentication starting from
-    provisioning the Crypto Authentication device ATECC608A/ATECC508A with keys
+    provisioning the Crypto Authentication device ATECC608/ATECC508A with keys
     and certificates to demonstrating an authentication sequence using
     asymmetric techniques.
     http://www.microchip.com/SWLibraryWeb/product.aspx?product=CryptoAuthLib
@@ -67,7 +67,7 @@ An example of the configuration:
 #define ATCA_HAL_I2C
 
 /* Included device support */
-#define ATCA_ATECC608A_SUPPORT
+#define ATCA_ATECC608_SUPPORT
 
 /* \brief How long to wait after an initial wake failure for the POST to
  *         complete.
@@ -153,7 +153,7 @@ Tests
 ------------
 
 There is a set of integration tests found in the test directory which will at least
-partially demonstrate the use of the objects.  Some tests may depend upon a 
+partially demonstrate the use of the objects.  Some tests may depend upon a
 certain device being configured in a certain way and may not work for all
 devices or specific configurations of the device.
 
@@ -165,8 +165,8 @@ One first selects a device type, with one of the following commands:
   - 204 (ATSHA204A)
   - 108 (ATECC108A)
   - 508 (ATECC508A)
-  - 608 (ATECC608A)
-  
+  - 608 (ATECC608A/B)
+
 From there the following unit test sweets are available:
   - unit (test command builder functions)
   - basic (test basic API functions)
@@ -174,7 +174,7 @@ From there the following unit test sweets are available:
   - cd (test certificate data functions)
   - util (test utility functions)
   - crypto (test software crypto functions)
-  
+
 Tests available depend on the lock level of the device. The unit tests
 won't lock the config or data zones automatically to allow retesting at desired
 lock levels. Therefore, some commands will need to be repeated after locking

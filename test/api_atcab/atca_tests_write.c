@@ -288,7 +288,7 @@ TEST(atca_cmd_basic_test, write_otp_zone)
     test_assert_data_is_locked();
 
     //since the 608 eliminated consumption mode, run a simpler test
-    if (gCfg->devtype == ATECC608A)
+    if (ATECC608 == (gCfg->devtype))
     {
         //initialize some data to try to write into OTP
         for (i = 0; i < ATCA_OTP_SIZE; i++)
@@ -571,8 +571,8 @@ TEST(atca_cmd_basic_test, write_config_zone)
         status = atcab_write_config_zone(test_ecc_configdata);
         break;
 #endif
-#ifdef ATCA_ATECC608A_SUPPORT
-    case ATECC608A:
+#ifdef ATCA_ATECC608_SUPPORT
+    case ATECC608:
         status = atcab_write_config_zone(test_ecc608_configdata);
         break;
 #endif

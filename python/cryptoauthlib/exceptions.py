@@ -155,5 +155,9 @@ class LibraryMemoryError(CryptoError):
     """CryptoAuthLib was unable to allocate memory"""
 
 
+class NoUseFlagError(CryptoError):
+    """Indication that no dk pk flag is available to perform"""
+
+
 class LibraryNotInitialized(CryptoError):
     """Indication that library or context was not initialized prior to an API call"""

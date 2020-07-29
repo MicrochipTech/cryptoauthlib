@@ -5,8 +5,8 @@
  * The AES command supports 128-bit AES encryption or decryption of small
  * messages or data packets in ECB mode.
  *
- * \note List of devices that support this command - ATECC608A & TA100. Refer to device
- *       datasheet for full details.
+ * \note List of devices that support this command - ATECC608A, ATECC608B,
+ *       & TA100. Refer to device datasheet for full details.
  *
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -59,7 +59,7 @@ ATCA_STATUS atcab_aes_cmac_init_ext(ATCADevice device, atca_aes_cmac_ctx_t* ctx,
 {
     if (ctx == NULL)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
     memset(ctx, 0, sizeof(*ctx));
     // IV for CMAC CBC calculations is all zeros
@@ -100,7 +100,7 @@ ATCA_STATUS atcab_aes_cmac_update(atca_aes_cmac_ctx_t* ctx, const uint8_t* data,
 
     if (ctx == NULL || data == NULL)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     memcpy(&ctx->block[ctx->block_size], data, copy_size);
@@ -179,7 +179,7 @@ ATCA_STATUS atcab_aes_cmac_finish(atca_aes_cmac_ctx_t* ctx, uint8_t* cmac, uint3
 
     if (ctx == NULL || cmac == NULL || cmac_size > ATCA_AES128_BLOCK_SIZE)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Either NULL pointer or invalid cmac size received");
     }
 
     // Calculate L as AES Encrypt of an all zero block

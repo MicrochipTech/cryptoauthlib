@@ -41,7 +41,7 @@
 /** \brief default configuration for an ECCx08A device */
 ATCAIfaceCfg cfg_ateccx08a_i2c_default = {
     .iface_type                 = ATCA_I2C_IFACE,
-    .devtype                    = ATECC608A,
+    .devtype                    = ATECC608,
     {
         .atcai2c.slave_address  = 0xC0,
         .atcai2c.bus            = 2,
@@ -57,7 +57,7 @@ ATCAIfaceCfg cfg_ateccx08a_i2c_default = {
 /** \brief default configuration for an ECCx08A device on the logical SWI bus over UART*/
 ATCAIfaceCfg cfg_ateccx08a_swi_default = {
     .iface_type         = ATCA_SWI_IFACE,
-    .devtype            = ATECC608A,
+    .devtype            = ATECC608,
     {
         .atcaswi.bus    = 4,
     },
@@ -70,7 +70,7 @@ ATCAIfaceCfg cfg_ateccx08a_swi_default = {
 /** \brief default configuration for Kit protocol over the device's async interface */
 ATCAIfaceCfg cfg_ateccx08a_kitcdc_default = {
     .iface_type             = ATCA_UART_IFACE,
-    .devtype                = ATECC608A,
+    .devtype                = ATECC608,
     {
         .atcauart.port      = 0,
         .atcauart.baud      = 115200,
@@ -86,7 +86,7 @@ ATCAIfaceCfg cfg_ateccx08a_kitcdc_default = {
 /** \brief default configuration for Kit protocol over the device's async interface */
 ATCAIfaceCfg cfg_ateccx08a_kithid_default = {
     .iface_type                  = ATCA_HID_IFACE,
-    .devtype                     = ATECC608A,
+    .devtype                     = ATECC608,
     {
         .atcahid.dev_interface   = ATCA_KIT_AUTO_IFACE,
         .atcahid.dev_identity    = 0,

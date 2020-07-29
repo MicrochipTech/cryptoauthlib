@@ -95,7 +95,7 @@ typedef struct ATCA_PACKED _atecc508a_config
     uint16_t KeyConfig[16];
 } atecc508a_config_t;
 
-typedef struct ATCA_PACKED _atecc608a_config
+typedef struct ATCA_PACKED _atecc608_config
 {
     uint32_t SN03;
     uint32_t RevNum;
@@ -125,7 +125,7 @@ typedef struct ATCA_PACKED _atecc608a_config
     uint16_t ChipOptions;
     uint32_t X509format;
     uint16_t KeyConfig[16];
-} atecc608a_config_t;
+} atecc608_config_t;
 
 #ifndef ATCA_NO_PRAGMA_PACK
 #pragma pack(pop)

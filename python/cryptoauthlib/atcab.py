@@ -21,7 +21,7 @@ Dynamic link library loading under ctypes and HAL initilization/release function
 # THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
 # THIS SOFTWARE.
 
-from ctypes import c_uint8, c_uint32, byref, create_string_buffer, Structure, c_char, c_uint16
+from ctypes import c_uint8, c_uint32, byref, create_string_buffer, Structure, c_char, c_uint16, c_void_p, c_bool
 from .status import Status
 from .library import get_cryptoauthlib, AtcaReference
 
@@ -72,7 +72,7 @@ class atca_aes_gcm_ctx(Structure):
                 ("enc_cb", c_char*16),
                 ("ciphertext_block", c_char*16)]
 
-class atca_hmac_sha256_ctx_t(atca_sha256_ctx):
+class atca_hmac_sha256_ctx(atca_sha256_ctx):
     """HMAC-SHA256 context"""
 
 
@@ -92,6 +92,13 @@ def atcab_release():
     raise CryptoException
     """
     return get_cryptoauthlib().atcab_release()
+
+
+def atcab_get_device():
+    """
+    Return the global device instance
+    """
+    return get_cryptoauthlib().atcab_get_device()
 
 
 def atcab_get_device_type():
@@ -232,7 +239,7 @@ def atcab_aes_cbc_init(ctx, key_id, key_block, iv):
 def atcab_aes_cbc_encrypt_block(ctx, plaintext, ciphertext):
     """
     Encrypt a block of data using CBC mode and a key within the
-    ATECC608A. atcab_aes_cbc_init() should be called before the
+    ATECC608. atcab_aes_cbc_init() should be called before the
     first use of this function.
 
     Args:
@@ -257,7 +264,7 @@ def atcab_aes_cbc_encrypt_block(ctx, plaintext, ciphertext):
 def atcab_aes_cbc_decrypt_block(ctx, ciphertext, plaintext):
     """
     Decrypt a block of data using CBC mode and a key within the
-    ATECC608A. atcab_aes_cbc_init() should be called before the
+    ATECC608. atcab_aes_cbc_init() should be called before the
     first use of this function.
 
     Args:
@@ -281,7 +288,7 @@ def atcab_aes_cbc_decrypt_block(ctx, ciphertext, plaintext):
 
 def atcab_aes_cmac_init(ctx, key_id, key_block):
     """
-    Initialize a CMAC calculation using an AES-128 key in the ATECC608A.
+    Initialize a CMAC calculation using an AES-128 key in the ATECC608.
 
     Args:
         ctx                 AES-128 CMAC context.
@@ -400,7 +407,7 @@ def atcab_aes_ctr_init_rand(ctx, key_id, key_block, counter_size, iv):
 def atcab_aes_ctr_encrypt_block(ctx, plaintext, ciphertext):
     """
     Encrypt a block of data using CTR mode and a key within the
-    ATECC608A device. atcab_aes_ctr_init() or atcab_aes_ctr_init_rand()
+    ATECC608 device. atcab_aes_ctr_init() or atcab_aes_ctr_init_rand()
     should be called before the first use of this function.
 
     Args:
@@ -423,7 +430,7 @@ def atcab_aes_ctr_encrypt_block(ctx, plaintext, ciphertext):
 def atcab_aes_ctr_decrypt_block(ctx, ciphertext, plaintext):
     """
     Decrypt a block of data using CTR mode and a key within the
-    ATECC608A device. atcab_aes_ctr_init() or atcab_aes_ctr_init_rand()
+    ATECC608 device. atcab_aes_ctr_init() or atcab_aes_ctr_init_rand()
     should be called before the first use of this function.
 
     Args:
@@ -497,7 +504,7 @@ def atcab_aes_gcm_init_rand(ctx, key_id, key_block, rand_size, free_field, free_
 def atcab_aes_gcm_aad_update(ctx, aad, aad_size):
     """
     Process Additional Authenticated Data (AAD) using GCM mode and a
-    key within the ATECC608A device.
+    key within the ATECC608 device.
 
     This can be called multiple times. atcab_aes_gcm_init() or
     atcab_aes_gcm_init_rand() should be called before the first use of this
@@ -517,7 +524,7 @@ def atcab_aes_gcm_aad_update(ctx, aad, aad_size):
 
 def atcab_aes_gcm_encrypt_update(ctx, plaintext, plaintext_size, ciphertext):
     """
-    Encrypt data using GCM mode and a key within the ATECC608A device.
+    Encrypt data using GCM mode and a key within the ATECC608 device.
     atcab_aes_gcm_init() or atcab_aes_gcm_init_rand() should be called
     before the first use of this function.
 
@@ -561,7 +568,7 @@ def atcab_aes_gcm_encrypt_finish(ctx, tag, tag_size):
 
 def atcab_aes_gcm_decrypt_update(ctx, ciphertext, ciphertext_size, plaintext):
     """
-    Decrypt data using GCM mode and a key within the ATECC608A device.
+    Decrypt data using GCM mode and a key within the ATECC608 device.
     atcab_aes_gcm_init() or atcab_aes_gcm_init_rand() should be called
     before the first use of this function.
 
@@ -1106,7 +1113,7 @@ def atcab_info(revision):
 def atcab_info_get_latch(state):
     """
     Using the Info command to get the persistent latch current state for
-    an ATECC608A device.
+    an ATECC608 device.
 
     Args:
         state               The state is returned here. Set (True) or
@@ -1127,7 +1134,7 @@ def atcab_info_get_latch(state):
 def atcab_info_set_latch(state):
     """
     Use the Info command to set the persistent latch state for an
-    ATECC608A device.
+    ATECC608 device.
 
     Args:
         state               Persistent latch state. Set (True) or
@@ -1161,7 +1168,7 @@ def atcab_kdf(mode, key_id, details, message, out_data, out_nonce):
                         EEPROM. Source key slot is the LSB and target key
                         slot is the MSB. (int)
         details         Further information about the computation, depending
-                        on the algorithm (4 bytes). (bytearray or bytes)
+                        on the algorithm. (int)
         message         Input value from system (up to 128 bytes). Actual size
                         of message is 16 bytes for AES algorithm or is encoded
                         in the MSB of the details parameter for other
@@ -1183,7 +1190,7 @@ def atcab_kdf(mode, key_id, details, message, out_data, out_nonce):
     if (not isinstance(out_data, bytearray)) or (not isinstance(out_nonce, bytearray)):
         status = Status.ATCA_BAD_PARAM
     else:
-        status = get_cryptoauthlib().atcab_kdf(mode, key_id, bytes(details), bytes(message),
+        status = get_cryptoauthlib().atcab_kdf(mode, key_id, details, bytes(message),
                                                byref(c_out_data), byref(c_out_nonce))
         out_data[0:] = bytes(c_out_data.raw)
         out_nonce[0:] = bytes(c_out_nonce.raw)
@@ -1352,7 +1359,7 @@ def atcab_nonce_base(mode, zero, num_in, rand_out):
                             nonce calculation mode (bit 15). (int)
         num_in              Input value to either be included in the nonce
                             calculation in random modes (20 bytes) or to be
-                            written directly (32 bytes or 64 bytes(ATECC608A))
+                            written directly (32 bytes or 64 bytes(ATECC608))
                             in pass-through mode. (bytearray or bytes)
         rand_out            If using a random mode, the internally generated
                             32-byte random number that was used in the nonce
@@ -1392,7 +1399,7 @@ def atcab_nonce_load(target, num_in, num_in_size):
     Execute a Nonce command in pass-through mode to load one of the
     device's internal buffers with a fixed value.
 
-    For the ATECC608A, available targets are TempKey (32 or 64 bytes), Message
+    For the ATECC608, available targets are TempKey (32 or 64 bytes), Message
     Digest Buffer (32 or 64 bytes), or the Alternate Key Buffer (32 bytes). For
     all other devices, only TempKey (32 bytes) is available.
 
@@ -1631,7 +1638,7 @@ def atcab_is_locked(zone, is_locked):
     if not isinstance(is_locked, AtcaReference):
         status = Status.ATCA_BAD_PARAM
     else:
-        c_is_locked = c_uint8(is_locked.value)
+        c_is_locked = c_bool(is_locked.value)
         status = get_cryptoauthlib().atcab_is_locked(zone, byref(c_is_locked))
         is_locked.value = c_is_locked.value
     return status
@@ -1873,7 +1880,7 @@ def atcab_secureboot_mac(mode, digest, signature, num_in, io_keys, is_verified):
 def atcab_selftest(mode, param2, result):
     """
     Executes the SelfTest command, which performs a test of one or more
-    of the cryptographic engines within the ATECC608A chip.
+    of the cryptographic engines within the ATECC608 chip.
 
     Args:
         mode                Functions to test. Can be a bit field combining any
@@ -1915,12 +1922,12 @@ def atcab_sha_base(mode, length, message, data_out, data_out_size):
                             End(2), Public(3), HMACstart(4), HMACend(5),
                             Read_Context(6), or Write_Context(7). Also
                             message digest target location for the
-                            ATECC608A. (int)
+                            ATECC608. (int)
         length              Number of bytes in the message parameter or
                             KeySlot for the HMAC key if Mode is
                             HMACstart(4) or Public(3). (int)
         message             Message bytes to be hashed or Write_Context if
-                            restoring a context on the ATECC608A. Can be
+                            restoring a context on the ATECC608. Can be
                             NULL if not required by the mode.
                             (bytearray or bytes)
         data_out            Data returned by the command (digest or
@@ -2000,7 +2007,7 @@ def atcab_sha_end(digest, length, message):
 def atcab_sha_read_context(context, context_size):
     """
     Executes SHA command to read the SHA-256 context back. Only for
-    ATECC608A with SHA-256 contexts. HMAC not supported.
+    ATECC608 with SHA-256 contexts. HMAC not supported.
 
     Args:
         context             Context data is returned here. (Expects bytearray)
@@ -2025,7 +2032,7 @@ def atcab_sha_read_context(context, context_size):
 def atcab_sha_write_context(context, context_size):
     """
     Executes SHA command to write (restore) a SHA-256 context into the
-    the device. Only supported for ATECC608A with SHA-256 contexts.
+    the device. Only supported for ATECC608 with SHA-256 contexts.
 
     Args:
         context             Context data to be restored. (bytearray or bytes)
@@ -2174,7 +2181,7 @@ def atcab_sha_hmac_finish(ctx, digest, target):
     Args:
         ctx                 HMAC/SHA-256 context (atca_hmac_sha256_ctx_t)
         target              Where to save the digest internal to the device.
-                            For ATECC608A, can be SHA_MODE_TARGET_TEMPKEY,
+                            For ATECC608, can be SHA_MODE_TARGET_TEMPKEY,
                             SHA_MODE_TARGET_MSGDIGBUF, or SHA_MODE_TARGET_OUT_ONLY.
                             For all other devices, SHA_MODE_TARGET_TEMPKEY is the
                             only option. (int)
@@ -2202,7 +2209,7 @@ def atcab_sha_hmac(data, data_size, key_slot, digest, target):
         data_size           Size of data in bytes. (int)
         key_slot            Slot key id to use for the HMAC calculation (int)
         target              Where to save the digest internal to the device.
-                            For ATECC608A, can be SHA_MODE_TARGET_TEMPKEY,
+                            For ATECC608, can be SHA_MODE_TARGET_TEMPKEY,
                             SHA_MODE_TARGET_MSGDIGBUF, or
                             SHA_MODE_TARGET_OUT_ONLY. For all other devices,
                             SHA_MODE_TARGET_TEMPKEY is the only option. (int)
@@ -2253,7 +2260,7 @@ def atcab_sign(key_id, msg, signature):
     """
     Executes Sign command, to sign a 32-byte external message using the private key
     in the specified slot. The message to be signed will be loaded into the Message
-    Digest Buffer to the ATECC608A device or TempKey for other devices.
+    Digest Buffer to the ATECC608 device or TempKey for other devices.
 
     Args:
         key_id          Slot of the private key to be used to sign the message (int)
@@ -2336,7 +2343,7 @@ def atcab_verify(mode, key_id, signature, public_key, other_data, mac):
     it is correctly generated from a given message and public key. In all cases, the
     signature is an input to the command. For the Stored, External, and ValidateExternal
     Modes, the contents of TempKey (or Message Digest Buffer in some cases for the
-    ATECC608A) should contain the 32 byte message.
+    ATECC608) should contain the 32 byte message.
 
     Args:
         mode                Verify command mode and options (int)
@@ -2414,7 +2421,7 @@ def atcab_verify_extern(message, signature, public_key, is_verified):
     """
     Executes the Verify command, which verifies a signature (ECDSA verify operation) with
     all components (message, signature, and public key) supplied. The message to be signed
-    will be loaded into the Message Digest Buffer to the ATECC608A device or TempKey for
+    will be loaded into the Message Digest Buffer to the ATECC608 device or TempKey for
     other devices.
 
     Args:
@@ -2445,7 +2452,7 @@ def atcab_verify_extern_mac(message, signature, public_key, num_in, io_key, is_v
     """
     Executes the Verify command with verification MAC, which verifies a signature
     (ECDSA verify operation) with all components (message,  signature, and public key)
-    supplied. This function is only available on the ATECC608A.
+    supplied. This function is only available on the ATECC608.
 
     Args:
         message             32 byte message to be verified. Typically the SHA256 hash of
@@ -2476,7 +2483,7 @@ def atcab_verify_stored(message, signature, key_id, is_verified):
     """
     Executes the Verify command, which verifies a signature (ECDSA verify operation)
     with a public key stored in the device. The message to be signed will be loaded
-    into the Message Digest Buffer to the ATECC608A device or TempKey for other devices.
+    into the Message Digest Buffer to the ATECC608 device or TempKey for other devices.
 
     Args:
         message             32 byte message to be verified. Typically the SHA256 hash of
@@ -2503,7 +2510,7 @@ def atcab_verify_stored_mac(message, signature, key_id, num_in, io_key, is_verif
     """
     Executes the Verify command with verification MAC, which verifies a  signature
     (ECDSA verify operation) with a public key stored in the device. This function
-    is only available on the ATECC608A.
+    is only available on the ATECC608.
 
     Args:
         message             32 byte message to be verified. Typically the SHA256 hash of
@@ -2748,5 +2755,5 @@ def atcab_write_config_counter(counter_id, counter_value):
 
 # Make module import * safe - keep at the end of the file
 __all__ = ['atca_aes_cbc_ctx', 'atca_aes_cmac_ctx', 'atca_aes_ctr_ctx',
-           'atca_aes_gcm_ctx', 'atca_sha256_ctx', 'atca_hmac_sha256_ctx_t']
+           'atca_aes_gcm_ctx', 'atca_sha256_ctx', 'atca_hmac_sha256_ctx']
 __all__ += [x for x in dir() if x.startswith(__name__.split('.')[-1])]

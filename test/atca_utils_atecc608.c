@@ -1,6 +1,6 @@
 /**
  * \file
- * \brief  Cryptoauthlib Testing: Device Specific Utilities for ATECC608A/B
+ * \brief  Cryptoauthlib Testing: Device Specific Utilities for ATECC608
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
@@ -27,7 +27,7 @@
 
 #include "atca_test.h"
 
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
 
 void update_chip_mode(uint8_t* chip_mode, uint8_t i2c_user_extra_add, uint8_t ttl_enable, uint8_t watchdog, uint8_t clock_divider)
 {
@@ -58,13 +58,13 @@ ATCA_STATUS check_clock_divider(int argc, char* argv[])
     ATCA_STATUS status;
     uint8_t chip_mode = 0;
 
-    if (gCfg->devtype != ATECC608A)
+    if (!(ATECC608 == gCfg->devtype))
     {
-        printf("Current device doesn't support clock divider settings (only ATECC608A)\r\n");
+        printf("Current device doesn't support clock divider settings (only ATECC608)\r\n");
         return ATCA_GEN_FAIL;
     }
 
-    // Update the actual ATECC608A chip mode so it takes effect immediately
+    // Update the actual ATECC608 chip mode so it takes effect immediately
     status = atcab_init(gCfg);
     if (status != ATCA_SUCCESS)
     {
@@ -82,10 +82,11 @@ ATCA_STATUS check_clock_divider(int argc, char* argv[])
             break;
         }
 
-        // Update the ATECC608A test config data so all the unit tests will run with the new chip mode
+        // Update the ATECC608 test config data so all the unit tests will run with the new chip mode
         update_chip_mode(&test_ecc608_configdata[ATCA_CHIPMODE_OFFSET], 0xFF, 0xFF, chip_mode & ATCA_CHIPMODE_WATCHDOG_MASK, chip_mode & ATCA_CHIPMODE_CLOCK_DIV_MASK);
 
-    } while (0);
+    }
+    while (0);
 
     atcab_release();
     return status;
@@ -98,9 +99,9 @@ ATCA_STATUS set_chip_mode(uint8_t i2c_user_extra_add, uint8_t ttl_enable, uint8_
     uint8_t config_word[ATCA_WORD_SIZE];
     bool config_locked = false;
 
-    if (gCfg->devtype != ATECC608A)
+    if (!(ATECC608 == gCfg->devtype))
     {
-        printf("Current device doesn't support clock divider settings (only ATECC608A)\r\n");
+        printf("Current device doesn't support clock divider settings (only ATECC608)\r\n");
         return ATCA_GEN_FAIL;
     }
 
@@ -116,7 +117,7 @@ ATCA_STATUS set_chip_mode(uint8_t i2c_user_extra_add, uint8_t ttl_enable, uint8_
         printf("Current device is config locked. Can't change clock divider. ");
     }
 
-    // Update the actual ATECC608A chip mode so it takes effect immediately
+    // Update the actual ATECC608 chip mode so it takes effect immediately
     status = atcab_init(gCfg);
     if (status != ATCA_SUCCESS)
     {
@@ -166,10 +167,11 @@ ATCA_STATUS set_chip_mode(uint8_t i2c_user_extra_add, uint8_t ttl_enable, uint8_
             break;
         }
 
-        // Update the ATECC608A test config data so all the unit tests will run with the new chip mode
+        // Update the ATECC608 test config data so all the unit tests will run with the new chip mode
         update_chip_mode(&test_ecc608_configdata[ATCA_CHIPMODE_OFFSET], i2c_user_extra_add, ttl_enable, watchdog, clock_divider);
 
-    } while (0);
+    }
+    while (0);
 
     atcab_release();
     return status;

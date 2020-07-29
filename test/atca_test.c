@@ -303,8 +303,8 @@ void test_assert_interface_init()
     TEST_ASSERT_NOT_NULL_MESSAGE(_gDevice, ATCA_TEST_HELPER_FILE);
 #endif
 
-#ifdef ATCA_ATECC608A_SUPPORT
-    if (_gDevice->mCommands->dt == ATECC608A)
+#ifdef ATCA_ATECC608_SUPPORT
+    if (ATECC608 == (_gDevice->mCommands->dt))
     {
         // Set the clock divider, which should be the same value as the test config
         _gDevice->mCommands->clock_divider = test_ecc608_configdata[ATCA_CHIPMODE_OFFSET] & ATCA_CHIPMODE_CLOCK_DIV_MASK;
@@ -412,18 +412,19 @@ void atca_test_assert_aes_enabled(UNITY_LINE_TYPE from_line)
 ATCA_STATUS atca_test_config_get_id(uint8_t test_type, uint16_t* handle)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
+
     if (test_type && handle)
     {
         switch (gCfg->devtype)
         {
 #if ATCA_CA_SUPPORT
         case ATSHA204A:
-            /* fallthrough */
+        /* fallthrough */
         case ATECC108A:
-            /* fallthrough */
+        /* fallthrough */
         case ATECC508A:
-            /* fallthrough */
-        case ATECC608A:
+        /* fallthrough */
+        case ATECC608:
             status = calib_config_get_slot_by_test(test_type, handle);
             break;
 #endif

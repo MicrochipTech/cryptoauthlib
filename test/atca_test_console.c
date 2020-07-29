@@ -40,8 +40,8 @@
 
 int run_basic_tests(int argc, char* argv[])
 {
-#ifdef ATCA_ATECC608A_SUPPORT
-    if (gCfg->devtype == ATECC608A)
+#ifdef ATCA_ATECC608_SUPPORT
+    if (ATECC608 == (gCfg->devtype))
     {
         check_clock_divider(argc, argv);
     }
@@ -51,8 +51,8 @@ int run_basic_tests(int argc, char* argv[])
 
 int run_unit_tests(int argc, char* argv[])
 {
-#ifdef ATCA_ATECC608A_SUPPORT
-    if (gCfg->devtype == ATECC608A)
+#ifdef ATCA_ATECC608_SUPPORT
+    if (ATECC608 == (gCfg->devtype))
     {
         check_clock_divider(argc, argv);
     }
@@ -117,7 +117,8 @@ int read_config(int argc, char* argv[])
             printf("%02X", (int)config[i]);
         }
         printf("\r\n");
-    } while (0);
+    }
+    while (0);
 
     atcab_release();
 
@@ -149,6 +150,7 @@ int lock_status(int argc, char* argv[])
 int lock_config(int argc, char* argv[])
 {
     int ret = lock_config_zone(argc, argv);
+
     lock_status(argc, argv);
     return ret;
 }
@@ -156,6 +158,7 @@ int lock_config(int argc, char* argv[])
 int lock_data(int argc, char* argv[])
 {
     int ret = lock_data_zone(argc, argv);
+
     lock_status(argc, argv);
     return ret;
 }
@@ -208,7 +211,7 @@ int discover(int argc, char* argv[])
 {
     ATCAIfaceCfg ifaceCfgs[10];
     int i;
-    const char* devname[] = { "ATSHA204A", "ATECC108A", "ATECC508A", "ATECC608A", "ATSHA206A" };  // indexed by ATCADeviceType
+    const char* devname[] = { "ATSHA204A", "ATECC108A", "ATECC508A", "ATECC608", "ATSHA206A" };  // indexed by ATCADeviceType
 
     for (i = 0; i < (int)(sizeof(ifaceCfgs) / sizeof(ATCAIfaceCfg)); i++)
     {
@@ -339,7 +342,8 @@ int lock_config_zone(int argc, char* argv[])
         do
         {
             ret = scanf("%c", &ch);
-        } while (ch == '\n' || ch == '\r');
+        }
+        while (ch == '\n' || ch == '\r');
 
         if (!((ch == 'Y') || (ch == 'y') || (ret < 0)))
         {
@@ -377,7 +381,8 @@ int lock_data_zone(int argc, char* argv[])
         do
         {
             ret = scanf("%c", &ch);
-        } while (ch == '\n' || ch == '\r');
+        }
+        while (ch == '\n' || ch == '\r');
 
         if (!((ch == 'Y') || (ch == 'y') || (ret < 0)))
         {
@@ -476,8 +481,8 @@ int run_all_tests(int argc, char* argv[])
     bool data_locked = false;
     int fails = 0;
 
-#ifdef ATCA_ATECC608A_SUPPORT
-    if (gCfg->devtype == ATECC608A)
+#ifdef ATCA_ATECC608_SUPPORT
+    if (ATECC608 == (gCfg->devtype))
     {
         check_clock_divider(argc, argv);
     }

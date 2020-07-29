@@ -51,7 +51,7 @@ typedef struct
 #define DEVICE_MASK(device)                 ((uint8_t)1 << device)
 #define REGISTER_TEST_CASE(group, name)     TEST_ ## group ## _ ## name ## _run
 
-#define DEVICE_MASK_ECC                     (DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A))
+#define DEVICE_MASK_ECC                     (DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608))
 
 
 #if !defined(ATCA_ECC_SUPPORT) && !defined(DO_NOT_TEST_CERT)
@@ -162,9 +162,9 @@ void atca_test_assert_aes_enabled(UNITY_LINE_TYPE from_line);
 
 typedef struct
 {
-    uint8_t     test_type;
-    uint16_t    handle;
-    void*       attributes;
+    uint8_t  test_type;
+    uint16_t handle;
+    void*    attributes;
 } device_object_meta_t;
 
 /* Configuration */

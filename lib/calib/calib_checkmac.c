@@ -7,7 +7,7 @@
  * result with input value.
  *
  * \note List of devices that support this command - ATSHA204A, ATECC108A,
- *       ATECC508A, and ATECC608A. There are differences in the modes that they
+ *       ATECC508A, and ATECC608A/B. There are differences in the modes that they
  *       support. Refer to device datasheets for full details.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -50,21 +50,19 @@
 ATCA_STATUS calib_checkmac(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t *challenge, const uint8_t *response, const uint8_t *other_data)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     // Verify the inputs
-    if (response == NULL || other_data == NULL)
+    if ((device == NULL) || (response == NULL) || (other_data == NULL) ||
+        (!(mode & CHECKMAC_MODE_BLOCK2_TEMPKEY) && challenge == NULL))
     {
-        return ATCA_BAD_PARAM;
-    }
-    if (!(mode & CHECKMAC_MODE_BLOCK2_TEMPKEY) && challenge == NULL)
-    {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     do
     {
+        ca_cmd = device->mCommands;
         // build Check MAC command
         packet.param1 = mode;
         packet.param2 = key_id;
@@ -81,11 +79,13 @@ ATCA_STATUS calib_checkmac(ATCADevice device, uint8_t mode, uint16_t key_id, con
 
         if ((status = atCheckMAC(ca_cmd, &packet)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atCheckMAC - failed");
             break;
         }
 
         if ((status = atca_execute_command( (void*)&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_checkmac - execution failed");
             break;
         }
     }

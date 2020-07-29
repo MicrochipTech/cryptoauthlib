@@ -833,7 +833,7 @@ class atcab_mock(object):
         if not isinstance(key_id, int):
             raise TypeError
 
-        if not isinstance(details, bytes):
+        if not isinstance(details, int):
             raise TypeError
 
         if not isinstance(message, bytes):
@@ -1947,7 +1947,7 @@ class atcab_mock(object):
 
         if not isinstance(num_in, bytes):
             raise TypeError
-    
+
         return Status.ATCA_SUCCESS
 
     #--------------------------------------------------------------------#
@@ -2201,30 +2201,21 @@ class atcab_mock(object):
 
 
     r_max_cert_size = c_size_t(123)
-    
+
     def atcacert_max_cert_size(self, cert_def, max_cert_size):
-    
+
         if not isinstance(cert_def, c_ptr):
             raise TypeError
-            
+
         if not isinstance(max_cert_size, c_ptr):
             raise TypeError
-            
+
         memmove(max_cert_size, byref(self.r_max_cert_size), sizeof(self.r_max_cert_size))
 
         return Status.ATCA_SUCCESS
 
 
     r_tng_type = c_int(1)
-
-    def tng_get_type(self, tng_type):
-
-        if not isinstance(tng_type, c_ptr):
-            raise TypeError
-
-        memmove(tng_type, byref(self.r_tng_type), sizeof(self.r_tng_type))
-
-        return Status.ATCA_SUCCESS
 
 
     def tng_get_device_pubkey(self, public_key):
@@ -2346,3 +2337,243 @@ class atcab_mock(object):
         memmove(public_key, byref(self.r_genkey_pubkey), sizeof(self.r_genkey_pubkey))
 
         return CertStatus.ATCACERT_E_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # sha206a_generate_derive_key(parent_key, derived_key, param1, param2):
+
+    r_derived_key = create_string_buffer(32)
+    r_derived_key.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                           0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                           0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                           0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
+
+    def sha206a_generate_derive_key(self, parent_key, derived_key, param1, param2):
+
+        if not isinstance(parent_key, bytes):
+            raise TypeError
+
+        if not isinstance(derived_key, c_ptr):
+            raise TypeError
+
+        if not isinstance(param1, int):
+            raise TypeError
+
+        if not isinstance(param2, int):
+            raise TypeError
+
+        memmove(cast(derived_key, c_void_p).value, cast(byref(self.r_derived_key), c_void_p).value, len(self.r_derived_key))
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # sha206a_diversify_parent_key(parent_key, diversified_key):
+
+    r_diversified_key = create_string_buffer(32)
+    r_diversified_key.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                               0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                               0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                               0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
+
+    def sha206a_diversify_parent_key(self, parent_key, diversified_key):
+
+        if not isinstance (parent_key, bytes):
+            raise TypeError
+
+        if not isinstance (diversified_key, c_ptr):
+            raise TypeError
+
+        memmove(cast(diversified_key, c_void_p).value, cast(byref(self.r_diversified_key), c_void_p).value, len(self.r_diversified_key))
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # sha206a_generate_challenge_response_pair(key, challenge, response):
+
+    r_challenge_response = create_string_buffer(32)
+    r_challenge_response.value = bytes(bytearray([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                                  0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                                  0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                                                  0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]))
+
+    def sha206a_generate_challenge_response_pair(self, key, challenge, response):
+
+        if not isinstance(key, bytes):
+            raise TypeError
+
+        if not isinstance(challenge, bytes):
+            raise TypeError
+
+        if not isinstance(response, c_ptr):
+            raise TypeError
+
+        memmove(cast(response, c_void_p).value, cast(byref(self.r_challenge_response), c_void_p).value, len(self.r_challenge_response))
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # sha206a_authenticate(challenge, expected_response, is_verified):
+
+    def sha206a_authenticate(self, challenge, expected_response, is_verified):
+
+        if not isinstance(challenge, bytes):
+            raise TypeError
+
+        if not isinstance(expected_response, bytes):
+            raise TypeError
+
+        if not isinstance(is_verified, c_ptr):
+            raise TypeError
+
+        memmove(cast(is_verified, c_void_p).value, cast(byref(self.r_verify_is_verified), c_void_p).value, 1)
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # sha206a_write_data_store(slot, data, block, offset, length, lock_after_write):
+
+    def sha206a_write_data_store(self, slot, data, block, offset, length, lock_after_write):
+
+        if not isinstance(slot, int):
+            raise TypeError
+
+        if not isinstance(data, bytes):
+            raise TypeError
+
+        if not isinstance(block, int):
+            raise TypeError
+
+        if not isinstance(offset, int):
+            raise TypeError
+
+        if not isinstance(length, int):
+            raise TypeError
+
+        if not isinstance(lock_after_write, int):
+            raise TypeError
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # sha206a_read_data_store(slot, data, block, offset, length):
+
+    def sha206a_read_data_store(self, slot, data, offset, length):
+
+        if not isinstance(slot, int):
+            raise TypeError
+
+        if not isinstance(data, c_ptr):
+            raise TypeError
+
+        if not isinstance(offset, int):
+            raise TypeError
+
+        if not isinstance(length, int):
+            raise TypeError
+
+        memmove(cast(data, c_void_p).value, cast(byref(self.r_read_zone_data), c_void_p).value, len(self.r_read_zone_data))
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # sha206a_get_data_store_lock_status(slot, is_locked):
+
+    r_verify_is_locked = c_uint8()
+    r_verify_is_locked.value = 1
+
+    def sha206a_get_data_store_lock_status(self, slot, is_locked):
+
+        if not isinstance(slot, int):
+            raise TypeError
+
+        if not isinstance(is_locked, c_ptr):
+            raise TypeError
+
+        memmove(cast(is_locked, c_void_p).value, cast(byref(self.r_verify_is_locked), c_void_p).value, 1)
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # sha206a_get_dk_update_count(dk_update_count):
+
+    r_dk_update_count = c_uint8()
+    r_dk_update_count.value = 1
+
+    def sha206a_get_dk_update_count(self, dk_update_count):
+
+        if not isinstance(dk_update_count, c_ptr):
+            raise TypeError
+
+        memmove(cast(dk_update_count, c_void_p).value, cast(byref(self.r_dk_update_count), c_void_p).value, 1)
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # sha206a_get_pk_useflag_count(pk_avail_count):
+
+    r_pk_avail_count = c_uint8()
+    r_pk_avail_count.value = 1
+
+    def sha206a_get_pk_useflag_count(self, pk_avail_count):
+
+        if not isinstance(pk_avail_count, c_ptr):
+            raise TypeError
+
+        memmove(cast(pk_avail_count, c_void_p).value, cast(byref(self.r_pk_avail_count), c_void_p).value, 1)
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # sha206a_get_dk_useflag_count(dk_avail_count):
+
+    r_dk_avail_count = c_uint8()
+    r_dk_avail_count.value = 1
+
+    def sha206a_get_dk_useflag_count(self, dk_avail_count):
+
+        if not isinstance(dk_avail_count, c_ptr):
+            raise TypeError
+
+        memmove(cast(dk_avail_count, c_void_p).value, cast(byref(self.r_dk_avail_count), c_void_p).value, 1)
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # sha206a_check_pk_useflag_validity(is_consumed):
+
+    r_verify_is_consumed = c_uint8()
+    r_verify_is_consumed.value = 1
+
+    def sha206a_check_pk_useflag_validity(self, is_consumed):
+
+        if not isinstance(is_consumed, c_ptr):
+            raise TypeError
+
+        memmove(cast(is_consumed, c_void_p).value, cast(byref(self.r_verify_is_consumed), c_void_p).value, 1)
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # sha206a_check_dk_useflag_validity(is_consumed):
+
+    def sha206a_check_dk_useflag_validity(self, is_consumed):
+
+        if not isinstance(is_consumed, c_ptr):
+            raise TypeError
+
+        memmove(cast(is_consumed, c_void_p).value, cast(byref(self.r_verify_is_consumed), c_void_p).value, 1)
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # sha206a_verify_device_consumption(is_consumed):
+
+    def sha206a_verify_device_consumption(self, is_consumed):
+
+        if not isinstance(is_consumed, c_ptr):
+            raise TypeError
+
+        memmove(cast(is_consumed, c_void_p).value, cast(byref(self.r_verify_is_consumed), c_void_p).value, 1)
+
+        return Status.ATCA_SUCCESS
+
+
+

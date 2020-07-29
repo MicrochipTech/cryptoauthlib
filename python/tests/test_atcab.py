@@ -368,7 +368,7 @@ def test_atcab_info_set_latch(test_init):
 def test_atcab_kdf(test_init):
     mode = 2
     key_id = 4
-    details = bytearray(4)
+    details = 0x12345678
     message = bytearray(128)
     out_data = bytearray(64)
     out_nonce = bytearray(32)

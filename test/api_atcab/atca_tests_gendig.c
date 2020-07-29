@@ -361,9 +361,9 @@ TEST(atca_cmd_basic_test, gendig_config_otp_data)
 t_test_case_info gendig_basic_test_info[] =
 {
         { REGISTER_TEST_CASE(atca_cmd_basic_test, gendig_config_otp_data), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
-        { REGISTER_TEST_CASE(atca_cmd_basic_test, gendig_counter),                                                                                    DEVICE_MASK(ATECC608A) },
-        { REGISTER_TEST_CASE(atca_cmd_basic_test, gendig_keyconfig),                                                                                  DEVICE_MASK(ATECC608A) },
-        { REGISTER_TEST_CASE(atca_cmd_basic_test, gendig_shared_nonce),                                                      DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
+        { REGISTER_TEST_CASE(atca_cmd_basic_test, gendig_counter),                                                                                    DEVICE_MASK(ATECC608) },
+        { REGISTER_TEST_CASE(atca_cmd_basic_test, gendig_keyconfig),                                                                                  DEVICE_MASK(ATECC608) },
+        { REGISTER_TEST_CASE(atca_cmd_basic_test, gendig_shared_nonce),                                                      DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
         { (fp_test_case)NULL,                     (uint8_t)0 }, /* Array Termination element*/
 };
 // *INDENT-ON*

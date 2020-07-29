@@ -52,33 +52,37 @@
 ATCA_STATUS calib_hmac(ATCADevice device, uint8_t mode, uint16_t key_id, uint8_t* digest)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     do
     {
-        if (digest == NULL)
+        if ((device == NULL) || (digest == NULL))
         {
-            status = ATCA_BAD_PARAM;
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             break;
         }
+
+        ca_cmd = device->mCommands;
         // build HMAC command
         packet.param1 = mode;
         packet.param2 = key_id;
 
         if ((status = atHMAC(ca_cmd, &packet)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atHMAC - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_hmac - failed");
             break;
         }
 
         if (packet.data[ATCA_COUNT_IDX] != HMAC_DIGEST_SIZE + 3)
         {
-            status = ATCA_RX_FAIL; // Unexpected response size
+            status = ATCA_TRACE(ATCA_RX_FAIL, "Unexpected response size"); // Unexpected response size
             break;
         }
 

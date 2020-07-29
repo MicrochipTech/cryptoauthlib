@@ -561,7 +561,7 @@ TEST(atca_cmd_basic_test, sha_hmac)
     TEST_ASSERT_EQUAL_MEMORY(hmac_ref, hmac, ATCA_SHA256_DIGEST_SIZE);
 }
 
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
 TEST(atca_cmd_basic_test, sha_hmac_tempkey)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
@@ -611,11 +611,11 @@ t_test_case_info sha_basic_test_info[] =
     //{ REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist_long),  DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
     //{ REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist_monte), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
 #if ATCA_CA_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_context),                                                           DEVICE_MASK(ATECC608A) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_context),                                                           DEVICE_MASK(ATECC608)     },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_context_simple),                                                    DEVICE_MASK(TA100)     },
 #endif
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_hmac),                                                DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_hmac_tempkey),                                                             DEVICE_MASK_ECC },
 #endif
     { (fp_test_case)NULL,                     (uint8_t)0 },         /* Array Termination element*/

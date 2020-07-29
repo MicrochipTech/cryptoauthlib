@@ -5,8 +5,8 @@
  * The SecureBoot command provides support for secure boot of an external MCU
  * or MPU.
  *
- * \note List of devices that support this command - ATECC608A. Refer to device
- *       datasheet for full details.
+ * \note List of devices that support this command - ATECC608A/B. Refer to
+ *       device datasheet for full details.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
@@ -52,16 +52,17 @@
 ATCA_STATUS calib_secureboot(ATCADevice device, uint8_t mode, uint16_t param2, const uint8_t* digest, const uint8_t* signature, uint8_t* mac)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
-    if (digest == NULL)
+    if ((device == NULL) || (digest == NULL))
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     do
     {
+        ca_cmd = device->mCommands;
         packet.param1 = mode;
         packet.param2 = param2;
 
@@ -74,11 +75,13 @@ ATCA_STATUS calib_secureboot(ATCADevice device, uint8_t mode, uint16_t param2, c
 
         if ((status = atSecureBoot(ca_cmd, &packet)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atSecureBoot - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_secureboot - execution failed");
             break;
         }
 
@@ -125,17 +128,13 @@ ATCA_STATUS calib_secureboot_mac(ATCADevice device, uint8_t mode, const uint8_t*
 
     do
     {
-        if (is_verified == NULL)
+        if ((is_verified == NULL) || (digest == NULL) || (num_in == NULL) || (io_key == NULL))
         {
-            return ATCA_BAD_PARAM;
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
         }
 
         *is_verified = false;
-
-        if (digest == NULL || num_in == NULL || io_key == NULL)
-        {
-            return ATCA_BAD_PARAM;
-        }
 
         // Setup Nonce command to create nonce combining host (num_in) and
         // device (RNG) nonces
@@ -150,12 +149,14 @@ ATCA_STATUS calib_secureboot_mac(ATCADevice device, uint8_t mode, const uint8_t*
         // Initialize TempKey with nonce
         if (ATCA_SUCCESS != (status = calib_nonce_base(device, nonce_params.mode, nonce_params.zero, nonce_params.num_in, rand_out)))
         {
+            ATCA_TRACE(status, "calib_nonce_base - failed");
             break;
         }
 
         // Calculate nonce (TempKey) value
         if (ATCA_SUCCESS != (status = atcah_nonce(&nonce_params)))
         {
+            ATCA_TRACE(status, "atcah_nonce - failed");
             break;
         }
 
@@ -168,6 +169,7 @@ ATCA_STATUS calib_secureboot_mac(ATCADevice device, uint8_t mode, const uint8_t*
         sboot_enc_params.digest_enc = digest_enc;
         if (ATCA_SUCCESS != (status = atcah_secureboot_enc(&sboot_enc_params)))
         {
+            ATCA_TRACE(status, "atcah_secureboot_enc - failed");
             break;
         }
 
@@ -197,6 +199,7 @@ ATCA_STATUS calib_secureboot_mac(ATCADevice device, uint8_t mode, const uint8_t*
         // is required to properly calculate the expected MAC
         if (ATCA_SUCCESS != (status = calib_read_bytes_zone(device, ATCA_ZONE_CONFIG, 0, SECUREBOOTCONFIG_OFFSET, buf, 2)))
         {
+            ATCA_TRACE(status, "calib_read_bytes_zone - failed");
             break;
         }
         sboot_mac_params.secure_boot_config = (uint16_t)buf[0] | ((uint16_t)buf[1] << 8);
@@ -204,6 +207,7 @@ ATCA_STATUS calib_secureboot_mac(ATCADevice device, uint8_t mode, const uint8_t*
         // Calculate the expected MAC
         if (ATCA_SUCCESS != (status = atcah_secureboot_mac(&sboot_mac_params)))
         {
+            ATCA_TRACE(status, "atcah_secureboot_mac - failed");
             break;
         }
 

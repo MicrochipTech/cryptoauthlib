@@ -6,7 +6,7 @@
  * use by the host system.
  *
  * \note List of devices that support this command - ATSHA204A, ATECC108A,
- *       ATECC508A, and ATECC608A. There are differences in the modes that they
+ *       ATECC508A, and ATECC608A/B. There are differences in the modes that they
  *       support. Refer to device datasheets for full details.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -51,12 +51,12 @@ typedef struct
  *                              End(2), Public(3), HMACstart(4), HMACend(5),
  *                              Read_Context(6), or Write_Context(7). Also
  *                              message digest target location for the
- *                              ATECC608A.
+ *                              ATECC608.
  * \param[in]    length         Number of bytes in the message parameter or
  *                              KeySlot for the HMAC key if Mode is
  *                              HMACstart(4) or Public(3).
  * \param[in]    message        Message bytes to be hashed or Write_Context if
- *                              restoring a context on the ATECC608A. Can be
+ *                              restoring a context on the ATECC608. Can be
  *                              NULL if not required by the mode.
  * \param[out]   data_out       Data returned by the command (digest or
  *                              context).
@@ -69,21 +69,26 @@ typedef struct
 ATCA_STATUS calib_sha_base(ATCADevice device, uint8_t mode, uint16_t length, const uint8_t* message, uint8_t* data_out, uint16_t* data_out_size)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t cmd_mode = (mode & SHA_MODE_MASK);
 
+    if (device == NULL)
+    {
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+    }
     if (cmd_mode != SHA_MODE_SHA256_PUBLIC && cmd_mode != SHA_MODE_HMAC_START && length > 0 && message == NULL)
     {
-        return ATCA_BAD_PARAM; // message data indicated, but nothing provided
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received"); // message data indicated, but nothing provided
     }
     if (data_out != NULL && data_out_size == NULL)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     do
     {
+        ca_cmd = device->mCommands;
         //Build Command
         packet.param1 = mode;
         packet.param2 = length;
@@ -95,11 +100,13 @@ ATCA_STATUS calib_sha_base(ATCADevice device, uint8_t mode, uint16_t length, con
 
         if ((status = atSHA(ca_cmd, &packet, length)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atSHA - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_sha_base - exection failed");
             break;
         }
 
@@ -160,7 +167,7 @@ ATCA_STATUS calib_sha_end(ATCADevice device, uint8_t *digest, uint16_t length, c
 }
 
 /** \brief Executes SHA command to read the SHA-256 context back. Only for
- *          ATECC608A with SHA-256 contexts. HMAC not supported.
+ *          ATECC608 with SHA-256 contexts. HMAC not supported.
  *
  *  \param[in]  device          Device context pointer
  *  \param[out]   context       Context data is returned here.
@@ -176,7 +183,7 @@ ATCA_STATUS calib_sha_read_context(ATCADevice device, uint8_t* context, uint16_t
 }
 
 /** \brief Executes SHA command to write (restore) a SHA-256 context into the
- *          the device. Only supported for ATECC608A with SHA-256 contexts.
+ *          the device. Only supported for ATECC608 with SHA-256 contexts.
  *
  *  \param[in] device        Device context pointer
  *  \param[in] context       Context data to be restored.
@@ -248,7 +255,7 @@ ATCA_STATUS calib_hw_sha2_256_update(ATCADevice device, atca_sha256_ctx_t* ctx, 
     // Process the current block
     if (ATCA_SUCCESS != (status = calib_sha_update(device, ctx->block)))
     {
-        return status;
+        return ATCA_TRACE(status, "calib_sha_update - failed");
     }
 
     // Process any additional blocks
@@ -258,7 +265,7 @@ ATCA_STATUS calib_hw_sha2_256_update(ATCADevice device, atca_sha256_ctx_t* ctx, 
     {
         if (ATCA_SUCCESS != (status = calib_sha_update(device, &data[copy_size + i * ATCA_SHA256_BLOCK_SIZE])))
         {
-            return status;
+            return ATCA_TRACE(status, "calib_sha_update - failed");
         }
     }
 
@@ -285,6 +292,11 @@ ATCA_STATUS calib_hw_sha2_256_finish(ATCADevice device, atca_sha256_ctx_t* ctx, 
     uint32_t msg_size_bits;
     uint32_t pad_zero_count;
     uint16_t digest_size;
+
+    if (device == NULL)
+    {
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+    }
 
     if (device->mIface->mIfaceCFG->devtype == ATSHA204A)
     {
@@ -316,7 +328,7 @@ ATCA_STATUS calib_hw_sha2_256_finish(ATCADevice device, atca_sha256_ctx_t* ctx, 
         digest_size = 32;
         if (ATCA_SUCCESS != (status = calib_sha_base(device, SHA_MODE_SHA256_UPDATE, ATCA_SHA256_BLOCK_SIZE, ctx->block, digest, &digest_size)))
         {
-            return status;
+            return ATCA_TRACE(status, "calib_sha_base - failed");
         }
 
         if (ctx->block_size > ATCA_SHA256_BLOCK_SIZE)
@@ -324,7 +336,7 @@ ATCA_STATUS calib_hw_sha2_256_finish(ATCADevice device, atca_sha256_ctx_t* ctx, 
             digest_size = 32;
             if (ATCA_SUCCESS != (status = calib_sha_base(device, SHA_MODE_SHA256_UPDATE, ATCA_SHA256_BLOCK_SIZE, &ctx->block[ATCA_SHA256_BLOCK_SIZE], digest, &digest_size)))
             {
-                return status;
+                return ATCA_TRACE(status, "calib_sha_base - failed");
             }
         }
     }
@@ -332,7 +344,7 @@ ATCA_STATUS calib_hw_sha2_256_finish(ATCADevice device, atca_sha256_ctx_t* ctx, 
     {
         if (ATCA_SUCCESS != (status = calib_sha_end(device, digest, ctx->block_size, ctx->block)))
         {
-            return status;
+            return ATCA_TRACE(status, "calib_sha_end - failed");
         }
     }
 
@@ -355,17 +367,17 @@ ATCA_STATUS calib_hw_sha2_256(ATCADevice device, const uint8_t * data, size_t da
 
     if (ATCA_SUCCESS != (status = calib_hw_sha2_256_init(device, &ctx)))
     {
-        return status;
+        return ATCA_TRACE(status, "calib_hw_sha2_256_init - failed");
     }
 
     if (ATCA_SUCCESS != (status = calib_hw_sha2_256_update(device, &ctx, data, data_size)))
     {
-        return status;
+        return ATCA_TRACE(status, "calib_hw_sha2_256_update - failed");
     }
 
     if (ATCA_SUCCESS != (status = calib_hw_sha2_256_finish(device, &ctx, digest)))
     {
-        return status;
+        return ATCA_TRACE(status, "calib_hw_sha2_256_finish - failed");
     }
 
     return ATCA_SUCCESS;
@@ -416,7 +428,7 @@ ATCA_STATUS calib_sha_hmac_update(ATCADevice device, atca_hmac_sha256_ctx_t* ctx
     // Process the current block
     if (ATCA_SUCCESS != (status = calib_sha_base(device, SHA_MODE_HMAC_UPDATE, ATCA_SHA256_BLOCK_SIZE, ctx->block, NULL, NULL)))
     {
-        return status;
+        return ATCA_TRACE(status, "calib_sha_base - failed");
     }
 
     // Process any additional blocks
@@ -426,7 +438,7 @@ ATCA_STATUS calib_sha_hmac_update(ATCADevice device, atca_hmac_sha256_ctx_t* ctx
     {
         if (ATCA_SUCCESS != (status = calib_sha_base(device, SHA_MODE_HMAC_UPDATE, ATCA_SHA256_BLOCK_SIZE, &data[copy_size + i * ATCA_SHA256_BLOCK_SIZE], NULL, NULL)))
         {
-            return status;
+            return ATCA_TRACE(status, "calib_sha_base - failed");
         }
     }
 
@@ -444,7 +456,7 @@ ATCA_STATUS calib_sha_hmac_update(ATCADevice device, atca_hmac_sha256_ctx_t* ctx
  * \param[in]  ctx     HMAC/SHA-256 context
  * \param[out] digest  HMAC/SHA-256 result is returned here (32 bytes).
  * \param[in]  target  Where to save the digest internal to the device.
- *                     For ATECC608A, can be SHA_MODE_TARGET_TEMPKEY,
+ *                     For ATECC608, can be SHA_MODE_TARGET_TEMPKEY,
  *                     SHA_MODE_TARGET_MSGDIGBUF, or SHA_MODE_TARGET_OUT_ONLY.
  *                     For all other devices, SHA_MODE_TARGET_TEMPKEY is the
  *                     only option.
@@ -456,13 +468,18 @@ ATCA_STATUS calib_sha_hmac_finish(ATCADevice device, atca_hmac_sha256_ctx_t *ctx
     uint8_t mode = SHA_MODE_HMAC_END;
     uint16_t digest_size = 32;
 
+    if (device == NULL)
+    {
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+    }
+
     if (ATECC608A == device->mIface->mIfaceCFG->devtype)
     {
         mode = SHA_MODE_608_HMAC_END;
     }
     else if (target != SHA_MODE_TARGET_TEMPKEY)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid target received");
     }
 
     mode |= target;
@@ -478,7 +495,7 @@ ATCA_STATUS calib_sha_hmac_finish(ATCADevice device, atca_hmac_sha256_ctx_t *ctx
  * \param[in]  key_slot   Slot key id to use for the HMAC calculation
  * \param[out] digest     Digest is returned here (32 bytes).
  * \param[in]  target     Where to save the digest internal to the device.
- *                        For ATECC608A, can be SHA_MODE_TARGET_TEMPKEY,
+ *                        For ATECC608, can be SHA_MODE_TARGET_TEMPKEY,
  *                        SHA_MODE_TARGET_MSGDIGBUF, or
  *                        SHA_MODE_TARGET_OUT_ONLY. For all other devices,
  *                        SHA_MODE_TARGET_TEMPKEY is the only option.
@@ -492,17 +509,17 @@ ATCA_STATUS calib_sha_hmac(ATCADevice device, const uint8_t * data, size_t data_
 
     if (ATCA_SUCCESS != (status = calib_sha_hmac_init(device, &ctx, key_slot)))
     {
-        return status;
+        return ATCA_TRACE(status, "calib_sha_hmac_init - failed");
     }
 
     if (ATCA_SUCCESS != (status = calib_sha_hmac_update(device, &ctx, data, data_size)))
     {
-        return status;
+        return ATCA_TRACE(status, "calib_sha_hmac_update - failed");
     }
 
     if (ATCA_SUCCESS != (status = calib_sha_hmac_finish(device, &ctx, digest, target)))
     {
-        return status;
+        return ATCA_TRACE(status, "calib_sha_hmac_finish - failed");
     }
 
     return ATCA_SUCCESS;

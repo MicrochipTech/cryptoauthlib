@@ -6,7 +6,7 @@
  * stored in TempKey using SHA-256 and derives a new key.
  *
  * \note List of devices that support this command - ATSHA204A, ATECC108A,
- *       ATECC508A, and ATECC608A. There are differences in the modes that they
+ *       ATECC508A, and ATECC608A/B. There are differences in the modes that they
  *       support. Refer to device datasheets for full details.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -48,11 +48,18 @@
 ATCA_STATUS calib_derivekey(ATCADevice device, uint8_t mode, uint16_t target_key, const uint8_t* mac)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     do
     {
+        if (device == NULL)
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
+        }
+
+        ca_cmd = device->mCommands;
         // build a deriveKey command (pass through mode)
         packet.param1 = mode;
         packet.param2 = target_key;
@@ -64,11 +71,13 @@ ATCA_STATUS calib_derivekey(ATCADevice device, uint8_t mode, uint16_t target_key
 
         if ((status = atDeriveKey(ca_cmd, &packet, mac != NULL)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atDeriveKey - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_derivekey - execution failed");
             break;
         }
 

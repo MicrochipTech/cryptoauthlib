@@ -14,10 +14,11 @@
 #cmakedefine ATCA_ATSHA206A_SUPPORT
 #cmakedefine ATCA_ATECC108A_SUPPORT
 #cmakedefine ATCA_ATECC508A_SUPPORT
-#cmakedefine ATCA_ATECC608A_SUPPORT
+#cmakedefine ATCA_ATECC608_SUPPORT
 #cmakedefine ATCA_TA100_SUPPORT
 
-
+/** Device Override - Library Assumes ATECC608B support in checks */
+#cmakedefine ATCA_ATECC608A_SUPPORT
 
 #ifdef ATCA_TA100_SUPPORT
 #cmakedefine ATCA_TA100_AES_AUTH_SUPPORT

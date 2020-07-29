@@ -64,7 +64,7 @@ TEST(atca_cmd_unit_test, crcerror)
 
 t_test_case_info calib_packet_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, crcerror), DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, crcerror), DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
     /* Array Termination element*/
     { (fp_test_case)NULL,                    (uint8_t)0 },
 };

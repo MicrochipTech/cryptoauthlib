@@ -10,7 +10,7 @@
  *       however, the OpCode and operation is the same.
  *
  * \note List of devices that support this command - ATSHA204A, ATECC108A,
- *       ATECC508A & ATECC608A. There are differences in the modes that they
+ *       ATECC508A & ATECC608A/B. There are differences in the modes that they
  *       support. Refer to device datasheets for full details.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -51,9 +51,15 @@
 ATCA_STATUS calib_info_base(ATCADevice device, uint8_t mode, uint16_t param2, uint8_t* out_data)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
+    if (device == NULL)
+    {
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+    }
+
+    ca_cmd = device->mCommands;
     // build an info command
     packet.param1 = mode;
     packet.param2 = param2;
@@ -63,11 +69,13 @@ ATCA_STATUS calib_info_base(ATCADevice device, uint8_t mode, uint16_t param2, ui
 
         if ((status = atInfo(ca_cmd, &packet)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atInfo - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_info_base - execution failed");
             break;
         }
 
@@ -90,14 +98,14 @@ ATCA_STATUS calib_info(ATCADevice device, uint8_t* revision)
 {
     if (revision == NULL)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     return calib_info_base(device, INFO_MODE_REVISION, 0, revision);
 }
 
 /** \brief Use the Info command to get the persistent latch current state for
- *          an ATECC608A device.
+ *          an ATECC608 device.
  *
  *  \param[in]  device  Device context pointer
  *  \param[out] state   The state is returned here. Set (true) or Cler (false).
@@ -112,12 +120,12 @@ ATCA_STATUS calib_info_get_latch(ATCADevice device, bool* state)
 
     if (state == NULL)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     if (ATCA_SUCCESS != (status = calib_info_base(device, INFO_MODE_VOL_KEY_PERMIT, 0, out_data)))
     {
-        return status;
+        return ATCA_TRACE(status, "calib_info_base - failed");
     }
 
     *state = (out_data[0] == 1);
@@ -126,7 +134,7 @@ ATCA_STATUS calib_info_get_latch(ATCADevice device, bool* state)
 }
 
 /** \brief Use the Info command to set the persistent latch state for an
- *          ATECC608A device.
+ *          ATECC608 device.
  *
  *  \param[in]  device  Device context pointer
  *  \param[out] state   Persistent latch state. Set (true) or clear (false).

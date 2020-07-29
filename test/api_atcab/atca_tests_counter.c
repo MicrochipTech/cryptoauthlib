@@ -61,7 +61,7 @@ TEST(atca_cmd_basic_test, counter_test)
 }
 
 /*
-   The test case implements the counter match function in ECC608A. Counter[0] is
+   The test case implements the counter match function in ECC608. Counter[0] is
    incremented to a value less than (32-counter_limit) and counter match slot data
    is written to value that is greater than the counter[0] value by counter_limit,
    so that only once the private key in slot 0 can be used for signing and next
@@ -190,9 +190,9 @@ TEST(atca_cmd_basic_test, counter_write_test)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info counter_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_write_test), DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A)  },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_test),       DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A)  },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_match),                               DEVICE_MASK(ATECC608A)  },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_write_test), DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608)  },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_test),       DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608)  },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_match),                               DEVICE_MASK(ATECC608)  },
     { (fp_test_case)NULL,                     (uint8_t)0 },        /* Array Termination element*/
 };
 // *INDENT-ON*

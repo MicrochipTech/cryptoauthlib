@@ -968,7 +968,7 @@ CK_RV pkcs11_key_derive
             {
                 if (ATCA_SLOT_CONFIG_WRITE_ECDH_MASK & pSession->slot->cfg_zone.SlotConfig[pBaseKey->slot])
                 {
-                    uint16_t read_key_id = (ATCA_SLOT_CONFIG_READKEY_MASK & pSession->slot->cfg_zone.SlotConfig[pBaseKey->slot])
+                    uint16_t read_key_id = (ATCA_SLOT_CONFIG_READKEY_MASK & pSession->slot->cfg_zone.SlotConfig[pBaseKey->slot | 0x01])
                                            >> ATCA_SLOT_CONFIG_READKEY_SHIFT;
                     status = atcab_ecdh_enc(pBaseKey->slot, &pEcdhParameters->pPublicData[1], pSecretKey->data,
                                             pSession->read_key, read_key_id, NULL);

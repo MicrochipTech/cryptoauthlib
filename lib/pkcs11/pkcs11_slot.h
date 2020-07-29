@@ -39,19 +39,19 @@ extern "C" {
 /** Slot Context */
 typedef struct _pkcs11_slot_ctx
 {
-    CK_BBOOL            initialized;
-    CK_SLOT_ID          slot_id;
-    ATCADevice          device_ctx;
-    ATCAIfaceCfg        interface_config;
-    CK_SESSION_HANDLE   session;
+    CK_BBOOL          initialized;
+    CK_SLOT_ID        slot_id;
+    ATCADevice        device_ctx;
+    ATCAIfaceCfg      interface_config;
+    CK_SESSION_HANDLE session;
 #if ATCA_CA_SUPPORT
-    atecc608a_config_t  cfg_zone;
+    atecc608_config_t cfg_zone;
 #endif
-    CK_FLAGS            flags;
-    uint16_t            user_pin_handle;
-    uint16_t            so_pin_handle;
+    CK_FLAGS flags;
+    uint16_t user_pin_handle;
+    uint16_t so_pin_handle;
 #ifndef PKCS11_LABEL_IS_SERNUM
-    CK_UTF8CHAR         label[PKCS11_MAX_LABEL_SIZE + 1];
+    CK_UTF8CHAR label[PKCS11_MAX_LABEL_SIZE + 1];
 #endif
 } pkcs11_slot_ctx, *pkcs11_slot_ctx_ptr;
 

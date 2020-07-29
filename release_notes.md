@@ -1,6 +1,20 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.2.2 (07/28/2020)
+
+### New Features
+  - ATECC608B support added
+
+### Fixes
+  - Consistent null pointer checks between calib & talib apis. Tracing enabled
+    for most all status changes
+  - Fix for pkcs11 ecdh with the legacy slot write mode and encrypted read to
+    pull the read key id from the correct slot (private key slot | 0x01)
+  - call the proper api from atcab_init_ext so it works with device structures
+    that are not the global instance
+
+
 ## Release v3.2.1 (06/29/2020)
 
 ### Fixes

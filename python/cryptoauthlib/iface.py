@@ -39,6 +39,7 @@ class ATCAIfaceType(AtcaEnum):
     ATCA_SPI_IFACE = 3
     ATCA_HID_IFACE = 4
 
+
 class ATCAKitType(AtcaEnum):
     """
     Interface Type Enumerations for Kit devices
@@ -48,6 +49,7 @@ class ATCAKitType(AtcaEnum):
     ATCA_KIT_SWI_IFACE = 2
     ATCA_KIT_UNKNOWN_IFACE = 3
 
+
 class ATCADeviceType(AtcaEnum):
     """
     Device Type Enumeration from atca_devtypes.h
@@ -56,6 +58,8 @@ class ATCADeviceType(AtcaEnum):
     ATECC108A = 1
     ATECC508A = 2
     ATECC608A = 3
+    ATECC608B = 3
+    ATECC608  = 3
     ATSHA206A = 4
     ATCA_DEV_UNKNOWN = 0x20
 

@@ -31,12 +31,6 @@ def test_tng_init_live(test_init_with_device):
         raise Exception('Unable to connect to a device')
 
 
-def test_tng_get_type(test_tng_init):
-    tng_type = AtcaReference(tng_type_t.TNGTYPE_UNKNOWN)
-    assert tng_get_type(tng_type) == Status.ATCA_SUCCESS
-    assert tng_type.value == atcab_mock.r_tng_type.value
-
-
 def test_tng_get_device_pubkey(test_tng_init):
     public_key = bytearray(64)
     assert tng_get_device_pubkey(public_key) == Status.ATCA_SUCCESS

@@ -66,8 +66,8 @@ TEST(atca_cmd_basic_test, selftest_all)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info selftest_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, selftest_individual), DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, selftest_all),        DEVICE_MASK(ATECC608A) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, selftest_individual), DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, selftest_all),        DEVICE_MASK(ATECC608) },
     { (fp_test_case)NULL,                     (uint8_t)0 },         /* Array Termination element*/
 };
 // *INDENT-ON*

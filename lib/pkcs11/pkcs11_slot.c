@@ -137,7 +137,7 @@ static ATCA_STATUS pkcs11_slot_check_device_type(ATCAIfaceCfg * ifacecfg)
         }
         else if (0x60 == info[2])
         {
-            devType = ATECC608A;
+            devType = ATECC608;
         }
 
         if (ifacecfg->devtype != devType)

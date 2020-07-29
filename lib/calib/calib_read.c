@@ -7,7 +7,7 @@
  * before being returned to the system.
  *
  * \note List of devices that support this command - ATSHA204A, ATECC108A,
- *       ATECC508A, ATECC608A. There are differences in the modes that they
+ *       ATECC508A, ATECC608A/B. There are differences in the modes that they
  *       support. Refer to device datasheets for full details.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -57,26 +57,29 @@
 ATCA_STATUS calib_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint8_t *data, uint8_t len)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint16_t addr;
 
     do
     {
         // Check the input parameters
-        if (data == NULL)
+        if ((device == NULL) || (data == NULL))
         {
-            return ATCA_BAD_PARAM;
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
         }
 
         if (len != 4 && len != 32)
         {
-            return ATCA_BAD_PARAM;
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid length received");
+            break;
         }
 
         // The get address function checks the remaining variables
         if ((status = calib_get_addr(zone, slot, block, offset, &addr)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_get_addr - failed");
             break;
         }
 
@@ -86,17 +89,20 @@ ATCA_STATUS calib_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint
             zone = zone | ATCA_ZONE_READWRITE_32;
         }
 
+        ca_cmd = device->mCommands;
         // build a read command
         packet.param1 = zone;
         packet.param2 = addr;
 
         if ((status = atRead(ca_cmd, &packet)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atRead - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_read_zone - execution failed");
             break;
         }
 
@@ -121,13 +127,14 @@ ATCA_STATUS calib_read_serial_number(ATCADevice device, uint8_t* serial_number)
 
     if (!serial_number)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     do
     {
         if ((status = calib_read_zone(device, ATCA_ZONE_CONFIG, 0, 0, 0, read_buf, ATCA_BLOCK_SIZE)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_read_zone - failed");
             break;
         }
         memcpy(&serial_number[0], &read_buf[0], 4);
@@ -154,18 +161,16 @@ ATCA_STATUS calib_is_slot_locked(ATCADevice device, uint16_t slot, bool *is_lock
 
     do
     {
-        if (slot > 15)
+        if ((slot > 15) || (is_locked == NULL))
         {
-            return ATCA_BAD_PARAM;
-        }
-        if (is_locked == NULL)
-        {
-            return ATCA_BAD_PARAM;
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "Either Invalid slot or NULL pointer received");
+            break;
         }
 
         // Read the word with the lock bytes ( SlotLock[2], RFU[2] ) (config block = 2, word offset = 6)
         if ((status = calib_read_zone(device, ATCA_ZONE_CONFIG, 0, 2 /*block*/, 6 /*offset*/, data, ATCA_WORD_SIZE)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_read_zone - failed");
             break;
         }
 
@@ -195,12 +200,14 @@ ATCA_STATUS calib_is_locked(ATCADevice device, uint8_t zone, bool *is_locked)
     {
         if (is_locked == NULL)
         {
-            return ATCA_BAD_PARAM;
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
         }
 
         // Read the word with the lock bytes (UserExtra, Selector, LockValue, LockConfig) (config block = 2, word offset = 5)
         if ((status = calib_read_zone(device, ATCA_ZONE_CONFIG, 0, 2 /*block*/, 5 /*offset*/, data, ATCA_WORD_SIZE)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_read_zone - failed");
             break;
         }
 
@@ -209,7 +216,7 @@ ATCA_STATUS calib_is_locked(ATCADevice device, uint8_t zone, bool *is_locked)
         {
         case LOCK_ZONE_CONFIG: *is_locked = (data[3] != 0x55); break;
         case LOCK_ZONE_DATA:   *is_locked = (data[2] != 0x55); break;
-        default: status = ATCA_BAD_PARAM; break;
+        default: status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid zone received"); break;
         }
     }
     while (0);
@@ -258,13 +265,14 @@ ATCA_STATUS calib_read_enc(ATCADevice device, uint16_t key_id, uint8_t block, ui
         // Verify inputs parameters
         if (data == NULL || enc_key == NULL)
         {
-            status = ATCA_BAD_PARAM;
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             break;
         }
 
         // Read the device SN
         if ((status = calib_read_zone(device, ATCA_ZONE_CONFIG, 0, 0, 0, serial_num, 32)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_read_zone - failed");
             break;
         }
         // Make the SN continuous by moving SN[4:8] right after SN[0:3]
@@ -353,15 +361,14 @@ ATCA_STATUS calib_read_config_zone(ATCADevice device, uint8_t* config_data)
 
     do
     {
-
         // Verify the inputs
         if (config_data == NULL)
         {
-            status = ATCA_BAD_PARAM;
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             break;
         }
 
-        if ((device->mIface->mIfaceCFG->devtype == ATSHA204A) || (device->mIface->mIfaceCFG->devtype == ATSHA206A))
+        if (atIsSHAFamily(device->mIface->mIfaceCFG->devtype))
         {
             status = calib_read_bytes_zone(device, ATCA_ZONE_CONFIG, 0, 0x00, config_data, ATCA_SHA_CONFIG_SIZE);
         }
@@ -372,6 +379,7 @@ ATCA_STATUS calib_read_config_zone(ATCADevice device, uint8_t* config_data)
 
         if (status != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_read_bytes_zone - failed");
             break;
         }
 
@@ -407,8 +415,8 @@ ATCA_STATUS calib_cmp_config_zone(ATCADevice device, uint8_t* config_data, bool*
         // Check the inputs
         if ((config_data == NULL) || (same_config == NULL))
         {
-            status = ATCA_BAD_PARAM;
-            ATCA_TRACE(status, "Invalid Parameters"); break;
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
         }
         // Set the boolean to false
         *same_config = false;
@@ -432,7 +440,7 @@ ATCA_STATUS calib_cmp_config_zone(ATCADevice device, uint8_t* config_data, bool*
             break;
         }
 
-        if (device->mIface->mIfaceCFG->devtype == ATECC608A)
+        if (ATECC608 == device->mIface->mIfaceCFG->devtype)
         {
             /* Skip Counter[0], Counter[1], which can change during operation */
 
@@ -490,20 +498,29 @@ ATCA_STATUS calib_read_sig(ATCADevice device, uint16_t slot, uint8_t* sig)
     do
     {
         // Check the value of the slot
-        if (sig == NULL || slot < 8 || slot > 15)
+        if (sig == NULL)
         {
-            return ATCA_BAD_PARAM;
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
+        }
+
+        if (slot < 8 || slot > 15)
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid slot received");
+            break;
         }
 
         // Read the first block
         if ((status = calib_read_zone(device, ATCA_ZONE_DATA, slot, 0, 0, &sig[0], ATCA_BLOCK_SIZE)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_read_zone - failed");
             break;
         }
 
         // Read the second block
         if ((status = calib_read_zone(device, ATCA_ZONE_DATA, slot, 1, 0, &sig[ATCA_BLOCK_SIZE], ATCA_BLOCK_SIZE)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_read_zone - failed");
             break;
         }
     }
@@ -540,12 +557,12 @@ ATCA_STATUS calib_read_pubkey(ATCADevice device, uint16_t slot, uint8_t *public_
     // Check the pointers
     if (public_key == NULL)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
     // Check the value of the slot
     if (slot < 8 || slot > 0xF)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid slot received");
     }
 
     do
@@ -558,6 +575,7 @@ ATCA_STATUS calib_read_pubkey(ATCADevice device, uint16_t slot, uint8_t *public_
         block = 0;
         if ((status = calib_read_zone(device, ATCA_ZONE_DATA, slot, block, offset, read_buf, ATCA_BLOCK_SIZE)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_read_zone - failed");
             break;
         }
 
@@ -571,6 +589,7 @@ ATCA_STATUS calib_read_pubkey(ATCADevice device, uint16_t slot, uint8_t *public_
         block = 1;
         if ((status = calib_read_zone(device, ATCA_ZONE_DATA, slot, block, offset, read_buf, ATCA_BLOCK_SIZE)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_read_zone - failed");
             break;
         }
 
@@ -589,6 +608,7 @@ ATCA_STATUS calib_read_pubkey(ATCADevice device, uint16_t slot, uint8_t *public_
         block = 2;
         if ((status = calib_read_zone(device, ATCA_ZONE_DATA, slot, block, offset, read_buf, ATCA_BLOCK_SIZE)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_read_zone - failed");
             break;
         }
 
@@ -635,11 +655,11 @@ ATCA_STATUS calib_read_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot
 
     if (zone != ATCA_ZONE_CONFIG && zone != ATCA_ZONE_OTP && zone != ATCA_ZONE_DATA)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid zone received");
     }
     if (zone == ATCA_ZONE_DATA && slot > 15)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid slot received");
     }
     if (length == 0)
     {
@@ -647,18 +667,19 @@ ATCA_STATUS calib_read_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot
     }
     if (data == NULL)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     do
     {
         if (ATCA_SUCCESS != (status = calib_get_zone_size(device, zone, slot, &zone_size)))
         {
+            ATCA_TRACE(status, "calib_get_zone_size - failed");
             break;
         }
         if (offset + length > zone_size)
         {
-            return ATCA_BAD_PARAM; // Can't read past the end of a zone
+            return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid parameter received"); // Can't read past the end of a zone
 
         }
         cur_block = offset / ATCA_BLOCK_SIZE;
@@ -675,6 +696,7 @@ ATCA_STATUS calib_read_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot
             // Read next chunk of data
             if (ATCA_SUCCESS != (status = calib_read_zone(device, zone, slot, (uint8_t)cur_block, (uint8_t)cur_offset, read_buf, read_size)))
             {
+                ATCA_TRACE(status, "calib_read_zone - falied");
                 break;
             }
 

@@ -42,7 +42,7 @@ ATCA_STATUS calib_wakeup(ATCADevice device)
 {
     if (device == NULL)
     {
-        return ATCA_GEN_FAIL;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     return atwake(device->mIface);
@@ -56,7 +56,7 @@ ATCA_STATUS calib_idle(ATCADevice device)
 {
     if (device == NULL)
     {
-        return ATCA_GEN_FAIL;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     return atidle(device->mIface);
@@ -70,7 +70,7 @@ ATCA_STATUS calib_sleep(ATCADevice device)
 {
     if (device == NULL)
     {
-        return ATCA_GEN_FAIL;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     return atsleep(device->mIface);
@@ -196,11 +196,11 @@ ATCA_STATUS calib_get_addr(uint8_t zone, uint16_t slot, uint8_t block, uint8_t o
 
     if (addr == NULL)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
     if ((mem_zone != ATCA_ZONE_CONFIG) && (mem_zone != ATCA_ZONE_DATA) && (mem_zone != ATCA_ZONE_OTP))
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid zone received");
     }
     do
     {
@@ -239,9 +239,9 @@ ATCA_STATUS calib_get_zone_size(ATCADevice device, uint8_t zone, uint16_t slot, 
 {
     ATCA_STATUS status = ATCA_SUCCESS;
 
-    if (size == NULL)
+    if ((device == NULL) || (size == NULL))
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     if (device->mIface->mIfaceCFG->devtype == ATSHA204A)
@@ -251,7 +251,7 @@ ATCA_STATUS calib_get_zone_size(ATCADevice device, uint8_t zone, uint16_t slot, 
         case ATCA_ZONE_CONFIG: *size = 88; break;
         case ATCA_ZONE_OTP:    *size = 64; break;
         case ATCA_ZONE_DATA:   *size = 32; break;
-        default: status = ATCA_BAD_PARAM; break;
+        default: status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid zone received"); break;
         }
     }
     else if (device->mIface->mIfaceCFG->devtype == ATSHA206A)
@@ -261,7 +261,7 @@ ATCA_STATUS calib_get_zone_size(ATCADevice device, uint8_t zone, uint16_t slot, 
         case ATCA_ZONE_CONFIG: *size = 88; break;
         case ATCA_ZONE_OTP:    *size = 0; break;
         case ATCA_ZONE_DATA:   *size = 32; break;
-        default: status = ATCA_BAD_PARAM; break;
+        default: status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid zone received"); break;
         }
     }
     else
@@ -285,10 +285,10 @@ ATCA_STATUS calib_get_zone_size(ATCADevice device, uint8_t zone, uint16_t slot, 
             }
             else
             {
-                status = ATCA_BAD_PARAM;
+                status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid slot received");
             }
             break;
-        default: status = ATCA_BAD_PARAM; break;
+        default: status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid zone received"); break;
         }
     }
 

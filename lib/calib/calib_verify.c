@@ -6,7 +6,7 @@
  * correctly generated given an input message digest and public key.
  *
  * \note List of devices that support this command - ATECC108A, ATECC508A, and
- *       ATECC608A. There are differences in the modes that they support. Refer
+ *       ATECC608A/B. There are differences in the modes that they support. Refer
  *       to device datasheet for full details.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -40,7 +40,7 @@
  *          public key. In all cases, the signature is an input to the command.
  *
  * For the Stored, External, and ValidateExternal Modes, the contents of
- * TempKey (or Message Digest Buffer in some cases for the ATECC608A) should
+ * TempKey (or Message Digest Buffer in some cases for the ATECC608) should
  * contain the 32 byte message.
  *
  * \param[in] device      Device context pointer
@@ -69,25 +69,26 @@
 ATCA_STATUS calib_verify(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* signature, const uint8_t* public_key, const uint8_t* other_data, uint8_t* mac)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t verify_mode = (mode & VERIFY_MODE_MASK);
 
     do
     {
-        if (signature == NULL)
+        if ((device == NULL) || (verify_mode == VERIFY_MODE_EXTERNAL && public_key == NULL) ||
+            (signature == NULL))
         {
-            return ATCA_BAD_PARAM;
-        }
-        if (verify_mode == VERIFY_MODE_EXTERNAL && public_key == NULL)
-        {
-            return ATCA_BAD_PARAM;
-        }
-        if ((verify_mode == VERIFY_MODE_VALIDATE || verify_mode == VERIFY_MODE_INVALIDATE) && other_data == NULL)
-        {
-            return ATCA_BAD_PARAM;
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer recived");
+            break;
         }
 
+        if ((verify_mode == VERIFY_MODE_VALIDATE || verify_mode == VERIFY_MODE_INVALIDATE) && other_data == NULL)
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer recived");
+            break;
+        }
+
+        ca_cmd = device->mCommands;
         // Build the verify command
         packet.param1 = mode;
         packet.param2 = key_id;
@@ -103,11 +104,13 @@ ATCA_STATUS calib_verify(ATCADevice device, uint8_t mode, uint16_t key_id, const
 
         if ((status = atVerify(ca_cmd, &packet)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atVerify - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_verify - execution failed");
             break;
         }
 
@@ -125,7 +128,7 @@ ATCA_STATUS calib_verify(ATCADevice device, uint8_t mode, uint16_t key_id, const
 
 /** \brief Executes the Verify command with verification MAC for the External
  *          or Stored Verify modes.. This function is only available on the
- *          ATECC608A.
+ *          ATECC608.
  *
  * \param[in]  device       Device context pointer
  * \param[in] mode          Verify command mode. Can be VERIFY_MODE_EXTERNAL or
@@ -162,20 +165,13 @@ static ATCA_STATUS calib_verify_extern_stored_mac(ATCADevice device, uint8_t mod
 
     do
     {
-        if (is_verified == NULL)
+        if ((is_verified == NULL) || (signature == NULL) || (message == NULL) || (num_in == NULL)
+            || (io_key == NULL) || ((mode & VERIFY_MODE_MASK) == VERIFY_MODE_EXTERNAL && public_key == NULL))
         {
-            return ATCA_BAD_PARAM;
+            return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer recived");
         }
 
         *is_verified = false;
-        if (signature == NULL || message == NULL || num_in == NULL || io_key == NULL)
-        {
-            return ATCA_BAD_PARAM;
-        }
-        if ((mode & VERIFY_MODE_MASK) == VERIFY_MODE_EXTERNAL && public_key == NULL)
-        {
-            return ATCA_BAD_PARAM; // Only External mode requires an external public key
-        }
 
         // When using the message digest buffer as the message source, the
         // second 32 bytes in the buffer will be the MAC system nonce.
@@ -183,6 +179,7 @@ static ATCA_STATUS calib_verify_extern_stored_mac(ATCADevice device, uint8_t mod
         memcpy(&msg_dig_buf[32], num_in, 32);
         if ((status = calib_nonce_load(device, NONCE_MODE_TARGET_MSGDIGBUF, msg_dig_buf, 64)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_nonce_load - failed");
             break;
         }
 
@@ -198,6 +195,7 @@ static ATCA_STATUS calib_verify_extern_stored_mac(ATCADevice device, uint8_t mod
         verify_mac_params.mac = host_mac;
         if (ATCA_SUCCESS != (status = atcah_verify_mac(&verify_mac_params)))
         {
+            ATCA_TRACE(status, "atcah_verify_mac - failed");
             break;
         }
 
@@ -220,7 +218,7 @@ static ATCA_STATUS calib_verify_extern_stored_mac(ATCADevice device, uint8_t mod
 /** \brief Executes the Verify command, which verifies a signature (ECDSA
  *          verify operation) with all components (message, signature, and
  *          public key) supplied. The message to be signed will be loaded into
- *          the Message Digest Buffer to the ATECC608A device or TempKey for
+ *          the Message Digest Buffer to the ATECC608 device or TempKey for
  *          other devices.
  *
  * \param[in]  device       Device context pointer
@@ -243,29 +241,26 @@ ATCA_STATUS calib_verify_extern(ATCADevice device, const uint8_t *message, const
     uint8_t nonce_target = NONCE_MODE_TARGET_TEMPKEY;
     uint8_t verify_source = VERIFY_MODE_SOURCE_TEMPKEY;
 
-    if (is_verified == NULL)
+    if ((device == NULL) || (is_verified == NULL) || (signature == NULL) || (message == NULL) ||
+        (public_key == NULL))
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     *is_verified = false;
 
-    if (signature == NULL || message == NULL || public_key == NULL)
-    {
-        return ATCA_BAD_PARAM;
-    }
-
     do
     {
         // Load message into device
-        if (device->mCommands->dt == ATECC608A)
+        if (ATECC608 == device->mIface->mIfaceCFG->devtype)
         {
-            // Use the Message Digest Buffer for the ATECC608A
+            // Use the Message Digest Buffer for the ATECC608
             nonce_target = NONCE_MODE_TARGET_MSGDIGBUF;
             verify_source = VERIFY_MODE_SOURCE_MSGDIGBUF;
         }
         if ((status = calib_nonce_load(device, nonce_target, message, 32)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_nonce_load - failed");
             break;
         }
 
@@ -285,7 +280,7 @@ ATCA_STATUS calib_verify_extern(ATCADevice device, const uint8_t *message, const
 /** \brief Executes the Verify command with verification MAC, which verifies a
  *          signature (ECDSA verify operation) with all components (message,
  *          signature, and public key) supplied. This function is only available
- *          on the ATECC608A.
+ *          on the ATECC608.
  *
  * \param[in]  device       Device context pointer
  * \param[in]  message      32 byte message to be verified. Typically
@@ -312,7 +307,7 @@ ATCA_STATUS calib_verify_extern_mac(ATCADevice device, const uint8_t *message, c
 /** \brief Executes the Verify command, which verifies a signature (ECDSA
  *          verify operation) with a public key stored in the device. The
  *          message to be signed will be loaded into the Message Digest Buffer
- *          to the ATECC608A device or TempKey for other devices.
+ *          to the ATECC608 device or TempKey for other devices.
  *
  * \param[in]  device       Device context pointer
  * \param[in]  message      32 byte message to be verified. Typically
@@ -333,29 +328,25 @@ ATCA_STATUS calib_verify_stored(ATCADevice device, const uint8_t *message, const
     uint8_t nonce_target = NONCE_MODE_TARGET_TEMPKEY;
     uint8_t verify_source = VERIFY_MODE_SOURCE_TEMPKEY;
 
-    if (is_verified == NULL)
+    if ((device == NULL) || (is_verified == NULL) || (signature == NULL) || (message == NULL))
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     *is_verified = false;
 
-    if (signature == NULL || message == NULL)
-    {
-        return ATCA_BAD_PARAM;
-    }
-
     do
     {
         // Load message into device
-        if (device->mCommands->dt == ATECC608A)
+        if (ATECC608 == device->mIface->mIfaceCFG->devtype)
         {
-            // Use the Message Digest Buffer for the ATECC608A
+            // Use the Message Digest Buffer for the ATECC608
             nonce_target = NONCE_MODE_TARGET_MSGDIGBUF;
             verify_source = VERIFY_MODE_SOURCE_MSGDIGBUF;
         }
         if ((status = calib_nonce_load(device, nonce_target, message, 32)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_nonce_load - failed");
             break;
         }
 
@@ -374,7 +365,7 @@ ATCA_STATUS calib_verify_stored(ATCADevice device, const uint8_t *message, const
 
 /** \brief Executes the Verify command with verification MAC, which verifies a
  *          signature (ECDSA verify operation) with a public key stored in the
- *          device. This function is only available on the ATECC608A.
+ *          device. This function is only available on the ATECC608.
  *
  * \param[in]  device       Device context pointer
  * \param[in]  message      32 byte message to be verified. Typically
@@ -419,9 +410,9 @@ ATCA_STATUS calib_verify_validate(ATCADevice device, uint16_t key_id, const uint
 {
     ATCA_STATUS status = ATCA_SUCCESS;
 
-    if (signature == NULL || other_data == NULL || is_verified == NULL)
+    if ((device == NULL) || (signature == NULL) || (other_data == NULL) || (is_verified == NULL))
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     status = calib_verify(device, VERIFY_MODE_VALIDATE, key_id, signature, NULL, other_data, NULL);
@@ -457,9 +448,9 @@ ATCA_STATUS calib_verify_invalidate(ATCADevice device, uint16_t key_id, const ui
 {
     ATCA_STATUS status = ATCA_SUCCESS;
 
-    if (signature == NULL || other_data == NULL || is_verified == NULL)
+    if ((device == NULL) || (signature == NULL) || (other_data == NULL) || (is_verified == NULL))
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     status = calib_verify(device, VERIFY_MODE_INVALIDATE, key_id, signature, NULL, other_data, NULL);

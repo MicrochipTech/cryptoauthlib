@@ -6,8 +6,8 @@
  * public keys, and for digest calculations involving public keys.
  *
  * \note List of devices that support this command - ATECC108A, ATECC508A,
- *       ATECC608A. There are differences in the modes that they support. Refer
- *       to device datasheets for full details.
+ *       ATECC608A/B. There are differences in the modes that they support.
+ *       Refer to device datasheets for full details.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
@@ -54,11 +54,18 @@
 ATCA_STATUS calib_genkey_base(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* other_data, uint8_t* public_key)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     do
     {
+        if (device == NULL)
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
+        }
+
+        ca_cmd = device->mCommands;
         // Build GenKey command
         packet.param1 = mode;
         packet.param2 = key_id;
@@ -69,11 +76,13 @@ ATCA_STATUS calib_genkey_base(ATCADevice device, uint8_t mode, uint16_t key_id, 
 
         if ((status = atGenKey(ca_cmd, &packet)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atGenKey - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_genkey_base - execution failed");
             break;
         }
 
@@ -85,7 +94,7 @@ ATCA_STATUS calib_genkey_base(ATCADevice device, uint8_t mode, uint16_t key_id, 
             }
             else
             {
-                status = ATCA_RX_FAIL;
+                status = ATCA_TRACE(ATCA_RX_FAIL, "Received response failure");
             }
         }
     }

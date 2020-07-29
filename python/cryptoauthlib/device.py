@@ -198,8 +198,8 @@ class Atecc508aConfig(AtcaStructure):
     _pack_ = 1
 
 
-class Atecc608aConfig(AtcaStructure):
-    """ATECC608A Config Zone Definition """
+class Atecc608Config(AtcaStructure):
+    """ATECC608 Config Zone Definition """
     _fields_ = [('SN03', c_uint8*4),
                 ('RevNum', c_uint8*4),
                 ('SN48', c_uint8*5),
@@ -230,4 +230,4 @@ class Atecc608aConfig(AtcaStructure):
     _pack_ = 1
 
 
-__all__ = ['Atsha204aConfig', 'Atecc508aConfig', 'Atecc608aConfig']
+__all__ = ['Atsha204aConfig', 'Atecc508aConfig', 'Atecc608Config']

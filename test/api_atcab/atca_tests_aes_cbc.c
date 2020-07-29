@@ -52,7 +52,7 @@ const uint8_t g_ciphertext_cbc[1][64] = {
     }
 };
 
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
 
 TEST(atca_cmd_basic_test, aes_cbc_encrypt_block)
 {
@@ -178,9 +178,9 @@ TEST(atca_cmd_basic_test, aes_cbc_decrypt_block_simple)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info aes_cbc_basic_test_info[] =
 {
-#ifdef ATCA_ATECC608A_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_block),            DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_block),            DEVICE_MASK(ATECC608A) },
+#ifdef ATCA_ATECC608_SUPPORT
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_block),            DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_block),            DEVICE_MASK(ATECC608) },
 #endif
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_block_simple),     DEVICE_MASK(TA100) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_block_simple),     DEVICE_MASK(TA100) },

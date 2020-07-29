@@ -73,9 +73,9 @@ ATECC508A_DEVICE_CONFIG = {
                   0x003C, 0x003C, 0x003C, 0x0030]
 }
 
-# ATECC608A Test Data
-ATECC608A_SER_NUM_VECTOR = bytearray.fromhex('01 23 72 E8 B9 63 B2 D3 EE')
-ATECC608A_DEVICE_CONFIG_VECTOR = bytearray.fromhex(
+# ATECC608 Test Data
+ATECC608_SER_NUM_VECTOR = bytearray.fromhex('01 23 72 E8 B9 63 B2 D3 EE')
+ATECC608_DEVICE_CONFIG_VECTOR = bytearray.fromhex(
     '01 23 72 E8 00 00 60 02 B9 63 B2 D3 EE 01 2D 00'
     'B0 00 55 01 8F 20 C4 44 87 20 87 20 8F 0F C4 36'
     '9F 0F 82 20 0F 0F C4 44 0F 0F 0F 0F 0F 0F 0F 0F'
@@ -84,7 +84,7 @@ ATECC608A_DEVICE_CONFIG_VECTOR = bytearray.fromhex(
     '00 00 00 00 00 00 00 00 FF FF 06 40 00 00 00 00'
     '33 00 1C 00 13 00 13 00 7C 00 1C 00 3C 00 33 00'
     '3C 00 3C 00 3C 00 30 00 3C 00 3C 00 3C 00 30 00')
-ATECC608A_DEVICE_CONFIG = {
+ATECC608_DEVICE_CONFIG = {
     'SN03': [0x01, 0x23, 0x72, 0xE8],
     'RevNum': [0x00, 0x00, 0x60, 0x02],
     'SN48': [0xB9, 0x63, 0xB2, 0xD3, 0xEE],
@@ -115,7 +115,7 @@ ATECC608A_DEVICE_CONFIG = {
 @pytest.mark.parametrize("config,size", [
     pytest.param(Atsha204aConfig, len(ATSHA204A_DEVICE_CONFIG_VECTOR), id='ATSHA204A'),
     pytest.param(Atecc508aConfig, len(ATECC508A_DEVICE_CONFIG_VECTOR), id='ATECC508A'),
-    pytest.param(Atecc608aConfig, len(ATECC608A_DEVICE_CONFIG_VECTOR), id='ATECC608A')
+    pytest.param(Atecc608Config, len(ATECC608_DEVICE_CONFIG_VECTOR), id='ATECC608')
 ])
 def test_device_config_size(config, size):
     assert ctypes.sizeof(config) == size
@@ -124,7 +124,7 @@ def test_device_config_size(config, size):
 @pytest.mark.parametrize("config,definition,vector", [
     pytest.param(Atsha204aConfig, ATSHA204A_DEVICE_CONFIG, ATSHA204A_DEVICE_CONFIG_VECTOR, id='ATSHA204A'),
     pytest.param(Atecc508aConfig, ATECC508A_DEVICE_CONFIG, ATECC508A_DEVICE_CONFIG_VECTOR, id='ATECC508A'),
-    pytest.param(Atecc608aConfig, ATECC608A_DEVICE_CONFIG, ATECC608A_DEVICE_CONFIG_VECTOR, id='ATECC608A')
+    pytest.param(Atecc608Config, ATECC608_DEVICE_CONFIG, ATECC608_DEVICE_CONFIG_VECTOR, id='ATECC608')
 ])
 def test_device_config_from_def(config, definition, vector):
     assert ctypes_to_bytes(config(**definition)) == bytes(vector)
@@ -133,7 +133,7 @@ def test_device_config_from_def(config, definition, vector):
 @pytest.mark.parametrize("config,vector", [
     pytest.param(Atsha204aConfig, ATSHA204A_DEVICE_CONFIG_VECTOR, id='ATSHA204A'),
     pytest.param(Atecc508aConfig, ATECC508A_DEVICE_CONFIG_VECTOR, id='ATECC508A'),
-    pytest.param(Atecc608aConfig, ATECC608A_DEVICE_CONFIG_VECTOR, id='ATECC608A')
+    pytest.param(Atecc608Config, ATECC608_DEVICE_CONFIG_VECTOR, id='ATECC608')
 ])
 def test_device_config_from_vector(config, vector):
     assert ctypes_to_bytes(config.from_buffer(vector)) == bytes(vector)
@@ -141,7 +141,7 @@ def test_device_config_from_vector(config, vector):
 @pytest.mark.parametrize("config,definition,vector", [
     pytest.param(Atsha204aConfig, ATSHA204A_DEVICE_CONFIG, ATSHA204A_SER_NUM_VECTOR, id='ATSHA204A'),
     pytest.param(Atecc508aConfig, ATECC508A_DEVICE_CONFIG, ATECC508A_SER_NUM_VECTOR, id='ATECC508A'),
-    pytest.param(Atecc608aConfig, ATECC608A_DEVICE_CONFIG, ATECC608A_SER_NUM_VECTOR, id='ATECC608A')
+    pytest.param(Atecc608Config, ATECC608_DEVICE_CONFIG, ATECC608_SER_NUM_VECTOR, id='ATECC608')
 ])
 def test_device_serial_number_from_def(config, definition, vector):
     config = config(**definition)

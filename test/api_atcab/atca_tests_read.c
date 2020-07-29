@@ -101,8 +101,8 @@ TEST(atca_cmd_basic_test, read_config_zone)
         break;
 #endif
 
-#ifdef ATCA_ATECC608A_SUPPORT
-    case ATECC608A:
+#ifdef ATCA_ATECC608_SUPPORT
+    case ATECC608:
         // Compare I2C_Address through SlotConfig
         TEST_ASSERT_EQUAL_MEMORY(&test_ecc608_configdata[16], &config_data[16], 52 - 16);
 

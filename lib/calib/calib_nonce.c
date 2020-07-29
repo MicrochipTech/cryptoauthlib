@@ -7,7 +7,7 @@
  * from the system.
  *
  * \note List of devices that support this command - ATSHA204A, ATECC108A,
- *       ATECC508A, and ATECC608A. There are differences in the modes that they
+ *       ATECC508A, and ATECC608A/B. There are differences in the modes that they
  *       support. Refer to device datasheets for full details.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -45,7 +45,7 @@
  *                          nonce calculation mode (bit 15).
  * \param[in]  num_in       Input value to either be included in the nonce
  *                          calculation in random modes (20 bytes) or to be
- *                          written directly (32 bytes or 64 bytes(ATECC608A))
+ *                          written directly (32 bytes or 64 bytes(ATECC608))
  *                          in pass-through mode.
  * \param[out] rand_out     If using a random mode, the internally generated
  *                          32-byte random number that was used in the nonce
@@ -57,12 +57,19 @@
 ATCA_STATUS calib_nonce_base(ATCADevice device, uint8_t mode, uint16_t zero, const uint8_t *num_in, uint8_t* rand_out)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t nonce_mode = mode & NONCE_MODE_MASK;
 
     do
     {
+        if (device == NULL)
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
+        }
+
+        ca_cmd = device->mCommands;
         // build a nonce command
         packet.param1 = mode;
         packet.param2 = zero;
@@ -85,16 +92,18 @@ ATCA_STATUS calib_nonce_base(ATCADevice device, uint8_t mode, uint16_t zero, con
         }
         else
         {
-            return ATCA_BAD_PARAM;
+            return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid nonce mode received");
         }
 
         if ((status = atNonce(ca_cmd, &packet)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atNonce - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_nonce_base - execution failed");
             break;
         }
 
@@ -127,7 +136,7 @@ ATCA_STATUS calib_nonce(ATCADevice device, const uint8_t *num_in)
 /** \brief Execute a Nonce command in pass-through mode to load one of the
  *          device's internal buffers with a fixed value.
  *
- * For the ATECC608A, available targets are TempKey (32 or 64 bytes), Message
+ * For the ATECC608, available targets are TempKey (32 or 64 bytes), Message
  * Digest Buffer (32 or 64 bytes), or the Alternate Key Buffer (32 bytes). For
  * all other devices, only TempKey (32 bytes) is available.
  *
@@ -156,7 +165,7 @@ ATCA_STATUS calib_nonce_load(ATCADevice device, uint8_t target, const uint8_t *n
     }
     else
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid size received");
     }
 
     return calib_nonce_base(device, mode, 0, num_in, NULL);

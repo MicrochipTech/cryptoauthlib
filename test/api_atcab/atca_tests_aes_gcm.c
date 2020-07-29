@@ -31,7 +31,7 @@
 #include "atca_test.h"
 #include "atca_basic.h"
 
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
 
 //#include "calib/calib_aes_gcm.h"
 #include "vectors/aes_gcm_nist_vectors.h"
@@ -659,11 +659,11 @@ TEST(atca_cmd_basic_test, aes_gcm_decrypt_cavp_vectors)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info aes_gcm_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_gcm_nist_vectors),             DEVICE_MASK(ATECC608A)  },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_gcm_encrypt_partial_blocks),   DEVICE_MASK(ATECC608A)  },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_gcm_decrypt_partial_blocks),   DEVICE_MASK(ATECC608A)  },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_gcm_encrypt_cavp_vectors),     DEVICE_MASK(ATECC608A)  },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_gcm_decrypt_cavp_vectors),     DEVICE_MASK(ATECC608A)  },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_gcm_nist_vectors),             DEVICE_MASK(ATECC608)  },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_gcm_encrypt_partial_blocks),   DEVICE_MASK(ATECC608)  },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_gcm_decrypt_partial_blocks),   DEVICE_MASK(ATECC608)  },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_gcm_encrypt_cavp_vectors),     DEVICE_MASK(ATECC608)  },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_gcm_decrypt_cavp_vectors),     DEVICE_MASK(ATECC608)  },
     { (fp_test_case)NULL,                     (uint8_t)0 },             /* Array Termination element*/
 };
 

@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include "atca_test.h"
 
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
 const uint8_t sboot_dummy_image[] =
 { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f,
   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f,
@@ -177,10 +177,10 @@ TEST(atca_cmd_basic_test, sboot_digest_fullstore_encrypted)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info sboot_basic_test_info[] =
 {
-#ifdef ATCA_ATECC608A_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sboot_digest),                     DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sboot_digest_full_encrypted),      DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sboot_digest_fullstore_encrypted), DEVICE_MASK(ATECC608A) },
+#ifdef ATCA_ATECC608_SUPPORT
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sboot_digest),                     DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sboot_digest_full_encrypted),      DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sboot_digest_fullstore_encrypted), DEVICE_MASK(ATECC608) },
 #endif
     { (fp_test_case)NULL,                     (uint8_t)0 },                      /* Array Termination element*/
 };

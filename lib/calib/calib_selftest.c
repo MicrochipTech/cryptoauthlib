@@ -5,8 +5,8 @@
  * The SelfTest command performs a test of one or more of the cryptographic
  * engines within the device.
  *
- * \note List of devices that support this command - ATECC608A. Refer to device
- *       datasheet for full details.
+ * \note List of devices that support this command - ATECC608A/B. Refer to
+ *       device datasheet for full details.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
@@ -34,7 +34,7 @@
 #include "cryptoauthlib.h"
 
 /** \brief Executes the SelfTest command, which performs a test of one or more
- *          of the cryptographic engines within the ATECC608A chip.
+ *          of the cryptographic engines within the ATECC608 chip.
  *
  *  \param[in]  device  Device context pointer
  *  \param[in]  mode    Functions to test. Can be a bit field combining any
@@ -50,18 +50,26 @@
 ATCA_STATUS calib_selftest(ATCADevice device, uint8_t mode, uint16_t param2, uint8_t* result)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t response = 0;
 
     do
     {
+        if (device == NULL)
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
+        }
+
+        ca_cmd = device->mCommands;
         // build a SelfTest command
         packet.param1 = mode;
         packet.param2 = param2;
 
         if ((status = atSelfTest(ca_cmd, &packet)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atSelfTest - failed");
             break;
         }
 

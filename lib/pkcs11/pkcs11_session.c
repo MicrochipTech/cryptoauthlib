@@ -51,6 +51,7 @@ static pkcs11_session_ctx_ptr pkcs11_session_cache[PKCS11_MAX_SESSIONS_ALLOWED];
 static pkcs11_session_ctx_ptr pkcs11_allocate_session_context(void)
 {
     pkcs11_session_ctx_ptr rv = NULL_PTR;
+
 #ifdef ATCA_NO_HEAP
     CK_ULONG i;
     for (i = 0; i < PKCS11_MAX_SESSIONS_ALLOWED; i++)
@@ -114,6 +115,7 @@ pkcs11_session_ctx_ptr pkcs11_get_session_context(CK_SESSION_HANDLE hSession)
 static CK_RV pkcs11_session_free_session_context(pkcs11_session_ctx_ptr session_ctx)
 {
     CK_RV rv = CKR_ARGUMENTS_BAD;
+
     if (session_ctx)
     {
         (void)pkcs11_util_memset(session_ctx, sizeof(pkcs11_session_ctx), 0, sizeof(pkcs11_session_ctx));

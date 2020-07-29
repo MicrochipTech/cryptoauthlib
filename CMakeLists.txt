@@ -2,10 +2,10 @@ cmake_minimum_required(VERSION 2.6.4)
 project (cryptoauthlib)
 
 # Set the current release version
-set(VERSION "3.2.0")
+set(VERSION "3.2.2")
 set(VERSION_MAJOR 3)
 set(VERSION_MINOR 2)
-set(VERSION_PATCH 0)
+set(VERSION_PATCH 2)
 
 # Build Options
 option(BUILD_TESTS "Create Test Application with library" OFF)

@@ -175,7 +175,7 @@ ATCA_STATUS atcah_nonce(struct atca_nonce_in_out *param)
             param->temp_key->no_mac_flag = 0;
             param->temp_key->valid = 1;
         }
-        else //In the case of ECC608A, passthrough message may be stored in message digest buffer/ Alternate Key buffer
+        else //In the case of ECC608, passthrough message may be stored in message digest buffer/ Alternate Key buffer
         {
 
             // Update TempKey flags
@@ -196,7 +196,7 @@ ATCA_STATUS atcah_nonce(struct atca_nonce_in_out *param)
 }
 
 /** \brief Decrypt data that's been encrypted by the IO protection key.
- *          The ECDH and KDF commands on the ATECC608A are the only ones that
+ *          The ECDH and KDF commands on the ATECC608 are the only ones that
  *          support this operation.
  *
  *    \param[in,out] param  Parameters required to perform the operation.

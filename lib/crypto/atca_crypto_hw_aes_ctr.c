@@ -5,8 +5,8 @@
  * The AES command supports 128-bit AES encryption or decryption of small
  * messages or data packets in ECB mode.
  *
- * \note List of devices that support this command - ATECC608A & TA100. Refer to device
- *       datasheet for full details.
+ * \note List of devices that support this command - ATECC608A, ATECC608B,
+ *       & TA100. Refer to device datasheet for full details.
  *
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -59,7 +59,7 @@ ATCA_STATUS atcab_aes_ctr_init_ext(ATCADevice device, atca_aes_ctr_ctx_t* ctx, u
 {
     if (ctx == NULL || iv == NULL || counter_size > ATCA_AES128_BLOCK_SIZE)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Either NULL pointer or invalid counter size received");
     }
     memset(ctx, 0, sizeof(*ctx));
     ctx->device = device;
@@ -123,7 +123,7 @@ ATCA_STATUS atcab_aes_ctr_init_rand_ext(ATCADevice device, atca_aes_ctr_ctx_t* c
 
     if (ctx == NULL || iv == NULL || counter_size > ATCA_AES128_BLOCK_SIZE)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Either NULL pointer or invalid counter size received");
     }
     memset(ctx, 0, sizeof(*ctx));
     ctx->device = device;
@@ -184,7 +184,7 @@ ATCA_STATUS atcab_aes_ctr_increment(atca_aes_ctr_ctx_t* ctx)
 
     if (ctx == NULL || ctx->counter_size > ATCA_AES128_BLOCK_SIZE)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Either NULL pointer or invalid counter size received");
     }
 
     // Increment the big-endian counter value
@@ -224,7 +224,7 @@ ATCA_STATUS atcab_aes_ctr_block(atca_aes_ctr_ctx_t* ctx, const uint8_t* input, u
 
     if (ctx == NULL || input == NULL || output == NULL)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     // Block encrypt of counter block (128 bits)

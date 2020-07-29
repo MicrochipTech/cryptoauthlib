@@ -7,7 +7,7 @@
  * creates a result key/digest/array. Three algorithms are currently supported:
  * PRF, HKDF and AES.
  *
- * \note List of devices that support this command - ATECC608A. Refer to device
+ * \note List of devices that support this command - ATECC608A/B. Refer to device
  *       datasheet for full details.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -64,17 +64,19 @@
 ATCA_STATUS calib_kdf(ATCADevice device, uint8_t mode, uint16_t key_id, const uint32_t details, const uint8_t* message, uint8_t* out_data, uint8_t* out_nonce)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint16_t out_data_size = 0;
 
     do
     {
-        if (message == NULL)
+        if ((device == NULL) || (message == NULL))
         {
-            return ATCA_BAD_PARAM;
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
         }
 
+        ca_cmd = device->mCommands;
         // Build the KDF command
         packet.param1 = mode;
         packet.param2 = key_id;
@@ -100,12 +102,14 @@ ATCA_STATUS calib_kdf(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
         // Build command
         if ((status = atKDF(ca_cmd, &packet)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atKDF - failed");
             break;
         }
 
         // Run command
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_kdf - execution failed");
             break;
         }
 

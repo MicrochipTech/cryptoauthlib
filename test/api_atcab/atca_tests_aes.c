@@ -65,7 +65,7 @@ const uint8_t g_ciphertext_ecb[4][64] = {
     }
 };
 
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
 
 TEST(atca_cmd_basic_test, aes_encrypt_key_tempkey)
 {
@@ -246,7 +246,7 @@ TEST(atca_cmd_basic_test, aes_decrypt_key_slot_simple)
 
 }
 
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
 TEST(atca_cmd_basic_test, aes_gfm)
 {
     ATCA_STATUS status;
@@ -268,7 +268,7 @@ TEST(atca_cmd_basic_test, aes_gfm)
 }
 #endif
 
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
 TEST(atca_cmd_basic_test, volatile_key_permit)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
@@ -372,18 +372,16 @@ TEST(atca_cmd_basic_test, volatile_key_permit)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info aes_basic_test_info[] =
 {
-#ifdef ATCA_ATECC608A_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, volatile_key_permit),              DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_encrypt_key_tempkey),          DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_decrypt_key_tempkey),          DEVICE_MASK(ATECC608A) },
+#ifdef ATCA_ATECC608_SUPPORT
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, volatile_key_permit),              DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_gfm),                          DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_encrypt_key_tempkey),          DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_decrypt_key_tempkey),          DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_encrypt_key_slot),             DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_decrypt_key_slot),             DEVICE_MASK(ATECC608) },
 #endif
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_encrypt_key_slot),             DEVICE_MASK(ATECC608A) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_encrypt_key_slot_simple),      DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_decrypt_key_slot),             DEVICE_MASK(ATECC608A) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_decrypt_key_slot_simple),      DEVICE_MASK(TA100) },
-#ifdef ATCA_ATECC608A_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_gfm),                          DEVICE_MASK(ATECC608A) },
-#endif
     /* Array Termination element*/
     { (fp_test_case)NULL,                     (uint8_t)0 },
 };

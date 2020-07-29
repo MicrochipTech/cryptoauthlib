@@ -33,7 +33,7 @@
 
 #include "vectors/aes_cmac_nist_vectors.h"
 
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
 TEST(atca_cmd_basic_test, aes_cmac)
 {
     ATCA_STATUS status;
@@ -87,7 +87,7 @@ TEST(atca_cmd_basic_test, aes_cmac_simple)
 
     for (key_block = 0; key_block < 4; key_block++)
     {
-         // Load AES keys into slot
+        // Load AES keys into slot
         status = atcab_write_bytes_zone(ATCA_ZONE_DATA, key_id, 0, &g_aes_keys[key_block][0], 16);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -108,8 +108,8 @@ TEST(atca_cmd_basic_test, aes_cmac_simple)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info aes_cmac_basic_test_info[] =
 {
-#ifdef ATCA_ATECC608A_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cmac),                         DEVICE_MASK(ATECC608A) },
+#ifdef ATCA_ATECC608_SUPPORT
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cmac),                         DEVICE_MASK(ATECC608) },
 #endif
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cmac_simple),                  DEVICE_MASK(TA100) },
     { (fp_test_case)NULL,                     (uint8_t)0 },             /* Array Termination element*/

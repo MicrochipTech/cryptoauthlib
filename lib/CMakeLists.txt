@@ -23,7 +23,7 @@ option(ATCA_ATSHA204A_SUPPORT "Include support for ATSHA204A device" ON)
 option(ATCA_ATSHA206A_SUPPORT "Include support for ATSHA206A device" ON)
 option(ATCA_ATECC108A_SUPPORT "Include support for ATECC108A device" ON)
 option(ATCA_ATECC508A_SUPPORT "Include support for ATECC508A device" ON)
-option(ATCA_ATECC608A_SUPPORT "Include support for ATECC608A device" ON)
+option(ATCA_ATECC608_SUPPORT "Include support for ATECC608 device" ON)
 option(ATCA_TA100_SUPPORT "Include support for TA100 device" OFF)
 cmake_dependent_option(ATCA_TA100_AES_AUTH_SUPPORT "Include Encrypted (GCM) and CMAC Auth session support" ON "ATCA_TA100_SUPPORT" OFF)
 option(ATCA_BUILD_SHARED_LIBS "Build CryptoAuthLib as shared library" ON)
@@ -102,7 +102,7 @@ execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/${DEPENDENCY_DIR}/wolfssl_downloader/)
 execute_process(COMMAND ${CMAKE_COMMAND} --build .
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/${DEPENDENCY_DIR}/wolfssl_downloader/)
-        
+
 #file(GLOB WOLFSSL_LIB_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../third_party/wolfssl/wolfcrypt/src/*.c")
 
 set(WOLFSSL_LIB_SRC ../third_party/wolfssl/wolfcrypt/src/aes.c
@@ -134,7 +134,8 @@ find_package(OpenSSL REQUIRED)
 endif(ATCA_OPENSSL)
 
 if (ATCA_ATSHA204A_SUPPORT OR ATCA_ATSHA206A_SUPPORT OR
-    ATCA_ATECC108A_SUPPORT OR ATCA_ATECC508A_SUPPORT OR ATCA_ATECC608A_SUPPORT)
+    ATCA_ATECC108A_SUPPORT OR ATCA_ATECC508A_SUPPORT OR
+    ATCA_ATECC608_SUPPORT)
 set(LIB_SRC ${LIB_SRC} ${CALIB_SRC} ${HOST_SRC})
 endif()
 

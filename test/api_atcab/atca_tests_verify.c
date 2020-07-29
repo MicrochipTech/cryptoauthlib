@@ -61,7 +61,7 @@ TEST(atca_cmd_basic_test, verify_extern)
     TEST_ASSERT(!is_verified);
 }
 
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
 TEST(atca_cmd_basic_test, verify_extern_mac)
 {
     ATCA_STATUS status;
@@ -152,7 +152,7 @@ TEST(atca_cmd_basic_test, verify_stored)
     TEST_ASSERT(!is_verified);
 }
 
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
 TEST(atca_cmd_basic_test, verify_stored_mac)
 {
     ATCA_STATUS status;
@@ -496,16 +496,16 @@ TEST(atca_cmd_basic_test, verify_invalidate)
 t_test_case_info verify_basic_test_info[] =
 {
     { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_extern),     DEVICE_MASK_ECC        | DEVICE_MASK(TA100)     },
-#ifdef ATCA_ATECC608A_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_extern_mac), DEVICE_MASK(ATECC608A)                          },
+#ifdef ATCA_ATECC608_SUPPORT
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_extern_mac), DEVICE_MASK(ATECC608)                          },
 #endif
     { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_stored),     DEVICE_MASK_ECC        | DEVICE_MASK(TA100)     },
-#ifdef ATCA_ATECC608A_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_stored_mac), DEVICE_MASK(ATECC608A)                          },
+#ifdef ATCA_ATECC608_SUPPORT
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_stored_mac), DEVICE_MASK(ATECC608)                          },
 #endif
 #ifdef ATCA_ECC_SUPPORT
     { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_validate),   DEVICE_MASK_ECC                                 },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_invalidate), DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_invalidate), DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
 #endif
     { (fp_test_case)NULL,                     (uint8_t)0 },       /* Array Termination element*/
 };

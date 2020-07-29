@@ -46,8 +46,13 @@
 #define ATCA_SHA_SUPPORT    1
 #endif
 
+/* Make sure all configuration options work */
+#if defined(ATCA_ATECC608A_SUPPORT) && !defined(ATCA_ATECC608_SUPPORT)
+#define ATCA_ATECC608_SUPPORT
+#endif
+
 #if defined(ATCA_ATECC108A_SUPPORT) || defined(ATCA_ATECC508A_SUPPORT) \
-    || defined(ATCA_ATECC608A_SUPPORT)
+    || defined(ATCA_ATECC608_SUPPORT)
 #define ATCA_ECC_SUPPORT    1
 #endif
 

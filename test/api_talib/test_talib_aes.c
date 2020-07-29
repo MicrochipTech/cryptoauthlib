@@ -31,8 +31,10 @@ TEST(atca_cmd_basic_test, talib_aes_gcm_nist_vectors)
     {
 
         //Skip the test case "Test case 5" as the IV size is small.
-        if(test_index == 4)
+        if (test_index == 4)
+        {
             continue;
+        }
 
         status = atca_test_config_get_id(TEST_TYPE_AES, &key_id);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
@@ -112,8 +114,8 @@ TEST(atca_cmd_basic_test, aes_gcm_test_implicit_iv)
                                              TA_PROP_SYMM_KEY_USAGE_MAC);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    status = talib_create_hmac_element_with_handle(atcab_get_device(), TA_MAC_COMMAND_HMAC_SIZE, key_id, 
-												   &attr_hmac_symm_handle);
+    status = talib_create_hmac_element_with_handle(atcab_get_device(), TA_MAC_COMMAND_HMAC_SIZE, key_id,
+                                                   &attr_hmac_symm_handle);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Copying the AES key and 4 byte to the local buffer
@@ -137,7 +139,7 @@ TEST(atca_cmd_basic_test, aes_gcm_test_implicit_iv)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     //Verify ciphertext with expected data
-     TEST_ASSERT_EQUAL_MEMORY(gcm_test_cases[test_index].ciphertext, ciphertext, gcm_test_cases[test_index].text_size);
+    TEST_ASSERT_EQUAL_MEMORY(gcm_test_cases[test_index].ciphertext, ciphertext, gcm_test_cases[test_index].text_size);
 
     //Verify calculated tag
     TEST_ASSERT_EQUAL_MEMORY(gcm_test_cases[test_index].tag, tag, sizeof(tag));

@@ -29,7 +29,7 @@
 
 #define AES_CONFIG_ENABLE_BIT_MASK   (uint8_t)0x01
 
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
 
 TEST(atca_cmd_basic_test, kdf_prf_output)
 {
@@ -232,7 +232,7 @@ TEST(atca_cmd_basic_test, kdf_aes_output_encrypted)
 
 
 
-    if (gCfg->devtype != ATECC608A)
+    if (!(ATECC608 == gCfg->devtype))
     {
         TEST_IGNORE();
     }
@@ -416,12 +416,12 @@ TEST(atca_cmd_basic_test, kdf_hkdf_output_encrypted)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info kdf_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_prf_output),            DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_prf_output_encrypted),  DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_aes_output),            DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_aes_output_encrypted),  DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_hkdf_output),           DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_hkdf_output_encrypted), DEVICE_MASK(ATECC608A) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_prf_output),            DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_prf_output_encrypted),  DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_aes_output),            DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_aes_output_encrypted),  DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_hkdf_output),           DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_hkdf_output_encrypted), DEVICE_MASK(ATECC608) },
     { (fp_test_case)NULL,                     (uint8_t)0 },               /* Array Termination element*/
 };
 // *INDENT-ON*

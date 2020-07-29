@@ -73,8 +73,8 @@ const char * kit_id_from_devtype(ATCADeviceType devtype)
         return "ECC108A";
     case ATECC508A:
         return "ECC508A";
-    case ATECC608A:
-        return "ECC608A";
+    case ATECC608:
+        return "ECC608";
     case ATSHA206A:
         return "SHA206A";
     case TA100:
@@ -167,7 +167,7 @@ ATCA_STATUS kit_init(ATCAIface iface)
         }
 
         /*Selects the first device type if both device interface and device identity is not defined*/
-        if (iface->mIfaceCFG->atcahid.dev_interface == ATCA_KIT_AUTO_IFACE && iface->mIfaceCFG->atcahid.dev_identity == 0 && (strncmp(device_match, dev_type, 6) == 0))
+        if (iface->mIfaceCFG->atcahid.dev_interface == ATCA_KIT_AUTO_IFACE && iface->mIfaceCFG->atcahid.dev_identity == 0 && (strncmp(device_match, dev_type, 3) == 0))
         {
 
             txlen = snprintf(txbuf, sizeof(txbuf) - 1, kit_device_select, device_match[0], address);

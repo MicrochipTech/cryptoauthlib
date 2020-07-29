@@ -37,12 +37,13 @@ TEST(atca_cmd_basic_test, ecdh)
     uint8_t read_key[ATCA_KEY_SIZE];
     uint16_t key_id_alice, key_id_bob;
     uint8_t frag[4] = { 0x44, 0x44, 0x44, 0x44 };
-	uint8_t host_num_in[NONCE_NUMIN_SIZE] = { 0 };
+    uint8_t host_num_in[NONCE_NUMIN_SIZE] = { 0 };
+
 #ifdef ATCA_PRINTF
     char displaystr[256];
     size_t displen = sizeof(displaystr);
 #endif
-    
+
 
     test_assert_data_is_locked();
 
@@ -123,9 +124,10 @@ TEST(atca_cmd_basic_test, ecdh_simple)
     uint8_t pms_alice[ATCA_ECCP256_KEY_SIZE], pms_bob[ATCA_ECCP256_KEY_SIZE];
     uint16_t key_id_alice, key_id_bob;
     uint8_t frag[4] = { 0x44, 0x44, 0x44, 0x44 };
-#ifdef ATCA_PRINTF 
+
+#ifdef ATCA_PRINTF
     char displaystr[256];
-	size_t displen = sizeof(displaystr);
+    size_t displen = sizeof(displaystr);
 #endif
 
     test_assert_data_is_locked();
@@ -162,7 +164,7 @@ TEST(atca_cmd_basic_test, ecdh_simple)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     printf("bob slot %04x pubkey:\r\n%s\r\n", key_id_bob, displaystr);
 #endif
- 
+
     status = atcab_ecdh(key_id_alice, pub_bob, pms_alice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_NOT_EQUAL(0, memcmp(pub_alice, frag, sizeof(frag)));
@@ -188,7 +190,7 @@ TEST(atca_cmd_basic_test, ecdh_simple)
     TEST_ASSERT_EQUAL_MEMORY(pms_alice, pms_bob, sizeof(pms_alice));
 }
 
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
 TEST(atca_cmd_basic_test, ecdh_protection_key)
 {
     ATCA_STATUS status;
@@ -197,6 +199,7 @@ TEST(atca_cmd_basic_test, ecdh_protection_key)
     uint8_t key_id_bob = 2;
     uint16_t tempkey_alice = 0xFFFF;
     uint8_t frag[4] = { 0x44, 0x44, 0x44, 0x44 };
+
 #ifdef ATCA_PRINTF
     char displaystr[256];
     size_t displen = sizeof(displaystr);
@@ -264,13 +267,13 @@ TEST(atca_cmd_basic_test, ecdh_protection_key)
 t_test_case_info ecdh_basic_test_info[] =
 {
 #ifdef ATCA_ECC_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, ecdh),                DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, ecdh),                DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
 #endif
 #if defined(ATCA_ECC_SUPPORT) || defined(ATCA_TA100_SUPPORT)
     { REGISTER_TEST_CASE(atca_cmd_basic_test, ecdh_simple),                DEVICE_MASK(TA100) },
 #endif
-#ifdef ATCA_ATECC608A_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, ecdh_protection_key),                          DEVICE_MASK(ATECC608A) },
+#ifdef ATCA_ATECC608_SUPPORT
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, ecdh_protection_key),                          DEVICE_MASK(ATECC608) },
 #endif
     { (fp_test_case)NULL,                     (uint8_t)0 },         /* Array Termination element*/
 };

@@ -8,7 +8,7 @@
  * to being sent to the device
  *
  * \note List of devices that support this command - ATSHA204A, ATECC108A,
- *       ATECC508A, and ATECC608A. There are differences in the modes that they
+ *       ATECC508A, and ATECC608A/B. There are differences in the modes that they
  *       support. Refer to device datasheets for full details.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -59,16 +59,17 @@
 ATCA_STATUS calib_write(ATCADevice device, uint8_t zone, uint16_t address, const uint8_t *value, const uint8_t *mac)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
-    if (value == NULL)
+    if ((device == NULL) || (value == NULL))
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     do
     {
+        ca_cmd = device->mCommands;
         // Build the write command
         packet.param1 = zone;
         packet.param2 = address;
@@ -90,11 +91,13 @@ ATCA_STATUS calib_write(ATCADevice device, uint8_t zone, uint16_t address, const
 
         if ((status = atWrite(ca_cmd, &packet, mac && (zone & ATCA_ZONE_READWRITE_32))) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atWrite - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_write - execution failed");
             break;
         }
 
@@ -127,12 +130,12 @@ ATCA_STATUS calib_write_zone(ATCADevice device, uint8_t zone, uint16_t slot, uin
     // Check the input parameters
     if (data == NULL)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     if (len != 4 && len != 32)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid length received");
     }
 
     do
@@ -140,6 +143,7 @@ ATCA_STATUS calib_write_zone(ATCADevice device, uint8_t zone, uint16_t slot, uin
         // The get address function checks the remaining variables
         if ((status = calib_get_addr(zone, slot, block, offset, &addr)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_get_addr - failed");
             break;
         }
 
@@ -203,13 +207,14 @@ ATCA_STATUS calib_write_enc(ATCADevice device, uint16_t key_id, uint8_t block, c
         // Verify inputs parameters
         if (data == NULL || enc_key == NULL)
         {
-            status = ATCA_BAD_PARAM;
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             break;
         }
 
         // Read the device SN
         if ((status = calib_read_zone(device, ATCA_ZONE_CONFIG, 0, 0, 0, serial_num, 32)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_read_zone - failed");
             break;
         }
         // Make the SN continuous by moving SN[4:8] right after SN[0:3]
@@ -322,7 +327,7 @@ ATCA_STATUS calib_write_config_zone(ATCADevice device, const uint8_t* config_dat
 
     if (config_data == NULL)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     do
@@ -330,23 +335,27 @@ ATCA_STATUS calib_write_config_zone(ATCADevice device, const uint8_t* config_dat
         // Get config zone size for the device
         if (ATCA_SUCCESS != (status = calib_get_zone_size(device, ATCA_ZONE_CONFIG, 0, &config_size)))
         {
+            ATCA_TRACE(status, "calib_get_zone_size - failed");
             break;
         }
 
         // Write config zone excluding UserExtra and Selector
         if (ATCA_SUCCESS != (status = calib_write_bytes_zone(device, ATCA_ZONE_CONFIG, 0, 16, &config_data[16], config_size - 16)))
         {
+            ATCA_TRACE(status, "calib_write_bytes_zone - failed");
             break;
         }
 
         // Write the UserExtra and Selector. This may fail if either value is already non-zero.
         if (ATCA_SUCCESS != (status = calib_updateextra(device, UPDATE_MODE_USER_EXTRA, config_data[84])))
         {
+            ATCA_TRACE(status, "calib_updateextra - failed");
             break;
         }
 
         if (ATCA_SUCCESS != (status = calib_updateextra(device, UPDATE_MODE_SELECTOR, config_data[85])))
         {
+            ATCA_TRACE(status, "calib_updateextra - failed");
             break;
         }
     }
@@ -376,7 +385,7 @@ ATCA_STATUS calib_write_pubkey(ATCADevice device, uint16_t slot, const uint8_t *
     // Check the pointers
     if (public_key == NULL)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     // The 64 byte P256 public key gets written to a 72 byte slot in the following pattern
@@ -393,6 +402,7 @@ ATCA_STATUS calib_write_pubkey(ATCADevice device, uint16_t slot, const uint8_t *
     {
         if (ATCA_SUCCESS != (status = calib_write_zone(device, ATCA_ZONE_DATA, slot, block, 0, &public_key_formatted[ATCA_BLOCK_SIZE * block], ATCA_BLOCK_SIZE)))
         {
+            ATCA_TRACE(status, "calib_write_zone - failed");
             break;
         }
     }
@@ -431,11 +441,11 @@ ATCA_STATUS calib_write_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slo
 
     if (zone != ATCA_ZONE_CONFIG && zone != ATCA_ZONE_OTP && zone != ATCA_ZONE_DATA)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid zone received");
     }
     if (zone == ATCA_ZONE_DATA && slot > 15)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid slot received");
     }
     if (length == 0)
     {
@@ -443,22 +453,23 @@ ATCA_STATUS calib_write_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slo
     }
     if (data == NULL)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
     if (offset_bytes % ATCA_WORD_SIZE != 0 || length % ATCA_WORD_SIZE != 0)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Either Invalid length or offset received");
     }
 
     do
     {
         if (ATCA_SUCCESS != (status = calib_get_zone_size(device, zone, slot, &zone_size)))
         {
+            ATCA_TRACE(status, "calib_get_zone_size - failed");
             break;
         }
         if (offset_bytes + length > zone_size)
         {
-            return ATCA_BAD_PARAM;
+            return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid parameter received");
         }
 
         cur_block = offset_bytes / ATCA_BLOCK_SIZE;
@@ -471,6 +482,7 @@ ATCA_STATUS calib_write_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slo
             {
                 if (ATCA_SUCCESS != (status = calib_write_zone(device, zone, slot, (uint8_t)cur_block, 0, &data[data_idx], ATCA_BLOCK_SIZE)))
                 {
+                    ATCA_TRACE(status, "calib_write_zone - failed");
                     break;
                 }
                 data_idx += ATCA_BLOCK_SIZE;
@@ -483,6 +495,7 @@ ATCA_STATUS calib_write_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slo
                 {
                     if (ATCA_SUCCESS != (status = calib_write_zone(device, zone, slot, (uint8_t)cur_block, (uint8_t)cur_word, &data[data_idx], ATCA_WORD_SIZE)))
                     {
+                        ATCA_TRACE(status, "calib_write_zone - failed");
                         break;
                     }
                 }
@@ -523,7 +536,7 @@ ATCA_STATUS calib_write_config_counter(ATCADevice device, uint16_t counter_id, u
 
     if (counter_id > 1 || counter_value > COUNTER_MAX_VALUE)
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Either invalid counter id or counter value received");
     }
 
     lin_a = 0xFFFF >> (counter_value % 32);

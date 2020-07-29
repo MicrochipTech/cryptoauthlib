@@ -7,7 +7,7 @@
  * individual slots read-only regardless of configuration.
  *
  * \note List of devices that support this command - ATSHA204A, ATECC108A,
- *       ATECC508A, ATECC608A. There are differences in the modes that they
+ *       ATECC508A, ATECC608A/B. There are differences in the modes that they
  *       support. Refer to device datasheets for full details.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -50,9 +50,15 @@
 ATCA_STATUS calib_lock(ATCADevice device, uint8_t mode, uint16_t summary_crc)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
+    if (device == NULL)
+    {
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+    }
+
+    ca_cmd = device->mCommands;
     // build command for lock zone and send
     memset(&packet, 0, sizeof(packet));
     packet.param1 = mode;
@@ -62,11 +68,13 @@ ATCA_STATUS calib_lock(ATCADevice device, uint8_t mode, uint16_t summary_crc)
     {
         if ((status = atLock(ca_cmd, &packet)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atLock - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_lock - execution failed");
             break;
         }
 

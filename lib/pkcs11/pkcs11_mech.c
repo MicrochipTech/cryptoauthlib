@@ -285,7 +285,7 @@ CK_RV pkcs11_mech_get_list(CK_SLOT_ID slotID, CK_MECHANISM_TYPE_PTR pMechanismLi
         mech_cnt = TABLE_SIZE(pkcs11_mech_list_ecc508);
         mech_list_ptr = pkcs11_mech_list_ecc508;
         break;
-    case ATECC608A:
+    case ATECC608:
         mech_cnt = TABLE_SIZE(pkcs11_mech_list_ecc608);
         mech_list_ptr = pkcs11_mech_list_ecc608;
         break;
@@ -342,7 +342,7 @@ CK_RV pkcs_mech_get_info(CK_SLOT_ID slotID, CK_MECHANISM_TYPE type, CK_MECHANISM
     case ATECC508A:
         mech_info_ptr = pkcs11_mech_find_info(pkcs11_mech_list_ecc508, TABLE_SIZE(pkcs11_mech_list_ecc508), type);
         break;
-    case ATECC608A:
+    case ATECC608:
         mech_info_ptr = pkcs11_mech_find_info(pkcs11_mech_list_ecc608, TABLE_SIZE(pkcs11_mech_list_ecc608), type);
         break;
     default:

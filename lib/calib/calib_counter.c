@@ -5,7 +5,7 @@
  * The Counter command reads or increments the binary count value for one of the
  * two monotonic counters
  *
- * \note List of devices that support this command -  ATECC508A and ATECC608A.
+ * \note List of devices that support this command -  ATECC508A and ATECC608A/B.
  *       There are differences in the modes that they support. Refer to device
  *       datasheets for full details.
  *
@@ -44,27 +44,31 @@
 ATCA_STATUS calib_counter(ATCADevice device, uint8_t mode, uint16_t counter_id, uint32_t *counter_value)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     do
     {
-        if (counter_id > 1)
+        if ((device == NULL) || (counter_id > 1))
         {
-            return ATCA_BAD_PARAM;
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "Either NULL pointer or invalid counter id received");
+            break;
         }
 
+        ca_cmd = device->mCommands;
         // build a Counter command
         packet.param1 = mode;
         packet.param2 = counter_id;
 
         if ((status = atCounter(ca_cmd, &packet)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atCounter - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_counter - execution failed");
             break;
         }
 
@@ -79,7 +83,7 @@ ATCA_STATUS calib_counter(ATCADevice device, uint8_t mode, uint16_t counter_id, 
             }
             else
             {
-                status = ATCA_RX_FAIL;
+                status = ATCA_TRACE(ATCA_RX_FAIL, "Response received failure");
             }
 
         }

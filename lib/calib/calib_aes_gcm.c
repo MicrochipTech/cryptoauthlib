@@ -6,8 +6,8 @@
  * messages or data packets in ECB mode. Also can perform GFM (Galois Field
  * Multiply) calculation in support of AES-GCM.
  *
- * \note List of devices that support this command - ATECC608A. Refer to device
- *       datasheet for full details.
+ * \note List of devices that support this command - ATECC608A/B. Refer to
+ *       device datasheet for full details.
  *
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -267,7 +267,7 @@ ATCA_STATUS calib_aes_gcm_init_rand(ATCADevice device, atca_aes_gcm_ctx_t* ctx, 
 }
 
 /** \brief Process Additional Authenticated Data (AAD) using GCM mode and a
- *         key within the ATECC608A device.
+ *         key within the ATECC608 device.
  *
  * This can be called multiple times. atcab_aes_gcm_init() or
  * atcab_aes_gcm_init_rand() should be called before the first use of this
@@ -333,7 +333,7 @@ ATCA_STATUS calib_aes_gcm_aad_update(ATCADevice device, atca_aes_gcm_ctx_t* ctx,
     return ATCA_SUCCESS;
 }
 
-/** \brief Process data using GCM mode and a key within the ATECC608A device.
+/** \brief Process data using GCM mode and a key within the ATECC608 device.
  *         atcab_aes_gcm_init() or atcab_aes_gcm_init_rand() should be called
  *         before the first use of this function.
  *
@@ -415,7 +415,7 @@ static ATCA_STATUS calib_aes_gcm_update(ATCADevice device, atca_aes_gcm_ctx_t* c
     return ATCA_SUCCESS;
 }
 
-/** \brief Encrypt data using GCM mode and a key within the ATECC608A device.
+/** \brief Encrypt data using GCM mode and a key within the ATECC608 device.
  *         atcab_aes_gcm_init() or atcab_aes_gcm_init_rand() should be called
  *         before the first use of this function.
  *
@@ -530,7 +530,7 @@ ATCA_STATUS calib_aes_gcm_encrypt_finish(ATCADevice device, atca_aes_gcm_ctx_t* 
     return ATCA_SUCCESS;
 }
 
-/** \brief Decrypt data using GCM mode and a key within the ATECC608A device.
+/** \brief Decrypt data using GCM mode and a key within the ATECC608 device.
  *         atcab_aes_gcm_init() or atcab_aes_gcm_init_rand() should be called
  *         before the first use of this function.
  *

@@ -98,8 +98,10 @@ class Status(AtcaEnum):
     ATCA_HEALTH_TEST_ERROR = 0xFA
     # Couldn't allocate required memory
     ATCA_ALLOC_FAILURE = 0xFB
+    # All dk pk flags are consumed so no use flag is available
+    ATCA_USE_FLAGS_CONSUMED = 0xFC
     # The library has not been initialized so the command could not be executed
-    ATCA_NOT_INITIALIZED = 0xFC
+    ATCA_NOT_INITIALIZED = 0xFD
 
 
 STATUS_EXCEPTION_MAP = {
@@ -136,6 +138,7 @@ STATUS_EXCEPTION_MAP = {
     int(Status.ATCA_NO_DEVICES): NoDevicesFoundError,
     int(Status.ATCA_HEALTH_TEST_ERROR): HealthTestError,
     int(Status.ATCA_ALLOC_FAILURE): LibraryMemoryError,
+    int(Status.ATCA_USE_FLAGS_CONSUMED): NoUseFlagError,
     int(Status.ATCA_NOT_INITIALIZED): LibraryNotInitialized
 }
 

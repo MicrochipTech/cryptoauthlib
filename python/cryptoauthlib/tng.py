@@ -30,34 +30,6 @@ from .status import Status
 # pylint: disable-msg=invalid-name
 
 
-class tng_type_t(AtcaEnum):
-    """
-    Types of TNG devices
-    """
-    TNGTYPE_UNKNOWN = 0
-    TNGTYPE_22 = 1
-    TNGTYPE_TN = 2
-
-
-def tng_get_type(tng_type):
-    """
-    Get the type of TNG device.
-
-    Args:
-        type  TNG device type is returned here. Expects AtcaReference.
-
-    Returns:
-        ATCA_SUCCESS on success, otherwise an error code.
-    """
-    if not isinstance(tng_type, AtcaReference):
-        status = Status.ATCA_BAD_PARAM
-    else:
-        c_tng_type = c_int(0)
-        status = get_cryptoauthlib().tng_get_type(byref(c_tng_type))
-        tng_type.value = tng_type_t(c_tng_type.value)
-    return status
-
-
 def tng_get_device_pubkey(public_key):
     """
     Uses GenKey command to calculate the public key from the primary

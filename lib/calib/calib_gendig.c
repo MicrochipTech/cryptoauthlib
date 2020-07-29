@@ -7,7 +7,7 @@
  * command.
  *
  * \note List of devices that support this command - ATSHA204A, ATECC108A,
- *       ATECC508A, and ATECC608A. There are differences in  the modes that
+ *       ATECC508A, and ATECC608A/B. There are differences in  the modes that
  *       they support. Refer to device datasheets for full details.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -49,17 +49,18 @@
 ATCA_STATUS calib_gendig(ATCADevice device, uint8_t zone, uint16_t key_id, const uint8_t *other_data, uint8_t other_data_size)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
     bool is_no_mac_key = false;
 
-    if (other_data_size > 0 && other_data == NULL)
+    if ((device == NULL) || (other_data_size > 0 && other_data == NULL))
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     do
     {
+        ca_cmd = device->mCommands;
         // build gendig command
         packet.param1 = zone;
         packet.param2 = key_id;
@@ -76,11 +77,13 @@ ATCA_STATUS calib_gendig(ATCADevice device, uint8_t zone, uint16_t key_id, const
 
         if ((status = atGenDig(ca_cmd, &packet, is_no_mac_key)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atGenDig - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_gendig - execution failed");
             break;
         }
 

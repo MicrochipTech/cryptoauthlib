@@ -23,7 +23,7 @@
 
 import os
 
-_CALIB_SUPPORTED_DEVICES = ['ATECC108A', 'ATECC508A', 'ATECC608A', 'ATSHA204A']
+_CALIB_SUPPORTED_DEVICES = ['ATECC108A', 'ATECC508A', 'ATECC608', 'ATSHA204A']
 _TALIB_SUPPORTED_DEVICES = ['TA100']
 
 def loadModule():
@@ -36,11 +36,11 @@ def loadModule():
     cryptoAuthLibTng = Module.CreateSharedComponent("cryptoauthlib_tng", "Trust&Go", "/Libraries/Cryptoauthlib", "/harmony/config/tng.py")
     cryptoAuthLibTng.setDisplayType("TNGTLS & TNGLORA Certificates")
     cryptoAuthLibTng.addDependency("CAL_LIB_CAP", "CA_LIB", True, False)
-    
+
     cryptoAuthLibPkcs11 = Module.CreateSharedComponent("cryptoauthlib_pkcs11", "PKCS11", "/Libraries/Cryptoauthlib", "/harmony/config/pkcs11.py")
     cryptoAuthLibPkcs11.setDisplayType("PKCS#11 Interface")
     cryptoAuthLibPkcs11.addDependency("CAL_LIB_CAP", "CA_LIB", True, False)
-    
+
     cryptoAuthLibTest = Module.CreateSharedComponent("cryptoauthlib_test", "Tester", "/Libraries/Cryptoauthlib", "/harmony/config/test_app.py")
     cryptoAuthLibTest.setDisplayType("Library Testing Application")
     cryptoAuthLibTest.addDependency("CAL_LIB_CAP", "CA_LIB", True, False)

@@ -6,8 +6,8 @@
  * messages or data packets in ECB mode. Also can perform GFM (Galois Field
  * Multiply) calculation in support of AES-GCM.
  *
- * \note List of devices that support this command - ATECC608A. Refer to device
- *       datasheet for full details.
+ * \note List of devices that support this command - ATECC608A/B. Refer to
+ *       device edatasheet for full details.
  *
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -49,17 +49,18 @@
 ATCA_STATUS calib_aes(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* aes_in, uint8_t* aes_out)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     do
     {
-        if (aes_in == NULL)
+        if ((device == NULL) || (aes_in == NULL))
         {
-            status = ATCA_BAD_PARAM;
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             break;
         }
 
+        ca_cmd = device->mCommands;
         // build a AES command
         packet.param1 = mode;
         packet.param2 = key_id;
@@ -74,11 +75,13 @@ ATCA_STATUS calib_aes(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
 
         if ((status = atAES(ca_cmd, &packet)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atAES - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_aes - execution failed");
             break;
         }
 

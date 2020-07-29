@@ -40,11 +40,13 @@ extern "C" {
 /** \brief The supported Device type in Cryptoauthlib library */
 typedef enum
 {
-    ATSHA204A,
-    ATECC108A,
-    ATECC508A,
-    ATECC608A,
-    ATSHA206A,
+    ATSHA204A = 0,
+    ATECC108A = 1,
+    ATECC508A = 2,
+    ATECC608A = 3,
+    ATECC608B = 3,
+    ATECC608 = 3,
+    ATSHA206A = 4,
     TA100 = 0x10,
     ATCA_DEV_UNKNOWN = 0x20
 } ATCADeviceType;

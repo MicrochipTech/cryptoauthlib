@@ -6,7 +6,7 @@
  * ECDSA algorithm.
  *
  * \note List of devices that support this command - ATECC108A, ATECC508A, and
- *       ATECC608A. There are differences in the modes that they support. Refer
+ *       ATECC608A/B. There are differences in the modes that they support. Refer
  *       to device datasheets for full details.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -50,26 +50,29 @@
 ATCA_STATUS calib_sign_base(ATCADevice device, uint8_t mode, uint16_t key_id, uint8_t *signature)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
-    if (signature == NULL)
+    if ((device == NULL) || (signature == NULL))
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
     do
     {
+        ca_cmd = device->mCommands;
         // Build sign command
         packet.param1 = mode;
         packet.param2 = key_id;
         if ((status = atSign(ca_cmd, &packet)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atSign - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_sign_base - execution failed");
             break;
         }
 
@@ -94,7 +97,7 @@ ATCA_STATUS calib_sign_base(ATCADevice device, uint8_t mode, uint16_t key_id, ui
 /** \brief Executes Sign command, to sign a 32-byte external message using the
  *                   private key in the specified slot. The message to be signed
  *                   will be loaded into the Message Digest Buffer to the
- *                   ATECC608A device or TempKey for other devices.
+ *                   ATECC608 device or TempKey for other devices.
  *
  *  \param[in]  device     Device context pointer
  *  \param[in]  key_id     Slot of the private key to be used to sign the
@@ -118,24 +121,27 @@ ATCA_STATUS calib_sign(ATCADevice device, uint16_t key_id, const uint8_t *msg, u
         // Make sure RNG has updated its seed
         if ((status = calib_random(device, NULL)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_random - failed");
             break;
         }
 
         // Load message into device
-        if (device->mCommands->dt == ATECC608A)
+        if (ATECC608 == device->mIface->mIfaceCFG->devtype)
         {
-            // Use the Message Digest Buffer for the ATECC608A
+            // Use the Message Digest Buffer for the ATECC608
             nonce_target = NONCE_MODE_TARGET_MSGDIGBUF;
             sign_source = SIGN_MODE_SOURCE_MSGDIGBUF;
         }
         if ((status = calib_nonce_load(device, nonce_target, msg, 32)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_nonce_load - failed");
             break;
         }
 
         // Sign the message
         if ((status = calib_sign_base(device, SIGN_MODE_EXTERNAL | sign_source, key_id, signature)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_sign_base - failed");
             break;
         }
     }
@@ -180,6 +186,7 @@ ATCA_STATUS calib_sign_internal(ATCADevice device, uint16_t key_id, bool is_inva
 
         if ((status = calib_sign_base(device, mode, key_id, signature)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_sign_base - failed");
             break;
         }
 

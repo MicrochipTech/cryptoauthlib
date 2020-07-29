@@ -57,7 +57,7 @@ else:
 # See if the library is already installed
 try:
     lib = cdll.LoadLibrary('libcryptoauth.so')
-    # Test to ensure it has the required features to support the 
+    # Test to ensure it has the required features to support the
     # python wrapper. It may change later to a version check
     assert 0 != lib.ATCAIfacecfg_size
     _EXTENSIONS = None
@@ -94,11 +94,20 @@ def install_udev_rules():
             print('Unable to write udev rules. Rerun install as sudo or install rules manually')
         except:
             print('Unable to install udev rules. See readme to manually install')
-    
+
 
 def load_readme():
     with open('README.md', 'r') as f:
         read_me = f.read()
+
+    if not _sdist_build:
+        with open('../README.md', 'r') as f:
+            notes = f.read()
+
+        read_me += notes[notes.find('Release notes'):notes.find('Host Device Support')]
+
+        with open('README.md', 'w') as f:
+            f.write(read_me)
 
     return read_me
 
@@ -115,7 +124,7 @@ class CryptoAuthCommandBuildExt(build_ext):
         except OSError as e:
             print("CMAKE must be installed on the system for this module to build the required extension e.g. 'apt-get install cmake' or 'yum install cmake'")
             raise e
-    
+
         extdir = os.path.abspath(
             os.path.dirname(self.get_ext_fullpath(ext.name)) + os.path.sep + _NAME)
         setupdir = os.path.dirname(os.path.abspath(__file__)) + os.path.sep
@@ -130,8 +139,8 @@ class CryptoAuthCommandBuildExt(build_ext):
 
         cmake_args = ['-DATCA_HAL_CUSTOM=ON', '-DATCA_TNGTLS_SUPPORT=ON',
                       '-DATCA_TNGLORA_SUPPORT=ON', '-DATCA_TFLEX_SUPPORT=ON',
-                      '-DATCA_TNG_LEGACY_SUPPORT=ON', '-DATCA_USE_ATCAB_FUNCTIONS=ON']
-
+                      '-DATCA_TNG_LEGACY_SUPPORT=ON', '-DATCA_TA100_SUPPORT=ON',
+                      '-DATCA_OPENSSL=ON', '-DATCA_USE_ATCAB_FUNCTIONS=ON']
         if not nousb:
             cmake_args += ['-DATCA_HAL_KIT_HID=ON']
 
@@ -144,7 +153,7 @@ class CryptoAuthCommandBuildExt(build_ext):
             cmake_args += ['-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=' + extdir]
 
         if sys.platform.startswith('linux'):
-            cmake_args += ['-DATCA_HAL_I2C=ON']
+            cmake_args += ['-DATCA_HAL_I2C=ON', '-DATCA_HAL_SPI=ON']
 
         cmake_args += ['-DATCACERT_DEF_SRC={}atca_utils_sizes.c'.format(setupdir.replace('\\','/') if _sdist_build else '../test/')]
 
@@ -205,7 +214,7 @@ if __name__ == '__main__':
         author=_AUTHOR,
         author_email=_AUTHOR_EMAIL,
         download_url=_DOWNLOAD_URL,
-        keywords='Microchip ATECC508A ATECC608A ECDSA ECDH',
+        keywords='Microchip ATECC508A ATECC608 ECDSA ECDH',
         project_urls=_PROJECT_URLS,
         license=_LICENSE,
         classifiers=_CLASSIFIERS,
@@ -213,6 +222,7 @@ if __name__ == '__main__':
         include_package_data=True,
         distclass=BinaryDistribution,
         cmdclass=_COMMANDS,
+        setup_requires=['setuptools>=38.6.0', 'wheel'],
         install_requires=['enum34;python_version<"3.4"'],
         ext_modules=_EXTENSIONS,
         python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4',

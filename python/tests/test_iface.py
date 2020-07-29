@@ -20,48 +20,72 @@ def test_iface_cfg_size(test_iface_init):
 
 
 def test_iface_cfg_ateccx08a_i2c(test_iface_init):
-    cfg = cfg_ateccx08a_i2c_default()
-    assert cfg.iface_type == ATCAIfaceType.ATCA_I2C_IFACE
-    assert cfg.devtype == ATCADeviceType.ATECC608A
-    assert cfg.cfg.atcai2c.slave_address == 0xC0
-    assert cfg.cfg.atcai2c.bus == 2
-    assert cfg.cfg.atcai2c.baud == 400000
+    try:
+        cfg = cfg_ateccx08a_i2c_default()
+    except ValueError:
+        pass
+    else:
+        assert cfg.iface_type == ATCAIfaceType.ATCA_I2C_IFACE
+        assert cfg.devtype == ATCADeviceType.ATECC608
+        assert cfg.cfg.atcai2c.slave_address == 0xC0
+        assert cfg.cfg.atcai2c.bus == 2
+        assert cfg.cfg.atcai2c.baud == 400000
 
 
 def test_iface_cfg_ateccx08a_swi(test_iface_init):
-    cfg = cfg_ateccx08a_swi_default()
-    assert cfg.iface_type == ATCAIfaceType.ATCA_SWI_IFACE
-    assert cfg.devtype == ATCADeviceType.ATECC608A
-    assert cfg.cfg.atcaswi.bus == 4
+    try:
+        cfg = cfg_ateccx08a_swi_default()
+    except ValueError:
+        pass
+    else:
+        assert cfg.iface_type == ATCAIfaceType.ATCA_SWI_IFACE
+        assert cfg.devtype == ATCADeviceType.ATECC608
+        assert cfg.cfg.atcaswi.bus == 4
 
 
 def test_iface_cfg_ateccx08a_kithid(test_iface_init):
-    cfg = cfg_ateccx08a_kithid_default()
-    assert cfg.iface_type == ATCAIfaceType.ATCA_HID_IFACE
-    assert cfg.devtype == ATCADeviceType.ATECC608A
-    assert cfg.cfg.atcahid.vid == 0x03EB
-    assert cfg.cfg.atcahid.pid == 0x2312
+    try:
+        cfg = cfg_ateccx08a_kithid_default()
+    except ValueError:
+        pass
+    else:
+        assert cfg.iface_type == ATCAIfaceType.ATCA_HID_IFACE
+        assert cfg.devtype == ATCADeviceType.ATECC608
+        assert cfg.cfg.atcahid.vid == 0x03EB
+        assert cfg.cfg.atcahid.pid == 0x2312
 
 
-def test_iface_cfg_atsha204a_i2c(test_iface_init):
-    cfg = cfg_atsha20xa_i2c_default()
-    assert cfg.iface_type == ATCAIfaceType.ATCA_I2C_IFACE
-    assert cfg.devtype == ATCADeviceType.ATSHA204A
-    assert cfg.cfg.atcai2c.slave_address == 0xC8
-    assert cfg.cfg.atcai2c.bus == 2
-    assert cfg.cfg.atcai2c.baud == 400000
+def test_iface_cfg_atsha20xa_i2c(test_iface_init):
+    try:
+        cfg = cfg_atsha20xa_i2c_default()
+    except ValueError:
+        pass
+    else:
+        assert cfg.iface_type == ATCAIfaceType.ATCA_I2C_IFACE
+        assert cfg.devtype == ATCADeviceType.ATSHA204A
+        assert cfg.cfg.atcai2c.slave_address == 0xC8
+        assert cfg.cfg.atcai2c.bus == 2
+        assert cfg.cfg.atcai2c.baud == 400000
 
 
-def test_iface_cfg_atsha204a_swi(test_iface_init):
-    cfg = cfg_atsha20xa_swi_default()
-    assert cfg.iface_type == ATCAIfaceType.ATCA_SWI_IFACE
-    assert cfg.devtype == ATCADeviceType.ATSHA204A
-    assert cfg.cfg.atcaswi.bus == 4
+def test_iface_cfg_atsha20xa_swi(test_iface_init):
+    try:
+        cfg = cfg_atsha20xa_swi_default()
+    except ValueError:
+        pass
+    else:
+        assert cfg.iface_type == ATCAIfaceType.ATCA_SWI_IFACE
+        assert cfg.devtype == ATCADeviceType.ATSHA204A
+        assert cfg.cfg.atcaswi.bus == 4
 
 
-def test_iface_cfg_atsha204a_kithid(test_iface_init):
-    cfg = cfg_atsha20xa_kithid_default()
-    assert cfg.iface_type == ATCAIfaceType.ATCA_HID_IFACE
-    assert cfg.devtype == ATCADeviceType.ATSHA204A
-    assert cfg.cfg.atcahid.vid == 0x03EB
-    assert cfg.cfg.atcahid.pid == 0x2312
+def test_iface_cfg_atsha20xa_kithid(test_iface_init):
+    try:
+        cfg = cfg_atsha20xa_kithid_default()
+    except ValueError:
+        pass
+    else:
+        assert cfg.iface_type == ATCAIfaceType.ATCA_HID_IFACE
+        assert cfg.devtype == ATCADeviceType.ATSHA204A
+        assert cfg.cfg.atcahid.vid == 0x03EB
+        assert cfg.cfg.atcahid.pid == 0x2312

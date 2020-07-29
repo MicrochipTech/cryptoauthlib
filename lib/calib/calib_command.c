@@ -32,9 +32,7 @@
  * THIS SOFTWARE.
  */
 
-#include <stdlib.h>
-#include <string.h>
-#include "calib_command.h"
+#include "cryptoauthlib.h"
 
 /** \brief ATCACommand CheckMAC method
  * \param[in] ca_cmd   instance
@@ -250,7 +248,7 @@ ATCA_STATUS atNonce(ATCACommand ca_cmd, ATCAPacket *packet)
     }
     else
     {
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "atNonce - failed; Invalid mode received");
     }
     atCalcCrc(packet);
     return ATCA_SUCCESS;
@@ -335,7 +333,7 @@ ATCA_STATUS atSecureBoot(ATCACommand ca_cmd, ATCAPacket *packet)
         break;
 
     default:
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "atSecureBoot - failed; Invalid mode received");
         break;
     }
     atCalcCrc(packet);
@@ -444,7 +442,7 @@ ATCA_STATUS atVerify(ATCACommand ca_cmd, ATCAPacket *packet)
         break;
 
     default:
-        return ATCA_BAD_PARAM;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "atVerify - failed; Invalid mode received");
     }
 
     atCalcCrc(packet);
@@ -645,7 +643,7 @@ bool atIsECCFamily(ATCADeviceType device_type)
     {
     case ATECC108A:
     case ATECC508A:
-    case ATECC608A:
+    case ATECC608:
         return true;
         break;
     default:

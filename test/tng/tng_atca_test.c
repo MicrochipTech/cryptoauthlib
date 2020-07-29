@@ -67,7 +67,7 @@ TEST(tng_atca, tng_get_device_pubkey)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info tng_atca_unit_test_info[] =
 {
-    { REGISTER_TEST_CASE(tng_atca, tng_get_device_pubkey), DEVICE_MASK(ATECC608A)},
+    { REGISTER_TEST_CASE(tng_atca, tng_get_device_pubkey), DEVICE_MASK(ATECC608)},
     { (fp_test_case)NULL,                                  (uint8_t)0 },
 };
 // *INDENT-ON*

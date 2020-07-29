@@ -38,40 +38,40 @@ extern int select_ta100_custom(int argc, char* argv[]);
 #endif
 
 /** gCfg must point to one of the cfg_ structures for any unit test to work.  this allows
- the command console to switch device types at runtime. */
+   the command console to switch device types at runtime. */
 ATCAIfaceCfg g_iface_config = {
 #ifdef ATCA_HAL_KIT_HID
-    .iface_type = ATCA_HID_IFACE,
+    .iface_type            = ATCA_HID_IFACE,
 #else
-    .iface_type = ATCA_UNKNOWN_IFACE,
+    .iface_type            = ATCA_UNKNOWN_IFACE,
 #endif
-    .devtype = ATCA_DEV_UNKNOWN,
+    .devtype               = ATCA_DEV_UNKNOWN,
     {
 #ifdef ATCA_HAL_KIT_HID
-        .atcahid = {
-            .dev_identity = 0,
-            .idx = 0,
-            .vid = 0x03EB,
-            .pid = 0x2312,
-            .packetsize = 64,
+        .atcahid           = {
+            .dev_identity  = 0,
+            .idx           = 0,
+            .vid           = 0x03EB,
+            .pid           = 0x2312,
+            .packetsize    = 64,
         },
 #else
-        .atcai2c = {
+        .atcai2c           = {
             .slave_address = 0xC0,
-            .bus = 2,
-            .baud = 400000,
+            .bus           = 2,
+            .baud          = 400000,
         },
 #endif
     },
-    .wake_delay = 1500,
-    .rx_retries = 20
+    .wake_delay            = 1500,
+    .rx_retries            = 20
 };
 
 ATCAIfaceCfg* gCfg = &g_iface_config;
 
 /** \brief Sets the device the command or test suite will use
  *
- * \param[in]  ifacecfg    Platform iface config to use 
+ * \param[in]  ifacecfg    Platform iface config to use
  */
 void atca_test_config_set_ifacecfg(ATCAIfaceCfg * ifacecfg)
 {
@@ -126,10 +126,10 @@ int select_508(int argc, char* argv[])
 
 int select_608(int argc, char* argv[])
 {
-#if defined(ATCA_HAL_CUSTOM) && defined(ATCA_ATECC608A_SUPPORT)
+#if defined(ATCA_HAL_CUSTOM) && defined(ATCA_ATECC608_SUPPORT)
     return select_608_custom(argc, argv);
 #else
-    return select_device(ATECC608A, NULL != argv);
+    return select_device(ATECC608, NULL != argv);
 #endif
 }
 
@@ -205,7 +205,7 @@ static int opt_iface_type(int argc, char* argv[])
             gCfg->atcahid.vid = 0x03EB;
             gCfg->atcahid.pid = 0x2312;
             gCfg->atcahid.packetsize = 64;
-            
+
             if (argc >= 3 && argv[2][0] != '-')
             {
                 ret = 3;
@@ -241,7 +241,7 @@ static int opt_iface_type(int argc, char* argv[])
 #ifdef __linux__
             gCfg->atcai2c.baud = 100000;
 #endif
-#endif /* ATCA_HAL_KIT_HID */
+#endif      /* ATCA_HAL_KIT_HID */
         }
         else if (0 == strcmp("swi", argv[1]))
         {
@@ -311,7 +311,7 @@ static t_menu_info cmd_options[] =
 };
 // *INDENT-ON*
 
-/** \brief Process an individual command option 
+/** \brief Process an individual command option
  *
  * \param[in]  argc     Number of arguments in the arg list
  * \param[out] argv     Argument list
@@ -334,7 +334,8 @@ static int process_option(int argc, char* argv[])
                 }
                 break;
             }
-        } while ((++menu_item)->menu_cmd);
+        }
+        while ((++menu_item)->menu_cmd);
     }
     return ret;
 }
@@ -354,7 +355,8 @@ int process_options(int argc, char* argv[])
     {
         ret = process_option(argc - cur_arg, &argv[cur_arg]);
         cur_arg += ret;
-    } while (argc > cur_arg&& ret >= 0);
+    }
+    while (argc > cur_arg && ret >= 0);
 
     return ret;
 }

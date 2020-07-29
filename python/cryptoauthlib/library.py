@@ -22,7 +22,8 @@ Cryptoauthlib Library Management
 # THIS SOFTWARE.
 
 import os.path
-import ctypes
+import json
+from ctypes import *
 from .exceptions import LibraryLoadError
 from .atcaenum import AtcaEnum
 
@@ -33,7 +34,7 @@ ATCA_NAMES = {'i2c': 'i2c', 'hid': 'kithid', 'sha': 'sha204', 'ecc': 'eccx08'}
 _CRYPTO_LIB = None
 
 # List of basic ctypes by size
-_CTYPES_BY_SIZE = {1: ctypes.c_uint8, 2: ctypes.c_uint16, 4:ctypes.c_uint32}
+_CTYPES_BY_SIZE = {1: c_uint8, 2: c_uint16, 4:c_uint32}
 
 class AtcaReference:
     """
@@ -77,16 +78,17 @@ def load_cryptoauthlib(lib=None):
         _CRYPTO_LIB = lib
     else:
         curr_path = os.path.abspath(os.path.dirname(__file__))
+        os.environ['PATH'] = os.path.dirname(__file__) + ';' + os.environ['PATH']
         if os.path.exists(os.path.join(curr_path, "cryptoauth.dll")):
-            _CRYPTO_LIB = ctypes.cdll.LoadLibrary(os.path.join(curr_path, "cryptoauth.dll"))
+            _CRYPTO_LIB = cdll.LoadLibrary(os.path.join(curr_path, "cryptoauth.dll"))
         elif os.path.exists(os.path.join(curr_path, "libcryptoauth.so")):
-            _CRYPTO_LIB = ctypes.cdll.LoadLibrary(os.path.join(curr_path, "libcryptoauth.so"))
+            _CRYPTO_LIB = cdll.LoadLibrary(os.path.join(curr_path, "libcryptoauth.so"))
         elif os.path.exists(os.path.join(curr_path, "libcryptoauth.dylib")):
-            _CRYPTO_LIB = ctypes.cdll.LoadLibrary(os.path.join(curr_path, "libcryptoauth.dylib"))
+            _CRYPTO_LIB = cdll.LoadLibrary(os.path.join(curr_path, "libcryptoauth.dylib"))
         else:
             # Try to find a system installed version
             try:
-                _CRYPTO_LIB = ctypes.cdll.LoadLibrary('libcryptoauth.so')
+                _CRYPTO_LIB = cdll.LoadLibrary('libcryptoauth.so')
             except:
                 raise LibraryLoadError('Unable to find cryptoauthlib. You may need to reinstall')
 
@@ -105,10 +107,12 @@ def get_device_name(revision):
     """
     devices = {0x10: 'ATECC108A',
                0x50: 'ATECC508A',
-               0x60: 'ATECC608A',
+               0x60: 'ATECC608',
                0x00: 'ATSHA204A',
-               0x02: 'ATSHA204A'}
-    return devices.get(revision[2], 'UNKNOWN')
+               0x02: 'ATSHA204A',
+               0x40: 'ATSHA206A'}
+    device_name = devices.get(revision[2], 'UNKNOWN')
+    return device_name
 
 
 def get_device_type_id(name):
@@ -119,6 +123,9 @@ def get_device_type_id(name):
                'ATECC108A': 1,
                'ATECC508A': 2,
                'ATECC608A': 3,
+               'ATECC608B': 3,
+               'ATECC608': 3,
+               'ATSAH206A': 4,
                'UNKNOWN': 0x20}
     return devices.get(name.upper())
 
@@ -149,9 +156,9 @@ def get_ctype_structure_instance(structure, value):
     if isinstance(value, dict):
         r = structure(**value)
     elif isinstance(value, int):
-        r = structure.from_buffer_copy(ctypes.c_uint(value))
+        r = structure.from_buffer_copy(c_uint(value))
     elif isinstance(value, AtcaEnum):
-        r = structure.from_buffer_copy(ctypes.c_uint(int(value)))
+        r = structure.from_buffer_copy(c_uint(int(value)))
     elif not isinstance(value, structure):
         r = structure(value)
     else:
@@ -168,7 +175,7 @@ def get_ctype_array_instance(array, value):
     """
     # pylint: disable-msg=invalid-name, protected-access
     t = array._type_
-    if t is ctypes.c_char:
+    if t is c_char:
         # Strings are special
         if isinstance(value, str):
             a = value.encode('ascii')
@@ -179,28 +186,61 @@ def get_ctype_array_instance(array, value):
     return a
 
 
-class AtcaStructure(ctypes.Structure):
+class AtcaUnion(Union):
     """ An extended ctypes structure to accept complex inputs """
     # pylint: disable-msg=invalid-name, too-few-public-methods
     def __init__(self, *args, **kwargs):
         if kwargs is not None:
             for f in self._fields_:
                 if f[0] in kwargs:
-                    if isinstance(f[1](), ctypes.Structure):
+                    if isinstance(f[1](), Union):
                         kwargs[f[0]] = get_ctype_structure_instance(f[1], kwargs[f[0]])
-                    elif isinstance(f[1](), ctypes.Array):
+                    elif isinstance(f[1](), Structure):
+                        kwargs[f[0]] = get_ctype_structure_instance(f[1], kwargs[f[0]])
+                    elif isinstance(f[1](), Array):
+                        kwargs[f[0]] = get_ctype_array_instance(f[1], kwargs[f[0]])
+
+        super(AtcaUnion, self).__init__(*args, **kwargs)
+
+
+class AtcaStructure(Structure):
+    """ An extended ctypes structure to accept complex inputs """
+    # pylint: disable-msg=invalid-name, too-few-public-methods
+    def __init__(self, *args, **kwargs):
+        if kwargs is not None:
+            for f in self._fields_:
+                if f[0] in kwargs:
+                    if isinstance(f[1](), Union):
+                        kwargs[f[0]] = get_ctype_structure_instance(f[1], kwargs[f[0]])
+                    elif isinstance(f[1](), Structure):
+                        kwargs[f[0]] = get_ctype_structure_instance(f[1], kwargs[f[0]])
+                    elif isinstance(f[1](), Array):
                         kwargs[f[0]] = get_ctype_array_instance(f[1], kwargs[f[0]])
 
         super(AtcaStructure, self).__init__(*args, **kwargs)
+
+    def update_from_buffer(self, buffer):
+        if len(buffer) < sizeof(self):
+            raise ValueError
+        memmove(addressof(self), buffer, sizeof(self))
 
 
 def ctypes_to_bytes(obj):
     """
     Convert a ctypes structure/array into bytes. This is for python2 compatibility
     """
-    buf = ctypes.create_string_buffer(ctypes.sizeof(obj))
-    ctypes.memmove(buf, ctypes.addressof(obj), ctypes.sizeof(obj))
+    buf = create_string_buffer(sizeof(obj))
+    memmove(buf, addressof(obj), sizeof(obj))
     return buf.raw
 
 
-__all__ = ['ATCA_NAMES', 'AtcaReference', 'load_cryptoauthlib', 'get_device_name', 'get_device_type_id']
+def create_byte_buffer(init_or_size):
+    if isinstance(init_or_size, int):
+        buf = (c_uint8*init_or_size)()
+    else:
+        buf = (c_uint8*len(init_or_size))(*list(init_or_size))
+    return buf
+
+
+__all__ = ['ATCA_NAMES', 'AtcaReference', 'load_cryptoauthlib', 'get_device_name', 'get_device_type_id',
+           'create_byte_buffer']

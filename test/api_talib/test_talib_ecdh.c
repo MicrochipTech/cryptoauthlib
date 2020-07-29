@@ -44,6 +44,7 @@ TEST(atca_cmd_basic_test, ecdh_p224_io_buffer)
     uint8_t bob_pubkey[TA_ECC224_PUB_KEY_SIZE];
     uint8_t alice_pms[TA_ECDH_ECCP224_PMS_SIZE];
     uint8_t bob_pms[TA_ECDH_ECCP224_PMS_SIZE];
+
 #ifdef ATCA_PRINTF
     char displaystr[400];
     size_t displen = sizeof(displaystr);
@@ -53,9 +54,9 @@ TEST(atca_cmd_basic_test, ecdh_p224_io_buffer)
     test_assert_data_is_locked();
 
     // Generate Alice's private key handle attributes
-    status = talib_handle_init_private_key(&alice_priv_key_attributes, TA_KEY_TYPE_ECCP224, 
-                                          TA_ALG_MODE_ECC_ECDH, TA_PROP_NO_SIGN_GENERATION,
-                                          TA_PROP_KEY_AGREEMENT_OUT_BUFF);
+    status = talib_handle_init_private_key(&alice_priv_key_attributes, TA_KEY_TYPE_ECCP224,
+                                           TA_ALG_MODE_ECC_ECDH, TA_PROP_NO_SIGN_GENERATION,
+                                           TA_PROP_KEY_AGREEMENT_OUT_BUFF);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Create Alice's private key handle
@@ -63,9 +64,9 @@ TEST(atca_cmd_basic_test, ecdh_p224_io_buffer)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Generate Bob's private key handle attributes
-    status = talib_handle_init_private_key(&bob_priv_key_attributes, TA_KEY_TYPE_ECCP224, 
-                                          TA_ALG_MODE_ECC_ECDH, TA_PROP_NO_SIGN_GENERATION,
-                                          TA_PROP_KEY_AGREEMENT_OUT_BUFF);
+    status = talib_handle_init_private_key(&bob_priv_key_attributes, TA_KEY_TYPE_ECCP224,
+                                           TA_ALG_MODE_ECC_ECDH, TA_PROP_NO_SIGN_GENERATION,
+                                           TA_PROP_KEY_AGREEMENT_OUT_BUFF);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Create Bob's private key handle
@@ -77,7 +78,7 @@ TEST(atca_cmd_basic_test, ecdh_p224_io_buffer)
                                alice_pubkey, &pubkey_len);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    // Generate Bob's ECCP224 private key and public key 
+    // Generate Bob's ECCP224 private key and public key
     status = talib_genkey_base(atcab_get_device(), TA_KEYGEN_MODE_NEWKEY, (uint32_t)bob_priv_key_handle,
                                bob_pubkey, &pubkey_len);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
@@ -135,10 +136,10 @@ TEST(atca_cmd_basic_test, ecdh_to_vol_reg)
     // Skip test if setup isn't locked
     test_assert_data_is_locked();
 
-    status = talib_handle_init_symmetric_key(&attr_dev_priv_key_handle, TA_KEY_TYPE_HMAC, 
+    status = talib_handle_init_symmetric_key(&attr_dev_priv_key_handle, TA_KEY_TYPE_HMAC,
                                              TA_PROP_SYMM_KEY_USAGE_MAC);
 
-    status = talib_create_ephemeral_element_with_handle(atcab_get_device(), details, dev_handle, 
+    status = talib_create_ephemeral_element_with_handle(atcab_get_device(), details, dev_handle,
                                                         &attr_dev_priv_key_handle);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -152,7 +153,7 @@ TEST(atca_cmd_basic_test, ecdh_to_vol_reg)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
 
-/** \brief Execute ECDH command to generate premaster secret for ECCP224 key and 
+/** \brief Execute ECDH command to generate premaster secret for ECCP224 key and
  *         store premaster secret x followed by y in shared data.
  */
 TEST(atca_cmd_basic_test, ecdh_to_shared_data)
@@ -170,6 +171,7 @@ TEST(atca_cmd_basic_test, ecdh_to_shared_data)
     uint8_t alice_pms[TA_ECDH_ECCP224_XY_PMS_SIZE];
     uint16_t pms_size = sizeof(alice_pms);
     uint8_t bob_pms[TA_ECDH_ECCP224_XY_PMS_SIZE];
+
 #ifdef ATCA_PRINTF
     char displaystr[512];
     size_t displen = sizeof(displaystr);
@@ -179,9 +181,9 @@ TEST(atca_cmd_basic_test, ecdh_to_shared_data)
     test_assert_data_is_locked();
 
     // Generate Alice's private key handle attributes
-    status = talib_handle_init_private_key(&alice_priv_key_attributes, TA_KEY_TYPE_ECCP224, 
-                                          TA_ALG_MODE_ECC_ECDH, TA_PROP_NO_SIGN_GENERATION,
-                                          TA_PROP_KEY_AGREEMENT_OUT_BUFF);
+    status = talib_handle_init_private_key(&alice_priv_key_attributes, TA_KEY_TYPE_ECCP224,
+                                           TA_ALG_MODE_ECC_ECDH, TA_PROP_NO_SIGN_GENERATION,
+                                           TA_PROP_KEY_AGREEMENT_OUT_BUFF);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Create Alice's private key handle
@@ -189,9 +191,9 @@ TEST(atca_cmd_basic_test, ecdh_to_shared_data)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Generate Bob's private key handle attributes
-    status = talib_handle_init_private_key(&bob_priv_key_attributes, TA_KEY_TYPE_ECCP224, 
-                                          TA_ALG_MODE_ECC_ECDH, TA_PROP_NO_SIGN_GENERATION,
-                                          TA_PROP_KEY_AGREEMENT_OUT_BUFF);
+    status = talib_handle_init_private_key(&bob_priv_key_attributes, TA_KEY_TYPE_ECCP224,
+                                           TA_ALG_MODE_ECC_ECDH, TA_PROP_NO_SIGN_GENERATION,
+                                           TA_PROP_KEY_AGREEMENT_OUT_BUFF);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Create Bob's private key handle
@@ -199,7 +201,7 @@ TEST(atca_cmd_basic_test, ecdh_to_shared_data)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Generate Alice's pre master secret key handle attributes
-    status = talib_handle_init_symmetric_key(&alice_pms_attributes, TA_KEY_TYPE_HMAC, 
+    status = talib_handle_init_symmetric_key(&alice_pms_attributes, TA_KEY_TYPE_HMAC,
                                              TA_PROP_SYMM_KEY_USAGE_ANY);
 
     // Create handle to store Alice pre master secret in shared data
@@ -217,7 +219,7 @@ TEST(atca_cmd_basic_test, ecdh_to_shared_data)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Generate pre master secret x followed by y and store it in Alice pms handle
-    status = talib_ecdh_xy_to_handle(atcab_get_device(), alice_priv_key_handle, alice_pms_handle, bob_pubkey, 
+    status = talib_ecdh_xy_to_handle(atcab_get_device(), alice_priv_key_handle, alice_pms_handle, bob_pubkey,
                                      sizeof(bob_pubkey));
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -260,7 +262,7 @@ TEST(atca_cmd_basic_test, ecdh_to_shared_data)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
 
-/** \brief Execute ECDH command to generate premaster secret for ECCP384 key and 
+/** \brief Execute ECDH command to generate premaster secret for ECCP384 key and
  *         get premaster secret x followed by y in io buffer.
  */
 TEST(atca_cmd_basic_test, ecdh_p384_xy_io_buffer)
@@ -275,6 +277,7 @@ TEST(atca_cmd_basic_test, ecdh_p384_xy_io_buffer)
     uint8_t bob_pubkey[TA_ECC384_PUB_KEY_SIZE];
     uint8_t alice_pms[TA_ECDH_ECCP384_XY_PMS_SIZE];
     uint8_t bob_pms[TA_ECDH_ECCP384_XY_PMS_SIZE];
+
 #ifdef ATCA_PRINTF
     char displaystr[512];
     size_t displen = sizeof(displaystr);
@@ -284,9 +287,9 @@ TEST(atca_cmd_basic_test, ecdh_p384_xy_io_buffer)
     test_assert_data_is_locked();
 
     // Generate Alice's private key handle attributes
-    status = talib_handle_init_private_key(&alice_priv_key_attributes, TA_KEY_TYPE_ECCP384, 
-                                          TA_ALG_MODE_ECC_ECDH, TA_PROP_NO_SIGN_GENERATION,
-                                          TA_PROP_KEY_AGREEMENT_OUT_BUFF);
+    status = talib_handle_init_private_key(&alice_priv_key_attributes, TA_KEY_TYPE_ECCP384,
+                                           TA_ALG_MODE_ECC_ECDH, TA_PROP_NO_SIGN_GENERATION,
+                                           TA_PROP_KEY_AGREEMENT_OUT_BUFF);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Create Alice's private key handle
@@ -294,9 +297,9 @@ TEST(atca_cmd_basic_test, ecdh_p384_xy_io_buffer)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Generate Bob's private key handle attributes
-    status = talib_handle_init_private_key(&bob_priv_key_attributes, TA_KEY_TYPE_ECCP384, 
-                                          TA_ALG_MODE_ECC_ECDH, TA_PROP_NO_SIGN_GENERATION,
-                                          TA_PROP_KEY_AGREEMENT_OUT_BUFF);
+    status = talib_handle_init_private_key(&bob_priv_key_attributes, TA_KEY_TYPE_ECCP384,
+                                           TA_ALG_MODE_ECC_ECDH, TA_PROP_NO_SIGN_GENERATION,
+                                           TA_PROP_KEY_AGREEMENT_OUT_BUFF);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Create Bob's private key handle
@@ -314,7 +317,7 @@ TEST(atca_cmd_basic_test, ecdh_p384_xy_io_buffer)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Generate Alice's pre master secret x followed by y and get in io buffer
-    status = talib_ecdh_xy_in_io_buffer(atcab_get_device(), alice_priv_key_handle, bob_pubkey, pubkey_len, 
+    status = talib_ecdh_xy_in_io_buffer(atcab_get_device(), alice_priv_key_handle, bob_pubkey, pubkey_len,
                                         alice_pms);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -326,7 +329,7 @@ TEST(atca_cmd_basic_test, ecdh_p384_xy_io_buffer)
 #endif
 
     // Generate Bob's pre master secret x followed by y and get in io buffer
-    status = talib_ecdh_xy_in_io_buffer(atcab_get_device(), bob_priv_key_handle, alice_pubkey, pubkey_len, 
+    status = talib_ecdh_xy_in_io_buffer(atcab_get_device(), bob_priv_key_handle, alice_pubkey, pubkey_len,
                                         bob_pms);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 

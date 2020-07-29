@@ -62,9 +62,9 @@ extern const uint8_t atecc508_config[];
 #endif
 #endif
 
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
 #if !PKCS11_USE_STATIC_CONFIG
-/** Standard Configuration Structure for ATECC608A devices */
+/** Standard Configuration Structure for ATECC608 devices */
 static const uint8_t atecc608_config[] = {
     0x01, 0x23, 0x00, 0x00, 0x00, 0x00, 0x60, 0x01, 0x00, 0x00, 0x00, 0x00, 0xEE, 0x01, 0x01, 0x00,
     0xC0, 0x00, 0x00, 0x01, 0x8F, 0x20, 0xC4, 0x44, 0x87, 0x20, 0x87, 0x20, 0x8F, 0x0F, 0xC4, 0x36,
@@ -99,7 +99,14 @@ static char * pkcs11_token_device(ATCADeviceType dev_type, uint8_t info[4])
             rv = "ATECC508A";
             break;
         case 0x60:
-            rv = "ATECC608A";
+            if (0x02 < info[1])
+            {
+                rv = "ATECC608B";
+            }
+            else
+            {
+                rv = "ATECC608A";
+            }
             break;
         default:
             break;
@@ -161,7 +168,7 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
             pConfig = (uint8_t*)atecc508_config;
             break;
     #endif
-    #ifdef ATCA_ATECC608A_SUPPORT
+    #ifdef ATCA_ATECC608_SUPPORT
         case 0x60:
             pConfig = (uint8_t*)atecc608_config;
             break;
@@ -182,7 +189,7 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
 #error "Sanity Check Failure: ATCA_I2C_ECC_ADDRESS is invalid for the device"
 #endif
 
-        buf[0] = ATCA_I2C_ECC_ADDRESS;
+            buf[0] = ATCA_I2C_ECC_ADDRESS;
 #endif
 
             if (ATCA_SUCCESS == rv)
@@ -213,7 +220,7 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
             /* Generate New Keys */
             for (int i = 0; (i < 16) && (ATCA_SUCCESS == rv); i++)
             {
-                if (ATCA_KEY_CONFIG_PRIVATE_MASK & ((atecc608a_config_t*)pConfig)->KeyConfig[i])
+                if (ATCA_KEY_CONFIG_PRIVATE_MASK & ((atecc608_config_t*)pConfig)->KeyConfig[i])
                 {
                     rv = atcab_genkey(i, NULL);
                 }

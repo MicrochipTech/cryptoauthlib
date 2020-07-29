@@ -76,8 +76,8 @@ static t_menu_info mas_menu_info[] =
 #ifdef ATCA_ATECC508A_SUPPORT
     { "508",      "Set Target Device to ATECC508A",                 select_508                           },
 #endif
-#ifdef ATCA_ATECC608A_SUPPORT
-    { "608",      "Set Target Device to ATECC608A",                 select_608                           },
+#ifdef ATCA_ATECC608_SUPPORT
+    { "608",      "Set Target Device to ATECC608",                  select_608                           },
 #endif
 #ifdef ATCA_TA100_SUPPORT
     { "ta100",    "Set Target Device to TA100",                     select_ta100                         },
@@ -100,10 +100,10 @@ static t_menu_info mas_menu_info[] =
     { "otpzero",  "Zero Out OTP Zone",                              (fp_menu_handler)run_otpzero_tests   },
 #endif
     { "util",     "Run Helper Function Tests",                      (fp_menu_handler)run_helper_tests    },
-#ifdef ATCA_ATECC608A_SUPPORT
-    { "clkdivm0", "Set ATECC608A to ClockDivider M0(0x00)",         (fp_menu_handler)set_clock_divider_m0},
-    { "clkdivm1", "Set ATECC608A to ClockDivider M1(0x05)",         (fp_menu_handler)set_clock_divider_m1},
-    { "clkdivm2", "Set ATECC608A to ClockDivider M2(0x0D)",         (fp_menu_handler)set_clock_divider_m2},
+#ifdef ATCA_ATECC608_SUPPORT
+    { "clkdivm0", "Set ATECC608 to ClockDivider M0(0x00)",          (fp_menu_handler)set_clock_divider_m0},
+    { "clkdivm1", "Set ATECC608 to ClockDivider M1(0x05)",          (fp_menu_handler)set_clock_divider_m1},
+    { "clkdivm2", "Set ATECC608 to ClockDivider M2(0x0D)",          (fp_menu_handler)set_clock_divider_m2},
 #endif
 #endif /* DO_NOT_TEST_BASIC_UNIT */
 #ifndef DO_NOT_TEST_CERT
@@ -141,6 +141,7 @@ int parse_cmd_string(char* buffer, const size_t buf_len, const int argc, char* a
     size_t i;
     char * c_ptr = buffer;
     bool in_arg = false;
+
     if (buffer && buf_len && argc && argv)
     {
         for (i = 0; i < buf_len; i++, c_ptr++)
@@ -194,11 +195,12 @@ static int run_cmd(int argc, char* argv[])
             {
                 if (menu_item->fp_handler)
                 {
-                   ret = menu_item->fp_handler(argc, argv);
+                    ret = menu_item->fp_handler(argc, argv);
                 }
                 break;
             }
-        } while ((++menu_item)->menu_cmd);
+        }
+        while ((++menu_item)->menu_cmd);
     }
 
     if (!menu_item->menu_cmd)
@@ -285,18 +287,25 @@ int processCmd(void)
 void atca_test_task(void)
 {
     uint8_t ch;
-    while (true) {
-		ch = 0;
-		scanf("%c", &ch);
 
-		if (ch) {
-			printf("%c", ch); // echo to output
-			if ( ch == 0x0d || ch == 0x0a )
-				processCmd();
-			else
-				CBUF_Push( cmdQ, ch );  // queue character into circular buffer
-		}
-	}
+    while (true)
+    {
+        ch = 0;
+        scanf("%c", &ch);
+
+        if (ch)
+        {
+            printf("%c", ch); // echo to output
+            if (ch == 0x0d || ch == 0x0a)
+            {
+                processCmd();
+            }
+            else
+            {
+                CBUF_Push(cmdQ, ch);    // queue character into circular buffer
+            }
+        }
+    }
 }
 
 #endif

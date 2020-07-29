@@ -508,7 +508,7 @@ TEST(atca_cmd_unit_test, info)
         devrev_min = 0x00005000;
         devrev_max = 0x000050FF;
         break;
-    case ATECC608A:
+    case ATECC608:
         devrev_min = 0x00006000;
         devrev_max = 0x000060FF;
         break;
@@ -518,9 +518,9 @@ TEST(atca_cmd_unit_test, info)
     }
 
     devrev = ((uint32_t)packet.data[1] << 24) |
-        ((uint32_t)packet.data[2] << 16) |
-        ((uint32_t)packet.data[3] << 8) |
-        ((uint32_t)packet.data[4] << 0);
+             ((uint32_t)packet.data[2] << 16) |
+             ((uint32_t)packet.data[3] << 8) |
+             ((uint32_t)packet.data[4] << 0);
 
     if (devrev < devrev_min || devrev > devrev_max)
     {
@@ -715,7 +715,7 @@ TEST(atca_cmd_unit_test, read)
     TEST_ASSERT_EQUAL(0x07, packet.data[ATCA_COUNT_IDX]);
 }
 
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
 extern const uint8_t sboot_dummy_image[];
 
 TEST(atca_cmd_unit_test, sboot)
@@ -1123,31 +1123,31 @@ TEST(atca_cmd_unit_test, write)
 
 t_test_case_info calib_commands_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, aes),                                                                                     DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, checkmac),     DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, counter),                                                        DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, derivekey),    DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, ecdh),                                                           DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, gendig),       DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, genkey),                                DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, aes),                                                                                     DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, checkmac),     DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, counter),                                                        DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, derivekey),    DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, ecdh),                                                           DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, gendig),       DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, genkey),                                DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
     { REGISTER_TEST_CASE(atca_cmd_unit_test, hmac),         DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A)                          },
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, info),         DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, kdf),                                                                                     DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, mac),          DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, nonce),        DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, info),         DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, kdf),                                                                                     DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, mac),          DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, nonce),        DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
     { REGISTER_TEST_CASE(atca_cmd_unit_test, pause),        DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A)                          },
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, privwrite),                             DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, random),       DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, read),         DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-#ifdef ATCA_ATECC608A_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, sboot),                                                                                   DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, selftest),                                                                                DEVICE_MASK(ATECC608A) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, privwrite),                             DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, random),       DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, read),         DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
+#ifdef ATCA_ATECC608_SUPPORT
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, sboot),                                                                                   DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, selftest),                                                                                DEVICE_MASK(ATECC608) },
 #endif
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, sha),          DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, sign),                                  DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, updateextra),  DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, verify),                                DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, write),        DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608A) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, sha),          DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, sign),                                  DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, updateextra),  DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, verify),                                DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_unit_test, write),        DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
     /* Array Termination element*/
     { (fp_test_case)NULL,                                   (uint8_t)0 },
 };

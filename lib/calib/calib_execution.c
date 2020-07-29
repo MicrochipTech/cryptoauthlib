@@ -41,6 +41,12 @@
 #include "atca_devtypes.h"
 #include "hal/atca_hal.h"
 
+
+#if defined(ATCA_NO_POLL) && defined(ATCA_ATECC608_SUPPORT) && !defined(ATCA_ATECC608A_SUPPORT)
+#warning "ATECC608B supports only polling mode, if you are using an ATECC608A specify ATCA_ATECC608A_SUPPORT manually"
+#endif
+
+
 #ifdef ATCA_NO_POLL
 // *INDENT-OFF* - Preserve time formatting from the code formatter
 /*Execution times for ATSHA204A supported commands...*/
@@ -117,7 +123,7 @@ static const device_execution_time_t device_execution_time_508[] = {
     { ATCA_WRITE,        26}
 };
 
-/*Execution times for ATECC608A-M0 supported commands...*/
+/*Execution times for ATECC608-M0 supported commands...*/
 static const device_execution_time_t device_execution_time_608_m0[] = {
     { ATCA_AES,          27},
     { ATCA_CHECKMAC,     40},
@@ -143,7 +149,7 @@ static const device_execution_time_t device_execution_time_608_m0[] = {
     { ATCA_WRITE,        45}
 };
 
-/*Execution times for ATECC608A-M1 supported commands...*/
+/*Execution times for ATECC608-M1 supported commands...*/
 static const device_execution_time_t device_execution_time_608_m1[] = {
     { ATCA_AES,          27},
     { ATCA_CHECKMAC,     40},
@@ -169,7 +175,7 @@ static const device_execution_time_t device_execution_time_608_m1[] = {
     { ATCA_WRITE,        45}
 };
 
-/*Execution times for ATECC608A-M2 supported commands...*/
+/*Execution times for ATECC608-M2 supported commands...*/
 static const device_execution_time_t device_execution_time_608_m2[] = {
     { ATCA_AES,          27},
     { ATCA_CHECKMAC,     40},
@@ -232,7 +238,7 @@ ATCA_STATUS calib_get_execution_time(uint8_t opcode, ATCACommand ca_cmd)
         no_of_commands = sizeof(device_execution_time_508) / sizeof(device_execution_time_t);
         break;
 
-    case ATECC608A:
+    case ATECC608:
         if (ca_cmd->clock_divider == ATCA_CHIPMODE_CLOCK_DIV_M1)
         {
             execution_times = device_execution_time_608_m1;

@@ -523,8 +523,8 @@ void test_atcac_aes128_gcm(void)
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
 #ifdef ATCA_WOLFSSL
-        status = atcac_aes_gcm_encrypt(&ctx, gcm_test_cases[test_index].plaintext, gcm_test_cases[test_index].text_size, ciphertext, 
-                                        tag, sizeof(tag), gcm_test_cases[test_index].aad, gcm_test_cases[test_index].aad_size);
+        status = atcac_aes_gcm_encrypt(&ctx, gcm_test_cases[test_index].plaintext, gcm_test_cases[test_index].text_size, ciphertext,
+                                       tag, sizeof(tag), gcm_test_cases[test_index].aad, gcm_test_cases[test_index].aad_size);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 #else
         //Add aad to gcm
@@ -592,7 +592,7 @@ void test_atcac_aes128_gcm(void)
 
 #ifdef ATCA_WOLFSSL
         status = atcac_aes_gcm_decrypt(&ctx, gcm_test_cases[test_index].ciphertext, gcm_test_cases[test_index].text_size, plaintext, tag, sizeof(tag),
-                                        gcm_test_cases[test_index].aad, gcm_test_cases[test_index].aad_size, &is_verified);
+                                       gcm_test_cases[test_index].aad, gcm_test_cases[test_index].aad_size, &is_verified);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 #else
 
@@ -678,8 +678,12 @@ void test_atcac_aes128_cmac(void)
     }
 }
 #else
-void test_atcac_aes128_gcm(void) {};
-void test_atcac_aes128_cmac(void) {};
+void test_atcac_aes128_gcm(void)
+{
+};
+void test_atcac_aes128_cmac(void)
+{
+};
 #endif
 
 #define ATCA_SHA_DIGEST_SIZE        32
@@ -713,7 +717,7 @@ void test_atcac_sha256_hmac(void)
         0x5d, 0x1b, 0x56, 0x9f, 0xe7, 0x05, 0xb6, 0x00,
         0x06, 0xfe, 0xec, 0x14, 0x5a, 0x0d, 0xb1, 0xe3
     };
-    atcac_hmac_sha256_ctx   ctx;
+    atcac_hmac_sha256_ctx ctx;
 
     status = atcac_sha256_hmac_init(&ctx, hmac_key, sizeof(hmac_key));
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
@@ -778,10 +782,11 @@ void test_atcac_sha256_hmac_nist(void)
         TEST_ASSERT_EQUAL(ret, ATCA_SUCCESS);
 
         ret = atcac_sha256_hmac_finish(&hmac_ctx, hmac, &hmac_len);
-     
+
         TEST_ASSERT_EQUAL(ret, ATCA_SUCCESS);
         TEST_ASSERT_EQUAL_MEMORY(hmac_ref, hmac, tlen);
-    } while (ret == ATCA_SUCCESS);
+    }
+    while (ret == ATCA_SUCCESS);
 
 #endif
 }

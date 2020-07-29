@@ -5,7 +5,7 @@
  * The Random command generates a random number for use by the system.
  *
  * \note List of devices that support this command - ATSHA204A, ATECC108A,
- *       ATECC508A, ATECC608A. There are differences in the modes that they
+ *       ATECC508A, ATECC608A/B. There are differences in the modes that they
  *       support. Refer to device datasheets for full details.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -44,28 +44,37 @@
 ATCA_STATUS calib_random(ATCADevice device, uint8_t *rand_out)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = device->mCommands;
+    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     do
     {
+        if (device == NULL)
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
+        }
+
+        ca_cmd = device->mCommands;
         // build an random command
         packet.param1 = RANDOM_SEED_UPDATE;
         packet.param2 = 0x0000;
 
         if ((status = atRandom(ca_cmd, &packet)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "atRandom - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
+            ATCA_TRACE(status, "calib_random - execution failed");
             break;
         }
 
         if (packet.data[ATCA_COUNT_IDX] != RANDOM_RSP_SIZE)
         {
-            status = ATCA_RX_FAIL;
+            status = ATCA_TRACE(ATCA_RX_FAIL, "Unexpected response size");
             break;
         }
 
