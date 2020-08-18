@@ -46,6 +46,8 @@ i2c_config_t conf;
 
 const char* TAG = "HAL_I2C";
 
+ATCA_STATUS status;
+
 /** \brief method to change the bus speec of I2C
  * \param[in] iface  interface on which to change bus speed
  * \param[in] speed  baud rate (typically 100000 or 400000)
@@ -213,11 +215,13 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxda
     int low = 0;
     uint8_t min_response_size = 4;
     uint16_t read_length = 2;
+    uint16_t rxdata_max_size;
 
     if ((NULL == cfg) || (NULL == rxlength) || (NULL == rxdata))
     {
         return ATCA_TRACE(ATCA_INVALID_POINTER, "NULL pointer encountered");
     }
+    rxdata_max_size = *rxlength;
     *rxlength = 0;
 
     //Read Length byte i.e. first byte from device
@@ -225,7 +229,7 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxda
     do
     {
         /*Send Word address to device...*/
-        retries = cfg->rx_retries;
+        int retries = cfg->rx_retries;
         while (retries-- > 0 && status != ATCA_SUCCESS)
         {
             status = hal_i2c_send(iface, word_address, &word_address, 0);
@@ -385,7 +389,7 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
     (void)i2c_master_cmd_begin(cfg->atcai2c.bus, cmd, 10);
     (void)i2c_cmd_link_delete(cmd);
 
-    atca_delay_ms(10);   // wait tWHI + tWLO which is configured based on device type and configuration structure
+    atca_delay_ms_internal(10);   // wait tWHI + tWLO which is configured based on device type and configuration structure
 
 //    if (bdrt != 100000)
 //    {
@@ -393,7 +397,7 @@ ATCA_STATUS hal_i2c_wake(ATCAIface iface)
 //    }
 
     rxlen = 4;
-    hal_i2c_receive(iface, data, &rxlen);
+    hal_i2c_receive(iface, 0x03, data, &rxlen);
     if (memcmp(data, expected, 4) == 0)
     {
 //        ESP_LOGI(TAG, "I2C wake successful");
