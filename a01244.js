@@ -1,9 +1,13 @@
 var a01244 =
 [
-    [ "atca_jwt_add_claim_numeric", "a02165.html#ga7073a7cfb7c77ad02923cdbb1226d2ad", null ],
-    [ "atca_jwt_add_claim_string", "a02165.html#ga3e6036b2c0e6dbc96a30f078e56cacff", null ],
-    [ "atca_jwt_check_payload_start", "a02165.html#ga167fe35631a0dd191293c6ad3a6485aa", null ],
-    [ "atca_jwt_finalize", "a02165.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b", null ],
-    [ "atca_jwt_init", "a02165.html#gad3ea09543f0569a5368130f4a3d7bce0", null ],
-    [ "atca_jwt_verify", "a02165.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b", null ]
+    [ "CK_CALLBACK_FUNCTION", "a01244.html#a5235e6437759c93b8189b124c8c807cf", null ],
+    [ "CK_DECLARE_FUNCTION", "a01244.html#a30315d302108bcfb354196f37b16a492", null ],
+    [ "CK_DECLARE_FUNCTION_POINTER", "a01244.html#aad472a68fb8e3eb9ba40169f5180b3b7", null ],
+    [ "CK_PTR", "a01244.html#a423401496b51f5c72a74e5502b47fd7d", null ],
+    [ "NULL_PTR", "a01244.html#a530f11a96e508d171d28564c8dc20942", null ],
+    [ "PKCS11_API", "a01244.html#af7a984e00c3e5ad25e84e20064fdacf5", null ],
+    [ "PKCS11_HELPER_DLL_EXPORT", "a01244.html#a836496360d58ba4ce6f85b9bd9db55fa", null ],
+    [ "PKCS11_HELPER_DLL_IMPORT", "a01244.html#ac37148adb3a42adffda5a54520bafc5d", null ],
+    [ "PKCS11_HELPER_DLL_LOCAL", "a01244.html#ad44738f0fc9eac7e23aed5fd4de71e4d", null ],
+    [ "PKCS11_LOCAL", "a01244.html#aa160340f6de98552412dd32ce4e4f245", null ]
 ];

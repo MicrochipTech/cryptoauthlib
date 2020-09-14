@@ -1,16 +1,17 @@
 var searchData=
 [
-  ['kit_5fid_5ffrom_5fdevtype_4299',['kit_id_from_devtype',['../a02163.html#gacd2ec023c7cca9dff92c411d7c8bbb73',1,'kit_protocol.c']]],
-  ['kit_5fidle_4300',['kit_idle',['../a02163.html#gaeaee19ff7623f0eab9839e68dae583af',1,'kit_protocol.c']]],
-  ['kit_5finit_4301',['kit_init',['../a02163.html#ga8fb98d1c372e7e75f99a2f7d1182b877',1,'kit_protocol.c']]],
-  ['kit_5finterface_5ffrom_5fkittype_4302',['kit_interface_from_kittype',['../a02163.html#ga6ba58bdf1ef6c9dabb64b56d51037c87',1,'kit_protocol.c']]],
-  ['kit_5fparse_5frsp_4303',['kit_parse_rsp',['../a02163.html#ga8bf59f4218d312568b769b8b8e5c563e',1,'kit_protocol.c']]],
-  ['kit_5fphy_5fnum_5ffound_4304',['kit_phy_num_found',['../a02163.html#ga11ee6ec0b2b7eb2ff2472f92208c3205',1,'hal_all_platforms_kit_hidapi.c']]],
-  ['kit_5fphy_5freceive_4305',['kit_phy_receive',['../a02163.html#gabb507252b1011037d6d2cce7d91b01d0',1,'kit_phy_receive(ATCAIface iface, uint8_t *rxdata, int *rxsize):&#160;hal_all_platforms_kit_hidapi.c'],['../a02163.html#gaae5e94b6080d4279474eb3e98bc58901',1,'kit_phy_receive(ATCAIface iface, char *rxdata, int *rxsize):&#160;hal_win_kit_hid.c']]],
-  ['kit_5fphy_5fsend_4306',['kit_phy_send',['../a02163.html#gabd452e3edb32ea0d22653c182b4e1198',1,'kit_phy_send(ATCAIface iface, uint8_t *txdata, int txlength):&#160;hal_all_platforms_kit_hidapi.c'],['../a02163.html#ga020fb0be6c73515122cf4b9f749fd97d',1,'kit_phy_send(ATCAIface iface, const char *txdata, int txlength):&#160;hal_win_kit_hid.c']]],
-  ['kit_5freceive_4307',['kit_receive',['../a02163.html#gac31292c951353a25a81c7fe1308589c0',1,'kit_protocol.c']]],
-  ['kit_5fsend_4308',['kit_send',['../a02163.html#gacd6849349e1ba6ccbb4587a1d80562c8',1,'kit_protocol.c']]],
-  ['kit_5fsleep_4309',['kit_sleep',['../a02163.html#gaf6054a0c971830411d5008b94923bdd8',1,'kit_protocol.c']]],
-  ['kit_5fwake_4310',['kit_wake',['../a02163.html#gaf7ce58d02b067b956abd32127f5519e9',1,'kit_protocol.c']]],
-  ['kit_5fwrap_5fcmd_4311',['kit_wrap_cmd',['../a02163.html#ga0f09f4b79c681f54b88a8f71bca0d4c4',1,'kit_protocol.c']]]
+  ['initatcacommand_4280',['initATCACommand',['../a08580.html#gaf4177bd66c5981ba86511608150c024e',1,'initATCACommand(ATCADeviceType device_type, ATCACommand ca_cmd):&#160;atca_command.c'],['../a08580.html#gaf4177bd66c5981ba86511608150c024e',1,'initATCACommand(ATCADeviceType device_type, ATCACommand ca_cmd):&#160;atca_command.c']]],
+  ['initatcadevice_4281',['initATCADevice',['../a08581.html#ga8eec7f2190d1f9bda6684f5d2177db15',1,'atca_device.c']]],
+  ['initatcaiface_4282',['initATCAIface',['../a08582.html#ga3a31087729a7a2e9a624572f234809fc',1,'atca_iface.c']]],
+  ['io_5fprotection_5fget_5fkey_4283',['io_protection_get_key',['../a00047.html#adb01c317f81145702f564ca1d46ec33b',1,'io_protection_key.h']]],
+  ['io_5fprotection_5fset_5fkey_4284',['io_protection_set_key',['../a00047.html#a8e02c996fdc083bb4c4444057e429a44',1,'io_protection_key.h']]],
+  ['isalpha_4285',['isAlpha',['../a00176.html#a592c23e94097ad5e212beb6390aa88c6',1,'isAlpha(char c):&#160;atca_helpers.c'],['../a00179.html#a592c23e94097ad5e212beb6390aa88c6',1,'isAlpha(char c):&#160;atca_helpers.c']]],
+  ['isatcaerror_4286',['isATCAError',['../a00257.html#ae41108996848638519849163e51cd10a',1,'isATCAError(uint8_t *data):&#160;calib_command.c'],['../a00260.html#ae41108996848638519849163e51cd10a',1,'isATCAError(uint8_t *data):&#160;calib_command.c']]],
+  ['isbase64_4287',['isBase64',['../a00176.html#ac873a37c53fdd922d5b36efd737e3ec3',1,'isBase64(char c, const uint8_t *rules):&#160;atca_helpers.c'],['../a00179.html#ac873a37c53fdd922d5b36efd737e3ec3',1,'isBase64(char c, const uint8_t *rules):&#160;atca_helpers.c']]],
+  ['isbase64digit_4288',['isBase64Digit',['../a00176.html#ad10d15454308230fbef54bdd43001ed2',1,'isBase64Digit(char c, const uint8_t *rules):&#160;atca_helpers.c'],['../a00179.html#ad10d15454308230fbef54bdd43001ed2',1,'isBase64Digit(char c, const uint8_t *rules):&#160;atca_helpers.c']]],
+  ['isdigit_4289',['isDigit',['../a00176.html#a7a929bf65cbc777bab7e533a2755cfad',1,'isDigit(char c):&#160;atca_helpers.c'],['../a00179.html#a7a929bf65cbc777bab7e533a2755cfad',1,'isDigit(char c):&#160;atca_helpers.c']]],
+  ['ishex_4290',['isHex',['../a00176.html#ab7ca9ee391118aafe6f3cf7df4fa5de3',1,'isHex(char c):&#160;atca_helpers.c'],['../a00179.html#ab7ca9ee391118aafe6f3cf7df4fa5de3',1,'isHex(char c):&#160;atca_helpers.c']]],
+  ['ishexalpha_4291',['isHexAlpha',['../a00176.html#a78abefc293c0a04d8ef649c94c8a1057',1,'isHexAlpha(char c):&#160;atca_helpers.c'],['../a00179.html#a78abefc293c0a04d8ef649c94c8a1057',1,'isHexAlpha(char c):&#160;atca_helpers.c']]],
+  ['ishexdigit_4292',['isHexDigit',['../a00176.html#a39003da4dc8a0b8999f1325c2f96f641',1,'isHexDigit(char c):&#160;atca_helpers.c'],['../a00179.html#a39003da4dc8a0b8999f1325c2f96f641',1,'isHexDigit(char c):&#160;atca_helpers.c']]],
+  ['iswhitespace_4293',['isWhiteSpace',['../a00176.html#ab3db1b55b966b792e8308a1819933c0e',1,'isWhiteSpace(char c):&#160;atca_helpers.c'],['../a00179.html#ab3db1b55b966b792e8308a1819933c0e',1,'isWhiteSpace(char c):&#160;atca_helpers.c']]]
 ];

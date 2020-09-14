@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: symmetric_authentication.h File Reference</title>
+<title>CryptoAuthLib: symmetric_authentication.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.2</span>
+   &#160;<span id="projectnumber">v3.2.3</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -87,19 +87,19 @@ $(document).ready(function(){initNavTree('a00023.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">symmetric_authentication.h File Reference</div>  </div>
+<div class="title">symmetric_authentication.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p>Contains API for performing the symmetric Authentication between the Host and the device.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01109_source.html">cryptoauthlib.h</a>&quot;</code><br />
-</div>
-<p><a href="a00023_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a00386_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00503_source.html">host/atca_host.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00026_source.html">symmetric_authentication.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a9a41d1600ffd22de067ded50447d359b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#a9a41d1600ffd22de067ded50447d359b">symmetric_authenticate</a> (uint8_t slot, const uint8_t *master_key, const uint8_t *rand_number)</td></tr>
+<tr class="memitem:a9a41d1600ffd22de067ded50447d359b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#a9a41d1600ffd22de067ded50447d359b">symmetric_authenticate</a> (uint8_t slot, const uint8_t *master_key, const uint8_t *rand_number)</td></tr>
 <tr class="memdesc:a9a41d1600ffd22de067ded50447d359b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function which does the authentication between the host and device.  <a href="a00023.html#a9a41d1600ffd22de067ded50447d359b">More...</a><br /></td></tr>
 <tr class="separator:a9a41d1600ffd22de067ded50447d359b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -114,7 +114,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> symmetric_authenticate </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> symmetric_authenticate </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>slot</em>, </td>
@@ -157,7 +157,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_33c02716943ce5dc61f9f67597f7f946.html">app</a></li><li class="navelem"><a class="el" href="dir_59397c220c08f5657ed63de064546fea.html">ip_protection</a></li><li class="navelem"><a class="el" href="a00023.html">symmetric_authentication.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_055632e474cc4a9b908bc06080f6f8f3.html">cryptauthlib-v3.2.3_</a></li><li class="navelem"><a class="el" href="dir_399d7797d9778e7f07e99d60c48bb664.html">app</a></li><li class="navelem"><a class="el" href="dir_76982c2673c19bbf9b789fcf4c8177d8.html">ip_protection</a></li><li class="navelem"><a class="el" href="a00023.html">symmetric_authentication.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

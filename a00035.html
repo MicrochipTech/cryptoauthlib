@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: example_pkcs11_config.c File Reference</title>
+<title>CryptoAuthLib: example_cert_chain.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.2</span>
+   &#160;<span id="projectnumber">v3.2.3</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,223 +85,48 @@ $(document).ready(function(){initNavTree('a00035.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">example_pkcs11_config.c File Reference</div>  </div>
+<div class="title">example_cert_chain.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="a01109_source.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;pkcs11_config.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01337_source.html">pkcs11/pkcs11_object.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01361_source.html">pkcs11/pkcs11_slot.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00032_source.html">example_cert_chain.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ad133b446f4dd937c7361ef008ebb5f28"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ad133b446f4dd937c7361ef008ebb5f28">pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS</a>&#160;&#160;&#160;&quot;device&quot;</td></tr>
-<tr class="separator:ad133b446f4dd937c7361ef008ebb5f28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6687a6580a35d8b23bbbc9b678126885"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a6687a6580a35d8b23bbbc9b678126885">pkcs11configLABEL_JITP_CERTIFICATE</a>&#160;&#160;&#160;&quot;signer&quot;</td></tr>
-<tr class="separator:a6687a6580a35d8b23bbbc9b678126885"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38f9707de35016d7d7c52a6113f0d0df"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a38f9707de35016d7d7c52a6113f0d0df">pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS</a>&#160;&#160;&#160;<a class="el" href="a00035.html#ad133b446f4dd937c7361ef008ebb5f28">pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS</a></td></tr>
-<tr class="separator:a38f9707de35016d7d7c52a6113f0d0df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aabcf202a3a7ccad95b4388de2fccaee3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#aabcf202a3a7ccad95b4388de2fccaee3">pkcs11configLABEL_DEVICE_PUBLIC_KEY_FOR_TLS</a>&#160;&#160;&#160;<a class="el" href="a00035.html#ad133b446f4dd937c7361ef008ebb5f28">pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS</a></td></tr>
-<tr class="separator:aabcf202a3a7ccad95b4388de2fccaee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a7afb784fad2dd8b8b2befd6159e2a053"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a7afb784fad2dd8b8b2befd6159e2a053">pkcs11_config_cert</a> (<a class="el" href="a01316.html#adb828773fc77a4f1dbb559ddedcc99c4">pkcs11_lib_ctx_ptr</a> pLibCtx, <a class="el" href="a01361.html#ac77ca422293b6ec4789d1746b276eeaf">pkcs11_slot_ctx_ptr</a> pSlot, <a class="el" href="a01337.html#a6cb03ffd9272d5924a1ef6cee8e3dab1">pkcs11_object_ptr</a> pObject, <a class="el" href="a01379.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pLabel)</td></tr>
-<tr class="separator:a7afb784fad2dd8b8b2befd6159e2a053"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e5ec966dd01f9eb6f1cc2f4b3085f9f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a0e5ec966dd01f9eb6f1cc2f4b3085f9f">pkcs11_config_key</a> (<a class="el" href="a01316.html#adb828773fc77a4f1dbb559ddedcc99c4">pkcs11_lib_ctx_ptr</a> pLibCtx, <a class="el" href="a01361.html#ac77ca422293b6ec4789d1746b276eeaf">pkcs11_slot_ctx_ptr</a> pSlot, <a class="el" href="a01337.html#a6cb03ffd9272d5924a1ef6cee8e3dab1">pkcs11_object_ptr</a> pObject, <a class="el" href="a01379.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pLabel)</td></tr>
-<tr class="separator:a0e5ec966dd01f9eb6f1cc2f4b3085f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27c492a61f8600152b2ef86230d44c9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a27c492a61f8600152b2ef86230d44c9b">pkcs11_config_load_objects</a> (<a class="el" href="a01361.html#ac77ca422293b6ec4789d1746b276eeaf">pkcs11_slot_ctx_ptr</a> pSlot)</td></tr>
-<tr class="separator:a27c492a61f8600152b2ef86230d44c9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a00212_source.html">atcacert/atcacert_def.h</a>&quot;</code><br />
+</div>
+<p><a href="a00035_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ac78f00c0f99695504ba10c9c329a135b"><td class="memItemLeft" align="right" valign="top">const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ac78f00c0f99695504ba10c9c329a135b">atecc608_config</a> []</td></tr>
-<tr class="separator:ac78f00c0f99695504ba10c9c329a135b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55a07310d9b492652d6f40797d2967de"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a08583.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a55a07310d9b492652d6f40797d2967de">g_cert_def_1_signer</a></td></tr>
+<tr class="separator:a55a07310d9b492652d6f40797d2967de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad3677dc34bfab2f4a64e7ddff0df47a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a08583.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#aad3677dc34bfab2f4a64e7ddff0df47a">g_cert_def_2_device</a></td></tr>
+<tr class="separator:aad3677dc34bfab2f4a64e7ddff0df47a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ad133b446f4dd937c7361ef008ebb5f28"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad133b446f4dd937c7361ef008ebb5f28">&#9670;&nbsp;</a></span>pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS&#160;&#160;&#160;&quot;device&quot;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a38f9707de35016d7d7c52a6113f0d0df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a38f9707de35016d7d7c52a6113f0d0df">&#9670;&nbsp;</a></span>pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS&#160;&#160;&#160;<a class="el" href="a00035.html#ad133b446f4dd937c7361ef008ebb5f28">pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aabcf202a3a7ccad95b4388de2fccaee3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aabcf202a3a7ccad95b4388de2fccaee3">&#9670;&nbsp;</a></span>pkcs11configLABEL_DEVICE_PUBLIC_KEY_FOR_TLS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define pkcs11configLABEL_DEVICE_PUBLIC_KEY_FOR_TLS&#160;&#160;&#160;<a class="el" href="a00035.html#ad133b446f4dd937c7361ef008ebb5f28">pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a6687a6580a35d8b23bbbc9b678126885"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6687a6580a35d8b23bbbc9b678126885">&#9670;&nbsp;</a></span>pkcs11configLABEL_JITP_CERTIFICATE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define pkcs11configLABEL_JITP_CERTIFICATE&#160;&#160;&#160;&quot;signer&quot;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a7afb784fad2dd8b8b2befd6159e2a053"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7afb784fad2dd8b8b2befd6159e2a053">&#9670;&nbsp;</a></span>pkcs11_config_cert()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> pkcs11_config_cert </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01316.html#adb828773fc77a4f1dbb559ddedcc99c4">pkcs11_lib_ctx_ptr</a>&#160;</td>
-          <td class="paramname"><em>pLibCtx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01361.html#ac77ca422293b6ec4789d1746b276eeaf">pkcs11_slot_ctx_ptr</a>&#160;</td>
-          <td class="paramname"><em>pSlot</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01337.html#a6cb03ffd9272d5924a1ef6cee8e3dab1">pkcs11_object_ptr</a>&#160;</td>
-          <td class="paramname"><em>pObject</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01379.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a>&#160;</td>
-          <td class="paramname"><em>pLabel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0e5ec966dd01f9eb6f1cc2f4b3085f9f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e5ec966dd01f9eb6f1cc2f4b3085f9f">&#9670;&nbsp;</a></span>pkcs11_config_key()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> pkcs11_config_key </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01316.html#adb828773fc77a4f1dbb559ddedcc99c4">pkcs11_lib_ctx_ptr</a>&#160;</td>
-          <td class="paramname"><em>pLibCtx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01361.html#ac77ca422293b6ec4789d1746b276eeaf">pkcs11_slot_ctx_ptr</a>&#160;</td>
-          <td class="paramname"><em>pSlot</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01337.html#a6cb03ffd9272d5924a1ef6cee8e3dab1">pkcs11_object_ptr</a>&#160;</td>
-          <td class="paramname"><em>pObject</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01379.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a>&#160;</td>
-          <td class="paramname"><em>pLabel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a27c492a61f8600152b2ef86230d44c9b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27c492a61f8600152b2ef86230d44c9b">&#9670;&nbsp;</a></span>pkcs11_config_load_objects()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> pkcs11_config_load_objects </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01361.html#ac77ca422293b6ec4789d1746b276eeaf">pkcs11_slot_ctx_ptr</a>&#160;</td>
-          <td class="paramname"><em>pSlot</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="ac78f00c0f99695504ba10c9c329a135b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac78f00c0f99695504ba10c9c329a135b">&#9670;&nbsp;</a></span>atecc608_config</h2>
+<a id="a55a07310d9b492652d6f40797d2967de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55a07310d9b492652d6f40797d2967de">&#9670;&nbsp;</a></span>g_cert_def_1_signer</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint8_t atecc608_config[]</td>
+          <td class="memname">const <a class="el" href="a08583.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> g_cert_def_1_signer</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
-<div class="line">    0x01, 0x23, 0x00, 0x00, 0x00, 0x00, 0x60, 0x01, 0x00, 0x00, 0x00, 0x00, 0xEE, 0x01, 0x01, 0x00,</div>
-<div class="line">    0xC0, 0x00, 0x00, 0x01, 0x8F, 0x20, 0xC4, 0x44, 0x87, 0x20, 0x87, 0x20, 0x8F, 0x0F, 0xC4, 0x36,</div>
-<div class="line">    0x9F, 0x0F, 0x82, 0x20, 0x0F, 0x0F, 0xC4, 0x44, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F,</div>
-<div class="line">    0x0F, 0x0F, 0x0F, 0x0F, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF,</div>
-<div class="line">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,</div>
-<div class="line">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,</div>
-<div class="line">    0x33, 0x00, 0x1C, 0x00, 0x13, 0x00, 0x13, 0x00, 0x7C, 0x00, 0x1C, 0x00, 0x3C, 0x00, 0x33, 0x00,</div>
-<div class="line">    0x3C, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x30, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x30, 0x00,</div>
-<div class="line">}</div>
-</div><!-- fragment --><p>Standard Configuration Structure for ATECC608 devices </p>
+
+</div>
+</div>
+<a id="aad3677dc34bfab2f4a64e7ddff0df47a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad3677dc34bfab2f4a64e7ddff0df47a">&#9670;&nbsp;</a></span>g_cert_def_2_device</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a08583.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> g_cert_def_2_device</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -310,7 +135,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_33c02716943ce5dc61f9f67597f7f946.html">app</a></li><li class="navelem"><a class="el" href="dir_ed794c25022e1cec4cdfc5066ee727fb.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00035.html">example_pkcs11_config.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_055632e474cc4a9b908bc06080f6f8f3.html">cryptauthlib-v3.2.3_</a></li><li class="navelem"><a class="el" href="dir_399d7797d9778e7f07e99d60c48bb664.html">app</a></li><li class="navelem"><a class="el" href="dir_17462714a1a66972944d73afdac92e54.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00035.html">example_cert_chain.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

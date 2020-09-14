@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_windows.c File Reference</title>
+<title>CryptoAuthLib: hal_linux.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.2</span>
+   &#160;<span id="projectnumber">v3.2.3</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -87,46 +87,54 @@ $(document).ready(function(){initNavTree('a01214.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">hal_windows.c File Reference</div>  </div>
+<div class="title">hal_linux.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for windows timer functions.  
+<p>Timer Utility Functions for Linux.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;windows.h&gt;</code><br />
-<code>#include &lt;math.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a01118_source.html">atca_hal.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
+<code>#include &lt;sys/types.h&gt;</code><br />
+<code>#include &lt;sys/stat.h&gt;</code><br />
+<code>#include &lt;sys/mman.h&gt;</code><br />
+<code>#include &lt;fcntl.h&gt;</code><br />
+<code>#include &lt;pthread.h&gt;</code><br />
+<code>#include &lt;errno.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00395_source.html">atca_hal.h</a>&quot;</code><br />
+<code>#include &lt;semaphore.h&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga7e9019810ba5ab81b256282392cd5079"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga7e9019810ba5ab81b256282392cd5079">hal_delay_us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga7e9019810ba5ab81b256282392cd5079"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of microseconds.  <a href="a02163.html#ga7e9019810ba5ab81b256282392cd5079">More...</a><br /></td></tr>
+<tr class="memitem:ga7e9019810ba5ab81b256282392cd5079"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a13296.html#ga7e9019810ba5ab81b256282392cd5079">hal_delay_us</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga7e9019810ba5ab81b256282392cd5079"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of microseconds.  <a href="a13296.html#ga7e9019810ba5ab81b256282392cd5079">More...</a><br /></td></tr>
 <tr class="separator:ga7e9019810ba5ab81b256282392cd5079"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa7df07f9efb18d8cef1d9602372aca8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#gaa7df07f9efb18d8cef1d9602372aca8c">hal_delay_10us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:gaa7df07f9efb18d8cef1d9602372aca8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of tens of microseconds.  <a href="a02163.html#gaa7df07f9efb18d8cef1d9602372aca8c">More...</a><br /></td></tr>
+<tr class="memitem:gaa7df07f9efb18d8cef1d9602372aca8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a13296.html#gaa7df07f9efb18d8cef1d9602372aca8c">hal_delay_10us</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:gaa7df07f9efb18d8cef1d9602372aca8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of tens of microseconds.  <a href="a13296.html#gaa7df07f9efb18d8cef1d9602372aca8c">More...</a><br /></td></tr>
 <tr class="separator:gaa7df07f9efb18d8cef1d9602372aca8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#gadc23b8130e72a445f76c68d62e8c95c5">hal_delay_ms</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:gadc23b8130e72a445f76c68d62e8c95c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of milliseconds.  <a href="a02163.html#gadc23b8130e72a445f76c68d62e8c95c5">More...</a><br /></td></tr>
+<tr class="memitem:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a13296.html#gadc23b8130e72a445f76c68d62e8c95c5">hal_delay_ms</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:gadc23b8130e72a445f76c68d62e8c95c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of milliseconds.  <a href="a13296.html#gadc23b8130e72a445f76c68d62e8c95c5">More...</a><br /></td></tr>
 <tr class="separator:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab289a3949663589ac6be71d72fb18278"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#gab289a3949663589ac6be71d72fb18278">hal_create_mutex</a> (void **ppMutex, char *pName)</td></tr>
-<tr class="memdesc:gab289a3949663589ac6be71d72fb18278"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional hal interfaces.  <a href="a02163.html#gab289a3949663589ac6be71d72fb18278">More...</a><br /></td></tr>
+<tr class="memitem:gab289a3949663589ac6be71d72fb18278"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00191.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a13296.html#gab289a3949663589ac6be71d72fb18278">hal_create_mutex</a> (void **ppMutex, char *pName)</td></tr>
+<tr class="memdesc:gab289a3949663589ac6be71d72fb18278"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional hal interfaces.  <a href="a13296.html#gab289a3949663589ac6be71d72fb18278">More...</a><br /></td></tr>
 <tr class="separator:gab289a3949663589ac6be71d72fb18278"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga4589d7b3e951f40b7928f1cf31f7ddf3">hal_destroy_mutex</a> (void *pMutex)</td></tr>
+<tr class="memitem:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00191.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a13296.html#ga4589d7b3e951f40b7928f1cf31f7ddf3">hal_destroy_mutex</a> (void *pMutex)</td></tr>
 <tr class="separator:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#gad4cd02ff7ae4e75844eab4e84eb61994">hal_lock_mutex</a> (void *pMutex)</td></tr>
+<tr class="memitem:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00191.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a13296.html#gad4cd02ff7ae4e75844eab4e84eb61994">hal_lock_mutex</a> (void *pMutex)</td></tr>
 <tr class="separator:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31fd8170a49623686543f6247b883bd1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga31fd8170a49623686543f6247b883bd1">hal_unlock_mutex</a> (void *pMutex)</td></tr>
+<tr class="memitem:ga31fd8170a49623686543f6247b883bd1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00191.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a13296.html#ga31fd8170a49623686543f6247b883bd1">hal_unlock_mutex</a> (void *pMutex)</td></tr>
 <tr class="separator:ga31fd8170a49623686543f6247b883bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for windows timer functions. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+<div class="textblock"><p>Timer Utility Functions for Linux. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_a05a22e5f002d7c1de78eecb12447d7f.html">hal</a></li><li class="navelem"><a class="el" href="a01214.html">hal_windows.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_055632e474cc4a9b908bc06080f6f8f3.html">cryptauthlib-v3.2.3_</a></li><li class="navelem"><a class="el" href="dir_ca3d4037a802337c07b97f564c6f6647.html">lib</a></li><li class="navelem"><a class="el" href="dir_facb1dd26924440611a9be16f91f1953.html">hal</a></li><li class="navelem"><a class="el" href="a01214.html">hal_linux.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

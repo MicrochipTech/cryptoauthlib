@@ -1,18 +1,13 @@
 var a01229 =
 [
-    [ "DEBUG_PIN_1", "a02163.html#gab12a92582aefe426bb194e0c298e8f98", null ],
-    [ "DEBUG_PIN_2", "a02163.html#ga6a2579114d13238c7ba20d147a74090a", null ],
-    [ "MAX_SWI_BUSES", "a02163.html#gaf9d9d027ce20f528edea144203141714", null ],
-    [ "RECEIVE_MODE", "a02163.html#gab45577245cf4a8ead70e2d56965f2df3", null ],
-    [ "RX_DELAY", "a02163.html#gac55a27e4c3eae59bb1687eb7e8d1fe4b", null ],
-    [ "TRANSMIT_MODE", "a02163.html#ga4b85133b317e72410ea0762d637d3460", null ],
-    [ "TX_DELAY", "a02163.html#ga3f3816567a2f513dd0e1f9eb17992fb2", null ],
-    [ "ATCASWIMaster_t", "a02163.html#ga626ead73d3ae1cc2ed09d5fa509f80ff", null ],
-    [ "swi_uart_deinit", "a02163.html#ga0b1aad3936bf003686d8db7fa2be5132", null ],
-    [ "swi_uart_discover_buses", "a02163.html#gad640b598d581ee7c8a4c804bee602906", null ],
-    [ "swi_uart_init", "a02163.html#ga003b63648f1a5f9eba274760559688f2", null ],
-    [ "swi_uart_mode", "a02163.html#gacc2a96c86ce4c07249b81bc6a7eb2e41", null ],
-    [ "swi_uart_receive_byte", "a02163.html#ga93f3dab17c14f71641ca970998ede823", null ],
-    [ "swi_uart_send_byte", "a02163.html#ga4a4d491006d9683d67838963706ac9c1", null ],
-    [ "swi_uart_setbaud", "a02163.html#gaba296f70baf68b768d6c4bb9cf7ba67d", null ]
+    [ "hal_i2c_discover_buses", "a13296.html#ga05700385437884cc7b28c38d33e84f8c", null ],
+    [ "hal_i2c_discover_devices", "a13296.html#gac7644e62498a596c09952ee3b28017b9", null ],
+    [ "hal_i2c_idle", "a13296.html#ga9317303ada721ff3f97e7aad69437a30", null ],
+    [ "hal_i2c_init", "a13296.html#ga09e7f465a040fbd19ea136269571de3c", null ],
+    [ "hal_i2c_post_init", "a13296.html#gafbe53519362f18c2688d10da6f7c618f", null ],
+    [ "hal_i2c_receive", "a13296.html#ga41a2b07d55558b9726abe28fd8431e90", null ],
+    [ "hal_i2c_release", "a13296.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
+    [ "hal_i2c_send", "a13296.html#gacc9a889e19d2f1a475a39391565b66dd", null ],
+    [ "hal_i2c_sleep", "a13296.html#ga3f89bae6a625d5f37abdcc99408def27", null ],
+    [ "hal_i2c_wake", "a13296.html#gad4df1b6755e2d5b5d9e810371e45ca8c", null ]
 ];

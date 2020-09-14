@@ -1,14 +1,13 @@
 var a01223 =
 [
-    [ "KIT_MSG_SIZE", "a02163.html#ga0810d89c328e48fd91eb604323cca4e9", null ],
-    [ "KIT_RX_WRAP_SIZE", "a02163.html#ga59e33124fc2fa800cc9c90a6ee3ff543", null ],
-    [ "KIT_TX_WRAP_SIZE", "a02163.html#ga8a649555029d4f23edfc15a8c01b2d3d", null ],
-    [ "kit_idle", "a02163.html#gaeaee19ff7623f0eab9839e68dae583af", null ],
-    [ "kit_init", "a02163.html#ga8fb98d1c372e7e75f99a2f7d1182b877", null ],
-    [ "kit_parse_rsp", "a02163.html#ga8bf59f4218d312568b769b8b8e5c563e", null ],
-    [ "kit_receive", "a02163.html#gac31292c951353a25a81c7fe1308589c0", null ],
-    [ "kit_send", "a02163.html#gacd6849349e1ba6ccbb4587a1d80562c8", null ],
-    [ "kit_sleep", "a02163.html#gaf6054a0c971830411d5008b94923bdd8", null ],
-    [ "kit_wake", "a02163.html#gaf7ce58d02b067b956abd32127f5519e9", null ],
-    [ "kit_wrap_cmd", "a02163.html#ga0f09f4b79c681f54b88a8f71bca0d4c4", null ]
+    [ "hal_i2c_discover_buses", "a13296.html#ga05700385437884cc7b28c38d33e84f8c", null ],
+    [ "hal_i2c_discover_devices", "a13296.html#gac7644e62498a596c09952ee3b28017b9", null ],
+    [ "hal_i2c_idle", "a13296.html#ga9317303ada721ff3f97e7aad69437a30", null ],
+    [ "hal_i2c_init", "a13296.html#ga09e7f465a040fbd19ea136269571de3c", null ],
+    [ "hal_i2c_post_init", "a13296.html#gafbe53519362f18c2688d10da6f7c618f", null ],
+    [ "hal_i2c_receive", "a13296.html#ga41a2b07d55558b9726abe28fd8431e90", null ],
+    [ "hal_i2c_release", "a13296.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
+    [ "hal_i2c_send", "a13296.html#gacc9a889e19d2f1a475a39391565b66dd", null ],
+    [ "hal_i2c_sleep", "a13296.html#ga3f89bae6a625d5f37abdcc99408def27", null ],
+    [ "hal_i2c_wake", "a13296.html#gad4df1b6755e2d5b5d9e810371e45ca8c", null ]
 ];

@@ -1,9 +1,14 @@
 var a01328 =
 [
-    [ "PCKS11_MECH_ECC508_EC_CAPABILITY", "a02167.html#ga148b7615f20d8432f0e5ac4e6683aa7d", null ],
-    [ "TABLE_SIZE", "a02167.html#ga178ac9759ade77839a52329537e3784b", null ],
-    [ "pcks11_mech_table_e", "a02167.html#gadbb018cf35cbcf4935ee405f069dbdb9", null ],
-    [ "pcks11_mech_table_ptr", "a02167.html#ga8fa74592503b8d6fee8164d6ffbc1df0", null ],
-    [ "pkcs11_mech_get_list", "a02167.html#ga9678c431b8d5479e53417b109b32c20f", null ],
-    [ "pkcs_mech_get_info", "a02167.html#gac66d133f84b945f9c26727ee9f7a7d57", null ]
+    [ "_pkcs11_session_ctx", "a13549.html", "a13549" ],
+    [ "pkcs11_session_ctx", "a01328.html#ace788f45b1b41ff633b00645960a1e56", null ],
+    [ "pkcs11_session_ctx_ptr", "a01328.html#a4088a7eeba6972be68d129b499a30161", null ],
+    [ "pkcs11_session_authorize", "a01328.html#ac31d85d2efc0eadb6b0c7b5264554a59", null ],
+    [ "pkcs11_session_check", "a13300.html#ga7eb04614661e0cedf6cb926787f5ff9b", null ],
+    [ "pkcs11_session_close", "a13300.html#gac082a1a5af11c561af58d333414f4a27", null ],
+    [ "pkcs11_session_closeall", "a13300.html#ga43525e77f9049b545fa09129cacf9c9a", null ],
+    [ "pkcs11_session_get_info", "a13300.html#ga236a002e179ed36a0b81399a3e11fcb8", null ],
+    [ "pkcs11_session_login", "a13300.html#ga4d70fd7e9799d0428c308a3e1ed146df", null ],
+    [ "pkcs11_session_logout", "a13300.html#gafefc70d16edaf998a521daf6b8aed3e6", null ],
+    [ "pkcs11_session_open", "a13300.html#gad015e297476bdc4df61870f8d1209ddb", null ]
 ];

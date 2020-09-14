@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: api_206a.h File Reference</title>
+<title>CryptoAuthLib: api_206a.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.2</span>
+   &#160;<span id="projectnumber">v3.2.3</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,163 +85,65 @@ $(document).ready(function(){initNavTree('a00014.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">api_206a.h File Reference</div>  </div>
+<div class="title">api_206a.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Provides api interfaces to use with ATSHA206A device.  
+<p>Provides APIs to use with ATSHA206A device.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00914_source.html">atca_status.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00878_source.html">atca_command.h</a>&quot;</code><br />
-</div>
-<p><a href="a00014_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a20d1d9fad06e15a8c6562c8d86037ec4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a20d1d9fad06e15a8c6562c8d86037ec4">ATCA_SHA206A_ZONE_WRITE_LOCK</a>&#160;&#160;&#160;0x20</td></tr>
-<tr class="separator:a20d1d9fad06e15a8c6562c8d86037ec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5dd0dcb6140ebac7d92896c70261403b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a5dd0dcb6140ebac7d92896c70261403b">ATCA_SHA206A_DKEY_CONSUMPTION_MASK</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:a5dd0dcb6140ebac7d92896c70261403b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1576a6197e391a3a189187ac559f9395"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a1576a6197e391a3a189187ac559f9395">ATCA_SHA206A_PKEY_CONSUMPTION_MASK</a>&#160;&#160;&#160;0x02</td></tr>
-<tr class="separator:a1576a6197e391a3a189187ac559f9395"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aabc20693d3599e4504d95333bfd68080"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#aabc20693d3599e4504d95333bfd68080">ATCA_SHA206A_SYMMETRIC_KEY_ID_SLOT</a>&#160;&#160;&#160;0X07</td></tr>
-<tr class="separator:aabc20693d3599e4504d95333bfd68080"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:abed82baf7f470b522273a3e37c24c600"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="a00014.html#abed82baf7f470b522273a3e37c24c600aa2dfe480d909da1165603db89b5ed55d">SHA206A_DATA_STORE0</a> =8, 
-<a class="el" href="a00014.html#abed82baf7f470b522273a3e37c24c600a56b6c7e550081b4378c71b9cd65d7293">SHA206A_DATA_STORE1</a>, 
-<a class="el" href="a00014.html#abed82baf7f470b522273a3e37c24c600af4ab5ae94067d1aa5894c5f56bdc46a0">SHA206A_DATA_STORE2</a>
- }</td></tr>
-<tr class="separator:abed82baf7f470b522273a3e37c24c600"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00386_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00017_source.html">api_206a.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a1e33c650348129b8d82a8370e38b4c6c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a1e33c650348129b8d82a8370e38b4c6c">sha206a_diversify_parent_key</a> (uint8_t *parent_key, uint8_t *diversified_key)</td></tr>
+<tr class="memitem:a1e33c650348129b8d82a8370e38b4c6c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a1e33c650348129b8d82a8370e38b4c6c">sha206a_diversify_parent_key</a> (uint8_t *parent_key, uint8_t *diversified_key)</td></tr>
 <tr class="memdesc:a1e33c650348129b8d82a8370e38b4c6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the diversified key based on the parent key provided and device serial number.  <a href="a00014.html#a1e33c650348129b8d82a8370e38b4c6c">More...</a><br /></td></tr>
 <tr class="separator:a1e33c650348129b8d82a8370e38b4c6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbdb8aef5ee59e66c2e7b28f19edc712"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#afbdb8aef5ee59e66c2e7b28f19edc712">sha206a_generate_derive_key</a> (uint8_t *parent_key, uint8_t *derived_key, uint8_t param1, uint16_t param2)</td></tr>
+<tr class="memitem:afbdb8aef5ee59e66c2e7b28f19edc712"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#afbdb8aef5ee59e66c2e7b28f19edc712">sha206a_generate_derive_key</a> (uint8_t *parent_key, uint8_t *derived_key, uint8_t param1, uint16_t param2)</td></tr>
 <tr class="memdesc:afbdb8aef5ee59e66c2e7b28f19edc712"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the derived key based on the parent key and other parameters provided.  <a href="a00014.html#afbdb8aef5ee59e66c2e7b28f19edc712">More...</a><br /></td></tr>
 <tr class="separator:afbdb8aef5ee59e66c2e7b28f19edc712"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c9123a2363452de20ceefc9b020aac0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a9c9123a2363452de20ceefc9b020aac0">sha206a_generate_challenge_response_pair</a> (uint8_t *key, uint8_t *challenge, uint8_t *response)</td></tr>
+<tr class="memitem:a9c9123a2363452de20ceefc9b020aac0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a9c9123a2363452de20ceefc9b020aac0">sha206a_generate_challenge_response_pair</a> (uint8_t *key, uint8_t *challenge, uint8_t *response)</td></tr>
 <tr class="memdesc:a9c9123a2363452de20ceefc9b020aac0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the response based on Key and Challenge provided.  <a href="a00014.html#a9c9123a2363452de20ceefc9b020aac0">More...</a><br /></td></tr>
 <tr class="separator:a9c9123a2363452de20ceefc9b020aac0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12d6e9c4cc705771788c0640aed7caa2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a12d6e9c4cc705771788c0640aed7caa2">sha206a_authenticate</a> (uint8_t *challenge, uint8_t *expected_response, uint8_t *is_authenticated)</td></tr>
+<tr class="memitem:a12d6e9c4cc705771788c0640aed7caa2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a12d6e9c4cc705771788c0640aed7caa2">sha206a_authenticate</a> (uint8_t *challenge, uint8_t *expected_response, uint8_t *is_authenticated)</td></tr>
 <tr class="memdesc:a12d6e9c4cc705771788c0640aed7caa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">verifies the challenge and provided response using key in device  <a href="a00014.html#a12d6e9c4cc705771788c0640aed7caa2">More...</a><br /></td></tr>
 <tr class="separator:a12d6e9c4cc705771788c0640aed7caa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac28d87cbe843ea3b2b69c5a62b14872f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ac28d87cbe843ea3b2b69c5a62b14872f">sha206a_verify_device_consumption</a> (uint8_t *is_consumed)</td></tr>
+<tr class="memitem:ac28d87cbe843ea3b2b69c5a62b14872f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ac28d87cbe843ea3b2b69c5a62b14872f">sha206a_verify_device_consumption</a> (uint8_t *is_consumed)</td></tr>
 <tr class="memdesc:ac28d87cbe843ea3b2b69c5a62b14872f"><td class="mdescLeft">&#160;</td><td class="mdescRight">verifies the device is fully consumed or not based on Parent and Derived Key use flags.  <a href="a00014.html#ac28d87cbe843ea3b2b69c5a62b14872f">More...</a><br /></td></tr>
 <tr class="separator:ac28d87cbe843ea3b2b69c5a62b14872f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77cc3bcc3d7c4fac3f328caa663d8948"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a77cc3bcc3d7c4fac3f328caa663d8948">sha206a_check_dk_useflag_validity</a> (uint8_t *is_valid)</td></tr>
-<tr class="memdesc:a77cc3bcc3d7c4fac3f328caa663d8948"><td class="mdescLeft">&#160;</td><td class="mdescRight">verifies Derived Key use flags for consumption  <a href="a00014.html#a77cc3bcc3d7c4fac3f328caa663d8948">More...</a><br /></td></tr>
-<tr class="separator:a77cc3bcc3d7c4fac3f328caa663d8948"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba072c8759cd0d991b732a40b03be0bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#aba072c8759cd0d991b732a40b03be0bf">sha206a_check_pk_useflag_validity</a> (uint8_t *is_valid)</td></tr>
-<tr class="memdesc:aba072c8759cd0d991b732a40b03be0bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">verifies Parent Key use flags for consumption  <a href="a00014.html#aba072c8759cd0d991b732a40b03be0bf">More...</a><br /></td></tr>
-<tr class="separator:aba072c8759cd0d991b732a40b03be0bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac98db9b59f5413e7c10d65e00cbff402"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ac98db9b59f5413e7c10d65e00cbff402">sha206a_get_dk_useflag_count</a> (uint8_t *dk_available_count)</td></tr>
+<tr class="memitem:ac87eb13206cd4e43575df8845aa094d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ac87eb13206cd4e43575df8845aa094d9">sha206a_check_dk_useflag_validity</a> (uint8_t *is_consumed)</td></tr>
+<tr class="memdesc:ac87eb13206cd4e43575df8845aa094d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">verifies Derived Key use flags for consumption  <a href="a00014.html#ac87eb13206cd4e43575df8845aa094d9">More...</a><br /></td></tr>
+<tr class="separator:ac87eb13206cd4e43575df8845aa094d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2ace3d5e5b19b3ff4347376b5b78d85"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ad2ace3d5e5b19b3ff4347376b5b78d85">sha206a_check_pk_useflag_validity</a> (uint8_t *is_consumed)</td></tr>
+<tr class="memdesc:ad2ace3d5e5b19b3ff4347376b5b78d85"><td class="mdescLeft">&#160;</td><td class="mdescRight">verifies Parent Key use flags for consumption  <a href="a00014.html#ad2ace3d5e5b19b3ff4347376b5b78d85">More...</a><br /></td></tr>
+<tr class="separator:ad2ace3d5e5b19b3ff4347376b5b78d85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac98db9b59f5413e7c10d65e00cbff402"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ac98db9b59f5413e7c10d65e00cbff402">sha206a_get_dk_useflag_count</a> (uint8_t *dk_available_count)</td></tr>
 <tr class="memdesc:ac98db9b59f5413e7c10d65e00cbff402"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculates available Derived Key use counts  <a href="a00014.html#ac98db9b59f5413e7c10d65e00cbff402">More...</a><br /></td></tr>
 <tr class="separator:ac98db9b59f5413e7c10d65e00cbff402"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4415f1d4d84a1ccea935cad493dd5074"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a4415f1d4d84a1ccea935cad493dd5074">sha206a_get_pk_useflag_count</a> (uint8_t *pk_available_count)</td></tr>
+<tr class="memitem:a4415f1d4d84a1ccea935cad493dd5074"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a4415f1d4d84a1ccea935cad493dd5074">sha206a_get_pk_useflag_count</a> (uint8_t *pk_available_count)</td></tr>
 <tr class="memdesc:a4415f1d4d84a1ccea935cad493dd5074"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculates available Parent Key use counts  <a href="a00014.html#a4415f1d4d84a1ccea935cad493dd5074">More...</a><br /></td></tr>
 <tr class="separator:a4415f1d4d84a1ccea935cad493dd5074"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a094aabc034e66d2a1b3ba9324da79010"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a094aabc034e66d2a1b3ba9324da79010">sha206a_get_dk_update_count</a> (uint8_t *dk_update_count)</td></tr>
+<tr class="memitem:a094aabc034e66d2a1b3ba9324da79010"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a094aabc034e66d2a1b3ba9324da79010">sha206a_get_dk_update_count</a> (uint8_t *dk_update_count)</td></tr>
 <tr class="memdesc:a094aabc034e66d2a1b3ba9324da79010"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read Derived Key slot update count. It will be wraps around 256.  <a href="a00014.html#a094aabc034e66d2a1b3ba9324da79010">More...</a><br /></td></tr>
 <tr class="separator:a094aabc034e66d2a1b3ba9324da79010"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23714cfbe25ea60f74a48c596ec48a6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a23714cfbe25ea60f74a48c596ec48a6b">sha206a_write_data_store</a> (uint8_t slot, uint8_t *data, uint8_t block, uint8_t offset, uint8_t len, bool lock_after_write)</td></tr>
+<tr class="memitem:a23714cfbe25ea60f74a48c596ec48a6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a23714cfbe25ea60f74a48c596ec48a6b">sha206a_write_data_store</a> (uint8_t slot, uint8_t *data, uint8_t block, uint8_t offset, uint8_t len, bool lock_after_write)</td></tr>
 <tr class="memdesc:a23714cfbe25ea60f74a48c596ec48a6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the data store slot with user data and lock it if necessary.  <a href="a00014.html#a23714cfbe25ea60f74a48c596ec48a6b">More...</a><br /></td></tr>
 <tr class="separator:a23714cfbe25ea60f74a48c596ec48a6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab97f7ad917c2c3293d211f8aad632a7c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ab97f7ad917c2c3293d211f8aad632a7c">sha206a_read_data_store</a> (uint8_t slot, uint8_t *data, uint8_t offset, uint8_t len)</td></tr>
+<tr class="memitem:ab97f7ad917c2c3293d211f8aad632a7c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ab97f7ad917c2c3293d211f8aad632a7c">sha206a_read_data_store</a> (uint8_t slot, uint8_t *data, uint8_t offset, uint8_t len)</td></tr>
 <tr class="memdesc:ab97f7ad917c2c3293d211f8aad632a7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the data stored in Data store.  <a href="a00014.html#ab97f7ad917c2c3293d211f8aad632a7c">More...</a><br /></td></tr>
 <tr class="separator:ab97f7ad917c2c3293d211f8aad632a7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac55f2b5842936c908254e755bfe3d0f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ac55f2b5842936c908254e755bfe3d0f1">sha206a_get_data_store_lock_status</a> (uint8_t slot, uint8_t *is_locked)</td></tr>
+<tr class="memitem:ac55f2b5842936c908254e755bfe3d0f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ac55f2b5842936c908254e755bfe3d0f1">sha206a_get_data_store_lock_status</a> (uint8_t slot, uint8_t *is_locked)</td></tr>
 <tr class="memdesc:ac55f2b5842936c908254e755bfe3d0f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the lock status of the given data store.  <a href="a00014.html#ac55f2b5842936c908254e755bfe3d0f1">More...</a><br /></td></tr>
 <tr class="separator:ac55f2b5842936c908254e755bfe3d0f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Provides api interfaces to use with ATSHA206A device. </p>
+<div class="textblock"><p>Provides APIs to use with ATSHA206A device. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a5dd0dcb6140ebac7d92896c70261403b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5dd0dcb6140ebac7d92896c70261403b">&#9670;&nbsp;</a></span>ATCA_SHA206A_DKEY_CONSUMPTION_MASK</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_SHA206A_DKEY_CONSUMPTION_MASK&#160;&#160;&#160;0x01</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1576a6197e391a3a189187ac559f9395"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1576a6197e391a3a189187ac559f9395">&#9670;&nbsp;</a></span>ATCA_SHA206A_PKEY_CONSUMPTION_MASK</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_SHA206A_PKEY_CONSUMPTION_MASK&#160;&#160;&#160;0x02</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aabc20693d3599e4504d95333bfd68080"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aabc20693d3599e4504d95333bfd68080">&#9670;&nbsp;</a></span>ATCA_SHA206A_SYMMETRIC_KEY_ID_SLOT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_SHA206A_SYMMETRIC_KEY_ID_SLOT&#160;&#160;&#160;0X07</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a20d1d9fad06e15a8c6562c8d86037ec4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a20d1d9fad06e15a8c6562c8d86037ec4">&#9670;&nbsp;</a></span>ATCA_SHA206A_ZONE_WRITE_LOCK</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_SHA206A_ZONE_WRITE_LOCK&#160;&#160;&#160;0x20</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="abed82baf7f470b522273a3e37c24c600"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abed82baf7f470b522273a3e37c24c600">&#9670;&nbsp;</a></span>anonymous enum</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="abed82baf7f470b522273a3e37c24c600aa2dfe480d909da1165603db89b5ed55d"></a>SHA206A_DATA_STORE0&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="abed82baf7f470b522273a3e37c24c600a56b6c7e550081b4378c71b9cd65d7293"></a>SHA206A_DATA_STORE1&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="abed82baf7f470b522273a3e37c24c600af4ab5ae94067d1aa5894c5f56bdc46a0"></a>SHA206A_DATA_STORE2&#160;</td><td class="fielddoc"></td></tr>
-</table>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="a12d6e9c4cc705771788c0640aed7caa2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a12d6e9c4cc705771788c0640aed7caa2">&#9670;&nbsp;</a></span>sha206a_authenticate()</h2>
 
@@ -249,7 +151,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_authenticate </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_authenticate </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>challenge</em>, </td>
@@ -287,14 +189,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a77cc3bcc3d7c4fac3f328caa663d8948"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a77cc3bcc3d7c4fac3f328caa663d8948">&#9670;&nbsp;</a></span>sha206a_check_dk_useflag_validity()</h2>
+<a id="ac87eb13206cd4e43575df8845aa094d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac87eb13206cd4e43575df8845aa094d9">&#9670;&nbsp;</a></span>sha206a_check_dk_useflag_validity()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_check_dk_useflag_validity </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_check_dk_useflag_validity </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>is_consumed</em></td><td>)</td>
@@ -314,14 +216,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aba072c8759cd0d991b732a40b03be0bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aba072c8759cd0d991b732a40b03be0bf">&#9670;&nbsp;</a></span>sha206a_check_pk_useflag_validity()</h2>
+<a id="ad2ace3d5e5b19b3ff4347376b5b78d85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2ace3d5e5b19b3ff4347376b5b78d85">&#9670;&nbsp;</a></span>sha206a_check_pk_useflag_validity()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_check_pk_useflag_validity </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_check_pk_useflag_validity </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>is_consumed</em></td><td>)</td>
@@ -348,7 +250,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_diversify_parent_key </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_diversify_parent_key </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>parent_key</em>, </td>
@@ -386,7 +288,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_generate_challenge_response_pair </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_generate_challenge_response_pair </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>key</em>, </td>
@@ -431,7 +333,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_generate_derive_key </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_generate_derive_key </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>parent_key</em>, </td>
@@ -483,7 +385,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_get_data_store_lock_status </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_get_data_store_lock_status </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>slot</em>, </td>
@@ -521,7 +423,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_get_dk_update_count </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_get_dk_update_count </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>dk_update_count</em></td><td>)</td>
@@ -548,7 +450,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_get_dk_useflag_count </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_get_dk_useflag_count </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>dk_available_count</em></td><td>)</td>
@@ -575,7 +477,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_get_pk_useflag_count </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_get_pk_useflag_count </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>pk_available_count</em></td><td>)</td>
@@ -602,7 +504,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_read_data_store </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_read_data_store </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>slot</em>, </td>
@@ -654,7 +556,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_verify_device_consumption </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_verify_device_consumption </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>is_consumed</em></td><td>)</td>
@@ -681,7 +583,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_write_data_store </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> sha206a_write_data_store </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>slot</em>, </td>
@@ -745,7 +647,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_33c02716943ce5dc61f9f67597f7f946.html">app</a></li><li class="navelem"><a class="el" href="dir_a6469ca660aadacda4fe8ab16151b5aa.html">api_206a</a></li><li class="navelem"><a class="el" href="a00014.html">api_206a.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_055632e474cc4a9b908bc06080f6f8f3.html">cryptauthlib-v3.2.3_</a></li><li class="navelem"><a class="el" href="dir_399d7797d9778e7f07e99d60c48bb664.html">app</a></li><li class="navelem"><a class="el" href="dir_80eadf767fed69263c7a4864f1197afc.html">api_206a</a></li><li class="navelem"><a class="el" href="a00014.html">api_206a.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

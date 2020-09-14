@@ -1,6 +1,7 @@
 var a01205 =
 [
-    [ "atca_delay_10us", "a02163.html#ga19891182689551cc3a88603135959351", null ],
-    [ "atca_delay_ms", "a02163.html#ga0544f36422b5e9a8890fb9c90fc5eb55", null ],
-    [ "atca_delay_us", "a02163.html#ga7598dfcd6dcac882836544d48356d02f", null ]
+    [ "atca_trace", "a01205.html#a60326372db8190ddb9f191fca5bdc38a", null ],
+    [ "atca_trace_config", "a01205.html#aaf7947b74c12dac486d03bb6f6b148d9", null ],
+    [ "atca_trace_msg", "a01205.html#a37c973beed068b00d261521bfe29299a", null ],
+    [ "g_trace_fp", "a01205.html#a3a81f3cd1d6204da295b87e92c7a039e", null ]
 ];

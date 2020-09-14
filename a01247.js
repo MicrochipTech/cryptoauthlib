@@ -1,9 +1,10 @@
 var a01247 =
 [
-    [ "atca_jwt_add_claim_numeric", "a02165.html#ga7073a7cfb7c77ad02923cdbb1226d2ad", null ],
-    [ "atca_jwt_add_claim_string", "a02165.html#ga3e6036b2c0e6dbc96a30f078e56cacff", null ],
-    [ "atca_jwt_check_payload_start", "a02165.html#ga167fe35631a0dd191293c6ad3a6485aa", null ],
-    [ "atca_jwt_finalize", "a02165.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b", null ],
-    [ "atca_jwt_init", "a02165.html#gad3ea09543f0569a5368130f4a3d7bce0", null ],
-    [ "atca_jwt_verify", "a02165.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b", null ]
+    [ "CK_FUNCTION_LIST", "a13525.html", "a13525" ],
+    [ "__PASTE", "a01247.html#ac3ae5768889bec57a63f08b6a6e5f58d", null ],
+    [ "CK_NEED_ARG_LIST", "a01247.html#a427a6a11246534e2c0d569e21cc854b9", null ],
+    [ "CK_NEED_ARG_LIST", "a01247.html#a427a6a11246534e2c0d569e21cc854b9", null ],
+    [ "CK_PKCS11_FUNCTION_INFO", "a01247.html#ac496f7959ba2c28cd7a2b5f5ac34628b", null ],
+    [ "CK_PKCS11_FUNCTION_INFO", "a01247.html#ac496f7959ba2c28cd7a2b5f5ac34628b", null ],
+    [ "CK_PKCS11_FUNCTION_INFO", "a01247.html#ac496f7959ba2c28cd7a2b5f5ac34628b", null ]
 ];

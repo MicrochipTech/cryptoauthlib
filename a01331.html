@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_mech.h File Reference</title>
+<title>CryptoAuthLib: pkcs11_signature.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.2</span>
+   &#160;<span id="projectnumber">v3.2.3</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -87,32 +87,58 @@ $(document).ready(function(){initNavTree('a01331.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">pkcs11_mech.h File Reference</div>  </div>
+<div class="title">pkcs11_signature.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Library Mechanism Handling.  
+<p>PKCS11 Library Sign/Verify Handling.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01265_source.html">cryptoki.h</a>&quot;</code><br />
-</div>
-<p><a href="a01331_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
+<div class="textblock"><code>#include &quot;pkcs11_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01271_source.html">pkcs11_debug.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01295_source.html">pkcs11_init.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01334_source.html">pkcs11_signature.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01316_source.html">pkcs11_object.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01328_source.html">pkcs11_session.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01352_source.html">pkcs11_util.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00386_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00221_source.html">atcacert/atcacert_der.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga9678c431b8d5479e53417b109b32c20f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#ga9678c431b8d5479e53417b109b32c20f">pkcs11_mech_get_list</a> (<a class="el" href="a01379.html#a53398953158f3b452e0513a0b78a0c5a">CK_SLOT_ID</a> slotID, <a class="el" href="a01379.html#a653265da2fe1c5336cadced022575156">CK_MECHANISM_TYPE_PTR</a> pMechanismList, <a class="el" href="a01379.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulCount)</td></tr>
-<tr class="separator:ga9678c431b8d5479e53417b109b32c20f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac66d133f84b945f9c26727ee9f7a7d57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#gac66d133f84b945f9c26727ee9f7a7d57">pkcs_mech_get_info</a> (<a class="el" href="a01379.html#a53398953158f3b452e0513a0b78a0c5a">CK_SLOT_ID</a> slotID, <a class="el" href="a01379.html#aaf1084907f5cc09a3e0b85ab022a240d">CK_MECHANISM_TYPE</a> type, <a class="el" href="a01379.html#a81131602c4689b717951c9c59f827661">CK_MECHANISM_INFO_PTR</a> pInfo)</td></tr>
-<tr class="separator:gac66d133f84b945f9c26727ee9f7a7d57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga742c35812a444a87e35150e2332be0c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01358.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a13300.html#ga742c35812a444a87e35150e2332be0c2">pkcs11_signature_sign_init</a> (<a class="el" href="a01358.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01358.html#afa4c48ba8a588833ea04f0910583592e">CK_MECHANISM_PTR</a> pMechanism, <a class="el" href="a01358.html#ad1cdd703196214cd34e6f9f52bc67683">CK_OBJECT_HANDLE</a> hKey)</td></tr>
+<tr class="memdesc:ga742c35812a444a87e35150e2332be0c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a signing operation using the specified key and mechanism.  <a href="a13300.html#ga742c35812a444a87e35150e2332be0c2">More...</a><br /></td></tr>
+<tr class="separator:ga742c35812a444a87e35150e2332be0c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4641a3dd4da46f801565310f3784a41e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01358.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a13300.html#ga4641a3dd4da46f801565310f3784a41e">pkcs11_signature_sign</a> (<a class="el" href="a01358.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01358.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pData, <a class="el" href="a01358.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulDataLen, <a class="el" href="a01358.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pSignature, <a class="el" href="a01358.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulSignatureLen)</td></tr>
+<tr class="memdesc:ga4641a3dd4da46f801565310f3784a41e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sign the data in a single pass operation.  <a href="a13300.html#ga4641a3dd4da46f801565310f3784a41e">More...</a><br /></td></tr>
+<tr class="separator:ga4641a3dd4da46f801565310f3784a41e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9c471f7e2ca3330cf6d2fa70e12db38a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01358.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a13300.html#ga9c471f7e2ca3330cf6d2fa70e12db38a">pkcs11_signature_sign_continue</a> (<a class="el" href="a01358.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01358.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pPart, <a class="el" href="a01358.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulPartLen)</td></tr>
+<tr class="memdesc:ga9c471f7e2ca3330cf6d2fa70e12db38a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues a multiple-part signature operation.  <a href="a13300.html#ga9c471f7e2ca3330cf6d2fa70e12db38a">More...</a><br /></td></tr>
+<tr class="separator:ga9c471f7e2ca3330cf6d2fa70e12db38a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb52d31f30bb8f6a66d1851ba0052dc7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01358.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a13300.html#gadb52d31f30bb8f6a66d1851ba0052dc7">pkcs11_signature_sign_finish</a> (<a class="el" href="a01358.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01358.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pSignature, <a class="el" href="a01358.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulSignatureLen)</td></tr>
+<tr class="memdesc:gadb52d31f30bb8f6a66d1851ba0052dc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part signature operation.  <a href="a13300.html#gadb52d31f30bb8f6a66d1851ba0052dc7">More...</a><br /></td></tr>
+<tr class="separator:gadb52d31f30bb8f6a66d1851ba0052dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga852f9badf3176a60bfb874fb5d118791"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01358.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a13300.html#ga852f9badf3176a60bfb874fb5d118791">pkcs11_signature_verify_init</a> (<a class="el" href="a01358.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01358.html#afa4c48ba8a588833ea04f0910583592e">CK_MECHANISM_PTR</a> pMechanism, <a class="el" href="a01358.html#ad1cdd703196214cd34e6f9f52bc67683">CK_OBJECT_HANDLE</a> hKey)</td></tr>
+<tr class="memdesc:ga852f9badf3176a60bfb874fb5d118791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a verification operation using the specified key and mechanism.  <a href="a13300.html#ga852f9badf3176a60bfb874fb5d118791">More...</a><br /></td></tr>
+<tr class="separator:ga852f9badf3176a60bfb874fb5d118791"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga27b3652fb8a87f7f40fff10c63316b35"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01358.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a13300.html#ga27b3652fb8a87f7f40fff10c63316b35">pkcs11_signature_verify</a> (<a class="el" href="a01358.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01358.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pData, <a class="el" href="a01358.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulDataLen, <a class="el" href="a01358.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pSignature, <a class="el" href="a01358.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulSignatureLen)</td></tr>
+<tr class="memdesc:ga27b3652fb8a87f7f40fff10c63316b35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies a signature on single-part data.  <a href="a13300.html#ga27b3652fb8a87f7f40fff10c63316b35">More...</a><br /></td></tr>
+<tr class="separator:ga27b3652fb8a87f7f40fff10c63316b35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab735278cab8e184d682b4ed8b12dbb1b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01358.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a13300.html#gab735278cab8e184d682b4ed8b12dbb1b">pkcs11_signature_verify_continue</a> (<a class="el" href="a01358.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01358.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pPart, <a class="el" href="a01358.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulPartLen)</td></tr>
+<tr class="memdesc:gab735278cab8e184d682b4ed8b12dbb1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues a multiple-part verification operation.  <a href="a13300.html#gab735278cab8e184d682b4ed8b12dbb1b">More...</a><br /></td></tr>
+<tr class="separator:gab735278cab8e184d682b4ed8b12dbb1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2aac39ede2b43021b63ed6bc7f3f20da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01358.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a13300.html#ga2aac39ede2b43021b63ed6bc7f3f20da">pkcs11_signature_verify_finish</a> (<a class="el" href="a01358.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01358.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pSignature, <a class="el" href="a01358.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulSignatureLen)</td></tr>
+<tr class="memdesc:ga2aac39ede2b43021b63ed6bc7f3f20da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part verification operation.  <a href="a13300.html#ga2aac39ede2b43021b63ed6bc7f3f20da">More...</a><br /></td></tr>
+<tr class="separator:ga2aac39ede2b43021b63ed6bc7f3f20da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Library Mechanism Handling. </p>
+<div class="textblock"><p>PKCS11 Library Sign/Verify Handling. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_231ca3caf32f66fb77d3d96bdb6ade1d.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01331.html">pkcs11_mech.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_055632e474cc4a9b908bc06080f6f8f3.html">cryptauthlib-v3.2.3_</a></li><li class="navelem"><a class="el" href="dir_ca3d4037a802337c07b97f564c6f6647.html">lib</a></li><li class="navelem"><a class="el" href="dir_148315eba23a82409e091a868200e20f.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01331.html">pkcs11_signature.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

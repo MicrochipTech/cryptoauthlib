@@ -1,10 +1,7 @@
 var a01268 =
 [
-    [ "CK_FUNCTION_LIST", "a02400.html", "a02400" ],
-    [ "__PASTE", "a01268.html#ac3ae5768889bec57a63f08b6a6e5f58d", null ],
-    [ "CK_NEED_ARG_LIST", "a01268.html#a427a6a11246534e2c0d569e21cc854b9", null ],
-    [ "CK_NEED_ARG_LIST", "a01268.html#a427a6a11246534e2c0d569e21cc854b9", null ],
-    [ "CK_PKCS11_FUNCTION_INFO", "a01268.html#ac496f7959ba2c28cd7a2b5f5ac34628b", null ],
-    [ "CK_PKCS11_FUNCTION_INFO", "a01268.html#ac496f7959ba2c28cd7a2b5f5ac34628b", null ],
-    [ "CK_PKCS11_FUNCTION_INFO", "a01268.html#ac496f7959ba2c28cd7a2b5f5ac34628b", null ]
+    [ "PKCS11_DEBUG", "a01268.html#a660e603d036b884434faff8d5a6bb443", null ],
+    [ "pkcs11_debug_attributes", "a01268.html#ac2549fbb058dd2934f6a3b4bf983bfa5", null ],
+    [ "PKCS11_DEBUG_NOFILE", "a01268.html#a747bc19e378f56f24664e615ecd996bd", null ],
+    [ "PKCS11_DEBUG_RETURN", "a01268.html#a9c844aa5e64c02064e137f20d82f0313", null ]
 ];

@@ -1,8 +1,7 @@
 var a01271 =
 [
-    [ "pkcs11_attrib_empty", "a02167.html#ga89c04713bd2e0df331bd4f8f5abf14ab", null ],
-    [ "pkcs11_attrib_false", "a02167.html#ga3bebbc6283e197f203ea5905ab5caee3", null ],
-    [ "pkcs11_attrib_fill", "a02167.html#gae518fd798cd7352bd7e1ea47cc9d8d33", null ],
-    [ "pkcs11_attrib_true", "a02167.html#ga0bfb7c14a9c1daf120a61a65499bdc55", null ],
-    [ "pkcs11_attrib_value", "a02167.html#ga50e9c64b899d1b2f78c9634298225303", null ]
+    [ "PKCS11_DEBUG", "a01271.html#a660e603d036b884434faff8d5a6bb443", null ],
+    [ "pkcs11_debug_attributes", "a01271.html#ac2549fbb058dd2934f6a3b4bf983bfa5", null ],
+    [ "PKCS11_DEBUG_NOFILE", "a01271.html#a747bc19e378f56f24664e615ecd996bd", null ],
+    [ "PKCS11_DEBUG_RETURN", "a01271.html#a9c844aa5e64c02064e137f20d82f0313", null ]
 ];

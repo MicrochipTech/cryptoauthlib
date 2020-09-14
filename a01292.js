@@ -1,7 +1,9 @@
 var a01292 =
 [
-    [ "PKCS11_DEBUG", "a01292.html#a660e603d036b884434faff8d5a6bb443", null ],
-    [ "pkcs11_debug_attributes", "a01292.html#ac2549fbb058dd2934f6a3b4bf983bfa5", null ],
-    [ "PKCS11_DEBUG_NOFILE", "a01292.html#a747bc19e378f56f24664e615ecd996bd", null ],
-    [ "PKCS11_DEBUG_RETURN", "a01292.html#a9c844aa5e64c02064e137f20d82f0313", null ]
+    [ "pkcs11_deinit", "a13300.html#gabff89fd0af2e75ee2db858f9fe934ac4", null ],
+    [ "pkcs11_get_context", "a13300.html#gae0e3060e6ae0dfc17a35881c223d8123", null ],
+    [ "pkcs11_init", "a13300.html#ga21e0ec91eccb3f92b45cb2536b3889b1", null ],
+    [ "pkcs11_init_check", "a13300.html#gadd899ffeae0146c08b249e3f551e21f8", null ],
+    [ "pkcs11_lock_context", "a13300.html#gaf0e755fd7df13be2aa1f706de5b0f24b", null ],
+    [ "pkcs11_unlock_context", "a13300.html#ga750f93d0a3c67f5d0e28c9c50ad990a8", null ]
 ];

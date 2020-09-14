@@ -1,10 +1,7 @@
 var a01280 =
 [
-    [ "pkcs11_cert_x509_write", "a02167.html#ga34fcca1dafb0a410d242fcb5ff3d69a5", null ],
-    [ "pkcs11_cert_wtlspublic_attributes", "a02167.html#gabc10a1f1b90bc7d2fb047db0af539e80", null ],
-    [ "pkcs11_cert_wtlspublic_attributes_count", "a02167.html#gad8232cd440c12745d24471e2676a117f", null ],
-    [ "pkcs11_cert_x509_attributes", "a02167.html#gafa471eb33699e2cba5dc3cc50a2d8df7", null ],
-    [ "pkcs11_cert_x509_attributes_count", "a02167.html#gadc2b14c7a052fdc0bb751259d28dfdc0", null ],
-    [ "pkcs11_cert_x509public_attributes", "a02167.html#ga8de4193ede04a12ab4e44b8df9eec478", null ],
-    [ "pkcs11_cert_x509public_attributes_count", "a02167.html#gafd21e04ab9248b3d58c3f5e4bd076ac9", null ]
+    [ "pkcs11_find_continue", "a13300.html#ga5dbe038da3069861b8de9f77d0c06de1", null ],
+    [ "pkcs11_find_finish", "a13300.html#gacc5c7a788f0c4eafd4f0c1da2aaf0d60", null ],
+    [ "pkcs11_find_get_attribute", "a13300.html#ga0e2b3b381504c39a017a4232a35b672d", null ],
+    [ "pkcs11_find_init", "a13300.html#ga6fd109c0919489909cc4073866d1c466", null ]
 ];

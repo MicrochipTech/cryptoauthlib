@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_attrib.c File Reference</title>
+<title>CryptoAuthLib: pkcs11_debug.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.2</span>
+   &#160;<span id="projectnumber">v3.2.3</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,42 +85,121 @@ $(document).ready(function(){initNavTree('a01271.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">pkcs11_attrib.c File Reference</div>  </div>
+<div class="title">pkcs11_debug.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Library Object Attributes Handling.  
+<p>PKCS11 Library Debugging.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;pkcs11_config.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01274_source.html">pkcs11_attrib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01109_source.html">cryptoauthlib.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gae518fd798cd7352bd7e1ea47cc9d8d33"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#gae518fd798cd7352bd7e1ea47cc9d8d33">pkcs11_attrib_fill</a> (<a class="el" href="a01379.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute, const <a class="el" href="a01379.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pData, const <a class="el" href="a01379.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulSize)</td></tr>
-<tr class="memdesc:gae518fd798cd7352bd7e1ea47cc9d8d33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the nessasary checks and copy data into an attribute structure.  <a href="a02167.html#gae518fd798cd7352bd7e1ea47cc9d8d33">More...</a><br /></td></tr>
-<tr class="separator:gae518fd798cd7352bd7e1ea47cc9d8d33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga50e9c64b899d1b2f78c9634298225303"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#ga50e9c64b899d1b2f78c9634298225303">pkcs11_attrib_value</a> (<a class="el" href="a01379.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute, const <a class="el" href="a01379.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulValue, const <a class="el" href="a01379.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulSize)</td></tr>
-<tr class="memdesc:ga50e9c64b899d1b2f78c9634298225303"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to write a numerical value to an attribute buffer.  <a href="a02167.html#ga50e9c64b899d1b2f78c9634298225303">More...</a><br /></td></tr>
-<tr class="separator:ga50e9c64b899d1b2f78c9634298225303"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3bebbc6283e197f203ea5905ab5caee3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#ga3bebbc6283e197f203ea5905ab5caee3">pkcs11_attrib_false</a> (const <a class="el" href="a01379.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01379.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
-<tr class="separator:ga3bebbc6283e197f203ea5905ab5caee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0bfb7c14a9c1daf120a61a65499bdc55"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#ga0bfb7c14a9c1daf120a61a65499bdc55">pkcs11_attrib_true</a> (const <a class="el" href="a01379.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01379.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
-<tr class="separator:ga0bfb7c14a9c1daf120a61a65499bdc55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga89c04713bd2e0df331bd4f8f5abf14ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01379.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02167.html#ga89c04713bd2e0df331bd4f8f5abf14ab">pkcs11_attrib_empty</a> (const <a class="el" href="a01379.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01379.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
-<tr class="separator:ga89c04713bd2e0df331bd4f8f5abf14ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</div>
+<p><a href="a01271_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a747bc19e378f56f24664e615ecd996bd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01271.html#a747bc19e378f56f24664e615ecd996bd">PKCS11_DEBUG_NOFILE</a>(...)</td></tr>
+<tr class="separator:a747bc19e378f56f24664e615ecd996bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a660e603d036b884434faff8d5a6bb443"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01271.html#a660e603d036b884434faff8d5a6bb443">PKCS11_DEBUG</a>(...)</td></tr>
+<tr class="separator:a660e603d036b884434faff8d5a6bb443"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c844aa5e64c02064e137f20d82f0313"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01271.html#a9c844aa5e64c02064e137f20d82f0313">PKCS11_DEBUG_RETURN</a>(x)&#160;&#160;&#160;{ return x; }</td></tr>
+<tr class="separator:a9c844aa5e64c02064e137f20d82f0313"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2549fbb058dd2934f6a3b4bf983bfa5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01271.html#ac2549fbb058dd2934f6a3b4bf983bfa5">pkcs11_debug_attributes</a>(x,  y)</td></tr>
+<tr class="separator:ac2549fbb058dd2934f6a3b4bf983bfa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Library Object Attributes Handling. </p>
+<div class="textblock"><p>PKCS11 Library Debugging. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a660e603d036b884434faff8d5a6bb443"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a660e603d036b884434faff8d5a6bb443">&#9670;&nbsp;</a></span>PKCS11_DEBUG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PKCS11_DEBUG</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac2549fbb058dd2934f6a3b4bf983bfa5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2549fbb058dd2934f6a3b4bf983bfa5">&#9670;&nbsp;</a></span>pkcs11_debug_attributes</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define pkcs11_debug_attributes</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">y&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a747bc19e378f56f24664e615ecd996bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a747bc19e378f56f24664e615ecd996bd">&#9670;&nbsp;</a></span>PKCS11_DEBUG_NOFILE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PKCS11_DEBUG_NOFILE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9c844aa5e64c02064e137f20d82f0313"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c844aa5e64c02064e137f20d82f0313">&#9670;&nbsp;</a></span>PKCS11_DEBUG_RETURN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PKCS11_DEBUG_RETURN</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x</td><td>)</td>
+          <td>&#160;&#160;&#160;{ return x; }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_231ca3caf32f66fb77d3d96bdb6ade1d.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01271.html">pkcs11_attrib.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_055632e474cc4a9b908bc06080f6f8f3.html">cryptauthlib-v3.2.3_</a></li><li class="navelem"><a class="el" href="dir_ca3d4037a802337c07b97f564c6f6647.html">lib</a></li><li class="navelem"><a class="el" href="dir_148315eba23a82409e091a868200e20f.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01271.html">pkcs11_debug.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

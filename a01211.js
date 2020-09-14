@@ -1,7 +1,10 @@
 var a01211 =
 [
-    [ "HID_DEVICES_MAX", "a02163.html#ga49053c3cd6d48fe5f468ce010ac0a9ef", null ],
-    [ "HID_PACKET_MAX", "a02163.html#ga6cdff3589b286ebcdd7771bb425fbf73", null ],
-    [ "atcahid_t", "a02163.html#gabb3ee8f7daf1cd68f8173981271ac37a", null ],
-    [ "hid_device_t", "a02163.html#gabac5505cae96829653fa6054af0372b3", null ]
+    [ "atca_delay_10us", "a01590.html#ga19891182689551cc3a88603135959351", null ],
+    [ "atca_delay_ms", "a01590.html#ga0544f36422b5e9a8890fb9c90fc5eb55", null ],
+    [ "atca_delay_us", "a01590.html#ga7598dfcd6dcac882836544d48356d02f", null ],
+    [ "hal_create_mutex", "a01590.html#gab289a3949663589ac6be71d72fb18278", null ],
+    [ "hal_destroy_mutex", "a01590.html#ga4589d7b3e951f40b7928f1cf31f7ddf3", null ],
+    [ "hal_lock_mutex", "a01590.html#gad4cd02ff7ae4e75844eab4e84eb61994", null ],
+    [ "hal_unlock_mutex", "a01590.html#ga31fd8170a49623686543f6247b883bd1", null ]
 ];

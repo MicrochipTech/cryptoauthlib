@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_jwt.h File Reference</title>
+<title>CryptoAuthLib: pkcs11.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.2</span>
+   &#160;<span id="projectnumber">v3.2.3</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -86,54 +86,153 @@ $(document).ready(function(){initNavTree('a01247.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">atca_jwt.h File Reference</div>  </div>
+<div class="title">pkcs11.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Utilities to create and verify a JSON Web Token (JWT)  
-<a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01109_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a01358_source.html">pkcs11t.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01355_source.html">pkcs11f.h</a>&quot;</code><br />
 </div>
 <p><a href="a01247_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02396.html">atca_jwt_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to hold metadata information about the jwt being built.  <a href="a02396.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a13525.html">CK_FUNCTION_LIST</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gad3ea09543f0569a5368130f4a3d7bce0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02165.html#gad3ea09543f0569a5368130f4a3d7bce0">atca_jwt_init</a> (<a class="el" href="a02396.html">atca_jwt_t</a> *jwt, char *buf, uint16_t buflen)</td></tr>
-<tr class="memdesc:gad3ea09543f0569a5368130f4a3d7bce0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a JWT structure.  <a href="a02165.html#gad3ea09543f0569a5368130f4a3d7bce0">More...</a><br /></td></tr>
-<tr class="separator:gad3ea09543f0569a5368130f4a3d7bce0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3e6036b2c0e6dbc96a30f078e56cacff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02165.html#ga3e6036b2c0e6dbc96a30f078e56cacff">atca_jwt_add_claim_string</a> (<a class="el" href="a02396.html">atca_jwt_t</a> *jwt, const char *claim, const char *value)</td></tr>
-<tr class="memdesc:ga3e6036b2c0e6dbc96a30f078e56cacff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a string claim to a token.  <a href="a02165.html#ga3e6036b2c0e6dbc96a30f078e56cacff">More...</a><br /></td></tr>
-<tr class="separator:ga3e6036b2c0e6dbc96a30f078e56cacff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7073a7cfb7c77ad02923cdbb1226d2ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02165.html#ga7073a7cfb7c77ad02923cdbb1226d2ad">atca_jwt_add_claim_numeric</a> (<a class="el" href="a02396.html">atca_jwt_t</a> *jwt, const char *claim, int32_t value)</td></tr>
-<tr class="memdesc:ga7073a7cfb7c77ad02923cdbb1226d2ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a numeric claim to a token.  <a href="a02165.html#ga7073a7cfb7c77ad02923cdbb1226d2ad">More...</a><br /></td></tr>
-<tr class="separator:ga7073a7cfb7c77ad02923cdbb1226d2ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6d1bf5c8bf4fb49e1e80c19911157d4b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02165.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b">atca_jwt_finalize</a> (<a class="el" href="a02396.html">atca_jwt_t</a> *jwt, uint16_t key_id)</td></tr>
-<tr class="memdesc:ga6d1bf5c8bf4fb49e1e80c19911157d4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the claims of a token, encode them, then sign the result.  <a href="a02165.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b">More...</a><br /></td></tr>
-<tr class="separator:ga6d1bf5c8bf4fb49e1e80c19911157d4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga167fe35631a0dd191293c6ad3a6485aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02165.html#ga167fe35631a0dd191293c6ad3a6485aa">atca_jwt_check_payload_start</a> (<a class="el" href="a02396.html">atca_jwt_t</a> *jwt)</td></tr>
-<tr class="memdesc:ga167fe35631a0dd191293c6ad3a6485aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the provided context to see what character needs to be added in order to append a claim.  <a href="a02165.html#ga167fe35631a0dd191293c6ad3a6485aa">More...</a><br /></td></tr>
-<tr class="separator:ga167fe35631a0dd191293c6ad3a6485aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0e2ca8c9bd4954e004cd10cdc29c9a9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00914.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02165.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b">atca_jwt_verify</a> (const char *buf, uint16_t buflen, const uint8_t *pubkey)</td></tr>
-<tr class="memdesc:ga0e2ca8c9bd4954e004cd10cdc29c9a9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies the signature of a jwt using the provided public key.  <a href="a02165.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b">More...</a><br /></td></tr>
-<tr class="separator:ga0e2ca8c9bd4954e004cd10cdc29c9a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ac3ae5768889bec57a63f08b6a6e5f58d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01247.html#ac3ae5768889bec57a63f08b6a6e5f58d">__PASTE</a>(x,  y)&#160;&#160;&#160;x ## y</td></tr>
+<tr class="separator:ac3ae5768889bec57a63f08b6a6e5f58d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a427a6a11246534e2c0d569e21cc854b9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01247.html#a427a6a11246534e2c0d569e21cc854b9">CK_NEED_ARG_LIST</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a427a6a11246534e2c0d569e21cc854b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac496f7959ba2c28cd7a2b5f5ac34628b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01247.html#ac496f7959ba2c28cd7a2b5f5ac34628b">CK_PKCS11_FUNCTION_INFO</a>(name)&#160;&#160;&#160;extern <a class="el" href="a01244.html#a30315d302108bcfb354196f37b16a492">CK_DECLARE_FUNCTION</a>(<a class="el" href="a01358.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>, name)</td></tr>
+<tr class="separator:ac496f7959ba2c28cd7a2b5f5ac34628b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a427a6a11246534e2c0d569e21cc854b9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01247.html#a427a6a11246534e2c0d569e21cc854b9">CK_NEED_ARG_LIST</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a427a6a11246534e2c0d569e21cc854b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac496f7959ba2c28cd7a2b5f5ac34628b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01247.html#ac496f7959ba2c28cd7a2b5f5ac34628b">CK_PKCS11_FUNCTION_INFO</a>(name)&#160;&#160;&#160;typedef <a class="el" href="a01244.html#aad472a68fb8e3eb9ba40169f5180b3b7">CK_DECLARE_FUNCTION_POINTER</a> (<a class="el" href="a01358.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>, <a class="el" href="a01247.html#ac3ae5768889bec57a63f08b6a6e5f58d">__PASTE</a> (CK_, name))</td></tr>
+<tr class="separator:ac496f7959ba2c28cd7a2b5f5ac34628b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac496f7959ba2c28cd7a2b5f5ac34628b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01247.html#ac496f7959ba2c28cd7a2b5f5ac34628b">CK_PKCS11_FUNCTION_INFO</a>(name)&#160;&#160;&#160;<a class="el" href="a01247.html#ac3ae5768889bec57a63f08b6a6e5f58d">__PASTE</a>(CK_, name) name;</td></tr>
+<tr class="separator:ac496f7959ba2c28cd7a2b5f5ac34628b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Utilities to create and verify a JSON Web Token (JWT) </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ac3ae5768889bec57a63f08b6a6e5f58d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3ae5768889bec57a63f08b6a6e5f58d">&#9670;&nbsp;</a></span>__PASTE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __PASTE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">y&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;x ## y</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a427a6a11246534e2c0d569e21cc854b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a427a6a11246534e2c0d569e21cc854b9">&#9670;&nbsp;</a></span>CK_NEED_ARG_LIST <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CK_NEED_ARG_LIST&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a427a6a11246534e2c0d569e21cc854b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a427a6a11246534e2c0d569e21cc854b9">&#9670;&nbsp;</a></span>CK_NEED_ARG_LIST <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CK_NEED_ARG_LIST&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac496f7959ba2c28cd7a2b5f5ac34628b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac496f7959ba2c28cd7a2b5f5ac34628b">&#9670;&nbsp;</a></span>CK_PKCS11_FUNCTION_INFO <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CK_PKCS11_FUNCTION_INFO</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name</td><td>)</td>
+          <td>&#160;&#160;&#160;extern <a class="el" href="a01244.html#a30315d302108bcfb354196f37b16a492">CK_DECLARE_FUNCTION</a>(<a class="el" href="a01358.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>, name)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac496f7959ba2c28cd7a2b5f5ac34628b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac496f7959ba2c28cd7a2b5f5ac34628b">&#9670;&nbsp;</a></span>CK_PKCS11_FUNCTION_INFO <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CK_PKCS11_FUNCTION_INFO</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name</td><td>)</td>
+          <td>&#160;&#160;&#160;typedef <a class="el" href="a01244.html#aad472a68fb8e3eb9ba40169f5180b3b7">CK_DECLARE_FUNCTION_POINTER</a> (<a class="el" href="a01358.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>, <a class="el" href="a01247.html#ac3ae5768889bec57a63f08b6a6e5f58d">__PASTE</a> (CK_, name))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac496f7959ba2c28cd7a2b5f5ac34628b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac496f7959ba2c28cd7a2b5f5ac34628b">&#9670;&nbsp;</a></span>CK_PKCS11_FUNCTION_INFO <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CK_PKCS11_FUNCTION_INFO</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name</td><td>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="a01247.html#ac3ae5768889bec57a63f08b6a6e5f58d">__PASTE</a>(CK_, name) name;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_912518f09b37075ddef990165e1525bf.html">jwt</a></li><li class="navelem"><a class="el" href="a01247.html">atca_jwt.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_055632e474cc4a9b908bc06080f6f8f3.html">cryptauthlib-v3.2.3_</a></li><li class="navelem"><a class="el" href="dir_ca3d4037a802337c07b97f564c6f6647.html">lib</a></li><li class="navelem"><a class="el" href="dir_148315eba23a82409e091a868200e20f.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01247.html">pkcs11.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

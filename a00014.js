@@ -1,15 +1,8 @@
 var a00014 =
 [
-    [ "ATCA_SHA206A_DKEY_CONSUMPTION_MASK", "a00014.html#a5dd0dcb6140ebac7d92896c70261403b", null ],
-    [ "ATCA_SHA206A_PKEY_CONSUMPTION_MASK", "a00014.html#a1576a6197e391a3a189187ac559f9395", null ],
-    [ "ATCA_SHA206A_SYMMETRIC_KEY_ID_SLOT", "a00014.html#aabc20693d3599e4504d95333bfd68080", null ],
-    [ "ATCA_SHA206A_ZONE_WRITE_LOCK", "a00014.html#a20d1d9fad06e15a8c6562c8d86037ec4", null ],
-    [ "SHA206A_DATA_STORE0", "a00014.html#abed82baf7f470b522273a3e37c24c600aa2dfe480d909da1165603db89b5ed55d", null ],
-    [ "SHA206A_DATA_STORE1", "a00014.html#abed82baf7f470b522273a3e37c24c600a56b6c7e550081b4378c71b9cd65d7293", null ],
-    [ "SHA206A_DATA_STORE2", "a00014.html#abed82baf7f470b522273a3e37c24c600af4ab5ae94067d1aa5894c5f56bdc46a0", null ],
     [ "sha206a_authenticate", "a00014.html#a12d6e9c4cc705771788c0640aed7caa2", null ],
-    [ "sha206a_check_dk_useflag_validity", "a00014.html#a77cc3bcc3d7c4fac3f328caa663d8948", null ],
-    [ "sha206a_check_pk_useflag_validity", "a00014.html#aba072c8759cd0d991b732a40b03be0bf", null ],
+    [ "sha206a_check_dk_useflag_validity", "a00014.html#ac87eb13206cd4e43575df8845aa094d9", null ],
+    [ "sha206a_check_pk_useflag_validity", "a00014.html#ad2ace3d5e5b19b3ff4347376b5b78d85", null ],
     [ "sha206a_diversify_parent_key", "a00014.html#a1e33c650348129b8d82a8370e38b4c6c", null ],
     [ "sha206a_generate_challenge_response_pair", "a00014.html#a9c9123a2363452de20ceefc9b020aac0", null ],
     [ "sha206a_generate_derive_key", "a00014.html#afbdb8aef5ee59e66c2e7b28f19edc712", null ],

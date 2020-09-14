@@ -1,7 +1,12 @@
 var a01301 =
 [
-    [ "pkcs11_find_continue", "a02167.html#ga5dbe038da3069861b8de9f77d0c06de1", null ],
-    [ "pkcs11_find_finish", "a02167.html#gacc5c7a788f0c4eafd4f0c1da2aaf0d60", null ],
-    [ "pkcs11_find_get_attribute", "a02167.html#ga0e2b3b381504c39a017a4232a35b672d", null ],
-    [ "pkcs11_find_init", "a02167.html#ga6fd109c0919489909cc4073866d1c466", null ]
+    [ "pkcs11_key_derive", "a13300.html#ga8ace04a2049a5d7e527558da10e68dcd", null ],
+    [ "pkcs11_key_generate_pair", "a13300.html#gaac5c7d6ae9b8262fb705083302efd90a", null ],
+    [ "pkcs11_key_write", "a13300.html#gaf3fdce991fe05099aa8552912e26dee7", null ],
+    [ "pkcs11_key_private_attributes", "a13300.html#ga40d8e67ef0fae7bdc2dca013ad8410aa", null ],
+    [ "pkcs11_key_private_attributes_count", "a13300.html#gaf358031996abf87fc21bc259e1e90644", null ],
+    [ "pkcs11_key_public_attributes", "a13300.html#gadf3e8d1e6b01d9fe85f54c9478d8d215", null ],
+    [ "pkcs11_key_public_attributes_count", "a13300.html#gadc78586c61388b3756395f0098fa4505", null ],
+    [ "pkcs11_key_secret_attributes", "a13300.html#ga6ef03269a32699359d90901cc84954f3", null ],
+    [ "pkcs11_key_secret_attributes_count", "a13300.html#ga55a0ac12b2ed4daefadaf3fa94edf78e", null ]
 ];

@@ -1,7 +1,4 @@
 var a00065 =
 [
-    [ "tng_cert_map_element", "a02708.html", "a02708" ],
-    [ "tng_get_device_cert_def", "a02168.html#ga28c369c92f1a7c2f61512cde463b8ff5", null ],
-    [ "tng_get_device_pubkey", "a02168.html#ga6bdd6b8ace7a98b7efbc13f85ffaac1a", null ],
-    [ "tng_map_get_device_cert_def", "a02168.html#ga38187b164a953981496cd927d3f97643", null ]
+    [ "g_tflxtls_cert_def_4_device", "a08591.html#gaca5751036ff201454ef8714cd93c6e37", null ]
 ];

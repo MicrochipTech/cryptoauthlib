@@ -1,7 +1,10 @@
 var a01259 =
 [
-    [ "atca_mbedtls_cert_add", "a02166.html#ga1180b0ded84f7edb4b36d14730366a64", null ],
-    [ "atca_mbedtls_ecdh_ioprot_cb", "a02166.html#gaa35682dc98e33ce3d6fad1fc902cdff0", null ],
-    [ "atca_mbedtls_ecdh_slot_cb", "a02166.html#ga98d684683ccecd3d56bdf5dc27ae999c", null ],
-    [ "atca_mbedtls_pk_init", "a02166.html#ga72da31831a3647e287543634e3f78aca", null ]
+    [ "pkcs11_cert_x509_write", "a13300.html#ga34fcca1dafb0a410d242fcb5ff3d69a5", null ],
+    [ "pkcs11_cert_wtlspublic_attributes", "a13300.html#gabc10a1f1b90bc7d2fb047db0af539e80", null ],
+    [ "pkcs11_cert_wtlspublic_attributes_count", "a13300.html#gad8232cd440c12745d24471e2676a117f", null ],
+    [ "pkcs11_cert_x509_attributes", "a13300.html#gafa471eb33699e2cba5dc3cc50a2d8df7", null ],
+    [ "pkcs11_cert_x509_attributes_count", "a13300.html#gadc2b14c7a052fdc0bb751259d28dfdc0", null ],
+    [ "pkcs11_cert_x509public_attributes", "a13300.html#ga8de4193ede04a12ab4e44b8df9eec478", null ],
+    [ "pkcs11_cert_x509public_attributes_count", "a13300.html#gafd21e04ab9248b3d58c3f5e4bd076ac9", null ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_uc3_timer_asf.c File Reference</title>
+<title>CryptoAuthLib: atca_debug.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.2</span>
+   &#160;<span id="projectnumber">v3.2.3</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,40 +85,120 @@ $(document).ready(function(){initNavTree('a01205.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">hal_uc3_timer_asf.c File Reference</div>  </div>
+<div class="title">atca_debug.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for SAM4S I2C over ASF drivers.  
+<p>Debug/Trace for CryptoAuthLib calls.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;asf.h&gt;</code><br />
-<code>#include &lt;delay.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a01118_source.html">atca_hal.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00386_source.html">cryptoauthlib.h</a>&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga7598dfcd6dcac882836544d48356d02f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga7598dfcd6dcac882836544d48356d02f">atca_delay_us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga7598dfcd6dcac882836544d48356d02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of microseconds.  <a href="a02163.html#ga7598dfcd6dcac882836544d48356d02f">More...</a><br /></td></tr>
-<tr class="separator:ga7598dfcd6dcac882836544d48356d02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga19891182689551cc3a88603135959351"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga19891182689551cc3a88603135959351">atca_delay_10us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga19891182689551cc3a88603135959351"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of tens of microseconds.  <a href="a02163.html#ga19891182689551cc3a88603135959351">More...</a><br /></td></tr>
-<tr class="separator:ga19891182689551cc3a88603135959351"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0544f36422b5e9a8890fb9c90fc5eb55"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02163.html#ga0544f36422b5e9a8890fb9c90fc5eb55">atca_delay_ms</a> (uint32_t ms)</td></tr>
-<tr class="memdesc:ga0544f36422b5e9a8890fb9c90fc5eb55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API for legacy implementations.  <a href="a02163.html#ga0544f36422b5e9a8890fb9c90fc5eb55">More...</a><br /></td></tr>
-<tr class="separator:ga0544f36422b5e9a8890fb9c90fc5eb55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf7947b74c12dac486d03bb6f6b148d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01205.html#aaf7947b74c12dac486d03bb6f6b148d9">atca_trace_config</a> (FILE *fp)</td></tr>
+<tr class="separator:aaf7947b74c12dac486d03bb6f6b148d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60326372db8190ddb9f191fca5bdc38a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00191.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01205.html#a60326372db8190ddb9f191fca5bdc38a">atca_trace</a> (<a class="el" href="a00191.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> status)</td></tr>
+<tr class="separator:a60326372db8190ddb9f191fca5bdc38a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37c973beed068b00d261521bfe29299a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00191.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01205.html#a37c973beed068b00d261521bfe29299a">atca_trace_msg</a> (<a class="el" href="a00191.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> status, const char *msg)</td></tr>
+<tr class="separator:a37c973beed068b00d261521bfe29299a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a3a81f3cd1d6204da295b87e92c7a039e"><td class="memItemLeft" align="right" valign="top">FILE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01205.html#a3a81f3cd1d6204da295b87e92c7a039e">g_trace_fp</a></td></tr>
+<tr class="separator:a3a81f3cd1d6204da295b87e92c7a039e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for SAM4S I2C over ASF drivers. </p>
-<p>Prerequisite: add "Delay routines (service)" module to application in Atmel Studio</p>
+<div class="textblock"><p>Debug/Trace for CryptoAuthLib calls. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a60326372db8190ddb9f191fca5bdc38a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60326372db8190ddb9f191fca5bdc38a">&#9670;&nbsp;</a></span>atca_trace()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00191.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atca_trace </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00191.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td>
+          <td class="paramname"><em>status</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aaf7947b74c12dac486d03bb6f6b148d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf7947b74c12dac486d03bb6f6b148d9">&#9670;&nbsp;</a></span>atca_trace_config()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void atca_trace_config </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>fp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a37c973beed068b00d261521bfe29299a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37c973beed068b00d261521bfe29299a">&#9670;&nbsp;</a></span>atca_trace_msg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00191.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atca_trace_msg </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00191.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td>
+          <td class="paramname"><em>status</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>msg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a3a81f3cd1d6204da295b87e92c7a039e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a81f3cd1d6204da295b87e92c7a039e">&#9670;&nbsp;</a></span>g_trace_fp</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">FILE* g_trace_fp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_a05a22e5f002d7c1de78eecb12447d7f.html">hal</a></li><li class="navelem"><a class="el" href="a01205.html">hal_uc3_timer_asf.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_055632e474cc4a9b908bc06080f6f8f3.html">cryptauthlib-v3.2.3_</a></li><li class="navelem"><a class="el" href="dir_ca3d4037a802337c07b97f564c6f6647.html">lib</a></li><li class="navelem"><a class="el" href="a01205.html">atca_debug.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

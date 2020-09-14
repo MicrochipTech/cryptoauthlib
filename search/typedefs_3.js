@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['hid_5fdevice_5ft_5241',['hid_device_t',['../a02163.html#gabac5505cae96829653fa6054af0372b3',1,'hid_device_t():&#160;hal_linux_kit_hid.h'],['../a02163.html#gabac5505cae96829653fa6054af0372b3',1,'hid_device_t():&#160;hal_win_kit_hid.h']]]
+  ['i2c_5fsam0_5finstance_5ft_5246',['i2c_sam0_instance_t',['../a00443.html#abc52bbb3cf5a8db38f9929b63d8d2171',1,'hal_sam0_i2c_asf.h']]],
+  ['i2c_5fsam_5finstance_5ft_5247',['i2c_sam_instance_t',['../a08586.html#ga2253297ba3f655a35cd1253e22ba5171',1,'hal_sam_i2c_asf.h']]],
+  ['i2c_5fstart_5finstance_5ft_5248',['i2c_start_instance_t',['../a08586.html#gab4ad18d30b921f27b4879ca71181491f',1,'hal_i2c_start.h']]]
 ];

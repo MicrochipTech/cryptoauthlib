@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_mbedtls_wrap.h Source File</title>
+<title>CryptoAuthLib: pkcs11_cert.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.2</span>
+   &#160;<span id="projectnumber">v3.2.3</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,47 +85,54 @@ $(document).ready(function(){initNavTree('a01259_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">atca_mbedtls_wrap.h</div>  </div>
+<div class="title">pkcs11_cert.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a01259.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef _ATCA_MBEDTLS_WRAP_H_</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define _ATCA_MBEDTLS_WRAP_H_</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef PKCS11_CERT_H_</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define PKCS11_CERT_H_</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">struct </span>mbedtls_pk_context;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">struct </span>mbedtls_x509_crt;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">struct </span><a class="code" href="a02244.html">atcacert_def_s</a>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">/* Wrapper Functions */</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a02166.html#ga72da31831a3647e287543634e3f78aca">atca_mbedtls_pk_init</a>(<span class="keyword">struct</span> mbedtls_pk_context * pkey, <span class="keyword">const</span> uint16_t slotid);</div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="a02166.html#ga1180b0ded84f7edb4b36d14730366a64">   48</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a02166.html#ga1180b0ded84f7edb4b36d14730366a64">atca_mbedtls_cert_add</a>(<span class="keyword">struct</span> mbedtls_x509_crt * cert, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="a02244.html">atcacert_def_s</a> * cert_def);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01316.html">pkcs11_object.h</a>&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="a13529.html">pkcs11_attrib_model</a> <a class="code" href="a13300.html#ga8de4193ede04a12ab4e44b8df9eec478">pkcs11_cert_x509public_attributes</a>[];</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="a01358.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> <a class="code" href="a13300.html#gafd21e04ab9248b3d58c3f5e4bd076ac9">pkcs11_cert_x509public_attributes_count</a>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="a13529.html">pkcs11_attrib_model</a> <a class="code" href="a13300.html#gabc10a1f1b90bc7d2fb047db0af539e80">pkcs11_cert_wtlspublic_attributes</a>[];</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="a01358.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> <a class="code" href="a13300.html#gad8232cd440c12745d24471e2676a117f">pkcs11_cert_wtlspublic_attributes_count</a>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="a13529.html">pkcs11_attrib_model</a> <a class="code" href="a13300.html#gafa471eb33699e2cba5dc3cc50a2d8df7">pkcs11_cert_x509_attributes</a>[];</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="a01358.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> <a class="code" href="a13300.html#gadc2b14c7a052fdc0bb751259d28dfdc0">pkcs11_cert_x509_attributes_count</a>;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">/* Application Callback definitions */</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<a class="code" href="a01358.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a13300.html#ga34fcca1dafb0a410d242fcb5ff3d69a5">pkcs11_cert_x509_write</a>(<a class="code" href="a01358.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="code" href="a01358.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute);</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="a02166.html#ga98d684683ccecd3d56bdf5dc27ae999c">   56</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a02166.html#ga98d684683ccecd3d56bdf5dc27ae999c">atca_mbedtls_ecdh_slot_cb</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="a02166.html#gaa35682dc98e33ce3d6fad1fc902cdff0">   62</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a02166.html#gaa35682dc98e33ce3d6fad1fc902cdff0">atca_mbedtls_ecdh_ioprot_cb</a>(uint8_t secret[32]);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;}</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* _ATCA_MBEDTLS_WRAP_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PKCS11_CERT_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aa02244_html"><div class="ttname"><a href="a02244.html">atcacert_def_s</a></div><div class="ttdef"><b>Definition:</b> atcacert_def.h:176</div></div>
-<div class="ttc" id="aa02166_html_ga1180b0ded84f7edb4b36d14730366a64"><div class="ttname"><a href="a02166.html#ga1180b0ded84f7edb4b36d14730366a64">atca_mbedtls_cert_add</a></div><div class="ttdeci">int atca_mbedtls_cert_add(struct mbedtls_x509_crt *cert, const struct atcacert_def_s *cert_def)</div></div>
-<div class="ttc" id="aa02166_html_gaa35682dc98e33ce3d6fad1fc902cdff0"><div class="ttname"><a href="a02166.html#gaa35682dc98e33ce3d6fad1fc902cdff0">atca_mbedtls_ecdh_ioprot_cb</a></div><div class="ttdeci">int atca_mbedtls_ecdh_ioprot_cb(uint8_t secret[32])</div><div class="ttdoc">ECDH Callback to obtain the IO Protection secret from the application.</div></div>
-<div class="ttc" id="aa02166_html_ga98d684683ccecd3d56bdf5dc27ae999c"><div class="ttname"><a href="a02166.html#ga98d684683ccecd3d56bdf5dc27ae999c">atca_mbedtls_ecdh_slot_cb</a></div><div class="ttdeci">int atca_mbedtls_ecdh_slot_cb(void)</div><div class="ttdoc">ECDH Callback to obtain the &quot;slot&quot; used in ECDH operations from the application.</div></div>
-<div class="ttc" id="aa02166_html_ga72da31831a3647e287543634e3f78aca"><div class="ttname"><a href="a02166.html#ga72da31831a3647e287543634e3f78aca">atca_mbedtls_pk_init</a></div><div class="ttdeci">int atca_mbedtls_pk_init(struct mbedtls_pk_context *pkey, const uint16_t slotid)</div><div class="ttdoc">Initializes an mbedtls pk context for use with EC operations.</div><div class="ttdef"><b>Definition:</b> atca_mbedtls_wrap.c:561</div></div>
+<div class="ttc" id="aa01358_html_a35181858a3b7a0a81f49d180d8f446ef"><div class="ttname"><a href="a01358.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a></div><div class="ttdeci">unsigned long int CK_ULONG</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:49</div></div>
+<div class="ttc" id="aa01316_html"><div class="ttname"><a href="a01316.html">pkcs11_object.h</a></div><div class="ttdoc">PKCS11 Library Object Handling.</div></div>
+<div class="ttc" id="aa13300_html_gafa471eb33699e2cba5dc3cc50a2d8df7"><div class="ttname"><a href="a13300.html#gafa471eb33699e2cba5dc3cc50a2d8df7">pkcs11_cert_x509_attributes</a></div><div class="ttdeci">const pkcs11_attrib_model pkcs11_cert_x509_attributes[]</div><div class="ttdef"><b>Definition:</b> pkcs11_cert.c:473</div></div>
+<div class="ttc" id="aa13300_html_gad8232cd440c12745d24471e2676a117f"><div class="ttname"><a href="a13300.html#gad8232cd440c12745d24471e2676a117f">pkcs11_cert_wtlspublic_attributes_count</a></div><div class="ttdeci">const CK_ULONG pkcs11_cert_wtlspublic_attributes_count</div><div class="ttdef"><b>Definition:</b> pkcs11_cert.c:468</div></div>
+<div class="ttc" id="aa13300_html_gafd21e04ab9248b3d58c3f5e4bd076ac9"><div class="ttname"><a href="a13300.html#gafd21e04ab9248b3d58c3f5e4bd076ac9">pkcs11_cert_x509public_attributes_count</a></div><div class="ttdeci">const CK_ULONG pkcs11_cert_x509public_attributes_count</div><div class="ttdef"><b>Definition:</b> pkcs11_cert.c:409</div></div>
+<div class="ttc" id="aa01358_html_a33839c131011ca3849dc35c11f69c39d"><div class="ttname"><a href="a01358.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a></div><div class="ttdeci">CK_ULONG CK_RV</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:1046</div></div>
+<div class="ttc" id="aa13300_html_gadc2b14c7a052fdc0bb751259d28dfdc0"><div class="ttname"><a href="a13300.html#gadc2b14c7a052fdc0bb751259d28dfdc0">pkcs11_cert_x509_attributes_count</a></div><div class="ttdeci">const CK_ULONG pkcs11_cert_x509_attributes_count</div><div class="ttdef"><b>Definition:</b> pkcs11_cert.c:527</div></div>
+<div class="ttc" id="aa13300_html_ga34fcca1dafb0a410d242fcb5ff3d69a5"><div class="ttname"><a href="a13300.html#ga34fcca1dafb0a410d242fcb5ff3d69a5">pkcs11_cert_x509_write</a></div><div class="ttdeci">CK_RV pkcs11_cert_x509_write(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)</div><div class="ttdef"><b>Definition:</b> pkcs11_cert.c:529</div></div>
+<div class="ttc" id="aa01358_html_a5e825285ada96a9920d361d33698ce04"><div class="ttname"><a href="a01358.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a></div><div class="ttdeci">CK_ATTRIBUTE CK_PTR CK_ATTRIBUTE_PTR</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:577</div></div>
+<div class="ttc" id="aa13300_html_gabc10a1f1b90bc7d2fb047db0af539e80"><div class="ttname"><a href="a13300.html#gabc10a1f1b90bc7d2fb047db0af539e80">pkcs11_cert_wtlspublic_attributes</a></div><div class="ttdeci">const pkcs11_attrib_model pkcs11_cert_wtlspublic_attributes[]</div><div class="ttdef"><b>Definition:</b> pkcs11_cert.c:414</div></div>
+<div class="ttc" id="aa13300_html_ga8de4193ede04a12ab4e44b8df9eec478"><div class="ttname"><a href="a13300.html#ga8de4193ede04a12ab4e44b8df9eec478">pkcs11_cert_x509public_attributes</a></div><div class="ttdeci">const pkcs11_attrib_model pkcs11_cert_x509public_attributes[]</div><div class="ttdef"><b>Definition:</b> pkcs11_cert.c:349</div></div>
+<div class="ttc" id="aa13529_html"><div class="ttname"><a href="a13529.html">_pkcs11_attrib_model</a></div><div class="ttdef"><b>Definition:</b> pkcs11_attrib.h:41</div></div>
+<div class="ttc" id="aa01358_html_ace49359127edfc5665608140005b9a96"><div class="ttname"><a href="a01358.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a></div><div class="ttdeci">void CK_PTR CK_VOID_PTR</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:67</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_4ffd540b1e8bd1b3c77f686379d81e11.html">cryptauthlib-v3.2.2_</a></li><li class="navelem"><a class="el" href="dir_22bd7ae9b92f1c809721fc0b656c2a03.html">lib</a></li><li class="navelem"><a class="el" href="dir_e9245f9af770ccd2887f79213e861d63.html">mbedtls</a></li><li class="navelem"><a class="el" href="a01259.html">atca_mbedtls_wrap.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_055632e474cc4a9b908bc06080f6f8f3.html">cryptauthlib-v3.2.3_</a></li><li class="navelem"><a class="el" href="dir_ca3d4037a802337c07b97f564c6f6647.html">lib</a></li><li class="navelem"><a class="el" href="dir_148315eba23a82409e091a868200e20f.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01259.html">pkcs11_cert.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

@@ -1,6 +1,9 @@
 var a01307 =
 [
-    [ "pkcs11_get_lib_info", "a02167.html#gaae56826104269ca730066136fb3eb995", null ],
-    [ "pkcs11_lib_description", "a02167.html#ga47daad4918afdf7ec808a5a57a4bce9d", null ],
-    [ "pkcs11_lib_manufacturer_id", "a02167.html#ga8ac50a3d8a0c4f1ddf04cdf02c757030", null ]
+    [ "PCKS11_MECH_ECC508_EC_CAPABILITY", "a13300.html#ga148b7615f20d8432f0e5ac4e6683aa7d", null ],
+    [ "TABLE_SIZE", "a13300.html#ga178ac9759ade77839a52329537e3784b", null ],
+    [ "pcks11_mech_table_e", "a13300.html#gadbb018cf35cbcf4935ee405f069dbdb9", null ],
+    [ "pcks11_mech_table_ptr", "a13300.html#ga8fa74592503b8d6fee8164d6ffbc1df0", null ],
+    [ "pkcs11_mech_get_list", "a13300.html#ga9678c431b8d5479e53417b109b32c20f", null ],
+    [ "pkcs_mech_get_info", "a13300.html#gac66d133f84b945f9c26727ee9f7a7d57", null ]
 ];
