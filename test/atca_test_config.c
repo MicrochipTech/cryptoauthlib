@@ -258,9 +258,33 @@ static int opt_iface_type(int argc, char* argv[])
         {
             gCfg->iface_type = ATCA_SPI_IFACE;
 
-            gCfg->atcaspi.bus = 0;
-            gCfg->atcaspi.select_pin = 0;
-            gCfg->atcaspi.baud = 200000;
+            if (argc >= 3 && argv[2][0] != '-')
+            {
+                gCfg->atcaspi.bus = (uint8_t)strtol(argv[2], NULL, 16);
+                ret = 3;
+            }
+            else
+            {
+                gCfg->atcaspi.bus = 0;
+            }
+
+            if (argc >= 4 && argv[3][0] != '-')
+            {
+                gCfg->atcaspi.select_pin = (uint8_t)strtol(argv[3], NULL, 16);
+            }
+            else
+            {
+                gCfg->atcaspi.select_pin = 0;
+            }
+
+            if (argc >= 5 && argv[4][0] != '-')
+            {
+                gCfg->atcaspi.baud = (uint32_t)strtol(argv[4], NULL, 10);
+            }
+            else
+            {
+                gCfg->atcaspi.baud = 200000;
+            }
         }
     }
     return ret;

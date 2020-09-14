@@ -8,6 +8,8 @@
 
 #include "cryptoauthlib.h"
 
+<#assign PLIB_NAME  = core.PORT_API_PREFIX?string>
+
 ATCAIfaceCfg ${NAME?lower_case}_${INDEX?string}_init_data = {
     .iface_type            = ${INTERFACE},
     .devtype               = ${NAME?upper_case},
@@ -19,8 +21,12 @@ ATCAIfaceCfg ${NAME?lower_case}_${INDEX?string}_init_data = {
 <#elseif INTERFACE == "ATCA_SPI_IFACE">
 <#assign plib_type = "spi">
     .atcaspi.bus           = 0,
-    .atcaspi.select_pin    = PORT_PIN_${SPI_CS_PIN?upper_case},
+        .atcaspi.select_pin    = ${PLIB_NAME}_PIN_${SPI_CS_PIN?upper_case},
+<#if HAL_INTERFACE?contains("FLEXCOM")>
+        .atcaspi.baud          = ${.vars["${HAL_INTERFACE?lower_case}"].FLEXCOM_SPI_BAUD_RATE},
+<#else>
     .atcaspi.baud          = ${.vars["${HAL_INTERFACE?lower_case}"].SPI_BAUD_RATE},
+</#if>
 </#if>
     .wake_delay            = ${WAKEUP_DELAY},
     .rx_retries            = ${RECEIVE_RETRY},

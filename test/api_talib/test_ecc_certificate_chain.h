@@ -39,7 +39,7 @@ extern const uint8_t test_ecc_root_public_key[64];
 
 extern const uint8_t test_ecc_signer_cert[571];
 
-extern const uint8_t test_ecc_leaf_cert[629] ;
+extern const uint8_t test_ecc_leaf_cert[629];
 
 extern const uint8_t test_ecc_leaf_public_key[64];
 

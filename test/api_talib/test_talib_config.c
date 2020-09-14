@@ -41,8 +41,8 @@ const uint8_t test_ta100_configdata[TA_CONFIG_SIZE] = {
 };
 
 static ta_element_attributes_t attr_rw_data = { 3, 72, 0, 0, 0, 0x54, 4 };
-static ta_element_attributes_t attr_ecc_private = { 1, 0x1700, 0, 0, 0, 0x01, 0};
-static ta_element_attributes_t attr_ecc_public = { 0, 0x00, 0, 0, 0, 0x55, 4};
+static ta_element_attributes_t attr_ecc_private = { 1, 0x1700, 0, 0, 0, 0x01, 0 };
+static ta_element_attributes_t attr_ecc_public = { 0, 0x00, 0, 0, 0, 0x55, 4 };
 static ta_element_attributes_t attr_hmac_key = { 0x42, 0x0600, 0, 0, 0, 0x55, 8 };
 static ta_element_attributes_t attr_aes_key = { 0x62, 0x0600, 0, 0, 0, 0x55, 8 };
 static ta_element_attributes_t attr_ecc_root_public = { 0, 0x06FF, 0, 0, 0, 0x55, 4 };
@@ -53,18 +53,18 @@ uint8_t auth_hmac_key[] = { 0xa2, 0x26, 0xe1, 0x65, 0x69, 0x01, 0x80, 0xeb, 0x1a
 
 static device_object_meta_t talib_config_object_data[] =
 {
-    {TEST_TYPE_ECC_SIGN,        0x8102,                           &attr_ecc_private },
-    {TEST_TYPE_ECC_VERIFY,      0x8103,                           &attr_ecc_public },
-    {TEST_TYPE_ECC_GENKEY,      TA_HANDLE_VOLATILE_REGISTER0,     &attr_ecc_private },
-    {TEST_TYPE_ECDH,            TA_HANDLE_VOLATILE_REGISTER1,     &attr_ecc_private },
-    {TEST_TYPE_AES,             0x8106,                           &attr_aes_key },
-    {TEST_TYPE_HMAC,            0x8105,                           &attr_hmac_key },
-    {TEST_TYPE_AUTH_HMAC,       0xAB1D,                           &attr_hmac_key },
-    {TEST_TYPE_AUTH_GCM,        0xAAD1,                           &attr_aes_key },
-    {TEST_TYPE_AUTH_CMAC,       0x9492,                           &attr_aes_key },
-    {TEST_TYPE_DATA,            0x8101,                           &attr_rw_data },
-    {TEST_TYPE_ECC_ROOT_KEY,    0x8107,                           &attr_ecc_root_public },
-    {0, 0, NULL}
+    { TEST_TYPE_ECC_SIGN,     0x8102,                                  &attr_ecc_private                               },
+    { TEST_TYPE_ECC_VERIFY,   0x8103,                                  &attr_ecc_public                                },
+    { TEST_TYPE_ECC_GENKEY,   TA_HANDLE_VOLATILE_REGISTER0,            &attr_ecc_private                               },
+    { TEST_TYPE_ECDH,         TA_HANDLE_VOLATILE_REGISTER1,            &attr_ecc_private                               },
+    { TEST_TYPE_AES,          0x8106,                                  &attr_aes_key                                   },
+    { TEST_TYPE_HMAC,         0x8105,                                  &attr_hmac_key                                  },
+    { TEST_TYPE_AUTH_HMAC,    0xAB1D,                                  &attr_hmac_key                                  },
+    { TEST_TYPE_AUTH_GCM,     0xAAD1,                                  &attr_aes_key                                   },
+    { TEST_TYPE_AUTH_CMAC,    0x9492,                                  &attr_aes_key                                   },
+    { TEST_TYPE_DATA,         0x8101,                                  &attr_rw_data                                   },
+    { TEST_TYPE_ECC_ROOT_KEY, 0x8107,                                  &attr_ecc_root_public                           },
+    { 0,                      0,                                       NULL                                            }
 };
 
 ATCA_STATUS talib_config_get_handle_by_test(uint8_t test_type, uint16_t* handle)
@@ -163,8 +163,8 @@ int talib_configure_device(int argc, char* argv[])
     if (ATCA_SUCCESS == status)
     {
         device_object_meta_t * create_ptr = talib_config_object_data;
-        
-        for (;create_ptr->test_type; create_ptr++)
+
+        for (; create_ptr->test_type; create_ptr++)
         {
             ta_element_attributes_t* attr_ptr = (ta_element_attributes_t*)create_ptr->attributes;
 
@@ -224,11 +224,13 @@ extern t_test_case_info* talib_create_tests[];
 extern t_test_case_info* talib_aes_tests[];
 extern t_test_case_info* talib_counter_tests[];
 extern t_test_case_info* talib_ecdh_tests[];
+extern t_test_case_info* talib_export_import_tests[];
 extern t_test_case_info* talib_genkey_tests[];
 extern t_test_case_info* talib_info_tests[];
 extern t_test_case_info* talib_kdf_tests[];
 extern t_test_case_info* talib_mac_tests[];
 extern t_test_case_info* talib_managecert_tests[];
+extern t_test_case_info* talib_power_tests[];
 extern t_test_case_info* talib_random_tests[];
 extern t_test_case_info* talib_rsa_enc_tests[];
 extern t_test_case_info* talib_selftest_tests[];
@@ -245,10 +247,12 @@ void run_all_talib_tests(void)
     RunAllTests(talib_counter_tests);
     RunAllTests(talib_create_tests);
     RunAllTests(talib_ecdh_tests);
+    RunAllTests(talib_export_import_tests);
     RunAllTests(talib_genkey_tests);
     RunAllTests(talib_info_tests);
     RunAllTests(talib_kdf_tests);
     RunAllTests(talib_mac_tests);
+    RunAllTests(talib_power_tests);
     RunAllTests(talib_random_tests);
     RunAllTests(talib_rsa_enc_tests);
     RunAllTests(talib_selftest_tests);

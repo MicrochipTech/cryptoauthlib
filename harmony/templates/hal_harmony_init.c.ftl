@@ -33,6 +33,7 @@
 #include "cryptoauthlib.h"
 
 <#assign pliblist = CAL_PLIB_LIST?word_list>
+<#assign PLIB_NAME  = core.PORT_API_PREFIX?string>
 <#if pliblist?size != 0>
 <#list pliblist as plib_id>
 <#assign plib_info = plib_id?split("_")>
@@ -46,7 +47,7 @@ atca_plib_i2c_api_t ${plib_info[0]}_plib_i2c_api = {
 <#elseif plib_info[1] == "spi">
 static void ${plib_info[0]}_select_pin(uint32_t pin, bool value)
 {
-    PORT_PinWrite(pin, value);
+    ${PLIB_NAME}_PinWrite(pin, value);
 }
 
 atca_plib_spi_api_t ${plib_info[0]}_plib_spi_api = {

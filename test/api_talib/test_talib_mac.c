@@ -26,7 +26,7 @@ TEST(atca_cmd_basic_test, mac_test_cmac)
 
     for (key_block = 0; key_block < 4; key_block++)
     {
-         // Load AES keys into slot
+        // Load AES keys into slot
         status = atcab_write_bytes_zone(ATCA_ZONE_DATA, key_id, 0, &g_aes_keys[key_block][0], 16);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -35,7 +35,7 @@ TEST(atca_cmd_basic_test, mac_test_cmac)
         {
 
             status = talib_cmac(atcab_get_device(), key_id, 0,
-                            g_plaintext, g_cmac_msg_sizes[msg_index], cmac);
+                                g_plaintext, g_cmac_msg_sizes[msg_index], cmac);
             TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
             TEST_ASSERT_EQUAL_MEMORY(g_cmacs[key_block][msg_index], cmac, sizeof(cmac));
@@ -47,9 +47,9 @@ TEST(atca_cmd_basic_test, mac_test_cmac)
 
 t_test_case_info talib_mac_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, mac_test_cmac),      DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, mac_test_cmac), DEVICE_MASK(TA100)      },
     /* Array Termination element*/
-    { (fp_test_case)NULL,                    (uint8_t)0 },
+    { (fp_test_case)NULL,                     (uint8_t)0 },
 };
 
 t_test_case_info* talib_mac_tests[] = {

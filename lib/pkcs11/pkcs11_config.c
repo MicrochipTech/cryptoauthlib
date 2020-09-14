@@ -336,11 +336,11 @@ static CK_RV pkcs11_config_parse_interface(pkcs11_slot_ctx_ptr slot_ctx, char* c
         }
         if (argc > 2)
         {
-            slot_ctx->interface_config.atcaspi.select_pin = (uint8_t)strtol(argv[1], NULL, 16);
+            slot_ctx->interface_config.atcaspi.select_pin = (uint8_t)strtol(argv[2], NULL, 16);
         }
         if (argc > 3)
         {
-            slot_ctx->interface_config.atcaspi.baud = (uint32_t)strtol(argv[1], NULL, 16);
+            slot_ctx->interface_config.atcaspi.baud = (uint32_t)strtol(argv[3], NULL, 10);
         }
         rv = CKR_OK;
 #endif

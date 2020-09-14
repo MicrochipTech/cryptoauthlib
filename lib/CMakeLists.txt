@@ -77,6 +77,7 @@ source_group("App/Tng" FILES ${TNG_SRC})
 endif()
 
 if (ATCA_MBEDTLS)
+if (NOT TARGET mbedtls)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../third_party/CMakeLists-mbedtls.txt.in ${CMAKE_BINARY_DIR}/${DEPENDENCY_DIR}/mbedtls_downloader/CMakeLists.txt)
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/${DEPENDENCY_DIR}/mbedtls_downloader/)
@@ -88,7 +89,7 @@ add_library(mbedtls STATIC ${MBEDTLS_LIB_SRC})
 target_compile_definitions(mbedtls PUBLIC -DMBEDTLS_CMAC_C)
 include_directories(mbedtls PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
                                     ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/mbedtls/include)
-
+endif()
 
 file(GLOB MBEDTLS_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mbedtls/*.c")
 if(${CMAKE_VERSION} VERSION_GREATER "3.8.0")

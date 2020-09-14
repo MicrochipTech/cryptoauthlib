@@ -195,7 +195,7 @@ ATCA_STATUS kit_init(ATCAIface iface)
 
 
             /*Selects the device only if the device type, device interface and device identity matches*/
-            if ((strcmp(device_match, dev_type) == 0) && (iface->mIfaceCFG->atcahid.dev_identity == address) && (strcmp(interface_match, dev_interface) == 0))
+            if ((strncmp(device_match, dev_type, 4) == 0) && (iface->mIfaceCFG->atcahid.dev_identity == address) && (strcmp(interface_match, dev_interface) == 0))
             {
 
 

@@ -50,7 +50,7 @@ TEST(atca_cmd_basic_test, managecert_verify_cert_shared_memory)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     //Write the complete signer certificate to the data handle in device
-    status = talib_write_element(atcab_get_device(), certificate_handle, sizeof(test_ecc_signer_cert), 
+    status = talib_write_element(atcab_get_device(), certificate_handle, sizeof(test_ecc_signer_cert),
                                  test_ecc_signer_cert);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -96,12 +96,12 @@ TEST(atca_cmd_basic_test, managecert_verify_cert_chain_volatile)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     //Verify the given signer certificate with root public key and store the signer extracted certificate to volatile handle
-    status = talib_store_extracted_cert_io(atcab_get_device(), root_key_id, extracted_cert_handle, 
+    status = talib_store_extracted_cert_io(atcab_get_device(), root_key_id, extracted_cert_handle,
                                            test_ecc_signer_cert, sizeof(test_ecc_signer_cert));
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     //The signer extracted certificate verifies the given leaf certificate and it stores leaf extraced certificate to same volatile handle
-    status = talib_store_extracted_cert_io(atcab_get_device(), extracted_cert_handle, extracted_cert_handle, 
+    status = talib_store_extracted_cert_io(atcab_get_device(), extracted_cert_handle, extracted_cert_handle,
                                            test_ecc_leaf_cert, sizeof(test_ecc_leaf_cert));
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -148,7 +148,7 @@ TEST(atca_cmd_basic_test, managecert_verify_cert_chain_data_shared_memory)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     //Write the complete leaf certificate to the data handle in device
-    status = talib_write_element(atcab_get_device(), leaf_cert_handle, sizeof(test_ecc_leaf_cert), 
+    status = talib_write_element(atcab_get_device(), leaf_cert_handle, sizeof(test_ecc_leaf_cert),
                                  test_ecc_leaf_cert);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -202,14 +202,14 @@ TEST(atca_cmd_basic_test, managecert_verify_cert_chain_data_shared_memory)
 
 t_test_case_info talib_managecert_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, managecert_verify_cert_io_buffer),                    DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, managecert_verify_cert_shared_memory),                DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, managecert_verify_cert_chain_volatile),               DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, managecert_verify_cert_chain_data_shared_memory),     DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, managecert_verify_cert_io_buffer),                DEVICE_MASK(TA100)                    },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, managecert_verify_cert_shared_memory),            DEVICE_MASK(TA100)                    },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, managecert_verify_cert_chain_volatile),           DEVICE_MASK(TA100)                    },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, managecert_verify_cert_chain_data_shared_memory), DEVICE_MASK(TA100)                    },
 
 
     /* Array Termination element*/
-    { (fp_test_case)NULL,                    (uint8_t)0 },
+    { (fp_test_case)NULL,                     (uint8_t)0 },
 };
 
 t_test_case_info* talib_managecert_tests[] = {

@@ -113,7 +113,7 @@ TEST(atca_cmd_basic_test, kdf_hkdf_stored)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Create the handle for the output data
-    status = talib_create_hmac_element(atcab_get_device(), hkdf_output_len, &attr_symm_hmac, 
+    status = talib_create_hmac_element(atcab_get_device(), hkdf_output_len, &attr_symm_hmac,
                                        &hkdf_out_stored_handle);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -122,7 +122,7 @@ TEST(atca_cmd_basic_test, kdf_hkdf_stored)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // perform the hkdf operation with the given data, key in HMAC handle and store the output to handle in device.
-    status = talib_hkdf_stored(atcab_get_device(), hmac_key_handle, hkdf_salt, sizeof(hkdf_salt), hkdf_info, 
+    status = talib_hkdf_stored(atcab_get_device(), hmac_key_handle, hkdf_salt, sizeof(hkdf_salt), hkdf_info,
                                sizeof(hkdf_info), hkdf_out_stored_handle, &hkdf_output_len);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -166,7 +166,7 @@ TEST(atca_cmd_basic_test, kdf_prf_io)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // perform the kdf prf operation with the given data and key in HMAC handle
-    status = talib_kdf_prf_io(atcab_get_device(), hmac_handle, sizeof(prf_key), prf_label_seed, 
+    status = talib_kdf_prf_io(atcab_get_device(), hmac_handle, sizeof(prf_key), prf_label_seed,
                               sizeof(prf_label_seed), prf_output, &prf_output_len);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -214,7 +214,7 @@ TEST(atca_cmd_basic_test, kdf_prf_stored)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // perform the kdf prf operation with the given data, key in HMAC handle and store the output to handle in device.
-    status = talib_kdf_prf_stored(atcab_get_device(), hmac_handle, sizeof(prf_key), prf_label_seed, 
+    status = talib_kdf_prf_stored(atcab_get_device(), hmac_handle, sizeof(prf_key), prf_label_seed,
                                   sizeof(prf_label_seed), data_handle, &prf_output_len);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -270,7 +270,7 @@ TEST(atca_cmd_basic_test, kdf_hmac_counter_io)
 
 
     // perform the hmac-counter operation with the data and key in HMAC handle.
-    status = talib_kdf_hmac_counter_io(atcab_get_device(), hmac_handle,  label, sizeof(label), context, 
+    status = talib_kdf_hmac_counter_io(atcab_get_device(), hmac_handle,  label, sizeof(label), context,
                                        sizeof(context), hmac_counter_output, &hmac_counter_output_len);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -322,7 +322,7 @@ TEST(atca_cmd_basic_test, kdf_hmac_counter_stored)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // perform the hmac-counter operation with the given data, key in HMAC handle and store the output to handle in device.
-    status = talib_kdf_hmac_counter_stored(atcab_get_device(), hmac_handle, label, sizeof(label), 
+    status = talib_kdf_hmac_counter_stored(atcab_get_device(), hmac_handle, label, sizeof(label),
                                            context, sizeof(context), data_handle, &hmac_counter_output_len);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -371,7 +371,7 @@ TEST(atca_cmd_basic_test, kdf_sha256_io)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // perform the kdf-sha256 operation with the given data and key in HMAC handle
-    status = talib_kdf_sha256_io(atcab_get_device(), hmac_handle, pre_pad, sizeof(pre_pad), post_pad, 
+    status = talib_kdf_sha256_io(atcab_get_device(), hmac_handle, pre_pad, sizeof(pre_pad), post_pad,
                                  sizeof(post_pad), sha_output, &sha_output_len);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -442,7 +442,7 @@ TEST(atca_cmd_basic_test, kdf_sha256_stored)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // perform the kdf-sha256 operation with the given data and key in HMAC handle
-    status = talib_kdf_sha256_stored(atcab_get_device(), hmac_handle, pre_pad, sizeof(pre_pad), 
+    status = talib_kdf_sha256_stored(atcab_get_device(), hmac_handle, pre_pad, sizeof(pre_pad),
                                      post_pad, sizeof(post_pad), sha256_stored_handle, &sha_output_len);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -479,14 +479,14 @@ TEST(atca_cmd_basic_test, kdf_sha256_stored)
 
 t_test_case_info talib_kdf_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_hkdf_io),             DEVICE_MASK(TA100)              },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_hkdf_stored),         DEVICE_MASK(TA100)              },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_prf_io),              DEVICE_MASK(TA100)              },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_prf_stored),          DEVICE_MASK(TA100)              },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_hmac_counter_io),     DEVICE_MASK(TA100)              },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_hmac_counter_stored), DEVICE_MASK(TA100)              },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_sha256_io),           DEVICE_MASK(TA100)              },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_sha256_stored),       DEVICE_MASK(TA100)              },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_hkdf_io),             DEVICE_MASK(TA100)                           },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_hkdf_stored),         DEVICE_MASK(TA100)                           },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_prf_io),              DEVICE_MASK(TA100)                           },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_prf_stored),          DEVICE_MASK(TA100)                           },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_hmac_counter_io),     DEVICE_MASK(TA100)                           },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_hmac_counter_stored), DEVICE_MASK(TA100)                           },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_sha256_io),           DEVICE_MASK(TA100)                           },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_sha256_stored),       DEVICE_MASK(TA100)                           },
 
     /* Array Termination element*/
     { (fp_test_case)NULL,                     (uint8_t)0 },

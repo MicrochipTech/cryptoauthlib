@@ -108,7 +108,7 @@
  */
 typedef struct atca_temp_key
 {
-    uint8_t  value[ATCA_KEY_SIZE * 2]; //!< Value of TempKey (64 bytes for ATECC608A only)
+    uint8_t  value[ATCA_KEY_SIZE * 2]; //!< Value of TempKey (64 bytes for ATECC608 only)
     unsigned key_id       : 4;         //!< If TempKey was derived from a slot or transport key (GenDig or GenKey), that key ID is saved here.
     unsigned source_flag  : 1;         //!< Indicates id TempKey started from a random nonce (0) or not (1).
     unsigned gen_dig_data : 1;         //!< TempKey was derived from the GenDig command.

@@ -1,6 +1,22 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.2.3 (09/12/2020)
+
+### New features
+  - Additional TA100 command support (requires NDA, consult with your FAE or 
+    submit a request through your myMicrochip account)
+
+### Fixes
+  - Security patch for USB HALs. Removed deprecated HALs and removed enumeration
+    from the hidapi HAL.
+  - Fix device matching logic to support older kits when using "auto detect"
+    settings in the interface configuration
+  - Fix SPI HAL generation errors for SAMG55 & SAM71 (flexcom) devices
+  - Added a timeout for Harmony I2C calls to prevent infinite loops on peripheral
+    failures. If a loop exists inside the peripheral library then it may still
+    cause processor spins until a watchdog reset.
+
 ## Release v3.2.2 (07/28/2020)
 
 ### New Features

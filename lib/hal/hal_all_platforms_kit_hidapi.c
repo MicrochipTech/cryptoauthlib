@@ -29,11 +29,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "hidapi.h"
-//#include "unistd.h"
-//#include <windows.h>
 
 #include "atca_hal.h"
-#include "hal_all_platforms_kit_hidapi.h"
 #include "hal/kit_protocol.h"
 
 /** \defgroup hal_ Hardware abstraction layer (hal_)
@@ -43,8 +40,7 @@
  *
    @{ */
 
-// File scope globals
-atcahid_t _gHid;
+#define HID_PACKET_MAX      512     //! Maximum number of bytes for a HID send/receive packet (typically 64)
 
 /** \brief discover cdc buses available for this hardware
  * this maintains a list of logical to physical bus mappings freeing the application
@@ -76,9 +72,7 @@ ATCA_STATUS hal_kit_hid_discover_devices(int bus_num, ATCAIfaceCfg cfg[], int *f
 ATCA_STATUS hal_kit_hid_init(void* hal, ATCAIfaceCfg* cfg)
 {
     ATCAHAL_t *phal = (ATCAHAL_t*)hal;
-    hid_device *handle;
-    struct hid_device_info *devs = NULL;
-    struct hid_device_info *cur_dev = NULL;
+
     int i = 0;
     int index = 0;
 
@@ -88,59 +82,15 @@ ATCA_STATUS hal_kit_hid_init(void* hal, ATCAIfaceCfg* cfg)
         return ATCA_BAD_PARAM;
     }
 
-    // Initialize the _gHid structure
-    memset(&_gHid, 0, sizeof(_gHid));
-    for (i = 0; i < HID_DEVICES_MAX; i++)
-    {
-        _gHid.kits[i] = NULL;
-    }
-    _gHid.num_kits_found = 0;
-
     // Create the enumerate object
 #ifdef KIT_DEBUG
     printf("Enumerate HID device(s)\n");
 #endif
     hid_init();
-    devs = hid_enumerate(cfg->atcahid.vid, cfg->atcahid.pid);
 
-    cur_dev = devs;
-    if (cur_dev == NULL)
-    {
-#ifdef KIT_DEBUG
-        printf("no HID device found\n");
-#endif
-        hid_exit();
-        return ATCA_COMM_FAIL;
-    }
-    while (cur_dev != NULL)
-    {
-        if ((handle = hid_open(cur_dev->vendor_id, cur_dev->product_id, cur_dev->serial_number)))
-        {
-            _gHid.kits[index] = handle;
-#ifdef KIT_DEBUG
-            printf("Kit USB Device Node: %s\n", cur_dev->path);
-            printf("  Manufacturer %s (%s)\n",
-                   (char*)cur_dev->manufacturer_string,
-                   (char*)cur_dev->product_string);
-            printf("  PID %d\n", cur_dev->product_id);
-            printf("  VID %d\n\n", cur_dev->vendor_id);
-#endif
-            index++;
-        }
-        cur_dev = cur_dev->next;
+    phal->hal_data = hid_open(cfg->atcahid.vid, cfg->atcahid.pid, NULL);
 
-    }
-
-    hid_free_enumeration(devs);
-
-    // Save the results of this discovery of HID
-    if (index > 0)
-    {
-        _gHid.num_kits_found = index;
-        phal->hal_data = &_gHid;
-    }
-
-    return ATCA_SUCCESS;
+    return (phal->hal_data) ? ATCA_SUCCESS : ATCA_COMM_FAIL;
 }
 
 /** \brief HAL implementation of Kit HID post init
@@ -151,7 +101,7 @@ ATCA_STATUS hal_kit_hid_post_init(ATCAIface iface)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
 
-    atcahid_t* pHid = atgetifacehaldat(iface);
+    hid_device* pHid = (hid_device*)atgetifacehaldat(iface);
     ATCAIfaceCfg *pCfg = atgetifacecfg(iface);
     int i = 0;
 
@@ -160,18 +110,13 @@ ATCA_STATUS hal_kit_hid_post_init(ATCAIface iface)
         return ATCA_BAD_PARAM;
     }
 
-    // Perform the kit protocol init
-    for (i = 0; i < pHid->num_kits_found; i++)
-    {
-        status = kit_init(iface);
-        if (status != ATCA_SUCCESS)
+    status = kit_init(iface);
+    if (status != ATCA_SUCCESS)
 #ifdef KIT_DEBUG
-        { printf("kit_init() Failed"); }
+    { printf("kit_init() Failed"); }
 #endif
-        {
-            ATCA_TRACE(status, "kit_init() failed");
-            break;
-        }
+    {
+        ATCA_TRACE(status, "kit_init() failed");
     }
 
     return status;
@@ -186,7 +131,7 @@ ATCA_STATUS hal_kit_hid_post_init(ATCAIface iface)
 ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength)
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
-    atcahid_t* pHid = (atcahid_t*)atgetifacehaldat(iface);
+    hid_device* pHid = (hid_device*)atgetifacehaldat(iface);
     int bytes_written = 0;
     int bytes_left;
     int bytes_to_send;
@@ -195,11 +140,6 @@ ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength)
     if ((txdata == NULL) || (cfg == NULL) || (pHid == NULL))
     {
         return ATCA_BAD_PARAM;
-    }
-
-    if (pHid->kits[cfg->atcahid.idx] == NULL)
-    {
-        return ATCA_COMM_FAIL;
     }
 
 #ifdef KIT_DEBUG
@@ -223,7 +163,7 @@ ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength)
 
         memcpy(&buffer[1], &txdata[(txlength - bytes_left)], bytes_to_send);
 
-        bytes_written = hid_write(pHid->kits[cfg->atcahid.idx], buffer, cfg->atcahid.packetsize + 1);
+        bytes_written = hid_write(pHid, buffer, (size_t)cfg->atcahid.packetsize + 1);
         if (bytes_written != cfg->atcahid.packetsize + 1)
         {
             return ATCA_TX_FAIL;
@@ -244,8 +184,7 @@ ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength)
 ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxsize)
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
-    atcahid_t* pHid = (atcahid_t*)atgetifacehaldat(iface);
-    bool continue_read = true;
+    hid_device* pHid = (hid_device*)atgetifacehaldat(iface);
     size_t bytes_read = 0;
     size_t total_bytes_read = 0;
     size_t bytes_to_read = *rxsize;
@@ -256,34 +195,23 @@ ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxsize)
         return ATCA_BAD_PARAM;
     }
 
-    if (pHid->kits[cfg->atcahid.idx] == NULL)
-    {
-        return ATCA_COMM_FAIL;
-    }
-
     bytes_to_read--;
-    //hid_get_product_string(pHid->kits[cfg->atcahid.idx], &rxdata[total_bytes_read], bytes_to_read);
-    //printf("%s\n", rxdata);
+
     // Receive the data from the kit USB device
     do
     {
-        bytes_read = hid_read(pHid->kits[cfg->atcahid.idx], &rxdata[total_bytes_read], bytes_to_read);
+        bytes_read = hid_read(pHid, &rxdata[total_bytes_read], bytes_to_read);
         if (bytes_read == -1)
         {
             return ATCA_RX_FAIL;
         }
+
+        location = memchr(&rxdata[total_bytes_read], '\n', bytes_read);
+
         total_bytes_read += bytes_read;
         bytes_to_read -= bytes_read;
-
-        // Check if the kit protocol message has been received
-        if (strstr((char*)rxdata, "\n") != NULL)
-        {
-            continue_read = false;
-        }
     }
-    while (continue_read == true);
-
-    location = strchr((char*)rxdata, '\n');
+    while (!location && 0 < bytes_to_read);
 
     // Save the total bytes read
     if (location != NULL)
@@ -308,9 +236,7 @@ ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxsize)
  */
 ATCA_STATUS kit_phy_num_found(int8_t* num_found)
 {
-    *num_found = _gHid.num_kits_found;
-
-    return ATCA_SUCCESS;
+    return ATCA_UNIMPLEMENTED;
 }
 
 /** \brief HAL implementation of kit protocol send over USB HID
@@ -375,22 +301,15 @@ ATCA_STATUS hal_kit_hid_sleep(ATCAIface iface)
  */
 ATCA_STATUS hal_kit_hid_release(void* hal_data)
 {
-    atcahid_t* phaldat = (atcahid_t*)hal_data;
+    hid_device* pHid = (hid_device*)hal_data;
     int i = 0;
 
-    if (phaldat == NULL)
+    if (pHid == NULL)
     {
         return ATCA_BAD_PARAM;
     }
 
-    // Close all kit USB devices
-    for (i = 0; i < phaldat->num_kits_found; i++)
-    {
-        if (_gHid.kits[i] != NULL)
-        {
-            hid_close(_gHid.kits[i]);
-        }
-    }
+    hid_close(pHid);
 
     return ATCA_SUCCESS;
 }
