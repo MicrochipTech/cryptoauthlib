@@ -409,6 +409,51 @@ void atca_test_assert_aes_enabled(UNITY_LINE_TYPE from_line)
     }
 }
 
+#if ATCA_TA_SUPPORT
+//The Function checks the Secureboot mode byte in configuration zone , if it is not set, it skips the test
+void atca_test_assert_ta_sboot_enabled(UNITY_LINE_TYPE from_line, uint8_t mode)
+{
+    if (TA100 == gCfg->devtype)
+    {
+        ATCA_STATUS status;
+        uint8_t check_config_sboot_enable[8];
+        uint16_t config_size = sizeof(check_config_sboot_enable);
+
+        // Bytes 32 of the config zone contains the Secure boot config bit
+        status = talib_read_partial_element(atcab_get_device(), TA_HANDLE_CONFIG_MEMORY, 32, &config_size,
+                                            &check_config_sboot_enable[0]);
+        UNITY_TEST_ASSERT_EQUAL_INT(ATCA_SUCCESS, status, from_line, NULL);
+
+        if ((check_config_sboot_enable[0] & TA_SECUREBOOT_CONFIG_MODE_MASK) != mode)
+        {
+            TEST_IGNORE_MESSAGE("Ignoring the test, Secureboot mode is not configured");
+        }
+    }
+}
+
+//The Function checks the Secureboot preboot mode byte in configuration zone , if it is not set, it skips the test
+void atca_test_assert_ta_sboot_preboot_enabled(UNITY_LINE_TYPE from_line)
+{
+    if (TA100 == gCfg->devtype)
+    {
+        ATCA_STATUS status;
+        uint8_t check_config_sboot_enable[8];
+        uint16_t config_size = sizeof(check_config_sboot_enable);
+
+        // Bytes 32 of the config zone contains the Secure boot config bit
+        status = talib_read_partial_element(atcab_get_device(), TA_HANDLE_CONFIG_MEMORY, 32, &config_size,
+                                            &check_config_sboot_enable[0]);
+        UNITY_TEST_ASSERT_EQUAL_INT(ATCA_SUCCESS, status, from_line, NULL);
+
+        if ((check_config_sboot_enable[1] & TA_SECUREBOOT_CONFIG_PREBOOT_ENABLE_MASK)
+            != TA_SECUREBOOT_CONFIG_PREBOOT_ENABLE_MASK)
+        {
+            TEST_IGNORE_MESSAGE("Ignoring the test, Secureboot preboot is not configured");
+        }
+    }
+}
+#endif
+
 ATCA_STATUS atca_test_config_get_id(uint8_t test_type, uint16_t* handle)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;

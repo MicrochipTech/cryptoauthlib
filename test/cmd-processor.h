@@ -33,7 +33,6 @@
 #include "cryptoauthlib.h"
 
 #define cmdQ_SIZE    512
-#define CMD_PROCESSOR_MAX_ARGS  10
 
 int processCmd_interactive(void);
 int processCmd(void);
@@ -45,18 +44,5 @@ volatile struct
     uint8_t m_putIdx;
     uint8_t m_entry[ cmdQ_SIZE ];
 } cmdQ;
-
-typedef int (*fp_menu_handler)(int argc, char* argv[]);
-
-typedef struct
-{
-    const char*     menu_cmd;
-    const char*     menu_cmd_description;
-    fp_menu_handler fp_handler;
-} t_menu_info;
-
-
-int run_tests(int test);
-
 
 #endif /* CMD-PROCESSOR_H_ */

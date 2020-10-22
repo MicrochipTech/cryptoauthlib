@@ -40,12 +40,19 @@ const uint8_t test_ta100_configdata[TA_CONFIG_SIZE] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-static ta_element_attributes_t attr_rw_data = { 3, 72, 0, 0, 0, 0x54, 4 };
+const char test_template_text[] = "CAL Sign Internal Test";
+uint8_t test_template_tlv[] = { 0x00, 0x16, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x02, 0x81, 0x01, 0x05, 0x06,
+                                0x07, 0x01, 0x01, 0x08, 0x01, 0x01 };
+
+static ta_element_attributes_t attr_rw_data = { 3, 72, 0, 0, 0, 0x55, 4 };
+static ta_element_attributes_t attr_template_data = { 3, 4135, 0, 0, 0, 0x11, 0 };
 static ta_element_attributes_t attr_ecc_private = { 1, 0x1700, 0, 0, 0, 0x01, 0 };
 static ta_element_attributes_t attr_ecc_public = { 0, 0x00, 0, 0, 0, 0x55, 4 };
 static ta_element_attributes_t attr_hmac_key = { 0x42, 0x0600, 0, 0, 0, 0x55, 8 };
 static ta_element_attributes_t attr_aes_key = { 0x62, 0x0600, 0, 0, 0, 0x55, 8 };
-static ta_element_attributes_t attr_ecc_root_public = { 0, 0x06FF, 0, 0, 0, 0x55, 4 };
+static ta_element_attributes_t attr_ecc_root_public = { 0, 0x07FF, 0, 0, 0, 0x55, 4 };
 
 uint8_t auth_hmac_key[] = { 0xa2, 0x26, 0xe1, 0x65, 0x69, 0x01, 0x80, 0xeb, 0x1a, 0x0c, 0x9c, 0x5b, 0x64, 0x5e, 0x42, 0x02,
                             0xfa, 0x2f, 0x4f, 0xfd, 0x68, 0x75 };
@@ -53,17 +60,18 @@ uint8_t auth_hmac_key[] = { 0xa2, 0x26, 0xe1, 0x65, 0x69, 0x01, 0x80, 0xeb, 0x1a
 
 static device_object_meta_t talib_config_object_data[] =
 {
-    { TEST_TYPE_ECC_SIGN,     0x8102,                                  &attr_ecc_private                               },
-    { TEST_TYPE_ECC_VERIFY,   0x8103,                                  &attr_ecc_public                                },
-    { TEST_TYPE_ECC_GENKEY,   TA_HANDLE_VOLATILE_REGISTER0,            &attr_ecc_private                               },
-    { TEST_TYPE_ECDH,         TA_HANDLE_VOLATILE_REGISTER1,            &attr_ecc_private                               },
-    { TEST_TYPE_AES,          0x8106,                                  &attr_aes_key                                   },
-    { TEST_TYPE_HMAC,         0x8105,                                  &attr_hmac_key                                  },
-    { TEST_TYPE_AUTH_HMAC,    0xAB1D,                                  &attr_hmac_key                                  },
-    { TEST_TYPE_AUTH_GCM,     0xAAD1,                                  &attr_aes_key                                   },
-    { TEST_TYPE_AUTH_CMAC,    0x9492,                                  &attr_aes_key                                   },
-    { TEST_TYPE_DATA,         0x8101,                                  &attr_rw_data                                   },
-    { TEST_TYPE_ECC_ROOT_KEY, 0x8107,                                  &attr_ecc_root_public                           },
+    { TEST_TYPE_ECC_SIGN,       0x8102,                                  &attr_ecc_private                               },
+    { TEST_TYPE_ECC_VERIFY,     0x8103,                                  &attr_ecc_public                                },
+    { TEST_TYPE_ECC_GENKEY,     TA_HANDLE_VOLATILE_REGISTER0,            &attr_ecc_private                               },
+    { TEST_TYPE_ECDH,           TA_HANDLE_VOLATILE_REGISTER1,            &attr_ecc_private                               },
+    { TEST_TYPE_AES,            0x8106,                                  &attr_aes_key                                   },
+    { TEST_TYPE_HMAC,           0x8105,                                  &attr_hmac_key                                  },
+    { TEST_TYPE_AUTH_HMAC,      0xAB1D,                                  &attr_hmac_key                                  },
+    { TEST_TYPE_AUTH_GCM,       0xAAD1,                                  &attr_aes_key                                   },
+    { TEST_TYPE_AUTH_CMAC,      0x9492,                                  &attr_aes_key                                   },
+    { TEST_TYPE_DATA,           0x8101,                                  &attr_rw_data                                   },
+    { TEST_TYPE_ECC_ROOT_KEY,   0x8107,                                  &attr_ecc_root_public                           },
+    { TEST_TYPE_TEMPLATE_DATA,  0X8108,                                  &attr_template_data                             },
     { 0,                      0,                                       NULL                                            }
 };
 
@@ -198,6 +206,29 @@ int talib_configure_device(int argc, char* argv[])
                 }
             }
 
+            else if (TEST_TYPE_TEMPLATE_DATA == create_ptr->test_type)
+            {
+                bool is_locked = false;
+                status = talib_is_setup_locked(atcab_get_device(), &is_locked);
+
+                if (is_locked)
+                {
+                    printf("Template Handle 0x%04x Create Failed, setup must be unlocked \r\n", create_ptr->handle);
+                }
+                else
+                {
+                    status = talib_create_element_with_handle(atcab_get_device(), create_ptr->handle, attr_ptr);
+
+                    if (ATCA_SUCCESS == status)
+                    {
+                        // copy the template text into template tlv
+                        memcpy(&test_template_tlv[2], test_template_text, strlen(test_template_text));
+                        status = talib_write_element(atcab_get_device(), create_ptr->handle, sizeof(test_template_tlv),
+                                                     test_template_tlv);
+                    }
+                }
+            }
+
             else
             {
                 status = talib_create_element_with_handle(atcab_get_device(), create_ptr->handle, attr_ptr);
@@ -233,6 +264,7 @@ extern t_test_case_info* talib_managecert_tests[];
 extern t_test_case_info* talib_power_tests[];
 extern t_test_case_info* talib_random_tests[];
 extern t_test_case_info* talib_rsa_enc_tests[];
+extern t_test_case_info* talib_secureboot_tests[];
 extern t_test_case_info* talib_selftest_tests[];
 extern t_test_case_info* talib_sha_tests[];
 extern t_test_case_info* talib_sign_tests[];
@@ -260,6 +292,7 @@ void run_all_talib_tests(void)
     RunAllTests(talib_sign_tests);
     RunAllTests(talib_verify_tests);
     RunAllTests(talib_write_tests);
+    RunAllTests(talib_secureboot_tests);
 }
 
 int run_talib_tests(int argc, char* argv[])

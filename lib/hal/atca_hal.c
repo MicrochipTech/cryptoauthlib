@@ -113,6 +113,19 @@ static ATCAHAL_t hal_hid = {
 };
 #endif
 
+#ifdef ATCA_HAL_KIT_BRIDGE
+static ATCAHAL_t hal_kit_bridge = {
+    hal_kit_init,
+    hal_kit_post_init,
+    hal_kit_send,
+    hal_kit_receive,
+    hal_kit_wake,
+    hal_kit_idle,
+    hal_kit_sleep,
+    hal_kit_release
+};
+#endif
+
 #ifdef ATCA_HAL_CUSTOM
 static ATCAHAL_t hal_custom;
 #endif
@@ -140,6 +153,11 @@ static ATCAHAL_t * atca_registered_hal_list[ATCA_UNKNOWN_IFACE] = {
 #endif
 #ifdef ATCA_HAL_KIT_HID
     &hal_hid,
+#else
+    NULL,
+#endif
+#ifdef ATCA_HAL_KIT_BRIDGE
+    &hal_kit_bridge,
 #else
     NULL,
 #endif

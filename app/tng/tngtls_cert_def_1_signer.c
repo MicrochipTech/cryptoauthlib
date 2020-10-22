@@ -28,7 +28,7 @@
 #include "atcacert/atcacert_def.h"
 #include "tngtls_cert_def_1_signer.h"
 
-const uint8_t g_tngtls_cert_template_1_signer[TNGTLS_CERT_TEMPLATE_1_SIGNER_SIZE] = {
+SHARED_LIB_EXPORT const uint8_t g_tngtls_cert_template_1_signer[TNGTLS_CERT_TEMPLATE_1_SIGNER_SIZE] = {
     0x30, 0x82, 0x02, 0x04, 0x30, 0x82, 0x01, 0xaa, 0xa0, 0x03, 0x02, 0x01, 0x02, 0x02, 0x10, 0x44,
     0x0e, 0xe4, 0x17, 0x0c, 0xb5, 0x45, 0xce, 0x59, 0x69, 0x8e, 0x30, 0x56, 0x99, 0x0a, 0x5d, 0x30,
     0x0a, 0x06, 0x08, 0x2a, 0x86, 0x48, 0xce, 0x3d, 0x04, 0x03, 0x02, 0x30, 0x4f, 0x31, 0x21, 0x30,
@@ -64,7 +64,7 @@ const uint8_t g_tngtls_cert_template_1_signer[TNGTLS_CERT_TEMPLATE_1_SIGNER_SIZE
     0xbf, 0x3b, 0x22, 0x78, 0x8e, 0x75, 0x41, 0x86
 };
 
-const atcacert_cert_element_t g_tngtls_cert_elements_1_signer[] = {
+SHARED_LIB_EXPORT const atcacert_cert_element_t g_tngtls_cert_elements_1_signer[] = {
     {
         .id = "subject",
         .device_loc ={
@@ -77,7 +77,7 @@ const atcacert_cert_element_t g_tngtls_cert_elements_1_signer[] = {
     }
 };
 
-const atcacert_def_t g_tngtls_cert_def_1_signer = {
+SHARED_LIB_EXPORT const atcacert_def_t g_tngtls_cert_def_1_signer = {
     .type                = CERTTYPE_X509,
     .template_id         = 1,
     .chain_id            = 0,

@@ -49,6 +49,9 @@ if(UNIX)
 target_link_libraries(cryptoauth_test pthread)
 endif()
 
+if(ATCA_BUILD_SHARED_LIBS)
+target_compile_definitions(cryptoauth_test PUBLIC -DATCA_BUILD_SHARED_LIBS)
+endif(ATCA_BUILD_SHARED_LIBS)
 
 if(ATCA_TEST_LOCK_ENABLE)
 target_compile_definitions(cryptoauth_test PUBLIC -DATCA_TEST_LOCK_ENABLE)

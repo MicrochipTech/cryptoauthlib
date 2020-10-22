@@ -27,7 +27,6 @@
 
 #include "atca_test.h"
 #include "cryptoauthlib.h"
-#include "cmd-processor.h"
 
 #ifdef ATCA_HAL_CUSTOM
 extern int select_204_custom(int argc, char* argv[]);

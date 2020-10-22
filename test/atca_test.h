@@ -39,6 +39,7 @@ extern const uint8_t g_slot4_key[];
 
 #define AES_CONFIG_ENABLE_BIT_MASK   (uint8_t)0x01
 
+#define CMD_PROCESSOR_MAX_ARGS  10
 
 typedef void (*fp_test_case)(void);
 
@@ -47,6 +48,15 @@ typedef struct
     fp_test_case fp_test;
     uint32_t     support_device_mask;
 }t_test_case_info;
+
+typedef int (*fp_menu_handler)(int argc, char* argv[]);
+
+typedef struct
+{
+    const char*     menu_cmd;
+    const char*     menu_cmd_description;
+    fp_menu_handler fp_handler;
+} t_menu_info;
 
 #define DEVICE_MASK(device)                 ((uint8_t)1 << device)
 #define REGISTER_TEST_CASE(group, name)     TEST_ ## group ## _ ## name ## _run
@@ -126,7 +136,7 @@ extern const uint8_t test_ecc_configdata[ATCA_ECC_CONFIG_SIZE];
 extern const uint8_t sha204_default_config[ATCA_SHA_CONFIG_SIZE];
 #endif
 #if ATCA_TA_SUPPORT
-const uint8_t test_ta100_configdata[TA_CONFIG_SIZE];
+extern const uint8_t test_ta100_configdata[TA_CONFIG_SIZE];
 #endif
 
 void atca_test_assert_config_is_unlocked(UNITY_LINE_TYPE from_line);
@@ -134,6 +144,10 @@ void atca_test_assert_config_is_locked(UNITY_LINE_TYPE from_line);
 void atca_test_assert_data_is_unlocked(UNITY_LINE_TYPE from_line);
 void atca_test_assert_data_is_locked(UNITY_LINE_TYPE from_line);
 void atca_test_assert_aes_enabled(UNITY_LINE_TYPE from_line);
+#if ATCA_TA_SUPPORT
+void atca_test_assert_ta_sboot_enabled(UNITY_LINE_TYPE from_line, uint8_t mode);
+void atca_test_assert_ta_sboot_preboot_enabled(UNITY_LINE_TYPE from_line);
+#endif
 
 #define unit_test_assert_config_is_locked()     atca_test_assert_config_is_locked(__LINE__)
 #define unit_test_assert_config_is_unlocked()   atca_test_assert_config_is_unlocked(__LINE__)
@@ -146,6 +160,8 @@ void atca_test_assert_aes_enabled(UNITY_LINE_TYPE from_line);
 #define test_assert_data_is_locked()            atca_test_assert_data_is_locked(__LINE__)
 
 #define check_config_aes_enable()               atca_test_assert_aes_enabled(__LINE__)
+#define check_config_ta_sboot_enable(mode)      atca_test_assert_ta_sboot_enabled(__LINE__, mode)
+#define check_config_ta_sboot_preboot_enable()  atca_test_assert_ta_sboot_preboot_enabled(__LINE__)
 
 
 #define TEST_TYPE_ECC_SIGN          (1)
@@ -159,6 +175,7 @@ void atca_test_assert_aes_enabled(UNITY_LINE_TYPE from_line);
 #define TEST_TYPE_AUTH_CMAC         (9)
 #define TEST_TYPE_AUTH_GCM          (10)
 #define TEST_TYPE_ECC_ROOT_KEY      (11)
+#define TEST_TYPE_TEMPLATE_DATA     (12)
 
 typedef struct
 {
@@ -171,6 +188,7 @@ typedef struct
 ATCA_STATUS atca_test_config_get_id(uint8_t test_type, uint16_t* handle);
 
 // Helper tests
+int run_tests(int test);
 void RunAllHelperTests(void);
 void RunBasicOtpZero(void);
 void RunAllBasicTests(void);

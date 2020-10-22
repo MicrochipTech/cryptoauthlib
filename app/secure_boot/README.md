@@ -1,4 +1,6 @@
-# Secure boot using ATECC608
+Secure boot using ATECC608
+=========================================================
+@page app_info_secure_boot Secure boot using ATECC608
 
 The SecureBoot command is a new feature on the
 [ATECC608A](https://www.microchip.com/wwwproducts/en/ATECC608A) device compared

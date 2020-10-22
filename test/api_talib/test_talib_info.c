@@ -53,7 +53,7 @@ TEST(atca_cmd_basic_test, info_sernum)
 }
 
 /** \brief This test case gives how much non volatile memory is remaining
- */ 
+ */
 TEST(atca_cmd_basic_test, info_nv_remain)
 {
     ATCA_STATUS status;
@@ -86,7 +86,7 @@ TEST(atca_cmd_basic_test, info_chip_status)
 }
 
 /** \brief This test case check whether the given volatile register id is created or not (valid or not)
- */ 
+ */
 TEST(atca_cmd_basic_test, info_volreg_status)
 {
     ATCA_STATUS status;
@@ -98,8 +98,8 @@ TEST(atca_cmd_basic_test, info_volreg_status)
     status = talib_handle_init_symmetric_key(&attr_aes_handle, TA_KEY_TYPE_AES128, TA_PROP_SYMM_KEY_USAGE_ANY);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    status = talib_create_hmac_element_with_handle(atcab_get_device(), TA_KEY_TYPE_AES128_SIZE, aes_handle, 
-                                                  &attr_aes_handle);
+    status = talib_create_hmac_element_with_handle(atcab_get_device(), TA_KEY_TYPE_AES128_SIZE, aes_handle,
+                                                   &attr_aes_handle);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     //Get the last byte of volatile register id
@@ -159,7 +159,7 @@ TEST(atca_cmd_basic_test, info_handle_size)
 TEST(atca_cmd_basic_test, info_handle_attributes)
 {
     ATCA_STATUS status;
-    ta_element_attributes_t rw_data_attr = { 3, 72, 0, 0, 0, 0x54, 0 };
+    ta_element_attributes_t rw_data_attr = { 3, 72, 0, 0, 0, 0x55, 0 };
     uint8_t handle_info[TA_HANDLE_INFO_SIZE];
     uint16_t handle;
 

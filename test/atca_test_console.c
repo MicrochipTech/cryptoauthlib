@@ -27,7 +27,6 @@
 
 #include "cryptoauthlib.h"
 #include "atca_test.h"
-#include "cmd-processor.h"
 #include "atca_crypto_sw_tests.h"
 
 #ifndef ATCA_SERIAL_NUM_SIZE

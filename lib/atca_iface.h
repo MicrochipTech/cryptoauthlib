@@ -51,6 +51,7 @@ typedef enum
     ATCA_UART_IFACE,
     ATCA_SPI_IFACE,
     ATCA_HID_IFACE,
+    ATCA_KIT_IFACE,
     ATCA_CUSTOM_IFACE,
     // additional physical interface types here
     ATCA_UNKNOWN_IFACE
@@ -123,6 +124,13 @@ typedef struct
             uint32_t    pid;           // Product ID of kit (0x2312 for CK101)
             uint32_t    packetsize;    // Size of the USB packet
         } atcahid;
+
+        struct
+        {
+            ATCAKitType dev_interface; // Target Bus Type
+            uint8_t     dev_identity;  // Target device identity
+            uint32_t    flags;
+        } atcakit;
 
         struct
         {

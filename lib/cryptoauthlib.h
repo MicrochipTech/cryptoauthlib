@@ -70,12 +70,6 @@
 #define ATCA_TA_SUPPORT     0
 #endif
 
-#ifdef ATCA_BUILD_SHARED_LIBS
-#define ATCA_DLL    SHARED_LIB_EXPORT
-#else
-#define ATCA_DLL    SHARED_LIB_IMPORT
-#endif
-
 #include "atca_status.h"
 #include "atca_debug.h"
 #include "atca_iface.h"

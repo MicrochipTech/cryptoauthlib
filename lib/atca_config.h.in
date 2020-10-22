@@ -7,6 +7,7 @@
 #cmakedefine ATCA_HAL_KIT_CDC
 #cmakedefine ATCA_HAL_I2C
 #cmakedefine ATCA_HAL_SPI
+#cmakedefine ATCA_HAL_KIT_BRIDGE
 #cmakedefine ATCA_HAL_CUSTOM
 
 /* Included device support */

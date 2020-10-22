@@ -27,12 +27,13 @@
 
 #include "atcacert/atcacert_def.h"
 #include "tngtls_cert_def_2_device.h"
+#include "tngtls_cert_def_1_signer.h"
 #include "tnglora_cert_def_1_signer.h"
 
 extern const uint8_t g_tngtls_cert_template_2_device[];
 extern const atcacert_cert_element_t g_tngtls_cert_elements_2_device[];
 
-const atcacert_def_t g_tnglora_cert_def_2_device = {
+SHARED_LIB_EXPORT const atcacert_def_t g_tnglora_cert_def_2_device = {
     .type                = CERTTYPE_X509,
     .template_id         = 2,
     .chain_id            = 0,

@@ -6,7 +6,7 @@ include(CheckSymbolExists)
 
 # Various Options for Build
 option(ATCA_HAL_KIT_HID "Include the HID HAL Driver")
-option(ATCA_HAL_KIT_CDC "Include the CDC HAL Driver (Legacy)" OFF)
+option(ATCA_HAL_KIT_BRIDGE "General purpose kit protocol (Packet and Stream)")
 option(ATCA_HAL_I2C "Include the I2C Hal Driver - Linux & MCU only")
 option(ATCA_HAL_SPI "Include the SPI HAL Driver - Linux & MCU only")
 option(ATCA_HAL_CUSTOM "Include support for Custom/Plug-in Hal Driver")
@@ -50,16 +50,26 @@ set(BUILD_SHARED_LIBS ${ATCA_BUILD_SHARED_LIBS})
 
 # Collect Library Sources
 file(GLOB LIB_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.c")
+file(GLOB LIB_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.h")
 file(GLOB ATCACERT_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "atcacert/*.c")
+file(GLOB ATCACERT_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "atcacert/*.h")
 file(GLOB CALIB_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "calib/*.c")
+file(GLOB CALIB_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "calib/*.h")
 file(GLOB TALIB_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "talib/*.c")
+file(GLOB TALIB_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "talib/*.h")
 file(GLOB_RECURSE CRYPTO_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "crypto/*.c")
+file(GLOB CRYPTO_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "crypto/*.h")
+file(GLOB CRYPTO_HASHES_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "crypto/hashes/*.h")
 file(GLOB HOST_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "host/*.c")
+file(GLOB HOST_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "host/*.h")
 file(GLOB JWT_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "jwt/*.c")
+file(GLOB JWT_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "jwt/*.h")
 file(GLOB PKCS11_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "pkcs11/*.c")
+file(GLOB PKCS11_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "pkcs11/*.h")
 file(GLOB TNG_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../app/tng/*.c")
+file(GLOB TNG_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../app/tng/*.h")
 file(GLOB SHA206_API_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../app/api_206a/*.c")
-
+file(GLOB SHA206_API_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../app/api_206a/*.h")
 
 if(ATCA_PKCS11 AND (ATCA_TNGTLS_SUPPORT OR ATCA_TNGLORA_SUPPORT OR ATCA_TFLEX_SUPPORT))
 SET(TNG_SRC ${TNG_SRC} ../app/pkcs11/trust_pkcs11_config.c)
@@ -159,6 +169,8 @@ set(CRYPTOAUTH_SRC ${LIB_SRC}
                    ${OPENSSL_SRC}
                    hal/atca_hal.c )
 
+set(HAL_INC hal/atca_hal.h)
+
 if(ATCA_HAL_KIT_HID OR ATCA_HAL_KIT_CDC)
 set(NEED_USB true)
 endif()
@@ -232,6 +244,10 @@ if(ATCA_HAL_SPI)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${SPI_SRC})
 endif(ATCA_HAL_SPI)
 
+if(ATCA_HAL_KIT_BRIDGE)
+set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_kit_bridge.c)
+endif(ATCA_HAL_KIT_BRIDGE)
+
 # Add Remaining Sources depending on target library type
 if(ATCA_MBEDTLS)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${MBEDTLS_SRC})
@@ -266,9 +282,11 @@ set(ATCA_TESTS_ENABLED ON CACHE INTERNAL "")
 endif(BUILD_TESTS)
 
 configure_file(atca_config.h.in atca_config.h @ONLY)
+set(LIB_INC ${LIB_INC} ${CMAKE_CURRENT_BINARY_DIR}/atca_config.h)
 
 if(ATCA_PKCS11)
 configure_file(pkcs11/pkcs11_config.h.in pkcs11_config.h @ONLY)
+set(PKCS11_INC ${PKCS11_INC} ${CMAKE_CURRENT_BINARY_DIR}/pkcs11_config.h)
 endif()
 
 include_directories(cryptoauth PUBLIC ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ../app/tng ../third_party/hidapi/hidapi ${USB_INCLUDE_DIR})
@@ -308,5 +326,24 @@ target_link_libraries(cryptoauth rt)
 endif(LINUX)
 
 if(DEFAULT_LIB_PATH)
-install(TARGETS ${PROJECT_NAME} DESTINATION ${DEFAULT_LIB_PATH})
-endif()
+install(TARGETS ${PROJECT_NAME}
+        LIBRARY
+          DESTINATION ${DEFAULT_LIB_PATH}
+          COMPONENT Libraries
+          NAMELINK_COMPONENT Development)
+endif(DEFAULT_LIB_PATH)
+
+if(DEFAULT_INC_PATH)
+install(FILES ${LIB_INC} DESTINATION ${DEFAULT_INC_PATH} COMPONENT Development)
+install(FILES ${HAL_INC} DESTINATION ${DEFAULT_INC_PATH}/hal COMPONENT Development)
+install(FILES ${ATCACERT_INC} DESTINATION ${DEFAULT_INC_PATH}/atcacert COMPONENT Development)
+install(FILES ${CALIB_INC} DESTINATION ${DEFAULT_INC_PATH}/calib COMPONENT Development)
+install(FILES ${TALIB_INC} DESTINATION ${DEFAULT_INC_PATH}/talib COMPONENT Development)
+install(FILES ${CRYPTO_INC} DESTINATION ${DEFAULT_INC_PATH}/crypto COMPONENT Development)
+install(FILES ${CRYPTO_HASHES_INC} DESTINATION ${DEFAULT_INC_PATH}/crypto/hashes COMPONENT Development)
+install(FILES ${HOST_INC} DESTINATION ${DEFAULT_INC_PATH}/host COMPONENT Development)
+install(FILES ${JWT_INC} DESTINATION ${DEFAULT_INC_PATH}/jwt COMPONENT Development)
+install(FILES ${PKCS11_INC} DESTINATION ${DEFAULT_INC_PATH}/pkcs11 COMPONENT Development)
+install(FILES ${TNG_INC} DESTINATION ${DEFAULT_INC_PATH}/app/tng COMPONENT Development)
+install(FILES ${SHA206_API_INC} DESTINATION ${DEFAULT_INC_PATH}/app/api_206a COMPONENT Development)
+endif(DEFAULT_INC_PATH)

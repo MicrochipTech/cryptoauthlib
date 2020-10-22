@@ -38,7 +38,7 @@
 #endif
 
 const char atca_version[] = ATCA_LIBRARY_VERSION_DATE;
-SHARED_LIB_EXPORT ATCADevice _gDevice = NULL;
+ATCADevice _gDevice = NULL;
 #ifdef ATCA_NO_HEAP
 SHARED_LIB_EXPORT struct atca_command g_atcab_command;
 SHARED_LIB_EXPORT struct atca_iface g_atcab_iface;

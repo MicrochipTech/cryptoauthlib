@@ -1,4 +1,4 @@
-CryptoAuthLib - Microchip CryptoAuthentication Library
+CryptoAuthLib - Microchip CryptoAuthentication Library {#mainpage}
 ====================================================
 
 Introduction
@@ -10,6 +10,7 @@ device. The family of devices supported currently are:
 - [ATECC108A](http://www.microchip.com/ATECC108A)
 - [ATECC508A](http://www.microchip.com/ATECC508A)
 - [ATECC608A](http://www.microchip.com/ATECC608A)
+- [ATECC608B](http://www.microchip.com/ATECC608B)
 
 The best place to start is with the [Microchip Trust Platform](https://www.microchip.com/design-centers/security-ics/trust-platform)
 

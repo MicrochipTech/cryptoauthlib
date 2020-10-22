@@ -70,4 +70,4 @@ Legacy Support - ASF3 for ARM Cortex-m0 & Cortex-m based processors (SAM)
 | all            |            | hal_sam_timer_asf.c          | ASF3        | Common timer hal for all platforms |
 
 
-
+@ingroup hal_

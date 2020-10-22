@@ -1,5 +1,7 @@
 IP Protection with Symmetric Authentication
-------------------------
+===========================================
+@page app_info_ip_prot IP Protection with Symmetric Authentication
+
 The IP protection can be easily integrated to the existing projects.The user project should include symmetric_authentication.c & symmetric_authentication.h files which contains the api
 - **symmetric_authenticate()** - For Performing the authentication between host & device.
 

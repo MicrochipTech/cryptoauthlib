@@ -67,6 +67,15 @@ typedef struct
     void *hal_data;       // points to whatever the HAL implementation for this interface wants it to, HAL manages.
 } ATCAHAL_t;
 
+typedef struct
+{
+    ATCA_STATUS (*send)(void* ctx, uint8_t* txdata, uint16_t txlen);        /**< Must be a blocking send */
+    ATCA_STATUS (*recv)(void* ctx, uint8_t* rxdata, uint16_t* rxlen);       /**< Must be a blocking receive */
+    void* (*packet_alloc)(size_t bytes);                                    /**< Allocate a phy packet */
+    void (*packet_free)(uint8_t* packet);                                   /**< Free a phy packet */
+    void* hal_data;                                                         /**< Physical layer context */
+} atca_hal_kit_phy_t;
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -152,6 +161,19 @@ ATCA_STATUS hal_kit_hid_sleep(ATCAIface iface);
 ATCA_STATUS hal_kit_hid_release(void *hal_data);
 ATCA_STATUS hal_kit_hid_discover_buses(int hid_buses[], int max_buses);
 ATCA_STATUS hal_kit_hid_discover_devices(int bus_num, ATCAIfaceCfg *cfg, int *found);
+#endif
+
+#ifdef ATCA_HAL_KIT_BRIDGE
+ATCA_STATUS hal_kit_init(void* hal, ATCAIfaceCfg* cfg);
+ATCA_STATUS hal_kit_post_init(ATCAIface iface);
+ATCA_STATUS hal_kit_send(ATCAIface iface, uint8_t word_address, uint8_t* txdata, int txlength);
+ATCA_STATUS hal_kit_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, uint16_t* rxlength);
+ATCA_STATUS hal_kit_wake(ATCAIface iface);
+ATCA_STATUS hal_kit_idle(ATCAIface iface);
+ATCA_STATUS hal_kit_sleep(ATCAIface iface);
+ATCA_STATUS hal_kit_release(void* hal_data);
+ATCA_STATUS hal_kit_discover_buses(int hid_buses[], int max_buses);
+ATCA_STATUS hal_kit_discover_devices(int bus_num, ATCAIfaceCfg* cfg, int* found);
 #endif
 
 /* Polling defaults if not overwritten by the configuration */

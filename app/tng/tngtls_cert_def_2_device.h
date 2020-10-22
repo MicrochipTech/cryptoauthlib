@@ -40,7 +40,7 @@ extern "C" {
 
 #define TNGTLS_CERT_TEMPLATE_2_DEVICE_SIZE 505
 #define TNGTLS_CERT_ELEMENTS_2_DEVICE_COUNT 2
-extern const atcacert_def_t g_tngtls_cert_def_2_device;
+ATCA_DLL const atcacert_def_t g_tngtls_cert_def_2_device;
 
 /** @} */
 

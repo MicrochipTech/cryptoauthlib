@@ -185,4 +185,16 @@
 
 #endif
 
+#ifdef ATCA_BUILD_SHARED_LIBS
+#if defined(cryptoauth_EXPORTS) && defined(_WIN32)
+#define ATCA_DLL    SHARED_LIB_EXPORT
+#else
+#define ATCA_DLL    SHARED_LIB_IMPORT
+#endif
+#else
+#undef SHARED_LIB_EXPORT
+#define SHARED_LIB_EXPORT
+#define ATCA_DLL    extern
+#endif
+
 #endif /* ATCA_COMPILER_H_ */

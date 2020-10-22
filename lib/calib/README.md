@@ -13,3 +13,5 @@ can employ the full power of the CryptoAuthLib object model.
 
 See the Doxygen documentation in cryptoauthlib/docs for details on the API of
 the calib commands.
+
+@ingroup calib_

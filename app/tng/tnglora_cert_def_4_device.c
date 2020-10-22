@@ -29,7 +29,7 @@
 #include "tnglora_cert_def_4_device.h"
 #include "tnglora_cert_def_1_signer.h"
 
-const uint8_t g_tnglora_cert_template_4_device[TNGLORA_CERT_TEMPLATE_4_DEVICE_SIZE] = {
+SHARED_LIB_EXPORT const uint8_t g_tnglora_cert_template_4_device[TNGLORA_CERT_TEMPLATE_4_DEVICE_SIZE] = {
     0x30, 0x82, 0x02, 0x24, 0x30, 0x82, 0x01, 0xc9, 0xa0, 0x03, 0x02, 0x01, 0x02, 0x02, 0x10, 0x55,
     0xce, 0x2e, 0x8f, 0xf6, 0x1c, 0x62, 0x50, 0xb7, 0xe1, 0x68, 0x03, 0x54, 0x14, 0x1c, 0x94, 0x30,
     0x0a, 0x06, 0x08, 0x2a, 0x86, 0x48, 0xce, 0x3d, 0x04, 0x03, 0x02, 0x30, 0x4f, 0x31, 0x21, 0x30,
@@ -67,7 +67,7 @@ const uint8_t g_tnglora_cert_template_4_device[TNGLORA_CERT_TEMPLATE_4_DEVICE_SI
     0x22, 0x7f, 0x91, 0x9c, 0xd2, 0x63, 0x34, 0x82
 };
 
-const atcacert_cert_element_t g_tnglora_cert_elements_4_device[] = {
+SHARED_LIB_EXPORT const atcacert_cert_element_t g_tnglora_cert_elements_4_device[] = {
     {
         .id = "SN03",
         .device_loc ={
@@ -124,7 +124,7 @@ const atcacert_cert_element_t g_tnglora_cert_elements_4_device[] = {
     }
 };
 
-const atcacert_def_t g_tnglora_cert_def_4_device = {
+SHARED_LIB_EXPORT const atcacert_def_t g_tnglora_cert_def_4_device = {
     .type                = CERTTYPE_X509,
     .template_id         = 4,
     .chain_id            = 0,

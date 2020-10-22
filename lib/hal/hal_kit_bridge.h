@@ -1,6 +1,9 @@
 /**
  * \file
- * \brief TNG LORA signer certificate definition
+ * \brief Kit Bridging HAL for cryptoauthlib. This is not intended to be a zero
+ * copy driver. It should work with any interface that confirms to a few basic
+ * requirements: a) will accept an arbitrary number of bytes and packetize it if
+ * necessary for transmission, b) will block for the duration of the transmit.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
@@ -25,24 +28,35 @@
  * THIS SOFTWARE.
  */
 
-#ifndef TNGLORA_CERT_DEF_1_SIGNER_H
-#define TNGLORA_CERT_DEF_1_SIGNER_H
-
-#include "atcacert/atcacert_def.h"
+#ifndef HAL_KIT_BRIDGE_H
+#define HAL_KIT_BRIDGE_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/** \ingroup tng_
- * @{
- */
-ATCA_DLL const atcacert_def_t g_tnglora_cert_def_1_signer;
+#define HAL_KIT_COMMAND_SEND    0x01
+#define HAL_KIT_COMMAND_RECV    0x02
+#define HAL_KIT_COMMAND_WAKE    0x03
+#define HAL_KIT_COMMAND_IDLE    0x04
+#define HAL_KIT_COMMAND_SLEEP   0x05
 
-/** @} */
+#define HAL_KIT_HEADER_LEN      (3)
+
+/* Kit Protocol Header defintion
+ * Byte    Bits    Definition
+ * ----    ----    -----------------
+ * 0       0..4    Protocol Version
+ * 0       5..8    Protocol Options
+ * 1       0..4    Kit Command
+ * 1       5..8    Interface Type
+ * 2               Device Identity
+ */
+
+ATCA_STATUS hal_kit_attach_phy(ATCAIfaceCfg* cfg, atca_hal_kit_phy_t* phy);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif
+#endif /* HAL_KIT_BRIDGE_H */

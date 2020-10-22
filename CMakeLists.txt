@@ -2,10 +2,10 @@ cmake_minimum_required(VERSION 2.6.4)
 project (cryptoauthlib)
 
 # Set the current release version
-set(VERSION "3.2.3")
+set(VERSION "3.2.4")
 set(VERSION_MAJOR 3)
 set(VERSION_MINOR 2)
-set(VERSION_PATCH 3)
+set(VERSION_PATCH 4)
 
 # Build Options
 option(BUILD_TESTS "Create Test Application with library" OFF)
@@ -21,6 +21,8 @@ if(WIN32)
 string(REPLACE "\\" "/" LOCAL_APP_DATA "$ENV{LOCALAPPDATA}/Microchip")
 set(DEFAULT_LIB_PATH "${LOCAL_APP_DATA}" CACHE
     STRING "The default absolute library path")
+set(DEFAULT_INC_PATH "${LOCAL_APP_DATA}/${PROJECT_NAME}" CACHE
+    STRING "The default include install path")
 set(DEFAULT_CONF_PATH "${LOCAL_APP_DATA}" CACHE
     STRING "The default location of ${PROJECT_NAME}.conf")
 set(DEFAULT_STORE_PATH "${LOCAL_APP_DATA}/${PROJECT_NAME}" CACHE
@@ -29,6 +31,8 @@ else()
 include(GNUInstallDirs)
 set(DEFAULT_LIB_PATH "${CMAKE_INSTALL_FULL_LIBDIR}" CACHE
     STRING "The default absolute library path")
+set(DEFAULT_INC_PATH "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}" CACHE
+    STRING "The default include install path")
 set(DEFAULT_CONF_PATH "${CMAKE_INSTALL_FULL_SYSCONFDIR}/${PROJECT_NAME}" CACHE
     STRING "The default location of ${PROJECT_NAME}.conf")
 set(DEFAULT_STORE_PATH "${CMAKE_INSTALL_FULL_LOCALSTATEDIR}/lib/${PROJECT_NAME}" CACHE
@@ -82,8 +86,12 @@ install(CODE "
                  DESTINATION ${DEFAULT_CONF_PATH})
         endif()
         ")
-install(DIRECTORY DESTINATION ${DEFAULT_STORE_PATH})
-install(CODE "execute_process(COMMAND chmod 1777 ${DEFAULT_STORE_PATH})")
+install(DIRECTORY DESTINATION ${DEFAULT_STORE_PATH}
+        DIRECTORY_PERMISSIONS
+          OWNER_EXECUTE OWNER_WRITE OWNER_READ
+          GROUP_EXECUTE GROUP_WRITE GROUP_READ
+          WORLD_EXECUTE WORLD_WRITE WORLD_READ
+        )
 install(CODE "
         if(NOT EXISTS ${DEFAULT_STORE_PATH}/slot.conf.tmpl)
             file(INSTALL ${PROJECT_SOURCE_DIR}/app/pkcs11/slot.conf.tmpl

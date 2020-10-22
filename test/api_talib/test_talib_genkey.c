@@ -31,7 +31,7 @@
 #if ATCA_TA_SUPPORT
 
 /** \brief Execute key gen command to generate symmetric key to do aes encrypt and decrypt.
- */ 
+ */
 TEST(atca_cmd_basic_test, genkey_symmetric_key)
 {
     ATCA_STATUS status;
@@ -42,13 +42,10 @@ TEST(atca_cmd_basic_test, genkey_symmetric_key)
     uint8_t cipher_text[ATCA_AES128_BLOCK_SIZE];
     uint8_t plain_text_out[ATCA_AES128_BLOCK_SIZE];
 
-    // Skip test if setup isn't locked
-    test_assert_data_is_locked();
-
     status = talib_handle_init_symmetric_key(&attr_aes_handle, TA_KEY_TYPE_AES128, TA_PROP_SYMM_KEY_USAGE_ANY);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    status = talib_create_hmac_element_with_handle(atcab_get_device(), TA_KEY_TYPE_AES128_SIZE, aes_handle, 
+    status = talib_create_hmac_element_with_handle(atcab_get_device(), TA_KEY_TYPE_AES128_SIZE, aes_handle,
                                                    &attr_aes_handle);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -67,7 +64,7 @@ TEST(atca_cmd_basic_test, genkey_symmetric_key)
 }
 
 /** \brief Execute key gen command to generate RSA2048 key.
- */ 
+ */
 TEST(atca_cmd_basic_test, genkey_rsa_key)
 {
     ATCA_STATUS status;
@@ -77,7 +74,7 @@ TEST(atca_cmd_basic_test, genkey_rsa_key)
     size_t pub_key_len = sizeof(pub_key);
     uint8_t frag[4] = { 0x44, 0x44, 0x44, 0x44 };
 
-    status = talib_handle_init_private_key(&attr_priv_key_handle, TA_KEY_TYPE_RSA2048, TA_ALG_MODE_RSA_SSA_PSS, 
+    status = talib_handle_init_private_key(&attr_priv_key_handle, TA_KEY_TYPE_RSA2048, TA_ALG_MODE_RSA_SSA_PSS,
                                            TA_PROP_SIGN_INT_EXT_DIGEST, TA_PROP_KEY_AGREEMENT_OUT_BUFF);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -96,7 +93,7 @@ TEST(atca_cmd_basic_test, genkey_rsa_key)
 }
 
 /** \brief Execute key gen command to generate ECCP224 key.
- */ 
+ */
 TEST(atca_cmd_basic_test, genkey_p224_key)
 {
     ATCA_STATUS status;
@@ -106,7 +103,7 @@ TEST(atca_cmd_basic_test, genkey_p224_key)
     size_t pub_key_len = sizeof(pub_key);
     uint8_t frag[4] = { 0x44, 0x44, 0x44, 0x44 };
 
-    status = talib_handle_init_private_key(&attr_priv_key_handle, TA_KEY_TYPE_ECCP224, TA_ALG_MODE_ECC_ECDSA, 
+    status = talib_handle_init_private_key(&attr_priv_key_handle, TA_KEY_TYPE_ECCP224, TA_ALG_MODE_ECC_ECDSA,
                                            TA_PROP_SIGN_INT_EXT_DIGEST, TA_PROP_NO_KEY_AGREEMENT);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -125,7 +122,7 @@ TEST(atca_cmd_basic_test, genkey_p224_key)
 }
 
 /** \brief Execute key gen command to generate ECCP384 key.
- */ 
+ */
 TEST(atca_cmd_basic_test, genkey_p384_key)
 {
     ATCA_STATUS status;
@@ -135,7 +132,7 @@ TEST(atca_cmd_basic_test, genkey_p384_key)
     size_t pub_key_len = sizeof(pub_key);
     uint8_t frag[4] = { 0x44, 0x44, 0x44, 0x44 };
 
-    status = talib_handle_init_private_key(&attr_priv_key_handle, TA_KEY_TYPE_ECCP384, TA_ALG_MODE_ECC_ECDSA, 
+    status = talib_handle_init_private_key(&attr_priv_key_handle, TA_KEY_TYPE_ECCP384, TA_ALG_MODE_ECC_ECDSA,
                                            TA_PROP_SIGN_INT_EXT_DIGEST, TA_PROP_NO_KEY_AGREEMENT);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -164,7 +161,7 @@ TEST(atca_cmd_basic_test, get_p224_pubkey)
     uint8_t frag[4] = { 0x44, 0x44, 0x44, 0x44 };
     size_t pub_key_len = sizeof(pub_key);
 
-    status = talib_handle_init_private_key(&attr_priv_key_handle, TA_KEY_TYPE_ECCP224, TA_ALG_MODE_ECC_ECDSA, 
+    status = talib_handle_init_private_key(&attr_priv_key_handle, TA_KEY_TYPE_ECCP224, TA_ALG_MODE_ECC_ECDSA,
                                            TA_PROP_SIGN_INT_EXT_DIGEST, TA_PROP_NO_KEY_AGREEMENT);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 

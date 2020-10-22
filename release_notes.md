@@ -1,6 +1,23 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.2.4 (10/17/2020)
+
+### New features
+  - Additional TA100 command support (requires NDA, consult with your FAE or 
+    submit a request through your myMicrochip account)
+  - Library build and install on linux now also installs the headers that
+    were used to build the library including all configuration files like
+    atca_config.h - customer applications building against the library will
+    need to add the include/cryptoauthlib to their include search paths
+
+### Fixes
+  - Fixed errors produced when -fno-common was used during build of the library
+    by resolving the variable declaration and exporting macros (tested with
+    static/dynamic linkage on linux & windows platforms)
+  - Added a timeout during i2c plib commands in the Harmony3 hals to prevent
+    system lockups from failed peripheral transfers that don't return errors.
+
 ## Release v3.2.3 (09/12/2020)
 
 ### New features
