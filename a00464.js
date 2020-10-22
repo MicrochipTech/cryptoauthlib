@@ -1,6 +1,5 @@
 var a00464 =
 [
-    [ "atca_delay_10us", "a08586.html#ga19891182689551cc3a88603135959351", null ],
-    [ "atca_delay_ms", "a08586.html#ga0544f36422b5e9a8890fb9c90fc5eb55", null ],
-    [ "atca_delay_us", "a08586.html#ga7598dfcd6dcac882836544d48356d02f", null ]
+    [ "i2c_sam_instance_t", "a01491.html#ga2253297ba3f655a35cd1253e22ba5171", null ],
+    [ "sam_change_baudrate", "a01491.html#gae597ddf62e19ba0f85e4444df939a88b", null ]
 ];

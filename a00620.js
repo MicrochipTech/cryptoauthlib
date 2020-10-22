@@ -1,9 +1,9 @@
 var a00620 =
 [
-    [ "pkcs11_slot_config", "a08590.html#ga29fdbbe0188137ec327678742a3aea01", null ],
-    [ "pkcs11_slot_get_context", "a08590.html#ga987853011908614aba0db7c5933b0a20", null ],
-    [ "pkcs11_slot_get_info", "a08590.html#ga3bba79e03141bfb7a9ec76c273db63d2", null ],
-    [ "pkcs11_slot_get_list", "a08590.html#ga0b1860dd97a6c0afd3056ac6bd10d38d", null ],
-    [ "pkcs11_slot_init", "a08590.html#ga418414364e88d0673b4f6c90cd62ebed", null ],
-    [ "pkcs11_slot_initslots", "a08590.html#ga8bdf7c43e464ac6214411d11d82ac317", null ]
+    [ "pkcs11_os_free", "a00620.html#a6dc4b364c3d11f22e08cc67adbcd70c6", null ],
+    [ "pkcs11_os_malloc", "a00620.html#add8754c49398ab1c3a26a581188e074c", null ],
+    [ "pkcs11_os_create_mutex", "a01495.html#gaf5f1c5e6c5bf8d91f2090ee4bbe20362", null ],
+    [ "pkcs11_os_destroy_mutex", "a01495.html#ga0b79ce15416271adde1bb832f6faa16b", null ],
+    [ "pkcs11_os_lock_mutex", "a01495.html#gae27d029f16c6710a0a168e1d1057a4e3", null ],
+    [ "pkcs11_os_unlock_mutex", "a01495.html#ga6f868fabdbf3e115a72e1d126e5356b5", null ]
 ];

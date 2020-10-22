@@ -1,6 +1,5 @@
 var a00116 =
 [
-    [ "g_tngtls_cert_def_3_device", "a00116.html#a2a3957dc0c59b0733de6473be6b95b9d", null ],
-    [ "g_tngtls_cert_elements_3_device", "a00116.html#ac3ea8a561f567f102362549b9378a3c0", null ],
-    [ "g_tngtls_cert_template_3_device", "a00116.html#a913445751eaf27905d119a45644c7792", null ]
+    [ "TNGTLS_CERT_TEMPLATE_3_DEVICE_SIZE", "a01496.html#ga67423e8649f02085c3daf1cde0e3483c", null ],
+    [ "g_tngtls_cert_def_3_device", "a01496.html#ga376857398e38c98b1b6948b4607f75c2", null ]
 ];

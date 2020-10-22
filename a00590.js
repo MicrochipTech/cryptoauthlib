@@ -1,9 +1,9 @@
 var a00590 =
 [
-    [ "PCKS11_MECH_ECC508_EC_CAPABILITY", "a08590.html#ga148b7615f20d8432f0e5ac4e6683aa7d", null ],
-    [ "TABLE_SIZE", "a08590.html#ga178ac9759ade77839a52329537e3784b", null ],
-    [ "pcks11_mech_table_e", "a08590.html#gadbb018cf35cbcf4935ee405f069dbdb9", null ],
-    [ "pcks11_mech_table_ptr", "a08590.html#ga8fa74592503b8d6fee8164d6ffbc1df0", null ],
-    [ "pkcs11_mech_get_list", "a08590.html#ga9678c431b8d5479e53417b109b32c20f", null ],
-    [ "pkcs_mech_get_info", "a08590.html#gac66d133f84b945f9c26727ee9f7a7d57", null ]
+    [ "pkcs11_deinit", "a01495.html#gabff89fd0af2e75ee2db858f9fe934ac4", null ],
+    [ "pkcs11_get_context", "a01495.html#gae0e3060e6ae0dfc17a35881c223d8123", null ],
+    [ "pkcs11_init", "a01495.html#ga21e0ec91eccb3f92b45cb2536b3889b1", null ],
+    [ "pkcs11_init_check", "a01495.html#gadd899ffeae0146c08b249e3f551e21f8", null ],
+    [ "pkcs11_lock_context", "a01495.html#gaf0e755fd7df13be2aa1f706de5b0f24b", null ],
+    [ "pkcs11_unlock_context", "a01495.html#ga750f93d0a3c67f5d0e28c9c50ad990a8", null ]
 ];

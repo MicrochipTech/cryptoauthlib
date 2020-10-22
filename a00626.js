@@ -1,11 +1,14 @@
 var a00626 =
 [
-    [ "pkcs11_token_convert_pin_to_key", "a08590.html#ga9e4aef0d030b3b8d4a0f77a1fec4ed3d", null ],
-    [ "pkcs11_token_get_access_type", "a08590.html#ga6f92db83ad7904096b24c6b25774f4b7", null ],
-    [ "pkcs11_token_get_info", "a08590.html#ga7bf2fea766cab4645fe615661bcf0db9", null ],
-    [ "pkcs11_token_get_storage", "a08590.html#gabf87951ca453a2eaff25df22bc136a57", null ],
-    [ "pkcs11_token_get_writable", "a08590.html#ga5521260e489c703aea4f15912f52ad31", null ],
-    [ "pkcs11_token_init", "a08590.html#ga7e207adf2d26c1d6ea64f7c60252bf45", null ],
-    [ "pkcs11_token_random", "a08590.html#gaf4c0c6a2d12d879308f2d42cc61ef401", null ],
-    [ "pkcs11_token_set_pin", "a08590.html#ga75272ae3120c6d9fc42862ac8b52da17", null ]
+    [ "_pkcs11_session_ctx", "a01752.html", "a01752" ],
+    [ "pkcs11_session_ctx", "a00626.html#ace788f45b1b41ff633b00645960a1e56", null ],
+    [ "pkcs11_session_ctx_ptr", "a00626.html#a4088a7eeba6972be68d129b499a30161", null ],
+    [ "pkcs11_session_authorize", "a00626.html#ac31d85d2efc0eadb6b0c7b5264554a59", null ],
+    [ "pkcs11_session_check", "a01495.html#ga7eb04614661e0cedf6cb926787f5ff9b", null ],
+    [ "pkcs11_session_close", "a01495.html#gac082a1a5af11c561af58d333414f4a27", null ],
+    [ "pkcs11_session_closeall", "a01495.html#ga43525e77f9049b545fa09129cacf9c9a", null ],
+    [ "pkcs11_session_get_info", "a01495.html#ga236a002e179ed36a0b81399a3e11fcb8", null ],
+    [ "pkcs11_session_login", "a01495.html#ga4d70fd7e9799d0428c308a3e1ed146df", null ],
+    [ "pkcs11_session_logout", "a01495.html#gafefc70d16edaf998a521daf6b8aed3e6", null ],
+    [ "pkcs11_session_open", "a01495.html#gad015e297476bdc4df61870f8d1209ddb", null ]
 ];

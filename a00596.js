@@ -1,20 +1,15 @@
 var a00596 =
 [
-    [ "pkcs11_object_alloc", "a08590.html#gacd13c46d7ed7be3dcfdd29c0e78ced3b", null ],
-    [ "pkcs11_object_check", "a08590.html#ga620279f183828bdd33ce94e0cd6f2150", null ],
-    [ "pkcs11_object_create", "a08590.html#ga5cdd6e87496f480f42c44430250794bb", null ],
-    [ "pkcs11_object_deinit", "a08590.html#ga2bed41875de97c71ac141b524175539b", null ],
-    [ "pkcs11_object_destroy", "a08590.html#ga34dbd233b6ac0bf1d2aa2be541d66b25", null ],
-    [ "pkcs11_object_find", "a08590.html#ga09ecdbfaf02822cf5ba6e0f98d3f51df", null ],
-    [ "pkcs11_object_free", "a08590.html#gaf781d0cb96ac95bc8af0e7a2cb2e18f3", null ],
-    [ "pkcs11_object_get_class", "a08590.html#ga551df2c3ba9a2aca7fd017eeb52d7d40", null ],
-    [ "pkcs11_object_get_destroyable", "a08590.html#gadd62d46b440f6a3be0e421eb3dfa20e4", null ],
-    [ "pkcs11_object_get_handle", "a08590.html#ga2a3ee790dbccb44b16d3031688b5aa45", null ],
-    [ "pkcs11_object_get_name", "a08590.html#ga7aee11eff64481426c348ea476508801", null ],
-    [ "pkcs11_object_get_size", "a08590.html#ga5d8c37a9938253cbd4179371cd5f663d", null ],
-    [ "pkcs11_object_get_type", "a08590.html#gaf2006af505de40376cee6817ccb69f59", null ],
-    [ "pkcs11_object_load_handle_info", "a08590.html#ga46af2d77773dcb56478ef7e14a0e81a6", null ],
-    [ "pkcs11_object_cache", "a08590.html#gaca0a5860e29d12831540eb7af43d3659", null ],
-    [ "pkcs11_object_monotonic_attributes", "a08590.html#ga230747fbe3b7a13dfda75980844c3e9d", null ],
-    [ "pkcs11_object_monotonic_attributes_count", "a08590.html#ga5e9308296fc3e124c3a4552134b674ee", null ]
+    [ "pkcs11_key_derive", "a01495.html#ga8ace04a2049a5d7e527558da10e68dcd", null ],
+    [ "pkcs11_key_generate_pair", "a01495.html#gaac5c7d6ae9b8262fb705083302efd90a", null ],
+    [ "pkcs11_key_write", "a01495.html#gaf3fdce991fe05099aa8552912e26dee7", null ],
+    [ "pkcs11_key_ec_private_attributes", "a01495.html#ga81d2f955c95147300f3403de8a0f5ad2", null ],
+    [ "pkcs11_key_ec_public_attributes", "a01495.html#ga5ad7cbddd090156dbfb6a885def9c3cc", null ],
+    [ "pkcs11_key_private_attributes", "a01495.html#ga40d8e67ef0fae7bdc2dca013ad8410aa", null ],
+    [ "pkcs11_key_private_attributes_count", "a01495.html#gaf358031996abf87fc21bc259e1e90644", null ],
+    [ "pkcs11_key_public_attributes", "a01495.html#gadf3e8d1e6b01d9fe85f54c9478d8d215", null ],
+    [ "pkcs11_key_public_attributes_count", "a01495.html#gadc78586c61388b3756395f0098fa4505", null ],
+    [ "pkcs11_key_rsa_private_attributes", "a01495.html#ga298dc33f25bcb9484bceff564f15f4ab", null ],
+    [ "pkcs11_key_secret_attributes", "a01495.html#ga6ef03269a32699359d90901cc84954f3", null ],
+    [ "pkcs11_key_secret_attributes_count", "a01495.html#ga55a0ac12b2ed4daefadaf3fa94edf78e", null ]
 ];

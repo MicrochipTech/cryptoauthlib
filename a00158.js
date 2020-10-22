@@ -1,7 +1,11 @@
 var a00158 =
 [
-    [ "ATCACommand", "a13290.html#gaebeafc249bfe2b00b6809d5c328841d9", null ],
-    [ "deleteATCACommand", "a13290.html#ga9404883f6b81e6356862a9bb4b42d4a9", null ],
-    [ "initATCACommand", "a13290.html#gaf4177bd66c5981ba86511608150c024e", null ],
-    [ "newATCACommand", "a13290.html#gac004e4f2b9a435f9de6cea523c0e9a2d", null ]
+    [ "cfg_ateccx08a_i2c_default", "a00158.html#afcb056718eb34ec3a612d550208e49cc", null ],
+    [ "cfg_ateccx08a_kitcdc_default", "a00158.html#a8fb19127e7fc7cfbaa619ba41bccc4b3", null ],
+    [ "cfg_ateccx08a_kithid_default", "a00158.html#a1f5e0890694189d4ce70f19b207eb070", null ],
+    [ "cfg_ateccx08a_swi_default", "a00158.html#a5624aa554e1964981b794e2295b9432c", null ],
+    [ "cfg_atsha20xa_i2c_default", "a00158.html#a3c2234bd89ad7cd649dd86f5ca3db370", null ],
+    [ "cfg_atsha20xa_kitcdc_default", "a00158.html#a6ab0e6655ce14e34534e164714ab2bbe", null ],
+    [ "cfg_atsha20xa_kithid_default", "a00158.html#aa246e05de94b085ac119609c3b22ea99", null ],
+    [ "cfg_atsha20xa_swi_default", "a00158.html#af684f107790c0872c512f54637389532", null ]
 ];

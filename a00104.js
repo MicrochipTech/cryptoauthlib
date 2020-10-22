@@ -1,6 +1,5 @@
 var a00104 =
 [
-    [ "g_tngtls_cert_def_1_signer", "a00104.html#ae40ebd42591d016e71b6cbd7aaa4196a", null ],
-    [ "g_tngtls_cert_elements_1_signer", "a00104.html#ab0faf280b94e91d5f5440b0d46a089ee", null ],
-    [ "g_tngtls_cert_template_1_signer", "a00104.html#a22c88213c1fd8a02e38cbc37a4a43b33", null ]
+    [ "TNGTLS_CERT_TEMPLATE_1_SIGNER_SIZE", "a01496.html#ga6102cfce0327af728b151a6b5828cfeb", null ],
+    [ "g_tngtls_cert_def_1_signer", "a01496.html#ga40297bf22e3c8bd5bed557a9f62a03c1", null ]
 ];

@@ -1,5 +1,5 @@
 var a00431 =
 [
-    [ "MAX_I2C_BUSES", "a08586.html#gaf89a7a4080a47aa10a5504291db285bf", null ],
-    [ "ATCAI2CMaster_t", "a08586.html#ga06b19a932aea9cf3a5165fefacb24f7b", null ]
+    [ "i2c_start_instance_t", "a01491.html#gab4ad18d30b921f27b4879ca71181491f", null ],
+    [ "start_change_baudrate", "a01491.html#gaf5c1d7b7fca31a8c1102814e4732c373", null ]
 ];

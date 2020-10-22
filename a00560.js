@@ -1,7 +1,11 @@
 var a00560 =
 [
-    [ "pkcs11_digest", "a00560.html#a81936ce8429c7a97bc42921589c1522e", null ],
-    [ "pkcs11_digest_final", "a00560.html#abd1c9ccc6899b550d241f007fd023d6b", null ],
-    [ "pkcs11_digest_init", "a00560.html#a903aed9c7d096dced1233a11539c781d", null ],
-    [ "pkcs11_digest_update", "a00560.html#a87a4b63b1a4ced5e40a1cc0bbc88599d", null ]
+    [ "pkcs11_config_cert", "a01495.html#ga7afb784fad2dd8b8b2befd6159e2a053", null ],
+    [ "pkcs11_config_init_cert", "a01495.html#ga1de4cccdfd83ce723eb050e09266a3ae", null ],
+    [ "pkcs11_config_init_private", "a01495.html#gab36c9d4f392c0eb613fb3833dd852495", null ],
+    [ "pkcs11_config_init_public", "a01495.html#gad8164c3b6e1c4287b665ce18c143bdd3", null ],
+    [ "pkcs11_config_key", "a01495.html#ga0e5ec966dd01f9eb6f1cc2f4b3085f9f", null ],
+    [ "pkcs11_config_load", "a01495.html#ga4804f397bd49dd23ec903e4249e22d9e", null ],
+    [ "pkcs11_config_load_objects", "a01495.html#gafbf88cd1298ee01568385688019ba80c", null ],
+    [ "pkcs11_config_remove_object", "a01495.html#ga02347d90fe77c323677712e685aa8c6a", null ]
 ];

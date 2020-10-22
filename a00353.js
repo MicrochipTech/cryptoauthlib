@@ -1,8 +1,11 @@
 var a00353 =
 [
-    [ "ATCA_ECC_P256_FIELD_SIZE", "a08585.html#gab6935877a2675bfc95af283fb43affb5", null ],
-    [ "ATCA_ECC_P256_PRIVATE_KEY_SIZE", "a08585.html#gadb06f3adddd74993ab0da4be3ea71441", null ],
-    [ "ATCA_ECC_P256_PUBLIC_KEY_SIZE", "a08585.html#ga6bcf19f52fbceb7801fc3216d528fb3c", null ],
-    [ "ATCA_ECC_P256_SIGNATURE_SIZE", "a08585.html#ga6eba254effebfbbb95381511fc7d80d5", null ],
-    [ "atcac_sw_ecdsa_verify_p256", "a08585.html#gaea3d9b4507e2f87de5204fc905b8123a", null ]
+    [ "atcab_aes_ctr_block", "a01483.html#ga76937b340e59be4dc1a30d8c7b76ebe0", null ],
+    [ "atcab_aes_ctr_decrypt_block", "a01483.html#gada9491be0c81fb18b021f71b9a6eda3e", null ],
+    [ "atcab_aes_ctr_encrypt_block", "a01483.html#ga7182e48a847f9c1b31f19c60f373e2da", null ],
+    [ "atcab_aes_ctr_increment", "a01483.html#ga475b72450dcd21c822de5cb366197927", null ],
+    [ "atcab_aes_ctr_init", "a01483.html#ga0db7d24f31dc2dd4805e3c433ae604ad", null ],
+    [ "atcab_aes_ctr_init_ext", "a01483.html#gad9ec3a1272f4a565aa5db79bb97ac3f0", null ],
+    [ "atcab_aes_ctr_init_rand", "a01483.html#gae7558905ea6a82c4bd50d4b99e954d91", null ],
+    [ "atcab_aes_ctr_init_rand_ext", "a01483.html#ga247a0af683b50965457e22e6a7b8c458", null ]
 ];

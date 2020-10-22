@@ -1,7 +1,9 @@
 var a00521 =
 [
-    [ "atca_mbedtls_cert_add", "a08589.html#ga1180b0ded84f7edb4b36d14730366a64", null ],
-    [ "atca_mbedtls_ecdh_ioprot_cb", "a08589.html#gaa35682dc98e33ce3d6fad1fc902cdff0", null ],
-    [ "atca_mbedtls_ecdh_slot_cb", "a08589.html#ga98d684683ccecd3d56bdf5dc27ae999c", null ],
-    [ "atca_mbedtls_pk_init", "a08589.html#ga72da31831a3647e287543634e3f78aca", null ]
+    [ "atca_jwt_add_claim_numeric", "a01493.html#ga7073a7cfb7c77ad02923cdbb1226d2ad", null ],
+    [ "atca_jwt_add_claim_string", "a01493.html#ga3e6036b2c0e6dbc96a30f078e56cacff", null ],
+    [ "atca_jwt_check_payload_start", "a01493.html#ga167fe35631a0dd191293c6ad3a6485aa", null ],
+    [ "atca_jwt_finalize", "a01493.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b", null ],
+    [ "atca_jwt_init", "a01493.html#gad3ea09543f0569a5368130f4a3d7bce0", null ],
+    [ "atca_jwt_verify", "a01493.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b", null ]
 ];

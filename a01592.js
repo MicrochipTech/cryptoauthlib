@@ -1,14 +1,10 @@
 var a01592 =
 [
-    [ "atca_jwt_t", "a01823.html", [
-      [ "buf", "a01823.html#a1fe855c208bc17a51a4d34fefdb2d5b1", null ],
-      [ "buflen", "a01823.html#a892366b22e8ea42d95e49308022eef4d", null ],
-      [ "cur", "a01823.html#aee7e8f6f5f1a4b5b402473cf99d3042a", null ]
-    ] ],
-    [ "atca_jwt_add_claim_numeric", "a01592.html#ga7073a7cfb7c77ad02923cdbb1226d2ad", null ],
-    [ "atca_jwt_add_claim_string", "a01592.html#ga3e6036b2c0e6dbc96a30f078e56cacff", null ],
-    [ "atca_jwt_check_payload_start", "a01592.html#ga167fe35631a0dd191293c6ad3a6485aa", null ],
-    [ "atca_jwt_finalize", "a01592.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b", null ],
-    [ "atca_jwt_init", "a01592.html#gad3ea09543f0569a5368130f4a3d7bce0", null ],
-    [ "atca_jwt_verify", "a01592.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b", null ]
+    [ "_reserved", "a01592.html#ad64c25d49d8bac111d62c92a0e552289", null ],
+    [ "data", "a01592.html#a0a6faa98b4d6b0b87ec0127daee17d11", null ],
+    [ "execTime", "a01592.html#a7f16544e2e38e2a389b69be0a7156986", null ],
+    [ "opcode", "a01592.html#a5c1b56e6bccc2a95dbddf1a08e56e87d", null ],
+    [ "param1", "a01592.html#aec4226da1b99c821237b6805c4e31333", null ],
+    [ "param2", "a01592.html#a16a7565b150a9c17a39c80fc932b9514", null ],
+    [ "txsize", "a01592.html#a3c02ddae56a01b6df3be14acf14915a4", null ]
 ];

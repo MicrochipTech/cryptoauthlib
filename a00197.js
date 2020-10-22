@@ -1,11 +1,34 @@
 var a00197 =
 [
-    [ "atcacert_create_csr", "a08583.html#gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6", null ],
-    [ "atcacert_create_csr_pem", "a08583.html#ga0b492025e27a705b1792b6276eeaaf68", null ],
-    [ "atcacert_get_response", "a08583.html#ga9f7223a578ce5c07a831638106c6ff6c", null ],
-    [ "atcacert_read_cert", "a08583.html#gaaf13dfd0ea4e563194cec6e62892b5c4", null ],
-    [ "atcacert_read_cert_size", "a08583.html#ga7af0248a5c3857e56e51b7cac88c882f", null ],
-    [ "atcacert_read_device_loc", "a08583.html#ga9a6222ede3a3f3f331882b613066b8a8", null ],
-    [ "atcacert_read_subj_key_id", "a08583.html#ga83897818bb9152464dbaa4ad2b85ce10", null ],
-    [ "atcacert_write_cert", "a08583.html#ga71ea9d7c93c2fecb87a36b1343397fad", null ]
+    [ "ATCAIface", "a01487.html#ga75c11126f3fe81df3d6c27f5bb393303", null ],
+    [ "ATCAIfaceType", "a01487.html#gac7f674d4a0afb12d2f3c9c5e98cb1089", [
+      [ "ATCA_I2C_IFACE", "a01487.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a872efba3aa5b7890acfe0f1e0e453bcb", null ],
+      [ "ATCA_SWI_IFACE", "a01487.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a2ce2e46b7f4245ab3d750ea2805fdc26", null ],
+      [ "ATCA_UART_IFACE", "a01487.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a80ec8c070f1c711f2b16ad39d2a0486d", null ],
+      [ "ATCA_SPI_IFACE", "a01487.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a8d50943acfc67f797b9c8fbf565deeb7", null ],
+      [ "ATCA_HID_IFACE", "a01487.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a7da282c54282a02f5650c38a85d0dfb1", null ],
+      [ "ATCA_KIT_IFACE", "a01487.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a0c22b107512100a364378a0bbf6bdfb9", null ],
+      [ "ATCA_CUSTOM_IFACE", "a01487.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a1da1522f46e7dbd1a928ff130594561d", null ],
+      [ "ATCA_UNKNOWN_IFACE", "a01487.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089ac300244b5b323ee44001db318f365cec", null ]
+    ] ],
+    [ "ATCAKitType", "a01487.html#ga4a5c4554e7355754d28123f08f05a060", [
+      [ "ATCA_KIT_AUTO_IFACE", "a01487.html#gga4a5c4554e7355754d28123f08f05a060a664bb9916e1b47bcf6ae414ffcec2b53", null ],
+      [ "ATCA_KIT_I2C_IFACE", "a01487.html#gga4a5c4554e7355754d28123f08f05a060aaf3c1491bb0cb283b0ac35de770e2f45", null ],
+      [ "ATCA_KIT_SWI_IFACE", "a01487.html#gga4a5c4554e7355754d28123f08f05a060a159c23e460fd4d21d0e9ec5fdeb648f3", null ],
+      [ "ATCA_KIT_SPI_IFACE", "a01487.html#gga4a5c4554e7355754d28123f08f05a060a1ab1554696e001f082479a02f855210d", null ],
+      [ "ATCA_KIT_UNKNOWN_IFACE", "a01487.html#gga4a5c4554e7355754d28123f08f05a060ac9a530c71bc570d6d58c2c8d521253a3", null ]
+    ] ],
+    [ "atgetifacecfg", "a01487.html#gac88ba81abfd42df65c6c0c64414dfc6e", null ],
+    [ "atgetifacehaldat", "a01487.html#ga5e4163b8882d4eb42d4d5191c8731da0", null ],
+    [ "atidle", "a01487.html#gac794fffe040e6d47a34c756720f3cbea", null ],
+    [ "atinit", "a01487.html#ga386353e8700eec35e4548dfa29f13b8d", null ],
+    [ "atpostinit", "a01487.html#ga6a9d6c47d866cba4ddd4ee6e671743d5", null ],
+    [ "atreceive", "a01487.html#ga01badea388343bdf5929c5c2be9f426b", null ],
+    [ "atsend", "a01487.html#gabd4f20b06efedede6bc4a836cfad8f38", null ],
+    [ "atsleep", "a01487.html#gac06336335e5f3191e3b1fc06d2830d96", null ],
+    [ "atwake", "a01487.html#ga32693c852341e1b946bab3cca5f71761", null ],
+    [ "deleteATCAIface", "a01487.html#gaf8074d759241d3edd6d8ead1d7322a98", null ],
+    [ "initATCAIface", "a01487.html#ga3a31087729a7a2e9a624572f234809fc", null ],
+    [ "newATCAIface", "a01487.html#ga6f28f18f0d00c5301939724325f6b6fc", null ],
+    [ "releaseATCAIface", "a01487.html#gab9ee16357a8e397a72eda7e9c8553fb3", null ]
 ];

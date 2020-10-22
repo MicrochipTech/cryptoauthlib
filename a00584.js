@@ -1,12 +1,6 @@
 var a00584 =
 [
-    [ "pkcs11_key_derive", "a08590.html#ga8ace04a2049a5d7e527558da10e68dcd", null ],
-    [ "pkcs11_key_generate_pair", "a08590.html#gaac5c7d6ae9b8262fb705083302efd90a", null ],
-    [ "pkcs11_key_write", "a08590.html#gaf3fdce991fe05099aa8552912e26dee7", null ],
-    [ "pkcs11_key_private_attributes", "a08590.html#ga40d8e67ef0fae7bdc2dca013ad8410aa", null ],
-    [ "pkcs11_key_private_attributes_count", "a08590.html#gaf358031996abf87fc21bc259e1e90644", null ],
-    [ "pkcs11_key_public_attributes", "a08590.html#gadf3e8d1e6b01d9fe85f54c9478d8d215", null ],
-    [ "pkcs11_key_public_attributes_count", "a08590.html#gadc78586c61388b3756395f0098fa4505", null ],
-    [ "pkcs11_key_secret_attributes", "a08590.html#ga6ef03269a32699359d90901cc84954f3", null ],
-    [ "pkcs11_key_secret_attributes_count", "a08590.html#ga55a0ac12b2ed4daefadaf3fa94edf78e", null ]
+    [ "pkcs11_get_lib_info", "a01495.html#gaae56826104269ca730066136fb3eb995", null ],
+    [ "pkcs11_lib_description", "a01495.html#ga47daad4918afdf7ec808a5a57a4bce9d", null ],
+    [ "pkcs11_lib_manufacturer_id", "a01495.html#ga8ac50a3d8a0c4f1ddf04cdf02c757030", null ]
 ];

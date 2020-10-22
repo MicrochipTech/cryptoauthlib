@@ -1,5 +1,9 @@
 var a00422 =
 [
-    [ "i2c_start_instance_t", "a08586.html#gab4ad18d30b921f27b4879ca71181491f", null ],
-    [ "start_change_baudrate", "a08586.html#gaf5c1d7b7fca31a8c1102814e4732c373", null ]
+    [ "ATCA_MUTEX_TIMEOUT", "a00422.html#acf61a669d2246c92200734be17bd5488", null ],
+    [ "hal_create_mutex", "a01491.html#gab289a3949663589ac6be71d72fb18278", null ],
+    [ "hal_destroy_mutex", "a01491.html#ga4589d7b3e951f40b7928f1cf31f7ddf3", null ],
+    [ "hal_lock_mutex", "a01491.html#gad4cd02ff7ae4e75844eab4e84eb61994", null ],
+    [ "hal_rtos_delay_ms", "a01491.html#ga3df335e46c7e798a1d4b8949d00c13d3", null ],
+    [ "hal_unlock_mutex", "a01491.html#ga31fd8170a49623686543f6247b883bd1", null ]
 ];

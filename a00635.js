@@ -1,7 +1,9 @@
 var a00635 =
 [
-    [ "PKCS11_UTIL_ARRAY_SIZE", "a00635.html#a599c24418585185172b26db696a67f78", null ],
-    [ "pkcs11_util_convert_rv", "a08590.html#ga747cebf2d5a1cb09e0a6e8db0a7584b6", null ],
-    [ "pkcs11_util_escape_string", "a08590.html#ga89b7e38b830e6c5348a1640040be5935", null ],
-    [ "pkcs11_util_memset", "a08590.html#ga4c491559c7692bafa75e520931aa53a5", null ]
+    [ "pkcs11_slot_config", "a01495.html#ga29fdbbe0188137ec327678742a3aea01", null ],
+    [ "pkcs11_slot_get_context", "a01495.html#ga987853011908614aba0db7c5933b0a20", null ],
+    [ "pkcs11_slot_get_info", "a01495.html#ga3bba79e03141bfb7a9ec76c273db63d2", null ],
+    [ "pkcs11_slot_get_list", "a01495.html#ga0b1860dd97a6c0afd3056ac6bd10d38d", null ],
+    [ "pkcs11_slot_init", "a01495.html#ga418414364e88d0673b4f6c90cd62ebed", null ],
+    [ "pkcs11_slot_initslots", "a01495.html#ga8bdf7c43e464ac6214411d11d82ac317", null ]
 ];

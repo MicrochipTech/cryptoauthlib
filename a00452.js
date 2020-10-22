@@ -1,6 +1,5 @@
 var a00452 =
 [
-    [ "atca_delay_10us", "a08586.html#ga19891182689551cc3a88603135959351", null ],
-    [ "atca_delay_ms", "a08586.html#ga0544f36422b5e9a8890fb9c90fc5eb55", null ],
-    [ "atca_delay_us", "a08586.html#ga7598dfcd6dcac882836544d48356d02f", null ]
+    [ "MAX_SPI_BUSES", "a01491.html#gafa761049508beb5d347d5b5e890b6bad", null ],
+    [ "ATCASPIMaster_t", "a01491.html#ga6e0318ed8ca99fa808e6b73b572d9891", null ]
 ];

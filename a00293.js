@@ -1,9 +1,6 @@
 var a00293 =
 [
-    [ "calib_lock", "a08584.html#gaedcd432286630b9b0b05aef743fcf140", null ],
-    [ "calib_lock_config_zone", "a08584.html#gad59ce160afe0d695a51f3bb1869f8f9f", null ],
-    [ "calib_lock_config_zone_crc", "a08584.html#gaedd7f6f6e9a6b5e58fac18416b9cb8e8", null ],
-    [ "calib_lock_data_slot", "a08584.html#gaf8b5f9e30a712d0740f1a258ff6481d5", null ],
-    [ "calib_lock_data_zone", "a08584.html#ga8b43d1fe63cc9c5349bd0eacab073f05", null ],
-    [ "calib_lock_data_zone_crc", "a08584.html#ga54f25b26b532c6f2cee224ebfd8d53c5", null ]
+    [ "calib_genkey", "a01489.html#ga5fa08c0fb0fd4de0137bd82c7ed410cb", null ],
+    [ "calib_genkey_base", "a01489.html#ga1d87bd17122bc323bb0e47db8341c6d8", null ],
+    [ "calib_get_pubkey", "a01489.html#gad902a2fe308340751b52ae249a38d688", null ]
 ];

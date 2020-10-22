@@ -1,10 +1,13 @@
 var a00542 =
 [
-    [ "pkcs11_cert_x509_write", "a08590.html#ga34fcca1dafb0a410d242fcb5ff3d69a5", null ],
-    [ "pkcs11_cert_wtlspublic_attributes", "a08590.html#gabc10a1f1b90bc7d2fb047db0af539e80", null ],
-    [ "pkcs11_cert_wtlspublic_attributes_count", "a08590.html#gad8232cd440c12745d24471e2676a117f", null ],
-    [ "pkcs11_cert_x509_attributes", "a08590.html#gafa471eb33699e2cba5dc3cc50a2d8df7", null ],
-    [ "pkcs11_cert_x509_attributes_count", "a08590.html#gadc2b14c7a052fdc0bb751259d28dfdc0", null ],
-    [ "pkcs11_cert_x509public_attributes", "a08590.html#ga8de4193ede04a12ab4e44b8df9eec478", null ],
-    [ "pkcs11_cert_x509public_attributes_count", "a08590.html#gafd21e04ab9248b3d58c3f5e4bd076ac9", null ]
+    [ "CK_CALLBACK_FUNCTION", "a00542.html#a5235e6437759c93b8189b124c8c807cf", null ],
+    [ "CK_DECLARE_FUNCTION", "a00542.html#a30315d302108bcfb354196f37b16a492", null ],
+    [ "CK_DECLARE_FUNCTION_POINTER", "a00542.html#aad472a68fb8e3eb9ba40169f5180b3b7", null ],
+    [ "CK_PTR", "a00542.html#a423401496b51f5c72a74e5502b47fd7d", null ],
+    [ "NULL_PTR", "a00542.html#a530f11a96e508d171d28564c8dc20942", null ],
+    [ "PKCS11_API", "a00542.html#af7a984e00c3e5ad25e84e20064fdacf5", null ],
+    [ "PKCS11_HELPER_DLL_EXPORT", "a00542.html#a836496360d58ba4ce6f85b9bd9db55fa", null ],
+    [ "PKCS11_HELPER_DLL_IMPORT", "a00542.html#ac37148adb3a42adffda5a54520bafc5d", null ],
+    [ "PKCS11_HELPER_DLL_LOCAL", "a00542.html#ad44738f0fc9eac7e23aed5fd4de71e4d", null ],
+    [ "PKCS11_LOCAL", "a00542.html#aa160340f6de98552412dd32ce4e4f245", null ]
 ];
