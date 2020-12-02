@@ -144,6 +144,8 @@ struct atca_device
     uint16_t session_key_id;  /**< Key ID used for a secure sesison */
     uint8_t* session_key;     /**< Session Key */
     uint8_t  session_key_len; /**< Length of key used for the session in bytes */
+
+    uint16_t options;         /**< Nested command details parameter */
 };
 
 typedef struct atca_device * ATCADevice;

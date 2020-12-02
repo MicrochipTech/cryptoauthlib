@@ -72,6 +72,26 @@ class atca_aes_gcm_ctx(Structure):
                 ("enc_cb", c_char*16),
                 ("ciphertext_block", c_char*16)]
 
+class atca_aes_ccm_ctx(Structure):
+    """AES CCM Context"""
+    _fields_ = [("cbc_mac_ctx", atca_aes_cbc_ctx),
+                ("ctr_ctx", atca_aes_ctr_ctx),
+                ("iv_size", c_uint8),
+                ("M", c_uint8),
+                ("counter", c_char*16),
+                ("partial_aad", c_char*16),
+                ("partial_aad_size", c_uint32),
+                ("text_size", c_uint32),
+                ("enc_cb", c_char*16),
+                ("data_size", c_uint32),
+                ("ciphertext_block", c_char*16)]
+
+class atca_aes_cbcmac_ctx(Structure):
+    """AES CBCMAC Context"""
+    _fields_ = [("cbc_ctx", atca_aes_cbc_ctx),
+                ("block_size", c_uint8),
+                ("block", c_char*16)]
+
 class atca_hmac_sha256_ctx(atca_sha256_ctx):
     """HMAC-SHA256 context"""
 
@@ -609,6 +629,215 @@ def atcab_aes_gcm_decrypt_finish(ctx, tag, tag_size, is_verified):
         c_is_verified = c_uint8(is_verified.value)
         status = get_cryptoauthlib().atcab_aes_gcm_decrypt_finish(byref(ctx), bytes(tag),
                                                                   tag_size, byref(c_is_verified))
+        is_verified.value = c_is_verified.value
+    return status
+
+def atcab_aes_cbcmac_init(ctx, key_id, key_block):
+    """
+    Initialize context for AES CBC-MAC operation.
+
+    Args:
+        ctx             AES CBC-MAC context to be initialized
+        key_id          Key location. Can either be a slot number or
+                        ATCA_TEMPKEY_KEYID for TempKey.
+        key_block       Index of the 16-byte block to use within the key
+                        location for the actual key.
+
+    Returns:
+        ATCA_SUCCESS on success, otherwise an error code.
+    """
+    status = get_cryptoauthlib().atcab_aes_cbcmac_init(byref(ctx), key_id, key_block)
+    return status
+
+def atcab_aes_cbcmac_update(ctx, data, data_size):
+    """
+    Calculate AES CBC-MAC with key stored within ECC608A device.
+    atcab_aes_cbcmac_init() should be called before the first use of
+    this function.
+
+    Args:
+        ctx             AES CBC-MAC context structure.
+        data            Data to be added for AES CBC-MAC calculation. Can be
+                        bytearray or bytes.
+        data_size       Data length in bytes.
+
+    Returns:
+        ATCA_SUCCESS on success, otherwise an error code.
+    """
+    status = get_cryptoauthlib().atcab_aes_cbcmac_update(byref(ctx), bytes(data), data_size)
+    return status
+
+def atcab_aes_cbcmac_finish(ctx, mac, mac_size):
+    """
+    Finish a CBC-MAC operation returning the CBC-MAC value. If the data
+    provided to the atcab_aes_cbcmac_update() function has incomplete
+    block this function will return an error code.
+
+    Args:
+        ctx        AES-128 CBC-MAC context.
+        mac        CBC-MAC is returned here.
+        mac_size   Size of CBC-MAC requested in bytes (max 16 bytes).
+
+    Returns:
+        ATCA_SUCCESS on success, otherwise an error code.
+    """
+    c_mac = create_string_buffer(16)
+    if not isinstance(mac, bytearray):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        status = get_cryptoauthlib().atcab_aes_cbcmac_finish(byref(ctx), byref(c_mac), mac_size)
+        mac[0:] = bytes(c_mac.raw)
+    return status
+
+def atcab_aes_ccm_init(ctx, key_id, key_block, iv, iv_size, aad_size, text_size, tag_size):
+    """
+    Initialize context for AES CCM operation with an existing IV, which
+    is common when starting a decrypt operation.
+
+    Args:
+    ctx          AES CCM context to be initialized
+    key_id       Key location. Can either be a slot number or
+                 ATCA_TEMPKEY_KEYID for TempKey.
+    key_block    Index of the 16-byte block to use within the key
+                 location for the actual key.
+    iv           Nonce to be fed into the AES CCM calculation.
+    iv_size      Size of iv.
+    aad_size     Size of Additional authtication data.
+    text_size    Size of plaintext/ciphertext to be processed.
+    tag_size     Prefered size of tag.
+    """
+    status = get_cryptoauthlib().atcab_aes_ccm_init(byref(ctx), key_id, key_block,
+                                                    bytes(iv), iv_size, aad_size, text_size, tag_size)
+    return status
+
+def atcab_aes_ccm_init_rand(ctx, key_id, key_block, iv, iv_size, aad_size, text_size, tag_size):
+    """
+    Initialize context for AES CCM operation with a random nonce
+
+    Args:
+    ctx          AES CCM context to be initialized
+    key_id       Key location. Can either be a slot number or
+                 ATCA_TEMPKEY_KEYID for TempKey.
+    key_block    Index of the 16-byte block to use within the key
+                 location for the actual key.
+    iv           Nonce to be fed into the AES CCM calculation.
+    iv_size      Size of iv.
+    aad_size     Size of Additional authtication data.
+    text_size    Size of plaintext/ciphertext to be processed.
+    tag_size     Prefered size of tag.
+    """
+    c_iv = create_string_buffer(16)
+    if not isinstance(iv, bytearray):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        status = get_cryptoauthlib().atcab_aes_ccm_init_rand(byref(ctx), key_id, key_block,
+                                                             byref(c_iv), iv_size, aad_size, text_size, tag_size)
+        iv[0:] = bytes(c_iv.raw)
+
+    return status
+
+def atcab_aes_ccm_aad_update(ctx, aad, aad_size):
+    """
+    Process Additional Authenticated Data (AAD) using CCM mode and a
+    key within the ATECC608A device
+
+    Args:
+    ctx          AES CCM context
+    aad          Additional authenticated data to be added
+    aad_size     Size of aad in bytes.
+    """
+    status = get_cryptoauthlib().atcab_aes_ccm_aad_update(byref(ctx), bytes(aad), aad_size)
+    return status
+
+def atcab_aes_ccm_aad_finish(ctx):
+    """
+    Finish processing Additional Authenticated Data (AAD) using CCM mode.
+
+    Args:
+    ctx          AES CCM context
+    """
+    status = get_cryptoauthlib().atcab_aes_ccm_aad_finish(byref(ctx))
+    return status
+
+def atcab_aes_ccm_encrypt_update(ctx, plaintext, plaintext_size, ciphertext):
+    """
+    Process data using CCM mode and a key within the ATECC608A device.
+    atcab_aes_ccm_init() or atcab_aes_ccm_init_rand() should be called
+    before the first use of this function.
+
+    Args:
+    ctx             AES CCM context structure.
+    plaintext       Data to be processed.
+    plaintext_size  Size of the data to be processed.
+    ciphertext      Output data is returned here.
+    """
+    c_ciphertext = create_string_buffer(16)
+    if not isinstance(ciphertext, bytearray):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        status = get_cryptoauthlib().atcab_aes_ccm_encrypt_update(byref(ctx), bytes(plaintext),
+                                                                  plaintext_size, byref(c_ciphertext))
+        ciphertext[0:] = bytes(c_ciphertext.raw)
+
+    return status
+
+def atcab_aes_ccm_decrypt_update(ctx, ciphertext, ciphertext_size, plaintext):
+    """
+    Process data using CCM mode and a key within the ATECC608A device.
+    atcab_aes_ccm_init() or atcab_aes_ccm_init_rand() should be called
+    before the first use of this function.
+
+    Args:
+    ctx              AES CCM context structure.
+    ciphertext       Data to be processed.
+    ciphertext_size  Size of the data to be processed.
+    plaintext        Output data is returned here.
+    """
+    c_plaintext = create_string_buffer(16)
+    if not isinstance(plaintext, bytearray):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        status = get_cryptoauthlib().atcab_aes_ccm_decrypt_update(byref(ctx), bytes(ciphertext),
+                                                                  ciphertext_size, byref(c_plaintext))
+        plaintext[0:] = bytes(c_plaintext.raw)
+
+    return status
+
+def atcab_aes_ccm_encrypt_finish(ctx, tag, tag_size):
+    """
+    Complete a CCM encrypt operation returning the authentication tag.
+
+    Args:
+    ctx              AES CCM context structure.
+    tag              Authentication tag is returned here.
+    tag_size         Tag size in bytes.
+
+    """
+    c_tag = create_string_buffer(16)
+    c_tag_size = c_uint8()
+    if not isinstance(tag, bytearray) | isinstance(tag_size, bytearray):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        status = get_cryptoauthlib().atcab_aes_ccm_encrypt_finish(byref(ctx), byref(c_tag), byref(c_tag_size))
+        tag[0:] = bytes(c_tag.raw)
+        tag_size[0] = c_tag_size.value
+    return status
+
+def atcab_aes_ccm_decrypt_finish(ctx, tag, is_verified):
+    """
+    Complete a CCM decrypt operation authenticating provided tag.
+    Args:
+    ctx              AES CCM context structure.
+    tag              Authentication tag is returned here.
+    is_verified      Value is set to true if the tag is authenticated else
+                     the value is set to false.
+
+    """
+    if not isinstance(is_verified, AtcaReference):
+        status = Status.ATCA_BAD_PARAM
+    else:
+        c_is_verified = c_uint8(is_verified.value)
+        status = get_cryptoauthlib().atcab_aes_ccm_decrypt_finish(byref(ctx), bytes(tag), byref(c_is_verified))
         is_verified.value = c_is_verified.value
     return status
 

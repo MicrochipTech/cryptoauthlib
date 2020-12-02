@@ -30,9 +30,13 @@
 #include "crypto/atca_crypto_sw.h"
 
 #ifdef ATCA_OPENSSL
+#include <openssl/bn.h>
+#include <openssl/bio.h>
 #include <openssl/cmac.h>
+#include <openssl/ec.h>
 #include <openssl/evp.h>
 #include <openssl/hmac.h>
+#include <openssl/pem.h>
 
 /** \brief Update the GCM context with additional authentication data (AAD)
  *
@@ -264,7 +268,8 @@ ATCA_STATUS atcac_aes_gcm_decrypt_finish(
         }
 
         /* Always try to free the context */
-        EVP_CIPHER_CTX_cleanup((EVP_CIPHER_CTX*)ctx->ptr);
+        EVP_CIPHER_CTX_free((EVP_CIPHER_CTX*)ctx->ptr);
+        ctx->ptr = NULL;
 
         if (ret > 0)
         {
@@ -548,6 +553,265 @@ ATCA_STATUS atcac_sha256_hmac_finish(
         *digest_len = outlen;
         HMAC_CTX_free((HMAC_CTX*)ctx->ptr);
         ctx->ptr = NULL;
+    }
+
+    return status;
+}
+
+/** \brief Set up a public/private key structure for use in asymmetric cryptographic functions
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_pk_init(
+    atcac_pk_ctx* ctx,                          /**< [in] pointer to a pk context */
+    uint8_t*      buf,                          /**< [in] buffer containing a pem encoded key */
+    size_t        buflen,                       /**< [in] length of the input buffer */
+    uint8_t       key_type,
+    bool          pubkey                        /**< [in] buffer is a public key */
+    )
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    if (ctx)
+    {
+        ctx->ptr = EVP_PKEY_new();
+
+        if (ctx->ptr)
+        {
+            int ret = EVP_PKEY_set_type((EVP_PKEY*)ctx->ptr, EVP_PKEY_EC);
+
+            if (0 < ret)
+            {
+                EC_KEY* ec_key = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1);
+
+                if (pubkey)
+                {
+                    /* Configure the public key */
+                    EC_POINT* ec_point = EC_POINT_new(EC_KEY_get0_group(ec_key));
+                    BIGNUM* x = BN_bin2bn(buf, 32, NULL);
+                    BIGNUM* y = BN_bin2bn(&buf[32], 32, NULL);
+
+                    ret = EC_POINT_set_affine_coordinates(EC_KEY_get0_group(ec_key), ec_point, x, y, NULL);
+
+                    if (0 < ret)
+                    {
+                        ret = EC_KEY_set_public_key(ec_key, ec_point);
+                    }
+
+                    EC_POINT_free(ec_point);
+                    BN_free(x);
+                    BN_free(y);
+                }
+                else
+                {
+                    /* Configure a private key */
+                    BIGNUM* d = BN_bin2bn(buf, buflen, NULL);
+                    ret = EC_KEY_set_private_key(ec_key, d);
+                    BN_free(d);
+                }
+
+                if (0 < ret)
+                {
+                    ret = EVP_PKEY_set1_EC_KEY((EVP_PKEY*)ctx->ptr, ec_key);
+                }
+
+                /* pkey context copies the key when it is attached */
+                EC_KEY_free(ec_key);
+
+                if (0 < ret)
+                {
+                    status = ATCA_SUCCESS;
+                }
+                else
+                {
+                    EVP_PKEY_free((EVP_PKEY*)ctx->ptr);
+                    status = ATCA_GEN_FAIL;
+                }
+            }
+        }
+    }
+    return status;
+}
+
+
+/** \brief Set up a public/private key structure for use in asymmetric cryptographic functions
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_pk_init_pem(
+    atcac_pk_ctx* ctx,                          /**< [in] pointer to a pk context */
+    uint8_t *     buf,                          /**< [in] buffer containing a pem encoded key */
+    size_t        buflen,                       /**< [in] length of the input buffer */
+    bool          pubkey                        /**< [in] buffer is a public key */
+    )
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    if (ctx)
+    {
+        BIO* bio = BIO_new_mem_buf((void*)buf, buflen);
+        if (pubkey)
+        {
+            ctx->ptr = PEM_read_bio_PUBKEY(bio, NULL, NULL, NULL);
+        }
+        else
+        {
+            ctx->ptr = PEM_read_bio_PrivateKey(bio, NULL, NULL, NULL);
+        }
+
+        status = ctx->ptr ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+    }
+    return status;
+}
+
+/** \brief Free a public/private key structure
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_pk_free(
+    atcac_pk_ctx* ctx                           /**< [in] pointer to a pk context */
+    )
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    if (ctx)
+    {
+        if (ctx->ptr)
+        {
+            EVP_PKEY_free(ctx->ptr);
+        }
+        status = ATCA_SUCCESS;
+    }
+    return status;
+}
+
+/** \brief Perform a signature with the private key in the context
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_pk_sign(
+    atcac_pk_ctx* ctx,
+    uint8_t *     digest,
+    size_t        dig_len,
+    uint8_t*      signature,
+    size_t*       sig_len
+    )
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+    int ret = 0;
+
+    if (ctx && ctx->ptr)
+    {
+        if (EVP_PKEY_EC == EVP_PKEY_id((EVP_PKEY*)ctx->ptr))
+        {
+            ECDSA_SIG* ec_sig = ECDSA_do_sign(digest, (int)dig_len, EVP_PKEY_get0_EC_KEY((EVP_PKEY*)ctx->ptr));
+
+            if (ec_sig)
+            {
+                ret = BN_bn2bin(ECDSA_SIG_get0_r(ec_sig), signature);
+                if (0 < ret)
+                {
+                    *sig_len = ret;
+                    ret = BN_bn2bin(ECDSA_SIG_get0_s(ec_sig), &signature[ret]);
+                }
+                if (0 < ret)
+                {
+                    *sig_len += ret;
+                }
+                ECDSA_SIG_free(ec_sig);
+            }
+        }
+        else
+        {
+            EVP_PKEY_CTX* sign_ctx = EVP_PKEY_CTX_new((EVP_PKEY*)ctx->ptr, NULL);
+
+            if (sign_ctx)
+            {
+                int ret = EVP_PKEY_sign_init(sign_ctx);
+
+                if (0 < ret)
+                {
+                    ret = EVP_PKEY_CTX_set_rsa_padding(sign_ctx, RSA_PKCS1_PADDING);
+                }
+
+                if (0 < ret)
+                {
+                    ret = EVP_PKEY_CTX_set_signature_md(sign_ctx, EVP_sha256());
+                }
+
+                if (0 < ret)
+                {
+                    ret = EVP_PKEY_sign(sign_ctx, signature, sig_len, digest, dig_len);
+                }
+
+                EVP_PKEY_CTX_free(sign_ctx);
+            }
+        }
+        status = (0 < ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+    }
+    return status;
+}
+
+/** \brief Perform a verify using the public key in the provided context
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_pk_verify(
+    atcac_pk_ctx* ctx,
+    uint8_t*      digest,
+    size_t        dig_len,
+    uint8_t*      signature,
+    size_t        sig_len
+    )
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    if (ctx && ctx->ptr)
+    {
+        int ret = -1;
+        if (EVP_PKEY_EC == EVP_PKEY_id((EVP_PKEY*)ctx->ptr))
+        {
+            ECDSA_SIG* ec_sig = ECDSA_SIG_new();
+            BIGNUM* r = BN_bin2bn(signature, 32, NULL);
+            BIGNUM* s = BN_bin2bn(&signature[32], 32, NULL);
+
+            ECDSA_SIG_set0(ec_sig, r, s);
+
+            ret = ECDSA_do_verify(digest, dig_len, ec_sig, EVP_PKEY_get0_EC_KEY((EVP_PKEY*)ctx->ptr));
+            ECDSA_SIG_free(ec_sig);
+            BN_free(r);
+            BN_free(s);
+        }
+        else
+        {
+
+            EVP_PKEY_CTX* verify_ctx = EVP_PKEY_CTX_new((EVP_PKEY*)ctx->ptr, NULL);
+
+            if (verify_ctx)
+            {
+                int ret = EVP_PKEY_verify_init(verify_ctx);
+
+                if (0 < ret)
+                {
+                    ret = EVP_PKEY_CTX_set_signature_md(verify_ctx, EVP_sha256());
+                }
+
+                if (0 < ret)
+                {
+                    if (EVP_PK_RSA == EVP_PKEY_id((EVP_PKEY*)ctx->ptr))
+                    {
+                        ret = EVP_PKEY_CTX_set_rsa_padding(verify_ctx, RSA_PKCS1_PADDING);
+                    }
+                }
+
+                if (0 < ret)
+                {
+                    ret = EVP_PKEY_verify(verify_ctx, signature, sig_len, digest, dig_len);
+                }
+                EVP_PKEY_CTX_free(verify_ctx);
+            }
+        }
+        status = (0 < ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
     }
 
     return status;

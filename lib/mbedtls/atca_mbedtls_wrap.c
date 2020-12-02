@@ -44,8 +44,11 @@
 
 #include "mbedtls/cmac.h"
 #include "mbedtls/pk.h"
+#include "mbedtls/ecdh.h"
 #include "mbedtls/ecp.h"
+#include "mbedtls/bignum.h"
 #include "mbedtls/x509_crt.h"
+
 
 /* Cryptoauthlib Includes */
 #include "cryptoauthlib.h"
@@ -552,13 +555,492 @@ ATCA_STATUS atcac_sha256_hmac_finish(
     return status;
 }
 
+/** \brief Set up a public/private key structure for use in asymmetric cryptographic functions
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_pk_init(
+    atcac_pk_ctx* ctx,                          /**< [in] pointer to a pk context */
+    uint8_t*      buf,                          /**< [in] buffer containing a pem encoded key */
+    size_t        buflen,                       /**< [in] length of the input buffer */
+    uint8_t       key_type,
+    bool          pubkey                        /**< [in] buffer is a public key */
+    )
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    if (ctx)
+    {
+        int ret;
+        uint8_t temp = 1;
+        mbedtls_ecp_keypair* ecp = NULL;
+
+        mbedtls_pk_init(ctx);
+        ret = mbedtls_pk_setup(ctx, mbedtls_pk_info_from_type(MBEDTLS_PK_ECKEY));
+
+        if (!ret)
+        {
+            ecp = mbedtls_pk_ec(*ctx);
+            ret = mbedtls_ecp_group_load(&ecp->grp, MBEDTLS_ECP_DP_SECP256R1);
+        }
+
+        if (pubkey)
+        {
+            if (!ret)
+            {
+                ret = mbedtls_mpi_read_binary(&(ecp->Q.X), buf, buflen / 2);
+            }
+
+            if (!ret)
+            {
+                ret = mbedtls_mpi_read_binary(&(ecp->Q.Y), &buf[buflen / 2], buflen / 2);
+            }
+
+            if (!ret)
+            {
+                ret = mbedtls_mpi_read_binary(&(ecp->Q.Z), &temp, 1);
+            }
+        }
+        else
+        {
+            if (!ret)
+            {
+                ret = mbedtls_mpi_read_binary(&(ecp->d), buf, buflen);
+            }
+        }
+
+        status = (!ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+    }
+    return status;
+}
+
+/** \brief Set up a public/private key structure for use in asymmetric cryptographic functions
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_pk_init_pem(
+    atcac_pk_ctx* ctx,                         /**< [in] pointer to a pk context */
+    uint8_t*      buf,                         /**< [in] buffer containing a pem encoded key */
+    size_t        buflen,                      /**< [in] length of the input buffer */
+    bool          pubkey                       /**< [in] buffer is a public key */
+    )
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    if (ctx)
+    {
+        int ret;
+        mbedtls_pk_init(ctx);
+
+        if (pubkey)
+        {
+            ret = mbedtls_pk_parse_public_key(ctx, buf, buflen);
+        }
+        else
+        {
+            ret = mbedtls_pk_parse_key(ctx, buf, buflen, NULL, 0);
+        }
+        status = (!ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+    }
+    return status;
+}
+
+/** \brief Free a public/private key structure
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_pk_free(
+    atcac_pk_ctx* ctx                           /**< [in] pointer to a pk context */
+    )
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    if (ctx)
+    {
+        mbedtls_pk_init(ctx);
+        status = ATCA_SUCCESS;
+    }
+    return status;
+}
+
+/** \brief Get the public key from the context
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_pk_public(
+    atcac_pk_ctx* ctx,
+    uint8_t*      buf,
+    size_t*       buflen
+    )
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    if (ctx)
+    {
+        int ret = -1;
+        switch (mbedtls_pk_get_type(ctx))
+        {
+        case MBEDTLS_PK_ECKEY:
+        /* fallthrough */
+        case MBEDTLS_PK_ECDSA:
+        {
+            (void)mbedtls_mpi_write_binary(&mbedtls_pk_ec(*ctx)->Q.X, buf, 32);
+            ret = mbedtls_mpi_write_binary(&mbedtls_pk_ec(*ctx)->Q.Y, &buf[32], 32);
+            *buflen = 64;
+            break;
+        }
+        default:
+            break;
+        }
+        status = (0 == ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+    }
+    return status;
+}
+
+/** \brief Perform a signature with the private key in the context
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_pk_sign(
+    atcac_pk_ctx* ctx,
+    uint8_t*      digest,
+    size_t        dig_len,
+    uint8_t*      signature,
+    size_t*       sig_len
+    )
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    if (ctx)
+    {
+        int ret = -1;
+        switch (mbedtls_pk_get_type(ctx))
+        {
+        case MBEDTLS_PK_ECKEY:
+        /* fallthrough */
+        case MBEDTLS_PK_ECDSA:
+        {
+            mbedtls_mpi r;
+            mbedtls_mpi s;
+
+            mbedtls_mpi_init(&r);
+            mbedtls_mpi_init(&s);
+
+            //ret = mbedtls_ecdsa_sign(&mbedtls_pk_ec(*ctx)->grp, &r, &s, &mbedtls_pk_ec(*ctx)->d, digest, dig_len, NULL, NULL);
+            ret = mbedtls_ecdsa_sign_det(&mbedtls_pk_ec(*ctx)->grp, &r, &s, &mbedtls_pk_ec(*ctx)->d, digest, dig_len, MBEDTLS_MD_SHA256);
+
+            if (!ret)
+            {
+                ret = mbedtls_mpi_write_binary(&r, signature, 32);
+            }
+
+            if (!ret)
+            {
+                ret = mbedtls_mpi_write_binary(&s, &signature[32], 32);
+            }
+
+            mbedtls_mpi_free(&r);
+            mbedtls_mpi_free(&s);
+
+            *sig_len = 64;
+            break;
+        }
+        case MBEDTLS_PK_RSA:
+            ret = mbedtls_pk_sign(ctx, MBEDTLS_MD_SHA256, digest, dig_len, signature, sig_len, NULL, NULL);
+            break;
+        default:
+            break;
+        }
+        status = (0 == ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+    }
+    return status;
+}
+
+/** \brief Perform a verify using the public key in the provided context
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_pk_verify(
+    atcac_pk_ctx* ctx,
+    uint8_t*      digest,
+    size_t        dig_len,
+    uint8_t*      signature,
+    size_t        sig_len
+    )
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    if (ctx)
+    {
+        int ret = -1;
+        switch (mbedtls_pk_get_type(ctx))
+        {
+        case MBEDTLS_PK_ECKEY:
+        /* fallthrough */
+        case MBEDTLS_PK_ECDSA:
+        {
+            mbedtls_mpi r;
+            mbedtls_mpi s;
+
+            mbedtls_mpi_init(&r);
+            mbedtls_mpi_init(&s);
+
+            mbedtls_mpi_read_binary(&r, signature, sig_len / 2);
+            mbedtls_mpi_read_binary(&s, &signature[sig_len / 2], sig_len / 2);
+
+            ret = mbedtls_ecdsa_verify(&mbedtls_pk_ec(*ctx)->grp, digest, dig_len, &mbedtls_pk_ec(*ctx)->Q, &r, &s);
+
+            mbedtls_mpi_free(&r);
+            mbedtls_mpi_free(&s);
+            break;
+        }
+        case MBEDTLS_PK_RSA:
+            ret = mbedtls_pk_verify(ctx, MBEDTLS_MD_SHA256, digest, dig_len, signature, sig_len);
+            break;
+        default:
+            break;
+        }
+        status = (0 == ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+    }
+    return status;
+}
+
+/** \brief Execute the key agreement protocol for the provided keys (if they can)
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_pk_derive(
+    atcac_pk_ctx* private_ctx,
+    atcac_pk_ctx* public_ctx,
+    uint8_t*      buf,
+    size_t*       buflen
+    )
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    if (private_ctx && public_ctx)
+    {
+        mbedtls_pk_type_t keytype = mbedtls_pk_get_type(private_ctx);
+
+        if (mbedtls_pk_get_type(public_ctx) == keytype)
+        {
+            int ret = -1;
+            switch (keytype)
+            {
+            case MBEDTLS_PK_ECKEY:
+            /* fallthrough */
+            case MBEDTLS_PK_ECDSA:
+            {
+                mbedtls_mpi result;
+
+                mbedtls_mpi_init(&result);
+
+                ret = mbedtls_ecdh_compute_shared(&mbedtls_pk_ec(*private_ctx)->grp, &result, &mbedtls_pk_ec(*public_ctx)->Q, &mbedtls_pk_ec(*private_ctx)->d, NULL, NULL);
+
+                mbedtls_mpi_write_binary(&result, buf, *buflen);
+                mbedtls_mpi_free(&result);
+                break;
+            }
+            default:
+                break;
+            }
+            status = (0 == ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+        }
+    }
+    return status;
+}
+
+
+#ifndef MBEDTLS_ECDSA_SIGN_ALT
+#include "mbedtls/pk_internal.h"
+#include "atcacert/atcacert_der.h"
+
+typedef struct atca_mbedtls_eckey_s
+{
+    ATCADevice device;
+    uint16_t   handle;
+} atca_mbedtls_eckey_t;
+
+static size_t atca_mbedtls_eckey_get_bitlen(const void * ctx)
+{
+    return mbedtls_pk_info_from_type(MBEDTLS_PK_ECKEY)->get_bitlen(ctx);
+}
+
+static int atca_mbedtls_eckey_can_do(mbedtls_pk_type_t type)
+{
+    return mbedtls_pk_info_from_type(MBEDTLS_PK_ECKEY)->can_do(type);
+}
+
+static int atca_mbedtls_eckey_verify(void *ctx, mbedtls_md_type_t md_alg,
+                                     const unsigned char *hash, size_t hash_len,
+                                     const unsigned char *sig, size_t sig_len)
+{
+    int ret = -1;
+    mbedtls_ecp_keypair *ecp = (mbedtls_ecp_keypair*)ctx;
+
+    if (ecp && hash && sig)
+    {
+        mbedtls_mpi r, s;
+        atca_mbedtls_eckey_t key_info;
+        uint8_t signature[ATCA_ECCP256_SIG_SIZE];
+
+        /* Signature is in ASN.1 format so we have to parse it out manually */
+        size_t len;
+        unsigned char *ptr = (unsigned char*)sig;
+        const unsigned char *end = sig + sig_len;
+
+        mbedtls_mpi_init(&r);
+        mbedtls_mpi_init(&s);
+
+        ret = mbedtls_mpi_write_binary(&ecp->d, (unsigned char*)&key_info, sizeof(atca_mbedtls_eckey_t));
+
+        if (!ret)
+        {
+            ret = mbedtls_asn1_get_tag(&ptr, end, &len, MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE);
+
+            if (ptr + len != end)
+            {
+                /* Some sort of parsing error */
+                ret = -1;
+            }
+        }
+
+        if (!ret)
+        {
+            ret = mbedtls_asn1_get_mpi(&ptr, end, &r);
+        }
+
+        if (!ret)
+        {
+            ret = mbedtls_asn1_get_mpi(&ptr, end, &s);
+        }
+
+        if (!ret)
+        {
+            ret = mbedtls_mpi_write_binary(&r, signature, 32);
+        }
+
+        if (!ret)
+        {
+            ret = mbedtls_mpi_write_binary(&s, &signature[32], 32);
+        }
+
+        if (!ret)
+        {
+            bool is_verified = false;
+            if (ATCA_SUCCESS == atcab_verify_stored_ext(key_info.device, hash, signature, key_info.handle, &is_verified))
+            {
+                if (is_verified)
+                {
+                    ret = 0;
+                }
+            }
+            ret = is_verified ? 0 : -1;
+        }
+
+        mbedtls_mpi_free(&r);
+        mbedtls_mpi_free(&s);
+    }
+
+    return ret;
+}
+
+static int atca_mbedtls_eckey_sign(void *ctx, mbedtls_md_type_t md_alg,
+                                   const unsigned char *hash, size_t hash_len,
+                                   unsigned char *sig, size_t *sig_len,
+                                   int (*f_rng)(void *, unsigned char *, size_t),
+                                   void *p_rng)
+{
+    int ret = -1;
+    mbedtls_ecp_keypair *ecp = (mbedtls_ecp_keypair*)ctx;
+
+    if (ecp && hash && sig && sig_len)
+    {
+        mbedtls_mpi r, s;
+        atca_mbedtls_eckey_t key_info;
+        uint8_t signature[75];
+
+        ret = mbedtls_mpi_write_binary(&ecp->d, (unsigned char*)&key_info, sizeof(atca_mbedtls_eckey_t));
+
+        if (!ret)
+        {
+            if (ATCA_SUCCESS != atcab_sign_ext(key_info.device, key_info.handle, hash, &signature[10]))
+            {
+                ret = -1;
+            }
+        }
+
+        if (!ret)
+        {
+            ret = atcacert_der_enc_ecdsa_sig_value(&signature[10], signature, sig_len);
+
+        }
+
+        if (!ret)
+        {
+            /* atcacert_der_enc_ecdsa_sig_value add the outer tag info so we need to not copy it
+               to the output buffer for mbedtls */
+            *sig_len -= 3;
+            memcpy(sig, &signature[3], *sig_len);
+        }
+    }
+    return ret;
+}
+
+static int atca_mbedtls_eckey_check_pair(const void *pub, const void *prv)
+{
+    return mbedtls_pk_info_from_type(MBEDTLS_PK_ECKEY)->check_pair_func(pub, prv);
+}
+
+static void * atca_mbedtls_eckey_alloc(void)
+{
+    return mbedtls_pk_info_from_type(MBEDTLS_PK_ECKEY)->ctx_alloc_func();
+}
+
+static void atca_mbedtls_eckey_free(void * ctx)
+{
+    return mbedtls_pk_info_from_type(MBEDTLS_PK_ECKEY)->ctx_free_func(ctx);
+}
+
+static void atca_mbedtls_eckey_debug(const void *ctx, mbedtls_pk_debug_item *items)
+{
+    return mbedtls_pk_info_from_type(MBEDTLS_PK_ECKEY)->debug_func(ctx, items);
+}
+
+const mbedtls_pk_info_t atca_mbedtls_eckey_info = {
+    MBEDTLS_PK_ECKEY,
+    "EC",
+    atca_mbedtls_eckey_get_bitlen,
+    atca_mbedtls_eckey_can_do,
+    atca_mbedtls_eckey_verify,
+    atca_mbedtls_eckey_sign,
+#if defined(MBEDTLS_ECDSA_C) && defined(MBEDTLS_ECP_RESTARTABLE)
+    /* Required to maintain structure alignment */
+    NULL,
+    NULL,
+#endif
+    NULL,
+    NULL,
+    atca_mbedtls_eckey_check_pair,
+    atca_mbedtls_eckey_alloc,
+    atca_mbedtls_eckey_free,
+#if defined(MBEDTLS_ECDSA_C) && defined(MBEDTLS_ECP_RESTARTABLE)
+    /* Required to maintain structure alignment */
+    NULL,
+    NULL,
+#endif
+    atca_mbedtls_eckey_debug,
+};
+
+#endif
+
 
 /** \brief Initializes an mbedtls pk context for use with EC operations
  * \param[in,out] pkey ptr to space to receive version string
  * \param[in] slotid Associated with this key
  * \return 0 on success, otherwise an error code.
  */
-int atca_mbedtls_pk_init(mbedtls_pk_context * pkey, const uint16_t slotid)
+int atca_mbedtls_pk_init_ext(ATCADevice device, mbedtls_pk_context * pkey, const uint16_t slotid)
 {
     int ret = 0;
     uint8_t public_key[ATCA_ECCP256_SIG_SIZE];
@@ -573,8 +1055,13 @@ int atca_mbedtls_pk_init(mbedtls_pk_context * pkey, const uint16_t slotid)
     if (!ret)
     {
         mbedtls_pk_init(pkey);
+#ifdef MBEDTLS_ECDSA_SIGN_ALT
         ret = mbedtls_pk_setup(pkey, mbedtls_pk_info_from_type(MBEDTLS_PK_ECKEY));
+#else
+        ret = mbedtls_pk_setup(pkey, &atca_mbedtls_eckey_info);
+#endif
     }
+
 
     if (!ret)
     {
@@ -584,7 +1071,7 @@ int atca_mbedtls_pk_init(mbedtls_pk_context * pkey, const uint16_t slotid)
 
     if (!ret)
     {
-        ret = atcab_get_pubkey(slotid, public_key);
+        ret = atcab_get_pubkey_ext(device, slotid, public_key);
     }
 
     if (!ret)
@@ -604,10 +1091,25 @@ int atca_mbedtls_pk_init(mbedtls_pk_context * pkey, const uint16_t slotid)
 
     if (!ret)
     {
-        ret = mbedtls_mpi_lset(&ecp->d, slotid);
+        /* This is a bit of a hack to force a context into the mbedtls keypair structure but it should
+           work on any platform as it is in essence directly copying memory exactly as it appears in the
+           structure */
+        atca_mbedtls_eckey_t key_info = { device, slotid };
+        ret = mbedtls_mpi_read_binary(&ecp->d, (const unsigned char*)&key_info,
+                                      sizeof(atca_mbedtls_eckey_t));
     }
 
     return ret;
+}
+
+/** \brief Initializes an mbedtls pk context for use with EC operations
+ * \param[in,out] pkey ptr to space to receive version string
+ * \param[in] slotid Associated with this key
+ * \return 0 on success, otherwise an error code.
+ */
+int atca_mbedtls_pk_init(mbedtls_pk_context * pkey, const uint16_t slotid)
+{
+    return atca_mbedtls_pk_init_ext(atcab_get_device(), pkey, slotid);
 }
 
 #if ATCA_CA_SUPPORT

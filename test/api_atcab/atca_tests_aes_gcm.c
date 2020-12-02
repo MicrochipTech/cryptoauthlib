@@ -672,6 +672,6 @@ t_test_case_info aes_gcm_basic_test_info[] =
 #else
 t_test_case_info aes_gcm_basic_test_info[] =
 {
-    { (fp_test_case)NULL,                     (uint8_t)0 },             /* Array Termination element*/
+    { (fp_test_case)NULL, (uint8_t)0                     },             /* Array Termination element*/
 };
 #endif

@@ -212,7 +212,83 @@ def test_atcab_aes_gcm_decrypt_finish(test_init):
     assert atcab_aes_gcm_decrypt_finish(ctx, tag, tag_size, is_verified) == Status.ATCA_SUCCESS
     assert is_verified.value == atcab_mock.r_is_verified.value
 
+def test_atcab_aes_cbcmac_init(test_init):
+    ctx = atca_aes_cbcmac_ctx()
+    key_id = 0
+    key_block = 0
+    assert atcab_aes_cbcmac_init(ctx, key_id, key_block) == Status.ATCA_SUCCESS
 
+def test_atcab_aes_cbcmac_update(test_init):
+    ctx = atca_aes_cbcmac_ctx()
+    data = bytearray(32)
+    data_size = len(data)
+    assert atcab_aes_cbcmac_update(ctx, data, data_size) == Status.ATCA_SUCCESS
+
+def test_atcab_aes_cbcmac_finish(test_init):
+    ctx = atca_aes_cbcmac_ctx()
+    mac = bytearray(16)
+    mac_size = len(mac)
+    assert atcab_aes_cbcmac_finish(ctx, mac, mac_size) == Status.ATCA_SUCCESS
+    assert mac == bytearray(atcab_mock.r_aes_cbcmac_output)
+
+def test_atcab_aes_ccm_init(test_init):
+    ctx = atca_aes_ccm_ctx()
+    key_id = 2
+    key_block = 2
+    iv = bytearray(16)
+    iv_size = len(iv)
+    aad_size = 2
+    text_size = 2
+    tag_size = 2
+    assert atcab_aes_ccm_init(ctx, key_id, key_block, iv, iv_size, aad_size, text_size, tag_size) == Status.ATCA_SUCCESS
+
+def test_atcab_aes_ccm_init_rand(test_init):
+    ctx = atca_aes_ccm_ctx()
+    key_id = 2
+    key_block = 2
+    iv = bytearray(16)
+    iv_size = len(iv)
+    aad_size = 2
+    text_size = 2
+    tag_size = 2
+    assert atcab_aes_ccm_init_rand(ctx, key_id, key_block, iv, iv_size, aad_size, text_size, tag_size) == Status.ATCA_SUCCESS
+    assert iv == bytearray(atcab_mock.r_iv)
+
+def test_atcab_aes_ccm_aad_update(test_init):
+    ctx = atca_aes_ccm_ctx()
+    aad = bytearray(16)
+    aad_size = 2
+    assert atcab_aes_ccm_aad_update(ctx, aad, aad_size) == Status.ATCA_SUCCESS
+
+def test_atcab_aes_ccm_encrypt_update(test_init):
+    ctx = atca_aes_ccm_ctx()
+    plaintext = bytearray(16)
+    plaintext_size = len(plaintext)
+    ciphertext = bytearray(16)
+    assert atcab_aes_ccm_encrypt_update(ctx, plaintext, plaintext_size, ciphertext) == Status.ATCA_SUCCESS
+    assert ciphertext == bytearray(atcab_mock.r_ciphertext)
+
+def test_atcab_aes_ccm_decrypt_update(test_init):
+    ctx = atca_aes_ccm_ctx()
+    ciphertext = bytearray(16)
+    ciphertext_size = len(ciphertext)
+    plaintext = bytearray(16)
+    assert atcab_aes_ccm_decrypt_update(ctx, ciphertext, ciphertext_size, plaintext) == Status.ATCA_SUCCESS
+    assert plaintext == bytearray(atcab_mock.r_plaintext)
+
+def test_atcab_aes_ccm_encrypt_finish(test_init):
+    ctx = atca_aes_ccm_ctx()
+    tag = bytearray(16)
+    tag_size = bytearray(1)
+    assert atcab_aes_ccm_encrypt_finish(ctx, tag, tag_size) == Status.ATCA_SUCCESS
+    assert tag_size[0] == atcab_mock.r_tag_size.value
+
+def test_atcab_aes_ccm_decrypt_finish(test_init):
+    ctx = atca_aes_ccm_ctx()
+    tag = bytearray(16)
+    is_verified = AtcaReference(2)
+    assert  atcab_aes_ccm_decrypt_finish(ctx, tag, is_verified) == Status.ATCA_SUCCESS
+    assert is_verified.value == atcab_mock.r_is_verified.value
 # ---------------ATCA_BASIC_CHECKMAC--------------
 
 def test_atcab_checkmac(test_init):

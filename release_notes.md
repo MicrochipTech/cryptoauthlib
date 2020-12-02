@@ -1,6 +1,22 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.2.5 (11/30/2020)
+
+### New features
+  - TA100 ShareKey API to drive the sharekey process (requires NDA, consult 
+    with your FAE or submit a request through your myMicrochip account)
+  - Additional software crypto library interface functions for asymmetric
+    cryptography (sign, verify, ecdh, etc)
+  - XC8 & XC16 compiler support
+  - AES CCM & CBC-MAC upper layer API using AES-ECB primatives
+
+### Fixes
+  - TA100 AES-GCM auth session tx packet length when command data is included
+  - PKCS11 Pin length check rejecting valid pin lengths
+  - aes-gcm nist vector test failed with mbedtls crypto backend due to aad
+    update not being executed when aad length was zero
+
 ## Release v3.2.4 (10/17/2020)
 
 ### New features

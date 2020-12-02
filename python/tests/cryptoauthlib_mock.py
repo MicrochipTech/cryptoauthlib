@@ -427,8 +427,196 @@ class atcab_mock(object):
         memmove(cast(is_verified, c_void_p).value, cast(byref(self.r_is_verified), c_void_p).value, 1)
 
         return Status.ATCA_SUCCESS
+    #--------------------------------------------------------------------#
+    # atcab_aes_cbcmac_init(ctx, key_id, key_block):
+
+    def atcab_aes_cbcmac_init(self, ctx, key_id, key_block):
+
+        if not isinstance(key_id, int):
+            raise TypeError
+
+        if not isinstance(key_block, int):
+            raise TypeError
+
+        return Status.ATCA_SUCCESS
 
     #--------------------------------------------------------------------#
+    # atcab_aes_cbcmac_update(ctx, data, data_size):
+
+    def atcab_aes_cbcmac_update(self, ctx, data, data_size):
+
+        if not isinstance(data, bytes):
+            raise TypeError
+
+        if not isinstance(data_size, int):
+            raise TypeError
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcab_aes_cbcmac_finish(ctx, mac, mac_size):
+
+    r_aes_cbcmac_output = create_string_buffer(16)
+    r_aes_cbcmac_output.value = bytes(bytearray([0x00, 0x01, 0x02, 0x04,
+                                                 0x00, 0x01, 0x02, 0x04,
+                                                 0x00, 0x01, 0x02, 0x04,
+                                                 0x00, 0x01, 0x02, 0x04]))
+
+    def atcab_aes_cbcmac_finish(self, ctx, mac, mac_size):
+
+        if not isinstance(mac, c_ptr):
+            raise TypeError
+
+        if not isinstance(mac_size, int):
+            raise TypeError
+
+        memmove(cast(mac, c_void_p).value, cast(byref(self.r_aes_cbcmac_output), c_void_p).value, mac_size)
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcab_aes_ccm_init(ctx, key_id, key_block, iv, iv_size, aad_size, text_size, tag_size):
+
+    def atcab_aes_ccm_init(self, ctx, key_id, key_block, iv, iv_size, aad_size, text_size, tag_size):
+
+        if not isinstance(key_id, int):
+            raise TypeError
+
+        if not isinstance(key_block, int):
+            raise TypeError
+
+        if not isinstance(iv, bytes):
+            raise TypeError
+
+        if not isinstance(iv_size, int):
+            raise TypeError
+
+        if not isinstance(aad_size, int):
+            raise TypeError
+
+        if not isinstance(text_size, int):
+            raise TypeError
+
+        if not isinstance(tag_size, int):
+            raise TypeError
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcab_aes_ccm_init_rand(ctx, key_id, key_block, iv, iv_size, aad_size, text_size, tag_size):
+
+    def atcab_aes_ccm_init_rand(self, ctx, key_id, key_block, iv, iv_size, aad_size, text_size, tag_size):
+
+        if not isinstance(key_id, int):
+            raise TypeError
+
+        if not isinstance(key_block, int):
+            raise TypeError
+
+        if not isinstance(iv, c_ptr):
+            raise TypeError
+
+        if not isinstance(iv_size, int):
+            raise TypeError
+
+        if not isinstance(aad_size, int):
+            raise TypeError
+
+        if not isinstance(text_size, int):
+            raise TypeError
+
+        if not isinstance(tag_size, int):
+            raise TypeError
+
+        memmove(cast(iv, c_void_p).value, cast(byref(self.r_iv), c_void_p).value, len(self.r_iv))
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcab_aes_ccm_aad_update(ctx, aad, aad_size):
+
+    def atcab_aes_ccm_aad_update(self, ctx, aad, aad_size):
+
+        if not isinstance(aad, bytes):
+            raise TypeError
+
+        if not isinstance(aad_size, int):
+            raise TypeError
+
+        return Status.ATCA_SUCCESS
+
+
+    #--------------------------------------------------------------------#
+    # atcab_aes_ccm_aad_finish(ctx):
+
+    def atcab_aes_ccm_aad_finish(self, ctx):
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcab_aes_ccm_encrypt_update(ctx, plaintext, plaintext_size, ciphertext):
+
+    def atcab_aes_ccm_encrypt_update(self, ctx, plaintext, plaintext_size, ciphertext):
+
+        if not isinstance(plaintext, bytes):
+            raise TypeError
+
+        if not isinstance(plaintext_size, int):
+            raise TypeError
+
+        if not isinstance(ciphertext, c_ptr):
+            raise TypeError
+
+        memmove(cast(ciphertext, c_void_p).value, cast(byref(self.r_ciphertext), c_void_p).value, len(self.r_ciphertext))
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    # atcab_aes_ccm_decrypt_update(ctx, ciphertext, ciphertext_size, plaintext):
+
+    def atcab_aes_ccm_decrypt_update(self, ctx, ciphertext, ciphertext_size, plaintext):
+
+        if not isinstance(ciphertext, bytes):
+            raise TypeError
+
+        if not isinstance(ciphertext_size, int):
+            raise TypeError
+
+        if not isinstance(plaintext, c_ptr):
+            raise TypeError
+
+        memmove(cast(plaintext, c_void_p).value, cast(byref(self.r_plaintext), c_void_p).value, len(self.r_plaintext))
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    #  atcab_aes_ccm_encrypt_finish(ctx, tag, tag_size):
+    r_tag_size = c_uint8()
+    r_tag_size.value = 0x12
+
+    def  atcab_aes_ccm_encrypt_finish(self, ctx, tag, tag_size):
+
+        memmove(cast(tag, c_void_p).value, cast(byref(self.r_tag), c_void_p).value, len(self.r_tag))
+        memmove(cast(tag_size, c_void_p).value, cast(byref(self.r_tag_size), c_void_p).value, 1)
+
+        return Status.ATCA_SUCCESS
+
+    #--------------------------------------------------------------------#
+    #  atcab_aes_ccm_decrypt_finish(ctx, tag, is_verified):
+
+    def  atcab_aes_ccm_decrypt_finish(self, ctx, tag, is_verified):
+
+        if not isinstance(tag, bytes):
+            raise TypeError
+
+        if not isinstance(is_verified, c_ptr):
+            raise TypeError
+
+        memmove(cast(is_verified, c_void_p).value, cast(byref(self.r_is_verified), c_void_p).value, 1)
+
+        return Status.ATCA_SUCCESS
+    #--------------------------------------------------------------------#
+
     # atcab_checkmac(mode, key_id, challenge, response, other_data):
 
     def atcab_checkmac(self, mode, key_id, challenge, response, other_data):

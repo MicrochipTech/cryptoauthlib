@@ -55,11 +55,13 @@ extern "C" {
 
 #include <mbedtls/cipher.h>
 #include <mbedtls/md.h>
+#include <mbedtls/pk.h>
 typedef mbedtls_cipher_context_t atcac_aes_cmac_ctx;
 typedef mbedtls_md_context_t atcac_hmac_sha256_ctx;
 typedef mbedtls_cipher_context_t atcac_aes_gcm_ctx;
 typedef mbedtls_md_context_t atcac_sha1_ctx;
 typedef mbedtls_md_context_t atcac_sha2_256_ctx;
+typedef mbedtls_pk_context atcac_pk_ctx;
 
 #elif defined(ATCA_OPENSSL)
 typedef struct
@@ -71,6 +73,7 @@ typedef atca_evp_ctx atcac_sha1_ctx;
 typedef atca_evp_ctx atcac_sha2_256_ctx;
 typedef atca_evp_ctx atcac_aes_cmac_ctx;
 typedef atca_evp_ctx atcac_hmac_sha256_ctx;
+typedef atca_evp_ctx atcac_pk_ctx;
 #elif defined(ATCA_WOLFSSL)
 #include "wolfssl/wolfcrypt/types.h"
 #ifndef WOLFSSL_CMAC
@@ -132,6 +135,16 @@ ATCA_STATUS atcac_aes_gcm_decrypt_start(atcac_aes_gcm_ctx* ctx, const uint8_t* k
 ATCA_STATUS atcac_aes_cmac_init(atcac_aes_cmac_ctx* ctx, const uint8_t* key, const uint8_t key_len);
 ATCA_STATUS atcac_aes_cmac_update(atcac_aes_cmac_ctx* ctx, const uint8_t* data, const size_t data_size);
 ATCA_STATUS atcac_aes_cmac_finish(atcac_aes_cmac_ctx* ctx, uint8_t* cmac, size_t* cmac_size);
+#endif
+
+#ifdef ATCA_MBEDTLS
+ATCA_STATUS atcac_pk_init(atcac_pk_ctx* ctx, uint8_t* buf, size_t buflen, uint8_t key_type, bool pubkey);
+ATCA_STATUS atcac_pk_init_pem(atcac_pk_ctx* ctx, uint8_t* buf, size_t buflen, bool pubkey);
+ATCA_STATUS atcac_pk_free(atcac_pk_ctx* ctx);
+ATCA_STATUS atcac_pk_public(atcac_pk_ctx* ctx, uint8_t* buf, size_t* buflen);
+ATCA_STATUS atcac_pk_sign(atcac_pk_ctx* ctx, uint8_t* digest, size_t dig_len, uint8_t* signature, size_t* sig_len);
+ATCA_STATUS atcac_pk_verify(atcac_pk_ctx* ctx, uint8_t* digest, size_t dig_len, uint8_t* signature, size_t sig_len);
+ATCA_STATUS atcac_pk_derive(atcac_pk_ctx* private_ctx, atcac_pk_ctx* public_ctx, uint8_t* buf, size_t* buflen);
 #endif
 
 #if defined(ATCA_MBEDTLS) || defined(ATCA_OPENSSL)

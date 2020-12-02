@@ -1,6 +1,6 @@
 /**
  * \file
- * \brief Unity tests for the CryptoAuthLib software crypto API.
+ * \brief Tests for the CryptoAuthLib software crypto API.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
@@ -39,6 +39,8 @@
 
 #include "vectors/aes_gcm_nist_vectors.h"
 #include "vectors/aes_cmac_nist_vectors.h"
+#include "vectors/ecdsa_nist_vectors.h"
+#include "vectors/ecdh_nist_vectors.h"
 
 static const uint8_t nist_hash_msg1[] = "abc";
 static const uint8_t nist_hash_msg2[] = "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq";
@@ -55,7 +57,6 @@ int atca_crypto_sw_tests(int argc, char * argv[])
     RUN_TEST(test_atcac_sw_sha1_nist_long);
     RUN_TEST(test_atcac_sw_sha1_nist_monte);
 
-
     RUN_TEST(test_atcac_sw_sha2_256_nist1);
     RUN_TEST(test_atcac_sw_sha2_256_nist2);
     RUN_TEST(test_atcac_sw_sha2_256_nist3);
@@ -63,10 +64,24 @@ int atca_crypto_sw_tests(int argc, char * argv[])
     RUN_TEST(test_atcac_sw_sha2_256_nist_long);
     RUN_TEST(test_atcac_sw_sha2_256_nist_monte);
 
-    RUN_TEST(test_atcac_aes128_gcm);
-    RUN_TEST(test_atcac_aes128_cmac);
     RUN_TEST(test_atcac_sha256_hmac);
     RUN_TEST(test_atcac_sha256_hmac_nist);
+
+#if defined(ATCA_MBEDTLS) || defined(ATCA_OPENSSL) || defined(ATCA_WOLFSSL)
+    RUN_TEST(test_atcac_aes128_gcm);
+    RUN_TEST(test_atcac_aes128_cmac);
+#endif
+
+#ifdef ATCA_MBEDTLS
+    RUN_TEST(test_atcac_public);
+    /* Because it is not realistic to perform signature vector tests on real
+       systems the verify test is executed first to ensure verify is working
+       correctly which will then be used to bootstrap the sign test */
+    RUN_TEST(test_atcac_verify_nist);
+    RUN_TEST(test_atcac_sign);
+
+    RUN_TEST(test_atcac_derive_nist);
+#endif
 
     return UnityEnd();
 }
@@ -517,7 +532,6 @@ void test_atcac_aes128_gcm(void)
 
     for (test_index = 0; test_index < GCM_TEST_VECTORS_COUNT; test_index++)
     {
-
         //////////////////////////////////////   Encryption /////////////////////////////////////////
         status = atcac_aes_gcm_encrypt_start(&ctx, gcm_test_cases[test_index].key, 16, gcm_test_cases[test_index].iv, gcm_test_cases[test_index].iv_size);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
@@ -560,11 +574,8 @@ void test_atcac_aes128_gcm(void)
             TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
             //Add aad to gcm
-            if (gcm_test_cases[test_index].aad_size > 0)
-            {
-                status = atcac_aes_gcm_aad_update(&ctx, gcm_test_cases[test_index].aad, gcm_test_cases[test_index].aad_size);
-                TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-            }
+            status = atcac_aes_gcm_aad_update(&ctx, gcm_test_cases[test_index].aad, gcm_test_cases[test_index].aad_size);
+            TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
             //Encrypt data
             if (gcm_test_cases[test_index].text_size > 0)
@@ -626,11 +637,8 @@ void test_atcac_aes128_gcm(void)
             TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
             //Add aad to gcm
-//            if (gcm_test_cases[test_index].aad_size > 0)
-            {
-                status = atcac_aes_gcm_aad_update(&ctx, gcm_test_cases[test_index].aad, gcm_test_cases[test_index].aad_size);
-                TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-            }
+            status = atcac_aes_gcm_aad_update(&ctx, gcm_test_cases[test_index].aad, gcm_test_cases[test_index].aad_size);
+            TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
             //Add ciphertext to gcm
             if (gcm_test_cases[test_index].text_size > 0)
@@ -677,13 +685,6 @@ void test_atcac_aes128_cmac(void)
         }
     }
 }
-#else
-void test_atcac_aes128_gcm(void)
-{
-};
-void test_atcac_aes128_cmac(void)
-{
-};
 #endif
 
 #define ATCA_SHA_DIGEST_SIZE        32
@@ -790,3 +791,165 @@ void test_atcac_sha256_hmac_nist(void)
 
 #endif
 }
+
+
+#if defined(ATCA_MBEDTLS) || defined(ATCA_OPENSSL) || defined(ATCA_WOLFSSL)
+void test_atcac_verify_nist(void)
+{
+    uint8_t pubkey[64];
+    uint8_t signature[64];
+    uint8_t digest[32];
+    atcac_pk_ctx pkey_ctx;
+    ATCA_STATUS status;
+    int i;
+
+    /* Test verification using [P-256,SHA-256] vectors */
+    for (i = 0; i < ecdsa_p256_test_vectors_count; i++)
+    {
+        /* Copy pubkey */
+        memcpy(pubkey, ecdsa_p256_test_vectors[i].Qx, 32);
+        memcpy(&pubkey[32], ecdsa_p256_test_vectors[i].Qy, 32);
+
+        /* Copy the signature */
+        memcpy(signature, ecdsa_p256_test_vectors[i].R, 32);
+        memcpy(&signature[32], ecdsa_p256_test_vectors[i].S, 32);
+
+        /* Hash the message */
+        status = atcac_sw_sha2_256(&ecdsa_p256_test_vectors[i].Msg, sizeof(ecdsa_p256_test_vectors[i].Msg), digest);
+        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+        /* Initialize the key using the provided X,Y cordinantes */
+        status = atcac_pk_init(&pkey_ctx, pubkey, sizeof(pubkey), 0, true);
+        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+        /* Perform the verification */
+        status = atcac_pk_verify(&pkey_ctx, digest, sizeof(digest), signature, sizeof(signature));
+
+        /* Make sure to free the key before testing the result of the verify */
+        atcac_pk_free(&pkey_ctx);
+
+        /* Check verification result against the expected success/failure */
+        if (ecdsa_p256_test_vectors[i].Result)
+        {
+            TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+        }
+        else
+        {
+            TEST_ASSERT_NOT_EQUAL(ATCA_SUCCESS, status);
+        }
+    }
+}
+#endif
+
+#ifdef ATCA_MBEDTLS
+static uint8_t private_key_pem[] =
+    "-----BEGIN EC PRIVATE KEY-----\n"
+    "MHcCAQEEICFZhAyzqkUgyheo51bhg3mcp+qwfl+koE+Mhs/sRyzBoAoGCCqGSM49\n"
+    "AwEHoUQDQgAExAE2yqujppBzD0hIpdqdXmMgtlXT90QqllaQYWEVBjdf+LmY5DCf\n"
+    "Mx8PXEVxhbDmgo6HHbz0S4VaZjShBLMaPw==\n"
+    "-----END EC PRIVATE KEY-----\n";
+
+static uint8_t public_key_pem[] =
+    "-----BEGIN PUBLIC KEY-----\n"
+    "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAExAE2yqujppBzD0hIpdqdXmMgtlXT\n"
+    "90QqllaQYWEVBjdf+LmY5DCfMx8PXEVxhbDmgo6HHbz0S4VaZjShBLMaPw==\n"
+    "-----END PUBLIC KEY-----\n";
+
+static uint8_t public_key_bytes[64] = {
+    0xc4, 0x01, 0x36, 0xca, 0xab, 0xa3, 0xa6, 0x90, 0x73, 0x0f, 0x48, 0x48, 0xa5, 0xda, 0x9d, 0x5e,
+    0x63, 0x20, 0xb6, 0x55, 0xd3, 0xf7, 0x44, 0x2a, 0x96, 0x56, 0x90, 0x61, 0x61, 0x15, 0x06, 0x37,
+    0x5f, 0xf8, 0xb9, 0x98, 0xe4, 0x30, 0x9f, 0x33, 0x1f, 0x0f, 0x5c, 0x45, 0x71, 0x85, 0xb0, 0xe6,
+    0x82, 0x8e, 0x87, 0x1d, 0xbc, 0xf4, 0x4b, 0x85, 0x5a, 0x66, 0x34, 0xa1, 0x04, 0xb3, 0x1a, 0x3f
+};
+
+void test_atcac_public(void)
+{
+    atcac_pk_ctx priv_ctx;
+    uint8_t public_key[64];
+    size_t public_key_size = 64;
+    ATCA_STATUS status;
+
+    /* Test initialization of a private key with a pem encoded key (without password) */
+    status = atcac_pk_init_pem(&priv_ctx, private_key_pem, sizeof(private_key_pem), false);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    status = atcac_pk_public(&priv_ctx, public_key, &public_key_size);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    TEST_ASSERT_EQUAL_MEMORY(public_key_bytes, public_key, 64);
+
+    status = atcac_pk_free(&priv_ctx);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+}
+
+void test_atcac_sign(void)
+{
+    atcac_pk_ctx sign_ctx;
+    atcac_pk_ctx verify_ctx;
+    uint8_t digest[32] = { 0x1A, 0x3A, 0xA5, 0x45, 0x04, 0x94, 0x53, 0xAF,
+                           0xDF, 0x17, 0xE9, 0x89, 0xA4, 0x1F, 0xA0, 0x97,
+                           0x94, 0xA5, 0x1B, 0xD5, 0xDB, 0x91, 0x36, 0x37,
+                           0x67, 0x55, 0x0C, 0x0F, 0x0A, 0xF3, 0x27, 0xD4 };
+    uint8_t signature[128];
+    size_t sig_size = sizeof(signature);
+    ATCA_STATUS status;
+
+    memset(signature, 0, sig_size);
+
+    /* Test initialization of a private key with a pem encoded key (without password) */
+    status = atcac_pk_init_pem(&sign_ctx, private_key_pem, sizeof(private_key_pem), false);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    /* Test signing with the private key */
+    status = atcac_pk_sign(&sign_ctx, digest, sizeof(digest), signature, &sig_size);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    /* Test initialization of a public key with a pem encoded key */
+    status = atcac_pk_init_pem(&verify_ctx, public_key_pem, sizeof(public_key_pem), true);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    /* Test verification of the siguature */
+    status = atcac_pk_verify(&verify_ctx, digest, sizeof(digest), &signature[sig_size - 64], 64);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    signature[10] ^= signature[10];
+
+    /* Test failure to validate a corrupted signature */
+    status = atcac_pk_verify(&verify_ctx, digest, sizeof(digest), &signature[sig_size - 64], 64);
+    TEST_ASSERT_NOT_EQUAL(ATCA_SUCCESS, status);
+}
+
+void test_atcac_derive_nist(void)
+{
+    ATCA_STATUS status;
+    atcac_pk_ctx pri_ctx;
+    atcac_pk_ctx pub_ctx;
+    uint8_t result[32];
+    size_t result_size;
+    int i;
+
+    /* Test verification using [P-256] vectors */
+    for (i = 0; i < ecdh_p256_test_vectors_count; i++)
+    {
+        uint8_t pubkey[64];
+
+        memcpy(pubkey, ecdh_p256_test_vectors[i].QCAVSx, 32);
+        memcpy(&pubkey[32], ecdh_p256_test_vectors[i].QCAVSy, 32);
+
+        (void)atcac_pk_init(&pub_ctx, pubkey, sizeof(pubkey), 0, true);
+        (void)atcac_pk_init(&pri_ctx, ecdh_p256_test_vectors[i].dIUT, 32, 0, false);
+
+        result_size = sizeof(result);
+        status = atcac_pk_derive(&pri_ctx, &pub_ctx, result, &result_size);
+
+        (void)atcac_pk_free(&pri_ctx);
+        (void)atcac_pk_free(&pub_ctx);
+
+        /* Check Test Results */
+        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+        TEST_ASSERT_EQUAL_MEMORY(ecdh_p256_test_vectors[i].ZIUT, result, 32);
+    }
+}
+
+
+#endif

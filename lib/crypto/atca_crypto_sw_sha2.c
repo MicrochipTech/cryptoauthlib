@@ -202,3 +202,35 @@ int atcac_sw_sha2_256(const uint8_t* data, size_t data_size, uint8_t digest[ATCA
 
     return ATCA_SUCCESS;
 }
+
+/** \brief Implements SHA256 HMAC-Counter per  NIST SP 800-108 used for KDF like operations */
+ATCA_STATUS atcac_sha256_hmac_counter(
+    atcac_hmac_sha256_ctx* ctx,
+    uint8_t *              label,
+    size_t                 label_len,
+    uint8_t *              data,
+    size_t                 data_len,
+    uint8_t *              digest,
+    size_t                 diglen
+    )
+{
+    ATCA_STATUS ret = ATCA_GEN_FAIL;
+
+    if (ctx)
+    {
+        uint32_t tmp = 1;
+
+        (void)atcac_sha256_hmac_update(ctx, (uint8_t*)&tmp, 1);
+        (void)atcac_sha256_hmac_update(ctx, label, label_len);
+
+        tmp = 0;
+        (void)atcac_sha256_hmac_update(ctx, (uint8_t*)&tmp, 1);
+        (void)atcac_sha256_hmac_update(ctx, data, data_len);
+
+        tmp = ATCA_UINT16_HOST_TO_BE(diglen);
+        (void)atcac_sha256_hmac_update(ctx, (uint8_t*)&tmp, 2);
+
+        ret = atcac_sha256_hmac_finish(ctx, digest, &diglen);
+    }
+    return ret;
+}

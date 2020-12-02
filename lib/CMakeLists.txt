@@ -97,6 +97,9 @@ execute_process(COMMAND ${CMAKE_COMMAND} --build .
 file(GLOB MBEDTLS_LIB_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../third_party/mbedtls/library/*.c")
 add_library(mbedtls STATIC ${MBEDTLS_LIB_SRC})
 target_compile_definitions(mbedtls PUBLIC -DMBEDTLS_CMAC_C)
+if(NOT WIN32)
+target_compile_options(mbedtls PRIVATE -fPIC)
+endif()
 include_directories(mbedtls PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
                                     ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/mbedtls/include)
 endif()
@@ -326,11 +329,18 @@ target_link_libraries(cryptoauth rt)
 endif(LINUX)
 
 if(DEFAULT_LIB_PATH)
+if(${CMAKE_VERSION} VERSION_GREATER "3.12.0")
 install(TARGETS ${PROJECT_NAME}
         LIBRARY
           DESTINATION ${DEFAULT_LIB_PATH}
           COMPONENT Libraries
           NAMELINK_COMPONENT Development)
+else()
+install(TARGETS ${PROJECT_NAME}
+        LIBRARY
+          DESTINATION ${DEFAULT_LIB_PATH}
+          COMPONENT Libraries)
+endif()
 endif(DEFAULT_LIB_PATH)
 
 if(DEFAULT_INC_PATH)

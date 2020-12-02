@@ -44,6 +44,7 @@ struct mbedtls_x509_crt;
 struct atcacert_def_s;
 
 /* Wrapper Functions */
+int atca_mbedtls_pk_init_ext(ATCADevice device, struct mbedtls_pk_context * pkey, const uint16_t slotid);
 int atca_mbedtls_pk_init(struct mbedtls_pk_context * pkey, const uint16_t slotid);
 int atca_mbedtls_cert_add(struct mbedtls_x509_crt * cert, const struct atcacert_def_s * cert_def);
 

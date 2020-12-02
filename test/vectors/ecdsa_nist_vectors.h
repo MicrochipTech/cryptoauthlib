@@ -1,6 +1,6 @@
 /**
  * \file
- * \brief Tests for the TA Library API (tablib)
+ * \brief Embedded NIST vectors for the ECDSA algorithm
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
@@ -25,27 +25,24 @@
  * THIS SOFTWARE.
  */
 
-#ifndef TEST_TALIB_H_
-#define TEST_TALIB_H_
+#ifndef ECDSA_NIST_VECTORS_H
+#define ECDSA_NIST_VECTORS_H
 
-#include "atca_test.h"
+/* See https://csrc.nist.gov/projects/cryptographic-algorithm-validation-program/digital-signatures */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+typedef struct
+{
+    uint8_t Msg[128];
+    uint8_t Qx[32];
+    uint8_t Qy[32];
+    uint8_t R[32];
+    uint8_t S[32];
+    bool    Result;
+    char*   ResultText;
+} ecdsa_p256_test_vector;
 
-ATCA_STATUS talib_config_get_handle_by_test(uint8_t test_type, uint16_t* handle);
+extern const ecdsa_p256_test_vector ecdsa_p256_test_vectors[];
+extern const size_t ecdsa_p256_test_vectors_count;
 
-/* Commands */
-int talib_configure_device(int argc, char* argv[]);
-int talib_config_print_handles(int argc, char* argv[]);
-int talib_config_clear_handles(int argc, char* argv[]);
 
-/* Test Commands */
-int run_talib_tests(int argc, char* argv[]);
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* TEST_CALIB_H_*/
+#endif /* ECDSA_NIST_VECTORS_H */

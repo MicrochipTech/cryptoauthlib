@@ -59,6 +59,22 @@
 #define SHARED_LIB_IMPORT       extern
 #endif
 
+#elif defined(__XC8) || defined(__XC16)
+/* Microchip XC8 and XC16 Compilers ------------------------- */
+#define SIZE_MAX 65535
+
+#define ATCA_UINT16_HOST_TO_LE(x)  (x)
+#define ATCA_UINT16_LE_TO_HOST(x)  (x)
+#define ATCA_UINT32_HOST_TO_LE(x)  (x)
+#define ATCA_UINT16_HOST_TO_BE(x)  ((((x) & 0x00FF) << 8) | (((x) & 0xFF00) >> 8))
+#define ATCA_UINT16_BE_TO_HOST(x)  ((((x) & 0x00FF) << 8) | (((x) & 0xFF00) >> 8))
+#define ATCA_UINT32_HOST_TO_BE(x)  ((((x) & 0x000000FF) << 24) | (((x) & 0x0000FF00) << 8) | (((x) & 0x00FF0000) >> 8) | (((x) & 0xFF000000) >> 24))
+#define ATCA_UINT32_BE_TO_HOST(x)  ((((x) & 0x000000FF) << 24) | (((x) & 0x0000FF00) << 8) | (((x) & 0x00FF0000) >> 8) | (((x) & 0xFF000000) >> 24))
+#define ATCA_UINT64_HOST_TO_BE(x)  ((uint64_t)ATCA_UINT32_HOST_TO_BE((uint32_t)(x)) << 32 + (uint64_t)ATCA_UINT32_HOST_TO_BE((uint32_t)((x) >> 32)))
+#define ATCA_UINT64_BE_TO_HOST(x)  ((uint64_t)ATCA_UINT32_BE_TO_HOST((uint32_t)(x)) << 32 + (uint64_t)ATCA_UINT32_BE_TO_HOST((uint32_t)((x) >> 32)))
+#define SHARED_LIB_EXPORT
+#define SHARED_LIB_IMPORT       extern
+
 //#elif defined(__ICC) || defined(__INTEL_COMPILER)
 /* Intel ICC/ICPC. ------------------------------------------ */
 

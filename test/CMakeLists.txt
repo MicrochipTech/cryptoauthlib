@@ -19,8 +19,11 @@ set(CRYPTOAUTH_TEST_SRC ${TEST_SRC}
                         ${TEST_ATCACERT_SRC}
                         ${TEST_API_ATCAB}
                         ${TEST_API_CALIB}
-                        ${TEST_API_TALIB}
                         ${TEST_VECTORS_SRC})
+
+if(ATCA_TA100_SUPPORT)
+set(CRYPTOAUTH_TEST_SRC ${CRYPTOAUTH_TEST_SRC} ${TEST_API_TALIB})
+endif(ATCA_TA100_SUPPORT)
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${CRYPTOAUTH_TEST_SRC})
 source_group("Unity" FILES ${UNITY_SRC})

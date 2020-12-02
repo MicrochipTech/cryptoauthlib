@@ -234,13 +234,12 @@ ATCA_STATUS hal_swi_init(void *hal, ATCAIfaceCfg *cfg)
 
     if (data->ref_ct <= 0)
     {
-        // Bus isn't being used, enable it
+        // initialize the bus index
+        data->bus_index = cfg->atcaswi.bus;
 
         // initialize  UART module for SWI interface
         swi_uart_init(data);
 
-        // store this for use during the release phase
-        data->bus_index = cfg->atcaswi.bus;
         // buses are shared, this is the first instance
         data->ref_ct = 1;
     }

@@ -1,6 +1,6 @@
 /**
  * \file
- * \brief Tests for the TA Library API (tablib)
+ * \brief Embedded NIST vectors for the ECDH algorithm
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
@@ -25,27 +25,21 @@
  * THIS SOFTWARE.
  */
 
-#ifndef TEST_ECC_CERTIFICATE_CHAIN_H_
-#define TEST_ECC_CERTIFICATE_CHAIN_H_
+#ifndef ECDH_NIST_VECTORS_H
+#define ECDH_NIST_VECTORS_H
 
-#include <stdint.h>
+/* See https://csrc.nist.gov/projects/cryptographic-algorithm-validation-program/component-testing#ECCCDH */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+typedef struct
+{
+    uint8_t QCAVSx[32];
+    uint8_t QCAVSy[32];
+    uint8_t dIUT[32];
+    uint8_t ZIUT[32];
+} ecdh_p256_test_vector;
 
-
-extern const uint8_t test_ecc_root_public_key[64];
-
-extern const uint8_t test_ecc_signer_cert[571];
-
-extern const uint8_t test_ecc_leaf_cert[629];
-
-extern const uint8_t test_ecc_leaf_public_key[64];
+extern const ecdh_p256_test_vector ecdh_p256_test_vectors[];
+extern const size_t ecdh_p256_test_vectors_count;
 
 
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* TEST_ECC_CERTIFICATE_CHAIN_H_*/
+#endif /* ECDH_NIST_VECTORS_H */

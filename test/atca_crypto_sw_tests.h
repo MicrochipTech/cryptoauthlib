@@ -50,4 +50,10 @@ void test_atcac_aes128_cmac(void);
 void test_atcac_sha256_hmac(void);
 void test_atcac_sha256_hmac_nist(void);
 
+void test_atcac_verify_nist(void);
+void test_atcac_public(void);
+void test_atcac_sign(void);
+void test_atcac_derive_nist(void);
+
+
 #endif

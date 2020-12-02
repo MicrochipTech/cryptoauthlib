@@ -57,5 +57,28 @@ typedef struct atca_aes_ctr_ctx
 }atca_aes_ctr_ctx_t;
 
 
+typedef struct atca_aes_cbcmac_ctx
+{
+    atca_aes_cbc_ctx_t cbc_ctx;                       //!< CBC context
+    uint8_t            block_size;                    //!< Number of bytes in unprocessed block.
+    uint8_t            block[ATCA_AES128_BLOCK_SIZE]; //!< Unprocessed message storage.
+} atca_aes_cbcmac_ctx_t;
+
+
+typedef struct atca_aes_ccm_ctx
+{
+    atca_aes_cbcmac_ctx_t cbc_mac_ctx;                              //!< CBC_MAC context
+    atca_aes_ctr_ctx_t    ctr_ctx;                                  //!< CTR context
+    uint8_t               iv_size;                                  //!< iv size
+    uint8_t               M;                                        //!< Tag size
+    uint8_t               counter[ATCA_AES128_BLOCK_SIZE];          //!< Initial counter value
+    uint8_t               partial_aad[ATCA_AES128_BLOCK_SIZE];      //!< Partial blocks of data waiting to be processed
+    size_t                partial_aad_size;                         //!< Amount of data in the partial block buffer
+    size_t                text_size;                                //!< Size of data to be processed
+    uint8_t               enc_cb[ATCA_AES128_BLOCK_SIZE];           //!< Last encrypted counter block
+    uint32_t              data_size;                                //!< Size of the data being encrypted/decrypted in bytes.
+    uint8_t               ciphertext_block[ATCA_AES128_BLOCK_SIZE]; //!< Last ciphertext block
+} atca_aes_ccm_ctx_t;
+
 
 #endif

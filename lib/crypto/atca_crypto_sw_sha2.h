@@ -52,7 +52,7 @@ int atcac_sw_sha2_256(const uint8_t * data, size_t data_size, uint8_t digest[ATC
 ATCA_STATUS atcac_sha256_hmac_init(atcac_hmac_sha256_ctx* ctx, const uint8_t* key, const uint8_t key_len);
 ATCA_STATUS atcac_sha256_hmac_update(atcac_hmac_sha256_ctx* ctx, const uint8_t* data, size_t data_size);
 ATCA_STATUS atcac_sha256_hmac_finish(atcac_hmac_sha256_ctx* ctx, uint8_t* digest, size_t* digest_len);
-
+ATCA_STATUS atcac_sha256_hmac_counter(atcac_hmac_sha256_ctx* ctx, uint8_t* label, size_t label_len, uint8_t* data, size_t data_len, uint8_t* digest, size_t diglen);
 
 #ifdef __cplusplus
 }

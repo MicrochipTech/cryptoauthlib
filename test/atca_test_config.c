@@ -211,6 +211,11 @@ static int opt_iface_type(int argc, char* argv[])
                 if (0 == strcmp("i2c", argv[2]))
                 {
                     gCfg->atcahid.dev_interface = ATCA_KIT_I2C_IFACE;
+                    if (argc >= 4 && argv[3][0] != '-')
+                    {
+                        uint32_t val = strtol(argv[3], NULL, 16);
+                        gCfg->atcahid.dev_identity = (uint8_t)val;
+                    }
                 }
                 else if (0 == strcmp("swi", argv[2]))
                 {

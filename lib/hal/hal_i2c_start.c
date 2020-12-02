@@ -199,6 +199,7 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxda
         .buffer = rxdata,
         .flags  = I2C_M_SEVEN | I2C_M_RD | I2C_M_STOP,
     };
+
     if ((NULL == cfg) || (NULL == rxlength) || (NULL == rxdata))
     {
         return ATCA_TRACE(ATCA_INVALID_POINTER, "NULL pointer encountered");
