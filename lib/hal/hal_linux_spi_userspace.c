@@ -111,7 +111,7 @@ ATCA_STATUS hal_spi_init(void *hal, ATCAIfaceCfg *cfg)
                 hal_data->ref_ct = 1;   // buses are shared, this is the first instance
 
                 (void)snprintf(hal_data->spi_file, sizeof(hal_data->spi_file) - 1,
-                               "/dev/spidev%d.%d", cfg->atcaspi.bus, cfg->atcaspi.select_pin);
+                               "/dev/spidev%d.%d", (uint8_t)cfg->atcaspi.bus, (uint8_t)cfg->atcaspi.select_pin);
 
                 pHal->hal_data = hal_data;
             }
@@ -263,13 +263,14 @@ ATCA_STATUS hal_spi_wake(ATCAIface iface)
     uint8_t csr_reg;
     int delay_timeout = (int)cfg->wake_delay;
 
+
     do
     {
-
         status = hal_spi_receive(iface, word_address, &csr_reg, &len);
 
         if (status == ATCA_SUCCESS)
         {
+#ifdef ATCA_TA100_SUPPORT
             /*status bit check in CSR register*/
             if ((len == 1) && (((csr_reg >> 1) & 0x03 ) != 0x03))
             {
@@ -282,6 +283,9 @@ ATCA_STATUS hal_spi_wake(ATCAIface iface)
 
                 break;
             }
+#else
+            break;
+#endif
 
         }
         /*poll csr register for every 100us*/

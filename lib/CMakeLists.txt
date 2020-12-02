@@ -266,6 +266,7 @@ endif()
 
 if(ATCA_BUILD_SHARED_LIBS)
 add_definitions(-DATCA_BUILD_SHARED_LIBS)
+set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} atca_utils_sizes.c)
 endif(ATCA_BUILD_SHARED_LIBS)
 
 add_library(cryptoauth ${CRYPTOAUTH_SRC} ${ATCACERT_DEF_SRC})

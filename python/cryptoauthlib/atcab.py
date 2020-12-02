@@ -2983,6 +2983,6 @@ def atcab_write_config_counter(counter_id, counter_value):
 
 
 # Make module import * safe - keep at the end of the file
-__all__ = ['atca_aes_cbc_ctx', 'atca_aes_cmac_ctx', 'atca_aes_ctr_ctx',
-           'atca_aes_gcm_ctx', 'atca_sha256_ctx', 'atca_hmac_sha256_ctx']
+__all__ = ['atca_aes_cbc_ctx', 'atca_aes_cmac_ctx', 'atca_aes_ctr_ctx', 'atca_aes_cbcmac_ctx',
+           'atca_aes_ccm_ctx', 'atca_aes_gcm_ctx', 'atca_sha256_ctx', 'atca_hmac_sha256_ctx']
 __all__ += [x for x in dir() if x.startswith(__name__.split('.')[-1])]

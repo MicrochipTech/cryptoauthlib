@@ -40,7 +40,7 @@
 // A structure to hold I2C information
 typedef struct atcaSPImaster
 {
-    char spi_file[16];
+    char spi_file[20];
     int  ref_ct;
 } ATCASPIMaster_t;
 

@@ -54,6 +54,12 @@ if os.path.exists('lib') and os.path.exists('third_party'):
 else:
     _sdist_build = False
 
+#python 2 compatibility
+try:
+    FileNotFoundError
+except NameError:
+    FileNotFoundError = IOError
+
 # See if the library is already installed
 try:
     lib = cdll.LoadLibrary('libcryptoauth.so')
@@ -157,8 +163,6 @@ class CryptoAuthCommandBuildExt(build_ext):
 
         if sys.platform.startswith('linux'):
             cmake_args += ['-DATCA_HAL_I2C=ON', '-DATCA_HAL_SPI=ON']
-
-        cmake_args += ['-DATCACERT_DEF_SRC={}atca_utils_sizes.c'.format(setupdir.replace('\\','/') if _sdist_build else '../test/')]
 
         if not os.path.exists(self.build_temp):
             os.makedirs(self.build_temp)
