@@ -1,7 +1,6 @@
 var a00581 =
 [
-    [ "pkcs11_find_continue", "a01495.html#ga5dbe038da3069861b8de9f77d0c06de1", null ],
-    [ "pkcs11_find_finish", "a01495.html#gacc5c7a788f0c4eafd4f0c1da2aaf0d60", null ],
-    [ "pkcs11_find_get_attribute", "a01495.html#ga0e2b3b381504c39a017a4232a35b672d", null ],
-    [ "pkcs11_find_init", "a01495.html#ga6fd109c0919489909cc4073866d1c466", null ]
+    [ "pkcs11_get_lib_info", "a01450.html#gaae56826104269ca730066136fb3eb995", null ],
+    [ "pkcs11_lib_description", "a01450.html#ga47daad4918afdf7ec808a5a57a4bce9d", null ],
+    [ "pkcs11_lib_manufacturer_id", "a01450.html#ga8ac50a3d8a0c4f1ddf04cdf02c757030", null ]
 ];

@@ -1,4 +1,5 @@
 var a00371 =
 [
-    [ "atcac_sw_sha1", "a01490.html#ga65fdb8b2a2da178fd417232bf9f0ea48", null ]
+    [ "atcac_sha256_hmac_counter", "a01445.html#ga1598511b7077693ee99d160dbebfc16d", null ],
+    [ "atcac_sw_sha2_256", "a01445.html#ga72ceba9df57d884c85321abe92994c4f", null ]
 ];

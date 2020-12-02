@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_mbedtls_wrap.c File Reference</title>
+<title>CryptoAuthLib: atca_openssl_interface.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.4</span>
+   &#160;<span id="projectnumber">v3.2.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,170 +85,104 @@ $(document).ready(function(){initNavTree('a00533.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_mbedtls_wrap.c File Reference</div>  </div>
+<div class="title">atca_openssl_interface.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Wrapper functions to replace cryptoauthlib software crypto functions with the mbedTLS equivalent.  
+<p>Crypto abstraction functions for external host side cryptography.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;mbedtls/config.h&quot;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &quot;mbedtls/cmac.h&quot;</code><br />
-<code>#include &quot;mbedtls/pk.h&quot;</code><br />
-<code>#include &quot;mbedtls/ecp.h&quot;</code><br />
-<code>#include &quot;mbedtls/x509_crt.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00395_source.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00356_source.html">crypto/atca_crypto_sw.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00212_source.html">atcacert/atcacert_client.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00224_source.html">atcacert/atcacert_def.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;atca_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00188_source.html">atca_status.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00350_source.html">crypto/atca_crypto_sw.h</a>&quot;</code><br />
+<code>#include &lt;openssl/bn.h&gt;</code><br />
+<code>#include &lt;openssl/bio.h&gt;</code><br />
+<code>#include &lt;openssl/cmac.h&gt;</code><br />
+<code>#include &lt;openssl/ec.h&gt;</code><br />
+<code>#include &lt;openssl/evp.h&gt;</code><br />
+<code>#include &lt;openssl/hmac.h&gt;</code><br />
+<code>#include &lt;openssl/pem.h&gt;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:aa7fa389b6ec8a6c33f594f8c3f5c76ef"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#aa7fa389b6ec8a6c33f594f8c3f5c76ef">mbedtls_calloc</a>&#160;&#160;&#160;calloc</td></tr>
-<tr class="separator:aa7fa389b6ec8a6c33f594f8c3f5c76ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f80030b2d10f956f8ac00b57eebfbe8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a4f80030b2d10f956f8ac00b57eebfbe8">mbedtls_free</a>&#160;&#160;&#160;free</td></tr>
-<tr class="separator:a4f80030b2d10f956f8ac00b57eebfbe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3d45f22c21cb53b9a3ba63cee1f2660f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a3d45f22c21cb53b9a3ba63cee1f2660f">atcac_aes_gcm_aad_update</a> (<a class="el" href="a00356.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *aad, const size_t aad_len)</td></tr>
+<tr class="memitem:a3d45f22c21cb53b9a3ba63cee1f2660f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a3d45f22c21cb53b9a3ba63cee1f2660f">atcac_aes_gcm_aad_update</a> (<a class="el" href="a00350.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *aad, const size_t aad_len)</td></tr>
 <tr class="memdesc:a3d45f22c21cb53b9a3ba63cee1f2660f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the GCM context with additional authentication data (AAD)  <a href="a00533.html#a3d45f22c21cb53b9a3ba63cee1f2660f">More...</a><br /></td></tr>
 <tr class="separator:a3d45f22c21cb53b9a3ba63cee1f2660f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a714c40d20275d71ca2c37a6971781c3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a714c40d20275d71ca2c37a6971781c3b">atcac_aes_gcm_encrypt_start</a> (<a class="el" href="a00356.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *key, const uint8_t key_len, const uint8_t *iv, const uint8_t iv_len)</td></tr>
+<tr class="memitem:a714c40d20275d71ca2c37a6971781c3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a714c40d20275d71ca2c37a6971781c3b">atcac_aes_gcm_encrypt_start</a> (<a class="el" href="a00350.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *key, const uint8_t key_len, const uint8_t *iv, const uint8_t iv_len)</td></tr>
 <tr class="memdesc:a714c40d20275d71ca2c37a6971781c3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize an AES-GCM context.  <a href="a00533.html#a714c40d20275d71ca2c37a6971781c3b">More...</a><br /></td></tr>
 <tr class="separator:a714c40d20275d71ca2c37a6971781c3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb8883646fd818c4e509bbf113ead8be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#abb8883646fd818c4e509bbf113ead8be">atcac_aes_gcm_encrypt_update</a> (<a class="el" href="a00356.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *plaintext, const size_t pt_len, uint8_t *ciphertext, size_t *ct_len)</td></tr>
+<tr class="memitem:abb8883646fd818c4e509bbf113ead8be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#abb8883646fd818c4e509bbf113ead8be">atcac_aes_gcm_encrypt_update</a> (<a class="el" href="a00350.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *plaintext, const size_t pt_len, uint8_t *ciphertext, size_t *ct_len)</td></tr>
 <tr class="memdesc:abb8883646fd818c4e509bbf113ead8be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypt a data using the initialized context.  <a href="a00533.html#abb8883646fd818c4e509bbf113ead8be">More...</a><br /></td></tr>
 <tr class="separator:abb8883646fd818c4e509bbf113ead8be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d8e4357fd7b9093af862596640308b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a4d8e4357fd7b9093af862596640308b0">atcac_aes_gcm_encrypt_finish</a> (<a class="el" href="a00356.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *ctx, uint8_t *tag, size_t tag_len)</td></tr>
+<tr class="memitem:a4d8e4357fd7b9093af862596640308b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a4d8e4357fd7b9093af862596640308b0">atcac_aes_gcm_encrypt_finish</a> (<a class="el" href="a00350.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *ctx, uint8_t *tag, size_t tag_len)</td></tr>
 <tr class="memdesc:a4d8e4357fd7b9093af862596640308b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the AES-GCM tag and free the context.  <a href="a00533.html#a4d8e4357fd7b9093af862596640308b0">More...</a><br /></td></tr>
 <tr class="separator:a4d8e4357fd7b9093af862596640308b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a506867898de9fe170da549dd70c78999"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a506867898de9fe170da549dd70c78999">atcac_aes_gcm_decrypt_start</a> (<a class="el" href="a00356.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *key, const uint8_t key_len, const uint8_t *iv, const uint8_t iv_len)</td></tr>
+<tr class="memitem:a506867898de9fe170da549dd70c78999"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a506867898de9fe170da549dd70c78999">atcac_aes_gcm_decrypt_start</a> (<a class="el" href="a00350.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *key, const uint8_t key_len, const uint8_t *iv, const uint8_t iv_len)</td></tr>
 <tr class="memdesc:a506867898de9fe170da549dd70c78999"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize an AES-GCM context for decryption.  <a href="a00533.html#a506867898de9fe170da549dd70c78999">More...</a><br /></td></tr>
 <tr class="separator:a506867898de9fe170da549dd70c78999"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a033507585666c0204a2c9f0d90215aac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a033507585666c0204a2c9f0d90215aac">atcac_aes_gcm_decrypt_update</a> (<a class="el" href="a00356.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *ciphertext, const size_t ct_len, uint8_t *plaintext, size_t *pt_len)</td></tr>
+<tr class="memitem:a033507585666c0204a2c9f0d90215aac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a033507585666c0204a2c9f0d90215aac">atcac_aes_gcm_decrypt_update</a> (<a class="el" href="a00350.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *ciphertext, const size_t ct_len, uint8_t *plaintext, size_t *pt_len)</td></tr>
 <tr class="memdesc:a033507585666c0204a2c9f0d90215aac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypt ciphertext using the initialized context.  <a href="a00533.html#a033507585666c0204a2c9f0d90215aac">More...</a><br /></td></tr>
 <tr class="separator:a033507585666c0204a2c9f0d90215aac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c61075cbaabd0189c92bb4d561ae269"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a9c61075cbaabd0189c92bb4d561ae269">atcac_aes_gcm_decrypt_finish</a> (<a class="el" href="a00356.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *tag, size_t tag_len, bool *is_verified)</td></tr>
+<tr class="memitem:a9c61075cbaabd0189c92bb4d561ae269"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a9c61075cbaabd0189c92bb4d561ae269">atcac_aes_gcm_decrypt_finish</a> (<a class="el" href="a00350.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *tag, size_t tag_len, bool *is_verified)</td></tr>
 <tr class="memdesc:a9c61075cbaabd0189c92bb4d561ae269"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare the AES-GCM tag and free the context.  <a href="a00533.html#a9c61075cbaabd0189c92bb4d561ae269">More...</a><br /></td></tr>
 <tr class="separator:a9c61075cbaabd0189c92bb4d561ae269"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabed03bcc1228768534ef4ee49df0ad09"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01490.html#gabed03bcc1228768534ef4ee49df0ad09">atcac_sw_sha1_init</a> (<a class="el" href="a00356.html#ab385f86dae5ecf97530c41da2c730dda">atcac_sha1_ctx</a> *ctx)</td></tr>
-<tr class="memdesc:gabed03bcc1228768534ef4ee49df0ad09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing SHA1 hash in software.  <a href="a01490.html#gabed03bcc1228768534ef4ee49df0ad09">More...</a><br /></td></tr>
+<tr class="memitem:gabed03bcc1228768534ef4ee49df0ad09"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01445.html#gabed03bcc1228768534ef4ee49df0ad09">atcac_sw_sha1_init</a> (<a class="el" href="a00350.html#ab385f86dae5ecf97530c41da2c730dda">atcac_sha1_ctx</a> *ctx)</td></tr>
+<tr class="memdesc:gabed03bcc1228768534ef4ee49df0ad09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing SHA1 hash in software.  <a href="a01445.html#gabed03bcc1228768534ef4ee49df0ad09">More...</a><br /></td></tr>
 <tr class="separator:gabed03bcc1228768534ef4ee49df0ad09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga65ff558306a88e0fbe2fc82bbe6a9c03"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01490.html#ga65ff558306a88e0fbe2fc82bbe6a9c03">atcac_sw_sha1_update</a> (<a class="el" href="a00356.html#ab385f86dae5ecf97530c41da2c730dda">atcac_sha1_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
-<tr class="memdesc:ga65ff558306a88e0fbe2fc82bbe6a9c03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add data to a SHA1 hash.  <a href="a01490.html#ga65ff558306a88e0fbe2fc82bbe6a9c03">More...</a><br /></td></tr>
+<tr class="memitem:ga65ff558306a88e0fbe2fc82bbe6a9c03"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01445.html#ga65ff558306a88e0fbe2fc82bbe6a9c03">atcac_sw_sha1_update</a> (<a class="el" href="a00350.html#ab385f86dae5ecf97530c41da2c730dda">atcac_sha1_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
+<tr class="memdesc:ga65ff558306a88e0fbe2fc82bbe6a9c03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add data to a SHA1 hash.  <a href="a01445.html#ga65ff558306a88e0fbe2fc82bbe6a9c03">More...</a><br /></td></tr>
 <tr class="separator:ga65ff558306a88e0fbe2fc82bbe6a9c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5589df2a639f61a4dc4ccedc9b5a5453"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a5589df2a639f61a4dc4ccedc9b5a5453">atcac_sw_sha1_finish</a> (<a class="el" href="a00356.html#ab385f86dae5ecf97530c41da2c730dda">atcac_sha1_ctx</a> *ctx, uint8_t digest[<a class="el" href="a00356.html#adb94a0991eb670ff1bf90253dfea0bfa">ATCA_SHA1_DIGEST_SIZE</a>])</td></tr>
+<tr class="memitem:a5589df2a639f61a4dc4ccedc9b5a5453"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a5589df2a639f61a4dc4ccedc9b5a5453">atcac_sw_sha1_finish</a> (<a class="el" href="a00350.html#ab385f86dae5ecf97530c41da2c730dda">atcac_sha1_ctx</a> *ctx, uint8_t digest[<a class="el" href="a00350.html#adb94a0991eb670ff1bf90253dfea0bfa">ATCA_SHA1_DIGEST_SIZE</a>])</td></tr>
 <tr class="memdesc:a5589df2a639f61a4dc4ccedc9b5a5453"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete the SHA1 hash in software and return the digest.  <a href="a00533.html#a5589df2a639f61a4dc4ccedc9b5a5453">More...</a><br /></td></tr>
 <tr class="separator:a5589df2a639f61a4dc4ccedc9b5a5453"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga58283666b662f084155ba693870c1077"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01490.html#ga58283666b662f084155ba693870c1077">atcac_sw_sha2_256_init</a> (<a class="el" href="a00356.html#ab5f0f06be68e024307d6b8bf0f0b81b8">atcac_sha2_256_ctx</a> *ctx)</td></tr>
-<tr class="memdesc:ga58283666b662f084155ba693870c1077"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing SHA256 hash in software.  <a href="a01490.html#ga58283666b662f084155ba693870c1077">More...</a><br /></td></tr>
+<tr class="memitem:ga58283666b662f084155ba693870c1077"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01445.html#ga58283666b662f084155ba693870c1077">atcac_sw_sha2_256_init</a> (<a class="el" href="a00350.html#ab5f0f06be68e024307d6b8bf0f0b81b8">atcac_sha2_256_ctx</a> *ctx)</td></tr>
+<tr class="memdesc:ga58283666b662f084155ba693870c1077"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing SHA256 hash in software.  <a href="a01445.html#ga58283666b662f084155ba693870c1077">More...</a><br /></td></tr>
 <tr class="separator:ga58283666b662f084155ba693870c1077"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab1a09fa1d854722cc667cea319ca9984"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01490.html#gab1a09fa1d854722cc667cea319ca9984">atcac_sw_sha2_256_update</a> (<a class="el" href="a00356.html#ab5f0f06be68e024307d6b8bf0f0b81b8">atcac_sha2_256_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
-<tr class="memdesc:gab1a09fa1d854722cc667cea319ca9984"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add data to a SHA256 hash.  <a href="a01490.html#gab1a09fa1d854722cc667cea319ca9984">More...</a><br /></td></tr>
+<tr class="memitem:gab1a09fa1d854722cc667cea319ca9984"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01445.html#gab1a09fa1d854722cc667cea319ca9984">atcac_sw_sha2_256_update</a> (<a class="el" href="a00350.html#ab5f0f06be68e024307d6b8bf0f0b81b8">atcac_sha2_256_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
+<tr class="memdesc:gab1a09fa1d854722cc667cea319ca9984"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add data to a SHA256 hash.  <a href="a01445.html#gab1a09fa1d854722cc667cea319ca9984">More...</a><br /></td></tr>
 <tr class="separator:gab1a09fa1d854722cc667cea319ca9984"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3a29931f2104cce481aa9ef1ab16fea"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#ae3a29931f2104cce481aa9ef1ab16fea">atcac_sw_sha2_256_finish</a> (<a class="el" href="a00356.html#ab5f0f06be68e024307d6b8bf0f0b81b8">atcac_sha2_256_ctx</a> *ctx, uint8_t digest[<a class="el" href="a00356.html#a86364f6d07b86740f3170d9d1ca60641">ATCA_SHA2_256_DIGEST_SIZE</a>])</td></tr>
+<tr class="memitem:ae3a29931f2104cce481aa9ef1ab16fea"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#ae3a29931f2104cce481aa9ef1ab16fea">atcac_sw_sha2_256_finish</a> (<a class="el" href="a00350.html#ab5f0f06be68e024307d6b8bf0f0b81b8">atcac_sha2_256_ctx</a> *ctx, uint8_t digest[<a class="el" href="a00350.html#a86364f6d07b86740f3170d9d1ca60641">ATCA_SHA2_256_DIGEST_SIZE</a>])</td></tr>
 <tr class="memdesc:ae3a29931f2104cce481aa9ef1ab16fea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete the SHA256 hash in software and return the digest.  <a href="a00533.html#ae3a29931f2104cce481aa9ef1ab16fea">More...</a><br /></td></tr>
 <tr class="separator:ae3a29931f2104cce481aa9ef1ab16fea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cb57e21bd345e7c2577465338f23ab6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a5cb57e21bd345e7c2577465338f23ab6">atcac_aes_cmac_init</a> (<a class="el" href="a00356.html#a855f42d8c66c63f1107ef71847929362">atcac_aes_cmac_ctx</a> *ctx, const uint8_t *key, const uint8_t key_len)</td></tr>
+<tr class="memitem:a5cb57e21bd345e7c2577465338f23ab6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a5cb57e21bd345e7c2577465338f23ab6">atcac_aes_cmac_init</a> (<a class="el" href="a00350.html#a855f42d8c66c63f1107ef71847929362">atcac_aes_cmac_ctx</a> *ctx, const uint8_t *key, const uint8_t key_len)</td></tr>
 <tr class="memdesc:a5cb57e21bd345e7c2577465338f23ab6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing CMAC in software.  <a href="a00533.html#a5cb57e21bd345e7c2577465338f23ab6">More...</a><br /></td></tr>
 <tr class="separator:a5cb57e21bd345e7c2577465338f23ab6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abba5529f08678f7a748d7dcfde8b5e59"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#abba5529f08678f7a748d7dcfde8b5e59">atcac_aes_cmac_update</a> (<a class="el" href="a00356.html#a855f42d8c66c63f1107ef71847929362">atcac_aes_cmac_ctx</a> *ctx, const uint8_t *data, const size_t data_size)</td></tr>
+<tr class="memitem:abba5529f08678f7a748d7dcfde8b5e59"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#abba5529f08678f7a748d7dcfde8b5e59">atcac_aes_cmac_update</a> (<a class="el" href="a00350.html#a855f42d8c66c63f1107ef71847929362">atcac_aes_cmac_ctx</a> *ctx, const uint8_t *data, const size_t data_size)</td></tr>
 <tr class="memdesc:abba5529f08678f7a748d7dcfde8b5e59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update CMAC context with input data.  <a href="a00533.html#abba5529f08678f7a748d7dcfde8b5e59">More...</a><br /></td></tr>
 <tr class="separator:abba5529f08678f7a748d7dcfde8b5e59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e5ceaf2a7d7e20ad5d02052f82c8c2a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a9e5ceaf2a7d7e20ad5d02052f82c8c2a">atcac_aes_cmac_finish</a> (<a class="el" href="a00356.html#a855f42d8c66c63f1107ef71847929362">atcac_aes_cmac_ctx</a> *ctx, uint8_t *cmac, size_t *cmac_size)</td></tr>
+<tr class="memitem:a9e5ceaf2a7d7e20ad5d02052f82c8c2a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a9e5ceaf2a7d7e20ad5d02052f82c8c2a">atcac_aes_cmac_finish</a> (<a class="el" href="a00350.html#a855f42d8c66c63f1107ef71847929362">atcac_aes_cmac_ctx</a> *ctx, uint8_t *cmac, size_t *cmac_size)</td></tr>
 <tr class="memdesc:a9e5ceaf2a7d7e20ad5d02052f82c8c2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finish CMAC calculation and clear the CMAC context.  <a href="a00533.html#a9e5ceaf2a7d7e20ad5d02052f82c8c2a">More...</a><br /></td></tr>
 <tr class="separator:a9e5ceaf2a7d7e20ad5d02052f82c8c2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4e23a2ff2f57f730a1490afaac2ea3dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01490.html#ga4e23a2ff2f57f730a1490afaac2ea3dc">atcac_sha256_hmac_init</a> (<a class="el" href="a00356.html#a253fe8619eb230171220d72f8fc4d6b9">atcac_hmac_sha256_ctx</a> *ctx, const uint8_t *key, const uint8_t key_len)</td></tr>
-<tr class="memdesc:ga4e23a2ff2f57f730a1490afaac2ea3dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing HMAC (sha256) in software.  <a href="a01490.html#ga4e23a2ff2f57f730a1490afaac2ea3dc">More...</a><br /></td></tr>
+<tr class="memitem:ga4e23a2ff2f57f730a1490afaac2ea3dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01445.html#ga4e23a2ff2f57f730a1490afaac2ea3dc">atcac_sha256_hmac_init</a> (<a class="el" href="a00350.html#a253fe8619eb230171220d72f8fc4d6b9">atcac_hmac_sha256_ctx</a> *ctx, const uint8_t *key, const uint8_t key_len)</td></tr>
+<tr class="memdesc:ga4e23a2ff2f57f730a1490afaac2ea3dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing HMAC (sha256) in software.  <a href="a01445.html#ga4e23a2ff2f57f730a1490afaac2ea3dc">More...</a><br /></td></tr>
 <tr class="separator:ga4e23a2ff2f57f730a1490afaac2ea3dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa4493b637590b0d3f5da0bd66b386d8a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01490.html#gaa4493b637590b0d3f5da0bd66b386d8a">atcac_sha256_hmac_update</a> (<a class="el" href="a00356.html#a253fe8619eb230171220d72f8fc4d6b9">atcac_hmac_sha256_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
-<tr class="memdesc:gaa4493b637590b0d3f5da0bd66b386d8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update HMAC context with input data.  <a href="a01490.html#gaa4493b637590b0d3f5da0bd66b386d8a">More...</a><br /></td></tr>
+<tr class="memitem:gaa4493b637590b0d3f5da0bd66b386d8a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01445.html#gaa4493b637590b0d3f5da0bd66b386d8a">atcac_sha256_hmac_update</a> (<a class="el" href="a00350.html#a253fe8619eb230171220d72f8fc4d6b9">atcac_hmac_sha256_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
+<tr class="memdesc:gaa4493b637590b0d3f5da0bd66b386d8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update HMAC context with input data.  <a href="a01445.html#gaa4493b637590b0d3f5da0bd66b386d8a">More...</a><br /></td></tr>
 <tr class="separator:gaa4493b637590b0d3f5da0bd66b386d8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4aabb5258b261af2802b45a817fb7113"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01490.html#ga4aabb5258b261af2802b45a817fb7113">atcac_sha256_hmac_finish</a> (<a class="el" href="a00356.html#a253fe8619eb230171220d72f8fc4d6b9">atcac_hmac_sha256_ctx</a> *ctx, uint8_t *digest, size_t *digest_len)</td></tr>
-<tr class="memdesc:ga4aabb5258b261af2802b45a817fb7113"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finish CMAC calculation and clear the HMAC context.  <a href="a01490.html#ga4aabb5258b261af2802b45a817fb7113">More...</a><br /></td></tr>
+<tr class="memitem:ga4aabb5258b261af2802b45a817fb7113"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01445.html#ga4aabb5258b261af2802b45a817fb7113">atcac_sha256_hmac_finish</a> (<a class="el" href="a00350.html#a253fe8619eb230171220d72f8fc4d6b9">atcac_hmac_sha256_ctx</a> *ctx, uint8_t *digest, size_t *digest_len)</td></tr>
+<tr class="memdesc:ga4aabb5258b261af2802b45a817fb7113"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finish CMAC calculation and clear the HMAC context.  <a href="a01445.html#ga4aabb5258b261af2802b45a817fb7113">More...</a><br /></td></tr>
 <tr class="separator:ga4aabb5258b261af2802b45a817fb7113"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga72da31831a3647e287543634e3f78aca"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01494.html#ga72da31831a3647e287543634e3f78aca">atca_mbedtls_pk_init</a> (mbedtls_pk_context *pkey, const uint16_t slotid)</td></tr>
-<tr class="memdesc:ga72da31831a3647e287543634e3f78aca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an mbedtls pk context for use with EC operations.  <a href="a01494.html#ga72da31831a3647e287543634e3f78aca">More...</a><br /></td></tr>
-<tr class="separator:ga72da31831a3647e287543634e3f78aca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ee0c99bd49ca5a196d7255b07d9375a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a4ee0c99bd49ca5a196d7255b07d9375a">atca_mbedtls_cert_add</a> (mbedtls_x509_crt *cert, const <a class="el" href="a01488.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def)</td></tr>
-<tr class="memdesc:a4ee0c99bd49ca5a196d7255b07d9375a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rebuild a certificate from an atcacert_def_t structure, and then add it to an mbedtls cert chain.  <a href="a00533.html#a4ee0c99bd49ca5a196d7255b07d9375a">More...</a><br /></td></tr>
-<tr class="separator:a4ee0c99bd49ca5a196d7255b07d9375a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b156f82fcffd60c0fa69ccdafc415c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a2b156f82fcffd60c0fa69ccdafc415c0">atcac_pk_init</a> (<a class="el" href="a00350.html#a3825af50d44c81262143afa3618f5176">atcac_pk_ctx</a> *ctx, uint8_t *buf, size_t buflen, uint8_t key_type, bool pubkey)</td></tr>
+<tr class="memdesc:a2b156f82fcffd60c0fa69ccdafc415c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up a public/private key structure for use in asymmetric cryptographic functions.  <a href="a00533.html#a2b156f82fcffd60c0fa69ccdafc415c0">More...</a><br /></td></tr>
+<tr class="separator:a2b156f82fcffd60c0fa69ccdafc415c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a387087494335a1e75512c0d0d359087a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a387087494335a1e75512c0d0d359087a">atcac_pk_init_pem</a> (<a class="el" href="a00350.html#a3825af50d44c81262143afa3618f5176">atcac_pk_ctx</a> *ctx, uint8_t *buf, size_t buflen, bool pubkey)</td></tr>
+<tr class="memdesc:a387087494335a1e75512c0d0d359087a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up a public/private key structure for use in asymmetric cryptographic functions.  <a href="a00533.html#a387087494335a1e75512c0d0d359087a">More...</a><br /></td></tr>
+<tr class="separator:a387087494335a1e75512c0d0d359087a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7b21448b94040d0357c0f7f42582843"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#ad7b21448b94040d0357c0f7f42582843">atcac_pk_free</a> (<a class="el" href="a00350.html#a3825af50d44c81262143afa3618f5176">atcac_pk_ctx</a> *ctx)</td></tr>
+<tr class="memdesc:ad7b21448b94040d0357c0f7f42582843"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free a public/private key structure.  <a href="a00533.html#ad7b21448b94040d0357c0f7f42582843">More...</a><br /></td></tr>
+<tr class="separator:ad7b21448b94040d0357c0f7f42582843"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53a04987f411195b3368ad247715e596"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#a53a04987f411195b3368ad247715e596">atcac_pk_sign</a> (<a class="el" href="a00350.html#a3825af50d44c81262143afa3618f5176">atcac_pk_ctx</a> *ctx, uint8_t *digest, size_t dig_len, uint8_t *signature, size_t *sig_len)</td></tr>
+<tr class="memdesc:a53a04987f411195b3368ad247715e596"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a signature with the private key in the context.  <a href="a00533.html#a53a04987f411195b3368ad247715e596">More...</a><br /></td></tr>
+<tr class="separator:a53a04987f411195b3368ad247715e596"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0f3a29010ab916ea3c6310af3cc31d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00533.html#ab0f3a29010ab916ea3c6310af3cc31d8">atcac_pk_verify</a> (<a class="el" href="a00350.html#a3825af50d44c81262143afa3618f5176">atcac_pk_ctx</a> *ctx, uint8_t *digest, size_t dig_len, uint8_t *signature, size_t sig_len)</td></tr>
+<tr class="memdesc:ab0f3a29010ab916ea3c6310af3cc31d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a verify using the public key in the provided context.  <a href="a00533.html#ab0f3a29010ab916ea3c6310af3cc31d8">More...</a><br /></td></tr>
+<tr class="separator:ab0f3a29010ab916ea3c6310af3cc31d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Wrapper functions to replace cryptoauthlib software crypto functions with the mbedTLS equivalent. </p>
+<div class="textblock"><p>Crypto abstraction functions for external host side cryptography. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="aa7fa389b6ec8a6c33f594f8c3f5c76ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7fa389b6ec8a6c33f594f8c3f5c76ef">&#9670;&nbsp;</a></span>mbedtls_calloc</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define mbedtls_calloc&#160;&#160;&#160;calloc</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a4f80030b2d10f956f8ac00b57eebfbe8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4f80030b2d10f956f8ac00b57eebfbe8">&#9670;&nbsp;</a></span>mbedtls_free</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define mbedtls_free&#160;&#160;&#160;free</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a4ee0c99bd49ca5a196d7255b07d9375a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ee0c99bd49ca5a196d7255b07d9375a">&#9670;&nbsp;</a></span>atca_mbedtls_cert_add()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int atca_mbedtls_cert_add </td>
-          <td>(</td>
-          <td class="paramtype">mbedtls_x509_crt *&#160;</td>
-          <td class="paramname"><em>cert</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a01488.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *&#160;</td>
-          <td class="paramname"><em>cert_def</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Rebuild a certificate from an atcacert_def_t structure, and then add it to an mbedtls cert chain. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">cert</td><td>mbedtls cert chain. Must have already been initialized </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">cert_def</td><td>Certificate definition that will be rebuilt and added </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 on success, otherwise an error code. </dd></dl>
-
-</div>
-</div>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="a9e5ceaf2a7d7e20ad5d02052f82c8c2a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9e5ceaf2a7d7e20ad5d02052f82c8c2a">&#9670;&nbsp;</a></span>atcac_aes_cmac_finish()</h2>
 
@@ -256,9 +190,9 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_cmac_finish </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_cmac_finish </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00356.html#a855f42d8c66c63f1107ef71847929362">atcac_aes_cmac_ctx</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00350.html#a855f42d8c66c63f1107ef71847929362">atcac_aes_cmac_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -301,9 +235,9 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_cmac_init </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_cmac_init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00356.html#a855f42d8c66c63f1107ef71847929362">atcac_aes_cmac_ctx</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00350.html#a855f42d8c66c63f1107ef71847929362">atcac_aes_cmac_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -346,9 +280,9 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_cmac_update </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_cmac_update </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00356.html#a855f42d8c66c63f1107ef71847929362">atcac_aes_cmac_ctx</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00350.html#a855f42d8c66c63f1107ef71847929362">atcac_aes_cmac_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -391,9 +325,9 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_gcm_aad_update </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_gcm_aad_update </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00356.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00350.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -436,9 +370,9 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_gcm_decrypt_finish </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_gcm_decrypt_finish </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00356.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00350.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -488,9 +422,9 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_gcm_decrypt_start </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_gcm_decrypt_start </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00356.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00350.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -547,9 +481,9 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_gcm_decrypt_update </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_gcm_decrypt_update </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00356.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00350.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -606,9 +540,9 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_gcm_encrypt_finish </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_gcm_encrypt_finish </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00356.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00350.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -651,9 +585,9 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_gcm_encrypt_start </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_gcm_encrypt_start </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00356.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00350.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -710,9 +644,9 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_gcm_encrypt_update </td>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_aes_gcm_encrypt_update </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00356.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00350.html#a036b9cc87dc500ede2af5d75bf145e13">atcac_aes_gcm_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -762,6 +696,241 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ad7b21448b94040d0357c0f7f42582843"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7b21448b94040d0357c0f7f42582843">&#9670;&nbsp;</a></span>atcac_pk_free()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_pk_free </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00350.html#a3825af50d44c81262143afa3618f5176">atcac_pk_ctx</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Free a public/private key structure. </p>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>pointer to a pk context </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2b156f82fcffd60c0fa69ccdafc415c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b156f82fcffd60c0fa69ccdafc415c0">&#9670;&nbsp;</a></span>atcac_pk_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_pk_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00350.html#a3825af50d44c81262143afa3618f5176">atcac_pk_ctx</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>buflen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>key_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>pubkey</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set up a public/private key structure for use in asymmetric cryptographic functions. </p>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>pointer to a pk context </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buf</td><td>buffer containing a pem encoded key </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buflen</td><td>length of the input buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pubkey</td><td>buffer is a public key </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a387087494335a1e75512c0d0d359087a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a387087494335a1e75512c0d0d359087a">&#9670;&nbsp;</a></span>atcac_pk_init_pem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_pk_init_pem </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00350.html#a3825af50d44c81262143afa3618f5176">atcac_pk_ctx</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>buflen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>pubkey</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set up a public/private key structure for use in asymmetric cryptographic functions. </p>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>pointer to a pk context </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buf</td><td>buffer containing a pem encoded key </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buflen</td><td>length of the input buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pubkey</td><td>buffer is a public key </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a53a04987f411195b3368ad247715e596"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53a04987f411195b3368ad247715e596">&#9670;&nbsp;</a></span>atcac_pk_sign()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_pk_sign </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00350.html#a3825af50d44c81262143afa3618f5176">atcac_pk_ctx</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>digest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>dig_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>signature</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>sig_len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Perform a signature with the private key in the context. </p>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="ab0f3a29010ab916ea3c6310af3cc31d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0f3a29010ab916ea3c6310af3cc31d8">&#9670;&nbsp;</a></span>atcac_pk_verify()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atcac_pk_verify </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00350.html#a3825af50d44c81262143afa3618f5176">atcac_pk_ctx</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>digest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>dig_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>signature</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>sig_len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Perform a verify using the public key in the provided context. </p>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
 <a id="a5589df2a639f61a4dc4ccedc9b5a5453"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5589df2a639f61a4dc4ccedc9b5a5453">&#9670;&nbsp;</a></span>atcac_sw_sha1_finish()</h2>
 
@@ -771,7 +940,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int atcac_sw_sha1_finish </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00356.html#ab385f86dae5ecf97530c41da2c730dda">atcac_sha1_ctx</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00350.html#ab385f86dae5ecf97530c41da2c730dda">atcac_sha1_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -809,7 +978,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int atcac_sw_sha2_256_finish </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00356.html#ab5f0f06be68e024307d6b8bf0f0b81b8">atcac_sha2_256_ctx</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00350.html#ab5f0f06be68e024307d6b8bf0f0b81b8">atcac_sha2_256_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -843,7 +1012,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_31789f3bb6a7bc9f44e469d16db78d19.html">cryptauthlib-v3.2.4_</a></li><li class="navelem"><a class="el" href="dir_242b332c7d8bbb6ae6998935f4a0cf12.html">lib</a></li><li class="navelem"><a class="el" href="dir_855d57e1298ad0179fc55de420dfacb6.html">mbedtls</a></li><li class="navelem"><a class="el" href="a00533.html">atca_mbedtls_wrap.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="dir_b5d7e7f66f637218433d047d3f3230ac.html">openssl</a></li><li class="navelem"><a class="el" href="a00533.html">atca_openssl_interface.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

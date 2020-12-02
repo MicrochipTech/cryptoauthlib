@@ -1,5 +1,6 @@
 var a00452 =
 [
-    [ "MAX_SPI_BUSES", "a01491.html#gafa761049508beb5d347d5b5e890b6bad", null ],
-    [ "ATCASPIMaster_t", "a01491.html#ga6e0318ed8ca99fa808e6b73b572d9891", null ]
+    [ "i2c_sam0_instance", "a01603.html", "a01603" ],
+    [ "i2c_sam0_instance_t", "a00452.html#abc52bbb3cf5a8db38f9929b63d8d2171", null ],
+    [ "sam0_change_baudrate", "a00452.html#aa09b1baa19c0d9232b191bffe0a200c0", null ]
 ];

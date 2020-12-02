@@ -1,5 +1,5 @@
 var a00446 =
 [
-    [ "MAX_I2C_BUSES", "a01491.html#gaf89a7a4080a47aa10a5504291db285bf", null ],
-    [ "ATCAI2CMaster_t", "a01491.html#ga06b19a932aea9cf3a5165fefacb24f7b", null ]
+    [ "MAX_SPI_BUSES", "a01446.html#gafa761049508beb5d347d5b5e890b6bad", null ],
+    [ "ATCASPIMaster_t", "a01446.html#ga6e0318ed8ca99fa808e6b73b572d9891", null ]
 ];

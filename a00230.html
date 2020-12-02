@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_der.h File Reference</title>
+<title>CryptoAuthLib: atcacert_host_sw.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.4</span>
+   &#160;<span id="projectnumber">v3.2.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -87,50 +87,39 @@ $(document).ready(function(){initNavTree('a00230.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atcacert_der.h File Reference</div>  </div>
+<div class="title">atcacert_host_sw.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>function declarations required to work with DER encoded data related to X.509 certificates.  
+<p>Host side methods using software implementations. host-side, the one authenticating a client, of the authentication process. Crypto functions are performed using a software library.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00206_source.html">atcacert.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00212_source.html">atcacert_def.h</a>&quot;</code><br />
 </div>
 <p><a href="a00230_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaafc9ef8e0164226481b670fde0223e13"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01488.html#gaafc9ef8e0164226481b670fde0223e13">atcacert_der_enc_length</a> (uint32_t length, uint8_t *der_length, size_t *der_length_size)</td></tr>
-<tr class="memdesc:gaafc9ef8e0164226481b670fde0223e13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode a length in DER format.  <a href="a01488.html#gaafc9ef8e0164226481b670fde0223e13">More...</a><br /></td></tr>
-<tr class="separator:gaafc9ef8e0164226481b670fde0223e13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeee4091e249b8fc202d5126a8374eeb1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01488.html#gaeee4091e249b8fc202d5126a8374eeb1">atcacert_der_dec_length</a> (const uint8_t *der_length, size_t *der_length_size, uint32_t *length)</td></tr>
-<tr class="memdesc:gaeee4091e249b8fc202d5126a8374eeb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode a DER format length.  <a href="a01488.html#gaeee4091e249b8fc202d5126a8374eeb1">More...</a><br /></td></tr>
-<tr class="separator:gaeee4091e249b8fc202d5126a8374eeb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga165018175f52421ea26fb33ccf335108"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01488.html#ga165018175f52421ea26fb33ccf335108">atcacert_der_adjust_length</a> (uint8_t *der_length, size_t *der_length_size, int delta_length, uint32_t *new_length)</td></tr>
-<tr class="separator:ga165018175f52421ea26fb33ccf335108"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf156257cda87df879f54c07e80bc0e8d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01488.html#gaf156257cda87df879f54c07e80bc0e8d">atcacert_der_enc_integer</a> (const uint8_t *int_data, size_t int_data_size, uint8_t is_unsigned, uint8_t *der_int, size_t *der_int_size)</td></tr>
-<tr class="memdesc:gaf156257cda87df879f54c07e80bc0e8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode an ASN.1 integer in DER format, including tag and length fields.  <a href="a01488.html#gaf156257cda87df879f54c07e80bc0e8d">More...</a><br /></td></tr>
-<tr class="separator:gaf156257cda87df879f54c07e80bc0e8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3b095e11adc55a61e3cfb2957d0c6c77"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01488.html#ga3b095e11adc55a61e3cfb2957d0c6c77">atcacert_der_dec_integer</a> (const uint8_t *der_int, size_t *der_int_size, uint8_t *int_data, size_t *int_data_size)</td></tr>
-<tr class="memdesc:ga3b095e11adc55a61e3cfb2957d0c6c77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode an ASN.1 DER encoded integer.  <a href="a01488.html#ga3b095e11adc55a61e3cfb2957d0c6c77">More...</a><br /></td></tr>
-<tr class="separator:ga3b095e11adc55a61e3cfb2957d0c6c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3583ada6da51d31cfe819894e8a9deeb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01488.html#ga3583ada6da51d31cfe819894e8a9deeb">atcacert_der_enc_ecdsa_sig_value</a> (const uint8_t raw_sig[64], uint8_t *der_sig, size_t *der_sig_size)</td></tr>
-<tr class="memdesc:ga3583ada6da51d31cfe819894e8a9deeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a raw ECDSA P256 signature in the DER encoding found in X.509 certificates.  <a href="a01488.html#ga3583ada6da51d31cfe819894e8a9deeb">More...</a><br /></td></tr>
-<tr class="separator:ga3583ada6da51d31cfe819894e8a9deeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac3f22b75f15e8508f35d99b95d955842"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01488.html#gac3f22b75f15e8508f35d99b95d955842">atcacert_der_dec_ecdsa_sig_value</a> (const uint8_t *der_sig, size_t *der_sig_size, uint8_t raw_sig[64])</td></tr>
-<tr class="memdesc:gac3f22b75f15e8508f35d99b95d955842"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses an ECDSA P256 signature in the DER encoding as found in X.509 certificates.  <a href="a01488.html#gac3f22b75f15e8508f35d99b95d955842">More...</a><br /></td></tr>
-<tr class="separator:gac3f22b75f15e8508f35d99b95d955842"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab78271af8c3e2837810fcdae6e3f5e28"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#gab78271af8c3e2837810fcdae6e3f5e28">atcacert_verify_cert_sw</a> (const <a class="el" href="a01443.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, const uint8_t ca_public_key[64])</td></tr>
+<tr class="memdesc:gab78271af8c3e2837810fcdae6e3f5e28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a certificate against its certificate authority's public key using software crypto functions.The function is currently not implemented.  <a href="a01443.html#gab78271af8c3e2837810fcdae6e3f5e28">More...</a><br /></td></tr>
+<tr class="separator:gab78271af8c3e2837810fcdae6e3f5e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa9829e5aa1ece3d3a933db9827d3e8f3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#gaa9829e5aa1ece3d3a933db9827d3e8f3">atcacert_gen_challenge_sw</a> (uint8_t challenge[32])</td></tr>
+<tr class="memdesc:gaa9829e5aa1ece3d3a933db9827d3e8f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a random challenge to be sent to the client using a software PRNG.The function is currently not implemented.  <a href="a01443.html#gaa9829e5aa1ece3d3a933db9827d3e8f3">More...</a><br /></td></tr>
+<tr class="separator:gaa9829e5aa1ece3d3a933db9827d3e8f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d5bf9ec84d28a0412377818805c32c4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga9d5bf9ec84d28a0412377818805c32c4">atcacert_verify_response_sw</a> (const uint8_t device_public_key[64], const uint8_t challenge[32], const uint8_t response[64])</td></tr>
+<tr class="memdesc:ga9d5bf9ec84d28a0412377818805c32c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a client's response to a challenge using software crypto functions.The function is currently not implemented.  <a href="a01443.html#ga9d5bf9ec84d28a0412377818805c32c4">More...</a><br /></td></tr>
+<tr class="separator:ga9d5bf9ec84d28a0412377818805c32c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>function declarations required to work with DER encoded data related to X.509 certificates. </p>
+<div class="textblock"><p>Host side methods using software implementations. host-side, the one authenticating a client, of the authentication process. Crypto functions are performed using a software library. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_31789f3bb6a7bc9f44e469d16db78d19.html">cryptauthlib-v3.2.4_</a></li><li class="navelem"><a class="el" href="dir_242b332c7d8bbb6ae6998935f4a0cf12.html">lib</a></li><li class="navelem"><a class="el" href="dir_361a368d4c76e0d953f5156071577f72.html">atcacert</a></li><li class="navelem"><a class="el" href="a00230.html">atcacert_der.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="dir_66d4f8af72ef71cf5ecd6cb2f7222b24.html">atcacert</a></li><li class="navelem"><a class="el" href="a00230.html">atcacert_host_sw.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

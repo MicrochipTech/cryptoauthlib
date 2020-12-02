@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_checkmac.c File Reference</title>
+<title>CryptoAuthLib: calib_derivekey.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.4</span>
+   &#160;<span id="projectnumber">v3.2.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -87,23 +87,23 @@ $(document).ready(function(){initNavTree('a00266.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">calib_checkmac.c File Reference</div>  </div>
+<div class="title">calib_derivekey.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for CheckMAC command.  
+<p>CryptoAuthLib Basic API methods for DeriveKey command.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00395_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00389_source.html">cryptoauthlib.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga41015825c365d4e7e16655446e0ee4ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01489.html#ga41015825c365d4e7e16655446e0ee4ac">calib_checkmac</a> (<a class="el" href="a01486.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t key_id, const uint8_t *challenge, const uint8_t *response, const uint8_t *other_data)</td></tr>
-<tr class="memdesc:ga41015825c365d4e7e16655446e0ee4ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares a MAC response with input values.  <a href="a01489.html#ga41015825c365d4e7e16655446e0ee4ac">More...</a><br /></td></tr>
-<tr class="separator:ga41015825c365d4e7e16655446e0ee4ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b7a1a8772d52c2eb79e6c25498dd880"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01444.html#ga4b7a1a8772d52c2eb79e6c25498dd880">calib_derivekey</a> (<a class="el" href="a01441.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t target_key, const uint8_t *mac)</td></tr>
+<tr class="memdesc:ga4b7a1a8772d52c2eb79e6c25498dd880"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the DeviveKey command for deriving a new key from a nonce (TempKey) and an existing key.  <a href="a01444.html#ga4b7a1a8772d52c2eb79e6c25498dd880">More...</a><br /></td></tr>
+<tr class="separator:ga4b7a1a8772d52c2eb79e6c25498dd880"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for CheckMAC command. </p>
-<p>The CheckMac command calculates a MAC response that would have been generated on a different CryptoAuthentication device and then compares the result with input value.</p>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for DeriveKey command. </p>
+<p>The DeriveKey command combines the current value of a key with the nonce stored in TempKey using SHA-256 and derives a new key.</p>
 <dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, and ATECC608A/B. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
@@ -111,7 +111,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_31789f3bb6a7bc9f44e469d16db78d19.html">cryptauthlib-v3.2.4_</a></li><li class="navelem"><a class="el" href="dir_242b332c7d8bbb6ae6998935f4a0cf12.html">lib</a></li><li class="navelem"><a class="el" href="dir_35a57c75a4a655cc4b614d66c305c473.html">calib</a></li><li class="navelem"><a class="el" href="a00266.html">calib_checkmac.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="dir_26a9b7cfc1c0c9d91c014cdeba9adbb8.html">calib</a></li><li class="navelem"><a class="el" href="a00266.html">calib_derivekey.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

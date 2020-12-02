@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_i2c_start.h File Reference</title>
+<title>CryptoAuthLib: hal_kit_bridge.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.4</span>
+   &#160;<span id="projectnumber">v3.2.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,43 +85,133 @@ $(document).ready(function(){initNavTree('a00431.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">hal_i2c_start.h File Reference</div>  </div>
+<div class="title">hal_kit_bridge.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for SAMD21 I2C over START drivers.  
+<p>Kit Bridging HAL for cryptoauthlib. This is not intended to be a zero copy driver. It should work with any interface that confirms to a few basic requirements: a) will accept an arbitrary number of bytes and packetize it if necessary for transmission, b) will block for the duration of the transmit.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;atmel_start.h&quot;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00395_source.html">cryptoauthlib.h</a>&quot;</code><br />
-</div>
+
 <p><a href="a00431_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01632.html">i2c_start_instance</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a75036e62d451235c7cc2adb90ca52a8f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#a75036e62d451235c7cc2adb90ca52a8f">HAL_KIT_COMMAND_SEND</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:a75036e62d451235c7cc2adb90ca52a8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abac189c960c7cca89e3485bf02049c0f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#abac189c960c7cca89e3485bf02049c0f">HAL_KIT_COMMAND_RECV</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:abac189c960c7cca89e3485bf02049c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac885b1da63767551154f2fff4b27a037"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ac885b1da63767551154f2fff4b27a037">HAL_KIT_COMMAND_WAKE</a>&#160;&#160;&#160;0x03</td></tr>
+<tr class="separator:ac885b1da63767551154f2fff4b27a037"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa84bdf1185a8f8c533db37fe133032eb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#aa84bdf1185a8f8c533db37fe133032eb">HAL_KIT_COMMAND_IDLE</a>&#160;&#160;&#160;0x04</td></tr>
+<tr class="separator:aa84bdf1185a8f8c533db37fe133032eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2afbe27f481ffa1bb18156882b7e642"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ab2afbe27f481ffa1bb18156882b7e642">HAL_KIT_COMMAND_SLEEP</a>&#160;&#160;&#160;0x05</td></tr>
+<tr class="separator:ab2afbe27f481ffa1bb18156882b7e642"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab89624779173549815c9fe24de017c44"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00431.html#ab89624779173549815c9fe24de017c44">HAL_KIT_HEADER_LEN</a>&#160;&#160;&#160;(3)</td></tr>
+<tr class="separator:ab89624779173549815c9fe24de017c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gaf5c1d7b7fca31a8c1102814e4732c373"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01491.html#gaf5c1d7b7fca31a8c1102814e4732c373">start_change_baudrate</a>) (<a class="el" href="a01487.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint32_t speed)</td></tr>
-<tr class="separator:gaf5c1d7b7fca31a8c1102814e4732c373"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab4ad18d30b921f27b4879ca71181491f"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a01632.html">i2c_start_instance</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01491.html#gab4ad18d30b921f27b4879ca71181491f">i2c_start_instance_t</a></td></tr>
-<tr class="separator:gab4ad18d30b921f27b4879ca71181491f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga3f5bce4e9ee06a3b564052b2bd202c29"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga3f5bce4e9ee06a3b564052b2bd202c29">hal_kit_attach_phy</a> (<a class="el" href="a01475.html">ATCAIfaceCfg</a> *cfg, <a class="el" href="a01587.html">atca_hal_kit_phy_t</a> *phy)</td></tr>
+<tr class="memdesc:ga3f5bce4e9ee06a3b564052b2bd202c29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function that connects a physical layer context structure that will be used by the kit protocol bridge.  <a href="a01446.html#ga3f5bce4e9ee06a3b564052b2bd202c29">More...</a><br /></td></tr>
+<tr class="separator:ga3f5bce4e9ee06a3b564052b2bd202c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for SAMD21 I2C over START drivers. </p>
-<p>Prerequisite: add SERCOM I2C Master Polled support to application in Atmel Studio</p>
+<div class="textblock"><p>Kit Bridging HAL for cryptoauthlib. This is not intended to be a zero copy driver. It should work with any interface that confirms to a few basic requirements: a) will accept an arbitrary number of bytes and packetize it if necessary for transmission, b) will block for the duration of the transmit. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="aa84bdf1185a8f8c533db37fe133032eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa84bdf1185a8f8c533db37fe133032eb">&#9670;&nbsp;</a></span>HAL_KIT_COMMAND_IDLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HAL_KIT_COMMAND_IDLE&#160;&#160;&#160;0x04</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abac189c960c7cca89e3485bf02049c0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abac189c960c7cca89e3485bf02049c0f">&#9670;&nbsp;</a></span>HAL_KIT_COMMAND_RECV</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HAL_KIT_COMMAND_RECV&#160;&#160;&#160;0x02</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a75036e62d451235c7cc2adb90ca52a8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75036e62d451235c7cc2adb90ca52a8f">&#9670;&nbsp;</a></span>HAL_KIT_COMMAND_SEND</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HAL_KIT_COMMAND_SEND&#160;&#160;&#160;0x01</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab2afbe27f481ffa1bb18156882b7e642"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2afbe27f481ffa1bb18156882b7e642">&#9670;&nbsp;</a></span>HAL_KIT_COMMAND_SLEEP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HAL_KIT_COMMAND_SLEEP&#160;&#160;&#160;0x05</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac885b1da63767551154f2fff4b27a037"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac885b1da63767551154f2fff4b27a037">&#9670;&nbsp;</a></span>HAL_KIT_COMMAND_WAKE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HAL_KIT_COMMAND_WAKE&#160;&#160;&#160;0x03</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab89624779173549815c9fe24de017c44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab89624779173549815c9fe24de017c44">&#9670;&nbsp;</a></span>HAL_KIT_HEADER_LEN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HAL_KIT_HEADER_LEN&#160;&#160;&#160;(3)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_31789f3bb6a7bc9f44e469d16db78d19.html">cryptauthlib-v3.2.4_</a></li><li class="navelem"><a class="el" href="dir_242b332c7d8bbb6ae6998935f4a0cf12.html">lib</a></li><li class="navelem"><a class="el" href="dir_bf653adef16cb08b38a82f2c17d83945.html">hal</a></li><li class="navelem"><a class="el" href="a00431.html">hal_i2c_start.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="dir_fce061263c906406827233fc0be94ca6.html">hal</a></li><li class="navelem"><a class="el" href="a00431.html">hal_kit_bridge.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

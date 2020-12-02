@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_sign.c File Reference</title>
+<title>CryptoAuthLib: atca_crypto_hw_aes.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.4</span>
+   &#160;<span id="projectnumber">v3.2.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,39 +85,125 @@ $(document).ready(function(){initNavTree('a00332.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">calib_sign.c File Reference</div>  </div>
+<div class="title">atca_crypto_hw_aes.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for Sign command.  
+<p>AES CTR, CBC &amp; CMAC structure definitions.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00395_source.html">cryptoauthlib.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gae453fe5f7e7fd31573ca0c21e61cd918"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01489.html#gae453fe5f7e7fd31573ca0c21e61cd918">calib_sign_base</a> (<a class="el" href="a01486.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t key_id, uint8_t *signature)</td></tr>
-<tr class="memdesc:gae453fe5f7e7fd31573ca0c21e61cd918"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Sign command, which generates a signature using the ECDSA algorithm.  <a href="a01489.html#gae453fe5f7e7fd31573ca0c21e61cd918">More...</a><br /></td></tr>
-<tr class="separator:gae453fe5f7e7fd31573ca0c21e61cd918"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga15d3f1059e6d1dc17382c29c84130873"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01489.html#ga15d3f1059e6d1dc17382c29c84130873">calib_sign</a> (<a class="el" href="a01486.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, const uint8_t *msg, uint8_t *signature)</td></tr>
-<tr class="memdesc:ga15d3f1059e6d1dc17382c29c84130873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Sign command, to sign a 32-byte external message using the private key in the specified slot. The message to be signed will be loaded into the Message Digest Buffer to the ATECC608 device or TempKey for other devices.  <a href="a01489.html#ga15d3f1059e6d1dc17382c29c84130873">More...</a><br /></td></tr>
-<tr class="separator:ga15d3f1059e6d1dc17382c29c84130873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf74bbc8f13821ea025aecbf8fc6248f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01489.html#gaf74bbc8f13821ea025aecbf8fc6248f2">calib_sign_internal</a> (<a class="el" href="a01486.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, bool is_invalidate, bool is_full_sn, uint8_t *signature)</td></tr>
-<tr class="memdesc:gaf74bbc8f13821ea025aecbf8fc6248f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Sign command to sign an internally generated message.  <a href="a01489.html#gaf74bbc8f13821ea025aecbf8fc6248f2">More...</a><br /></td></tr>
-<tr class="separator:gaf74bbc8f13821ea025aecbf8fc6248f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00389_source.html">cryptoauthlib.h</a>&quot;</code><br />
+</div>
+<p><a href="a00332_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01555.html">atca_aes_cbc_ctx</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01559.html">atca_aes_cmac_ctx</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01563.html">atca_aes_ctr_ctx</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01567.html">atca_aes_cbcmac_ctx</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01571.html">atca_aes_ccm_ctx</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a927afea55b7a5011e14795d735b47ad7"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a01555.html">atca_aes_cbc_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#a927afea55b7a5011e14795d735b47ad7">atca_aes_cbc_ctx_t</a></td></tr>
+<tr class="separator:a927afea55b7a5011e14795d735b47ad7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71a000f89238de0205da742995a0cb34"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a01559.html">atca_aes_cmac_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#a71a000f89238de0205da742995a0cb34">atca_aes_cmac_ctx_t</a></td></tr>
+<tr class="separator:a71a000f89238de0205da742995a0cb34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52b18f051752d214a2d5b485270f5b15"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a01563.html">atca_aes_ctr_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#a52b18f051752d214a2d5b485270f5b15">atca_aes_ctr_ctx_t</a></td></tr>
+<tr class="separator:a52b18f051752d214a2d5b485270f5b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66efe80a50daaa4b54840233d1b45b01"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a01567.html">atca_aes_cbcmac_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#a66efe80a50daaa4b54840233d1b45b01">atca_aes_cbcmac_ctx_t</a></td></tr>
+<tr class="separator:a66efe80a50daaa4b54840233d1b45b01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb4e183cce26d955cfa293502252563c"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a01571.html">atca_aes_ccm_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#acb4e183cce26d955cfa293502252563c">atca_aes_ccm_ctx_t</a></td></tr>
+<tr class="separator:acb4e183cce26d955cfa293502252563c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for Sign command. </p>
-<p>The Sign command generates a signature using the private key in slot with ECDSA algorithm.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC108A, ATECC508A, and ATECC608A/B. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>AES CTR, CBC &amp; CMAC structure definitions. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="a927afea55b7a5011e14795d735b47ad7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a927afea55b7a5011e14795d735b47ad7">&#9670;&nbsp;</a></span>atca_aes_cbc_ctx_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a01555.html">atca_aes_cbc_ctx</a> <a class="el" href="a00332.html#a927afea55b7a5011e14795d735b47ad7">atca_aes_cbc_ctx_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a66efe80a50daaa4b54840233d1b45b01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66efe80a50daaa4b54840233d1b45b01">&#9670;&nbsp;</a></span>atca_aes_cbcmac_ctx_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a01567.html">atca_aes_cbcmac_ctx</a> <a class="el" href="a00332.html#a66efe80a50daaa4b54840233d1b45b01">atca_aes_cbcmac_ctx_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acb4e183cce26d955cfa293502252563c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb4e183cce26d955cfa293502252563c">&#9670;&nbsp;</a></span>atca_aes_ccm_ctx_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a01571.html">atca_aes_ccm_ctx</a> <a class="el" href="a00332.html#acb4e183cce26d955cfa293502252563c">atca_aes_ccm_ctx_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a71a000f89238de0205da742995a0cb34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71a000f89238de0205da742995a0cb34">&#9670;&nbsp;</a></span>atca_aes_cmac_ctx_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a01559.html">atca_aes_cmac_ctx</a> <a class="el" href="a00332.html#a71a000f89238de0205da742995a0cb34">atca_aes_cmac_ctx_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a52b18f051752d214a2d5b485270f5b15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52b18f051752d214a2d5b485270f5b15">&#9670;&nbsp;</a></span>atca_aes_ctr_ctx_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a01563.html">atca_aes_ctr_ctx</a> <a class="el" href="a00332.html#a52b18f051752d214a2d5b485270f5b15">atca_aes_ctr_ctx_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_31789f3bb6a7bc9f44e469d16db78d19.html">cryptauthlib-v3.2.4_</a></li><li class="navelem"><a class="el" href="dir_242b332c7d8bbb6ae6998935f4a0cf12.html">lib</a></li><li class="navelem"><a class="el" href="dir_35a57c75a4a655cc4b614d66c305c473.html">calib</a></li><li class="navelem"><a class="el" href="a00332.html">calib_sign.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="dir_251077d1406e6d718218945b8168cb6e.html">crypto</a></li><li class="navelem"><a class="el" href="a00332.html">atca_crypto_hw_aes.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

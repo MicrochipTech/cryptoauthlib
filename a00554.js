@@ -1,16 +1,11 @@
 var a00554 =
 [
-    [ "pkcs11_cert_get_authority_key_id", "a01495.html#ga8615e62ff44d3df242534e5805e26a82", null ],
-    [ "pkcs11_cert_get_encoded", "a01495.html#ga7c1c4563e1c3b21f009966bfbeb90541", null ],
-    [ "pkcs11_cert_get_subject", "a01495.html#ga710c95124c627373e383d123c0ab5b1f", null ],
-    [ "pkcs11_cert_get_subject_key_id", "a01495.html#gae42580eee339e29aab9698251c3e7e2a", null ],
-    [ "pkcs11_cert_get_trusted_flag", "a01495.html#ga96af56861fd0c9e00b96ff6243b84447", null ],
-    [ "pkcs11_cert_get_type", "a01495.html#ga80a4d4deaad0e8893ff9b6cecb594c5c", null ],
-    [ "pkcs11_cert_x509_write", "a01495.html#ga34fcca1dafb0a410d242fcb5ff3d69a5", null ],
-    [ "pkcs11_cert_wtlspublic_attributes", "a01495.html#gabc10a1f1b90bc7d2fb047db0af539e80", null ],
-    [ "pkcs11_cert_wtlspublic_attributes_count", "a01495.html#gad8232cd440c12745d24471e2676a117f", null ],
-    [ "pkcs11_cert_x509_attributes", "a01495.html#gafa471eb33699e2cba5dc3cc50a2d8df7", null ],
-    [ "pkcs11_cert_x509_attributes_count", "a01495.html#gadc2b14c7a052fdc0bb751259d28dfdc0", null ],
-    [ "pkcs11_cert_x509public_attributes", "a01495.html#ga8de4193ede04a12ab4e44b8df9eec478", null ],
-    [ "pkcs11_cert_x509public_attributes_count", "a01495.html#gafd21e04ab9248b3d58c3f5e4bd076ac9", null ]
+    [ "pkcs11_config_cert", "a01450.html#ga7afb784fad2dd8b8b2befd6159e2a053", null ],
+    [ "pkcs11_config_init_cert", "a01450.html#ga1de4cccdfd83ce723eb050e09266a3ae", null ],
+    [ "pkcs11_config_init_private", "a01450.html#gab36c9d4f392c0eb613fb3833dd852495", null ],
+    [ "pkcs11_config_init_public", "a01450.html#gad8164c3b6e1c4287b665ce18c143bdd3", null ],
+    [ "pkcs11_config_key", "a01450.html#ga0e5ec966dd01f9eb6f1cc2f4b3085f9f", null ],
+    [ "pkcs11_config_load", "a01450.html#ga4804f397bd49dd23ec903e4249e22d9e", null ],
+    [ "pkcs11_config_load_objects", "a01450.html#gafbf88cd1298ee01568385688019ba80c", null ],
+    [ "pkcs11_config_remove_object", "a01450.html#ga02347d90fe77c323677712e685aa8c6a", null ]
 ];

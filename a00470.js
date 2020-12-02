@@ -1,13 +1,9 @@
 var a00470 =
 [
-    [ "hal_spi_discover_buses", "a01491.html#ga92cecc8e30a88dee1cbedd49141bc209", null ],
-    [ "hal_spi_discover_devices", "a01491.html#ga6cf45c115bcb721e951e8792e0feb3f0", null ],
-    [ "hal_spi_idle", "a01491.html#ga470458f44feb9f6dfb7845851d821182", null ],
-    [ "hal_spi_init", "a01491.html#ga6c7a1471361e74b4bf6ad7f0388715c2", null ],
-    [ "hal_spi_post_init", "a01491.html#gaeb831d9894ce11146bd00c79a98b7f0f", null ],
-    [ "hal_spi_receive", "a01491.html#ga410c24762579358a576a58610a877e63", null ],
-    [ "hal_spi_release", "a01491.html#ga8c3f1c6c20d939c4ca976fdda6279359", null ],
-    [ "hal_spi_send", "a01491.html#ga16661176757d0ef155155b07267a44ed", null ],
-    [ "hal_spi_sleep", "a01491.html#gae97ef6e553aed5ba6ac0e65476d82308", null ],
-    [ "hal_spi_wake", "a01491.html#ga182f605fabb3a02f9d4a0e433496290b", null ]
+    [ "SWI_FLAG_CMD", "a01446.html#ga13c01ac16bb14fde75e9c00dcd1cc761", null ],
+    [ "SWI_FLAG_IDLE", "a01446.html#ga6219d68ef915fdcd734f51960ba08fb6", null ],
+    [ "SWI_FLAG_SLEEP", "a01446.html#ga13ef2322176ad9b7ba3d2e23b277cce6", null ],
+    [ "SWI_FLAG_TX", "a01446.html#ga20af8352e13a7357650ba1cbf41349ea", null ],
+    [ "SWI_WAKE_TOKEN", "a01446.html#ga8f12e3b749e7b3dc905114cc7b8d0b38", null ],
+    [ "hal_swi_send_flag", "a01446.html#gaae96ea936a2e85d0bcb81b7868ee007d", null ]
 ];

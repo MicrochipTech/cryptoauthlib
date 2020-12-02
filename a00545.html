@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11.h File Reference</title>
+<title>CryptoAuthLib: pkcs11_attrib.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.4</span>
+   &#160;<span id="projectnumber">v3.2.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -86,141 +86,89 @@ $(document).ready(function(){initNavTree('a00545.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">pkcs11.h File Reference</div>  </div>
+<div class="title">pkcs11_attrib.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="a00656_source.html">pkcs11t.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00653_source.html">pkcs11f.h</a>&quot;</code><br />
+
+<p>PKCS11 Library Object Attribute Handling.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00536_source.html">cryptoki.h</a>&quot;</code><br />
 </div>
 <p><a href="a00545_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01728.html">CK_FUNCTION_LIST</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01699.html">_pkcs11_attrib_model</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ac3ae5768889bec57a63f08b6a6e5f58d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00545.html#ac3ae5768889bec57a63f08b6a6e5f58d">__PASTE</a>(x,  y)&#160;&#160;&#160;x ## y</td></tr>
-<tr class="separator:ac3ae5768889bec57a63f08b6a6e5f58d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a427a6a11246534e2c0d569e21cc854b9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00545.html#a427a6a11246534e2c0d569e21cc854b9">CK_NEED_ARG_LIST</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:a427a6a11246534e2c0d569e21cc854b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac496f7959ba2c28cd7a2b5f5ac34628b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00545.html#ac496f7959ba2c28cd7a2b5f5ac34628b">CK_PKCS11_FUNCTION_INFO</a>(name)&#160;&#160;&#160;    extern <a class="el" href="a00542.html#a30315d302108bcfb354196f37b16a492">CK_DECLARE_FUNCTION</a>(<a class="el" href="a00656.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>, name)</td></tr>
-<tr class="separator:ac496f7959ba2c28cd7a2b5f5ac34628b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a427a6a11246534e2c0d569e21cc854b9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00545.html#a427a6a11246534e2c0d569e21cc854b9">CK_NEED_ARG_LIST</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:a427a6a11246534e2c0d569e21cc854b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac496f7959ba2c28cd7a2b5f5ac34628b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00545.html#ac496f7959ba2c28cd7a2b5f5ac34628b">CK_PKCS11_FUNCTION_INFO</a>(name)&#160;&#160;&#160;    typedef <a class="el" href="a00542.html#aad472a68fb8e3eb9ba40169f5180b3b7">CK_DECLARE_FUNCTION_POINTER</a> (<a class="el" href="a00656.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>, <a class="el" href="a00545.html#ac3ae5768889bec57a63f08b6a6e5f58d">__PASTE</a> (CK_, name))</td></tr>
-<tr class="separator:ac496f7959ba2c28cd7a2b5f5ac34628b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac496f7959ba2c28cd7a2b5f5ac34628b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00545.html#ac496f7959ba2c28cd7a2b5f5ac34628b">CK_PKCS11_FUNCTION_INFO</a>(name)&#160;&#160;&#160;    <a class="el" href="a00545.html#ac3ae5768889bec57a63f08b6a6e5f58d">__PASTE</a>(CK_, name) name;</td></tr>
-<tr class="separator:ac496f7959ba2c28cd7a2b5f5ac34628b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a5a0b1cd7e76456a031118d97060eecb9"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00545.html#a5a0b1cd7e76456a031118d97060eecb9">attrib_f</a>) (<a class="el" href="a00650.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a00650.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:a5a0b1cd7e76456a031118d97060eecb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5808b2771bb5bd3fdb344fd9b33b48ed"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a01699.html">_pkcs11_attrib_model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00545.html#a5808b2771bb5bd3fdb344fd9b33b48ed">pkcs11_attrib_model</a></td></tr>
+<tr class="separator:a5808b2771bb5bd3fdb344fd9b33b48ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a989f60ace1b798f527c3065087a21162"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a01699.html">_pkcs11_attrib_model</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00545.html#a989f60ace1b798f527c3065087a21162">pkcs11_attrib_model_ptr</a></td></tr>
+<tr class="separator:a989f60ace1b798f527c3065087a21162"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gae518fd798cd7352bd7e1ea47cc9d8d33"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#gae518fd798cd7352bd7e1ea47cc9d8d33">pkcs11_attrib_fill</a> (<a class="el" href="a00650.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute, const <a class="el" href="a00650.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pData, const <a class="el" href="a00650.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulSize)</td></tr>
+<tr class="memdesc:gae518fd798cd7352bd7e1ea47cc9d8d33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the nessasary checks and copy data into an attribute structure.  <a href="a01450.html#gae518fd798cd7352bd7e1ea47cc9d8d33">More...</a><br /></td></tr>
+<tr class="separator:gae518fd798cd7352bd7e1ea47cc9d8d33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50e9c64b899d1b2f78c9634298225303"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga50e9c64b899d1b2f78c9634298225303">pkcs11_attrib_value</a> (<a class="el" href="a00650.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute, const <a class="el" href="a00650.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulValue, const <a class="el" href="a00650.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulSize)</td></tr>
+<tr class="memdesc:ga50e9c64b899d1b2f78c9634298225303"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to write a numerical value to an attribute buffer.  <a href="a01450.html#ga50e9c64b899d1b2f78c9634298225303">More...</a><br /></td></tr>
+<tr class="separator:ga50e9c64b899d1b2f78c9634298225303"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3bebbc6283e197f203ea5905ab5caee3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga3bebbc6283e197f203ea5905ab5caee3">pkcs11_attrib_false</a> (const <a class="el" href="a00650.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a00650.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:ga3bebbc6283e197f203ea5905ab5caee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0bfb7c14a9c1daf120a61a65499bdc55"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga0bfb7c14a9c1daf120a61a65499bdc55">pkcs11_attrib_true</a> (const <a class="el" href="a00650.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a00650.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:ga0bfb7c14a9c1daf120a61a65499bdc55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga89c04713bd2e0df331bd4f8f5abf14ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga89c04713bd2e0df331bd4f8f5abf14ab">pkcs11_attrib_empty</a> (const <a class="el" href="a00650.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a00650.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:ga89c04713bd2e0df331bd4f8f5abf14ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ac3ae5768889bec57a63f08b6a6e5f58d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3ae5768889bec57a63f08b6a6e5f58d">&#9670;&nbsp;</a></span>__PASTE</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>PKCS11 Library Object Attribute Handling. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+</div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="a5a0b1cd7e76456a031118d97060eecb9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a0b1cd7e76456a031118d97060eecb9">&#9670;&nbsp;</a></span>attrib_f</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define __PASTE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">x, </td>
+          <td class="memname">typedef <a class="el" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>(* attrib_f) (<a class="el" href="a00650.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a00650.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td>
         </tr>
+      </table>
+</div><div class="memdoc">
+<p>Populate an attribute based on the "object" </p>
+
+</div>
+</div>
+<a id="a5808b2771bb5bd3fdb344fd9b33b48ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5808b2771bb5bd3fdb344fd9b33b48ed">&#9670;&nbsp;</a></span>pkcs11_attrib_model</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">y&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;x ## y</td>
+          <td class="memname">typedef struct <a class="el" href="a01699.html">_pkcs11_attrib_model</a> <a class="el" href="a00545.html#a5808b2771bb5bd3fdb344fd9b33b48ed">pkcs11_attrib_model</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a427a6a11246534e2c0d569e21cc854b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a427a6a11246534e2c0d569e21cc854b9">&#9670;&nbsp;</a></span>CK_NEED_ARG_LIST <span class="overload">[1/2]</span></h2>
+<a id="a989f60ace1b798f527c3065087a21162"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a989f60ace1b798f527c3065087a21162">&#9670;&nbsp;</a></span>pkcs11_attrib_model_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define CK_NEED_ARG_LIST&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a427a6a11246534e2c0d569e21cc854b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a427a6a11246534e2c0d569e21cc854b9">&#9670;&nbsp;</a></span>CK_NEED_ARG_LIST <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CK_NEED_ARG_LIST&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac496f7959ba2c28cd7a2b5f5ac34628b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac496f7959ba2c28cd7a2b5f5ac34628b">&#9670;&nbsp;</a></span>CK_PKCS11_FUNCTION_INFO <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CK_PKCS11_FUNCTION_INFO</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">name</td><td>)</td>
-          <td>&#160;&#160;&#160;    extern <a class="el" href="a00542.html#a30315d302108bcfb354196f37b16a492">CK_DECLARE_FUNCTION</a>(<a class="el" href="a00656.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>, name)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac496f7959ba2c28cd7a2b5f5ac34628b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac496f7959ba2c28cd7a2b5f5ac34628b">&#9670;&nbsp;</a></span>CK_PKCS11_FUNCTION_INFO <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CK_PKCS11_FUNCTION_INFO</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">name</td><td>)</td>
-          <td>&#160;&#160;&#160;    typedef <a class="el" href="a00542.html#aad472a68fb8e3eb9ba40169f5180b3b7">CK_DECLARE_FUNCTION_POINTER</a> (<a class="el" href="a00656.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>, <a class="el" href="a00545.html#ac3ae5768889bec57a63f08b6a6e5f58d">__PASTE</a> (CK_, name))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac496f7959ba2c28cd7a2b5f5ac34628b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac496f7959ba2c28cd7a2b5f5ac34628b">&#9670;&nbsp;</a></span>CK_PKCS11_FUNCTION_INFO <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CK_PKCS11_FUNCTION_INFO</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">name</td><td>)</td>
-          <td>&#160;&#160;&#160;    <a class="el" href="a00545.html#ac3ae5768889bec57a63f08b6a6e5f58d">__PASTE</a>(CK_, name) name;</td>
+          <td class="memname">typedef struct <a class="el" href="a01699.html">_pkcs11_attrib_model</a> * <a class="el" href="a00545.html#a989f60ace1b798f527c3065087a21162">pkcs11_attrib_model_ptr</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -232,7 +180,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_31789f3bb6a7bc9f44e469d16db78d19.html">cryptauthlib-v3.2.4_</a></li><li class="navelem"><a class="el" href="dir_242b332c7d8bbb6ae6998935f4a0cf12.html">lib</a></li><li class="navelem"><a class="el" href="dir_aab7ca30495e81b23d36429b9580000d.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00545.html">pkcs11.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="dir_da4de44fd9fa8eacc46326d2e228f8d2.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00545.html">pkcs11_attrib.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

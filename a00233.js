@@ -1,6 +1,9 @@
 var a00233 =
 [
-    [ "atcacert_gen_challenge_hw", "a01488.html#ga208c1ea765f192bd86b26964fbb5edcb", null ],
-    [ "atcacert_verify_cert_hw", "a01488.html#ga81e92ea606e86051afa84f2fac4898d6", null ],
-    [ "atcacert_verify_response_hw", "a01488.html#gafeffa7a36a7b5a343f5f568d090e8eed", null ]
+    [ "atcacert_decode_pem", "a00233.html#a67998c5401898020391dc6f02b11d2bd", null ],
+    [ "atcacert_decode_pem_cert", "a00233.html#a47e68bdf906458409c7eff1aed0dff3a", null ],
+    [ "atcacert_decode_pem_csr", "a00233.html#afbccc09407aeb4d7b626b28da120211a", null ],
+    [ "atcacert_encode_pem", "a00233.html#abd464bace94353a8ff767e5a9bdc66ce", null ],
+    [ "atcacert_encode_pem_cert", "a00233.html#a5f893d8f40bc8126a3802ad435bba895", null ],
+    [ "atcacert_encode_pem_csr", "a00233.html#ab148948a885c6a7c9c95494e48e45cb1", null ]
 ];

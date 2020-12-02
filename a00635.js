@@ -1,9 +1,11 @@
 var a00635 =
 [
-    [ "pkcs11_slot_config", "a01495.html#ga29fdbbe0188137ec327678742a3aea01", null ],
-    [ "pkcs11_slot_get_context", "a01495.html#ga987853011908614aba0db7c5933b0a20", null ],
-    [ "pkcs11_slot_get_info", "a01495.html#ga3bba79e03141bfb7a9ec76c273db63d2", null ],
-    [ "pkcs11_slot_get_list", "a01495.html#ga0b1860dd97a6c0afd3056ac6bd10d38d", null ],
-    [ "pkcs11_slot_init", "a01495.html#ga418414364e88d0673b4f6c90cd62ebed", null ],
-    [ "pkcs11_slot_initslots", "a01495.html#ga8bdf7c43e464ac6214411d11d82ac317", null ]
+    [ "pkcs11_token_convert_pin_to_key", "a01450.html#ga9e4aef0d030b3b8d4a0f77a1fec4ed3d", null ],
+    [ "pkcs11_token_get_access_type", "a01450.html#ga6f92db83ad7904096b24c6b25774f4b7", null ],
+    [ "pkcs11_token_get_info", "a01450.html#ga7bf2fea766cab4645fe615661bcf0db9", null ],
+    [ "pkcs11_token_get_storage", "a01450.html#gabf87951ca453a2eaff25df22bc136a57", null ],
+    [ "pkcs11_token_get_writable", "a01450.html#ga5521260e489c703aea4f15912f52ad31", null ],
+    [ "pkcs11_token_init", "a01450.html#ga7e207adf2d26c1d6ea64f7c60252bf45", null ],
+    [ "pkcs11_token_random", "a01450.html#gaf4c0c6a2d12d879308f2d42cc61ef401", null ],
+    [ "pkcs11_token_set_pin", "a01450.html#ga75272ae3120c6d9fc42862ac8b52da17", null ]
 ];

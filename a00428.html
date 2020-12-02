@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_i2c_start.c File Reference</title>
+<title>CryptoAuthLib: hal_kit_bridge.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.4</span>
+   &#160;<span id="projectnumber">v3.2.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -87,66 +87,61 @@ $(document).ready(function(){initNavTree('a00428.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">hal_i2c_start.c File Reference</div>  </div>
+<div class="title">hal_kit_bridge.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for SAMD21 I2C over START drivers.  
+<p>Kit Bridging HAL for cryptoauthlib. This is not intended to be a zero copy driver. It should work with any interface that confirms to a few basic requirements: a) will accept an arbitrary number of bytes and packetize it if necessary for transmission, b) will block for the duration of the transmit.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;string.h&gt;</code><br />
-<code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &lt;atmel_start.h&gt;</code><br />
-<code>#include &lt;hal_gpio.h&gt;</code><br />
-<code>#include &lt;hal_delay.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00431_source.html">hal_i2c_start.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00407_source.html">atca_start_config.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00410_source.html">atca_start_iface.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00395_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00389_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00398_source.html">atca_hal.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00431_source.html">hal_kit_bridge.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga05700385437884cc7b28c38d33e84f8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01491.html#ga05700385437884cc7b28c38d33e84f8c">hal_i2c_discover_buses</a> (int i2c_buses[], int max_buses)</td></tr>
-<tr class="memdesc:ga05700385437884cc7b28c38d33e84f8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover i2c buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-prior knowledge  <a href="a01491.html#ga05700385437884cc7b28c38d33e84f8c">More...</a><br /></td></tr>
-<tr class="separator:ga05700385437884cc7b28c38d33e84f8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac7644e62498a596c09952ee3b28017b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01491.html#gac7644e62498a596c09952ee3b28017b9">hal_i2c_discover_devices</a> (int bus_num, <a class="el" href="a01520.html">ATCAIfaceCfg</a> cfg[], int *found)</td></tr>
-<tr class="memdesc:gac7644e62498a596c09952ee3b28017b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover any CryptoAuth devices on a given logical bus number  <a href="a01491.html#gac7644e62498a596c09952ee3b28017b9">More...</a><br /></td></tr>
-<tr class="separator:gac7644e62498a596c09952ee3b28017b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga09e7f465a040fbd19ea136269571de3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01491.html#ga09e7f465a040fbd19ea136269571de3c">hal_i2c_init</a> (void *hal, <a class="el" href="a01520.html">ATCAIfaceCfg</a> *cfg)</td></tr>
-<tr class="memdesc:ga09e7f465a040fbd19ea136269571de3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">hal_i2c_init manages requests to initialize a physical interface. it manages use counts so when an interface has released the physical layer, it will disable the interface for some other use. You can have multiple ATCAIFace instances using the same bus, and you can have multiple ATCAIFace instances on multiple i2c buses, so hal_i2c_init manages these things and ATCAIFace is abstracted from the physical details.  <a href="a01491.html#ga09e7f465a040fbd19ea136269571de3c">More...</a><br /></td></tr>
-<tr class="separator:ga09e7f465a040fbd19ea136269571de3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafbe53519362f18c2688d10da6f7c618f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01491.html#gafbe53519362f18c2688d10da6f7c618f">hal_i2c_post_init</a> (<a class="el" href="a01487.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:gafbe53519362f18c2688d10da6f7c618f"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of I2C post init.  <a href="a01491.html#gafbe53519362f18c2688d10da6f7c618f">More...</a><br /></td></tr>
-<tr class="separator:gafbe53519362f18c2688d10da6f7c618f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacc9a889e19d2f1a475a39391565b66dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01491.html#gacc9a889e19d2f1a475a39391565b66dd">hal_i2c_send</a> (<a class="el" href="a01487.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
-<tr class="memdesc:gacc9a889e19d2f1a475a39391565b66dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of I2C send over START.  <a href="a01491.html#gacc9a889e19d2f1a475a39391565b66dd">More...</a><br /></td></tr>
-<tr class="separator:gacc9a889e19d2f1a475a39391565b66dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga41a2b07d55558b9726abe28fd8431e90"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01491.html#ga41a2b07d55558b9726abe28fd8431e90">hal_i2c_receive</a> (<a class="el" href="a01487.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
-<tr class="memdesc:ga41a2b07d55558b9726abe28fd8431e90"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of I2C receive function for START I2C.  <a href="a01491.html#ga41a2b07d55558b9726abe28fd8431e90">More...</a><br /></td></tr>
-<tr class="separator:ga41a2b07d55558b9726abe28fd8431e90"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad4df1b6755e2d5b5d9e810371e45ca8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01491.html#gad4df1b6755e2d5b5d9e810371e45ca8c">hal_i2c_wake</a> (<a class="el" href="a01487.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:gad4df1b6755e2d5b5d9e810371e45ca8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">wake up CryptoAuth device using I2C bus  <a href="a01491.html#gad4df1b6755e2d5b5d9e810371e45ca8c">More...</a><br /></td></tr>
-<tr class="separator:gad4df1b6755e2d5b5d9e810371e45ca8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9317303ada721ff3f97e7aad69437a30"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01491.html#ga9317303ada721ff3f97e7aad69437a30">hal_i2c_idle</a> (<a class="el" href="a01487.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga9317303ada721ff3f97e7aad69437a30"><td class="mdescLeft">&#160;</td><td class="mdescRight">idle CryptoAuth device using I2C bus  <a href="a01491.html#ga9317303ada721ff3f97e7aad69437a30">More...</a><br /></td></tr>
-<tr class="separator:ga9317303ada721ff3f97e7aad69437a30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f89bae6a625d5f37abdcc99408def27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01491.html#ga3f89bae6a625d5f37abdcc99408def27">hal_i2c_sleep</a> (<a class="el" href="a01487.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga3f89bae6a625d5f37abdcc99408def27"><td class="mdescLeft">&#160;</td><td class="mdescRight">sleep CryptoAuth device using I2C bus  <a href="a01491.html#ga3f89bae6a625d5f37abdcc99408def27">More...</a><br /></td></tr>
-<tr class="separator:ga3f89bae6a625d5f37abdcc99408def27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac382cc4431d2d1c721c21a453ba36c22"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01491.html#gac382cc4431d2d1c721c21a453ba36c22">hal_i2c_release</a> (void *hal_data)</td></tr>
-<tr class="memdesc:gac382cc4431d2d1c721c21a453ba36c22"><td class="mdescLeft">&#160;</td><td class="mdescRight">manages reference count on given bus and releases resource if no more refences exist  <a href="a01491.html#gac382cc4431d2d1c721c21a453ba36c22">More...</a><br /></td></tr>
-<tr class="separator:gac382cc4431d2d1c721c21a453ba36c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f5bce4e9ee06a3b564052b2bd202c29"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga3f5bce4e9ee06a3b564052b2bd202c29">hal_kit_attach_phy</a> (<a class="el" href="a01475.html">ATCAIfaceCfg</a> *cfg, <a class="el" href="a01587.html">atca_hal_kit_phy_t</a> *phy)</td></tr>
+<tr class="memdesc:ga3f5bce4e9ee06a3b564052b2bd202c29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function that connects a physical layer context structure that will be used by the kit protocol bridge.  <a href="a01446.html#ga3f5bce4e9ee06a3b564052b2bd202c29">More...</a><br /></td></tr>
+<tr class="separator:ga3f5bce4e9ee06a3b564052b2bd202c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3a3729f4aef929ffb07347110b226e56"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga3a3729f4aef929ffb07347110b226e56">hal_kit_discover_buses</a> (int busses[], int max_buses)</td></tr>
+<tr class="memdesc:ga3a3729f4aef929ffb07347110b226e56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request a list of busses from the kit host.  <a href="a01446.html#ga3a3729f4aef929ffb07347110b226e56">More...</a><br /></td></tr>
+<tr class="separator:ga3a3729f4aef929ffb07347110b226e56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6a9e3c8dbbd2deecddaf2d8efb72fd69"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga6a9e3c8dbbd2deecddaf2d8efb72fd69">hal_kit_discover_devices</a> (int bus_num, <a class="el" href="a01475.html">ATCAIfaceCfg</a> cfg[], int *found)</td></tr>
+<tr class="memdesc:ga6a9e3c8dbbd2deecddaf2d8efb72fd69"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover any CryptoAuth devices on a given logical bus number  <a href="a01446.html#ga6a9e3c8dbbd2deecddaf2d8efb72fd69">More...</a><br /></td></tr>
+<tr class="separator:ga6a9e3c8dbbd2deecddaf2d8efb72fd69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8fb6c3e2b06667019200adb31fddaf7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga8fb6c3e2b06667019200adb31fddaf7e">hal_kit_init</a> (void *hal, <a class="el" href="a01475.html">ATCAIfaceCfg</a> *cfg)</td></tr>
+<tr class="memdesc:ga8fb6c3e2b06667019200adb31fddaf7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of Kit USB HID init.  <a href="a01446.html#ga8fb6c3e2b06667019200adb31fddaf7e">More...</a><br /></td></tr>
+<tr class="separator:ga8fb6c3e2b06667019200adb31fddaf7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7baebf1b0431d0670517d3788d63b111"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga7baebf1b0431d0670517d3788d63b111">hal_kit_post_init</a> (<a class="el" href="a01442.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:ga7baebf1b0431d0670517d3788d63b111"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of Kit HID post init.  <a href="a01446.html#ga7baebf1b0431d0670517d3788d63b111">More...</a><br /></td></tr>
+<tr class="separator:ga7baebf1b0431d0670517d3788d63b111"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga18817a4a7ab5958453eca414e28834ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga18817a4a7ab5958453eca414e28834ba">hal_kit_send</a> (<a class="el" href="a01442.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
+<tr class="memdesc:ga18817a4a7ab5958453eca414e28834ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol send over USB HID.  <a href="a01446.html#ga18817a4a7ab5958453eca414e28834ba">More...</a><br /></td></tr>
+<tr class="separator:ga18817a4a7ab5958453eca414e28834ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga239b2412c8c0d45c2097a4fa06c9aa53"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga239b2412c8c0d45c2097a4fa06c9aa53">hal_kit_receive</a> (<a class="el" href="a01442.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxsize)</td></tr>
+<tr class="memdesc:ga239b2412c8c0d45c2097a4fa06c9aa53"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of send over USB HID.  <a href="a01446.html#ga239b2412c8c0d45c2097a4fa06c9aa53">More...</a><br /></td></tr>
+<tr class="separator:ga239b2412c8c0d45c2097a4fa06c9aa53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4f7e1de3222950879d485569b9cb2ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#gad4f7e1de3222950879d485569b9cb2ca">hal_kit_wake</a> (<a class="el" href="a01442.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:gad4f7e1de3222950879d485569b9cb2ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the wake for kit protocol.  <a href="a01446.html#gad4f7e1de3222950879d485569b9cb2ca">More...</a><br /></td></tr>
+<tr class="separator:gad4f7e1de3222950879d485569b9cb2ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacfb7c91da7634631c726a2e055dcb7a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#gacfb7c91da7634631c726a2e055dcb7a3">hal_kit_idle</a> (<a class="el" href="a01442.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:gacfb7c91da7634631c726a2e055dcb7a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the idle for kit protocol.  <a href="a01446.html#gacfb7c91da7634631c726a2e055dcb7a3">More...</a><br /></td></tr>
+<tr class="separator:gacfb7c91da7634631c726a2e055dcb7a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaef40522196a760f71104be4fb6155a26"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#gaef40522196a760f71104be4fb6155a26">hal_kit_sleep</a> (<a class="el" href="a01442.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:gaef40522196a760f71104be4fb6155a26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call the sleep for kit protocol.  <a href="a01446.html#gaef40522196a760f71104be4fb6155a26">More...</a><br /></td></tr>
+<tr class="separator:gaef40522196a760f71104be4fb6155a26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafb063a58f6e3b087cf08fce5c66ee422"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#gafb063a58f6e3b087cf08fce5c66ee422">hal_kit_release</a> (void *hal_data)</td></tr>
+<tr class="memdesc:gafb063a58f6e3b087cf08fce5c66ee422"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the physical port for HID.  <a href="a01446.html#gafb063a58f6e3b087cf08fce5c66ee422">More...</a><br /></td></tr>
+<tr class="separator:gafb063a58f6e3b087cf08fce5c66ee422"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for SAMD21 I2C over START drivers. </p>
-<p>This code is structured in two parts. Part 1 is the connection of the ATCA HAL API to the physical I2C implementation. Part 2 is the START I2C primitives to set up the interface.</p>
-<p>Prerequisite: add SERCOM I2C Master Polled support to application in Atmel Studio</p>
+<div class="textblock"><p>Kit Bridging HAL for cryptoauthlib. This is not intended to be a zero copy driver. It should work with any interface that confirms to a few basic requirements: a) will accept an arbitrary number of bytes and packetize it if necessary for transmission, b) will block for the duration of the transmit. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_31789f3bb6a7bc9f44e469d16db78d19.html">cryptauthlib-v3.2.4_</a></li><li class="navelem"><a class="el" href="dir_242b332c7d8bbb6ae6998935f4a0cf12.html">lib</a></li><li class="navelem"><a class="el" href="dir_bf653adef16cb08b38a82f2c17d83945.html">hal</a></li><li class="navelem"><a class="el" href="a00428.html">hal_i2c_start.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="dir_fce061263c906406827233fc0be94ca6.html">hal</a></li><li class="navelem"><a class="el" href="a00428.html">hal_kit_bridge.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

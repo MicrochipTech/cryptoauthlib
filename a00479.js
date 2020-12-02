@@ -1,6 +1,6 @@
 var a00479 =
 [
-    [ "atca_delay_10us", "a01491.html#ga19891182689551cc3a88603135959351", null ],
-    [ "atca_delay_ms", "a01491.html#ga0544f36422b5e9a8890fb9c90fc5eb55", null ],
-    [ "atca_delay_us", "a01491.html#ga7598dfcd6dcac882836544d48356d02f", null ]
+    [ "MAX_I2C_BUSES", "a01446.html#gaf89a7a4080a47aa10a5504291db285bf", null ],
+    [ "ATCAI2CMaster_t", "a01446.html#ga06b19a932aea9cf3a5165fefacb24f7b", null ],
+    [ "change_i2c_speed", "a01446.html#gadc420e4b166a1b339d1a2687e0f12cb1", null ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_os.c File Reference</title>
+<title>CryptoAuthLib: pkcs11_session.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.4</span>
+   &#160;<span id="projectnumber">v3.2.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -87,36 +87,55 @@ $(document).ready(function(){initNavTree('a00617.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">pkcs11_os.c File Reference</div>  </div>
+<div class="title">pkcs11_session.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Library Operating System Abstraction Functions.  
+<p>PKCS11 Library Session Handling.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00620_source.html">pkcs11_os.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00650_source.html">pkcs11_util.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00389_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00512_source.html">host/atca_host.h</a>&quot;</code><br />
+<code>#include &quot;pkcs11_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00563_source.html">pkcs11_debug.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00620_source.html">pkcs11_session.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00638_source.html">pkcs11_token.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00587_source.html">pkcs11_init.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00632_source.html">pkcs11_slot.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00608_source.html">pkcs11_object.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00614_source.html">pkcs11_os.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00644_source.html">pkcs11_util.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaf5f1c5e6c5bf8d91f2090ee4bbe20362"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00656.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01495.html#gaf5f1c5e6c5bf8d91f2090ee4bbe20362">pkcs11_os_create_mutex</a> (<a class="el" href="a00656.html#ae0b1b81b8173ec1695352ff3c44f1254">CK_VOID_PTR_PTR</a> ppMutex)</td></tr>
-<tr class="memdesc:gaf5f1c5e6c5bf8d91f2090ee4bbe20362"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application callback for creating a mutex object.  <a href="a01495.html#gaf5f1c5e6c5bf8d91f2090ee4bbe20362">More...</a><br /></td></tr>
-<tr class="separator:gaf5f1c5e6c5bf8d91f2090ee4bbe20362"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0b79ce15416271adde1bb832f6faa16b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00656.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01495.html#ga0b79ce15416271adde1bb832f6faa16b">pkcs11_os_destroy_mutex</a> (<a class="el" href="a00656.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pMutex)</td></tr>
-<tr class="separator:ga0b79ce15416271adde1bb832f6faa16b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae27d029f16c6710a0a168e1d1057a4e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00656.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01495.html#gae27d029f16c6710a0a168e1d1057a4e3">pkcs11_os_lock_mutex</a> (<a class="el" href="a00656.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pMutex)</td></tr>
-<tr class="separator:gae27d029f16c6710a0a168e1d1057a4e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6f868fabdbf3e115a72e1d126e5356b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00656.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01495.html#ga6f868fabdbf3e115a72e1d126e5356b5">pkcs11_os_unlock_mutex</a> (<a class="el" href="a00656.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pMutex)</td></tr>
-<tr class="separator:ga6f868fabdbf3e115a72e1d126e5356b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga33b843d3e0cb28b80d38056f18fe9519"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00620.html#a4088a7eeba6972be68d129b499a30161">pkcs11_session_ctx_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga33b843d3e0cb28b80d38056f18fe9519">pkcs11_get_session_context</a> (<a class="el" href="a00650.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession)</td></tr>
+<tr class="separator:ga33b843d3e0cb28b80d38056f18fe9519"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7eb04614661e0cedf6cb926787f5ff9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga7eb04614661e0cedf6cb926787f5ff9b">pkcs11_session_check</a> (<a class="el" href="a00620.html#a4088a7eeba6972be68d129b499a30161">pkcs11_session_ctx_ptr</a> *pSession, <a class="el" href="a00650.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession)</td></tr>
+<tr class="memdesc:ga7eb04614661e0cedf6cb926787f5ff9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the session is initialized properly.  <a href="a01450.html#ga7eb04614661e0cedf6cb926787f5ff9b">More...</a><br /></td></tr>
+<tr class="separator:ga7eb04614661e0cedf6cb926787f5ff9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad015e297476bdc4df61870f8d1209ddb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#gad015e297476bdc4df61870f8d1209ddb">pkcs11_session_open</a> (<a class="el" href="a00650.html#a53398953158f3b452e0513a0b78a0c5a">CK_SLOT_ID</a> slotID, <a class="el" href="a00650.html#a53850492c1ba57aca4332be791a3c6a3">CK_FLAGS</a> flags, <a class="el" href="a00650.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> <a class="el" href="a00650.html#a14c9a8a037989273976dbb18424f6f66">pApplication</a>, CK_NOTIFY notify, <a class="el" href="a00650.html#aef4990311e533d6c22fad877d4c42c03">CK_SESSION_HANDLE_PTR</a> phSession)</td></tr>
+<tr class="separator:gad015e297476bdc4df61870f8d1209ddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac082a1a5af11c561af58d333414f4a27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#gac082a1a5af11c561af58d333414f4a27">pkcs11_session_close</a> (<a class="el" href="a00650.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession)</td></tr>
+<tr class="separator:gac082a1a5af11c561af58d333414f4a27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga43525e77f9049b545fa09129cacf9c9a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga43525e77f9049b545fa09129cacf9c9a">pkcs11_session_closeall</a> (<a class="el" href="a00650.html#a53398953158f3b452e0513a0b78a0c5a">CK_SLOT_ID</a> slotID)</td></tr>
+<tr class="memdesc:ga43525e77f9049b545fa09129cacf9c9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close all sessions for a given slot - not actually all open sessions.  <a href="a01450.html#ga43525e77f9049b545fa09129cacf9c9a">More...</a><br /></td></tr>
+<tr class="separator:ga43525e77f9049b545fa09129cacf9c9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga236a002e179ed36a0b81399a3e11fcb8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga236a002e179ed36a0b81399a3e11fcb8">pkcs11_session_get_info</a> (<a class="el" href="a00650.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a00650.html#a1e6e862fe5939066510cdf361fb59f8c">CK_SESSION_INFO_PTR</a> pInfo)</td></tr>
+<tr class="memdesc:ga236a002e179ed36a0b81399a3e11fcb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains information about a particular session.  <a href="a01450.html#ga236a002e179ed36a0b81399a3e11fcb8">More...</a><br /></td></tr>
+<tr class="separator:ga236a002e179ed36a0b81399a3e11fcb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4d70fd7e9799d0428c308a3e1ed146df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga4d70fd7e9799d0428c308a3e1ed146df">pkcs11_session_login</a> (<a class="el" href="a00650.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a00650.html#a727c371da3a59aba32fc006d408f80d3">CK_USER_TYPE</a> userType, <a class="el" href="a00650.html#af25c3841a3f605e6414f4c9ef5592ed9">CK_UTF8CHAR_PTR</a> pPin, <a class="el" href="a00650.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulPinLen)</td></tr>
+<tr class="separator:ga4d70fd7e9799d0428c308a3e1ed146df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafefc70d16edaf998a521daf6b8aed3e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#gafefc70d16edaf998a521daf6b8aed3e6">pkcs11_session_logout</a> (<a class="el" href="a00650.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession)</td></tr>
+<tr class="separator:gafefc70d16edaf998a521daf6b8aed3e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Library Operating System Abstraction Functions. </p>
+<div class="textblock"><p>PKCS11 Library Session Handling. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_31789f3bb6a7bc9f44e469d16db78d19.html">cryptauthlib-v3.2.4_</a></li><li class="navelem"><a class="el" href="dir_242b332c7d8bbb6ae6998935f4a0cf12.html">lib</a></li><li class="navelem"><a class="el" href="dir_aab7ca30495e81b23d36429b9580000d.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00617.html">pkcs11_os.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="dir_da4de44fd9fa8eacc46326d2e228f8d2.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00617.html">pkcs11_session.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

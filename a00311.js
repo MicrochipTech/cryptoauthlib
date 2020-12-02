@@ -1,9 +1,5 @@
 var a00311 =
 [
-    [ "calib_challenge", "a01489.html#ga527688ba64f8a45663b920ff3333bf06", null ],
-    [ "calib_challenge_seed_update", "a01489.html#ga3599eb3352da9d7dc527e5ff9935bd49", null ],
-    [ "calib_nonce", "a01489.html#gad4e9ba79d8d9d65263d8dd7d5df6fd53", null ],
-    [ "calib_nonce_base", "a01489.html#ga0e63b42b9f17b12d9296ac019f9dfd10", null ],
-    [ "calib_nonce_load", "a01489.html#ga2ec82eed30721cfed86d8c33ad8e9385", null ],
-    [ "calib_nonce_rand", "a01489.html#ga9cc318c2497c9781c42df7a9c54fe234", null ]
+    [ "calib_secureboot", "a01444.html#ga85ff79334f1b8e877c0e3bbb31d87f43", null ],
+    [ "calib_secureboot_mac", "a01444.html#ga0c79b36f050621e8df14f9804a990162", null ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_bool.h File Reference</title>
+<title>CryptoAuthLib: atca_command.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.4</span>
+   &#160;<span id="projectnumber">v3.2.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -84,25 +84,57 @@ $(document).ready(function(){initNavTree('a00152.html',''); initResizable(); });
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_bool.h File Reference</div>  </div>
+<div class="title">atca_command.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>bool define for systems that don't have it  
+<p>Microchip Crypto Auth device command object - this is a command builder only, it does not send the command. The result of a command method is a fully formed packet, ready to send to the ATCAIFace object to dispatch.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00155_source.html">atca_compiler.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00188_source.html">atca_status.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00173_source.html">atca_devtypes.h</a>&quot;</code><br />
+<code>#include &lt;stddef.h&gt;</code><br />
 </div>
 <p><a href="a00152_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01455.html">atca_command</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a01455.html" title="atca_command is the C object backing ATCACommand.">atca_command</a> is the C object backing ATCACommand.  <a href="a01455.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaebeafc249bfe2b00b6809d5c328841d9"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a01455.html">atca_command</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01440.html#gaebeafc249bfe2b00b6809d5c328841d9">ATCACommand</a></td></tr>
+<tr class="separator:gaebeafc249bfe2b00b6809d5c328841d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaf4177bd66c5981ba86511608150c024e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01440.html#gaf4177bd66c5981ba86511608150c024e">initATCACommand</a> (<a class="el" href="a01441.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a> device_type, <a class="el" href="a01440.html#gaebeafc249bfe2b00b6809d5c328841d9">ATCACommand</a> ca_cmd)</td></tr>
+<tr class="memdesc:gaf4177bd66c5981ba86511608150c024e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializer for ATCACommand.  <a href="a01440.html#gaf4177bd66c5981ba86511608150c024e">More...</a><br /></td></tr>
+<tr class="separator:gaf4177bd66c5981ba86511608150c024e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac004e4f2b9a435f9de6cea523c0e9a2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01440.html#gaebeafc249bfe2b00b6809d5c328841d9">ATCACommand</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01440.html#gac004e4f2b9a435f9de6cea523c0e9a2d">newATCACommand</a> (<a class="el" href="a01441.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a> device_type)</td></tr>
+<tr class="memdesc:gac004e4f2b9a435f9de6cea523c0e9a2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor for ATCACommand  <a href="a01440.html#gac004e4f2b9a435f9de6cea523c0e9a2d">More...</a><br /></td></tr>
+<tr class="separator:gac004e4f2b9a435f9de6cea523c0e9a2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9404883f6b81e6356862a9bb4b42d4a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01440.html#ga9404883f6b81e6356862a9bb4b42d4a9">deleteATCACommand</a> (<a class="el" href="a01440.html#gaebeafc249bfe2b00b6809d5c328841d9">ATCACommand</a> *ca_cmd)</td></tr>
+<tr class="memdesc:ga9404883f6b81e6356862a9bb4b42d4a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">ATCACommand destructor.  <a href="a01440.html#ga9404883f6b81e6356862a9bb4b42d4a9">More...</a><br /></td></tr>
+<tr class="separator:ga9404883f6b81e6356862a9bb4b42d4a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>bool define for systems that don't have it </p>
+<div class="textblock"><p>Microchip Crypto Auth device command object - this is a command builder only, it does not send the command. The result of a command method is a fully formed packet, ready to send to the ATCAIFace object to dispatch. </p>
+<p>This command object supports the ATSHA and ATECC device family. The command list is a superset of all device commands for this family. The command object differentiates the packet contents based on specific device type within the family.</p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_31789f3bb6a7bc9f44e469d16db78d19.html">cryptauthlib-v3.2.4_</a></li><li class="navelem"><a class="el" href="dir_242b332c7d8bbb6ae6998935f4a0cf12.html">lib</a></li><li class="navelem"><a class="el" href="a00152.html">atca_bool.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="a00152.html">atca_command.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

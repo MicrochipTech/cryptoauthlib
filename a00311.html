@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_nonce.c File Reference</title>
+<title>CryptoAuthLib: calib_secureboot.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.4</span>
+   &#160;<span id="projectnumber">v3.2.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -87,46 +87,35 @@ $(document).ready(function(){initNavTree('a00311.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">calib_nonce.c File Reference</div>  </div>
+<div class="title">calib_secureboot.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for Nonce command.  
+<p>CryptoAuthLib Basic API methods for SecureBoot command.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00395_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00389_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00512_source.html">host/atca_host.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga0e63b42b9f17b12d9296ac019f9dfd10"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01489.html#ga0e63b42b9f17b12d9296ac019f9dfd10">calib_nonce_base</a> (<a class="el" href="a01486.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t zero, const uint8_t *num_in, uint8_t *rand_out)</td></tr>
-<tr class="memdesc:ga0e63b42b9f17b12d9296ac019f9dfd10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Nonce command, which loads a random or fixed nonce/data into the device for use by subsequent commands.  <a href="a01489.html#ga0e63b42b9f17b12d9296ac019f9dfd10">More...</a><br /></td></tr>
-<tr class="separator:ga0e63b42b9f17b12d9296ac019f9dfd10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad4e9ba79d8d9d65263d8dd7d5df6fd53"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01489.html#gad4e9ba79d8d9d65263d8dd7d5df6fd53">calib_nonce</a> (<a class="el" href="a01486.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *num_in)</td></tr>
-<tr class="memdesc:gad4e9ba79d8d9d65263d8dd7d5df6fd53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command in pass-through mode to initialize TempKey to a specified value.  <a href="a01489.html#gad4e9ba79d8d9d65263d8dd7d5df6fd53">More...</a><br /></td></tr>
-<tr class="separator:gad4e9ba79d8d9d65263d8dd7d5df6fd53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2ec82eed30721cfed86d8c33ad8e9385"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01489.html#ga2ec82eed30721cfed86d8c33ad8e9385">calib_nonce_load</a> (<a class="el" href="a01486.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t target, const uint8_t *num_in, uint16_t num_in_size)</td></tr>
-<tr class="memdesc:ga2ec82eed30721cfed86d8c33ad8e9385"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command in pass-through mode to load one of the device's internal buffers with a fixed value.  <a href="a01489.html#ga2ec82eed30721cfed86d8c33ad8e9385">More...</a><br /></td></tr>
-<tr class="separator:ga2ec82eed30721cfed86d8c33ad8e9385"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9cc318c2497c9781c42df7a9c54fe234"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01489.html#ga9cc318c2497c9781c42df7a9c54fe234">calib_nonce_rand</a> (<a class="el" href="a01486.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *num_in, uint8_t *rand_out)</td></tr>
-<tr class="memdesc:ga9cc318c2497c9781c42df7a9c54fe234"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command to generate a random nonce combining a host nonce (num_in) and a device random number.  <a href="a01489.html#ga9cc318c2497c9781c42df7a9c54fe234">More...</a><br /></td></tr>
-<tr class="separator:ga9cc318c2497c9781c42df7a9c54fe234"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga527688ba64f8a45663b920ff3333bf06"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01489.html#ga527688ba64f8a45663b920ff3333bf06">calib_challenge</a> (<a class="el" href="a01486.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *num_in)</td></tr>
-<tr class="memdesc:ga527688ba64f8a45663b920ff3333bf06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command in pass-through mode to initialize TempKey to a specified value.  <a href="a01489.html#ga527688ba64f8a45663b920ff3333bf06">More...</a><br /></td></tr>
-<tr class="separator:ga527688ba64f8a45663b920ff3333bf06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3599eb3352da9d7dc527e5ff9935bd49"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00200.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01489.html#ga3599eb3352da9d7dc527e5ff9935bd49">calib_challenge_seed_update</a> (<a class="el" href="a01486.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *num_in, uint8_t *rand_out)</td></tr>
-<tr class="memdesc:ga3599eb3352da9d7dc527e5ff9935bd49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command to generate a random challenge combining a host nonce (num_in) and a device random number.  <a href="a01489.html#ga3599eb3352da9d7dc527e5ff9935bd49">More...</a><br /></td></tr>
-<tr class="separator:ga3599eb3352da9d7dc527e5ff9935bd49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga85ff79334f1b8e877c0e3bbb31d87f43"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01444.html#ga85ff79334f1b8e877c0e3bbb31d87f43">calib_secureboot</a> (<a class="el" href="a01441.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t param2, const uint8_t *digest, const uint8_t *signature, uint8_t *mac)</td></tr>
+<tr class="memdesc:ga85ff79334f1b8e877c0e3bbb31d87f43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Secure Boot command, which provides support for secure boot of an external MCU or MPU.  <a href="a01444.html#ga85ff79334f1b8e877c0e3bbb31d87f43">More...</a><br /></td></tr>
+<tr class="separator:ga85ff79334f1b8e877c0e3bbb31d87f43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0c79b36f050621e8df14f9804a990162"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00188.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01444.html#ga0c79b36f050621e8df14f9804a990162">calib_secureboot_mac</a> (<a class="el" href="a01441.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, const uint8_t *digest, const uint8_t *signature, const uint8_t *num_in, const uint8_t *io_key, bool *is_verified)</td></tr>
+<tr class="memdesc:ga0c79b36f050621e8df14f9804a990162"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Secure Boot command with encrypted digest and validated MAC response using the IO protection key.  <a href="a01444.html#ga0c79b36f050621e8df14f9804a990162">More...</a><br /></td></tr>
+<tr class="separator:ga0c79b36f050621e8df14f9804a990162"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for Nonce command. </p>
-<p>The Nonce command generates a nonce for use by a subsequent commands of the device by combining an internally generated random number with an input value from the system.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, and ATECC608A/B. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for SecureBoot command. </p>
+<p>The SecureBoot command provides support for secure boot of an external MCU or MPU.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC608A/B. Refer to device datasheet for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_31789f3bb6a7bc9f44e469d16db78d19.html">cryptauthlib-v3.2.4_</a></li><li class="navelem"><a class="el" href="dir_242b332c7d8bbb6ae6998935f4a0cf12.html">lib</a></li><li class="navelem"><a class="el" href="dir_35a57c75a4a655cc4b614d66c305c473.html">calib</a></li><li class="navelem"><a class="el" href="a00311.html">calib_nonce.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="dir_26a9b7cfc1c0c9d91c014cdeba9adbb8.html">calib</a></li><li class="navelem"><a class="el" href="a00311.html">calib_secureboot.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

@@ -1,6 +1,5 @@
 var a00275 =
 [
-    [ "calib_counter", "a01489.html#ga51c2df6734379b2cc2459b04d2ad4928", null ],
-    [ "calib_counter_increment", "a01489.html#gad686b27c12c150be4f499ce3b5821a8c", null ],
-    [ "calib_counter_read", "a01489.html#ga2ce6735118e98aae3bf5e53004dcb203", null ]
+    [ "ATCA_UNSUPPORTED_CMD", "a00275.html#aa025be8149d8f6e4d07aaa436b026db2", null ],
+    [ "calib_execute_command", "a00275.html#a19fc558e09f03a2f8f5ee89b1e396b2e", null ]
 ];

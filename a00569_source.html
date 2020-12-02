@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_debug.h Source File</title>
+<title>CryptoAuthLib: pkcs11_digest.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.4</span>
+   &#160;<span id="projectnumber">v3.2.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,54 +85,46 @@ $(document).ready(function(){initNavTree('a00569_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">pkcs11_debug.h</div>  </div>
+<div class="title">pkcs11_digest.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00569.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef PKCS11_DEBUG_H_</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define PKCS11_DEBUG_H_</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef PKCS11_DIGEST_H_</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define PKCS11_DIGEST_H_</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;pkcs11_config.h&quot;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00536.html">cryptoki.h</a>&quot;</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#if PKCS11_DEBUG_ENABLE</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span> * pkcs11_debug_get_ckr_name(<a class="code" href="a00656.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> rv);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a00569.html#ac2549fbb058dd2934f6a3b4bf983bfa5">pkcs11_debug_attributes</a>(<a class="code" href="a00656.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pTemplate, <a class="code" href="a00656.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulCount);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#if defined(__linux__) || defined(__CYGWIN__)</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;pthread.h&gt;</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;sys/types.h&gt;</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;sys/syscall.h&gt;</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#define PKCS11_DEBUG_NOFILE(fmt, ...) { fflush(stderr); fprintf(stderr, &quot;%d:%d:&quot; fmt, getpid(), (int)syscall(SYS_gettid), ## __VA_ARGS__); fflush(stderr); }</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#define PKCS11_DEBUG_NOFILE(fmt, ...) { printf(fmt, ## __VA_ARGS__); }</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#define PKCS11_DEBUG(fmt, ...)  PKCS11_DEBUG_NOFILE(&quot;%s:%d:&quot; fmt, __FUNCTION__, __LINE__, ## __VA_ARGS__)</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#define PKCS11_DEBUG_RETURN(x)     { CK_RV __y = x; PKCS11_DEBUG(&quot;%s(%x)\n&quot;, pkcs11_debug_get_ckr_name(__y), (unsigned int)__y); return __y; }</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="a00569.html#a747bc19e378f56f24664e615ecd996bd">   53</a></span>&#160;<span class="preprocessor">#define PKCS11_DEBUG_NOFILE(...)</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="a00569.html#a660e603d036b884434faff8d5a6bb443">   54</a></span>&#160;<span class="preprocessor">#define PKCS11_DEBUG(...)</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="a00569.html#a9c844aa5e64c02064e137f20d82f0313">   55</a></span>&#160;<span class="preprocessor">#define PKCS11_DEBUG_RETURN(x)     { return x; }</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="a00569.html#ac2549fbb058dd2934f6a3b4bf983bfa5">   56</a></span>&#160;<span class="preprocessor">#define pkcs11_debug_attributes(x, y)</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PKCS11_DEBUG_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<a class="code" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a00569.html#a903aed9c7d096dced1233a11539c781d">pkcs11_digest_init</a>(<a class="code" href="a00650.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="code" href="a00650.html#afa4c48ba8a588833ea04f0910583592e">CK_MECHANISM_PTR</a> pMechanism);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<a class="code" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a00569.html#a81936ce8429c7a97bc42921589c1522e">pkcs11_digest</a>(<a class="code" href="a00650.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="code" href="a00650.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pData, <a class="code" href="a00650.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulDataLen, <a class="code" href="a00650.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pDigest, <a class="code" href="a00650.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulDigestLen);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<a class="code" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a00569.html#a87a4b63b1a4ced5e40a1cc0bbc88599d">pkcs11_digest_update</a>(<a class="code" href="a00650.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="code" href="a00650.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pPart, <a class="code" href="a00650.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulPartLen);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<a class="code" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a00569.html#abd1c9ccc6899b550d241f007fd023d6b">pkcs11_digest_final</a>(<a class="code" href="a00650.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="code" href="a00650.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pDigest, <a class="code" href="a00650.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulDigestLen);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PKCS11_DIGEST_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aa00656_html_a35181858a3b7a0a81f49d180d8f446ef"><div class="ttname"><a href="a00656.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a></div><div class="ttdeci">unsigned long int CK_ULONG</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:49</div></div>
-<div class="ttc" id="aa00569_html_ac2549fbb058dd2934f6a3b4bf983bfa5"><div class="ttname"><a href="a00569.html#ac2549fbb058dd2934f6a3b4bf983bfa5">pkcs11_debug_attributes</a></div><div class="ttdeci">#define pkcs11_debug_attributes(x, y)</div><div class="ttdef"><b>Definition:</b> pkcs11_debug.h:56</div></div>
-<div class="ttc" id="aa00656_html_a33839c131011ca3849dc35c11f69c39d"><div class="ttname"><a href="a00656.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a></div><div class="ttdeci">CK_ULONG CK_RV</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:1046</div></div>
-<div class="ttc" id="aa00656_html_a5e825285ada96a9920d361d33698ce04"><div class="ttname"><a href="a00656.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a></div><div class="ttdeci">CK_ATTRIBUTE CK_PTR CK_ATTRIBUTE_PTR</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:577</div></div>
+<div class="ttc" id="aa00569_html_a81936ce8429c7a97bc42921589c1522e"><div class="ttname"><a href="a00569.html#a81936ce8429c7a97bc42921589c1522e">pkcs11_digest</a></div><div class="ttdeci">CK_RV pkcs11_digest(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pDigest, CK_ULONG_PTR pulDigestLen)</div><div class="ttdoc">Digest the specified data in a one-pass operation and return the resulting digest.</div><div class="ttdef"><b>Definition:</b> pkcs11_digest.c:61</div></div>
+<div class="ttc" id="aa00650_html_a35181858a3b7a0a81f49d180d8f446ef"><div class="ttname"><a href="a00650.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a></div><div class="ttdeci">unsigned long int CK_ULONG</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:49</div></div>
+<div class="ttc" id="aa00650_html_a33839c131011ca3849dc35c11f69c39d"><div class="ttname"><a href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a></div><div class="ttdeci">CK_ULONG CK_RV</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:1046</div></div>
+<div class="ttc" id="aa00569_html_a903aed9c7d096dced1233a11539c781d"><div class="ttname"><a href="a00569.html#a903aed9c7d096dced1233a11539c781d">pkcs11_digest_init</a></div><div class="ttdeci">CK_RV pkcs11_digest_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism)</div><div class="ttdoc">Initializes a message-digesting operation using the specified mechanism in the specified session.</div><div class="ttdef"><b>Definition:</b> pkcs11_digest.c:18</div></div>
+<div class="ttc" id="aa00650_html_a5a263e303e42c8b2f3bc08315e34fc4f"><div class="ttname"><a href="a00650.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a></div><div class="ttdeci">CK_ULONG CK_SESSION_HANDLE</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:261</div></div>
+<div class="ttc" id="aa00569_html_abd1c9ccc6899b550d241f007fd023d6b"><div class="ttname"><a href="a00569.html#abd1c9ccc6899b550d241f007fd023d6b">pkcs11_digest_final</a></div><div class="ttdeci">CK_RV pkcs11_digest_final(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pDigest, CK_ULONG_PTR pulDigestLen)</div><div class="ttdoc">Finishes a multiple-part digesting operation.</div><div class="ttdef"><b>Definition:</b> pkcs11_digest.c:162</div></div>
+<div class="ttc" id="aa00650_html_a3d7233a4077fbaf7ae76b64da0a62a21"><div class="ttname"><a href="a00650.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a></div><div class="ttdeci">CK_BYTE CK_PTR CK_BYTE_PTR</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:63</div></div>
+<div class="ttc" id="aa00650_html_afa4c48ba8a588833ea04f0910583592e"><div class="ttname"><a href="a00650.html#afa4c48ba8a588833ea04f0910583592e">CK_MECHANISM_PTR</a></div><div class="ttdeci">CK_MECHANISM CK_PTR CK_MECHANISM_PTR</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:998</div></div>
+<div class="ttc" id="aa00650_html_af18ced3aa6adcd9f76ae8c132ed2eeb9"><div class="ttname"><a href="a00650.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a></div><div class="ttdeci">CK_ULONG CK_PTR CK_ULONG_PTR</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:66</div></div>
+<div class="ttc" id="aa00536_html"><div class="ttname"><a href="a00536.html">cryptoki.h</a></div></div>
+<div class="ttc" id="aa00569_html_a87a4b63b1a4ced5e40a1cc0bbc88599d"><div class="ttname"><a href="a00569.html#a87a4b63b1a4ced5e40a1cc0bbc88599d">pkcs11_digest_update</a></div><div class="ttdeci">CK_RV pkcs11_digest_update(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen)</div><div class="ttdoc">Continues a multiple-part digesting operation.</div><div class="ttdef"><b>Definition:</b> pkcs11_digest.c:118</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_31789f3bb6a7bc9f44e469d16db78d19.html">cryptauthlib-v3.2.4_</a></li><li class="navelem"><a class="el" href="dir_242b332c7d8bbb6ae6998935f4a0cf12.html">lib</a></li><li class="navelem"><a class="el" href="dir_aab7ca30495e81b23d36429b9580000d.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00569.html">pkcs11_debug.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="dir_da4de44fd9fa8eacc46326d2e228f8d2.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00569.html">pkcs11_digest.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>
