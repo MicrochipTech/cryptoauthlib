@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project (cryptoauth_test)
+project (cryptoauth_test C)
 
 option (ATCA_TEST_LOCK_ENABLE "Enable device locking functions and tests" OFF)
 

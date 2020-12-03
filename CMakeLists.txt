@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6.4)
-project (cryptoauthlib)
+project (cryptoauthlib C)
 
 # Set the current release version
 set(VERSION "3.2.5")

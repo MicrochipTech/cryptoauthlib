@@ -65,7 +65,7 @@ try:
     lib = cdll.LoadLibrary('libcryptoauth.so')
     # Test to ensure it has the required features to support the
     # python wrapper. It may change later to a version check
-    assert 0 != lib.ATCAIfacecfg_size
+    assert 0 != lib.ATCAIfaceCfg_size
     _EXTENSIONS = None
 except:
     _EXTENSIONS = [Extension('cryptoauthlib', sources=[])]

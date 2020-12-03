@@ -142,7 +142,9 @@ ATCA_STATUS hal_create_mutex(void ** ppMutex, char* pName)
         pthread_mutexattr_t muattr;
         pthread_mutexattr_init(&muattr);
         pthread_mutexattr_settype(&muattr, PTHREAD_MUTEX_ERRORCHECK);
+#ifdef PTHREAD_PRIO_INHERIT
         pthread_mutexattr_setprotocol(&muattr, PTHREAD_PRIO_INHERIT);
+#endif
         pthread_mutexattr_setrobust(&muattr, PTHREAD_MUTEX_ROBUST);
         if (pName)
         {
