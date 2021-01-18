@@ -243,11 +243,7 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
         {
             if (64 != ulPinLen)
             {
-                if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
-                {
-                    rv = pkcs11_util_convert_rv(atcab_read_serial_number(buf));
-                    (void)pkcs11_unlock_context(pLibCtx);
-                }
+                rv = pkcs11_util_convert_rv(atcab_read_serial_number(buf));
 
                 if (CKR_OK == rv)
                 {
