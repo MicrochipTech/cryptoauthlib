@@ -123,6 +123,7 @@ class CryptoAuthCommandBuildExt(build_ext):
         # Suppress cmake output
         devnull = open(os.devnull, 'r+b')
         nousb = bool(os.environ.get('CRYPTOAUTHLIB_NOUSB', False))
+        cmake_gen = os.environ.get('CMAKE_GEN', None)
 
         # Check if CMAKE is installed
         try:
@@ -158,6 +159,8 @@ class CryptoAuthCommandBuildExt(build_ext):
                           '-DCMAKE_RUNTIME_OUTPUT_DIRECTORY_%s=' % cfg.upper() + extdir]
             if sys.maxsize > 2**32:
                 cmake_args += ['-A', 'x64']
+            if cmake_gen is not None:
+                cmake_args += ['-G', '"{}"'.format(cmake_gen)]
         else:
             cmake_args += ['-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=' + extdir]
 
