@@ -125,7 +125,7 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
 {
 #if PKCS11_TOKEN_INIT_SUPPORT
     CK_RV rv;
-    uint8_t buf[34] = {0};
+    uint8_t buf[32] = {0};
     uint8_t * pConfig = NULL;
     bool lock = false;
     pkcs11_lib_ctx_ptr pLibCtx;
@@ -242,11 +242,7 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
         {
             if (64 != ulPinLen)
             {
-                if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
-                {
                     rv = pkcs11_util_convert_rv(atcab_read_serial_number(buf));
-                    (void)pkcs11_unlock_context(pLibCtx);
-                }
 
                 if (CKR_OK == rv)
                 {
@@ -259,7 +255,7 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
                 rv = pkcs11_token_convert_pin_to_key(pPin, ulPinLen, NULL, 0, buf, buflen);
             }
 
-            if (CKR_OK == rv)
+            if ((CKR_OK == rv) && (pSlotCtx->so_pin_handle != 0xFFFF))
             {
                 if (atcab_is_ca_device(pSlotCtx->interface_config.devtype))
                 {
@@ -581,7 +577,7 @@ CK_RV pkcs11_token_convert_pin_to_key(
 {
     ATCA_STATUS status = ATCA_SUCCESS;
 
-    if (!pPin || !ulPinLen || !pKey || 32 != ulKeyLen)
+    if (!pPin || !ulPinLen || !pKey || 32 > ulKeyLen)
     {
         return CKR_ARGUMENTS_BAD;
     }
