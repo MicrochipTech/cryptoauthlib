@@ -1,12 +1,11 @@
 var a00242 =
 [
-    [ "RETURN", "a00242.html#a6a0e6b80dd3d5ca395cf58151749f5e2", null ],
-    [ "calib_aes_gcm_aad_update", "a00242.html#a465c622e2dc00fa7d6b12e72b5e18163", null ],
-    [ "calib_aes_gcm_decrypt_finish", "a00242.html#a503c84eaf2b95e3524477e366ad31fb7", null ],
-    [ "calib_aes_gcm_decrypt_update", "a00242.html#a689c84bd0d7b914a551763d2e9bf8995", null ],
-    [ "calib_aes_gcm_encrypt_finish", "a00242.html#a405cedf561a767000251a76088f2d63f", null ],
-    [ "calib_aes_gcm_encrypt_update", "a00242.html#a5403947bb6b0caa35d77a555493a10d9", null ],
-    [ "calib_aes_gcm_init", "a00242.html#a049b1d6c0e21e011a90c783fbc2932be", null ],
-    [ "calib_aes_gcm_init_rand", "a00242.html#a6f2bb3db5006b0b7fd1f4c48a167f6af", null ],
-    [ "atca_basic_aes_gcm_version", "a01444.html#gaa5990c6c2a55759960d25a1f8ad1973d", null ]
+    [ "_calib_exit", "a01521.html#ga2167248c704fb8d6864760c066bec13b", null ],
+    [ "calib_ecc204_get_addr", "a01521.html#ga6c9404e7b3b4a42c67080b84610352ca", null ],
+    [ "calib_get_addr", "a01521.html#gae51a67781e9e4618e669db1c999e6ec2", null ],
+    [ "calib_get_zone_size", "a01521.html#ga023735b1c0b10e70832d9a957bc99ae3", null ],
+    [ "calib_idle", "a01521.html#ga59750d83d93368b2944f57bb38bf4d1f", null ],
+    [ "calib_sleep", "a01521.html#gad26b70951a0da6d80fb98027faae7a1f", null ],
+    [ "calib_wakeup", "a01521.html#gafbc037d57a4cc4fec6a2f291736170cb", null ],
+    [ "calib_wakeup_i2c", "a00242.html#a884790e08be94431e1fbe92bf6106e06", null ]
 ];

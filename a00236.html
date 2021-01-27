@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_pem.h File Reference</title>
+<title>CryptoAuthLib: calib_aes_gcm.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.5</span>
+   &#160;<span id="projectnumber">v3.3.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -84,106 +84,56 @@ $(document).ready(function(){initNavTree('a00236.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atcacert_pem.h File Reference</div>  </div>
+<div class="title">calib_aes_gcm.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Functions for converting between DER and PEM formats.  
+<p>CryptoAuthLib Basic API methods for AES GCM mode.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
-</div>
-<p><a href="a00236_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:aefb573f85f8692759f6c82587a948d71"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html#aefb573f85f8692759f6c82587a948d71">PEM_CERT_BEGIN</a>&#160;&#160;&#160;&quot;-----BEGIN CERTIFICATE-----&quot;</td></tr>
-<tr class="separator:aefb573f85f8692759f6c82587a948d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbe03d95d1d6a651c01d1ef74daa4063"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html#afbe03d95d1d6a651c01d1ef74daa4063">PEM_CERT_END</a>&#160;&#160;&#160;&quot;-----END CERTIFICATE-----&quot;</td></tr>
-<tr class="separator:afbe03d95d1d6a651c01d1ef74daa4063"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a006df03d5e86c2d586f02362ca66566e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html#a006df03d5e86c2d586f02362ca66566e">PEM_CSR_BEGIN</a>&#160;&#160;&#160;&quot;-----BEGIN CERTIFICATE REQUEST-----&quot;</td></tr>
-<tr class="separator:a006df03d5e86c2d586f02362ca66566e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7521d8913a097b0a910d00fdb664210"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html#ad7521d8913a097b0a910d00fdb664210">PEM_CSR_END</a>&#160;&#160;&#160;&quot;-----END CERTIFICATE REQUEST-----&quot;</td></tr>
-<tr class="separator:ad7521d8913a097b0a910d00fdb664210"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:abd464bace94353a8ff767e5a9bdc66ce"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html#abd464bace94353a8ff767e5a9bdc66ce">atcacert_encode_pem</a> (const uint8_t *der, size_t der_size, char *pem, size_t *pem_size, const char *header, const char *footer)</td></tr>
-<tr class="memdesc:abd464bace94353a8ff767e5a9bdc66ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode a DER data in PEM format.  <a href="a00236.html#abd464bace94353a8ff767e5a9bdc66ce">More...</a><br /></td></tr>
-<tr class="separator:abd464bace94353a8ff767e5a9bdc66ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67998c5401898020391dc6f02b11d2bd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html#a67998c5401898020391dc6f02b11d2bd">atcacert_decode_pem</a> (const char *pem, size_t pem_size, uint8_t *der, size_t *der_size, const char *header, const char *footer)</td></tr>
-<tr class="memdesc:a67998c5401898020391dc6f02b11d2bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode PEM data into DER format.  <a href="a00236.html#a67998c5401898020391dc6f02b11d2bd">More...</a><br /></td></tr>
-<tr class="separator:a67998c5401898020391dc6f02b11d2bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f893d8f40bc8126a3802ad435bba895"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html#a5f893d8f40bc8126a3802ad435bba895">atcacert_encode_pem_cert</a> (const uint8_t *der_cert, size_t der_cert_size, char *pem_cert, size_t *pem_cert_size)</td></tr>
-<tr class="memdesc:a5f893d8f40bc8126a3802ad435bba895"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode a DER certificate in PEM format.  <a href="a00236.html#a5f893d8f40bc8126a3802ad435bba895">More...</a><br /></td></tr>
-<tr class="separator:a5f893d8f40bc8126a3802ad435bba895"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47e68bdf906458409c7eff1aed0dff3a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html#a47e68bdf906458409c7eff1aed0dff3a">atcacert_decode_pem_cert</a> (const char *pem_cert, size_t pem_cert_size, uint8_t *der_cert, size_t *der_cert_size)</td></tr>
-<tr class="memdesc:a47e68bdf906458409c7eff1aed0dff3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode a PEM certificate into DER format.  <a href="a00236.html#a47e68bdf906458409c7eff1aed0dff3a">More...</a><br /></td></tr>
-<tr class="separator:a47e68bdf906458409c7eff1aed0dff3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab148948a885c6a7c9c95494e48e45cb1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html#ab148948a885c6a7c9c95494e48e45cb1">atcacert_encode_pem_csr</a> (const uint8_t *der_csr, size_t der_csr_size, char *pem_csr, size_t *pem_csr_size)</td></tr>
-<tr class="memdesc:ab148948a885c6a7c9c95494e48e45cb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode a DER CSR in PEM format.  <a href="a00236.html#ab148948a885c6a7c9c95494e48e45cb1">More...</a><br /></td></tr>
-<tr class="separator:ab148948a885c6a7c9c95494e48e45cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbccc09407aeb4d7b626b28da120211a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html#afbccc09407aeb4d7b626b28da120211a">atcacert_decode_pem_csr</a> (const char *pem_csr, size_t pem_csr_size, uint8_t *der_csr, size_t *der_csr_size)</td></tr>
-<tr class="memdesc:afbccc09407aeb4d7b626b28da120211a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract the CSR certificate bytes from a PEM encoded CSR certificate.  <a href="a00236.html#afbccc09407aeb4d7b626b28da120211a">More...</a><br /></td></tr>
-<tr class="separator:afbccc09407aeb4d7b626b28da120211a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00383_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00239_source.html">calib_aes_gcm.h</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="memitem:a6a0e6b80dd3d5ca395cf58151749f5e2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html#a6a0e6b80dd3d5ca395cf58151749f5e2">RETURN</a>&#160;&#160;&#160;return <a class="el" href="a00383.html#a0831fc28e099b0f18c3a3c23a7d41df1">ATCA_TRACE</a></td></tr>
+<tr class="separator:a6a0e6b80dd3d5ca395cf58151749f5e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa5990c6c2a55759960d25a1f8ad1973d"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01521.html#gaa5990c6c2a55759960d25a1f8ad1973d">atca_basic_aes_gcm_version</a> = &quot;2.0&quot;</td></tr>
+<tr class="separator:gaa5990c6c2a55759960d25a1f8ad1973d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a049b1d6c0e21e011a90c783fbc2932be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html#a049b1d6c0e21e011a90c783fbc2932be">calib_aes_gcm_init</a> (<a class="el" href="a01518.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a01516.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block, const uint8_t *iv, size_t iv_size)</td></tr>
+<tr class="memdesc:a049b1d6c0e21e011a90c783fbc2932be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for AES GCM operation with an existing IV, which is common when starting a decrypt operation.  <a href="a00236.html#a049b1d6c0e21e011a90c783fbc2932be">More...</a><br /></td></tr>
+<tr class="separator:a049b1d6c0e21e011a90c783fbc2932be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f2bb3db5006b0b7fd1f4c48a167f6af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html#a6f2bb3db5006b0b7fd1f4c48a167f6af">calib_aes_gcm_init_rand</a> (<a class="el" href="a01518.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a01516.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block, size_t rand_size, const uint8_t *free_field, size_t free_field_size, uint8_t *iv)</td></tr>
+<tr class="memdesc:a6f2bb3db5006b0b7fd1f4c48a167f6af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for AES GCM operation with a IV composed of a random and optional fixed(free) field, which is common when starting an encrypt operation.  <a href="a00236.html#a6f2bb3db5006b0b7fd1f4c48a167f6af">More...</a><br /></td></tr>
+<tr class="separator:a6f2bb3db5006b0b7fd1f4c48a167f6af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a465c622e2dc00fa7d6b12e72b5e18163"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html#a465c622e2dc00fa7d6b12e72b5e18163">calib_aes_gcm_aad_update</a> (<a class="el" href="a01518.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a01516.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *ctx, const uint8_t *aad, uint32_t aad_size)</td></tr>
+<tr class="memdesc:a465c622e2dc00fa7d6b12e72b5e18163"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process Additional Authenticated Data (AAD) using GCM mode and a key within the ATECC608 device.  <a href="a00236.html#a465c622e2dc00fa7d6b12e72b5e18163">More...</a><br /></td></tr>
+<tr class="separator:a465c622e2dc00fa7d6b12e72b5e18163"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5403947bb6b0caa35d77a555493a10d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html#a5403947bb6b0caa35d77a555493a10d9">calib_aes_gcm_encrypt_update</a> (<a class="el" href="a01518.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a01516.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *ctx, const uint8_t *plaintext, uint32_t plaintext_size, uint8_t *ciphertext)</td></tr>
+<tr class="memdesc:a5403947bb6b0caa35d77a555493a10d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypt data using GCM mode and a key within the ATECC608 device. <a class="el" href="a01516.html#ga4805112b62e86b5465e24648504dc374" title="Initialize context for AES GCM operation with an existing IV, which is common when starting a decrypt...">atcab_aes_gcm_init()</a> or <a class="el" href="a01516.html#gad71a5720ceaddf2c76476aead5f0c3e6" title="Initialize context for AES GCM operation with a IV composed of a random and optional fixed(free) fiel...">atcab_aes_gcm_init_rand()</a> should be called before the first use of this function.  <a href="a00236.html#a5403947bb6b0caa35d77a555493a10d9">More...</a><br /></td></tr>
+<tr class="separator:a5403947bb6b0caa35d77a555493a10d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a405cedf561a767000251a76088f2d63f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html#a405cedf561a767000251a76088f2d63f">calib_aes_gcm_encrypt_finish</a> (<a class="el" href="a01518.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a01516.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *ctx, uint8_t *tag, size_t tag_size)</td></tr>
+<tr class="memdesc:a405cedf561a767000251a76088f2d63f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete a GCM encrypt operation returning the authentication tag.  <a href="a00236.html#a405cedf561a767000251a76088f2d63f">More...</a><br /></td></tr>
+<tr class="separator:a405cedf561a767000251a76088f2d63f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a689c84bd0d7b914a551763d2e9bf8995"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html#a689c84bd0d7b914a551763d2e9bf8995">calib_aes_gcm_decrypt_update</a> (<a class="el" href="a01518.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a01516.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *ctx, const uint8_t *ciphertext, uint32_t ciphertext_size, uint8_t *plaintext)</td></tr>
+<tr class="memdesc:a689c84bd0d7b914a551763d2e9bf8995"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypt data using GCM mode and a key within the ATECC608 device. <a class="el" href="a01516.html#ga4805112b62e86b5465e24648504dc374" title="Initialize context for AES GCM operation with an existing IV, which is common when starting a decrypt...">atcab_aes_gcm_init()</a> or <a class="el" href="a01516.html#gad71a5720ceaddf2c76476aead5f0c3e6" title="Initialize context for AES GCM operation with a IV composed of a random and optional fixed(free) fiel...">atcab_aes_gcm_init_rand()</a> should be called before the first use of this function.  <a href="a00236.html#a689c84bd0d7b914a551763d2e9bf8995">More...</a><br /></td></tr>
+<tr class="separator:a689c84bd0d7b914a551763d2e9bf8995"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a503c84eaf2b95e3524477e366ad31fb7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html#a503c84eaf2b95e3524477e366ad31fb7">calib_aes_gcm_decrypt_finish</a> (<a class="el" href="a01518.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a01516.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *ctx, const uint8_t *tag, size_t tag_size, bool *is_verified)</td></tr>
+<tr class="memdesc:a503c84eaf2b95e3524477e366ad31fb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete a GCM decrypt operation verifying the authentication tag.  <a href="a00236.html#a503c84eaf2b95e3524477e366ad31fb7">More...</a><br /></td></tr>
+<tr class="separator:a503c84eaf2b95e3524477e366ad31fb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Functions for converting between DER and PEM formats. </p>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for AES GCM mode. </p>
+<p>The AES command supports 128-bit AES encryption or decryption of small messages or data packets in ECB mode. Also can perform GFM (Galois Field Multiply) calculation in support of AES-GCM.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC608A/B. Refer to device datasheet for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="aefb573f85f8692759f6c82587a948d71"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aefb573f85f8692759f6c82587a948d71">&#9670;&nbsp;</a></span>PEM_CERT_BEGIN</h2>
+<a id="a6a0e6b80dd3d5ca395cf58151749f5e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a0e6b80dd3d5ca395cf58151749f5e2">&#9670;&nbsp;</a></span>RETURN</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define PEM_CERT_BEGIN&#160;&#160;&#160;&quot;-----BEGIN CERTIFICATE-----&quot;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="afbe03d95d1d6a651c01d1ef74daa4063"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbe03d95d1d6a651c01d1ef74daa4063">&#9670;&nbsp;</a></span>PEM_CERT_END</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PEM_CERT_END&#160;&#160;&#160;&quot;-----END CERTIFICATE-----&quot;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a006df03d5e86c2d586f02362ca66566e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a006df03d5e86c2d586f02362ca66566e">&#9670;&nbsp;</a></span>PEM_CSR_BEGIN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PEM_CSR_BEGIN&#160;&#160;&#160;&quot;-----BEGIN CERTIFICATE REQUEST-----&quot;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad7521d8913a097b0a910d00fdb664210"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad7521d8913a097b0a910d00fdb664210">&#9670;&nbsp;</a></span>PEM_CSR_END</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PEM_CSR_END&#160;&#160;&#160;&quot;-----END CERTIFICATE REQUEST-----&quot;</td>
+          <td class="memname">#define RETURN&#160;&#160;&#160;return <a class="el" href="a00383.html#a0831fc28e099b0f18c3a3c23a7d41df1">ATCA_TRACE</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -191,47 +141,153 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a67998c5401898020391dc6f02b11d2bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67998c5401898020391dc6f02b11d2bd">&#9670;&nbsp;</a></span>atcacert_decode_pem()</h2>
+<a id="a465c622e2dc00fa7d6b12e72b5e18163"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a465c622e2dc00fa7d6b12e72b5e18163">&#9670;&nbsp;</a></span>calib_aes_gcm_aad_update()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int atcacert_decode_pem </td>
+          <td class="memname"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_aes_gcm_aad_update </td>
           <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>pem</em>, </td>
+          <td class="paramtype"><a class="el" href="a01518.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a01516.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>aad</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>aad_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Process Additional Authenticated Data (AAD) using GCM mode and a key within the ATECC608 device. </p>
+<p>This can be called multiple times. <a class="el" href="a01516.html#ga4805112b62e86b5465e24648504dc374" title="Initialize context for AES GCM operation with an existing IV, which is common when starting a decrypt...">atcab_aes_gcm_init()</a> or <a class="el" href="a01516.html#gad71a5720ceaddf2c76476aead5f0c3e6" title="Initialize context for AES GCM operation with a IV composed of a random and optional fixed(free) fiel...">atcab_aes_gcm_init_rand()</a> should be called before the first use of this function. When there is AAD to include, this should be called before <a class="el" href="a01516.html#gab3fda8219d17d1b7bc50b1040399a47d" title="Encrypt data using GCM mode and a key within the ATECC608 device. atcab_aes_gcm_init() or atcab_aes_g...">atcab_aes_gcm_encrypt_update()</a> or <a class="el" href="a01516.html#ga2ad3270d8bebf6172dc02d0c7d9fb738" title="Decrypt data using GCM mode and a key within the ATECC608 device. atcab_aes_gcm_init() or atcab_aes_g...">atcab_aes_gcm_decrypt_update()</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>AES GCM context </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">aad</td><td>Additional authenticated data to be added </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">aad_size</td><td>Size of aad in bytes</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="a503c84eaf2b95e3524477e366ad31fb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a503c84eaf2b95e3524477e366ad31fb7">&#9670;&nbsp;</a></span>calib_aes_gcm_decrypt_finish()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_aes_gcm_decrypt_finish </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01518.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a01516.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>tag</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>pem_size</em>, </td>
+          <td class="paramname"><em>tag_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool *&#160;</td>
+          <td class="paramname"><em>is_verified</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Complete a GCM decrypt operation verifying the authentication tag. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>AES GCM context structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tag</td><td>Expected authentication tag. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tag_size</td><td>Size of tag in bytes (12 to 16 bytes). </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">is_verified</td><td>Returns whether or not the tag verified.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="a689c84bd0d7b914a551763d2e9bf8995"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a689c84bd0d7b914a551763d2e9bf8995">&#9670;&nbsp;</a></span>calib_aes_gcm_decrypt_update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_aes_gcm_decrypt_update </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01518.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a01516.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>ciphertext_size</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>der</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>der_size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>header</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>footer</em>&#160;</td>
+          <td class="paramname"><em>plaintext</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -241,15 +297,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decode PEM data into DER format. </p>
+<p>Decrypt data using GCM mode and a key within the ATECC608 device. <a class="el" href="a01516.html#ga4805112b62e86b5465e24648504dc374" title="Initialize context for AES GCM operation with an existing IV, which is common when starting a decrypt...">atcab_aes_gcm_init()</a> or <a class="el" href="a01516.html#gad71a5720ceaddf2c76476aead5f0c3e6" title="Initialize context for AES GCM operation with a IV composed of a random and optional fixed(free) fiel...">atcab_aes_gcm_init_rand()</a> should be called before the first use of this function. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pem</td><td>PEM data to decode to DER. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pem_size</td><td>PEM data size in bytes. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">der</td><td>DER data is returned here. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">der_size</td><td>As input, the size of the der buffer. As output, the size of the DER data. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">header</td><td>Header to find the beginning of the PEM data. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">footer</td><td>Footer to find the end of the PEM data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>AES GCM context structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ciphertext</td><td>Ciphertext to be decrypted. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ciphertext_size</td><td>Size of ciphertext in bytes. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Decrypted data is returned here.</td></tr>
   </table>
   </dd>
 </dl>
@@ -257,35 +312,35 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a47e68bdf906458409c7eff1aed0dff3a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a47e68bdf906458409c7eff1aed0dff3a">&#9670;&nbsp;</a></span>atcacert_decode_pem_cert()</h2>
+<a id="a405cedf561a767000251a76088f2d63f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a405cedf561a767000251a76088f2d63f">&#9670;&nbsp;</a></span>calib_aes_gcm_encrypt_finish()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int atcacert_decode_pem_cert </td>
+          <td class="memname"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_aes_gcm_encrypt_finish </td>
           <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>pem_cert</em>, </td>
+          <td class="paramtype"><a class="el" href="a01518.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>pem_cert_size</em>, </td>
+          <td class="paramtype"><a class="el" href="a01516.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>der_cert</em>, </td>
+          <td class="paramname"><em>tag</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>der_cert_size</em>&#160;</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>tag_size</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -295,13 +350,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decode a PEM certificate into DER format. </p>
+<p>Complete a GCM encrypt operation returning the authentication tag. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pem_cert</td><td>PEM certificate to decode to DER. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pem_cert_size</td><td>PEM certificate size in bytes. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">der_cert</td><td>DER certificate is returned here. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">der_cert_size</td><td>As input, the size of the der_cert buffer. As output, the size of the DER certificate. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>AES GCM context structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">tag</td><td>Authentication tag is returned here. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tag_size</td><td>Tag size in bytes (12 to 16 bytes).</td></tr>
   </table>
   </dd>
 </dl>
@@ -309,35 +364,41 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="afbccc09407aeb4d7b626b28da120211a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbccc09407aeb4d7b626b28da120211a">&#9670;&nbsp;</a></span>atcacert_decode_pem_csr()</h2>
+<a id="a5403947bb6b0caa35d77a555493a10d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5403947bb6b0caa35d77a555493a10d9">&#9670;&nbsp;</a></span>calib_aes_gcm_encrypt_update()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int atcacert_decode_pem_csr </td>
+          <td class="memname"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_aes_gcm_encrypt_update </td>
           <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>pem_csr</em>, </td>
+          <td class="paramtype"><a class="el" href="a01518.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>pem_csr_size</em>, </td>
+          <td class="paramtype"><a class="el" href="a01516.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>plaintext_size</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>der_csr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>der_csr_size</em>&#160;</td>
+          <td class="paramname"><em>ciphertext</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -347,13 +408,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Extract the CSR certificate bytes from a PEM encoded CSR certificate. </p>
+<p>Encrypt data using GCM mode and a key within the ATECC608 device. <a class="el" href="a01516.html#ga4805112b62e86b5465e24648504dc374" title="Initialize context for AES GCM operation with an existing IV, which is common when starting a decrypt...">atcab_aes_gcm_init()</a> or <a class="el" href="a01516.html#gad71a5720ceaddf2c76476aead5f0c3e6" title="Initialize context for AES GCM operation with a IV composed of a random and optional fixed(free) fiel...">atcab_aes_gcm_init_rand()</a> should be called before the first use of this function. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pem_csr</td><td>PEM CSR to decode to DER. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pem_csr_size</td><td>PEM CSR size in bytes. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">der_csr</td><td>DER CSR is returned here. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">der_csr_size</td><td>As input, the size of the der_csr buffer. As output, the size of the DER CSR. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>AES GCM context structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">plaintext</td><td>Plaintext to be encrypted (16 bytes). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">plaintext_size</td><td>Size of plaintext in bytes. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Encrypted data is returned here.</td></tr>
   </table>
   </dd>
 </dl>
@@ -361,47 +423,47 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="abd464bace94353a8ff767e5a9bdc66ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd464bace94353a8ff767e5a9bdc66ce">&#9670;&nbsp;</a></span>atcacert_encode_pem()</h2>
+<a id="a049b1d6c0e21e011a90c783fbc2932be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a049b1d6c0e21e011a90c783fbc2932be">&#9670;&nbsp;</a></span>calib_aes_gcm_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int atcacert_encode_pem </td>
+          <td class="memname"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_aes_gcm_init </td>
           <td>(</td>
+          <td class="paramtype"><a class="el" href="a01518.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a01516.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>key_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>key_block</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>der</em>, </td>
+          <td class="paramname"><em>iv</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>der_size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>pem</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>pem_size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>header</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>footer</em>&#160;</td>
+          <td class="paramname"><em>iv_size</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -411,15 +473,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encode a DER data in PEM format. </p>
+<p>Initialize context for AES GCM operation with an existing IV, which is common when starting a decrypt operation. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">der</td><td>DER data to be encoded as PEM. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">der_size</td><td>DER data size in bytes. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pem</td><td>PEM encoded data is returned here. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">pem_size</td><td>As input, the size of the pem buffer. As output, the size of the PEM data. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">header</td><td>Header to place at the beginning of the PEM data. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">footer</td><td>Footer to place at the end of the PEM data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>AES GCM context to be initialized. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key_id</td><td>Key location. Can either be a slot number or ATCA_TEMPKEY_KEYID for TempKey. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key_block</td><td>Index of the 16-byte block to use within the key location for the actual key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">iv</td><td>Initialization vector. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">iv_size</td><td>Size of IV in bytes. Standard is 12 bytes.</td></tr>
   </table>
   </dd>
 </dl>
@@ -427,35 +489,59 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a5f893d8f40bc8126a3802ad435bba895"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5f893d8f40bc8126a3802ad435bba895">&#9670;&nbsp;</a></span>atcacert_encode_pem_cert()</h2>
+<a id="a6f2bb3db5006b0b7fd1f4c48a167f6af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f2bb3db5006b0b7fd1f4c48a167f6af">&#9670;&nbsp;</a></span>calib_aes_gcm_init_rand()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int atcacert_encode_pem_cert </td>
+          <td class="memname"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_aes_gcm_init_rand </td>
           <td>(</td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>der_cert</em>, </td>
+          <td class="paramtype"><a class="el" href="a01518.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a01516.html#ga6105ecbb8ccbbbc50a0bca14d2d51718">atca_aes_gcm_ctx_t</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>key_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>key_block</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>der_cert_size</em>, </td>
+          <td class="paramname"><em>rand_size</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>pem_cert</em>, </td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>free_field</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>pem_cert_size</em>&#160;</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>free_field_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>iv</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -465,65 +551,17 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encode a DER certificate in PEM format. </p>
+<p>Initialize context for AES GCM operation with a IV composed of a random and optional fixed(free) field, which is common when starting an encrypt operation. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">der_cert</td><td>DER certificate to be encoded as PEM. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">der_cert_size</td><td>DER certificate size in bytes. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pem_cert</td><td>PEM encoded certificate is returned here. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">pem_cert_size</td><td>As input, the size of the pem_cert buffer. As output, the size of the PEM certificate. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
-
-</div>
-</div>
-<a id="ab148948a885c6a7c9c95494e48e45cb1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab148948a885c6a7c9c95494e48e45cb1">&#9670;&nbsp;</a></span>atcacert_encode_pem_csr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int atcacert_encode_pem_csr </td>
-          <td>(</td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>der_csr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>der_csr_size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>pem_csr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>pem_csr_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encode a DER CSR in PEM format. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">der_csr</td><td>DER CSR to be encoded as PEM. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">der_csr_size</td><td>DER CSR size in bytes. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pem_csr</td><td>PEM encoded CSR is returned here. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">pem_csr_size</td><td>As input, the size of the pem_csr buffer. As output, the size of the PEM CSR. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>AES CTR context to be initialized. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key_id</td><td>Key location. Can either be a slot number or ATCA_TEMPKEY_KEYID for TempKey. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key_block</td><td>Index of the 16-byte block to use within the key location for the actual key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rand_size</td><td>Size of the random field in bytes. Minimum and recommended size is 12 bytes. Max is 32 bytes. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">free_field</td><td>Fixed data to include in the IV after the random field. Can be NULL if not used. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">free_field_size</td><td>Size of the free field in bytes. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">iv</td><td>Initialization vector is returned here. Its size will be rand_size and free_field_size combined.</td></tr>
   </table>
   </dd>
 </dl>
@@ -536,7 +574,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="dir_66d4f8af72ef71cf5ecd6cb2f7222b24.html">atcacert</a></li><li class="navelem"><a class="el" href="a00236.html">atcacert_pem.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_87f752e68b722cbc3e0b8ce9f855cb08.html">cryptauthlib-v3.3.0_</a></li><li class="navelem"><a class="el" href="dir_05b5e449e7eda89ff3fc7e4d23e0e258.html">lib</a></li><li class="navelem"><a class="el" href="dir_6d116ffb7c6bd70b9623b43f97d4db59.html">calib</a></li><li class="navelem"><a class="el" href="a00236.html">calib_aes_gcm.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

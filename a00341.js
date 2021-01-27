@@ -1,13 +1,11 @@
 var a00341 =
 [
-    [ "atcab_aes_ccm_aad_finish", "a01438.html#ga94406250530e4f3ff23414293d4b1cba", null ],
-    [ "atcab_aes_ccm_aad_update", "a01438.html#ga9fdfca99f258526647c1bb6d92a5c3e6", null ],
-    [ "atcab_aes_ccm_decrypt_finish", "a01438.html#ga3c3da555c212f9f6af700542d5e51177", null ],
-    [ "atcab_aes_ccm_decrypt_update", "a01438.html#gac051ca39356f63b0971a82cc700eec89", null ],
-    [ "atcab_aes_ccm_encrypt_finish", "a01438.html#ga51c291bed610a6f61f56909233a9c00a", null ],
-    [ "atcab_aes_ccm_encrypt_update", "a01438.html#ga37600304129e3436d02462b73ece670a", null ],
-    [ "atcab_aes_ccm_init", "a01438.html#gaef4130a5cfd068780b2c763a3af06c52", null ],
-    [ "atcab_aes_ccm_init_ext", "a01438.html#ga57b4c1385a4753e5f536c72982bf5e95", null ],
-    [ "atcab_aes_ccm_init_rand", "a01438.html#gaafb4674fec65ca6ff0399560f88a2514", null ],
-    [ "atcab_aes_ccm_init_rand_ext", "a01438.html#ga22375fed660c63df78fd19f30e06a2b4", null ]
+    [ "atcab_aes_ctr_block", "a01516.html#ga76937b340e59be4dc1a30d8c7b76ebe0", null ],
+    [ "atcab_aes_ctr_decrypt_block", "a01516.html#gada9491be0c81fb18b021f71b9a6eda3e", null ],
+    [ "atcab_aes_ctr_encrypt_block", "a01516.html#ga7182e48a847f9c1b31f19c60f373e2da", null ],
+    [ "atcab_aes_ctr_increment", "a01516.html#ga475b72450dcd21c822de5cb366197927", null ],
+    [ "atcab_aes_ctr_init", "a01516.html#ga0db7d24f31dc2dd4805e3c433ae604ad", null ],
+    [ "atcab_aes_ctr_init_ext", "a01516.html#gad9ec3a1272f4a565aa5db79bb97ac3f0", null ],
+    [ "atcab_aes_ctr_init_rand", "a01516.html#gae7558905ea6a82c4bd50d4b99e954d91", null ],
+    [ "atcab_aes_ctr_init_rand_ext", "a01516.html#ga247a0af683b50965457e22e6a7b8c458", null ]
 ];

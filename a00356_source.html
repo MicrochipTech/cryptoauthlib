@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_crypto_sw_ecdsa.h Source File</title>
+<title>CryptoAuthLib: atca_crypto_sw_rand.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.5</span>
+   &#160;<span id="projectnumber">v3.3.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,46 +85,36 @@ $(document).ready(function(){initNavTree('a00356_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">atca_crypto_sw_ecdsa.h</div>  </div>
+<div class="title">atca_crypto_sw_rand.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00356.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#ifndef ATCA_CRYPTO_SW_ECDSA_H</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#define ATCA_CRYPTO_SW_ECDSA_H</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00350.html">atca_crypto_sw.h</a>&quot;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="a01445.html#gab6935877a2675bfc95af283fb43affb5">   44</a></span>&#160;<span class="preprocessor">#define ATCA_ECC_P256_FIELD_SIZE       (256 / 8)</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="a01445.html#gadb06f3adddd74993ab0da4be3ea71441">   45</a></span>&#160;<span class="preprocessor">#define ATCA_ECC_P256_PRIVATE_KEY_SIZE (ATCA_ECC_P256_FIELD_SIZE)</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="a01445.html#ga6bcf19f52fbceb7801fc3216d528fb3c">   46</a></span>&#160;<span class="preprocessor">#define ATCA_ECC_P256_PUBLIC_KEY_SIZE  (ATCA_ECC_P256_FIELD_SIZE * 2)</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="a01445.html#ga6eba254effebfbbb95381511fc7d80d5">   47</a></span>&#160;<span class="preprocessor">#define ATCA_ECC_P256_SIGNATURE_SIZE   (ATCA_ECC_P256_FIELD_SIZE * 2)</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a01445.html#gaea3d9b4507e2f87de5204fc905b8123a">atcac_sw_ecdsa_verify_p256</a>(<span class="keyword">const</span> uint8_t msg[<a class="code" href="a01445.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a>],</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                               <span class="keyword">const</span> uint8_t signature[<a class="code" href="a01445.html#ga6eba254effebfbbb95381511fc7d80d5">ATCA_ECC_P256_SIGNATURE_SIZE</a>],</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                               <span class="keyword">const</span> uint8_t public_key[<a class="code" href="a01445.html#ga6bcf19f52fbceb7801fc3216d528fb3c">ATCA_ECC_P256_PUBLIC_KEY_SIZE</a>]);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef ATCA_CRYPTO_SW_RAND_H</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define ATCA_CRYPTO_SW_RAND_H</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00344.html">atca_crypto_sw.h</a>&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a01522.html#ga0710d8bf5e92403c4026c32af39ad79e">atcac_sw_random</a>(uint8_t* data, <span class="keywordtype">size_t</span> data_size);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aa01445_html_ga6eba254effebfbbb95381511fc7d80d5"><div class="ttname"><a href="a01445.html#ga6eba254effebfbbb95381511fc7d80d5">ATCA_ECC_P256_SIGNATURE_SIZE</a></div><div class="ttdeci">#define ATCA_ECC_P256_SIGNATURE_SIZE</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_ecdsa.h:47</div></div>
-<div class="ttc" id="aa01445_html_gab6935877a2675bfc95af283fb43affb5"><div class="ttname"><a href="a01445.html#gab6935877a2675bfc95af283fb43affb5">ATCA_ECC_P256_FIELD_SIZE</a></div><div class="ttdeci">#define ATCA_ECC_P256_FIELD_SIZE</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_ecdsa.h:44</div></div>
-<div class="ttc" id="aa01445_html_gaea3d9b4507e2f87de5204fc905b8123a"><div class="ttname"><a href="a01445.html#gaea3d9b4507e2f87de5204fc905b8123a">atcac_sw_ecdsa_verify_p256</a></div><div class="ttdeci">int atcac_sw_ecdsa_verify_p256(const uint8_t msg[(256/8)], const uint8_t signature[((256/8) *2)], const uint8_t public_key[((256/8) *2)])</div><div class="ttdoc">return software generated ECDSA verification result and the function is currently not implemented</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_ecdsa.c:39</div></div>
-<div class="ttc" id="aa00350_html"><div class="ttname"><a href="a00350.html">atca_crypto_sw.h</a></div><div class="ttdoc">Common defines for CryptoAuthLib software crypto wrappers.</div></div>
-<div class="ttc" id="aa01445_html_ga6bcf19f52fbceb7801fc3216d528fb3c"><div class="ttname"><a href="a01445.html#ga6bcf19f52fbceb7801fc3216d528fb3c">ATCA_ECC_P256_PUBLIC_KEY_SIZE</a></div><div class="ttdeci">#define ATCA_ECC_P256_PUBLIC_KEY_SIZE</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_ecdsa.h:46</div></div>
+<div class="ttc" id="aa00344_html"><div class="ttname"><a href="a00344.html">atca_crypto_sw.h</a></div><div class="ttdoc">Common defines for CryptoAuthLib software crypto wrappers.</div></div>
+<div class="ttc" id="aa01522_html_ga0710d8bf5e92403c4026c32af39ad79e"><div class="ttname"><a href="a01522.html#ga0710d8bf5e92403c4026c32af39ad79e">atcac_sw_random</a></div><div class="ttdeci">int atcac_sw_random(uint8_t *data, size_t data_size)</div><div class="ttdoc">return software generated random number and the function is currently not implemented</div><div class="ttdef"><b>Definition:</b> atca_crypto_sw_rand.c:36</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="dir_251077d1406e6d718218945b8168cb6e.html">crypto</a></li><li class="navelem"><a class="el" href="a00356.html">atca_crypto_sw_ecdsa.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_87f752e68b722cbc3e0b8ce9f855cb08.html">cryptauthlib-v3.3.0_</a></li><li class="navelem"><a class="el" href="dir_05b5e449e7eda89ff3fc7e4d23e0e258.html">lib</a></li><li class="navelem"><a class="el" href="dir_99d1a637360dc76add697636ddd22361.html">crypto</a></li><li class="navelem"><a class="el" href="a00356.html">atca_crypto_sw_rand.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

@@ -1,9 +1,20 @@
 var a00599 =
 [
-    [ "PCKS11_MECH_ECC508_EC_CAPABILITY", "a01450.html#ga148b7615f20d8432f0e5ac4e6683aa7d", null ],
-    [ "TABLE_SIZE", "a01450.html#ga178ac9759ade77839a52329537e3784b", null ],
-    [ "pcks11_mech_table_e", "a01450.html#gadbb018cf35cbcf4935ee405f069dbdb9", null ],
-    [ "pcks11_mech_table_ptr", "a01450.html#ga8fa74592503b8d6fee8164d6ffbc1df0", null ],
-    [ "pkcs11_mech_get_list", "a01450.html#ga9678c431b8d5479e53417b109b32c20f", null ],
-    [ "pkcs_mech_get_info", "a01450.html#gac66d133f84b945f9c26727ee9f7a7d57", null ]
+    [ "pkcs11_object_alloc", "a01527.html#gacd13c46d7ed7be3dcfdd29c0e78ced3b", null ],
+    [ "pkcs11_object_check", "a01527.html#ga620279f183828bdd33ce94e0cd6f2150", null ],
+    [ "pkcs11_object_create", "a01527.html#ga5cdd6e87496f480f42c44430250794bb", null ],
+    [ "pkcs11_object_deinit", "a01527.html#ga2bed41875de97c71ac141b524175539b", null ],
+    [ "pkcs11_object_destroy", "a01527.html#ga34dbd233b6ac0bf1d2aa2be541d66b25", null ],
+    [ "pkcs11_object_find", "a01527.html#ga09ecdbfaf02822cf5ba6e0f98d3f51df", null ],
+    [ "pkcs11_object_free", "a01527.html#gaf781d0cb96ac95bc8af0e7a2cb2e18f3", null ],
+    [ "pkcs11_object_get_class", "a01527.html#ga551df2c3ba9a2aca7fd017eeb52d7d40", null ],
+    [ "pkcs11_object_get_destroyable", "a01527.html#gadd62d46b440f6a3be0e421eb3dfa20e4", null ],
+    [ "pkcs11_object_get_handle", "a01527.html#ga2a3ee790dbccb44b16d3031688b5aa45", null ],
+    [ "pkcs11_object_get_name", "a01527.html#ga7aee11eff64481426c348ea476508801", null ],
+    [ "pkcs11_object_get_size", "a01527.html#ga5d8c37a9938253cbd4179371cd5f663d", null ],
+    [ "pkcs11_object_get_type", "a01527.html#gaf2006af505de40376cee6817ccb69f59", null ],
+    [ "pkcs11_object_load_handle_info", "a01527.html#ga46af2d77773dcb56478ef7e14a0e81a6", null ],
+    [ "pkcs11_object_cache", "a01527.html#gaca0a5860e29d12831540eb7af43d3659", null ],
+    [ "pkcs11_object_monotonic_attributes", "a01527.html#ga230747fbe3b7a13dfda75980844c3e9d", null ],
+    [ "pkcs11_object_monotonic_attributes_count", "a01527.html#ga5e9308296fc3e124c3a4552134b674ee", null ]
 ];

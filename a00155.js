@@ -1,5 +1,6 @@
 var a00155 =
 [
-    [ "ATCA_DLL", "a00155.html#a3c406311bad62403b4ba379576214108", null ],
-    [ "SHARED_LIB_EXPORT", "a00155.html#a19e63228967ce8a061f9f0d227dc6830", null ]
+    [ "atca_trace", "a00155.html#a60326372db8190ddb9f191fca5bdc38a", null ],
+    [ "atca_trace_config", "a00155.html#aaf7947b74c12dac486d03bb6f6b148d9", null ],
+    [ "atca_trace_msg", "a00155.html#a37c973beed068b00d261521bfe29299a", null ]
 ];

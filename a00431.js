@@ -6,5 +6,5 @@ var a00431 =
     [ "HAL_KIT_COMMAND_SLEEP", "a00431.html#ab2afbe27f481ffa1bb18156882b7e642", null ],
     [ "HAL_KIT_COMMAND_WAKE", "a00431.html#ac885b1da63767551154f2fff4b27a037", null ],
     [ "HAL_KIT_HEADER_LEN", "a00431.html#ab89624779173549815c9fe24de017c44", null ],
-    [ "hal_kit_attach_phy", "a01446.html#ga3f5bce4e9ee06a3b564052b2bd202c29", null ]
+    [ "hal_kit_attach_phy", "a01523.html#ga3f5bce4e9ee06a3b564052b2bd202c29", null ]
 ];

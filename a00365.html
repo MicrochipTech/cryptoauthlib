@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_crypto_sw_sha1.c File Reference</title>
+<title>CryptoAuthLib: atca_crypto_sw_sha2.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.5</span>
+   &#160;<span id="projectnumber">v3.3.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -87,30 +87,34 @@ $(document).ready(function(){initNavTree('a00365.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_crypto_sw_sha1.c File Reference</div>  </div>
+<div class="title">atca_crypto_sw_sha2.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Wrapper API for SHA 1 routines.  
+<p>Wrapper API for software SHA 256 routines.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00368_source.html">atca_crypto_sw_sha1.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00380_source.html">hashes/sha1_routines.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00383_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00368_source.html">atca_crypto_sw_sha2.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00380_source.html">hashes/sha2_routines.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga65fdb8b2a2da178fd417232bf9f0ea48"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01445.html#ga65fdb8b2a2da178fd417232bf9f0ea48">atcac_sw_sha1</a> (const uint8_t *data, size_t data_size, uint8_t digest[(20)])</td></tr>
-<tr class="memdesc:ga65fdb8b2a2da178fd417232bf9f0ea48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform SHA1 hash of data in software.  <a href="a01445.html#ga65fdb8b2a2da178fd417232bf9f0ea48">More...</a><br /></td></tr>
-<tr class="separator:ga65fdb8b2a2da178fd417232bf9f0ea48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga72ceba9df57d884c85321abe92994c4f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#ga72ceba9df57d884c85321abe92994c4f">atcac_sw_sha2_256</a> (const uint8_t *data, size_t data_size, uint8_t digest[(32)])</td></tr>
+<tr class="memdesc:ga72ceba9df57d884c85321abe92994c4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">single call convenience function which computes Hash of given data using SHA256 software  <a href="a01522.html#ga72ceba9df57d884c85321abe92994c4f">More...</a><br /></td></tr>
+<tr class="separator:ga72ceba9df57d884c85321abe92994c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1598511b7077693ee99d160dbebfc16d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#ga1598511b7077693ee99d160dbebfc16d">atcac_sha256_hmac_counter</a> (<a class="el" href="a00344.html#a253fe8619eb230171220d72f8fc4d6b9">atcac_hmac_sha256_ctx</a> *ctx, uint8_t *label, size_t label_len, uint8_t *data, size_t data_len, uint8_t *digest, size_t diglen)</td></tr>
+<tr class="memdesc:ga1598511b7077693ee99d160dbebfc16d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements SHA256 HMAC-Counter per NIST SP 800-108 used for KDF like operations.  <a href="a01522.html#ga1598511b7077693ee99d160dbebfc16d">More...</a><br /></td></tr>
+<tr class="separator:ga1598511b7077693ee99d160dbebfc16d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Wrapper API for SHA 1 routines. </p>
+<div class="textblock"><p>Wrapper API for software SHA 256 routines. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="dir_251077d1406e6d718218945b8168cb6e.html">crypto</a></li><li class="navelem"><a class="el" href="a00365.html">atca_crypto_sw_sha1.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_87f752e68b722cbc3e0b8ce9f855cb08.html">cryptauthlib-v3.3.0_</a></li><li class="navelem"><a class="el" href="dir_05b5e449e7eda89ff3fc7e4d23e0e258.html">lib</a></li><li class="navelem"><a class="el" href="dir_99d1a637360dc76add697636ddd22361.html">crypto</a></li><li class="navelem"><a class="el" href="a00365.html">atca_crypto_sw_sha2.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

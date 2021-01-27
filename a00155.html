@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_compiler.h File Reference</title>
+<title>CryptoAuthLib: atca_debug.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.5</span>
+   &#160;<span id="projectnumber">v3.3.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,50 +85,83 @@ $(document).ready(function(){initNavTree('a00155.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_compiler.h File Reference</div>  </div>
+<div class="title">atca_debug.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>CryptoAuthLiub is meant to be portable across architectures, even non-Microchip architectures and compiler environments. This file is for isolating compiler specific macros.  
-<a href="#details">More...</a></p>
-
+<div class="textblock"><code>#include &quot;<a class="el" href="a00179_source.html">atca_status.h</a>&quot;</code><br />
+</div>
 <p><a href="a00155_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a19e63228967ce8a061f9f0d227dc6830"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00155.html#a19e63228967ce8a061f9f0d227dc6830">SHARED_LIB_EXPORT</a></td></tr>
-<tr class="separator:a19e63228967ce8a061f9f0d227dc6830"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c406311bad62403b4ba379576214108"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00155.html#a3c406311bad62403b4ba379576214108">ATCA_DLL</a>&#160;&#160;&#160;extern</td></tr>
-<tr class="separator:a3c406311bad62403b4ba379576214108"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:aaf7947b74c12dac486d03bb6f6b148d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00155.html#aaf7947b74c12dac486d03bb6f6b148d9">atca_trace_config</a> (FILE *fp)</td></tr>
+<tr class="separator:aaf7947b74c12dac486d03bb6f6b148d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60326372db8190ddb9f191fca5bdc38a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00155.html#a60326372db8190ddb9f191fca5bdc38a">atca_trace</a> (<a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> status)</td></tr>
+<tr class="separator:a60326372db8190ddb9f191fca5bdc38a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37c973beed068b00d261521bfe29299a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00155.html#a37c973beed068b00d261521bfe29299a">atca_trace_msg</a> (<a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> status, const char *msg)</td></tr>
+<tr class="separator:a37c973beed068b00d261521bfe29299a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLiub is meant to be portable across architectures, even non-Microchip architectures and compiler environments. This file is for isolating compiler specific macros. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a3c406311bad62403b4ba379576214108"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c406311bad62403b4ba379576214108">&#9670;&nbsp;</a></span>ATCA_DLL</h2>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a60326372db8190ddb9f191fca5bdc38a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60326372db8190ddb9f191fca5bdc38a">&#9670;&nbsp;</a></span>atca_trace()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ATCA_DLL&#160;&#160;&#160;extern</td>
+          <td class="memname"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atca_trace </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td>
+          <td class="paramname"><em>status</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a19e63228967ce8a061f9f0d227dc6830"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19e63228967ce8a061f9f0d227dc6830">&#9670;&nbsp;</a></span>SHARED_LIB_EXPORT</h2>
+<a id="aaf7947b74c12dac486d03bb6f6b148d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf7947b74c12dac486d03bb6f6b148d9">&#9670;&nbsp;</a></span>atca_trace_config()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SHARED_LIB_EXPORT</td>
+          <td class="memname">void atca_trace_config </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>fp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a37c973beed068b00d261521bfe29299a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37c973beed068b00d261521bfe29299a">&#9670;&nbsp;</a></span>atca_trace_msg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atca_trace_msg </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td>
+          <td class="paramname"><em>status</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>msg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -140,7 +173,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="a00155.html">atca_compiler.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_87f752e68b722cbc3e0b8ce9f855cb08.html">cryptauthlib-v3.3.0_</a></li><li class="navelem"><a class="el" href="dir_05b5e449e7eda89ff3fc7e4d23e0e258.html">lib</a></li><li class="navelem"><a class="el" href="a00155.html">atca_debug.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

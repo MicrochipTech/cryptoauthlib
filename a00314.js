@@ -1,4 +1,7 @@
 var a00314 =
 [
-    [ "calib_selftest", "a01444.html#ga1b6999f25a78a2a6313cbb3328394e29", null ]
+    [ "calib_ecc204_sign", "a01521.html#ga02d45c016f89a576ce822726b155cd6c", null ],
+    [ "calib_sign", "a01521.html#ga15d3f1059e6d1dc17382c29c84130873", null ],
+    [ "calib_sign_base", "a01521.html#gae453fe5f7e7fd31573ca0c21e61cd918", null ],
+    [ "calib_sign_internal", "a01521.html#gaf74bbc8f13821ea025aecbf8fc6248f2", null ]
 ];

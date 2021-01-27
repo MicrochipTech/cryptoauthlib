@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: tng_atcacert_client.h File Reference</title>
+<title>CryptoAuthLib: tng_root_cert.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.5</span>
+   &#160;<span id="projectnumber">v3.3.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -84,58 +84,63 @@ $(document).ready(function(){initNavTree('a00074.html',''); initResizable(); });
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">tng_atcacert_client.h File Reference</div>  </div>
+<div class="title">tng_root_cert.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Client side certificate I/O functions for TNG devices.  
+<p>TNG root certificate (DER)  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00194_source.html">atcacert/atcacert.h</a>&quot;</code><br />
-</div>
-<p><a href="a00074_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
-<tr class="memitem:ga67606649a5f2261cb6b55478d72bf805"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01451.html#ga67606649a5f2261cb6b55478d72bf805">tng_atcacert_max_device_cert_size</a> (size_t *max_cert_size)</td></tr>
-<tr class="memdesc:ga67606649a5f2261cb6b55478d72bf805"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the maximum possible certificate size in bytes for a TNG device certificate. Certificate can be variable size, so this gives an appropriate buffer size when reading the certificate.  <a href="a01451.html#ga67606649a5f2261cb6b55478d72bf805">More...</a><br /></td></tr>
-<tr class="separator:ga67606649a5f2261cb6b55478d72bf805"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga22c7ea083197410f396d18fa808e8e0c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01451.html#ga22c7ea083197410f396d18fa808e8e0c">tng_atcacert_read_device_cert</a> (uint8_t *cert, size_t *cert_size, const uint8_t *signer_cert)</td></tr>
-<tr class="memdesc:ga22c7ea083197410f396d18fa808e8e0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the device certificate for a TNG device.  <a href="a01451.html#ga22c7ea083197410f396d18fa808e8e0c">More...</a><br /></td></tr>
-<tr class="separator:ga22c7ea083197410f396d18fa808e8e0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga01bf19754baee6ce82ec46f966528262"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01451.html#ga01bf19754baee6ce82ec46f966528262">tng_atcacert_device_public_key</a> (uint8_t *public_key, uint8_t *cert)</td></tr>
-<tr class="memdesc:ga01bf19754baee6ce82ec46f966528262"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the device public key.  <a href="a01451.html#ga01bf19754baee6ce82ec46f966528262">More...</a><br /></td></tr>
-<tr class="separator:ga01bf19754baee6ce82ec46f966528262"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga857aacbb70f2ea18411f1ca478a0e37f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01451.html#ga857aacbb70f2ea18411f1ca478a0e37f">tng_atcacert_max_signer_cert_size</a> (size_t *max_cert_size)</td></tr>
-<tr class="memdesc:ga857aacbb70f2ea18411f1ca478a0e37f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the maximum possible certificate size in bytes for a TNG signer certificate. Certificate can be variable size, so this gives an appropriate buffer size when reading the certificate.  <a href="a01451.html#ga857aacbb70f2ea18411f1ca478a0e37f">More...</a><br /></td></tr>
-<tr class="separator:ga857aacbb70f2ea18411f1ca478a0e37f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga82d3c529ed81119a956957052c06e8d7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01451.html#ga82d3c529ed81119a956957052c06e8d7">tng_atcacert_read_signer_cert</a> (uint8_t *cert, size_t *cert_size)</td></tr>
-<tr class="memdesc:ga82d3c529ed81119a956957052c06e8d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the signer certificate for a TNG device.  <a href="a01451.html#ga82d3c529ed81119a956957052c06e8d7">More...</a><br /></td></tr>
-<tr class="separator:ga82d3c529ed81119a956957052c06e8d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa4c31ab35807d8ed51fbecc48866aa04"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01451.html#gaa4c31ab35807d8ed51fbecc48866aa04">tng_atcacert_signer_public_key</a> (uint8_t *public_key, uint8_t *cert)</td></tr>
-<tr class="memdesc:gaa4c31ab35807d8ed51fbecc48866aa04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the signer public key.  <a href="a01451.html#gaa4c31ab35807d8ed51fbecc48866aa04">More...</a><br /></td></tr>
-<tr class="separator:gaa4c31ab35807d8ed51fbecc48866aa04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa3a0387ff2a71684a2992d4661c53331"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01451.html#gaa3a0387ff2a71684a2992d4661c53331">tng_atcacert_root_cert_size</a> (size_t *cert_size)</td></tr>
-<tr class="memdesc:gaa3a0387ff2a71684a2992d4661c53331"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the size of the TNG root cert.  <a href="a01451.html#gaa3a0387ff2a71684a2992d4661c53331">More...</a><br /></td></tr>
-<tr class="separator:gaa3a0387ff2a71684a2992d4661c53331"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31cf63afba3c936d279a325d71691a68"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01451.html#ga31cf63afba3c936d279a325d71691a68">tng_atcacert_root_cert</a> (uint8_t *cert, size_t *cert_size)</td></tr>
-<tr class="memdesc:ga31cf63afba3c936d279a325d71691a68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the TNG root cert.  <a href="a01451.html#ga31cf63afba3c936d279a325d71691a68">More...</a><br /></td></tr>
-<tr class="separator:ga31cf63afba3c936d279a325d71691a68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8cd0d450da1bf23d0f6784446d35c556"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01451.html#ga8cd0d450da1bf23d0f6784446d35c556">tng_atcacert_root_public_key</a> (uint8_t *public_key)</td></tr>
-<tr class="memdesc:ga8cd0d450da1bf23d0f6784446d35c556"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the root public key.  <a href="a01451.html#ga8cd0d450da1bf23d0f6784446d35c556">More...</a><br /></td></tr>
-<tr class="separator:ga8cd0d450da1bf23d0f6784446d35c556"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<code>#include &lt;stddef.h&gt;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ac8701381ff8ac8a30fded35b8ef38920"><td class="memItemLeft" align="right" valign="top">const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ac8701381ff8ac8a30fded35b8ef38920">g_cryptoauth_root_ca_002_cert</a> [501]</td></tr>
+<tr class="separator:ac8701381ff8ac8a30fded35b8ef38920"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abff789f84f8f178a30ce06792fe47771"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#abff789f84f8f178a30ce06792fe47771">g_cryptoauth_root_ca_002_cert_size</a> = sizeof(<a class="el" href="a01528.html#ga5c01e37d1f10dbf90d50208cbc5bc8ab">g_cryptoauth_root_ca_002_cert</a>)</td></tr>
+<tr class="separator:abff789f84f8f178a30ce06792fe47771"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Client side certificate I/O functions for TNG devices. </p>
+<div class="textblock"><p>TNG root certificate (DER) </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Variable Documentation</h2>
+<a id="ac8701381ff8ac8a30fded35b8ef38920"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8701381ff8ac8a30fded35b8ef38920">&#9670;&nbsp;</a></span>g_cryptoauth_root_ca_002_cert</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint8_t g_cryptoauth_root_ca_002_cert[501]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abff789f84f8f178a30ce06792fe47771"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abff789f84f8f178a30ce06792fe47771">&#9670;&nbsp;</a></span>g_cryptoauth_root_ca_002_cert_size</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const size_t g_cryptoauth_root_ca_002_cert_size = sizeof(<a class="el" href="a01528.html#ga5c01e37d1f10dbf90d50208cbc5bc8ab">g_cryptoauth_root_ca_002_cert</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_f121dfd9c77a7432a2e2a8a75be2e1de.html">app</a></li><li class="navelem"><a class="el" href="dir_eb2c4027abed29e4f9befe4c311de985.html">tng</a></li><li class="navelem"><a class="el" href="a00074.html">tng_atcacert_client.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_87f752e68b722cbc3e0b8ce9f855cb08.html">cryptauthlib-v3.3.0_</a></li><li class="navelem"><a class="el" href="dir_d728e1e27902ea94af89981d4f261a02.html">app</a></li><li class="navelem"><a class="el" href="dir_491e295b984867c0e1ceaceb8cc74dad.html">tng</a></li><li class="navelem"><a class="el" href="a00074.html">tng_root_cert.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

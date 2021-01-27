@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_find.h File Reference</title>
+<title>CryptoAuthLib: pkcs11_info.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.5</span>
+   &#160;<span id="projectnumber">v3.3.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,39 +85,41 @@ $(document).ready(function(){initNavTree('a00575.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">pkcs11_find.h File Reference</div>  </div>
+<div class="title">pkcs11_info.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Library Object Find/Searching.  
+<p>PKCS11 Library Information Functions.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00536_source.html">cryptoki.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00608_source.html">pkcs11_object.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00530_source.html">cryptoki.h</a>&quot;</code><br />
 </div>
 <p><a href="a00575_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga6fd109c0919489909cc4073866d1c466"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga6fd109c0919489909cc4073866d1c466">pkcs11_find_init</a> (<a class="el" href="a00650.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a00650.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pTemplate, <a class="el" href="a00650.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulCount)</td></tr>
-<tr class="separator:ga6fd109c0919489909cc4073866d1c466"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5dbe038da3069861b8de9f77d0c06de1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga5dbe038da3069861b8de9f77d0c06de1">pkcs11_find_continue</a> (<a class="el" href="a00650.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a00650.html#a42a298b2f343261d27b87140090106d4">CK_OBJECT_HANDLE_PTR</a> phObject, <a class="el" href="a00650.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulMaxObjectCount, <a class="el" href="a00650.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulObjectCount)</td></tr>
-<tr class="separator:ga5dbe038da3069861b8de9f77d0c06de1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacc5c7a788f0c4eafd4f0c1da2aaf0d60"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#gacc5c7a788f0c4eafd4f0c1da2aaf0d60">pkcs11_find_finish</a> (<a class="el" href="a00650.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession)</td></tr>
-<tr class="separator:gacc5c7a788f0c4eafd4f0c1da2aaf0d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0e2b3b381504c39a017a4232a35b672d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00650.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga0e2b3b381504c39a017a4232a35b672d">pkcs11_find_get_attribute</a> (<a class="el" href="a00650.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a00650.html#ad1cdd703196214cd34e6f9f52bc67683">CK_OBJECT_HANDLE</a> hObject, <a class="el" href="a00650.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pTemplate, <a class="el" href="a00650.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulCount)</td></tr>
-<tr class="separator:ga0e2b3b381504c39a017a4232a35b672d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae56826104269ca730066136fb3eb995"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00644.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01527.html#gaae56826104269ca730066136fb3eb995">pkcs11_get_lib_info</a> (<a class="el" href="a00644.html#a2d8a8dcb105d17ae3a86aced319789fd">CK_INFO_PTR</a> pInfo)</td></tr>
+<tr class="memdesc:gaae56826104269ca730066136fb3eb995"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains general information about Cryptoki.  <a href="a01527.html#gaae56826104269ca730066136fb3eb995">More...</a><br /></td></tr>
+<tr class="separator:gaae56826104269ca730066136fb3eb995"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga8ac50a3d8a0c4f1ddf04cdf02c757030"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01527.html#ga8ac50a3d8a0c4f1ddf04cdf02c757030">pkcs11_lib_manufacturer_id</a> []</td></tr>
+<tr class="separator:ga8ac50a3d8a0c4f1ddf04cdf02c757030"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47daad4918afdf7ec808a5a57a4bce9d"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01527.html#ga47daad4918afdf7ec808a5a57a4bce9d">pkcs11_lib_description</a> []</td></tr>
+<tr class="separator:ga47daad4918afdf7ec808a5a57a4bce9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Library Object Find/Searching. </p>
+<div class="textblock"><p>PKCS11 Library Information Functions. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="dir_da4de44fd9fa8eacc46326d2e228f8d2.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00575.html">pkcs11_find.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_87f752e68b722cbc3e0b8ce9f855cb08.html">cryptauthlib-v3.3.0_</a></li><li class="navelem"><a class="el" href="dir_05b5e449e7eda89ff3fc7e4d23e0e258.html">lib</a></li><li class="navelem"><a class="el" href="dir_b9237e4e45ad71cf217df054d1c61b0b.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00575.html">pkcs11_info.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

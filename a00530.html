@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_mbedtls_wrap.h File Reference</title>
+<title>CryptoAuthLib: cryptoki.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.5</span>
+   &#160;<span id="projectnumber">v3.3.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,37 +85,227 @@ $(document).ready(function(){initNavTree('a00530.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">atca_mbedtls_wrap.h File Reference</div>  </div>
+<div class="title">cryptoki.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
+<div class="textblock"><code>#include &quot;<a class="el" href="a00533_source.html">pkcs11.h</a>&quot;</code><br />
+</div>
 <p><a href="a00530_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gab235933e78ed89776fb62f67b48f0a11"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01449.html#gab235933e78ed89776fb62f67b48f0a11">atca_mbedtls_pk_init_ext</a> (<a class="el" href="a01441.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, struct mbedtls_pk_context *pkey, const uint16_t slotid)</td></tr>
-<tr class="memdesc:gab235933e78ed89776fb62f67b48f0a11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an mbedtls pk context for use with EC operations.  <a href="a01449.html#gab235933e78ed89776fb62f67b48f0a11">More...</a><br /></td></tr>
-<tr class="separator:gab235933e78ed89776fb62f67b48f0a11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga72da31831a3647e287543634e3f78aca"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01449.html#ga72da31831a3647e287543634e3f78aca">atca_mbedtls_pk_init</a> (struct mbedtls_pk_context *pkey, const uint16_t slotid)</td></tr>
-<tr class="memdesc:ga72da31831a3647e287543634e3f78aca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an mbedtls pk context for use with EC operations.  <a href="a01449.html#ga72da31831a3647e287543634e3f78aca">More...</a><br /></td></tr>
-<tr class="separator:ga72da31831a3647e287543634e3f78aca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1180b0ded84f7edb4b36d14730366a64"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01449.html#ga1180b0ded84f7edb4b36d14730366a64">atca_mbedtls_cert_add</a> (struct mbedtls_x509_crt *cert, const struct <a class="el" href="a01531.html">atcacert_def_s</a> *cert_def)</td></tr>
-<tr class="separator:ga1180b0ded84f7edb4b36d14730366a64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga98d684683ccecd3d56bdf5dc27ae999c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01449.html#ga98d684683ccecd3d56bdf5dc27ae999c">atca_mbedtls_ecdh_slot_cb</a> (void)</td></tr>
-<tr class="memdesc:ga98d684683ccecd3d56bdf5dc27ae999c"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH Callback to obtain the "slot" used in ECDH operations from the application.  <a href="a01449.html#ga98d684683ccecd3d56bdf5dc27ae999c">More...</a><br /></td></tr>
-<tr class="separator:ga98d684683ccecd3d56bdf5dc27ae999c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa35682dc98e33ce3d6fad1fc902cdff0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01449.html#gaa35682dc98e33ce3d6fad1fc902cdff0">atca_mbedtls_ecdh_ioprot_cb</a> (uint8_t secret[32])</td></tr>
-<tr class="memdesc:gaa35682dc98e33ce3d6fad1fc902cdff0"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH Callback to obtain the IO Protection secret from the application.  <a href="a01449.html#gaa35682dc98e33ce3d6fad1fc902cdff0">More...</a><br /></td></tr>
-<tr class="separator:gaa35682dc98e33ce3d6fad1fc902cdff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ac37148adb3a42adffda5a54520bafc5d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00530.html#ac37148adb3a42adffda5a54520bafc5d">PKCS11_HELPER_DLL_IMPORT</a></td></tr>
+<tr class="separator:ac37148adb3a42adffda5a54520bafc5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a836496360d58ba4ce6f85b9bd9db55fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00530.html#a836496360d58ba4ce6f85b9bd9db55fa">PKCS11_HELPER_DLL_EXPORT</a></td></tr>
+<tr class="separator:a836496360d58ba4ce6f85b9bd9db55fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad44738f0fc9eac7e23aed5fd4de71e4d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00530.html#ad44738f0fc9eac7e23aed5fd4de71e4d">PKCS11_HELPER_DLL_LOCAL</a></td></tr>
+<tr class="separator:ad44738f0fc9eac7e23aed5fd4de71e4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7a984e00c3e5ad25e84e20064fdacf5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00530.html#af7a984e00c3e5ad25e84e20064fdacf5">PKCS11_API</a></td></tr>
+<tr class="separator:af7a984e00c3e5ad25e84e20064fdacf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa160340f6de98552412dd32ce4e4f245"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00530.html#aa160340f6de98552412dd32ce4e4f245">PKCS11_LOCAL</a>&#160;&#160;&#160;<a class="el" href="a00530.html#ad44738f0fc9eac7e23aed5fd4de71e4d">PKCS11_HELPER_DLL_LOCAL</a></td></tr>
+<tr class="separator:aa160340f6de98552412dd32ce4e4f245"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a423401496b51f5c72a74e5502b47fd7d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00530.html#a423401496b51f5c72a74e5502b47fd7d">CK_PTR</a>&#160;&#160;&#160;*</td></tr>
+<tr class="separator:a423401496b51f5c72a74e5502b47fd7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30315d302108bcfb354196f37b16a492"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00530.html#a30315d302108bcfb354196f37b16a492">CK_DECLARE_FUNCTION</a>(returnType,  name)&#160;&#160;&#160;returnType <a class="el" href="a00530.html#af7a984e00c3e5ad25e84e20064fdacf5">PKCS11_API</a> name</td></tr>
+<tr class="separator:a30315d302108bcfb354196f37b16a492"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad472a68fb8e3eb9ba40169f5180b3b7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00530.html#aad472a68fb8e3eb9ba40169f5180b3b7">CK_DECLARE_FUNCTION_POINTER</a>(returnType,  name)&#160;&#160;&#160;returnType <a class="el" href="a00530.html#af7a984e00c3e5ad25e84e20064fdacf5">PKCS11_API</a>(*name)</td></tr>
+<tr class="separator:aad472a68fb8e3eb9ba40169f5180b3b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5235e6437759c93b8189b124c8c807cf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00530.html#a5235e6437759c93b8189b124c8c807cf">CK_CALLBACK_FUNCTION</a>(returnType,  name)&#160;&#160;&#160;returnType(*name)</td></tr>
+<tr class="separator:a5235e6437759c93b8189b124c8c807cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a530f11a96e508d171d28564c8dc20942"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00530.html#a530f11a96e508d171d28564c8dc20942">NULL_PTR</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:a530f11a96e508d171d28564c8dc20942"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a5235e6437759c93b8189b124c8c807cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5235e6437759c93b8189b124c8c807cf">&#9670;&nbsp;</a></span>CK_CALLBACK_FUNCTION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CK_CALLBACK_FUNCTION</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">returnType, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;returnType(*name)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a30315d302108bcfb354196f37b16a492"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30315d302108bcfb354196f37b16a492">&#9670;&nbsp;</a></span>CK_DECLARE_FUNCTION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CK_DECLARE_FUNCTION</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">returnType, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;returnType <a class="el" href="a00530.html#af7a984e00c3e5ad25e84e20064fdacf5">PKCS11_API</a> name</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aad472a68fb8e3eb9ba40169f5180b3b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad472a68fb8e3eb9ba40169f5180b3b7">&#9670;&nbsp;</a></span>CK_DECLARE_FUNCTION_POINTER</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CK_DECLARE_FUNCTION_POINTER</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">returnType, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;returnType <a class="el" href="a00530.html#af7a984e00c3e5ad25e84e20064fdacf5">PKCS11_API</a>(*name)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a423401496b51f5c72a74e5502b47fd7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a423401496b51f5c72a74e5502b47fd7d">&#9670;&nbsp;</a></span>CK_PTR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CK_PTR&#160;&#160;&#160;*</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a530f11a96e508d171d28564c8dc20942"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a530f11a96e508d171d28564c8dc20942">&#9670;&nbsp;</a></span>NULL_PTR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define NULL_PTR&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af7a984e00c3e5ad25e84e20064fdacf5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7a984e00c3e5ad25e84e20064fdacf5">&#9670;&nbsp;</a></span>PKCS11_API</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PKCS11_API</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a836496360d58ba4ce6f85b9bd9db55fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a836496360d58ba4ce6f85b9bd9db55fa">&#9670;&nbsp;</a></span>PKCS11_HELPER_DLL_EXPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PKCS11_HELPER_DLL_EXPORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac37148adb3a42adffda5a54520bafc5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac37148adb3a42adffda5a54520bafc5d">&#9670;&nbsp;</a></span>PKCS11_HELPER_DLL_IMPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PKCS11_HELPER_DLL_IMPORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad44738f0fc9eac7e23aed5fd4de71e4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad44738f0fc9eac7e23aed5fd4de71e4d">&#9670;&nbsp;</a></span>PKCS11_HELPER_DLL_LOCAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PKCS11_HELPER_DLL_LOCAL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa160340f6de98552412dd32ce4e4f245"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa160340f6de98552412dd32ce4e4f245">&#9670;&nbsp;</a></span>PKCS11_LOCAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PKCS11_LOCAL&#160;&#160;&#160;<a class="el" href="a00530.html#ad44738f0fc9eac7e23aed5fd4de71e4d">PKCS11_HELPER_DLL_LOCAL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="dir_4db54977152af98fdebc5a4618ccdb94.html">mbedtls</a></li><li class="navelem"><a class="el" href="a00530.html">atca_mbedtls_wrap.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_87f752e68b722cbc3e0b8ce9f855cb08.html">cryptauthlib-v3.3.0_</a></li><li class="navelem"><a class="el" href="dir_05b5e449e7eda89ff3fc7e4d23e0e258.html">lib</a></li><li class="navelem"><a class="el" href="dir_b9237e4e45ad71cf217df054d1c61b0b.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00530.html">cryptoki.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

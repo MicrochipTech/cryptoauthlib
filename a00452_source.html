@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_sam0_i2c_asf.h Source File</title>
+<title>CryptoAuthLib: hal_sam_i2c_asf.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.5</span>
+   &#160;<span id="projectnumber">v3.3.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,38 +85,39 @@ $(document).ready(function(){initNavTree('a00452_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">hal_sam0_i2c_asf.h</div>  </div>
+<div class="title">hal_sam_i2c_asf.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00452.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef HAL_SAMD21_I2C_ASF_H_</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define HAL_SAMD21_I2C_ASF_H_</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef HAL_SAMG55_I2C_ASF_H_</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define HAL_SAMG55_I2C_ASF_H_</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;asf.h&gt;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00389.html">cryptoauthlib.h</a>&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00383.html">cryptoauthlib.h</a>&quot;</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="a00452.html#aa09b1baa19c0d9232b191bffe0a200c0">   36</a></span>&#160;<span class="keyword">typedef</span> void (* <a class="code" href="a00452.html#aa09b1baa19c0d9232b191bffe0a200c0">sam0_change_baudrate</a>)(<a class="code" href="a01511.html">ATCAIface</a> iface, uint32_t speed);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="a01603.html">   38</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="a01603.html">i2c_sam0_instance</a></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="a01603.html#a49a13e733e8e0648165ff24419fa91c7">   40</a></span>&#160;    <span class="keyword">struct </span>i2c_master_module * <a class="code" href="a01603.html#a49a13e733e8e0648165ff24419fa91c7">i2c_instance</a>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="a01603.html#aa057010ec9186041e48d78e6879e317a">   41</a></span>&#160;    <a class="code" href="a00452.html#aa09b1baa19c0d9232b191bffe0a200c0">sam0_change_baudrate</a>       <a class="code" href="a01603.html#aa057010ec9186041e48d78e6879e317a">change_baudrate</a>;</div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="a00452.html#abc52bbb3cf5a8db38f9929b63d8d2171">   42</a></span>&#160;} <a class="code" href="a00452.html#abc52bbb3cf5a8db38f9929b63d8d2171">i2c_sam0_instance_t</a>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAL_SAMD21_I2C_ASF_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="a01523.html#gae597ddf62e19ba0f85e4444df939a88b">   47</a></span>&#160;<span class="keyword">typedef</span> void (* <a class="code" href="a01523.html#gae597ddf62e19ba0f85e4444df939a88b">sam_change_baudrate</a>)(<a class="code" href="a01588.html">ATCAIface</a> iface, uint32_t speed);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="a01688.html">   49</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="a01688.html">i2c_sam_instance</a></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;{</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="a01688.html#a5a633e42035bd009af942b508acaf3d9">   51</a></span>&#160;    Twi *               <a class="code" href="a01688.html#a5a633e42035bd009af942b508acaf3d9">i2c_instance</a>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="a01688.html#aa50b662a49ed98cb27c809f4b2027ac9">   52</a></span>&#160;    <a class="code" href="a01523.html#gae597ddf62e19ba0f85e4444df939a88b">sam_change_baudrate</a> <a class="code" href="a01688.html#aa50b662a49ed98cb27c809f4b2027ac9">change_baudrate</a>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="a01523.html#ga2253297ba3f655a35cd1253e22ba5171">   53</a></span>&#160;} <a class="code" href="a01523.html#ga2253297ba3f655a35cd1253e22ba5171">i2c_sam_instance_t</a>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">/* HAL_SAMG55_I2C_ASF_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aa01603_html_a49a13e733e8e0648165ff24419fa91c7"><div class="ttname"><a href="a01603.html#a49a13e733e8e0648165ff24419fa91c7">i2c_sam0_instance::i2c_instance</a></div><div class="ttdeci">struct i2c_master_module * i2c_instance</div><div class="ttdef"><b>Definition:</b> hal_sam0_i2c_asf.h:40</div></div>
-<div class="ttc" id="aa01603_html"><div class="ttname"><a href="a01603.html">i2c_sam0_instance</a></div><div class="ttdef"><b>Definition:</b> hal_sam0_i2c_asf.h:39</div></div>
-<div class="ttc" id="aa00452_html_aa09b1baa19c0d9232b191bffe0a200c0"><div class="ttname"><a href="a00452.html#aa09b1baa19c0d9232b191bffe0a200c0">sam0_change_baudrate</a></div><div class="ttdeci">void(* sam0_change_baudrate)(ATCAIface iface, uint32_t speed)</div><div class="ttdef"><b>Definition:</b> hal_sam0_i2c_asf.h:36</div></div>
-<div class="ttc" id="aa01603_html_aa057010ec9186041e48d78e6879e317a"><div class="ttname"><a href="a01603.html#aa057010ec9186041e48d78e6879e317a">i2c_sam0_instance::change_baudrate</a></div><div class="ttdeci">sam0_change_baudrate change_baudrate</div><div class="ttdef"><b>Definition:</b> hal_sam0_i2c_asf.h:41</div></div>
-<div class="ttc" id="aa00452_html_abc52bbb3cf5a8db38f9929b63d8d2171"><div class="ttname"><a href="a00452.html#abc52bbb3cf5a8db38f9929b63d8d2171">i2c_sam0_instance_t</a></div><div class="ttdeci">struct i2c_sam0_instance i2c_sam0_instance_t</div></div>
-<div class="ttc" id="aa01511_html"><div class="ttname"><a href="a01511.html">atca_iface</a></div><div class="ttdoc">atca_iface is the C object backing ATCAIface. See the atca_iface.h file for details on the ATCAIface ...</div><div class="ttdef"><b>Definition:</b> atca_iface.h:160</div></div>
-<div class="ttc" id="aa00389_html"><div class="ttname"><a href="a00389.html">cryptoauthlib.h</a></div><div class="ttdoc">Single aggregation point for all CryptoAuthLib header files.</div></div>
+<div class="ttc" id="aa00383_html"><div class="ttname"><a href="a00383.html">cryptoauthlib.h</a></div><div class="ttdoc">Single aggregation point for all CryptoAuthLib header files.</div></div>
+<div class="ttc" id="aa01523_html_gae597ddf62e19ba0f85e4444df939a88b"><div class="ttname"><a href="a01523.html#gae597ddf62e19ba0f85e4444df939a88b">sam_change_baudrate</a></div><div class="ttdeci">void(* sam_change_baudrate)(ATCAIface iface, uint32_t speed)</div><div class="ttdef"><b>Definition:</b> hal_sam_i2c_asf.h:47</div></div>
+<div class="ttc" id="aa01688_html"><div class="ttname"><a href="a01688.html">i2c_sam_instance</a></div><div class="ttdef"><b>Definition:</b> hal_sam_i2c_asf.h:50</div></div>
+<div class="ttc" id="aa01588_html"><div class="ttname"><a href="a01588.html">atca_iface</a></div><div class="ttdoc">atca_iface is the context structure for a configured interface</div><div class="ttdef"><b>Definition:</b> atca_iface.h:174</div></div>
+<div class="ttc" id="aa01688_html_a5a633e42035bd009af942b508acaf3d9"><div class="ttname"><a href="a01688.html#a5a633e42035bd009af942b508acaf3d9">i2c_sam_instance::i2c_instance</a></div><div class="ttdeci">Twi * i2c_instance</div><div class="ttdef"><b>Definition:</b> hal_sam_i2c_asf.h:51</div></div>
+<div class="ttc" id="aa01688_html_aa50b662a49ed98cb27c809f4b2027ac9"><div class="ttname"><a href="a01688.html#aa50b662a49ed98cb27c809f4b2027ac9">i2c_sam_instance::change_baudrate</a></div><div class="ttdeci">sam_change_baudrate change_baudrate</div><div class="ttdef"><b>Definition:</b> hal_sam_i2c_asf.h:52</div></div>
+<div class="ttc" id="aa01523_html_ga2253297ba3f655a35cd1253e22ba5171"><div class="ttname"><a href="a01523.html#ga2253297ba3f655a35cd1253e22ba5171">i2c_sam_instance_t</a></div><div class="ttdeci">struct i2c_sam_instance i2c_sam_instance_t</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="dir_fce061263c906406827233fc0be94ca6.html">hal</a></li><li class="navelem"><a class="el" href="a00452.html">hal_sam0_i2c_asf.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_87f752e68b722cbc3e0b8ce9f855cb08.html">cryptauthlib-v3.3.0_</a></li><li class="navelem"><a class="el" href="dir_05b5e449e7eda89ff3fc7e4d23e0e258.html">lib</a></li><li class="navelem"><a class="el" href="dir_7d780dd2d7f2a81cb39cba6ef9812450.html">hal</a></li><li class="navelem"><a class="el" href="a00452.html">hal_sam_i2c_asf.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_cfgs.h File Reference</title>
+<title>CryptoAuthLib: atca_compiler.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.5</span>
+   &#160;<span id="projectnumber">v3.3.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,238 +85,53 @@ $(document).ready(function(){initNavTree('a00146.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#var-members">Variables</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">atca_cfgs.h File Reference</div>  </div>
+<div class="title">atca_compiler.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>a set of default configurations for various ATCA devices and interfaces  
+<p>CryptoAuthLiub is meant to be portable across architectures, even non-Microchip architectures and compiler environments. This file is for isolating compiler specific macros.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00185_source.html">atca_iface.h</a>&quot;</code><br />
-</div>
+
 <p><a href="a00146_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:afcb056718eb34ec3a612d550208e49cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01475.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00146.html#afcb056718eb34ec3a612d550208e49cc">cfg_ateccx08a_i2c_default</a></td></tr>
-<tr class="memdesc:afcb056718eb34ec3a612d550208e49cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for an ECCx08A device on the first logical I2C bus  <a href="a00146.html#afcb056718eb34ec3a612d550208e49cc">More...</a><br /></td></tr>
-<tr class="separator:afcb056718eb34ec3a612d550208e49cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5624aa554e1964981b794e2295b9432c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01475.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00146.html#a5624aa554e1964981b794e2295b9432c">cfg_ateccx08a_swi_default</a></td></tr>
-<tr class="memdesc:a5624aa554e1964981b794e2295b9432c"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for an ECCx08A device on the logical SWI bus over UART  <a href="a00146.html#a5624aa554e1964981b794e2295b9432c">More...</a><br /></td></tr>
-<tr class="separator:a5624aa554e1964981b794e2295b9432c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8fb19127e7fc7cfbaa619ba41bccc4b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01475.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00146.html#a8fb19127e7fc7cfbaa619ba41bccc4b3">cfg_ateccx08a_kitcdc_default</a></td></tr>
-<tr class="memdesc:a8fb19127e7fc7cfbaa619ba41bccc4b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for Kit protocol over a CDC interface  <a href="a00146.html#a8fb19127e7fc7cfbaa619ba41bccc4b3">More...</a><br /></td></tr>
-<tr class="separator:a8fb19127e7fc7cfbaa619ba41bccc4b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f5e0890694189d4ce70f19b207eb070"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01475.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00146.html#a1f5e0890694189d4ce70f19b207eb070">cfg_ateccx08a_kithid_default</a></td></tr>
-<tr class="memdesc:a1f5e0890694189d4ce70f19b207eb070"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for Kit protocol over a HID interface  <a href="a00146.html#a1f5e0890694189d4ce70f19b207eb070">More...</a><br /></td></tr>
-<tr class="separator:a1f5e0890694189d4ce70f19b207eb070"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c2234bd89ad7cd649dd86f5ca3db370"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01475.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00146.html#a3c2234bd89ad7cd649dd86f5ca3db370">cfg_atsha20xa_i2c_default</a></td></tr>
-<tr class="memdesc:a3c2234bd89ad7cd649dd86f5ca3db370"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for a SHA204A device on the first logical I2C bus  <a href="a00146.html#a3c2234bd89ad7cd649dd86f5ca3db370">More...</a><br /></td></tr>
-<tr class="separator:a3c2234bd89ad7cd649dd86f5ca3db370"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af684f107790c0872c512f54637389532"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01475.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00146.html#af684f107790c0872c512f54637389532">cfg_atsha20xa_swi_default</a></td></tr>
-<tr class="memdesc:af684f107790c0872c512f54637389532"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for an SHA20xA device on the logical SWI bus over UART  <a href="a00146.html#af684f107790c0872c512f54637389532">More...</a><br /></td></tr>
-<tr class="separator:af684f107790c0872c512f54637389532"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ab0e6655ce14e34534e164714ab2bbe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01475.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00146.html#a6ab0e6655ce14e34534e164714ab2bbe">cfg_atsha20xa_kitcdc_default</a></td></tr>
-<tr class="memdesc:a6ab0e6655ce14e34534e164714ab2bbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for Kit protocol over a CDC interface  <a href="a00146.html#a6ab0e6655ce14e34534e164714ab2bbe">More...</a><br /></td></tr>
-<tr class="separator:a6ab0e6655ce14e34534e164714ab2bbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa246e05de94b085ac119609c3b22ea99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01475.html">ATCAIfaceCfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00146.html#aa246e05de94b085ac119609c3b22ea99">cfg_atsha20xa_kithid_default</a></td></tr>
-<tr class="memdesc:aa246e05de94b085ac119609c3b22ea99"><td class="mdescLeft">&#160;</td><td class="mdescRight">default configuration for Kit protocol over a HID interface for SHA204  <a href="a00146.html#aa246e05de94b085ac119609c3b22ea99">More...</a><br /></td></tr>
-<tr class="separator:aa246e05de94b085ac119609c3b22ea99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a19e63228967ce8a061f9f0d227dc6830"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00146.html#a19e63228967ce8a061f9f0d227dc6830">SHARED_LIB_EXPORT</a></td></tr>
+<tr class="separator:a19e63228967ce8a061f9f0d227dc6830"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c406311bad62403b4ba379576214108"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00146.html#a3c406311bad62403b4ba379576214108">ATCA_DLL</a>&#160;&#160;&#160;extern</td></tr>
+<tr class="separator:a3c406311bad62403b4ba379576214108"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>a set of default configurations for various ATCA devices and interfaces </p>
+<div class="textblock"><p>CryptoAuthLiub is meant to be portable across architectures, even non-Microchip architectures and compiler environments. This file is for isolating compiler specific macros. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Variable Documentation</h2>
-<a id="afcb056718eb34ec3a612d550208e49cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afcb056718eb34ec3a612d550208e49cc">&#9670;&nbsp;</a></span>cfg_ateccx08a_i2c_default</h2>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a3c406311bad62403b4ba379576214108"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c406311bad62403b4ba379576214108">&#9670;&nbsp;</a></span>ATCA_DLL</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01475.html">ATCAIfaceCfg</a> cfg_ateccx08a_i2c_default</td>
+          <td class="memname">#define ATCA_DLL&#160;&#160;&#160;extern</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>default configuration for an ECCx08A device on the first logical I2C bus </p>
-
 </div>
 </div>
-<a id="a8fb19127e7fc7cfbaa619ba41bccc4b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8fb19127e7fc7cfbaa619ba41bccc4b3">&#9670;&nbsp;</a></span>cfg_ateccx08a_kitcdc_default</h2>
+<a id="a19e63228967ce8a061f9f0d227dc6830"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19e63228967ce8a061f9f0d227dc6830">&#9670;&nbsp;</a></span>SHARED_LIB_EXPORT</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01475.html">ATCAIfaceCfg</a> cfg_ateccx08a_kitcdc_default</td>
+          <td class="memname">#define SHARED_LIB_EXPORT</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-
-<p>default configuration for Kit protocol over a CDC interface </p>
-
-</div>
-</div>
-<a id="a1f5e0890694189d4ce70f19b207eb070"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1f5e0890694189d4ce70f19b207eb070">&#9670;&nbsp;</a></span>cfg_ateccx08a_kithid_default</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01475.html">ATCAIfaceCfg</a> cfg_ateccx08a_kithid_default</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>default configuration for Kit protocol over a HID interface </p>
-
-</div>
-</div>
-<a id="a5624aa554e1964981b794e2295b9432c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5624aa554e1964981b794e2295b9432c">&#9670;&nbsp;</a></span>cfg_ateccx08a_swi_default</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01475.html">ATCAIfaceCfg</a> cfg_ateccx08a_swi_default</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>default configuration for an ECCx08A device on the logical SWI bus over UART </p>
-
-</div>
-</div>
-<a id="a3c2234bd89ad7cd649dd86f5ca3db370"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c2234bd89ad7cd649dd86f5ca3db370">&#9670;&nbsp;</a></span>cfg_atsha20xa_i2c_default</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01475.html">ATCAIfaceCfg</a> cfg_atsha20xa_i2c_default</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>default configuration for a SHA204A device on the first logical I2C bus </p>
-
-</div>
-</div>
-<a id="a6ab0e6655ce14e34534e164714ab2bbe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ab0e6655ce14e34534e164714ab2bbe">&#9670;&nbsp;</a></span>cfg_atsha20xa_kitcdc_default</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01475.html">ATCAIfaceCfg</a> cfg_atsha20xa_kitcdc_default</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>default configuration for Kit protocol over a CDC interface </p>
-
-</div>
-</div>
-<a id="aa246e05de94b085ac119609c3b22ea99"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa246e05de94b085ac119609c3b22ea99">&#9670;&nbsp;</a></span>cfg_atsha20xa_kithid_default</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01475.html">ATCAIfaceCfg</a> cfg_atsha20xa_kithid_default</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>default configuration for Kit protocol over a HID interface for SHA204 </p>
-
-</div>
-</div>
-<a id="af684f107790c0872c512f54637389532"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af684f107790c0872c512f54637389532">&#9670;&nbsp;</a></span>cfg_atsha20xa_swi_default</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01475.html">ATCAIfaceCfg</a> cfg_atsha20xa_swi_default</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>default configuration for an SHA20xA device on the logical SWI bus over UART </p>
 
 </div>
 </div>
@@ -325,7 +140,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="a00146.html">atca_cfgs.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_87f752e68b722cbc3e0b8ce9f855cb08.html">cryptauthlib-v3.3.0_</a></li><li class="navelem"><a class="el" href="dir_05b5e449e7eda89ff3fc7e4d23e0e258.html">lib</a></li><li class="navelem"><a class="el" href="a00146.html">atca_compiler.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

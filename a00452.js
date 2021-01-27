@@ -1,6 +1,5 @@
 var a00452 =
 [
-    [ "i2c_sam0_instance", "a01603.html", "a01603" ],
-    [ "i2c_sam0_instance_t", "a00452.html#abc52bbb3cf5a8db38f9929b63d8d2171", null ],
-    [ "sam0_change_baudrate", "a00452.html#aa09b1baa19c0d9232b191bffe0a200c0", null ]
+    [ "i2c_sam_instance_t", "a01523.html#ga2253297ba3f655a35cd1253e22ba5171", null ],
+    [ "sam_change_baudrate", "a01523.html#gae597ddf62e19ba0f85e4444df939a88b", null ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_host_sw.h Source File</title>
+<title>CryptoAuthLib: atcacert_pem.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.5</span>
+   &#160;<span id="projectnumber">v3.3.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,55 +85,63 @@ $(document).ready(function(){initNavTree('a00230_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">atcacert_host_sw.h</div>  </div>
+<div class="title">atcacert_pem.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00230.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#ifndef ATCACERT_HOST_SOFT_H</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#define ATCACERT_HOST_SOFT_H</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00212.html">atcacert_def.h</a>&quot;</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">// Inform function naming when compiling in C++</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef ATCACERT_PEM_H</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define ATCACERT_PEM_H</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="a00230.html#aefb573f85f8692759f6c82587a948d71">   37</a></span>&#160;<span class="preprocessor">#define PEM_CERT_BEGIN &quot;-----BEGIN CERTIFICATE-----&quot;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="a00230.html#afbe03d95d1d6a651c01d1ef74daa4063">   38</a></span>&#160;<span class="preprocessor">#define PEM_CERT_END   &quot;-----END CERTIFICATE-----&quot;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="a00230.html#a006df03d5e86c2d586f02362ca66566e">   39</a></span>&#160;<span class="preprocessor">#define PEM_CSR_BEGIN  &quot;-----BEGIN CERTIFICATE REQUEST-----&quot;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="a00230.html#ad7521d8913a097b0a910d00fdb664210">   40</a></span>&#160;<span class="preprocessor">#define PEM_CSR_END    &quot;-----END CERTIFICATE REQUEST-----&quot;</span></div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a01443.html#gab78271af8c3e2837810fcdae6e3f5e28">atcacert_verify_cert_sw</a>(<span class="keyword">const</span> <a class="code" href="a01531.html">atcacert_def_t</a>* cert_def,</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                            <span class="keyword">const</span> uint8_t*        cert,</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                            <span class="keywordtype">size_t</span>                cert_size,</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                            <span class="keyword">const</span> uint8_t         ca_public_key[64]);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a01443.html#gaa9829e5aa1ece3d3a933db9827d3e8f3">atcacert_gen_challenge_sw</a>(uint8_t challenge[32]);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a01443.html#ga9d5bf9ec84d28a0412377818805c32c4">atcacert_verify_response_sw</a>(<span class="keyword">const</span> uint8_t device_public_key[64],</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                                <span class="keyword">const</span> uint8_t challenge[32],</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                                <span class="keyword">const</span> uint8_t response[64]);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;}</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00230.html#abd464bace94353a8ff767e5a9bdc66ce">atcacert_encode_pem</a>(<span class="keyword">const</span> uint8_t* der,</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                        <span class="keywordtype">size_t</span>         der_size,</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                        <span class="keywordtype">char</span>*          pem,</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                        <span class="keywordtype">size_t</span>*        pem_size,</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                        <span class="keyword">const</span> <span class="keywordtype">char</span>*    header,</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                        <span class="keyword">const</span> <span class="keywordtype">char</span>*    footer);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00230.html#a67998c5401898020391dc6f02b11d2bd">atcacert_decode_pem</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* pem,</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                        <span class="keywordtype">size_t</span>      pem_size,</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                        uint8_t*    der,</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                        <span class="keywordtype">size_t</span>*     der_size,</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                        <span class="keyword">const</span> <span class="keywordtype">char</span>* header,</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                        <span class="keyword">const</span> <span class="keywordtype">char</span>* footer);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00230.html#a5f893d8f40bc8126a3802ad435bba895">atcacert_encode_pem_cert</a>(<span class="keyword">const</span> uint8_t* der_cert, <span class="keywordtype">size_t</span> der_cert_size, <span class="keywordtype">char</span>* pem_cert, <span class="keywordtype">size_t</span>* pem_cert_size);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00230.html#a47e68bdf906458409c7eff1aed0dff3a">atcacert_decode_pem_cert</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* pem_cert, <span class="keywordtype">size_t</span> pem_cert_size, uint8_t* der_cert, <span class="keywordtype">size_t</span>* der_cert_size);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00230.html#ab148948a885c6a7c9c95494e48e45cb1">atcacert_encode_pem_csr</a>(<span class="keyword">const</span> uint8_t* der_csr, <span class="keywordtype">size_t</span> der_csr_size, <span class="keywordtype">char</span>* pem_csr, <span class="keywordtype">size_t</span>* pem_csr_size);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a00230.html#afbccc09407aeb4d7b626b28da120211a">atcacert_decode_pem_csr</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* pem_csr, <span class="keywordtype">size_t</span> pem_csr_size, uint8_t* der_csr, <span class="keywordtype">size_t</span>* der_csr_size);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aa01531_html"><div class="ttname"><a href="a01531.html">atcacert_def_s</a></div><div class="ttdef"><b>Definition:</b> atcacert_def.h:176</div></div>
-<div class="ttc" id="aa01443_html_ga9d5bf9ec84d28a0412377818805c32c4"><div class="ttname"><a href="a01443.html#ga9d5bf9ec84d28a0412377818805c32c4">atcacert_verify_response_sw</a></div><div class="ttdeci">int atcacert_verify_response_sw(const uint8_t device_public_key[64], const uint8_t challenge[32], const uint8_t response[64])</div><div class="ttdoc">Verify a client's response to a challenge using software crypto functions.The function is currently n...</div><div class="ttdef"><b>Definition:</b> atcacert_host_sw.c:87</div></div>
-<div class="ttc" id="aa00212_html"><div class="ttname"><a href="a00212.html">atcacert_def.h</a></div><div class="ttdoc">Declarations for certificates related to ECC CryptoAuthentication devices. These are the definitions ...</div></div>
-<div class="ttc" id="aa01443_html_gaa9829e5aa1ece3d3a933db9827d3e8f3"><div class="ttname"><a href="a01443.html#gaa9829e5aa1ece3d3a933db9827d3e8f3">atcacert_gen_challenge_sw</a></div><div class="ttdeci">int atcacert_gen_challenge_sw(uint8_t challenge[32])</div><div class="ttdoc">Generate a random challenge to be sent to the client using a software PRNG.The function is currently ...</div><div class="ttdef"><b>Definition:</b> atcacert_host_sw.c:75</div></div>
-<div class="ttc" id="aa01443_html_gab78271af8c3e2837810fcdae6e3f5e28"><div class="ttname"><a href="a01443.html#gab78271af8c3e2837810fcdae6e3f5e28">atcacert_verify_cert_sw</a></div><div class="ttdeci">int atcacert_verify_cert_sw(const atcacert_def_t *cert_def, const uint8_t *cert, size_t cert_size, const uint8_t ca_public_key[64])</div><div class="ttdoc">Verify a certificate against its certificate authority's public key using software crypto functions....</div><div class="ttdef"><b>Definition:</b> atcacert_host_sw.c:38</div></div>
+<div class="ttc" id="aa00230_html_abd464bace94353a8ff767e5a9bdc66ce"><div class="ttname"><a href="a00230.html#abd464bace94353a8ff767e5a9bdc66ce">atcacert_encode_pem</a></div><div class="ttdeci">int atcacert_encode_pem(const uint8_t *der, size_t der_size, char *pem, size_t *pem_size, const char *header, const char *footer)</div><div class="ttdoc">Encode a DER data in PEM format.</div><div class="ttdef"><b>Definition:</b> atcacert_pem.c:35</div></div>
+<div class="ttc" id="aa00230_html_a47e68bdf906458409c7eff1aed0dff3a"><div class="ttname"><a href="a00230.html#a47e68bdf906458409c7eff1aed0dff3a">atcacert_decode_pem_cert</a></div><div class="ttdeci">int atcacert_decode_pem_cert(const char *pem_cert, size_t pem_cert_size, uint8_t *der_cert, size_t *der_cert_size)</div><div class="ttdoc">Decode a PEM certificate into DER format.</div><div class="ttdef"><b>Definition:</b> atcacert_pem.c:175</div></div>
+<div class="ttc" id="aa00230_html_a67998c5401898020391dc6f02b11d2bd"><div class="ttname"><a href="a00230.html#a67998c5401898020391dc6f02b11d2bd">atcacert_decode_pem</a></div><div class="ttdeci">int atcacert_decode_pem(const char *pem, size_t pem_size, uint8_t *der, size_t *der_size, const char *header, const char *footer)</div><div class="ttdoc">Decode PEM data into DER format.</div><div class="ttdef"><b>Definition:</b> atcacert_pem.c:103</div></div>
+<div class="ttc" id="aa00230_html_a5f893d8f40bc8126a3802ad435bba895"><div class="ttname"><a href="a00230.html#a5f893d8f40bc8126a3802ad435bba895">atcacert_encode_pem_cert</a></div><div class="ttdeci">int atcacert_encode_pem_cert(const uint8_t *der_cert, size_t der_cert_size, char *pem_cert, size_t *pem_cert_size)</div><div class="ttdoc">Encode a DER certificate in PEM format.</div><div class="ttdef"><b>Definition:</b> atcacert_pem.c:153</div></div>
+<div class="ttc" id="aa00230_html_afbccc09407aeb4d7b626b28da120211a"><div class="ttname"><a href="a00230.html#afbccc09407aeb4d7b626b28da120211a">atcacert_decode_pem_csr</a></div><div class="ttdeci">int atcacert_decode_pem_csr(const char *pem_csr, size_t pem_csr_size, uint8_t *der_csr, size_t *der_csr_size)</div><div class="ttdoc">Extract the CSR certificate bytes from a PEM encoded CSR certificate.</div><div class="ttdef"><b>Definition:</b> atcacert_pem.c:186</div></div>
+<div class="ttc" id="aa00230_html_ab148948a885c6a7c9c95494e48e45cb1"><div class="ttname"><a href="a00230.html#ab148948a885c6a7c9c95494e48e45cb1">atcacert_encode_pem_csr</a></div><div class="ttdeci">int atcacert_encode_pem_csr(const uint8_t *der_csr, size_t der_csr_size, char *pem_csr, size_t *pem_csr_size)</div><div class="ttdoc">Encode a DER CSR in PEM format.</div><div class="ttdef"><b>Definition:</b> atcacert_pem.c:164</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_d9e8ae65371dd6fcc6aab310077d7d33.html">lib</a></li><li class="navelem"><a class="el" href="dir_66d4f8af72ef71cf5ecd6cb2f7222b24.html">atcacert</a></li><li class="navelem"><a class="el" href="a00230.html">atcacert_host_sw.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_87f752e68b722cbc3e0b8ce9f855cb08.html">cryptauthlib-v3.3.0_</a></li><li class="navelem"><a class="el" href="dir_05b5e449e7eda89ff3fc7e4d23e0e258.html">lib</a></li><li class="navelem"><a class="el" href="dir_3284bdb79d343980e5a246d88faa34fe.html">atcacert</a></li><li class="navelem"><a class="el" href="a00230.html">atcacert_pem.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: trust_pkcs11_config.c File Reference</title>
+<title>CryptoAuthLib: io_protection_key.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.2.5</span>
+   &#160;<span id="projectnumber">v3.3.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -84,26 +84,72 @@ $(document).ready(function(){initNavTree('a00041.html',''); initResizable(); });
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">trust_pkcs11_config.c File Reference</div>  </div>
+<div class="title">io_protection_key.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Trust Platform Configuration.  
+<p>Provides required interface to access IO protection key.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00389_source.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;pkcs11_config.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00608_source.html">pkcs11/pkcs11_object.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00632_source.html">pkcs11/pkcs11_slot.h</a>&quot;</code><br />
-</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Trust Platform Configuration. </p>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00179_source.html">atca_status.h</a>&quot;</code><br />
+</div>
+<p><a href="a00041_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:adb01c317f81145702f564ca1d46ec33b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#adb01c317f81145702f564ca1d46ec33b">io_protection_get_key</a> (uint8_t *io_key)</td></tr>
+<tr class="separator:adb01c317f81145702f564ca1d46ec33b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e02c996fdc083bb4c4444057e429a44"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a8e02c996fdc083bb4c4444057e429a44">io_protection_set_key</a> (uint8_t *io_key)</td></tr>
+<tr class="separator:a8e02c996fdc083bb4c4444057e429a44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Provides required interface to access IO protection key. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="adb01c317f81145702f564ca1d46ec33b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb01c317f81145702f564ca1d46ec33b">&#9670;&nbsp;</a></span>io_protection_get_key()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> io_protection_get_key </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>io_key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8e02c996fdc083bb4c4444057e429a44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e02c996fdc083bb4c4444057e429a44">&#9670;&nbsp;</a></span>io_protection_set_key()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> io_protection_set_key </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>io_key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_b5d757e3d7ff9542485dec7ea87573a5.html">cryptauthlib-v3.2.5_</a></li><li class="navelem"><a class="el" href="dir_f121dfd9c77a7432a2e2a8a75be2e1de.html">app</a></li><li class="navelem"><a class="el" href="dir_c242300e5c7f0834928392079458f05b.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00041.html">trust_pkcs11_config.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_87f752e68b722cbc3e0b8ce9f855cb08.html">cryptauthlib-v3.3.0_</a></li><li class="navelem"><a class="el" href="dir_d728e1e27902ea94af89981d4f261a02.html">app</a></li><li class="navelem"><a class="el" href="dir_2f65a82dd5b888f286192dce99c559ae.html">secure_boot</a></li><li class="navelem"><a class="el" href="a00041.html">io_protection_key.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

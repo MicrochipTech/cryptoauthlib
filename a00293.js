@@ -1,9 +1,10 @@
 var a00293 =
 [
-    [ "calib_lock", "a01444.html#gaedcd432286630b9b0b05aef743fcf140", null ],
-    [ "calib_lock_config_zone", "a01444.html#gad59ce160afe0d695a51f3bb1869f8f9f", null ],
-    [ "calib_lock_config_zone_crc", "a01444.html#gaedd7f6f6e9a6b5e58fac18416b9cb8e8", null ],
-    [ "calib_lock_data_slot", "a01444.html#gaf8b5f9e30a712d0740f1a258ff6481d5", null ],
-    [ "calib_lock_data_zone", "a01444.html#ga8b43d1fe63cc9c5349bd0eacab073f05", null ],
-    [ "calib_lock_data_zone_crc", "a01444.html#ga54f25b26b532c6f2cee224ebfd8d53c5", null ]
+    [ "calib_challenge", "a01521.html#ga527688ba64f8a45663b920ff3333bf06", null ],
+    [ "calib_challenge_seed_update", "a01521.html#ga3599eb3352da9d7dc527e5ff9935bd49", null ],
+    [ "calib_nonce", "a01521.html#gad4e9ba79d8d9d65263d8dd7d5df6fd53", null ],
+    [ "calib_nonce_base", "a01521.html#ga0e63b42b9f17b12d9296ac019f9dfd10", null ],
+    [ "calib_nonce_gen_session_key", "a01521.html#ga47aa3e6c05baea266e73630181dadd49", null ],
+    [ "calib_nonce_load", "a01521.html#ga2ec82eed30721cfed86d8c33ad8e9385", null ],
+    [ "calib_nonce_rand", "a01521.html#ga9cc318c2497c9781c42df7a9c54fe234", null ]
 ];

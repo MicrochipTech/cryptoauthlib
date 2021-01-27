@@ -1,15 +1,10 @@
 var a00050 =
 [
-    [ "secure_boot_config_bits", "a01991.html", "a01991" ],
-    [ "secure_boot_parameters", "a01995.html", "a01995" ],
-    [ "SECURE_BOOT_CONFIG_DISABLE", "a00050.html#abda1d3106b26d6e32fddd71223ecb491", null ],
-    [ "SECURE_BOOT_CONFIG_FULL_BOTH", "a00050.html#a5aae2464eb2bb84cec34bfd422697a27", null ],
-    [ "SECURE_BOOT_CONFIG_FULL_DIG", "a00050.html#a61ab82e3ca8c3f985cfc8b1a06daaced", null ],
-    [ "SECURE_BOOT_CONFIG_FULL_SIGN", "a00050.html#a3eef897b793c9ff7430c09d88bd8bac0", null ],
-    [ "SECURE_BOOT_CONFIGURATION", "a00050.html#a93cbf6aee50e7449217cf18f2ebfc690", null ],
-    [ "SECURE_BOOT_DIGEST_ENCRYPT_ENABLED", "a00050.html#aad47571829afb2de827111c11df184de", null ],
-    [ "SECURE_BOOT_UPGRADE_SUPPORT", "a00050.html#a07cf8cf7a12bb9592fff7a31a369c1a5", null ],
-    [ "bind_host_and_secure_element_with_io_protection", "a00050.html#af086e6ea3beaf8711ec855ff7dce40b1", null ],
-    [ "host_generate_random_number", "a00050.html#a197406dca9e671c3ef8036976108527f", null ],
-    [ "secure_boot_process", "a00050.html#a861a785461af4116bca9343019225abd", null ]
+    [ "memory_parameters", "a02084.html", "a02084" ],
+    [ "secure_boot_check_full_copy_completion", "a00050.html#a6378e763208c43ba1fbcadd8bc8a084c", null ],
+    [ "secure_boot_deinit_memory", "a00050.html#abf726b809a542bc68519520b61b755a3", null ],
+    [ "secure_boot_init_memory", "a00050.html#ad744cc79ced98d366fed07780032bc47", null ],
+    [ "secure_boot_mark_full_copy_completion", "a00050.html#aa635e6de2a04772df6edfdc1973236b9", null ],
+    [ "secure_boot_read_memory", "a00050.html#a25b3c765095b474bc2b93f87d96f7b28", null ],
+    [ "secure_boot_write_memory", "a00050.html#a00a29e86e9ab8b9d74b95e194a1b08f2", null ]
 ];
