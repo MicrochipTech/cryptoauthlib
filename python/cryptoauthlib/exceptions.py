@@ -161,3 +161,6 @@ class NoUseFlagError(CryptoError):
 
 class LibraryNotInitialized(CryptoError):
     """Indication that library or context was not initialized prior to an API call"""
+
+class UnsupportedInterface(CryptoError):
+    """"The selected interface is not supported by the library"""

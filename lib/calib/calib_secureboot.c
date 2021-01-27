@@ -52,7 +52,6 @@
 ATCA_STATUS calib_secureboot(ATCADevice device, uint8_t mode, uint16_t param2, const uint8_t* digest, const uint8_t* signature, uint8_t* mac)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     if ((device == NULL) || (digest == NULL))
@@ -62,7 +61,6 @@ ATCA_STATUS calib_secureboot(ATCADevice device, uint8_t mode, uint16_t param2, c
 
     do
     {
-        ca_cmd = device->mCommands;
         packet.param1 = mode;
         packet.param2 = param2;
 
@@ -73,7 +71,7 @@ ATCA_STATUS calib_secureboot(ATCADevice device, uint8_t mode, uint16_t param2, c
             memcpy(&packet.data[SECUREBOOT_DIGEST_SIZE], signature, SECUREBOOT_SIGNATURE_SIZE);
         }
 
-        if ((status = atSecureBoot(ca_cmd, &packet)) != ATCA_SUCCESS)
+        if ((status = atSecureBoot(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "atSecureBoot - failed");
             break;

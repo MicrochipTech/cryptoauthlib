@@ -26,13 +26,13 @@
  */
 
 #include "cryptoauthlib.h"
-#include "atcacert/atcacert_date.h"
-#include "atcacert/atcacert_def.h"
-#include "host/atca_host.h"
 
 #define SIZE_OF_API_T(x)  size_t x ## _size(void); size_t x ## _size(void) { return sizeof( x ); }
 #define SIZE_OF_API_S(x)  size_t x ## _size(void); size_t x ## _size(void) { return sizeof(struct x ); }
 
+#if ATCA_CA_SUPPORT
+#include "atcacert/atcacert_date.h"
+#include "atcacert/atcacert_def.h"
 /* atcacert_date.h */
 SIZE_OF_API_T(atcacert_tm_utc_t)
 SIZE_OF_API_T(atcacert_date_format_t)
@@ -47,11 +47,15 @@ SIZE_OF_API_T(atcacert_cert_loc_t)
 SIZE_OF_API_T(atcacert_cert_element_t)
 SIZE_OF_API_T(atcacert_def_t)
 SIZE_OF_API_T(atcacert_build_state_t)
+#endif
 
 /* atcab.h */
 SIZE_OF_API_T(atca_aes_cbc_ctx_t)
 SIZE_OF_API_T(atca_aes_cmac_ctx_t)
 SIZE_OF_API_T(atca_aes_ctr_ctx_t)
+
+#if ATCA_CA_SUPPORT
+#include "host/atca_host.h"
 
 /* atca_host.h */
 SIZE_OF_API_T(atca_temp_key_t)
@@ -72,13 +76,13 @@ SIZE_OF_API_T(atca_check_mac_in_out_t)
 SIZE_OF_API_T(atca_verify_in_out_t)
 SIZE_OF_API_T(atca_gen_key_in_out_t)
 SIZE_OF_API_T(atca_sign_internal_in_out_t)
+#endif
 
 /* atca_bool.h */
 SIZE_OF_API_T(bool)
 
 /* atca_command.h */
 #if ATCA_CA_SUPPORT
-SIZE_OF_API_S(atca_command)
 SIZE_OF_API_T(ATCAPacket)
 #endif
 

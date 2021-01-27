@@ -49,7 +49,6 @@
 ATCA_STATUS calib_aes(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* aes_in, uint8_t* aes_out)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     do
@@ -60,7 +59,6 @@ ATCA_STATUS calib_aes(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
             break;
         }
 
-        ca_cmd = device->mCommands;
         // build a AES command
         packet.param1 = mode;
         packet.param2 = key_id;
@@ -73,7 +71,7 @@ ATCA_STATUS calib_aes(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
             memcpy(packet.data, aes_in, AES_DATA_SIZE);
         }
 
-        if ((status = atAES(ca_cmd, &packet)) != ATCA_SUCCESS)
+        if ((status = atAES(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "atAES - failed");
             break;

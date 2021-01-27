@@ -69,7 +69,6 @@
 ATCA_STATUS calib_verify(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* signature, const uint8_t* public_key, const uint8_t* other_data, uint8_t* mac)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t verify_mode = (mode & VERIFY_MODE_MASK);
 
@@ -88,7 +87,6 @@ ATCA_STATUS calib_verify(ATCADevice device, uint8_t mode, uint16_t key_id, const
             break;
         }
 
-        ca_cmd = device->mCommands;
         // Build the verify command
         packet.param1 = mode;
         packet.param2 = key_id;
@@ -102,7 +100,7 @@ ATCA_STATUS calib_verify(ATCADevice device, uint8_t mode, uint16_t key_id, const
             memcpy(&packet.data[ATCA_SIG_SIZE], other_data, VERIFY_OTHER_DATA_SIZE);
         }
 
-        if ((status = atVerify(ca_cmd, &packet)) != ATCA_SUCCESS)
+        if ((status = atVerify(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "atVerify - failed");
             break;
@@ -252,7 +250,7 @@ ATCA_STATUS calib_verify_extern(ATCADevice device, const uint8_t *message, const
     do
     {
         // Load message into device
-        if (ATECC608 == device->mIface->mIfaceCFG->devtype)
+        if (ATECC608 == device->mIface.mIfaceCFG->devtype)
         {
             // Use the Message Digest Buffer for the ATECC608
             nonce_target = NONCE_MODE_TARGET_MSGDIGBUF;
@@ -338,7 +336,7 @@ ATCA_STATUS calib_verify_stored(ATCADevice device, const uint8_t *message, const
     do
     {
         // Load message into device
-        if (ATECC608 == device->mIface->mIfaceCFG->devtype)
+        if (ATECC608 == device->mIface.mIfaceCFG->devtype)
         {
             // Use the Message Digest Buffer for the ATECC608
             nonce_target = NONCE_MODE_TARGET_MSGDIGBUF;

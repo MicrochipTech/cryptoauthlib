@@ -52,7 +52,6 @@
 ATCA_STATUS calib_mac(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* challenge, uint8_t* digest)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     do
@@ -63,7 +62,6 @@ ATCA_STATUS calib_mac(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
             break;
         }
 
-        ca_cmd = device->mCommands;
         // build mac command
         packet.param1 = mode;
         packet.param2 = key_id;
@@ -76,7 +74,7 @@ ATCA_STATUS calib_mac(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
             memcpy(&packet.data[0], challenge, 32);  // a 32-byte challenge
         }
 
-        if ((status = atMAC(ca_cmd, &packet)) != ATCA_SUCCESS)
+        if ((status = atMAC(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "atMAC - failed");
             break;

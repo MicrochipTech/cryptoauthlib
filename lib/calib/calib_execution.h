@@ -47,6 +47,12 @@ extern "C" {
 
 #define ATCA_UNSUPPORTED_CMD ((uint16_t)0xFFFF)
 
+#define CALIB_SWI_FLAG_WAKE     0x00    //!< flag preceding a command
+#define CALIB_SWI_FLAG_CMD      0x77    //!< flag preceding a command
+#define CALIB_SWI_FLAG_TX       0x88    //!< flag requesting a response
+#define CALIB_SWI_FLAG_IDLE     0xBB    //!< flag requesting to go into Idle mode
+#define CALIB_SWI_FLAG_SLEEP    0xCC    //!< flag requesting to go into Sleep mode
+
 #ifdef ATCA_NO_POLL
 /** \brief Structure to hold the device execution time and the opcode for the
  *         corresponding command
@@ -58,6 +64,10 @@ typedef struct
 }device_execution_time_t;
 
 ATCA_STATUS calib_get_execution_time(uint8_t opcode, ATCACommand ca_cmd);
+#endif
+
+#ifndef ATCA_HAL_LEGACY_API
+ATCA_STATUS calib_execute_receive(ATCADevice device, uint8_t device_address, uint8_t* rxdata, uint16_t* rxlength);
 #endif
 
 ATCA_STATUS calib_execute_command(ATCAPacket* packet, ATCADevice device);

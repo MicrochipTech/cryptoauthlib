@@ -91,7 +91,7 @@ ATCA_STATUS atcab_aes_cbcmac_update(atca_aes_cbcmac_ctx_t* ctx, const uint8_t* d
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     size_t i;
-    uint8_t ciphertext[AES_DATA_SIZE];
+    uint8_t ciphertext[ATCA_AES128_BLOCK_SIZE];
 
     if (data_size == 0)
     {
@@ -105,9 +105,9 @@ ATCA_STATUS atcab_aes_cbcmac_update(atca_aes_cbcmac_ctx_t* ctx, const uint8_t* d
     }
 
     // Process full blocks of data with AES-CBC
-    for (i = 0; i < data_size / AES_DATA_SIZE; i++)
+    for (i = 0; i < data_size / ATCA_AES128_BLOCK_SIZE; i++)
     {
-        status = atcab_aes_cbc_encrypt_block(&ctx->cbc_ctx, &data[i * AES_DATA_SIZE], ciphertext);
+        status = atcab_aes_cbc_encrypt_block(&ctx->cbc_ctx, &data[i * ATCA_AES128_BLOCK_SIZE], ciphertext);
         if (status != ATCA_SUCCESS)
         {
             return status;
@@ -115,10 +115,10 @@ ATCA_STATUS atcab_aes_cbcmac_update(atca_aes_cbcmac_ctx_t* ctx, const uint8_t* d
     }
 
     // Store incomplete block to context structure
-    if ((i * AES_DATA_SIZE) < data_size)
+    if ((i * ATCA_AES128_BLOCK_SIZE) < data_size)
     {
-        memcpy(ctx->block, &data[i * AES_DATA_SIZE], data_size - i * AES_DATA_SIZE);
-        ctx->block_size = (uint8_t)(data_size - i * AES_DATA_SIZE);
+        memcpy(ctx->block, &data[i * ATCA_AES128_BLOCK_SIZE], data_size - i * ATCA_AES128_BLOCK_SIZE);
+        ctx->block_size = (uint8_t)(data_size - i * ATCA_AES128_BLOCK_SIZE);
     }
     else
     {
@@ -140,7 +140,7 @@ ATCA_STATUS atcab_aes_cbcmac_update(atca_aes_cbcmac_ctx_t* ctx, const uint8_t* d
  */
 ATCA_STATUS atcab_aes_cbcmac_finish(atca_aes_cbcmac_ctx_t* ctx, uint8_t* mac, uint32_t mac_size)
 {
-    if (ctx == NULL || mac == NULL || mac_size > AES_DATA_SIZE)
+    if (ctx == NULL || mac == NULL || mac_size > ATCA_AES128_BLOCK_SIZE)
     {
         return ATCA_BAD_PARAM;
     }

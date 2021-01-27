@@ -38,34 +38,13 @@
 #include "atca_start_config.h"
 #include "atca_start_iface.h"
 
+
 /** \defgroup hal_ Hardware abstraction layer (hal_)
  *
  * \brief
  * These methods define the hardware abstraction layer for communicating with a CryptoAuth device
  *
    @{ */
-
-/** \brief an intermediary data structure to allow the HAL layer to point the standard API functions
-   used by the upper layers to the HAL implementation for the interface.  This isolates the upper layers
-   and loosely couples the ATCAIface object from the physical implementation.
- */
-
-typedef struct
-{
-    // interface is a group of function pointers to a specific HAL implementation for this interface type
-    // so these function pointers are initialized in the HAL layer in order to help keep the ATCAIface object
-    // from needing to know the low-level details, including global naming of HAL methods and physical implementation.
-    ATCA_STATUS (*halinit)(void *hal, ATCAIfaceCfg *cfg);
-    ATCA_STATUS (*halpostinit)(ATCAIface iface);
-    ATCA_STATUS (*halsend)(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength);
-    ATCA_STATUS (*halreceive)(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, uint16_t* rxlength);
-    ATCA_STATUS (*halwake)(ATCAIface iface);
-    ATCA_STATUS (*halidle)(ATCAIface iface);
-    ATCA_STATUS (*halsleep)(ATCAIface iface);
-    ATCA_STATUS (*halrelease)(void* hal_data);
-
-    void *hal_data;       // points to whatever the HAL implementation for this interface wants it to, HAL manages.
-} ATCAHAL_t;
 
 typedef struct
 {
@@ -80,100 +59,100 @@ typedef struct
 extern "C" {
 #endif
 
-extern ATCA_STATUS hal_iface_init(ATCAIfaceCfg *, ATCAHAL_t** hal);
-extern ATCA_STATUS hal_iface_release(ATCAIfaceType, void* hal_data);
+ATCA_STATUS hal_iface_init(ATCAIfaceCfg *, ATCAHAL_t** hal, ATCAHAL_t** phy);
+ATCA_STATUS hal_iface_release(ATCAIfaceType, void* hal_data);
 
 ATCA_STATUS hal_check_wake(const uint8_t* response, int response_size);
 
 #ifdef ATCA_HAL_I2C
-ATCA_STATUS hal_i2c_init(void *hal, ATCAIfaceCfg *cfg);
+ATCA_STATUS hal_i2c_init(ATCAIface iface, ATCAIfaceCfg *cfg);
 ATCA_STATUS hal_i2c_post_init(ATCAIface iface);
 ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength);
 ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength);
+ATCA_STATUS hal_i2c_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen);
+#ifdef ATCA_LEGACY_HAL
 ATCA_STATUS hal_i2c_wake(ATCAIface iface);
 ATCA_STATUS hal_i2c_idle(ATCAIface iface);
 ATCA_STATUS hal_i2c_sleep(ATCAIface iface);
+#endif
 ATCA_STATUS hal_i2c_release(void *hal_data);
-ATCA_STATUS hal_i2c_discover_buses(int i2c_buses[], int max_buses);
-ATCA_STATUS hal_i2c_discover_devices(int bus_num, ATCAIfaceCfg *cfg, int *found);
 #endif
 
 #ifdef ATCA_HAL_SWI
-ATCA_STATUS hal_swi_init(void *hal, ATCAIfaceCfg *cfg);
+ATCA_STATUS hal_swi_init(ATCAIface iface, ATCAIfaceCfg *cfg);
 ATCA_STATUS hal_swi_post_init(ATCAIface iface);
 ATCA_STATUS hal_swi_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength);
 ATCA_STATUS hal_swi_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength);
+ATCA_STATUS hal_swi_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen);
+#ifdef ATCA_LEGACY_HAL
 ATCA_STATUS hal_swi_wake(ATCAIface iface);
 ATCA_STATUS hal_swi_idle(ATCAIface iface);
 ATCA_STATUS hal_swi_sleep(ATCAIface iface);
+#endif
 ATCA_STATUS hal_swi_release(void *hal_data);
-ATCA_STATUS hal_swi_discover_buses(int swi_buses[], int max_buses);
-ATCA_STATUS hal_swi_discover_devices(int bus_num, ATCAIfaceCfg *cfg, int *found);
+#endif
+
+
+#if defined(ATCA_HAL_1WIRE) || defined(ATCA_HAL_SWI)
+ATCA_STATUS hal_gpio_init(void *hal, ATCAIfaceCfg* cfg);
+ATCA_STATUS hal_gpio_post_init(ATCAIface iface);
+ATCA_STATUS hal_gpio_send(ATCAIface iface, uint8_t word_address, uint8_t* txdata, int txlength);
+ATCA_STATUS hal_gpio_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, uint16_t* rxlength);
+ATCA_STATUS hal_gpio_idle(ATCAIface iface);
+ATCA_STATUS hal_gpio_sleep(ATCAIface iface);
+ATCA_STATUS hal_gpio_wake(ATCAIface iface);
+ATCA_STATUS hal_gpio_release(void *hal_data);
+ATCA_STATUS hal_gpio_device_discovery(ATCAIface iface);
 #endif
 
 #ifdef ATCA_HAL_UART
-ATCA_STATUS hal_uart_init(void *hal, ATCAIfaceCfg *cfg);
+ATCA_STATUS hal_uart_init(ATCAIface iface, ATCAIfaceCfg *cfg);
 ATCA_STATUS hal_uart_post_init(ATCAIface iface);
 ATCA_STATUS hal_uart_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength);
 ATCA_STATUS hal_uart_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength);
+ATCA_STATUS hal_uart_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen);
+#ifdef ATCA_LEGACY_HAL
 ATCA_STATUS hal_uart_wake(ATCAIface iface);
 ATCA_STATUS hal_uart_idle(ATCAIface iface);
 ATCA_STATUS hal_uart_sleep(ATCAIface iface);
+#endif
 ATCA_STATUS hal_uart_release(ATCAIface iface);
-ATCA_STATUS hal_uart_discover_buses(int uart_buses[], int max_buses);
-ATCA_STATUS hal_uart_discover_devices(int bus_num, ATCAIfaceCfg *cfg, int *found);
 #endif
 
 #ifdef ATCA_HAL_SPI
-ATCA_STATUS hal_spi_init(void *hal, ATCAIfaceCfg *cfg);
+ATCA_STATUS hal_spi_init(ATCAIface iface, ATCAIfaceCfg *cfg);
 ATCA_STATUS hal_spi_post_init(ATCAIface iface);
 ATCA_STATUS hal_spi_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength);
 ATCA_STATUS hal_spi_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength);
+ATCA_STATUS hal_spi_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen);
+#ifdef ATCA_LEGACY_HAL
 ATCA_STATUS hal_spi_wake(ATCAIface iface);
 ATCA_STATUS hal_spi_idle(ATCAIface iface);
 ATCA_STATUS hal_spi_sleep(ATCAIface iface);
-ATCA_STATUS hal_spi_release(void *hal_data);
-ATCA_STATUS hal_spi_discover_buses(int spi_buses[], int max_buses);
-ATCA_STATUS hal_spi_discover_devices(int bus_num, ATCAIfaceCfg *cfg, int *found);
 #endif
-
-#ifdef ATCA_HAL_KIT_CDC
-ATCA_STATUS hal_kit_cdc_init(void *hal, ATCAIfaceCfg *cfg);
-ATCA_STATUS hal_kit_cdc_post_init(ATCAIface iface);
-ATCA_STATUS hal_kit_cdc_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength);
-ATCA_STATUS hal_kit_cdc_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength);
-ATCA_STATUS hal_kit_cdc_wake(ATCAIface iface);
-ATCA_STATUS hal_kit_cdc_idle(ATCAIface iface);
-ATCA_STATUS hal_kit_cdc_sleep(ATCAIface iface);
-ATCA_STATUS hal_kit_cdc_release(void *hal_data);
-ATCA_STATUS hal_kit_cdc_discover_buses(int cdc_buses[], int max_buses);
-ATCA_STATUS hal_kit_cdc_discover_devices(int bus_num, ATCAIfaceCfg *cfg, int *found);
+ATCA_STATUS hal_spi_release(void *hal_data);
 #endif
 
 #ifdef ATCA_HAL_KIT_HID
-ATCA_STATUS hal_kit_hid_init(void *hal, ATCAIfaceCfg *cfg);
+ATCA_STATUS hal_kit_hid_init(ATCAIface iface, ATCAIfaceCfg *cfg);
 ATCA_STATUS hal_kit_hid_post_init(ATCAIface iface);
 ATCA_STATUS hal_kit_hid_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength);
 ATCA_STATUS hal_kit_hid_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength);
-ATCA_STATUS hal_kit_hid_wake(ATCAIface iface);
-ATCA_STATUS hal_kit_hid_idle(ATCAIface iface);
-ATCA_STATUS hal_kit_hid_sleep(ATCAIface iface);
+ATCA_STATUS hal_kit_hid_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen);
 ATCA_STATUS hal_kit_hid_release(void *hal_data);
-ATCA_STATUS hal_kit_hid_discover_buses(int hid_buses[], int max_buses);
-ATCA_STATUS hal_kit_hid_discover_devices(int bus_num, ATCAIfaceCfg *cfg, int *found);
 #endif
 
 #ifdef ATCA_HAL_KIT_BRIDGE
-ATCA_STATUS hal_kit_init(void* hal, ATCAIfaceCfg* cfg);
+ATCA_STATUS hal_kit_init(ATCAIface iface, ATCAIfaceCfg* cfg);
 ATCA_STATUS hal_kit_post_init(ATCAIface iface);
 ATCA_STATUS hal_kit_send(ATCAIface iface, uint8_t word_address, uint8_t* txdata, int txlength);
 ATCA_STATUS hal_kit_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, uint16_t* rxlength);
-ATCA_STATUS hal_kit_wake(ATCAIface iface);
-ATCA_STATUS hal_kit_idle(ATCAIface iface);
-ATCA_STATUS hal_kit_sleep(ATCAIface iface);
+ATCA_STATUS hal_kit_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen);
 ATCA_STATUS hal_kit_release(void* hal_data);
-ATCA_STATUS hal_kit_discover_buses(int hid_buses[], int max_buses);
-ATCA_STATUS hal_kit_discover_devices(int bus_num, ATCAIfaceCfg* cfg, int* found);
+#endif
+
+#ifdef ATCA_HAL_CUSTOM
+ATCA_STATUS hal_custom_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen);
 #endif
 
 /* Polling defaults if not overwritten by the configuration */
@@ -188,6 +167,18 @@ ATCA_STATUS hal_kit_discover_devices(int bus_num, ATCAIfaceCfg* cfg, int* found)
 #ifndef ATCA_POLLING_MAX_TIME_MSEC
 #define ATCA_POLLING_MAX_TIME_MSEC        2500
 #endif
+
+/*  */
+typedef enum
+{
+    ATCA_HAL_CONTROL_WAKE = 0,
+    ATCA_HAL_CONTROL_IDLE = 1,
+    ATCA_HAL_CONTROL_SLEEP = 2,
+    ATCA_HAL_CONTROL_RESET = 3,
+    ATCA_HAL_CONTROL_SELECT = 4,
+    ATCA_HAL_CONTROL_DESELECT = 5,
+    ATCA_HAL_CHANGE_BAUD = 6
+} ATCA_HAL_CONTROL;
 
 /** \brief Timer API for legacy implementations */
 #ifndef atca_delay_ms
@@ -230,7 +221,8 @@ void    hal_free(void* ptr);
 #endif
 
 
-ATCA_STATUS hal_iface_register_hal(ATCAIfaceType iface_type, ATCAHAL_t *hal, ATCAHAL_t **old);
+ATCA_STATUS hal_iface_register_hal(ATCAIfaceType iface_type, ATCAHAL_t *hal, ATCAHAL_t **old_hal, ATCAHAL_t* phy, ATCAHAL_t** old_phy);
+uint8_t hal_is_command_word(uint8_t word_address);
 
 #ifdef __cplusplus
 }

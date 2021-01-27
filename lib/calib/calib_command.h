@@ -36,7 +36,6 @@
 #define CALIB_COMMAND_H
 
 #include <stddef.h>
-#include "atca_command.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -104,30 +103,30 @@ typedef struct
 #endif
 
 
-ATCA_STATUS atCheckMAC(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atCounter(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atDeriveKey(ATCACommand ca_cmd, ATCAPacket *packet, bool has_mac);
-ATCA_STATUS atECDH(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atGenDig(ATCACommand ca_cmd, ATCAPacket *packet, bool is_no_mac_key);
-ATCA_STATUS atGenKey(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atHMAC(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atInfo(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atLock(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atMAC(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atNonce(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atPause(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atPrivWrite(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atRandom(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atRead(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atSecureBoot(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atSHA(ATCACommand ca_cmd, ATCAPacket *packet, uint16_t write_context_size);
-ATCA_STATUS atSign(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atUpdateExtra(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atVerify(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atWrite(ATCACommand ca_cmd, ATCAPacket *packet, bool has_mac);
-ATCA_STATUS atAES(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atSelfTest(ATCACommand ca_cmd, ATCAPacket *packet);
-ATCA_STATUS atKDF(ATCACommand ca_cmd, ATCAPacket *packet);
+ATCA_STATUS atCheckMAC(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atCounter(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atDeriveKey(ATCADeviceType device_type, ATCAPacket *packet, bool has_mac);
+ATCA_STATUS atECDH(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atGenDig(ATCADeviceType device_type, ATCAPacket *packet, bool is_no_mac_key);
+ATCA_STATUS atGenKey(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atHMAC(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atInfo(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atLock(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atMAC(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atNonce(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atPause(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atPrivWrite(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atRandom(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atRead(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atSecureBoot(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atSHA(ATCADeviceType device_type, ATCAPacket *packet, uint16_t write_context_size);
+ATCA_STATUS atSign(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atUpdateExtra(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atVerify(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atWrite(ATCADeviceType device_type, ATCAPacket *packet, bool has_mac);
+ATCA_STATUS atAES(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atSelfTest(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atKDF(ATCADeviceType device_type, ATCAPacket *packet);
 
 bool atIsSHAFamily(ATCADeviceType device_type);
 bool atIsECCFamily(ATCADeviceType device_type);
@@ -202,6 +201,8 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define ATCA_KEY_COUNT              (16)                               //!< number of keys
 #define ATCA_ECC_CONFIG_SIZE        (128)                              //!< size of configuration zone
 #define ATCA_SHA_CONFIG_SIZE        (88)                               //!< size of configuration zone
+#define ATCA_ECC204_CONFIG_SIZE     (64)                               //!< size of ECC204 configuration zone
+#define ATCA_ECC204_CONFIG_SLOT_SIZE (16)                              //!< size of ECC204 configuration slot size
 #define ATCA_OTP_SIZE               (64)                               //!< size of OTP zone
 #define ATCA_DATA_SIZE              (ATCA_KEY_COUNT * ATCA_KEY_SIZE)   //!< size of data zone
 #define ATCA_AES_GFM_SIZE            ATCA_BLOCK_SIZE                   //!< size of GFM data
@@ -386,6 +387,7 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define GENKEY_MODE_PUBLIC          ((uint8_t)0x00)         //!< GenKey mode: public key calculation
 #define GENKEY_MODE_DIGEST          ((uint8_t)0x08)         //!< GenKey mode: PubKey digest will be created after the public key is calculated
 #define GENKEY_MODE_PUBKEY_DIGEST   ((uint8_t)0x10)         //!< GenKey mode: Calculate PubKey digest on the public key in KeyId
+#define GENKEY_MODE_MAC             ((uint8_t)0x20)         //!< Genkey mode: Calculate MAC of public key + session key
 #define GENKEY_PRIVATE_TO_TEMPKEY   ((uint16_t)0xFFFF)      //!< GenKey Create private key and store to tempkey (608 only)
 #define GENKEY_RSP_SIZE_SHORT       ATCA_RSP_SIZE_MIN       //!< GenKey response packet size in Digest mode
 #define GENKEY_RSP_SIZE_LONG        ATCA_RSP_SIZE_64        //!< GenKey response packet size when returning a public key
@@ -414,6 +416,7 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define INFO_MODE_REVISION          ((uint8_t)0x00)     //!< Info mode Revision
 #define INFO_MODE_KEY_VALID         ((uint8_t)0x01)     //!< Info mode KeyValid
 #define INFO_MODE_STATE             ((uint8_t)0x02)     //!< Info mode State
+#define INFO_MODE_LOCK_STATUS       ((uint8_t)0x02)     //!< Info mode Lock status for ECC204 device
 #define INFO_MODE_GPIO              ((uint8_t)0x03)     //!< Info mode GPIO
 #define INFO_MODE_VOL_KEY_PERMIT    ((uint8_t)0x04)     //!< Info mode GPIO
 #define INFO_MODE_MAX               ((uint8_t)0x03)     //!< Info mode maximum value
@@ -486,6 +489,8 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define LOCK_ZONE_CONFIG            ((uint8_t)0x00)     //!< Lock zone is Config
 #define LOCK_ZONE_DATA              ((uint8_t)0x01)     //!< Lock zone is OTP or Data
 #define LOCK_ZONE_DATA_SLOT         ((uint8_t)0x02)     //!< Lock slot of Data
+#define LOCK_ECC204_ZONE_DATA       ((uint8_t)0x00)     //!< Lock ECC204 Data zone by slot
+#define LOCK_ECC204_ZONE_CONFIG     ((uint8_t)0x01)     //!< Lock ECC204 configuration zone by slot
 #define LOCK_ZONE_NO_CRC            ((uint8_t)0x80)     //!< Lock command: Ignore summary.
 #define LOCK_ZONE_MASK              (0xBF)              //!< Lock parameter 1 bits 6 are 0.
 #define ATCA_UNLOCKED               (0x55)              //!< Value indicating an unlocked zone
@@ -528,6 +533,7 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define NONCE_MODE_NO_SEED_UPDATE       ((uint8_t)0x01)          //!< Nonce mode: do not update seed
 #define NONCE_MODE_INVALID              ((uint8_t)0x02)          //!< Nonce mode 2 is invalid.
 #define NONCE_MODE_PASSTHROUGH          ((uint8_t)0x03)          //!< Nonce mode: pass-through
+#define NONCE_MODE_GEN_SESSION_KEY      ((uint8_t)0x02)          //!< NOnce mode: Generate session key in ECC204 device
 
 #define NONCE_MODE_INPUT_LEN_MASK       ((uint8_t)0x20)          //!< Nonce mode: input size mask
 #define NONCE_MODE_INPUT_LEN_32         ((uint8_t)0x00)          //!< Nonce mode: input size is 32 bytes
@@ -642,9 +648,11 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define SHA_MODE_SHA256_END                 ((uint8_t)0x02)   //!< Complete the calculation and return the digest
 #define SHA_MODE_SHA256_PUBLIC              ((uint8_t)0x03)   //!< Add 64 byte ECC public key in the slot to the SHA context
 #define SHA_MODE_HMAC_START                 ((uint8_t)0x04)   //!< Initialization, HMAC calculation
+#define SHA_MODE_ECC204_HMAC_START          ((uint8_t)0x03)   //!< Initialization, HMAC calculation for ECC204
 #define SHA_MODE_HMAC_UPDATE                ((uint8_t)0x01)   //!< Add 64 bytes in the meesage to the SHA context
 #define SHA_MODE_HMAC_END                   ((uint8_t)0x05)   //!< Complete the HMAC computation and return digest
 #define SHA_MODE_608_HMAC_END               ((uint8_t)0x02)   //!< Complete the HMAC computation and return digest... Different command on 608
+#define SHA_MODE_ECC204_HMAC_END            ((uint8_t)0x02)   //!< Complete the HMAC computation and return digest... Different mode on ECC204
 #define SHA_MODE_READ_CONTEXT               ((uint8_t)0x06)   //!< Read current SHA-256 context out of the device
 #define SHA_MODE_WRITE_CONTEXT              ((uint8_t)0x07)   //!< Restore a SHA-256 context into the device
 #define SHA_MODE_TARGET_MASK                ((uint8_t)0xC0)   //!< Resulting digest target location mask

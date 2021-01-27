@@ -48,7 +48,6 @@
 ATCA_STATUS calib_derivekey(ATCADevice device, uint8_t mode, uint16_t target_key, const uint8_t* mac)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     do
@@ -59,7 +58,6 @@ ATCA_STATUS calib_derivekey(ATCADevice device, uint8_t mode, uint16_t target_key
             break;
         }
 
-        ca_cmd = device->mCommands;
         // build a deriveKey command (pass through mode)
         packet.param1 = mode;
         packet.param2 = target_key;
@@ -69,7 +67,7 @@ ATCA_STATUS calib_derivekey(ATCADevice device, uint8_t mode, uint16_t target_key
             memcpy(packet.data, mac, MAC_SIZE);
         }
 
-        if ((status = atDeriveKey(ca_cmd, &packet, mac != NULL)) != ATCA_SUCCESS)
+        if ((status = atDeriveKey(atcab_get_device_type_ext(device), &packet, mac != NULL)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "atDeriveKey - failed");
             break;

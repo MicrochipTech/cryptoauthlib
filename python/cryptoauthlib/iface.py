@@ -24,6 +24,7 @@ Interface Configuration
 from ctypes import Structure, Union, c_uint16, c_int, c_uint8, c_uint32, c_void_p
 from .library import get_cryptoauthlib, get_ctype_by_name
 from .atcaenum import AtcaEnum
+from .exceptions import UnsupportedInterface
 
 # Because this module directly mirrors the C api the following is an exception to the python coding standard
 # pylint: disable-msg=too-few-public-methods
@@ -38,6 +39,12 @@ class ATCAIfaceType(AtcaEnum):
     ATCA_UART_IFACE = 2
     ATCA_SPI_IFACE = 3
     ATCA_HID_IFACE = 4
+    ATCA_KIT_IFACE = 5
+    ATCA_CUSTOM_IFACE = 6
+    ATCA_I2C_GPIO_IFACE = 7
+    ATCA_SWI_GPIO_IFACE = 8
+    ATCA_SPI_GPIO_IFACE = 9
+    ATCA_UNKNOWN_IFACE = 0xFE
 
 
 class ATCAKitType(AtcaEnum):
@@ -47,7 +54,8 @@ class ATCAKitType(AtcaEnum):
     ATCA_KIT_AUTO_IFACE = 0
     ATCA_KIT_I2C_IFACE = 1
     ATCA_KIT_SWI_IFACE = 2
-    ATCA_KIT_UNKNOWN_IFACE = 3
+    ATCA_KIT_SPI_IFACE = 3
+    ATCA_KIT_UNKNOWN_IFACE = 4
 
 
 class ATCADeviceType(AtcaEnum):
@@ -61,6 +69,7 @@ class ATCADeviceType(AtcaEnum):
     ATECC608B = 3
     ATECC608  = 3
     ATSHA206A = 4
+    ECC204 = 5
     ATCA_DEV_UNKNOWN = 0x20
 
 
@@ -76,7 +85,8 @@ class _ATCAI2C(Structure):
 
 class _ATCASWI(Structure):
     """SWI (Atmel Single Wire Interface) HAL configuration"""
-    _fields_ = [('bus', c_uint8)]
+    _fields_ = [('address', c_uint8),
+                ('bus', c_uint8)]
 
 
 class _ATCAUART(Structure):
@@ -129,34 +139,42 @@ class ATCAIfaceCfg(Structure):
                 ('cfg_data', c_void_p)]
 
 
+def _iface_load_default_config(name):
+    """"Attempt to load the default configuration structure from the library by name"""
+    try:
+        return ATCAIfaceCfg.in_dll(get_cryptoauthlib(), name)
+    except ValueError:
+        raise UnsupportedInterface('The selected interface specified by {} is not supported by this version of the library'.format(name))
+
+
 def cfg_ateccx08a_i2c_default():
     """Default configuration for an ECCx08A device on the first logical I2C bus"""
-    return ATCAIfaceCfg.in_dll(get_cryptoauthlib(), 'cfg_ateccx08a_i2c_default')
+    return _iface_load_default_config('cfg_ateccx08a_i2c_default')
 
 
 def cfg_ateccx08a_swi_default():
     """Default configuration for an ECCx08A device on the logical SWI bus over UART"""
-    return ATCAIfaceCfg.in_dll(get_cryptoauthlib(), 'cfg_ateccx08a_swi_default')
+    return _iface_load_default_config('cfg_ateccx08a_swi_default')
 
 
 def cfg_ateccx08a_kithid_default():
     """Default configuration for Kit protocol over a HID interface"""
-    return ATCAIfaceCfg.in_dll(get_cryptoauthlib(), 'cfg_ateccx08a_kithid_default')
+    return _iface_load_default_config('cfg_ateccx08a_kithid_default')
 
 
 def cfg_atsha20xa_i2c_default():
     """Default configuration for a SHA204A device on the first logical I2C bus"""
-    return ATCAIfaceCfg.in_dll(get_cryptoauthlib(), 'cfg_atsha20xa_i2c_default')
+    return _iface_load_default_config('cfg_atsha20xa_i2c_default')
 
 
 def cfg_atsha20xa_swi_default():
     """Default configuration for an SHA204A device on the logical SWI bus over UART"""
-    return ATCAIfaceCfg.in_dll(get_cryptoauthlib(), 'cfg_atsha20xa_swi_default')
+    return _iface_load_default_config('cfg_atsha20xa_swi_default')
 
 
 def cfg_atsha20xa_kithid_default():
     """Default configuration for Kit protocol over a HID interface for SHA204"""
-    return ATCAIfaceCfg.in_dll(get_cryptoauthlib(), 'cfg_atsha20xa_kithid_default')
+    return _iface_load_default_config('cfg_atsha20xa_kithid_default')
 
 
 # Make module import * safe - keep at the end of the file

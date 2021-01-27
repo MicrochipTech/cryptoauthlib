@@ -49,7 +49,6 @@
 ATCA_STATUS calib_gendig(ATCADevice device, uint8_t zone, uint16_t key_id, const uint8_t *other_data, uint8_t other_data_size)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
     bool is_no_mac_key = false;
 
@@ -60,7 +59,6 @@ ATCA_STATUS calib_gendig(ATCADevice device, uint8_t zone, uint16_t key_id, const
 
     do
     {
-        ca_cmd = device->mCommands;
         // build gendig command
         packet.param1 = zone;
         packet.param2 = key_id;
@@ -75,7 +73,7 @@ ATCA_STATUS calib_gendig(ATCADevice device, uint8_t zone, uint16_t key_id, const
             is_no_mac_key = true;
         }
 
-        if ((status = atGenDig(ca_cmd, &packet, is_no_mac_key)) != ATCA_SUCCESS)
+        if ((status = atGenDig(atcab_get_device_type_ext(device), &packet, is_no_mac_key)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "atGenDig - failed");
             break;

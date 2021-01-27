@@ -48,17 +48,6 @@ int run_basic_tests(int argc, char* argv[])
     return run_test(argc, argv, RunAllBasicTests);
 }
 
-int run_unit_tests(int argc, char* argv[])
-{
-#ifdef ATCA_ATECC608_SUPPORT
-    if (ATECC608 == (gCfg->devtype))
-    {
-        check_clock_divider(argc, argv);
-    }
-#endif
-    return run_test(argc, argv, RunAllFeatureTests);
-}
-
 int run_otpzero_tests(int argc, char* argv[])
 {
     return run_test(argc, argv, RunBasicOtpZero);
@@ -170,9 +159,9 @@ int do_randoms(int argc, char* argv[])
     size_t displen = sizeof(displayStr);
     int i;
 
-    if (gCfg->devtype == ATSHA206A)
+    if ((gCfg->devtype == ATSHA206A) || (ECC204 == gCfg->devtype))
     {
-        printf("ATSHA206A doesn't support random command\r\n");
+        printf("Selected Device doesn't support random command\r\n");
         return ATCA_GEN_FAIL;
     }
 
@@ -205,41 +194,6 @@ int do_randoms(int argc, char* argv[])
     return status;
 }
 
-#if ATCA_CA_SUPPORT
-int discover(int argc, char* argv[])
-{
-    ATCAIfaceCfg ifaceCfgs[10];
-    int i;
-    const char* devname[] = { "ATSHA204A", "ATECC108A", "ATECC508A", "ATECC608", "ATSHA206A" };  // indexed by ATCADeviceType
-
-    for (i = 0; i < (int)(sizeof(ifaceCfgs) / sizeof(ATCAIfaceCfg)); i++)
-    {
-        ifaceCfgs[i].devtype = ATCA_DEV_UNKNOWN;
-        ifaceCfgs[i].iface_type = ATCA_UNKNOWN_IFACE;
-    }
-
-    printf("Searching...\r\n");
-    atcab_cfg_discover(ifaceCfgs, sizeof(ifaceCfgs) / sizeof(ATCAIfaceCfg));
-    for (i = 0; i < (int)(sizeof(ifaceCfgs) / sizeof(ATCAIfaceCfg)); i++)
-    {
-        if (ifaceCfgs[i].devtype != ATCA_DEV_UNKNOWN)
-        {
-            printf("Found %s ", devname[ifaceCfgs[i].devtype]);
-            if (ifaceCfgs[i].iface_type == ATCA_I2C_IFACE)
-            {
-                printf("@ bus %d addr %02x", ifaceCfgs[i].atcai2c.bus, ifaceCfgs[i].atcai2c.slave_address);
-            }
-            if (ifaceCfgs[i].iface_type == ATCA_SWI_IFACE)
-            {
-                printf("@ bus %d", ifaceCfgs[i].atcaswi.bus);
-            }
-            printf("\r\n");
-        }
-    }
-
-    return 0;
-}
-#endif
 
 int info(int argc, char* argv[])
 {
@@ -521,13 +475,6 @@ int run_all_tests(int argc, char* argv[])
 #ifndef DO_NOT_TEST_BASIC_UNIT
     if (!config_locked)
     {
-        fails += run_test(argc, argv, RunAllFeatureTests);
-        if (fails > 0)
-        {
-            printf("unit tests with config zone unlocked failed.\r\n");
-            return status;
-        }
-
         fails += run_test(argc, argv, RunAllBasicTests);
         if (fails > 0)
         {
@@ -551,13 +498,6 @@ int run_all_tests(int argc, char* argv[])
 
     if (!data_locked)
     {
-        fails += run_test(argc, argv, RunAllFeatureTests);
-        if (fails > 0)
-        {
-            printf("unit tests with data zone unlocked failed.\r\n");
-            return status;
-        }
-
         fails += run_test(argc, argv, RunAllBasicTests);
         if (fails > 0)
         {
@@ -577,13 +517,6 @@ int run_all_tests(int argc, char* argv[])
             printf("lock_status() failed with ret=0x%08X\r\n", status);
             return status;
         }
-    }
-
-    fails += run_test(argc, argv, RunAllFeatureTests);
-    if (fails > 0)
-    {
-        printf("unit tests with data zone locked failed.\r\n");
-        return status;
     }
 
     fails += run_test(argc, argv, RunAllBasicTests);

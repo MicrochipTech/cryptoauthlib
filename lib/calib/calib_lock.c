@@ -50,7 +50,6 @@
 ATCA_STATUS calib_lock(ATCADevice device, uint8_t mode, uint16_t summary_crc)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     if (device == NULL)
@@ -58,7 +57,6 @@ ATCA_STATUS calib_lock(ATCADevice device, uint8_t mode, uint16_t summary_crc)
         return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
-    ca_cmd = device->mCommands;
     // build command for lock zone and send
     memset(&packet, 0, sizeof(packet));
     packet.param1 = mode;
@@ -66,7 +64,7 @@ ATCA_STATUS calib_lock(ATCADevice device, uint8_t mode, uint16_t summary_crc)
 
     do
     {
-        if ((status = atLock(ca_cmd, &packet)) != ATCA_SUCCESS)
+        if ((status = atLock(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "atLock - failed");
             break;
@@ -150,4 +148,65 @@ ATCA_STATUS calib_lock_data_zone_crc(ATCADevice device, uint16_t summary_crc)
 ATCA_STATUS calib_lock_data_slot(ATCADevice device, uint16_t slot)
 {
     return calib_lock(device, ((uint8_t)slot << 2) | LOCK_ZONE_DATA_SLOT, 0);
+}
+
+/** \brief Use Lock command to lock individual configuration zone slots
+ *
+ *  \param[in]   device       Device context pointer
+ *  \param[in]   slot         The slot number to be locked
+ *  \param[in]   summary_crc  CRC calculated over all 16 bytes within the selected
+ *                            slot of the configuration zone.
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code
+ */
+ATCA_STATUS calib_ecc204_lock_config_slot(ATCADevice device, uint8_t slot, uint16_t summary_crc)
+{
+    uint8_t mode = LOCK_ECC204_ZONE_CONFIG | (slot << 1);
+
+    if (!summary_crc)
+    {
+        mode |= LOCK_ZONE_NO_CRC;
+    }
+
+    return calib_lock(device, mode, summary_crc);
+}
+
+/** \brief Use lock command to lock complete configuration zone
+ *
+ *  \param[in]  device      Device context pointer
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code
+ */
+ATCA_STATUS calib_ecc204_lock_config_zone(ATCADevice device)
+{
+    ATCA_STATUS status = ATCA_GEN_FAIL;
+    uint8_t slot = 0;
+    uint8_t mode;
+
+    while (slot <= 3)
+    {
+        mode = LOCK_ZONE_NO_CRC | LOCK_ECC204_ZONE_CONFIG | (slot << 1);
+
+        if (ATCA_SUCCESS != (status = calib_lock(device, mode, 0)))
+        {
+            ATCA_TRACE(status, "calib_ecc204_lock_config_zone - failed");
+            break;
+        }
+
+        slot += 1;  //Increment slot
+    }
+
+    return status;
+}
+
+/** \brief Use lock command to lock data zone slot
+ *
+ *  \param[in]   device   Device context pointer
+ *  \param[in]   slot     The slot number to be locked
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code
+ */
+ATCA_STATUS calib_ecc204_lock_data_slot(ATCADevice device, uint8_t slot)
+{
+    return calib_lock(device, LOCK_ECC204_ZONE_DATA | (slot << 1), 0);
 }

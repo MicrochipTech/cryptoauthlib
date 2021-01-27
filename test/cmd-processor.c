@@ -61,23 +61,23 @@ static void call_exit(int argc, char* argv[]);
 static t_menu_info mas_menu_info[] =
 {
     { "help",     "Display Menu",                                   (fp_menu_handler)help                },
-#if ATCA_CA_SUPPORT
-    { "discover", "Discover Buses and Devices",                     discover                             },
-#endif
 #ifdef ATCA_ATSHA204A_SUPPORT
-    { "204",      "Set Target Device to ATSHA204A",                 select_204                           },
+    { "sha204",      "Set Target Device to ATSHA204A",              select_204                           },
 #endif
 #ifdef ATCA_ATSHA206A_SUPPORT
-    { "206",      "Set Target Device to ATSHA206A",                 select_206                           },
+    { "sha206",      "Set Target Device to ATSHA206A",              select_206                           },
 #endif
 #ifdef ATCA_ATECC108A_SUPPORT
-    { "108",      "Set Target Device to ATECC108A",                 select_108                           },
+    { "ecc108",      "Set Target Device to ATECC108A",              select_108                           },
+#endif
+#ifdef ATCA_ECC204_SUPPORT
+    { "ecc204",    "Set Target Device to ECC204",                   select_ecc204                        },
 #endif
 #ifdef ATCA_ATECC508A_SUPPORT
-    { "508",      "Set Target Device to ATECC508A",                 select_508                           },
+    { "ecc508",      "Set Target Device to ATECC508A",              select_508                           },
 #endif
 #ifdef ATCA_ATECC608_SUPPORT
-    { "608",      "Set Target Device to ATECC608",                  select_608                           },
+    { "ecc608",      "Set Target Device to ATECC608",               select_608                           },
 #endif
 #ifdef ATCA_TA100_SUPPORT
     { "ta100",    "Set Target Device to TA100",                     select_ta100                         },
@@ -95,7 +95,6 @@ static t_menu_info mas_menu_info[] =
     { "tng",      "Run unit tests on TNG type part.",               (fp_menu_handler)run_tng_tests       },
 #ifndef DO_NOT_TEST_BASIC_UNIT
     { "basic",    "Run Basic Test on Selected Device",              (fp_menu_handler)run_basic_tests     },
-    { "unit",     "Run Unit Test on Selected Device",               (fp_menu_handler)run_unit_tests      },
 #ifdef ATCA_TEST_LOCK_ENABLE
     { "otpzero",  "Zero Out OTP Zone",                              (fp_menu_handler)run_otpzero_tests   },
 #endif
@@ -150,7 +149,7 @@ int parse_cmd_string(char* buffer, const size_t buf_len, const int argc, char* a
             {
                 break;
             }
-            else if (isWhiteSpace(*c_ptr))
+            else if (isBlankSpace(*c_ptr))
             {
                 *c_ptr = '\0';
                 if (in_arg)

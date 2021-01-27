@@ -23,8 +23,8 @@
 *****************************************************************************"""
 
 _DEFAULT_I2C_ADDRESS = {'ecc': 0xC0, 'sha': 0xC8, 'ta100': 0x2e}
-_SWI_DEVICES = ['ATSHA204A', 'ATSHA206A', 'ATECC108A', 'ATECC508A', 'ATECC608']
-_I2C_DEVICES = ['ATSHA204A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'TA100']
+_SWI_DEVICES = ['ATSHA204A', 'ATSHA206A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'ECC204']
+_I2C_DEVICES = ['ATSHA204A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'TA100', 'ECC204']
 _SPI_DEVICES = ['TA100']
 
 
@@ -36,29 +36,56 @@ def updateTngCapability(id, src):
     Database.sendMessage('cryptoauthlib_tng', 'UPDATE_TNG_TYPE', {'id': id, 'src': src})
 
 
+def updateSwiBbInterfaceSettings(symbol, swi_bb_iface):
+    if swi_bb_iface:
+        symbol.getComponent().getSymbolByID('HAL_INTERFACE').setValue("GPIO")
+        updateSercomPlibList("GPIO_SWI_BB", swi_bb_iface)
+    else:
+        if symbol.getComponent().getSymbolByID('INTERFACE').getReadOnly():
+            pass
+        else:
+            try:
+                symbol.getComponent().getSymbolByID('HAL_INTERFACE').clearValue()
+            except AttributeError:
+                pass
+        updateSercomPlibList("GPIO_SWI_BB", swi_bb_iface)
+
+
 def updatePartInterfaceSettings(symbol, event):
     symObj = event['symbol']
     updateId = event['id'].upper()
     selected_key = symObj.getSelectedKey()
+    SWI_BB_IFACE = False
 
     if updateId == 'INTERFACE':
         if selected_key == 'ATCA_SPI_IFACE':
             symbol.setVisible('SPI' in symbol.getID())
+            symbol.getComponent().getSymbolByID('I2C_ADDR').setVisible(False)
         elif selected_key == 'ATCA_I2C_IFACE':
             symbol.setVisible('I2C' in symbol.getID())
+        elif selected_key == 'ATCA_SWI_IFACE':
+            symbol.setVisible('SWI_UART' in symbol.getID())
+            symbol.getComponent().getSymbolByID('I2C_ADDR').setVisible(False)
+        elif selected_key == 'ATCA_SWI_BB_IFACE':
+            SWI_BB_IFACE = True
+            symbol.setVisible('SWIBB' in symbol.getID())
+            symbol.getComponent().getSymbolByID('I2C_ADDR').setVisible(False)
+
+        updateSwiBbInterfaceSettings(symbol, SWI_BB_IFACE)
     elif updateId == 'PART_TYPE':
         if selected_key == "TNGTLS":
             Database.activateComponents(['cryptoauthlib_tng'])
-            symbol.setValue(0x6A)
+            i2c_addr = 0x6A
         elif selected_key == "TFLEX":
             Database.activateComponents(['cryptoauthlib_tng'])
-            symbol.setValue(0x6C)
+            i2c_addr = 0x6C
         elif selected_key == "TNGLORA":
             Database.activateComponents(['cryptoauthlib_tng'])
-            symbol.setValue(0xB2)
+            i2c_addr = 0xB2
         else:
-            symbol.setValue(0xC0)
+            i2c_addr = 0xC0
 
+        symbol.getComponent().getSymbolByID('I2C_ADDR').setValue(i2c_addr)
         updateTngCapability(selected_key, event['namespace'])
 
 
@@ -84,10 +111,11 @@ def instantiateComponent(deviceComponent, index):
     interfaceType.setLabel('Interface Type')
     if deviceType in _I2C_DEVICES:
         interfaceType.addKey("ATCA_I2C_IFACE", "0", "I2C")
-#    if deviceType in _SWI_DEVICES:
-#        interfaceType.addKey("ATCA_SWI_IFACE", "1", "SWI")
+    if deviceType in _SWI_DEVICES:
+        interfaceType.addKey("ATCA_SWI_IFACE", "1", "SWI")
+        interfaceType.addKey("ATCA_SWI_BB_IFACE", "2", "SWI_BB")
     if deviceType in _SPI_DEVICES:
-        interfaceType.addKey("ATCA_SPI_IFACE", "2", "SPI")
+        interfaceType.addKey("ATCA_SPI_IFACE", "3", "SPI")
     interfaceType.setDefaultValue(0)
     interfaceType.setOutputMode("Key")
     interfaceType.setDisplayMode("Description")
@@ -102,22 +130,25 @@ def instantiateComponent(deviceComponent, index):
         devicePartType.setDefaultValue(0)
         devicePartType.setOutputMode("Key")
         devicePartType.setDisplayMode("Description")
+        devicePartType.setDependencies(updatePartInterfaceSettings, ["PART_TYPE"])
 
-        deviceAddress = deviceComponent.createHexSymbol("I2C_ADDR", devicePartType)
-        deviceAddress.setLabel("I2C Address")
-        deviceAddress.setDefaultValue(0xC0)
-    else:
-        deviceAddress = deviceComponent.createHexSymbol("I2C_ADDR", interfaceType)
-        deviceAddress.setLabel("I2C Address")
+    deviceAddress = deviceComponent.createHexSymbol("I2C_ADDR", interfaceType)
+    deviceAddress.setLabel("I2C Address")
 
-        if 'ECC' in deviceID:
-            deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['ecc'])
-        elif 'SHA' in deviceID:
-            deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['sha'])
-        elif 'TA' in deviceID:
-            deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['ta100'])
+    if 'ECC' in deviceID:
+        deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['ecc'])
+    elif 'SHA' in deviceID:
+        deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['sha'])
+    elif 'TA' in deviceID:
+        deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['ta100'])
 
-    deviceAddress.setDependencies(updatePartInterfaceSettings, ["PART_TYPE"])
+    deviceAddress.setDependencies(updatePartInterfaceSettings, ["INTERFACE"])
+    deviceAddress.setVisible(True)
+    
+    swiUartComment = deviceComponent.createCommentSymbol("SWI_UART_COMMENT", interfaceType)
+    swiUartComment.setLabel("!!! Select UART Ring buffer mode in UART configuration.!!! ")
+    swiUartComment.setDependencies(updatePartInterfaceSettings, ["INTERFACE"])
+    swiUartComment.setVisible(False)
 
     spiCsComment = deviceComponent.createCommentSymbol("SPI_CS_PINS_COMMENT", interfaceType)
     spiCsComment.setLabel("!!! Configure the Chip Select pin as GPIO OUTPUT in Pin Settings.!!! ")
@@ -132,6 +163,20 @@ def instantiateComponent(deviceComponent, index):
     spiChipSelectPin.setDependencies(updatePartInterfaceSettings, ["INTERFACE"])
     spiChipSelectPin.setVisible(False)
 
+    swibbPinComment = deviceComponent.createCommentSymbol("SWIBB_PIN_COMMENT", interfaceType)
+    swibbPinComment.setLabel("!!! Configure the SWI Crypto pin as GPIO INPUT.!!! ")
+    swibbPinComment.setDependencies(updatePartInterfaceSettings, ["INTERFACE"])
+    swibbPinComment.setVisible(False)
+
+    # Gpio pin configuration for swi bitbang
+    swibbCryptoPin = deviceComponent.createKeyValueSetSymbol("SWIBB_CRYPTO_PIN", interfaceType)
+    swibbCryptoPin.setLabel("SWIBB Crypto Pin")
+    swibbCryptoPin.setDefaultValue(0)
+    swibbCryptoPin.setOutputMode("Key")
+    swibbCryptoPin.setDisplayMode("Description")
+    swibbCryptoPin.setDependencies(updatePartInterfaceSettings, ["INTERFACE"])
+    swibbCryptoPin.setVisible(False)
+
     availablePinDictionary = {}
     availablePinDictionary = Database.sendMessage("core", "PIN_LIST", availablePinDictionary)
 
@@ -140,6 +185,7 @@ def instantiateComponent(deviceComponent, index):
         value = list(availablePinDictionary.keys())[list(availablePinDictionary.values()).index(pad)]
         description = pad
         spiChipSelectPin.addKey(key, value, description)
+        swibbCryptoPin.addKey(key, value, description)
 
     wakeupDelay = deviceComponent.createIntegerSymbol("WAKEUP_DELAY", None)
     wakeupDelay.setLabel("Wakeup Delay (us)")
@@ -179,7 +225,14 @@ def onAttachmentConnected(source, target):
     elif 'SPI' in sourceID:
         source['component'].getSymbolByID('HAL_INTERFACE').setValue(targetID)
         source['component'].getSymbolByID('INTERFACE').setReadOnly(True)
-        source['component'].getSymbolByID('INTERFACE').setSelectedKey('ATCA_SPI_IFACE', 1)
+        source['component'].getSymbolByID('INTERFACE').setSelectedKey('ATCA_SPI_IFACE', 3)
+        updateSercomPlibList(target['id'], True)
+    elif 'SWI' in sourceID:
+        source['component'].getSymbolByID('HAL_INTERFACE').setValue(targetID)
+        source['component'].getSymbolByID('INTERFACE').setReadOnly(True)
+        source['component'].getSymbolByID('INTERFACE').setSelectedKey('ATCA_SWI_IFACE', 1)
+        if "uart" in target['id'].lower():
+            target['id'] = target['id'].replace("UART", "SWI_UART")
         updateSercomPlibList(target['id'], True)
 
 
@@ -204,6 +257,17 @@ def onAttachmentDisconnected(source, target):
         except AttributeError:
             # Happens when the instance is deleted while attached
             pass
+        updateSercomPlibList(target['id'], False)
+    elif 'SWI' in sourceID:
+        try:
+            source['component'].getSymbolByID('HAL_INTERFACE').clearValue()
+            source['component'].getSymbolByID('INTERFACE').clearValue()
+            source['component'].getSymbolByID('INTERFACE').setReadOnly(False)
+        except AttributeError:
+            # Happens when the instance is deleted while attached
+            pass
+        if "uart" in target['id'].lower():
+            target['id'] = target['id'].replace("UART", "SWI_UART")
         updateSercomPlibList(target['id'], False)
 
 

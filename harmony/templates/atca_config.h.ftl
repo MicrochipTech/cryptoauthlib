@@ -5,28 +5,16 @@
 /* MPLAB Harmony Common Include */
 #include "definitions.h"
 
-<#assign pliblist = CAL_PLIB_LIST?word_list>
+<#assign pliblist = CAL_HAL_LIST?word_list>
 <#if pliblist?size != 0>
 <#list pliblist as plib_id>
-<#assign plib_info = plib_id?split("_")>
-<#if plib_info?size == 1 || plib_info[1] == "i2c">
-<#assign atca_hal_i2c = true>
-<#elseif plib_info[1] == "spi">
-<#assign atca_hal_spi = true>
-</#if>
+#ifndef ATCA_HAL_${plib_id}
+#define ATCA_HAL_${plib_id}
+#endif
+
 </#list>
 </#if>
 
-<#if atca_hal_i2c??>
-#ifndef ATCA_HAL_I2C
-#define ATCA_HAL_I2C
-#endif
-</#if>
-<#if atca_hal_spi??>
-#ifndef ATCA_HAL_SPI
-#define ATCA_HAL_SPI
-#endif
-</#if>
 
 <#assign devices = CAL_DEVICE_LIST?word_list>
 <#if devices?size != 0>
@@ -34,6 +22,17 @@
 <#list devices as device_type>
 #define ATCA_${device_type}_SUPPORT
 </#list>
+</#if>
+
+<#if CAL_ENABLE_TA100_AES_AUTH>
+/** TA100 Specific - Enable auth sessions that require AES (CMAC/GCM) from
+   an external library */
+#define ATCA_TA100_AES_AUTH_SUPPORT
+</#if>
+
+<#if CAL_ENABLE_TA100_FCE>
+/** TA100 Specific - Enable support for the FCE APIs for the TA100 */
+#define ATCA_TA100_FCE_SUPPORT
 </#if>
 
 <#if !CAL_ENABLE_POLLING>
@@ -91,23 +90,24 @@
 /* Define generic interfaces to the processor libraries */
 <#assign pliblist = CAL_PLIB_LIST?word_list>
 <#if pliblist?size != 0>
+<#list pliblist as plib_id>
+<#assign plib_info = plib_id?split("_", 1)>
+<#if plib_info[1] == "i2c">
 <#assign size_var = "size_t">
-
-<#if atca_hal_i2c??>
-<#if pliblist[0]?contains("sercom")>
+<#if plib_id?contains("sercom")>
 #define PLIB_I2C_ERROR          SERCOM_I2C_ERROR
 #define PLIB_I2C_ERROR_NONE     SERCOM_I2C_ERROR_NONE
 #define PLIB_I2C_TRANSFER_SETUP SERCOM_I2C_TRANSFER_SETUP
 <#assign size_var = "uint32_t">
-<#elseif pliblist[0]?contains("flexcom")>
+<#elseif plib_id?contains("flexcom")>
 #define PLIB_I2C_ERROR          FLEXCOM_TWI_ERROR
 #define PLIB_I2C_ERROR_NONE     FLEXCOM_TWI_ERROR_NONE
 #define PLIB_I2C_TRANSFER_SETUP FLEXCOM_TWI_TRANSFER_SETUP
-<#elseif pliblist[0]?contains("twihs")>
+<#elseif plib_id?contains("twihs")>
 #define PLIB_I2C_ERROR          TWIHS_ERROR
 #define PLIB_I2C_ERROR_NONE     TWIHS_ERROR_NONE
 #define PLIB_I2C_TRANSFER_SETUP TWIHS_TRANSFER_SETUP
-<#elseif pliblist[0]?contains("i2c")>
+<#elseif plib_id?contains("i2c")>
 #define PLIB_I2C_ERROR          I2C_ERROR
 #define PLIB_I2C_ERROR_NONE     I2C_ERROR_NONE
 #define PLIB_I2C_TRANSFER_SETUP I2C_TRANSFER_SETUP
@@ -128,7 +128,8 @@ typedef struct atca_plib_api
     atca_i2c_plib_transfer_setup    transfer_setup;
 } atca_plib_i2c_api_t;
 </#if>
-<#if atca_hal_spi??>
+
+<#if plib_info[1] == "spi">
 typedef bool (* atca_spi_plib_read)( void * , size_t );
 typedef bool (* atca_spi_plib_write)( void *, size_t );
 typedef bool (* atca_spi_plib_is_busy)( void );
@@ -143,11 +144,114 @@ typedef struct atca_plib_spi_api
 } atca_plib_spi_api_t;
 </#if>
 
-<#list pliblist as plib_id>
-<#assign plib_info = plib_id?split("_")>
-extern atca_plib_${plib_info[1]!"i2c"}_api_t ${plib_info[0]}_plib_${plib_info[1]!"i2c"}_api;
+<#if plib_info[1] == "swi">
+<#if plib_info[2] == "uart">
+<#if plib_id?contains("flexcom")>
+#define PLIB_SWI_ERROR             FLEXCOM_USART_ERROR
+#define PLIB_SWI_SERIAL_SETUP      FLEXCOM_USART_SERIAL_SETUP
+#define PLIB_SWI_READ_ERROR        FLEXCOM_USART_EVENT_READ_ERROR
+#define PLIB_SWI_READ_CALLBACK     FLEXCOM_USART_RING_BUFFER_CALLBACK
+#define PLIB_SWI_PARITY_NONE       FLEXCOM_USART_PARITY_NONE
+#define PLIB_SWI_DATA_WIDTH        FLEXCOM_USART_DATA_7_BIT
+#define PLIB_SWI_STOP_BIT          FLEXCOM_USART_STOP_1_BIT
+#define PLIB_SWI_EVENT             FLEXCOM_USART_EVENT
+<#elseif plib_id?contains("sercom")>
+#define PLIB_SWI_ERROR             USART_ERROR
+#define PLIB_SWI_SERIAL_SETUP      USART_SERIAL_SETUP
+#define PLIB_SWI_READ_ERROR        SERCOM_USART_EVENT_READ_ERROR
+#define PLIB_SWI_READ_CALLBACK     SERCOM_USART_RING_BUFFER_CALLBACK
+#define PLIB_SWI_PARITY_NONE       USART_PARITY_NONE
+#define PLIB_SWI_DATA_WIDTH        USART_DATA_7_BIT
+#define PLIB_SWI_STOP_BIT          USART_STOP_1_BIT
+#define PLIB_SWI_EVENT             SERCOM_USART_EVENT
+<#elseif plib_id?contains("usart")>
+#define PLIB_SWI_ERROR             USART_ERROR
+#define PLIB_SWI_SERIAL_SETUP      USART_SERIAL_SETUP
+#define PLIB_SWI_READ_ERROR        USART_EVENT_READ_ERROR
+#define PLIB_SWI_READ_CALLBACK     USART_RING_BUFFER_CALLBACK
+#define PLIB_SWI_PARITY_NONE       USART_PARITY_NONE
+#define PLIB_SWI_DATA_WIDTH        USART_DATA_7_BIT
+#define PLIB_SWI_STOP_BIT          USART_STOP_1_BIT
+#define PLIB_SWI_EVENT             USART_EVENT
+</#if>
+
+typedef size_t (* atca_swi_plib_read)( uint8_t *, const size_t );
+typedef size_t (* atca_swi_plib_write)( uint8_t *, const size_t );
+typedef PLIB_SWI_ERROR (* atca_swi_error_get)( void );
+typedef bool (* atca_swi_plib_serial_setup)(PLIB_SWI_SERIAL_SETUP* , uint32_t );
+typedef size_t (* atca_swi_plib_readcount_get)( void );
+typedef void (* atca_swi_plib_readcallbackreg)(PLIB_SWI_READ_CALLBACK, uintptr_t );
+
+typedef struct atca_plib_swi_api
+{
+    atca_swi_plib_read              read;
+    atca_swi_plib_write             write;
+    atca_swi_error_get              error_get;
+    atca_swi_plib_serial_setup      serial_setup;
+    atca_swi_plib_readcount_get     readcount_get;
+    atca_swi_plib_readcallbackreg   readcallback_reg;
+} atca_plib_swi_uart_api_t;
+
+/** SWI Transmit delay */
+#define SWI_TX_DELAY     ((uint32_t)90)
+<#elseif plib_info[2] == "bb">
+typedef bool (* atca_swi_plib_read)( uint8_t );
+typedef void (* atca_swi_plib_write)( uint8_t, bool );
+typedef void (* atca_swi_set_pin_output)( uint8_t );
+typedef void (* atca_swi_set_pin_input)( uint8_t );
+
+typedef struct atca_plib_swi_api
+{
+    atca_swi_plib_read            read;
+    atca_swi_plib_write           write;
+    atca_swi_set_pin_output       set_pin_output_dir;
+    atca_swi_set_pin_input        set_pin_input_dir;
+}atca_plib_swi_bb_api_t;
+
+/**
+ * \name Macros for Bit-Banged SWI Timing
+ *
+ * Times to drive bits at 230.4 kbps.
+   @{ */
+
+//! delay macro for width of one pulse (start pulse or zero pulse)
+//! should be 4.34 us, is 4.05 us
+
+#define BIT_DELAY_1L        atca_delay_us(4)
+//! should be 4.34 us, is 4.05us
+#define BIT_DELAY_1H        atca_delay_us(4)
+
+//! time to keep pin high for five pulses plus stop bit (used to bit-bang CryptoAuth 'zero' bit)
+//! should be 26.04 us, is 26.92 us
+#define BIT_DELAY_5        atca_delay_us(26)    // considering pin set delay
+
+//! time to keep pin high for seven bits plus stop bit (used to bit-bang CryptoAuth 'one' bit)
+//! should be 34.72 us, is 35.13 us
+#define BIT_DELAY_7        atca_delay_us(34)    // considering pin set delay
+
+//! turn around time when switching from receive to transmit
+//! should be 93 us (Setting little less value as there would be other process before these steps)
+#define RX_TX_DELAY        atca_delay_us(65)
+
+</#if>
+</#if>
 </#list>
 </#if>
+
+<#if atca_hal_swi??>
+/** SWI Flags */
+#define SWI_WAKE_TOKEN   ((uint8_t)0x00)
+#define SWI_FLAG_CMD     ((uint8_t)0x77)
+#define SWI_FLAG_TX      ((uint8_t)0x88)
+#define SWI_FLAG_IDLE    ((uint8_t)0xBB)
+#define SWI_FLAG_SLEEP   ((uint8_t)0xCC)
+</#if>
+
+<#list pliblist as plib_id>
+<#assign plib_info = plib_id?split("_", 1)>
+<#assign plib_drv = plib_id?substring(plib_id?index_of("_") + 1)>
+extern atca_plib_${plib_drv!"i2c"}_api_t ${plib_info[0]}_plib_${plib_drv!"i2c"}_api;
+</#list>
 
 <#if cryptoauthlib_tng??>
 /** Define certificate templates to be supported. */

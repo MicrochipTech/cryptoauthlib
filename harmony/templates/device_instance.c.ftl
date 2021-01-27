@@ -9,23 +9,37 @@
 #include "cryptoauthlib.h"
 
 <#assign PLIB_NAME  = core.PORT_API_PREFIX?string>
-
 ATCAIfaceCfg ${NAME?lower_case}_${INDEX?string}_init_data = {
+<#if INTERFACE == "ATCA_SWI_BB_IFACE">
+<#assign INTERFACE = "ATCA_SWI_IFACE">
+</#if>
     .iface_type            = ${INTERFACE},
     .devtype               = ${NAME?upper_case},
 <#if INTERFACE == "ATCA_I2C_IFACE">
 <#assign plib_type = "i2c">
-    .atcai2c.slave_address = 0x${I2C_ADDR?upper_case},
+    .atcai2c.address       = 0x${I2C_ADDR?upper_case},
     .atcai2c.bus           = 0,
+<#if HAL_INTERFACE?contains("FLEXCOM") || HAL_INTERFACE?contains("SERCOM")>
     .atcai2c.baud          = ${.vars["${HAL_INTERFACE?lower_case}"].I2C_CLOCK_SPEED}000,
+<#else>
+    .atcai2c.baud          = ${.vars["${HAL_INTERFACE?lower_case}"].I2C_CLOCK_SPEED},
+</#if>
 <#elseif INTERFACE == "ATCA_SPI_IFACE">
 <#assign plib_type = "spi">
     .atcaspi.bus           = 0,
-        .atcaspi.select_pin    = ${PLIB_NAME}_PIN_${SPI_CS_PIN?upper_case},
+    .atcaspi.select_pin    = ${PLIB_NAME}_PIN_${SPI_CS_PIN?upper_case},
 <#if HAL_INTERFACE?contains("FLEXCOM")>
-        .atcaspi.baud          = ${.vars["${HAL_INTERFACE?lower_case}"].FLEXCOM_SPI_BAUD_RATE},
+    .atcaspi.baud          = ${.vars["${HAL_INTERFACE?lower_case}"].FLEXCOM_SPI_BAUD_RATE},
 <#else>
     .atcaspi.baud          = ${.vars["${HAL_INTERFACE?lower_case}"].SPI_BAUD_RATE},
+</#if>
+<#elseif INTERFACE == "ATCA_SWI_IFACE">
+<#if HAL_INTERFACE?contains("GPIO")>
+<#assign plib_type = "swi_bb">
+    .atcaswi.bus           = ${PLIB_NAME}_PIN_${SWIBB_CRYPTO_PIN?upper_case},
+<#else>
+<#assign plib_type = "swi_uart">
+    .atcaswi.bus           = 0,
 </#if>
 </#if>
     .wake_delay            = ${WAKEUP_DELAY},

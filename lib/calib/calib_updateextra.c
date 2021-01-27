@@ -50,7 +50,6 @@
 ATCA_STATUS calib_updateextra(ATCADevice device, uint8_t mode, uint16_t new_value)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     do
@@ -61,13 +60,12 @@ ATCA_STATUS calib_updateextra(ATCADevice device, uint8_t mode, uint16_t new_valu
             break;
         }
 
-        ca_cmd = device->mCommands;
         // Build command
         memset(&packet, 0, sizeof(packet));
         packet.param1 = mode;
         packet.param2 = new_value;
 
-        if ((status = atUpdateExtra(ca_cmd, &packet)) != ATCA_SUCCESS)
+        if ((status = atUpdateExtra(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "atUpdateExtra - failed");
             break;

@@ -59,7 +59,6 @@
 ATCA_STATUS calib_write(ATCADevice device, uint8_t zone, uint16_t address, const uint8_t *value, const uint8_t *mac)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     if ((device == NULL) || (value == NULL))
@@ -69,7 +68,6 @@ ATCA_STATUS calib_write(ATCADevice device, uint8_t zone, uint16_t address, const
 
     do
     {
-        ca_cmd = device->mCommands;
         // Build the write command
         packet.param1 = zone;
         packet.param2 = address;
@@ -89,7 +87,7 @@ ATCA_STATUS calib_write(ATCADevice device, uint8_t zone, uint16_t address, const
             memcpy(packet.data, value, 4);
         }
 
-        if ((status = atWrite(ca_cmd, &packet, mac && (zone & ATCA_ZONE_READWRITE_32))) != ATCA_SUCCESS)
+        if ((status = atWrite(atcab_get_device_type_ext(device), &packet, mac && (zone & ATCA_ZONE_READWRITE_32))) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "atWrite - failed");
             break;
@@ -558,3 +556,320 @@ ATCA_STATUS calib_write_config_counter(ATCADevice device, uint16_t counter_id, u
 
     return status;
 }
+
+#if defined(ATCA_ECC204_SUPPORT)
+/** \brief Execute write command to write either 16 byte or 32 byte to one of the EEPROM zones
+ *         on the ECC204 device.
+ *
+ *  \param[in] device   Device context pointer
+ *  \param[in] zone     Zone/Param1 for the write command.
+ *  \param[in] address  Address/Param2 for the write command.
+ *  \param[in] value    Plain-text data to be written or cipher-text for
+ *                      encrypted writes. 32 or 16 bytes depending on zone.
+ *  \param[in] mac      MAC required for encrypted writes (32 bytes). Set to NULL
+ *                      if not required.
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS calib_ecc204_write(ATCADevice device, uint8_t zone, uint16_t address, const uint8_t *value,
+                               const uint8_t *mac)
+{
+    ATCA_STATUS status = ATCA_SUCCESS;
+    ATCAPacket packet;
+
+    if ((NULL == device) && (NULL == value))
+    {
+        status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
+    }
+
+    if (ATCA_SUCCESS == status)
+    {
+        packet.param1 = zone;
+        packet.param2 = address;
+
+        if (ATCA_ECC204_ZONE_CONFIG == zone)
+        {
+            memcpy(packet.data, value, 16);
+        }
+        else if (ATCA_ECC204_ZONE_DATA == zone)
+        {
+            memcpy(packet.data, value, ATCA_BLOCK_SIZE);
+        }
+        else
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid zone received");
+        }
+
+        if (ATCA_SUCCESS == status)
+        {
+            if (mac && (ATCA_ECC204_ZONE_DATA == zone))
+            {
+                memcpy(&packet.data[ATCA_BLOCK_SIZE], mac, MAC_SIZE);
+            }
+
+            (void)atWrite(atcab_get_device_type_ext(device), &packet, mac && (ATCA_ECC204_ZONE_DATA == zone));
+        }
+    }
+
+    if (ATCA_SUCCESS == status)
+    {
+        if (ATCA_SUCCESS != (status = atca_execute_command(&packet, device)))
+        {
+            ATCA_TRACE(status, "calib_ecc204_write - execution failed");
+        }
+    }
+
+    return status;
+
+}
+
+/** \brief Execute write command to write data into configuration zone or data zone
+ *         This function only support ECC204 device
+ *
+ *  \param[in]    device      Device context pointer
+ *  \param[in]    zone        Device zone to write (config=1, data=0)
+ *  \param[in]    slot        the slot number to be witten
+ *  \param[in]    block       32-byte block to write
+ *  \param[in]    offset      ignore for ECC204 device
+ *  \param[in]    data        Data to be written into slot
+ *  \param[in]    len         Number of bytes to be written. Must be either 16 or 32.
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code
+ */
+ATCA_STATUS calib_ecc204_write_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint8_t block,
+                                    uint8_t offset, const uint8_t *data, uint8_t len)
+{
+    ATCA_STATUS status = ATCA_SUCCESS;
+    uint16_t addr;
+
+    if ((NULL == device) && (NULL == data))
+    {
+        status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
+    }
+    else if (((ATCA_ECC204_ZONE_CONFIG == zone) && (16 != len)) ||
+             ((ATCA_ECC204_ZONE_DATA == zone) && (ATCA_BLOCK_SIZE != len)))
+    {
+        status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid length received");
+    }
+
+    if (ATCA_SUCCESS == status)
+    {
+        if (ATCA_SUCCESS != (status = calib_ecc204_get_addr(zone, slot, block, 0, &addr)))
+        {
+            ATCA_TRACE(status, "calib_ecc204_get_addr - failed");
+        }
+
+        if (ATCA_SUCCESS == status)
+        {
+            status = calib_ecc204_write(device, zone, addr, data, NULL);
+        }
+    }
+
+    return status;
+}
+
+/** \brief Use write command to write configuration data into ECC204 config zone
+ *
+ *  \param[in]  device       Device context pointer
+ *  \param[in]  config_data  configuration data
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code
+ */
+ATCA_STATUS calib_ecc204_write_config_zone(ATCADevice device, uint8_t* config_data)
+{
+    ATCA_STATUS status = ATCA_SUCCESS;
+    uint8_t slot = 1;
+
+    if ((NULL == device) || (NULL == config_data))
+    {
+        status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
+    }
+
+    if (ATCA_SUCCESS == status)
+    {
+        while (slot <= 3)
+        {
+            if (ATCA_SUCCESS != (status = calib_ecc204_write_zone(device, ATCA_ECC204_ZONE_CONFIG, slot,
+                                                                  0, 0, &config_data[16 * slot], 16)))
+            {
+                ATCA_TRACE(status, "calib_ecc204_write_zone - failed");
+            }
+            slot += 1; // Increment slot
+        }
+    }
+
+    return status;
+}
+
+/** \brief Executes write command, performs an encrypted write of a 32 byte block into given slot.
+ *
+ *  \param[in]  device          Device context pointer
+ *  \param[in]  slot            key slot to be written
+ *  \param[in]  data            32 bytes of clear text data
+ *  \param[in]  transport_key   Transport key
+ *  \param[in]  key_id          Transport key id
+ *  \param[in]  num_in          20 byte host nonce to inject into Nonce calculation
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code
+ */
+#if defined(ATCA_USE_CONSTANT_HOST_NONCE)
+ATCA_STATUS calib_ecc204_write_enc(ATCADevice device, uint8_t slot, uint8_t* data, uint8_t* transport_key,
+                                   uint8_t transport_key_id)
+{
+    uint8_t num_in[NONCE_NUMIN_SIZE] = { 0 };
+
+#else
+ATCA_STATUS calib_ecc204_write_enc(ATCADevice device, uint8_t slot, uint8_t* data, uint8_t* transport_key,
+                                   uint8_t transport_key_id, uint8_t num_in[NONCE_NUMIN_SIZE])
+{
+#endif
+    ATCA_STATUS status = ATCA_SUCCESS;
+    atca_nonce_in_out_t nonce_params;
+    atca_write_mac_in_out_t write_mac_param;
+    atca_temp_key_t temp_key;
+    atca_session_key_in_out_t session_key_params;
+    uint8_t rand_out[RANDOM_NUM_SIZE] = { 0 };
+    uint8_t serial_number[ATCA_SERIAL_NUM_SIZE] = { 0 };
+    uint8_t session_key[ATCA_KEY_SIZE] = { 0 };
+    uint8_t cipher_text[ATCA_KEY_SIZE] = { 0 };
+    uint8_t mac[WRITE_MAC_SIZE] = { 0 };
+    uint16_t addr;
+
+    if ((NULL == data) || (NULL == transport_key))
+    {
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encounteed");
+    }
+
+    do
+    {
+        // Read device serial number
+        if (ATCA_SUCCESS != (status = calib_ecc204_read_serial_number(device, serial_number)))
+        {
+            ATCA_TRACE(status, "Read serial number failed");
+            break;
+        }
+
+        // Generate session key on device
+        if (ATCA_SUCCESS != (status = calib_nonce_gen_session_key(device, transport_key_id, num_in, rand_out)))
+        {
+            ATCA_TRACE(status, "Session key generation failed");
+            break;
+        }
+
+        // Random Nonce inputs
+        memset(&temp_key, 0, sizeof(temp_key));
+        memset(&nonce_params, 0, sizeof(nonce_params));
+        nonce_params.mode = NONCE_MODE_SEED_UPDATE;
+        nonce_params.zero = transport_key_id;
+        nonce_params.num_in = &num_in[0];
+        nonce_params.rand_out = rand_out;
+        nonce_params.temp_key = &temp_key;
+
+        // Calculate Nonce
+        if ((status = atcah_nonce(&nonce_params)) != ATCA_SUCCESS)
+        {
+            ATCA_TRACE(status, "Calculate nonce failed");
+            break;
+        }
+
+        // Session key inputs
+        memset(&session_key_params, 0, sizeof(session_key_params));
+        session_key_params.transport_key = transport_key;
+        session_key_params.transport_key_id = transport_key_id;
+        session_key_params.sn = serial_number;
+        session_key_params.nonce = temp_key.value;
+        session_key_params.session_key = session_key;
+
+        // calculate session key on host
+        if (ATCA_SUCCESS != (status = atcah_gen_session_key(&session_key_params)))
+        {
+            ATCA_TRACE(status, "Host session key generation failed");
+            break;
+        }
+
+        if (ATCA_SUCCESS != (status = calib_ecc204_get_addr(ATCA_ECC204_ZONE_DATA, slot, 0, 0, &addr)))
+        {
+            ATCA_TRACE(status, "Calculate slot address failed");
+            break;
+        }
+
+        // copy session key into temp variable
+        memcpy(temp_key.value, session_key, ATCA_KEY_SIZE);
+
+        // Write mac inputs
+        write_mac_param.zone = ATCA_ECC204_ZONE_DATA;
+        write_mac_param.key_id = addr;
+        write_mac_param.sn = serial_number;
+        write_mac_param.input_data = data;
+        write_mac_param.encrypted_data = cipher_text;
+        write_mac_param.auth_mac = mac;
+        write_mac_param.temp_key = &temp_key;
+
+        // calculate MAC on host
+        if (ATCA_SUCCESS != (status = atcah_ecc204_write_auth_mac(&write_mac_param)))
+        {
+            ATCA_TRACE(status, "Data encryption failed");
+            break;
+        }
+
+        status = calib_ecc204_write(device, write_mac_param.zone, write_mac_param.key_id, write_mac_param.encrypted_data, write_mac_param.auth_mac);
+    }
+    while (0);
+
+    return status;
+}
+
+/** \brief Use Write command to write bytes
+ *
+ * This function will issue the write command as many times as is required to
+ * read the requested data.
+ *
+ *  \param[in]   device        Device context pointer
+ *  \param[in]   zone          zone to write data to. Option are
+ *                             ATCA_ECC204_ZONE_CONFIG(1), ATCA_ECC204_ZONE_DATA(0)
+ *  \param[in]   slot          slot number to write to.
+ *  \param[in]   block         offset bytes ignored
+ *  \param[in]   data          data to be written
+ *  \param[in]   length        number of bytes to e written
+ *
+ *  \return ATCA_SUCCESS on success, otheriwse an error code
+ */
+ATCA_STATUS calib_ecc204_write_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot, size_t block,
+                                          const uint8_t *data, size_t length)
+{
+    ATCA_STATUS status = ATCA_SUCCESS;
+    uint8_t block_size = (zone == ATCA_ECC204_ZONE_CONFIG) ? ATCA_ECC204_CONFIG_SLOT_SIZE : ATCA_BLOCK_SIZE;
+    uint8_t no_of_blocks;
+    uint8_t data_idx = 0;
+
+    if ((NULL == device) || (NULL == data))
+    {
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Encountered NULL pointer");
+    }
+    else if ((ATCA_ECC204_ZONE_DATA == zone) && (((length > 64) && (2 == slot)) ||
+                                                 ((length > 320) && (3 == slot)) || (1 == slot) || (0 == slot)))
+    {
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid parameter received");
+    }
+    else if (0 == length)
+    {
+        return ATCA_SUCCESS;
+    }
+
+    no_of_blocks = length / block_size;
+    while (no_of_blocks--)
+    {
+        if (ATCA_SUCCESS != (status = calib_ecc204_write_zone(device, zone, slot, (uint8_t)block, 0,
+                                                              &data[block_size * data_idx],
+                                                              block_size)))
+        {
+            ATCA_TRACE(status, "calib_ecc204_write_zone failed");
+            break;
+        }
+
+        block += 1;      // Read next block
+        data_idx += 1;   // increment data index
+    }
+}
+
+#endif

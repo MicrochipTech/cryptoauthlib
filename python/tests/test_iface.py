@@ -6,6 +6,7 @@ definition or assumptions of the platform build and memory alignment is wrong
 """
 import pytest
 import ctypes
+from cryptoauthlib.exceptions import UnsupportedInterface
 from cryptoauthlib.iface import *
 from cryptoauthlib.library import load_cryptoauthlib, get_size_by_name
 
@@ -22,7 +23,7 @@ def test_iface_cfg_size(test_iface_init):
 def test_iface_cfg_ateccx08a_i2c(test_iface_init):
     try:
         cfg = cfg_ateccx08a_i2c_default()
-    except ValueError:
+    except UnsupportedInterface:
         pass
     else:
         assert cfg.iface_type == ATCAIfaceType.ATCA_I2C_IFACE
@@ -35,7 +36,7 @@ def test_iface_cfg_ateccx08a_i2c(test_iface_init):
 def test_iface_cfg_ateccx08a_swi(test_iface_init):
     try:
         cfg = cfg_ateccx08a_swi_default()
-    except ValueError:
+    except UnsupportedInterface:
         pass
     else:
         assert cfg.iface_type == ATCAIfaceType.ATCA_SWI_IFACE
@@ -46,7 +47,7 @@ def test_iface_cfg_ateccx08a_swi(test_iface_init):
 def test_iface_cfg_ateccx08a_kithid(test_iface_init):
     try:
         cfg = cfg_ateccx08a_kithid_default()
-    except ValueError:
+    except UnsupportedInterface:
         pass
     else:
         assert cfg.iface_type == ATCAIfaceType.ATCA_HID_IFACE
@@ -58,7 +59,7 @@ def test_iface_cfg_ateccx08a_kithid(test_iface_init):
 def test_iface_cfg_atsha20xa_i2c(test_iface_init):
     try:
         cfg = cfg_atsha20xa_i2c_default()
-    except ValueError:
+    except UnsupportedInterface:
         pass
     else:
         assert cfg.iface_type == ATCAIfaceType.ATCA_I2C_IFACE
@@ -71,7 +72,7 @@ def test_iface_cfg_atsha20xa_i2c(test_iface_init):
 def test_iface_cfg_atsha20xa_swi(test_iface_init):
     try:
         cfg = cfg_atsha20xa_swi_default()
-    except ValueError:
+    except UnsupportedInterface:
         pass
     else:
         assert cfg.iface_type == ATCAIfaceType.ATCA_SWI_IFACE
@@ -82,7 +83,7 @@ def test_iface_cfg_atsha20xa_swi(test_iface_init):
 def test_iface_cfg_atsha20xa_kithid(test_iface_init):
     try:
         cfg = cfg_atsha20xa_kithid_default()
-    except ValueError:
+    except UnsupportedInterface:
         pass
     else:
         assert cfg.iface_type == ATCAIfaceType.ATCA_HID_IFACE

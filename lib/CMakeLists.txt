@@ -4,31 +4,45 @@ project(cryptoauth C)
 include(CMakeDependentOption)
 include(CheckSymbolExists)
 
-# Various Options for Build
+# HAL Selection
 option(ATCA_HAL_KIT_HID "Include the HID HAL Driver")
 option(ATCA_HAL_KIT_BRIDGE "General purpose kit protocol (Packet and Stream)")
 option(ATCA_HAL_I2C "Include the I2C Hal Driver - Linux & MCU only")
 option(ATCA_HAL_SPI "Include the SPI HAL Driver - Linux & MCU only")
 option(ATCA_HAL_CUSTOM "Include support for Custom/Plug-in Hal Driver")
+
+# Library Options
 option(ATCA_PRINTF "Enable Debug print statements in library")
 option(ATCA_PKCS11 "Build PKCS11 Library")
+option(ATCA_BUILD_SHARED_LIBS "Build CryptoAuthLib as shared library" ON)
+option(ATCA_NO_HEAP "Do not use dynamic (heap) allocation functions" OFF)
+option(ATCA_USE_ATCAB_FUNCTIONS "Build the atcab_ api functions rather than using macros" OFF)
+option(ATCA_ENABLE_DEPRECATED "Enable the use of older APIs that that been replaced" OFF)
+
+# Software Cryptographic backend for host crypto abstractions
 option(ATCA_MBEDTLS "Integrate with mbedtls" OFF)
 option(ATCA_WOLFSSL "Integrate with WolfSSL" OFF)
 option(ATCA_OPENSSL "Integration with OpenSSL" OFF)
+
+# Trust Platform Options
 option(ATCA_TNGTLS_SUPPORT "Include Trust & Go TLS Certificates")
 option(ATCA_TNGLORA_SUPPORT "Include Trust & Go LORA Certificates")
 option(ATCA_TFLEX_SUPPORT "Include Trust Flex Certificates")
 option(ATCA_TNG_LEGACY_SUPPORT "Include previous version of Trust & Go Certificates")
+
+# Device enablement
 option(ATCA_ATSHA204A_SUPPORT "Include support for ATSHA204A device" ON)
 option(ATCA_ATSHA206A_SUPPORT "Include support for ATSHA206A device" ON)
 option(ATCA_ATECC108A_SUPPORT "Include support for ATECC108A device" ON)
 option(ATCA_ATECC508A_SUPPORT "Include support for ATECC508A device" ON)
 option(ATCA_ATECC608_SUPPORT "Include support for ATECC608 device" ON)
 option(ATCA_TA100_SUPPORT "Include support for TA100 device" OFF)
+option(ATCA_ECC204_SUPPORT "Include support for ECC204 device" ON)
+
+
+# TA100 Dependent Configuration options
 cmake_dependent_option(ATCA_TA100_AES_AUTH_SUPPORT "Include Encrypted (GCM) and CMAC Auth session support" ON "ATCA_TA100_SUPPORT" OFF)
-option(ATCA_BUILD_SHARED_LIBS "Build CryptoAuthLib as shared library" ON)
-option(ATCA_NO_HEAP "Do not use dynamic (heap) allocation functions" OFF)
-option(ATCA_USE_ATCAB_FUNCTIONS "Build the atcab_ api functions rather than using macros" OFF)
+cmake_dependent_option(ATCA_TA100_FCE_SUPPORT "Include FCE Support for the TA100" ON "ATCA_TA100_SUPPORT" OFF)
 
 # Check Options
 if (ATCA_MBEDTLS AND (ATCA_WOLFSSL OR ATCA_OPENSSL))
@@ -120,15 +134,30 @@ execute_process(COMMAND ${CMAKE_COMMAND} --build .
 #file(GLOB WOLFSSL_LIB_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../third_party/wolfssl/wolfcrypt/src/*.c")
 
 set(WOLFSSL_LIB_SRC ../third_party/wolfssl/wolfcrypt/src/aes.c
+                    ../third_party/wolfssl/wolfcrypt/src/arc4.c
+                    ../third_party/wolfssl/wolfcrypt/src/asn.c
                     ../third_party/wolfssl/wolfcrypt/src/cmac.c
+                    ../third_party/wolfssl/wolfcrypt/src/coding.c
+                    ../third_party/wolfssl/wolfcrypt/src/des3.c
+		    ../third_party/wolfssl/wolfcrypt/src/ecc.c
+                    ../third_party/wolfssl/wolfcrypt/src/hash.c
                     ../third_party/wolfssl/wolfcrypt/src/hmac.c
+                    ../third_party/wolfssl/wolfcrypt/src/integer.c
+                    ../third_party/wolfssl/wolfcrypt/src/memory.c
+                    ../third_party/wolfssl/wolfcrypt/src/pwdbased.c
+                    ../third_party/wolfssl/wolfcrypt/src/random.c
+                    ../third_party/wolfssl/wolfcrypt/src/rsa.c
                     ../third_party/wolfssl/wolfcrypt/src/sha.c
                     ../third_party/wolfssl/wolfcrypt/src/sha256.c
+                    ../third_party/wolfssl/wolfcrypt/src/tfm.c
+                    ../third_party/wolfssl/wolfcrypt/src/wc_encrypt.c
+                    ../third_party/wolfssl/wolfcrypt/src/wc_port.c
+                    ../third_party/wolfssl/wolfcrypt/src/wolfmath.c
                     )
 
 
 add_library(wolfssl STATIC ${WOLFSSL_LIB_SRC})
-target_compile_definitions(wolfssl PRIVATE -DWC_NO_RNG -DWOLFSSL_AES_DIRECT -DHAVE_AESGCM -DWOLFSSL_CMAC -DNO_OLD_TLS -DNO_MD5)
+target_compile_definitions(wolfssl PRIVATE -DWC_NO_HARDEN -DHAVE_ECC -DHAVE_ALL_CURVES -DWOLFCRYPT_ONLY -DWOLFSSL_PEM_TO_DER -DWOLFSSL_VALIDATE_ECC_IMPORT -DWOLFSSL_AES_DIRECT -DHAVE_AESGCM -DWOLFSSL_CMAC -DNO_OLD_TLS -DNO_MD5)
 include_directories(wolfssl PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
                                     ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/wolfssl)
 
@@ -149,7 +178,7 @@ endif(ATCA_OPENSSL)
 
 if (ATCA_ATSHA204A_SUPPORT OR ATCA_ATSHA206A_SUPPORT OR
     ATCA_ATECC108A_SUPPORT OR ATCA_ATECC508A_SUPPORT OR
-    ATCA_ATECC608_SUPPORT)
+    ATCA_ATECC608_SUPPORT OR ATCA_ECC204_SUPPORT)
 set(LIB_SRC ${LIB_SRC} ${CALIB_SRC} ${HOST_SRC})
 endif()
 

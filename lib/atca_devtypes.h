@@ -47,6 +47,7 @@ typedef enum
     ATECC608B = 3,
     ATECC608 = 3,
     ATSHA206A = 4,
+    ECC204 = 5,
     TA100 = 0x10,
     ATCA_DEV_UNKNOWN = 0x20
 } ATCADeviceType;

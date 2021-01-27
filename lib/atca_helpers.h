@@ -49,7 +49,7 @@ ATCA_STATUS atcab_printbin_label(const char* label, uint8_t* binary, size_t bin_
 
 ATCA_STATUS packHex(const char* ascii_hex, size_t ascii_hex_len, char* packed_hex, size_t* packed_len);
 bool isDigit(char c);
-bool isWhiteSpace(char c);
+bool isBlankSpace(char c);
 bool isAlpha(char c);
 bool isHexAlpha(char c);
 bool isHex(char c);

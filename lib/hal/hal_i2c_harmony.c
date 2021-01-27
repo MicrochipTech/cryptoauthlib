@@ -34,6 +34,7 @@
 
 #include "cryptoauthlib.h"
 
+
 /** \defgroup hal_ Hardware abstraction layer (hal_)
  *
  * \brief
@@ -119,7 +120,7 @@ static ATCA_STATUS hal_i2c_wait(atca_plib_i2c_api_t* plib, uint32_t rate, uint16
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
-ATCA_STATUS hal_i2c_init(void *hal, ATCAIfaceCfg *cfg)
+ATCA_STATUS hal_i2c_init(ATCAIface iface, ATCAIfaceCfg *cfg)
 {
     return ATCA_SUCCESS;
 }
@@ -141,7 +142,7 @@ ATCA_STATUS hal_i2c_post_init(ATCAIface iface)
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
-ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength)
+ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t address, uint8_t *txdata, int txlength)
 {
     ATCAIfaceCfg* cfg = atgetifacecfg(iface);
     atca_plib_i2c_api_t * plib;
@@ -158,13 +159,6 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata,
         return ATCA_BAD_PARAM;
     }
 
-
-    if (0xFF != word_address)
-    {
-        txdata[0] = word_address;   // insert the Word Address Value, Command token
-        txlength++;                 // account for word address value byte.
-    }
-
     /* Wait for the I2C bus to be ready */
     /* Since the wait time is unknown, waiting for 30 bytes duration */
     status = hal_i2c_wait(plib, cfg->atcai2c.baud, 30);
@@ -172,7 +166,7 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata,
     if (ATCA_SUCCESS == status)
     {
         status = ATCA_COMM_FAIL;
-        if (plib->write(cfg->atcai2c.slave_address >> 1, txdata, txlength) == true)
+        if (plib->write(address >> 1, txdata, txlength) == true)
         {
             /* Wait for the I2C transfer to complete */
             status = hal_i2c_wait(plib, cfg->atcai2c.baud, txlength);
@@ -199,15 +193,11 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata,
  *                             As output, the number of bytes received.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)
+ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t address, uint8_t *rxdata, uint16_t *rxlength)
 {
     ATCA_STATUS status = ATCA_COMM_FAIL;
     ATCAIfaceCfg* cfg = atgetifacecfg(iface);
-    uint16_t rxdata_max_size;
-    uint16_t read_length = 2;
-    uint8_t min_resp_size = 4;
     atca_plib_i2c_api_t * plib;
-    int retries;
 
     if ((NULL == cfg) || (NULL == rxlength) || (NULL == rxdata))
     {
@@ -219,104 +209,25 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxda
         return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
     }
 
-    rxdata_max_size = *rxlength;
-    *rxlength = 0;
-
-    do
+    /* Read given length bytes from device */
+    status = ATCA_COMM_FAIL;
+    if (plib->read(address >> 1, rxdata, *rxlength) == true)
     {
-        /*Send Word address to device...*/
-        retries = cfg->rx_retries;
-        while (retries-- > 0 && status != ATCA_SUCCESS)
+        /* Wait for the I2C transfer to complete */
+        if (ATCA_SUCCESS == (status = hal_i2c_wait(plib, cfg->atcai2c.baud, *rxlength)))
         {
-            status = hal_i2c_send(iface, word_address, &word_address, 0);
-        }
-        if (ATCA_SUCCESS != status)
-        {
-            ATCA_TRACE(status, "hal_i2c_send - failed");
-            break;
-        }
-
-#if ATCA_TA_SUPPORT
-        /*Set read length.. Check for register reads or 1 byte reads*/
-        if ((word_address == ATCA_MAIN_PROCESSOR_RD_CSR) || (word_address == ATCA_FAST_CRYPTO_RD_FSR)
-            || (rxdata_max_size == 1))
-        {
-            read_length = 1;
-        }
-#endif
-
-        /* Read length bytes to know number of bytes to read */
-        status = ATCA_COMM_FAIL;
-        if (plib->read(cfg->atcai2c.slave_address >> 1, rxdata, read_length) == true)
-        {
-            /* Wait for the I2C transfer to complete */
-            if (ATCA_SUCCESS == (status = hal_i2c_wait(plib, cfg->atcai2c.baud, read_length)))
+            /* Transfer complete. Check if the transfer was successful */
+            if (plib->error_get() != PLIB_I2C_ERROR_NONE)
             {
-                /* Transfer complete. Check if the transfer was successful */
-                if (plib->error_get() != PLIB_I2C_ERROR_NONE)
-                {
-                    status = ATCA_COMM_FAIL;
-                }
+                status = ATCA_COMM_FAIL;
             }
-        }
-        if (ATCA_SUCCESS != status)
-        {
-            ATCA_TRACE(status, "plib->read - failed");
-            break;
-        }
-
-        if (1 == read_length)
-        {
-            ATCA_TRACE(status, "1 byte read completed");
-            break;
-        }
-
-        /*Calculate bytes to read based on device response*/
-        if (cfg->devtype == TA100)
-        {
-            read_length = ((uint16_t)rxdata[0] * 256) + rxdata[1];
-            min_resp_size += 1;
-        }
-        else
-        {
-            read_length =  rxdata[0];
-        }
-
-        if (read_length > rxdata_max_size)
-        {
-            status = ATCA_TRACE(ATCA_SMALL_BUFFER, "rxdata is small buffer");
-            break;
-        }
-
-        if (read_length < min_resp_size)
-        {
-            status = ATCA_TRACE(ATCA_RX_FAIL, "packet size is invalid");
-            break;
-        }
-
-        /* Read given length bytes from device */
-        status = ATCA_COMM_FAIL;
-        if (plib->read(cfg->atcai2c.slave_address >> 1, &rxdata[2], read_length - 2) == true)
-        {
-            /* Wait for the I2C transfer to complete */
-            if (ATCA_SUCCESS == (status = hal_i2c_wait(plib, cfg->atcai2c.baud, read_length - 2)))
-            {
-                /* Transfer complete. Check if the transfer was successful */
-                if (plib->error_get() != PLIB_I2C_ERROR_NONE)
-                {
-                    status = ATCA_COMM_FAIL;
-                }
-            }
-        }
-        if (ATCA_SUCCESS != status)
-        {
-            status = ATCA_TRACE(status, "plib->read - failed");
-            break;
         }
     }
-    while (0);
+    if (ATCA_SUCCESS != status)
+    {
+        status = ATCA_TRACE(status, "plib->read - failed");
+    }
 
-    *rxlength = read_length;
     return status;
 }
 
@@ -356,195 +267,30 @@ ATCA_STATUS change_i2c_speed(ATCAIface iface, uint32_t speed)
     return status;
 }
 
-/** \brief wake up CryptoAuth device using I2C bus
- * \param[in] iface  interface to logical device to wakeup
+/** \brief Perform control operations for the kit protocol
+ * \param[in]     iface          Interface to interact with.
+ * \param[in]     option         Control parameter identifier
+ * \param[in]     param          Optional pointer to parameter value
+ * \param[in]     paramlen       Length of the parameter
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-
-ATCA_STATUS hal_i2c_wake(ATCAIface iface)
+ATCA_STATUS hal_i2c_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen)
 {
-    ATCA_STATUS status = ATCA_SUCCESS;
-    ATCAIfaceCfg* cfg = atgetifacecfg(iface);
-    atca_plib_i2c_api_t * plib;
-    int retries;
-    uint32_t bdrt;
-    uint8_t data[4] = { 0 };
+    (void)param;
+    (void)paramlen;
 
-    if (!cfg)
+    if (iface && iface->mIfaceCFG)
     {
-        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
-    }
-
-    plib = (atca_plib_i2c_api_t*)cfg->cfg_data;
-    if (!plib)
-    {
-        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
-    }
-
-
-    retries = cfg->rx_retries;
-
-    bdrt = cfg->atcai2c.baud;
-    if (bdrt != 100000)   // if not already at 100KHz, change it
-    {
-        status = change_i2c_speed(iface, 100000);
-    }
-
-    if (ATCA_SUCCESS == status)
-    {
-        /* Wait for the I2C bus to be ready */
-        /* Since the wait time is unknown, waiting for 30 bytes duration */
-        if (ATCA_SUCCESS == (status = hal_i2c_wait(plib, 100000, 30)))
+        if (ATCA_HAL_CHANGE_BAUD == option)
         {
-            // Send the 00 address as the wake pulse; part will NACK, so don't check for status
-            (void)plib->write(0x00, (uint8_t*)&data[0], 1);
-
-            /* Wait for the I2C transfer to complete */
-            status = hal_i2c_wait(plib, 100000, 1);
+            return change_i2c_speed(iface, *(uint32_t*)param);
+        }
+        else
+        {
+            return ATCA_UNIMPLEMENTED;
         }
     }
-
-    if (ATCA_SUCCESS == status)
-    {
-        // wait tWHI + tWLO which is configured based on device type and configuration structure
-        atca_delay_us(cfg->wake_delay);
-
-        status = ATCA_COMM_FAIL;
-        while (retries-- > 0 && status == ATCA_COMM_FAIL)
-        {
-            if (plib->read(cfg->atcai2c.slave_address >> 1, (uint8_t*)&data[0], 4) == true)
-            {
-                /* Wait for the I2C transfer to complete */
-                status = hal_i2c_wait(plib, 100000, 4);
-
-                if (ATCA_SUCCESS == status)
-                {
-                    /* Transfer complete. Check if the transfer was successful */
-                    if (plib->error_get() != PLIB_I2C_ERROR_NONE)
-                    {
-                        status = ATCA_COMM_FAIL;
-                    }
-                }
-            }
-        }
-        if (ATCA_SUCCESS == status)
-        {
-            // if necessary, revert baud rate to what came in.
-            if (bdrt != 100000)
-            {
-                status = change_i2c_speed(iface, bdrt);
-            }
-        }
-
-        if (ATCA_SUCCESS == status)
-        {
-            status = hal_check_wake(data, 4);
-        }
-    }
-
-    return status;
-}
-
-/** \brief idle CryptoAuth device using I2C bus
- * \param[in] iface  interface to logical device to idle
- * \return ATCA_SUCCESS on success, otherwise an error code.
- */
-
-ATCA_STATUS hal_i2c_idle(ATCAIface iface)
-{
-    ATCA_STATUS status = ATCA_COMM_FAIL;
-    ATCAIfaceCfg* cfg = atgetifacecfg(iface);
-    atca_plib_i2c_api_t * plib;
-    uint8_t data[1];
-
-    if (!cfg)
-    {
-        return ATCA_BAD_PARAM;
-    }
-
-    plib = (atca_plib_i2c_api_t*)cfg->cfg_data;
-    if (!plib)
-    {
-        return ATCA_BAD_PARAM;
-    }
-
-    data[0] = 0x02;  // idle word address value
-
-    /* Wait for the I2C bus to be ready */
-    /* Since wait time is unknown, wait for 30 bytes time */
-    status = hal_i2c_wait(plib, cfg->atcai2c.baud, 30);
-
-    if (ATCA_SUCCESS == status)
-    {
-        status = ATCA_COMM_FAIL;
-        if (plib->write(cfg->atcai2c.slave_address >> 1, (uint8_t*)&data[0], 1) == true)
-        {
-            /* Wait for the I2C transfer to complete */
-            status = hal_i2c_wait(plib, cfg->atcai2c.baud, 1);
-
-            if (ATCA_SUCCESS == status)
-            {
-                /* Transfer complete. Check if the transfer was successful */
-                if (plib->error_get() != PLIB_I2C_ERROR_NONE)
-                {
-                    status = ATCA_TRACE(ATCA_COMM_FAIL, "plib->write failed");
-                }
-            }
-        }
-    }
-
-    return status;
-}
-
-/** \brief sleep CryptoAuth device using I2C bus
- * \param[in] iface  interface to logical device to sleep
- * \return ATCA_SUCCESS on success, otherwise an error code.
- */
-
-ATCA_STATUS hal_i2c_sleep(ATCAIface iface)
-{
-    ATCA_STATUS status = ATCA_COMM_FAIL;
-    ATCAIfaceCfg* cfg = atgetifacecfg(iface);
-    atca_plib_i2c_api_t * plib;
-    uint8_t data[4];
-
-    if (!cfg)
-    {
-        return ATCA_BAD_PARAM;
-    }
-
-    plib = (atca_plib_i2c_api_t*)cfg->cfg_data;
-    if (!plib)
-    {
-        return ATCA_BAD_PARAM;
-    }
-
-    data[0] = 0x01;  // sleep word address value
-
-    /* Wait for the I2C bus to be ready */
-    /* Since wait time is unknown, wait for 30 bytes time */
-    status = hal_i2c_wait(plib, cfg->atcai2c.baud, 30);
-
-    if (ATCA_SUCCESS == status)
-    {
-        status = ATCA_COMM_FAIL;
-        if (plib->write(cfg->atcai2c.slave_address >> 1, (uint8_t*)&data[0], 1) == true)
-        {
-            /* Wait for the I2C transfer to complete */
-            status = hal_i2c_wait(plib, cfg->atcai2c.baud, 1);
-
-            if (ATCA_SUCCESS == status)
-            {
-                /* Transfer complete. Check if the transfer was successful */
-                if (plib->error_get() != PLIB_I2C_ERROR_NONE)
-                {
-                    status = ATCA_TRACE(ATCA_COMM_FAIL, "plib->write failed");
-                }
-            }
-        }
-    }
-
-    return status;
+    return ATCA_BAD_PARAM;
 }
 
 /** \brief manages reference count on given bus and releases resource if no more refences exist

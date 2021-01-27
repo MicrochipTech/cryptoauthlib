@@ -191,10 +191,10 @@ CK_RV pkcs11_slot_init(CK_SLOT_ID slotID)
     #ifdef ATCA_HAL_I2C
         if (ATCA_SUCCESS != status)
         {
-            if (0xC0 != ifacecfg->atcai2c.slave_address)
+            if (0xC0 != ifacecfg->atcai2c.address)
             {
                 /* Try the default address */
-                ifacecfg->atcai2c.slave_address = 0xC0;
+                ifacecfg->atcai2c.address = 0xC0;
                 atcab_release();
                 atca_delay_ms(1);
                 retries = 2;

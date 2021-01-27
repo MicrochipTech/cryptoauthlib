@@ -1,4 +1,4 @@
-from ctypes import c_uint8, create_string_buffer, memmove, byref, cast, c_void_p, c_uint32, POINTER, c_size_t, sizeof
+from ctypes import c_uint8, create_string_buffer, memmove, byref, cast, c_void_p, c_uint32, POINTER, c_size_t, sizeof, c_int
 from cryptoauthlib import *
 
 c_ptr = type(byref(create_string_buffer(1)))

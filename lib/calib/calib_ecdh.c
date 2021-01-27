@@ -67,7 +67,7 @@ ATCA_STATUS calib_ecdh_base(ATCADevice device, uint8_t mode, uint16_t key_id, co
         packet.param2 = key_id;
         memcpy(packet.data, public_key, ATCA_PUB_KEY_SIZE);
 
-        if ((status = atECDH(device->mCommands, &packet)) != ATCA_SUCCESS)
+        if ((status = atECDH(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "atECDH - failed");
             break;

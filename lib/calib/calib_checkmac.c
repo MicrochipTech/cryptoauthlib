@@ -50,7 +50,6 @@
 ATCA_STATUS calib_checkmac(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t *challenge, const uint8_t *response, const uint8_t *other_data)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     // Verify the inputs
@@ -62,7 +61,6 @@ ATCA_STATUS calib_checkmac(ATCADevice device, uint8_t mode, uint16_t key_id, con
 
     do
     {
-        ca_cmd = device->mCommands;
         // build Check MAC command
         packet.param1 = mode;
         packet.param2 = key_id;
@@ -77,7 +75,7 @@ ATCA_STATUS calib_checkmac(ATCADevice device, uint8_t mode, uint16_t key_id, con
         memcpy(&packet.data[32], response, CHECKMAC_CLIENT_RESPONSE_SIZE);
         memcpy(&packet.data[64], other_data, CHECKMAC_OTHER_DATA_SIZE);
 
-        if ((status = atCheckMAC(ca_cmd, &packet)) != ATCA_SUCCESS)
+        if ((status = atCheckMAC(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "atCheckMAC - failed");
             break;

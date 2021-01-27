@@ -321,11 +321,11 @@ bool isDigit(char c)
 }
 
 /**
- * \brief Checks to see if a character is whitespace
+ * \brief Checks to see if a character is blank space
  * \param[in] c  character to check
- * \return True if the character is whitespace
+ * \return True if the character is blankspace
  */
-bool isWhiteSpace(char c)
+bool isBlankSpace(char c)
 {
     return (c == '\n') || (c == '\r') || (c == '\t') || (c == ' ');
 }
@@ -351,14 +351,14 @@ bool isHexAlpha(char c)
 }
 
 /**
- * \brief Returns true if this character is a valid hex character or if this is whitespace (The character can be
+ * \brief Returns true if this character is a valid hex character or if this is blankspace (The character can be
  *        included in a valid hexstring).
  * \param[in] c  character to check
  * \return True if the character can be included in a valid hexstring
  */
 bool isHex(char c)
 {
-    return isHexDigit(c) || isWhiteSpace(c);
+    return isHexDigit(c) || isBlankSpace(c);
 }
 
 /**
@@ -372,10 +372,10 @@ bool isHexDigit(char c)
 }
 
 /**
- * \brief Remove white space from a ASCII hex string.
- * \param[in]    ascii_hex      Initial hex string to remove white space from
+ * \brief Remove spaces from a ASCII hex string.
+ * \param[in]    ascii_hex      Initial hex string to remove blankspace from
  * \param[in]    ascii_hex_len  Length of the initial hex string
- * \param[in]    packed_hex     Resulting hex string without white space
+ * \param[in]    packed_hex     Resulting hex string without blankspace
  * \param[in,out] packed_len     In: Size to packed_hex buffer
  *                              Out: Number of bytes in the packed hex string
  * \return ATCA_SUCCESS on success, otherwise an error code.
@@ -483,7 +483,7 @@ ATCA_STATUS atcab_printbin(uint8_t* binary, size_t bin_len, bool add_space)
 #define B64_IS_INVALID (uint8_t)0xFF
 
 /**
- * \brief Returns true if this character is a valid base 64 character or if this is whitespace (A character can be
+ * \brief Returns true if this character is a valid base 64 character or if this is space (A character can be
  *        included in a valid base 64 string).
  * \param[in] c      character to check
  * \param[in] rules  base64 ruleset to use
@@ -491,7 +491,7 @@ ATCA_STATUS atcab_printbin(uint8_t* binary, size_t bin_len, bool add_space)
  */
 bool isBase64(char c, const uint8_t * rules)
 {
-    return isBase64Digit(c, rules) || isWhiteSpace(c);
+    return isBase64Digit(c, rules) || isBlankSpace(c);
 }
 
 /**
@@ -662,9 +662,9 @@ ATCA_STATUS atcab_base64decode_(const char* encoded, size_t encoded_size, uint8_
         // Start decoding the input data
         for (enc_index = 0; enc_index < encoded_size; enc_index++)
         {
-            if (isWhiteSpace(encoded[enc_index]))
+            if (isBlankSpace(encoded[enc_index]))
             {
-                continue; // Skip any whitespace characters
+                continue; // Skip any empty characters
             }
             if (!isBase64Digit(encoded[enc_index], rules))
             {

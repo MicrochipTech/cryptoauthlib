@@ -57,11 +57,11 @@ ATCA_STATUS atcab_release(void);
 ATCADevice atcab_get_device(void);
 ATCADeviceType atcab_get_device_type_ext(ATCADevice device);
 ATCADeviceType atcab_get_device_type(void);
+uint8_t atcab_get_device_address(ATCADevice device);
 
 bool atcab_is_ca_device(ATCADeviceType dev_type);
 bool atcab_is_ta_device(ATCADeviceType dev_type);
 
-#define atcab_cfg_discover(...)                 calib_cfg_discover(__VA_ARGS__)
 #define atcab_get_addr(...)                     calib_get_addr(__VA_ARGS__)
 #define atca_execute_command(...)               calib_execute_command(__VA_ARGS__)
 
@@ -105,7 +105,7 @@ ATCA_STATUS atcab_aes_ccm_decrypt_finish(atca_aes_ccm_ctx_t* ctx, const uint8_t*
 
 
 
-#if ATCA_CA_SUPPORT && !ATCA_TA_SUPPORT && !defined(ATCA_USE_ATCAB_FUNCTIONS)
+#if ATCA_CA_SUPPORT && !ATCA_TA_SUPPORT && !defined(ATCA_USE_ATCAB_FUNCTIONS) && !defined(ATCA_ECC204_SUPPORT)
 
 #define atcab_wakeup()                          calib_wakeup(_gDevice)
 #define atcab_idle()                            calib_idle(_gDevice)
@@ -273,7 +273,6 @@ ATCA_STATUS atcab_aes_ccm_decrypt_finish(atca_aes_ccm_ctx_t* ctx, const uint8_t*
 #define atcab_sleep(...)                        (0)
 #define _atcab_exit(...)                        (1)
 #define atcab_get_zone_size(...)                talib_get_zone_size(_gDevice, __VA_ARGS__)
-//#define atcab_cfg_discover(...)                 (1)
 //#define atcab_get_addr(...)                     (1)
 
 // AES command functions
@@ -431,14 +430,13 @@ ATCA_STATUS atcab_aes_ccm_decrypt_finish(atca_aes_ccm_ctx_t* ctx, const uint8_t*
 
 #endif
 
-#if (ATCA_TA_SUPPORT && ATCA_CA_SUPPORT) || defined(ATCA_USE_ATCAB_FUNCTIONS)
+#if (ATCA_TA_SUPPORT && ATCA_CA_SUPPORT) || defined(ATCA_USE_ATCAB_FUNCTIONS) || defined(ATCA_ECC204_SUPPORT)
 
 /* Basic global methods */
 ATCA_STATUS _atcab_exit(void);
 ATCA_STATUS atcab_wakeup(void);
 ATCA_STATUS atcab_idle(void);
 ATCA_STATUS atcab_sleep(void);
-//ATCA_STATUS atcab_cfg_discover(ATCAIfaceCfg cfg_array[], int max);
 //ATCA_STATUS atcab_get_addr(uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t* addr);
 ATCA_STATUS atcab_get_zone_size(uint8_t zone, uint16_t slot, size_t* size);
 

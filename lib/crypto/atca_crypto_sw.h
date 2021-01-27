@@ -88,6 +88,9 @@ typedef atca_evp_ctx atcac_pk_ctx;
 #include "wolfssl/wolfcrypt/sha.h"
 #include "wolfssl/wolfcrypt/sha256.h"
 #include "wolfssl/wolfcrypt/error-crypt.h"
+#include "wolfssl/wolfcrypt/asn_public.h"
+#include "wolfssl/wolfcrypt/asn.h"
+#include "wolfssl/wolfcrypt/ecc.h"
 
 typedef struct
 {
@@ -95,10 +98,17 @@ typedef struct
     uint8_t  iv[AES_BLOCK_SIZE];
     uint16_t iv_len;
 } atcac_aes_gcm_ctx;
+
+typedef struct
+{
+    void* ptr;
+} atca_wc_ctx;
+
 typedef wc_Sha atcac_sha1_ctx;
 typedef wc_Sha256 atcac_sha2_256_ctx;
 typedef Cmac atcac_aes_cmac_ctx;
 typedef Hmac atcac_hmac_sha256_ctx;
+typedef atca_wc_ctx atcac_pk_ctx;
 
 #else
 #ifndef ATCA_ENABLE_SHA1_IMPL
@@ -135,9 +145,7 @@ ATCA_STATUS atcac_aes_gcm_decrypt_start(atcac_aes_gcm_ctx* ctx, const uint8_t* k
 ATCA_STATUS atcac_aes_cmac_init(atcac_aes_cmac_ctx* ctx, const uint8_t* key, const uint8_t key_len);
 ATCA_STATUS atcac_aes_cmac_update(atcac_aes_cmac_ctx* ctx, const uint8_t* data, const size_t data_size);
 ATCA_STATUS atcac_aes_cmac_finish(atcac_aes_cmac_ctx* ctx, uint8_t* cmac, size_t* cmac_size);
-#endif
 
-#ifdef ATCA_MBEDTLS
 ATCA_STATUS atcac_pk_init(atcac_pk_ctx* ctx, uint8_t* buf, size_t buflen, uint8_t key_type, bool pubkey);
 ATCA_STATUS atcac_pk_init_pem(atcac_pk_ctx* ctx, uint8_t* buf, size_t buflen, bool pubkey);
 ATCA_STATUS atcac_pk_free(atcac_pk_ctx* ctx);

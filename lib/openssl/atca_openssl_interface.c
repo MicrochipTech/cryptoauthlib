@@ -678,9 +678,41 @@ ATCA_STATUS atcac_pk_free(
     {
         if (ctx->ptr)
         {
-            EVP_PKEY_free(ctx->ptr);
+            EVP_PKEY_free((EVP_PKEY*)ctx->ptr);
         }
         status = ATCA_SUCCESS;
+    }
+    return status;
+}
+
+/** \brief Get the public key from the context
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_pk_public(
+    atcac_pk_ctx* ctx,
+    uint8_t*      buf,
+    size_t*       buflen
+    )
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    if (ctx && buf && ctx->ptr)
+    {
+        int ret = -1;
+        if (EVP_PKEY_EC == EVP_PKEY_id((EVP_PKEY*)ctx->ptr))
+        {
+            unsigned char pbuf[65];  // UNCOMPRESSED format
+            unsigned char *out = pbuf;
+
+            ret = i2o_ECPublicKey(EVP_PKEY_get0_EC_KEY((EVP_PKEY*)ctx->ptr), &out);
+
+            if (ret > 0)
+            {
+                memcpy(buf, &pbuf[1], *buflen);
+            }
+        }
+        status = (ret > 0) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
     }
     return status;
 }
@@ -812,6 +844,47 @@ ATCA_STATUS atcac_pk_verify(
             }
         }
         status = (0 < ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+    }
+
+    return status;
+}
+
+/** \brief Execute the key agreement protocol for the provided keys (if they can)
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_pk_derive(
+    atcac_pk_ctx* private_ctx,
+    atcac_pk_ctx* public_ctx,
+    uint8_t*      buf,
+    size_t*       buflen
+    )
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    if ((private_ctx != NULL) && (public_ctx != NULL) && (buf != NULL) && (buflen != NULL))
+    {
+        int keytype = EVP_PKEY_id((EVP_PKEY*)private_ctx->ptr);
+
+        if (keytype == EVP_PKEY_id((EVP_PKEY*)public_ctx->ptr))
+        {
+            int ret = -1;
+            switch (keytype)
+            {
+            case EVP_PKEY_EC:
+            {
+                const EC_POINT *pub_key = EC_KEY_get0_public_key(
+                    EVP_PKEY_get0_EC_KEY((EVP_PKEY*)public_ctx->ptr));
+
+                ret = ECDH_compute_key(buf, *buflen, pub_key,
+                                       EVP_PKEY_get0_EC_KEY((EVP_PKEY*)private_ctx->ptr), NULL);
+                break;
+            }
+            default:
+                break;
+            }
+            status = (ret > 0) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+        }
     }
 
     return status;

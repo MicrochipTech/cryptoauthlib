@@ -32,6 +32,10 @@
 #include "swi_uart_samd21_asf.h"
 #include "atca_helpers.h"
 
+#ifndef ATCA_HAL_LEGACY_API
+#error "The use of this hal requires the ATCA_HAL_LEGACY_API option to be enabled.
+#endif
+
 /** \defgroup hal_ Hardware abstraction layer (hal_)
  *
  * \brief

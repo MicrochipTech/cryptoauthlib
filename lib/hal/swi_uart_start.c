@@ -32,6 +32,10 @@
 #include "swi_uart_start.h"
 #include "atca_helpers.h"
 
+#ifndef ATCA_HAL_LEGACY_API
+#error "The use of this hal requires the ATCA_HAL_LEGACY_API option to be enabled.
+#endif
+
 #define USART_BAUD_RATE(baud, sercom_freq)      (65536 - ((65536 * 16.0F * baud) / sercom_freq))
 
 /** \defgroup hal_ Hardware abstraction layer (hal_)

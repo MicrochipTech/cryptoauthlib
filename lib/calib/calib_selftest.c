@@ -50,7 +50,6 @@
 ATCA_STATUS calib_selftest(ATCADevice device, uint8_t mode, uint16_t param2, uint8_t* result)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t response = 0;
 
@@ -62,12 +61,11 @@ ATCA_STATUS calib_selftest(ATCADevice device, uint8_t mode, uint16_t param2, uin
             break;
         }
 
-        ca_cmd = device->mCommands;
         // build a SelfTest command
         packet.param1 = mode;
         packet.param2 = param2;
 
-        if ((status = atSelfTest(ca_cmd, &packet)) != ATCA_SUCCESS)
+        if ((status = atSelfTest(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "atSelfTest - failed");
             break;

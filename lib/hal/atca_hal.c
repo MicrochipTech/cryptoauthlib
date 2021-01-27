@@ -35,55 +35,40 @@
 #include "cryptoauthlib.h"
 #include "atca_hal.h"
 
+#ifndef ATCA_MAX_HAL_CACHE
+#define ATCA_MAX_HAL_CACHE
+#endif
+
 #ifdef ATCA_HAL_I2C
 static ATCAHAL_t hal_i2c = {
     hal_i2c_init,
     hal_i2c_post_init,
     hal_i2c_send,
     hal_i2c_receive,
-    hal_i2c_wake,
-    hal_i2c_idle,
-    hal_i2c_sleep,
+    hal_i2c_control,
     hal_i2c_release
 };
 #endif
 
-#ifdef ATCA_HAL_SWI
-static ATCAHAL_t hal_swi = {
+#ifdef ATCA_HAL_SWI_UART
+static ATCAHAL_t hal_swi_uart = {
     hal_swi_init,
     hal_swi_post_init,
     hal_swi_send,
     hal_swi_receive,
-    hal_swi_wake,
-    hal_swi_idle,
-    hal_swi_sleep,
+    hal_swi_control,
     hal_swi_release
 };
 #endif
 
-#if defined(ATCA_HAL_UART) && !defined(ATCA_HAL_KIT_CDC)
+#ifdef ATCA_HAL_UART
 static ATCAHAL_t hal_uart = {
     hal_uart_init,
     hal_uart_post_init,
     hal_uart_send,
     hal_uart_receive,
-    hal_uart_wake,
-    hal_uart_idle,
-    hal_uart_sleep,
+    hal_uart_control,
     hal_uart_release
-};
-#endif
-
-#if !defined(ATCA_HAL_UART) && defined(ATCA_HAL_KIT_CDC)
-static ATCAHAL_t hal_uart = {
-    hal_kit_cdc_init,
-    hal_kit_cdc_post_init,
-    hal_kit_cdc_send,
-    hal_kit_cdc_receive,
-    hal_kit_cdc_wake,
-    hal_kit_cdc_idle,
-    hal_kit_cdc_sleep,
-    hal_kit_cdc_release
 };
 #endif
 
@@ -93,10 +78,21 @@ static ATCAHAL_t hal_spi = {
     hal_spi_post_init,
     hal_spi_send,
     hal_spi_receive,
-    hal_spi_wake,
-    hal_spi_idle,
-    hal_spi_sleep,
+    hal_spi_control,
     hal_spi_release
+};
+#endif
+
+#ifdef ATCA_HAL_GPIO
+static ATCAHAL_t hal_gpio = {
+    hal_gpio_init,
+    hal_gpio_post_init,
+    hal_gpio_send,
+    hal_gpio_receive,
+    hal_gpio_wake,
+    hal_gpio_idle,
+    hal_gpio_sleep,
+    hal_gpio_release
 };
 #endif
 
@@ -106,10 +102,20 @@ static ATCAHAL_t hal_hid = {
     hal_kit_hid_post_init,
     hal_kit_hid_send,
     hal_kit_hid_receive,
-    hal_kit_hid_wake,
-    hal_kit_hid_idle,
-    hal_kit_hid_sleep,
+    hal_kit_hid_control,
     hal_kit_hid_release
+};
+#endif
+
+#if defined(ATCA_HAL_KIT_HID) || defined(ATCA_HAL_KIT_UART)
+#include "kit_protocol.h"
+static ATCAHAL_t hal_kit_v1 = {
+    kit_init,
+    kit_post_init,
+    kit_send,
+    kit_receive,
+    kit_control,
+    kit_release
 };
 #endif
 
@@ -119,9 +125,7 @@ static ATCAHAL_t hal_kit_bridge = {
     hal_kit_post_init,
     hal_kit_send,
     hal_kit_receive,
-    hal_kit_wake,
-    hal_kit_idle,
-    hal_kit_sleep,
+    hal_kit_control,
     hal_kit_release
 };
 #endif
@@ -130,57 +134,73 @@ static ATCAHAL_t hal_kit_bridge = {
 static ATCAHAL_t hal_custom;
 #endif
 
-static ATCAHAL_t * atca_registered_hal_list[ATCA_UNKNOWN_IFACE] = {
+/** \brief Structure that holds the hal/phy maping for different interface types
+ */
+typedef struct
+{
+    uint8_t    iface_type;          /**<  */
+    ATCAHAL_t* hal;                 /**<  */
+    ATCAHAL_t* phy;                 /**< Physical interface for the specific HAL*/
+} atca_hal_list_entry_t;
+
+
+static atca_hal_list_entry_t atca_registered_hal_list[ATCA_MAX_HAL_CACHE] = {
 #ifdef ATCA_HAL_I2C
-    &hal_i2c,
-#else
-    NULL,
+    { ATCA_I2C_IFACE,      &hal_i2c,        NULL      },
 #endif
 #ifdef ATCA_HAL_SWI
-    &hal_swi,
-#else
-    NULL,
+    { ATCA_SWI_IFACE,      &hal_swi_uart,   &hal_uart },
 #endif
-#if defined(ATCA_HAL_UART) || defined(ATCA_HAL_KIT_CDC)
-    &hal_uart,
-#else
-    NULL,
+#ifdef ATCA_HAL_KIT_UART
+    { ATCA_UART_IFACE,     &hal_kit_v1,     &hal_uart },
 #endif
 #ifdef ATCA_HAL_SPI
-    &hal_spi,
-#else
-    NULL,
+    { ATCA_SPI_IFACE,      &hal_spi,        NULL      },
 #endif
 #ifdef ATCA_HAL_KIT_HID
-    &hal_hid,
-#else
-    NULL,
+    { ATCA_HID_IFACE,      &hal_kit_v1,     &hal_hid  },
 #endif
 #ifdef ATCA_HAL_KIT_BRIDGE
-    &hal_kit_bridge,
-#else
-    NULL,
+    { ATCA_KIT_IFACE,      &hal_kit_bridge, NULL      },
 #endif
-#ifdef ATCA_HAL_CUSTOM
-    &hal_custom,
-#else
-    NULL
+#if ATCA_HAL_SWI_GPIO
+    { ATCA_SWI_GPIO_IFACE, &hal_gpio,       NULL      },
 #endif
 };
+
+static const size_t atca_registered_hal_list_size = sizeof(atca_registered_hal_list) / sizeof(atca_hal_list_entry_t);
+
 
 /** \brief Internal function to get a value from the hal cache
  * \param[in] iface_type - the type of physical interface to register
  * \param[out] hal pointer to the existing ATCAHAL_t structure
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
-static ATCA_STATUS hal_iface_get_registered(ATCAIfaceType iface_type, ATCAHAL_t** hal)
+static ATCA_STATUS hal_iface_get_registered(ATCAIfaceType iface_type, ATCAHAL_t** hal, ATCAHAL_t **phy)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if ((ATCA_UNKNOWN_IFACE > iface_type) && hal)
+    if (hal && phy)
     {
-        *hal = atca_registered_hal_list[iface_type];
-        status = ATCA_SUCCESS;
+        int i;
+        for (i = 0; i < atca_registered_hal_list_size; i++)
+        {
+            if (iface_type == atca_registered_hal_list[i].iface_type)
+            {
+                break;
+            }
+        }
+
+        if (i < atca_registered_hal_list_size)
+        {
+            *hal = atca_registered_hal_list[i].hal;
+            *phy = atca_registered_hal_list[i].phy;
+            status = ATCA_SUCCESS;
+        }
+        else
+        {
+            status = ATCA_GEN_FAIL;
+        }
     }
 
     return status;
@@ -191,14 +211,46 @@ static ATCA_STATUS hal_iface_get_registered(ATCAIfaceType iface_type, ATCAHAL_t*
  * \param[in] hal pointer to the existing ATCAHAL_t structure
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
-static ATCA_STATUS hal_iface_set_registered(ATCAIfaceType iface_type, ATCAHAL_t* hal)
+static ATCA_STATUS hal_iface_set_registered(ATCAIfaceType iface_type, ATCAHAL_t* hal, ATCAHAL_t* phy)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if ((ATCA_UNKNOWN_IFACE > iface_type) && hal)
+    if (hal)
     {
-        atca_registered_hal_list[iface_type] = hal;
-        status = ATCA_SUCCESS;
+        int i;
+        int empty = atca_registered_hal_list_size;
+        for (i = 0; i < atca_registered_hal_list_size; i++)
+        {
+            if (iface_type == atca_registered_hal_list[i].iface_type)
+            {
+                break;
+            }
+            else if (empty == atca_registered_hal_list_size)
+            {
+                if (!atca_registered_hal_list[i].hal && !atca_registered_hal_list[i].phy)
+                {
+                    empty = i;
+                }
+            }
+        }
+
+        if (i < atca_registered_hal_list_size)
+        {
+            atca_registered_hal_list[i].hal = hal;
+            atca_registered_hal_list[i].phy = phy;
+            status = ATCA_SUCCESS;
+        }
+        else if (empty < atca_registered_hal_list_size)
+        {
+            atca_registered_hal_list[empty].hal = hal;
+            atca_registered_hal_list[empty].hal = phy;
+            status = ATCA_SUCCESS;
+        }
+        else
+        {
+            status = ATCA_ALLOC_FAILURE;
+        }
+
     }
 
     return status;
@@ -210,15 +262,15 @@ static ATCA_STATUS hal_iface_set_registered(ATCAIfaceType iface_type, ATCAHAL_t*
  * \param[out] old pointer to the existing ATCAHAL_t structure
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS hal_iface_register_hal(ATCAIfaceType iface_type, ATCAHAL_t *hal, ATCAHAL_t **old)
+ATCA_STATUS hal_iface_register_hal(ATCAIfaceType iface_type, ATCAHAL_t *hal, ATCAHAL_t **old_hal, ATCAHAL_t* phy, ATCAHAL_t** old_phy)
 {
     ATCA_STATUS status;
 
-    status = old ? hal_iface_get_registered(iface_type, old) : ATCA_SUCCESS;
+    status = (old_hal && old_phy) ? hal_iface_get_registered(iface_type, old_hal, old_phy) : ATCA_SUCCESS;
 
     if (ATCA_SUCCESS == status)
     {
-        status = hal_iface_set_registered(iface_type, hal);
+        status = hal_iface_set_registered(iface_type, hal, phy);
     }
 
     return ATCA_SUCCESS;
@@ -229,26 +281,32 @@ ATCA_STATUS hal_iface_register_hal(ATCAIfaceType iface_type, ATCAHAL_t *hal, ATC
  * \param[in] hal pointer to ATCAHAL_t intermediate data structure
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS hal_iface_init(ATCAIfaceCfg *cfg, ATCAHAL_t **hal)
+ATCA_STATUS hal_iface_init(ATCAIfaceCfg *cfg, ATCAHAL_t **hal, ATCAHAL_t **phy)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
     if (cfg && hal)
     {
-        status = hal_iface_get_registered(cfg->iface_type, hal);
+        status = hal_iface_get_registered(cfg->iface_type, hal, phy);
 
 #ifdef ATCA_HAL_CUSTOM
         if (ATCA_CUSTOM_IFACE == cfg->iface_type)
         {
-            (*hal)->halinit = cfg->atcacustom.halinit;
-            (*hal)->halpostinit = cfg->atcacustom.halpostinit;
-            (*hal)->halreceive = cfg->atcacustom.halreceive;
-            (*hal)->halsend = cfg->atcacustom.halsend;
-            (*hal)->halsleep = cfg->atcacustom.halsleep;
-            (*hal)->halwake = cfg->atcacustom.halwake;
-            (*hal)->halidle = cfg->atcacustom.halidle;
-            (*hal)->halrelease = cfg->atcacustom.halrelease;
-            (*hal)->hal_data = NULL;
+            *hal = hal_malloc(sizeof(ATCAHAL_t));
+            if (*hal)
+            {
+                (*hal)->halinit = cfg->atcacustom.halinit;
+                (*hal)->halpostinit = cfg->atcacustom.halpostinit;
+                (*hal)->halreceive = cfg->atcacustom.halreceive;
+                (*hal)->halsend = cfg->atcacustom.halsend;
+                (*hal)->halcontrol = hal_custom_control;
+                (*hal)->halrelease = cfg->atcacustom.halrelease;
+                status = ATCA_SUCCESS;
+            }
+            else
+            {
+                status = ATCA_ALLOC_FAILURE;
+            }
         }
 #endif
     }
@@ -266,8 +324,9 @@ ATCA_STATUS hal_iface_release(ATCAIfaceType iface_type, void *hal_data)
 {
     ATCA_STATUS status;
     ATCAHAL_t * hal;
+    ATCAHAL_t* phy;
 
-    status = hal_iface_get_registered(iface_type, &hal);
+    status = hal_iface_get_registered(iface_type, &hal, &phy);
 
     if (ATCA_SUCCESS == status)
     {
@@ -303,6 +362,16 @@ ATCA_STATUS hal_check_wake(const uint8_t* response, int response_size)
     return ATCA_WAKE_FAILED;
 }
 
+/** \brief Utility function for hal_wake to check the reply.
+ * \param[in] word_address      Command to check
+ * \return true if the word_address is considered a command
+ */
+uint8_t hal_is_command_word(uint8_t word_address)
+{
+    return 0xFF == word_address || 0x03 == word_address || 0x10 == word_address;
+}
+
+
 #if !defined(ATCA_NO_HEAP) && defined(ATCA_TESTS_ENABLED) && defined(ATCA_PLATFORM_MALLOC)
 
 void* (*g_hal_malloc_f)(size_t) = ATCA_PLATFORM_MALLOC;
@@ -324,4 +393,132 @@ void hal_test_set_memory_f(void* (*malloc_func)(size_t), void (*free_func)(void*
     g_hal_free_f = free_func;
 }
 
+#endif
+
+#if defined(ATCA_HAL_LEGACY_API) && defined(ATCA_HAL_I2C)
+ATCA_STATUS hal_i2c_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen)
+{
+    (void)param;
+    (void)paramlen;
+
+    switch (option)
+    {
+    case ATCA_HAL_CONTROL_WAKE:
+        return hal_i2c_wake(iface);
+    case ATCA_HAL_CONTROL_IDLE:
+        return hal_i2c_idle(iface);
+    case ATCA_HAL_CONTROL_SLEEP:
+        return hal_i2c_sleep(iface);
+    case ATCA_HAL_CONTROL_SELECT:
+    /* fallthrough */
+    case ATCA_HAL_CONTROL_DESELECT:
+        return ATCA_SUCCESS;
+    default:
+        return ATCA_BAD_PARAM;
+    }
+}
+#endif
+
+#if defined(ATCA_HAL_LEGACY_API) && defined(ATCA_HAL_SWI)
+ATCA_STATUS hal_swi_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen)
+{
+    (void)param;
+    (void)paramlen;
+
+    switch (option)
+    {
+    case ATCA_HAL_CONTROL_WAKE:
+        return hal_swi_wake(iface);
+    case ATCA_HAL_CONTROL_IDLE:
+        return hal_swi_idle(iface);
+    case ATCA_HAL_CONTROL_SLEEP:
+        return hal_swi_sleep(iface);
+    case ATCA_HAL_CONTROL_SELECT:
+    /* fallthrough */
+    case ATCA_HAL_CONTROL_DESELECT:
+        return ATCA_SUCCESS;
+    default:
+        return ATCA_BAD_PARAM;
+    }
+}
+#endif
+
+#if defined(ATCA_HAL_LEGACY_API) && defined(ATCA_HAL_UART)
+ATCA_STATUS hal_uart_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen)
+{
+    (void)param;
+    (void)paramlen;
+
+    switch (option)
+    {
+    case ATCA_HAL_CONTROL_WAKE:
+        return hal_uart_wake(iface);
+    case ATCA_HAL_CONTROL_IDLE:
+        return hal_uart_idle(iface);
+    case ATCA_HAL_CONTROL_SLEEP:
+        return hal_uart_sleep(iface);
+    case ATCA_HAL_CONTROL_SELECT:
+    /* fallthrough */
+    case ATCA_HAL_CONTROL_DESELECT:
+        return ATCA_SUCCESS;
+    default:
+        return ATCA_BAD_PARAM;
+    }
+}
+#endif
+
+#if defined(ATCA_HAL_LEGACY_API) && defined(ATCA_HAL_SPI)
+ATCA_STATUS hal_spi_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen)
+{
+    (void)param;
+    (void)paramlen;
+
+    if (iface)
+    {
+        switch (option)
+        {
+        case ATCA_HAL_CONTROL_WAKE:
+            return hal_spi_wake(iface);
+        case ATCA_HAL_CONTROL_IDLE:
+            return hal_spi_idle(iface);
+        case ATCA_HAL_CONTROL_SLEEP:
+            return hal_spi_sleep(iface);
+        case ATCA_HAL_CONTROL_SELECT:
+        /* fallthrough */
+        case ATCA_HAL_CONTROL_DESELECT:
+            return ATCA_SUCCESS;
+        default:
+            break;
+        }
+    }
+    return ATCA_BAD_PARAM;
+}
+#endif
+
+#if defined(ATCA_HAL_CUSTOM)
+ATCA_STATUS hal_custom_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen)
+{
+    (void)param;
+    (void)paramlen;
+
+    if (iface && iface->mIfaceCFG)
+    {
+        switch (option)
+        {
+        case ATCA_HAL_CONTROL_WAKE:
+            return iface->mIfaceCFG->atcacustom.halwake(iface);
+        case ATCA_HAL_CONTROL_IDLE:
+            return iface->mIfaceCFG->atcacustom.halidle(iface);
+        case ATCA_HAL_CONTROL_SLEEP:
+            return iface->mIfaceCFG->atcacustom.halsleep(iface);
+        case ATCA_HAL_CONTROL_SELECT:
+        /* fallthrough */
+        case ATCA_HAL_CONTROL_DESELECT:
+            return ATCA_SUCCESS;
+        default:
+            break;
+        }
+    }
+    return ATCA_BAD_PARAM;
+}
 #endif

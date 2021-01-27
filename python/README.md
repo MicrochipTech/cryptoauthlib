@@ -178,3 +178,8 @@ has details for how to run the tests. The module tests are not comprehensive for
 of cryptoauthlib but rather are meant to test the python module code only against the library to ensure
 the interfaces are correct and ctypes structures match the platform.
 
+Release notes
+-----------
+See [Release Notes](release_notes.md)
+
+

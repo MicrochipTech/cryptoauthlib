@@ -108,6 +108,7 @@ def get_device_name(revision):
     devices = {0x10: 'ATECC108A',
                0x50: 'ATECC508A',
                0x60: 'ATECC608',
+               0x20: 'ECC204',
                0x00: 'ATSHA204A',
                0x02: 'ATSHA204A',
                0x40: 'ATSHA206A'}
@@ -126,6 +127,7 @@ def get_device_type_id(name):
                'ATECC608B': 3,
                'ATECC608': 3,
                'ATSAH206A': 4,
+               'ECC204': 5,
                'UNKNOWN': 0x20}
     return devices.get(name.upper())
 

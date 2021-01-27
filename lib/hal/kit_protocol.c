@@ -29,7 +29,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "atca_compiler.h"
-#include "kit_phy.h"
 #include "kit_protocol.h"
 #include "atca_helpers.h"
 
@@ -79,6 +78,8 @@ const char * kit_id_from_devtype(ATCADeviceType devtype)
         return "SHA206A";
     case TA100:
         return "TA100";
+    case ECC204:
+        return "ECC204";
     default:
         return "unknown";
     }
@@ -99,6 +100,46 @@ const char * kit_interface_from_kittype(ATCAKitType kittype)
     default:
         return "unknown";
     }
+}
+
+/** \brief HAL implementation of send over USB HID
+ *  \param[in] iface     instance
+ *  \param[in] txdata    pointer to bytes to send
+ *  \param[in] txlength  number of bytes to send
+ *  \return ATCA_STATUS
+ */
+ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength)
+{
+    if (iface && iface->phy && iface->phy->halsend)
+    {
+        return iface->phy->halsend(iface, 0xFF, txdata, txlength);
+    }
+    else
+    {
+        return ATCA_BAD_PARAM;
+    }
+}
+
+/** \brief HAL implementation of kit protocol send over USB HID
+ * \param[in]    iface   instance
+ * \param[out]   rxdata  pointer to space to receive the data
+ * \param[in,out] rxsize  ptr to expected number of receive bytes to request
+ * \return ATCA_STATUS
+ */
+ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxsize)
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    if (iface && iface->phy && iface->phy->halreceive && rxsize)
+    {
+        uint16_t rxlen = (uint16_t)*rxsize;
+        if (ATCA_SUCCESS == (status = iface->phy->halreceive(iface, 0, rxdata, &rxlen)))
+        {
+            *rxsize = rxlen;
+        }
+    }
+
+    return status;
 }
 
 /** \brief HAL implementation of kit protocol init.  This function calls back to the physical protocol to send the bytes
@@ -225,6 +266,15 @@ ATCA_STATUS kit_init(ATCAIface iface)
     }
 
     return status;
+}
+
+/** \brief HAL implementation of Kit HID post init
+ *  \param[in] iface  instance
+ *  \return ATCA_STATUS
+ */
+ATCA_STATUS kit_post_init(ATCAIface iface)
+{
+    return ATCA_SUCCESS;
 }
 
 /** \brief The function send word address byte of atreceive to kit protocol to receive
@@ -669,6 +719,45 @@ ATCA_STATUS kit_parse_rsp(const char* pkitbuf, int nkitbuf, uint8_t* kitstatus, 
     *datasize = (int)datasizeTemp;
 
     return status;
+}
+
+
+/** \brief Perform control operations for the kit protocol
+ * \param[in]     iface          Interface to interact with.
+ * \param[in]     option         Control parameter identifier
+ * \param[in]     param          Optional pointer to parameter value
+ * \param[in]     paramlen       Length of the parameter
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS kit_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen)
+{
+    (void)param;
+    (void)paramlen;
+
+    if (iface && iface->mIfaceCFG)
+    {
+        switch (option)
+        {
+        case ATCA_HAL_CONTROL_WAKE:
+            return kit_wake(iface);
+        case ATCA_HAL_CONTROL_IDLE:
+            return kit_idle(iface);
+        case ATCA_HAL_CONTROL_SLEEP:
+            return kit_sleep(iface);
+        case ATCA_HAL_CONTROL_SELECT:
+        /* fallthrough */
+        case ATCA_HAL_CONTROL_DESELECT:
+            return ATCA_SUCCESS;
+        default:
+            break;
+        }
+    }
+    return ATCA_BAD_PARAM;
+}
+
+ATCA_STATUS kit_release(void* hal_data)
+{
+    return ATCA_SUCCESS;
 }
 
 /** @} */

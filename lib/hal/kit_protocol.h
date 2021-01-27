@@ -53,9 +53,11 @@ extern "C" {
 #endif
 
 ATCA_STATUS kit_init(ATCAIface iface);
-
+ATCA_STATUS kit_post_init(ATCAIface iface);
 ATCA_STATUS kit_send(ATCAIface iface, uint8_t word_address, uint8_t* txdata, int txlength);
 ATCA_STATUS kit_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, uint16_t* rxsize);
+ATCA_STATUS kit_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen);
+ATCA_STATUS kit_release(void* hal_data);
 
 ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlength, char* pkitbuf, int* nkitbuf, char target);
 ATCA_STATUS kit_parse_rsp(const char* pkitbuf, int nkitbuf, uint8_t* kitstatus, uint8_t* rxdata, int* nrxdata);

@@ -60,7 +60,6 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
 {
 #endif
     ATCAPacket packet;
-    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
     atca_nonce_in_out_t nonce_params;
     atca_gen_dig_in_out_t gen_dig_param;
@@ -79,8 +78,6 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
 
     do
     {
-        ca_cmd = device->mCommands;
-
         if (write_key == NULL)
         {
             // Caller requested an unencrypted PrivWrite, which is only allowed when the data zone is unlocked
@@ -174,7 +171,7 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
             memcpy(&packet.data[sizeof(cipher_text)], host_mac, sizeof(host_mac));
         }
 
-        if ((status = atPrivWrite(ca_cmd, &packet)) != ATCA_SUCCESS)
+        if ((status = atPrivWrite(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "atPrivWrite - failed");
             break;

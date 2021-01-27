@@ -76,6 +76,9 @@
 //! KeyId{32} || OpCode{1} || Param1{1} || Param2{2}|| SN8{1} || SN0_1{2} || 0{25} || TempKey{32}
 #define ATCA_MSG_SIZE_ENCRYPT_MAC      (96)
 
+//! TransportKey{32} || 0x15{1} || 0x00{1} || KeyId{2} || SN8{1} || SN0_1{2} || 0{25} || Nonce{32}
+#define ATCA_MSG_SIZE_SESSION_KEY      (96)
+
 //! KeyId{32} || OpCode{1} || Param1{1} || Param2{2}|| SN8{1} || SN0_1{2} || 0{21} || PlainText{36}
 #define ATCA_MSG_SIZE_PRIVWRITE_MAC    (96)
 
@@ -414,6 +417,18 @@ typedef struct atca_sign_internal_in_out
     uint8_t*                    digest;            //!< [out] SHA256 digest of the full 55 byte message. Can be NULL if not required.
 } atca_sign_internal_in_out_t;
 
+/** \brief Input/Output paramters for calculating the session key
+ *         by the nonce command. Used with the atcah_gen_session_key() function.
+ */
+typedef struct atca_session_key_in_out
+{
+    uint8_t*       transport_key;
+    uint16_t       transport_key_id;
+    const uint8_t* sn;
+    uint8_t*       nonce;
+    uint8_t*       session_key;
+}atca_session_key_in_out_t;
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -439,6 +454,8 @@ ATCA_STATUS atcah_secureboot_enc(atca_secureboot_enc_in_out_t* param);
 ATCA_STATUS atcah_secureboot_mac(atca_secureboot_mac_in_out_t *param);
 ATCA_STATUS atcah_encode_counter_match(uint32_t counter, uint8_t * counter_match);
 ATCA_STATUS atcah_io_decrypt(struct atca_io_decrypt_in_out *param);
+ATCA_STATUS atcah_ecc204_write_auth_mac(struct atca_write_mac_in_out *param);
+ATCA_STATUS atcah_gen_session_key(atca_session_key_in_out_t *param);
 #ifdef __cplusplus
 }
 #endif

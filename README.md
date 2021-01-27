@@ -36,6 +36,15 @@ configuration is well tested, then you can commit it to a CryptoAuth Xplained
 Pro Extension, for example. Keep in mind that once you lock a device, it will
 not be changeable.
 
+Licensing
+---------------------------
+
+The CryptoAuthLib license can be found in the accompaning [license.txt](https://github.com/MicrochipTech/cryptoauthlib/blob/main/license.txt)
+file.
+
+Cryptoauthlib also includes optional third party software subject to their own licensing terms. If you are using one of these optional components please
+verify the terms of those licenses as well in the third_party/<module> directories.
+
 
 Examples
 -----------

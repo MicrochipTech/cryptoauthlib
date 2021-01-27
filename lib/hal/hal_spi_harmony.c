@@ -38,6 +38,7 @@
 #include "atca_device.h"
 #include "definitions.h"
 #include "talib/talib_defines.h"
+#include "talib/talib_fce.h"
 
 /** \defgroup hal_ Hardware abstraction layer (hal_)
  *
@@ -108,7 +109,7 @@ static ATCA_STATUS hal_spi_wait(atca_plib_spi_api_t * plib, uint32_t rate, uint1
  * \param[in] cfg - interface configuration
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS hal_spi_init(void *hal, ATCAIfaceCfg *cfg)
+ATCA_STATUS hal_spi_init(ATCAIface iface, ATCAIfaceCfg *cfg)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
@@ -135,6 +136,51 @@ ATCA_STATUS hal_spi_init(void *hal, ATCAIfaceCfg *cfg)
 ATCA_STATUS hal_spi_post_init(ATCAIface iface)
 {
     return ATCA_SUCCESS;
+}
+
+/** \brief HAL implementation to assert the device chip select
+ * \param[in]    iface          Device to interact with.
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS hal_spi_select(ATCAIface iface)
+{
+    ATCAIfaceCfg* cfg = atgetifacecfg(iface);
+
+    if (cfg)
+    {
+        atca_plib_spi_api_t * plib = (atca_plib_spi_api_t*)cfg->cfg_data;
+
+        plib->select(cfg->atcaspi.select_pin, 0);
+
+        return ATCA_SUCCESS;
+    }
+    else
+    {
+        return ATCA_BAD_PARAM;
+    }
+}
+
+
+/** \brief HAL implementation to deassert the device chip select
+ * \param[in]    iface          Device to interact with.
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS hal_spi_deselect(ATCAIface iface)
+{
+    ATCAIfaceCfg* cfg = atgetifacecfg(iface);
+
+    if (cfg)
+    {
+        atca_plib_spi_api_t * plib = (atca_plib_spi_api_t*)cfg->cfg_data;
+
+        plib->select(cfg->atcaspi.select_pin, 1);
+
+        return ATCA_SUCCESS;
+    }
+    else
+    {
+        return ATCA_BAD_PARAM;
+    }
 }
 
 /** \brief HAL implementation of SPI send over Harmony
@@ -167,14 +213,6 @@ ATCA_STATUS hal_spi_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata,
 
     do
     {
-        if (0xFF != word_address)
-        {
-            txdata[0] = word_address; // insert the Word Address Value, Command token
-            txlength++;               // account for word address value byte.
-        }
-
-        plib->select(cfg->atcaspi.select_pin, 0);
-
         /* Wait for the SPI bus to be ready */
         if (ATCA_SUCCESS != (status = hal_spi_wait(plib, cfg->atcaspi.baud, 0)) )
         {
@@ -193,7 +231,6 @@ ATCA_STATUS hal_spi_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata,
     }
     while (0);
 
-    plib->select(cfg->atcaspi.select_pin, 1);
     return status;
 }
 
@@ -209,8 +246,6 @@ ATCA_STATUS hal_spi_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxda
 {
     ATCA_STATUS status = ATCA_COMM_FAIL;
     ATCAIfaceCfg* cfg = atgetifacecfg(iface);
-    uint16_t rxdata_max_size;
-    uint16_t read_length = 2;
     atca_plib_spi_api_t * plib;
 
     if ((NULL == cfg) || (NULL == rxlength) || (NULL == rxdata))
@@ -223,122 +258,42 @@ ATCA_STATUS hal_spi_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxda
         return ATCA_TRACE(ATCA_INVALID_POINTER, "NULL pointer encountered");
     }
 
-    rxdata_max_size = *rxlength;
-    *rxlength = 0;
-
-    do
+    /* read status register/length bytes to know number of bytes to read */
+    status = ATCA_COMM_FAIL;
+    if (true == plib->read(rxdata, *rxlength) )
     {
-
-        /*Set read length.. Check for register reads or 1 byte reads*/
-        if ((ATCA_MAIN_PROCESSOR_RD_CSR == word_address) || (ATCA_FAST_CRYPTO_RD_FSR == word_address )
-            || ( 1  == rxdata_max_size))
-        {
-            read_length = 1;
-        }
-
-        plib->select(cfg->atcaspi.select_pin, 0);
-
-        /*Send Word address to device...*/
-        if (true == plib->write(&word_address, sizeof(word_address)))
-        {
-            /* Wait for the SPI transfer to complete */
-            status = hal_spi_wait(plib, cfg->atcaspi.baud, sizeof(word_address));
-
-        }
-        if (ATCA_SUCCESS != status)
-        {
-            ATCA_TRACE(status, "plib->write - failed");
-            break;
-        }
-
-        /* read status register/length bytes to know number of bytes to read */
-        status = ATCA_COMM_FAIL;
-        if (true == plib->read(rxdata, read_length) )
-        {
-            /* Wait for the SPI transfer to complete */
-            status = hal_spi_wait(plib, cfg->atcaspi.baud, read_length);
-
-        }
-        if (ATCA_SUCCESS != status)
-        {
-            ATCA_TRACE(status, "plib->read - failed");
-            break;
-        }
-
-        if (1 == read_length)
-        {
-            ATCA_TRACE(status, "1 byte read completed");
-            break;
-        }
-
-        /*Calculate bytes to read based on device response*/
-        read_length = ((uint16_t)rxdata[0] * 256) + rxdata[1];
-
-        if (read_length > rxdata_max_size)
-        {
-            status = ATCA_TRACE(ATCA_SMALL_BUFFER, "rxdata is small buffer");
-            break;
-        }
-
-        if (read_length < 5)
-        {
-            status = ATCA_TRACE(ATCA_RX_FAIL, "packet size is invalid");
-            break;
-        }
-
-        /* Read given length bytes from device */
-        status = ATCA_COMM_FAIL;
-        if (true == plib->read(&rxdata[2], read_length - 2))
-        {
-            /* Wait for the SPI transfer to complete */
-            status = hal_spi_wait(plib, cfg->atcaspi.baud, read_length - 2);
-
-        }
-        if (ATCA_SUCCESS != status)
-        {
-            ATCA_TRACE(status, "plib->read - failed");
-            break;
-        }
-
+        /* Wait for the SPI transfer to complete */
+        status = hal_spi_wait(plib, cfg->atcaspi.baud, *rxlength);
     }
-    while (0);
 
-    plib->select(cfg->atcaspi.select_pin, 1);
-
-    *rxlength = read_length;
     return status;
 }
 
-
-
-/** \brief wake up TA100 device using SPI bus
- * \param[in] iface  interface to logical device to wakeup
+/** \brief Perform control operations for the kit protocol
+ * \param[in]     iface          Interface to interact with.
+ * \param[in]     option         Control parameter identifier
+ * \param[in]     param          Optional pointer to parameter value
+ * \param[in]     paramlen       Length of the parameter
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-
-ATCA_STATUS hal_spi_wake(ATCAIface iface)
+ATCA_STATUS hal_spi_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen)
 {
-    return ATCA_UNIMPLEMENTED;
-}
+    (void)param;
+    (void)paramlen;
 
-/** \brief idle TA100 device using SPI bus
- * \param[in] iface  interface to logical device to idle
- * \return ATCA_SUCCESS on success, otherwise an error code.
- */
-
-ATCA_STATUS hal_spi_idle(ATCAIface iface)
-{
-    return ATCA_UNIMPLEMENTED;
-}
-
-/** \brief sleep TA100 device using SPI bus
- * \param[in] iface  interface to logical device to sleep
- * \return ATCA_SUCCESS on success, otherwise an error code.
- */
-
-ATCA_STATUS hal_spi_sleep(ATCAIface iface)
-{
-    return ATCA_UNIMPLEMENTED;
+    if (iface && iface->mIfaceCFG)
+    {
+        switch (option)
+        {
+        case ATCA_HAL_CONTROL_SELECT:
+            return hal_spi_select(iface);
+        case ATCA_HAL_CONTROL_DESELECT:
+            return hal_spi_deselect(iface);
+        default:
+            return ATCA_UNIMPLEMENTED;
+        }
+    }
+    return ATCA_BAD_PARAM;
 }
 
 /** \brief manages reference count on given bus and releases resource if no more refences exist

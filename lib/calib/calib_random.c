@@ -44,7 +44,6 @@
 ATCA_STATUS calib_random(ATCADevice device, uint8_t *rand_out)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     do
@@ -55,12 +54,11 @@ ATCA_STATUS calib_random(ATCADevice device, uint8_t *rand_out)
             break;
         }
 
-        ca_cmd = device->mCommands;
         // build an random command
         packet.param1 = RANDOM_SEED_UPDATE;
         packet.param2 = 0x0000;
 
-        if ((status = atRandom(ca_cmd, &packet)) != ATCA_SUCCESS)
+        if ((status = atRandom(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "atRandom - failed");
             break;

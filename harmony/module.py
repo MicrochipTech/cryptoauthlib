@@ -23,7 +23,7 @@
 
 import os
 
-_CALIB_SUPPORTED_DEVICES = ['ATECC108A', 'ATECC508A', 'ATECC608', 'ATSHA204A']
+_CALIB_SUPPORTED_DEVICES = ['ATECC108A', 'ATECC508A', 'ATECC608', 'ATSHA204A', 'ATSHA206A', 'ECC204']
 _TALIB_SUPPORTED_DEVICES = ['TA100']
 
 def loadModule():
@@ -45,10 +45,16 @@ def loadModule():
     cryptoAuthLibTest.setDisplayType("Library Testing Application")
     cryptoAuthLibTest.addDependency("CAL_LIB_CAP", "CA_LIB", True, False)
 
+    # cryptoAuthLibSwiBB = Module.CreateSharedComponent("cryptoauthlib_swibb", "SWI_BB", "/Libraries/Cryptoauthlib", "/harmony/config/swi_bb.py")
+    # cryptoAuthLibSwiBB.setDisplayType("SWI BitBang Hal Interface")
+    # cryptoAuthLibSwiBB.addDependency("CAL_LIB_CAP", "CA_LIB", True, False)
+    # cryptoAuthLibSwiBB.addCapability("GPIO_SWI_BB", "UART", "SWI_BB", False)
+
     for dev in _CALIB_SUPPORTED_DEVICES:
         comp = Module.CreateGeneratorComponent(dev.lower(), dev, "/Harmony/Drivers/Crypto", "/harmony/config/device_common.py", "/harmony/config/device_instance.py")
         comp.addDependency("cryptoauthlib", "CA_LIB", True, False)
-        comp.addMultiDependency('{}_DEP_PLIB_I2C'.format(dev.upper()), 'I2C', 'I2C', True)
+        comp.addMultiDependency('{}_DEP_PLIB_I2C'.format(dev.upper()), 'I2C', 'I2C', False)
+        comp.addMultiDependency('{}_DEP_PLIB_SWI'.format(dev.upper()), 'UART', 'SWI', False)
 
     if os.path.exists(Module.getPath() + 'lib/talib/talib_basic.h'):
         for dev in _TALIB_SUPPORTED_DEVICES:

@@ -70,9 +70,7 @@ int atca_crypto_sw_tests(int argc, char * argv[])
 #if defined(ATCA_MBEDTLS) || defined(ATCA_OPENSSL) || defined(ATCA_WOLFSSL)
     RUN_TEST(test_atcac_aes128_gcm);
     RUN_TEST(test_atcac_aes128_cmac);
-#endif
 
-#ifdef ATCA_MBEDTLS
     RUN_TEST(test_atcac_public);
     /* Because it is not realistic to perform signature vector tests on real
        systems the verify test is executed first to ensure verify is working
@@ -839,9 +837,7 @@ void test_atcac_verify_nist(void)
         }
     }
 }
-#endif
 
-#ifdef ATCA_MBEDTLS
 static uint8_t private_key_pem[] =
     "-----BEGIN EC PRIVATE KEY-----\n"
     "MHcCAQEEICFZhAyzqkUgyheo51bhg3mcp+qwfl+koE+Mhs/sRyzBoAoGCCqGSM49\n"

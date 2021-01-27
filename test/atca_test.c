@@ -40,7 +40,6 @@
 const char* ATCA_TEST_HELPER_FILE = "In helper: " __FILE__;
 
 const char* TEST_GROUP_atca_cmd_basic_test = "atca_cmd_basic_test";
-const char* TEST_GROUP_atca_cmd_unit_test = "atca_cmd_unit_test";
 
 bool g_atca_test_quiet_mode = false;
 
@@ -139,15 +138,6 @@ t_test_case_info* basic_tests[] =
     (t_test_case_info*)NULL, /* Array Termination element*/
 };
 
-#if ATCA_CA_SUPPORT
-t_test_case_info* unit_tests[] =
-{
-    calib_commands_info,
-    calib_packet_info,
-    (t_test_case_info*)NULL, /* Array Termination element*/
-};
-#endif
-
 t_test_case_info* otpzero_tests[] =
 {
     otpzero_basic_test_info,
@@ -211,13 +201,6 @@ void RunAllBasicTests(void)
     RunAllTests(basic_tests);
 };
 
-void RunAllFeatureTests(void)
-{
-#if ATCA_CA_SUPPORT
-    RunAllTests(unit_tests);
-#endif
-}
-
 void RunBasicOtpZero(void)
 {
     RunAllTests(otpzero_tests);
@@ -233,37 +216,6 @@ void RunTNGTests(void)
     RunAllTests(tng_tests);
 }
 
-#if 0 // ATCA_CA_SUPPORT
-static bool atcau_is_locked(uint8_t zone)
-{
-    ATCA_STATUS status = ATCA_GEN_FAIL;
-    ATCAPacket packet;
-    ATCACommand ca_cmd = _gDevice->mCommands;
-
-    // build an read command
-    packet.param1 = 0x00;
-    packet.param2 = 0x15;
-    status = atRead(ca_cmd, &packet);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-    status = atca_execute_command(&packet, _gDevice);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-    switch (zone)
-    {
-    case LOCK_ZONE_DATA:
-        return packet.data[ATCA_RSP_DATA_IDX + 2] == 0;
-        break;
-    case LOCK_ZONE_CONFIG:
-        return packet.data[ATCA_RSP_DATA_IDX + 3] == 0;
-        break;
-    default:
-        TEST_FAIL_MESSAGE("Invalid lock zone");
-        break;
-    }
-    return false;
-}
-#endif
 
 #ifdef ATCA_NO_HEAP
 ATCA_DLL ATCADevice _gDevice;
@@ -272,72 +224,6 @@ ATCA_DLL struct atca_command g_atcab_command;
 ATCA_DLL struct atca_iface g_atcab_iface;
 #endif
 
-/**
- * \brief Initialize the interface and check it was successful
- */
-void test_assert_interface_init()
-{
-#ifdef ATCA_NO_HEAP
-    ATCA_STATUS status;
-#endif
-
-    // If the device is still connected - disconnect it
-    if (_gDevice)
-    {
-#ifdef ATCA_NO_HEAP
-        status = releaseATCADevice(_gDevice);
-        _gDevice = NULL;
-#else
-        deleteATCADevice(&_gDevice);
-        TEST_ASSERT_NULL_MESSAGE(_gDevice, ATCA_TEST_HELPER_FILE);
-#endif
-    }
-
-    // Get the device
-#ifdef ATCA_NO_HEAP
-    g_atcab_device.mCommands = &g_atcab_command;
-    g_atcab_device.mIface    = &g_atcab_iface;
-    status = initATCADevice(gCfg, &g_atcab_device);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    _gDevice = &g_atcab_device;
-#else
-    _gDevice = newATCADevice(gCfg);
-    TEST_ASSERT_NOT_NULL_MESSAGE(_gDevice, ATCA_TEST_HELPER_FILE);
-#endif
-
-#ifdef ATCA_ATECC608_SUPPORT
-    if (ATECC608 == (_gDevice->mCommands->dt))
-    {
-        // Set the clock divider, which should be the same value as the test config
-        _gDevice->mCommands->clock_divider = test_ecc608_configdata[ATCA_CHIPMODE_OFFSET] & ATCA_CHIPMODE_CLOCK_DIV_MASK;
-    }
-#endif
-}
-
-/**
- * \brief Clean up the allocated interface
- */
-void test_assert_interface_deinit(void)
-{
-    ATCA_STATUS status;
-
-    TEST_ASSERT((_gDevice != NULL) && (_gDevice->mIface != NULL));
-
-    status = atwake(_gDevice->mIface);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-    status = atsleep(_gDevice->mIface);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-#ifdef ATCA_NO_HEAP
-    status = releaseATCADevice(_gDevice);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    _gDevice = NULL;
-#else
-    deleteATCADevice(&_gDevice);
-    TEST_ASSERT_NULL(_gDevice);
-#endif
-}
 
 void atca_test_assert_config_is_unlocked(UNITY_LINE_TYPE from_line)
 {
@@ -472,6 +358,8 @@ ATCA_STATUS atca_test_config_get_id(uint8_t test_type, uint16_t* handle)
         case ATECC508A:
         /* fallthrough */
         case ATECC608:
+        /* fallthrough */
+        case ECC204:
             status = calib_config_get_slot_by_test(test_type, handle);
             break;
 #endif
@@ -518,12 +406,3 @@ TEST_TEAR_DOWN(atca_cmd_basic_test)
     UnityMalloc_EndTest();
 }
 
-TEST_SETUP(atca_cmd_unit_test)
-{
-    test_assert_interface_init();
-}
-
-TEST_TEAR_DOWN(atca_cmd_unit_test)
-{
-    test_assert_interface_deinit();
-}

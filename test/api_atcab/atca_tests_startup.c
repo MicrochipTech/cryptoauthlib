@@ -27,28 +27,6 @@
 #include <stdlib.h>
 #include "atca_test.h"
 
-TEST(atca_cmd_unit_test, wake_sleep)
-{
-    ATCA_STATUS status;
-
-    status = atwake(_gDevice->mIface);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-    status = atsleep(_gDevice->mIface);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-}
-
-TEST(atca_cmd_unit_test, wake_idle)
-{
-    ATCA_STATUS status;
-
-    status = atwake(_gDevice->mIface);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-    status = atidle(_gDevice->mIface);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-}
-
 TEST(atca_cmd_basic_test, version)
 {
     char ver_str[20];
@@ -96,13 +74,6 @@ t_test_case_info startup_basic_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_basic_test, init),       DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, doubleinit), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
     { (fp_test_case)NULL,                     (uint8_t)0 },/* Array Termination element*/
-};
-
-t_test_case_info startup_unit_test_info[] =
-{
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, wake_sleep), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_unit_test, wake_idle),  DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
-    { (fp_test_case)NULL,                    (uint8_t)0 },/* Array Termination element*/
 };
 // *INDENT-ON*
 

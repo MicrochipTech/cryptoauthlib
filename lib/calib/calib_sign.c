@@ -50,7 +50,6 @@
 ATCA_STATUS calib_sign_base(ATCADevice device, uint8_t mode, uint16_t key_id, uint8_t *signature)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     if ((device == NULL) || (signature == NULL))
@@ -60,11 +59,10 @@ ATCA_STATUS calib_sign_base(ATCADevice device, uint8_t mode, uint16_t key_id, ui
 
     do
     {
-        ca_cmd = device->mCommands;
         // Build sign command
         packet.param1 = mode;
         packet.param2 = key_id;
-        if ((status = atSign(ca_cmd, &packet)) != ATCA_SUCCESS)
+        if ((status = atSign(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "atSign - failed");
             break;
@@ -126,7 +124,7 @@ ATCA_STATUS calib_sign(ATCADevice device, uint16_t key_id, const uint8_t *msg, u
         }
 
         // Load message into device
-        if (ATECC608 == device->mIface->mIfaceCFG->devtype)
+        if (ATECC608 == device->mIface.mIfaceCFG->devtype)
         {
             // Use the Message Digest Buffer for the ATECC608
             nonce_target = NONCE_MODE_TARGET_MSGDIGBUF;
@@ -192,6 +190,63 @@ ATCA_STATUS calib_sign_internal(ATCADevice device, uint16_t key_id, bool is_inva
 
     }
     while (0);
+
+    return status;
+}
+
+/** \brief Execute sign command to sign the 32 bytes message digest using private key
+ *         mentioned in slot.
+ *
+ *  \param[in]   device         Device context pointer
+ *  \param[in]   key_id         points to private key slot
+ *  \param[in]   msg            32 bytes message digest
+ *  \param[out]  signature      Signature is returned here. Format is R and S
+ *                              integers in big-endian format. 64 bytes for
+ *                              P256 curve.
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code
+ */
+ATCA_STATUS calib_ecc204_sign(ATCADevice device, uint16_t key_id, const uint8_t* msg, uint8_t* signature)
+{
+    ATCA_STATUS status = ATCA_SUCCESS;
+    ATCAPacket packet;
+
+    if ((NULL == device) || (NULL == msg))
+    {
+        status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
+    }
+
+    if (ATCA_SUCCESS == status)
+    {
+        packet.param1 = 0x00;
+        packet.param2 = key_id;
+
+        // copy message digest into i/o buffer
+        memcpy(packet.data, msg, ATCA_SHA256_DIGEST_SIZE);
+
+        (void)atSign(atcab_get_device_type_ext(device), &packet);
+
+        if (ATCA_SUCCESS != (status = atca_execute_command(&packet, device)))
+        {
+            ATCA_TRACE(status, "calib_ecc204_sign - execution failed");
+        }
+    }
+
+    if (ATCA_SUCCESS == status)
+    {
+        if (NULL == signature)
+        {
+            if (packet.data[ATCA_COUNT_IDX] == (ATCA_SIG_SIZE + ATCA_PACKET_OVERHEAD))
+            {
+                memcpy(signature, &packet.data[ATCA_RSP_DATA_IDX], ATCA_SIG_SIZE);
+            }
+            else
+            {
+                status = ATCA_RX_FAIL;
+            }
+
+        }
+    }
 
     return status;
 }

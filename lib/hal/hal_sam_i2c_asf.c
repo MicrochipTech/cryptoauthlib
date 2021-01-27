@@ -36,6 +36,9 @@
 #include "cryptoauthlib.h"
 #include "hal_sam_i2c_asf.h"
 
+#ifndef ATCA_HAL_LEGACY_API
+#error "The use of this hal requires the ATCA_HAL_LEGACY_API option to be enabled.
+#endif
 
 //!< Uncomment when debugging
 /*#define DEBUG_HAL*/

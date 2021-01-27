@@ -33,7 +33,6 @@ extern "C" {
 #endif
 
 #include "atca_status.h"
-#include "atca_command.h"
 
 #define ATCA_SHA206A_ZONE_WRITE_LOCK        0x20
 #define ATCA_SHA206A_DKEY_CONSUMPTION_MASK  0x01

@@ -209,6 +209,7 @@ int select_108(int argc, char* argv[]);
 int select_508(int argc, char* argv[]);
 int select_608(int argc, char* argv[]);
 int select_ta100(int argc, char* argv[]);
+int select_ecc204(int argc, char* argv[]);
 
 int certdata_unit_tests(int argc, char* argv[]);
 int certio_unit_tests(int argc, char* argv[]);

@@ -34,6 +34,7 @@ extern int select_108_custom(int argc, char* argv[]);
 extern int select_508_custom(int argc, char* argv[]);
 extern int select_608_custom(int argc, char* argv[]);
 extern int select_ta100_custom(int argc, char* argv[]);
+extern int select_ecc204_custom(int argc, char* argv[]);
 #endif
 
 /** gCfg must point to one of the cfg_ structures for any unit test to work.  this allows
@@ -56,7 +57,11 @@ ATCAIfaceCfg g_iface_config = {
         },
 #else
         .atcai2c           = {
+#ifdef ATCA_ENABLE_DEPRECATED
             .slave_address = 0xC0,
+#else
+            .address       = 0xC0,
+#endif
             .bus           = 2,
             .baud          = 400000,
         },
@@ -138,6 +143,15 @@ int select_ta100(int argc, char* argv[])
     return select_ta100_custom(argc, argv);
 #else
     return select_device(TA100, NULL != argv);
+#endif
+}
+
+int select_ecc204(int argc, char* argv[])
+{
+#if defined(ATCA_HAL_CUSTOM) && defined(ATCA_ECC204_SUPPORT)
+    return select_ecc204_custom(argc, argv);
+#else
+    return select_device(ECC204, NULL != argv);
 #endif
 }
 
@@ -314,7 +328,11 @@ static int opt_address(int argc, char* argv[])
         }
         else if (ATCA_I2C_IFACE == gCfg->iface_type)
         {
+#ifdef ATCA_ENABLE_DEPRECATED
             gCfg->atcai2c.slave_address = (uint8_t)val;
+#else
+            gCfg->atcai2c.address = (uint8_t)val;
+#endif
         }
 
         ret = 2;

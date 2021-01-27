@@ -19,10 +19,9 @@ ATCA_STATUS calib_wakeup(ATCADevice device);
 ATCA_STATUS calib_idle(ATCADevice device);
 ATCA_STATUS calib_sleep(ATCADevice device);
 ATCA_STATUS _calib_exit(ATCADevice device);
-ATCA_STATUS calib_cfg_discover(ATCAIfaceCfg cfg_array[], int max);
 ATCA_STATUS calib_get_addr(uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t* addr);
 ATCA_STATUS calib_get_zone_size(ATCADevice device, uint8_t zone, uint16_t slot, size_t* size);
-
+ATCA_STATUS calib_ecc204_get_addr(uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t* addr);
 
 //AES command functions
 ATCA_STATUS calib_aes(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* aes_in, uint8_t* aes_out);
@@ -62,6 +61,7 @@ ATCA_STATUS calib_gendig(ATCADevice device, uint8_t zone, uint16_t key_id, const
 ATCA_STATUS calib_genkey_base(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* other_data, uint8_t* public_key);
 ATCA_STATUS calib_genkey(ATCADevice device, uint16_t key_id, uint8_t* public_key);
 ATCA_STATUS calib_get_pubkey(ATCADevice device, uint16_t key_id, uint8_t* public_key);
+ATCA_STATUS calib_genkey_mac(ATCADevice device, uint8_t* public_key, uint8_t* mac);
 
 // HMAC command functions
 ATCA_STATUS calib_hmac(ATCADevice device, uint8_t mode, uint16_t key_id, uint8_t* digest);
@@ -71,6 +71,11 @@ ATCA_STATUS calib_info_base(ATCADevice device, uint8_t mode, uint16_t param2, ui
 ATCA_STATUS calib_info(ATCADevice device, uint8_t* revision);
 ATCA_STATUS calib_info_set_latch(ATCADevice device, bool state);
 ATCA_STATUS calib_info_get_latch(ATCADevice device, bool* state);
+ATCA_STATUS calib_info_privkey_valid(ATCADevice device, uint16_t key_id, uint8_t* is_valid);
+ATCA_STATUS calib_info_lock_status(ATCADevice device, uint16_t param2, uint8_t* is_locked);
+ATCA_STATUS calib_ecc204_is_locked(ATCADevice device, uint8_t zone, bool* is_locked);
+ATCA_STATUS calib_ecc204_is_data_locked(ATCADevice device, bool* is_locked);
+ATCA_STATUS calib_ecc204_is_config_locked(ATCADevice device, bool* is_locked);
 
 // KDF command functions
 ATCA_STATUS calib_kdf(ATCADevice device, uint8_t mode, uint16_t key_id, const uint32_t details, const uint8_t* message, uint8_t* out_data, uint8_t* out_nonce);
@@ -82,6 +87,10 @@ ATCA_STATUS calib_lock_config_zone_crc(ATCADevice device, uint16_t summary_crc);
 ATCA_STATUS calib_lock_data_zone(ATCADevice device);
 ATCA_STATUS calib_lock_data_zone_crc(ATCADevice device, uint16_t summary_crc);
 ATCA_STATUS calib_lock_data_slot(ATCADevice device, uint16_t slot);
+// Lock ECC204 command functions
+ATCA_STATUS calib_ecc204_lock_config_slot(ATCADevice device, uint8_t slot, uint16_t summary_crc);
+ATCA_STATUS calib_ecc204_lock_config_zone(ATCADevice device);
+ATCA_STATUS calib_ecc204_lock_data_slot(ATCADevice device, uint8_t slot);
 
 // MAC command functions
 ATCA_STATUS calib_mac(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* challenge, uint8_t* digest);
@@ -93,6 +102,8 @@ ATCA_STATUS calib_nonce_load(ATCADevice device, uint8_t target, const uint8_t *n
 ATCA_STATUS calib_nonce_rand(ATCADevice device, const uint8_t *num_in, uint8_t* rand_out);
 ATCA_STATUS calib_challenge(ATCADevice device, const uint8_t *num_in);
 ATCA_STATUS calib_challenge_seed_update(ATCADevice device, const uint8_t *num_in, uint8_t* rand_out);
+ATCA_STATUS calib_nonce_gen_session_key(ATCADevice device, uint16_t param2, uint8_t* num_in,
+                                        uint8_t* rand_out);
 
 // PrivWrite command functions
 
@@ -114,7 +125,14 @@ ATCA_STATUS calib_read_pubkey(ATCADevice device, uint16_t slot, uint8_t *public_
 ATCA_STATUS calib_read_sig(ATCADevice device, uint16_t slot, uint8_t *sig);
 ATCA_STATUS calib_read_config_zone(ATCADevice device, uint8_t* config_data);
 ATCA_STATUS calib_cmp_config_zone(ATCADevice device, uint8_t* config_data, bool* same_config);
-
+// ECC204 Read command functions
+ATCA_STATUS calib_ecc204_read_zone(ATCADevice device, uint8_t zone, uint8_t slot, uint8_t block, size_t offset,
+                                   uint8_t* data, uint8_t len);
+ATCA_STATUS calib_ecc204_read_config_zone(ATCADevice device, uint8_t* config_data);
+ATCA_STATUS calib_ecc204_read_serial_number(ATCADevice device, uint8_t* serial_number);
+ATCA_STATUS calib_ecc204_read_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot,
+                                         size_t block, uint8_t* data, size_t length);
+ATCA_STATUS calib_ecc204_cmp_config_zone(ATCADevice device, uint8_t* config_data, bool* same_config);
 
 #if defined(ATCA_USE_CONSTANT_HOST_NONCE)
 ATCA_STATUS calib_read_enc(ATCADevice device, uint16_t key_id, uint8_t block, uint8_t *data, const uint8_t* enc_key, const uint16_t enc_key_id);
@@ -159,6 +177,8 @@ ATCA_STATUS calib_sha_hmac(ATCADevice device, const uint8_t * data, size_t data_
 ATCA_STATUS calib_sign_base(ATCADevice device, uint8_t mode, uint16_t key_id, uint8_t *signature);
 ATCA_STATUS calib_sign(ATCADevice device, uint16_t key_id, const uint8_t *msg, uint8_t *signature);
 ATCA_STATUS calib_sign_internal(ATCADevice device, uint16_t key_id, bool is_invalidate, bool is_full_sn, uint8_t *signature);
+// ECC204 Sign command functions
+ATCA_STATUS calib_ecc204_sign(ATCADevice device, uint16_t key_id, const uint8_t* msg, uint8_t* signature);
 
 // UpdateExtra command functions
 ATCA_STATUS calib_updateextra(ATCADevice device, uint8_t mode, uint16_t new_value);
@@ -178,11 +198,27 @@ ATCA_STATUS calib_write_zone(ATCADevice device, uint8_t zone, uint16_t slot, uin
 ATCA_STATUS calib_write_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot, size_t offset_bytes, const uint8_t *data, size_t length);
 ATCA_STATUS calib_write_pubkey(ATCADevice device, uint16_t slot, const uint8_t *public_key);
 ATCA_STATUS calib_write_config_zone(ATCADevice device, const uint8_t* config_data);
+// ECC204 Write command functions
+ATCA_STATUS calib_ecc204_write(ATCADevice device, uint8_t zone, uint16_t address, const uint8_t *value,
+                               const uint8_t *mac);
+ATCA_STATUS calib_ecc204_write_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint8_t block,
+                                    uint8_t offset, const uint8_t *data, uint8_t len);
+ATCA_STATUS calib_ecc204_write_config_zone(ATCADevice device, uint8_t* config_data);
+ATCA_STATUS calib_ecc204_write_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot, size_t block,
+                                          const uint8_t *data, size_t length);
 
 #if defined(ATCA_USE_CONSTANT_HOST_NONCE)
 ATCA_STATUS calib_write_enc(ATCADevice device, uint16_t key_id, uint8_t block, const uint8_t *data, const uint8_t* enc_key, const uint16_t enc_key_id);
 #else
 ATCA_STATUS calib_write_enc(ATCADevice device, uint16_t key_id, uint8_t block, const uint8_t *data, const uint8_t* enc_key, const uint16_t enc_key_id, const uint8_t num_in[NONCE_NUMIN_SIZE]);
+#endif
+
+#if defined(ATCA_USE_CONSTANT_HOST_NONCE)
+ATCA_STATUS calib_ecc204_write_enc(ATCADevice device, uint8_t slot, uint8_t* data, uint8_t* transport_key,
+                                   uint8_t key_id);
+#else
+ATCA_STATUS calib_ecc204_write_enc(ATCADevice device, uint8_t slot, uint8_t* data, uint8_t* transport_key,
+                                   uint8_t key_id, uint8_t num_in[NONCE_NUMIN_SIZE]);
 #endif
 
 ATCA_STATUS calib_write_config_counter(ATCADevice device, uint16_t counter_id, uint32_t counter_value);

@@ -187,6 +187,24 @@ ATCA_STATUS atcah_nonce(struct atca_nonce_in_out *param)
 
         }
     }
+    else if ((NONCE_MODE_GEN_SESSION_KEY == calc_mode) && (param->zero >= 0x8000))
+    {
+        // Calculate nonce using SHA-256 (refer to data sheet)
+        p_temp = temporary;
+
+        memcpy(p_temp, param->rand_out, RANDOM_NUM_SIZE);
+        p_temp += RANDOM_NUM_SIZE;
+
+        memcpy(p_temp, param->num_in, NONCE_NUMIN_SIZE);
+        p_temp += NONCE_NUMIN_SIZE;
+
+        *p_temp++ = ATCA_NONCE;
+        *p_temp++ = param->mode;
+        *p_temp++ = (param->zero) & 0xFF;
+
+        // Calculate SHA256 to get the nonce
+        atcac_sw_sha2_256(temporary, ATCA_MSG_SIZE_NONCE, param->temp_key->value);
+    }
     else
     {
         return ATCA_BAD_PARAM;
@@ -1556,6 +1574,123 @@ ATCA_STATUS atcah_encode_counter_match(uint32_t counter_value, uint8_t * counter
 
     // Counter match value should be repeated in the next 4 bytes
     memcpy(counter_match_value + 4, counter_match_value, 4);
+
+    return ATCA_SUCCESS;
+}
+
+/** \brief This function calculates the input MAC for the ECC204 Write command.
+
+   The Write command will need an input MAC if SlotConfig3.bit0 is set.
+
+ * \param[in,out] param pointer to parameter structure
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcah_ecc204_write_auth_mac(struct atca_write_mac_in_out *param)
+{
+    uint8_t mac_input[ATCA_MSG_SIZE_ENCRYPT_MAC];
+    uint8_t i;
+    uint8_t *p_temp;
+
+    // Check parameters
+    if ((NULL == param->input_data) || (NULL == param->temp_key))
+    {
+        return ATCA_BAD_PARAM;
+    }
+
+    // Encrypt by XOR-ing Data with the session key
+    for (i = 0; i < 32; i++)
+    {
+        param->encrypted_data[i] = param->input_data[i] ^ param->temp_key->value[i];
+    }
+
+    // If the pointer *mac is provided by the caller then calculate input MAC
+    if (param->auth_mac)
+    {
+        // Start calculation
+        p_temp = mac_input;
+
+        // (1) 32 bytes TempKey
+        memcpy(p_temp, param->temp_key->value, ATCA_KEY_SIZE);
+        p_temp += ATCA_KEY_SIZE;
+
+        // (2) 1 byte Opcode
+        *p_temp++ = ATCA_WRITE;
+
+        // (3) 1 byte Param1 (zone)
+        *p_temp++ = param->zone;
+
+        // (4) 2 bytes Param2 (keyID)
+        *p_temp++ = (param->key_id >> 8) & 0xFF;
+        *p_temp++ = param->key_id & 0xFF;
+
+        // (5) 1 byte SN[8]
+        *p_temp++ = param->sn[8];
+
+        // (6) 2 bytes SN[0:1]
+        *p_temp++ = param->sn[0];
+        *p_temp++ = param->sn[1];
+
+        // (7) 25 zeros
+        memset(p_temp, 0, ATCA_WRITE_MAC_ZEROS_SIZE);
+        p_temp += ATCA_WRITE_MAC_ZEROS_SIZE;
+
+        // (8) 32 bytes PlainText
+        memcpy(p_temp, param->input_data, ATCA_KEY_SIZE);
+
+        // Calculate SHA256 to get MAC
+        atcac_sw_sha2_256(mac_input, sizeof(mac_input), param->auth_mac);
+    }
+
+    return ATCA_SUCCESS;
+}
+
+/** \brief This function calculates the session key for the ECC204.
+ *
+ * \param[in,out] param pointer to parameter structure
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcah_gen_session_key(struct atca_session_key_in_out *param)
+{
+    uint8_t session_key_input[ATCA_MSG_SIZE_SESSION_KEY];
+    uint8_t *p_temp;
+
+    if ((NULL == param->transport_key) || (NULL == param->nonce) || (NULL == param->session_key))
+    {
+        return ATCA_BAD_PARAM;
+    }
+
+    p_temp = session_key_input;
+
+    // (1) 32 bytes of transport key
+    memcpy(p_temp, param->transport_key, ATCA_KEY_SIZE);
+    p_temp += ATCA_KEY_SIZE;
+
+    // (2) 0x15
+    *p_temp++ = 0x15;
+
+    // (3) 0x00
+    *p_temp++ = 0x00;
+
+    // (4) 2bytes of transport key id
+    *p_temp++ = param->transport_key_id & 0xFF;
+    *p_temp++ = (param->transport_key_id >> 8) & 0xFF;
+
+    // (5) 1 byte SN[8]
+    *p_temp++ = param->sn[8];
+
+    // (6) 2 bytes SN[0:1]
+    *p_temp++ = param->sn[0];
+    *p_temp++ = param->sn[1];
+
+    // (7) 25 zeros
+    memset(p_temp, 0, ATCA_WRITE_MAC_ZEROS_SIZE);
+    p_temp += ATCA_WRITE_MAC_ZEROS_SIZE;
+
+    // (8) 32 bytes nonce
+    memcpy(p_temp, param->nonce, 32);
+
+    // Calculate SHA256 to get MAC
+    atcac_sw_sha2_256(session_key_input, sizeof(session_key_input), param->session_key);
 
     return ATCA_SUCCESS;
 }

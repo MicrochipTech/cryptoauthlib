@@ -250,7 +250,7 @@ ATCA_STATUS hal_kit_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxda
  * \param[in] iface  ATCAIface instance that is the interface object to send the bytes over
  * \return ATCA_STATUS
  */
-ATCA_STATUS hal_kit_wake(ATCAIface iface)
+static ATCA_STATUS hal_kit_wake(ATCAIface iface)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
@@ -290,7 +290,7 @@ ATCA_STATUS hal_kit_wake(ATCAIface iface)
  * \param[in] iface  ATCAIface instance that is the interface object to send the bytes over
  * \return ATCA_STATUS
  */
-ATCA_STATUS hal_kit_idle(ATCAIface iface)
+static ATCA_STATUS hal_kit_idle(ATCAIface iface)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
@@ -330,7 +330,7 @@ ATCA_STATUS hal_kit_idle(ATCAIface iface)
  * \param[in] iface  ATCAIface instance that is the interface object to send the bytes over
  * \return ATCA_STATUS
  */
-ATCA_STATUS hal_kit_sleep(ATCAIface iface)
+static ATCA_STATUS hal_kit_sleep(ATCAIface iface)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
@@ -365,6 +365,27 @@ ATCA_STATUS hal_kit_sleep(ATCAIface iface)
 
     return status;
 }
+
+/** \brief Kit Protocol Control
+ * \param[in] iface  ATCAIface instance that is the interface object to send the bytes over
+ * \param[in] option  Control option to use
+ * \return ATCA_STATUS
+ */
+ATCA_STATUS hal_kit_control(ATCAIface iface, uint8_t option)
+{
+    switch (option)
+    {
+    case ATCA_HAL_CONTROL_WAKE:
+        return hal_kit_wake(iface);
+    case ATCA_HAL_CONTROL_IDLE:
+        return hal_kit_idle(iface);
+    case ATCA_HAL_CONTROL_SLEEP:
+        return hal_kit_sleep(iface);
+    default:
+        return ATCA_BAD_PARAM;
+    }
+}
+
 
 /** \brief Close the physical port for HID
  * \param[in] hal_data  The hardware abstraction data specific to this HAL

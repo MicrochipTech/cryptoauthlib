@@ -61,12 +61,22 @@ def updateHalTracker(id, inc):
         calHalTracker[id] = cnt
     elif cnt > 0:
         cnt -= 1
-    
-    symbol = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_FILE_SRC_HAL_' + id.upper())
+
+    print('updateHalTracker', id)
+
+    symbol = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_FILE_SRC_HAL_' + id)
     symbol.setEnabled(cnt > 0)
+
+    calHalList = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_HAL_LIST_ENTRIES')
+
+    if cnt == 0:
+        del_value_from_list(calHalList, id)
+    else:
+        add_value_to_list(calHalList, id)
 
 
 def updatePlibTracker(id, inc):
+    # id is of the form: <plib>_<hal>_<mode>
     global calPlibTracker
     cnt = calPlibTracker.pop(id, 0)
     if inc:
@@ -75,7 +85,12 @@ def updatePlibTracker(id, inc):
     elif cnt > 0:
         cnt -= 1
 
-    updateHalTracker(id.split('_')[1], inc)
+    hal_ids = id.upper().split('_')[1:]
+    if len(hal_ids) > 1:
+        updateHalTracker('_'.join(hal_ids), inc)
+        updateHalTracker(hal_ids[1], inc)
+    else:
+        updateHalTracker(hal_ids[0], inc)
 
     calPlibList = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_PLIB_LIST_ENTRIES')
 
@@ -134,6 +149,15 @@ def updateFileEnable(component, pattern, enable):
                 srcFile.setEnabled(enable)
 
 
+def check_if_file_exists(component, pattern):
+    global numFileCntr
+    for x in range(numFileCntr):
+        srcFile = component.getSymbolByID(fileSymbolName + str(x))
+        if srcFile is not None:
+            if pattern.replace('/*','') in srcFile.getOutputName():
+                return True
+    return False
+
 
 def onAttachmentConnected(source, target):
     global _ca_dev_cnt
@@ -150,6 +174,9 @@ def onAttachmentConnected(source, target):
         if 'TA100' in targetComponentID:
             _ta_dev_cnt += 1
             updateFileEnable(srcComponent, _TA_PATHS, True)
+            if check_if_file_exists(srcComponent, 'talib_fce'):
+                calTaEnableFce = srcComponent.getSymbolByID('CAL_ENABLE_TA100_FCE')
+                calTaEnableFce.setValue(True)
         else:
             _ca_dev_cnt += 1
             updateFileEnable(srcComponent, _CA_PATHS, True)
@@ -167,7 +194,9 @@ def onAttachmentConnected(source, target):
         
         WolfCrypto = srcComponent.getSymbolByID('CAL_FILE_SRC_WOLFSSL_WRAPPER')
         WolfCrypto.setEnabled(True)
-        print('connected lib_wolfcrypt')
+
+        calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA100_AES_AUTH')
+        calTaEnableAesAuth.setValue(True)
 
 
 def onAttachmentDisconnected(source, target):
@@ -185,6 +214,10 @@ def onAttachmentDisconnected(source, target):
             _ta_dev_cnt -= 1
             if 0 == _ta_dev_cnt:
                 updateFileEnable(srcComponent, _TA_PATHS, False)
+                calTaEnableFce = srcComponent.getSymbolByID('CAL_ENABLE_TA100_FCE')
+                calTaEnableFce.setValue(False)
+                calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA100_AES_AUTH')
+                calTaEnableAesAuth.setValue(False)
         else:
             _ca_dev_cnt -= 1
             if 0 == _ca_dev_cnt:
@@ -204,6 +237,9 @@ def onAttachmentDisconnected(source, target):
         
         WolfCrypto = srcComponent.getSymbolByID('CAL_FILE_SRC_WOLFSSL_WRAPPER')
         WolfCrypto.setEnabled(False)
+
+        calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA100_AES_AUTH')
+        calTaEnableAesAuth.setValue(False)
         
         print('disconnected lib_wolfcrypt')
 
@@ -307,6 +343,38 @@ def instantiateComponent(calComponent):
     calLibI2cHalSrcFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/hal/")
     calLibI2cHalSrcFile.setType('SOURCE')
     calLibI2cHalSrcFile.setEnabled(False)
+
+    calLibUartHalSrcFile = calComponent.createFileSymbol("CAL_FILE_SRC_HAL_UART", None)
+    calLibUartHalSrcFile.setSourcePath("lib/hal/hal_uart_harmony.c")
+    calLibUartHalSrcFile.setOutputName("hal_uart_harmony.c")
+    calLibUartHalSrcFile.setDestPath("library/cryptoauthlib/hal")
+    calLibUartHalSrcFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/hal/")
+    calLibUartHalSrcFile.setType('SOURCE')
+    calLibUartHalSrcFile.setEnabled(False)
+    
+    calLibSwiUartHalSrcFile = calComponent.createFileSymbol("CAL_FILE_SRC_HAL_SWI_UART", None)
+    calLibSwiUartHalSrcFile.setSourcePath("lib/hal/hal_swi_uart.c")
+    calLibSwiUartHalSrcFile.setOutputName("hal_swi_uart.c")
+    calLibSwiUartHalSrcFile.setDestPath("library/cryptoauthlib/hal")
+    calLibSwiUartHalSrcFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/hal/")
+    calLibSwiUartHalSrcFile.setType('SOURCE')
+    calLibSwiUartHalSrcFile.setEnabled(False)
+
+    calLibSwiBBHalSrcFile = calComponent.createFileSymbol("CAL_FILE_SRC_HAL_BB", None)
+    calLibSwiBBHalSrcFile.setSourcePath("lib/hal/hal_gpio_harmony.c")
+    calLibSwiBBHalSrcFile.setOutputName("hal_gpio_harmony.c")
+    calLibSwiBBHalSrcFile.setDestPath("library/cryptoauthlib/hal")
+    calLibSwiBBHalSrcFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/hal/")
+    calLibSwiBBHalSrcFile.setType('SOURCE')
+    calLibSwiBBHalSrcFile.setEnabled(False)
+
+    calLibSwiBBHalSrcFile = calComponent.createFileSymbol("CAL_FILE_SRC_HAL_SWI_BB", None)
+    calLibSwiBBHalSrcFile.setSourcePath("lib/hal/hal_swi_bitbang_harmony.c")
+    calLibSwiBBHalSrcFile.setOutputName("hal_swi_bitbang_harmony.c")
+    calLibSwiBBHalSrcFile.setDestPath("library/cryptoauthlib/hal")
+    calLibSwiBBHalSrcFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/hal/")
+    calLibSwiBBHalSrcFile.setType('SOURCE')
+    calLibSwiBBHalSrcFile.setEnabled(False)
     
     calLibSpiHalSrcFile = calComponent.createFileSymbol("CAL_FILE_SRC_HAL_SPI", None)
     calLibSpiHalSrcFile.setSourcePath("lib/hal/hal_spi_harmony.c")
@@ -317,6 +385,10 @@ def instantiateComponent(calComponent):
     calLibSpiHalSrcFile.setEnabled(False)
 
     # List of HALs that will be included based on device connections
+    calHalList = calComponent.createListSymbol('CAL_HAL_LIST', None)
+    calHalList = calComponent.createListEntrySymbol('CAL_HAL_LIST_ENTRIES', None)
+    calHalList.setTarget('cryptoauthlib.CAL_HAL_LIST')
+
     calPlibList = calComponent.createListSymbol('CAL_PLIB_LIST', None)
     calPlibList = calComponent.createListEntrySymbol('CAL_PLIB_LIST_ENTRIES', None)
     calPlibList.setTarget('cryptoauthlib.CAL_PLIB_LIST')
@@ -325,6 +397,15 @@ def instantiateComponent(calComponent):
     calDeviceList = calComponent.createListSymbol('CAL_DEVICE_LIST', None)
     calDeviceList = calComponent.createListEntrySymbol('CAL_DEVICE_LIST_ENTRIES', None)
     calDeviceList.setTarget('cryptoauthlib.CAL_DEVICE_LIST')
+    
+    # Add device specific options
+    calTaEnableAesAuth = calComponent.createBooleanSymbol('CAL_ENABLE_TA100_AES_AUTH', None)
+    calTaEnableAesAuth.setValue(False)
+    calTaEnableAesAuth.setVisible(True)
+
+    calTaEnableFce = calComponent.createBooleanSymbol('CAL_ENABLE_TA100_FCE', None)
+    calTaEnableFce.setValue(False)
+    calTaEnableFce.setVisible(True)
 
 
     ################# Templated files to be included #######################

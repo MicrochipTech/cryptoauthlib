@@ -30,7 +30,6 @@
 #define ATCA_DEVICE_H
 /*lint +flb */
 
-#include "atca_command.h"
 #include "atca_iface.h"
 /** \defgroup device ATCADevice (atca_)
    @{ */
@@ -131,21 +130,36 @@ typedef struct ATCA_PACKED _atecc608_config
 #pragma pack(pop)
 #endif
 
+/** \brief ATCADeviceState says about device state
+ */
+typedef enum
+{
+    ATCA_DEVICE_STATE_UNKNOWN = 0,
+    ATCA_DEVICE_STATE_SLEEP,
+    ATCA_DEVICE_STATE_IDLE,
+    ATCA_DEVICE_STATE_ACTIVE
+} ATCADeviceState;
+
+
 /** \brief atca_device is the C object backing ATCADevice.  See the atca_device.h file for
  * details on the ATCADevice methods
  */
 struct atca_device
 {
-    ATCACommand mCommands;    //!< Command set for a given CryptoAuth device
-    ATCAIface   mIface;       //!< Physical interface
+    atca_iface_t mIface;                /**< Physical interface */
+    uint8_t      device_state;          /**< Device Power State */
 
-    uint8_t  session_state;   /**< Secure Session State */
-    uint16_t session_counter; /**< Secure Session Message Count */
-    uint16_t session_key_id;  /**< Key ID used for a secure sesison */
-    uint8_t* session_key;     /**< Session Key */
-    uint8_t  session_key_len; /**< Length of key used for the session in bytes */
+    uint8_t  clock_divider;
+    uint16_t execution_time_msec;
 
-    uint16_t options;         /**< Nested command details parameter */
+    uint8_t  session_state;             /**< Secure Session State */
+    uint16_t session_counter;           /**< Secure Session Message Count */
+    uint16_t session_key_id;            /**< Key ID used for a secure sesison */
+    uint8_t* session_key;               /**< Session Key */
+    uint8_t  session_key_len;           /**< Length of key used for the session in bytes */
+
+    uint16_t options;                   /**< Nested command details parameter */
+
 };
 
 typedef struct atca_device * ATCADevice;
@@ -155,7 +169,6 @@ ATCADevice newATCADevice(ATCAIfaceCfg *cfg);
 ATCA_STATUS releaseATCADevice(ATCADevice ca_dev);
 void deleteATCADevice(ATCADevice *ca_dev);
 
-ATCACommand atGetCommands(ATCADevice dev);
 ATCAIface atGetIFace(ATCADevice dev);
 
 

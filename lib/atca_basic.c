@@ -40,7 +40,6 @@
 const char atca_version[] = ATCA_LIBRARY_VERSION_DATE;
 ATCADevice _gDevice = NULL;
 #ifdef ATCA_NO_HEAP
-SHARED_LIB_EXPORT struct atca_command g_atcab_command;
 SHARED_LIB_EXPORT struct atca_iface g_atcab_iface;
 SHARED_LIB_EXPORT struct atca_device g_atcab_device;
 #endif
@@ -82,8 +81,7 @@ ATCA_STATUS atcab_init_ext(ATCADevice* device, ATCAIfaceCfg *cfg)
         }
 
 #ifdef ATCA_NO_HEAP
-        g_atcab_device.mCommands = &g_atcab_command;
-        g_atcab_device.mIface = &g_atcab_iface;
+        g_atcab_device.mIface = g_atcab_iface;
         status = initATCADevice(cfg, &g_atcab_device);
         if (status != ATCA_SUCCESS)
         {
@@ -101,11 +99,11 @@ ATCA_STATUS atcab_init_ext(ATCADevice* device, ATCAIfaceCfg *cfg)
 #ifdef ATCA_ATECC608_SUPPORT
         if (cfg->devtype == ATECC608)
         {
-            if ((status = calib_read_bytes_zone(*device, ATCA_ZONE_CONFIG, 0, ATCA_CHIPMODE_OFFSET, &(*device)->mCommands->clock_divider, 1)) != ATCA_SUCCESS)
+            if ((status = calib_read_bytes_zone(*device, ATCA_ZONE_CONFIG, 0, ATCA_CHIPMODE_OFFSET, &(*device)->clock_divider, 1)) != ATCA_SUCCESS)
             {
                 return status;
             }
-            (*device)->mCommands->clock_divider &= ATCA_CHIPMODE_CLOCK_DIV_MASK;
+            (*device)->clock_divider &= ATCA_CHIPMODE_CLOCK_DIV_MASK;
         }
 #endif
     }
@@ -140,11 +138,6 @@ ATCA_STATUS atcab_init_device(ATCADevice ca_device)
     if (ca_device == NULL)
     {
         return ATCA_BAD_PARAM;
-    }
-
-    if (atGetCommands(ca_device) == NULL || atGetIFace(ca_device) == NULL)
-    {
-        return ATCA_GEN_FAIL;
     }
 
     // if there's already a device created, release it
@@ -203,9 +196,9 @@ ATCADeviceType atcab_get_device_type_ext(ATCADevice device)
 {
     ATCADeviceType ret = ATCA_DEV_UNKNOWN;
 
-    if (device && device->mIface && device->mIface->mIfaceCFG)
+    if (device && device->mIface.mIfaceCFG)
     {
-        ret = device->mIface->mIfaceCFG->devtype;
+        ret = device->mIface.mIfaceCFG->devtype;
     }
     return ret;
 }
@@ -217,6 +210,26 @@ ATCADeviceType atcab_get_device_type(void)
 {
     return atcab_get_device_type_ext(_gDevice);
 }
+
+/** \brief Get the current device address based on the configured device
+ * and interface
+ * \return the device address if applicable else 0xFF
+ */
+uint8_t atcab_get_device_address(ATCADevice device)
+{
+    if (device && device->mIface.mIfaceCFG)
+    {
+        switch (device->mIface.mIfaceCFG->iface_type)
+        {
+        case ATCA_I2C_IFACE:
+            return device->mIface.mIfaceCFG->atcai2c.address;
+        default:
+            break;
+        }
+    }
+    return 0xFF;
+}
+
 
 /** \brief Check whether the device is cryptoauth device
  *  \return True if device is cryptoauth device or False.
@@ -234,7 +247,7 @@ bool atcab_is_ta_device(ATCADeviceType dev_type)
     return (dev_type == TA100) ? true : false;
 }
 
-#if (ATCA_CA_SUPPORT && ATCA_TA_SUPPORT) || defined(ATCA_USE_ATCAB_FUNCTIONS)
+#if (ATCA_CA_SUPPORT && ATCA_TA_SUPPORT) || defined(ATCA_USE_ATCAB_FUNCTIONS) || defined(ATCA_ECC204_SUPPORT)
 
 /** \brief wakeup the CryptoAuth device
  *  \return ATCA_SUCCESS on success, otherwise an error code.
@@ -1552,7 +1565,16 @@ ATCA_STATUS atcab_lock_config_zone(void)
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-        status = calib_lock_config_zone(_gDevice);
+        if (ECC204 == dev_type)
+        {
+#if defined(ATCA_ECC204_SUPPORT)
+            status = calib_ecc204_lock_config_zone(_gDevice);
+#endif
+        }
+        else
+        {
+            status = calib_lock_config_zone(_gDevice);
+        }
 #endif
     }
     else if (atcab_is_ta_device(dev_type))
@@ -1683,7 +1705,16 @@ ATCA_STATUS atcab_lock_data_slot(uint16_t slot)
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-        status = calib_lock_data_slot(_gDevice, slot);
+        if (ECC204 == dev_type)
+        {
+#if defined(ATCA_ECC204_SUPPORT)
+            status = calib_ecc204_lock_data_slot(_gDevice, slot);
+#endif
+        }
+        else
+        {
+            status = calib_lock_data_slot(_gDevice, slot);
+        }
 #endif
     }
     else if (atcab_is_ta_device(dev_type))
@@ -2061,7 +2092,16 @@ ATCA_STATUS atcab_read_zone(uint8_t zone, uint16_t slot, uint8_t block, uint8_t 
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-        status = calib_read_zone(_gDevice, zone, slot, block, offset, data, len);
+        if (ECC204 == dev_type)
+        {
+#if defined(ATCA_ECC204_SUPPORT)
+            status = calib_ecc204_read_zone(_gDevice, zone, slot, block, offset, data, len);
+#endif
+        }
+        else
+        {
+            status = calib_read_zone(_gDevice, zone, slot, block, offset, data, len);
+        }
 #endif
     }
     else if (atcab_is_ta_device(dev_type))
@@ -2091,7 +2131,16 @@ ATCA_STATUS atcab_is_locked(uint8_t zone, bool* is_locked)
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-        status = calib_is_locked(_gDevice, zone, is_locked);
+        if (ECC204 == dev_type)
+        {
+#if defined(ATCA_ECC204_SUPPORT)
+            status = calib_ecc204_is_locked(_gDevice, zone, is_locked);
+#endif
+        }
+        else
+        {
+            status = calib_is_locked(_gDevice, zone, is_locked);
+        }
 #endif
     }
     else if (atcab_is_ta_device(dev_type))
@@ -2131,7 +2180,16 @@ ATCA_STATUS atcab_is_config_locked(bool* is_locked)
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-        status = calib_is_locked(_gDevice, LOCK_ZONE_CONFIG, is_locked);
+        if (ECC204 == dev_type)
+        {
+#if defined(ATCA_ECC204_SUPPORT)
+            status = calib_ecc204_is_locked(_gDevice, ATCA_ECC204_ZONE_CONFIG, is_locked);
+#endif
+        }
+        else
+        {
+            status = calib_is_locked(_gDevice, LOCK_ZONE_CONFIG, is_locked);
+        }
 #endif
     }
     else if (atcab_is_ta_device(dev_type))
@@ -2160,7 +2218,16 @@ ATCA_STATUS atcab_is_data_locked(bool* is_locked)
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-        status = calib_is_locked(_gDevice, LOCK_ZONE_DATA, is_locked);
+#if defined(ATCA_ECC204_SUPPORT)
+        if (ECC204 == dev_type)
+        {
+            status = calib_ecc204_is_locked(_gDevice, ATCA_ECC204_ZONE_DATA, is_locked);
+        }
+        else
+#endif
+        {
+            status = calib_is_locked(_gDevice, LOCK_ZONE_DATA, is_locked);
+        }
 #endif
     }
     else if (atcab_is_ta_device(dev_type))
@@ -2230,7 +2297,16 @@ ATCA_STATUS atcab_read_bytes_zone(uint8_t zone, uint16_t slot, size_t offset, ui
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-        status = calib_read_bytes_zone(_gDevice, zone, slot, offset, data, length);
+        if (ECC204 == dev_type)
+        {
+#if defined(ATCA_ECC204_SUPPORT)
+            status = calib_ecc204_read_bytes_zone(_gDevice, zone, slot, offset, data, length);
+#endif
+        }
+        else
+        {
+            status = calib_read_bytes_zone(_gDevice, zone, slot, offset, data, length);
+        }
 #endif
     }
     else if (atcab_is_ta_device(dev_type))
@@ -2260,7 +2336,16 @@ ATCA_STATUS atcab_read_serial_number(uint8_t* serial_number)
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-        status = calib_read_serial_number(_gDevice, serial_number);
+        if (ECC204 == dev_type)
+        {
+#if defined(ATCA_ECC204_SUPPORT)
+            status = calib_ecc204_read_serial_number(_gDevice, serial_number);
+#endif
+        }
+        else
+        {
+            status = calib_read_serial_number(_gDevice, serial_number);
+        }
 #endif
     }
     else if (atcab_is_ta_device(dev_type))
@@ -2365,7 +2450,16 @@ ATCA_STATUS atcab_read_config_zone(uint8_t* config_data)
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-        status = calib_read_config_zone(_gDevice, config_data);
+        if (ECC204 == dev_type)
+        {
+#if defined(ATCA_ECC204_SUPPORT)
+            status = calib_ecc204_read_config_zone(_gDevice, config_data);
+#endif
+        }
+        else
+        {
+            status = calib_read_config_zone(_gDevice, config_data);
+        }
 #endif
     }
     else if (atcab_is_ta_device(dev_type))
@@ -2403,7 +2497,16 @@ ATCA_STATUS atcab_cmp_config_zone(uint8_t* config_data, bool* same_config)
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-        status = calib_cmp_config_zone(_gDevice, config_data, same_config);
+        if (ECC204 == dev_type)
+        {
+#if defined(ATCA_ECC204_SUPPORT)
+            status = calib_ecc204_cmp_config_zone(_gDevice, config_data, same_config);
+#endif
+        }
+        else
+        {
+            status = calib_cmp_config_zone(_gDevice, config_data, same_config);
+        }
 #endif
     }
     else if (atcab_is_ta_device(dev_type))
@@ -3132,7 +3235,16 @@ ATCA_STATUS atcab_sign_ext(ATCADevice device, uint16_t key_id, const uint8_t* ms
     if (atcab_is_ca_device(dev_type))
     {
 #ifdef ATCA_ECC_SUPPORT
-        status = calib_sign(_gDevice, key_id, msg, signature);
+        if (ECC204 == dev_type)
+        {
+#if defined(ATCA_ECC204_SUPPORT)
+            status = calib_ecc204_sign(_gDevice, key_id, msg, signature);
+#endif
+        }
+        else
+        {
+            status = calib_sign(_gDevice, key_id, msg, signature);
+        }
 #endif
     }
     else if (atcab_is_ta_device(dev_type))
@@ -3617,7 +3729,16 @@ ATCA_STATUS atcab_write(uint8_t zone, uint16_t address, const uint8_t* value, co
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-        status = calib_write(_gDevice, zone, address, value, mac);
+        if (ECC204 == dev_type)
+        {
+#if defined(ATCA_ECC204_SUPPORT)
+            status = calib_ecc204_write(_gDevice, zone, address, value, mac);
+#endif
+        }
+        else
+        {
+            status = calib_write(_gDevice, zone, address, value, mac);
+        }
 #endif
     }
     else if (atcab_is_ta_device(dev_type))
@@ -3653,7 +3774,16 @@ ATCA_STATUS atcab_write_zone(uint8_t zone, uint16_t slot, uint8_t block, uint8_t
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-        status = calib_write_zone(_gDevice, zone, slot, block, offset, data, len);
+        if (ECC204 == dev_type)
+        {
+#if defined(ATCA_ECC204_SUPPORT)
+            status = calib_ecc204_write_zone(_gDevice, zone, slot, block, offset, data, len);
+#endif
+        }
+        else
+        {
+            status = calib_write_zone(_gDevice, zone, slot, block, offset, data, len);
+        }
 #endif
     }
     else if (atcab_is_ta_device(dev_type))
@@ -3697,7 +3827,16 @@ ATCA_STATUS atcab_write_bytes_zone(uint8_t zone, uint16_t slot, size_t offset_by
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-        status = calib_write_bytes_zone(_gDevice, zone, slot, offset_bytes, data, length);
+        if (ECC204 == dev_type)
+        {
+#if defined(ATCA_ECC204_SUPPORT)
+            status = calib_ecc204_write_bytes_zone(_gDevice, zone, slot, offset_bytes, data, length);
+#endif
+        }
+        else
+        {
+            status = calib_write_bytes_zone(_gDevice, zone, slot, offset_bytes, data, length);
+        }
 #endif
     }
     else if (atcab_is_ta_device(dev_type))
@@ -3771,7 +3910,16 @@ ATCA_STATUS atcab_write_config_zone(const uint8_t* config_data)
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-        status = calib_write_config_zone(_gDevice, config_data);
+        if (ECC204 == dev_type)
+        {
+#if defined(ATCA_ECC204_SUPPORT)
+            status = calib_ecc204_write_config_zone(_gDevice, config_data);
+#endif
+        }
+        else
+        {
+            status = calib_write_config_zone(_gDevice, config_data);
+        }
 #endif
     }
     else if (atcab_is_ta_device(dev_type))

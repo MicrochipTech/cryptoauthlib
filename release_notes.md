@@ -1,6 +1,33 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.3.0 (01/22/2021)
+
+### API Updates
+  - HAL API has been signifiantly revised to improve portability. This update
+    simplies the requirements of each HAL to only the physical transport
+    mechanisms. Please see the hal porting and library upgrading notes:
+    https://github.com/MicrochipTech/cryptoauthlib/wiki/Upgrading-to-v3.3
+  - Internal structures have been updated by removing obsolete elements and
+    combining mandatory fields. This saves significant memory in both program
+    and data regions.
+  - Inclusive language update: all remaining legacy language elements have
+    been updated. Where this impacts the external API there is the option
+    ATCA_ENABLE_DEPRECATED to use the previous names.
+
+### New features
+  - ECC204 support has been added with one wire HAL support.
+  - ECC204, SHA206, one wire and single wire (uart and gpio) hals have been
+    added to the Harmony 3 configurator.
+  - PKCS11 support for symmetric (AES & HMAC) keys has been added and enabled
+    for additional mechanisms such as HMAC signing and AES encrypt/decrypt
+
+### Fixes
+  - pkcs11_token_init had several conditions that were corrected
+  - fix to detect differences in i2c clock rate specifications between flexcom
+    and sercom configurators in Harmony 3 and the emit the correct value for
+    the cryptoauthlib interface config structure.
+
 ## Release v3.2.5 (11/30/2020)
 
 ### New features

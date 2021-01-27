@@ -41,8 +41,10 @@
  * \param[in]  device       Device context pointer
  * \param[in]  mode         Controls the mechanism of the internal RNG or fixed
  *                          write.
- * \param[in]  zero         Param2, normally 0, but can be used to indicate a
+ * \param[in]  param2       Param2, normally 0, but can be used to indicate a
  *                          nonce calculation mode (bit 15).
+ *                          For ECC204, represent tarnsport key id greater than
+ *                          or equal to 0x8000
  * \param[in]  num_in       Input value to either be included in the nonce
  *                          calculation in random modes (20 bytes) or to be
  *                          written directly (32 bytes or 64 bytes(ATECC608))
@@ -54,10 +56,9 @@
  *
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS calib_nonce_base(ATCADevice device, uint8_t mode, uint16_t zero, const uint8_t *num_in, uint8_t* rand_out)
+ATCA_STATUS calib_nonce_base(ATCADevice device, uint8_t mode, uint16_t param2, const uint8_t *num_in, uint8_t* rand_out)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t nonce_mode = mode & NONCE_MODE_MASK;
 
@@ -69,13 +70,13 @@ ATCA_STATUS calib_nonce_base(ATCADevice device, uint8_t mode, uint16_t zero, con
             break;
         }
 
-        ca_cmd = device->mCommands;
         // build a nonce command
         packet.param1 = mode;
-        packet.param2 = zero;
+        packet.param2 = param2;
 
         // Copy the right amount of NumIn data
-        if ((nonce_mode == NONCE_MODE_SEED_UPDATE || nonce_mode == NONCE_MODE_NO_SEED_UPDATE))
+        if ((nonce_mode == NONCE_MODE_SEED_UPDATE) || (nonce_mode == NONCE_MODE_NO_SEED_UPDATE)
+            || (NONCE_MODE_GEN_SESSION_KEY == nonce_mode))
         {
             memcpy(packet.data, num_in, NONCE_NUMIN_SIZE);
         }
@@ -95,7 +96,7 @@ ATCA_STATUS calib_nonce_base(ATCADevice device, uint8_t mode, uint16_t zero, con
             return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid nonce mode received");
         }
 
-        if ((status = atNonce(ca_cmd, &packet)) != ATCA_SUCCESS)
+        if ((status = atNonce(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "atNonce - failed");
             break;
@@ -216,4 +217,20 @@ ATCA_STATUS calib_challenge(ATCADevice device, const uint8_t *num_in)
 ATCA_STATUS calib_challenge_seed_update(ATCADevice device, const uint8_t *num_in, uint8_t* rand_out)
 {
     return calib_nonce_base(device, NONCE_MODE_SEED_UPDATE, 0, num_in, rand_out);
+}
+
+/** \brief Use Nonce command to generate session key for use by a subsequent write command
+ *         This Mode only supports in ECC204 device.
+ *  \param[in]  device    Device context pointer
+ *  \param[in]  param2    Key id points to transport key
+ *  \param[in]  num_in    Input value from host system
+ *  \param[out] rand_out  Internally generate random number of 32 bytes
+ *                        returned here
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS calib_nonce_gen_session_key(ATCADevice device, uint16_t param2, uint8_t* num_in,
+                                        uint8_t* rand_out)
+{
+    return calib_nonce_base(device, NONCE_MODE_GEN_SESSION_KEY, param2, num_in, rand_out);
 }

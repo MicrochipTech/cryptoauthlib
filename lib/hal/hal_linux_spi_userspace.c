@@ -1,30 +1,17 @@
 /**/
 #include "cryptoauthlib.h"
 #include "atca_hal.h"
-#include "hal_linux_spi_userspace.h"
 
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <linux/spi/spidev.h>
 
-
-ATCA_STATUS hal_spi_discover_buses(int spi_buses[], int max_buses)
+typedef struct atca_spi_host_s
 {
-    return ATCA_UNIMPLEMENTED;
-}
-
-/** \brief discover any TA100 devices on a given logical bus number
- * \param[in]  bus_num  logical bus number on which to look for TA100 devices
- * \param[out] cfg     pointer to head of an array of interface config structures which get filled in by this method
- * \param[out] found   number of devices found on this bus
- * \return ATCA_SUCCESS
- */
-
-ATCA_STATUS hal_spi_discover_devices(int bus_num, ATCAIfaceCfg cfg[], int *found)
-{
-    return ATCA_UNIMPLEMENTED;
-}
+    char spi_file[20];
+    int  f_spi;
+} atca_spi_host_t;
 
 /** \brief Open and configure the SPI device
  * \param[in]  dev_name  File name in the form /dev/spidevX.Y
@@ -83,43 +70,35 @@ ATCA_STATUS hal_spi_open_file(const char * dev_name, uint32_t speed, int * fd)
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
-ATCA_STATUS hal_spi_init(void *hal, ATCAIfaceCfg *cfg)
+ATCA_STATUS hal_spi_init(ATCAIface iface, ATCAIfaceCfg *cfg)
 {
 
     int f_spi;
-    ATCAHAL_t *pHal = (ATCAHAL_t*)hal;
-    ATCA_STATUS status = ATCA_SUCCESS;
+    ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (!pHal || !cfg)
+    if (iface && cfg)
     {
-        status =  ATCA_BAD_PARAM;
-    }
-    else
-    {
-        if (pHal->hal_data)
+        if (!iface->hal_data)
         {
-            ATCASPIMaster_t * hal_data = (ATCASPIMaster_t*)pHal->hal_data;
-
-            // Assume the bus had already been initialized
-            hal_data->ref_ct++;
-        }
-        else
-        {
-            ATCASPIMaster_t * hal_data = malloc(sizeof(ATCASPIMaster_t));
+            atca_spi_host_t * hal_data = malloc(sizeof(atca_spi_host_t));
             if (hal_data)
             {
-                hal_data->ref_ct = 1;   // buses are shared, this is the first instance
-
                 (void)snprintf(hal_data->spi_file, sizeof(hal_data->spi_file) - 1,
                                "/dev/spidev%d.%d", (uint8_t)cfg->atcaspi.bus, (uint8_t)cfg->atcaspi.select_pin);
 
-                pHal->hal_data = hal_data;
+                iface->hal_data = hal_data;
+                status = ATCA_SUCCESS;
             }
             else
             {
                 status = ATCA_ALLOC_FAILURE;
             }
         }
+        else
+        {
+            status = ATCA_SUCCESS;
+        }
+
     }
     return status;
 }
@@ -129,6 +108,50 @@ ATCA_STATUS hal_spi_post_init(ATCAIface iface)
     return ATCA_SUCCESS;
 }
 
+
+/** \brief HAL implementation to assert the device chip select
+ * \param[in]    iface          Device to interact with.
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS hal_spi_select(ATCAIface iface)
+{
+    ATCAIfaceCfg *cfg = atgetifacecfg(iface);
+    atca_spi_host_t * hal_data = (atca_spi_host_t*)atgetifacehaldat(iface);
+
+    if (hal_data && cfg)
+    {
+        return hal_spi_open_file(hal_data->spi_file, cfg->atcaspi.baud, &hal_data->f_spi);
+    }
+    else
+    {
+        return ATCA_BAD_PARAM;
+    }
+}
+
+
+/** \brief HAL implementation to deassert the device chip select
+ * \param[in]    iface          Device to interact with.
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS hal_spi_deselect(ATCAIface iface)
+{
+    atca_spi_host_t * hal_data = (atca_spi_host_t*)atgetifacehaldat(iface);
+
+    if (hal_data)
+    {
+        struct spi_ioc_transfer spi_xfer = { 0 };
+
+        (void)ioctl(hal_data->f_spi, SPI_IOC_MESSAGE(1), &spi_xfer);
+
+        return close(hal_data->f_spi);
+    }
+    else
+    {
+        return ATCA_BAD_PARAM;
+    }
+}
+
+
 /** \brief HAL implementation of SPI receive function
  * \param[in]    iface          Device to interact with.
  * \param[in]    word_address   device transaction type
@@ -137,81 +160,27 @@ ATCA_STATUS hal_spi_post_init(ATCAIface iface)
  *                              As output, the number of bytes received.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS hal_spi_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxdata, uint16_t *len)
+ATCA_STATUS hal_spi_receive(ATCAIface iface, uint8_t flags, uint8_t *rxdata, uint16_t *rxlength)
 {
     int f_spi;
-    uint8_t response_len[3] = { 0 };
-    uint16_t read_length = 2u; //to read length bytes
-    uint16_t rx_max_data = *len;
     ATCA_STATUS status = ATCA_BAD_PARAM;
-    ATCAIfaceCfg *cfg = atgetifacecfg(iface);
-    ATCASPIMaster_t * hal_data = (ATCASPIMaster_t*)atgetifacehaldat(iface);
+    atca_spi_host_t * hal_data = (atca_spi_host_t*)atgetifacehaldat(iface);
 
-    struct spi_ioc_transfer spi_xfer = { 0 };
-
-    *len = 0;
-    rxdata[0] = word_address;
-
-    if (hal_data && cfg)
+    if (hal_data)
     {
-        status = hal_spi_open_file(hal_data->spi_file, cfg->atcaspi.baud, &f_spi);
-    }
+        struct spi_ioc_transfer spi_xfer = { 0 };
+        spi_xfer.rx_buf = (unsigned long)rxdata;
+        spi_xfer.len = *rxlength;
+        spi_xfer.cs_change = true;
 
-    if (status == ATCA_SUCCESS)
-    {
-        /*check for READ_CSR or RD_FSR transaction*/
-        if ((0x30 == word_address) || (0xB0 == word_address ))
+        if (*rxlength == ioctl(hal_data->f_spi, SPI_IOC_MESSAGE(1), &spi_xfer))
         {
-            read_length = 1;
+            status = ATCA_SUCCESS;
         }
-
-        spi_xfer.tx_buf = (unsigned long)rxdata;
-        spi_xfer.rx_buf = (unsigned long)response_len;
-        spi_xfer.len = read_length + 1;
-
-        if (ioctl(f_spi, SPI_IOC_MESSAGE(1), &spi_xfer) == 1)
+        else
         {
             status = ATCA_COMM_FAIL;
         }
-
-        if (status == ATCA_SUCCESS)
-        {
-            *rxdata = response_len[1];
-            if (read_length == 2u) //if length bytes are read
-            {
-                read_length = response_len[1] << 8;
-                read_length |= response_len[2];
-
-                if (read_length >= ATCA_RSP_SIZE_MIN)
-                {
-                    if (read_length <= rx_max_data)
-                    {
-                        rxdata[0] = word_address;
-                        spi_xfer.tx_buf = (unsigned long)rxdata;
-                        spi_xfer.rx_buf = (unsigned long)(rxdata + 1);
-                        spi_xfer.len = read_length - 1;
-
-                        if (ioctl(f_spi, SPI_IOC_MESSAGE(1), &spi_xfer) == 1)
-                        {
-                            status = ATCA_COMM_FAIL;
-                        }
-
-                        *rxdata = response_len[1];
-                        *(rxdata + 1) = response_len[2];
-                    }
-                    else
-                    {
-                        status = ATCA_SMALL_BUFFER;
-                    }
-                }
-                else
-                {
-                    status = ATCA_INVALID_SIZE;
-                }
-            }
-            *len = read_length;
-        }
-        close(f_spi);
     }
     return status;
 }
@@ -226,122 +195,72 @@ ATCA_STATUS hal_spi_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxda
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
-ATCA_STATUS hal_spi_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int len)
+ATCA_STATUS hal_spi_send(ATCAIface iface, uint8_t flags, uint8_t *txdata, int txlen)
 {
     int f_spi;
     ATCA_STATUS status = ATCA_SUCCESS;
-    ATCAIfaceCfg *cfg = atgetifacecfg(iface);
-    ATCASPIMaster_t * hal_data = (ATCASPIMaster_t*)atgetifacehaldat(iface);
+    atca_spi_host_t * hal_data = (atca_spi_host_t*)atgetifacehaldat(iface);
+    int ret;
 
-    if (hal_data && cfg)
+    if (hal_data)
     {
-        status = hal_spi_open_file(hal_data->spi_file, cfg->atcaspi.baud, &f_spi);
-    }
+        struct spi_ioc_transfer spi_xfer = { 0 };
+        spi_xfer.tx_buf = (unsigned long)txdata;
+        spi_xfer.len = txlen;
+        spi_xfer.cs_change = true;
 
-    if (status == ATCA_SUCCESS)
-    {
-        txdata[0] = word_address;
-
-        status = (write(f_spi, txdata, len + 1) != (len + 1)) ? ATCA_COMM_FAIL : ATCA_SUCCESS;
-
-        close(f_spi);
-    }
-    return status;
-}
-
-/** \brief wake up CryptoAuth device using SPI bus
- * \param[in] iface  interface to logical device to wakeup
- * \return ATCA_SUCCESS on success, otherwise an error code.
- */
-
-ATCA_STATUS hal_spi_wake(ATCAIface iface)
-{
-    ATCAIfaceCfg *cfg = atgetifacecfg(iface);
-    ATCA_STATUS status = ATCA_SUCCESS;
-    uint16_t len = 1u;            // sleep command  packet length
-    uint8_t word_address = 0x30u; // word address indicating RD_CSR
-    uint8_t csr_reg;
-    int delay_timeout = (int)cfg->wake_delay;
-
-
-    do
-    {
-        status = hal_spi_receive(iface, word_address, &csr_reg, &len);
-
-        if (status == ATCA_SUCCESS)
+        if (txlen == ioctl(hal_data->f_spi, SPI_IOC_MESSAGE(1), &spi_xfer))
         {
-#ifdef ATCA_TA100_SUPPORT
-            /*status bit check in CSR register*/
-            if ((len == 1) && (((csr_reg >> 1) & 0x03 ) != 0x03))
-            {
-                status = ATCA_SUCCESS;
-                /*self test bit check*/
-                if (csr_reg & 0x01)
-                {
-                    status = TA_SELF_TEST_FAILURE;
-                }
-
-                break;
-            }
-#else
-            break;
-#endif
-
+            status = ATCA_SUCCESS;
         }
-        /*poll csr register for every 100us*/
-        atca_delay_us(100);
-        delay_timeout = delay_timeout - 100;
-
-    }
-    while (delay_timeout > 0);
-
-    if (delay_timeout < 0)
-    {
-        status =  ATCA_TIMEOUT;
+        else
+        {
+            status = ATCA_COMM_FAIL;
+        }
     }
 
     return status;
 }
 
-/** \brief idle TA100 device using SPI bus
- * \param[in] iface  interface to logical device to idle
+
+/** \brief Perform control operations for the kit protocol
+ * \param[in]     iface          Interface to interact with.
+ * \param[in]     option         Control parameter identifier
+ * \param[in]     param          Optional pointer to parameter value
+ * \param[in]     paramlen       Length of the parameter
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-
-ATCA_STATUS hal_spi_idle(ATCAIface iface)
+ATCA_STATUS hal_spi_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen)
 {
-    return ATCA_UNIMPLEMENTED;
-}
+    (void)param;
+    (void)paramlen;
 
-/** \brief sleep TA100 device using SPI bus
- * \param[in] iface  interface to logical device to sleep
- * \return ATCA_SUCCESS on success, otherwise an error code.
- */
-ATCA_STATUS hal_spi_sleep(ATCAIface iface)
-{
-
-    uint16_t len = 10u;           // sleep command  packet length
-    uint8_t word_address = 0x00u; // word address indicating WR_command
-    /*2byte -length , opcode,mode,param2,crc*/
-    uint8_t sleep_cmd[10] = { 0x00, 0x0a, 0x03, 0x01, 0x00, 0x00, 0x00, 0x00, 0xa6, 0xc1 };
-
-    return hal_spi_send(iface, word_address, sleep_cmd, len);
-
+    if (iface && iface->mIfaceCFG)
+    {
+        switch (option)
+        {
+        case ATCA_HAL_CONTROL_SELECT:
+            return hal_spi_select(iface);
+        case ATCA_HAL_CONTROL_DESELECT:
+            return hal_spi_deselect(iface);
+        default:
+            return ATCA_UNIMPLEMENTED;
+        }
+    }
+    return ATCA_BAD_PARAM;
 }
 
 /** \brief manages reference count on given bus and releases resource if no more refences exist
  * \param[in] hal_data - opaque pointer to hal data structure - known only to the HAL implementation
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-
-
 ATCA_STATUS hal_spi_release(void *hal_data)
 {
-    ATCASPIMaster_t *hal = (ATCASPIMaster_t*)hal_data;
+    atca_spi_host_t *hal = (atca_spi_host_t*)hal_data;
 
-    // if the use count for this bus has gone to 0 references, disable it.  protect against an unbracketed release
-    if (hal && --(hal->ref_ct) <= 0)
+    if (hal)
     {
+        close(hal->f_spi);
         free(hal);
     }
 

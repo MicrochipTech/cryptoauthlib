@@ -44,7 +44,6 @@
 ATCA_STATUS calib_counter(ATCADevice device, uint8_t mode, uint16_t counter_id, uint32_t *counter_value)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     do
@@ -55,12 +54,11 @@ ATCA_STATUS calib_counter(ATCADevice device, uint8_t mode, uint16_t counter_id, 
             break;
         }
 
-        ca_cmd = device->mCommands;
         // build a Counter command
         packet.param1 = mode;
         packet.param2 = counter_id;
 
-        if ((status = atCounter(ca_cmd, &packet)) != ATCA_SUCCESS)
+        if ((status = atCounter(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "atCounter - failed");
             break;

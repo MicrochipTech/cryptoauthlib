@@ -52,7 +52,6 @@
 ATCA_STATUS calib_hmac(ATCADevice device, uint8_t mode, uint16_t key_id, uint8_t* digest)
 {
     ATCAPacket packet;
-    ATCACommand ca_cmd = NULL;
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
     do
@@ -63,12 +62,11 @@ ATCA_STATUS calib_hmac(ATCADevice device, uint8_t mode, uint16_t key_id, uint8_t
             break;
         }
 
-        ca_cmd = device->mCommands;
         // build HMAC command
         packet.param1 = mode;
         packet.param2 = key_id;
 
-        if ((status = atHMAC(ca_cmd, &packet)) != ATCA_SUCCESS)
+        if ((status = atHMAC(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "atHMAC - failed");
             break;

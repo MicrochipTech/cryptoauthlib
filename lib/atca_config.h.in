@@ -4,11 +4,18 @@
 
 /* Included HALS */
 #cmakedefine ATCA_HAL_KIT_HID
-#cmakedefine ATCA_HAL_KIT_CDC
 #cmakedefine ATCA_HAL_I2C
 #cmakedefine ATCA_HAL_SPI
 #cmakedefine ATCA_HAL_KIT_BRIDGE
 #cmakedefine ATCA_HAL_CUSTOM
+#cmakedefine ATCA_HAL_SWI
+#cmakedefine ATCA_HAL_1WIRE
+
+
+/** Define to enable compatibility with legacy HALs
+   (HALs with embedded device logic)*/
+#cmakedefine ATCA_HAL_LEGACY_API
+
 
 /* Included device support */
 #cmakedefine ATCA_ATSHA204A_SUPPORT
@@ -17,13 +24,12 @@
 #cmakedefine ATCA_ATECC508A_SUPPORT
 #cmakedefine ATCA_ATECC608_SUPPORT
 #cmakedefine ATCA_TA100_SUPPORT
+#cmakedefine ATCA_ECC204_SUPPORT
 
 /** Device Override - Library Assumes ATECC608B support in checks */
 #cmakedefine ATCA_ATECC608A_SUPPORT
 
-#ifdef ATCA_TA100_SUPPORT
-#cmakedefine ATCA_TA100_AES_AUTH_SUPPORT
-#endif
+
 
 /** Define if cryptoauthlib is to use the maximum execution time method */
 #cmakedefine ATCA_NO_POLL
@@ -65,6 +71,16 @@
 
 /** Define to build atcab_ functions rather that defining them as macros */
 #cmakedefine ATCA_USE_ATCAB_FUNCTIONS
+
+/** Define to enable older API forms that have been replaced */
+#cmakedefine ATCA_ENABLE_DEPRECATED
+
+/** TA100 Specific - Enable auth sessions that require AES (CMAC/GCM) from
+   an external library */
+#cmakedefine ATCA_TA100_AES_AUTH_SUPPORT
+
+/** TA100 Specific - Enable support for the FCE APIs for the TA100 */
+#cmakedefine ATCA_TA100_FCE_SUPPORT
 
 /******************** Platform Configuration Section ***********************/
 

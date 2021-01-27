@@ -44,17 +44,22 @@ extern "C" {
 #include <stdint.h>
 #include "atca_status.h"
 
+
 typedef enum
 {
-    ATCA_I2C_IFACE,
-    ATCA_SWI_IFACE,
-    ATCA_UART_IFACE,
-    ATCA_SPI_IFACE,
-    ATCA_HID_IFACE,
-    ATCA_KIT_IFACE,
-    ATCA_CUSTOM_IFACE,
+    ATCA_I2C_IFACE = 0,         /**< Native I2C Driver */
+    ATCA_SWI_IFACE = 1,         /**< SWI or 1-Wire over UART/USART */
+    ATCA_UART_IFACE = 2,        /**< Kit v1 over UART/USART */
+    ATCA_SPI_IFACE = 3,         /**< Native SPI Driver */
+    ATCA_HID_IFACE = 4,         /**< Kit v1 over HID */
+    ATCA_KIT_IFACE = 5,         /**< Kit v2 (Binary/Bridging) */
+    ATCA_CUSTOM_IFACE = 6,      /**< Custom HAL functions provided during interface init */
+    ATCA_I2C_GPIO_IFACE = 7,    /**< I2C "Bitbang" Driver */
+    ATCA_SWI_GPIO_IFACE = 8,    /**< SWI or 1-Wire using a GPIO */
+    ATCA_SPI_GPIO_IFACE = 9,    /**< SWI or 1-Wire using a GPIO */
+
     // additional physical interface types here
-    ATCA_UNKNOWN_IFACE
+    ATCA_UNKNOWN_IFACE = 0xFE
 } ATCAIfaceType;
 
 
@@ -64,19 +69,10 @@ typedef enum
     ATCA_KIT_I2C_IFACE,
     ATCA_KIT_SWI_IFACE,
     ATCA_KIT_SPI_IFACE,
-    ATCA_KIT_UNKNOWN_IFACE
-} ATCAKitType;
+    ATCA_KIT_UNKNOWN_IFACE } ATCAKitType;
 
 
-
-/* ATCAIfaceCfg is a mediator object between a completely abstract notion of a
-   physical interface and an actual physical interface.
-
-   The main purpose of it is to keep hardware specifics from bleeding into the
-   higher levels - hardware specifics could include things like framework
-   specific items (ASF SERCOM) vs a non-Microchip I2C library constant that
-   defines an I2C port. But I2C has roughly the same parameters regardless of
-   architecture and framework.
+/* ATCAIfaceCfg is the configuration object for a device
  */
 
 typedef struct
@@ -89,14 +85,19 @@ typedef struct
     {
         struct
         {
-            uint8_t  slave_address; // 8-bit slave address
+#ifdef ATCA_ENABLE_DEPRECATED
+            uint8_t slave_address;  // 8-bit slave address
+#else
+            uint8_t address;        /**< Device address - the upper 7 bits are the I2c address bits */
+#endif
             uint8_t  bus;           // logical i2c bus number, 0-based - HAL will map this to a pin pair for SDA SCL
             uint32_t baud;          // typically 400000
         } atcai2c;
 
         struct
         {
-            uint8_t bus;        // logical SWI bus - HAL will map this to a pin	or uart port
+            uint8_t address;        // 7-bit device address
+            uint8_t bus;            // logical SWI bus - HAL will map this to a pin	or uart port
         } atcaswi;
 
         struct
@@ -150,30 +151,32 @@ typedef struct
     int      rx_retries;    // the number of retries to attempt for receiving bytes
     void *   cfg_data;      // opaque data used by HAL in device discovery
 } ATCAIfaceCfg;
+
+
+
 typedef struct atca_iface * ATCAIface;
 
-
-/** \brief atca_iface is the C object backing ATCAIface.  See the atca_iface.h file for
- * details on the ATCAIface methods
+/** \brief HAL Driver Structure
  */
-
-struct atca_iface
+typedef struct
 {
-    ATCAIfaceType mType;
-    ATCAIfaceCfg *mIfaceCFG;    // points to previous defined/given Cfg object, caller manages this
+    ATCA_STATUS (*halinit)(ATCAIface iface, ATCAIfaceCfg* cfg);
+    ATCA_STATUS (*halpostinit)(ATCAIface iface);
+    ATCA_STATUS (*halsend)(ATCAIface iface, uint8_t word_address, uint8_t* txdata, int txlength);
+    ATCA_STATUS (*halreceive)(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, uint16_t* rxlength);
+    ATCA_STATUS (*halcontrol)(ATCAIface iface, uint8_t option, void* param, size_t paramlen);
+    ATCA_STATUS (*halrelease)(void* hal_data);
+} ATCAHAL_t;
 
-    ATCA_STATUS (*atinit)(void *hal, ATCAIfaceCfg *);
-    ATCA_STATUS (*atpostinit)(ATCAIface hal);
-    ATCA_STATUS (*atsend)(ATCAIface hal, uint8_t word_address, uint8_t *txdata, int txlength);
-    ATCA_STATUS (*atreceive)(ATCAIface hal, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength);
-    ATCA_STATUS (*atwake)(ATCAIface hal);
-    ATCA_STATUS (*atidle)(ATCAIface hal);
-    ATCA_STATUS (*atsleep)(ATCAIface hal);
-
-    // treat as private
-    void *hal_data;     // generic pointer used by HAL to point to architecture specific structure
-                        // no ATCA object should touch this except HAL, HAL manages this pointer and memory it points to
-};
+/** \brief atca_iface is the context structure for a configured interface
+ */
+typedef struct atca_iface
+{
+    ATCAIfaceCfg* mIfaceCFG;    /**< Points to previous defined/given Cfg object, the caller manages this */
+    ATCAHAL_t*    hal;          /**< The configured HAL for the interface */
+    ATCAHAL_t*    phy;          /**< When a HAL is not a "native" hal it needs a physical layer to be associated with it */
+    void*         hal_data;     /**< Pointer to HAL specific context/data */
+} atca_iface_t;
 
 ATCA_STATUS initATCAIface(ATCAIfaceCfg *cfg, ATCAIface ca_iface);
 ATCAIface newATCAIface(ATCAIfaceCfg *cfg);
@@ -182,9 +185,9 @@ void deleteATCAIface(ATCAIface *ca_iface);
 
 // IFace methods
 ATCA_STATUS atinit(ATCAIface ca_iface);
-ATCA_STATUS atpostinit(ATCAIface ca_iface);
 ATCA_STATUS atsend(ATCAIface ca_iface, uint8_t word_address, uint8_t *txdata, int txlength);
 ATCA_STATUS atreceive(ATCAIface ca_iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength);
+ATCA_STATUS atcontrol(ATCAIface ca_iface, uint8_t option, void* param, size_t paramlen);
 ATCA_STATUS atwake(ATCAIface ca_iface);
 ATCA_STATUS atidle(ATCAIface ca_iface);
 ATCA_STATUS atsleep(ATCAIface ca_iface);
@@ -193,6 +196,10 @@ ATCA_STATUS atsleep(ATCAIface ca_iface);
 ATCAIfaceCfg * atgetifacecfg(ATCAIface ca_iface);
 void* atgetifacehaldat(ATCAIface ca_iface);
 
+/* Utilities */
+bool atca_iface_is_kit(ATCAIface ca_iface);
+int atca_iface_get_retries(ATCAIface ca_iface);
+uint16_t atca_iface_get_wake_delay(ATCAIface ca_iface);
 
 #ifdef __cplusplus
 }

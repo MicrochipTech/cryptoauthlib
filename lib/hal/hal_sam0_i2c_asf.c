@@ -37,6 +37,10 @@
 #include "hal_sam0_i2c_asf.h"
 #include "cryptoauthlib.h"
 
+#ifndef ATCA_HAL_LEGACY_API
+#error "The use of this hal requires the ATCA_HAL_LEGACY_API option to be enabled.
+#endif
+
 /** \defgroup hal_ Hardware abstraction layer (hal_)
  *
  * \brief
