@@ -839,7 +839,12 @@ CK_RV pkcs11_config_load(pkcs11_slot_ctx_ptr slot_ctx)
     {
         rv = pkcs11_config_load_objects(slot_ctx);
     }
-
+#if PKCS11_USE_STATIC_CONFIG
+    if (CKR_OK == rv)
+    {
+        rv = pkcs11_config_interface(slot_ctx);
+    }
+#endif
     return rv;
 }
 
