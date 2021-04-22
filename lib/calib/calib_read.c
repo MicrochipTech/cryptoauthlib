@@ -402,7 +402,7 @@ ATCA_STATUS calib_read_config_zone(ATCADevice device, uint8_t* config_data)
  *
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS calib_cmp_config_zone(ATCADevice device, uint8_t* config_data, bool* same_config)
+ATCA_STATUS calib_cmp_config_zone(ATCADevice device, const uint8_t* const config_data, bool* same_config)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t device_config_data[ATCA_ECC_CONFIG_SIZE];   /** Max for all configs */

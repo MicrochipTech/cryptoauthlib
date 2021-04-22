@@ -124,7 +124,7 @@ ATCA_STATUS calib_read_serial_number(ATCADevice device, uint8_t* serial_number);
 ATCA_STATUS calib_read_pubkey(ATCADevice device, uint16_t slot, uint8_t *public_key);
 ATCA_STATUS calib_read_sig(ATCADevice device, uint16_t slot, uint8_t *sig);
 ATCA_STATUS calib_read_config_zone(ATCADevice device, uint8_t* config_data);
-ATCA_STATUS calib_cmp_config_zone(ATCADevice device, uint8_t* config_data, bool* same_config);
+ATCA_STATUS calib_cmp_config_zone(ATCADevice device, const uint8_t* const config_data, bool* same_config);
 // ECC204 Read command functions
 ATCA_STATUS calib_ecc204_read_zone(ATCADevice device, uint8_t zone, uint8_t slot, uint8_t block, size_t offset,
                                    uint8_t* data, uint8_t len);

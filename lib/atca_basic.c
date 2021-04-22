@@ -2489,7 +2489,7 @@ ATCA_STATUS atcab_read_config_zone(uint8_t* config_data)
  *
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atcab_cmp_config_zone(uint8_t* config_data, bool* same_config)
+ATCA_STATUS atcab_cmp_config_zone(const uint8_t* const config_data, bool* same_config)
 {
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
