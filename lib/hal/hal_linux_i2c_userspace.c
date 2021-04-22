@@ -130,6 +130,13 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t address, uint8_t *txdata, int 
     atca_i2c_host_t * hal_data = (atca_i2c_host_t*)atgetifacehaldat(iface);
     int f_i2c;  // I2C file descriptor
 
+    // Add workaround for following kernel message
+    // i2c i2c-1: adapter quirk: no zero length (addr 0x0000, size 0, write)
+    if (txlength <= 0)
+    {
+        return ATCA_SUCCESS;
+    }
+
     // Initiate I2C communication
     if ( (f_i2c = open(hal_data->i2c_file, O_RDWR)) < 0)
     {
