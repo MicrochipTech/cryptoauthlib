@@ -63,7 +63,7 @@ typedef struct
     uint16_t execution_time_msec;
 }device_execution_time_t;
 
-ATCA_STATUS calib_get_execution_time(uint8_t opcode, ATCACommand ca_cmd);
+ATCA_STATUS calib_get_execution_time(uint8_t opcode, ATCADevice device);
 #endif
 
 #ifndef ATCA_HAL_LEGACY_API

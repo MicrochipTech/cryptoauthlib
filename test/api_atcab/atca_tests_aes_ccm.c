@@ -99,8 +99,9 @@ TEST(atca_cmd_basic_test, aes_ccm_auth_encrypt)
     uint8_t ciphertext[48];
     uint8_t tag[AES_DATA_SIZE];
     uint8_t tag_size;
+    size_t i;
 
-    for (int i = 0; i < (sizeof(ccm_test_array) / sizeof(aes_ccm_test_vectors)); i++)
+    for (i = 0; i < (sizeof(ccm_test_array) / sizeof(aes_ccm_test_vectors)); i++)
     {
         test_data = (aes_ccm_test_vectors*)&ccm_test_array[i];
 
@@ -133,8 +134,9 @@ TEST(atca_cmd_basic_test, aes_ccm_auth_decrypt)
     atca_aes_ccm_ctx_t ctx;
     uint8_t plaintext[48];
     bool is_verified;
+    size_t i;
 
-    for (int i = 0; i < (sizeof(ccm_test_array) / sizeof(aes_ccm_test_vectors)); i++)
+    for (i = 0; i < (sizeof(ccm_test_array) / sizeof(aes_ccm_test_vectors)); i++)
     {
         test_data = (aes_ccm_test_vectors*)&ccm_test_array[i];
 

@@ -36,6 +36,7 @@
 /* Cryptoauthlib Interface Includes */
 #include "pkcs11_config.h"
 #include "pkcs11_debug.h"
+#include "pkcs11_encrypt.h"
 #include "pkcs11_init.h"
 #include "pkcs11_info.h"
 #include "pkcs11_slot.h"
@@ -462,25 +463,24 @@ CK_RV C_EncryptInit
     CK_OBJECT_HANDLE  hObject
 )
 {
-    ((void)hSession);
-    ((void)pMechanism);
-    ((void)hObject);
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(CKR_FUNCTION_NOT_SUPPORTED);
+    PKCS11_DEBUG_RETURN(pkcs11_encrypt_init(hSession, pMechanism, hObject));
 }
 
 /**
  * \brief Perform a single operation encryption operation in the specified session
  */
-CK_RV C_Encrypt(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pEncryptedData, CK_ULONG_PTR pulEncryptedDataLen)
+CK_RV C_Encrypt
+(
+    CK_SESSION_HANDLE hSession,
+    CK_BYTE_PTR       pData,
+    CK_ULONG          ulDataLen,
+    CK_BYTE_PTR       pEncryptedData,
+    CK_ULONG_PTR      pulEncryptedDataLen
+)
 {
-    ((void)hSession);
-    ((void)pData);
-    ((void)ulDataLen);
-    ((void)pEncryptedData);
-    ((void)pulEncryptedDataLen);
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(CKR_FUNCTION_NOT_SUPPORTED);
+    PKCS11_DEBUG_RETURN(pkcs11_encrypt(hSession, pData, ulDataLen, pEncryptedData, pulEncryptedDataLen));
 }
 
 /**
@@ -495,13 +495,8 @@ CK_RV C_EncryptUpdate
     CK_ULONG_PTR      pulEncryptedDataLen
 )
 {
-    ((void)hSession);
-    ((void)pData);
-    ((void)ulDataLen);
-    ((void)pEncryptedData);
-    ((void)pulEncryptedDataLen);
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(CKR_FUNCTION_NOT_SUPPORTED);
+    PKCS11_DEBUG_RETURN(pkcs11_encrypt_update(hSession, pData, ulDataLen, pEncryptedData, pulEncryptedDataLen));
 }
 
 /**
@@ -509,11 +504,8 @@ CK_RV C_EncryptUpdate
  */
 CK_RV C_EncryptFinal(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedData, CK_ULONG_PTR pulEncryptedDataLen)
 {
-    ((void)hSession);
-    ((void)pEncryptedData);
-    ((void)pulEncryptedDataLen);
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(CKR_FUNCTION_NOT_SUPPORTED);
+    PKCS11_DEBUG_RETURN(pkcs11_encrypt_final(hSession, pEncryptedData, pulEncryptedDataLen));
 }
 
 /**
@@ -521,11 +513,8 @@ CK_RV C_EncryptFinal(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedData, CK_
  */
 CK_RV C_DecryptInit(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hObject)
 {
-    ((void)hSession);
-    ((void)pMechanism);
-    ((void)hObject);
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(CKR_FUNCTION_NOT_SUPPORTED);
+    PKCS11_DEBUG_RETURN(pkcs11_decrypt_init(hSession, pMechanism, hObject));
 }
 
 /**
@@ -540,13 +529,8 @@ CK_RV C_Decrypt
     CK_ULONG_PTR      pulDataLen
 )
 {
-    ((void)hSession);
-    ((void)pEncryptedData);
-    ((void)ulEncryptedDataLen);
-    ((void)pData);
-    ((void)pulDataLen);
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(CKR_FUNCTION_NOT_SUPPORTED);
+    PKCS11_DEBUG_RETURN(pkcs11_decrypt(hSession, pEncryptedData, ulEncryptedDataLen, pData, pulDataLen));
 }
 
 /**
@@ -561,13 +545,8 @@ CK_RV C_DecryptUpdate
     CK_ULONG_PTR      pDataLen
 )
 {
-    ((void)hSession);
-    ((void)pEncryptedData);
-    ((void)ulEncryptedDataLen);
-    ((void)pData);
-    ((void)pDataLen);
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(CKR_FUNCTION_NOT_SUPPORTED);
+    PKCS11_DEBUG_RETURN(pkcs11_decrypt_update(hSession, pEncryptedData, ulEncryptedDataLen, pData, pDataLen));
 }
 
 /**
@@ -575,11 +554,8 @@ CK_RV C_DecryptUpdate
  */
 CK_RV C_DecryptFinal(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG_PTR pDataLen)
 {
-    ((void)hSession);
-    ((void)pData);
-    ((void)pDataLen);
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(CKR_FUNCTION_NOT_SUPPORTED);
+    PKCS11_DEBUG_RETURN(pkcs11_decrypt_final(hSession, pData, pDataLen));
 }
 
 /**
@@ -835,13 +811,8 @@ CK_RV C_GenerateKey
     CK_OBJECT_HANDLE_PTR phKey
 )
 {
-    ((void)hSession);
-    ((void)pMechanism);
-    ((void)pTemplate);
-    ((void)ulCount);
-    ((void)phKey);
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(CKR_FUNCTION_NOT_SUPPORTED);
+    PKCS11_DEBUG_RETURN(pkcs11_key_generate(hSession, pMechanism, pTemplate, ulCount, phKey));
 }
 
 /**

@@ -78,7 +78,7 @@ ATCA_STATUS hal_i2c_sleep(ATCAIface iface);
 ATCA_STATUS hal_i2c_release(void *hal_data);
 #endif
 
-#ifdef ATCA_HAL_SWI
+#ifdef ATCA_HAL_SWI_UART
 ATCA_STATUS hal_swi_init(ATCAIface iface, ATCAIfaceCfg *cfg);
 ATCA_STATUS hal_swi_post_init(ATCAIface iface);
 ATCA_STATUS hal_swi_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength);
@@ -116,7 +116,7 @@ ATCA_STATUS hal_uart_wake(ATCAIface iface);
 ATCA_STATUS hal_uart_idle(ATCAIface iface);
 ATCA_STATUS hal_uart_sleep(ATCAIface iface);
 #endif
-ATCA_STATUS hal_uart_release(ATCAIface iface);
+ATCA_STATUS hal_uart_release(void *hal_data);
 #endif
 
 #ifdef ATCA_HAL_SPI
@@ -177,7 +177,8 @@ typedef enum
     ATCA_HAL_CONTROL_RESET = 3,
     ATCA_HAL_CONTROL_SELECT = 4,
     ATCA_HAL_CONTROL_DESELECT = 5,
-    ATCA_HAL_CHANGE_BAUD = 6
+    ATCA_HAL_CHANGE_BAUD = 6,
+    ATCA_HAL_FLUSH_BUFFER = 7
 } ATCA_HAL_CONTROL;
 
 /** \brief Timer API for legacy implementations */

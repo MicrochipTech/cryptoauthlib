@@ -38,6 +38,8 @@
 const char pkcs11_trust_device_label[] = "device";
 const char pkcs11_trust_signer_label[] = "signer";
 const char pkcs11_trust_root_label[] = "root";
+const char pkcs11_trust_device_private_key_label[] = "device private";
+const char pkcs11_trust_device_public_key_label[] = "device public";
 
 /* Helper function to assign the proper fields to an certificate object from a cert def */
 CK_RV pkcs11_trust_config_cert(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pLabel)
@@ -96,6 +98,47 @@ CK_RV pkcs11_trust_config_cert(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr p
     }
 #endif
 
+
+    return rv;
+}
+
+/* Helper function to assign the proper fields to a key object */
+CK_RV pkcs11_trust_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pLabel)
+{
+    CK_RV rv = CKR_OK;
+
+    (void)pLibCtx;
+
+    if (!pObject || !pLabel || !pSlot)
+    {
+        return CKR_ARGUMENTS_BAD;
+    }
+
+    if (pLabel->ulValueLen >= PKCS11_MAX_LABEL_SIZE)
+    {
+        return CKR_ARGUMENTS_BAD;
+    }
+
+    if (!strncmp(pkcs11_trust_device_private_key_label, (char*)pLabel->pValue, pLabel->ulValueLen))
+    {
+        /* slot 0 - Device Private Key */
+        pkcs11_config_init_private(pObject, pLabel->pValue, pLabel->ulValueLen);
+        pObject->slot = 0;
+        pObject->flags |= PKCS11_OBJECT_FLAG_TRUST_TYPE;
+        pObject->config = &pSlot->cfg_zone;
+    }
+    else if (!strncmp(pkcs11_trust_device_public_key_label, (char*)pLabel->pValue, pLabel->ulValueLen))
+    {
+        /* slot 0 - Device Public Key */
+        pkcs11_config_init_public(pObject, pLabel->pValue, pLabel->ulValueLen);
+        pObject->slot = 0;
+        pObject->flags |= PKCS11_OBJECT_FLAG_TRUST_TYPE;
+        pObject->config = &pSlot->cfg_zone;
+    }
+    else
+    {
+        rv = CKR_ARGUMENTS_BAD;
+    }
 
     return rv;
 }

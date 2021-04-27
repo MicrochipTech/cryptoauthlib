@@ -1,7 +1,6 @@
 /**
  * \file
- * \brief API wrapper for software ECDSA verify.  Currently unimplemented but could be
- *        implemented via a 3rd party library such as MicroECC.
+ * \brief Unity tests for the CryptoAuthLib software crypto API.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
@@ -26,23 +25,35 @@
  * THIS SOFTWARE.
  */
 
+#ifndef ATCA_CRYPTO_TESTS_H_
+#define ATCA_CRYPTO_TESTS_H_
 
-#include "atca_crypto_sw_ecdsa.h"
+#include "third_party/unity/unity.h"
 
-/** \brief return software generated ECDSA verification result and the function is currently not implemented
- * \param[in] msg         ptr to message or challenge
- * \param[in] signature   ptr to the signature to verify
- * \param[in] public_key  ptr to public key of device which signed the challenge
- * return ATCA_UNIMPLEMENTED , as the function is currently not implemented
- */
+int atca_crypto_sw_tests(int argc, char* argv[]);
 
-int atcac_sw_ecdsa_verify_p256(const uint8_t msg[ATCA_ECC_P256_FIELD_SIZE],
-                               const uint8_t signature[ATCA_ECC_P256_SIGNATURE_SIZE],
-                               const uint8_t public_key[ATCA_ECC_P256_PUBLIC_KEY_SIZE])
-{
-    (void)msg;
-    (void)signature;
-    (void)public_key;
+void test_atcac_sw_sha1_nist1(void);
+void test_atcac_sw_sha1_nist2(void);
+void test_atcac_sw_sha1_nist3(void);
+void test_atcac_sw_sha1_nist_short(void);
+void test_atcac_sw_sha1_nist_long(void);
+void test_atcac_sw_sha1_nist_monte(void);
+void test_atcac_sw_sha2_256_nist1(void);
+void test_atcac_sw_sha2_256_nist2(void);
+void test_atcac_sw_sha2_256_nist3(void);
+void test_atcac_sw_sha2_256_nist_short(void);
+void test_atcac_sw_sha2_256_nist_long(void);
+void test_atcac_sw_sha2_256_nist_monte(void);
 
-    return ATCA_UNIMPLEMENTED;
-}
+void test_atcac_aes128_gcm(void);
+void test_atcac_aes128_cmac(void);
+void test_atcac_sha256_hmac(void);
+void test_atcac_sha256_hmac_nist(void);
+
+void test_atcac_verify_nist(void);
+void test_atcac_public(void);
+void test_atcac_sign(void);
+void test_atcac_derive_nist(void);
+
+
+#endif

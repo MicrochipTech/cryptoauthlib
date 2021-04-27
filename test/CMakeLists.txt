@@ -8,8 +8,10 @@ file(GLOB TEST_JWT_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "jwt/*.c")
 file(GLOB TEST_TNG_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "tng/*.c")
 file(GLOB TEST_API_ATCAB RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "api_atcab/*.c")
 file(GLOB TEST_API_CALIB RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "api_calib/*.c")
+file(GLOB TEST_API_CRYPTO RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "api_crypto/*.c")
 file(GLOB TEST_API_TALIB RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "api_talib/*.c")
 file(GLOB TEST_VECTORS_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "vectors/*.c")
+file(GLOB TEST_MBEDTLDS_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mbedtls/*.c")
 file(GLOB TEST_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.c")
 file(GLOB UNITY_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../third_party/unity/*.c")
 
@@ -19,6 +21,7 @@ set(CRYPTOAUTH_TEST_SRC ${TEST_SRC}
                         ${TEST_ATCACERT_SRC}
                         ${TEST_API_ATCAB}
                         ${TEST_API_CALIB}
+                        ${TEST_API_CRYPTO}
                         ${TEST_VECTORS_SRC})
 
 if(ATCA_TA100_SUPPORT)
@@ -34,14 +37,20 @@ set(CRYPTOAUTH_TEST_SRC ${CRYPTOAUTH_TEST_SRC} ${TEST_CUSTOM_CMD_SRC})
 source_group("External Files" FILES ${TEST_CUSTOM_CMD_SRC})
 endif()
 
+if(ATCA_MBEDTLS)
+set(CRYPTOAUTH_TEST_SRC ${CRYPTOAUTH_TEST_SRC} ${TEST_MBEDTLDS_SRC})
+endif()
+
 add_executable(cryptoauth_test ${CRYPTOAUTH_TEST_SRC} ${UNITY_SRC})
 
 include_directories(cryptoauth_test ${CMAKE_CURRENT_SOURCE_DIR}
                                     ${CMAKE_CURRENT_SOURCE_DIR}/../
                                     ${CMAKE_CURRENT_SOURCE_DIR}/api_atcab
                                     ${CMAKE_CURRENT_SOURCE_DIR}/api_calib
+                                    ${CMAKE_CURRENT_SOURCE_DIR}/api_crypto
                                     ${CMAKE_CURRENT_SOURCE_DIR}/api_talib
                                     ${CMAKE_CURRENT_SOURCE_DIR}/../lib
+                                    ${CMAKE_CURRENT_SOURCE_DIR}/../third_party
                                     ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/mbedtls/include
                                     ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/wolfssl
                                     ${CMAKE_CURRENT_BINARY_DIR}/../lib)

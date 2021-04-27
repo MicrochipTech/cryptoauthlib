@@ -62,14 +62,13 @@ typedef struct atcacert_tm_utc_s
 /**
  * Date formats.
  */
-typedef enum atcacert_date_format_e
-{
-    DATEFMT_ISO8601_SEP,        //!< ISO8601 full date YYYY-MM-DDThh:mm:ssZ
-    DATEFMT_RFC5280_UTC,        //!< RFC 5280 (X.509) 4.1.2.5.1 UTCTime format YYMMDDhhmmssZ
-    DATEFMT_POSIX_UINT32_BE,    //!< POSIX (aka UNIX) date format. Seconds since Jan 1, 1970. 32 bit unsigned integer, big endian.
-    DATEFMT_POSIX_UINT32_LE,    //!< POSIX (aka UNIX) date format. Seconds since Jan 1, 1970. 32 bit unsigned integer, little endian.
-    DATEFMT_RFC5280_GEN         //!< RFC 5280 (X.509) 4.1.2.5.2 GeneralizedTime format YYYYMMDDhhmmssZ
-} atcacert_date_format_t;
+#define DATEFMT_ISO8601_SEP         0   //!< ISO8601 full date YYYY-MM-DDThh:mm:ssZ
+#define DATEFMT_RFC5280_UTC         1   //!< RFC 5280 (X.509) 4.1.2.5.1 UTCTime format YYMMDDhhmmssZ
+#define DATEFMT_POSIX_UINT32_BE     2   //!< POSIX (aka UNIX) date format. Seconds since Jan 1, 1970. 32 bit unsigned integer, big endian.
+#define DATEFMT_POSIX_UINT32_LE     3   //!< POSIX (aka UNIX) date format. Seconds since Jan 1, 1970. 32 bit unsigned integer, little endian.
+#define DATEFMT_RFC5280_GEN         4   //!< RFC 5280 (X.509) 4.1.2.5.2 GeneralizedTime format YYYYMMDDhhmmssZ
+
+typedef uint8_t atcacert_date_format_t;
 
 #define DATEFMT_ISO8601_SEP_SIZE     (20)
 #define DATEFMT_RFC5280_UTC_SIZE     (13)

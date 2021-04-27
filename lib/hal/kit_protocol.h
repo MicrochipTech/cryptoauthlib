@@ -52,7 +52,7 @@
 extern "C" {
 #endif
 
-ATCA_STATUS kit_init(ATCAIface iface);
+ATCA_STATUS kit_init(ATCAIface iface, ATCAIfaceCfg* cfg);
 ATCA_STATUS kit_post_init(ATCAIface iface);
 ATCA_STATUS kit_send(ATCAIface iface, uint8_t word_address, uint8_t* txdata, int txlength);
 ATCA_STATUS kit_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, uint16_t* rxsize);

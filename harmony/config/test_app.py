@@ -27,10 +27,20 @@ import glob
 fileSymbolName = "CAL_FILE_SRC_TEST_"
 numFileCntr = 0
 
-_TEST_PATHS = ['atcacert/*', 'jwt/*', 'api_atcab/*', 'api_calib/*', 'api_talib/*', 'vectors/*']
+_TEST_PATHS = ['atcacert/*', 'jwt/*', 'api_atcab/*', 'api_calib/*', 'api_crypto', 'api_talib/*', 'vectors/*']
 _TEST_SOURCES = ['atca_crypto_sw_tests.c', 'atca_test.c', 'atca_test_config.c', 'atca_test_console.c',
                'atca_utils_atecc608.c', 'cmd-processor.c']
 _TEST_HEADERS = ['atca_crypto_sw_tests.h', 'atca_test.h', 'cbuf.h', 'cmd-processor.h']
+
+
+def CALSecFileUpdate(symbol, event):
+    symObj = event['symbol']
+    selected_key = symObj.getSelectedKey()
+
+    if selected_key == "SECURE":
+        symbol.setSecurity("SECURE")
+    elif selected_key == "NON_SECURE":
+        symbol.setSecurity("NON_SECURE")
 
 
 def AddFile(component, src_path, dest_path, proj_path, file_type = "SOURCE", isMarkup = False, enable=True):
@@ -44,6 +54,13 @@ def AddFile(component, src_path, dest_path, proj_path, file_type = "SOURCE", isM
     srcFile.setOutputName(os.path.basename(src_path))
     srcFile.setMarkup(isMarkup)
     srcFile.setEnabled(enable)
+    try:
+        CALSecValue = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_NON_SECURE').getValue()
+        if CALSecValue == True:
+            srcFile.setSecurity("SECURE")
+    except:
+        pass
+    srcFile.setDependencies(CALSecFileUpdate, ["cryptoauthlib.CAL_NON_SECURE"])
     numFileCntr += 1
 
 
@@ -86,6 +103,13 @@ def instantiateComponent(calTestingApplication):
 
     defSym.setValue('{0}/test'.format(targetPath))
     defSym.setAppend(True, ';')
+    try:
+        CALSecValue = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_NON_SECURE').getValue()
+        if CALSecValue == True:
+            defSym.setSecurity("SECURE")
+    except:
+        pass
+    defSym.setDependencies(CALSecFileUpdate, ["cryptoauthlib.CAL_NON_SECURE"])
 
 
     # Add core library files

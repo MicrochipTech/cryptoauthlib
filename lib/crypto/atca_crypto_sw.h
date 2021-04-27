@@ -119,6 +119,9 @@ typedef atca_wc_ctx atcac_pk_ctx;
 #define ATCA_ENABLE_SHA256_IMPL     1
 #endif
 
+#ifndef ATCA_ENABLE_RAND_IMPL
+#define ATCA_ENABLE_RAND_IMPL       1
+#endif
 
 typedef struct
 {
@@ -172,6 +175,8 @@ ATCA_STATUS atcac_aes_gcm_encrypt(atcac_aes_gcm_ctx* ctx, const uint8_t* plainte
 ATCA_STATUS atcac_aes_gcm_decrypt(atcac_aes_gcm_ctx* ctx, const uint8_t* ciphertext, const size_t ct_len, uint8_t* plaintext, const uint8_t* tag,
                                   size_t tag_len, const uint8_t* aad, const size_t aad_len, bool* is_verified);
 #endif
+
+ATCA_STATUS atcac_pbkdf2_sha256(const uint32_t iter, const uint8_t* password, const size_t password_len, const uint8_t* salt, const size_t salt_len, uint8_t* result, size_t result_len);
 
 #ifdef __cplusplus
 }

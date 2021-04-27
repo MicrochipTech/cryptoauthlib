@@ -148,7 +148,7 @@ static atca_hal_list_entry_t atca_registered_hal_list[ATCA_MAX_HAL_CACHE] = {
 #ifdef ATCA_HAL_I2C
     { ATCA_I2C_IFACE,      &hal_i2c,        NULL      },
 #endif
-#ifdef ATCA_HAL_SWI
+#ifdef ATCA_HAL_SWI_UART
     { ATCA_SWI_IFACE,      &hal_swi_uart,   &hal_uart },
 #endif
 #ifdef ATCA_HAL_KIT_UART
@@ -182,7 +182,7 @@ static ATCA_STATUS hal_iface_get_registered(ATCAIfaceType iface_type, ATCAHAL_t*
 
     if (hal && phy)
     {
-        int i;
+        size_t i;
         for (i = 0; i < atca_registered_hal_list_size; i++)
         {
             if (iface_type == atca_registered_hal_list[i].iface_type)
@@ -217,8 +217,8 @@ static ATCA_STATUS hal_iface_set_registered(ATCAIfaceType iface_type, ATCAHAL_t*
 
     if (hal)
     {
-        int i;
-        int empty = atca_registered_hal_list_size;
+        size_t i;
+        size_t empty = atca_registered_hal_list_size;
         for (i = 0; i < atca_registered_hal_list_size; i++)
         {
             if (iface_type == atca_registered_hal_list[i].iface_type)

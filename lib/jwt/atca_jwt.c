@@ -172,7 +172,7 @@ ATCA_STATUS atca_jwt_finalize(
     }
 
     /* Create digest of the message store and store in the buffer */
-    status = atcac_sw_sha2_256((const uint8_t*)jwt->buf, jwt->cur, (uint8_t*)(jwt->buf + jwt->buflen - 32));
+    status = (ATCA_STATUS)atcac_sw_sha2_256((const uint8_t*)jwt->buf, jwt->cur, (uint8_t*)(jwt->buf + jwt->buflen - 32));
     if (ATCA_SUCCESS != status)
     {
         return status;
@@ -266,7 +266,7 @@ ATCA_STATUS atca_jwt_add_claim_numeric(
         if (0 < written && written < remaining)
         {
             jwt->cur += written;
-            return 0;
+            return ATCA_SUCCESS;
         }
         else
         {
@@ -325,7 +325,7 @@ ATCA_STATUS atca_jwt_verify(
         }
 
         /* Digest the token */
-        if (ATCA_SUCCESS != (status = atcac_sw_sha2_256((const uint8_t*)buf, pStr - buf - 1, digest)))
+        if (ATCA_SUCCESS != (status = (ATCA_STATUS)atcac_sw_sha2_256((const uint8_t*)buf, pStr - buf - 1, digest)))
         {
             break;
         }

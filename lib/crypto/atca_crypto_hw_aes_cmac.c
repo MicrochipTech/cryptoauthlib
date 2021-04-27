@@ -91,8 +91,8 @@ ATCA_STATUS atcab_aes_cmac_init(atca_aes_cmac_ctx_t* ctx, uint16_t key_id, uint8
  */
 ATCA_STATUS atcab_aes_cmac_update(atca_aes_cmac_ctx_t* ctx, const uint8_t* data, uint32_t data_size)
 {
-    uint32_t rem_size = ATCA_AES128_BLOCK_SIZE - ctx->block_size;
-    uint32_t copy_size = data_size > rem_size ? rem_size : data_size;
+    uint32_t rem_size;
+    uint32_t copy_size;
     ATCA_STATUS status = ATCA_SUCCESS;
     uint8_t ciphertext[ATCA_AES128_BLOCK_SIZE];
     uint32_t block_count;
@@ -102,6 +102,9 @@ ATCA_STATUS atcab_aes_cmac_update(atca_aes_cmac_ctx_t* ctx, const uint8_t* data,
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
+
+    rem_size = ATCA_AES128_BLOCK_SIZE - ctx->block_size;
+    copy_size = data_size > rem_size ? rem_size : data_size;
 
     memcpy(&ctx->block[ctx->block_size], data, copy_size);
 

@@ -43,6 +43,19 @@ struct mbedtls_pk_context;
 struct mbedtls_x509_crt;
 struct atcacert_def_s;
 
+/** Structure to hold metadata - is written into the mbedtls pk structure as the private key
+    bignum value 'd' which otherwise would be unused. Bignums can be any arbitrary length of
+    bytes    */
+typedef struct atca_mbedtls_eckey_s
+{
+    ATCADevice device;
+    uint16_t   handle;
+} atca_mbedtls_eckey_t;
+
+/* Integration Helper */
+int atca_mbedtls_ecdsa_sign(const mbedtls_mpi* d, mbedtls_mpi* r, mbedtls_mpi* s,
+                            const unsigned char* buf, size_t buf_len);
+
 /* Wrapper Functions */
 int atca_mbedtls_pk_init_ext(ATCADevice device, struct mbedtls_pk_context * pkey, const uint16_t slotid);
 int atca_mbedtls_pk_init(struct mbedtls_pk_context * pkey, const uint16_t slotid);

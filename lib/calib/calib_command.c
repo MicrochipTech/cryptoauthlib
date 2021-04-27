@@ -41,6 +41,8 @@
  */
 ATCA_STATUS atCheckMAC(ATCADeviceType device_type, ATCAPacket *packet)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     packet->opcode = ATCA_CHECKMAC;
     packet->txsize = CHECKMAC_COUNT;
@@ -55,6 +57,8 @@ ATCA_STATUS atCheckMAC(ATCADeviceType device_type, ATCAPacket *packet)
  */
 ATCA_STATUS atCounter(ATCADeviceType device_type, ATCAPacket *packet)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     packet->opcode = ATCA_COUNTER;
     packet->txsize = COUNTER_COUNT;
@@ -70,6 +74,8 @@ ATCA_STATUS atCounter(ATCADeviceType device_type, ATCAPacket *packet)
  */
 ATCA_STATUS atDeriveKey(ATCADeviceType device_type, ATCAPacket *packet, bool has_mac)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     packet->opcode = ATCA_DERIVE_KEY;
 
@@ -94,6 +100,8 @@ ATCA_STATUS atDeriveKey(ATCADeviceType device_type, ATCAPacket *packet, bool has
  */
 ATCA_STATUS atECDH(ATCADeviceType device_type, ATCAPacket *packet)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     packet->opcode = ATCA_ECDH;
     packet->txsize = ECDH_COUNT;
@@ -109,6 +117,8 @@ ATCA_STATUS atECDH(ATCADeviceType device_type, ATCAPacket *packet)
  */
 ATCA_STATUS atGenDig(ATCADeviceType device_type, ATCAPacket *packet, bool is_no_mac_key)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     packet->opcode = ATCA_GENDIG;
 
@@ -135,6 +145,8 @@ ATCA_STATUS atGenDig(ATCADeviceType device_type, ATCAPacket *packet, bool is_no_
  */
 ATCA_STATUS atGenKey(ATCADeviceType device_type, ATCAPacket *packet)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     packet->opcode = ATCA_GENKEY;
 
@@ -157,6 +169,8 @@ ATCA_STATUS atGenKey(ATCADeviceType device_type, ATCAPacket *packet)
  */
 ATCA_STATUS atHMAC(ATCADeviceType device_type, ATCAPacket *packet)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     packet->opcode = ATCA_HMAC;
     packet->txsize = HMAC_COUNT;
@@ -171,6 +185,8 @@ ATCA_STATUS atHMAC(ATCADeviceType device_type, ATCAPacket *packet)
  */
 ATCA_STATUS atInfo(ATCADeviceType device_type, ATCAPacket *packet)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     packet->opcode = ATCA_INFO;
     packet->txsize = INFO_COUNT;
@@ -185,6 +201,8 @@ ATCA_STATUS atInfo(ATCADeviceType device_type, ATCAPacket *packet)
  */
 ATCA_STATUS atLock(ATCADeviceType device_type, ATCAPacket *packet)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     packet->opcode = ATCA_LOCK;
     packet->txsize = LOCK_COUNT;
@@ -199,6 +217,8 @@ ATCA_STATUS atLock(ATCADeviceType device_type, ATCAPacket *packet)
  */
 ATCA_STATUS atMAC(ATCADeviceType device_type, ATCAPacket *packet)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     // variable packet size
     packet->opcode = ATCA_MAC;
@@ -221,6 +241,8 @@ ATCA_STATUS atMAC(ATCADeviceType device_type, ATCAPacket *packet)
  */
 ATCA_STATUS atNonce(ATCADeviceType device_type, ATCAPacket *packet)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     // variable packet size
     uint8_t calc_mode = packet->param1 & NONCE_MODE_MASK;
@@ -261,6 +283,8 @@ ATCA_STATUS atNonce(ATCADeviceType device_type, ATCAPacket *packet)
  */
 ATCA_STATUS atPause(ATCADeviceType device_type, ATCAPacket *packet)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     packet->opcode = ATCA_PAUSE;
     packet->txsize = PAUSE_COUNT;
@@ -275,6 +299,8 @@ ATCA_STATUS atPause(ATCADeviceType device_type, ATCAPacket *packet)
  */
 ATCA_STATUS atPrivWrite(ATCADeviceType device_type, ATCAPacket *packet)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     packet->opcode = ATCA_PRIVWRITE;
     packet->txsize = PRIVWRITE_COUNT;
@@ -289,6 +315,8 @@ ATCA_STATUS atPrivWrite(ATCADeviceType device_type, ATCAPacket *packet)
  */
 ATCA_STATUS atRandom(ATCADeviceType device_type, ATCAPacket *packet)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     packet->opcode = ATCA_RANDOM;
     packet->txsize = RANDOM_COUNT;
@@ -303,6 +331,8 @@ ATCA_STATUS atRandom(ATCADeviceType device_type, ATCAPacket *packet)
  */
 ATCA_STATUS atRead(ATCADeviceType device_type, ATCAPacket *packet)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     packet->opcode = ATCA_READ;
     packet->txsize = READ_COUNT;
@@ -317,6 +347,8 @@ ATCA_STATUS atRead(ATCADeviceType device_type, ATCAPacket *packet)
  */
 ATCA_STATUS atSecureBoot(ATCADeviceType device_type, ATCAPacket *packet)
 {
+    ((void)device_type);
+
     packet->opcode = ATCA_SECUREBOOT;
     packet->txsize = ATCA_CMD_SIZE_MIN;
 
@@ -348,6 +380,8 @@ ATCA_STATUS atSecureBoot(ATCADeviceType device_type, ATCAPacket *packet)
  */
 ATCA_STATUS atSHA(ATCADeviceType device_type, ATCAPacket *packet, uint16_t write_context_size)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     packet->opcode = ATCA_SHA;
 
@@ -408,6 +442,8 @@ ATCA_STATUS atSign(ATCADeviceType device_type, ATCAPacket *packet)
  */
 ATCA_STATUS atUpdateExtra(ATCADeviceType device_type, ATCAPacket *packet)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     packet->opcode = ATCA_UPDATE_EXTRA;
     packet->txsize = UPDATE_COUNT;
@@ -422,6 +458,8 @@ ATCA_STATUS atUpdateExtra(ATCADeviceType device_type, ATCAPacket *packet)
  */
 ATCA_STATUS atVerify(ATCADeviceType device_type, ATCAPacket *packet)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     packet->opcode = ATCA_VERIFY;
 
@@ -507,6 +545,8 @@ ATCA_STATUS atWrite(ATCADeviceType device_type, ATCAPacket *packet, bool has_mac
  */
 ATCA_STATUS atAES(ATCADeviceType device_type, ATCAPacket *packet)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     packet->opcode = ATCA_AES;
     packet->txsize = ATCA_CMD_SIZE_MIN;
@@ -530,14 +570,14 @@ ATCA_STATUS atAES(ATCADeviceType device_type, ATCAPacket *packet)
  */
 ATCA_STATUS atSelfTest(ATCADeviceType device_type, ATCAPacket *packet)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     packet->opcode = ATCA_SELFTEST;
     packet->txsize = ATCA_CMD_SIZE_MIN;
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
-
-
 
 /** \brief ATCACommand KDF method
  * \param[in]  ca_cmd  Instance
@@ -547,6 +587,8 @@ ATCA_STATUS atSelfTest(ATCADeviceType device_type, ATCAPacket *packet)
  */
 ATCA_STATUS atKDF(ATCADeviceType device_type, ATCAPacket *packet)
 {
+    ((void)device_type);
+
     // Set the opcode & parameters
     packet->opcode = ATCA_KDF;
 

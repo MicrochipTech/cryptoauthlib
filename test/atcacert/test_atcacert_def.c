@@ -5667,6 +5667,10 @@ static atcacert_cert_element_t g_auth_key_cert_element = {
         .offset = 331,
         .count = 20
     },
+    {
+        TF_NONE,
+        TF_NONE
+    }
 };
 
 TEST(atcacert_cert_build, start_signer_no_ca_key)

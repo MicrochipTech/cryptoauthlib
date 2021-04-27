@@ -28,6 +28,16 @@ _I2C_DEVICES = ['ATSHA204A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'TA100', 'ECC
 _SPI_DEVICES = ['TA100']
 
 
+def CALSecFileUpdate(symbol, event):
+    symObj = event['symbol']
+    selected_key = symObj.getSelectedKey()
+
+    if selected_key == "SECURE":
+        symbol.setSecurity("SECURE")
+    elif selected_key == "NON_SECURE":
+        symbol.setSecurity("NON_SECURE")
+
+
 def updateSercomPlibList(plib, inc):
     Database.sendMessage('cryptoauthlib', 'UPDATE_PLIB_LIST', {'id': plib.lower(), 'inc': inc})
 
@@ -211,6 +221,13 @@ def instantiateComponent(deviceComponent, index):
     devInitDataFile.setType('SOURCE')
     devInitDataFile.setOverwrite(True)
     devInitDataFile.setMarkup(True)
+    try:
+        CALSecValue = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_NON_SECURE').getValue()
+        if CALSecValue == True:
+            devInitDataFile.setSecurity("SECURE")
+    except:
+        pass
+    devInitDataFile.setDependencies(CALSecFileUpdate, ["cryptoauthlib.CAL_NON_SECURE"])
 
 
 def onAttachmentConnected(source, target):

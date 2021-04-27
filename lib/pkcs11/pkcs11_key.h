@@ -48,6 +48,8 @@ extern const pkcs11_attrib_model pkcs11_key_secret_attributes[];
 extern const CK_ULONG pkcs11_key_secret_attributes_count;
 
 CK_RV pkcs11_key_write(CK_VOID_PTR pSession, CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute);
+CK_RV pkcs11_key_generate(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_ATTRIBUTE_PTR pTemplate,
+                          CK_ULONG ulCount, CK_OBJECT_HANDLE_PTR phKey);
 CK_RV pkcs11_key_generate_pair(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism,
                                CK_ATTRIBUTE_PTR pPublicKeyTemplate, CK_ULONG ulPublicKeyAttributeCount,
                                CK_ATTRIBUTE_PTR pPrivateKeyTemplate, CK_ULONG ulPrivateKeyAttributeCount,

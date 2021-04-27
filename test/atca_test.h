@@ -79,7 +79,7 @@ typedef struct
 extern bool g_atca_test_quiet_mode;
 
 void RunAllTests(t_test_case_info** tests_list);
-int run_test(int argc, char* argv[], void* fptest);
+int run_test(int argc, char* argv[], void (*fptest)(void));
 void run_all_talib_tests(void);
 
 extern const char* TEST_GROUP_atca_cmd_basic_test;
@@ -128,6 +128,8 @@ extern t_test_case_info otpzero_basic_test_info[];
 extern t_test_case_info jwt_unit_test_info[];
 extern t_test_case_info tng_atca_unit_test_info[];
 extern t_test_case_info tng_atcacert_client_unit_test_info[];
+
+extern t_test_case_info test_crypto_pbkdf2_info[];
 
 void test_assert_interface_init(void);
 void test_assert_interface_deinit(void);
@@ -196,6 +198,8 @@ void RunBasicOtpZero(void);
 void RunAllBasicTests(void);
 void RunAllFeatureTests(void);
 void RunTNGTests(void);
+void RunCryptoIntegrationTests(void);
+void RunPbkdf2Tests(void);
 
 /* Setup & Configuration */
 void atca_test_config_set_ifacecfg(ATCAIfaceCfg * ifacecfg);
@@ -233,12 +237,16 @@ int run_unit_tests(int argc, char* argv[]);
 int run_otpzero_tests(int argc, char* argv[]);
 int run_helper_tests(int argc, char* argv[]);
 int run_all_tests(int argc, char* argv[]);
+
 ATCA_STATUS set_chip_mode(uint8_t i2c_user_extra_add, uint8_t ttl_enable, uint8_t watchdog, uint8_t clock_divider);
 void update_chip_mode(uint8_t* chip_mode, uint8_t i2c_user_extra_add, uint8_t ttl_enable, uint8_t watchdog, uint8_t clock_divider);
 int set_clock_divider_m0(int argc, char* argv[]);
 int set_clock_divider_m1(int argc, char* argv[]);
 int set_clock_divider_m2(int argc, char* argv[]);
 int run_tng_tests(int argc, char* argv[]);
+int run_crypto_integration_tests(int argc, char* argv[]);
+int run_pbkdf2_tests(int argc, char* argv[]);
+
 ATCA_STATUS check_clock_divider(int argc, char* argv[]);
 
 #ifdef _WIN32

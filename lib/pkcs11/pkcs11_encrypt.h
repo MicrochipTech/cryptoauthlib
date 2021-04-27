@@ -1,6 +1,6 @@
 /**
  * \file
- * \brief PKCS11 Library Slot Handling & Context
+ * \brief PKCS11 Library AES Support
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
@@ -25,49 +25,38 @@
  * THIS SOFTWARE.
  */
 
-#ifndef PKCS11_SLOT_H_
-#define PKCS11_SLOT_H_
+#ifndef PKCS11_ENCRYPT_H_
+#define PKCS11_ENCRYPT_H_
 
-//#include "pkcs11_config.h"
-#include "pkcs11_init.h"
-#include "cryptoauthlib.h"
+#include "pkcs11.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/** Slot Context */
-typedef struct _pkcs11_slot_ctx
-{
-    CK_BBOOL          initialized;
-    CK_SLOT_ID        slot_id;
-    ATCADevice        device_ctx;
-    ATCAIfaceCfg      interface_config;
-    CK_SESSION_HANDLE session;
-#if ATCA_CA_SUPPORT
-    atecc608_config_t cfg_zone;
-#endif
-    CK_FLAGS flags;
-    uint16_t user_pin_handle;
-    uint16_t so_pin_handle;
-#ifndef PKCS11_LABEL_IS_SERNUM
-    CK_UTF8CHAR label[PKCS11_MAX_LABEL_SIZE + 1];
-#endif
-    CK_BBOOL logged_in;
-    CK_BYTE  read_key[32];                      /**< Accepted through C_Login as the user pin */
-} pkcs11_slot_ctx, *pkcs11_slot_ctx_ptr;
+CK_RV pkcs11_encrypt_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hObject);
+CK_RV pkcs11_encrypt(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen,
+                     CK_BYTE_PTR pEncryptedData, CK_ULONG_PTR pulEncryptedDataLen);
+
+CK_RV pkcs11_encrypt_update(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen,
+                            CK_BYTE_PTR pEncryptedData, CK_ULONG_PTR pulEncryptedDataLen);
+
+CK_RV pkcs11_encrypt_final(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedData, CK_ULONG_PTR pulEncryptedDataLen);
+
+CK_RV pkcs11_decrypt_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hObject);
+
+CK_RV pkcs11_decrypt(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedData, CK_ULONG ulEncryptedDataLen,
+                     CK_BYTE_PTR pData, CK_ULONG_PTR pulDataLen);
+
+CK_RV pkcs11_decrypt_update(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedData, CK_ULONG ulEncryptedDataLen,
+                            CK_BYTE_PTR pData, CK_ULONG_PTR pDataLen);
+
+CK_RV pkcs11_decrypt_final(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG_PTR pDataLen);
+
 
 #ifdef __cplusplus
 }
 #endif
 
-CK_RV pkcs11_slot_init(CK_SLOT_ID slotID);
-CK_RV pkcs11_slot_config(CK_SLOT_ID slotID);
-CK_VOID_PTR pkcs11_slot_initslots(CK_ULONG pulCount);
-pkcs11_slot_ctx_ptr pkcs11_slot_get_context(pkcs11_lib_ctx_ptr lib_ctx, CK_SLOT_ID slotID);
 
-
-CK_RV pkcs11_slot_get_list(CK_BBOOL tokenPresent, CK_SLOT_ID_PTR pSlotList, CK_ULONG_PTR pulCount);
-CK_RV pkcs11_slot_get_info(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo);
-
-#endif /* PKCS11_SLOT_H_ */
+#endif /* PKCS11_ENCRYPT_H_ */

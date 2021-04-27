@@ -283,6 +283,7 @@ ATCAIface atGetIFace(ATCADevice dev);
 #define ATCA_CHIP_OPT_IO_PROT_KEY(v)            (ATCA_CHIP_OPT_IO_PROT_KEY_MASK & (v << ATCA_CHIP_OPT_IO_PROT_KEY_SHIFT))
 
 /* Key Config */
+#define ATCA_KEY_CONFIG_OFFSET(x)               (96UL + (x) * 2)
 #define ATCA_KEY_CONFIG_PRIVATE_SHIFT           (0)
 #define ATCA_KEY_CONFIG_PRIVATE_MASK            (0x01u << ATCA_KEY_CONFIG_PRIVATE_SHIFT)
 #define ATCA_KEY_CONFIG_PUB_INFO_SHIFT          (1)

@@ -75,6 +75,17 @@
 #define PKCS11_MAX_LABEL_SIZE           30
 #endif
 
+/** Define to always convert PIN using KDF */
+#cmakedefine PKCS11_PIN_KDF_ALWAYS
+
+/** Define to use PBKDF2 for PIN KDF */
+#cmakedefine PKCS11_PIN_PBKDF2_EN
+
+/** Define how many iterations PBKDF2 will use for PIN KDF */
+#if defined(PKCS11_PIN_PBKDF2_EN) && !defined(PKCS11_PIN_PBKDF2_ITERATIONS)
+#define PKCS11_PIN_PBKDF2_ITERATIONS    2
+#endif    
+
 /****************************************************************************/
 /* The following configuration options are for fine tuning of the library   */
 /****************************************************************************/

@@ -65,6 +65,9 @@ int read_config(int argc, char* argv[])
     size_t config_size = 0;
     size_t i = 0;
 
+    ((void)argc);
+    ((void)argv);
+
     status = atcab_init(gCfg);
     if (status != ATCA_SUCCESS)
     {
@@ -118,6 +121,9 @@ int lock_status(int argc, char* argv[])
     ATCA_STATUS status;
     bool is_locked = false;
 
+    ((void)argc);
+    ((void)argv);
+
     if ((status = is_config_locked(&is_locked)) != ATCA_SUCCESS)
     {
         printf("is_device_locked() failed with ret=0x%08X\r\n", status);
@@ -158,6 +164,9 @@ int do_randoms(int argc, char* argv[])
     char displayStr[100];
     size_t displen = sizeof(displayStr);
     int i;
+
+    ((void)argc);
+    ((void)argv);
 
     if ((gCfg->devtype == ATSHA206A) || (ECC204 == gCfg->devtype))
     {
@@ -202,6 +211,9 @@ int info(int argc, char* argv[])
     char displaystr[15];
     size_t displaylen = sizeof(displaystr);
 
+    ((void)argc);
+    ((void)argv);
+
     status = get_info(revision);
     if (status == ATCA_SUCCESS)
     {
@@ -218,6 +230,9 @@ int read_sernum(int argc, char* argv[])
     uint8_t serialnum[ATCA_SERIAL_NUM_SIZE];
     char displaystr[30];
     size_t displaylen = sizeof(displaystr);
+
+    ((void)argc);
+    ((void)argv);
 
     status = get_serial_no(serialnum);
     if (status == ATCA_SUCCESS)
@@ -282,6 +297,9 @@ int lock_config_zone(int argc, char* argv[])
     ATCA_STATUS status;
     uint8_t ch = 0;
 
+    ((void)argc);
+    ((void)argv);
+
     if (gCfg->devtype == ATSHA206A)
     {
         printf("ATSHA206A doesn't support lock command\r\n");
@@ -326,6 +344,9 @@ int lock_data_zone(int argc, char* argv[])
 {
     ATCA_STATUS status;
     uint8_t ch = 0;
+
+    ((void)argc);
+    ((void)argv);
 
     if (!g_atca_test_quiet_mode)
     {
@@ -409,7 +430,7 @@ ATCA_STATUS get_serial_no(uint8_t* sernum)
     return status;
 }
 
-int run_test(int argc, char* argv[], void* fptest)
+int run_test(int argc, char* argv[], void (*fptest)(void))
 {
     if (CMD_PROCESSOR_MAX_ARGS > argc)
     {
@@ -458,7 +479,7 @@ int run_all_tests(int argc, char* argv[])
         return status;
     }
 
-    status = lock_status(argc, argv);
+    status = (ATCA_STATUS)lock_status(argc, argv);
     if (status != ATCA_SUCCESS)
     {
         printf("lock_status() failed with ret=0x%08X\r\n", status);
@@ -482,13 +503,13 @@ int run_all_tests(int argc, char* argv[])
             return status;
         }
 
-        status = lock_config_zone(argc, argv);
+        status = (ATCA_STATUS)lock_config_zone(argc, argv);
         if (status != ATCA_SUCCESS)
         {
             printf("lock_config_zone() failed with ret=0x%08X\r\n", status);
             return status;
         }
-        status = lock_status(argc, argv);
+        status = (ATCA_STATUS)lock_status(argc, argv);
         if (status != ATCA_SUCCESS)
         {
             printf("lock_status() failed with ret=0x%08X\r\n", status);
@@ -505,13 +526,13 @@ int run_all_tests(int argc, char* argv[])
             return status;
         }
 
-        status = lock_data_zone(argc, argv);
+        status = (ATCA_STATUS)lock_data_zone(argc, argv);
         if (status != ATCA_SUCCESS)
         {
             printf("lock_data_zone() failed with ret=0x%08X\r\n", status);
             return status;
         }
-        status = lock_status(argc, argv);
+        status = (ATCA_STATUS)lock_status(argc, argv);
         if (status != ATCA_SUCCESS)
         {
             printf("lock_status() failed with ret=0x%08X\r\n", status);
@@ -588,4 +609,16 @@ int run_tng_tests(int argc, char* argv[])
 
     atcab_release();
     return 0;
+}
+
+#if defined(ATCA_MBEDTLS) || defined(ATCA_WOLFSSL) || defined(ATCA_OPENSSL)
+int run_crypto_integration_tests(int argc, char* argv[])
+{
+    return run_test(argc, argv, RunCryptoIntegrationTests);
+}
+#endif
+
+int run_pbkdf2_tests(int argc, char* argv[])
+{
+    return run_test(argc, argv, RunPbkdf2Tests);
 }

@@ -176,7 +176,7 @@ ATCA_STATUS calib_info_privkey_valid(ATCADevice device, uint16_t key_id, uint8_t
     return calib_info_base(device, INFO_MODE_KEY_VALID, key_id, is_valid);
 }
 
-#if defined(ATCA_ECC204_SUPPORT)
+#ifdef ATCA_ECC204_SUPPORT
 /** \brief Use Info command to ECC204 config/data zone lock status
  *
  *  \param[in]   device      Device context pointer
@@ -189,113 +189,4 @@ ATCA_STATUS calib_info_lock_status(ATCADevice device, uint16_t param2, uint8_t* 
 {
     return calib_info_base(device, INFO_MODE_LOCK_STATUS, param2, is_locked);
 }
-
-/** \brief Use Info command to check ECC204 Config zone lock status
- *
- *  \param[in]   device       Device context pointer
- *  \param[out]  is_locked    return lock status
- *
- *  \return ATCA_SUCCESS on success, otherwise an error code
- */
-ATCA_STATUS calib_ecc204_is_config_locked(ATCADevice device, bool* is_locked)
-{
-    ATCA_STATUS status = ATCA_SUCCESS;
-    uint16_t param2;
-    uint8_t slot = 0;
-
-    if (NULL == is_locked)
-    {
-        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
-    }
-
-    while (slot <= 3)
-    {
-        param2 = ATCA_ECC204_ZONE_CONFIG | (slot << 1);
-        if (ATCA_SUCCESS != (status = calib_info_lock_status(device, param2, (uint8_t*)is_locked)))
-        {
-            *is_locked = false;
-            break;
-        }
-
-        if (*is_locked)
-        {
-            slot += 1; // increment slot
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    return status;
-}
-
-/** \brief Use Info command to check ECC204 Data zone lock status
- *
- *  \param[in]   device       Device context pointer
- *  \param[out]  is_locked    return lock status
- *
- *  \return ATCA_SUCCESS on success, otherwise an error code
- */
-ATCA_STATUS calib_ecc204_is_data_locked(ATCADevice device, bool* is_locked)
-{
-    ATCA_STATUS status = ATCA_SUCCESS;
-    uint16_t param2;
-    uint8_t slot = 0;
-
-    if (NULL == is_locked)
-    {
-        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
-    }
-
-    while (slot <= 3)
-    {
-        param2 = ATCA_ECC204_ZONE_DATA | (slot << 1);
-        if (ATCA_SUCCESS != (status = calib_info_lock_status(device, param2, (uint8_t*)is_locked)))
-        {
-            *is_locked = false;
-            break;
-        }
-
-        if (*is_locked)
-        {
-            slot += 1; // increment slot
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    return status;
-}
-
-/** \brief Use Info command to check config/data is locked or not
- *
- *  \param[in]   device     Device contect pointer
- *  \param[in]   zone       Config/Data zone
- *  \param[out]  is_locked  return lock status here
- *
- *  \return ATCA_SUCCESS on success, otherwise an error code
- */
-ATCA_STATUS calib_ecc204_is_locked(ATCADevice device, uint8_t zone, bool* is_locked)
-{
-    ATCA_STATUS status = ATCA_SUCCESS;
-
-    if (ATCA_ECC204_ZONE_CONFIG == zone)
-    {
-        status = calib_ecc204_is_config_locked(device, is_locked);
-    }
-    else if (ATCA_ECC204_ZONE_DATA == zone)
-    {
-        status = calib_ecc204_is_data_locked(device, is_locked);
-    }
-    else
-    {
-        status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid zone received");
-    }
-
-    return status;
-}
-
 #endif

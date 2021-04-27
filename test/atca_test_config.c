@@ -97,6 +97,7 @@ int select_204(int argc, char* argv[])
 #if defined(ATCA_HAL_CUSTOM) && defined(ATCA_ATSHA204A_SUPPORT)
     return select_204_custom(argc, argv);
 #else
+    ((void)argc);
     return select_device(ATSHA204A, NULL != argv);
 #endif
 }
@@ -106,6 +107,7 @@ int select_206(int argc, char* argv[])
 #if defined(ATCA_HAL_CUSTOM) && defined(ATCA_ATSHA206A_SUPPORT)
     return select_206_custom(argc, argv);
 #else
+    ((void)argc);
     return select_device(ATSHA206A, NULL != argv);
 #endif
 }
@@ -115,6 +117,7 @@ int select_108(int argc, char* argv[])
 #if defined(ATCA_HAL_CUSTOM) && defined(ATCA_ATECC108A_SUPPORT)
     return select_108_custom(argc, argv);
 #else
+    ((void)argc);
     return select_device(ATECC108A, NULL != argv);
 #endif
 }
@@ -124,6 +127,7 @@ int select_508(int argc, char* argv[])
 #if defined(ATCA_HAL_CUSTOM) && defined(ATCA_ATECC508A_SUPPORT)
     return select_508_custom(argc, argv);
 #else
+    ((void)argc);
     return select_device(ATECC508A, NULL != argv);
 #endif
 }
@@ -133,6 +137,7 @@ int select_608(int argc, char* argv[])
 #if defined(ATCA_HAL_CUSTOM) && defined(ATCA_ATECC608_SUPPORT)
     return select_608_custom(argc, argv);
 #else
+    ((void)argc);
     return select_device(ATECC608, NULL != argv);
 #endif
 }
@@ -142,6 +147,7 @@ int select_ta100(int argc, char* argv[])
 #if defined(ATCA_HAL_CUSTOM) && defined(ATCA_TA100_SUPPORT)
     return select_ta100_custom(argc, argv);
 #else
+    ((void)argc);
     return select_device(TA100, NULL != argv);
 #endif
 }
@@ -151,6 +157,7 @@ int select_ecc204(int argc, char* argv[])
 #if defined(ATCA_HAL_CUSTOM) && defined(ATCA_ECC204_SUPPORT)
     return select_ecc204_custom(argc, argv);
 #else
+    ((void)argc);
     return select_device(ECC204, NULL != argv);
 #endif
 }
@@ -342,6 +349,8 @@ static int opt_address(int argc, char* argv[])
 
 static int opt_quiet(int argc, char* argv[])
 {
+    ((void)argc);
+    ((void)argv);
     g_atca_test_quiet_mode = true;
     return 1;
 }

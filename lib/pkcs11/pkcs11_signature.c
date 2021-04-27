@@ -72,9 +72,17 @@ CK_RV pkcs11_signature_sign_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pM
         return rv;
     }
 
-    pSession->active_object = hKey;
+    if (CKM_VENDOR_DEFINED == pSession->active_mech)
+    {
+        pSession->active_object = hKey;
+        pSession->active_mech = pMechanism->mechanism;
+    }
+    else
+    {
+        rv = CKR_OPERATION_ACTIVE;
+    }
 
-    return CKR_OK;
+    return rv;
 }
 
 /**
@@ -117,15 +125,29 @@ CK_RV pkcs11_signature_sign(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_UL
             {
                 return rv;
             }
-            status = atcab_sign(pKey->slot, pData, pSignature);
-            (void)pkcs11_unlock_context(pLibCtx);
-            if (status)
+
+            switch (pSession->active_mech)
             {
-                PKCS11_DEBUG("atcab_sign: %02X\n", status);
-                return CKR_FUNCTION_FAILED;
+            case CKM_SHA256_HMAC:
+                status = atcab_sha_hmac(pData, ulDataLen, pKey->slot, pSignature, SHA_MODE_TARGET_OUT_ONLY);
+                *pulSignatureLen = ATCA_SHA256_DIGEST_SIZE;
+                break;
+            case CKM_ECDSA:
+                status = atcab_sign(pKey->slot, pData, pSignature);
+                *pulSignatureLen = ATCA_SIG_SIZE;
+                break;
+            default:
+                status = ATCA_GEN_FAIL;
+                break;
+            }
+            pSession->active_mech = CKM_VENDOR_DEFINED;
+
+            (void)pkcs11_unlock_context(pLibCtx);
+            if (CKR_OK == rv && ATCA_SUCCESS != status)
+            {
+                return pkcs11_util_convert_rv(status);
             }
         }
-        *pulSignatureLen = ATCA_SIG_SIZE;
     }
     else
     {
@@ -191,9 +213,18 @@ CK_RV pkcs11_signature_verify_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR 
         return rv;
     }
 
-    pSession->active_object = hKey;
+    if (CKM_VENDOR_DEFINED == pSession->active_mech)
+    {
+        pSession->active_object = hKey;
+        pSession->active_mech = pMechanism->mechanism;
+        rv = CKR_OK;
+    }
+    else
+    {
+        rv = CKR_OPERATION_ACTIVE;
+    }
 
-    return CKR_OK;
+    return rv;
 }
 
 /**
@@ -204,9 +235,7 @@ CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_
     pkcs11_lib_ctx_ptr pLibCtx = NULL;
     pkcs11_session_ctx_ptr pSession;
     pkcs11_object_ptr pKey;
-    atecc508a_config_t * pConfig;
-    ATCA_STATUS status;
-    bool verified = FALSE;
+    CK_BBOOL is_private;
     CK_RV rv;
 
     rv = pkcs11_init_check(&pLibCtx, FALSE);
@@ -228,7 +257,7 @@ CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_
     }
 
     /* Check parameters */
-    if (!pData || ulDataLen != ATCA_SHA_DIGEST_SIZE || !pSignature || ulSignatureLen != VERIFY_256_SIGNATURE_SIZE)
+    if (!pData || ulDataLen != ATCA_SHA256_DIGEST_SIZE || !pSignature || ulSignatureLen != ATCA_ECCP256_SIG_SIZE)
     {
         return CKR_ARGUMENTS_BAD;
     }
@@ -244,24 +273,50 @@ CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_
         return rv;
     }
 
-    if (ATCA_KEY_CONFIG_PRIVATE_MASK & pConfig->KeyConfig[pKey->slot])
+    switch (pSession->active_mech)
     {
-        /* Device can't verify against a private key so ask the device for
-           the public key first then perform an external verify */
-        uint8_t pub_key[ATCA_PUB_KEY_SIZE];
-
-        status = atcab_get_pubkey(pKey->slot, pub_key);
-        if (ATCA_SUCCESS == status)
+    case CKM_SHA256_HMAC:
+    {
+        uint8_t buf[ATCA_SHA256_DIGEST_SIZE];
+        if (ATCA_SUCCESS == (status = atcab_sha_hmac(pData, ulDataLen, pKey->slot, buf, SHA_MODE_TARGET_OUT_ONLY)))
         {
-            status = atcab_verify_extern(pData, pSignature, pub_key, &verified);
+            if (!memcmp(pSignature, buf, ATCA_SHA256_DIGEST_SIZE))
+            {
+                verified = TRUE;
+            }
         }
     }
-    else
-    {
-        /* Assume Public Key has been stored properly and verify against
-           whatever is stored */
-        status = atcab_verify_stored(pData, pSignature, pKey->slot, &verified);
+    break;
+    case CKM_ECDSA:
+        if (CKR_OK == (rv = pkcs11_object_is_private(pKey, &is_private)))
+        {
+            ATCA_STATUS status;
+            bool verified = FALSE;
+
+            if (is_private)
+            {
+                /* Device can't verify against a private key so ask the device for
+                    the public key first then perform an external verify */
+                uint8_t pub_key[ATCA_ECCP256_PUBKEY_SIZE];
+
+                if (ATCA_SUCCESS == (status = atcab_get_pubkey(pKey->slot, pub_key)))
+                {
+                    status = atcab_verify_extern(pData, pSignature, pub_key, &verified);
+                }
+            }
+            else
+            {
+                /* Assume Public Key has been stored properly and verify against
+                    whatever is stored */
+                status = atcab_verify_stored(pData, pSignature, pKey->slot, &verified);
+            }
+        }
+        break;
+    default:
+        status = ATCA_GEN_FAIL;
+        break;
     }
+    pSession->active_mech = CKM_VENDOR_DEFINED;
 
     (void)pkcs11_unlock_context(pLibCtx);
 

@@ -24,6 +24,7 @@ Cryptoauthlib Library Management
 import os.path
 import json
 from ctypes import *
+from ctypes.util import find_library
 from .exceptions import LibraryLoadError
 from .atcaenum import AtcaEnum
 
@@ -77,20 +78,11 @@ def load_cryptoauthlib(lib=None):
     if lib is not None:
         _CRYPTO_LIB = lib
     else:
-        curr_path = os.path.abspath(os.path.dirname(__file__))
-        os.environ['PATH'] = os.path.dirname(__file__) + ';' + os.environ['PATH']
-        if os.path.exists(os.path.join(curr_path, "cryptoauth.dll")):
-            _CRYPTO_LIB = cdll.LoadLibrary(os.path.join(curr_path, "cryptoauth.dll"))
-        elif os.path.exists(os.path.join(curr_path, "libcryptoauth.so")):
-            _CRYPTO_LIB = cdll.LoadLibrary(os.path.join(curr_path, "libcryptoauth.so"))
-        elif os.path.exists(os.path.join(curr_path, "libcryptoauth.dylib")):
-            _CRYPTO_LIB = cdll.LoadLibrary(os.path.join(curr_path, "libcryptoauth.dylib"))
-        else:
-            # Try to find a system installed version
-            try:
-                _CRYPTO_LIB = cdll.LoadLibrary('libcryptoauth.so')
-            except:
-                raise LibraryLoadError('Unable to find cryptoauthlib. You may need to reinstall')
+        try:
+            os.environ['PATH'] = os.path.dirname(__file__) + os.pathsep + os.environ['PATH']
+            _CRYPTO_LIB = cdll.LoadLibrary(find_library('cryptoauth'))
+        except:
+            raise LibraryLoadError('Unable to find cryptoauthlib. You may need to reinstall')
 
 
 def get_cryptoauthlib():

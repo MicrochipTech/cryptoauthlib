@@ -85,6 +85,7 @@ CK_RV pkcs11_object_alloc(pkcs11_object_ptr * ppObject);
 CK_RV pkcs11_object_free(pkcs11_object_ptr pObject);
 CK_RV pkcs11_object_check(pkcs11_object_ptr * ppObject, CK_OBJECT_HANDLE handle);
 CK_RV pkcs11_object_find(pkcs11_object_ptr * ppObject, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount);
+CK_RV pkcs11_object_is_private(pkcs11_object_ptr pObject, CK_BBOOL* is_private);
 
 CK_RV pkcs11_object_get_class(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute);
 CK_RV pkcs11_object_get_name(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute);

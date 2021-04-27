@@ -256,7 +256,7 @@ int atcacert_create_csr_pem(const atcacert_def_t* csr_def, char* csr, size_t* cs
 
     // Create DER CSR
     csr_der_size = csr_max_size;
-    status = atcacert_create_csr(csr_def, (uint8_t*)csr, &csr_der_size);
+    status = (ATCA_STATUS)atcacert_create_csr(csr_def, (uint8_t*)csr, &csr_der_size);
     if (status != ATCACERT_E_SUCCESS)
     {
         return status;
@@ -267,7 +267,7 @@ int atcacert_create_csr_pem(const atcacert_def_t* csr_def, char* csr, size_t* cs
     memmove(csr + (csr_max_size - csr_der_size), csr, csr_der_size);
 
     *csr_size = csr_max_size;
-    status = atcacert_encode_pem_csr((uint8_t*)(csr + (csr_max_size - csr_der_size)), csr_der_size, csr, csr_size);
+    status = (ATCA_STATUS)atcacert_encode_pem_csr((uint8_t*)(csr + (csr_max_size - csr_der_size)), csr_der_size, csr, csr_size);
     if (status != ATCACERT_E_SUCCESS)
     {
         return status;
@@ -293,13 +293,13 @@ int atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, size_t* csr
         // Check the pointers
         if (csr_def == NULL || csr == NULL || csr == NULL || csr_size == NULL)
         {
-            status = ATCACERT_E_BAD_PARAMS;
+            status = (ATCA_STATUS)ATCACERT_E_BAD_PARAMS;
             ATCA_TRACE(status, "Null input parameter"); break;
         }
         // Check the csr buffer size
         if (*csr_size < csr_def->cert_template_size)
         {
-            status = ATCACERT_E_BUFFER_TOO_SMALL;
+            status = (ATCA_STATUS)ATCACERT_E_BUFFER_TOO_SMALL;
             ATCA_TRACE(status, "CSR buffer size too small"); break;
         }
         // Copy the CSR template into the CSR that will be returned
@@ -333,14 +333,14 @@ int atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, size_t* csr
             }
         }
         // Insert the public key into the CSR template
-        status = atcacert_set_cert_element(csr_def, pub_loc, csr, *csr_size, pub_key, ATCA_PUB_KEY_SIZE);
+        status = (ATCA_STATUS)atcacert_set_cert_element(csr_def, pub_loc, csr, *csr_size, pub_key, ATCA_PUB_KEY_SIZE);
         if (status != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "Setting CSR public key failed"); break;
         }
 
         // Get the CSR TBS digest
-        status = atcacert_get_tbs_digest(csr_def, csr, *csr_size, tbs_digest);
+        status = (ATCA_STATUS)atcacert_get_tbs_digest(csr_def, csr, *csr_size, tbs_digest);
         if (status != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "Get TBS digest failed"); break;
@@ -354,7 +354,7 @@ int atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, size_t* csr
         }
 
         // Insert the signature into the CSR template
-        status = atcacert_set_signature(csr_def, csr, csr_size, csr_max_size, sig);
+        status = (ATCA_STATUS)atcacert_set_signature(csr_def, csr, csr_size, csr_max_size, sig);
         if (status != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "Setting CSR signature failed"); break;

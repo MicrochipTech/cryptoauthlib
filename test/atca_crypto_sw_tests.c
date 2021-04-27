@@ -25,11 +25,7 @@
  * THIS SOFTWARE.
  */
 
-#ifdef _WIN32
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#endif
+#include "cryptoauthlib.h"
 
 #include "atca_crypto_sw_tests.h"
 #include "crypto/atca_crypto_sw.h"
@@ -48,6 +44,9 @@ static const uint8_t nist_hash_msg3[] = "a";
 
 int atca_crypto_sw_tests(int argc, char * argv[])
 {
+    ((void)argc);
+    ((void)argv);
+
     UnityBegin("atca_crypto_sw_tests.c");
 
     RUN_TEST(test_atcac_sw_sha1_nist1);
@@ -141,7 +140,7 @@ void test_atcac_sw_sha1_nist3(void)
     TEST_ASSERT_EQUAL_MEMORY(digest_ref, digest, sizeof(digest_ref));
 }
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__linux__)
 static void hex_to_uint8(const char hex_str[2], uint8_t* num)
 {
     *num = 0;
@@ -206,6 +205,14 @@ static int read_rsp_hex_value(FILE* file, const char* name, uint8_t* data, size_
         {
             continue;
         }
+        else
+        {
+            size_t ln = strlen(line);
+            if (ln > 0 && line[ln-2] == '\r')
+            {
+                line[ln-1] = 0;
+            }
+        }
 
         if (memcmp(line, name, name_size) == 0)
         {
@@ -239,6 +246,14 @@ static int read_rsp_int_value(FILE* file, const char* name, int* value)
         {
             continue;
         }
+        else
+        {
+            size_t ln = strlen(line);
+            if (ln > 0 && line[ln-2] == '\r')
+            {
+                line[ln-1] = 0;
+            }
+        }
 
         if (memcmp(line, name, name_size) == 0)
         {
@@ -263,8 +278,9 @@ static int read_rsp_int_value(FILE* file, const char* name, int* value)
 
 static void test_atcac_sw_sha1_nist_simple(const char* filename)
 {
-#ifndef _WIN32
-    TEST_IGNORE_MESSAGE("Test only available under windows.");
+#if !defined(_WIN32) && !defined(__linux__)
+    ((void)filename);
+    TEST_IGNORE_MESSAGE("Test is not available for this platform.");
 #else
     FILE* rsp_file = NULL;
     int ret = ATCA_SUCCESS;
@@ -319,8 +335,8 @@ void test_atcac_sw_sha1_nist_long(void)
 
 void test_atcac_sw_sha1_nist_monte(void)
 {
-#ifndef _WIN32
-    TEST_IGNORE_MESSAGE("Test only available under windows.");
+#if !defined(_WIN32) && !defined(__linux__)
+    TEST_IGNORE_MESSAGE("Test is not available for this platform.");
 #else
     FILE* rsp_file = NULL;
     int ret = ATCA_SUCCESS;
@@ -418,8 +434,9 @@ void test_atcac_sw_sha2_256_nist3(void)
 
 static void test_atcac_sw_sha2_256_nist_simple(const char* filename)
 {
-#ifndef _WIN32
-    TEST_IGNORE_MESSAGE("Test only available under windows.");
+#if !defined(_WIN32) && !defined(__linux__)
+    ((void)filename);
+    TEST_IGNORE_MESSAGE("Test is not available for this platform.");
 #else
     FILE* rsp_file = NULL;
     int ret = ATCA_SUCCESS;
@@ -474,8 +491,8 @@ void test_atcac_sw_sha2_256_nist_long(void)
 
 void test_atcac_sw_sha2_256_nist_monte(void)
 {
-#ifndef _WIN32
-    TEST_IGNORE_MESSAGE("Test only available under windows.");
+#if !defined(_WIN32) && !defined(__linux__) 
+    TEST_IGNORE_MESSAGE("Test is not available for this platform.");
 #else
     FILE* rsp_file = NULL;
     int ret = ATCA_SUCCESS;
@@ -518,7 +535,6 @@ void test_atcac_aes128_gcm(void)
 {
     ATCA_STATUS status;
     uint8_t test_index;
-    uint8_t aes_key_block = 0;
     uint8_t ciphertext[GCM_TEST_VECTORS_DATA_SIZE_MAX];
     size_t ct_size;
     uint8_t plaintext[GCM_TEST_VECTORS_DATA_SIZE_MAX];
@@ -685,8 +701,6 @@ void test_atcac_aes128_cmac(void)
 }
 #endif
 
-#define ATCA_SHA_DIGEST_SIZE        32
-
 void test_atcac_sha256_hmac(void)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
@@ -733,8 +747,8 @@ void test_atcac_sha256_hmac(void)
 
 void test_atcac_sha256_hmac_nist(void)
 {
-#ifndef _WIN32
-    TEST_IGNORE_MESSAGE("Test only available under windows.");
+#if !defined(_WIN32) && !defined(__linux__) 
+    TEST_IGNORE_MESSAGE("Test is not available for this platform.");
 #else
     FILE* rsp_file = NULL;
     int ret = ATCA_SUCCESS;
@@ -799,7 +813,7 @@ void test_atcac_verify_nist(void)
     uint8_t digest[32];
     atcac_pk_ctx pkey_ctx;
     ATCA_STATUS status;
-    int i;
+    size_t i;
 
     /* Test verification using [P-256,SHA-256] vectors */
     for (i = 0; i < ecdsa_p256_test_vectors_count; i++)
@@ -813,7 +827,7 @@ void test_atcac_verify_nist(void)
         memcpy(&signature[32], ecdsa_p256_test_vectors[i].S, 32);
 
         /* Hash the message */
-        status = atcac_sw_sha2_256(&ecdsa_p256_test_vectors[i].Msg, sizeof(ecdsa_p256_test_vectors[i].Msg), digest);
+        status = atcac_sw_sha2_256(ecdsa_p256_test_vectors[i].Msg, sizeof(ecdsa_p256_test_vectors[i].Msg), digest);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
         /* Initialize the key using the provided X,Y cordinantes */
@@ -922,7 +936,7 @@ void test_atcac_derive_nist(void)
     atcac_pk_ctx pub_ctx;
     uint8_t result[32];
     size_t result_size;
-    int i;
+    size_t i;
 
     /* Test verification using [P-256] vectors */
     for (i = 0; i < ecdh_p256_test_vectors_count; i++)
@@ -933,7 +947,7 @@ void test_atcac_derive_nist(void)
         memcpy(&pubkey[32], ecdh_p256_test_vectors[i].QCAVSy, 32);
 
         (void)atcac_pk_init(&pub_ctx, pubkey, sizeof(pubkey), 0, true);
-        (void)atcac_pk_init(&pri_ctx, ecdh_p256_test_vectors[i].dIUT, 32, 0, false);
+        (void)atcac_pk_init(&pri_ctx, (uint8_t*)ecdh_p256_test_vectors[i].dIUT, 32, 0, false);
 
         result_size = sizeof(result);
         status = atcac_pk_derive(&pri_ctx, &pub_ctx, result, &result_size);
@@ -946,6 +960,5 @@ void test_atcac_derive_nist(void)
         TEST_ASSERT_EQUAL_MEMORY(ecdh_p256_test_vectors[i].ZIUT, result, 32);
     }
 }
-
 
 #endif

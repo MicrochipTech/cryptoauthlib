@@ -133,7 +133,7 @@ int mbedtls_ecdh_compute_shared(mbedtls_ecp_group *grp, mbedtls_mpi *z,
     if (!ret)
     {
         slotid = *(uint16_t*)d->p;
-        if (ATECC608 == atcab_get_device()->mIface->mIfaceCFG->devtype)
+        if (ATECC608 == atcab_get_device_type())
         {
             ret = atca_mbedtls_ecdh_ioprot_cb(secret);
             if (!ret)

@@ -14,11 +14,11 @@
 #endif
 
 #ifndef pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS
-#define pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS        pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS
+#define pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS        "device private"
 #endif
 
 #ifndef pkcs11configLABEL_DEVICE_PUBLIC_KEY_FOR_TLS
-#define pkcs11configLABEL_DEVICE_PUBLIC_KEY_FOR_TLS         pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS
+#define pkcs11configLABEL_DEVICE_PUBLIC_KEY_FOR_TLS         "device public"
 #endif
 
 /** Standard Configuration Structure for ATECC608 devices */
@@ -185,13 +185,14 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr pSlot)
 CK_RV pkcs11_config_interface(pkcs11_slot_ctx_ptr pSlot)
 {
     CK_RV rv = CKR_ARGUMENTS_BAD;
+
     if (pSlot)
     {
 #ifdef ATCA_HAL_I2C
-    cfg_ateccx08a_i2c_default.atcai2c.slave_address = 0xC0;
-    slot_ctx->interface_config = &cfg_ateccx08a_i2c_default;
+        cfg_ateccx08a_i2c_default.atcai2c.slave_address = 0xC0;
+        slot_ctx->interface_config = &cfg_ateccx08a_i2c_default;
 #else
-    slot_ctx->interface_config = &cfg_ateccx08a_kithid_default;
+        slot_ctx->interface_config = &cfg_ateccx08a_kithid_default;
 #endif
     }
     return rv;

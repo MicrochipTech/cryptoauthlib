@@ -215,14 +215,14 @@ static const device_execution_time_t device_execution_time_ecc204[] = {
  *  \param[in] ca_cmd  Command object for which the execution times are associated
  *  \return ATCA_SUCCESS
  */
-ATCA_STATUS calib_get_execution_time(uint8_t opcode, ATCACommand ca_cmd)
+ATCA_STATUS calib_get_execution_time(uint8_t opcode, ATCADevice device)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     const device_execution_time_t *execution_times;
     uint8_t i, no_of_commands;
 
 
-    switch (ca_cmd->dt)
+    switch (device->mIface.mIfaceCFG->devtype)
     {
     case ATSHA204A:
         execution_times = device_execution_time_204;
@@ -245,12 +245,12 @@ ATCA_STATUS calib_get_execution_time(uint8_t opcode, ATCACommand ca_cmd)
         break;
 
     case ATECC608:
-        if (ca_cmd->clock_divider == ATCA_CHIPMODE_CLOCK_DIV_M1)
+        if (device->clock_divider == ATCA_CHIPMODE_CLOCK_DIV_M1)
         {
             execution_times = device_execution_time_608_m1;
             no_of_commands = sizeof(device_execution_time_608_m1) / sizeof(device_execution_time_t);
         }
-        else if (ca_cmd->clock_divider == ATCA_CHIPMODE_CLOCK_DIV_M2)
+        else if (device->clock_divider == ATCA_CHIPMODE_CLOCK_DIV_M2)
         {
             execution_times = device_execution_time_608_m2;
             no_of_commands = sizeof(device_execution_time_608_m2) / sizeof(device_execution_time_t);
@@ -274,18 +274,18 @@ ATCA_STATUS calib_get_execution_time(uint8_t opcode, ATCACommand ca_cmd)
         break;
     }
 
-    ca_cmd->execution_time_msec = ATCA_UNSUPPORTED_CMD;
+    device->execution_time_msec = ATCA_UNSUPPORTED_CMD;
 
     for (i = 0; i < no_of_commands; i++)
     {
         if (execution_times[i].opcode == opcode)
         {
-            ca_cmd->execution_time_msec = execution_times[i].execution_time_msec;
+            device->execution_time_msec = execution_times[i].execution_time_msec;
             break;
         }
     }
 
-    if (ca_cmd->execution_time_msec == ATCA_UNSUPPORTED_CMD)
+    if (device->execution_time_msec == ATCA_UNSUPPORTED_CMD)
     {
         status = ATCA_BAD_OPCODE;
     }
@@ -304,7 +304,8 @@ ATCA_STATUS calib_execute_send(ATCADevice device, uint8_t device_address, uint8_
     }
 
 #ifdef ATCA_HAL_LEGACY_API
-    status = atsend(device->mIface, 0xFF, (uint8_t*)txdata, txlength - 1);
+    ((void)device_address);
+    status = atsend(&device->mIface, 0xFF, (uint8_t*)txdata, txlength - 1);
 #else
     if (atca_iface_is_kit(&device->mIface))
     {
@@ -329,8 +330,6 @@ ATCA_STATUS calib_execute_send(ATCADevice device, uint8_t device_address, uint8_
 ATCA_STATUS calib_execute_receive(ATCADevice device, uint8_t device_address, uint8_t* rxdata, uint16_t* rxlength)
 {
     ATCA_STATUS status = ATCA_COMM_FAIL;
-    uint16_t read_length = 1;
-    uint8_t word_address;
 
     if ((NULL == rxlength) || (NULL == rxdata))
     {
@@ -338,8 +337,12 @@ ATCA_STATUS calib_execute_receive(ATCADevice device, uint8_t device_address, uin
     }
 
 #ifdef ATCA_HAL_LEGACY_API
-    status = atsend(device->mIface, txdata[0], (uint8_t*)txdata, txlength);
+    ((void)device_address);
+    status = atreceive(&device->mIface, 0, rxdata, rxlength);
 #else
+    uint16_t read_length = 1;
+    uint8_t word_address;
+
     if (atca_iface_is_kit(&device->mIface))
     {
         status = atreceive(&device->mIface, 0, rxdata, rxlength);
@@ -437,11 +440,11 @@ ATCA_STATUS calib_execute_command(ATCAPacket* packet, ATCADevice device)
     do
     {
 #ifdef ATCA_NO_POLL
-        if ((status = calib_get_execution_time(packet->opcode, device->mCommands)) != ATCA_SUCCESS)
+        if ((status = calib_get_execution_time(packet->opcode, device)) != ATCA_SUCCESS)
         {
             return status;
         }
-        execution_or_wait_time = device->mCommands->execution_time_msec;
+        execution_or_wait_time = device->execution_time_msec;
         max_delay_count = 0;
 #else
         execution_or_wait_time = ATCA_POLLING_INIT_TIME_MSEC;

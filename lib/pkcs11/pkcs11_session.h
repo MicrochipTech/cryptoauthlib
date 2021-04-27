@@ -35,21 +35,40 @@
 extern "C" {
 #endif
 
+/* Some mechanism require the context to be initialized first and it is done
+   in a previous command than the target operation */
+typedef union _pkcs11_session_mech_ctx
+{
+    struct
+    {
+        atca_hmac_sha256_ctx_t context;
+    } hmac;
+    struct
+    {
+        atca_aes_cmac_ctx_t context;
+    } cmac;
+    struct
+    {
+        atca_aes_gcm_ctx_t context;
+        CK_BYTE            tag_len;
+    } gcm;
+} pkcs11_session_mech_ctx, *pkcs11_session_mech_ctx_ptr;
+
 /** Session Context */
 typedef struct _pkcs11_session_ctx
 {
-    CK_BBOOL            initialized;
-    pkcs11_slot_ctx_ptr slot;
-    CK_SESSION_HANDLE   handle;
-    CK_STATE            state;
-    CK_ULONG            error;
-    CK_ATTRIBUTE_PTR    attrib_list;
-    CK_ULONG            attrib_count;
-    CK_ULONG            object_index;
-    CK_ULONG            object_count;
-    CK_OBJECT_HANDLE    active_object;
-    CK_BBOOL            logged_in;
-    CK_BYTE             read_key[32];           /**< Accepted through C_Login as the user pin */
+    CK_BBOOL                initialized;
+    pkcs11_slot_ctx_ptr     slot;
+    CK_SESSION_HANDLE       handle;
+    CK_STATE                state;
+    CK_ULONG                error;
+    CK_ATTRIBUTE_PTR        attrib_list;
+    CK_ULONG                attrib_count;
+    CK_ULONG                object_index;
+    CK_ULONG                object_count;
+    CK_OBJECT_HANDLE        active_object;
+    CK_MECHANISM_TYPE       active_mech;
+    pkcs11_session_mech_ctx active_mech_data;
 } pkcs11_session_ctx, *pkcs11_session_ctx_ptr;
 
 #ifdef __cplusplus

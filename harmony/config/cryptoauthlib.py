@@ -36,6 +36,17 @@ _HAL_FILES = ["atca_hal.c", "atca_hal.h", "atca_start_config.h", "atca_start_ifa
 _CORE_PATHS = ['crypto/**/*', 'crypto/*', 'jwt/*', '*']
 _CA_PATHS = ['atcacert/*', 'calib/*', 'host/*']
 _TA_PATHS = ['talib/*']
+_SHA206_PATHS = ['api_206a/*']
+
+
+def CALSecFileUpdate(symbol, event):
+    symObj = event['symbol']
+    selected_key = symObj.getSelectedKey()
+
+    if selected_key == "SECURE":
+        symbol.setSecurity("SECURE")
+    elif selected_key == "NON_SECURE":
+        symbol.setSecurity("NON_SECURE")
 
 
 def add_value_to_list(symbol_list, value):
@@ -121,6 +132,7 @@ def AddFile(component, src_path, dest_path, proj_path, file_type = "SOURCE", isM
     srcFile.setOutputName(os.path.basename(src_path))
     srcFile.setMarkup(isMarkup)
     srcFile.setEnabled(enable)
+    srcFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
     numFileCntr += 1
 
 
@@ -179,6 +191,8 @@ def onAttachmentConnected(source, target):
                 calTaEnableFce.setValue(True)
         else:
             _ca_dev_cnt += 1
+            if 'SHA206' in targetComponentID:
+                updateFileEnable(srcComponent, _SHA206_PATHS, True)
             updateFileEnable(srcComponent, _CA_PATHS, True)
     
     if srcConnectionID == 'FreeRTOS':
@@ -221,6 +235,8 @@ def onAttachmentDisconnected(source, target):
         else:
             _ca_dev_cnt -= 1
             if 0 == _ca_dev_cnt:
+                if 'SHA206' in targetComponentID:
+                    updateFileEnable(srcComponent, _SHA206_PATHS, False)
                 updateFileEnable(srcComponent, _CA_PATHS, False)   
         
 
@@ -264,6 +280,7 @@ def instantiateComponent(calComponent):
 
     defSym.setValue( '{0};{0}/crypto;{0}/pkcs11'.format(targetPath))
     defSym.setAppend(True, ';')
+    defSym.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
 
     # Add core library files
     for search_path in _CORE_PATHS:
@@ -278,6 +295,10 @@ def instantiateComponent(calComponent):
     for search_path in _TA_PATHS:
         AddFilesDir(calComponent, 'lib', search_path, 'library/cryptoauthlib',
             'config/{}/library/cryptoauthlib'.format(configName), enable=False)
+
+    for search_path in _SHA206_PATHS:
+        AddFilesDir(calComponent, 'app', search_path, 'library/cryptoauthlib/app',
+            'config/{}/library/cryptoauthlib/app'.format(configName), enable=False)
 
     # Add individual files
     for hal_file in _HAL_FILES:
@@ -321,6 +342,7 @@ def instantiateComponent(calComponent):
     calLibFreeRTOSSrcFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/hal/")
     calLibFreeRTOSSrcFile.setType('SOURCE')
     calLibFreeRTOSSrcFile.setEnabled(False)
+    calLibFreeRTOSSrcFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
 
     # Replaces cryptoauthlib host functions with WolfCrypto provided ones
     calEnableWolfCrypto = calComponent.createBooleanSymbol('CAL_ENABLE_WOLFCRYPTO', None)
@@ -334,6 +356,7 @@ def instantiateComponent(calComponent):
     calLibWolfSSLSrcFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/wolfssl/")
     calLibWolfSSLSrcFile.setType('SOURCE')
     calLibWolfSSLSrcFile.setEnabled(False)
+    calLibWolfSSLSrcFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
 
     # Add HAL Drivers
     calLibI2cHalSrcFile = calComponent.createFileSymbol("CAL_FILE_SRC_HAL_I2C", None)
@@ -343,6 +366,7 @@ def instantiateComponent(calComponent):
     calLibI2cHalSrcFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/hal/")
     calLibI2cHalSrcFile.setType('SOURCE')
     calLibI2cHalSrcFile.setEnabled(False)
+    calLibI2cHalSrcFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
 
     calLibUartHalSrcFile = calComponent.createFileSymbol("CAL_FILE_SRC_HAL_UART", None)
     calLibUartHalSrcFile.setSourcePath("lib/hal/hal_uart_harmony.c")
@@ -351,6 +375,7 @@ def instantiateComponent(calComponent):
     calLibUartHalSrcFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/hal/")
     calLibUartHalSrcFile.setType('SOURCE')
     calLibUartHalSrcFile.setEnabled(False)
+    calLibUartHalSrcFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
     
     calLibSwiUartHalSrcFile = calComponent.createFileSymbol("CAL_FILE_SRC_HAL_SWI_UART", None)
     calLibSwiUartHalSrcFile.setSourcePath("lib/hal/hal_swi_uart.c")
@@ -359,6 +384,7 @@ def instantiateComponent(calComponent):
     calLibSwiUartHalSrcFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/hal/")
     calLibSwiUartHalSrcFile.setType('SOURCE')
     calLibSwiUartHalSrcFile.setEnabled(False)
+    calLibSwiUartHalSrcFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
 
     calLibSwiBBHalSrcFile = calComponent.createFileSymbol("CAL_FILE_SRC_HAL_BB", None)
     calLibSwiBBHalSrcFile.setSourcePath("lib/hal/hal_gpio_harmony.c")
@@ -367,6 +393,7 @@ def instantiateComponent(calComponent):
     calLibSwiBBHalSrcFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/hal/")
     calLibSwiBBHalSrcFile.setType('SOURCE')
     calLibSwiBBHalSrcFile.setEnabled(False)
+    calLibSwiBBHalSrcFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
 
     calLibSwiBBHalSrcFile = calComponent.createFileSymbol("CAL_FILE_SRC_HAL_SWI_BB", None)
     calLibSwiBBHalSrcFile.setSourcePath("lib/hal/hal_swi_bitbang_harmony.c")
@@ -375,6 +402,7 @@ def instantiateComponent(calComponent):
     calLibSwiBBHalSrcFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/hal/")
     calLibSwiBBHalSrcFile.setType('SOURCE')
     calLibSwiBBHalSrcFile.setEnabled(False)
+    calLibSwiBBHalSrcFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
     
     calLibSpiHalSrcFile = calComponent.createFileSymbol("CAL_FILE_SRC_HAL_SPI", None)
     calLibSpiHalSrcFile.setSourcePath("lib/hal/hal_spi_harmony.c")
@@ -383,6 +411,7 @@ def instantiateComponent(calComponent):
     calLibSpiHalSrcFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/hal/")
     calLibSpiHalSrcFile.setType('SOURCE')
     calLibSpiHalSrcFile.setEnabled(False)
+    calLibSpiHalSrcFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
 
     # List of HALs that will be included based on device connections
     calHalList = calComponent.createListSymbol('CAL_HAL_LIST', None)
@@ -419,6 +448,7 @@ def instantiateComponent(calComponent):
     calLibCoreM0PlusSrcFile.setType("SOURCE")
     calLibCoreM0PlusSrcFile.setOverwrite(True)
     calLibCoreM0PlusSrcFile.setMarkup(True)
+    calLibCoreM0PlusSrcFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
 
     # Configuration header file 
     calLibConfigFile = calComponent.createFileSymbol("CAL_LIB_CONFIG_DATA", None)
@@ -429,6 +459,7 @@ def instantiateComponent(calComponent):
     calLibConfigFile.setType("HEADER")
     calLibConfigFile.setOverwrite(True)
     calLibConfigFile.setMarkup(True)
+    calLibConfigFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
 
 
     # This selects and configures the proper processor specific delay implementation as one
@@ -446,6 +477,14 @@ def instantiateComponent(calComponent):
     calLibDelaySrcFile.setType("SOURCE")
     calLibDelaySrcFile.setOverwrite(True)
     calLibDelaySrcFile.setMarkup(True)
+    calLibDelaySrcFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
 
-
-
+    if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
+        calSecurity = calComponent.createKeyValueSetSymbol("CAL_NON_SECURE", None)
+        calSecurity.setLabel("Security mode")
+        calSecurity.addKey("NON_SECURE", "0", "False")
+        calSecurity.addKey("SECURE", "1", "True")
+        calSecurity.setOutputMode("Key")
+        calSecurity.setDisplayMode("Key")
+        calSecurity.setVisible(True)
+        calSecurity.setDefaultValue(0)

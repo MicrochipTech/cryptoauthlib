@@ -53,7 +53,8 @@ def loadModule():
     for dev in _CALIB_SUPPORTED_DEVICES:
         comp = Module.CreateGeneratorComponent(dev.lower(), dev, "/Harmony/Drivers/Crypto", "/harmony/config/device_common.py", "/harmony/config/device_instance.py")
         comp.addDependency("cryptoauthlib", "CA_LIB", True, False)
-        comp.addMultiDependency('{}_DEP_PLIB_I2C'.format(dev.upper()), 'I2C', 'I2C', False)
+        if 'ATSHA206A' not in dev:
+            comp.addMultiDependency('{}_DEP_PLIB_I2C'.format(dev.upper()), 'I2C', 'I2C', False)
         comp.addMultiDependency('{}_DEP_PLIB_SWI'.format(dev.upper()), 'UART', 'SWI', False)
 
     if os.path.exists(Module.getPath() + 'lib/talib/talib_basic.h'):

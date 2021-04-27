@@ -23,6 +23,14 @@ ATCA_STATUS calib_get_addr(uint8_t zone, uint16_t slot, uint8_t block, uint8_t o
 ATCA_STATUS calib_get_zone_size(ATCADevice device, uint8_t zone, uint16_t slot, size_t* size);
 ATCA_STATUS calib_ecc204_get_addr(uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t* addr);
 
+/* Helper Functions */
+ATCA_STATUS calib_is_locked(ATCADevice device, uint8_t zone, bool* is_locked);
+ATCA_STATUS calib_is_slot_locked(ATCADevice device, uint16_t slot, bool* is_locked);
+ATCA_STATUS calib_is_private(ATCADevice device, uint16_t slot, bool* is_private);
+ATCA_STATUS calib_ecc204_is_locked(ATCADevice device, uint8_t zone, bool* is_locked);
+ATCA_STATUS calib_ecc204_is_data_locked(ATCADevice device, bool* is_locked);
+ATCA_STATUS calib_ecc204_is_config_locked(ATCADevice device, bool* is_locked);
+
 //AES command functions
 ATCA_STATUS calib_aes(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* aes_in, uint8_t* aes_out);
 ATCA_STATUS calib_aes_encrypt(ATCADevice device, uint16_t key_id, uint8_t key_block, const uint8_t* plaintext, uint8_t* ciphertext);
@@ -73,9 +81,6 @@ ATCA_STATUS calib_info_set_latch(ATCADevice device, bool state);
 ATCA_STATUS calib_info_get_latch(ATCADevice device, bool* state);
 ATCA_STATUS calib_info_privkey_valid(ATCADevice device, uint16_t key_id, uint8_t* is_valid);
 ATCA_STATUS calib_info_lock_status(ATCADevice device, uint16_t param2, uint8_t* is_locked);
-ATCA_STATUS calib_ecc204_is_locked(ATCADevice device, uint8_t zone, bool* is_locked);
-ATCA_STATUS calib_ecc204_is_data_locked(ATCADevice device, bool* is_locked);
-ATCA_STATUS calib_ecc204_is_config_locked(ATCADevice device, bool* is_locked);
 
 // KDF command functions
 ATCA_STATUS calib_kdf(ATCADevice device, uint8_t mode, uint16_t key_id, const uint32_t details, const uint8_t* message, uint8_t* out_data, uint8_t* out_nonce);
@@ -117,8 +122,6 @@ ATCA_STATUS calib_random(ATCADevice device, uint8_t* rand_out);
 
 // Read command functions
 ATCA_STATUS calib_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint8_t *data, uint8_t len);
-ATCA_STATUS calib_is_locked(ATCADevice device, uint8_t zone, bool *is_locked);
-ATCA_STATUS calib_is_slot_locked(ATCADevice device, uint16_t slot, bool *is_locked);
 ATCA_STATUS calib_read_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot, size_t offset, uint8_t *data, size_t length);
 ATCA_STATUS calib_read_serial_number(ATCADevice device, uint8_t* serial_number);
 ATCA_STATUS calib_read_pubkey(ATCADevice device, uint16_t slot, uint8_t *public_key);
@@ -203,7 +206,7 @@ ATCA_STATUS calib_ecc204_write(ATCADevice device, uint8_t zone, uint16_t address
                                const uint8_t *mac);
 ATCA_STATUS calib_ecc204_write_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint8_t block,
                                     uint8_t offset, const uint8_t *data, uint8_t len);
-ATCA_STATUS calib_ecc204_write_config_zone(ATCADevice device, uint8_t* config_data);
+ATCA_STATUS calib_ecc204_write_config_zone(ATCADevice device, const uint8_t* config_data);
 ATCA_STATUS calib_ecc204_write_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot, size_t block,
                                           const uint8_t *data, size_t length);
 

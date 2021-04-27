@@ -28,14 +28,6 @@
 // Undefine the Unity FAIL macro so it doesn't conflict with the ASF definition
 #undef FAIL
 
-#if !defined(_WIN32) && !defined(__linux__) && !defined(__XC32__) && !defined(__APPLE__) && !defined(ESP32)
-#ifdef ATMEL_START
-#include "atmel_start.h"
-#else
-#include <asf.h>
-#endif
-#endif
-
 #include <string.h>
 #ifndef _WIN32
 #include "cbuf.h"
@@ -50,17 +42,17 @@
 #include "api_talib/test_talib.h"
 #endif
 
-static void help(int argc, char* argv[]);
+static int help(int argc, char* argv[]);
 
 #if defined(_WIN32) || defined(__linux__) || defined(__APPLE__)
-static void call_exit(int argc, char* argv[]);
+static int call_exit(int argc, char* argv[]);
 #endif
 
 
 // *INDENT-OFF*  - Preserve formatting
 static t_menu_info mas_menu_info[] =
 {
-    { "help",     "Display Menu",                                   (fp_menu_handler)help                },
+    { "help",     "Display Menu",                                   help                                 },
 #ifdef ATCA_ATSHA204A_SUPPORT
     { "sha204",      "Set Target Device to ATSHA204A",              select_204                           },
 #endif
@@ -82,27 +74,27 @@ static t_menu_info mas_menu_info[] =
 #ifdef ATCA_TA100_SUPPORT
     { "ta100",    "Set Target Device to TA100",                     select_ta100                         },
 #endif
-    { "info",     "Get the Chip Revision",                          (fp_menu_handler)info                },
+    { "info",     "Get the Chip Revision",                          info                                 },
     { "sernum",   "Get the Chip Serial Number",                     read_sernum                          },
     { "rand",     "Generate Some Random Numbers",                   do_randoms                           },
-    { "readcfg",  "Read the Config Zone",                           (fp_menu_handler)read_config         },
+    { "readcfg",  "Read the Config Zone",                           read_config                          },
     { "lockstat", "Zone Lock Status",                               lock_status                          },
 #ifdef ATCA_TEST_LOCK_ENABLE
-    { "lockcfg",  "Lock the Config Zone",                           (fp_menu_handler)lock_config         },
-    { "lockdata", "Lock Data and OTP Zones",                        (fp_menu_handler)lock_data           },
-    { "all",      "Run all unit tests, locking as needed.",         (fp_menu_handler)run_all_tests       },
+    { "lockcfg",  "Lock the Config Zone",                           lock_config                          },
+    { "lockdata", "Lock Data and OTP Zones",                        lock_data                            },
+    { "all",      "Run all unit tests, locking as needed.",         run_all_tests                        },
 #endif
-    { "tng",      "Run unit tests on TNG type part.",               (fp_menu_handler)run_tng_tests       },
+    { "tng",      "Run unit tests on TNG type part.",               run_tng_tests                        },
 #ifndef DO_NOT_TEST_BASIC_UNIT
-    { "basic",    "Run Basic Test on Selected Device",              (fp_menu_handler)run_basic_tests     },
+    { "basic",    "Run Basic Test on Selected Device",              run_basic_tests                      },
 #ifdef ATCA_TEST_LOCK_ENABLE
-    { "otpzero",  "Zero Out OTP Zone",                              (fp_menu_handler)run_otpzero_tests   },
+    { "otpzero",  "Zero Out OTP Zone",                              run_otpzero_tests                    },
 #endif
-    { "util",     "Run Helper Function Tests",                      (fp_menu_handler)run_helper_tests    },
+    { "util",     "Run Helper Function Tests",                      run_helper_tests                     },
 #ifdef ATCA_ATECC608_SUPPORT
-    { "clkdivm0", "Set ATECC608 to ClockDivider M0(0x00)",          (fp_menu_handler)set_clock_divider_m0},
-    { "clkdivm1", "Set ATECC608 to ClockDivider M1(0x05)",          (fp_menu_handler)set_clock_divider_m1},
-    { "clkdivm2", "Set ATECC608 to ClockDivider M2(0x0D)",          (fp_menu_handler)set_clock_divider_m2},
+    { "clkdivm0", "Set ATECC608 to ClockDivider M0(0x00)",          set_clock_divider_m0                 },
+    { "clkdivm1", "Set ATECC608 to ClockDivider M1(0x05)",          set_clock_divider_m1                 },
+    { "clkdivm2", "Set ATECC608 to ClockDivider M2(0x0D)",          set_clock_divider_m2                 },
 #endif
 #endif /* DO_NOT_TEST_BASIC_UNIT */
 #ifndef DO_NOT_TEST_CERT
@@ -110,7 +102,11 @@ static t_menu_info mas_menu_info[] =
     { "cio",      "Run Unit Test on Cert I/O",                      certio_unit_tests                    },
 #endif
 #ifndef DO_NOT_TEST_SW_CRYPTO
-    { "crypto",   "Run Unit Tests for Software Crypto Functions",   (fp_menu_handler)atca_crypto_sw_tests},
+    { "crypto",   "Run Unit Tests for Software Crypto Functions",   atca_crypto_sw_tests                 },
+#endif
+    { "pbkdf2",   "Run pbkdf2 tests",                               run_pbkdf2_tests                     },
+#if defined(ATCA_MBEDTLS)
+    { "crypto_int", "Run crypto library integration tests",         run_crypto_integration_tests         },
 #endif
 #if ATCA_TA_SUPPORT
     { "config",    "Create testing handles in TA100 device",        talib_configure_device               },
@@ -119,7 +115,7 @@ static t_menu_info mas_menu_info[] =
     { "talib",     "Run talib tests",                               run_talib_tests                      },
 #endif
 #if defined(_WIN32) || defined(__linux__) || defined(__APPLE__)
-    { "exit",     "Exit the test application",                      (fp_menu_handler)call_exit           },
+    { "exit",     "Exit the test application",                      call_exit                            },
 #endif
     { NULL,       NULL,                                             NULL                                 },
 };
@@ -238,9 +234,13 @@ static int parse_cmd(char *command, size_t max_len)
 
 static int exit_code;
 
-void call_exit(int argc, char* argv[])
+int call_exit(int argc, char* argv[])
 {
+    ((void)argc);
+    ((void)argv);
+
     exit_code = 1;
+    return 0;
 }
 
 int main(int argc, char* argv[])
@@ -309,8 +309,11 @@ void atca_test_task(void)
 
 #endif
 
-static void help(int argc, char* argv[])
+static int help(int argc, char* argv[])
 {
+    ((void)argc);
+    ((void)argv);
+
     uint8_t index = 0;
 
     printf("Usage:\r\n");
@@ -319,4 +322,6 @@ static void help(int argc, char* argv[])
         printf("%s - %s\r\n", mas_menu_info[index].menu_cmd, mas_menu_info[index].menu_cmd_description);
         index++;
     }
+
+    return 0;
 }

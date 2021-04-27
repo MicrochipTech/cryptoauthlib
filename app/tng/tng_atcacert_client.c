@@ -104,6 +104,8 @@ int tng_atcacert_device_public_key(uint8_t* public_key, uint8_t* cert)
     const atcacert_def_t* cert_def = NULL;
     uint8_t raw_public_key[72];
 
+    (void)cert;
+
     if (public_key == NULL)
     {
         return ATCACERT_E_BAD_PARAMS;

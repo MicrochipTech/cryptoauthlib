@@ -42,7 +42,7 @@ int atcacert_date_enc(atcacert_date_format_t   format,
                       uint8_t*                 formatted_date,
                       size_t*                  formatted_date_size)
 {
-    if (timestamp == NULL || formatted_date_size == NULL || format < 0 || format >= sizeof(ATCACERT_DATE_FORMAT_SIZES) / sizeof(ATCACERT_DATE_FORMAT_SIZES[0]))
+    if (timestamp == NULL || formatted_date_size == NULL || format >= sizeof(ATCACERT_DATE_FORMAT_SIZES) / sizeof(ATCACERT_DATE_FORMAT_SIZES[0]))
     {
         return ATCACERT_E_BAD_PARAMS;
     }
@@ -65,7 +65,7 @@ int atcacert_date_enc(atcacert_date_format_t   format,
     case DATEFMT_POSIX_UINT32_BE: return atcacert_date_enc_posix_uint32_be(timestamp, formatted_date);
     case DATEFMT_POSIX_UINT32_LE: return atcacert_date_enc_posix_uint32_le(timestamp, formatted_date);
     case DATEFMT_RFC5280_GEN:     return atcacert_date_enc_rfc5280_gen(timestamp, formatted_date);
-    default: return ATCACERT_E_BAD_PARAMS;
+    default: break;
     }
 
     return ATCACERT_E_BAD_PARAMS;
@@ -76,7 +76,7 @@ int atcacert_date_dec(atcacert_date_format_t format,
                       size_t                 formatted_date_size,
                       atcacert_tm_utc_t*     timestamp)
 {
-    if (formatted_date == NULL || timestamp == NULL || format < 0 || format >= sizeof(ATCACERT_DATE_FORMAT_SIZES) / sizeof(ATCACERT_DATE_FORMAT_SIZES[0]))
+    if (formatted_date == NULL || timestamp == NULL || format >= sizeof(ATCACERT_DATE_FORMAT_SIZES) / sizeof(ATCACERT_DATE_FORMAT_SIZES[0]))
     {
         return ATCACERT_E_BAD_PARAMS;
     }
@@ -93,16 +93,16 @@ int atcacert_date_dec(atcacert_date_format_t format,
     case DATEFMT_POSIX_UINT32_BE: return atcacert_date_dec_posix_uint32_be(formatted_date, timestamp);
     case DATEFMT_POSIX_UINT32_LE: return atcacert_date_dec_posix_uint32_le(formatted_date, timestamp);
     case DATEFMT_RFC5280_GEN:     return atcacert_date_dec_rfc5280_gen(formatted_date, timestamp);
-    default: return ATCACERT_E_BAD_PARAMS;
+    default: break;
     }
 
-    return ATCACERT_E_SUCCESS;
+    return ATCACERT_E_BAD_PARAMS;
 }
 
 int atcacert_date_get_max_date(atcacert_date_format_t format, atcacert_tm_utc_t* timestamp)
 {
 
-    if (timestamp == NULL || format < 0 || format >= sizeof(ATCACERT_DATE_FORMAT_SIZES) / sizeof(ATCACERT_DATE_FORMAT_SIZES[0]))
+    if (timestamp == NULL || format >= sizeof(ATCACERT_DATE_FORMAT_SIZES) / sizeof(ATCACERT_DATE_FORMAT_SIZES[0]))
     {
         return ATCACERT_E_BAD_PARAMS;
     }
@@ -1066,7 +1066,7 @@ int atcacert_date_dec_compcert(const uint8_t          enc_dates[3],
      * Minutes and seconds are always zero.
      */
 
-    if (enc_dates == NULL || issue_date == NULL || expire_date == NULL || expire_date_format < 0 || expire_date_format >= sizeof(ATCACERT_DATE_FORMAT_SIZES) / sizeof(ATCACERT_DATE_FORMAT_SIZES[0]))
+    if (enc_dates == NULL || issue_date == NULL || expire_date == NULL || expire_date_format >= sizeof(ATCACERT_DATE_FORMAT_SIZES) / sizeof(ATCACERT_DATE_FORMAT_SIZES[0]))
     {
         return ATCACERT_E_BAD_PARAMS;
     }

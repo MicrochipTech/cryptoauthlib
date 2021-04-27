@@ -55,7 +55,9 @@ void pkcs11_config_init_private(pkcs11_object_ptr pObject, char * label, size_t 
     pObject->class_type = CKK_EC;
     pObject->attributes = pkcs11_key_private_attributes;
     pObject->count = pkcs11_key_private_attributes_count;
+#if ATCA_CA_SUPPORT
     pObject->data = NULL;
+#endif
     pObject->size = 16;
 }
 
@@ -71,8 +73,28 @@ void pkcs11_config_init_public(pkcs11_object_ptr pObject, char * label, size_t l
     pObject->class_type = CKK_EC;
     pObject->attributes = pkcs11_key_public_attributes;
     pObject->count = pkcs11_key_public_attributes_count;
+#if ATCA_CA_SUPPORT
     pObject->data = NULL;
+#endif
     pObject->size = 64;
+}
+
+void pkcs11_config_init_secret(pkcs11_object_ptr pObject, char * label, size_t len, uint8_t keylen)
+{
+    if (len >= PKCS11_MAX_LABEL_SIZE)
+    {
+        len = PKCS11_MAX_LABEL_SIZE - 1;
+    }
+    memcpy(pObject->name, label, len);
+    pObject->name[len] = '\0';
+    pObject->class_id = CKO_SECRET_KEY;
+    pObject->class_type = CKK_GENERIC_SECRET;
+    pObject->attributes = pkcs11_key_secret_attributes;
+    pObject->count = pkcs11_key_secret_attributes_count;
+#if ATCA_CA_SUPPORT
+    pObject->data = NULL;
+#endif
+    pObject->size = keylen;
 }
 
 void pkcs11_config_init_cert(pkcs11_object_ptr pObject, char * label, size_t len)
@@ -87,7 +109,9 @@ void pkcs11_config_init_cert(pkcs11_object_ptr pObject, char * label, size_t len
     pObject->class_type = 0;
     pObject->attributes = pkcs11_cert_x509public_attributes;
     pObject->count = pkcs11_cert_x509public_attributes_count;
+#if ATCA_CA_SUPPORT
     pObject->data = NULL;
+#endif
     pObject->size = 0;
 }
 
@@ -412,7 +436,9 @@ static CK_RV pkcs11_config_parse_object(pkcs11_slot_ctx_ptr slot_ctx, char* cfgs
             pkcs11_config_init_private(pObject, argv[1], strlen(argv[1]));
             pObject->slot = slot;
             pObject->flags = 0;
+#if ATCA_CA_SUPPORT
             pObject->config = &slot_ctx->cfg_zone;
+#endif
         }
 
         /* Every private key object needs a cooresponding public key object */
@@ -425,7 +451,9 @@ static CK_RV pkcs11_config_parse_object(pkcs11_slot_ctx_ptr slot_ctx, char* cfgs
             pkcs11_config_init_public(pPubkey, argv[1], strlen(argv[1]));
             pPubkey->slot = slot;
             pPubkey->flags = 0;
+#if ATCA_CA_SUPPORT
             pPubkey->config = &slot_ctx->cfg_zone;
+#endif
         }
         else
         {
@@ -440,7 +468,27 @@ static CK_RV pkcs11_config_parse_object(pkcs11_slot_ctx_ptr slot_ctx, char* cfgs
             pkcs11_config_init_public(pObject, argv[1], strlen(argv[1]));
             pObject->slot = (uint16_t)strtol(argv[2], NULL, 16);
             pObject->flags = 0;
+#if ATCA_CA_SUPPORT
             pObject->config = &slot_ctx->cfg_zone;
+#endif
+        }
+    }
+    else if (!strcmp(argv[0], "secret") && argc >= 3)
+    {
+        rv = pkcs11_object_alloc(&pObject);
+        if (!rv && pObject)
+        {
+            uint8_t keylen = 32;
+            if (4 == argc)
+            {
+                keylen = (uint8_t)strtol(argv[3], NULL, 10);
+            }
+            pkcs11_config_init_secret(pObject, argv[1], strlen(argv[1]), keylen);
+            pObject->slot = (uint16_t)strtol(argv[2], NULL, 16);
+            pObject->flags = 0;
+#if ATCA_CA_SUPPORT
+            pObject->config = &slot_ctx->cfg_zone;
+#endif
         }
     }
     else if (!strcmp(argv[0], "certificate") && argc >= 3)
@@ -460,7 +508,9 @@ static CK_RV pkcs11_config_parse_object(pkcs11_slot_ctx_ptr slot_ctx, char* cfgs
 //            pObject->size = g_cert_def_2_device.cert_template_size;
 //            pObject->data = &g_cert_def_2_device;
             pObject->flags = 0;
+#if ATCA_CA_SUPPORT
             pObject->config = &slot_ctx->cfg_zone;
+#endif
         }
     }
     else
@@ -484,7 +534,7 @@ static CK_RV pkcs11_config_parse_handle(uint16_t * handle, char* cfgstr)
 
     if (argc == 1)
     {
-        *handle = (uint16_t)strtol(argv[2], NULL, 16);
+        *handle = (uint16_t)strtol(argv[0], NULL, 16);
         rv = CKR_OK;
     }
 
@@ -517,6 +567,7 @@ static CK_RV pkcs11_config_parse_slot_file(pkcs11_slot_ctx_ptr slot_ctx, int arg
         {
             rv = pkcs11_config_parse_freeslots(slot_ctx, argv[i + 1]);
         }
+#if ATCA_TA_SUPPORT
         else if (!strcmp(argv[i], "user_pin_handle"))
         {
             rv = pkcs11_config_parse_handle(&slot_ctx->user_pin_handle, argv[i + 1]);
@@ -525,6 +576,7 @@ static CK_RV pkcs11_config_parse_slot_file(pkcs11_slot_ctx_ptr slot_ctx, int arg
         {
             rv = pkcs11_config_parse_handle(&slot_ctx->so_pin_handle, argv[i + 1]);
         }
+#endif
         else if (!strcmp(argv[i], "object"))
         {
             rv = pkcs11_config_parse_object(slot_ctx, argv[i + 1]);
@@ -545,30 +597,36 @@ static CK_RV pkcs11_config_parse_object_file(pkcs11_slot_ctx_ptr slot_ctx, CK_BY
     {
         pObject->slot = slot;
         pObject->flags = PKCS11_OBJECT_FLAG_DESTROYABLE;
+#if ATCA_CA_SUPPORT
         pObject->config = &slot_ctx->cfg_zone;
+#endif
         memset(pObject->name, 0, sizeof(pObject->name));
-    }
 
-    for (i = 0; i < argc; i += 2)
-    {
-        if (!strcmp(argv[i], "type"))
+        for (i = 0; i < argc; i += 2)
         {
-            if (!strcmp(argv[i + 1], "private"))
+            if (!strcmp(argv[i], "type"))
             {
-                privkey = TRUE;
-                pkcs11_config_init_private(pObject, "", 0);
+                if (!strcmp(argv[i + 1], "private"))
+                {
+                    privkey = TRUE;
+                    pkcs11_config_init_private(pObject, "", 0);
+                }
+                else if (!strcmp(argv[i + 1], "public"))
+                {
+                    pkcs11_config_init_public(pObject, "", 0);
+                }
+                else if (!strcmp(argv[i + 1], "secret"))
+                {
+                    pkcs11_config_init_secret(pObject, "", 0, 32);
+                }
+                //if (!strcmp(argv[i + 1], "certificate"))
+                //{
+                //}
             }
-            else if (!strcmp(argv[i + 1], "public"))
+            else if (!strcmp(argv[i], "label"))
             {
-                pkcs11_config_init_public(pObject, "", 0);
+                strncpy(pObject->name, argv[i + 1], sizeof(pObject->name));
             }
-            //if (!strcmp(argv[i + 1], "certificate"))
-            //{
-            //}
-        }
-        else if (!strcmp(argv[i], "label"))
-        {
-            strncpy(pObject->name, argv[i + 1], sizeof(pObject->name));
         }
     }
 
@@ -581,7 +639,9 @@ static CK_RV pkcs11_config_parse_object_file(pkcs11_slot_ctx_ptr slot_ctx, CK_BY
         {
             pPubkey->slot = slot;
             pPubkey->flags = pObject->flags;
+#if ATCA_CA_SUPPORT
             pPubkey->config = &slot_ctx->cfg_zone;
+#endif
             pkcs11_config_init_public(pPubkey, pObject->name, strlen(pObject->name));
         }
         else
@@ -604,11 +664,11 @@ CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, p
     FILE* fp;
     char *objtype = "";
     char filename[200];
-    int i;
+    int i = 0;
     CK_RV rv = CKR_FUNCTION_FAILED;
 
+#if ATCA_CA_SUPPORT
     /* Find a free slot that matches the object type */
-
     for (i = 0; i < 16; i++)
     {
         if (pSlot->flags & (1 << i))
@@ -638,8 +698,21 @@ CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, p
                     break;
                 }
             }
+            else if (CKO_SECRET_KEY == pObject->class_id)
+            {
+                if ((6 == keytype) || (7 == keytype))
+                {
+                    pObject->slot = i;
+                    pObject->flags = PKCS11_OBJECT_FLAG_DESTROYABLE;
+                    pObject->config = &pSlot->cfg_zone;
+                    pkcs11_config_init_secret(pObject, pLabel->pValue, pLabel->ulValueLen, 32);
+                    objtype = "secret";
+                    break;
+                }
+            }
         }
     }
+#endif
 
     if (i < 16)
     {

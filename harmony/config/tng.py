@@ -29,6 +29,16 @@ numFileCntr = 0
 _tng_type_tracker = {}
 
 
+def CALSecFileUpdate(symbol, event):
+    symObj = event['symbol']
+    selected_key = symObj.getSelectedKey()
+
+    if selected_key == "SECURE":
+        symbol.setSecurity("SECURE")
+    elif selected_key == "NON_SECURE":
+        symbol.setSecurity("NON_SECURE")
+
+
 def updateTracker(id, src):
     global _tng_type_tracker
     _tng_type_tracker[src] = id
@@ -62,6 +72,13 @@ def AddFile(component, src_path, dest_path, proj_path, file_type = "SOURCE", isM
     srcFile.setType(file_type)
     srcFile.setOutputName(os.path.basename(src_path))
     srcFile.setMarkup(isMarkup)
+    try:
+        CALSecValue = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_NON_SECURE').getValue()
+        if CALSecValue == True:
+            srcFile.setSecurity("SECURE")
+    except:
+        pass
+    srcFile.setDependencies(CALSecFileUpdate, ["cryptoauthlib.CAL_NON_SECURE"])
     numFileCntr += 1
 
 def AddFilesDir(component, configName, dirPath):
@@ -91,6 +108,17 @@ def instantiateComponent(tngComponent):
     Database.activateComponents(['cryptoauthlib'])
 
     configName = Variables.get("__CONFIGURATION_NAME")
+    
+    targetPath = '../src/config/' + configName + '/library/cryptoauthlib/tng'
+    
+    # Append the include paths in MPLABX IDE
+    defSym = tngComponent.createSettingSymbol("CAL_XC32_INCLUDE_DIRS", None)
+    defSym.setCategory("C32")
+    defSym.setKey("extra-include-directories")
+
+    defSym.setValue( '{0}'.format(targetPath))
+    defSym.setAppend(True, ';')
+    defSym.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
 
     AddFilesDir(tngComponent, configName, 'app/tng')
 

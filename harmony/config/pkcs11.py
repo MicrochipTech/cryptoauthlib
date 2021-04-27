@@ -29,6 +29,16 @@ numFileCntr = 0
 _tng_type_tracker = {}
 
 
+def CALSecFileUpdate(symbol, event):
+    symObj = event['symbol']
+    selected_key = symObj.getSelectedKey()
+
+    if selected_key == "SECURE":
+        symbol.setSecurity("SECURE")
+    elif selected_key == "NON_SECURE":
+        symbol.setSecurity("NON_SECURE")
+
+
 def AddFile(component, src_path, dest_path, proj_path, file_type = "SOURCE", isMarkup = False):
     global fileSymbolName
     global numFileCntr
@@ -39,6 +49,13 @@ def AddFile(component, src_path, dest_path, proj_path, file_type = "SOURCE", isM
     srcFile.setType(file_type)
     srcFile.setOutputName(os.path.basename(src_path))
     srcFile.setMarkup(isMarkup)
+    try:
+        CALSecValue = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_NON_SECURE').getValue()
+        if CALSecValue == True:
+            srcFile.setSecurity("SECURE")
+    except:
+        pass
+    srcFile.setDependencies(CALSecFileUpdate, ["cryptoauthlib.CAL_NON_SECURE"])
     numFileCntr += 1
 
 
@@ -80,6 +97,13 @@ def instantiateComponent(calPkcs11Component):
     calPkcs11TngFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/app/pkcs11")
     calPkcs11TngFile.setType('SOURCE')
     calPkcs11TngFile.setEnabled(True)
+    try:
+        CALSecValue = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_NON_SECURE').getValue()
+        if CALSecValue == True:
+            calPkcs11TngFile.setSecurity("SECURE")
+    except:
+        pass
+    calPkcs11TngFile.setDependencies(CALSecFileUpdate, ["cryptoauthlib.CAL_NON_SECURE"])
 
     # Configuration options for the PKCS11 module
     calPkcs11ExternalFuncList = calPkcs11Component.createBooleanSymbol("CAL_PKCS11_EXT_FUNC_LIST", None)
@@ -90,7 +114,7 @@ def instantiateComponent(calPkcs11Component):
     calPkcs11DebugPrint = calPkcs11Component.createBooleanSymbol("CAL_PKCS11_ENABLE_DEBUG_PRINT", None)
     calPkcs11DebugPrint.setLabel("Enable Debug Print?")
     calPkcs11DebugPrint.setDefaultValue(False)
-
+    
     calPkcs11AwsFreeRTOS = calPkcs11Component.createBooleanSymbol("CAL_PKCS11_AWS_FREERTOS", None)
     calPkcs11AwsFreeRTOS.setLabel("Enable AWS FreeRTOS Modifications?")
     calPkcs11AwsFreeRTOS.setDefaultValue(False)
@@ -120,6 +144,10 @@ def instantiateComponent(calPkcs11Component):
     pkcs11ConfigFile.setType("HEADER")
     pkcs11ConfigFile.setOverwrite(True)
     pkcs11ConfigFile.setMarkup(True)
-
-
-
+    try:
+        CALSecValue = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_NON_SECURE').getValue()
+        if CALSecValue == True:
+            pkcs11ConfigFile.setSecurity("SECURE")
+    except:
+        pass
+    pkcs11ConfigFile.setDependencies(CALSecFileUpdate, ["cryptoauthlib.CAL_NON_SECURE"])

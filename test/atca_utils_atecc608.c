@@ -58,6 +58,9 @@ ATCA_STATUS check_clock_divider(int argc, char* argv[])
     ATCA_STATUS status;
     uint8_t chip_mode = 0;
 
+    ((void)argc);
+    ((void)argv);
+
     if (!(ATECC608 == gCfg->devtype))
     {
         printf("Current device doesn't support clock divider settings (only ATECC608)\r\n");
@@ -179,6 +182,9 @@ ATCA_STATUS set_chip_mode(uint8_t i2c_user_extra_add, uint8_t ttl_enable, uint8_
 
 int set_clock_divider_m0(int argc, char* argv[])
 {
+    ((void)argc);
+    ((void)argv);
+
     ATCA_STATUS status = set_chip_mode(0xFF, 0xFF, ATCA_CHIPMODE_WATCHDOG_SHORT, ATCA_CHIPMODE_CLOCK_DIV_M0);
 
     if (status == ATCA_SUCCESS)
@@ -190,6 +196,9 @@ int set_clock_divider_m0(int argc, char* argv[])
 
 int set_clock_divider_m1(int argc, char* argv[])
 {
+    ((void)argc);
+    ((void)argv);
+
     ATCA_STATUS status = set_chip_mode(0xFF, 0xFF, ATCA_CHIPMODE_WATCHDOG_SHORT, ATCA_CHIPMODE_CLOCK_DIV_M1);
 
     if (status == ATCA_SUCCESS)
@@ -201,6 +210,9 @@ int set_clock_divider_m1(int argc, char* argv[])
 
 int set_clock_divider_m2(int argc, char* argv[])
 {
+    ((void)argc);
+    ((void)argv);
+
     // Additionally set watchdog to long settings (~13s) as some commands
     // can't complete in time on the faster watchdog setting.
     ATCA_STATUS status = set_chip_mode(0xFF, 0xFF, ATCA_CHIPMODE_WATCHDOG_LONG, ATCA_CHIPMODE_CLOCK_DIV_M2);

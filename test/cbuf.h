@@ -103,7 +103,7 @@
  *   contained in the circular buffer.
  */
 
-#define CBUF_Len(cbuf)        ((typeof( cbuf.m_putIdx ))(( cbuf.m_putIdx ) - ( cbuf.m_getIdx )))
+#define CBUF_Len(cbuf)        ((__typeof__( cbuf.m_putIdx ))(( cbuf.m_putIdx ) - ( cbuf.m_getIdx )))
 
 /**
  *   Appends an element to the end of the circular buffer. The

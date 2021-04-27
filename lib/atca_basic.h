@@ -103,6 +103,9 @@ ATCA_STATUS atcab_aes_ccm_decrypt_update(atca_aes_ccm_ctx_t* ctx, const uint8_t*
 ATCA_STATUS atcab_aes_ccm_encrypt_finish(atca_aes_ccm_ctx_t* ctx, uint8_t* tag, uint8_t* tag_size);
 ATCA_STATUS atcab_aes_ccm_decrypt_finish(atca_aes_ccm_ctx_t* ctx, const uint8_t* tag, bool* is_verified);
 
+// Hardware Accelerated algorithms
+ATCA_STATUS atcab_pbkdf2_sha256_ext(ATCADevice device, const uint32_t iter, const uint16_t slot, const uint8_t* salt, const size_t salt_len, uint8_t* result, size_t result_len);
+ATCA_STATUS atcab_pbkdf2_sha256(const uint32_t iter, const uint16_t slot, const uint8_t* salt, const size_t salt_len, uint8_t* result, size_t result_len);
 
 
 #if ATCA_CA_SUPPORT && !ATCA_TA_SUPPORT && !defined(ATCA_USE_ATCAB_FUNCTIONS) && !defined(ATCA_ECC204_SUPPORT)
@@ -203,9 +206,12 @@ ATCA_STATUS atcab_aes_ccm_decrypt_finish(atca_aes_ccm_ctx_t* ctx, const uint8_t*
 #define atcab_is_config_locked(...)             calib_is_locked(_gDevice, LOCK_ZONE_CONFIG, __VA_ARGS__)
 #define atcab_is_data_locked(...)               calib_is_locked(_gDevice, LOCK_ZONE_DATA, __VA_ARGS__)
 #define atcab_is_slot_locked(...)               calib_is_slot_locked(_gDevice, __VA_ARGS__)
+#define atcab_is_private(...)                   calib_is_private(_gDevice, __VA_ARGS__)
+#define atcab_is_private_ext                    calib_is_private
 #define atcab_read_bytes_zone(...)              calib_read_bytes_zone(_gDevice, __VA_ARGS__)
 #define atcab_read_serial_number(...)           calib_read_serial_number(_gDevice, __VA_ARGS__)
 #define atcab_read_pubkey(...)                  calib_read_pubkey(_gDevice, __VA_ARGS__)
+#define atcab_read_pubkey_ext                   calib_read_pubkey
 #define atcab_read_sig(...)                     calib_read_sig(_gDevice, __VA_ARGS__)
 #define atcab_read_config_zone(...)             calib_read_config_zone(_gDevice, __VA_ARGS__)
 #define atcab_cmp_config_zone(...)              calib_cmp_config_zone(_gDevice, __VA_ARGS__)
@@ -235,6 +241,7 @@ ATCA_STATUS atcab_aes_ccm_decrypt_finish(atca_aes_ccm_ctx_t* ctx, const uint8_t*
 #define atcab_sha_hmac_update(...)              calib_sha_hmac_update(_gDevice, __VA_ARGS__)
 #define atcab_sha_hmac_finish(...)              calib_sha_hmac_finish(_gDevice, __VA_ARGS__)
 #define atcab_sha_hmac(...)                     calib_sha_hmac(_gDevice, __VA_ARGS__)
+#define atcab_sha_hmac_ext                      calib_sha_hmac
 #define SHA_CONTEXT_MAX_SIZE                    (99)
 
 // Sign command functions
@@ -365,9 +372,12 @@ ATCA_STATUS atcab_aes_ccm_decrypt_finish(atca_aes_ccm_ctx_t* ctx, const uint8_t*
 #define atcab_is_config_locked(...)             talib_is_config_locked(_gDevice, __VA_ARGS__)
 #define atcab_is_data_locked(...)               talib_is_setup_locked(_gDevice, __VA_ARGS__)
 #define atcab_is_slot_locked(...)               talib_is_handle_locked(_gDevice, __VA_ARGS__)
+#define atcab_is_private(...)                   talib_is_private(_gDevice, __VA_ARGS__)
+#define atcab_is_private_ext                    talib_is_private
 #define atcab_read_bytes_zone(...)              talib_read_bytes_zone(_gDevice, __VA_ARGS__)
 #define atcab_read_serial_number(...)           talib_info_serial_number_compat(_gDevice, __VA_ARGS__)
 #define atcab_read_pubkey(...)                  talib_read_pubkey_compat(_gDevice, __VA_ARGS__)
+#define atcab_read_pubkey_ext                   talib_read_pubkey_compat
 #define atcab_read_sig(...)                     talib_read_sig_compat(_gDevice, __VA_ARGS__)
 #define atcab_read_config_zone(...)             talib_read_config_zone(_gDevice, __VA_ARGS__)
 #define atcab_cmp_config_zone(...)              talib_cmp_config_zone(_gDevice, __VA_ARGS__)
@@ -397,6 +407,7 @@ ATCA_STATUS atcab_aes_ccm_decrypt_finish(atca_aes_ccm_ctx_t* ctx, const uint8_t*
 #define atcab_sha_hmac_update(...)              (ATCA_UNIMPLEMENTED)
 #define atcab_sha_hmac_finish(...)              (ATCA_UNIMPLEMENTED)
 #define atcab_sha_hmac(...)                     talib_hmac_compat(_gDevice, __VA_ARGS__)
+#define atcab_sha_hmac_ext                      talib_hmac_compat
 #define SHA_CONTEXT_MAX_SIZE                    (109)
 
 // Sign command functions
@@ -540,9 +551,12 @@ ATCA_STATUS atcab_is_locked(uint8_t zone, bool* is_locked);
 ATCA_STATUS atcab_is_config_locked(bool* is_locked);
 ATCA_STATUS atcab_is_data_locked(bool* is_locked);
 ATCA_STATUS atcab_is_slot_locked(uint16_t slot, bool* is_locked);
+ATCA_STATUS atcab_is_private_ext(ATCADevice device, uint16_t slot, bool* is_private);
+ATCA_STATUS atcab_is_private(uint16_t slot, bool* is_private);
 ATCA_STATUS atcab_read_bytes_zone(uint8_t zone, uint16_t slot, size_t offset, uint8_t* data, size_t length);
 ATCA_STATUS atcab_read_serial_number(uint8_t* serial_number);
 ATCA_STATUS atcab_read_pubkey(uint16_t slot, uint8_t* public_key);
+ATCA_STATUS atcab_read_pubkey_ext(ATCADevice device, uint16_t slot, uint8_t* public_key);
 ATCA_STATUS atcab_read_sig(uint16_t slot, uint8_t* sig);
 ATCA_STATUS atcab_read_config_zone(uint8_t* config_data);
 ATCA_STATUS atcab_cmp_config_zone(uint8_t* config_data, bool* same_config);
@@ -579,6 +593,7 @@ ATCA_STATUS atcab_sha_hmac_update(atca_hmac_sha256_ctx_t* ctx, const uint8_t* da
 ATCA_STATUS atcab_sha_hmac_finish(atca_hmac_sha256_ctx_t* ctx, uint8_t* digest, uint8_t target);
 
 ATCA_STATUS atcab_sha_hmac(const uint8_t* data, size_t data_size, uint16_t key_slot, uint8_t* digest, uint8_t target);
+ATCA_STATUS atcab_sha_hmac_ext(ATCADevice device, const uint8_t* data, size_t data_size, uint16_t key_slot, uint8_t* digest, uint8_t target);
 
 /* Sign command */
 ATCA_STATUS atcab_sign_base(uint8_t mode, uint16_t key_id, uint8_t* signature);

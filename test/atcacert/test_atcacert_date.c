@@ -1087,7 +1087,7 @@ TEST(atcacert_date_enc, bad_format)
 
     set_tm(&ts, 2013, 11, 10, 9, 8, 7);
 
-    ret = atcacert_date_enc(-1, &ts, ts_str, &ts_str_size);
+    ret = atcacert_date_enc((atcacert_date_format_t)-1, &ts, ts_str, &ts_str_size);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
     ret = atcacert_date_enc(DATEFMT_RFC5280_GEN + 1, &ts, ts_str, &ts_str_size);
@@ -1760,13 +1760,13 @@ TEST(atcacert_date_get_max_date, bad_params)
     int ret = ATCACERT_E_SUCCESS;
     atcacert_tm_utc_t ts;
 
-    ret = atcacert_date_get_max_date(-1, &ts);
+    ret = atcacert_date_get_max_date((atcacert_date_format_t)-1, &ts);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
     ret = atcacert_date_get_max_date(DATEFMT_ISO8601_SEP, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_date_get_max_date(-1, NULL);
+    ret = atcacert_date_get_max_date((atcacert_date_format_t)-1, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
 
@@ -1856,10 +1856,10 @@ TEST(atcacert_date_dec_compcert, bad_params)
     ret = atcacert_date_dec_compcert(NULL, DATEFMT_RFC5280_GEN, &issue_date, &expire_date);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_date_dec_compcert(enc_dates, -1, &issue_date, &expire_date);
+    ret = atcacert_date_dec_compcert(enc_dates, (atcacert_date_format_t)-1, &issue_date, &expire_date);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_date_dec_compcert(NULL, -1, &issue_date, &expire_date);
+    ret = atcacert_date_dec_compcert(NULL, (atcacert_date_format_t)-1, &issue_date, &expire_date);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
     ret = atcacert_date_dec_compcert(enc_dates, DATEFMT_RFC5280_GEN, NULL, &expire_date);
@@ -1868,10 +1868,10 @@ TEST(atcacert_date_dec_compcert, bad_params)
     ret = atcacert_date_dec_compcert(NULL, DATEFMT_RFC5280_GEN, NULL, &expire_date);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_date_dec_compcert(enc_dates, -1, NULL, &expire_date);
+    ret = atcacert_date_dec_compcert(enc_dates, (atcacert_date_format_t)-1, NULL, &expire_date);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_date_dec_compcert(NULL, -1, NULL, &expire_date);
+    ret = atcacert_date_dec_compcert(NULL, (atcacert_date_format_t)-1, NULL, &expire_date);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
     ret = atcacert_date_dec_compcert(enc_dates, DATEFMT_RFC5280_GEN, &issue_date, NULL);
@@ -1880,10 +1880,10 @@ TEST(atcacert_date_dec_compcert, bad_params)
     ret = atcacert_date_dec_compcert(NULL, DATEFMT_RFC5280_GEN, &issue_date, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_date_dec_compcert(enc_dates, -1, &issue_date, NULL);
+    ret = atcacert_date_dec_compcert(enc_dates, (atcacert_date_format_t)-1, &issue_date, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_date_dec_compcert(NULL, -1, &issue_date, NULL);
+    ret = atcacert_date_dec_compcert(NULL, (atcacert_date_format_t)-1, &issue_date, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
     ret = atcacert_date_dec_compcert(enc_dates, DATEFMT_RFC5280_GEN, NULL, NULL);
@@ -1892,10 +1892,10 @@ TEST(atcacert_date_dec_compcert, bad_params)
     ret = atcacert_date_dec_compcert(NULL, DATEFMT_RFC5280_GEN, NULL, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_date_dec_compcert(enc_dates, -1, NULL, NULL);
+    ret = atcacert_date_dec_compcert(enc_dates, (atcacert_date_format_t)-1, NULL, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_date_dec_compcert(NULL, -1, NULL, NULL);
+    ret = atcacert_date_dec_compcert(NULL, (atcacert_date_format_t)-1, NULL, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
 
@@ -2006,7 +2006,7 @@ TEST(atcacert_date_dec, bad_format)
     size_t ts_str_size = sizeof(ts_str);
     atcacert_tm_utc_t ts;
 
-    ret = atcacert_date_dec(-1, ts_str, ts_str_size, &ts);
+    ret = atcacert_date_dec((atcacert_date_format_t)-1, ts_str, ts_str_size, &ts);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
     ret = atcacert_date_dec(DATEFMT_RFC5280_GEN + 1, ts_str, ts_str_size, &ts);

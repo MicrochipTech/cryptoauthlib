@@ -26,6 +26,7 @@
  */
 
 #include "cryptoauthlib.h"
+#include "crypto/atca_crypto_sw_rand.h"
 #include "host/atca_host.h"
 
 #include "pkcs11_config.h"
@@ -234,6 +235,7 @@ CK_RV pkcs11_session_open(
     /* Initialize the session */
     session_ctx->slot = slot_ctx;
     session_ctx->initialized = TRUE;
+    session_ctx->active_mech = CKM_VENDOR_DEFINED;
 
     /* Assign the session handle */
     session_ctx->handle = (CK_SESSION_HANDLE)session_ctx;
@@ -365,8 +367,10 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
 {
     pkcs11_lib_ctx_ptr pLibCtx = pkcs11_get_context();
     pkcs11_session_ctx_ptr session_ctx = pkcs11_get_session_context(hSession);
-    uint8_t sn[ATCA_SERIAL_NUM_SIZE];
+    bool is_ca_device = atcab_is_ca_device(atcab_get_device_type());
+    uint16_t key_len = is_ca_device ? 32 : 16;
     CK_RV rv;
+    ATCA_STATUS status;
 
     if (!pLibCtx || !pLibCtx->initialized)
     {
@@ -375,6 +379,7 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
 
     if (!pPin || !ulPinLen)
     {
+        PKCS11_DEBUG("pin: %p, pin-len: %d\n", pPin, ulPinLen);
         return CKR_ARGUMENTS_BAD;
     }
 
@@ -388,29 +393,60 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
         return CKR_SESSION_CLOSED;
     }
 
-    if (64 != ulPinLen)
+    if (session_ctx->slot->logged_in)
     {
-        if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
+        return CKR_USER_ALREADY_LOGGED_IN;
+    }
+
+    if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
+    {
+#ifndef PKCS11_PIN_KDF_ALWAYS
+        if (2 * key_len == ulPinLen)
         {
-            rv = pkcs11_util_convert_rv(atcab_read_serial_number(sn));
-            (void)pkcs11_unlock_context(pLibCtx);
+            rv = pkcs11_token_convert_pin_to_key(pPin, ulPinLen, NULL, 0, session_ctx->slot->read_key, key_len);
+        }
+        else
+#endif
+        {
+            uint8_t sn[ATCA_SERIAL_NUM_SIZE];
+
+            if (CKR_OK == (rv = pkcs11_util_convert_rv(atcab_read_serial_number(sn))))
+            {
+                rv = pkcs11_token_convert_pin_to_key(pPin, ulPinLen, sn, (CK_LONG)sizeof(sn), session_ctx->slot->read_key, key_len);
+            }
         }
 
-        if (CKR_OK == rv)
+#if ATCA_TA_SUPPORT
+        if (CKR_OK == rv && atcab_is_ta_device(atcab_get_device_type()))
         {
-            rv = pkcs11_token_convert_pin_to_key(pPin, ulPinLen, sn, (CK_LONG)sizeof(sn),
-                                                 session_ctx->read_key, (CK_LONG)sizeof(session_ctx->read_key));
+            uint8_t auth_i_nonce[16];
+            uint8_t auth_r_nonce[16];
+
+            (void)atcac_sw_random(auth_r_nonce, sizeof(auth_r_nonce));
+
+            status = talib_auth_generate_nonce(_gDevice, 0x4100,
+                                               TA_AUTH_GENERATE_OPT_NONCE_SRC_MASK | TA_AUTH_GENERATE_OPT_RANDOM_MASK, auth_i_nonce);
+
+            if (CKR_OK == (rv = pkcs11_util_convert_rv(status)))
+            {
+                status = talib_auth_startup(atcab_get_device(), session_ctx->slot->user_pin_handle,
+                                            TA_AUTH_ALG_ID_GCM, 0x1FFF, 16, session_ctx->slot->read_key, auth_i_nonce, auth_r_nonce);
+                rv = pkcs11_util_convert_rv(status);
+            }
+
+            if (CKR_OK != rv)
+            {
+                (void)talib_auth_terminate(atcab_get_device());
+            }
         }
-    }
-    else
-    {
-        rv = pkcs11_token_convert_pin_to_key(pPin, ulPinLen, NULL, 0, session_ctx->read_key,
-                                             (CK_LONG)sizeof(session_ctx->read_key));
+#endif
+
+        (void)pkcs11_unlock_context(pLibCtx);
     }
 
     if (CKR_OK == rv)
     {
-        session_ctx->logged_in = TRUE;
+        session_ctx->slot->logged_in = TRUE;
     }
 
     return rv;
@@ -436,10 +472,17 @@ CK_RV pkcs11_session_logout(CK_SESSION_HANDLE hSession)
         return CKR_SESSION_CLOSED;
     }
 
-    /* Wipe the io protection secret */
-    (void)pkcs11_util_memset(session_ctx->read_key, sizeof(session_ctx->read_key), 0, sizeof(session_ctx->read_key));
+#if ATCA_TA_SUPPORT
+    if (session_ctx->slot->logged_in && atcab_is_ta_device(atcab_get_device_type()))
+    {
+        (void)talib_auth_terminate(atcab_get_device());
+    }
+#endif
 
-    session_ctx->logged_in = FALSE;
+    /* Wipe the io protection secret */
+    (void)pkcs11_util_memset(session_ctx->slot->read_key, sizeof(session_ctx->slot->read_key), 0, sizeof(session_ctx->slot->read_key));
+
+    session_ctx->slot->logged_in = FALSE;
 
     return CKR_OK;
 }

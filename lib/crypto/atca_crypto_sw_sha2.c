@@ -98,7 +98,7 @@ ATCA_STATUS atcac_sha256_hmac_init(
         {
             (void)atcac_sw_sha2_256_init(&ctx->sha256_ctx);
             (void)atcac_sw_sha2_256_update(&ctx->sha256_ctx, key, klen);
-            status = atcac_sw_sha2_256_finish(&ctx->sha256_ctx, ctx->ipad);
+            status = (ATCA_STATUS)atcac_sw_sha2_256_finish(&ctx->sha256_ctx, ctx->ipad);
             klen = ATCA_SHA2_256_DIGEST_SIZE;
         }
 
@@ -117,7 +117,7 @@ ATCA_STATUS atcac_sha256_hmac_init(
             }
 
             (void)atcac_sw_sha2_256_init(&ctx->sha256_ctx);
-            status = atcac_sw_sha2_256_update(&ctx->sha256_ctx, ctx->ipad, ATCA_SHA2_256_BLOCK_SIZE);
+            status = (ATCA_STATUS)atcac_sw_sha2_256_update(&ctx->sha256_ctx, ctx->ipad, ATCA_SHA2_256_BLOCK_SIZE);
         }
 
     }
@@ -135,7 +135,7 @@ ATCA_STATUS atcac_sha256_hmac_update(
     size_t                 data_size            /**< [in] length of input data */
     )
 {
-    return atcac_sw_sha2_256_update(&ctx->sha256_ctx, data, data_size);
+    return (ATCA_STATUS)atcac_sw_sha2_256_update(&ctx->sha256_ctx, data, data_size);
 }
 
 /** \brief Finish HMAC calculation and clear the HMAC context
@@ -154,14 +154,14 @@ ATCA_STATUS atcac_sha256_hmac_finish(
     {
         uint8_t temp_dig[ATCA_SHA2_256_DIGEST_SIZE];
 
-        status = atcac_sw_sha2_256_finish(&ctx->sha256_ctx, temp_dig);
+        status = (ATCA_STATUS)atcac_sw_sha2_256_finish(&ctx->sha256_ctx, temp_dig);
 
         if (ATCA_SUCCESS == status)
         {
             (void)atcac_sw_sha2_256_init(&ctx->sha256_ctx);
             (void)atcac_sw_sha2_256_update(&ctx->sha256_ctx, ctx->opad, ATCA_SHA2_256_BLOCK_SIZE);
             (void)atcac_sw_sha2_256_update(&ctx->sha256_ctx, temp_dig, ATCA_SHA2_256_DIGEST_SIZE);
-            status = atcac_sw_sha2_256_finish(&ctx->sha256_ctx, digest);
+            status = (ATCA_STATUS)atcac_sw_sha2_256_finish(&ctx->sha256_ctx, digest);
         }
     }
     return status;

@@ -281,6 +281,13 @@ CK_RV pkcs11_deinit(CK_VOID_PTR pReserved)
         return CKR_CRYPTOKI_NOT_INITIALIZED;
     }
 
+#if ATCA_TA_SUPPORT
+    if (atcab_is_ta_device(atcab_get_device_type()))
+    {
+        (void)talib_auth_terminate(atcab_get_device());
+    }
+#endif
+
     /* Release the crypto device */
     atcab_release();
 

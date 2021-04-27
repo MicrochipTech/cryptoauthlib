@@ -43,6 +43,20 @@
  *
    @{ */
 
+#if !defined(ATCA_PLATFORM_MALLOC)
+void*   hal_malloc(size_t size)
+{
+    return pvPortMalloc(size);
+}
+#endif
+
+#if !defined(ATCA_PLATFORM_FREE)
+void    hal_free(void* ptr)
+{
+    vPortFree(ptr);
+}
+#endif
+
 /**
  * \brief This function delays for a number of milliseconds.
  *

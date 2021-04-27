@@ -74,7 +74,7 @@ TEST(atca_cmd_basic_test, sboot_digest)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     //Calculate the digest for the sboot_dummy_image using software SHA256
-    status = atcac_sw_sha2_256(sboot_dummy_image, sizeof(sboot_dummy_image), digest);
+    status = (ATCA_STATUS)atcac_sw_sha2_256(sboot_dummy_image, sizeof(sboot_dummy_image), digest);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Sign the digest
@@ -111,7 +111,7 @@ TEST(atca_cmd_basic_test, sboot_digest_full_encrypted)
 
 
     // Calculate the digest for the message using software SHA256
-    status = atcac_sw_sha2_256(sboot_dummy_image, sizeof(sboot_dummy_image), digest);
+    status = (ATCA_STATUS)atcac_sw_sha2_256(sboot_dummy_image, sizeof(sboot_dummy_image), digest);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Sign the message
@@ -144,7 +144,7 @@ TEST(atca_cmd_basic_test, sboot_digest_fullstore_encrypted)
     test_assert_data_is_locked();
 
     //Calculate the digest for the message using software SHA256
-    status = atcac_sw_sha2_256(sboot_dummy_image, sizeof(sboot_dummy_image), digest);
+    status = (ATCA_STATUS)atcac_sw_sha2_256(sboot_dummy_image, sizeof(sboot_dummy_image), digest);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Sign the message

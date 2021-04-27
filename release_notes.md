@@ -1,6 +1,29 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.3.1 (04/23/2021)
+
+### New features
+  - Core support for kit protocol over serial ports (i.e. tty/COM ports)
+  - PKCS11 support for TA100 auth sessions
+
+### Fixes
+  - Fix mbedtls integration combinations that would produce unexpected
+    behavior. All variations of sign/verify _ALT now work as expected
+    given a configured key (for example if a key is configured as a stored public
+    and VERIFY_ALT is enabled then library will perform a stored key verify rather
+    than an external public key load and verify)
+  - Added mbedtls integration tests to confirm that integrations are working
+    on a target platform as expected. These generally bootstrap using NIST example
+    vectors before using the validated functions/algorithms to test the remaining
+    integration.
+  - Clean up warnings when run with very strict settings (-Wall -Wextra -pedantic -Werror)
+  - Fix false wake errors when baud rate switching for I2C
+  - Fix for I2C errors that could be created on the bus when there are devices
+    on the bus that support general calls - this fix should also correct
+    linux zero length kernel messages when enabled.
+  - Fix ESP32 HAL to work with the updated HAL structure. 
+
 ## Release v3.3.0 (01/22/2021)
 
 ### API Updates

@@ -642,6 +642,8 @@ ATCA_STATUS calib_ecc204_write_zone(ATCADevice device, uint8_t zone, uint16_t sl
     ATCA_STATUS status = ATCA_SUCCESS;
     uint16_t addr;
 
+    ((void)offset);
+
     if ((NULL == device) && (NULL == data))
     {
         status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
@@ -675,7 +677,7 @@ ATCA_STATUS calib_ecc204_write_zone(ATCADevice device, uint8_t zone, uint16_t sl
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code
  */
-ATCA_STATUS calib_ecc204_write_config_zone(ATCADevice device, uint8_t* config_data)
+ATCA_STATUS calib_ecc204_write_config_zone(ATCADevice device, const uint8_t* config_data)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     uint8_t slot = 1;
@@ -870,6 +872,8 @@ ATCA_STATUS calib_ecc204_write_bytes_zone(ATCADevice device, uint8_t zone, uint1
         block += 1;      // Read next block
         data_idx += 1;   // increment data index
     }
+
+    return status;
 }
 
 #endif

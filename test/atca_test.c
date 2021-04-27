@@ -163,6 +163,18 @@ t_test_case_info* tng_tests[] =
 };
 
 
+#ifdef ATCA_MBEDTLS
+
+extern t_test_case_info test_mbedtls_ecdsa_info[];
+
+t_test_case_info* crypto_integration_tests[] =
+{
+    test_mbedtls_ecdsa_info,
+    (t_test_case_info*)NULL, /* Array Termination element*/
+};
+#endif
+
+
 void RunAllTests(t_test_case_info** tests_list)
 {
     t_test_case_info* sp_current_test;
@@ -216,6 +228,25 @@ void RunTNGTests(void)
     RunAllTests(tng_tests);
 }
 
+#if defined(ATCA_MBEDTLS) || defined(ATCA_WOLFSSL) || defined(ATCA_OPENSSL)
+void RunCryptoIntegrationTests(void)
+{
+    RunAllTests(crypto_integration_tests);
+}
+#endif
+
+extern t_test_case_info test_crypto_pbkdf2_info[];
+
+t_test_case_info* pbkdf2_tests[] =
+{
+    test_crypto_pbkdf2_info,
+    (t_test_case_info*)NULL, /* Array Termination element*/
+};
+
+void RunPbkdf2Tests(void)
+{
+    RunAllTests(pbkdf2_tests);
+}
 
 #ifdef ATCA_NO_HEAP
 ATCA_DLL ATCADevice _gDevice;
@@ -230,7 +261,7 @@ void atca_test_assert_config_is_unlocked(UNITY_LINE_TYPE from_line)
     bool is_locked = false;
     ATCA_STATUS status = atcab_is_config_locked(&is_locked);
 
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    UNITY_TEST_ASSERT_EQUAL_INT(ATCA_SUCCESS, status, from_line, NULL);
 
     if (is_locked)
     {
@@ -243,7 +274,7 @@ void atca_test_assert_config_is_locked(UNITY_LINE_TYPE from_line)
     bool is_locked = false;
     ATCA_STATUS status = atcab_is_config_locked(&is_locked);
 
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    UNITY_TEST_ASSERT_EQUAL_INT(ATCA_SUCCESS, status, from_line, NULL);
 
     if (!is_locked)
     {
@@ -256,7 +287,7 @@ void atca_test_assert_data_is_unlocked(UNITY_LINE_TYPE from_line)
     bool is_locked = false;
     ATCA_STATUS status = atcab_is_data_locked(&is_locked);
 
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    UNITY_TEST_ASSERT_EQUAL_INT(ATCA_SUCCESS, status, from_line, NULL);
 
     if (is_locked)
     {

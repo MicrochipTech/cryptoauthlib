@@ -89,6 +89,13 @@ class _ATCASWI(Structure):
                 ('bus', c_uint8)]
 
 
+class _ATCASPI(Structure):
+    """SPI HAL configuration"""
+    _fields_ = [('bus', c_uint8),
+                ('select_pin', c_uint8),
+                ('baud', c_uint32)]
+
+
 class _ATCAUART(Structure):
     """Generic UART HAL configuration"""
     _fields_ = [('port', c_int),
@@ -124,6 +131,7 @@ class _ATCAIfaceParams(Union):
     """HAL Configurations supported by the library (this is a union)"""
     _fields_ = [('atcai2c', _ATCAI2C),
                 ('atcaswi', _ATCASWI),
+                ('atcaspi', _ATCASPI),
                 ('atcauart', _ATCAUART),
                 ('atcahid', _ATCAHID),
                 ('atcacustom', _ATCACUSTOM)]

@@ -113,6 +113,7 @@ ATCA_STATUS hal_i2c_init(ATCAIface iface, ATCAIfaceCfg* cfg)
  */
 ATCA_STATUS hal_i2c_post_init(ATCAIface iface)
 {
+    ((void)iface);
     return ATCA_SUCCESS;
 }
 
@@ -126,9 +127,13 @@ ATCA_STATUS hal_i2c_post_init(ATCAIface iface)
 
 ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t address, uint8_t *txdata, int txlength)
 {
-    ATCAIfaceCfg *cfg = atgetifacecfg(iface);
     atca_i2c_host_t * hal_data = (atca_i2c_host_t*)atgetifacehaldat(iface);
     int f_i2c;  // I2C file descriptor
+
+    if (!hal_data)
+    {
+        return ATCA_NOT_INITIALIZED;
+    }
 
     // Initiate I2C communication
     if ( (f_i2c = open(hal_data->i2c_file, O_RDWR)) < 0)
@@ -156,17 +161,21 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t address, uint8_t *txdata, int 
 
 /** \brief HAL implementation of I2C receive function
  * \param[in]    iface          Device to interact with.
- * \param[in]    word_address   device transaction type
+ * \param[in]    address        device address
  * \param[out]   rxdata         Data received will be returned here.
  * \param[in,out] rxlength      As input, the size of the rxdata buffer.
  *                              As output, the number of bytes received.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)
+ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t address, uint8_t *rxdata, uint16_t *rxlength)
 {
-    ATCAIfaceCfg *cfg = atgetifacecfg(iface);
     atca_i2c_host_t * hal_data = (atca_i2c_host_t*)atgetifacehaldat(iface);
     int f_i2c;  // I2C file descriptor
+
+    if (!hal_data)
+    {
+        return ATCA_NOT_INITIALIZED;
+    }
 
     // Initiate I2C communication
     if ( (f_i2c = open(hal_data->i2c_file, O_RDWR)) < 0)
@@ -175,7 +184,7 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxda
     }
 
     // Set Device Address
-    if (ioctl(f_i2c, I2C_SLAVE, cfg->atcai2c.address >> 1) < 0)
+    if (ioctl(f_i2c, I2C_SLAVE, address >> 1) < 0)
     {
         close(f_i2c);
         return ATCA_COMM_FAIL;
@@ -200,6 +209,7 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxda
  */
 ATCA_STATUS hal_i2c_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen)
 {
+    (void)option;
     (void)param;
     (void)paramlen;
 

@@ -110,14 +110,62 @@ const char * kit_interface_from_kittype(ATCAKitType kittype)
  */
 ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength)
 {
-    if (iface && iface->phy && iface->phy->halsend)
+    ATCAIfaceCfg *cfg = atgetifacecfg(iface);
+    int bytes_written = 0;
+    int bytes_left = 0;
+    int bytes_to_send = 0;
+    int packetsize = 0;
+    uint8_t buffer[512]; //! Maximum number of bytes for a HID send/receive packet (typically 64)
+    ATCA_STATUS status = ATCA_SUCCESS;
+
+    if ((NULL == cfg) || (NULL == iface) || (NULL == iface->phy) ||
+        (NULL == iface->phy->halsend) || (NULL == txdata))
     {
-        return iface->phy->halsend(iface, 0xFF, txdata, txlength);
+        return ATCA_BAD_PARAM;
+    }
+
+    if (ATCA_HID_IFACE == iface->mIfaceCFG->iface_type)
+    {
+#ifdef ATCA_HAL_KIT_HID
+        packetsize = (int)cfg->atcahid.packetsize;
+#endif
+    }
+    else if (ATCA_UART_IFACE == iface->mIfaceCFG->iface_type)
+    {
+#ifdef ATCA_HAL_KIT_UART
+        packetsize = 1;
+#endif
     }
     else
     {
         return ATCA_BAD_PARAM;
     }
+
+    bytes_left = txlength;
+    while (bytes_left > 0)
+    {
+        memset(buffer, 0, sizeof(buffer));
+
+        if (bytes_left >= packetsize)
+        {
+            bytes_to_send = packetsize;
+        }
+        else
+        {
+            bytes_to_send = bytes_left;
+        }
+
+        memcpy(&buffer[1], &txdata[(txlength - bytes_left)], bytes_to_send);
+
+        if (ATCA_SUCCESS != (status = iface->phy->halsend(iface, 0xFF, buffer, packetsize)))
+        {
+            break;
+        }
+
+        bytes_left -= bytes_to_send;
+    }
+
+    return status;
 }
 
 /** \brief HAL implementation of kit protocol send over USB HID
@@ -129,24 +177,58 @@ ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength)
 ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxsize)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
+    size_t total_bytes_read = 0;
+    size_t bytes_to_read = 0;
+    char *location;
+    uint16_t rxlen;
 
-    if (iface && iface->phy && iface->phy->halreceive && rxsize)
+    if ((NULL == iface) || (NULL == iface->phy) || (NULL == iface->phy->halreceive) ||
+        (NULL == rxdata) || (NULL == rxsize))
     {
-        uint16_t rxlen = (uint16_t)*rxsize;
-        if (ATCA_SUCCESS == (status = iface->phy->halreceive(iface, 0, rxdata, &rxlen)))
-        {
-            *rxsize = rxlen;
-        }
+        return status;
     }
 
-    return status;
+    bytes_to_read = (size_t)*rxsize;
+    rxlen = (uint16_t)bytes_to_read--;
+
+    do
+    {
+        if (ATCA_SUCCESS != (status = iface->phy->halreceive(iface, 0x00, &rxdata[total_bytes_read], &rxlen)))
+        {
+            break;
+        }
+
+        location = memchr(&rxdata[total_bytes_read], '\n', (size_t)rxlen);
+
+        total_bytes_read += rxlen;
+        bytes_to_read -= rxlen;
+
+    }
+    while ((NULL == location) && (0 < bytes_to_read));
+
+    if (ATCA_SUCCESS != status)
+    {
+        return status;
+    }
+
+    // Save the total bytes read
+    if (location != NULL)
+    {
+        *rxsize = (int)(location - (char*)rxdata);
+    }
+    else
+    {
+        *rxsize = (int)total_bytes_read;
+    }
+
+    return ATCA_SUCCESS;
 }
 
 /** \brief HAL implementation of kit protocol init.  This function calls back to the physical protocol to send the bytes
  *  \param[in] iface  instance
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS kit_init(ATCAIface iface)
+ATCA_STATUS kit_init(ATCAIface iface, ATCAIfaceCfg* cfg)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     const char kit_device[] = "board:device(%02X)\n";
@@ -161,6 +243,8 @@ ATCA_STATUS kit_init(ATCAIface iface)
     char *token; /* string token */
     int i;
     int address;
+
+    ((void)cfg);
 
     device_match = kit_id_from_devtype(iface->mIfaceCFG->devtype);
     interface_match = kit_interface_from_kittype(iface->mIfaceCFG->atcahid.dev_interface);

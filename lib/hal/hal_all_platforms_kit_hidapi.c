@@ -40,8 +40,6 @@
  *
    @{ */
 
-#define HID_PACKET_MAX      512     //! Maximum number of bytes for a HID send/receive packet (typically 64)
-
 /** \brief HAL implementation of Kit USB HID init
  *  \param[in] hal pointer to HAL specific data that is maintained by this HAL
  *  \param[in] cfg pointer to HAL specific configuration data that is used to initialize this HAL
@@ -89,10 +87,7 @@ ATCA_STATUS hal_kit_hid_send(ATCAIface iface, uint8_t word_address, uint8_t* txd
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
     hid_device* pHid = (hid_device*)atgetifacehaldat(iface);
-    int bytes_written = 0;
-    int bytes_left;
-    int bytes_to_send;
-    uint8_t buffer[HID_PACKET_MAX];
+    int bytes_written;
 
     if ((txdata == NULL) || (cfg == NULL) || (pHid == NULL))
     {
@@ -103,30 +98,10 @@ ATCA_STATUS hal_kit_hid_send(ATCAIface iface, uint8_t word_address, uint8_t* txd
     printf("HID layer: Write: %s", txdata);
 #endif
 
-    //To avoid ERROR_INVALID_USER_BUFFER on Windows
-    bytes_left = txlength;
-    while (bytes_left > 0)
+    bytes_written = hid_write(pHid, txdata, (size_t)cfg->atcahid.packetsize + 1);
+    if (bytes_written != cfg->atcahid.packetsize + 1)
     {
-        memset(buffer, 0, (HID_PACKET_MAX));
-
-        if (bytes_left >= (int)cfg->atcahid.packetsize)
-        {
-            bytes_to_send = cfg->atcahid.packetsize;
-        }
-        else
-        {
-            bytes_to_send = bytes_left;
-        }
-
-        memcpy(&buffer[1], &txdata[(txlength - bytes_left)], bytes_to_send);
-
-        bytes_written = hid_write(pHid, buffer, (size_t)cfg->atcahid.packetsize + 1);
-        if (bytes_written != cfg->atcahid.packetsize + 1)
-        {
-            return ATCA_TX_FAIL;
-        }
-
-        bytes_left -= bytes_to_send;
+        return ATCA_TX_FAIL;
     }
 
     return ATCA_SUCCESS;
@@ -141,44 +116,17 @@ ATCA_STATUS hal_kit_hid_send(ATCAIface iface, uint8_t word_address, uint8_t* txd
  */
 ATCA_STATUS hal_kit_hid_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, uint16_t* rxsize)
 {
-    ATCAIfaceCfg *cfg = atgetifacecfg(iface);
     hid_device* pHid = (hid_device*)atgetifacehaldat(iface);
-    size_t bytes_read = 0;
-    size_t total_bytes_read = 0;
-    size_t bytes_to_read = *rxsize;
-    char *location;
 
-    if ((rxdata == NULL) || (rxsize == NULL) || (cfg == NULL) || (pHid == NULL))
+    if ((rxdata == NULL) || (rxsize == NULL) || (pHid == NULL))
     {
         return ATCA_BAD_PARAM;
     }
 
-    bytes_to_read--;
-
-    // Receive the data from the kit USB device
-    do
+    *rxsize = (uint16_t)hid_read(pHid, rxdata, (size_t)*rxsize);
+    if (*rxsize == -1)
     {
-        bytes_read = hid_read(pHid, &rxdata[total_bytes_read], bytes_to_read);
-        if (bytes_read == -1)
-        {
-            return ATCA_RX_FAIL;
-        }
-
-        location = memchr(&rxdata[total_bytes_read], '\n', bytes_read);
-
-        total_bytes_read += bytes_read;
-        bytes_to_read -= bytes_read;
-    }
-    while (!location && 0 < bytes_to_read);
-
-    // Save the total bytes read
-    if (location != NULL)
-    {
-        *rxsize = (int)(location - (char*)rxdata);
-    }
-    else
-    {
-        *rxsize = (int)total_bytes_read;
+        return ATCA_RX_FAIL;
     }
 
 #ifdef KIT_DEBUG

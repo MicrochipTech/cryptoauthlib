@@ -261,9 +261,10 @@ static int read_rsp_int_value(FILE* file, const char* name, int* value)
 #endif
 static void test_basic_hw_sha2_256_nist_simple(const char* filename)
 {
-    #ifndef _WIN32
+#ifndef _WIN32
+    ((void)filename);
     TEST_IGNORE_MESSAGE("Test only available under windows.");
-    #else
+#else
     FILE* rsp_file = NULL;
     uint8_t md_ref[ATCA_SHA2_256_DIGEST_SIZE];
     uint8_t md[sizeof(md_ref)];

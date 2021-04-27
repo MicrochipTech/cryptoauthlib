@@ -220,15 +220,21 @@ CK_RV pkcs11_slot_init(CK_SLOT_ID slotID)
         {
             if (atcab_is_ca_device(ifacecfg->devtype))
             {
+#if ATCA_CA_SUPPORT
                 /* Only the classic cryptoauth devices require the configuration
                    to be loaded into memory */
                 status = atcab_read_config_zone((uint8_t*)&slot_ctx->cfg_zone);
+#else
+                status = ATCA_GEN_FAIL;
+#endif
             }
             else
             {
 #if ATCA_TA_SUPPORT
                 /* Iterate through all objects and attach handle info */
                 status = pkcs11_object_load_handle_info(lib_ctx);
+#else
+                status = ATCA_GEN_FAIL;
 #endif
             }
         }

@@ -211,6 +211,9 @@ ATCA_STATUS calib_ecc204_sign(ATCADevice device, uint16_t key_id, const uint8_t*
     ATCA_STATUS status = ATCA_SUCCESS;
     ATCAPacket packet;
 
+    packet.param1 = 0x00;
+    packet.param2 = key_id;
+
     if ((NULL == device) || (NULL == msg))
     {
         status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
@@ -218,9 +221,6 @@ ATCA_STATUS calib_ecc204_sign(ATCADevice device, uint16_t key_id, const uint8_t*
 
     if (ATCA_SUCCESS == status)
     {
-        packet.param1 = 0x00;
-        packet.param2 = key_id;
-
         // copy message digest into i/o buffer
         memcpy(packet.data, msg, ATCA_SHA256_DIGEST_SIZE);
 
