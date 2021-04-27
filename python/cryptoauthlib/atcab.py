@@ -31,7 +31,8 @@ from .library import get_cryptoauthlib, AtcaReference
 
 class atca_aes_cbc_ctx(Structure):
     """AES CBC Context"""
-    _fields_ = [("key_id", c_uint16),
+    _fields_ = [("device", c_void_p),
+                ("key_id", c_uint16),
                 ("key_block", c_uint8),
                 ("ciphertext", c_char*16)]
 

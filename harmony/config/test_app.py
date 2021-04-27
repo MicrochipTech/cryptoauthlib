@@ -27,7 +27,7 @@ import glob
 fileSymbolName = "CAL_FILE_SRC_TEST_"
 numFileCntr = 0
 
-_TEST_PATHS = ['atcacert/*', 'jwt/*', 'api_atcab/*', 'api_calib/*', 'api_crypto', 'api_talib/*', 'vectors/*']
+_TEST_PATHS = ['atcacert/*', 'jwt/*', 'api_atcab/*', 'api_calib/*', 'api_crypto/*', 'api_talib/*', 'vectors/*']
 _TEST_SOURCES = ['atca_crypto_sw_tests.c', 'atca_test.c', 'atca_test_config.c', 'atca_test_console.c',
                'atca_utils_atecc608.c', 'cmd-processor.c']
 _TEST_HEADERS = ['atca_crypto_sw_tests.h', 'atca_test.h', 'cbuf.h', 'cmd-processor.h']
