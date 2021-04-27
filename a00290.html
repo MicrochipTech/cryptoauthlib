@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_mac.c File Reference</title>
+<title>CryptoAuthLib: calib_kdf.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.0</span>
+   &#160;<span id="projectnumber">v3.3.1</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -87,31 +87,31 @@ $(document).ready(function(){initNavTree('a00290.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">calib_mac.c File Reference</div>  </div>
+<div class="title">calib_kdf.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for MAC command.  
+<p>CryptoAuthLib Basic API methods for KDF command.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00383_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00392_source.html">cryptoauthlib.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gae98ccfd6545cf40218259ace032f11d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01521.html#gae98ccfd6545cf40218259ace032f11d1">calib_mac</a> (<a class="el" href="a01518.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t key_id, const uint8_t *challenge, uint8_t *digest)</td></tr>
-<tr class="memdesc:gae98ccfd6545cf40218259ace032f11d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes MAC command, which computes a SHA-256 digest of a key stored in the device, a challenge, and other information on the device.  <a href="a01521.html#gae98ccfd6545cf40218259ace032f11d1">More...</a><br /></td></tr>
-<tr class="separator:gae98ccfd6545cf40218259ace032f11d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3e89694762b85f8507a3cdaa11fdb415"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04473.html#ga3e89694762b85f8507a3cdaa11fdb415">calib_kdf</a> (<a class="el" href="a04470.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t key_id, const uint32_t details, const uint8_t *message, uint8_t *out_data, uint8_t *out_nonce)</td></tr>
+<tr class="memdesc:ga3e89694762b85f8507a3cdaa11fdb415"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the KDF command, which derives a new key in PRF, AES, or HKDF modes.  <a href="a04473.html#ga3e89694762b85f8507a3cdaa11fdb415">More...</a><br /></td></tr>
+<tr class="separator:ga3e89694762b85f8507a3cdaa11fdb415"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for MAC command. </p>
-<p>The MAC command computes a SHA-256 digest of a key stored in the device, a challenge, and other information on the device. The output of this command is the digest of this message.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, and ATECC608A/B. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for KDF command. </p>
+<p>The KDF command implements one of a number of Key Derivation Functions (KDF). Generally this function combines a source key with an input string and creates a result key/digest/array. Three algorithms are currently supported: PRF, HKDF and AES.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC608A/B. Refer to device datasheet for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_87f752e68b722cbc3e0b8ce9f855cb08.html">cryptauthlib-v3.3.0_</a></li><li class="navelem"><a class="el" href="dir_05b5e449e7eda89ff3fc7e4d23e0e258.html">lib</a></li><li class="navelem"><a class="el" href="dir_6d116ffb7c6bd70b9623b43f97d4db59.html">calib</a></li><li class="navelem"><a class="el" href="a00290.html">calib_mac.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ba9d997d0d387c1e0d2fa63de516c6a9.html">cryptauthlib-v3.3.1_</a></li><li class="navelem"><a class="el" href="dir_5077294d8dd80f4dbf652076ab530b49.html">lib</a></li><li class="navelem"><a class="el" href="dir_b60537e863e1e362a91fcadf037a75fd.html">calib</a></li><li class="navelem"><a class="el" href="a00290.html">calib_kdf.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

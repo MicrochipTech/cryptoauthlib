@@ -1,9 +1,13 @@
 var a00608 =
 [
-    [ "pkcs11_os_free", "a00608.html#a6dc4b364c3d11f22e08cc67adbcd70c6", null ],
-    [ "pkcs11_os_malloc", "a00608.html#add8754c49398ab1c3a26a581188e074c", null ],
-    [ "pkcs11_os_create_mutex", "a01527.html#gaf5f1c5e6c5bf8d91f2090ee4bbe20362", null ],
-    [ "pkcs11_os_destroy_mutex", "a01527.html#ga0b79ce15416271adde1bb832f6faa16b", null ],
-    [ "pkcs11_os_lock_mutex", "a01527.html#gae27d029f16c6710a0a168e1d1057a4e3", null ],
-    [ "pkcs11_os_unlock_mutex", "a01527.html#ga6f868fabdbf3e115a72e1d126e5356b5", null ]
+    [ "pkcs11_key_derive", "a00608.html#a8ace04a2049a5d7e527558da10e68dcd", null ],
+    [ "pkcs11_key_generate", "a00608.html#ae2748ca15b76254a518b28bf3dccb63f", null ],
+    [ "pkcs11_key_generate_pair", "a00608.html#aac5c7d6ae9b8262fb705083302efd90a", null ],
+    [ "pkcs11_key_write", "a04479.html#gaf3fdce991fe05099aa8552912e26dee7", null ],
+    [ "pkcs11_key_private_attributes", "a04479.html#ga40d8e67ef0fae7bdc2dca013ad8410aa", null ],
+    [ "pkcs11_key_private_attributes_count", "a04479.html#gaf358031996abf87fc21bc259e1e90644", null ],
+    [ "pkcs11_key_public_attributes", "a04479.html#gadf3e8d1e6b01d9fe85f54c9478d8d215", null ],
+    [ "pkcs11_key_public_attributes_count", "a04479.html#gadc78586c61388b3756395f0098fa4505", null ],
+    [ "pkcs11_key_secret_attributes", "a04479.html#ga6ef03269a32699359d90901cc84954f3", null ],
+    [ "pkcs11_key_secret_attributes_count", "a04479.html#ga55a0ac12b2ed4daefadaf3fa94edf78e", null ]
 ];

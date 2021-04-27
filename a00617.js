@@ -1,11 +1,9 @@
 var a00617 =
 [
-    [ "pkcs11_signature_sign", "a01527.html#ga4641a3dd4da46f801565310f3784a41e", null ],
-    [ "pkcs11_signature_sign_continue", "a01527.html#ga9c471f7e2ca3330cf6d2fa70e12db38a", null ],
-    [ "pkcs11_signature_sign_finish", "a01527.html#gadb52d31f30bb8f6a66d1851ba0052dc7", null ],
-    [ "pkcs11_signature_sign_init", "a01527.html#ga742c35812a444a87e35150e2332be0c2", null ],
-    [ "pkcs11_signature_verify", "a01527.html#ga27b3652fb8a87f7f40fff10c63316b35", null ],
-    [ "pkcs11_signature_verify_continue", "a01527.html#gab735278cab8e184d682b4ed8b12dbb1b", null ],
-    [ "pkcs11_signature_verify_finish", "a01527.html#ga2aac39ede2b43021b63ed6bc7f3f20da", null ],
-    [ "pkcs11_signature_verify_init", "a01527.html#ga852f9badf3176a60bfb874fb5d118791", null ]
+    [ "PCKS11_MECH_ECC508_EC_CAPABILITY", "a04479.html#ga148b7615f20d8432f0e5ac4e6683aa7d", null ],
+    [ "TABLE_SIZE", "a04479.html#ga178ac9759ade77839a52329537e3784b", null ],
+    [ "pcks11_mech_table_e", "a04479.html#gadbb018cf35cbcf4935ee405f069dbdb9", null ],
+    [ "pcks11_mech_table_ptr", "a04479.html#ga8fa74592503b8d6fee8164d6ffbc1df0", null ],
+    [ "pkcs11_mech_get_list", "a04479.html#ga9678c431b8d5479e53417b109b32c20f", null ],
+    [ "pkcs_mech_get_info", "a04479.html#gac66d133f84b945f9c26727ee9f7a7d57", null ]
 ];

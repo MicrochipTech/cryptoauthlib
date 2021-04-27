@@ -1,12 +1,11 @@
 var a00581 =
 [
-    [ "_pkcs11_lib_ctx", "a01788.html", "a01788" ],
-    [ "pkcs11_lib_ctx", "a00581.html#a6442956560b04724d849e98b9b782e23", null ],
-    [ "pkcs11_lib_ctx_ptr", "a00581.html#adb828773fc77a4f1dbb559ddedcc99c4", null ],
-    [ "pkcs11_deinit", "a01527.html#gabff89fd0af2e75ee2db858f9fe934ac4", null ],
-    [ "pkcs11_get_context", "a01527.html#gae0e3060e6ae0dfc17a35881c223d8123", null ],
-    [ "pkcs11_init", "a01527.html#ga21e0ec91eccb3f92b45cb2536b3889b1", null ],
-    [ "pkcs11_init_check", "a01527.html#gadd899ffeae0146c08b249e3f551e21f8", null ],
-    [ "pkcs11_lock_context", "a01527.html#gaf0e755fd7df13be2aa1f706de5b0f24b", null ],
-    [ "pkcs11_unlock_context", "a01527.html#ga750f93d0a3c67f5d0e28c9c50ad990a8", null ]
+    [ "pkcs11_decrypt", "a04479.html#ga4b2aaee6288061f2d56f4e99f0178709", null ],
+    [ "pkcs11_decrypt_final", "a04479.html#ga045a35287c46a29da2ad13e700087e0d", null ],
+    [ "pkcs11_decrypt_init", "a04479.html#ga0fecfe06a4e6a9e96f783db39f5c3f1d", null ],
+    [ "pkcs11_decrypt_update", "a04479.html#ga000cfc27505b694c031f8b66979d0c1f", null ],
+    [ "pkcs11_encrypt", "a04479.html#ga0df6b857ebf689b4891b37117922c2ca", null ],
+    [ "pkcs11_encrypt_final", "a04479.html#gaae94f85980031bec34148341efd537e3", null ],
+    [ "pkcs11_encrypt_init", "a04479.html#ga15ac03fa8dac568af6652d0ed4dd21b9", null ],
+    [ "pkcs11_encrypt_update", "a04479.html#gae037e8f4262948999f4e2fb526752a40", null ]
 ];

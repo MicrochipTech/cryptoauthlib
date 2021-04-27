@@ -1,14 +1,10 @@
 var a00440 =
 [
-    [ "atca_spi_host_s", "a01680.html", "a01680" ],
-    [ "atca_spi_host_t", "a00440.html#abdea02e929234b2f6a305c4fc93756d0", null ],
-    [ "hal_spi_control", "a00440.html#ac7f3951634faf0a7c16c234d471c3660", null ],
-    [ "hal_spi_deselect", "a00440.html#a6bcb25e01ba6242973eedb32fa9dac2a", null ],
-    [ "hal_spi_init", "a00440.html#a24b3ca4076a0e4093644d4f58cd80a69", null ],
-    [ "hal_spi_open_file", "a00440.html#ac476728164468ba4e629bf2ad673a908", null ],
-    [ "hal_spi_post_init", "a00440.html#aeb831d9894ce11146bd00c79a98b7f0f", null ],
-    [ "hal_spi_receive", "a00440.html#a70f5e46ee32a5b37492ebcce5e4f9154", null ],
-    [ "hal_spi_release", "a00440.html#a8c3f1c6c20d939c4ca976fdda6279359", null ],
-    [ "hal_spi_select", "a00440.html#a237aa1d0ee551a61991b52dc7812ff64", null ],
-    [ "hal_spi_send", "a00440.html#a828899fd41a20124eab797d7cc6d0ed3", null ]
+    [ "HAL_KIT_COMMAND_IDLE", "a00440.html#aa84bdf1185a8f8c533db37fe133032eb", null ],
+    [ "HAL_KIT_COMMAND_RECV", "a00440.html#abac189c960c7cca89e3485bf02049c0f", null ],
+    [ "HAL_KIT_COMMAND_SEND", "a00440.html#a75036e62d451235c7cc2adb90ca52a8f", null ],
+    [ "HAL_KIT_COMMAND_SLEEP", "a00440.html#ab2afbe27f481ffa1bb18156882b7e642", null ],
+    [ "HAL_KIT_COMMAND_WAKE", "a00440.html#ac885b1da63767551154f2fff4b27a037", null ],
+    [ "HAL_KIT_HEADER_LEN", "a00440.html#ab89624779173549815c9fe24de017c44", null ],
+    [ "hal_kit_attach_phy", "a04475.html#ga3f5bce4e9ee06a3b564052b2bd202c29", null ]
 ];

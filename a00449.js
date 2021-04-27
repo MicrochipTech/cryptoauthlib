@@ -1,13 +1,14 @@
 var a00449 =
 [
-    [ "hal_i2c_discover_buses", "a01523.html#ga05700385437884cc7b28c38d33e84f8c", null ],
-    [ "hal_i2c_discover_devices", "a01523.html#gac7644e62498a596c09952ee3b28017b9", null ],
-    [ "hal_i2c_idle", "a01523.html#ga9317303ada721ff3f97e7aad69437a30", null ],
-    [ "hal_i2c_init", "a01523.html#ga09e7f465a040fbd19ea136269571de3c", null ],
-    [ "hal_i2c_post_init", "a01523.html#gafbe53519362f18c2688d10da6f7c618f", null ],
-    [ "hal_i2c_receive", "a01523.html#gac1baf65047dc3efe1f14f1b79b62c04f", null ],
-    [ "hal_i2c_release", "a01523.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
-    [ "hal_i2c_send", "a01523.html#ga148e547d08979e9934ce183933ecd7ed", null ],
-    [ "hal_i2c_sleep", "a01523.html#ga3f89bae6a625d5f37abdcc99408def27", null ],
-    [ "hal_i2c_wake", "a01523.html#gad4df1b6755e2d5b5d9e810371e45ca8c", null ]
+    [ "atca_spi_host_s", "a04632.html", "a04632" ],
+    [ "atca_spi_host_t", "a00449.html#abdea02e929234b2f6a305c4fc93756d0", null ],
+    [ "hal_spi_control", "a00449.html#ac7f3951634faf0a7c16c234d471c3660", null ],
+    [ "hal_spi_deselect", "a00449.html#a6bcb25e01ba6242973eedb32fa9dac2a", null ],
+    [ "hal_spi_init", "a00449.html#a24b3ca4076a0e4093644d4f58cd80a69", null ],
+    [ "hal_spi_open_file", "a00449.html#ac476728164468ba4e629bf2ad673a908", null ],
+    [ "hal_spi_post_init", "a00449.html#aeb831d9894ce11146bd00c79a98b7f0f", null ],
+    [ "hal_spi_receive", "a00449.html#a70f5e46ee32a5b37492ebcce5e4f9154", null ],
+    [ "hal_spi_release", "a00449.html#a8c3f1c6c20d939c4ca976fdda6279359", null ],
+    [ "hal_spi_select", "a00449.html#a237aa1d0ee551a61991b52dc7812ff64", null ],
+    [ "hal_spi_send", "a00449.html#a828899fd41a20124eab797d7cc6d0ed3", null ]
 ];

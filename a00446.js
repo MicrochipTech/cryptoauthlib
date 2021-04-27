@@ -1,6 +1,10 @@
 var a00446 =
 [
-    [ "i2c_sam0_instance", "a01684.html", "a01684" ],
-    [ "i2c_sam0_instance_t", "a00446.html#abc52bbb3cf5a8db38f9929b63d8d2171", null ],
-    [ "sam0_change_baudrate", "a00446.html#aa09b1baa19c0d9232b191bffe0a200c0", null ]
+    [ "atca_i2c_host_t", "a04475.html#ga66c5ee62a634720fc2ae3070689c9ccb", null ],
+    [ "hal_i2c_control", "a04475.html#ga4f82572f05b8587d98bc38601453863e", null ],
+    [ "hal_i2c_init", "a04475.html#ga17df8d983df73e2e8f62f1236f157909", null ],
+    [ "hal_i2c_post_init", "a04475.html#gafbe53519362f18c2688d10da6f7c618f", null ],
+    [ "hal_i2c_receive", "a04475.html#gac1baf65047dc3efe1f14f1b79b62c04f", null ],
+    [ "hal_i2c_release", "a04475.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
+    [ "hal_i2c_send", "a04475.html#ga148e547d08979e9934ce183933ecd7ed", null ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_hal.h File Reference</title>
+<title>CryptoAuthLib: cryptoauthlib.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.0</span>
+   &#160;<span id="projectnumber">v3.3.1</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,112 +85,414 @@ $(document).ready(function(){initNavTree('a00392.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">atca_hal.h File Reference</div>  </div>
+<div class="title">cryptoauthlib.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>low-level HAL - methods used to setup indirection to physical layer interface  
+<p>Single aggregation point for all CryptoAuthLib header files.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;stdarg.h&gt;</code><br />
 <code>#include &quot;atca_config.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00179_source.html">atca_status.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00176_source.html">atca_iface.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00395_source.html">atca_start_config.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00398_source.html">atca_start_iface.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00149_source.html">atca_compiler.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00188_source.html">atca_version.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00182_source.html">atca_status.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00158_source.html">atca_debug.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00179_source.html">atca_iface.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00173_source.html">atca_helpers.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00401_source.html">hal/atca_hal.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00146_source.html">atca_cfgs.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00164_source.html">atca_device.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00248_source.html">calib/calib_basic.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00257_source.html">calib/calib_command.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00242_source.html">calib/calib_aes_gcm.h</a>&quot;</code><br />
+<code>#include &quot;talib/talib_status.h&quot;</code><br />
+<code>#include &quot;talib/talib_basic.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00137_source.html">atca_basic.h</a>&quot;</code><br />
 </div>
 <p><a href="a00392_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01664.html">atca_hal_kit_phy_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga8bec71e1581c804c34ee5239109e0aaf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#ga8bec71e1581c804c34ee5239109e0aaf">ATCA_POLLING_INIT_TIME_MSEC</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:ga8bec71e1581c804c34ee5239109e0aaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga608ef7949677dac87e1c76c826e6bf40"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#ga608ef7949677dac87e1c76c826e6bf40">ATCA_POLLING_FREQUENCY_TIME_MSEC</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:ga608ef7949677dac87e1c76c826e6bf40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3fec2247165d648a94cea3d0cbfd662f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#ga3fec2247165d648a94cea3d0cbfd662f">ATCA_POLLING_MAX_TIME_MSEC</a>&#160;&#160;&#160;2500</td></tr>
-<tr class="separator:ga3fec2247165d648a94cea3d0cbfd662f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4f60d6c21f0543b2187329461cffd466"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#ga4f60d6c21f0543b2187329461cffd466">hal_memset_s</a>&#160;&#160;&#160;<a class="el" href="a00170.html#ac37b319dabc5b9492a422f6d3d4e118b">atcab_memset_s</a></td></tr>
-<tr class="separator:ga4f60d6c21f0543b2187329461cffd466"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga63592210c9f6bba65e47bee41ba33aad"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#ga63592210c9f6bba65e47bee41ba33aad">ATCA_HAL_CONTROL</a> { <br />
-&#160;&#160;<a class="el" href="a01523.html#gga63592210c9f6bba65e47bee41ba33aada67b7cb6d7acd443c7ce155f79e24e8a3">ATCA_HAL_CONTROL_WAKE</a> = 0, 
-<a class="el" href="a01523.html#gga63592210c9f6bba65e47bee41ba33aada68f29ce1dae672fba4d0bd72a2520787">ATCA_HAL_CONTROL_IDLE</a> = 1, 
-<a class="el" href="a01523.html#gga63592210c9f6bba65e47bee41ba33aada2d7aafbda814952834385918b0b71fb2">ATCA_HAL_CONTROL_SLEEP</a> = 2, 
-<a class="el" href="a01523.html#gga63592210c9f6bba65e47bee41ba33aada707f9990e8082bd03fc6d3b57f4554dd">ATCA_HAL_CONTROL_RESET</a> = 3, 
-<br />
-&#160;&#160;<a class="el" href="a01523.html#gga63592210c9f6bba65e47bee41ba33aada353f3f565c16842ce1cd1353a9967e0f">ATCA_HAL_CONTROL_SELECT</a> = 4, 
-<a class="el" href="a01523.html#gga63592210c9f6bba65e47bee41ba33aadae67d200e332beb287624f9e077718b7c">ATCA_HAL_CONTROL_DESELECT</a> = 5, 
-<a class="el" href="a01523.html#gga63592210c9f6bba65e47bee41ba33aada0af7e182f6bfea47544cb3ec2fce26c9">ATCA_HAL_CHANGE_BAUD</a> = 6
-<br />
- }</td></tr>
-<tr class="separator:ga63592210c9f6bba65e47bee41ba33aad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gaf17e547bf330b9b561fd34437f09e616"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#gaf17e547bf330b9b561fd34437f09e616">hal_iface_init</a> (<a class="el" href="a01548.html">ATCAIfaceCfg</a> *, <a class="el" href="a01584.html">ATCAHAL_t</a> **hal, <a class="el" href="a01584.html">ATCAHAL_t</a> **phy)</td></tr>
-<tr class="memdesc:gaf17e547bf330b9b561fd34437f09e616"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard HAL API for ATCA to initialize a physical interface.  <a href="a01523.html#gaf17e547bf330b9b561fd34437f09e616">More...</a><br /></td></tr>
-<tr class="separator:gaf17e547bf330b9b561fd34437f09e616"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4be1afccb41f28f6ce620b1d5197befc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#ga4be1afccb41f28f6ce620b1d5197befc">hal_iface_release</a> (<a class="el" href="a01519.html#gac7f674d4a0afb12d2f3c9c5e98cb1089">ATCAIfaceType</a>, void *hal_data)</td></tr>
-<tr class="memdesc:ga4be1afccb41f28f6ce620b1d5197befc"><td class="mdescLeft">&#160;</td><td class="mdescRight">releases a physical interface, HAL knows how to interpret hal_data  <a href="a01523.html#ga4be1afccb41f28f6ce620b1d5197befc">More...</a><br /></td></tr>
-<tr class="separator:ga4be1afccb41f28f6ce620b1d5197befc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6ce92f1d10000eb6618fc74c2ca92d76"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#ga6ce92f1d10000eb6618fc74c2ca92d76">hal_check_wake</a> (const uint8_t *response, int response_size)</td></tr>
-<tr class="memdesc:ga6ce92f1d10000eb6618fc74c2ca92d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility function for hal_wake to check the reply.  <a href="a01523.html#ga6ce92f1d10000eb6618fc74c2ca92d76">More...</a><br /></td></tr>
-<tr class="separator:ga6ce92f1d10000eb6618fc74c2ca92d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0544f36422b5e9a8890fb9c90fc5eb55"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#ga0544f36422b5e9a8890fb9c90fc5eb55">atca_delay_ms</a> (uint32_t ms)</td></tr>
-<tr class="memdesc:ga0544f36422b5e9a8890fb9c90fc5eb55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API for legacy implementations.  <a href="a01523.html#ga0544f36422b5e9a8890fb9c90fc5eb55">More...</a><br /></td></tr>
-<tr class="separator:ga0544f36422b5e9a8890fb9c90fc5eb55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7598dfcd6dcac882836544d48356d02f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#ga7598dfcd6dcac882836544d48356d02f">atca_delay_us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga7598dfcd6dcac882836544d48356d02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of microseconds.  <a href="a01523.html#ga7598dfcd6dcac882836544d48356d02f">More...</a><br /></td></tr>
-<tr class="separator:ga7598dfcd6dcac882836544d48356d02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3df335e46c7e798a1d4b8949d00c13d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#ga3df335e46c7e798a1d4b8949d00c13d3">hal_rtos_delay_ms</a> (uint32_t ms)</td></tr>
-<tr class="memdesc:ga3df335e46c7e798a1d4b8949d00c13d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API implemented at the HAL level.  <a href="a01523.html#ga3df335e46c7e798a1d4b8949d00c13d3">More...</a><br /></td></tr>
-<tr class="separator:ga3df335e46c7e798a1d4b8949d00c13d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#gadc23b8130e72a445f76c68d62e8c95c5">hal_delay_ms</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:gadc23b8130e72a445f76c68d62e8c95c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of milliseconds.  <a href="a01523.html#gadc23b8130e72a445f76c68d62e8c95c5">More...</a><br /></td></tr>
-<tr class="separator:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7e9019810ba5ab81b256282392cd5079"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#ga7e9019810ba5ab81b256282392cd5079">hal_delay_us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga7e9019810ba5ab81b256282392cd5079"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of microseconds.  <a href="a01523.html#ga7e9019810ba5ab81b256282392cd5079">More...</a><br /></td></tr>
-<tr class="separator:ga7e9019810ba5ab81b256282392cd5079"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab289a3949663589ac6be71d72fb18278"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#gab289a3949663589ac6be71d72fb18278">hal_create_mutex</a> (void **ppMutex, char *pName)</td></tr>
-<tr class="memdesc:gab289a3949663589ac6be71d72fb18278"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional hal interfaces.  <a href="a01523.html#gab289a3949663589ac6be71d72fb18278">More...</a><br /></td></tr>
-<tr class="separator:gab289a3949663589ac6be71d72fb18278"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#ga4589d7b3e951f40b7928f1cf31f7ddf3">hal_destroy_mutex</a> (void *pMutex)</td></tr>
-<tr class="separator:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#gad4cd02ff7ae4e75844eab4e84eb61994">hal_lock_mutex</a> (void *pMutex)</td></tr>
-<tr class="separator:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31fd8170a49623686543f6247b883bd1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#ga31fd8170a49623686543f6247b883bd1">hal_unlock_mutex</a> (void *pMutex)</td></tr>
-<tr class="separator:ga31fd8170a49623686543f6247b883bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga123ea0df03cae5ca06ec355d795deb6f"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#ga123ea0df03cae5ca06ec355d795deb6f">hal_malloc</a> (size_t size)</td></tr>
-<tr class="separator:ga123ea0df03cae5ca06ec355d795deb6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa6d47ddbfd92184e624c55bf69328e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#gafa6d47ddbfd92184e624c55bf69328e0">hal_free</a> (void *ptr)</td></tr>
-<tr class="separator:gafa6d47ddbfd92184e624c55bf69328e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga43e975cd670652e6ae76f390b2e82218"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#ga43e975cd670652e6ae76f390b2e82218">hal_iface_register_hal</a> (<a class="el" href="a01519.html#gac7f674d4a0afb12d2f3c9c5e98cb1089">ATCAIfaceType</a> iface_type, <a class="el" href="a01584.html">ATCAHAL_t</a> *hal, <a class="el" href="a01584.html">ATCAHAL_t</a> **old_hal, <a class="el" href="a01584.html">ATCAHAL_t</a> *phy, <a class="el" href="a01584.html">ATCAHAL_t</a> **old_phy)</td></tr>
-<tr class="memdesc:ga43e975cd670652e6ae76f390b2e82218"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register/Replace a HAL with a.  <a href="a01523.html#ga43e975cd670652e6ae76f390b2e82218">More...</a><br /></td></tr>
-<tr class="separator:ga43e975cd670652e6ae76f390b2e82218"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac5acbcb3cee22506992d838cd8a3e8ae"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01523.html#gac5acbcb3cee22506992d838cd8a3e8ae">hal_is_command_word</a> (uint8_t word_address)</td></tr>
-<tr class="memdesc:gac5acbcb3cee22506992d838cd8a3e8ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility function for hal_wake to check the reply.  <a href="a01523.html#gac5acbcb3cee22506992d838cd8a3e8ae">More...</a><br /></td></tr>
-<tr class="separator:gac5acbcb3cee22506992d838cd8a3e8ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe8da91949841c137ea573c327bff267"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#afe8da91949841c137ea573c327bff267">ATCA_SHA_SUPPORT</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:afe8da91949841c137ea573c327bff267"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a744eebbe3aacc3b0f2e6e7d5fb2f81c0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#a744eebbe3aacc3b0f2e6e7d5fb2f81c0">ATCA_ATECC608_SUPPORT</a></td></tr>
+<tr class="separator:a744eebbe3aacc3b0f2e6e7d5fb2f81c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42c67508ff6b45d11b1349d8a7ad04d9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#a42c67508ff6b45d11b1349d8a7ad04d9">ATCA_ECC_SUPPORT</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a42c67508ff6b45d11b1349d8a7ad04d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cffff3f4586ac856f67460d33f23770"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#a2cffff3f4586ac856f67460d33f23770">ATCA_CA_SUPPORT</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a2cffff3f4586ac856f67460d33f23770"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e26b17e186f53c03907fca83ca361eb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#a9e26b17e186f53c03907fca83ca361eb">ATCA_TA_SUPPORT</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a9e26b17e186f53c03907fca83ca361eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85e0a506bd6fdae6ce32d5df3a48ac1c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#a85e0a506bd6fdae6ce32d5df3a48ac1c">ATCA_SHA256_BLOCK_SIZE</a>&#160;&#160;&#160;(64)</td></tr>
+<tr class="separator:a85e0a506bd6fdae6ce32d5df3a48ac1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b683697977ad3af9a2c7d8fd6bfe8c8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#a4b683697977ad3af9a2c7d8fd6bfe8c8">ATCA_SHA256_DIGEST_SIZE</a>&#160;&#160;&#160;(32)</td></tr>
+<tr class="separator:a4b683697977ad3af9a2c7d8fd6bfe8c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71e52612e6d56f7412a113fcc4fb57d4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#a71e52612e6d56f7412a113fcc4fb57d4">ATCA_AES128_BLOCK_SIZE</a>&#160;&#160;&#160;(16)</td></tr>
+<tr class="separator:a71e52612e6d56f7412a113fcc4fb57d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad018c90564df3a461b8edcef27000f91"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#ad018c90564df3a461b8edcef27000f91">ATCA_AES128_KEY_SIZE</a>&#160;&#160;&#160;(16)</td></tr>
+<tr class="separator:ad018c90564df3a461b8edcef27000f91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a653e182874070e52d504892ad69d08a2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#a653e182874070e52d504892ad69d08a2">ATCA_ECCP256_KEY_SIZE</a>&#160;&#160;&#160;(32)</td></tr>
+<tr class="separator:a653e182874070e52d504892ad69d08a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace31254e4882c34fd124218474a1b794"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#ace31254e4882c34fd124218474a1b794">ATCA_ECCP256_PUBKEY_SIZE</a>&#160;&#160;&#160;(64)</td></tr>
+<tr class="separator:ace31254e4882c34fd124218474a1b794"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d420e6a05f2de7d8b55883de34328d6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#a0d420e6a05f2de7d8b55883de34328d6">ATCA_ECCP256_SIG_SIZE</a>&#160;&#160;&#160;(64)</td></tr>
+<tr class="separator:a0d420e6a05f2de7d8b55883de34328d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add3796a1d4de55604283aef5a70f7945"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#add3796a1d4de55604283aef5a70f7945">ATCA_ZONE_CONFIG</a>&#160;&#160;&#160;((uint8_t)0x00)</td></tr>
+<tr class="separator:add3796a1d4de55604283aef5a70f7945"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a547efc6fa3cb0501b2e53f80023dff7e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#a547efc6fa3cb0501b2e53f80023dff7e">ATCA_ZONE_OTP</a>&#160;&#160;&#160;((uint8_t)0x01)</td></tr>
+<tr class="separator:a547efc6fa3cb0501b2e53f80023dff7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c65b241280290fae9fd4faa9d7a292b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#a4c65b241280290fae9fd4faa9d7a292b">ATCA_ZONE_DATA</a>&#160;&#160;&#160;((uint8_t)0x02)</td></tr>
+<tr class="separator:a4c65b241280290fae9fd4faa9d7a292b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a850ec56b408fccccaea5826d452c3a64"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#a850ec56b408fccccaea5826d452c3a64">SHA_MODE_TARGET_TEMPKEY</a>&#160;&#160;&#160;((uint8_t)0x00)</td></tr>
+<tr class="separator:a850ec56b408fccccaea5826d452c3a64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae559b402c678cc51f8252b927b8781e5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#ae559b402c678cc51f8252b927b8781e5">SHA_MODE_TARGET_MSGDIGBUF</a>&#160;&#160;&#160;((uint8_t)0x40)</td></tr>
+<tr class="separator:ae559b402c678cc51f8252b927b8781e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0df4b9151bb3d807bc1c532036c6d88"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#ae0df4b9151bb3d807bc1c532036c6d88">SHA_MODE_TARGET_OUT_ONLY</a>&#160;&#160;&#160;((uint8_t)0xC0)</td></tr>
+<tr class="separator:ae0df4b9151bb3d807bc1c532036c6d88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a1c717bd7199cd60fe3f088b236d86f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#a8a1c717bd7199cd60fe3f088b236d86f">ATCA_STRINGIFY</a>(x)&#160;&#160;&#160;#x</td></tr>
+<tr class="separator:a8a1c717bd7199cd60fe3f088b236d86f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac067271c1e02986c59cd444644c117ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#ac067271c1e02986c59cd444644c117ba">ATCA_TOSTRING</a>(x)&#160;&#160;&#160;<a class="el" href="a00392.html#a8a1c717bd7199cd60fe3f088b236d86f">ATCA_STRINGIFY</a>(x)</td></tr>
+<tr class="separator:ac067271c1e02986c59cd444644c117ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0831fc28e099b0f18c3a3c23a7d41df1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00392.html#a0831fc28e099b0f18c3a3c23a7d41df1">ATCA_TRACE</a>(s,  m)&#160;&#160;&#160;<a class="el" href="a00158.html#a60326372db8190ddb9f191fca5bdc38a">atca_trace</a>(s)</td></tr>
+<tr class="separator:a0831fc28e099b0f18c3a3c23a7d41df1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>low-level HAL - methods used to setup indirection to physical layer interface </p>
+<div class="textblock"><p>Single aggregation point for all CryptoAuthLib header files. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a71e52612e6d56f7412a113fcc4fb57d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71e52612e6d56f7412a113fcc4fb57d4">&#9670;&nbsp;</a></span>ATCA_AES128_BLOCK_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_AES128_BLOCK_SIZE&#160;&#160;&#160;(16)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad018c90564df3a461b8edcef27000f91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad018c90564df3a461b8edcef27000f91">&#9670;&nbsp;</a></span>ATCA_AES128_KEY_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_AES128_KEY_SIZE&#160;&#160;&#160;(16)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a744eebbe3aacc3b0f2e6e7d5fb2f81c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a744eebbe3aacc3b0f2e6e7d5fb2f81c0">&#9670;&nbsp;</a></span>ATCA_ATECC608_SUPPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_ATECC608_SUPPORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2cffff3f4586ac856f67460d33f23770"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cffff3f4586ac856f67460d33f23770">&#9670;&nbsp;</a></span>ATCA_CA_SUPPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_CA_SUPPORT&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a42c67508ff6b45d11b1349d8a7ad04d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42c67508ff6b45d11b1349d8a7ad04d9">&#9670;&nbsp;</a></span>ATCA_ECC_SUPPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_ECC_SUPPORT&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a653e182874070e52d504892ad69d08a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a653e182874070e52d504892ad69d08a2">&#9670;&nbsp;</a></span>ATCA_ECCP256_KEY_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_ECCP256_KEY_SIZE&#160;&#160;&#160;(32)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ace31254e4882c34fd124218474a1b794"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace31254e4882c34fd124218474a1b794">&#9670;&nbsp;</a></span>ATCA_ECCP256_PUBKEY_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_ECCP256_PUBKEY_SIZE&#160;&#160;&#160;(64)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0d420e6a05f2de7d8b55883de34328d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d420e6a05f2de7d8b55883de34328d6">&#9670;&nbsp;</a></span>ATCA_ECCP256_SIG_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_ECCP256_SIG_SIZE&#160;&#160;&#160;(64)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a85e0a506bd6fdae6ce32d5df3a48ac1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85e0a506bd6fdae6ce32d5df3a48ac1c">&#9670;&nbsp;</a></span>ATCA_SHA256_BLOCK_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_SHA256_BLOCK_SIZE&#160;&#160;&#160;(64)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4b683697977ad3af9a2c7d8fd6bfe8c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b683697977ad3af9a2c7d8fd6bfe8c8">&#9670;&nbsp;</a></span>ATCA_SHA256_DIGEST_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_SHA256_DIGEST_SIZE&#160;&#160;&#160;(32)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afe8da91949841c137ea573c327bff267"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe8da91949841c137ea573c327bff267">&#9670;&nbsp;</a></span>ATCA_SHA_SUPPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_SHA_SUPPORT&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Library Configuration File - All build attributes should be included in atca_config.h </p>
+
+</div>
+</div>
+<a id="a8a1c717bd7199cd60fe3f088b236d86f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a1c717bd7199cd60fe3f088b236d86f">&#9670;&nbsp;</a></span>ATCA_STRINGIFY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_STRINGIFY</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x</td><td>)</td>
+          <td>&#160;&#160;&#160;#x</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9e26b17e186f53c03907fca83ca361eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e26b17e186f53c03907fca83ca361eb">&#9670;&nbsp;</a></span>ATCA_TA_SUPPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_TA_SUPPORT&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac067271c1e02986c59cd444644c117ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac067271c1e02986c59cd444644c117ba">&#9670;&nbsp;</a></span>ATCA_TOSTRING</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_TOSTRING</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x</td><td>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="a00392.html#a8a1c717bd7199cd60fe3f088b236d86f">ATCA_STRINGIFY</a>(x)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0831fc28e099b0f18c3a3c23a7d41df1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0831fc28e099b0f18c3a3c23a7d41df1">&#9670;&nbsp;</a></span>ATCA_TRACE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_TRACE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">s, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">m&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="a00158.html#a60326372db8190ddb9f191fca5bdc38a">atca_trace</a>(s)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="add3796a1d4de55604283aef5a70f7945"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add3796a1d4de55604283aef5a70f7945">&#9670;&nbsp;</a></span>ATCA_ZONE_CONFIG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_ZONE_CONFIG&#160;&#160;&#160;((uint8_t)0x00)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4c65b241280290fae9fd4faa9d7a292b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c65b241280290fae9fd4faa9d7a292b">&#9670;&nbsp;</a></span>ATCA_ZONE_DATA</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_ZONE_DATA&#160;&#160;&#160;((uint8_t)0x02)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a547efc6fa3cb0501b2e53f80023dff7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a547efc6fa3cb0501b2e53f80023dff7e">&#9670;&nbsp;</a></span>ATCA_ZONE_OTP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_ZONE_OTP&#160;&#160;&#160;((uint8_t)0x01)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae559b402c678cc51f8252b927b8781e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae559b402c678cc51f8252b927b8781e5">&#9670;&nbsp;</a></span>SHA_MODE_TARGET_MSGDIGBUF</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHA_MODE_TARGET_MSGDIGBUF&#160;&#160;&#160;((uint8_t)0x40)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Place resulting digest both in Output buffer and Message Digest Buffer </p>
+
+</div>
+</div>
+<a id="ae0df4b9151bb3d807bc1c532036c6d88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0df4b9151bb3d807bc1c532036c6d88">&#9670;&nbsp;</a></span>SHA_MODE_TARGET_OUT_ONLY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHA_MODE_TARGET_OUT_ONLY&#160;&#160;&#160;((uint8_t)0xC0)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Place resulting digest both in Output buffer ONLY </p>
+
+</div>
+</div>
+<a id="a850ec56b408fccccaea5826d452c3a64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a850ec56b408fccccaea5826d452c3a64">&#9670;&nbsp;</a></span>SHA_MODE_TARGET_TEMPKEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHA_MODE_TARGET_TEMPKEY&#160;&#160;&#160;((uint8_t)0x00)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Place resulting digest both in Output buffer and TempKey </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_87f752e68b722cbc3e0b8ce9f855cb08.html">cryptauthlib-v3.3.0_</a></li><li class="navelem"><a class="el" href="dir_05b5e449e7eda89ff3fc7e4d23e0e258.html">lib</a></li><li class="navelem"><a class="el" href="dir_7d780dd2d7f2a81cb39cba6ef9812450.html">hal</a></li><li class="navelem"><a class="el" href="a00392.html">atca_hal.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ba9d997d0d387c1e0d2fa63de516c6a9.html">cryptauthlib-v3.3.1_</a></li><li class="navelem"><a class="el" href="dir_5077294d8dd80f4dbf652076ab530b49.html">lib</a></li><li class="navelem"><a class="el" href="a00392.html">cryptoauthlib.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

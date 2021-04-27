@@ -1,10 +1,12 @@
 var a00437 =
 [
-    [ "atca_i2c_host_t", "a01523.html#ga66c5ee62a634720fc2ae3070689c9ccb", null ],
-    [ "hal_i2c_control", "a01523.html#ga4f82572f05b8587d98bc38601453863e", null ],
-    [ "hal_i2c_init", "a01523.html#ga17df8d983df73e2e8f62f1236f157909", null ],
-    [ "hal_i2c_post_init", "a01523.html#gafbe53519362f18c2688d10da6f7c618f", null ],
-    [ "hal_i2c_receive", "a01523.html#gac1baf65047dc3efe1f14f1b79b62c04f", null ],
-    [ "hal_i2c_release", "a01523.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
-    [ "hal_i2c_send", "a01523.html#ga148e547d08979e9934ce183933ecd7ed", null ]
+    [ "hal_kit_attach_phy", "a04475.html#ga3f5bce4e9ee06a3b564052b2bd202c29", null ],
+    [ "hal_kit_control", "a04475.html#gad0120b49e2ce340eab1bd1c2999cd622", null ],
+    [ "hal_kit_discover_buses", "a04475.html#ga3a3729f4aef929ffb07347110b226e56", null ],
+    [ "hal_kit_discover_devices", "a04475.html#ga6a9e3c8dbbd2deecddaf2d8efb72fd69", null ],
+    [ "hal_kit_init", "a04475.html#ga8fb6c3e2b06667019200adb31fddaf7e", null ],
+    [ "hal_kit_post_init", "a04475.html#ga7baebf1b0431d0670517d3788d63b111", null ],
+    [ "hal_kit_receive", "a04475.html#ga239b2412c8c0d45c2097a4fa06c9aa53", null ],
+    [ "hal_kit_release", "a04475.html#gafb063a58f6e3b087cf08fce5c66ee422", null ],
+    [ "hal_kit_send", "a04475.html#ga18817a4a7ab5958453eca414e28834ba", null ]
 ];

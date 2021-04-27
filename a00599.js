@@ -1,20 +1,12 @@
 var a00599 =
 [
-    [ "pkcs11_object_alloc", "a01527.html#gacd13c46d7ed7be3dcfdd29c0e78ced3b", null ],
-    [ "pkcs11_object_check", "a01527.html#ga620279f183828bdd33ce94e0cd6f2150", null ],
-    [ "pkcs11_object_create", "a01527.html#ga5cdd6e87496f480f42c44430250794bb", null ],
-    [ "pkcs11_object_deinit", "a01527.html#ga2bed41875de97c71ac141b524175539b", null ],
-    [ "pkcs11_object_destroy", "a01527.html#ga34dbd233b6ac0bf1d2aa2be541d66b25", null ],
-    [ "pkcs11_object_find", "a01527.html#ga09ecdbfaf02822cf5ba6e0f98d3f51df", null ],
-    [ "pkcs11_object_free", "a01527.html#gaf781d0cb96ac95bc8af0e7a2cb2e18f3", null ],
-    [ "pkcs11_object_get_class", "a01527.html#ga551df2c3ba9a2aca7fd017eeb52d7d40", null ],
-    [ "pkcs11_object_get_destroyable", "a01527.html#gadd62d46b440f6a3be0e421eb3dfa20e4", null ],
-    [ "pkcs11_object_get_handle", "a01527.html#ga2a3ee790dbccb44b16d3031688b5aa45", null ],
-    [ "pkcs11_object_get_name", "a01527.html#ga7aee11eff64481426c348ea476508801", null ],
-    [ "pkcs11_object_get_size", "a01527.html#ga5d8c37a9938253cbd4179371cd5f663d", null ],
-    [ "pkcs11_object_get_type", "a01527.html#gaf2006af505de40376cee6817ccb69f59", null ],
-    [ "pkcs11_object_load_handle_info", "a01527.html#ga46af2d77773dcb56478ef7e14a0e81a6", null ],
-    [ "pkcs11_object_cache", "a01527.html#gaca0a5860e29d12831540eb7af43d3659", null ],
-    [ "pkcs11_object_monotonic_attributes", "a01527.html#ga230747fbe3b7a13dfda75980844c3e9d", null ],
-    [ "pkcs11_object_monotonic_attributes_count", "a01527.html#ga5e9308296fc3e124c3a4552134b674ee", null ]
+    [ "_pkcs11_lib_ctx", "a04740.html", "a04740" ],
+    [ "pkcs11_lib_ctx", "a00599.html#a6442956560b04724d849e98b9b782e23", null ],
+    [ "pkcs11_lib_ctx_ptr", "a00599.html#adb828773fc77a4f1dbb559ddedcc99c4", null ],
+    [ "pkcs11_deinit", "a04479.html#gabff89fd0af2e75ee2db858f9fe934ac4", null ],
+    [ "pkcs11_get_context", "a04479.html#gae0e3060e6ae0dfc17a35881c223d8123", null ],
+    [ "pkcs11_init", "a04479.html#ga21e0ec91eccb3f92b45cb2536b3889b1", null ],
+    [ "pkcs11_init_check", "a04479.html#gadd899ffeae0146c08b249e3f551e21f8", null ],
+    [ "pkcs11_lock_context", "a04479.html#gaf0e755fd7df13be2aa1f706de5b0f24b", null ],
+    [ "pkcs11_unlock_context", "a04479.html#ga750f93d0a3c67f5d0e28c9c50ad990a8", null ]
 ];

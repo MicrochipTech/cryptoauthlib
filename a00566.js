@@ -1,7 +1,7 @@
 var a00566 =
 [
-    [ "pkcs11_find_continue", "a01527.html#ga5dbe038da3069861b8de9f77d0c06de1", null ],
-    [ "pkcs11_find_finish", "a01527.html#gacc5c7a788f0c4eafd4f0c1da2aaf0d60", null ],
-    [ "pkcs11_find_get_attribute", "a01527.html#ga0e2b3b381504c39a017a4232a35b672d", null ],
-    [ "pkcs11_find_init", "a01527.html#ga6fd109c0919489909cc4073866d1c466", null ]
+    [ "PKCS11_DEBUG", "a00566.html#a660e603d036b884434faff8d5a6bb443", null ],
+    [ "pkcs11_debug_attributes", "a00566.html#ac2549fbb058dd2934f6a3b4bf983bfa5", null ],
+    [ "PKCS11_DEBUG_NOFILE", "a00566.html#a747bc19e378f56f24664e615ecd996bd", null ],
+    [ "PKCS11_DEBUG_RETURN", "a00566.html#a9c844aa5e64c02064e137f20d82f0313", null ]
 ];

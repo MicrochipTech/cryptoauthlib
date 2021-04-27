@@ -1,13 +1,12 @@
 var a00422 =
 [
-    [ "hal_i2c_discover_buses", "a01523.html#ga05700385437884cc7b28c38d33e84f8c", null ],
-    [ "hal_i2c_discover_devices", "a01523.html#gac7644e62498a596c09952ee3b28017b9", null ],
-    [ "hal_i2c_idle", "a01523.html#ga9317303ada721ff3f97e7aad69437a30", null ],
-    [ "hal_i2c_init", "a01523.html#ga09e7f465a040fbd19ea136269571de3c", null ],
-    [ "hal_i2c_post_init", "a01523.html#gafbe53519362f18c2688d10da6f7c618f", null ],
-    [ "hal_i2c_receive", "a01523.html#gac1baf65047dc3efe1f14f1b79b62c04f", null ],
-    [ "hal_i2c_release", "a01523.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
-    [ "hal_i2c_send", "a01523.html#ga148e547d08979e9934ce183933ecd7ed", null ],
-    [ "hal_i2c_sleep", "a01523.html#ga3f89bae6a625d5f37abdcc99408def27", null ],
-    [ "hal_i2c_wake", "a01523.html#gad4df1b6755e2d5b5d9e810371e45ca8c", null ]
+    [ "hal_gpio_device_discovery", "a00422.html#ad9245156928911351edf9f6eac4e5614", null ],
+    [ "hal_gpio_idle", "a00422.html#aa1c8af7ea618cc3848b81388522bb879", null ],
+    [ "hal_gpio_init", "a00422.html#a053931b7df85bcb458f70b42cd7291ff", null ],
+    [ "hal_gpio_post_init", "a00422.html#a680903ede9921710475c23f3e0f5c56c", null ],
+    [ "hal_gpio_receive", "a00422.html#a1f3e92b2eaa40631b1eda3611e2c894a", null ],
+    [ "hal_gpio_release", "a00422.html#a34a8c0ab6cfceb80c15080b571c0b3f7", null ],
+    [ "hal_gpio_send", "a00422.html#af4cb123d24a3d8da914ecd773b2ddcf4", null ],
+    [ "hal_gpio_sleep", "a00422.html#a0102f79a56117c7e08108156e96af5c3", null ],
+    [ "hal_gpio_wake", "a00422.html#a17a1086ee3cdf4b52ffa7387834f1df5", null ]
 ];

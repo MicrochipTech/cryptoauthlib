@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_debug.h File Reference</title>
+<title>CryptoAuthLib: atca_debug.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.0</span>
+   &#160;<span id="projectnumber">v3.3.1</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,25 +85,35 @@ $(document).ready(function(){initNavTree('a00155.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">atca_debug.h File Reference</div>  </div>
+<div class="title">atca_debug.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="a00179_source.html">atca_status.h</a>&quot;</code><br />
-</div>
-<p><a href="a00155_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
+
+<p>Debug/Trace for CryptoAuthLib calls.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;<a class="el" href="a00392_source.html">cryptoauthlib.h</a>&gt;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aaf7947b74c12dac486d03bb6f6b148d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00155.html#aaf7947b74c12dac486d03bb6f6b148d9">atca_trace_config</a> (FILE *fp)</td></tr>
 <tr class="separator:aaf7947b74c12dac486d03bb6f6b148d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60326372db8190ddb9f191fca5bdc38a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00155.html#a60326372db8190ddb9f191fca5bdc38a">atca_trace</a> (<a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> status)</td></tr>
+<tr class="memitem:a60326372db8190ddb9f191fca5bdc38a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00155.html#a60326372db8190ddb9f191fca5bdc38a">atca_trace</a> (<a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="el" href="a00413.html#ab58253322bcadfefd7ab8c3ec0fb65fb">status</a>)</td></tr>
 <tr class="separator:a60326372db8190ddb9f191fca5bdc38a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37c973beed068b00d261521bfe29299a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00155.html#a37c973beed068b00d261521bfe29299a">atca_trace_msg</a> (<a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> status, const char *msg)</td></tr>
+<tr class="memitem:a37c973beed068b00d261521bfe29299a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00155.html#a37c973beed068b00d261521bfe29299a">atca_trace_msg</a> (<a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="el" href="a00413.html#ab58253322bcadfefd7ab8c3ec0fb65fb">status</a>, const char *msg)</td></tr>
 <tr class="separator:a37c973beed068b00d261521bfe29299a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a3a81f3cd1d6204da295b87e92c7a039e"><td class="memItemLeft" align="right" valign="top">FILE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00155.html#a3a81f3cd1d6204da295b87e92c7a039e">g_trace_fp</a></td></tr>
+<tr class="separator:a3a81f3cd1d6204da295b87e92c7a039e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Debug/Trace for CryptoAuthLib calls. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="a60326372db8190ddb9f191fca5bdc38a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a60326372db8190ddb9f191fca5bdc38a">&#9670;&nbsp;</a></span>atca_trace()</h2>
 
@@ -111,9 +121,9 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atca_trace </td>
+          <td class="memname"><a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atca_trace </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td>
           <td class="paramname"><em>status</em></td><td>)</td>
           <td></td>
         </tr>
@@ -147,9 +157,9 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atca_trace_msg </td>
+          <td class="memname"><a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atca_trace_msg </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td>
           <td class="paramname"><em>status</em>, </td>
         </tr>
         <tr>
@@ -168,12 +178,27 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a3a81f3cd1d6204da295b87e92c7a039e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a81f3cd1d6204da295b87e92c7a039e">&#9670;&nbsp;</a></span>g_trace_fp</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">FILE* g_trace_fp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_87f752e68b722cbc3e0b8ce9f855cb08.html">cryptauthlib-v3.3.0_</a></li><li class="navelem"><a class="el" href="dir_05b5e449e7eda89ff3fc7e4d23e0e258.html">lib</a></li><li class="navelem"><a class="el" href="a00155.html">atca_debug.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ba9d997d0d387c1e0d2fa63de516c6a9.html">cryptauthlib-v3.3.1_</a></li><li class="navelem"><a class="el" href="dir_5077294d8dd80f4dbf652076ab530b49.html">lib</a></li><li class="navelem"><a class="el" href="a00155.html">atca_debug.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

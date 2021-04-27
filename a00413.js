@@ -1,12 +1,24 @@
 var a00413 =
 [
-    [ "hal_gpio_device_discovery", "a00413.html#ad9245156928911351edf9f6eac4e5614", null ],
-    [ "hal_gpio_idle", "a00413.html#aa1c8af7ea618cc3848b81388522bb879", null ],
-    [ "hal_gpio_init", "a00413.html#a053931b7df85bcb458f70b42cd7291ff", null ],
-    [ "hal_gpio_post_init", "a00413.html#a680903ede9921710475c23f3e0f5c56c", null ],
-    [ "hal_gpio_receive", "a00413.html#a1f3e92b2eaa40631b1eda3611e2c894a", null ],
-    [ "hal_gpio_release", "a00413.html#a34a8c0ab6cfceb80c15080b571c0b3f7", null ],
-    [ "hal_gpio_send", "a00413.html#af4cb123d24a3d8da914ecd773b2ddcf4", null ],
-    [ "hal_gpio_sleep", "a00413.html#a0102f79a56117c7e08108156e96af5c3", null ],
-    [ "hal_gpio_wake", "a00413.html#a17a1086ee3cdf4b52ffa7387834f1df5", null ]
+    [ "ACK_CHECK_DIS", "a00413.html#a8ad7ceb373ce664b1c2482a66537e7c0", null ],
+    [ "ACK_CHECK_EN", "a00413.html#a7dd22b838d2b1f22d367e6cdef04ccc3", null ],
+    [ "ACK_VAL", "a00413.html#a1d64a546dacc15052a6c4887f9d0020f", null ],
+    [ "I2C0_SCL_PIN", "a00413.html#a1e30c459b21b57de018d51644a767929", null ],
+    [ "I2C0_SDA_PIN", "a00413.html#a0a6c8b4ecca4f35aaa82d33f8a1d9742", null ],
+    [ "I2C1_SCL_PIN", "a00413.html#add009e081e638094ee54b280661d862e", null ],
+    [ "I2C1_SDA_PIN", "a00413.html#a68697a8aca56f616b38aa23f82edecd5", null ],
+    [ "LOG_LOCAL_LEVEL", "a00413.html#a5155a7b7465dd9b5e6167122827d0158", null ],
+    [ "MAX_I2C_BUSES", "a00413.html#af89a7a4080a47aa10a5504291db285bf", null ],
+    [ "NACK_VAL", "a00413.html#ae20bf16f65c41237e2d620ef49890781", null ],
+    [ "ATCAI2CMaster_t", "a00413.html#a06b19a932aea9cf3a5165fefacb24f7b", null ],
+    [ "hal_i2c_change_baud", "a00413.html#a210aab17fd4be72d6af1bdf044ec2581", null ],
+    [ "hal_i2c_control", "a00413.html#ga4f82572f05b8587d98bc38601453863e", null ],
+    [ "hal_i2c_init", "a00413.html#ga17df8d983df73e2e8f62f1236f157909", null ],
+    [ "hal_i2c_post_init", "a00413.html#gafbe53519362f18c2688d10da6f7c618f", null ],
+    [ "hal_i2c_receive", "a00413.html#gac1baf65047dc3efe1f14f1b79b62c04f", null ],
+    [ "hal_i2c_release", "a00413.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
+    [ "hal_i2c_send", "a00413.html#ga148e547d08979e9934ce183933ecd7ed", null ],
+    [ "i2c_hal_data", "a00413.html#afc44109c333c49c93b058b36cb2ed2fb", null ],
+    [ "status", "a00413.html#ab58253322bcadfefd7ab8c3ec0fb65fb", null ],
+    [ "TAG", "a00413.html#a5a85b9c772bbeb480b209a3e6ea92b4c", null ]
 ];

@@ -1,16 +1,16 @@
 var modules =
 [
-    [ "Basic Crypto API methods (atcab_)", "a01516.html", "a01516" ],
-    [ "Configuration (cfg_)", "a01517.html", null ],
-    [ "ATCADevice (atca_)", "a01518.html", "a01518" ],
-    [ "ATCAIface (atca_)", "a01519.html", "a01519" ],
-    [ "Certificate manipulation methods (atcacert_)", "a01520.html", "a01520" ],
-    [ "Basic Crypto API methods for CryptoAuth Devices (calib_)", "a01521.html", "a01521" ],
-    [ "Software crypto methods (atcac_)", "a01522.html", "a01522" ],
-    [ "Hardware abstraction layer (hal_)", "a01523.html", "a01523" ],
-    [ "Host side crypto methods (atcah_)", "a01524.html", "a01524" ],
-    [ "JSON Web Token (JWT) methods (atca_jwt_)", "a01525.html", "a01525" ],
-    [ "mbedTLS Wrapper methods (atca_mbedtls_)", "a01526.html", "a01526" ],
-    [ "Attributes (pkcs11_attrib_)", "a01527.html", "a01527" ],
-    [ "TNG API (tng_)", "a01528.html", "a01528" ]
+    [ "Basic Crypto API methods (atcab_)", "a04468.html", "a04468" ],
+    [ "Configuration (cfg_)", "a04469.html", null ],
+    [ "ATCADevice (atca_)", "a04470.html", "a04470" ],
+    [ "ATCAIface (atca_)", "a04471.html", "a04471" ],
+    [ "Certificate manipulation methods (atcacert_)", "a04472.html", "a04472" ],
+    [ "Basic Crypto API methods for CryptoAuth Devices (calib_)", "a04473.html", "a04473" ],
+    [ "Software crypto methods (atcac_)", "a04474.html", "a04474" ],
+    [ "Hardware abstraction layer (hal_)", "a04475.html", "a04475" ],
+    [ "Host side crypto methods (atcah_)", "a04476.html", "a04476" ],
+    [ "JSON Web Token (JWT) methods (atca_jwt_)", "a04477.html", "a04477" ],
+    [ "mbedTLS Wrapper methods (atca_mbedtls_)", "a04478.html", "a04478" ],
+    [ "Attributes (pkcs11_attrib_)", "a04479.html", "a04479" ],
+    [ "TNG API (tng_)", "a04480.html", "a04480" ]
 ];

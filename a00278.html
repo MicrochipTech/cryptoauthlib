@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_hmac.c File Reference</title>
+<title>CryptoAuthLib: calib_genkey.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.0</span>
+   &#160;<span id="projectnumber">v3.3.1</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -87,31 +87,40 @@ $(document).ready(function(){initNavTree('a00278.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">calib_hmac.c File Reference</div>  </div>
+<div class="title">calib_genkey.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for HMAC command.  
+<p>CryptoAuthLib Basic API methods for GenKey command.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00383_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00392_source.html">cryptoauthlib.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaf2a3d2083992c399f6da6efee006cfc8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01521.html#gaf2a3d2083992c399f6da6efee006cfc8">calib_hmac</a> (<a class="el" href="a01518.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t key_id, uint8_t *digest)</td></tr>
-<tr class="memdesc:gaf2a3d2083992c399f6da6efee006cfc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues a HMAC command, which computes an HMAC/SHA-256 digest of a key stored in the device, a challenge, and other information on the device.  <a href="a01521.html#gaf2a3d2083992c399f6da6efee006cfc8">More...</a><br /></td></tr>
-<tr class="separator:gaf2a3d2083992c399f6da6efee006cfc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d87bd17122bc323bb0e47db8341c6d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04473.html#ga1d87bd17122bc323bb0e47db8341c6d8">calib_genkey_base</a> (<a class="el" href="a04470.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t key_id, const uint8_t *other_data, uint8_t *public_key)</td></tr>
+<tr class="memdesc:ga1d87bd17122bc323bb0e47db8341c6d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues GenKey command, which can generate a private key, compute a public key, nd/or compute a digest of a public key.  <a href="a04473.html#ga1d87bd17122bc323bb0e47db8341c6d8">More...</a><br /></td></tr>
+<tr class="separator:ga1d87bd17122bc323bb0e47db8341c6d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5fa08c0fb0fd4de0137bd82c7ed410cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04473.html#ga5fa08c0fb0fd4de0137bd82c7ed410cb">calib_genkey</a> (<a class="el" href="a04470.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, uint8_t *public_key)</td></tr>
+<tr class="memdesc:ga5fa08c0fb0fd4de0137bd82c7ed410cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues GenKey command, which generates a new random private key in slot and returns the public key.  <a href="a04473.html#ga5fa08c0fb0fd4de0137bd82c7ed410cb">More...</a><br /></td></tr>
+<tr class="separator:ga5fa08c0fb0fd4de0137bd82c7ed410cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad902a2fe308340751b52ae249a38d688"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04473.html#gad902a2fe308340751b52ae249a38d688">calib_get_pubkey</a> (<a class="el" href="a04470.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, uint8_t *public_key)</td></tr>
+<tr class="memdesc:gad902a2fe308340751b52ae249a38d688"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses GenKey command to calculate the public key from an existing private key in a slot.  <a href="a04473.html#gad902a2fe308340751b52ae249a38d688">More...</a><br /></td></tr>
+<tr class="separator:gad902a2fe308340751b52ae249a38d688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f4386930ff3e9b6ddda3b30a7a352a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04473.html#ga4f4386930ff3e9b6ddda3b30a7a352a0">calib_genkey_mac</a> (<a class="el" href="a04470.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t *public_key, uint8_t *mac)</td></tr>
+<tr class="memdesc:ga4f4386930ff3e9b6ddda3b30a7a352a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses Genkey command to calculate SHA256 digest MAC of combining public key and session key.  <a href="a04473.html#ga4f4386930ff3e9b6ddda3b30a7a352a0">More...</a><br /></td></tr>
+<tr class="separator:ga4f4386930ff3e9b6ddda3b30a7a352a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for HMAC command. </p>
-<p>The HMAC command computes an HMAC/SHA-256 digest using a key stored in the device over a challenge stored in the TempKey register, and/or other information stored within the device.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, and ATECC508A . There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for GenKey command. </p>
+<p>The GenKey command is used for creating ECC private keys, generating ECC public keys, and for digest calculations involving public keys.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC108A, ATECC508A, ATECC608A/B. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_87f752e68b722cbc3e0b8ce9f855cb08.html">cryptauthlib-v3.3.0_</a></li><li class="navelem"><a class="el" href="dir_05b5e449e7eda89ff3fc7e4d23e0e258.html">lib</a></li><li class="navelem"><a class="el" href="dir_6d116ffb7c6bd70b9623b43f97d4db59.html">calib</a></li><li class="navelem"><a class="el" href="a00278.html">calib_hmac.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ba9d997d0d387c1e0d2fa63de516c6a9.html">cryptauthlib-v3.3.1_</a></li><li class="navelem"><a class="el" href="dir_5077294d8dd80f4dbf652076ab530b49.html">lib</a></li><li class="navelem"><a class="el" href="dir_b60537e863e1e362a91fcadf037a75fd.html">calib</a></li><li class="navelem"><a class="el" href="a00278.html">calib_genkey.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

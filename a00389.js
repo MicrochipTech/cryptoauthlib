@@ -1,10 +1,10 @@
 var a00389 =
 [
-    [ "atca_hal_list_entry_t", "a01660.html", "a01660" ],
-    [ "ATCA_MAX_HAL_CACHE", "a00389.html#a997e92b2157ec33182e4c484c329a719", null ],
-    [ "hal_check_wake", "a01523.html#ga6ce92f1d10000eb6618fc74c2ca92d76", null ],
-    [ "hal_iface_init", "a01523.html#gaf17e547bf330b9b561fd34437f09e616", null ],
-    [ "hal_iface_register_hal", "a01523.html#ga43e975cd670652e6ae76f390b2e82218", null ],
-    [ "hal_iface_release", "a01523.html#ga4be1afccb41f28f6ce620b1d5197befc", null ],
-    [ "hal_is_command_word", "a01523.html#gac5acbcb3cee22506992d838cd8a3e8ae", null ]
+    [ "sw_sha256_ctx", "a04608.html", "a04608" ],
+    [ "SHA256_BLOCK_SIZE", "a00389.html#a9c1fe69ad43d4ca74b84303a0ed64f2f", null ],
+    [ "SHA256_DIGEST_SIZE", "a00389.html#a81efbc0fc101b06a914f7ff9e2fbc0e9", null ],
+    [ "sw_sha256", "a00389.html#a90a76445beb1a0eadea22bb7e3c8ad60", null ],
+    [ "sw_sha256_final", "a00389.html#a594b8b10c408cb1103da9c09b1367a51", null ],
+    [ "sw_sha256_init", "a00389.html#acfb7028e6f10d29c548cbecdbfa53ac8", null ],
+    [ "sw_sha256_update", "a00389.html#a7f5d8ad85631d77bfdb10dfb728bfbce", null ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_crypto_hw_aes_cmac.c File Reference</title>
+<title>CryptoAuthLib: atca_crypto_hw_aes_cbcmac.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.0</span>
+   &#160;<span id="projectnumber">v3.3.1</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -87,41 +87,40 @@ $(document).ready(function(){initNavTree('a00338.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_crypto_hw_aes_cmac.c File Reference</div>  </div>
+<div class="title">atca_crypto_hw_aes_cbcmac.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p>CryptoAuthLib Basic API methods for AES CBC_MAC mode.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00383_source.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00326_source.html">atca_crypto_hw_aes.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00392_source.html">cryptoauthlib.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga8da20fcd2c98c0738b32379d87b14843"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01516.html#ga8da20fcd2c98c0738b32379d87b14843">atcab_aes_cmac_init_ext</a> (<a class="el" href="a01518.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a00326.html#a71a000f89238de0205da742995a0cb34">atca_aes_cmac_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block)</td></tr>
-<tr class="memdesc:ga8da20fcd2c98c0738b32379d87b14843"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a CMAC calculation using an AES-128 key in the device.  <a href="a01516.html#ga8da20fcd2c98c0738b32379d87b14843">More...</a><br /></td></tr>
-<tr class="separator:ga8da20fcd2c98c0738b32379d87b14843"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga84506ff4105e63823c99527788d36d52"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01516.html#ga84506ff4105e63823c99527788d36d52">atcab_aes_cmac_init</a> (<a class="el" href="a00326.html#a71a000f89238de0205da742995a0cb34">atca_aes_cmac_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block)</td></tr>
-<tr class="memdesc:ga84506ff4105e63823c99527788d36d52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a CMAC calculation using an AES-128 key in the device.  <a href="a01516.html#ga84506ff4105e63823c99527788d36d52">More...</a><br /></td></tr>
-<tr class="separator:ga84506ff4105e63823c99527788d36d52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0cf22e893c713890faeb9fa8784760b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01516.html#ga0cf22e893c713890faeb9fa8784760b1">atcab_aes_cmac_update</a> (<a class="el" href="a00326.html#a71a000f89238de0205da742995a0cb34">atca_aes_cmac_ctx_t</a> *ctx, const uint8_t *data, uint32_t data_size)</td></tr>
-<tr class="memdesc:ga0cf22e893c713890faeb9fa8784760b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add data to an initialized CMAC calculation.  <a href="a01516.html#ga0cf22e893c713890faeb9fa8784760b1">More...</a><br /></td></tr>
-<tr class="separator:ga0cf22e893c713890faeb9fa8784760b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac0be51b283b107465dcf42758ca31687"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01516.html#gac0be51b283b107465dcf42758ca31687">atcab_aes_cmac_finish</a> (<a class="el" href="a00326.html#a71a000f89238de0205da742995a0cb34">atca_aes_cmac_ctx_t</a> *ctx, uint8_t *cmac, uint32_t cmac_size)</td></tr>
-<tr class="memdesc:gac0be51b283b107465dcf42758ca31687"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finish a CMAC operation returning the CMAC value.  <a href="a01516.html#gac0be51b283b107465dcf42758ca31687">More...</a><br /></td></tr>
-<tr class="separator:gac0be51b283b107465dcf42758ca31687"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaecb3e5b1e6a16b50431b064b00212f64"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04468.html#gaecb3e5b1e6a16b50431b064b00212f64">atcab_aes_cbcmac_init_ext</a> (<a class="el" href="a04470.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a00332.html#a66efe80a50daaa4b54840233d1b45b01">atca_aes_cbcmac_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block)</td></tr>
+<tr class="memdesc:gaecb3e5b1e6a16b50431b064b00212f64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for AES CBC-MAC operation.  <a href="a04468.html#gaecb3e5b1e6a16b50431b064b00212f64">More...</a><br /></td></tr>
+<tr class="separator:gaecb3e5b1e6a16b50431b064b00212f64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab52af5418e5a2d06c6cf4d23f892bd63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04468.html#gab52af5418e5a2d06c6cf4d23f892bd63">atcab_aes_cbcmac_init</a> (<a class="el" href="a00332.html#a66efe80a50daaa4b54840233d1b45b01">atca_aes_cbcmac_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block)</td></tr>
+<tr class="memdesc:gab52af5418e5a2d06c6cf4d23f892bd63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for AES CBC-MAC operation.  <a href="a04468.html#gab52af5418e5a2d06c6cf4d23f892bd63">More...</a><br /></td></tr>
+<tr class="separator:gab52af5418e5a2d06c6cf4d23f892bd63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaede4cf8d6ab2b4ecf92e3871b1eac8a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04468.html#gaede4cf8d6ab2b4ecf92e3871b1eac8a2">atcab_aes_cbcmac_update</a> (<a class="el" href="a00332.html#a66efe80a50daaa4b54840233d1b45b01">atca_aes_cbcmac_ctx_t</a> *ctx, const uint8_t *data, uint32_t data_size)</td></tr>
+<tr class="memdesc:gaede4cf8d6ab2b4ecf92e3871b1eac8a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate AES CBC-MAC with key stored within ECC608A device. calib_aes_cbcmac_init() should be called before the first use of this function.  <a href="a04468.html#gaede4cf8d6ab2b4ecf92e3871b1eac8a2">More...</a><br /></td></tr>
+<tr class="separator:gaede4cf8d6ab2b4ecf92e3871b1eac8a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab5cad319919f92bed46e94ee17f77446"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04468.html#gab5cad319919f92bed46e94ee17f77446">atcab_aes_cbcmac_finish</a> (<a class="el" href="a00332.html#a66efe80a50daaa4b54840233d1b45b01">atca_aes_cbcmac_ctx_t</a> *ctx, uint8_t *mac, uint32_t mac_size)</td></tr>
+<tr class="memdesc:gab5cad319919f92bed46e94ee17f77446"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finish a CBC-MAC operation returning the CBC-MAC value. If the data provided to the calib_aes_cbcmac_update() function has incomplete block this function will return an error code.  <a href="a04468.html#gab5cad319919f92bed46e94ee17f77446">More...</a><br /></td></tr>
+<tr class="separator:gab5cad319919f92bed46e94ee17f77446"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>CryptoAuthLib Basic API methods for AES CBC_MAC mode. </p>
-<p>The AES command supports 128-bit AES encryption or decryption of small messages or data packets in ECB mode.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC608A, ATECC608B, &amp; TA100. Refer to device datasheet for full details.</dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+<p>The AES command supports 128-bit AES encryption or decryption of small messages or data packets in ECB mode. Also can perform GFM (Galois Field Multiply) calculation in support of AES-GCM.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC608A. Refer to device datasheet for full details.</dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_87f752e68b722cbc3e0b8ce9f855cb08.html">cryptauthlib-v3.3.0_</a></li><li class="navelem"><a class="el" href="dir_05b5e449e7eda89ff3fc7e4d23e0e258.html">lib</a></li><li class="navelem"><a class="el" href="dir_99d1a637360dc76add697636ddd22361.html">crypto</a></li><li class="navelem"><a class="el" href="a00338.html">atca_crypto_hw_aes_cmac.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ba9d997d0d387c1e0d2fa63de516c6a9.html">cryptauthlib-v3.3.1_</a></li><li class="navelem"><a class="el" href="dir_5077294d8dd80f4dbf652076ab530b49.html">lib</a></li><li class="navelem"><a class="el" href="dir_a4d945251cd1dd5b0ae0b4e25ccd98f3.html">crypto</a></li><li class="navelem"><a class="el" href="a00338.html">atca_crypto_hw_aes_cbcmac.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

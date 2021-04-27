@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_crypto_hw_aes_ccm.c File Reference</title>
+<title>CryptoAuthLib: atca_crypto_hw_aes_cbc.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.0</span>
+   &#160;<span id="projectnumber">v3.3.1</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -87,58 +87,41 @@ $(document).ready(function(){initNavTree('a00335.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_crypto_hw_aes_ccm.c File Reference</div>  </div>
+<div class="title">atca_crypto_hw_aes_cbc.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for AES CCM mode.  
+<p>CryptoAuthLib Basic API methods for AES CBC mode.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00383_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00392_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00332_source.html">atca_crypto_hw_aes.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga57b4c1385a4753e5f536c72982bf5e95"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01516.html#ga57b4c1385a4753e5f536c72982bf5e95">atcab_aes_ccm_init_ext</a> (<a class="el" href="a01518.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a00326.html#acb4e183cce26d955cfa293502252563c">atca_aes_ccm_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block, uint8_t *iv, size_t iv_size, size_t aad_size, size_t text_size, size_t tag_size)</td></tr>
-<tr class="memdesc:ga57b4c1385a4753e5f536c72982bf5e95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for AES CCM operation with an existing IV, which is common when starting a decrypt operation.  <a href="a01516.html#ga57b4c1385a4753e5f536c72982bf5e95">More...</a><br /></td></tr>
-<tr class="separator:ga57b4c1385a4753e5f536c72982bf5e95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaef4130a5cfd068780b2c763a3af06c52"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01516.html#gaef4130a5cfd068780b2c763a3af06c52">atcab_aes_ccm_init</a> (<a class="el" href="a00326.html#acb4e183cce26d955cfa293502252563c">atca_aes_ccm_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block, uint8_t *iv, size_t iv_size, size_t aad_size, size_t text_size, size_t tag_size)</td></tr>
-<tr class="memdesc:gaef4130a5cfd068780b2c763a3af06c52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for AES CCM operation with an existing IV, which is common when starting a decrypt operation.  <a href="a01516.html#gaef4130a5cfd068780b2c763a3af06c52">More...</a><br /></td></tr>
-<tr class="separator:gaef4130a5cfd068780b2c763a3af06c52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga22375fed660c63df78fd19f30e06a2b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01516.html#ga22375fed660c63df78fd19f30e06a2b4">atcab_aes_ccm_init_rand_ext</a> (<a class="el" href="a01518.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a00326.html#acb4e183cce26d955cfa293502252563c">atca_aes_ccm_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block, uint8_t *iv, size_t iv_size, size_t aad_size, size_t text_size, size_t tag_size)</td></tr>
-<tr class="memdesc:ga22375fed660c63df78fd19f30e06a2b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for AES CCM operation with a random nonce.  <a href="a01516.html#ga22375fed660c63df78fd19f30e06a2b4">More...</a><br /></td></tr>
-<tr class="separator:ga22375fed660c63df78fd19f30e06a2b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaafb4674fec65ca6ff0399560f88a2514"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01516.html#gaafb4674fec65ca6ff0399560f88a2514">atcab_aes_ccm_init_rand</a> (<a class="el" href="a00326.html#acb4e183cce26d955cfa293502252563c">atca_aes_ccm_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block, uint8_t *iv, size_t iv_size, size_t aad_size, size_t text_size, size_t tag_size)</td></tr>
-<tr class="memdesc:gaafb4674fec65ca6ff0399560f88a2514"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for AES CCM operation with a random nonce.  <a href="a01516.html#gaafb4674fec65ca6ff0399560f88a2514">More...</a><br /></td></tr>
-<tr class="separator:gaafb4674fec65ca6ff0399560f88a2514"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9fdfca99f258526647c1bb6d92a5c3e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01516.html#ga9fdfca99f258526647c1bb6d92a5c3e6">atcab_aes_ccm_aad_update</a> (<a class="el" href="a00326.html#acb4e183cce26d955cfa293502252563c">atca_aes_ccm_ctx_t</a> *ctx, const uint8_t *aad, size_t aad_size)</td></tr>
-<tr class="memdesc:ga9fdfca99f258526647c1bb6d92a5c3e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process Additional Authenticated Data (AAD) using CCM mode and a key within the ATECC608A device.  <a href="a01516.html#ga9fdfca99f258526647c1bb6d92a5c3e6">More...</a><br /></td></tr>
-<tr class="separator:ga9fdfca99f258526647c1bb6d92a5c3e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga94406250530e4f3ff23414293d4b1cba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01516.html#ga94406250530e4f3ff23414293d4b1cba">atcab_aes_ccm_aad_finish</a> (<a class="el" href="a00326.html#acb4e183cce26d955cfa293502252563c">atca_aes_ccm_ctx_t</a> *ctx)</td></tr>
-<tr class="memdesc:ga94406250530e4f3ff23414293d4b1cba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finish processing Additional Authenticated Data (AAD) using CCM mode.  <a href="a01516.html#ga94406250530e4f3ff23414293d4b1cba">More...</a><br /></td></tr>
-<tr class="separator:ga94406250530e4f3ff23414293d4b1cba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga37600304129e3436d02462b73ece670a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01516.html#ga37600304129e3436d02462b73ece670a">atcab_aes_ccm_encrypt_update</a> (<a class="el" href="a00326.html#acb4e183cce26d955cfa293502252563c">atca_aes_ccm_ctx_t</a> *ctx, const uint8_t *plaintext, uint32_t plaintext_size, uint8_t *ciphertext)</td></tr>
-<tr class="memdesc:ga37600304129e3436d02462b73ece670a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process data using CCM mode and a key within the ATECC608A device. calib_aes_ccm_init() or calib_aes_ccm_init_rand() should be called before the first use of this function.  <a href="a01516.html#ga37600304129e3436d02462b73ece670a">More...</a><br /></td></tr>
-<tr class="separator:ga37600304129e3436d02462b73ece670a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac051ca39356f63b0971a82cc700eec89"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01516.html#gac051ca39356f63b0971a82cc700eec89">atcab_aes_ccm_decrypt_update</a> (<a class="el" href="a00326.html#acb4e183cce26d955cfa293502252563c">atca_aes_ccm_ctx_t</a> *ctx, const uint8_t *ciphertext, uint32_t ciphertext_size, uint8_t *plaintext)</td></tr>
-<tr class="memdesc:gac051ca39356f63b0971a82cc700eec89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process data using CCM mode and a key within the ATECC608A device. calib_aes_ccm_init() or calib_aes_ccm_init_rand() should be called before the first use of this function.  <a href="a01516.html#gac051ca39356f63b0971a82cc700eec89">More...</a><br /></td></tr>
-<tr class="separator:gac051ca39356f63b0971a82cc700eec89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga51c291bed610a6f61f56909233a9c00a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01516.html#ga51c291bed610a6f61f56909233a9c00a">atcab_aes_ccm_encrypt_finish</a> (<a class="el" href="a00326.html#acb4e183cce26d955cfa293502252563c">atca_aes_ccm_ctx_t</a> *ctx, uint8_t *tag, uint8_t *tag_size)</td></tr>
-<tr class="memdesc:ga51c291bed610a6f61f56909233a9c00a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete a CCM encrypt operation returning the authentication tag.  <a href="a01516.html#ga51c291bed610a6f61f56909233a9c00a">More...</a><br /></td></tr>
-<tr class="separator:ga51c291bed610a6f61f56909233a9c00a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3c3da555c212f9f6af700542d5e51177"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01516.html#ga3c3da555c212f9f6af700542d5e51177">atcab_aes_ccm_decrypt_finish</a> (<a class="el" href="a00326.html#acb4e183cce26d955cfa293502252563c">atca_aes_ccm_ctx_t</a> *ctx, const uint8_t *tag, bool *is_verified)</td></tr>
-<tr class="memdesc:ga3c3da555c212f9f6af700542d5e51177"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete a CCM decrypt operation authenticating provided tag.  <a href="a01516.html#ga3c3da555c212f9f6af700542d5e51177">More...</a><br /></td></tr>
-<tr class="separator:ga3c3da555c212f9f6af700542d5e51177"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga13efae9f9f9c7aa5c5647119b0f3d1cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04468.html#ga13efae9f9f9c7aa5c5647119b0f3d1cb">atcab_aes_cbc_init_ext</a> (<a class="el" href="a04470.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, <a class="el" href="a00332.html#a927afea55b7a5011e14795d735b47ad7">atca_aes_cbc_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block, const uint8_t *iv)</td></tr>
+<tr class="memdesc:ga13efae9f9f9c7aa5c5647119b0f3d1cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for AES CBC operation.  <a href="a04468.html#ga13efae9f9f9c7aa5c5647119b0f3d1cb">More...</a><br /></td></tr>
+<tr class="separator:ga13efae9f9f9c7aa5c5647119b0f3d1cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc41b824cdc9b10efa46bcbf74850184"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04468.html#gabc41b824cdc9b10efa46bcbf74850184">atcab_aes_cbc_init</a> (<a class="el" href="a00332.html#a927afea55b7a5011e14795d735b47ad7">atca_aes_cbc_ctx_t</a> *ctx, uint16_t key_id, uint8_t key_block, const uint8_t *iv)</td></tr>
+<tr class="memdesc:gabc41b824cdc9b10efa46bcbf74850184"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for AES CBC operation.  <a href="a04468.html#gabc41b824cdc9b10efa46bcbf74850184">More...</a><br /></td></tr>
+<tr class="separator:gabc41b824cdc9b10efa46bcbf74850184"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7414e3dc8215cedc1bffc6cf576d7d1e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04468.html#ga7414e3dc8215cedc1bffc6cf576d7d1e">atcab_aes_cbc_encrypt_block</a> (<a class="el" href="a00332.html#a927afea55b7a5011e14795d735b47ad7">atca_aes_cbc_ctx_t</a> *ctx, const uint8_t *plaintext, uint8_t *ciphertext)</td></tr>
+<tr class="memdesc:ga7414e3dc8215cedc1bffc6cf576d7d1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypt a block of data using CBC mode and a key within the device. <a class="el" href="a04468.html#gabc41b824cdc9b10efa46bcbf74850184" title="Initialize context for AES CBC operation.">atcab_aes_cbc_init()</a> should be called before the first use of this function.  <a href="a04468.html#ga7414e3dc8215cedc1bffc6cf576d7d1e">More...</a><br /></td></tr>
+<tr class="separator:ga7414e3dc8215cedc1bffc6cf576d7d1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c66e1b8b31bb87be3de6c9a9084c21e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04468.html#ga7c66e1b8b31bb87be3de6c9a9084c21e">atcab_aes_cbc_decrypt_block</a> (<a class="el" href="a00332.html#a927afea55b7a5011e14795d735b47ad7">atca_aes_cbc_ctx_t</a> *ctx, const uint8_t *ciphertext, uint8_t *plaintext)</td></tr>
+<tr class="memdesc:ga7c66e1b8b31bb87be3de6c9a9084c21e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypt a block of data using CBC mode and a key within the device. <a class="el" href="a04468.html#gabc41b824cdc9b10efa46bcbf74850184" title="Initialize context for AES CBC operation.">atcab_aes_cbc_init()</a> should be called before the first use of this function.  <a href="a04468.html#ga7c66e1b8b31bb87be3de6c9a9084c21e">More...</a><br /></td></tr>
+<tr class="separator:ga7c66e1b8b31bb87be3de6c9a9084c21e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for AES CCM mode. </p>
-<p>The AES command supports 128-bit AES encryption or decryption of small messages or data packets in ECB mode. CCM mode provides security and authenticity to the message being processed.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC608A. Refer to device datasheet for full details.</dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for AES CBC mode. </p>
+<p>The AES command supports 128-bit AES encryption or decryption of small messages or data packets in ECB mode.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC608A, ATECC608B, &amp; TA100. Refer to device datasheet for full details.</dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_87f752e68b722cbc3e0b8ce9f855cb08.html">cryptauthlib-v3.3.0_</a></li><li class="navelem"><a class="el" href="dir_05b5e449e7eda89ff3fc7e4d23e0e258.html">lib</a></li><li class="navelem"><a class="el" href="dir_99d1a637360dc76add697636ddd22361.html">crypto</a></li><li class="navelem"><a class="el" href="a00335.html">atca_crypto_hw_aes_ccm.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ba9d997d0d387c1e0d2fa63de516c6a9.html">cryptauthlib-v3.3.1_</a></li><li class="navelem"><a class="el" href="dir_5077294d8dd80f4dbf652076ab530b49.html">lib</a></li><li class="navelem"><a class="el" href="dir_a4d945251cd1dd5b0ae0b4e25ccd98f3.html">crypto</a></li><li class="navelem"><a class="el" href="a00335.html">atca_crypto_hw_aes_cbc.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>
