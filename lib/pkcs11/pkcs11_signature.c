@@ -237,6 +237,8 @@ CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_
     pkcs11_object_ptr pKey;
     CK_BBOOL is_private;
     CK_RV rv;
+    ATCA_STATUS status = ATCA_GEN_FAIL;
+    bool verified = FALSE;
 
     rv = pkcs11_init_check(&pLibCtx, FALSE);
     if (rv)
@@ -262,12 +264,6 @@ CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_
         return CKR_ARGUMENTS_BAD;
     }
 
-    pConfig = (atecc508a_config_t*)pKey->config;
-    if (!pConfig)
-    {
-        return CKR_GENERAL_ERROR;
-    }
-
     if (CKR_OK != (rv = pkcs11_lock_context(pLibCtx)))
     {
         return rv;
@@ -290,9 +286,6 @@ CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_
     case CKM_ECDSA:
         if (CKR_OK == (rv = pkcs11_object_is_private(pKey, &is_private)))
         {
-            ATCA_STATUS status;
-            bool verified = FALSE;
-
             if (is_private)
             {
                 /* Device can't verify against a private key so ask the device for

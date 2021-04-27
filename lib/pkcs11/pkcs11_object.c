@@ -68,16 +68,16 @@ static CK_OBJECT_HANDLE pkcs11_object_alloc_handle(void)
  */
 const pkcs11_attrib_model pkcs11_object_monotonic_attributes[] = {
     /** Object Class - CK_OBJECT_CLASS */
-    { CKA_CLASS,           pkcs11_object_get_class                                                                },
+    { CKA_CLASS,           pkcs11_object_get_class                                                                          },
     /** Hardware Feature Type - CK_HW_FEATURE_TYPE */
-    { CKA_HW_FEATURE_TYPE, pkcs11_object_get_type                                                                 },
+    { CKA_HW_FEATURE_TYPE, pkcs11_object_get_type                                                                           },
     /** Counter will reset to a previously returned value if the token is
         initialized using C_InitToken. */
-    { CKA_RESET_ON_INIT,   pkcs11_attrib_false                                                                    },
+    { CKA_RESET_ON_INIT,   pkcs11_attrib_false                                                                              },
     /** Counter has been reset at least once at some point in time. */
-    { CKA_HAS_RESET,       pkcs11_attrib_false                                                                    },
+    { CKA_HAS_RESET,       pkcs11_attrib_false                                                                              },
     /** Current value of the monotonic counter. Big endian order. */
-    { CKA_VALUE,           NULL_PTR                                                                               },
+    { CKA_VALUE,           NULL_PTR                                                                                         },
 };
 
 const CK_ULONG pkcs11_object_monotonic_attributes_count = PKCS11_UTIL_ARRAY_SIZE(pkcs11_object_monotonic_attributes);
@@ -491,167 +491,168 @@ CK_RV pkcs11_object_create
                 rv = pkcs11_key_write(pSession, pObject, pData);
                 if (rv)
                 {
-                    (void)pkcs11_config_remove_object ((pLibCtx, pSession->slot, pObject);
-                                                       }
-                                                       }
-                                                       break;
-                                                   case CKO_PRIVATE_KEY:
-                                                       pObject->class_id = CKO_PRIVATE_KEY;
-                                                       if (CKR_OK == (rv = pkcs11_config_key(pLibCtx, pSession->slot, pObject, pLabel)))
-                                                       {
-                                                           rv = pkcs11_key_write(pSession, pObject, pData);
-                                                           if (rv)
-                                                           {
-                                                               (void)pkcs11_config_remove_object(pLibCtx, pSession->slot, pObject);
-                                                           }
-                                                       }
-                                                       break;
-                                                   default:
-                                                       break;
-                                                       }
-                                                       if (CKR_OK == rv)
-                    {
-                        rv = pkcs11_object_get_handle(pObject, phObject);
-                    }
-                                                       else
-                    {
-                        if (pObject)
-                        {
-                            (void)pkcs11_object_free(pObject);
-                        }
-                    }
-                                                       }
+                    (void)pkcs11_config_remove_object(pLibCtx, pSession->slot, pObject);
+                }
+            }
+            break;
+        case CKO_PRIVATE_KEY:
+            pObject->class_id = CKO_PRIVATE_KEY;
+            if (CKR_OK == (rv = pkcs11_config_key(pLibCtx, pSession->slot, pObject, pLabel)))
+            {
+                rv = pkcs11_key_write(pSession, pObject, pData);
+                if (rv)
+                {
+                    (void)pkcs11_config_remove_object(pLibCtx, pSession->slot, pObject);
+                }
+            }
+            break;
+        default:
+            break;
+        }
+        if (CKR_OK == rv)
+        {
+            rv = pkcs11_object_get_handle(pObject, phObject);
+        }
+        else
+        {
+            if (pObject)
+            {
+                (void)pkcs11_object_free(pObject);
+            }
+        }
+    }
 
-                                                       return rv;
-                                                       }
+    return rv;
+}
 
 /**
  * \brief Destroy the specified object
  */
-                                                       CK_RV pkcs11_object_destroy(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject)
-                    {
-                        pkcs11_object_ptr pObject;
-                        CK_RV rv;
-                        pkcs11_lib_ctx_ptr pLibCtx = NULL;
-                        pkcs11_session_ctx_ptr pSession = NULL;
+CK_RV pkcs11_object_destroy(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject)
+{
+    pkcs11_object_ptr pObject;
+    CK_RV rv;
+    pkcs11_lib_ctx_ptr pLibCtx = NULL;
+    pkcs11_session_ctx_ptr pSession = NULL;
 
-                        rv = pkcs11_init_check(&pLibCtx, FALSE);
-                        if (rv)
-                        {
-                            return rv;
-                        }
+    rv = pkcs11_init_check(&pLibCtx, FALSE);
+    if (rv)
+    {
+        return rv;
+    }
 
-                        rv = pkcs11_session_check(&pSession, hSession);
-                        if (rv)
-                        {
-                            return rv;
-                        }
+    rv = pkcs11_session_check(&pSession, hSession);
+    if (rv)
+    {
+        return rv;
+    }
 
-                        rv = pkcs11_object_check(&pObject, hObject);
-                        if (rv)
-                        {
-                            return rv;
-                        }
+    rv = pkcs11_object_check(&pObject, hObject);
+    if (rv)
+    {
+        return rv;
+    }
 
-                        if (pObject->flags & PKCS11_OBJECT_FLAG_DESTROYABLE)
-                        {
+    if (pObject->flags & PKCS11_OBJECT_FLAG_DESTROYABLE)
+    {
 #if !PKCS11_USE_STATIC_CONFIG
-                            pkcs11_config_remove_object(pLibCtx, pSession->slot, pObject);
+        pkcs11_config_remove_object(pLibCtx, pSession->slot, pObject);
 #endif
-                            return pkcs11_object_free(pObject);
-                        }
-                        else
-                        {
-                            return CKR_ACTION_PROHIBITED;
-                        }
-                    }
+        return pkcs11_object_free(pObject);
+    }
+    else
+    {
+        return CKR_ACTION_PROHIBITED;
+    }
+}
 
 /* Interal function to clean up resources */
-                                                       CK_RV pkcs11_object_deinit(pkcs11_lib_ctx_ptr pContext)
-                    {
-                        CK_RV rv = CKR_OK;
-                        int i;
+CK_RV pkcs11_object_deinit(pkcs11_lib_ctx_ptr pContext)
+{
+    CK_RV rv = CKR_OK;
+    int i;
 
-                        for (i = 0; i < PKCS11_MAX_OBJECTS_ALLOWED; i++)
-                        {
-                            pkcs11_object_ptr pObj = pkcs11_object_cache[i].object;
-                            if (pObj)
-                            {
-                                CK_RV tmp = pkcs11_object_free(pObj);
-                                if (!rv)
-                                {
-                                    rv = tmp;
-                                }
-                            }
-                        }
-                        return rv;
-                    }
+    for (i = 0; i < PKCS11_MAX_OBJECTS_ALLOWED; i++)
+    {
+        pkcs11_object_ptr pObj = pkcs11_object_cache[i].object;
+        if (pObj)
+        {
+            CK_RV tmp = pkcs11_object_free(pObj);
+            if (!rv)
+            {
+                rv = tmp;
+            }
+        }
+    }
+    return rv;
+}
 
 #if ATCA_TA_SUPPORT
-                                                       CK_RV pkcs11_object_load_handle_info(pkcs11_lib_ctx_ptr pContext)
-                    {
-                        CK_RV rv = CKR_OK;
-                        uint8_t handle_info[TA_HANDLE_INFO_SIZE];
+CK_RV pkcs11_object_load_handle_info(pkcs11_lib_ctx_ptr pContext)
+{
+    CK_RV rv = CKR_OK;
+    uint8_t handle_info[TA_HANDLE_INFO_SIZE];
 
-                        for (int i = 0; i < PKCS11_MAX_OBJECTS_ALLOWED; i++)
-                        {
-                            pkcs11_object_ptr pObj = pkcs11_object_cache[i].object;
-                            if (pObj)
-                            {
-                                pObj->flags |= PKCS11_OBJECT_FLAG_TA_TYPE;
-                                if (ATCA_SUCCESS == talib_info_get_handle_info(atcab_get_device(), pObj->slot, handle_info))
-                                {
-                                    memcpy(&pObj->handle_info, handle_info, sizeof(ta_element_attributes_t));
-                                }
-                                else
-                                {
-                                    memset(&pObj->handle_info, 0, sizeof(ta_element_attributes_t));
-                                }
+    for (int i = 0; i < PKCS11_MAX_OBJECTS_ALLOWED; i++)
+    {
+        pkcs11_object_ptr pObj = pkcs11_object_cache[i].object;
+        if (pObj)
+        {
+            pObj->flags |= PKCS11_OBJECT_FLAG_TA_TYPE;
+            if (ATCA_SUCCESS == talib_info_get_handle_info(atcab_get_device(), pObj->slot, handle_info))
+            {
+                memcpy(&pObj->handle_info, handle_info, sizeof(ta_element_attributes_t));
+            }
+            else
+            {
+                memset(&pObj->handle_info, 0, sizeof(ta_element_attributes_t));
+            }
 
-                            }
-                        }
-                        return rv;
-                    }
+        }
+    }
+    return rv;
+}
 #endif
 
 
 /** \brief Checks the attributes of the underlying cryptographic asset to
     determine if it is a private key - this changes the way the associated
     public key is referenced */
-                                                       CK_RV pkcs11_object_is_private(pkcs11_object_ptr pObject, CK_BBOOL * is_private)
-                    {
-                        CK_RV rv = CKR_ARGUMENTS_BAD;
-                        if (pObject && is_private)
-                        {
-                            ATCADeviceType dev_type = atcab_get_device_type();
+CK_RV pkcs11_object_is_private(pkcs11_object_ptr pObject, CK_BBOOL * is_private)
+{
+    CK_RV rv = CKR_ARGUMENTS_BAD;
 
-                            *is_private = false;
-                            rv = CKR_GENERAL_ERROR;
+    if (pObject && is_private)
+    {
+        ATCADeviceType dev_type = atcab_get_device_type();
 
-                            if (atcab_is_ca_device(dev_type))
-                            {
+        *is_private = false;
+        rv = CKR_GENERAL_ERROR;
+
+        if (atcab_is_ca_device(dev_type))
+        {
 #if ATCA_CA_SUPPORT
-                                atecc508a_config_t* cfg_ptr = (atecc508a_config_t*)pObject->config;
+            atecc508a_config_t* cfg_ptr = (atecc508a_config_t*)pObject->config;
 
-                                if (cfg_ptr)
-                                {
-                                    *is_private = (cfg_ptr->KeyConfig[pObject->slot] & ATCA_KEY_CONFIG_PRIVATE_MASK) ? true : false;
-                                    rv = CKR_OK;
-                                }
+            if (cfg_ptr)
+            {
+                *is_private = (cfg_ptr->KeyConfig[pObject->slot] & ATCA_KEY_CONFIG_PRIVATE_MASK) ? true : false;
+                rv = CKR_OK;
+            }
 #endif
-                            }
-                            else if (atcab_is_ta_device(dev_type))
-                            {
+        }
+        else if (atcab_is_ta_device(dev_type))
+        {
 #if ATCA_TA_SUPPORT
-                                *is_private = (TA_CLASS_PRIVATE_KEY == (pObject->handle_info.element_CKA & 0xF));
-                                rv = CKR_OK;
+            *is_private = (TA_CLASS_PRIVATE_KEY == (pObject->handle_info.element_CKA & 0xF));
+            rv = CKR_OK;
 #endif
-                            }
+        }
 
-                        }
+    }
 
-                        return rv;
-                    }
+    return rv;
+}
 
 
 /** @} */
