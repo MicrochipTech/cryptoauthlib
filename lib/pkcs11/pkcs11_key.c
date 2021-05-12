@@ -244,14 +244,16 @@ static CK_RV pkcs11_key_get_ec_point(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttr
 
     if (obj_ptr)
     {
+        ATCA_STATUS status = ATCA_SUCCESS;
+        CK_UTF8CHAR ec_asn1_key[3 + ATCA_ECCP256_PUBKEY_SIZE] = { 0x04, 0x41, 0x04 };
+
         if (pAttribute->pValue)
         {
             CK_BBOOL is_private;
 
             if (CKR_OK == (rv = pkcs11_object_is_private(obj_ptr, &is_private)))
             {
-                CK_UTF8CHAR ec_asn1_key[3 + ATCA_ECCP256_PUBKEY_SIZE] = { 0x04, 0x41, 0x04 };
-                ATCA_STATUS status;
+                
 
                 if (is_private)
                 {
@@ -263,16 +265,16 @@ static CK_RV pkcs11_key_get_ec_point(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttr
                     status = atcab_read_pubkey(obj_ptr->slot, &ec_asn1_key[3]);
                     PKCS11_DEBUG("atcab_read_pubkey: %x\r\n", status);
                 }
-
-                if (ATCA_SUCCESS == status)
-                {
-                    rv = pkcs11_attrib_fill(pAttribute, ec_asn1_key, sizeof(ec_asn1_key));
-                }
-                else
-                {
-                    rv = CKR_FUNCTION_FAILED;
-                }
             }
+        }
+
+        if (ATCA_SUCCESS == status)
+        {
+            rv = pkcs11_attrib_fill(pAttribute, ec_asn1_key, sizeof(ec_asn1_key));
+        }
+        else
+        {
+            rv = CKR_FUNCTION_FAILED;
         }
     }
 
