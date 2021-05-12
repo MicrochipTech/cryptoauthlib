@@ -16,20 +16,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/setup-python@v2
-        name: Install Python
-        with:
-          python-version: '3.8'
-
       - name: Describe Tag & Branch Name
         id: build_names
         shell: bash
         run: |
           echo ::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/}
-
-      # Configure compilers for Windows. Does nothing on Linux/Mac.
-      - name: Enable Developer Command Prompt
-        uses: ilammy/msvc-dev-cmd@v1
 
       - name: Configure Environment
         shell: bash
@@ -49,7 +40,7 @@ jobs:
         with:
           package-dir: python 
         env:
-          CIBW_SKIP: "*-win32"
+#          CIBW_SKIP: "*-win32"
           CIBW_BUILD_VERBOSITY: 3
 
       - uses: actions/upload-artifact@v2
