@@ -54,7 +54,7 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          path: python/wheelhouse/*.whl
+          path: wheelhouse/*.whl
 
   build_sdist:
     name: Build source distribution
