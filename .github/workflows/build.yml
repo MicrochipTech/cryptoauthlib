@@ -49,6 +49,7 @@ jobs:
         with:
           package-dir: python 
         env:
+          CIBW_SKIP: "*-win32"
           CIBW_BUILD_VERBOSITY: 3
 
       - uses: actions/upload-artifact@v2

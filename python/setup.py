@@ -42,7 +42,7 @@ _PROJECT_URLS = {
 
 # Include the compiled library in the resulting distribution
 _PACKAGE_DATA = {}
-if sys.platform is 'win32':
+if sys.platform == 'win32':
     _PACKAGE_DATA['libcryptoauth'] = ['cryptoauth.dll']
 #elif sys.platform is 'darwin':
 else:
