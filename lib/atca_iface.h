@@ -42,6 +42,7 @@ extern "C" {
 
 #include "atca_devtypes.h"
 #include <stdint.h>
+#include <stddef.h>
 #include "atca_status.h"
 
 
