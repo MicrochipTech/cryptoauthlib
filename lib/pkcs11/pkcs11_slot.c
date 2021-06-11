@@ -161,7 +161,9 @@ CK_RV pkcs11_slot_init(CK_SLOT_ID slotID)
     pkcs11_slot_ctx_ptr slot_ctx;
     ATCA_STATUS status = CKR_OK;
     int retries;
-
+#if PKCS11_USE_STATIC_CONFIG
+    CK_RV rv;
+#endif
     if (!lib_ctx)
     {
         return CKR_CRYPTOKI_NOT_INITIALIZED;
@@ -173,7 +175,13 @@ CK_RV pkcs11_slot_init(CK_SLOT_ID slotID)
     {
         return CKR_SLOT_ID_INVALID;
     }
-
+#if PKCS11_USE_STATIC_CONFIG
+    rv = pkcs11_config_interface(slot_ctx);
+    if (rv != CKR_OK)
+    {
+        return CKR_DEVICE_ERROR;
+    }
+#endif 
     if (!slot_ctx->initialized)
     {
         ATCAIfaceCfg * ifacecfg = &slot_ctx->interface_config;
