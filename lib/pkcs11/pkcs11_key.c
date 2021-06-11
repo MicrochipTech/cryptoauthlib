@@ -848,7 +848,9 @@ CK_RV pkcs11_key_generate
 
     if (CKR_OK == rv && ATCA_SUCCESS != status)
     {
+#if !PKCS11_USE_STATIC_CONFIG
         (void)pkcs11_config_remove_object(pLibCtx, pSession->slot, pKey);
+#endif
         rv = pkcs11_util_convert_rv(status);
     }
 
@@ -973,7 +975,9 @@ CK_RV pkcs11_key_generate_pair
             rv = pkcs11_util_convert_rv(atcab_genkey(pPrivate->slot, NULL));
             if (rv)
             {
+#if !PKCS11_USE_STATIC_CONFIG
                 (void)pkcs11_config_remove_object(pLibCtx, pSession->slot, pPrivate);
+#endif
             }
             (void)pkcs11_unlock_context(pLibCtx);
         }
