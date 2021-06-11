@@ -155,7 +155,7 @@ CK_RV pkcs11_trust_load_objects(pkcs11_slot_ctx_ptr pSlot)
         if (pObject)
         {
             /* Slot 0 - Device Private Key */
-            pkcs11_config_init_private(pObject, (char*)pkcs11_trust_device_label, strlen(pkcs11_trust_device_label));
+            pkcs11_config_init_private(pObject, (char*)pkcs11_trust_device_private_key_label, strlen(pkcs11_trust_device_private_key_label));
             pObject->slot = 0;
             pObject->flags |= PKCS11_OBJECT_FLAG_TRUST_TYPE;
             pObject->config = &pSlot->cfg_zone;
@@ -168,7 +168,7 @@ CK_RV pkcs11_trust_load_objects(pkcs11_slot_ctx_ptr pSlot)
         if (pObject)
         {
             /* Slot 0 - Device Public Key */
-            pkcs11_config_init_public(pObject, (char*)pkcs11_trust_device_label, strlen(pkcs11_trust_device_label));
+            pkcs11_config_init_public(pObject, (char*)pkcs11_trust_device_public_key_label, strlen(pkcs11_trust_device_public_key_label));
             pObject->slot = 0;
             pObject->flags |= PKCS11_OBJECT_FLAG_TRUST_TYPE;
             pObject->config = &pSlot->cfg_zone;
