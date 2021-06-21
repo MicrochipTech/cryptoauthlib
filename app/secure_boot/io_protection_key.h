@@ -43,6 +43,3 @@ extern ATCA_STATUS io_protection_set_key(uint8_t* io_key);
 #endif
 
 #endif
-
-
-

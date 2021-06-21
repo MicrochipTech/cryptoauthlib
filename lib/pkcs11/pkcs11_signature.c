@@ -351,4 +351,3 @@ CK_RV pkcs11_signature_verify_finish(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSi
 
 
 /** @} */
-

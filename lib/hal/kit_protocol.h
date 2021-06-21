@@ -66,6 +66,10 @@ ATCA_STATUS kit_wake(ATCAIface iface);
 ATCA_STATUS kit_idle(ATCAIface iface);
 ATCA_STATUS kit_sleep(ATCAIface iface);
 
+
+const char* kit_id_from_devtype(ATCADeviceType devtype);
+const char* kit_interface_from_kittype(ATCAKitType kittype);
+
 #ifdef __cplusplus
 }
 #endif

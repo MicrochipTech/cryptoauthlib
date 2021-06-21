@@ -232,4 +232,3 @@ ATCA_STATUS atcab_aes_cmac_finish(atca_aes_cmac_ctx_t* ctx, uint8_t* cmac, uint3
 
     return ATCA_SUCCESS;
 }
-

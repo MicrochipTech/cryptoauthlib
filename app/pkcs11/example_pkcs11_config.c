@@ -1,4 +1,3 @@
-
 #include "cryptoauthlib.h"
 #include "pkcs11_config.h"
 #include "pkcs11/pkcs11_object.h"

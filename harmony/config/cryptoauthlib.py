@@ -73,8 +73,6 @@ def updateHalTracker(id, inc):
     elif cnt > 0:
         cnt -= 1
 
-    print('updateHalTracker', id)
-
     symbol = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_FILE_SRC_HAL_' + id)
     symbol.setEnabled(cnt > 0)
 
@@ -111,12 +109,38 @@ def updatePlibTracker(id, inc):
         add_value_to_list(calPlibList, id)
 
 
+def updateDevCfgTracker(id, inc):
+    calDevCfgList = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_DEV_CFG_LIST_ENTRIES')
+
+    if inc:
+        add_value_to_list(calDevCfgList, id)
+    else:
+        del_value_from_list(calDevCfgList, id)
+
+
+def extendDevCfgList(new_list, cnt):
+    calDevCfgList = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_DEV_CFG_LIST_ENTRIES')
+    
+    for value in new_list:
+        values = list(calDevCfgList.getValues())
+        if value not in values:
+            calDevCfgList.addValue(value)
+
+
 def handleMessage(messageID, args):
     global calPlibTracker
 
     if (messageID == 'UPDATE_PLIB_LIST'):
         if isinstance(args, dict):
             updatePlibTracker(**args)
+
+    if (messageID == 'UPDATE_DEV_CFG_LIST'):
+        if isinstance(args, dict):
+            updateDevCfgTracker(**args)
+
+    if (messageID == 'EXTEND_DEV_CFG_LIST'):
+        if isinstance(args, dict):
+            extendDevCfgList(**args)
 
     return {}
 
@@ -256,8 +280,7 @@ def onAttachmentDisconnected(source, target):
 
         calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA100_AES_AUTH')
         calTaEnableAesAuth.setValue(False)
-        
-        print('disconnected lib_wolfcrypt')
+
 
 
 def instantiateComponent(calComponent):
@@ -426,7 +449,12 @@ def instantiateComponent(calComponent):
     calDeviceList = calComponent.createListSymbol('CAL_DEVICE_LIST', None)
     calDeviceList = calComponent.createListEntrySymbol('CAL_DEVICE_LIST_ENTRIES', None)
     calDeviceList.setTarget('cryptoauthlib.CAL_DEVICE_LIST')
-    
+
+    # List of specific device instances
+    calDevCfgList = calComponent.createListSymbol('CAL_DEV_CFG_LIST', None)
+    calDevCfgList = calComponent.createListEntrySymbol('CAL_DEV_CFG_LIST_ENTRIES', None)
+    calDevCfgList.setTarget('cryptoauthlib.CAL_DEV_CFG_LIST')
+
     # Add device specific options
     calTaEnableAesAuth = calComponent.createBooleanSymbol('CAL_ENABLE_TA100_AES_AUTH', None)
     calTaEnableAesAuth.setValue(False)

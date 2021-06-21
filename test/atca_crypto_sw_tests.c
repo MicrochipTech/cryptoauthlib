@@ -208,9 +208,9 @@ static int read_rsp_hex_value(FILE* file, const char* name, uint8_t* data, size_
         else
         {
             size_t ln = strlen(line);
-            if (ln > 0 && line[ln-2] == '\r')
+            if (ln > 0 && line[ln - 2] == '\r')
             {
-                line[ln-1] = 0;
+                line[ln - 1] = 0;
             }
         }
 
@@ -249,9 +249,9 @@ static int read_rsp_int_value(FILE* file, const char* name, int* value)
         else
         {
             size_t ln = strlen(line);
-            if (ln > 0 && line[ln-2] == '\r')
+            if (ln > 0 && line[ln - 2] == '\r')
             {
-                line[ln-1] = 0;
+                line[ln - 1] = 0;
             }
         }
 
@@ -301,7 +301,7 @@ static void test_atcac_sw_sha1_nist_simple(const char* filename)
             continue;
         }
 
-        msg = malloc(len_bits == 0 ? 1 : len_bits / 8);
+        msg = hal_malloc(len_bits == 0 ? 1 : len_bits / 8);
         TEST_ASSERT_NOT_NULL_MESSAGE(msg, "malloc failed");
 
         ret = read_rsp_hex_value(rsp_file, "Msg = ", msg, len_bits == 0 ? 1 : len_bits / 8);
@@ -314,7 +314,7 @@ static void test_atcac_sw_sha1_nist_simple(const char* filename)
         TEST_ASSERT_EQUAL(ret, ATCA_SUCCESS);
         TEST_ASSERT_EQUAL_MEMORY(md_ref, md, sizeof(md_ref));
 
-        free(msg);
+        hal_free(msg);
         msg = NULL;
         count++;
     }
@@ -457,7 +457,7 @@ static void test_atcac_sw_sha2_256_nist_simple(const char* filename)
             continue;
         }
 
-        msg = malloc(len_bits == 0 ? 1 : len_bits / 8);
+        msg = hal_malloc(len_bits == 0 ? 1 : len_bits / 8);
         TEST_ASSERT_NOT_NULL_MESSAGE(msg, "malloc failed");
 
         ret = read_rsp_hex_value(rsp_file, "Msg = ", msg, len_bits == 0 ? 1 : len_bits / 8);
@@ -470,7 +470,7 @@ static void test_atcac_sw_sha2_256_nist_simple(const char* filename)
         TEST_ASSERT_EQUAL(ret, ATCA_SUCCESS);
         TEST_ASSERT_EQUAL_MEMORY(md_ref, md, sizeof(md_ref));
 
-        free(msg);
+        hal_free(msg);
         msg = NULL;
         count++;
     }
@@ -491,7 +491,7 @@ void test_atcac_sw_sha2_256_nist_long(void)
 
 void test_atcac_sw_sha2_256_nist_monte(void)
 {
-#if !defined(_WIN32) && !defined(__linux__) 
+#if !defined(_WIN32) && !defined(__linux__)
     TEST_IGNORE_MESSAGE("Test is not available for this platform.");
 #else
     FILE* rsp_file = NULL;
@@ -704,7 +704,7 @@ void test_atcac_aes128_cmac(void)
 void test_atcac_sha256_hmac(void)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
-    uint8_t hmac[ATCA_SHA_DIGEST_SIZE];
+    uint8_t hmac[ATCA_SHA256_DIGEST_SIZE];
     size_t hmac_size;
     uint8_t data_input[] = {
         0x6f, 0xb3, 0xec, 0x66, 0xf9, 0xeb, 0x07, 0x0a,
@@ -717,7 +717,7 @@ void test_atcac_sha256_hmac(void)
         0x03, 0xd7, 0x60, 0xe8, 0x57, 0xa6, 0xd6, 0x21,
         0x1c
     };
-    const uint8_t hmac_ref[ATCA_SHA_DIGEST_SIZE] = {
+    const uint8_t hmac_ref[ATCA_SHA256_DIGEST_SIZE] = {
         0x29, 0x7f, 0x22, 0xb8, 0xd2, 0x51, 0xb0, 0x63,
         0xa7, 0xc0, 0x8d, 0xcf, 0x4d, 0xba, 0x0d, 0x1f,
         0xb3, 0x5d, 0x32, 0xa3, 0xba, 0xab, 0x15, 0xac,
@@ -742,12 +742,12 @@ void test_atcac_sha256_hmac(void)
     status = atcac_sha256_hmac_finish(&ctx, hmac, &hmac_size);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    TEST_ASSERT_EQUAL_MEMORY(hmac_ref, hmac, ATCA_SHA_DIGEST_SIZE);
+    TEST_ASSERT_EQUAL_MEMORY(hmac_ref, hmac, ATCA_SHA256_DIGEST_SIZE);
 }
 
 void test_atcac_sha256_hmac_nist(void)
 {
-#if !defined(_WIN32) && !defined(__linux__) 
+#if !defined(_WIN32) && !defined(__linux__)
     TEST_IGNORE_MESSAGE("Test is not available for this platform.");
 #else
     FILE* rsp_file = NULL;

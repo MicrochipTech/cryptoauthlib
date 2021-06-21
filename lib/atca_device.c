@@ -47,7 +47,7 @@ ATCADevice newATCADevice(ATCAIfaceCfg *cfg)
         return NULL;
     }
 
-    ca_dev = (ATCADevice)malloc(sizeof(*ca_dev));
+    ca_dev = (ATCADevice)hal_malloc(sizeof(*ca_dev));
     if (ca_dev == NULL)
     {
         return NULL;
@@ -58,7 +58,7 @@ ATCADevice newATCADevice(ATCAIfaceCfg *cfg)
     status = initATCADevice(cfg, ca_dev);
     if (status != ATCA_SUCCESS)
     {
-        free(ca_dev);
+        hal_free(ca_dev);
         ca_dev = NULL;
         return NULL;
     }
@@ -78,7 +78,7 @@ void deleteATCADevice(ATCADevice *ca_dev)
 
     releaseATCADevice(*ca_dev);
 
-    free(*ca_dev);
+    hal_free(*ca_dev);
     *ca_dev = NULL;
 }
 #endif

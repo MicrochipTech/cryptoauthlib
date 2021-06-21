@@ -742,4 +742,3 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 }
 #endif
 #endif
-

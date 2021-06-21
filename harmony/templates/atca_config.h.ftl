@@ -61,13 +61,22 @@
 </#if>
 
 <#if CAL_ENABLE_RTOS>
+/** Define platform malloc/free */
+#define ATCA_PLATFORM_MALLOC    OSAL_Malloc
+#define ATCA_PLATFORM_FREE      OSAL_Free
+
 /** Use RTOS timers (i.e. delays that yield when the scheduler is running) */
 #ifndef ATCA_USE_RTOS_TIMER
 #define ATCA_USE_RTOS_TIMER     (1)
 #endif
+
 #define atca_delay_ms   hal_rtos_delay_ms
 #define atca_delay_us   hal_delay_us
 <#else>
+/** Define platform malloc/free */
+#define ATCA_PLATFORM_MALLOC    malloc
+#define ATCA_PLATFORM_FREE      free
+
 #define atca_delay_ms   hal_delay_ms
 #define atca_delay_us   hal_delay_us
 </#if>
@@ -88,11 +97,16 @@
 </#if>
 
 /* Define generic interfaces to the processor libraries */
+<#assign is_atca_plib_i2c_exists = "False">
+<#assign is_atca_plib_spi_exists = "False">
+<#assign is_atca_plib_uart_exists = "False">
+<#assign is_atca_plib_bb_exists = "False">
 <#assign pliblist = CAL_PLIB_LIST?word_list>
 <#if pliblist?size != 0>
 <#list pliblist as plib_id>
 <#assign plib_info = plib_id?split("_", 1)>
 <#if plib_info[1] == "i2c">
+<#if is_atca_plib_i2c_exists == "False">
 <#assign size_var = "size_t">
 <#if plib_id?contains("sercom")>
 #define PLIB_I2C_ERROR          SERCOM_I2C_ERROR
@@ -119,7 +133,7 @@ typedef bool (* atca_i2c_plib_is_busy)( void );
 typedef PLIB_I2C_ERROR (* atca_i2c_error_get)( void );
 typedef bool (* atca_i2c_plib_transfer_setup)(PLIB_I2C_TRANSFER_SETUP* setup, uint32_t srcClkFreq);
 
-typedef struct atca_plib_api
+typedef struct atca_plib_i2c_api
 {
     atca_i2c_plib_read              read;
     atca_i2c_plib_write             write;
@@ -127,9 +141,12 @@ typedef struct atca_plib_api
     atca_i2c_error_get              error_get;
     atca_i2c_plib_transfer_setup    transfer_setup;
 } atca_plib_i2c_api_t;
+<#assign is_atca_plib_i2c_exists = "True">
+</#if>
 </#if>
 
 <#if plib_info[1] == "spi">
+<#if is_atca_plib_spi_exists == "False">
 typedef bool (* atca_spi_plib_read)( void * , size_t );
 typedef bool (* atca_spi_plib_write)( void *, size_t );
 typedef bool (* atca_spi_plib_is_busy)( void );
@@ -142,10 +159,12 @@ typedef struct atca_plib_spi_api
     atca_spi_plib_is_busy           is_busy;
     atca_spi_plib_select            select;
 } atca_plib_spi_api_t;
+<#assign is_atca_plib_spi_exists = "True">
+</#if>
 </#if>
 
-<#if plib_info[1] == "swi">
-<#if plib_info[2] == "uart">
+<#if plib_info[1] == "swi" && plib_info[2] == "uart" || plib_info[1] == "uart">
+<#if is_atca_plib_uart_exists == "False">
 <#if plib_id?contains("flexcom")>
 #define PLIB_SWI_ERROR             FLEXCOM_USART_ERROR
 #define PLIB_SWI_SERIAL_SETUP      FLEXCOM_USART_SERIAL_SETUP
@@ -175,26 +194,29 @@ typedef struct atca_plib_spi_api
 #define PLIB_SWI_EVENT             USART_EVENT
 </#if>
 
-typedef size_t (* atca_swi_plib_read)( uint8_t *, const size_t );
-typedef size_t (* atca_swi_plib_write)( uint8_t *, const size_t );
-typedef PLIB_SWI_ERROR (* atca_swi_error_get)( void );
-typedef bool (* atca_swi_plib_serial_setup)(PLIB_SWI_SERIAL_SETUP* , uint32_t );
-typedef size_t (* atca_swi_plib_readcount_get)( void );
-typedef void (* atca_swi_plib_readcallbackreg)(PLIB_SWI_READ_CALLBACK, uintptr_t );
+typedef size_t (* atca_uart_plib_read)( uint8_t *, const size_t );
+typedef size_t (* atca_uart_plib_write)( uint8_t *, const size_t );
+typedef PLIB_SWI_ERROR (* atca_uart_error_get)( void );
+typedef bool (* atca_uart_plib_serial_setup)(PLIB_SWI_SERIAL_SETUP* , uint32_t );
+typedef size_t (* atca_uart_plib_readcount_get)( void );
+typedef void (* atca_uart_plib_readcallbackreg)(PLIB_SWI_READ_CALLBACK, uintptr_t );
 
-typedef struct atca_plib_swi_api
+typedef struct atca_plib_uart_api
 {
-    atca_swi_plib_read              read;
-    atca_swi_plib_write             write;
-    atca_swi_error_get              error_get;
-    atca_swi_plib_serial_setup      serial_setup;
-    atca_swi_plib_readcount_get     readcount_get;
-    atca_swi_plib_readcallbackreg   readcallback_reg;
-} atca_plib_swi_uart_api_t;
+    atca_uart_plib_read              read;
+    atca_uart_plib_write             write;
+    atca_uart_error_get              error_get;
+    atca_uart_plib_serial_setup      serial_setup;
+    atca_uart_plib_readcount_get     readcount_get;
+    atca_uart_plib_readcallbackreg   readcallback_reg;
+} atca_plib_uart_api_t;
+
+<#assign is_atca_plib_uart_exists = "True">
 
 /** SWI Transmit delay */
 #define SWI_TX_DELAY     ((uint32_t)90)
 <#elseif plib_info[2] == "bb">
+<#if is_atca_plib_bb_exists == "False">
 typedef bool (* atca_swi_plib_read)( uint8_t );
 typedef void (* atca_swi_plib_write)( uint8_t, bool );
 typedef void (* atca_swi_set_pin_output)( uint8_t );
@@ -207,6 +229,7 @@ typedef struct atca_plib_swi_api
     atca_swi_set_pin_output       set_pin_output_dir;
     atca_swi_set_pin_input        set_pin_input_dir;
 }atca_plib_swi_bb_api_t;
+<#assign is_atca_plib_bb_exists = "True">
 
 /**
  * \name Macros for Bit-Banged SWI Timing
@@ -233,6 +256,7 @@ typedef struct atca_plib_swi_api
 //! should be 93 us (Setting little less value as there would be other process before these steps)
 #define RX_TX_DELAY        atca_delay_us(65)
 
+</#if>
 </#if>
 </#if>
 </#list>
@@ -273,6 +297,11 @@ extern atca_plib_${plib_drv!"i2c"}_api_t ${plib_info[0]}_plib_${plib_drv!"i2c"}_
 /** Define Software Crypto Library to Use - if none are defined use the
     cryptoauthlib version where applicable */
 #define ATCA_WOLFSSL
+</#if>
+
+<#assign devcfglist = CAL_DEV_CFG_LIST?word_list>
+<#if devcfglist?size != 0>
+#define ATCA_TEST_MULTIPLE_INSTANCES
 </#if>
 
 

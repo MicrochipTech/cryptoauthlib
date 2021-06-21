@@ -28,6 +28,11 @@
 #include "atca_test.h"
 #include "cryptoauthlib.h"
 
+#ifdef ATCA_TEST_MULTIPLE_INSTANCES
+#include "atca_devcfg_list.h"
+void select_dev_cfg_data();
+#endif
+
 #ifdef ATCA_HAL_CUSTOM
 extern int select_204_custom(int argc, char* argv[]);
 extern int select_108_custom(int argc, char* argv[]);
@@ -203,6 +208,10 @@ static int opt_device_type(int argc, char* argv[])
     return ret;
 }
 
+#ifndef _WIN32
+static char opt_device_name[20];
+#endif
+
 /** \brief Sets the interface the command or test suite will use
  *
  * \param[in]  argc     Number of arguments in the arg list
@@ -311,9 +320,117 @@ static int opt_iface_type(int argc, char* argv[])
                 gCfg->atcaspi.baud = 200000;
             }
         }
+        else if (0 == strcmp("uart", argv[1]))
+        {
+            gCfg->iface_type = ATCA_UART_IFACE;
+            gCfg->atcauart.dev_interface = ATCA_KIT_AUTO_IFACE;
+            gCfg->atcauart.dev_identity = 0;
+
+            if (argc >= 3 && argv[2][0] != '-')
+            {
+                /* Port/Device */
+#ifdef _WIN32
+                gCfg->atcauart.port = (uint8_t)strtol(argv[2], NULL, 10);
+#else
+                size_t len = strlen(argv[2]);
+                if (len < sizeof(opt_device_name))
+                {
+                    memcpy(opt_device_name, argv[2], len);
+                    gCfg->cfg_data = opt_device_name;
+                }
+#endif
+                ret = 3;
+            }
+
+            if (argc >= 4 && argv[3][0] != '-')
+            {
+                /* Baud rate */
+                gCfg->atcauart.baud = (uint8_t)strtol(argv[3], NULL, 10);
+                ret++;
+            }
+            else
+            {
+                gCfg->atcauart.baud = 115200UL;
+            }
+
+            if (argc >= 5 && argv[4][0] != '-')
+            {
+                /* Word size */
+                gCfg->atcauart.wordsize = (uint8_t)strtol(argv[4], NULL, 10);
+                ret++;
+            }
+            else
+            {
+                gCfg->atcauart.wordsize = 8;
+            }
+
+            if (argc >= 6 && argv[5][0] != '-')
+            {
+                /* Stop Bits */
+                gCfg->atcauart.stopbits = (uint8_t)strtol(argv[5], NULL, 10);
+                ret++;
+            }
+            else
+            {
+                gCfg->atcauart.stopbits = 1;
+            }
+
+            if (argc >= 7 && argv[6][0] != '-')
+            {
+                /* Parity Bits */
+                //gCfg->atcauart.parity = (uint8_t)strtol(argv[6], NULL, 16);
+                ret++;
+            }
+            else
+            {
+                gCfg->atcauart.parity = 2;
+            }
+        }
     }
+
+#ifdef ATCA_TEST_MULTIPLE_INSTANCES
+    select_dev_cfg_data();
+#endif
     return ret;
 }
+
+#ifdef ATCA_TEST_MULTIPLE_INSTANCES
+void select_dev_cfg_data()
+{
+    size_t num_of_elements;
+    int i;
+
+    num_of_elements = sizeof(devcfg_list) / sizeof(devcfg_list[0]);
+    for (i = 0; i < num_of_elements; i++)
+    {
+        if ((gCfg->iface_type == ATCA_I2C_IFACE) && (devcfg_list[i]->iface_type == ATCA_I2C_IFACE))
+        {
+#ifdef ATCA_ENABLE_DEPRECATED
+            if (gCfg->atcai2c.slave_address == devcfg_list[i]->atcai2c.slave_address)
+#else
+            if (gCfg->atcai2c.address == devcfg_list[i]->atcai2c.address)
+#endif
+            {
+                gCfg->cfg_data = devcfg_list[i]->cfg_data;
+            }
+        }
+        else if ((gCfg->iface_type == ATCA_SPI_IFACE) && (devcfg_list[i]->iface_type == ATCA_SPI_IFACE))
+        {
+            if (gCfg->atcaspi.select_pin == devcfg_list[i]->atcaspi.select_pin)
+            {
+                gCfg->cfg_data = devcfg_list[i]->cfg_data;
+            }
+        }
+        else if ((gCfg->iface_type == ATCA_SWI_IFACE) && (devcfg_list[i]->iface_type == ATCA_SWI_IFACE))
+        {
+            if (gCfg->atcaswi.bus == devcfg_list[i]->atcaswi.bus)
+            {
+                gCfg->cfg_data = devcfg_list[i]->cfg_data;
+            }
+        }
+    }
+}
+#endif
 
 /** \brief Sets the device address based on interface type (this option must be provided after
  * specifying the interface type otherwise it might produce unexpected results).
@@ -325,25 +442,71 @@ static int opt_iface_type(int argc, char* argv[])
 static int opt_address(int argc, char* argv[])
 {
     int ret = 0;
+    ATCAKitType kit_type = ATCA_KIT_AUTO_IFACE;
 
     if (argc >= 2)
     {
         uint32_t val = strtol(argv[1], NULL, 16);
-        if (ATCA_HID_IFACE == gCfg->iface_type)
+
+        if (argc >= 3 && argv[2][0] != '-')
         {
-            gCfg->atcahid.dev_identity = (uint8_t)val;
+            if (0 == strcmp("i2c", argv[2]))
+            {
+                kit_type = ATCA_KIT_I2C_IFACE;
+            }
+            else if (0 == strcmp("swi", argv[2]))
+            {
+                kit_type = ATCA_KIT_SWI_IFACE;
+            }
+            else if (0 == strcmp("spi", argv[2]))
+            {
+                kit_type = ATCA_KIT_SPI_IFACE;
+            }
+            ret = 3;
         }
-        else if (ATCA_I2C_IFACE == gCfg->iface_type)
+        else
         {
+            ret = 2;
+        }
+
+        switch (gCfg->iface_type)
+        {
+        case ATCA_I2C_IFACE:
 #ifdef ATCA_ENABLE_DEPRECATED
             gCfg->atcai2c.slave_address = (uint8_t)val;
 #else
             gCfg->atcai2c.address = (uint8_t)val;
 #endif
+            break;
+        case ATCA_SWI_IFACE:
+            gCfg->atcaswi.address = (uint8_t)val;
+            break;
+        case ATCA_UART_IFACE:
+            gCfg->atcauart.dev_identity = (uint8_t)val;
+            if (argc >= 3)
+            {
+                gCfg->atcauart.dev_interface = kit_type;
+            }
+            break;
+        case ATCA_SPI_IFACE:
+            gCfg->atcaspi.select_pin = (uint8_t)val;
+            break;
+        case ATCA_HID_IFACE:
+            gCfg->atcahid.dev_identity = (uint8_t)val;
+            if (argc >= 3)
+            {
+                gCfg->atcahid.dev_interface = kit_type;
+            }
+            break;
+        default:
+            break;
         }
-
-        ret = 2;
     }
+
+#ifdef ATCA_TEST_MULTIPLE_INSTANCES
+    select_dev_cfg_data();
+#endif
+
     return ret;
 }
 

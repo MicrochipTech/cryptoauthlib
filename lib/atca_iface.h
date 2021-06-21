@@ -40,8 +40,11 @@
 extern "C" {
 #endif
 
-#include "atca_devtypes.h"
 #include <stdint.h>
+#include <stddef.h>
+
+#include "atca_config.h"
+#include "atca_devtypes.h"
 #include "atca_status.h"
 
 
@@ -69,7 +72,8 @@ typedef enum
     ATCA_KIT_I2C_IFACE,
     ATCA_KIT_SWI_IFACE,
     ATCA_KIT_SPI_IFACE,
-    ATCA_KIT_UNKNOWN_IFACE } ATCAKitType;
+    ATCA_KIT_UNKNOWN_IFACE
+} ATCAKitType;
 
 
 /* ATCAIfaceCfg is the configuration object for a device
@@ -109,11 +113,13 @@ typedef struct
 
         struct
         {
-            int      port;      // logic port number
-            uint32_t baud;      // typically 115200
-            uint8_t  wordsize;  // usually 8
-            uint8_t  parity;    // 0 == even, 1 == odd, 2 == none
-            uint8_t  stopbits;  // 0,1,2
+            ATCAKitType dev_interface; // Kit interface type
+            uint8_t     dev_identity;  // I2C address for the I2C interface device or the bus number for the SWI interface device.
+            uint8_t     port;          // Port numbers where supported - otherwise accept the device through config data
+            uint32_t    baud;          // typically 115200
+            uint8_t     wordsize;      // usually 8
+            uint8_t     parity;        // 0 == even, 1 == odd, 2 == none
+            uint8_t     stopbits;      // 0,1,2
         } atcauart;
 
         struct
@@ -207,6 +213,3 @@ uint16_t atca_iface_get_wake_delay(ATCAIface ca_iface);
 /*lint -flb*/
 /** @} */
 #endif
-
-
-

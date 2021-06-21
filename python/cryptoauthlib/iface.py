@@ -74,11 +74,16 @@ class ATCADeviceType(AtcaEnum):
 
 
 # The following must match atca_iface.h exactly
+class _U_Address(Union):
+    """Hidden union to provide backward compatibility with the api change"""
+    _fields_ = [('slave_address', c_uint8),
+                ('address', c_uint8)]
 
 
 class _ATCAI2C(Structure):
     """I2C/TWI HAL configuration"""
-    _fields_ = [('slave_address', c_uint8),
+    _anonymous_ = ('u')
+    _fields_ = [('u', _U_Address),
                 ('bus', c_uint8),
                 ('baud', c_uint32)]
 

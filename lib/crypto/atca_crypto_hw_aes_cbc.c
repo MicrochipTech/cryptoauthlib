@@ -160,4 +160,3 @@ ATCA_STATUS atcab_aes_cbc_decrypt_block(atca_aes_cbc_ctx_t* ctx, const uint8_t* 
 
     return status;
 }
-

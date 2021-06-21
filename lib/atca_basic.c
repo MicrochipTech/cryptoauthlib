@@ -106,6 +106,16 @@ ATCA_STATUS atcab_init_ext(ATCADevice* device, ATCAIfaceCfg *cfg)
             (*device)->clock_divider &= ATCA_CHIPMODE_CLOCK_DIV_MASK;
         }
 #endif
+
+#ifdef ATCA_ECC204_SUPPORT
+        /* To compatible with kitprotocol firmware on otherside */
+        /* On kitprotocol firmware, during discovery time itself ECC204 would have woke up */
+        if ((ECC204 == cfg->devtype) && (atca_iface_is_kit(atGetIFace(*device))))
+        {
+            (*device)->device_state = ATCA_DEVICE_STATE_ACTIVE;
+        }
+#endif
+
     }
 
     return ATCA_SUCCESS;

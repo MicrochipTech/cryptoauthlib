@@ -370,7 +370,10 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
     bool is_ca_device = atcab_is_ca_device(atcab_get_device_type());
     uint16_t key_len = is_ca_device ? 32 : 16;
     CK_RV rv;
+
+#if ATCA_TA_SUPPORT
     ATCA_STATUS status;
+#endif
 
     if (!pLibCtx || !pLibCtx->initialized)
     {

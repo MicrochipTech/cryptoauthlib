@@ -40,4 +40,3 @@ CK_RV pkcs11_os_unlock_mutex(CK_VOID_PTR pMutex);
 #define pkcs11_os_free      hal_free
 
 #endif /* PKCS11_OS_H_ */
-

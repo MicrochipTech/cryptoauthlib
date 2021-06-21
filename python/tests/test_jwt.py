@@ -118,7 +118,7 @@ def test_jwt_round_trip_hmac_qa(test_jwt_init_live, slot, config):
         # A Dummy/Test Audience to verify against
         'aud': 'test_audience'
     }
-    
+
     token = PyJWT(slot, config)
     encoded = token.encode(claims, b'', algorithm='HS256')
 

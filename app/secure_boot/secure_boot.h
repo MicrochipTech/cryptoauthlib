@@ -87,6 +87,3 @@ extern ATCA_STATUS host_generate_random_number(uint8_t *rand);
 #endif
 
 #endif
-
-
-

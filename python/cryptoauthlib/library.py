@@ -95,13 +95,13 @@ def load_cryptoauthlib(lib=None):
         _CRYPTO_LIB = lib
     else:
         try:
-            os.environ['PATH'] = os.path.dirname(__file__) + os.pathsep + os.environ['PATH']
-            library_file = find_library('cryptoauth')
-            if library_file is None:
-                library_file = _force_local_library()
-            _CRYPTO_LIB = cdll.LoadLibrary(library_file)
+            _CRYPTO_LIB = cdll.LoadLibrary(find_library('cryptoauth'))
         except:
-            raise LibraryLoadError('Unable to find cryptoauthlib. You may need to reinstall')
+            try:
+                _CRYPTO_LIB = cdll.LoadLibrary(_force_local_library())
+            except:
+                raise LibraryLoadError('Unable to find cryptoauthlib. You may need to reinstall')
+
 
 
 def get_cryptoauthlib():

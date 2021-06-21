@@ -91,4 +91,3 @@ void CL_hash(U8 *msg, int msgBytes, U8 *dest);
 #endif
 
 #endif // __SHA1_ROUTINES_DOT_H__
-

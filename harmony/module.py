@@ -45,6 +45,11 @@ def loadModule():
     cryptoAuthLibTest.setDisplayType("Library Testing Application")
     cryptoAuthLibTest.addDependency("CAL_LIB_CAP", "CA_LIB", True, False)
 
+    cryptoAuthLibKitHost = Module.CreateSharedComponent("cryptoauthlib_kit_host", "Kit Host", "/Libraries/Cryptoauthlib", "/harmony/config/kit_host.py")
+    cryptoAuthLibKitHost.setDisplayType("Cryptoauth Kit Protocol Host")
+    cryptoAuthLibKitHost.addDependency("CAL_LIB_CAP", "CA_LIB", True, False)
+    cryptoAuthLibKitHost.addDependency("UART", "UART", None, False, False)
+
     # cryptoAuthLibSwiBB = Module.CreateSharedComponent("cryptoauthlib_swibb", "SWI_BB", "/Libraries/Cryptoauthlib", "/harmony/config/swi_bb.py")
     # cryptoAuthLibSwiBB.setDisplayType("SWI BitBang Hal Interface")
     # cryptoAuthLibSwiBB.addDependency("CAL_LIB_CAP", "CA_LIB", True, False)

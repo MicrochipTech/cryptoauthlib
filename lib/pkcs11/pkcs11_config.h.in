@@ -129,7 +129,9 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr pSlot);
 CK_RV pkcs11_config_load(pkcs11_slot_ctx_ptr slot_ctx);
 CK_RV pkcs11_config_cert(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pcLabel);
 CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pcLabel);
+#if !PKCS11_USE_STATIC_CONFIG
 CK_RV pkcs11_config_remove_object(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject);
+#endif
 
 void pkcs11_config_init_private(pkcs11_object_ptr pObject, char * label, size_t len);
 void pkcs11_config_init_public(pkcs11_object_ptr pObject, char * label, size_t len);

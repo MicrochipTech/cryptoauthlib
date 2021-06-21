@@ -35,8 +35,6 @@
 
 #include "atca_status.h"
 #include "atca_iface.h"
-#include "atca_start_config.h"
-#include "atca_start_iface.h"
 
 
 /** \defgroup hal_ Hardware abstraction layer (hal_)
@@ -105,7 +103,7 @@ ATCA_STATUS hal_gpio_release(void *hal_data);
 ATCA_STATUS hal_gpio_device_discovery(ATCAIface iface);
 #endif
 
-#ifdef ATCA_HAL_UART
+#if defined(ATCA_HAL_SWI_UART) || defined(ATCA_HAL_KIT_UART) || defined(ATCA_HAL_UART)
 ATCA_STATUS hal_uart_init(ATCAIface iface, ATCAIfaceCfg *cfg);
 ATCA_STATUS hal_uart_post_init(ATCAIface iface);
 ATCA_STATUS hal_uart_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength);

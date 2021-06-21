@@ -3,6 +3,7 @@
 #define ATCA_CONFIG_H
 
 /* Included HALS */
+#cmakedefine ATCA_HAL_KIT_UART
 #cmakedefine ATCA_HAL_KIT_HID
 #cmakedefine ATCA_HAL_I2C
 #cmakedefine ATCA_HAL_SPI

@@ -436,4 +436,3 @@ TEST_TEAR_DOWN(atca_cmd_basic_test)
 
     UnityMalloc_EndTest();
 }
-

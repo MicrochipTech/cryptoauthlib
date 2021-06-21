@@ -461,4 +461,3 @@ ATCA_STATUS calib_verify_invalidate(ATCADevice device, uint16_t key_id, const ui
 
     return status;
 }
-

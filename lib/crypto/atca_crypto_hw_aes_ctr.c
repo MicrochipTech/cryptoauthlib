@@ -278,4 +278,3 @@ ATCA_STATUS atcab_aes_ctr_decrypt_block(atca_aes_ctr_ctx_t* ctx, const uint8_t* 
 {
     return atcab_aes_ctr_block(ctx, ciphertext, plaintext);
 }
-

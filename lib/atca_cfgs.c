@@ -49,8 +49,11 @@ ATCAIfaceCfg cfg_ateccx08a_i2c_default = {
         .atcai2c.address        = 0xC0,
 #endif
         .atcai2c.bus            = 2,
+#ifdef __linux__
+        .atcai2c.baud           = 100000,
+#else
         .atcai2c.baud           = 400000,
-        //.atcai2c.baud = 100000,
+#endif
     },
     .wake_delay                 = 1500,
     .rx_retries                 = 20
@@ -114,7 +117,11 @@ ATCAIfaceCfg cfg_atsha20xa_i2c_default = {
         .atcai2c.address        = 0xC8,
 #endif
         .atcai2c.bus            = 2,
+#ifdef __linux__
+        .atcai2c.baud           = 100000,
+#else
         .atcai2c.baud           = 400000,
+#endif
     },
     .wake_delay                 = 2560,
     .rx_retries                 = 20
@@ -176,8 +183,11 @@ ATCAIfaceCfg cfg_ecc204_i2c_default = {
         .atcai2c.address        = 0x33,
 #endif
         .atcai2c.bus            = 2,
+#ifdef __linux__
+        .atcai2c.baud           = 100000,
+#else
         .atcai2c.baud           = 400000,
-        //.atcai2c.baud = 100000,
+#endif
     },
     .wake_delay                 = 1500,
     .rx_retries                 = 20

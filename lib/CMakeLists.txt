@@ -10,6 +10,7 @@ option(ATCA_HAL_KIT_BRIDGE "General purpose kit protocol (Packet and Stream)")
 option(ATCA_HAL_I2C "Include the I2C Hal Driver - Linux & MCU only")
 option(ATCA_HAL_SPI "Include the SPI HAL Driver - Linux & MCU only")
 option(ATCA_HAL_CUSTOM "Include support for Custom/Plug-in Hal Driver")
+option(ATCA_HAL_KIT_UART "Include th UART HAL Driver")
 
 # Library Options
 option(ATCA_PRINTF "Enable Debug print statements in library")
@@ -262,13 +263,21 @@ set(USB_INCLUDE_DIR ${LIBUSB_INCLUDE_DIR})
 set(HID_SRC ../third_party/hidapi/libusb/hid.c)
 endif(USE_LIBUSB)
 
-if(NEED_USB)
+if(NEED_USB OR ATCA_HAL_KIT_UART)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/kit_protocol.c)
 endif()
 
 if(ATCA_HAL_KIT_HID)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${HID_SRC} hal/hal_all_platforms_kit_hidapi.c)
 endif(ATCA_HAL_KIT_HID)
+
+if(ATCA_HAL_KIT_UART)
+if(WIN32)
+set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_windows_kit_uart.c)
+elseif(LINUX)
+set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_linux_uart_userspace.c)
+endif()
+endif(ATCA_HAL_KIT_UART)
 
 if(ATCA_HAL_KIT_CDC)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${CDC_SRC})

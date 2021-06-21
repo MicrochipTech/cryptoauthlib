@@ -451,4 +451,3 @@ CK_RV pkcs11_find_get_attribute(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hOb
 }
 
 /** @} */
-

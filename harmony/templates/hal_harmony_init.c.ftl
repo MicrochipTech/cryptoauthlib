@@ -44,6 +44,7 @@ atca_plib_i2c_api_t ${plib_info[0]}_plib_i2c_api = {
     .is_busy = ${.vars["${plib_info[0]}"].I2C_PLIB_API_PREFIX}_IsBusy,
     .error_get = ${.vars["${plib_info[0]}"].I2C_PLIB_API_PREFIX}_ErrorGet,
     .transfer_setup = ${.vars["${plib_info[0]}"].I2C_PLIB_API_PREFIX}_TransferSetup
+};
 <#elseif plib_info[1] == "spi">
 static void ${plib_info[0]}_select_pin(uint32_t pin, bool value)
 {
@@ -55,15 +56,16 @@ atca_plib_spi_api_t ${plib_info[0]}_plib_spi_api = {
     .write = ${.vars["${plib_info[0]}"].SPI_PLIB_API_PREFIX}_Write,
     .is_busy = ${.vars["${plib_info[0]}"].SPI_PLIB_API_PREFIX}_IsBusy,
     .select = &${plib_info[0]}_select_pin
-<#elseif plib_info[1] == "swi">
-<#if plib_info[2] == "uart">
-atca_plib_swi_uart_api_t ${plib_info[0]}_plib_swi_uart_api = {
+};
+<#elseif plib_info[1] == "swi" && plib_info[2] == "uart" || plib_info[1] == "uart">
+atca_plib_uart_api_t ${plib_info[0]}_plib_uart_api = {
     .read = ${.vars["${plib_info[0]}"].USART_PLIB_API_PREFIX}_Read,
     .write = ${.vars["${plib_info[0]}"].USART_PLIB_API_PREFIX}_Write,
     .error_get = ${.vars["${plib_info[0]}"].USART_PLIB_API_PREFIX}_ErrorGet,
     .serial_setup = ${.vars["${plib_info[0]}"].USART_PLIB_API_PREFIX}_SerialSetup,
     .readcount_get = ${.vars["${plib_info[0]}"].USART_PLIB_API_PREFIX}_ReadCountGet,
     .readcallback_reg = ${.vars["${plib_info[0]}"].USART_PLIB_API_PREFIX}_ReadCallbackRegister
+};
 <#elseif plib_info[1] == "gpio">
 static void ${plib_info[0]}_SetupPinDirection(uint32_t pin, uint8_t pin_dir)
 {
@@ -90,9 +92,9 @@ atca_plib_gpio_api_t ${plib_info[0]}_plib_gpio_api = {
     .read = ${.vars["${plib_info[0]}"].GPIO_PLIB_API_PREFIX}_Read,
     .write = ${.vars["${plib_info[0]}"].GPIO_PLIB_API_PREFIX}_Write,
     .pin_setup = ${.vars["${plib_info[0]}"].GPIO_PLIB_API_PREFIX}_SetupPinDirection
-</#if>
-</#if>
 };
+</#if>
+
 
 </#list>
 </#if>

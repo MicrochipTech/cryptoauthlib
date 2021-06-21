@@ -43,6 +43,21 @@ def CALSecFileUpdate(symbol, event):
         symbol.setSecurity("NON_SECURE")
 
 
+def add_value_to_list(symbol_list, value):
+    values = list(symbol_list.getValues())
+    if value not in values:
+        symbol_list.addValue(value)
+
+
+def del_value_from_list(symbol_list, value):
+    values = list(symbol_list.getValues())
+    if value in values:
+        symbol_list.clearValues()
+        values.remove(value)
+        for v in values:
+            symbol_list.addValue(v)
+
+
 def AddFile(component, src_path, dest_path, proj_path, file_type = "SOURCE", isMarkup = False, enable=True):
     global fileSymbolName
     global numFileCntr
@@ -80,6 +95,9 @@ def AddFilesDir(component, base_path, search_pattern, destination_path, project_
             AddFile(component, source_path, file_destination, file_project.replace('\\','/'),
                 file_type='HEADER' if ext is 'h' else 'SOURCE', enable=enable)
 
+
+def handleMessage(messageID, args):
+    return {}
 
 
 def onAttachmentConnected(source, target):
@@ -125,3 +143,21 @@ def instantiateComponent(calTestingApplication):
 
     AddFilesDir(calTestingApplication, 'third_party/unity', '*', 'library/cryptoauthlib/third_party/unity', 'config/{}/library/cryptoauthlib/third_party/unity'.format(configName))
 
+    calLibDevCfgFile = calTestingApplication.createFileSymbol("CAL_LIB_DEV_CFG_DATA", None)
+    calLibDevCfgFile.setSourcePath("harmony/templates/atca_devcfg_list.h.ftl")
+    calLibDevCfgFile.setOutputName("atca_devcfg_list.h")
+    calLibDevCfgFile.setDestPath("library/cryptoauthlib")
+    calLibDevCfgFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/")
+    calLibDevCfgFile.setType("HEADER")
+    calLibDevCfgFile.setOverwrite(True)
+    calLibDevCfgFile.setMarkup(True)
+    calLibDevCfgFile.setDependencies(CALSecFileUpdate, ["cryptoauthlib.CAL_NON_SECURE"])
+
+    calTester = calTestingApplication.createBooleanSymbol("MULTIPLE_IFACE_SELECTED", None)
+    calTester.setLabel("TEST MULTIPLE INSTANCES")
+    calTester.setDefaultValue(False)
+    calTester.setVisible(True)
+
+    calTesterCmnt = calTestingApplication.createCommentSymbol("MULTIPLE_IFACE_COMMENT", calTester)
+    calTesterCmnt.setLabel("!! Set if Multiple devices and interfaces are selected !! ")
+    calTesterCmnt.setVisible(True)

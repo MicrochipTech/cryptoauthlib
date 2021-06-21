@@ -27,6 +27,12 @@ _SWI_DEVICES = ['ATSHA204A', 'ATSHA206A', 'ATECC108A', 'ATECC508A', 'ATECC608', 
 _I2C_DEVICES = ['ATSHA204A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'TA100', 'ECC204']
 _SPI_DEVICES = ['TA100']
 
+caldevcfglist = []
+
+
+def handleMessage(messageID, args):
+    return {}
+
 
 def CALSecFileUpdate(symbol, event):
     symObj = event['symbol']
@@ -38,12 +44,37 @@ def CALSecFileUpdate(symbol, event):
         symbol.setSecurity("NON_SECURE")
 
 
+def add_value_to_list(symbol_list, value):
+    if value not in symbol_list:
+        symbol_list.append(value)
+
+
+def del_value_from_list(symbol_list, value):
+    if value in symbol_list:
+        symbol_list.remove(value)
+
+
 def updateSercomPlibList(plib, inc):
     Database.sendMessage('cryptoauthlib', 'UPDATE_PLIB_LIST', {'id': plib.lower(), 'inc': inc})
 
 
 def updateTngCapability(id, src):
     Database.sendMessage('cryptoauthlib_tng', 'UPDATE_TNG_TYPE', {'id': id, 'src': src})
+
+
+def updateDevCfgList(dev_cfg, inc):
+    global caldevcfglist
+    Database.sendMessage('cryptoauthlib', 'UPDATE_DEV_CFG_LIST', {'id': dev_cfg.lower(), 'inc': inc})
+
+    if inc:
+        add_value_to_list(caldevcfglist, dev_cfg.lower())
+    else:
+        del_value_from_list(caldevcfglist, dev_cfg.lower())
+    
+
+def calExtendDevCfgList(symbol, event):
+    global caldevcfglist
+    Database.sendMessage('cryptoauthlib', 'EXTEND_DEV_CFG_LIST', {'new_list': caldevcfglist, 'cnt': len(caldevcfglist)})
 
 
 def updateSwiBbInterfaceSettings(symbol, swi_bb_iface):
@@ -229,10 +260,19 @@ def instantiateComponent(deviceComponent, index):
         pass
     devInitDataFile.setDependencies(CALSecFileUpdate, ["cryptoauthlib.CAL_NON_SECURE"])
 
+    devCfgList = deviceComponent.createBooleanSymbol('DEV_CFG_LIST', None)
+    devCfgList.setVisible(False)
+    devCfgList.setDependencies(calExtendDevCfgList, ["cryptoauthlib_test.MULTIPLE_IFACE_SELECTED"])
+
 
 def onAttachmentConnected(source, target):
     sourceID = source['id'].upper()
     targetID = target['component'].getID().upper()
+
+    name = source['component'].getID().lower()
+
+    dev_cfg_init_data = name + '_init_data'
+    updateDevCfgList(dev_cfg_init_data, True)
 
     if 'I2C' in sourceID:
         source['component'].getSymbolByID('HAL_INTERFACE').setValue(targetID)
@@ -256,6 +296,11 @@ def onAttachmentConnected(source, target):
 def onAttachmentDisconnected(source, target):
     sourceID = source['id'].upper()
     targetID = target['component'].getID().upper()
+
+    name = source['component'].getID().lower()
+
+    dev_cfg_init_data = name + '_init_data'
+    updateDevCfgList(dev_cfg_init_data, False)
 
     if 'I2C' in sourceID:
         try:

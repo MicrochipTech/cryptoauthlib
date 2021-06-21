@@ -120,4 +120,3 @@ CK_RV pkcs11_attrib_empty(const CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute
 
 
 /** @} */
-

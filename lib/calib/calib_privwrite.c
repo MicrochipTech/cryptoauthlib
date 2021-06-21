@@ -188,4 +188,3 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
 
     return status;
 }
-

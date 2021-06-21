@@ -58,4 +58,3 @@ void sw_sha256(const uint8_t * message, unsigned int len, uint8_t digest[SHA256_
 #endif
 
 #endif // SHA2_ROUTINES_H
-

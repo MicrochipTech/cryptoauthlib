@@ -476,6 +476,10 @@ ATCA_STATUS calib_execute_command(ATCAPacket* packet, ATCADevice device)
             }
             else
             {
+                if (ATCA_DEVICE_STATE_ACTIVE != device->device_state)
+                {
+                    device->device_state = ATCA_DEVICE_STATE_ACTIVE;
+                }
                 retries = 0;
             }
 

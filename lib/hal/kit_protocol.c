@@ -102,6 +102,8 @@ const char * kit_interface_from_kittype(ATCAKitType kittype)
     }
 }
 
+#if defined(ATCA_HAL_KIT_HID) || defined(ATCA_HAL_KIT_UART)
+
 /** \brief HAL implementation of send over USB HID
  *  \param[in] iface     instance
  *  \param[in] txdata    pointer to bytes to send
@@ -141,6 +143,10 @@ ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength)
         return ATCA_BAD_PARAM;
     }
 
+#ifdef KIT_DEBUG
+    printf("Kit Send (%d): %s", txlength, txdata);
+#endif
+
     bytes_left = txlength;
     while (bytes_left > 0)
     {
@@ -155,12 +161,35 @@ ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength)
             bytes_to_send = bytes_left;
         }
 
-        memcpy(&buffer[1], &txdata[(txlength - bytes_left)], bytes_to_send);
+        if (ATCA_HID_IFACE == iface->mIfaceCFG->iface_type)
+        {
+#ifdef ATCA_HAL_KIT_HID
+            memcpy(&buffer[1], &txdata[(txlength - bytes_left)], bytes_to_send);
+#endif
+        }
+        else if (ATCA_UART_IFACE == iface->mIfaceCFG->iface_type)
+        {
+#ifdef ATCA_HAL_KIT_UART
+            memcpy(&buffer[0], &txdata[(txlength - bytes_left)], bytes_to_send);
+#endif
+        }
+        else
+        {
+            return ATCA_BAD_PARAM;
+        }
+
 
         if (ATCA_SUCCESS != (status = iface->phy->halsend(iface, 0xFF, buffer, packetsize)))
         {
             break;
         }
+
+#ifdef ATCA_HAL_KIT_UART
+        if (buffer[0] == '\n')   // sizeof will include \0 and count will increase
+        {
+            break;
+        }
+#endif
 
         bytes_left -= bytes_to_send;
     }
@@ -179,7 +208,7 @@ ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxsize)
     ATCA_STATUS status = ATCA_BAD_PARAM;
     size_t total_bytes_read = 0;
     size_t bytes_to_read = 0;
-    char *location;
+    char* location = NULL;
     uint16_t rxlen;
 
     if ((NULL == iface) || (NULL == iface->phy) || (NULL == iface->phy->halreceive) ||
@@ -188,23 +217,34 @@ ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxsize)
         return status;
     }
 
+    status = ATCA_SUCCESS;
+
+#ifdef ATCA_HAL_KIT_UART
+    if (ATCA_UART_IFACE == iface->mIfaceCFG->iface_type)
+    {
+        rxlen = 1;
+        do
+        {
+            /* Clear out nulls if they are in the buffer */
+            status = iface->phy->halreceive(iface, 0x00, rxdata, &rxlen);
+        }
+        while (ATCA_SUCCESS == status && *rxdata == '\0');
+        total_bytes_read = 1;
+    }
+#endif
+
     bytes_to_read = (size_t)*rxsize;
     rxlen = (uint16_t)bytes_to_read--;
 
-    do
+    while (ATCA_SUCCESS == status && (NULL == location) && (0 < bytes_to_read))
     {
-        if (ATCA_SUCCESS != (status = iface->phy->halreceive(iface, 0x00, &rxdata[total_bytes_read], &rxlen)))
-        {
-            break;
-        }
+        status = iface->phy->halreceive(iface, 0x00, &rxdata[total_bytes_read], &rxlen);
 
         location = memchr(&rxdata[total_bytes_read], '\n', (size_t)rxlen);
 
         total_bytes_read += rxlen;
         bytes_to_read -= rxlen;
-
     }
-    while ((NULL == location) && (0 < bytes_to_read));
 
     if (ATCA_SUCCESS != status)
     {
@@ -220,6 +260,10 @@ ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxsize)
     {
         *rxsize = (int)total_bytes_read;
     }
+
+#ifdef KIT_DEBUG
+    printf("Kit Recv (%d): %s", *rxsize, rxdata);
+#endif
 
     return ATCA_SUCCESS;
 }
@@ -243,11 +287,34 @@ ATCA_STATUS kit_init(ATCAIface iface, ATCAIfaceCfg* cfg)
     char *token; /* string token */
     int i;
     int address;
+    ATCAKitType iface_type;
+    uint8_t dev_identity;
 
     ((void)cfg);
 
     device_match = kit_id_from_devtype(iface->mIfaceCFG->devtype);
-    interface_match = kit_interface_from_kittype(iface->mIfaceCFG->atcahid.dev_interface);
+
+    switch (iface->mIfaceCFG->iface_type)
+    {
+#ifdef ATCA_HAL_KIT_HID
+    case ATCA_HID_IFACE:
+        iface_type = iface->mIfaceCFG->atcahid.dev_interface;
+        dev_identity = iface->mIfaceCFG->atcahid.dev_identity;
+        break;
+#endif
+#ifdef ATCA_HAL_KIT_UART
+    case ATCA_UART_IFACE:
+        iface_type = iface->mIfaceCFG->atcauart.dev_interface;
+        dev_identity = iface->mIfaceCFG->atcauart.dev_identity;
+        break;
+#endif
+    default:
+        iface_type = ATCA_KIT_AUTO_IFACE;
+        dev_identity = 0;
+        break;
+    }
+
+    interface_match = kit_interface_from_kittype(iface_type);
 
     /* Iterate to find the target device */
     for (i = 0; i < KIT_MAX_SCAN_COUNT; i++)
@@ -292,7 +359,7 @@ ATCA_STATUS kit_init(ATCAIface iface, ATCAIfaceCfg* cfg)
         }
 
         /*Selects the first device type if both device interface and device identity is not defined*/
-        if (iface->mIfaceCFG->atcahid.dev_interface == ATCA_KIT_AUTO_IFACE && iface->mIfaceCFG->atcahid.dev_identity == 0 && (strncmp(device_match, dev_type, 3) == 0))
+        if (iface_type == ATCA_KIT_AUTO_IFACE && dev_identity == 0 && (strncmp(device_match, dev_type, 3) == 0))
         {
 
             txlen = snprintf(txbuf, sizeof(txbuf) - 1, kit_device_select, device_match[0], address);
@@ -311,16 +378,11 @@ ATCA_STATUS kit_init(ATCAIface iface, ATCAIfaceCfg* cfg)
             rxlen = sizeof(rxbuf);
             status = kit_phy_receive(iface, rxbuf, &rxlen);
             break;
-
-
         }
-
         else
         {
 
-
-            /*Selects the device only if the device type, device interface and device identity matches*/
-            if ((strncmp(device_match, dev_type, 4) == 0) && (iface->mIfaceCFG->atcahid.dev_identity == address) && (strcmp(interface_match, dev_interface) == 0))
+            if ((strncmp(device_match, dev_type, 4) == 0) && (dev_identity == address) && (strcmp(interface_match, dev_interface) == 0))
             {
 
 
@@ -461,7 +523,7 @@ ATCA_STATUS kit_send(ATCAIface iface, uint8_t word_address, uint8_t* txdata, int
     {
         // Wrap in kit protocol
         nkitbuf = txlength * 2 + KIT_TX_WRAP_SIZE;
-        pkitbuf = malloc(nkitbuf);
+        pkitbuf = hal_malloc(nkitbuf);
         memset(pkitbuf, 0, nkitbuf);
 
         target = kit_id_from_devtype(iface->mIfaceCFG->devtype);
@@ -493,7 +555,7 @@ ATCA_STATUS kit_send(ATCAIface iface, uint8_t word_address, uint8_t* txdata, int
     while (0);
 
     // Free the bytes
-    free(pkitbuf);
+    hal_free(pkitbuf);
 
     return status;
 }
@@ -536,7 +598,7 @@ ATCA_STATUS kit_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, 
 
         // Receive the response bytes
         nkitbuf = (*rxsize * 2) + KIT_RX_WRAP_SIZE;
-        pkitbuf = malloc(nkitbuf);
+        pkitbuf = hal_malloc(nkitbuf);
         memset(pkitbuf, 0, nkitbuf);
 
         if (ATCA_SUCCESS != (status = kit_phy_receive(iface, pkitbuf, &nkitbuf)))
@@ -564,7 +626,7 @@ ATCA_STATUS kit_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, 
     while (0);
 
     // Free the bytes
-    free(pkitbuf);
+    hal_free(pkitbuf);
 
     return status;
 }
@@ -843,5 +905,7 @@ ATCA_STATUS kit_release(void* hal_data)
 {
     return ATCA_SUCCESS;
 }
+
+#endif
 
 /** @} */

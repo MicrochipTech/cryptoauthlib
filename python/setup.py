@@ -41,7 +41,7 @@ _PROJECT_URLS = {
 }
 
 # Include the compiled library in the resulting distribution
-_PACKAGE_DATA = {}
+_PACKAGE_DATA = {'cryptoauth_signatures': ['cryptoauth.json']}
 if sys.platform == 'win32':
     _PACKAGE_DATA['libcryptoauth'] = ['cryptoauth.dll']
 #elif sys.platform is 'darwin':
@@ -145,9 +145,10 @@ class CryptoAuthCommandBuildExt(build_ext):
             build_args = []
 
         cmake_args = ['-DATCA_HAL_CUSTOM=ON', '-DATCA_TNGTLS_SUPPORT=ON',
+                      '-DATCA_ATSHA206A_SUPPORT=ON',
                       '-DATCA_TNGLORA_SUPPORT=ON', '-DATCA_TFLEX_SUPPORT=ON',
                       '-DATCA_TNG_LEGACY_SUPPORT=ON', '-DATCA_USE_ATCAB_FUNCTIONS=ON']
-
+                      
         if os.path.exists('../lib/talib' if not _sdist_build else 'lib/talib'):
             cmake_args += ['-DATCA_TA100_SUPPORT=ON']
             if sys.platform.startswith('linux'):
@@ -164,8 +165,7 @@ class CryptoAuthCommandBuildExt(build_ext):
             if cmake_gen is not None:
                 cmake_args += ['-G', cmake_gen]
             elif sys.maxsize > 2**32:
-                cmake_args += ['-A', 'x64']
-
+                    cmake_args += ['-A', 'x64']
         else:
             cmake_args += ['-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=' + extdir]
 

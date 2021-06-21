@@ -59,6 +59,3 @@ extern bool secure_boot_check_full_copy_completion(void);
 #endif
 
 #endif
-
-
-

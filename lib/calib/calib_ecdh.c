@@ -272,4 +272,3 @@ ATCA_STATUS calib_ecdh_tempkey_ioenc(ATCADevice device, const uint8_t* public_ke
 
     return status;
 }
-

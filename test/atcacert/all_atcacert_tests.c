@@ -96,5 +96,5 @@ void RunAllCertIOTests(void)
     RUN_TEST_GROUP(atcacert_client);
     RUN_TEST_GROUP(atcacert_host_hw);
 }
-    
+
 #endif

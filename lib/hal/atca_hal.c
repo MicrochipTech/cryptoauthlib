@@ -61,7 +61,7 @@ static ATCAHAL_t hal_swi_uart = {
 };
 #endif
 
-#ifdef ATCA_HAL_UART
+#if defined(ATCA_HAL_UART) || defined(ATCA_HAL_SWI_UART) || defined(ATCA_HAL_KIT_UART)
 static ATCAHAL_t hal_uart = {
     hal_uart_init,
     hal_uart_post_init,
@@ -146,25 +146,27 @@ typedef struct
 
 static atca_hal_list_entry_t atca_registered_hal_list[ATCA_MAX_HAL_CACHE] = {
 #ifdef ATCA_HAL_I2C
-    { ATCA_I2C_IFACE,      &hal_i2c,        NULL      },
+    { ATCA_I2C_IFACE,      &hal_i2c,             NULL             },
 #endif
 #ifdef ATCA_HAL_SWI_UART
-    { ATCA_SWI_IFACE,      &hal_swi_uart,   &hal_uart },
+    { ATCA_SWI_IFACE,      &hal_swi_uart,        &hal_uart        },
 #endif
 #ifdef ATCA_HAL_KIT_UART
-    { ATCA_UART_IFACE,     &hal_kit_v1,     &hal_uart },
+    { ATCA_UART_IFACE,     &hal_kit_v1,          &hal_uart        },
+#elif defined(ATCA_HAL_UART)
+    { ATCA_UART_IFACE,     &hal_uart,            NULL             },
 #endif
 #ifdef ATCA_HAL_SPI
-    { ATCA_SPI_IFACE,      &hal_spi,        NULL      },
+    { ATCA_SPI_IFACE,      &hal_spi,             NULL             },
 #endif
 #ifdef ATCA_HAL_KIT_HID
-    { ATCA_HID_IFACE,      &hal_kit_v1,     &hal_hid  },
+    { ATCA_HID_IFACE,      &hal_kit_v1,          &hal_hid         },
 #endif
 #ifdef ATCA_HAL_KIT_BRIDGE
-    { ATCA_KIT_IFACE,      &hal_kit_bridge, NULL      },
+    { ATCA_KIT_IFACE,      &hal_kit_bridge,      NULL             },
 #endif
 #if ATCA_HAL_SWI_GPIO
-    { ATCA_SWI_GPIO_IFACE, &hal_gpio,       NULL      },
+    { ATCA_SWI_GPIO_IFACE, &hal_gpio,            NULL             },
 #endif
 };
 
@@ -331,6 +333,7 @@ ATCA_STATUS hal_iface_release(ATCAIfaceType iface_type, void *hal_data)
     if (ATCA_SUCCESS == status)
     {
         status = hal->halrelease ? hal->halrelease(hal_data) : ATCA_BAD_PARAM;
+        status = phy->halrelease ? phy->halrelease(hal_data) : ATCA_BAD_PARAM;
     }
 
     return status;

@@ -105,4 +105,3 @@ ATCA_STATUS calib_selftest(ATCADevice device, uint8_t mode, uint16_t param2, uin
 
     return status;
 }
-

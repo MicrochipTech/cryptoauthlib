@@ -822,4 +822,3 @@ int atcacert_max_cert_size(const atcacert_def_t* cert_def,
 #endif
 
 #endif
-

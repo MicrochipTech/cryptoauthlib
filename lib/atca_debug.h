@@ -1,5 +1,3 @@
-
-
 #ifndef _ATCA_DEBUG_H
 #define _ATCA_DEBUG_H
 

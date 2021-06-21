@@ -44,12 +44,12 @@ PLIB_SWI_SERIAL_SETUP serial_setup = {
 static ATCA_STATUS hal_uart_flush_buffer(ATCAIface iface)
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
-    atca_plib_swi_uart_api_t* plib;
+    atca_plib_uart_api_t* plib;
     uint8_t dummy_read;
 
     if (cfg && cfg->cfg_data)
     {
-        plib = (atca_plib_swi_uart_api_t*)cfg->cfg_data;
+        plib = (atca_plib_uart_api_t*)cfg->cfg_data;
 
         // Until rx ring buffer gets cleared, read out all data from rx buffer
         while (plib->readcount_get() >= 1)
@@ -70,12 +70,12 @@ static ATCA_STATUS hal_uart_flush_buffer(ATCAIface iface)
 static ATCA_STATUS hal_uart_set_baudrate(ATCAIface iface, uint32_t baudrate)
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
-    atca_plib_swi_uart_api_t* plib;
+    atca_plib_uart_api_t* plib;
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
     if (cfg && cfg->cfg_data)
     {
-        plib = (atca_plib_swi_uart_api_t*)cfg->cfg_data;
+        plib = (atca_plib_uart_api_t*)cfg->cfg_data;
 
         serial_setup.baudRate = baudrate;
 
@@ -95,14 +95,14 @@ static ATCA_STATUS hal_uart_set_baudrate(ATCAIface iface, uint32_t baudrate)
  */
 ATCA_STATUS hal_uart_init(ATCAIface iface, ATCAIfaceCfg *cfg)
 {
-    atca_plib_swi_uart_api_t* plib;
+    atca_plib_uart_api_t* plib;
 
     if (cfg == NULL)
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
     }
 
-    plib = (atca_plib_swi_uart_api_t*)cfg->cfg_data;
+    plib = (atca_plib_uart_api_t*)cfg->cfg_data;
     if (plib == NULL)
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
@@ -135,12 +135,12 @@ ATCA_STATUS hal_uart_post_init(ATCAIface iface)
 ATCA_STATUS hal_uart_send(ATCAIface iface, uint8_t word_address, uint8_t* txdata, int txlength)
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
-    atca_plib_swi_uart_api_t* plib;
+    atca_plib_uart_api_t* plib;
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
     if (cfg && cfg->cfg_data && txdata && txlength)
     {
-        plib = (atca_plib_swi_uart_api_t*)cfg->cfg_data;
+        plib = (atca_plib_uart_api_t*)cfg->cfg_data;
 
         (void)plib->error_get();
         if (txlength == plib->write(txdata, txlength))
@@ -169,13 +169,13 @@ ATCA_STATUS hal_uart_send(ATCAIface iface, uint8_t word_address, uint8_t* txdata
 ATCA_STATUS hal_uart_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxdata, uint16_t* rxlength)
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
-    atca_plib_swi_uart_api_t* plib;
+    atca_plib_uart_api_t* plib;
     ATCA_STATUS status = ATCA_BAD_PARAM;
     int16_t timeout = 300;
 
     if (cfg && cfg->cfg_data && rxdata && rxlength)
     {
-        plib = (atca_plib_swi_uart_api_t*)cfg->cfg_data;
+        plib = (atca_plib_uart_api_t*)cfg->cfg_data;
 
         while ((plib->readcount_get() < *rxlength) && (timeout > 0))
         {
