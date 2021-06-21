@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: tflxtls_cert_def_4_device.c File Reference</title>
+<title>CryptoAuthLib: secure_boot_memory.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.1</span>
+   &#160;<span id="projectnumber">v3.3.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,52 +85,166 @@ $(document).ready(function(){initNavTree('a00056.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#var-members">Variables</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">tflxtls_cert_def_4_device.c File Reference</div>  </div>
+<div class="title">secure_boot_memory.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>TNG TLS device certificate definition.  
+<p>Provides interface to memory component for the secure boot.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00209_source.html">atcacert/atcacert_def.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00101_source.html">tngtls_cert_def_1_signer.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a0fe5622ccaa7178f6f9537935b66edcf"><td class="memItemLeft" align="right" valign="top">const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a0fe5622ccaa7178f6f9537935b66edcf">g_tflxtls_cert_template_4_device</a> [500]</td></tr>
-<tr class="separator:a0fe5622ccaa7178f6f9537935b66edcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1828d4dafab30ab2dda8a79dbf830a85"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a04472.html#gadc7021bdefda0fcbdb0ab9c2bd8c6ba9">atcacert_cert_element_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a1828d4dafab30ab2dda8a79dbf830a85">g_tflxtls_cert_elements_4_device</a> []</td></tr>
-<tr class="separator:a1828d4dafab30ab2dda8a79dbf830a85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaca5751036ff201454ef8714cd93c6e37"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a04472.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a04480.html#gaca5751036ff201454ef8714cd93c6e37">g_tflxtls_cert_def_4_device</a></td></tr>
-<tr class="separator:gaca5751036ff201454ef8714cd93c6e37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><code>#include &quot;<a class="el" href="a01484_source.html">atca_status.h</a>&quot;</code><br />
+<code>#include &quot;atca_command.h&quot;</code><br />
+</div>
+<p><a href="a00056_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a06324.html">memory_parameters</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ad744cc79ced98d366fed07780032bc47"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ad744cc79ced98d366fed07780032bc47">secure_boot_init_memory</a> (<a class="el" href="a06324.html">memory_parameters</a> *memory_params)</td></tr>
+<tr class="separator:ad744cc79ced98d366fed07780032bc47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25b3c765095b474bc2b93f87d96f7b28"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a25b3c765095b474bc2b93f87d96f7b28">secure_boot_read_memory</a> (uint8_t *pu8_data, uint32_t *pu32_target_length)</td></tr>
+<tr class="separator:a25b3c765095b474bc2b93f87d96f7b28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00a29e86e9ab8b9d74b95e194a1b08f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a00a29e86e9ab8b9d74b95e194a1b08f2">secure_boot_write_memory</a> (uint8_t *pu8_data, uint32_t *pu32_target_length)</td></tr>
+<tr class="separator:a00a29e86e9ab8b9d74b95e194a1b08f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf726b809a542bc68519520b61b755a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#abf726b809a542bc68519520b61b755a3">secure_boot_deinit_memory</a> (<a class="el" href="a06324.html">memory_parameters</a> *memory_params)</td></tr>
+<tr class="separator:abf726b809a542bc68519520b61b755a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa635e6de2a04772df6edfdc1973236b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#aa635e6de2a04772df6edfdc1973236b9">secure_boot_mark_full_copy_completion</a> (void)</td></tr>
+<tr class="separator:aa635e6de2a04772df6edfdc1973236b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6378e763208c43ba1fbcadd8bc8a084c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a6378e763208c43ba1fbcadd8bc8a084c">secure_boot_check_full_copy_completion</a> (void)</td></tr>
+<tr class="separator:a6378e763208c43ba1fbcadd8bc8a084c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>TNG TLS device certificate definition. </p>
+<div class="textblock"><p>Provides interface to memory component for the secure boot. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Variable Documentation</h2>
-<a id="a1828d4dafab30ab2dda8a79dbf830a85"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1828d4dafab30ab2dda8a79dbf830a85">&#9670;&nbsp;</a></span>g_tflxtls_cert_elements_4_device</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a6378e763208c43ba1fbcadd8bc8a084c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6378e763208c43ba1fbcadd8bc8a084c">&#9670;&nbsp;</a></span>secure_boot_check_full_copy_completion()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="a04472.html#gadc7021bdefda0fcbdb0ab9c2bd8c6ba9">atcacert_cert_element_t</a> g_tflxtls_cert_elements_4_device[]</td>
+          <td class="memname">bool secure_boot_check_full_copy_completion </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a0fe5622ccaa7178f6f9537935b66edcf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0fe5622ccaa7178f6f9537935b66edcf">&#9670;&nbsp;</a></span>g_tflxtls_cert_template_4_device</h2>
+<a id="abf726b809a542bc68519520b61b755a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf726b809a542bc68519520b61b755a3">&#9670;&nbsp;</a></span>secure_boot_deinit_memory()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint8_t g_tflxtls_cert_template_4_device[500]</td>
+          <td class="memname">void secure_boot_deinit_memory </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a06324.html">memory_parameters</a> *&#160;</td>
+          <td class="paramname"><em>memory_params</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad744cc79ced98d366fed07780032bc47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad744cc79ced98d366fed07780032bc47">&#9670;&nbsp;</a></span>secure_boot_init_memory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> secure_boot_init_memory </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a06324.html">memory_parameters</a> *&#160;</td>
+          <td class="paramname"><em>memory_params</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa635e6de2a04772df6edfdc1973236b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa635e6de2a04772df6edfdc1973236b9">&#9670;&nbsp;</a></span>secure_boot_mark_full_copy_completion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> secure_boot_mark_full_copy_completion </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a25b3c765095b474bc2b93f87d96f7b28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25b3c765095b474bc2b93f87d96f7b28">&#9670;&nbsp;</a></span>secure_boot_read_memory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> secure_boot_read_memory </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>pu8_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>pu32_target_length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a00a29e86e9ab8b9d74b95e194a1b08f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00a29e86e9ab8b9d74b95e194a1b08f2">&#9670;&nbsp;</a></span>secure_boot_write_memory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> secure_boot_write_memory </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>pu8_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>pu32_target_length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -142,7 +256,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ba9d997d0d387c1e0d2fa63de516c6a9.html">cryptauthlib-v3.3.1_</a></li><li class="navelem"><a class="el" href="dir_e23113351ea5643a30d80aaf79fddae5.html">app</a></li><li class="navelem"><a class="el" href="dir_cbd92ec4047fcb5485f22f55f11b4082.html">tng</a></li><li class="navelem"><a class="el" href="a00056.html">tflxtls_cert_def_4_device.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_f05d529b5e914b1a2bfe12131717fabb.html">app</a></li><li class="navelem"><a class="el" href="dir_a918f04685137e308130206b20b76d5a.html">secure_boot</a></li><li class="navelem"><a class="el" href="a00056.html">secure_boot_memory.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

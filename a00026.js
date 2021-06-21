@@ -1,9 +1,21 @@
 var a00026 =
 [
-    [ "g_cert_def_0_root", "a00026.html#a7853b633cac882faf27c0698df53f092", null ],
-    [ "g_cert_def_1_signer", "a00026.html#a55a07310d9b492652d6f40797d2967de", null ],
-    [ "g_cert_def_2_device", "a00026.html#aad3677dc34bfab2f4a64e7ddff0df47a", null ],
-    [ "g_cert_elements_1_signer", "a00026.html#a0267a3fda98daefe9f9dc0aa1dc602a4", null ],
-    [ "g_cert_template_1_signer", "a00026.html#ad22bc6721af379c8f2c9c5a0f8780e3b", null ],
-    [ "g_cert_template_2_device", "a00026.html#aaf4c29bf4fcdfaee142b8c85792e4451", null ]
+    [ "_ascii_kit_host_context", "a06308.html", "a06308" ],
+    [ "_kit_host_map_entry", "a06312.html", "a06312" ],
+    [ "KIT_DATA_BEGIN_DELIMITER", "a00026.html#aabb437bfae6836a5b0bb3bd9f1884296", null ],
+    [ "KIT_DATA_END_DELIMITER", "a00026.html#aad9b090e9f32d7480ee650d90f93051e", null ],
+    [ "KIT_FIRMWARE_SIZE_MAX", "a00026.html#af181e384a69c3d0e4879fb82fd30be81", null ],
+    [ "KIT_LAYER_DELIMITER", "a00026.html#afaa98e012ad40b48c614108b267d3202", null ],
+    [ "KIT_MESSAGE_DELIMITER", "a00026.html#a495cd6ae37421f4711fbd41b9545be87", null ],
+    [ "KIT_MESSAGE_SIZE_MAX", "a00026.html#a5ef47c1942cca10be5c5bf17841c8611", null ],
+    [ "KIT_SECTION_NAME_SIZE_MAX", "a00026.html#a3cf82bca874871864473a36168371b7a", null ],
+    [ "KIT_VERSION_SIZE_MAX", "a00026.html#a7cc71795b8d533ccbdb3555b6fc4cbb0", null ],
+    [ "ascii_kit_host_context_t", "a00026.html#a80731eade86b67f9d8fb45ec823f8161", null ],
+    [ "kit_host_map_entry_t", "a00026.html#abe18de5c585f639142a5bf7c253e5b7f", null ],
+    [ "kit_host_format_response", "a00026.html#ac6f6e7798cc371e9667889cbbb4af330", null ],
+    [ "kit_host_init", "a00026.html#a9dcff757a8d30cec3b1e209351b16358", null ],
+    [ "kit_host_init_phy", "a00026.html#ac79cbb36e6f0efe9196fa9131ccdb69b", null ],
+    [ "kit_host_process_cmd", "a00026.html#ac00c465f600b5dd1dcb85eddff61d93a", null ],
+    [ "kit_host_process_line", "a00026.html#a2067eeb11f190a7fb64217f917c3ff76", null ],
+    [ "kit_host_task", "a00026.html#ac2fa4cf8af951688c4be97cca0d23b71", null ]
 ];

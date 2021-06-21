@@ -1,7 +1,6 @@
 var a00062 =
 [
-    [ "tng_cert_map_element", "a05056.html", "a05056" ],
-    [ "tng_get_device_cert_def", "a04480.html#ga28c369c92f1a7c2f61512cde463b8ff5", null ],
-    [ "tng_get_device_pubkey", "a04480.html#ga6bdd6b8ace7a98b7efbc13f85ffaac1a", null ],
-    [ "tng_map_get_device_cert_def", "a04480.html#ga38187b164a953981496cd927d3f97643", null ]
+    [ "g_tflxtls_cert_def_4_device", "a05740.html#gaca5751036ff201454ef8714cd93c6e37", null ],
+    [ "g_tflxtls_cert_elements_4_device", "a00062.html#a1828d4dafab30ab2dda8a79dbf830a85", null ],
+    [ "g_tflxtls_cert_template_4_device", "a00062.html#a0fe5622ccaa7178f6f9537935b66edcf", null ]
 ];

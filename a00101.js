@@ -1,5 +1,5 @@
 var a00101 =
 [
-    [ "TNGTLS_CERT_TEMPLATE_1_SIGNER_SIZE", "a04480.html#ga6102cfce0327af728b151a6b5828cfeb", null ],
-    [ "g_tngtls_cert_def_1_signer", "a04480.html#ga40297bf22e3c8bd5bed557a9f62a03c1", null ]
+    [ "TNGLORA_CERT_TEMPLATE_4_DEVICE_SIZE", "a05740.html#ga4904eeaf46d9ce00b07debd27699e44e", null ],
+    [ "g_tnglora_cert_def_4_device", "a05740.html#ga557d737e9b117370394084a0f6fe0ce7", null ]
 ];

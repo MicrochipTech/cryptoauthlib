@@ -1,6 +1,5 @@
 var a00080 =
 [
-    [ "g_tnglora_cert_def_1_signer", "a00080.html#a703116fbf86fb006ddf1ff02f2332989", null ],
-    [ "g_tngtls_cert_elements_1_signer", "a00080.html#ab0faf280b94e91d5f5440b0d46a089ee", null ],
-    [ "g_tngtls_cert_template_1_signer", "a00080.html#a4278a77bc6ed80e09d281ccf6ae5f23c", null ]
+    [ "g_cryptoauth_root_ca_002_cert", "a00080.html#ac8701381ff8ac8a30fded35b8ef38920", null ],
+    [ "g_cryptoauth_root_ca_002_cert_size", "a00080.html#abff789f84f8f178a30ce06792fe47771", null ]
 ];

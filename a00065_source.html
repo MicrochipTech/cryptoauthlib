@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: tng_atca.h Source File</title>
+<title>CryptoAuthLib: tflxtls_cert_def_4_device.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.1</span>
+   &#160;<span id="projectnumber">v3.3.2</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,44 +85,34 @@ $(document).ready(function(){initNavTree('a00065_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">tng_atca.h</div>  </div>
+<div class="title">tflxtls_cert_def_4_device.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a00065.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef TNG_ATCA_H</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define TNG_ATCA_H</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef TFLXTLS_CERT_DEF_4_DEVICE_H</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define TFLXTLS_CERT_DEF_4_DEVICE_H</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00137.html">atca_basic.h</a>&quot;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a00209.html">atcacert/atcacert_def.h</a>&quot;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">const</span> <a class="code" href="a04560.html">atcacert_def_t</a>* <a class="code" href="a04480.html#ga38187b164a953981496cd927d3f97643">tng_map_get_device_cert_def</a>(<span class="keywordtype">int</span> index);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<a class="code" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a04480.html#ga28c369c92f1a7c2f61512cde463b8ff5">tng_get_device_cert_def</a>(<span class="keyword">const</span> <a class="code" href="a04560.html">atcacert_def_t</a> **cert_def);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<a class="code" href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a04480.html#ga6bdd6b8ace7a98b7efbc13f85ffaac1a">tng_get_device_pubkey</a>(uint8_t *public_key);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01511.html">atcacert/atcacert_def.h</a>&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="a05820.html">atcacert_def_t</a> <a class="code" href="a05740.html#gaca5751036ff201454ef8714cd93c6e37">g_tflxtls_cert_def_4_device</a>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aa04480_html_ga6bdd6b8ace7a98b7efbc13f85ffaac1a"><div class="ttname"><a href="a04480.html#ga6bdd6b8ace7a98b7efbc13f85ffaac1a">tng_get_device_pubkey</a></div><div class="ttdeci">ATCA_STATUS tng_get_device_pubkey(uint8_t *public_key)</div><div class="ttdoc">Uses GenKey command to calculate the public key from the primary device public key.</div><div class="ttdef"><b>Definition:</b> tng_atca.c:112</div></div>
-<div class="ttc" id="aa00137_html"><div class="ttname"><a href="a00137.html">atca_basic.h</a></div><div class="ttdoc">CryptoAuthLib Basic API methods - a simple crypto authentication API. These methods manage a global A...</div></div>
-<div class="ttc" id="aa04480_html_ga28c369c92f1a7c2f61512cde463b8ff5"><div class="ttname"><a href="a04480.html#ga28c369c92f1a7c2f61512cde463b8ff5">tng_get_device_cert_def</a></div><div class="ttdeci">ATCA_STATUS tng_get_device_cert_def(const atcacert_def_t **cert_def)</div><div class="ttdoc">Get the TNG device certificate definition.</div><div class="ttdef"><b>Definition:</b> tng_atca.c:80</div></div>
-<div class="ttc" id="aa04480_html_ga38187b164a953981496cd927d3f97643"><div class="ttname"><a href="a04480.html#ga38187b164a953981496cd927d3f97643">tng_map_get_device_cert_def</a></div><div class="ttdeci">const atcacert_def_t * tng_map_get_device_cert_def(int index)</div><div class="ttdoc">Helper function to iterate through all trust cert definitions.</div><div class="ttdef"><b>Definition:</b> tng_atca.c:68</div></div>
-<div class="ttc" id="aa00209_html"><div class="ttname"><a href="a00209.html">atcacert_def.h</a></div><div class="ttdoc">Declarations for certificates related to ECC CryptoAuthentication devices. These are the definitions ...</div></div>
-<div class="ttc" id="aa04560_html"><div class="ttname"><a href="a04560.html">atcacert_def_s</a></div><div class="ttdef"><b>Definition:</b> atcacert_def.h:176</div></div>
-<div class="ttc" id="aa00182_html_a22bd6643f31f1d75dc3e7ea939f468cd"><div class="ttname"><a href="a00182.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a></div><div class="ttdeci">ATCA_STATUS</div><div class="ttdef"><b>Definition:</b> atca_status.h:43</div></div>
+<div class="ttc" id="aa01511_html"><div class="ttname"><a href="a01511.html">atcacert_def.h</a></div><div class="ttdoc">Declarations for certificates related to ECC CryptoAuthentication devices. These are the definitions ...</div></div>
+<div class="ttc" id="aa05820_html"><div class="ttname"><a href="a05820.html">atcacert_def_s</a></div><div class="ttdef"><b>Definition:</b> atcacert_def.h:176</div></div>
+<div class="ttc" id="aa05740_html_gaca5751036ff201454ef8714cd93c6e37"><div class="ttname"><a href="a05740.html#gaca5751036ff201454ef8714cd93c6e37">g_tflxtls_cert_def_4_device</a></div><div class="ttdeci">const atcacert_def_t g_tflxtls_cert_def_4_device</div><div class="ttdef"><b>Definition:</b> tflxtls_cert_def_4_device.c:105</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ba9d997d0d387c1e0d2fa63de516c6a9.html">cryptauthlib-v3.3.1_</a></li><li class="navelem"><a class="el" href="dir_e23113351ea5643a30d80aaf79fddae5.html">app</a></li><li class="navelem"><a class="el" href="dir_cbd92ec4047fcb5485f22f55f11b4082.html">tng</a></li><li class="navelem"><a class="el" href="a00065.html">tng_atca.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_f05d529b5e914b1a2bfe12131717fabb.html">app</a></li><li class="navelem"><a class="el" href="dir_2b8414f80db714ac2c641a237e54a82e.html">tng</a></li><li class="navelem"><a class="el" href="a00065.html">tflxtls_cert_def_4_device.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

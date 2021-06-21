@@ -1,4 +1,6 @@
 var a00083 =
 [
-    [ "g_tnglora_cert_def_1_signer", "a04480.html#ga6394f3a8d07be723a1c9c566a64c4a2e", null ]
+    [ "CRYPTOAUTH_ROOT_CA_002_PUBLIC_KEY_OFFSET", "a05740.html#ga9d67f287321c5821711e9cc0ef332b3b", null ],
+    [ "g_cryptoauth_root_ca_002_cert", "a05740.html#ga5c01e37d1f10dbf90d50208cbc5bc8ab", null ],
+    [ "g_cryptoauth_root_ca_002_cert_size", "a05740.html#gabff789f84f8f178a30ce06792fe47771", null ]
 ];
