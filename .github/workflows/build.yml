@@ -28,6 +28,7 @@ jobs:
           echo $TAG_NAME
           cd python
           echo $TAG_NAME >VERSION
+          cp ../release_notes.md .
           cp -r ../lib .
           cp -r ../third_party .
           mkdir app

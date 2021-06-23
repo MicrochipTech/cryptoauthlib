@@ -22,7 +22,6 @@ Cryptoauthlib Library Management
 # THIS SOFTWARE.
 
 import os.path
-import json
 import sys
 from ctypes import *
 from ctypes.util import find_library
@@ -95,12 +94,12 @@ def load_cryptoauthlib(lib=None):
         _CRYPTO_LIB = lib
     else:
         try:
-            _CRYPTO_LIB = cdll.LoadLibrary(find_library('cryptoauth'))
+            library_file = find_library('cryptoauth')
+            if library_file is None:
+                library_file = _force_local_library()
+            _CRYPTO_LIB = cdll.LoadLibrary(library_file)
         except:
-            try:
-                _CRYPTO_LIB = cdll.LoadLibrary(_force_local_library())
-            except:
-                raise LibraryLoadError('Unable to find cryptoauthlib. You may need to reinstall')
+            raise LibraryLoadError('Unable to find cryptoauthlib. You may need to reinstall')
 
 
 

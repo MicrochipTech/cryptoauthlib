@@ -106,15 +106,6 @@ def load_readme():
     with open('README.md', 'r') as f:
         read_me = f.read()
 
-    if not _sdist_build:
-        with open('../README.md', 'r') as f:
-            notes = f.read()
-
-        read_me += notes[notes.find('Release notes'):notes.find('Host Device Support')]
-
-        with open('README.md', 'w') as f:
-            f.write(read_me)
-
     return read_me
 
 
