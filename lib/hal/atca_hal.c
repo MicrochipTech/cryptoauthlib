@@ -332,10 +332,24 @@ ATCA_STATUS hal_iface_release(ATCAIfaceType iface_type, void *hal_data)
 
     if (ATCA_SUCCESS == status)
     {
-        status = hal->halrelease ? hal->halrelease(hal_data) : ATCA_BAD_PARAM;
-        status = phy->halrelease ? phy->halrelease(hal_data) : ATCA_BAD_PARAM;
-    }
+        if (hal && hal->halrelease)
+        {
+            status = hal->halrelease(hal_data);
+        }
+        else
+        {
+            status = ATCA_BAD_PARAM;
+        }
 
+        if (phy && phy->halrelease)
+        {
+            status |= phy->halrelease(hal_data);
+        }
+        else
+        {
+            status = ATCA_BAD_PARAM;
+        }
+    }
     return status;
 }
 
