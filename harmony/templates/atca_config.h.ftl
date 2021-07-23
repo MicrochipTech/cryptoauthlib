@@ -105,7 +105,7 @@
 <#if pliblist?size != 0>
 <#list pliblist as plib_id>
 <#assign plib_info = plib_id?split("_", 1)>
-<#if plib_info[1] == "i2c">
+<#if plib_info[0] == "i2c">
 <#if is_atca_plib_i2c_exists == "False">
 <#assign size_var = "size_t">
 <#if plib_id?contains("sercom")>
@@ -145,7 +145,7 @@ typedef struct atca_plib_i2c_api
 </#if>
 </#if>
 
-<#if plib_info[1] == "spi">
+<#if plib_info[0] == "spi">
 <#if is_atca_plib_spi_exists == "False">
 typedef bool (* atca_spi_plib_read)( void * , size_t );
 typedef bool (* atca_spi_plib_write)( void *, size_t );
@@ -163,7 +163,7 @@ typedef struct atca_plib_spi_api
 </#if>
 </#if>
 
-<#if plib_info[1] == "swi" && plib_info[2] == "uart" || plib_info[1] == "uart">
+<#if plib_info[0] == "swi" && plib_info[2] == "uart" || plib_info[0] == "uart">
 <#if is_atca_plib_uart_exists == "False">
 <#if plib_id?contains("flexcom")>
 #define PLIB_SWI_ERROR             FLEXCOM_USART_ERROR
