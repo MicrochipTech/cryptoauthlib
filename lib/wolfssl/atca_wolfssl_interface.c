@@ -330,7 +330,7 @@ ATCA_STATUS atcac_pk_init(
     {
         if (!key_type)
         {
-            (ecc_key*)ctx->ptr = wc_ecc_key_new(NULL);
+            ctx->ptr = (ecc_key*)wc_ecc_key_new(NULL);
 
             if (ctx->ptr)
             {
@@ -392,11 +392,11 @@ ATCA_STATUS atcac_pk_init_pem(
             type = ECC_PUBLICKEY_TYPE;
         }
 
-        ret = PemToDer((char*)buf, (long)buflen, type, &der, NULL, NULL, &ecckey);
+        ret = PemToDer((const unsigned char*)buf, (long)buflen, type, &der, NULL, NULL, &ecckey);
 
         if ((ret >= 0) && (der != NULL))
         {
-            (ecc_key*)ctx->ptr = wc_ecc_key_new(NULL);
+            ctx->ptr = (ecc_key*)wc_ecc_key_new(NULL);
 
             if (ctx->ptr)
             {
@@ -488,7 +488,6 @@ ATCA_STATUS atcac_pk_sign(
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
-    int ret = 0;
     WC_RNG rng;
 
     if (ctx && ctx->ptr && signature && digest && sig_len)
