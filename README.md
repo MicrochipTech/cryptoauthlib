@@ -177,7 +177,7 @@ One first selects a device type, with one of the following commands:
   - 508 (ATECC508A)
   - 608 (ATECC608A/B)
 
-From there the following unit test sweets are available:
+From there the following unit test suites are available:
   - unit (test command builder functions)
   - basic (test basic API functions)
   - cio (test certification i/o functions)
