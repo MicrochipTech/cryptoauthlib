@@ -103,7 +103,9 @@ class _ATCASPI(Structure):
 
 class _ATCAUART(Structure):
     """Generic UART HAL configuration"""
-    _fields_ = [('port', c_int),
+    _fields_ = [('dev_interface', get_ctype_by_name('ATCAKitType')),
+                ('dev_identity', c_uint8),
+                ('port', c_uint8),
                 ('baud', c_uint32),
                 ('wordsize', c_uint8),
                 ('parity', c_uint8),

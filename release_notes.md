@@ -1,8 +1,30 @@
 
 # Microchip Cryptoauthlib Release Notes
 
-## Release v3.3.2 (06/20/2021)
+## Release v3.3.3 (10/06/2021)
 
+### New features
+  - Added Zephyr support and zephyr driver api HALs for I2C & SPI. Adding cryptoauthlib
+    to a zephyr project CMakeLists.txt is now possible - use subdirectory(cryptoauthlib/lib).
+    One can also include the repo in the west manifest
+  - Added SWI device support for linux platforms using hardware uarts
+  - Added contributing guidelines and PR process documentation
+  - SWI bitbang driver for harmony - supports Atmel SWI and ECC204 protocols
+
+
+### Fixes
+  - Wolfssl build errors when generating MHC projects containing wolfssl
+  - Removed zero length aad limitation in CCM implementation
+  - Changed ECC204 zone identifiers and slot types to align with cryptoauthlib
+    standard forms
+  - XC8/XC16 build warnings
+  - Several pkcs11 fixes - token_init deadlock, null num_in for private key writes,
+    fsecret key length parsing, object_create failing, etc
+  - Null pointer access violation in atcab_release when using a native hal and double
+    free in openssl implementation of atcac_pk_verify 
+
+
+## Release v3.3.2 (06/20/2021)
 
 ### New features
   - All memory allocations now go through the hal_ platform definitions.

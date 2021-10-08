@@ -25,14 +25,14 @@
  * THIS SOFTWARE.
  */
 
+#include "cryptoauthlib.h"
+#include "atca_hal.h"
+
 #include <windows.h>
 #include <stdio.h>
 #include <conio.h>
 #include <math.h>
 #include <string.h>
-
-#include "cryptoauthlib.h"
-#include "atca_hal.h"
 
 typedef struct atca_uart_host_s
 {
@@ -100,6 +100,7 @@ static ATCA_STATUS hal_uart_open_file(ATCAIface iface)
         dcbSerialParams.BaudRate = cfg->atcauart.baud;     //  baud rate
         dcbSerialParams.ByteSize = cfg->atcauart.wordsize; //  data size, xmit and rcv
         dcbSerialParams.StopBits = cfg->atcauart.stopbits; //  stop bit
+        dcbSerialParams.fDtrControl = DTR_CONTROL_ENABLE;
 
         if (!SetCommState(hal_data->hSerial, &dcbSerialParams))
         {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Package name="cryptoauthlib">
     <Dependencies>
-        <Dependency name="csp" version="v3.9.0"/>
+        <Dependency name="csp" version="v3.10.0"/>
     </Dependencies>
 </Package>

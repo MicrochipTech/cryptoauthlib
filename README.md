@@ -36,15 +36,6 @@ configuration is well tested, then you can commit it to a CryptoAuth Xplained
 Pro Extension, for example. Keep in mind that once you lock a device, it will
 not be changeable.
 
-Licensing
----------------------------
-
-The CryptoAuthLib license can be found in the accompaning [license.txt](https://github.com/MicrochipTech/cryptoauthlib/blob/main/license.txt)
-file.
-
-Cryptoauthlib also includes optional third party software subject to their own licensing terms. If you are using one of these optional components please
-verify the terms of those licenses as well in the third_party/<module> directories.
-
 
 Examples
 -----------
@@ -113,19 +104,9 @@ Host Device Support
 ---------------
 
 CryptoAuthLib will run on a variety of platforms from small micro-controllers
-to desktop host systems.  The current list of hardware abstraction layer
-support includes:
+to desktop host systems. See [hal readme](lib/hal/readme.md)
 
-Rich OS Hosts:
-  - Linux Kit Protocol over HID USB
-  - Linux I2C
-  - Linux SPI
-  - Windows Kit Protocol over HID USB
-
-Microcontrollers:
-  - Microchip AVR, SAM, & PIC families. See [hal readme](lib/hal/readme.md)
-
-If you have specific microcontrollers or Rich OS platforms you need support
+If you have specific microcontrollers or platforms you need support
 for, please contact us through the Microchip portal with your request.
 
 CryptoAuthLib Architecture
@@ -165,47 +146,7 @@ Tests
 There is a set of integration tests found in the test directory which will at least
 partially demonstrate the use of the objects.  Some tests may depend upon a
 certain device being configured in a certain way and may not work for all
-devices or specific configurations of the device.
-
-The test/cmd-processor.c file contains a main() function for running the tests.
-It implements a command-line interface. Typing help will bring up the list of
-commands available.
-
-One first selects a device type, with one of the following commands:
-  - 204 (ATSHA204A)
-  - 108 (ATECC108A)
-  - 508 (ATECC508A)
-  - 608 (ATECC608A/B)
-
-From there the following unit test sweets are available:
-  - unit (test command builder functions)
-  - basic (test basic API functions)
-  - cio (test certification i/o functions)
-  - cd (test certificate data functions)
-  - util (test utility functions)
-  - crypto (test software crypto functions)
-
-Tests available depend on the lock level of the device. The unit tests
-won't lock the config or data zones automatically to allow retesting at desired
-lock levels. Therefore, some commands will need to be repeated after locking
-to exercise all available tests.
-
-Starting from a blank device, the sequence of commands to exercise all unit
-tests is:
-```text
-unit
-basic
-lockcfg
-unit
-basic
-lockdata
-unit
-basic
-cio
-cd
-util
-crypto
-```
+devices or specific configurations of the device. See [test readme](test/README.md)
 
 Using CryptoAuthLib (Microchip CryptoAuth Library)
 ===========================================

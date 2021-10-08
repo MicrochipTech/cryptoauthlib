@@ -648,4 +648,3 @@ t_test_case_info write_basic_test_info[] =
     { (fp_test_case)NULL,                     (uint8_t)0 },                 /* Array Termination element*/
 };
 // *INDENT-ON*
-

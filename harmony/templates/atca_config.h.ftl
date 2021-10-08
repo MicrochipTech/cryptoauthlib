@@ -104,8 +104,9 @@
 <#assign pliblist = CAL_PLIB_LIST?word_list>
 <#if pliblist?size != 0>
 <#list pliblist as plib_id>
-<#assign plib_info = plib_id?split("_", 1)>
-<#if plib_info[1] == "i2c">
+<#assign plib_info = plib_id?split("_")>
+
+<#if plib_info[plib_info?size-1] == "i2c">
 <#if is_atca_plib_i2c_exists == "False">
 <#assign size_var = "size_t">
 <#if plib_id?contains("sercom")>
@@ -145,7 +146,7 @@ typedef struct atca_plib_i2c_api
 </#if>
 </#if>
 
-<#if plib_info[1] == "spi">
+<#if plib_info[plib_info?size-1] == "spi">
 <#if is_atca_plib_spi_exists == "False">
 typedef bool (* atca_spi_plib_read)( void * , size_t );
 typedef bool (* atca_spi_plib_write)( void *, size_t );
@@ -163,7 +164,7 @@ typedef struct atca_plib_spi_api
 </#if>
 </#if>
 
-<#if plib_info[1] == "swi" && plib_info[2] == "uart" || plib_info[1] == "uart">
+<#if plib_info[plib_info?size-1] == "uart">
 <#if is_atca_plib_uart_exists == "False">
 <#if plib_id?contains("flexcom")>
 #define PLIB_SWI_ERROR             FLEXCOM_USART_ERROR
@@ -215,7 +216,8 @@ typedef struct atca_plib_uart_api
 
 /** SWI Transmit delay */
 #define SWI_TX_DELAY     ((uint32_t)90)
-<#elseif plib_info[2] == "bb">
+</#if>
+<#elseif plib_info[plib_info?size-1] == "bb">
 <#if is_atca_plib_bb_exists == "False">
 typedef bool (* atca_swi_plib_read)( uint8_t );
 typedef void (* atca_swi_plib_write)( uint8_t, bool );
@@ -228,7 +230,7 @@ typedef struct atca_plib_swi_api
     atca_swi_plib_write           write;
     atca_swi_set_pin_output       set_pin_output_dir;
     atca_swi_set_pin_input        set_pin_input_dir;
-}atca_plib_swi_bb_api_t;
+}atca_plib_bb_api_t;
 <#assign is_atca_plib_bb_exists = "True">
 
 /**
@@ -258,7 +260,6 @@ typedef struct atca_plib_swi_api
 
 </#if>
 </#if>
-</#if>
 </#list>
 </#if>
 
@@ -272,8 +273,8 @@ typedef struct atca_plib_swi_api
 </#if>
 
 <#list pliblist as plib_id>
-<#assign plib_info = plib_id?split("_", 1)>
-<#assign plib_drv = plib_id?substring(plib_id?index_of("_") + 1)>
+<#assign plib_info = plib_id?split("_")>
+<#assign plib_drv = plib_info[plib_info?size-1]>
 extern atca_plib_${plib_drv!"i2c"}_api_t ${plib_info[0]}_plib_${plib_drv!"i2c"}_api;
 </#list>
 

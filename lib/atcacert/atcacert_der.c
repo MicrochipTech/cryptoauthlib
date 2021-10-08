@@ -32,7 +32,7 @@
 int atcacert_der_enc_length(uint32_t length, uint8_t* der_length, size_t* der_length_size)
 {
     size_t der_length_size_calc = 0;
-    int exp = sizeof(length) - 1;
+    int8_t exp = (int8_t)sizeof(length) - 1;
 
     if (der_length_size == NULL)
     {
@@ -156,7 +156,7 @@ int atcacert_der_adjust_length(uint8_t* der_length, size_t* der_length_size, int
     {
         return ATCACERT_E_ERROR;
     }
-    new_len = old_len + delta_length;
+    new_len = old_len + (uint32_t)delta_length;
 
     if (new_length != NULL)
     {
@@ -255,7 +255,7 @@ int atcacert_der_dec_integer(const uint8_t* der_int,
 {
     int ret = 0;
     size_t der_length_size = 0;
-    uint32_t int_data_size_calc = 0;
+    size_t int_data_size_calc = 0;
 
     if (der_int == NULL || der_int_size == NULL || (int_data != NULL && int_data_size == NULL))
     {
@@ -273,7 +273,7 @@ int atcacert_der_dec_integer(const uint8_t* der_int,
 
     }
     der_length_size = *der_int_size - 1;
-    ret = atcacert_der_dec_length(&der_int[1], &der_length_size, &int_data_size_calc);
+    ret = atcacert_der_dec_length(&der_int[1], &der_length_size, (uint32_t*)(&int_data_size_calc));
     if (ret != ATCACERT_E_SUCCESS)
     {
         return ret;

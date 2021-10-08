@@ -1,0 +1,40 @@
+/* user_settings.h */
+
+/* Place OS specific preprocessor flags, defines, includes here, will be
+   included into every file because types.h includes it */
+
+#ifndef USER_SETTINGS_H
+#define USER_SETTINGS_H
+
+#ifdef __cplusplus
+    extern "C" {
+#endif
+
+#define WC_NO_HARDEN
+
+#define HAVE_ECC
+
+#define HAVE_ALL_CURVES
+
+#define WOLFCRYPT_ONLY
+
+#define WOLFSSL_PEM_TO_DER
+
+#define WOLFSSL_VALIDATE_ECC_IMPORT
+
+#define WOLFSSL_AES_DIRECT
+
+#define HAVE_AESGCM
+
+#define WOLFSSL_CMAC
+
+#define NO_OLD_TLS
+
+#define NO_MD5
+
+
+#ifdef __cplusplus
+    }   /* extern "C" */
+#endif
+
+#endif

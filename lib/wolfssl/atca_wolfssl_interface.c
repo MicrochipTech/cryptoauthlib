@@ -31,6 +31,27 @@
 
 #ifdef ATCA_WOLFSSL
 
+/** \brief Return Random Bytes
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+int atcac_sw_random(uint8_t* data, size_t data_size)
+{
+    RNG rng;
+    int ret = wc_InitRng(&rng);
+
+    if (ret != 0)
+    {
+        return ATCA_GEN_FAIL;
+    }
+    ret = wc_RNG_GenerateBlock(&rng, data, data_size);
+    if (ret != 0)
+    {
+        return ATCA_GEN_FAIL;
+    }
+    return ATCA_SUCCESS;
+}
+
 /** \brief Initialize an AES-GCM context
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
@@ -330,7 +351,7 @@ ATCA_STATUS atcac_pk_init(
     {
         if (!key_type)
         {
-            (ecc_key*)ctx->ptr = wc_ecc_key_new(NULL);
+            ctx->ptr = wc_ecc_key_new(NULL);
 
             if (ctx->ptr)
             {
@@ -392,11 +413,11 @@ ATCA_STATUS atcac_pk_init_pem(
             type = ECC_PUBLICKEY_TYPE;
         }
 
-        ret = PemToDer((char*)buf, (long)buflen, type, &der, NULL, NULL, &ecckey);
+        ret = PemToDer((unsigned char*)buf, (long)buflen, type, &der, NULL, NULL, &ecckey);
 
         if ((ret >= 0) && (der != NULL))
         {
-            (ecc_key*)ctx->ptr = wc_ecc_key_new(NULL);
+            ctx->ptr = wc_ecc_key_new(NULL);
 
             if (ctx->ptr)
             {

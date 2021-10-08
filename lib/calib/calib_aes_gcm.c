@@ -286,7 +286,7 @@ ATCA_STATUS calib_aes_gcm_aad_update(ATCADevice device, atca_aes_gcm_ctx_t* ctx,
     ATCA_STATUS status;
     uint32_t block_count;
     uint32_t rem_size;
-    uint32_t copy_size;
+    size_t copy_size;
 
     if (ctx == NULL || (aad_size > 0 && aad == NULL))
     {
@@ -299,7 +299,7 @@ ATCA_STATUS calib_aes_gcm_aad_update(ATCADevice device, atca_aes_gcm_ctx_t* ctx,
     }
 
     rem_size = AES_DATA_SIZE - (uint32_t)ctx->partial_aad_size;
-    copy_size = aad_size > rem_size ? rem_size : aad_size;
+    copy_size = aad_size > rem_size ? (size_t)rem_size : (size_t)aad_size;
 
     // Copy data into current block
     memcpy(&ctx->partial_aad[ctx->partial_aad_size], aad, copy_size);
@@ -328,7 +328,7 @@ ATCA_STATUS calib_aes_gcm_aad_update(ATCADevice device, atca_aes_gcm_ctx_t* ctx,
     // Save any remaining data
     ctx->aad_size += (block_count + 1) * AES_DATA_SIZE;
     ctx->partial_aad_size = aad_size % AES_DATA_SIZE;
-    memcpy(ctx->partial_aad, &aad[copy_size + block_count * AES_DATA_SIZE], ctx->partial_aad_size);
+    memcpy(ctx->partial_aad, &aad[copy_size + block_count * AES_DATA_SIZE], (size_t)ctx->partial_aad_size);
 
     return ATCA_SUCCESS;
 }

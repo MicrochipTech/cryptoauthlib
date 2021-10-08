@@ -72,8 +72,7 @@ typedef enum
     ATCA_KIT_I2C_IFACE,
     ATCA_KIT_SWI_IFACE,
     ATCA_KIT_SPI_IFACE,
-    ATCA_KIT_UNKNOWN_IFACE
-} ATCAKitType;
+    ATCA_KIT_UNKNOWN_IFACE } ATCAKitType;
 
 
 /* ATCAIfaceCfg is the configuration object for a device
@@ -204,6 +203,7 @@ void* atgetifacehaldat(ATCAIface ca_iface);
 
 /* Utilities */
 bool atca_iface_is_kit(ATCAIface ca_iface);
+bool atca_iface_is_swi(ATCAIface ca_iface);
 int atca_iface_get_retries(ATCAIface ca_iface);
 uint16_t atca_iface_get_wake_delay(ATCAIface ca_iface);
 

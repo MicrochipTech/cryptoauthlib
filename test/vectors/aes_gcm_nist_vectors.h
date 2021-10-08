@@ -1,5 +1,3 @@
-
-
 #ifndef AES_GCM_NIST_VECTORS_H
 #define AES_GCM_NIST_VECTORS_H
 

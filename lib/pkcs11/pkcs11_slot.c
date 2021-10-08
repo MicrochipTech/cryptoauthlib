@@ -119,7 +119,7 @@ CK_RV pkcs11_slot_config(CK_SLOT_ID slotID)
     return rv;
 }
 
-#if 0
+#if PKCS11_508_SUPPORT && PKCS11_608_SUPPORT
 static ATCA_STATUS pkcs11_slot_check_device_type(ATCAIfaceCfg * ifacecfg)
 {
     uint8_t info[4] = { 0 };

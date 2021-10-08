@@ -192,9 +192,9 @@ TEST(atca_cmd_basic_test, mbedtls_ecdsa_sign)
 
 t_test_case_info test_mbedtls_ecdsa_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, mbedtls_ecdsa_verify_nist),               DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, mbedtls_ecdsa_verify_nist_stored_key),    DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, mbedtls_ecdsa_sign),                      DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, mbedtls_ecdsa_verify_nist),            DEVICE_MASK_ECC | DEVICE_MASK(TA100)                      },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, mbedtls_ecdsa_verify_nist_stored_key), DEVICE_MASK_ECC | DEVICE_MASK(TA100)                      },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, mbedtls_ecdsa_sign),                   DEVICE_MASK_ECC | DEVICE_MASK(TA100)                      },
     /* Array Termination element*/
     { (fp_test_case)NULL,                     (uint8_t)0 },
 };

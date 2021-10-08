@@ -62,14 +62,14 @@ const uint8_t test_ecc_configdata[ATCA_ECC_CONFIG_SIZE] = {
 
 static device_object_meta_t calib_config_object_data[] =
 {
-    { TEST_TYPE_ECC_SIGN,   2,          NULL         },
-    { TEST_TYPE_ECC_VERIFY, 15,         NULL         },
-    { TEST_TYPE_ECC_GENKEY, 2,          NULL         },
-    { TEST_TYPE_ECDH,       0,          NULL         },
-    { TEST_TYPE_AES,        10,         NULL         },
-    { TEST_TYPE_HMAC,       4,          NULL         },
-    { TEST_TYPE_DATA,       11,         NULL         },
-    { 0,                    0,          NULL         }
+    { TEST_TYPE_ECC_SIGN,   2,                    NULL                  },
+    { TEST_TYPE_ECC_VERIFY, 15,                   NULL                  },
+    { TEST_TYPE_ECC_GENKEY, 2,                    NULL                  },
+    { TEST_TYPE_ECDH,       0,                    NULL                  },
+    { TEST_TYPE_AES,        10,                   NULL                  },
+    { TEST_TYPE_HMAC,       4,                    NULL                  },
+    { TEST_TYPE_DATA,       11,                   NULL                  },
+    { 0,                    0,                    NULL                  }
 };
 
 ATCA_STATUS calib_config_get_slot_by_test(uint8_t test_type, uint16_t* handle)
@@ -89,4 +89,3 @@ ATCA_STATUS calib_config_get_slot_by_test(uint8_t test_type, uint16_t* handle)
     return status;
 }
 #endif
-

@@ -75,10 +75,8 @@ TEST(atca_cmd_basic_test, pdkdf2_hw_vectors)
 
 t_test_case_info test_crypto_pbkdf2_info[] =
 {
-    { REGISTER_TEST_CASE(atca_crypto_pbkdf2_sw, vectors),           DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100)           },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test,   pdkdf2_hw_vectors), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100)           },
+    { REGISTER_TEST_CASE(atca_crypto_pbkdf2_sw, vectors),             DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100)                     },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test,   pdkdf2_hw_vectors),   DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100)                     },
     /* Array Termination element*/
     { (fp_test_case)NULL,                       (uint8_t)0 },
 };
-
-

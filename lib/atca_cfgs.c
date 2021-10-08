@@ -73,9 +73,9 @@ ATCAIfaceCfg cfg_ateccx08a_swi_default = {
 };
 #endif
 
-#if defined(ATCA_ECC_SUPPORT) && defined(ATCA_HAL_KIT_CDC)
+#if defined(ATCA_ECC_SUPPORT) && defined(ATCA_HAL_KIT_UART)
 /** \brief default configuration for Kit protocol over the device's async interface */
-ATCAIfaceCfg cfg_ateccx08a_kitcdc_default = {
+ATCAIfaceCfg cfg_ateccx08_kituart_default = {
     .iface_type             = ATCA_UART_IFACE,
     .devtype                = ATECC608,
     {
@@ -141,9 +141,9 @@ ATCAIfaceCfg cfg_atsha20xa_swi_default = {
 };
 #endif
 
-#if defined(ATCA_SHA_SUPPORT) && defined(ATCA_HAL_KIT_CDC)
+#if defined(ATCA_SHA_SUPPORT) && defined(ATCA_HAL_KIT_UART)
 /** \brief default configuration for Kit protocol over the device's async interface */
-ATCAIfaceCfg cfg_atsha20xa_kitcdc_default = {
+ATCAIfaceCfg cfg_atsha20xa_kituart_default = {
     .iface_type            = ATCA_UART_IFACE,
     .devtype               = ATSHA204A,
     {

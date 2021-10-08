@@ -32,7 +32,7 @@ _ta_dev_cnt = 0
 calPlibTracker = {}
 calHalTracker = {}
 
-_HAL_FILES = ["atca_hal.c", "atca_hal.h", "atca_start_config.h", "atca_start_iface.h"]
+_HAL_FILES = ["atca_hal.c", "atca_hal.h"]
 _CORE_PATHS = ['crypto/**/*', 'crypto/*', 'jwt/*', '*']
 _CA_PATHS = ['atcacert/*', 'calib/*', 'host/*']
 _TA_PATHS = ['talib/*']
@@ -75,6 +75,12 @@ def updateHalTracker(id, inc):
 
     symbol = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_FILE_SRC_HAL_' + id)
     symbol.setEnabled(cnt > 0)
+
+    try:
+        symbol = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_FILE_SRC_HAL_{}_HEADER'.format(id))
+        symbol.setEnabled(cnt > 0)
+    except:
+        pass
 
     calHalList = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_HAL_LIST_ENTRIES')
 
@@ -120,7 +126,7 @@ def updateDevCfgTracker(id, inc):
 
 def extendDevCfgList(new_list, cnt):
     calDevCfgList = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_DEV_CFG_LIST_ENTRIES')
-    
+
     for value in new_list:
         values = list(calDevCfgList.getValues())
         if value not in values:
@@ -200,7 +206,7 @@ def onAttachmentConnected(source, target):
     global _ta_dev_cnt
     srcComponent = source["component"]
     srcConnectionID = source["id"]
-    
+
     targetComponentID = target["component"].getID().upper()
 
     # Check if a dependency got satisfied
@@ -218,7 +224,7 @@ def onAttachmentConnected(source, target):
             if 'SHA206' in targetComponentID:
                 updateFileEnable(srcComponent, _SHA206_PATHS, True)
             updateFileEnable(srcComponent, _CA_PATHS, True)
-    
+
     if srcConnectionID == 'FreeRTOS':
         calEnableRtos = srcComponent.getSymbolByID('CAL_ENABLE_RTOS')
         calEnableRtos.setValue(True)
@@ -229,7 +235,7 @@ def onAttachmentConnected(source, target):
     if targetComponentID == 'LIB_WOLFCRYPT':
         calEnableWolfCrypto = srcComponent.getSymbolByID('CAL_ENABLE_WOLFCRYPTO')
         calEnableWolfCrypto.setValue(True)
-        
+
         WolfCrypto = srcComponent.getSymbolByID('CAL_FILE_SRC_WOLFSSL_WRAPPER')
         WolfCrypto.setEnabled(True)
 
@@ -261,8 +267,8 @@ def onAttachmentDisconnected(source, target):
             if 0 == _ca_dev_cnt:
                 if 'SHA206' in targetComponentID:
                     updateFileEnable(srcComponent, _SHA206_PATHS, False)
-                updateFileEnable(srcComponent, _CA_PATHS, False)   
-        
+                updateFileEnable(srcComponent, _CA_PATHS, False)
+
 
     if srcConnectionID == 'FreeRTOS':
         calEnableRtos = srcComponent.getSymbolByID('CAL_ENABLE_RTOS')
@@ -274,7 +280,7 @@ def onAttachmentDisconnected(source, target):
     if targetComponentID == 'LIB_WOLFCRYPT':
         WolfCrypto = srcComponent.getSymbolByID('CAL_ENABLE_WOLFCRYPTO')
         WolfCrypto.setValue(False)
-        
+
         WolfCrypto = srcComponent.getSymbolByID('CAL_FILE_SRC_WOLFSSL_WRAPPER')
         WolfCrypto.setEnabled(False)
 
@@ -309,7 +315,7 @@ def instantiateComponent(calComponent):
     for search_path in _CORE_PATHS:
         AddFilesDir(calComponent, 'lib', search_path, 'library/cryptoauthlib',
             'config/{}/library/cryptoauthlib'.format(configName))
-            
+
     # Add device library files (default disabled)
     for search_path in _CA_PATHS:
         AddFilesDir(calComponent, 'lib', search_path, 'library/cryptoauthlib',
@@ -371,7 +377,7 @@ def instantiateComponent(calComponent):
     calEnableWolfCrypto = calComponent.createBooleanSymbol('CAL_ENABLE_WOLFCRYPTO', None)
     calEnableWolfCrypto.setValue(False)
     calEnableWolfCrypto.setVisible(False)
-    
+
     calLibWolfSSLSrcFile = calComponent.createFileSymbol("CAL_FILE_SRC_WOLFSSL_WRAPPER", None)
     calLibWolfSSLSrcFile.setSourcePath("lib/wolfssl/atca_wolfssl_interface.c")
     calLibWolfSSLSrcFile.setOutputName("atca_wolfssl_interface.c")
@@ -399,7 +405,7 @@ def instantiateComponent(calComponent):
     calLibUartHalSrcFile.setType('SOURCE')
     calLibUartHalSrcFile.setEnabled(False)
     calLibUartHalSrcFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
-    
+
     calLibSwiUartHalSrcFile = calComponent.createFileSymbol("CAL_FILE_SRC_HAL_SWI_UART", None)
     calLibSwiUartHalSrcFile.setSourcePath("lib/hal/hal_swi_uart.c")
     calLibSwiUartHalSrcFile.setOutputName("hal_swi_uart.c")
@@ -409,24 +415,24 @@ def instantiateComponent(calComponent):
     calLibSwiUartHalSrcFile.setEnabled(False)
     calLibSwiUartHalSrcFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
 
-    calLibSwiBBHalSrcFile = calComponent.createFileSymbol("CAL_FILE_SRC_HAL_BB", None)
-    calLibSwiBBHalSrcFile.setSourcePath("lib/hal/hal_gpio_harmony.c")
-    calLibSwiBBHalSrcFile.setOutputName("hal_gpio_harmony.c")
+    calLibSwiBBHalSrcFile = calComponent.createFileSymbol("CAL_FILE_SRC_HAL_SWI_BB", None)
+    calLibSwiBBHalSrcFile.setSourcePath("lib/hal/hal_swi_gpio.c")
+    calLibSwiBBHalSrcFile.setOutputName("hal_swi_gpio.c")
     calLibSwiBBHalSrcFile.setDestPath("library/cryptoauthlib/hal")
     calLibSwiBBHalSrcFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/hal/")
     calLibSwiBBHalSrcFile.setType('SOURCE')
     calLibSwiBBHalSrcFile.setEnabled(False)
     calLibSwiBBHalSrcFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
 
-    calLibSwiBBHalSrcFile = calComponent.createFileSymbol("CAL_FILE_SRC_HAL_SWI_BB", None)
-    calLibSwiBBHalSrcFile.setSourcePath("lib/hal/hal_swi_bitbang_harmony.c")
-    calLibSwiBBHalSrcFile.setOutputName("hal_swi_bitbang_harmony.c")
-    calLibSwiBBHalSrcFile.setDestPath("library/cryptoauthlib/hal")
-    calLibSwiBBHalSrcFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/hal/")
-    calLibSwiBBHalSrcFile.setType('SOURCE')
-    calLibSwiBBHalSrcFile.setEnabled(False)
-    calLibSwiBBHalSrcFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
-    
+    calLibSwiBBHalHdrFile = calComponent.createFileSymbol("CAL_FILE_SRC_HAL_SWI_BB_HEADER", None)
+    calLibSwiBBHalHdrFile.setSourcePath("lib/hal/hal_swi_gpio.h")
+    calLibSwiBBHalHdrFile.setOutputName("hal_swi_gpio.h")
+    calLibSwiBBHalHdrFile.setDestPath("library/cryptoauthlib/hal")
+    calLibSwiBBHalHdrFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/hal/")
+    calLibSwiBBHalHdrFile.setType('HEADER')
+    calLibSwiBBHalHdrFile.setEnabled(False)
+    calLibSwiBBHalHdrFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
+
     calLibSpiHalSrcFile = calComponent.createFileSymbol("CAL_FILE_SRC_HAL_SPI", None)
     calLibSpiHalSrcFile.setSourcePath("lib/hal/hal_spi_harmony.c")
     calLibSpiHalSrcFile.setOutputName("hal_spi_harmony.c")
@@ -478,7 +484,18 @@ def instantiateComponent(calComponent):
     calLibCoreM0PlusSrcFile.setMarkup(True)
     calLibCoreM0PlusSrcFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
 
-    # Configuration header file 
+    # cryptoauthlib configuration structures that are create per device instance
+    calLibCoreM0PlusSrcFile = calComponent.createFileSymbol("CAL_HAL_HARMONY_GPIO", None)
+    calLibCoreM0PlusSrcFile.setSourcePath("harmony/templates/hal_gpio_harmony.c.ftl")
+    calLibCoreM0PlusSrcFile.setOutputName("hal_gpio_harmony.c")
+    calLibCoreM0PlusSrcFile.setDestPath("library/cryptoauthlib/hal")
+    calLibCoreM0PlusSrcFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/hal/")
+    calLibCoreM0PlusSrcFile.setType("SOURCE")
+    calLibCoreM0PlusSrcFile.setOverwrite(True)
+    calLibCoreM0PlusSrcFile.setMarkup(True)
+    calLibCoreM0PlusSrcFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
+
+    # Configuration header file
     calLibConfigFile = calComponent.createFileSymbol("CAL_LIB_CONFIG_DATA", None)
     calLibConfigFile.setSourcePath("harmony/templates/atca_config.h.ftl")
     calLibConfigFile.setOutputName("atca_config.h")

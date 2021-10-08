@@ -114,6 +114,8 @@
 #define ATCA_GPIO_SET                           1
 #define ATCA_MIN_RESPONSE_LENGTH                4
 
+#define PIN_INPUT_DIR(pin)  PORT_GroupInputEnable(GET_PORT_GROUP(pin), GET_PIN_MASK(pin))
+#define PIN_OUTPUT_DIR(pin) PORT_GroupOutputEnable(GET_PORT_GROUP(pin), GET_PIN_MASK(pin))
 
 /**
  * \name Macros for Bit-Banged SWI Timing

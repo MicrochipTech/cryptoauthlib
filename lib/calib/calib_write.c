@@ -378,7 +378,7 @@ ATCA_STATUS calib_write_pubkey(ATCADevice device, uint16_t slot, const uint8_t *
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     uint8_t public_key_formatted[ATCA_BLOCK_SIZE * 3];
-    int block;
+    uint8_t block;
 
     // Check the pointers
     if (public_key == NULL)
@@ -539,8 +539,8 @@ ATCA_STATUS calib_write_config_counter(ATCADevice device, uint16_t counter_id, u
 
     lin_a = 0xFFFF >> (counter_value % 32);
     lin_b = 0xFFFF >> ((counter_value >= 16) ? (counter_value - 16) % 32 : 0);
-    bin_a = counter_value / 32;
-    bin_b = (counter_value >= 16) ? ((counter_value - 16) / 32) : 0;
+    bin_a = (uint16_t)(counter_value / 32);
+    bin_b = (counter_value >= 16) ? ((uint16_t)((counter_value - 16) / 32)) : 0;
 
     bytes[idx++] = lin_a >> 8;
     bytes[idx++] = lin_a & 0xFF;
@@ -641,6 +641,7 @@ ATCA_STATUS calib_ecc204_write_zone(ATCADevice device, uint8_t zone, uint16_t sl
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     uint16_t addr;
+    uint8_t write_zone = (zone == ATCA_ZONE_CONFIG) ? ATCA_ECC204_ZONE_CONFIG : ATCA_ECC204_ZONE_DATA;
 
     ((void)offset);
 
@@ -648,22 +649,22 @@ ATCA_STATUS calib_ecc204_write_zone(ATCADevice device, uint8_t zone, uint16_t sl
     {
         status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
     }
-    else if (((ATCA_ECC204_ZONE_CONFIG == zone) && (16 != len)) ||
-             ((ATCA_ECC204_ZONE_DATA == zone) && (ATCA_BLOCK_SIZE != len)))
+    else if (((ATCA_ECC204_ZONE_CONFIG == write_zone) && (16 != len)) ||
+             ((ATCA_ECC204_ZONE_DATA == write_zone) && (ATCA_BLOCK_SIZE != len)))
     {
         status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid length received");
     }
 
     if (ATCA_SUCCESS == status)
     {
-        if (ATCA_SUCCESS != (status = calib_ecc204_get_addr(zone, slot, block, 0, &addr)))
+        if (ATCA_SUCCESS != (status = calib_ecc204_get_addr(write_zone, slot, block, 0, &addr)))
         {
             ATCA_TRACE(status, "calib_ecc204_get_addr - failed");
         }
 
         if (ATCA_SUCCESS == status)
         {
-            status = calib_ecc204_write(device, zone, addr, data, NULL);
+            status = calib_ecc204_write(device, write_zone, addr, data, NULL);
         }
     }
 
@@ -715,13 +716,13 @@ ATCA_STATUS calib_ecc204_write_config_zone(ATCADevice device, const uint8_t* con
  *  \return ATCA_SUCCESS on success, otherwise an error code
  */
 #if defined(ATCA_USE_CONSTANT_HOST_NONCE)
-ATCA_STATUS calib_ecc204_write_enc(ATCADevice device, uint8_t slot, uint8_t* data, uint8_t* transport_key,
+ATCA_STATUS calib_ecc204_write_enc(ATCADevice device, uint16_t slot, uint8_t* data, uint8_t* transport_key,
                                    uint8_t transport_key_id)
 {
     uint8_t num_in[NONCE_NUMIN_SIZE] = { 0 };
 
 #else
-ATCA_STATUS calib_ecc204_write_enc(ATCADevice device, uint8_t slot, uint8_t* data, uint8_t* transport_key,
+ATCA_STATUS calib_ecc204_write_enc(ATCADevice device, uint16_t slot, uint8_t* data, uint8_t* transport_key,
                                    uint8_t transport_key_id, uint8_t num_in[NONCE_NUMIN_SIZE])
 {
 #endif
@@ -827,8 +828,7 @@ ATCA_STATUS calib_ecc204_write_enc(ATCADevice device, uint8_t slot, uint8_t* dat
  * read the requested data.
  *
  *  \param[in]   device        Device context pointer
- *  \param[in]   zone          zone to write data to. Option are
- *                             ATCA_ECC204_ZONE_CONFIG(1), ATCA_ECC204_ZONE_DATA(0)
+ *  \param[in]   zone          It accepts only ATCA_ZONE_DATA for ECC204 device
  *  \param[in]   slot          slot number to write to.
  *  \param[in]   block         offset bytes ignored
  *  \param[in]   data          data to be written
@@ -840,7 +840,7 @@ ATCA_STATUS calib_ecc204_write_bytes_zone(ATCADevice device, uint8_t zone, uint1
                                           const uint8_t *data, size_t length)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
-    uint8_t block_size = (zone == ATCA_ECC204_ZONE_CONFIG) ? ATCA_ECC204_CONFIG_SLOT_SIZE : ATCA_BLOCK_SIZE;
+    uint8_t block_size = ATCA_BLOCK_SIZE;
     uint8_t no_of_blocks;
     uint8_t data_idx = 0;
 
@@ -848,8 +848,14 @@ ATCA_STATUS calib_ecc204_write_bytes_zone(ATCADevice device, uint8_t zone, uint1
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "Encountered NULL pointer");
     }
-    else if ((ATCA_ECC204_ZONE_DATA == zone) && (((length > 64) && (2 == slot)) ||
-                                                 ((length > 320) && (3 == slot)) || (1 == slot) || (0 == slot)))
+    else if (ATCA_ZONE_DATA == zone)
+    {
+        if (((length > 64) && (2 == slot)) || ((length > 320) && (1 == slot)) || (0 == slot))
+        {
+            return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid parameter received");
+        }
+    }
+    else if (ATCA_ZONE_CONFIG == zone)
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid parameter received");
     }
@@ -858,7 +864,7 @@ ATCA_STATUS calib_ecc204_write_bytes_zone(ATCADevice device, uint8_t zone, uint1
         return ATCA_SUCCESS;
     }
 
-    no_of_blocks = length / block_size;
+    no_of_blocks = (uint8_t)(length / block_size);
     while (no_of_blocks--)
     {
         if (ATCA_SUCCESS != (status = calib_ecc204_write_zone(device, zone, slot, (uint8_t)block, 0,

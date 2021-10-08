@@ -251,10 +251,10 @@ static int opt_iface_type(int argc, char* argv[])
                 {
                     gCfg->atcahid.dev_interface = ATCA_KIT_SWI_IFACE;
                 }
-                //else if (0 == strcmp("spi", argv[2]))
-                //{
-                //    gCfg->atcahid.dev_interface = ATCA_KIT_SPI_IFACE;
-                //}
+                else if (0 == strcmp("spi", argv[2]))
+                {
+                    gCfg->atcahid.dev_interface = ATCA_KIT_SPI_IFACE;
+                }
             }
             else
             {

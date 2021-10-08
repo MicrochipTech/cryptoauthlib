@@ -37,6 +37,23 @@
 #include <openssl/evp.h>
 #include <openssl/hmac.h>
 #include <openssl/pem.h>
+#include <openssl/rand.h>
+
+/** \brief Return Random Bytes
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+int atcac_sw_random(uint8_t* data, size_t data_size)
+{
+    if (1 == RAND_bytes(data, data_size))
+    {
+        return ATCA_SUCCESS;
+    }
+    else
+    {
+        return ATCA_GEN_FAIL;
+    }
+}
 
 /** \brief Update the GCM context with additional authentication data (AAD)
  *
@@ -811,8 +828,6 @@ ATCA_STATUS atcac_pk_verify(
 
             ret = ECDSA_do_verify(digest, dig_len, ec_sig, EVP_PKEY_get0_EC_KEY((EVP_PKEY*)ctx->ptr));
             ECDSA_SIG_free(ec_sig);
-            BN_free(r);
-            BN_free(s);
         }
         else
         {

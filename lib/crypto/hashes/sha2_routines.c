@@ -170,7 +170,7 @@ void sw_sha256_update(sw_sha256_ctx* ctx, const uint8_t* msg, uint32_t msg_size)
 {
     uint32_t block_count;
     uint32_t rem_size = SHA256_BLOCK_SIZE - ctx->block_size;
-    uint32_t copy_size = msg_size > rem_size ? rem_size : msg_size;
+    size_t copy_size = msg_size > rem_size ? (size_t)rem_size : (size_t)msg_size;
 
     // Copy data into current block
     memcpy(&ctx->block[ctx->block_size], msg, copy_size);
@@ -193,7 +193,7 @@ void sw_sha256_update(sw_sha256_ctx* ctx, const uint8_t* msg, uint32_t msg_size)
     // Save any remaining data
     ctx->total_msg_size += (block_count + 1) * SHA256_BLOCK_SIZE;
     ctx->block_size = msg_size % SHA256_BLOCK_SIZE;
-    memcpy(ctx->block, &msg[copy_size + block_count * SHA256_BLOCK_SIZE], ctx->block_size);
+    memcpy(ctx->block, &msg[copy_size + block_count * SHA256_BLOCK_SIZE], (size_t)ctx->block_size);
 }
 
 
@@ -203,7 +203,7 @@ void sw_sha256_update(sw_sha256_ctx* ctx, const uint8_t* msg, uint32_t msg_size)
  */
 void sw_sha256_final(sw_sha256_ctx* ctx, uint8_t digest[SHA256_DIGEST_SIZE])
 {
-    int i, j;
+    int32_t i, j;
     uint32_t msg_size_bits;
     uint32_t pad_zero_count;
 
@@ -218,7 +218,7 @@ void sw_sha256_final(sw_sha256_ctx* ctx, uint8_t digest[SHA256_DIGEST_SIZE])
     ctx->block[ctx->block_size++] = 0x80;
 
     // Add padding zeros plus upper 4 bytes of total msg size in bits (only supporting 32bit message bit counts)
-    memset(&ctx->block[ctx->block_size], 0, pad_zero_count + 4);
+    memset(&ctx->block[ctx->block_size], 0, (size_t)pad_zero_count + 4);
     ctx->block_size += pad_zero_count + 4;
 
     // Add the total message size in bits to the end of the current block. Technically this is

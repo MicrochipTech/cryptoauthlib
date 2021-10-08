@@ -37,7 +37,7 @@
 <#if pliblist?size != 0>
 <#list pliblist as plib_id>
 <#assign plib_info = plib_id?split("_")>
-<#if plib_info?size == 1 || plib_info[1] == "i2c">
+<#if plib_info[plib_info?size-1] == "i2c">
 atca_plib_i2c_api_t ${plib_info[0]}_plib_i2c_api = {
     .read = ${.vars["${plib_info[0]}"].I2C_PLIB_API_PREFIX}_Read,
     .write = ${.vars["${plib_info[0]}"].I2C_PLIB_API_PREFIX}_Write,
@@ -45,7 +45,7 @@ atca_plib_i2c_api_t ${plib_info[0]}_plib_i2c_api = {
     .error_get = ${.vars["${plib_info[0]}"].I2C_PLIB_API_PREFIX}_ErrorGet,
     .transfer_setup = ${.vars["${plib_info[0]}"].I2C_PLIB_API_PREFIX}_TransferSetup
 };
-<#elseif plib_info[1] == "spi">
+<#elseif plib_info[plib_info?size-1] == "spi">
 static void ${plib_info[0]}_select_pin(uint32_t pin, bool value)
 {
     ${PLIB_NAME}_PinWrite(pin, value);
@@ -57,7 +57,7 @@ atca_plib_spi_api_t ${plib_info[0]}_plib_spi_api = {
     .is_busy = ${.vars["${plib_info[0]}"].SPI_PLIB_API_PREFIX}_IsBusy,
     .select = &${plib_info[0]}_select_pin
 };
-<#elseif plib_info[1] == "swi" && plib_info[2] == "uart" || plib_info[1] == "uart">
+<#elseif plib_info[plib_info?size-1] == "uart">
 atca_plib_uart_api_t ${plib_info[0]}_plib_uart_api = {
     .read = ${.vars["${plib_info[0]}"].USART_PLIB_API_PREFIX}_Read,
     .write = ${.vars["${plib_info[0]}"].USART_PLIB_API_PREFIX}_Write,
@@ -65,33 +65,6 @@ atca_plib_uart_api_t ${plib_info[0]}_plib_uart_api = {
     .serial_setup = ${.vars["${plib_info[0]}"].USART_PLIB_API_PREFIX}_SerialSetup,
     .readcount_get = ${.vars["${plib_info[0]}"].USART_PLIB_API_PREFIX}_ReadCountGet,
     .readcallback_reg = ${.vars["${plib_info[0]}"].USART_PLIB_API_PREFIX}_ReadCallbackRegister
-};
-<#elseif plib_info[1] == "gpio">
-static void ${plib_info[0]}_SetupPinDirection(uint32_t pin, uint8_t pin_dir)
-{
-    if (pin_dir == 0) {
-        ${PLIB_NAME}_PinInputEnable(pin);
-    }
-    else
-    {
-        ${PLIB_NAME}_PinOutputEnable(pin);
-    }
-}
-
-static void ${plib_info[0]}_Write(uint32_t pin, bool value)
-{
-    ${PLIB_NAME}_PinWrite(pin, value);
-}
-
-static bool ${plib_info[0]}_Read(uint32_t pin)
-{
-    return ${PLIB_NAME}_PinRead(pin);
-}
-
-atca_plib_gpio_api_t ${plib_info[0]}_plib_gpio_api = {
-    .read = ${.vars["${plib_info[0]}"].GPIO_PLIB_API_PREFIX}_Read,
-    .write = ${.vars["${plib_info[0]}"].GPIO_PLIB_API_PREFIX}_Write,
-    .pin_setup = ${.vars["${plib_info[0]}"].GPIO_PLIB_API_PREFIX}_SetupPinDirection
 };
 </#if>
 

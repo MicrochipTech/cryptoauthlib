@@ -1,8 +1,9 @@
 /**
+ *
  * \file
  * \brief ATCA Hardware abstraction layer for GPIO
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2021 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -27,6 +28,7 @@
 
 #include "atca_hal.h"
 
+<#assign PLIB_NAME  = core.PORT_API_PREFIX?string>
 
 /**
  * \brief Initialize a gpio interface using given config.
@@ -55,16 +57,16 @@ ATCA_STATUS hal_gpio_post_init(ATCAIface iface)
  */
 ATCA_STATUS hal_gpio_send(
     ATCAIface iface,            /**< Interface context */
-    uint8_t   word_address,     /**< Unused parameter */
-    uint8_t*  pin_state,        /**< Pin state to output */
-    int       unused_param      /**< Unused parameter  */
-    )
+    uint8_t word_address,       /**< Unused parameter */
+    uint8_t* pin_state,         /**< Pin state to output */
+    int unused_param            /**< Unused parameter  */
+)
 {
     (void)word_address;
     (void)unused_param;
     uint32_t pin_id = *(uint32_t*)atgetifacecfg(iface)->cfg_data;
 
-    PORT_PinWrite(pin_id, *pin_state);
+    ${PLIB_NAME}_PinWrite(pin_id, *pin_state);
 
     return ATCA_SUCCESS;
 }
@@ -76,16 +78,16 @@ ATCA_STATUS hal_gpio_send(
  */
 ATCA_STATUS hal_gpio_receive(
     ATCAIface iface,            /**< Interface context */
-    uint8_t   word_address,     /**< Unused parameter */
-    uint8_t*  pin_state,        /**< Pin state to output */
+    uint8_t word_address,       /**< Unused parameter */
+    uint8_t* pin_state,         /**< Pin state to output */
     uint16_t* unused_param      /**< Unused parameter  */
-    )
+)
 {
     (void)word_address;
     (void)unused_param;
     uint32_t pin_id = *(uint32_t*)atgetifacecfg(iface)->cfg_data;
 
-    *pin_state = PORT_PinRead(pin_id);
+    *pin_state = ${PLIB_NAME}_PinRead(pin_id);
 
     return ATCA_SUCCESS;
 }
@@ -99,19 +101,18 @@ ATCA_STATUS hal_gpio_control(ATCAIface iface, uint8_t option, void* param, size_
         switch (option)
         {
         case ATCA_HAL_CONTROL_DIRECTION:
-        {
-            uint8_t pin_dir = *(uint8_t*)param;
-            uint32_t pin_id = *(uint32_t*)atgetifacecfg(iface)->cfg_data;
+            {
+                uint8_t pin_dir = *(uint8_t*)param;
+                uint32_t pin_id = *(uint32_t*)atgetifacecfg(iface)->cfg_data;
 
-            if (pin_dir == 0)
-            {
-                PORT_PinInputEnable(pin_id);
+                if (pin_dir == 0) {
+                    ${PLIB_NAME}_PinInputEnable(pin_id);
+                }
+                else
+                {
+                    ${PLIB_NAME}_PinOutputEnable(pin_id);
+                }
             }
-            else
-            {
-                PORT_PinOutputEnable(pin_id);
-            }
-        }
             return ATCA_SUCCESS;
         default:
             return ATCA_UNIMPLEMENTED;

@@ -135,10 +135,11 @@ class CryptoAuthCommandBuildExt(build_ext):
         else:
             build_args = []
 
-        cmake_args = ['-DATCA_HAL_CUSTOM=ON', '-DATCA_TNGTLS_SUPPORT=ON',
+        cmake_args = ['-DATCA_HAL_CUSTOM=ON', '-DATCA_HAL_KIT_UART=ON',
                       '-DATCA_ATSHA206A_SUPPORT=ON',
-                      '-DATCA_TNGLORA_SUPPORT=ON', '-DATCA_TFLEX_SUPPORT=ON',
-                      '-DATCA_TNG_LEGACY_SUPPORT=ON', '-DATCA_USE_ATCAB_FUNCTIONS=ON']
+                      '-DATCA_TNGTLS_SUPPORT=ON', '-DATCA_TFLEX_SUPPORT=ON',
+                      '-DATCA_TNGLORA_SUPPORT=ON', '-DATCA_TNG_LEGACY_SUPPORT=ON',
+                      '-DATCA_USE_ATCAB_FUNCTIONS=ON']
                       
         if os.path.exists('../lib/talib' if not _sdist_build else 'lib/talib'):
             cmake_args += ['-DATCA_TA100_SUPPORT=ON']

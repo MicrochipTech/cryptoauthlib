@@ -90,7 +90,7 @@ typedef atca_evp_ctx atcac_pk_ctx;
 #include "wolfssl/wolfcrypt/error-crypt.h"
 #include "wolfssl/wolfcrypt/asn_public.h"
 #include "wolfssl/wolfcrypt/asn.h"
-#include "wolfssl/wolfcrypt/ecc.h"
+#include "wolfssl/wolfcrypt/random.h"
 
 typedef struct
 {
@@ -109,6 +109,9 @@ typedef wc_Sha256 atcac_sha2_256_ctx;
 typedef Cmac atcac_aes_cmac_ctx;
 typedef Hmac atcac_hmac_sha256_ctx;
 typedef atca_wc_ctx atcac_pk_ctx;
+
+/* Some configurations end up with a circular definition the above have to be defined before include ecc.h (since ecc.h can call cryptoauthlib functions) */
+#include "wolfssl/wolfcrypt/ecc.h"
 
 #else
 #ifndef ATCA_ENABLE_SHA1_IMPL

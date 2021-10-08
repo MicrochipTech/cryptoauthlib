@@ -40,7 +40,7 @@
    @{ */
 
 /* Constants */
-#define KIT_MAX_SCAN_COUNT      4
+#define KIT_MAX_SCAN_COUNT      8
 #define KIT_MAX_TX_BUF          32
 
 #ifndef strnchr
@@ -97,6 +97,22 @@ const char * kit_interface_from_kittype(ATCAKitType kittype)
         return "SWI";
     case ATCA_KIT_SPI_IFACE:
         return "SPI";
+    default:
+        return "unknown";
+    }
+}
+
+/** Kit parser physical interface string */
+const char* kit_interface(ATCAKitType kittype)
+{
+    switch (kittype)
+    {
+    case ATCA_KIT_I2C_IFACE:
+        return "i2c";
+    case ATCA_KIT_SWI_IFACE:
+        return "swi";
+    case ATCA_KIT_SPI_IFACE:
+        return "spi";
     default:
         return "unknown";
     }
@@ -276,12 +292,13 @@ ATCA_STATUS kit_init(ATCAIface iface, ATCAIfaceCfg* cfg)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     const char kit_device[] = "board:device(%02X)\n";
+    const char kit_interface_select[] = "%c:physical:interface:%s\n";
     const char kit_device_select[] = "%c:physical:select(%02X)\n";
     char txbuf[KIT_MAX_TX_BUF];
     int txlen;
     char rxbuf[KIT_RX_WRAP_SIZE + 4];
     int rxlen;
-    const char* device_match, *interface_match;
+    const char* device_match, *interface_match, *interface;
     char *dev_type, *dev_interface;
     char delim[] = " ";
     char *token; /* string token */
@@ -359,7 +376,7 @@ ATCA_STATUS kit_init(ATCAIface iface, ATCAIfaceCfg* cfg)
         }
 
         /*Selects the first device type if both device interface and device identity is not defined*/
-        if (iface_type == ATCA_KIT_AUTO_IFACE && dev_identity == 0 && (strncmp(device_match, dev_type, 3) == 0))
+        if (iface_type == ATCA_KIT_AUTO_IFACE && (dev_identity == 0 || dev_identity == address) && (strncmp(device_match, dev_type, 4) == 0))
         {
 
             txlen = snprintf(txbuf, sizeof(txbuf) - 1, kit_device_select, device_match[0], address);
@@ -382,9 +399,26 @@ ATCA_STATUS kit_init(ATCAIface iface, ATCAIfaceCfg* cfg)
         else
         {
 
-            if ((strncmp(device_match, dev_type, 4) == 0) && (dev_identity == address) && (strcmp(interface_match, dev_interface) == 0))
+            if ((strncmp(device_match, dev_type, 4) == 0) && (dev_identity == 0 || dev_identity == address) && (strcmp(interface_match, dev_interface) == 0))
             {
+                interface = kit_interface(iface_type);
+                txlen = snprintf(txbuf, sizeof(txbuf) - 1, kit_interface_select, device_match[0], interface);
+                txbuf[sizeof(txbuf) - 1] = '\0';
 
+                if (txlen < 0)
+                {
+                    status = ATCA_INVALID_SIZE;
+                    break;
+                }
+
+                if (ATCA_SUCCESS != (status = kit_phy_send(iface, txbuf, txlen)))
+                {
+                    break;
+                }
+
+                rxlen = sizeof(rxbuf);
+                // Ignoring the response to support earlier versions
+                (void)kit_phy_receive(iface, rxbuf, &rxlen);
 
                 txlen = snprintf(txbuf, sizeof(txbuf) - 1, kit_device_select, device_match[0], address);
                 txbuf[sizeof(txbuf) - 1] = '\0';

@@ -64,6 +64,7 @@ int read_config(int argc, char* argv[])
     uint8_t config[200];
     size_t config_size = 0;
     size_t i = 0;
+    uint8_t zone = ATCA_ZONE_CONFIG;
 
     ((void)argc);
     ((void)argv);
@@ -77,7 +78,7 @@ int read_config(int argc, char* argv[])
 
     do
     {
-        status = atcab_get_zone_size(ATCA_ZONE_CONFIG, 0, &config_size);
+        status = atcab_get_zone_size(zone, 0, &config_size);
         if (status != ATCA_SUCCESS)
         {
             printf("atcab_get_zone_size() failed: %02x\r\n", status);
@@ -611,7 +612,7 @@ int run_tng_tests(int argc, char* argv[])
     return 0;
 }
 
-#if defined(ATCA_MBEDTLS) || defined(ATCA_WOLFSSL) || defined(ATCA_OPENSSL)
+#if defined(ATCA_MBEDTLS)
 int run_crypto_integration_tests(int argc, char* argv[])
 {
     return run_test(argc, argv, RunCryptoIntegrationTests);

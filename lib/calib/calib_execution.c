@@ -305,11 +305,11 @@ ATCA_STATUS calib_execute_send(ATCADevice device, uint8_t device_address, uint8_
 
 #ifdef ATCA_HAL_LEGACY_API
     ((void)device_address);
-    status = atsend(&device->mIface, 0xFF, (uint8_t*)txdata, txlength - 1);
+    status = atsend(&device->mIface, 0xFF, (uint8_t*)txdata, (int)txlength - 1);
 #else
     if (atca_iface_is_kit(&device->mIface))
     {
-        status = atsend(&device->mIface, 0xFF, (uint8_t*)txdata, txlength - 1);
+        status = atsend(&device->mIface, 0xFF, (uint8_t*)txdata, (int)txlength - 1);
     }
     else
     {
@@ -317,7 +317,7 @@ ATCA_STATUS calib_execute_send(ATCADevice device, uint8_t device_address, uint8_
         if (ATCA_UNIMPLEMENTED == status || ATCA_SUCCESS == status)
         {
             /* Send the command packet to the device */
-            status = atsend(&device->mIface, device_address, (uint8_t*)txdata, txlength);
+            status = atsend(&device->mIface, device_address, (uint8_t*)txdata, (int)txlength);
         }
         (void)atcontrol(&device->mIface, ATCA_HAL_CONTROL_DESELECT, NULL, 0);
     }
@@ -367,9 +367,13 @@ ATCA_STATUS calib_execute_receive(ATCADevice device, uint8_t device_address, uin
                 word_address = 0;
             }
 
-            if (ATCA_SUCCESS != (status = atsend(&device->mIface, device_address, &word_address, sizeof(word_address))))
+            // Skip word address send for ECC204 device
+            if (ECC204 != device->mIface.mIfaceCFG->devtype)
             {
-                break;
+                if (ATCA_SUCCESS != (status = atsend(&device->mIface, device_address, &word_address, sizeof(word_address))))
+                {
+                    break;
+                }
             }
 
             /* Read length bytes to know number of bytes to read */
@@ -397,6 +401,7 @@ ATCA_STATUS calib_execute_receive(ATCADevice device, uint8_t device_address, uin
 
             /* Read given length bytes from device */
             read_length -= 1;
+
             status = atreceive(&device->mIface, device_address, &rxdata[1], &read_length);
 
             if (ATCA_SUCCESS != status)
@@ -469,6 +474,10 @@ ATCA_STATUS calib_execute_command(ATCAPacket* packet, ATCADevice device)
             else if (ATCA_SWI_IFACE == device->mIface.mIfaceCFG->iface_type)
             {
                 packet->_reserved = CALIB_SWI_FLAG_CMD;
+            }
+            else if ((ATCA_SWI_GPIO_IFACE == device->mIface.mIfaceCFG->iface_type) && (ECC204 == device->mIface.mIfaceCFG->devtype))
+            {
+                packet->_reserved = 0x03;
             }
             if (ATCA_RX_NO_RESPONSE == (status = calib_execute_send(device, device_address, (uint8_t*)packet, packet->txsize + 1)))
             {

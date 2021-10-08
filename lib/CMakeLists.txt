@@ -10,7 +10,8 @@ option(ATCA_HAL_KIT_BRIDGE "General purpose kit protocol (Packet and Stream)")
 option(ATCA_HAL_I2C "Include the I2C Hal Driver - Linux & MCU only")
 option(ATCA_HAL_SPI "Include the SPI HAL Driver - Linux & MCU only")
 option(ATCA_HAL_CUSTOM "Include support for Custom/Plug-in Hal Driver")
-option(ATCA_HAL_KIT_UART "Include th UART HAL Driver")
+option(ATCA_HAL_KIT_UART "Include the UART HAL Driver")
+option(ATCA_HAL_SWI_UART "Include the SWI using UART Driver")
 
 # Library Options
 option(ATCA_PRINTF "Enable Debug print statements in library")
@@ -40,6 +41,10 @@ option(ATCA_ATECC608_SUPPORT "Include support for ATECC608 device" ON)
 option(ATCA_TA100_SUPPORT "Include support for TA100 device" OFF)
 option(ATCA_ECC204_SUPPORT "Include support for ECC204 device" ON)
 
+# RTOS Selection
+if (TARGET zephyr_interface)
+SET(ATCA_ZEPHYR_SUPPORT ON CACHE INTERNAL "Include zephyr hal drivers")
+endif()
 
 # TA100 Dependent Configuration options
 cmake_dependent_option(ATCA_TA100_AES_AUTH_SUPPORT "Include Encrypted (GCM) and CMAC Auth session support" ON "ATCA_TA100_SUPPORT" OFF)
@@ -164,9 +169,17 @@ set(WOLFSSL_LIB_SRC ../third_party/wolfssl/wolfcrypt/src/aes.c
 
 
 add_library(wolfssl STATIC ${WOLFSSL_LIB_SRC})
-target_compile_definitions(wolfssl PRIVATE -DWC_NO_HARDEN -DHAVE_ECC -DHAVE_ALL_CURVES -DWOLFCRYPT_ONLY -DWOLFSSL_PEM_TO_DER -DWOLFSSL_VALIDATE_ECC_IMPORT -DWOLFSSL_AES_DIRECT -DHAVE_AESGCM -DWOLFSSL_CMAC -DNO_OLD_TLS -DNO_MD5)
+target_compile_definitions(wolfssl PRIVATE -DWOLFSSL_USER_SETTINGS)
+configure_file(../third_party/wolfssl_settings.h.in user_settings.h @ONLY)
+set(WOLFSSL_USER_SETTINGS TRUE)
+
+if(NOT WIN32)
+target_compile_options(wolfssl PRIVATE -fPIC)
+endif()
+
 include_directories(wolfssl PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
-                                    ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/wolfssl)
+                                    ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/wolfssl
+                                    ${CMAKE_CURRENT_BINARY_DIR})
 
 
 file(GLOB WOLFSSL_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "wolfssl/*.c")
@@ -210,14 +223,13 @@ set(CRYPTOAUTH_SRC ${LIB_SRC}
 
 set(HAL_INC hal/atca_hal.h)
 
-if(ATCA_HAL_KIT_HID OR ATCA_HAL_KIT_CDC)
+if(ATCA_HAL_KIT_HID)
 set(NEED_USB true)
 endif()
 
 if(WIN32)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_windows.c)
 set(HID_SRC ../third_party/hidapi/windows/hid.c)
-set(CDC_SRC hal/hal_win_kit_cdc.c)
 elseif(APPLE)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_linux.c)
 set(HID_SRC ../third_party/hidapi/mac/hid.c)
@@ -226,6 +238,12 @@ set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_linux.c)
 set(TWI_SRC hal/hal_linux_i2c_userspace.c)
 set(SPI_SRC hal/hal_linux_spi_userspace.c)
 set(LINUX TRUE)
+endif()
+
+if(ATCA_ZEPHYR_SUPPORT)
+set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ../third_party/hal/zephyr/hal_zephyr.c)
+SET(TWI_SRC ../third_party/hal/zephyr/hal_zephyr_i2c.c)
+SET(SPI_SRC ../third_party/hal/zephyr/hal_zephyr_spi.c)
 endif()
 
 if(LINUX AND NEED_USB)
@@ -244,10 +262,10 @@ endif()
 
 if(LIBUDEV_GOOD)
 set(USE_UDEV TRUE)
-elseif(LIBUSB_GOOD AND NOT ATCA_HAL_KIT_CDC)
+elseif(LIBUSB_GOOD)
 set(USE_LIBUSB TRUE)
 else()
-message(FATAL_ERROR, "Missing Build Dependencies for USB - install libusb-1.0-0-dev or libudev-dev")
+message(FATAL_ERROR "Missing Build Dependencies for USB - install libusb-1.0-0-dev or libudev-dev")
 endif()
 
 endif(LINUX AND NEED_USB)
@@ -255,7 +273,6 @@ endif(LINUX AND NEED_USB)
 if(USE_UDEV)
 set(USB_INCLUDE_DIR ${LIBUDEV_INCLUDE_DIR})
 set(HID_SRC ../third_party/hidapi/linux/hid.c)
-set(CDC_SRC hal/hal_linux_kit_cdc.c)
 endif(USE_UDEV)
 
 if(USE_LIBUSB)
@@ -271,17 +288,13 @@ if(ATCA_HAL_KIT_HID)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${HID_SRC} hal/hal_all_platforms_kit_hidapi.c)
 endif(ATCA_HAL_KIT_HID)
 
-if(ATCA_HAL_KIT_UART)
+if(ATCA_HAL_KIT_UART OR ATCA_HAL_SWI_UART)
 if(WIN32)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_windows_kit_uart.c)
-elseif(LINUX)
+elseif(LINUX OR APPLE)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_linux_uart_userspace.c)
 endif()
-endif(ATCA_HAL_KIT_UART)
-
-if(ATCA_HAL_KIT_CDC)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${CDC_SRC})
-endif(ATCA_HAL_KIT_CDC)
+endif()
 
 if(ATCA_HAL_I2C)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${TWI_SRC})
@@ -290,6 +303,10 @@ endif(ATCA_HAL_I2C)
 if(ATCA_HAL_SPI)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${SPI_SRC})
 endif(ATCA_HAL_SPI)
+
+if(ATCA_HAL_SWI_UART)
+set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_swi_uart.c)
+endif(ATCA_HAL_SWI_UART)
 
 if(ATCA_HAL_KIT_BRIDGE)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_kit_bridge.c)

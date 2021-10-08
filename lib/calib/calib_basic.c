@@ -42,7 +42,7 @@ ATCA_STATUS calib_wakeup_i2c(ATCADevice device)
 
     if (iface)
     {
-        uint8_t retries = atca_iface_get_retries(iface);
+        int retries = atca_iface_get_retries(iface);
         uint8_t address = atcab_get_device_address(device);
         uint32_t temp;
         uint32_t wake;
@@ -116,7 +116,7 @@ ATCA_STATUS calib_wakeup(ATCADevice device)
 #ifdef ATCA_HAL_LEGACY_API
         status = atwake(iface);
 #else
-        if (atca_iface_is_kit(iface) || (ATCA_SWI_IFACE == iface->mIfaceCFG->iface_type))
+        if (atca_iface_is_kit(iface) || atca_iface_is_swi(&device->mIface))
         {
             status = atwake(iface);
         }
@@ -145,7 +145,7 @@ ATCA_STATUS calib_idle(ATCADevice device)
 #ifdef ATCA_HAL_LEGACY_API
     status = atidle(&device->mIface);
 #else
-    if (atca_iface_is_kit(&device->mIface) || (ATCA_SWI_IFACE == device->mIface.mIfaceCFG->iface_type))
+    if (atca_iface_is_kit(&device->mIface) || atca_iface_is_swi(&device->mIface))
     {
         status = atidle(&device->mIface);
     }
@@ -176,7 +176,7 @@ ATCA_STATUS calib_sleep(ATCADevice device)
 #ifdef ATCA_HAL_LEGACY_API
     status = atsleep(&device->mIface);
 #else
-    if (atca_iface_is_kit(&device->mIface) || (ATCA_SWI_IFACE == device->mIface.mIfaceCFG->iface_type))
+    if (atca_iface_is_kit(&device->mIface) || atca_iface_is_swi(&device->mIface))
     {
         status = atsleep(&device->mIface);
     }
@@ -229,14 +229,14 @@ ATCA_STATUS calib_get_addr(uint8_t zone, uint16_t slot, uint8_t block, uint8_t o
         offset = offset & (uint8_t)0x07;
         if ((mem_zone == ATCA_ZONE_CONFIG) || (mem_zone == ATCA_ZONE_OTP))
         {
-            *addr = block << 3;
+            *addr = ((uint16_t)block) << 3;
             *addr |= offset;
         }
         else     // ATCA_ZONE_DATA
         {
             *addr = slot << 3;
             *addr  |= offset;
-            *addr |= block << 8;
+            *addr |= ((uint16_t)block) << 8;
         }
     }
     while (0);
@@ -269,7 +269,7 @@ ATCA_STATUS calib_ecc204_get_addr(uint8_t zone, uint16_t slot, uint8_t block, ui
     // Initialize the addr to 00
     *addr = 0;
     *addr = slot << 3;
-    *addr |= block << 8;
+    *addr |= ((uint16_t)block) << 8;
 
     return status;
 }
@@ -318,8 +318,8 @@ ATCA_STATUS calib_get_zone_size(ATCADevice device, uint8_t zone, uint16_t slot, 
     {
         switch (zone)
         {
-        case ATCA_ECC204_ZONE_CONFIG: *size = 16; break;
-        case ATCA_ECC204_ZONE_DATA:
+        case ATCA_ZONE_CONFIG: *size = 64; break;
+        case ATCA_ZONE_DATA:
             if ((0 == slot) || (3 == slot))
             {
                 *size = 32;

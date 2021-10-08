@@ -201,11 +201,11 @@ ATCA_STATUS calib_ecc204_is_locked(ATCADevice device, uint8_t zone, bool* is_loc
 {
     ATCA_STATUS status = ATCA_SUCCESS;
 
-    if (ATCA_ECC204_ZONE_CONFIG == zone)
+    if (ATCA_ZONE_CONFIG == zone)
     {
         status = calib_ecc204_is_config_locked(device, is_locked);
     }
-    else if (ATCA_ECC204_ZONE_DATA == zone)
+    else if (ATCA_ZONE_DATA == zone)
     {
         status = calib_ecc204_is_data_locked(device, is_locked);
     }

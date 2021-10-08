@@ -226,7 +226,7 @@ ATCA_STATUS atca_jwt_add_claim_string(
         atca_jwt_check_payload_start(jwt);
 
         remaining = jwt->buflen - jwt->cur;
-        written = snprintf(&jwt->buf[jwt->cur], remaining, "\"%s\":\"%s\"", claim, value);
+        written = snprintf(&jwt->buf[jwt->cur], (size_t)remaining, "\"%s\":\"%s\"", claim, value);
         if (0 < written && written < remaining)
         {
             jwt->cur += written;
@@ -262,7 +262,7 @@ ATCA_STATUS atca_jwt_add_claim_numeric(
         atca_jwt_check_payload_start(jwt);
 
         remaining = jwt->buflen - jwt->cur;
-        written = snprintf(&jwt->buf[jwt->cur], remaining, "\"%s\":%ld", claim, (long)value);
+        written = snprintf(&jwt->buf[jwt->cur], (size_t)remaining, "\"%s\":%ld", claim, (long)value);
         if (0 < written && written < remaining)
         {
             jwt->cur += written;
@@ -325,7 +325,7 @@ ATCA_STATUS atca_jwt_verify(
         }
 
         /* Digest the token */
-        if (ATCA_SUCCESS != (status = (ATCA_STATUS)atcac_sw_sha2_256((const uint8_t*)buf, pStr - buf - 1, digest)))
+        if (ATCA_SUCCESS != (status = (ATCA_STATUS)atcac_sw_sha2_256((const uint8_t*)buf, (size_t)(pStr - buf - 1), digest)))
         {
             break;
         }

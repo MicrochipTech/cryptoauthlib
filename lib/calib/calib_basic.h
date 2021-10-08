@@ -93,9 +93,10 @@ ATCA_STATUS calib_lock_data_zone(ATCADevice device);
 ATCA_STATUS calib_lock_data_zone_crc(ATCADevice device, uint16_t summary_crc);
 ATCA_STATUS calib_lock_data_slot(ATCADevice device, uint16_t slot);
 // Lock ECC204 command functions
-ATCA_STATUS calib_ecc204_lock_config_slot(ATCADevice device, uint8_t slot, uint16_t summary_crc);
+ATCA_STATUS calib_ecc204_lock_config_slot(ATCADevice device, uint16_t slot, uint16_t summary_crc);
 ATCA_STATUS calib_ecc204_lock_config_zone(ATCADevice device);
-ATCA_STATUS calib_ecc204_lock_data_slot(ATCADevice device, uint8_t slot);
+ATCA_STATUS calib_ecc204_lock_data_slot(ATCADevice device, uint16_t slot);
+ATCA_STATUS calib_ecc204_lock_data_zone(ATCADevice device);
 
 // MAC command functions
 ATCA_STATUS calib_mac(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* challenge, uint8_t* digest);
@@ -129,7 +130,7 @@ ATCA_STATUS calib_read_sig(ATCADevice device, uint16_t slot, uint8_t *sig);
 ATCA_STATUS calib_read_config_zone(ATCADevice device, uint8_t* config_data);
 ATCA_STATUS calib_cmp_config_zone(ATCADevice device, uint8_t* config_data, bool* same_config);
 // ECC204 Read command functions
-ATCA_STATUS calib_ecc204_read_zone(ATCADevice device, uint8_t zone, uint8_t slot, uint8_t block, size_t offset,
+ATCA_STATUS calib_ecc204_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint8_t block, size_t offset,
                                    uint8_t* data, uint8_t len);
 ATCA_STATUS calib_ecc204_read_config_zone(ATCADevice device, uint8_t* config_data);
 ATCA_STATUS calib_ecc204_read_serial_number(ATCADevice device, uint8_t* serial_number);
@@ -217,10 +218,10 @@ ATCA_STATUS calib_write_enc(ATCADevice device, uint16_t key_id, uint8_t block, c
 #endif
 
 #if defined(ATCA_USE_CONSTANT_HOST_NONCE)
-ATCA_STATUS calib_ecc204_write_enc(ATCADevice device, uint8_t slot, uint8_t* data, uint8_t* transport_key,
+ATCA_STATUS calib_ecc204_write_enc(ATCADevice device, uint16_t slot, uint8_t* data, uint8_t* transport_key,
                                    uint8_t key_id);
 #else
-ATCA_STATUS calib_ecc204_write_enc(ATCADevice device, uint8_t slot, uint8_t* data, uint8_t* transport_key,
+ATCA_STATUS calib_ecc204_write_enc(ATCADevice device, uint16_t slot, uint8_t* data, uint8_t* transport_key,
                                    uint8_t key_id, uint8_t num_in[NONCE_NUMIN_SIZE]);
 #endif
 

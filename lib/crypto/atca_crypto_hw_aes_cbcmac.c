@@ -117,7 +117,7 @@ ATCA_STATUS atcab_aes_cbcmac_update(atca_aes_cbcmac_ctx_t* ctx, const uint8_t* d
     // Store incomplete block to context structure
     if ((i * ATCA_AES128_BLOCK_SIZE) < data_size)
     {
-        memcpy(ctx->block, &data[i * ATCA_AES128_BLOCK_SIZE], data_size - i * ATCA_AES128_BLOCK_SIZE);
+        memcpy(ctx->block, &data[i * ATCA_AES128_BLOCK_SIZE], (size_t)(data_size - i * ATCA_AES128_BLOCK_SIZE));
         ctx->block_size = (uint8_t)(data_size - i * ATCA_AES128_BLOCK_SIZE);
     }
     else
@@ -149,7 +149,7 @@ ATCA_STATUS atcab_aes_cbcmac_finish(atca_aes_cbcmac_ctx_t* ctx, uint8_t* mac, ui
     if (ctx->block_size == 0)
     {
         // All processing is already done, copying the mac to result buffer
-        memcpy(mac, ctx->cbc_ctx.ciphertext, mac_size);
+        memcpy(mac, ctx->cbc_ctx.ciphertext, (size_t)mac_size);
     }
     else
     {

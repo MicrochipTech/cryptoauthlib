@@ -101,7 +101,7 @@ ATCA_STATUS atcab_aes_ccm_init_ext(ATCADevice device, atca_aes_ccm_ctx_t* ctx, u
        -----------------------*/
     memset(B, 0, ATCA_AES128_BLOCK_SIZE);
     // Formatting flag field
-    B[0] = L | (M << 3) | ((aad_size > 0) << 6);
+    B[0] = (uint8_t)(L | (M << 3) | ((aad_size > 0) << 6));
 
     /*----------------------
        Octet Number   Contents
@@ -135,9 +135,12 @@ ATCA_STATUS atcab_aes_ccm_init_ext(ATCADevice device, atca_aes_ccm_ctx_t* ctx, u
     }
 
     // Loading AAD size in ctx buffer.
-    ctx->partial_aad[0] = (uint8_t)(aad_size >> 8) & 0xff;
-    ctx->partial_aad[1] = (uint8_t)(aad_size & 0xff);
-    ctx->partial_aad_size = 2;
+    if (aad_size > 0)
+    {
+        ctx->partial_aad[0] = (uint8_t)(aad_size >> 8) & 0xff;
+        ctx->partial_aad[1] = (uint8_t)(aad_size & 0xff);
+        ctx->partial_aad_size = 2;
+    }
 
     // --------------------- Init sequence for encryption/decryption .......................//
     memset(counter, 0, ATCA_AES128_BLOCK_SIZE);
@@ -464,7 +467,7 @@ static ATCA_STATUS atcab_aes_ccm_update(atca_aes_ccm_ctx_t* ctx, const uint8_t* 
  */
 ATCA_STATUS atcab_aes_ccm_encrypt_update(atca_aes_ccm_ctx_t* ctx, const uint8_t* plaintext, uint32_t plaintext_size, uint8_t* ciphertext)
 {
-    return atcab_aes_ccm_update(ctx, plaintext, plaintext_size, ciphertext, true);
+    return atcab_aes_ccm_update(ctx, plaintext, (size_t)plaintext_size, ciphertext, true);
 }
 
 /** \brief Process data using CCM mode and a key within the ATECC608A device.
@@ -479,7 +482,7 @@ ATCA_STATUS atcab_aes_ccm_encrypt_update(atca_aes_ccm_ctx_t* ctx, const uint8_t*
  */
 ATCA_STATUS atcab_aes_ccm_decrypt_update(atca_aes_ccm_ctx_t* ctx, const uint8_t* ciphertext, uint32_t ciphertext_size, uint8_t* plaintext)
 {
-    return atcab_aes_ccm_update(ctx, ciphertext, ciphertext_size, plaintext, false);
+    return atcab_aes_ccm_update(ctx, ciphertext, (size_t)ciphertext_size, plaintext, false);
 }
 
 /** \brief Complete a CCM operation returning the authentication tag.

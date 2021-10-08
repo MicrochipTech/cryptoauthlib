@@ -92,7 +92,7 @@ ATCA_STATUS atcab_aes_cmac_init(atca_aes_cmac_ctx_t* ctx, uint16_t key_id, uint8
 ATCA_STATUS atcab_aes_cmac_update(atca_aes_cmac_ctx_t* ctx, const uint8_t* data, uint32_t data_size)
 {
     uint32_t rem_size;
-    uint32_t copy_size;
+    size_t copy_size;
     ATCA_STATUS status = ATCA_SUCCESS;
     uint8_t ciphertext[ATCA_AES128_BLOCK_SIZE];
     uint32_t block_count;
@@ -104,7 +104,7 @@ ATCA_STATUS atcab_aes_cmac_update(atca_aes_cmac_ctx_t* ctx, const uint8_t* data,
     }
 
     rem_size = ATCA_AES128_BLOCK_SIZE - ctx->block_size;
-    copy_size = data_size > rem_size ? rem_size : data_size;
+    copy_size = data_size > rem_size ? (size_t)rem_size : (size_t)data_size;
 
     memcpy(&ctx->block[ctx->block_size], data, copy_size);
 
@@ -140,7 +140,7 @@ ATCA_STATUS atcab_aes_cmac_update(atca_aes_cmac_ctx_t* ctx, const uint8_t* data,
 
     // Save any remaining data
     ctx->block_size = data_size;
-    memcpy(ctx->block, &data[copy_size + block_count * ATCA_AES128_BLOCK_SIZE], ctx->block_size);
+    memcpy(ctx->block, &data[copy_size + block_count * ATCA_AES128_BLOCK_SIZE], (size_t)ctx->block_size);
 
     return ATCA_SUCCESS;
 }
@@ -156,7 +156,7 @@ static void left_shift_one(uint8_t* data, size_t data_size)
 
     for (i = 0; i < data_size; i++)
     {
-        data[i] = data[i] << 1;
+        data[i] = (uint8_t)(data[i] << 1);
         if (i + 1 < data_size && data[i + 1] & 0x80)
         {
             data[i] |= 0x01; // Next byte has a bit that needs to be shifted into this one
@@ -228,7 +228,7 @@ ATCA_STATUS atcab_aes_cmac_finish(atca_aes_cmac_ctx_t* ctx, uint8_t* cmac, uint3
         return status;
     }
 
-    memcpy(cmac, cmac_full, cmac_size);
+    memcpy(cmac, cmac_full, (size_t)cmac_size);
 
     return ATCA_SUCCESS;
 }

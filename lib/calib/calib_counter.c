@@ -74,10 +74,22 @@ ATCA_STATUS calib_counter(ATCADevice device, uint8_t mode, uint16_t counter_id, 
         {
             if (packet.data[ATCA_COUNT_IDX] == 7)
             {
-                *counter_value = ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 0] <<  0) |
-                                 ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 1] <<  8) |
-                                 ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 2] << 16) |
-                                 ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 3] << 24);
+                if (ECC204 == device->mIface.mIfaceCFG->devtype)
+                {
+                    #if defined(ATCA_ECC204_SUPPORT)
+                    *counter_value = ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 3] <<  0) |
+                                     ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 2] <<  8) |
+                                     ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 1] << 16) |
+                                     ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 0] << 24);
+                    #endif
+                }
+                else
+                {
+                    *counter_value = ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 0] <<  0) |
+                                     ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 1] <<  8) |
+                                     ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 2] << 16) |
+                                     ((uint32_t)packet.data[ATCA_RSP_DATA_IDX + 3] << 24);
+                }
             }
             else
             {

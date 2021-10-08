@@ -139,7 +139,7 @@ int atcacert_decode_pem(const char* pem,
     }
 
     // Decode data
-    status = atcab_base64decode(data_pos, footer_pos - data_pos, der, der_size);
+    status = atcab_base64decode(data_pos, (size_t)(footer_pos - data_pos), der, der_size);
     if (status != ATCA_SUCCESS)
     {
         if (status == ATCA_SMALL_BUFFER)

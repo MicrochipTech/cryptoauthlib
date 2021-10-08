@@ -159,9 +159,9 @@ ATCA_STATUS calib_lock_data_slot(ATCADevice device, uint16_t slot)
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code
  */
-ATCA_STATUS calib_ecc204_lock_config_slot(ATCADevice device, uint8_t slot, uint16_t summary_crc)
+ATCA_STATUS calib_ecc204_lock_config_slot(ATCADevice device, uint16_t slot, uint16_t summary_crc)
 {
-    uint8_t mode = LOCK_ECC204_ZONE_CONFIG | (slot << 1);
+    uint8_t mode = (uint8_t)(LOCK_ECC204_ZONE_CONFIG | (slot << 1));
 
     if (!summary_crc)
     {
@@ -185,12 +185,21 @@ ATCA_STATUS calib_ecc204_lock_config_zone(ATCADevice device)
 
     while (slot <= 3)
     {
-        mode = LOCK_ZONE_NO_CRC | LOCK_ECC204_ZONE_CONFIG | (slot << 1);
+        mode = (uint8_t)(LOCK_ZONE_NO_CRC | LOCK_ECC204_ZONE_CONFIG | (slot << 1));
 
         if (ATCA_SUCCESS != (status = calib_lock(device, mode, 0)))
         {
-            ATCA_TRACE(status, "calib_ecc204_lock_config_zone - failed");
-            break;
+            // ECC204 returns execution error if slot is already locked.
+            // Consider already locked status as valid while locking the config zone.
+            if (status == ATCA_EXECUTION_ERROR)
+            {
+                status = ATCA_SUCCESS;
+            }
+            else
+            {
+                ATCA_TRACE(status, "calib_ecc204_lock_config_zone - failed");
+                break;
+            }
         }
 
         slot += 1;  //Increment slot
@@ -206,7 +215,44 @@ ATCA_STATUS calib_ecc204_lock_config_zone(ATCADevice device)
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code
  */
-ATCA_STATUS calib_ecc204_lock_data_slot(ATCADevice device, uint8_t slot)
+ATCA_STATUS calib_ecc204_lock_data_slot(ATCADevice device, uint16_t slot)
 {
-    return calib_lock(device, LOCK_ECC204_ZONE_DATA | (slot << 1), 0);
+    return calib_lock(device, (uint8_t)(LOCK_ECC204_ZONE_DATA | (slot << 1)), 0);
+}
+
+/** \brief Use lock command to lock complete Data zone
+ *
+ *  \param[in]  device      Device context pointer
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code
+ */
+ATCA_STATUS calib_ecc204_lock_data_zone(ATCADevice device)
+{
+    ATCA_STATUS status = ATCA_GEN_FAIL;
+    uint8_t slot = 0;
+    uint8_t mode;
+
+    while (slot <= 3)
+    {
+        mode = LOCK_ZONE_NO_CRC | LOCK_ECC204_ZONE_DATA | (slot << 1);
+
+        if (ATCA_SUCCESS != (status = calib_lock(device, mode, 0)))
+        {
+            // ECC204 returns execution error if slot is already locked.
+            // Consider already locked status as valid while locking the config zone.
+            if (status == ATCA_EXECUTION_ERROR)
+            {
+                status = ATCA_SUCCESS;
+            }
+            else
+            {
+                ATCA_TRACE(status, "calib_ecc204_lock_data_zone - failed");
+                break;
+            }
+        }
+
+        slot += 1;  //Increment slot
+    }
+
+    return status;
 }

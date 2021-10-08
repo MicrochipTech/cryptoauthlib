@@ -345,6 +345,23 @@ bool atca_iface_is_kit(ATCAIface ca_iface)
     return ret;
 }
 
+/** \brief Check if the given interface is configured as a SWI
+ * \return true if the interface is considered a kit
+ */
+bool atca_iface_is_swi(ATCAIface ca_iface)
+{
+    bool ret = false;
+
+    if (ca_iface && ca_iface->mIfaceCFG)
+    {
+        if (ATCA_SWI_IFACE == ca_iface->mIfaceCFG->iface_type || ATCA_SWI_GPIO_IFACE == ca_iface->mIfaceCFG->iface_type)
+        {
+            ret = true;
+        }
+    }
+    return ret;
+}
+
 /** \brief Retrive the number of retries for a configured interface */
 int atca_iface_get_retries(ATCAIface ca_iface)
 {

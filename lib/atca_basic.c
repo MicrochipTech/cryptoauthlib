@@ -1618,7 +1618,16 @@ ATCA_STATUS atcab_lock_config_zone_crc(uint16_t summary_crc)
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-        status = calib_lock_config_zone_crc(_gDevice, summary_crc);
+        if (ECC204 == dev_type)
+        {
+#if defined(ATCA_ECC204_SUPPORT)
+            status = ATCA_UNIMPLEMENTED;
+#endif
+        }
+        else
+        {
+            status = calib_lock_config_zone_crc(_gDevice, summary_crc);
+        }
 #endif
     }
     else if (atcab_is_ta_device(dev_type))
@@ -1649,7 +1658,16 @@ ATCA_STATUS atcab_lock_data_zone(void)
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-        status = calib_lock_data_zone(_gDevice);
+        if (ECC204 == dev_type)
+        {
+#if defined(ATCA_ECC204_SUPPORT)
+            status = calib_ecc204_lock_data_zone(_gDevice);
+#endif
+        }
+        else
+        {
+            status = calib_lock_data_zone(_gDevice);
+        }
 #endif
     }
     else if (atcab_is_ta_device(dev_type))
@@ -1683,7 +1701,16 @@ ATCA_STATUS atcab_lock_data_zone_crc(uint16_t summary_crc)
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-        status = calib_lock_data_zone_crc(_gDevice, summary_crc);
+        if (ECC204 == dev_type)
+        {
+#if defined(ATCA_ECC204_SUPPORT)
+            status = ATCA_UNIMPLEMENTED;
+#endif
+        }
+        else
+        {
+            status = calib_lock_data_zone_crc(_gDevice, summary_crc);
+        }
 #endif
     }
     else if (atcab_is_ta_device(dev_type))
@@ -2193,7 +2220,7 @@ ATCA_STATUS atcab_is_config_locked(bool* is_locked)
         if (ECC204 == dev_type)
         {
 #if defined(ATCA_ECC204_SUPPORT)
-            status = calib_ecc204_is_locked(_gDevice, ATCA_ECC204_ZONE_CONFIG, is_locked);
+            status = calib_ecc204_is_locked(_gDevice, ATCA_ZONE_CONFIG, is_locked);
 #endif
         }
         else
@@ -2228,13 +2255,13 @@ ATCA_STATUS atcab_is_data_locked(bool* is_locked)
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-#if defined(ATCA_ECC204_SUPPORT)
         if (ECC204 == dev_type)
         {
-            status = calib_ecc204_is_locked(_gDevice, ATCA_ECC204_ZONE_DATA, is_locked);
+#if defined(ATCA_ECC204_SUPPORT)
+            status = calib_ecc204_is_locked(_gDevice, ATCA_ZONE_DATA, is_locked);
+#endif
         }
         else
-#endif
         {
             status = calib_is_locked(_gDevice, LOCK_ZONE_DATA, is_locked);
         }

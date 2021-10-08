@@ -234,7 +234,7 @@ ATCA_STATUS calib_ecc204_sign(ATCADevice device, uint16_t key_id, const uint8_t*
 
     if (ATCA_SUCCESS == status)
     {
-        if (NULL == signature)
+        if (signature != NULL)
         {
             if (packet.data[ATCA_COUNT_IDX] == (ATCA_SIG_SIZE + ATCA_PACKET_OVERHEAD))
             {

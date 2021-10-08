@@ -25,9 +25,10 @@
  * THIS SOFTWARE.
  */
 
+#include "atca_hal.h"
 #include <windows.h>
 #include <math.h>
-#include "atca_hal.h"
+
 
 /** \defgroup hal_ Hardware abstraction layer (hal_)
  *

@@ -394,14 +394,14 @@ ATCA_STATUS atSHA(ATCADeviceType device_type, ATCAPacket *packet, uint16_t write
         break;
 
     case SHA_MODE_SHA256_UPDATE:                                           // UPDATE
-        packet->txsize = ATCA_CMD_SIZE_MIN + packet->param2;
+        packet->txsize = (uint8_t)(ATCA_CMD_SIZE_MIN + packet->param2);
         break;
 
     case SHA_MODE_SHA256_END:     // END
     case SHA_MODE_HMAC_END:
         // check the given packet for a size variable in param2.  If it is > 0, it should
         // be 0-63, incorporate that size into the packet
-        packet->txsize = ATCA_CMD_SIZE_MIN + packet->param2;
+        packet->txsize = (uint8_t)(ATCA_CMD_SIZE_MIN + packet->param2);
         break;
 
     case SHA_MODE_READ_CONTEXT:
@@ -409,7 +409,7 @@ ATCA_STATUS atSHA(ATCADeviceType device_type, ATCAPacket *packet, uint16_t write
         break;
 
     case SHA_MODE_WRITE_CONTEXT:
-        packet->txsize = ATCA_CMD_SIZE_MIN + write_context_size;
+        packet->txsize = (uint8_t)(ATCA_CMD_SIZE_MIN + write_context_size);
         break;
     }
 

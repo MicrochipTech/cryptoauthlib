@@ -677,32 +677,53 @@ ATCA_STATUS calib_read_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code
  */
-ATCA_STATUS calib_ecc204_read_zone(ATCADevice device, uint8_t zone, uint8_t slot, uint8_t block, size_t offset,
+ATCA_STATUS calib_ecc204_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint8_t block, size_t offset,
                                    uint8_t* data, uint8_t len)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     ATCAPacket packet;
     uint16_t addr;
+    uint8_t read_zone;
 
     (void)offset;
+
+    read_zone = (zone == ATCA_ZONE_CONFIG) ? ATCA_ECC204_ZONE_CONFIG : ATCA_ECC204_ZONE_DATA;
+
 
     if ((NULL == device) || (NULL == data))
     {
         status = ATCA_TRACE(ATCA_BAD_PARAM, "Encountered Null pointer");
     }
-    else if (((ATCA_ECC204_ZONE_CONFIG == zone) && (16 != len)) ||
-             ((ATCA_ECC204_ZONE_DATA == zone) && (32 != len)))
+    else if (ATCA_ZONE_DATA == zone)
     {
-        status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid parameter received");
+        if (32 != len)
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid parameter received");
+        }
+        else if ((0x00 == slot) || (0x03 == slot))
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid slot number received");
+        }
+        else
+        {
+            read_zone = ATCA_ECC204_ZONE_DATA;
+        }
     }
-    else if ((ATCA_ECC204_ZONE_DATA == zone) && ((0x00 == slot) || (0x01 == slot)))
+    else if (ATCA_ECC204_ZONE_CONFIG == zone)
     {
-        status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid slot number received");
+        if (16 != len)
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid parameter received");
+        }
+        else
+        {
+            read_zone = ATCA_ECC204_ZONE_CONFIG;
+        }
     }
 
     if (ATCA_SUCCESS == status)
     {
-        if (ATCA_SUCCESS != (status = calib_ecc204_get_addr(zone, slot, block, 0, &addr)))
+        if (ATCA_SUCCESS != (status = calib_ecc204_get_addr(read_zone, slot, block, 0, &addr)))
         {
             ATCA_TRACE(status, "Address Encoding failed");
         }
@@ -710,7 +731,7 @@ ATCA_STATUS calib_ecc204_read_zone(ATCADevice device, uint8_t zone, uint8_t slot
         if (ATCA_SUCCESS == status)
         {
             // Build packets
-            packet.param1 = zone;
+            packet.param1 = read_zone;
             packet.param2 = addr;
 
             (void)atRead(atcab_get_device_type_ext(device), &packet);
@@ -790,30 +811,31 @@ ATCA_STATUS calib_ecc204_read_serial_number(ATCADevice device, uint8_t* serial_n
  * read the requested data.
  *
  *  \param[in]  device  Device context pointer
- *  \param[in]  zone    Zone to read data from. Option are ATCA_ZONE_CONFIG(0),
- *                      ATCA_ZONE_OTP(1), or ATCA_ZONE_DATA(2).
- *  \param[in]  slot    Slot number to read from if zone is ATCA_ZONE_DATA(2).
+ *  \param[in]  zone    Zone to read data from. Option are ATCA_ZONE_CONFIG(1),
+ *                      or ATCA_ZONE_DATA(0).
+ *  \param[in]  slot    Slot number to read from
  *                      Ignored for all other zones.
- *  \param[in]  block   Byte offset within the zone to read from.
+ *  \param[in]  offset  Byte offset within the zone to read from.
  *  \param[out] data    Read data is returned here.
  *  \param[in]  length  Number of bytes to read starting from the offset.
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS calib_ecc204_read_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot,
-                                         size_t block, uint8_t* data, size_t length)
+                                         size_t offset, uint8_t* data, size_t length)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t block_size = (zone == ATCA_ECC204_ZONE_CONFIG) ? ATCA_ECC204_CONFIG_SLOT_SIZE : ATCA_BLOCK_SIZE;
     uint8_t no_of_blocks;
     uint8_t data_idx = 0;
+    size_t cur_block = 0;
 
     if ((NULL == device) || (NULL == data))
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "Encountered NULL pointer");
     }
     else if ((ATCA_ECC204_ZONE_DATA == zone) && (((length > 64) && (2 == slot)) ||
-                                                 ((length > 320) && (3 == slot)) || (1 == slot) || (0 == slot)))
+                                                 ((length > 320) && (1 == slot)) || (3 == slot) || (0 == slot)))
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid parameter received");
     }
@@ -822,10 +844,11 @@ ATCA_STATUS calib_ecc204_read_bytes_zone(ATCADevice device, uint8_t zone, uint16
         return ATCA_SUCCESS;
     }
 
-    no_of_blocks = length / block_size;
+    cur_block = offset / block_size;
+    no_of_blocks = (uint8_t)(length / block_size);
     while (no_of_blocks--)
     {
-        if (ATCA_SUCCESS != (status = calib_ecc204_read_zone(device, zone, slot, block, 0,
+        if (ATCA_SUCCESS != (status = calib_ecc204_read_zone(device, zone, slot, cur_block, 0,
                                                              &data[block_size * data_idx],
                                                              block_size)))
         {
@@ -833,7 +856,14 @@ ATCA_STATUS calib_ecc204_read_bytes_zone(ATCADevice device, uint8_t zone, uint16
             break;
         }
 
-        block += 1;      // Read next block
+        if (zone == ATCA_ECC204_ZONE_CONFIG)
+        {
+            slot += 1;
+        }
+        else
+        {
+            cur_block += 1;
+        }
         data_idx += 1;   // increment data index
     }
 

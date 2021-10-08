@@ -120,4 +120,3 @@ const pbkdf2_sha256_fixed_size_test_vector pbkdf2_sha256_fixed_size_test_vectors
 };
 
 const size_t pbkdf2_sha256_fixed_size_test_vectors_count = sizeof(pbkdf2_sha256_fixed_size_test_vectors) / sizeof(pbkdf2_sha256_fixed_size_test_vector);
-

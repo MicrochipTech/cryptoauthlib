@@ -9,10 +9,13 @@
 #include "cryptoauthlib.h"
 
 <#assign PLIB_NAME  = core.PORT_API_PREFIX?string>
-ATCAIfaceCfg ${NAME?lower_case}_${INDEX?string}_init_data = {
+
 <#if INTERFACE == "ATCA_SWI_BB_IFACE">
-<#assign INTERFACE = "ATCA_SWI_IFACE">
+<#assign INTERFACE = "ATCA_SWI_GPIO_IFACE">
+static const uint32_t ${NAME?lower_case}_${INDEX?string}_pin_id = ${PLIB_NAME}_PIN_${SWIBB_CRYPTO_PIN?upper_case};
 </#if>
+
+ATCAIfaceCfg ${NAME?lower_case}_${INDEX?string}_init_data = {
     .iface_type            = ${INTERFACE},
     .devtype               = ${NAME?upper_case},
 <#if INTERFACE == "ATCA_I2C_IFACE">
@@ -33,16 +36,18 @@ ATCAIfaceCfg ${NAME?lower_case}_${INDEX?string}_init_data = {
 <#else>
     .atcaspi.baud          = ${.vars["${HAL_INTERFACE?lower_case}"].SPI_BAUD_RATE},
 </#if>
+<#elseif INTERFACE == "ATCA_SWI_GPIO_IFACE">
+<#assign plib_type = "bb">
+	.atcaswi.bus           = ${PLIB_NAME}_PIN_${SWIBB_CRYPTO_PIN?upper_case},
 <#elseif INTERFACE == "ATCA_SWI_IFACE">
-<#if HAL_INTERFACE?contains("GPIO")>
-<#assign plib_type = "swi_bb">
-    .atcaswi.bus           = ${PLIB_NAME}_PIN_${SWIBB_CRYPTO_PIN?upper_case},
-<#else>
-<#assign plib_type = "swi_uart">
+<#assign plib_type = "uart">
     .atcaswi.bus           = 0,
-</#if>
 </#if>
     .wake_delay            = ${WAKEUP_DELAY},
     .rx_retries            = ${RECEIVE_RETRY},
+<#if plib_type != "bb">
     .cfg_data              = &${HAL_INTERFACE?lower_case}_plib_${plib_type}_api
+<#else>
+    .cfg_data              = (void*)&${NAME?lower_case}_${INDEX?string}_pin_id
+</#if>
 };

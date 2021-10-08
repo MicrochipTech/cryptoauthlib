@@ -722,7 +722,7 @@ int atcacert_set_signature(const atcacert_def_t* cert_def,
                            const uint8_t         signature[64])
 {
     int ret = 0;
-    uint16_t sig_offset;
+    int16_t sig_offset;
     size_t cur_der_sig_size;
     size_t new_der_sig_size;
     size_t old_cert_der_length_size;
@@ -733,8 +733,8 @@ int atcacert_set_signature(const atcacert_def_t* cert_def,
         return ATCACERT_E_BAD_PARAMS;
     }
 
-    sig_offset = cert_def->std_cert_elements[STDCERT_SIGNATURE].offset;
-    sig_offset += get_effective_offset(cert_def, cert, sig_offset);
+    sig_offset = (int16_t)cert_def->std_cert_elements[STDCERT_SIGNATURE].offset;
+    sig_offset += get_effective_offset(cert_def, cert, (uint16_t)sig_offset);
 
     // Non X.509 signatures are treated like normal certificate elements
     if (cert_def->type != CERTTYPE_X509)
@@ -748,10 +748,10 @@ int atcacert_set_signature(const atcacert_def_t* cert_def,
 
     }
     // Current size of the signature is from its offset to the end of the cert
-    cur_der_sig_size = *cert_size - sig_offset;
+    cur_der_sig_size = *cert_size - (uint16_t)sig_offset;
 
     // Find the size of buffer available for the new DER signature
-    new_der_sig_size = max_cert_size - sig_offset;
+    new_der_sig_size = max_cert_size - (uint16_t)sig_offset;
 
     // Set the new signature
     ret = atcacert_der_enc_ecdsa_sig_value(signature, &cert[sig_offset], &new_der_sig_size);
@@ -759,12 +759,12 @@ int atcacert_set_signature(const atcacert_def_t* cert_def,
     {
         if (ret == ATCACERT_E_BUFFER_TOO_SMALL)
         {
-            *cert_size += (int)new_der_sig_size - (int)cur_der_sig_size;  // Report the size needed
+            *cert_size += new_der_sig_size - cur_der_sig_size;  // Report the size needed
         }
         return ret;
     }
 
-    *cert_size += (int)new_der_sig_size - (int)cur_der_sig_size;
+    *cert_size += new_der_sig_size - cur_der_sig_size;
 
     old_cert_der_length_size = *cert_size - 1;
     ret = atcacert_der_adjust_length(
@@ -791,7 +791,7 @@ int atcacert_get_signature(const atcacert_def_t* cert_def,
                            size_t                cert_size,
                            uint8_t               signature[64])
 {
-    uint16_t sig_offset;
+    int16_t sig_offset;
     size_t der_sig_size = 0;
 
     if (cert_def == NULL || cert == NULL || signature == NULL)
@@ -799,8 +799,8 @@ int atcacert_get_signature(const atcacert_def_t* cert_def,
         return ATCACERT_E_BAD_PARAMS;
     }
 
-    sig_offset = cert_def->std_cert_elements[STDCERT_SIGNATURE].offset;
-    sig_offset += get_effective_offset(cert_def, cert, sig_offset);
+    sig_offset = (int16_t)cert_def->std_cert_elements[STDCERT_SIGNATURE].offset;
+    sig_offset += get_effective_offset(cert_def, cert, (uint16_t)sig_offset);
 
     // Non X.509 signatures are treated like normal certificate elements
     if (cert_def->type != CERTTYPE_X509)
@@ -813,7 +813,7 @@ int atcacert_get_signature(const atcacert_def_t* cert_def,
         return ATCACERT_E_ELEM_OUT_OF_BOUNDS;  // Signature element is shown as past the end of the certificate
 
     }
-    der_sig_size = cert_size - sig_offset;
+    der_sig_size = cert_size - (uint16_t)sig_offset;
     return atcacert_der_dec_ecdsa_sig_value(&cert[sig_offset], &der_sig_size, signature);
 }
 
@@ -1507,8 +1507,8 @@ int atcacert_get_comp_cert(const atcacert_def_t* cert_def,
         return ret;
     }
 
-    comp_cert[69] = ((cert_def->template_id & 0x0F) << 4) | (cert_def->chain_id & 0x0F);
-    comp_cert[70] = ((uint8_t)(cert_def->sn_source & 0x0F) << 4) | 0;
+    comp_cert[69] = (uint8_t)(((cert_def->template_id & 0x0F) << 4) | (cert_def->chain_id & 0x0F));
+    comp_cert[70] = (uint8_t)(((cert_def->sn_source & 0x0F) << 4) | 0);
     comp_cert[71] = 0;
 
     return ATCACERT_E_SUCCESS;
@@ -1529,13 +1529,13 @@ int atcacert_get_tbs(const atcacert_def_t* cert_def,
 
     eff_offset = get_effective_offset(cert_def, cert, cert_def->tbs_cert_loc.offset + cert_def->tbs_cert_loc.count);
 
-    if ((size_t)(cert_def->tbs_cert_loc.offset + cert_def->tbs_cert_loc.count + eff_offset) > cert_size)
+    if ((size_t)(cert_def->tbs_cert_loc.offset + cert_def->tbs_cert_loc.count + (size_t)eff_offset) > cert_size)
     {
         return ATCACERT_E_BAD_CERT;
     }
 
     *tbs      = &cert[cert_def->tbs_cert_loc.offset];
-    *tbs_size = cert_def->tbs_cert_loc.count + eff_offset;
+    *tbs_size = cert_def->tbs_cert_loc.count + (size_t)eff_offset;
 
     return ATCACERT_E_SUCCESS;
 }
@@ -1604,12 +1604,12 @@ int atcacert_set_cert_element(const atcacert_def_t*      cert_def,
 
     eff_offset = get_effective_offset(cert_def, cert, cert_loc->offset);
 
-    if ((size_t)(cert_loc->offset + data_size + eff_offset) > cert_size)
+    if ((size_t)(cert_loc->offset + data_size + (size_t)eff_offset) > cert_size)
     {
         return ATCACERT_E_ELEM_OUT_OF_BOUNDS;
     }
 
-    memcpy(&cert[cert_loc->offset + eff_offset], data, data_size);
+    memcpy(&cert[cert_loc->offset + (size_t)eff_offset], data, data_size);
 
     return ATCACERT_E_SUCCESS;
 }
@@ -1640,12 +1640,12 @@ int atcacert_get_cert_element(const atcacert_def_t*      cert_def,
 
     eff_offset = get_effective_offset(cert_def, cert, cert_loc->offset);
 
-    if ((size_t)(cert_loc->offset + cert_loc->count + eff_offset) > cert_size)
+    if ((size_t)(cert_loc->offset + cert_loc->count + (size_t)eff_offset) > cert_size)
     {
         return ATCACERT_E_ELEM_OUT_OF_BOUNDS;
     }
 
-    memcpy(data, &cert[cert_loc->offset + eff_offset], data_size);
+    memcpy(data, &cert[cert_loc->offset + (size_t)eff_offset], data_size);
 
     return ATCACERT_E_SUCCESS;
 }

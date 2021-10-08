@@ -618,7 +618,7 @@
       "ctypes.c_uint16",
       "ctypes.c_uint16",
       "ctypes.POINTER(ta_element_attributes_t)",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes Create command to create elements on shared data or volatile register. This cannot create Secure_boot special handles. ",
     "parameters": [
@@ -653,7 +653,7 @@
     "argtypes": [
       "ctypes.c_void_p",
       "ctypes.POINTER(ta_element_attributes_t)",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes Create command to create elements on TA100 shared data memory. The handle is created by vega and handle value is copied into output buffer. This function wont create handle for ephemeral or HMAC symmetric key. This cannot create Secure_boot special handles. ",
     "parameters": [
@@ -728,7 +728,7 @@
       "ctypes.c_void_p",
       "ctypes.c_size_t",
       "ctypes.POINTER(ta_element_attributes_t)",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes Create command to create HMAC symmetric elements on shared data. The handle is created by vega and handle value is copied into output buffer. This cannot create Secure_boot special handles. ",
     "parameters": [
@@ -784,7 +784,7 @@
       "ctypes.c_void_p",
       "ctypes.c_uint16",
       "ctypes.POINTER(ta_element_attributes_t)",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA-API Execute the create command to create handle by TA100 in linked shared data. ",
     "parameters": [
@@ -940,7 +940,7 @@
       "ctypes.c_void_p",
       "ctypes.c_void_p",
       "ctypes.c_char_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes devupdate command to Update the subsequent block (image) of the nonvolatile operating code within the Vega device. ",
     "parameters": [
@@ -1185,7 +1185,7 @@
       "ctypes.c_void_p",
       "ctypes.c_uint16",
       "ctypes.c_char_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes the Export command, which exports the contents of a key/data element in the shared data memory. ",
     "parameters": [
@@ -1497,7 +1497,7 @@
     "restype": "ctypes.c_uint8",
     "argtypes": [
       "ctypes.c_void_p",
-      "ctypes.c_uint16_p",
+      "ctypes.POINTER(ctypes.c_uint16)",
       "ctypes.POINTER(ctypes.c_size_t)"
     ],
     "docstring": "TA API - Issues an Info command to return handles list. ",
@@ -1720,7 +1720,7 @@
     "restype": "ctypes.c_uint8",
     "argtypes": [
       "ctypes.c_void_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Issues an Info command to get ROM ID. ",
     "parameters": [
@@ -1994,7 +1994,7 @@
       "ctypes.c_char_p",
       "ctypes.c_char_p",
       "ctypes.c_char_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes HKDF operation using KDF command. Extract_key = HMAC(Salt, Key_Handle) Out_Handle[0-31] = HMAC(Key_ Extract_key, Info | 1) Out_Handle[32-63] = HMAC(Key_ Extract_key, Out_Handle[0-31] | Info | 2) Out_Handle[64-95] = HMAC(Key_ Extract_key, Out_Handle[32-63] | Info | 3) Out_Handle[96-127] = HMAC(Key_ Extract_key, Out_Handle[64-95] | Info | 4) ",
     "parameters": [
@@ -2046,7 +2046,7 @@
       "ctypes.c_char_p",
       "ctypes.c_uint16",
       "ctypes.c_char_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes HKDF operation using KDF command, result in IO buffer. ",
     "parameters": [
@@ -2094,7 +2094,7 @@
       "ctypes.c_char_p",
       "ctypes.c_size_t",
       "ctypes.c_uint16",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes HKDF operation using KDF command, result is stored inside device either in shared data memory or volatile register. ",
     "parameters": [
@@ -2141,7 +2141,7 @@
       "ctypes.c_uint16",
       "ctypes.c_char_p",
       "ctypes.c_char_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes PRF operation using KDF command. A1 = HMAC(Key_Handle, Input_Data) Out_Handle[0-31] = HMAC(Key_Handle, A1 | Input_Data) A2 = HMAC(Key_Handle, A1) Out_Handle[32-63] = HMAC(Key_Handle, A2 | Input_Data) A3 = HMAC(Key_Handle, A2) Out_Handle[64-95] = HMAC(Key_Handle, A3 | Input_Data) A4 = HMAC(Key_Handle, A3) Out_Handle[96-127] = HMAC(Key_Handle, A4 | Input_Data) ",
     "parameters": [
@@ -2184,7 +2184,7 @@
       "ctypes.c_char_p",
       "ctypes.c_uint16",
       "ctypes.c_char_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes PRF operation using KDF command, result in IO buffer. ",
     "parameters": [
@@ -2227,7 +2227,7 @@
       "ctypes.c_char_p",
       "ctypes.c_uint16",
       "ctypes.c_uint16",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes PRF operation using KDF command, result is stored inside device either in shared data memory or volatile register. ",
     "parameters": [
@@ -2272,7 +2272,7 @@
       "ctypes.c_char_p",
       "ctypes.c_char_p",
       "ctypes.c_char_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes HMAC-Counter operation using KDF command. Bytes 0-31: HMAC(key_handle, 1 | Label | 0 | Context | Length) Bytes 32-63: HMAC(key_handle, 2 | Label | 0 | Context | Length) Bytes 64-95: HMAC(key_handle, 3 | Label | 0 | Context | Length) Bytes 95-127: HMAC(key_handle, 4 | Label | 0 | Context | Length) ",
     "parameters": [
@@ -2324,7 +2324,7 @@
       "ctypes.c_char_p",
       "ctypes.c_uint16",
       "ctypes.c_char_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes HMAC-Counter operation using KDF command, result is in IO buffer. ",
     "parameters": [
@@ -2372,7 +2372,7 @@
       "ctypes.c_char_p",
       "ctypes.c_uint16",
       "ctypes.c_uint16",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes HMAC-Counter operation using KDF command, result is stored inside device either in shared data memory or volatile register. ",
     "parameters": [
@@ -2421,7 +2421,7 @@
       "ctypes.c_char_p",
       "ctypes.c_uint16",
       "ctypes.c_char_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes SHA256 operation using KDF command. Bytes 0-31: SHA256(Pre_pad | key_handle | Post_pad) ",
     "parameters": [
@@ -2473,7 +2473,7 @@
       "ctypes.c_char_p",
       "ctypes.c_uint16",
       "ctypes.c_char_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes SHA256 operation using KDF command, result in IO buffer. ",
     "parameters": [
@@ -2521,7 +2521,7 @@
       "ctypes.c_char_p",
       "ctypes.c_uint16",
       "ctypes.c_uint16",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes SHA256 operation using KDF command, result is stored inside device either in shared data memory or volatile register. ",
     "parameters": [
@@ -2819,7 +2819,7 @@
       "ctypes.c_char_p",
       "ctypes.c_uint16",
       "ctypes.c_char_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes MAC command for CMAC and HMAC calculations. ",
     "parameters": [
@@ -3220,7 +3220,7 @@
       "ctypes.c_uint16",
       "ctypes.c_uint16",
       "ctypes.c_uint16",
-      "ctypes.c_uint16_p",
+      "ctypes.POINTER(ctypes.c_uint16)",
       "ctypes.c_char_p",
       "ctypes.c_char_p"
     ],
@@ -3265,7 +3265,7 @@
     "argtypes": [
       "ctypes.c_void_p",
       "ctypes.c_uint16",
-      "ctypes.c_uint16_p",
+      "ctypes.POINTER(ctypes.c_uint16)",
       "ctypes.c_char_p"
     ],
     "docstring": "TA API - Executes Read command to read complete element from shared data memory. Restrictions apply based on attributes of the element. Volatile registers can never be read. ",
@@ -3294,7 +3294,7 @@
       "ctypes.c_void_p",
       "ctypes.c_uint16",
       "ctypes.c_uint16",
-      "ctypes.c_uint16_p",
+      "ctypes.POINTER(ctypes.c_uint16)",
       "ctypes.c_char_p"
     ],
     "docstring": "TA API - Executes Read command to read partial element from shared date memory. Restrictions apply based on attributes of the element. Volatile registers can never be read. ",
@@ -3507,7 +3507,7 @@
       "ctypes.c_char_p",
       "ctypes.c_char_p",
       "ctypes.c_char_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes RSAEnc command to perform RSA Encryption and Decryption operations Maximum number of bytes that can be encrypted or decrypted is 62. This is available only for RSA-1024 bit keys. ",
     "parameters": [
@@ -4228,7 +4228,7 @@
       "ctypes.c_uint16",
       "ctypes.c_char_p",
       "ctypes.c_char_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes SHA command, which computes a SHA-256 digest for general purpose use by the host system. ",
     "parameters": [
@@ -4270,7 +4270,7 @@
       "ctypes.c_uint16",
       "ctypes.c_char_p",
       "ctypes.c_char_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes SHA command, which computes a SHA-256 digest for general purpose use by the host system. ",
     "parameters": [
@@ -4535,7 +4535,7 @@
     "argtypes": [
       "ctypes.c_void_p",
       "ctypes.c_char_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": null,
     "parameters": [
@@ -4559,7 +4559,7 @@
       "ctypes.c_void_p",
       "ctypes.c_uint16",
       "ctypes.c_char_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "Executes Read command to read the SHA-256 context from given input handle. ",
     "parameters": [
@@ -4641,7 +4641,7 @@
       "ctypes.c_uint16",
       "ctypes.c_uint16",
       "ctypes.c_char_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes the Sign command for sign internally generated messages using ECDSA or RSA algorithm. ",
     "parameters": [
@@ -4685,7 +4685,7 @@
       "ctypes.c_char_p",
       "ctypes.c_uint16",
       "ctypes.c_char_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - Executes the Sign command for sign the external messages using ECDSA or RSA algorithm. ",
     "parameters": [
@@ -5523,7 +5523,7 @@
       "ctypes.c_char_p",
       "ctypes.c_uint16",
       "ctypes.c_char_p",
-      "ctypes.c_uint16_p"
+      "ctypes.POINTER(ctypes.c_uint16)"
     ],
     "docstring": "TA API - To pass data from host to TA100 or TA100 to host for sequence calculation. ",
     "parameters": [

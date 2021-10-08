@@ -35,36 +35,105 @@
 
 typedef struct atca_uart_host_s
 {
-    char    uart_file[20];
-    int     fd_uart;
-    int     uart_baud;
-    int     uart_wordsize;
-    uint8_t uart_parity;
-    uint8_t uart_stopbit;
-    int     ref_ct;
+    char uart_file[20];
+    int  fd_uart;
+    int  ref_ct;
 } atca_uart_host_t;
+
+/**
+ * \brief Convert an numerical value for baud rate into the posix/linux values
+ * \return baudrate macro value
+ */
+static speed_t hal_uart_convert_baudrate(uint32_t baudrate)
+{
+    switch (baudrate)
+    {
+    case 0:
+        return B0;
+    case 4800:
+        return B4800;
+    case 9600:
+        return B9600;
+    case 115200:
+        return B115200;
+    case 230400:
+        return B230400;
+    default:
+        return B115200;
+    }
+}
+
+/**
+ * \brief Convert integer wordsize into posix/linux flags
+ * \return flag value
+ */
+static inline tcflag_t hal_uart_convert_wordsize(uint8_t wordsize)
+{
+    switch (wordsize)
+    {
+    case 5:
+        return CS5;
+    case 6:
+        return CS6;
+    case 7:
+        return CS7;
+    default:
+        return CS8;
+    }
+}
+
+/**
+ * \brief Set baudrate default is 115200.
+ *
+ * \param[in] baudrate  contain new baudrate
+ *
+ * \return true on success, otherwise false.
+ */
+static ATCA_STATUS hal_uart_set_baudrate(ATCAIface iface, uint32_t baudrate)
+{
+    atca_uart_host_t * hal_data = (atca_uart_host_t*)atgetifacehaldat(iface);
+
+    if (hal_data && hal_data->fd_uart)
+    {
+        struct termios tty;
+        speed_t rate;
+
+        /* Get existing device attributes */
+        tcgetattr(hal_data->fd_uart, &tty);
+
+        rate = hal_uart_convert_baudrate(baudrate);
+
+        cfsetispeed(&tty, rate);
+        cfsetospeed(&tty, rate);
+
+        /* Update settings */
+        tcsetattr(hal_data->fd_uart, TCSANOW, &tty);
+    }
+    return ATCA_SUCCESS;
+}
 
 /** \brief Open and configure serial COM Uart
  * \param[out] fd  resulting file descriptor
  *
  * \return ATCA_SUCCESS on success, else an error code
  */
-ATCA_STATUS hal_uart_open_file(atca_uart_host_t * hal_data)
+static ATCA_STATUS hal_uart_open_file(atca_uart_host_t * hal_data, ATCAIfaceCfg *cfg)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
     if (hal_data)
     {
-        struct termios tty;
-
         hal_data->fd_uart = open(hal_data->uart_file, O_RDWR | O_NOCTTY);
 
         if (0 < hal_data->fd_uart)
         {
+            struct termios tty;
+            speed_t rate;
+
             /* Get existing device attributes */
             tcgetattr(hal_data->fd_uart, &tty);
 
-            /* Raw Mode */
+            /* Raw Mode (non-canonical, no echo, etc) */
             tty.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
 
             /* No flow control */
@@ -73,29 +142,48 @@ ATCA_STATUS hal_uart_open_file(atca_uart_host_t * hal_data)
             /* No output translation */
             tty.c_oflag &= ~OPOST;
 
-            //Enable read timeout
+            /* Enable read timeout */
             tty.c_cc[VTIME] = 5;
 
-            cfsetispeed(&tty, hal_data->uart_baud);
-            cfsetospeed(&tty, hal_data->uart_baud);
+            /* Convert baudrate to posix/linux format */
+            rate = hal_uart_convert_baudrate(cfg->atcauart.baud);
+            cfsetispeed(&tty, rate);
+            cfsetospeed(&tty, rate);
 
-            // set number of stopbits
-            if (1 < hal_data->uart_stopbit)
+            /* set number of stopbits */
+            if (1 < cfg->atcauart.stopbits)
             {
+                /* Two stop bits */
                 tty.c_cflag |= CSTOPB;
             }
-
-            // set parity bits
-            if (0 == hal_data->uart_parity) // even parity
+            else
             {
-                tty.c_cflag |= PARENB;
-            }
-            else if (1 == hal_data->uart_parity) // odd parity
-            {
-                tty.c_cflag |= PARENB;
-                tty.c_cflag |= PARODD;
+                /* One Stop Bit */
+                tty.c_cflag &= ~CSTOPB;
             }
 
+            /* Set the transmission word size */
+            tty.c_cflag &= ~CSIZE;
+            tty.c_cflag |= hal_uart_convert_wordsize(cfg->atcauart.wordsize);
+
+            if (0 == cfg->atcauart.parity)
+            {
+                /* Set Even Parity */
+                tty.c_cflag |= PARENB;
+                tty.c_cflag &= ~PARODD;
+            }
+            else if (1 == cfg->atcauart.parity)
+            {
+                /* Set Odd Parity */
+                tty.c_cflag |= (PARENB | PARODD);
+            }
+            else
+            {
+                /* Disable Parity */
+                tty.c_cflag &= ~PARENB;
+            }
+
+            /* Configure the port with the configured settings immediately */
             if (tcsetattr(hal_data->fd_uart, TCSANOW, &tty))
             {
                 close(hal_data->fd_uart);
@@ -147,30 +235,9 @@ ATCA_STATUS hal_uart_init(ATCAIface iface, ATCAIfaceCfg *cfg)
                                    "/dev/ttyS%d", (uint8_t)cfg->atcauart.port);
                 }
 
-                // Set linux uart baudrate mask
-                switch (cfg->atcauart.baud)
-                {
-                case 0:      hal_data->uart_baud = B0; break;
-                case 4800:   hal_data->uart_baud = B4800; break;
-                case 9600:   hal_data->uart_baud = B9600; break;
-                case 115200: hal_data->uart_baud = B115200; break;
-                default: hal_data->uart_baud = B115200; break;
-                }
-                // set linux uart character size
-                switch (cfg->atcauart.wordsize)
-                {
-                case 5: hal_data->uart_wordsize = CS5; break;
-                case 6: hal_data->uart_wordsize = CS6; break;
-                case 7: hal_data->uart_wordsize = CS7; break;
-                case 8: hal_data->uart_wordsize = CS8; break;
-                default: hal_data->uart_wordsize = CS8; break;
-                }
-
-                hal_data->uart_parity = iface->mIfaceCFG->atcauart.parity;
-                hal_data->uart_stopbit = iface->mIfaceCFG->atcauart.stopbits;
                 iface->hal_data = hal_data;
 
-                if (ATCA_SUCCESS == (status = hal_uart_open_file(hal_data)))
+                if (ATCA_SUCCESS == (status = hal_uart_open_file(hal_data, cfg)))
                 {
                     hal_data->ref_ct = 1;
                 }
@@ -304,8 +371,20 @@ ATCA_STATUS hal_uart_control(ATCAIface iface, uint8_t option, void* param, size_
 
     if (iface && iface->mIfaceCFG)
     {
-        /* This HAL does not support any of the control functions */
-        return ATCA_UNIMPLEMENTED;
+        switch (option)
+        {
+        case ATCA_HAL_CHANGE_BAUD:
+            return hal_uart_set_baudrate(iface, *(uint32_t*)param);
+        case ATCA_HAL_FLUSH_BUFFER:
+            /* Using non-canonical mode so there should be no buffering */
+            return ATCA_SUCCESS;
+        case ATCA_HAL_CONTROL_SELECT:
+        /* fallthrough */
+        case ATCA_HAL_CONTROL_DESELECT:
+            return ATCA_SUCCESS;
+        default:
+            return ATCA_UNIMPLEMENTED;
+        }
     }
     return ATCA_BAD_PARAM;
 }

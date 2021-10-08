@@ -65,7 +65,9 @@
 
 #elif defined(__XC8) || defined(__XC16)
 /* Microchip XC8 and XC16 Compilers ------------------------- */
+#ifndef SIZE_MAX
 #define SIZE_MAX 65535
+#endif
 
 #define ATCA_UINT16_HOST_TO_LE(x)  (x)
 #define ATCA_UINT16_LE_TO_HOST(x)  (x)

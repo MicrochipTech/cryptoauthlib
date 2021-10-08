@@ -47,4 +47,3 @@ t_test_case_info nonce_basic_test_info[] =
 };
 
 // *INDENT-ON*
-

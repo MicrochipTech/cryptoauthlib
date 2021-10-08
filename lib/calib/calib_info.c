@@ -64,7 +64,6 @@ ATCA_STATUS calib_info_base(ATCADevice device, uint8_t mode, uint16_t param2, ui
 
     do
     {
-
         if ((status = atInfo(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "atInfo - failed");
@@ -73,8 +72,21 @@ ATCA_STATUS calib_info_base(ATCADevice device, uint8_t mode, uint16_t param2, ui
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "calib_info_base - execution failed");
-            break;
+            // For ECC204, Lock status and Key valid modes return their status in first byte.
+            // So, need to consider 01 as valid response as it presents lock/keyvalid status.
+            if (((INFO_MODE_LOCK_STATUS == mode) || (INFO_MODE_KEY_VALID == mode))
+                && (ECC204 == device->mIface.mIfaceCFG->devtype))
+            {
+                if (status == ATCA_CHECKMAC_VERIFY_FAILED)
+                {
+                    status = ATCA_SUCCESS;
+                }
+            }
+            else
+            {
+                ATCA_TRACE(status, "calib_info_base - execution failed");
+                break;
+            }
         }
 
         uint8_t response = packet.data[ATCA_COUNT_IDX];

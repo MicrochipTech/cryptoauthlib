@@ -163,7 +163,7 @@ int atcacert_date_get_max_date(atcacert_date_format_t format, atcacert_tm_utc_t*
 /**
  * \brief Convert an unsigned integer to a zero padded string with no terminating null.
  */
-static uint8_t* uint_to_str(uint32_t num, int width, uint8_t* str)
+static uint8_t* uint_to_str(int num, int width, uint8_t* str)
 {
     uint8_t* ret = str + width;
     int i;
@@ -1033,13 +1033,13 @@ int atcacert_date_enc_compcert(const atcacert_tm_utc_t* issue_date,
 
     memset(enc_dates, 0, 3);
 
-    enc_dates[0] = (enc_dates[0] & 0x07) | (((issue_date->tm_year + 1900 - 2000) & 0x1F) << 3);
-    enc_dates[0] = (enc_dates[0] & 0xF8) | (((issue_date->tm_mon + 1) & 0x0F) >> 1);
-    enc_dates[1] = (enc_dates[1] & 0x7F) | (((issue_date->tm_mon + 1) & 0x0F) << 7);
-    enc_dates[1] = (enc_dates[1] & 0x83) | ((issue_date->tm_mday & 0x1F) << 2);
-    enc_dates[1] = (enc_dates[1] & 0xFC) | ((issue_date->tm_hour & 0x1F) >> 3);
-    enc_dates[2] = (enc_dates[2] & 0x1F) | ((issue_date->tm_hour & 0x1F) << 5);
-    enc_dates[2] = (enc_dates[2] & 0xE0) | (expire_years & 0x1F);
+    enc_dates[0] = (enc_dates[0] & 0x07) | (uint8_t)(((issue_date->tm_year + 1900 - 2000) & 0x1F) << 3);
+    enc_dates[0] = (uint8_t)((enc_dates[0] & 0xF8) | (((issue_date->tm_mon + 1) & 0x0F) >> 1));
+    enc_dates[1] = (uint8_t)((enc_dates[1] & 0x7F) | (((issue_date->tm_mon + 1) & 0x0F) << 7));
+    enc_dates[1] = (uint8_t)((enc_dates[1] & 0x83) | ((issue_date->tm_mday & 0x1F) << 2));
+    enc_dates[1] = (uint8_t)((enc_dates[1] & 0xFC) | ((issue_date->tm_hour & 0x1F) >> 3));
+    enc_dates[2] = (uint8_t)((enc_dates[2] & 0x1F) | ((issue_date->tm_hour & 0x1F) << 5));
+    enc_dates[2] = (uint8_t)((enc_dates[2] & 0xE0) | (expire_years & 0x1F));
 
     return ATCACERT_E_SUCCESS;
 }
