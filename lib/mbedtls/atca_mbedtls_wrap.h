@@ -35,6 +35,8 @@
  *
    @{ */
 
+#include "atca_device.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
