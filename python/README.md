@@ -105,7 +105,7 @@ print(''.join(['%02X ' % x for x in randomnum]))
 ```
 
 In the above python code, "import cryptoauthlib" imports the python module. load_cryptoauthlib()
-function loads the ompiled library. The load_cryptoauthlib() is a function that you will not
+function loads the compiled library. The load_cryptoauthlib() is a function that you will not
 see in the 'C' library, this is a python specific utility function and is required for python
 scripts to locate and load the compiled library.
 
