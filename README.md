@@ -104,7 +104,7 @@ Host Device Support
 ---------------
 
 CryptoAuthLib will run on a variety of platforms from small micro-controllers
-to desktop host systems. See [hal readme](lib/hal/readme.md)
+to desktop host systems. See [hal readme](lib/hal/README.md)
 
 If you have specific microcontrollers or platforms you need support
 for, please contact us through the Microchip portal with your request.
