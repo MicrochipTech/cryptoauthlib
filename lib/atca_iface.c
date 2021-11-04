@@ -153,7 +153,11 @@ ATCA_STATUS atsend(ATCAIface ca_iface, uint8_t address, uint8_t *txdata, int txl
 #ifdef ATCA_HAL_I2C
         if (ATCA_I2C_IFACE == ca_iface->mIfaceCFG->iface_type && 0xFF == address)
         {
+#ifdef ATCA_ENABLE_DEPRECATED
+            address = ca_iface->mIfaceCFG->atcai2c.slave_address;
+#else
             address = ca_iface->mIfaceCFG->atcai2c.address;
+#endif
         }
 #endif
 

@@ -232,7 +232,11 @@ uint8_t atcab_get_device_address(ATCADevice device)
         switch (device->mIface.mIfaceCFG->iface_type)
         {
         case ATCA_I2C_IFACE:
+#ifdef ATCA_ENABLE_DEPRECATED
+            return device->mIface.mIfaceCFG->atcai2c.slave_address;
+#else
             return device->mIface.mIfaceCFG->atcai2c.address;
+#endif
         default:
             break;
         }
