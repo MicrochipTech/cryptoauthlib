@@ -306,7 +306,11 @@ static CK_RV pkcs11_config_parse_interface(pkcs11_slot_ctx_ptr slot_ctx, char* c
         slot_ctx->interface_config.iface_type = ATCA_I2C_IFACE;
         if (argc > 1)
         {
+#ifdef ATCA_ENABLE_DEPRECATED
+            slot_ctx->interface_config.atcai2c.slave_address = (uint8_t)strtol(argv[1], NULL, 16);
+#else
             slot_ctx->interface_config.atcai2c.address = (uint8_t)strtol(argv[1], NULL, 16);
+#endif
         }
         if (argc > 2)
         {
