@@ -1,8 +1,15 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Create a report to help us improve this library
 
 ---
+
+<!--- Caution: Product datasheets are provided under NDA (non-disclosure
+agreement) and it is up to you to abide by the terms of it. Only use this
+form to report issues with the library itself and not issues related to
+specific device behavior. Use Microchip's support portal to ask about or
+report any device related issues: https://microchipsupport.force.com/s/
+--->
 
 **Describe the bug**
 A clear and concise description of what the bug is.

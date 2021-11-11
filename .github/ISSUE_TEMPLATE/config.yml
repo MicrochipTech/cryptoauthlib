@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Microchip Support Portal
+    url: https://microchipsupport.force.com/s/
+    about: Submit technical support requests to Microchip's team of product experts
+  - name: Microchip PSIRT Security Reporting
+    url: https://www.microchip.com/design-centers/embedded-security/how-to-report-potential-product-security-vulnerabilities
+    about: How to report security vunerabilities through Microchip's PSIRT Process
