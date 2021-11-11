@@ -48,9 +48,11 @@
 #include "mbedtls/ecdh.h"
 #include "mbedtls/ecp.h"
 #include "mbedtls/entropy.h"
-#include "mbedtls/bignum.h"
 #include "mbedtls/x509_crt.h"
 
+
+/* Cryptoauthlib Includes */
+#include "cryptoauthlib.h"
 #include "atca_mbedtls_wrap.h"
 #include "atca_mbedtls_patch.h"
 
