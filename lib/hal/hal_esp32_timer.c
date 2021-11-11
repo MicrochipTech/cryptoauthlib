@@ -25,9 +25,9 @@ void atca_delay_us(uint32_t delay)
 }
 
 #ifdef ATCA_USE_RTOS_TIMER
-void atca_delay_ms_internal(uint32_t msec)
-#else
 void atca_delay_ms(uint32_t msec)
+#else
+void atca_delay_ms_internal(uint32_t msec)
 #endif
 {
     ets_delay_us(msec * 1000);
