@@ -13,7 +13,7 @@ The previous API version is maintained for a year after a new version is release
 | Version | Supported          | Notes |
 | ------- | ------------------ | ----- |
 | 3.3.x   | :heavy_check_mark: |       |
-| 3.2.x   | :heavy_check_mark: | Security updates until January 2022 |
+| 3.2.x   | :x: | Security updates until January 2022 |
 | < 3.2   | :x:                |       |
 
 ## Reporting a Vulnerability
