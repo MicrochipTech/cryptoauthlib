@@ -166,6 +166,10 @@ typedef struct ATCA_PACKED atcacert_cert_element_s
     atcacert_transform_t  transforms[ATCA_MAX_TRANSFORMS]; //!< List of transforms from device to cert for this element.
 } atcacert_cert_element_t;
 
+#ifndef ATCA_NO_PRAGMA_PACK
+#pragma pack(pop)
+#endif
+
 /**
  * Defines a certificate and all the pieces to work with it.
  *
@@ -207,10 +211,6 @@ typedef struct atcacert_build_state_s
     uint8_t               is_device_sn;         //!< Indicates the structure contains the device SN.
     uint8_t               device_sn[9];         //!< Storage for the device SN, when it's found.
 } atcacert_build_state_t;
-
-#ifndef ATCA_NO_PRAGMA_PACK
-#pragma pack(pop)
-#endif
 
 // Inform function naming when compiling in C++
 #ifdef __cplusplus
