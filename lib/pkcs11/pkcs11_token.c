@@ -101,7 +101,7 @@ static char * pkcs11_token_device(ATCADeviceType dev_type, uint8_t info[4])
             rv = "ATECC508A";
             break;
         case 0x60:
-            if (0x02 < info[1])
+            if (info[3] >= 0x03)
             {
                 rv = "ATECC608B";
             }
