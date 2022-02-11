@@ -221,8 +221,6 @@ class atcacert_def_t(AtcaStructure):
     """
     CTypes mirror of atcacert_def_t from atcacert_def.h
     """
-    _pack_ = 1
-
     def __init__(self, *args, **kwargs):
         if kwargs is not None:
             _atcacert_convert_enum(kwargs, 'type', atcacert_cert_type_t)

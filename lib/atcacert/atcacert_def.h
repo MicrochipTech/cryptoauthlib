@@ -172,7 +172,7 @@ typedef struct ATCA_PACKED atcacert_cert_element_s
  * If any of the standard certificate elements (std_cert_elements) are not a part of the certificate
  * definition, set their count to 0 to indicate their absence.
  */
-typedef struct ATCA_PACKED atcacert_def_s
+typedef struct atcacert_def_s
 {
     atcacert_cert_type_t           type;                                    //!< Certificate type.
     uint8_t                        template_id;                             //!< ID for the this certificate definition (4-bit value).
@@ -198,7 +198,7 @@ typedef struct ATCA_PACKED atcacert_def_s
  * Tracks the state of a certificate as it's being rebuilt from device information.
  */
 
-typedef struct ATCA_PACKED atcacert_build_state_s
+typedef struct atcacert_build_state_s
 {
     const atcacert_def_t* cert_def;             //!< Certificate definition for the certificate being rebuilt.
     uint8_t*              cert;                 //!< Buffer to contain the rebuilt certificate.
