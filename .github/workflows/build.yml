@@ -2,6 +2,8 @@ name: Build and deploy wheels to pypi
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 20*
 
@@ -17,32 +19,33 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Describe Tag & Branch Name
+        if:  github.event_name == 'push' && startsWith(github.ref, 'refs/tags/20')
         id: build_names
         shell: bash
         run: |
-          echo ::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/}
+          cd python
+          echo ${GITHUB_REF#refs/tags/} >VERSION
 
       - name: Configure Environment
         shell: bash
         run: |
-          echo $TAG_NAME
           cd python
-          echo $TAG_NAME >VERSION
           cp ../release_notes.md .
           cp -r ../lib .
           cp -r ../third_party .
           mkdir app
           cp -r ../app/tng app
-        env:
-          TAG_NAME: ${{ steps.build_names.outputs.TAG_NAME }}
 
       - name: Build wheels
-        uses: joerick/cibuildwheel@v1.11.0
+        uses: pypa/cibuildwheel@v2.3.1
         with:
           package-dir: python 
         env:
-#          CIBW_SKIP: "*-win32"
+          CIBW_SKIP: "cp27-* pp*-macosx* cp35-macosx_x86_64"
           CIBW_BUILD_VERBOSITY: 3
+          CIBW_ARCHS_MACOS: "x86_64 arm64"
+          # Skip trying to test arm64 builds on Intel Macs
+          CIBW_TEST_SKIP: "*-macosx_arm64 *-macosx_universal2:arm64"
 
       - uses: actions/upload-artifact@v2
         with:
@@ -82,6 +85,7 @@ jobs:
           path: python/dist/*.tar.gz
 
   upload_pypi:
+    if:  github.event_name == 'push' && startsWith(github.ref, 'refs/tags/20')
     needs: [build_wheels, build_sdist]
     runs-on: ubuntu-latest
 
@@ -91,7 +95,20 @@ jobs:
           name: artifact
           path: dist
 
-      - uses: pypa/gh-action-pypi-publish@master
+      - name: Production Release
+        if: startsWith(github.repository, 'MicrochipTech')
+        uses: pypa/gh-action-pypi-publish@release/v1.5
         with:
           user: ${{ secrets.pypi_username }}
           password: ${{ secrets.pypi_password }}
+          skip_existing: true
+
+      - name: Test Release
+        if: ${{ !startsWith(github.repository, 'MicrochipTech') }}
+        uses: pypa/gh-action-pypi-publish@release/v1.5
+        with:
+          user: ${{ secrets.pypi_username }}
+          password: ${{ secrets.pypi_password }}
+          repository_url: https://test.pypi.org/legacy/
+          skip_existing: true
+

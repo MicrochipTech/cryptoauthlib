@@ -28,9 +28,6 @@ _CLASSIFIERS = [
     'Programming Language :: Python :: 2',
     'Programming Language :: Python :: 2.7',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.5',
-    'Programming Language :: Python :: 3.6',
-    'Programming Language :: Python :: 3.7',
     'Operating System :: OS Independent',
 ]
 
@@ -74,7 +71,7 @@ except:
 try:
     _VERSION = open('VERSION', 'r').read().strip()
 except FileNotFoundError:
-    with open('../lib/atca_version.h', 'r') as f:
+    with open('lib/atca_version.h', 'r') as f:
         m = re.search(r'ATCA_LIBRARY_VERSION_DATE\s+\"([0-9]+)\"', f.read(), re.M)
         _VERSION = m.groups()[0]
 
@@ -232,6 +229,6 @@ if __name__ == '__main__':
         setup_requires=['setuptools>=38.6.0', 'wheel'],
         install_requires=['enum34;python_version<"3.4"'],
         ext_modules=_EXTENSIONS,
-        python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4',
+        python_requires='>=3.4.*',
         zip_safe=False
     )
