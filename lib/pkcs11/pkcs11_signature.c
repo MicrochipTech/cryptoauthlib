@@ -148,6 +148,21 @@ CK_RV pkcs11_signature_sign(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_UL
                 return pkcs11_util_convert_rv(status);
             }
         }
+        else
+        {
+            switch (pSession->active_mech)
+            {
+            case CKM_SHA256_HMAC:
+                *pulSignatureLen = ATCA_SHA256_DIGEST_SIZE;
+                break;
+            case CKM_ECDSA:
+                *pulSignatureLen = ATCA_SIG_SIZE;
+                break;
+            default:
+                status = ATCA_GEN_FAIL;
+                break;
+            }
+        }
     }
     else
     {
