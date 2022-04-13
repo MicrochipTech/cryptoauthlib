@@ -428,8 +428,8 @@ CK_RV pkcs11_token_get_info(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)
     pInfo->ulMinPinLen = 0;
     pInfo->flags = CKF_RNG;// | CKF_LOGIN_REQUIRED;
 
-    pInfo->ulMaxSessionCount = 1;
-    pInfo->ulMaxRwSessionCount = 1;
+    pInfo->ulMaxSessionCount = PKCS11_MAX_SESSIONS_ALLOWED;
+    pInfo->ulMaxRwSessionCount = PKCS11_MAX_SESSIONS_ALLOWED;
 
     pInfo->ulSessionCount = (slot_ctx->session) ? TRUE : FALSE;
     pInfo->ulRwSessionCount = (slot_ctx->session) ? TRUE : FALSE;

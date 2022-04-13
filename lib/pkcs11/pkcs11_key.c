@@ -513,12 +513,12 @@ const pkcs11_attrib_model pkcs11_key_private_attributes[] = {
     { CKA_SIGN_RECOVER,        NULL_PTR                                                                                                                                                                                                     },
     /** CK_TRUE if key supports unwrapping (i.e., can be used to unwrap other keys)9 */
     { CKA_UNWRAP,              NULL_PTR                                                                                                                                                                                                     },
-    /** CK_TRUE if key is extractable and can be wrapped 9 */
-    { CKA_EXTRACTABLE,         NULL_PTR                                                                                                                                                                                                     },
+    /** CK_TRUE if key is extractable and can be wrapped */
+    { CKA_EXTRACTABLE,         pkcs11_attrib_false                                                                                                                                                                                          },
     /** CK_TRUE if key has always had the CKA_SENSITIVE attribute set to CK_TRUE */
     { CKA_ALWAYS_SENSITIVE,    pkcs11_token_get_access_type                                                                                                                                                                                 },
     /** CK_TRUE if key has never had the CKA_EXTRACTABLE attribute set to CK_TRUE */
-    { CKA_NEVER_EXTRACTABLE,   NULL_PTR                                                                                                                                                                                                     },
+    { CKA_NEVER_EXTRACTABLE,   pkcs11_token_get_access_type                                                                                                                                                                                 },
     /** CK_TRUE if the key can only be wrapped with a wrapping key that has CKA_TRUSTED set to CK_TRUE. Default is CK_FALSE. */
     { CKA_WRAP_WITH_TRUSTED,   NULL_PTR                                                                                                                                                                                                     },
     /** For wrapping keys. The attribute template to match against any keys
@@ -639,11 +639,11 @@ const pkcs11_attrib_model pkcs11_key_secret_attributes[] = {
     /** CK_TRUE if key supports unwrapping (i.e., can be used to unwrap other keys) */
     { CKA_UNWRAP,             NULL_PTR                                                                                                                                                                            },
     /** CK_TRUE if key is extractable and can be wrapped */
-    { CKA_EXTRACTABLE,        NULL_PTR                                                                                                                                                                            },
+    { CKA_EXTRACTABLE,        pkcs11_attrib_false                                                                                                                                                                 },
     /** CK_TRUE if key has always had the CKA_SENSITIVE attribute set to CK_TRUE */
     { CKA_ALWAYS_SENSITIVE,   pkcs11_token_get_access_type                                                                                                                                                        },
     /** CK_TRUE if key has never had the CKA_EXTRACTABLE attribute set to CK_TRUE  */
-    { CKA_NEVER_EXTRACTABLE,  NULL_PTR                                                                                                                                                                            },
+    { CKA_NEVER_EXTRACTABLE,  pkcs11_token_get_access_type                                                                                                                                                        },
     /** Key checksum */
     { CKA_CHECK_VALUE,        pkcs11_key_get_check_value                                                                                                                                                          },
     /** CK_TRUE if the key can only be wrapped with a wrapping key that has CKA_TRUSTED set to CK_TRUE. Default is CK_FALSE. */
