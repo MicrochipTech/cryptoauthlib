@@ -15,6 +15,7 @@ set(PKCS11_PIN_PBKDF2_ITERATIONS  2 CACHE STRING "Define how many iterations PBK
 set(PKCS11_SEARCH_CACHE_SIZE    250 CACHE STRING "Static Search Attribute Cache in bytes")
 set(PKCS11_TOKEN_INIT_SUPPORT   OFF CACHE BOOL   "Support for configuring a blank or new device")
 set(PKCS11_MONOTONIC_ENABLE     OFF CACHE BOOL   "Include the monotonic hardware feature as an object")
+set(PKCS11_AUTO_ID_ENABLE       ON  CACHE BOOL   "Generate CKA_ID values based on standards")
 
 file(GLOB PKCS11_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "pkcs11/*.c")
 file(GLOB PKCS11_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "pkcs11/*.h")

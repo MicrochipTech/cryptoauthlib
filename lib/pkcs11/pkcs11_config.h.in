@@ -115,6 +115,10 @@
 #cmakedefine01 PKCS11_MONOTONIC_ENABLE
 #endif
 
+/** Automatically generate CKA_ID values based on standards */
+#ifndef PKCS11_AUTO_ID_ENABLE
+#cmakedefine01 PKCS11_AUTO_ID_ENABLE
+#endif
 
 #include "pkcs11/cryptoki.h"
 #include <stddef.h>
