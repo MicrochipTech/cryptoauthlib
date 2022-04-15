@@ -335,6 +335,10 @@ CK_RV pkcs11_cert_get_subject_key_id(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttr
             else
             {
                 pAttribute->ulValueLen = 20;
+                if (pAttribute->pValue == NULL)
+                {
+                    return CKR_OK;
+                }
             }
         }
         else
@@ -392,7 +396,7 @@ static CK_RV pkcs11_cert_get_id(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute
         }
         else
         {
-            return pkcs11_attrib_empty(NULL, pAttribute);
+            return pkcs11_attrib_empty(pObject, pAttribute);
         }
     }
     return rv;
