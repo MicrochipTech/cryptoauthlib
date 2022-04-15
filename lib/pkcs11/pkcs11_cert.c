@@ -335,6 +335,10 @@ CK_RV pkcs11_cert_get_subject_key_id(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttr
             else
             {
                 pAttribute->ulValueLen = 20;
+                if (pAttribute->pValue == NULL)
+                {
+                    return CKR_OK;
+                }
             }
         }
         else
@@ -370,6 +374,35 @@ CK_RV pkcs11_cert_get_trusted_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttrib
         }
     }
     return CKR_ARGUMENTS_BAD;
+}
+
+static CK_RV pkcs11_cert_get_id(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+{
+#if PKCS11_AUTO_ID_ENABLE
+    return pkcs11_cert_get_subject_key_id(pObject, pAttribute);
+#elif ATCA_CA_SUPPORT
+    pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
+    CK_RV rv = CKR_ARGUMENTS_BAD;
+
+    if (obj_ptr)
+    {
+        pkcs11_cert_check_trust_data(obj_ptr);
+
+        if (obj_ptr->data)
+        {
+            atcacert_def_t * cert_cfg = (atcacert_def_t*)obj_ptr->data;
+            uint16_t key_id = ATCA_UINT16_HOST_TO_BE(cert_cfg->public_key_dev_loc.slot);
+            rv = pkcs11_attrib_fill(pAttribute, &key_id, sizeof(uint16_t));
+        }
+        else
+        {
+            return pkcs11_attrib_empty(pObject, pAttribute);
+        }
+    }
+    return rv;
+#else
+    return pkcs11_attrib_empty(pObject, pAttribute);
+#endif
 }
 
 /**
@@ -411,7 +444,7 @@ const pkcs11_attrib_model pkcs11_cert_x509public_attributes[] = {
     /** DER-encoded Certificate subject name */
     { CKA_SUBJECT,                    pkcs11_cert_get_subject                                                                                                                                                                                                                           },
     /** Key identifier for public/private key pair (default empty) */
-    { CKA_ID,                         pkcs11_attrib_empty                                                                                                                                                                                                                               },
+    { CKA_ID,                         pkcs11_cert_get_id                                                                                                                                                                                                                                },
     /** DER-encoded Certificate issuer name (default empty)*/
     { CKA_ISSUER,                     pkcs11_attrib_empty                                                                                                                                                                                                                               },
     /** DER-encoding of the certificate serial number (default empty) */

@@ -35,44 +35,44 @@
 
 /** Define to lock the PIN slot after writing */
 #ifndef PKCS11_LOCK_PIN_SLOT
-#define PKCS11_LOCK_PIN_SLOT            0
+#cmakedefine01 PKCS11_LOCK_PIN_SLOT
 #endif
 
 /** Enable PKCS#11 Debugging Messages */
 #ifndef PKCS11_DEBUG_ENABLE
-#define PKCS11_DEBUG_ENABLE             0
+#cmakedefine01 PKCS11_DEBUG_ENABLE
 #endif
 
 /** Use Static or Dynamic Allocation */
 #ifndef PKCS11_USE_STATIC_MEMORY
-#define PKCS11_USE_STATIC_MEMORY        1
+#cmakedefine01 PKCS11_USE_STATIC_MEMORY
 #endif
 
 /** Use a compiled configuration rather than loading from a filestore */
 #ifndef PKCS11_USE_STATIC_CONFIG
-#define PKCS11_USE_STATIC_CONFIG        0
+#cmakedefine01 PKCS11_USE_STATIC_CONFIG
 #endif
 
 /** Maximum number of slots allowed in the system - if static memory this will
    always be the number of slots */
 #ifndef PKCS11_MAX_SLOTS_ALLOWED
-#define PKCS11_MAX_SLOTS_ALLOWED        1
+#define PKCS11_MAX_SLOTS_ALLOWED        @PKCS11_MAX_SLOTS_ALLOWED@
 #endif
 
 /** Maximum number of total sessions allowed in the system - if using static
    memory then this many session contexts will be allocated */
 #ifndef PKCS11_MAX_SESSIONS_ALLOWED
-#define PKCS11_MAX_SESSIONS_ALLOWED     10
+#define PKCS11_MAX_SESSIONS_ALLOWED     @PKCS11_MAX_SESSIONS_ALLOWED@
 #endif
 
 /** Maximum number of cryptographic objects allowed to be cached */
 #ifndef PKCS11_MAX_OBJECTS_ALLOWED
-#define PKCS11_MAX_OBJECTS_ALLOWED      16
+#define PKCS11_MAX_OBJECTS_ALLOWED      @PKCS11_MAX_OBJECTS_ALLOWED@
 #endif
 
 /** Maximum label size in characters */
 #ifndef PKCS11_MAX_LABEL_SIZE
-#define PKCS11_MAX_LABEL_SIZE           30
+#define PKCS11_MAX_LABEL_SIZE           @PKCS11_MAX_LABEL_SIZE@
 #endif
 
 /** Define to always convert PIN using KDF */
@@ -83,8 +83,8 @@
 
 /** Define how many iterations PBKDF2 will use for PIN KDF */
 #if defined(PKCS11_PIN_PBKDF2_EN) && !defined(PKCS11_PIN_PBKDF2_ITERATIONS)
-#define PKCS11_PIN_PBKDF2_ITERATIONS    2
-#endif    
+#define PKCS11_PIN_PBKDF2_ITERATIONS    @PKCS11_PIN_PBKDF2_ITERATIONS@
+#endif
 
 /****************************************************************************/
 /* The following configuration options are for fine tuning of the library   */
@@ -96,25 +96,29 @@
    intends to use. Otherwise compilers will not be able to optimize out the unusued
    functions */
 #ifndef PKCS11_EXTERNAL_FUNCTION_LIST
-#define PKCS11_EXTERNAL_FUNCTION_LIST    0
+#cmakedefine01 PKCS11_EXTERNAL_FUNCTION_LIST
 #endif
 
 /** Static Search Attribute Cache in bytes (variable number of attributes based
    on size and memory requirements) */
 #ifndef PKCS11_SEARCH_CACHE_SIZE
-#define PKCS11_SEARCH_CACHE_SIZE        250
+#define PKCS11_SEARCH_CACHE_SIZE        @PKCS11_SEARCH_CACHE_SIZE@
 #endif
 
 /** Support for configuring a "blank" or new device */
 #ifndef PKCS11_TOKEN_INIT_SUPPORT
-#define PKCS11_TOKEN_INIT_SUPPORT       1
+#cmakedefine01 PKCS11_TOKEN_INIT_SUPPORT
 #endif
 
 /** Include the monotonic hardware feature as an object */
 #ifndef PKCS11_MONOTONIC_ENABLE
-#define PKCS11_MONOTONIC_ENABLE         0
+#cmakedefine01 PKCS11_MONOTONIC_ENABLE
 #endif
 
+/** Automatically generate CKA_ID values based on standards */
+#ifndef PKCS11_AUTO_ID_ENABLE
+#cmakedefine01 PKCS11_AUTO_ID_ENABLE
+#endif
 
 #include "pkcs11/cryptoki.h"
 #include <stddef.h>

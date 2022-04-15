@@ -373,6 +373,61 @@ static CK_RV pkcs11_key_auth_required(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAtt
     return rv;
 }
 
+static CK_RV pkcs11_key_get_id(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+{
+    pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
+    CK_RV rv = CKR_ARGUMENTS_BAD;
+
+    if (obj_ptr)
+    {
+#if PKCS11_AUTO_ID_ENABLE
+        if (pAttribute->pValue)
+        {
+            CK_BBOOL is_private;
+
+            if (CKR_OK == (rv = pkcs11_object_is_private(obj_ptr, &is_private)))
+            {
+                ATCA_STATUS status;
+                uint8_t buffer[1 + ATCA_ECCP256_PUBKEY_SIZE] = {0x04};
+
+                if (is_private)
+                {
+                    status = atcab_get_pubkey(obj_ptr->slot, &buffer[1]);
+                    PKCS11_DEBUG("atcab_get_pubkey: %x\r\n", status);
+                }
+                else
+                {
+                    status = atcab_read_pubkey(obj_ptr->slot, &buffer[1]);
+                    PKCS11_DEBUG("atcab_read_pubkey: %x\r\n", status);
+                }
+
+                if (ATCA_SUCCESS == status)
+                {
+                    status = atcac_sw_sha1(buffer, sizeof(buffer), buffer);
+                }
+
+                if (ATCA_SUCCESS == status)
+                {
+                    rv = pkcs11_attrib_fill(pAttribute, buffer, ATCA_SHA1_DIGEST_SIZE);
+                }
+                else
+                {
+                    rv = pkcs11_util_convert_rv(status);
+                }
+            }
+        }
+        else
+        {
+            rv = pkcs11_attrib_fill(pAttribute, NULL, ATCA_SHA1_DIGEST_SIZE);
+        }
+#else
+        uint16_t key_id = ATCA_UINT16_HOST_TO_BE(obj_ptr->slot);
+        rv = pkcs11_attrib_fill(pAttribute, &key_id, sizeof(uint16_t));
+#endif
+    }
+    return rv;
+}
+
 /**
  * CKO_PUBLIC_KEY - Public Key Object Model
  */
@@ -394,7 +449,7 @@ const pkcs11_attrib_model pkcs11_key_public_attributes[] = {
     /** Type of key */
     { CKA_KEY_TYPE,           pkcs11_object_get_type                                                                                                                                                              },
     /** Key identifier for key (default empty) */
-    { CKA_ID,                 pkcs11_attrib_empty                                                                                                                                                                 },
+    { CKA_ID,                 pkcs11_key_get_id                                                                                                                                                                 },
     /** Start date for the key (default empty) */
     { CKA_START_DATE,         pkcs11_attrib_empty                                                                                                                                                                 },
     /** End date for the key (default empty) */
@@ -484,7 +539,7 @@ const pkcs11_attrib_model pkcs11_key_private_attributes[] = {
     /** Type of key */
     { CKA_KEY_TYPE,            pkcs11_object_get_type                                                                                                                                                                                       },
     /** Key identifier for key (default empty) */
-    { CKA_ID,                  pkcs11_attrib_empty                                                                                                                                                                                          },
+    { CKA_ID,                  pkcs11_key_get_id                                                                                                                                                                                          },
     /** Start date for the key (default empty) */
     { CKA_START_DATE,          pkcs11_attrib_empty                                                                                                                                                                                          },
     /** End date for the key (default empty) */
