@@ -155,6 +155,8 @@ class CryptoAuthCommandBuildExt(build_ext):
                 cmake_args += ['-G', cmake_gen]
             elif sys.maxsize > 2**32:
                     cmake_args += ['-A', 'x64']
+            else:
+                    cmake_args += ['-A', 'x86']
         else:
             cmake_args += ['-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=' + extdir]
 
