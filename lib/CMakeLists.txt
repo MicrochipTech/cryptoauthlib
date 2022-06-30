@@ -41,6 +41,8 @@ option(ATCA_ATECC608_SUPPORT "Include support for ATECC608 device" ON)
 option(ATCA_TA100_SUPPORT "Include support for TA100 device" OFF)
 option(ATCA_ECC204_SUPPORT "Include support for ECC204 device" ON)
 
+option(ATCA_ZEPHYR_USE_DEFAULT_HAL "Use the default version of the Zephyr HAL" ON)
+
 # RTOS Selection
 if (TARGET zephyr_interface)
 SET(ATCA_ZEPHYR_SUPPORT ON CACHE INTERNAL "Include zephyr hal drivers")
@@ -240,8 +242,10 @@ endif()
 
 if(ATCA_ZEPHYR_SUPPORT)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ../third_party/hal/zephyr/hal_zephyr.c)
+if(ATCA_ZEPHYR_USE_DEFAULT_HAL)
 SET(TWI_SRC ../third_party/hal/zephyr/hal_zephyr_i2c.c)
 SET(SPI_SRC ../third_party/hal/zephyr/hal_zephyr_spi.c)
+endif()
 endif()
 
 if(LINUX AND NEED_USB)
