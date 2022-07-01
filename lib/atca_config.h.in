@@ -12,6 +12,7 @@
 #cmakedefine ATCA_HAL_SWI_UART
 #cmakedefine ATCA_HAL_1WIRE
 
+#cmakedefine ATCA_MAX_HAL_CACHE @ATCA_MAX_HAL_CACHE@
 
 /** Define to enable compatibility with legacy HALs
    (HALs with embedded device logic)*/
