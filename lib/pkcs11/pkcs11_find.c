@@ -40,7 +40,8 @@
    @{ */
 
 //#ifdef ATCA_NO_HEAP
-static CK_BYTE pkcs11_find_template_cache[PKCS11_SEARCH_CACHE_SIZE];
+/* as we cast pointers to CK_ATTRIBUTE on this array later on, make sure it is also aligned that way */
+static CK_BYTE __attribute__ ((aligned(__alignof__(CK_ATTRIBUTE)))) pkcs11_find_template_cache[PKCS11_SEARCH_CACHE_SIZE];
 //#endif
 
 /**
