@@ -37,7 +37,7 @@ jobs:
           cp -r ../app/tng app
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.3.1
+        uses: pypa/cibuildwheel@v2.11.1
         with:
           package-dir: python 
         env:
@@ -46,8 +46,9 @@ jobs:
           CIBW_ARCHS_MACOS: "x86_64 arm64"
           # Skip trying to test arm64 builds on Intel Macs
           CIBW_TEST_SKIP: "*-macosx_arm64 *-macosx_universal2:arm64"
+          CMAKE_OSX_ARCHITECTURES: "arm64;x86_64"
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           path: wheelhouse/*.whl
 
@@ -111,4 +112,3 @@ jobs:
           password: ${{ secrets.pypi_password }}
           repository_url: https://test.pypi.org/legacy/
           skip_existing: true
-
