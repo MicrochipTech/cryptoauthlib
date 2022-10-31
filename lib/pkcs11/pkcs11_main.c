@@ -409,7 +409,7 @@ CK_RV C_GetObjectSize(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_U
  */
 CK_RV C_GetAttributeValue(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)
 {
-    PKCS11_DEBUG("\r\n");
+ //   PKCS11_DEBUG("\r\n");
     PKCS11_DEBUG_RETURN(pkcs11_find_get_attribute(hSession, hObject, pTemplate, ulCount));
 }
 

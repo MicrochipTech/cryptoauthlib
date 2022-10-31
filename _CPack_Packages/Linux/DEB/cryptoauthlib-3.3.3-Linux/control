@@ -1,0 +1,10 @@
+Architecture: amd64
+Depends: opensc
+Description: cryptoauthlib built using CMake
+Maintainer: Hardware Group Ltd.
+Package: cryptoauthlib
+Priority: optional
+Section: devel
+Version: 3.3.3
+Installed-Size: 1895
+

@@ -1,0 +1,17 @@
+/home/georgi/CRYPTO/microchip/cryptoauthlib/CMakeFiles/package.dir
+/home/georgi/CRYPTO/microchip/cryptoauthlib/CMakeFiles/package_source.dir
+/home/georgi/CRYPTO/microchip/cryptoauthlib/CMakeFiles/edit_cache.dir
+/home/georgi/CRYPTO/microchip/cryptoauthlib/CMakeFiles/rebuild_cache.dir
+/home/georgi/CRYPTO/microchip/cryptoauthlib/CMakeFiles/list_install_components.dir
+/home/georgi/CRYPTO/microchip/cryptoauthlib/CMakeFiles/install.dir
+/home/georgi/CRYPTO/microchip/cryptoauthlib/CMakeFiles/install/local.dir
+/home/georgi/CRYPTO/microchip/cryptoauthlib/CMakeFiles/install/strip.dir
+/home/georgi/CRYPTO/microchip/cryptoauthlib/lib/CMakeFiles/cryptoauth.dir
+/home/georgi/CRYPTO/microchip/cryptoauthlib/lib/CMakeFiles/package.dir
+/home/georgi/CRYPTO/microchip/cryptoauthlib/lib/CMakeFiles/package_source.dir
+/home/georgi/CRYPTO/microchip/cryptoauthlib/lib/CMakeFiles/edit_cache.dir
+/home/georgi/CRYPTO/microchip/cryptoauthlib/lib/CMakeFiles/rebuild_cache.dir
+/home/georgi/CRYPTO/microchip/cryptoauthlib/lib/CMakeFiles/list_install_components.dir
+/home/georgi/CRYPTO/microchip/cryptoauthlib/lib/CMakeFiles/install.dir
+/home/georgi/CRYPTO/microchip/cryptoauthlib/lib/CMakeFiles/install/local.dir
+/home/georgi/CRYPTO/microchip/cryptoauthlib/lib/CMakeFiles/install/strip.dir

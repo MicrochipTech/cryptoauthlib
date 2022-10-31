@@ -81,7 +81,7 @@ CK_RV pkcs11_lock_context(pkcs11_lib_ctx_ptr pContext)
         }
         else
         {
-            rv = CKR_CANT_LOCK;
+            rv = CKR_OK;//CKR_CANT_LOCK;
         }
     }
     return rv;
@@ -106,7 +106,7 @@ CK_RV pkcs11_unlock_context(pkcs11_lib_ctx_ptr pContext)
         }
         else
         {
-            rv = CKR_CANT_LOCK;
+            rv = CKR_OK;
         }
     }
 

@@ -51,15 +51,19 @@ endif()
 endif()
 
 # Set up a default configuration file to install
-configure_file(${PROJECT_SOURCE_DIR}/app/pkcs11/cryptoauthlib.conf.in ${PROJECT_BINARY_DIR}/${DEFAULT_CONF_FILE_NAME})
-
+#configure_file(${PROJECT_SOURCE_DIR}/app/pkcs11/cryptoauthlib.conf.in ${DEFAULT_CONF_PATH}/${DEFAULT_CONF_FILE_NAME})
+install(DIRECTORY "${PROJECT_SOURCE_DIR}/udev/" DESTINATION "${LOCAL_APP_DATA}/etc/udev/rules.d/")
+install(DIRECTORY "${PROJECT_SOURCE_DIR}/etc/" DESTINATION "${DEFAULT_CONF_PATH}")
+install(DIRECTORY "${PROJECT_SOURCE_DIR}/slot/" DESTINATION "${LOCAL_APP_DATA}/var/lib/cryptoauthlib/")
 # Packaging
 set(CPACK_PACKAGE_VENDOR "Microchip Technology Inc")
 set(CPACK_PACKAGE_VERSION_MAJOR ${VERSION_MAJOR})
 set(CPACK_PACKAGE_VERSION_MINOR ${VERSION_MINOR})
 set(CPACK_PACKAGE_VERSION_PATCH ${VERSION_PATCH})
-set(CPACK_GENERATOR "TGZ")
-set(CPACK_SOURCE_GENERATOR "TGZ")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "opensc")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Hardware Group Ltd.")
+set(CPACK_GENERATOR "DEB")
+set(CPACK_SOURCE_GENERATOR "DEB")
 set(CPACK_SOURCE_IGNORE_FILES "build/*;\\.git/*")
 
 include(CPack)

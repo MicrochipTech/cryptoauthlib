@@ -1,0 +1,1 @@
+ACTION=="add|change", SUBSYSTEM=="i2c-dev", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="c631", SYMLINK+="i2c-20"
