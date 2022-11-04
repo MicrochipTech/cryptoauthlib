@@ -94,5 +94,9 @@ def __update_signatures(lib, filename):
 
 _lib_definition_file = os.path.join(os.path.dirname(__file__), 'cryptoauth.json')
 
-if os.path.exists(_lib_definition_file):
-    __update_signatures(get_cryptoauthlib(), _lib_definition_file)
+def __reinitialize():
+    global _lib_definition_file
+    if os.path.exists(_lib_definition_file):
+        __update_signatures(get_cryptoauthlib(), _lib_definition_file)
+
+__reinitialize()

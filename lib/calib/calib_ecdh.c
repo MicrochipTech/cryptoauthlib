@@ -34,8 +34,10 @@
  */
 
 #include "cryptoauthlib.h"
+
 #include "host/atca_host.h"
 
+#if CALIB_ECDH_EN
 /** \brief Base function for generating premaster secret key using ECDH.
  *  \param[in]  device      Device context pointer
  *  \param[in]  mode        Mode to be used for ECDH computation
@@ -116,7 +118,9 @@ ATCA_STATUS calib_ecdh(ATCADevice device, uint16_t key_id, const uint8_t* public
 
     return status;
 }
+#endif /* CALIB_ECDH */
 
+#if CALIB_ECDH_ENC_EN
 /** \brief ECDH command with a private key in a slot and the premaster secret
  *         is read from the next slot.
  *
@@ -212,6 +216,7 @@ ATCA_STATUS calib_ecdh_ioenc(ATCADevice device, uint16_t key_id, const uint8_t* 
 
     return status;
 }
+#endif /* CALIB_ECDH_ENC_EN */
 
 /** \brief ECDH command with a private key in TempKey and the premaster secret
  *         is returned in the clear.
@@ -225,6 +230,7 @@ ATCA_STATUS calib_ecdh_ioenc(ATCADevice device, uint16_t key_id, const uint8_t* 
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if CALIB_ECDH_EN
 ATCA_STATUS calib_ecdh_tempkey(ATCADevice device, const uint8_t* public_key, uint8_t* pms)
 {
     // Perform ECDH operation with TempKey
@@ -232,6 +238,7 @@ ATCA_STATUS calib_ecdh_tempkey(ATCADevice device, const uint8_t* public_key, uin
 
     return calib_ecdh_base(device, mode, 0x0000, public_key, pms, NULL);
 }
+#endif /* CALIB_ECDH */
 
 /** \brief ECDH command with a private key in TempKey and the premaster secret
  *         is returned encrypted using the IO protection key.
@@ -246,6 +253,8 @@ ATCA_STATUS calib_ecdh_tempkey(ATCADevice device, const uint8_t* public_key, uin
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
+
+#if CALIB_ECDH_ENC_EN
 ATCA_STATUS calib_ecdh_tempkey_ioenc(ATCADevice device, const uint8_t* public_key, uint8_t* pms, const uint8_t* io_key)
 {
     uint8_t mode = ECDH_MODE_SOURCE_TEMPKEY | ECDH_MODE_OUTPUT_ENC | ECDH_MODE_COPY_OUTPUT_BUFFER;
@@ -272,3 +281,4 @@ ATCA_STATUS calib_ecdh_tempkey_ioenc(ATCADevice device, const uint8_t* public_ke
 
     return status;
 }
+#endif /* CALIB_ECDH_ENC */

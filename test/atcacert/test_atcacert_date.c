@@ -49,6 +49,7 @@ static void set_tm(atcacert_tm_utc_t* ts, int year, int month, int day, int hour
     ts->tm_sec = sec;
 }
 
+#if ATCACERT_DATEFMT_ISO_EN
 TEST_GROUP(atcacert_date_enc_iso8601_sep);
 
 TEST_SETUP(atcacert_date_enc_iso8601_sep)
@@ -209,9 +210,7 @@ TEST(atcacert_date_enc_iso8601_sep, bad_params)
     ret = atcacert_date_enc_iso8601_sep(NULL, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
-
-
-
+#endif
 
 TEST_GROUP(atcacert_date_enc_rfc5280_utc);
 
@@ -395,7 +394,7 @@ TEST(atcacert_date_enc_rfc5280_utc, bad_params)
 }
 
 
-
+#if ATCACERT_DATEFMT_POSIX_EN
 TEST_GROUP(atcacert_date_enc_posix_uint32_be);
 
 TEST_SETUP(atcacert_date_enc_posix_uint32_be)
@@ -611,7 +610,7 @@ TEST(atcacert_date_enc_posix_uint32_le, bad_params)
     ret = atcacert_date_enc_posix_uint32_le(NULL, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
-
+#endif
 
 
 TEST_GROUP(atcacert_date_enc_rfc5280_gen);
@@ -954,6 +953,7 @@ TEST_TEAR_DOWN(atcacert_date_enc)
 {
 }
 
+#if ATCACERT_DATEFMT_ISO_EN
 TEST(atcacert_date_enc, iso8601_sep)
 {
     int ret = 0;
@@ -975,6 +975,7 @@ TEST(atcacert_date_enc, iso8601_sep)
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL(DATEFMT_ISO8601_SEP_SIZE, ts_str_size);
 }
+#endif
 
 TEST(atcacert_date_enc, rfc5280_utc)
 {
@@ -998,6 +999,7 @@ TEST(atcacert_date_enc, rfc5280_utc)
     TEST_ASSERT_EQUAL(DATEFMT_RFC5280_UTC_SIZE, ts_str_size);
 }
 
+#if ATCACERT_DATEFMT_POSIX_EN
 TEST(atcacert_date_enc, posix_uint32_be)
 {
     int ret = 0;
@@ -1041,6 +1043,7 @@ TEST(atcacert_date_enc, posix_uint32_le)
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL(DATEFMT_POSIX_UINT32_BE_SIZE, ts_str_size);
 }
+#endif
 
 TEST(atcacert_date_enc, rfc5280_gen)
 {
@@ -1130,7 +1133,7 @@ TEST(atcacert_date_enc, bad_params)
 
 
 
-
+#if ATCACERT_DATEFMT_ISO_EN
 TEST_GROUP(atcacert_date_dec_iso8601_sep);
 
 TEST_SETUP(atcacert_date_dec_iso8601_sep)
@@ -1232,7 +1235,7 @@ TEST(atcacert_date_dec_iso8601_sep, bad_params)
     ret = atcacert_date_dec_iso8601_sep(NULL, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
-
+#endif
 
 
 
@@ -1361,7 +1364,7 @@ TEST(atcacert_date_dec_rfc5280_utc, bad_params)
 }
 
 
-
+#if ATCACERT_DATEFMT_POSIX_EN
 TEST_GROUP(atcacert_date_dec_posix_uint32_be);
 
 TEST_SETUP(atcacert_date_dec_posix_uint32_be)
@@ -1564,7 +1567,7 @@ TEST(atcacert_date_dec_posix_uint32_le, bad_params)
     ret = atcacert_date_dec_posix_uint32_le(NULL, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
-
+#endif
 
 
 TEST_GROUP(atcacert_date_dec_rfc5280_gen);

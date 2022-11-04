@@ -146,12 +146,12 @@ static ATCA_STATUS hal_uart_open_file(atca_uart_host_t * hal_data, ATCAIfaceCfg 
             tty.c_cc[VTIME] = 5;
 
             /* Convert baudrate to posix/linux format */
-            rate = hal_uart_convert_baudrate(cfg->atcauart.baud);
+            rate = hal_uart_convert_baudrate(ATCA_IFACECFG_VALUE(cfg, atcauart.baud));
             cfsetispeed(&tty, rate);
             cfsetospeed(&tty, rate);
 
             /* set number of stopbits */
-            if (1 < cfg->atcauart.stopbits)
+            if (1 < ATCA_IFACECFG_VALUE(cfg, atcauart.stopbits))
             {
                 /* Two stop bits */
                 tty.c_cflag |= CSTOPB;
@@ -164,15 +164,15 @@ static ATCA_STATUS hal_uart_open_file(atca_uart_host_t * hal_data, ATCAIfaceCfg 
 
             /* Set the transmission word size */
             tty.c_cflag &= ~CSIZE;
-            tty.c_cflag |= hal_uart_convert_wordsize(cfg->atcauart.wordsize);
+            tty.c_cflag |= hal_uart_convert_wordsize(ATCA_IFACECFG_VALUE(cfg, atcauart.wordsize));
 
-            if (0 == cfg->atcauart.parity)
+            if (0 == ATCA_IFACECFG_VALUE(cfg, atcauart.parity))
             {
                 /* Set Even Parity */
                 tty.c_cflag |= PARENB;
                 tty.c_cflag &= ~PARODD;
             }
-            else if (1 == cfg->atcauart.parity)
+            else if (1 == ATCA_IFACECFG_VALUE(cfg, atcauart.parity))
             {
                 /* Set Odd Parity */
                 tty.c_cflag |= (PARENB | PARODD);
@@ -232,7 +232,7 @@ ATCA_STATUS hal_uart_init(ATCAIface iface, ATCAIfaceCfg *cfg)
                 else
                 {
                     (void)snprintf(hal_data->uart_file, sizeof(hal_data->uart_file) - 1,
-                                   "/dev/ttyS%d", (uint8_t)cfg->atcauart.port);
+                                   "/dev/ttyS%d", (uint8_t)ATCA_IFACECFG_VALUE(cfg, atcauart.port));
                 }
 
                 iface->hal_data = hal_data;

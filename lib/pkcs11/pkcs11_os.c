@@ -33,21 +33,12 @@
    @{ */
 
 /**
- * \brief Convert HAL return codes to PKCS11 return values
- * \param[IN] status Code returned by hal call
- */
-static CK_RV pkcs11_os_convert_rv(ATCA_STATUS status)
-{
-    return (ATCA_FUNC_FAIL == status) ? CKR_CANT_LOCK : pkcs11_util_convert_rv(status);
-}
-
-/**
  * \brief Application callback for creating a mutex object
  * \param[in,out] ppMutex location to receive ptr to mutex
  */
 CK_RV pkcs11_os_create_mutex(CK_VOID_PTR_PTR ppMutex)
 {
-    return pkcs11_os_convert_rv(hal_create_mutex(ppMutex, "atpkcs11"));
+    return pkcs11_util_convert_rv(hal_create_mutex(ppMutex, "atpkcs11"));
 }
 
 /*
@@ -56,7 +47,7 @@ CK_RV pkcs11_os_create_mutex(CK_VOID_PTR_PTR ppMutex)
  */
 CK_RV pkcs11_os_destroy_mutex(CK_VOID_PTR pMutex)
 {
-    return pkcs11_os_convert_rv(hal_destroy_mutex(pMutex));
+    return pkcs11_util_convert_rv(hal_destroy_mutex(pMutex));
 }
 
 /*
@@ -65,7 +56,7 @@ CK_RV pkcs11_os_destroy_mutex(CK_VOID_PTR pMutex)
  */
 CK_RV pkcs11_os_lock_mutex(CK_VOID_PTR pMutex)
 {
-    return pkcs11_os_convert_rv(hal_lock_mutex(pMutex));
+    return pkcs11_util_convert_rv(hal_lock_mutex(pMutex));
 }
 
 /*
@@ -74,7 +65,7 @@ CK_RV pkcs11_os_lock_mutex(CK_VOID_PTR pMutex)
  */
 CK_RV pkcs11_os_unlock_mutex(CK_VOID_PTR pMutex)
 {
-    return pkcs11_os_convert_rv(hal_unlock_mutex(pMutex));
+    return pkcs11_util_convert_rv(hal_unlock_mutex(pMutex));
 }
 
 /** @} */

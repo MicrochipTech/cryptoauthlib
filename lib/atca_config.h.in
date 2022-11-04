@@ -83,6 +83,9 @@
 /** Define to enable older API forms that have been replaced */
 #cmakedefine ATCA_ENABLE_DEPRECATED
 
+/** Enable Strict ISO/C99 compliance */
+#cmakedefine ATCA_STRICT_C99
+
 /** TA100 Specific - Enable auth sessions that require AES (CMAC/GCM) from
    an external library */
 #cmakedefine ATCA_TA100_AES_AUTH_SUPPORT
@@ -95,9 +98,11 @@
 /** Define if the library is not to use malloc/free */
 #cmakedefine ATCA_NO_HEAP
 
-/** Define platform malloc/free */
-#cmakedefine ATCA_PLATFORM_MALLOC    @ATCA_PLATFORM_MALLOC@
-#cmakedefine ATCA_PLATFORM_FREE      @ATCA_PLATFORM_FREE@
+/** Define platform provided functions */
+#cmakedefine ATCA_PLATFORM_MALLOC      @ATCA_PLATFORM_MALLOC@
+#cmakedefine ATCA_PLATFORM_FREE        @ATCA_PLATFORM_FREE@
+#cmakedefine ATCA_PLATFORM_STRCASESTR  @ATCA_PLATFORM_STRCASESTR@
+#cmakedefine ATCA_PLATFORM_MEMSET_S    @ATCA_PLATFORM_MEMSET_S@
 
 #define atca_delay_ms   hal_delay_ms
 #define atca_delay_us   hal_delay_us

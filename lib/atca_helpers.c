@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 #include "cryptoauthlib.h"
 #include "atca_helpers.h"
 
@@ -853,6 +854,7 @@ ATCA_STATUS atcab_base64decode(const char* encoded, size_t encoded_len, uint8_t*
     return atcab_base64decode_(encoded, encoded_len, byte_array, array_len, atcab_b64rules_default);
 }
 
+#if !defined(ATCA_PLATFORM_MEMSET_S) && !defined(memset_s)
 /**
  * \brief Guaranteed to perform memory writes regardless of optimization level. Matches memset_s signature
  */
@@ -879,3 +881,52 @@ int atcab_memset_s(void* dest, size_t destsz, int ch, size_t count)
 
     return 0;
 }
+#endif
+
+#if !defined(ATCA_PLATFORM_STRCASESTR) && !defined(strcasecstr)
+/**
+ * \brief Search for a substring in a case insenstive format
+ */
+char * lib_strcasestr(const char *haystack, const char *needle)
+{
+    const char * h = haystack;
+    const char * n = needle;
+    const char * m = NULL;
+
+    if (!h || !n)
+    {
+        return (char*)h;
+    }
+
+    while(*h && *n)
+    {
+        if (*h != *n && *h != toupper(*n))
+        {
+            if(m)
+            {
+                /* Restart Matching */
+                m = NULL;
+                n = needle;
+            }
+            else 
+            {
+                /* Continue stepping through the haystack */
+                h++;
+            }
+        }
+        else
+        {
+            if (!m)
+            {
+                /* Save the start of the match */
+                m = h;
+            }
+            n++;
+            h++;
+        }
+    }
+
+    /* if we reached the end of the needle then it was found */
+    return (char*)((!*n) ? m : NULL);
+}
+#endif

@@ -38,6 +38,7 @@ extern t_test_case_info calib_commands_info[];
 extern t_test_case_info calib_packet_info[];
 
 ATCA_STATUS calib_config_get_slot_by_test(uint8_t test_type, uint16_t* handle);
+ATCA_STATUS calib_config_get_ecc204_slot_by_test(uint8_t test_type, uint16_t* handle);
 
 #ifdef __cplusplus
 }

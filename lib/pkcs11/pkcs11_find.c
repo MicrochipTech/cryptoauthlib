@@ -197,7 +197,7 @@ static pkcs11_attrib_model_ptr pkcs11_find_attrib_match(pkcs11_object_ptr pObjec
     return NULL_PTR;
 }
 
-static CK_OBJECT_HANDLE pkcs11_find_handle(const CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ULONG_PTR index)
+static CK_OBJECT_HANDLE pkcs11_find_handle(const CK_SLOT_ID slotid, const CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ULONG_PTR index)
 {
     CK_ULONG i;
     CK_ULONG j;
@@ -207,7 +207,7 @@ static CK_OBJECT_HANDLE pkcs11_find_handle(const CK_ATTRIBUTE_PTR pTemplate, CK_
     for (i = (index) ? *index : 0; i < PKCS11_MAX_OBJECTS_ALLOWED; i++)
     {
         pkcs11_object_ptr pObject = pkcs11_object_cache[i].object;
-        if (pObject)
+        if (pObject && slotid == pkcs11_object_cache[i].slotid)
         {
             /* Iterate through attribute list */
             for (j = 0; j < ulCount; j++)
@@ -248,11 +248,12 @@ static CK_OBJECT_HANDLE pkcs11_find_handle(const CK_ATTRIBUTE_PTR pTemplate, CK_
 
 CK_RV pkcs11_find_init(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)
 {
+    pkcs11_lib_ctx_ptr pLibCtx;
     pkcs11_session_ctx_ptr pSession;
     CK_ULONG index = 0;
     CK_RV rv;
 
-    rv = pkcs11_init_check(NULL, FALSE);
+    rv = pkcs11_init_check(&pLibCtx, FALSE);
     if (rv)
     {
         return rv;
@@ -275,42 +276,48 @@ CK_RV pkcs11_find_init(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pTemplate, C
         get private unless we're using a shared key system - and that will only be
         for secured data and not key info */
 
-    if (pkcs11_find_handle(pTemplate, ulCount, &index))
+    if (CKR_OK == (rv = (pkcs11_lock_both(pLibCtx))))
     {
-        if (ulCount)
+        if (pkcs11_find_handle(pSession->slot->slot_id, pTemplate, ulCount, &index))
         {
-            rv = pkcs11_find_copy_template(pkcs11_find_template_cache, PKCS11_SEARCH_CACHE_SIZE, pTemplate, ulCount);
-            if (rv)
+            if (ulCount)
             {
-                return rv;
+                if (CKR_OK == (rv = pkcs11_find_copy_template(pkcs11_find_template_cache, PKCS11_SEARCH_CACHE_SIZE, pTemplate, ulCount)))
+                {
+                    pSession->attrib_list = (CK_ATTRIBUTE_PTR)pkcs11_find_template_cache;
+                }
             }
-            pSession->attrib_list = (CK_ATTRIBUTE_PTR)pkcs11_find_template_cache;
+            else
+            {
+                pSession->attrib_list = NULL_PTR;
+            }
+            if (CKR_OK == rv)
+            {
+                pSession->attrib_count = ulCount;
+                pSession->object_index = index;
+                pSession->object_count = 1;
+                index++;
+                while (pkcs11_find_handle(pSession->slot->slot_id, pSession->attrib_list, ulCount, &index))
+                {
+                    pSession->object_count++;
+                    index++;
+                }
+            }
         }
-        else
-        {
-            pSession->attrib_list = NULL_PTR;
-        }
-        pSession->attrib_count = ulCount;
-        pSession->object_index = index;
-        pSession->object_count = 1;
-        index++;
-        while (pkcs11_find_handle(pSession->attrib_list, ulCount, &index))
-        {
-            pSession->object_count++;
-            index++;
-        }
+        (void)pkcs11_unlock_both(pLibCtx);
     }
 
-    return CKR_OK;
+    return rv;
 }
 
 CK_RV pkcs11_find_continue(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE_PTR phObject, CK_ULONG ulMaxObjectCount, CK_ULONG_PTR pulObjectCount)
 {
+    pkcs11_lib_ctx_ptr pLibCtx;
     pkcs11_session_ctx_ptr pSession;
     CK_ULONG i;
     CK_RV rv;
 
-    rv = pkcs11_init_check(NULL, FALSE);
+    rv = pkcs11_init_check(&pLibCtx, FALSE);
     if (rv)
     {
         return rv;
@@ -329,25 +336,30 @@ CK_RV pkcs11_find_continue(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE_PTR phOb
 
     *pulObjectCount = (pSession->object_count < ulMaxObjectCount) ? pSession->object_count : ulMaxObjectCount;
 
-    for (i = 0; i < *pulObjectCount; i++)
+    if (CKR_OK == (rv = (pkcs11_lock_both(pLibCtx))))
     {
-        phObject[i] = pkcs11_find_handle(pSession->attrib_list, pSession->attrib_count, &pSession->object_index);
-        if (!phObject[i])
+        for (i = 0; i < *pulObjectCount; i++)
         {
-            pSession->object_count = 0;
-            *pulObjectCount = i;
-            break;
-        }
+            phObject[i] = pkcs11_find_handle(pSession->slot->slot_id, pSession->attrib_list, 
+                                                pSession->attrib_count, &pSession->object_index);
+            if (!phObject[i])
+            {
+                pSession->object_count = 0;
+                *pulObjectCount = i;
+                break;
+            }
 
-        pSession->object_index++;
+            pSession->object_index++;
 
-        if (pSession->object_count)
-        {
-            pSession->object_count--;
+            if (pSession->object_count)
+            {
+                pSession->object_count--;
+            }
         }
+        (void)pkcs11_unlock_both(pLibCtx);
     }
 
-    return CKR_OK;
+    return rv;
 }
 
 CK_RV pkcs11_find_finish(CK_SESSION_HANDLE hSession)
@@ -425,7 +437,7 @@ CK_RV pkcs11_find_get_attribute(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hOb
         }
         else if (pAttribute->func)
         {
-            if (CKR_OK == pkcs11_lock_context(pLibCtx))
+            if (CKR_OK == pkcs11_lock_both(pLibCtx))
             {
                 /* Attribute function found so try to execute it */
                 CK_RV temp = pAttribute->func(pObject, &pTemplate[i]);
@@ -433,7 +445,11 @@ CK_RV pkcs11_find_get_attribute(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hOb
                 {
                     rv = temp;
                 }
-                pkcs11_unlock_context(pLibCtx);
+                (void)pkcs11_unlock_both(pLibCtx);
+            }
+            else if (!rv)
+            {
+                rv = CKR_GENERAL_ERROR;
             }
         }
         else

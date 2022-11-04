@@ -25,9 +25,13 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
 
-#ifdef ATCA_ECC_SUPPORT
+#ifndef TEST_ATCAB_ECDH_EN
+#define TEST_ATCAB_ECDH_EN      CALIB_ECDH_EN || TALIB_ECDH_EN
+#endif
+
+#if TEST_ATCAB_ECDH_EN && CALIB_ECDH_EN
 TEST(atca_cmd_basic_test, ecdh)
 {
     ATCA_STATUS status;
@@ -58,7 +62,7 @@ TEST(atca_cmd_basic_test, ecdh)
     memset(pub_alice, 0x44, ATCA_PUB_KEY_SIZE);
     memset(pub_bob, 0x44, ATCA_PUB_KEY_SIZE);
 
-    status = atcab_genkey(key_id_alice, pub_alice);
+    status = atca_test_genkey(key_id_alice, pub_alice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
 #ifdef ATCA_PRINTF
@@ -70,7 +74,7 @@ TEST(atca_cmd_basic_test, ecdh)
 
     TEST_ASSERT_NOT_EQUAL_MESSAGE(0, memcmp(pub_alice, frag, sizeof(frag)), "Alice key not initialized");
 
-    status = atcab_genkey(key_id_bob, pub_bob);
+    status = atca_test_genkey(key_id_bob, pub_bob);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_NOT_EQUAL_MESSAGE(0, memcmp(pub_bob, frag, sizeof(frag)), "Bob key not initialized");
 
@@ -117,6 +121,7 @@ TEST(atca_cmd_basic_test, ecdh)
 }
 #endif
 
+#if TEST_ATCAB_ECDH_EN
 TEST(atca_cmd_basic_test, ecdh_simple)
 {
     ATCA_STATUS status;
@@ -142,7 +147,7 @@ TEST(atca_cmd_basic_test, ecdh_simple)
     memset(pub_alice, 0x44, ATCA_ECCP256_PUBKEY_SIZE);
     memset(pub_bob, 0x44, ATCA_ECCP256_PUBKEY_SIZE);
 
-    status = atcab_genkey(key_id_alice, pub_alice);
+    status = atca_test_genkey(key_id_alice, pub_alice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
 #ifdef ATCA_PRINTF
@@ -154,7 +159,7 @@ TEST(atca_cmd_basic_test, ecdh_simple)
 
     TEST_ASSERT_NOT_EQUAL_MESSAGE(0, memcmp(pub_alice, frag, sizeof(frag)), "Alice key not initialized");
 
-    status = atcab_genkey(key_id_bob, pub_bob);
+    status = atca_test_genkey(key_id_bob, pub_bob);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_NOT_EQUAL_MESSAGE(0, memcmp(pub_bob, frag, sizeof(frag)), "Bob key not initialized");
 
@@ -189,8 +194,9 @@ TEST(atca_cmd_basic_test, ecdh_simple)
 
     TEST_ASSERT_EQUAL_MEMORY(pms_alice, pms_bob, sizeof(pms_alice));
 }
+#endif
 
-#ifdef ATCA_ATECC608_SUPPORT
+#if TEST_ATCAB_ECDH_EN && defined(ATCA_ATECC608_SUPPORT)
 TEST(atca_cmd_basic_test, ecdh_protection_key)
 {
     ATCA_STATUS status;
@@ -212,7 +218,7 @@ TEST(atca_cmd_basic_test, ecdh_protection_key)
     memset(pub_bob, 0x44, ATCA_PUB_KEY_SIZE);
 
     //Generating Alice private key in tempkey and public key from tempkey.
-    status = atcab_genkey(tempkey_alice, pub_alice);
+    status = atca_test_genkey(tempkey_alice, pub_alice);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_NOT_EQUAL_MESSAGE(0, memcmp(pub_alice, frag, sizeof(frag)), "Alice key not initialized");
 
@@ -224,7 +230,7 @@ TEST(atca_cmd_basic_test, ecdh_protection_key)
 #endif
 
     //Generating Bob public key from private key in slot
-    status = atcab_genkey(key_id_bob, pub_bob);
+    status = atca_test_genkey(key_id_bob, pub_bob);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_NOT_EQUAL_MESSAGE(0, memcmp(pub_bob, frag, sizeof(frag)), "Bob key not initialized");
 
@@ -266,14 +272,14 @@ TEST(atca_cmd_basic_test, ecdh_protection_key)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info ecdh_basic_test_info[] =
 {
-#ifdef ATCA_ECC_SUPPORT
+#if TEST_ATCAB_ECDH_EN
+#if CALIB_ECDH_EN
     { REGISTER_TEST_CASE(atca_cmd_basic_test, ecdh),                DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
 #endif
-#if defined(ATCA_ECC_SUPPORT) || defined(ATCA_TA100_SUPPORT)
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, ecdh_simple),                DEVICE_MASK(TA100) },
-#endif
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, ecdh_simple),         DEVICE_MASK(TA100) },
 #ifdef ATCA_ATECC608_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, ecdh_protection_key),                          DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, ecdh_protection_key), DEVICE_MASK(ATECC608) },
+#endif
 #endif
     { (fp_test_case)NULL,                     (uint8_t)0 },         /* Array Termination element*/
 };

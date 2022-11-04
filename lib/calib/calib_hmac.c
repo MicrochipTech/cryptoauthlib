@@ -35,6 +35,7 @@
 
 #include "cryptoauthlib.h"
 
+#if CALIB_HMAC_EN
 /** \brief Issues a HMAC command, which computes an HMAC/SHA-256 digest of a
  *          key stored in the device, a challenge, and other information on the
  *          device.
@@ -91,3 +92,4 @@ ATCA_STATUS calib_hmac(ATCADevice device, uint8_t mode, uint16_t key_id, uint8_t
 
     return status;
 }
+#endif  /* CALIB_HMAC_EN */

@@ -55,12 +55,12 @@ static int selected(const char* filter, const char* name)
 
 static int testSelected(const char* test)
 {
-    return selected(UnityFixture.NameFilter, test);
+    return UnityFixture.NameInvert ^ selected(UnityFixture.NameFilter, test);
 }
 
 static int groupSelected(const char* group)
 {
-    return selected(UnityFixture.GroupFilter, group);
+    return UnityFixture.GroupInvert ^ selected(UnityFixture.GroupFilter, group);
 }
 
 void UnityTestRunner(unityfunction* setup,
@@ -209,7 +209,11 @@ int UnityGetCommandLineOptions(int argc, const char* argv[])
             UNITY_PRINT_EOL();
             UnityPrint("  -g NAME     Only run tests in groups that contain the string NAME");
             UNITY_PRINT_EOL();
+            UnityPrint("  -G NAME     Only run tests in groups that do not contain the string NAME");
+            UNITY_PRINT_EOL();
             UnityPrint("  -n NAME     Only run tests whose name contains the string NAME");
+            UNITY_PRINT_EOL();
+            UnityPrint("  -N NAME     Only run tests whose name does not contain the string NAME");
             UNITY_PRINT_EOL();
             UnityPrint("  -r NUMBER   Repeatedly run all tests NUMBER times");
             UNITY_PRINT_EOL();
@@ -245,12 +249,30 @@ int UnityGetCommandLineOptions(int argc, const char* argv[])
             UnityFixture.GroupFilter = argv[i];
             i++;
         }
+        else if (strcmp(argv[i], "-G") == 0)
+        {
+            i++;
+            if (i >= argc)
+                return 1;
+            UnityFixture.GroupFilter = argv[i];
+            UnityFixture.GroupInvert = 1;
+            i++;
+        }
         else if (strcmp(argv[i], "-n") == 0)
         {
             i++;
             if (i >= argc)
                 return 1;
             UnityFixture.NameFilter = argv[i];
+            i++;
+        }
+        else if (strcmp(argv[i], "-N") == 0)
+        {
+            i++;
+            if (i >= argc)
+                return 1;
+            UnityFixture.NameFilter = argv[i];
+            UnityFixture.NameInvert = 1;
             i++;
         }
         else if (strcmp(argv[i], "-r") == 0)
@@ -286,22 +308,25 @@ void UnityConcludeFixtureTest(void)
     if (Unity.CurrentTestIgnored)
     {
         Unity.TestIgnores++;
-        UNITY_PRINT_EOL();
     }
-    else if (!Unity.CurrentTestFailed)
+    else if (Unity.CurrentTestFailed)
     {
-        if (UnityFixture.Verbose)
+        Unity.TestFailures++;
+    }
+    else if (UnityFixture.Verbose)
         {
             UnityPrint(" ");
             UnityPrint(UnityStrPass);
+    }
+
+    if (UnityFixture.Verbose)
+    {
             UNITY_EXEC_TIME_STOP();
             UNITY_PRINT_EXEC_TIME();
             UNITY_PRINT_EOL();
         }
-    }
-    else /* Unity.CurrentTestFailed */
+    else if (Unity.CurrentTestIgnored || Unity.CurrentTestFailed)
     {
-        Unity.TestFailures++;
         UNITY_PRINT_EOL();
     }
 

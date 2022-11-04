@@ -25,8 +25,13 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
 
+#ifndef TEST_ATCAB_RANDOM_EN
+#define TEST_ATCAB_RANDOM_EN            CALIB_RANDOM_EN || TALIB_RANDOM_EN
+#endif
+
+#if TEST_ATCAB_RANDOM_EN
 TEST(atca_cmd_basic_test, random)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
@@ -35,11 +40,15 @@ TEST(atca_cmd_basic_test, random)
     status = atcab_random(randomnum);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
+#endif
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info random_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, random), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
+#if TEST_ATCAB_RANDOM_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, random), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC | DEVICE_MASK(TA100) },
+#endif
     { (fp_test_case)NULL,                     (uint8_t)0 },/* Array Termination element*/
 };
 // *INDENT-ON*
+

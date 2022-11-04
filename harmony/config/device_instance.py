@@ -22,7 +22,7 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
-_DEFAULT_I2C_ADDRESS = {'ecc': 0xC0, 'sha': 0xC8, 'ta100': 0x2e}
+_DEFAULT_I2C_ADDRESS = {'ecc': 0xC0, 'sha': 0xC8, 'ecc204': 0x66, 'ta100': 0x2e}
 _SWI_DEVICES = ['ATSHA204A', 'ATSHA206A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'ECC204']
 _I2C_DEVICES = ['ATSHA204A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'TA100', 'ECC204']
 _SPI_DEVICES = ['TA100']
@@ -61,6 +61,8 @@ def updateSercomPlibList(plib, inc):
 def updateTngCapability(id, src):
     Database.sendMessage('cryptoauthlib_tng', 'UPDATE_TNG_TYPE', {'id': id, 'src': src})
 
+def updateWpcCapability(id, src):
+    Database.sendMessage('cryptoauthlib_wpc', 'UPDATE_WPC_TYPE', {'id': id, 'src': src})
 
 def updateDevCfgList(dev_cfg, inc):
     global caldevcfglist
@@ -117,9 +119,12 @@ def updatePartInterfaceSettings(symbol, event):
         if selected_key == "TNGTLS":
             Database.activateComponents(['cryptoauthlib_tng'])
             i2c_addr = 0x6A
-        elif selected_key == "TFLEX":
+        elif selected_key == "TFLXTLS":
             Database.activateComponents(['cryptoauthlib_tng'])
             i2c_addr = 0x6C
+        elif selected_key == "TFLXWPC":
+            Database.activateComponents(['cryptoauthlib_wpc'])
+            i2c_addr = 0x70
         elif selected_key == "TNGLORA":
             Database.activateComponents(['cryptoauthlib_tng'])
             i2c_addr = 0xB2
@@ -128,6 +133,7 @@ def updatePartInterfaceSettings(symbol, event):
 
         symbol.getComponent().getSymbolByID('I2C_ADDR').setValue(i2c_addr)
         updateTngCapability(selected_key, event['namespace'])
+        updateWpcCapability(selected_key, event['namespace'])
 
 
 def sort_alphanumeric(l):
@@ -165,7 +171,8 @@ def instantiateComponent(deviceComponent, index):
         devicePartType = deviceComponent.createKeyValueSetSymbol("PART_TYPE", interfaceType)
         devicePartType.setLabel("Select Part Type")
         devicePartType.addKey("Custom", "0", "Trust Custom")
-        devicePartType.addKey("TFLEX", "3", "Trust Flex")
+        devicePartType.addKey("TFLXTLS", "3", "Trust Flex: TLS")
+        devicePartType.addKey("TFLXWPC", "4", "Trust Flex: WPC")
         devicePartType.addKey("TNGTLS", "1", "Trust & Go: TLS")
         devicePartType.addKey("TNGLORA", "2", "Trust & Go: LORA")
         devicePartType.setDefaultValue(0)
@@ -176,7 +183,9 @@ def instantiateComponent(deviceComponent, index):
     deviceAddress = deviceComponent.createHexSymbol("I2C_ADDR", interfaceType)
     deviceAddress.setLabel("I2C Address")
 
-    if 'ECC' in deviceID:
+    if 'ECC204' in deviceID:
+        deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['ecc204'])
+    elif 'ECC' in deviceID:
         deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['ecc'])
     elif 'SHA' in deviceID:
         deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['sha'])

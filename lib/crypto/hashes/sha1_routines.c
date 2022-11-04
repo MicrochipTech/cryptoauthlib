@@ -28,7 +28,9 @@
 #include "sha1_routines.h"
 #include <string.h>
 #include "atca_compiler.h"
+#include "cryptoauthlib.h"
 
+#if ATCA_CRYPTO_SHA1_EN
 /**
  * \brief Initialize context for performing SHA1 hash in software.
  *
@@ -322,3 +324,4 @@ void shaEngine(U32 *buf, U32 *h)
     //}
 
 }
+#endif /* ATCA_CRYPTO_SHA1_EN */

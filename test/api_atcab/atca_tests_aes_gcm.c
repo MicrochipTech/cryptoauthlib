@@ -28,8 +28,7 @@
 #ifdef _WIN32
 #include <time.h>
 #endif
-#include "atca_test.h"
-#include "atca_basic.h"
+#include "test_atcab.h"
 
 #ifdef ATCA_ATECC608_SUPPORT
 

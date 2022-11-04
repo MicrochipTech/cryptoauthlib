@@ -35,6 +35,7 @@
 
 #include "cryptoauthlib.h"
 
+#if CALIB_GENDIG_EN
 /** \brief Issues a GenDig command, which performs a SHA256 hash on the source data indicated by zone with the
  *  contents of TempKey.  See the CryptoAuth datasheet for your chip to see what the values of zone
  *  correspond to.
@@ -90,3 +91,4 @@ ATCA_STATUS calib_gendig(ATCADevice device, uint8_t zone, uint16_t key_id, const
 
     return status;
 }
+#endif /* CALIB_GENDIG_EN */

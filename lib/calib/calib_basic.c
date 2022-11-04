@@ -50,7 +50,7 @@ ATCA_STATUS calib_wakeup_i2c(ATCADevice device)
 
         do
         {
-            if (100000UL < iface->mIfaceCFG->atcai2c.baud)
+            if (100000UL < ATCA_IFACECFG_VALUE(iface->mIfaceCFG, atcai2c.baud))
             {
                 temp = 100000UL;
                 status = atcontrol(iface, ATCA_HAL_CHANGE_BAUD, &temp, sizeof(temp));
@@ -86,9 +86,9 @@ ATCA_STATUS calib_wakeup_i2c(ATCADevice device)
                 status = atreceive(iface, address, (uint8_t*)&wake, &rxlen);
             }
 
-            if ((ATCA_SUCCESS == status) && (100000UL < iface->mIfaceCFG->atcai2c.baud))
+            if ((ATCA_SUCCESS == status) && (100000UL < ATCA_IFACECFG_VALUE(iface->mIfaceCFG, atcai2c.baud)))
             {
-                temp = iface->mIfaceCFG->atcai2c.baud;
+                temp = ATCA_IFACECFG_VALUE(iface->mIfaceCFG, atcai2c.baud);
                 status = atcontrol(iface, ATCA_HAL_CHANGE_BAUD, &temp, sizeof(temp));
             }
 
@@ -244,6 +244,7 @@ ATCA_STATUS calib_get_addr(uint8_t zone, uint16_t slot, uint8_t block, uint8_t o
     return status;
 }
 
+#ifdef ATCA_ECC204_SUPPORT
 /** \brief Compute the address given the zone, slot, block, and offset for ECC204 device
  *  \param[in] zone   Zone to get address from. Config(1) or
  *                    Data(0) which requires a slot.
@@ -273,6 +274,7 @@ ATCA_STATUS calib_ecc204_get_addr(uint8_t zone, uint16_t slot, uint8_t block, ui
 
     return status;
 }
+#endif
 
 /** \brief Gets the size of the specified zone in bytes.
  *
@@ -295,6 +297,7 @@ ATCA_STATUS calib_get_zone_size(ATCADevice device, uint8_t zone, uint16_t slot, 
 
     if (device->mIface.mIfaceCFG->devtype == ATSHA204A)
     {
+#ifdef ATCA_ATSHA204A_SUPPORT
         switch (zone)
         {
         case ATCA_ZONE_CONFIG: *size = 88; break;
@@ -302,7 +305,9 @@ ATCA_STATUS calib_get_zone_size(ATCADevice device, uint8_t zone, uint16_t slot, 
         case ATCA_ZONE_DATA:   *size = 32; break;
         default: status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid zone received"); break;
         }
+#endif
     }
+#ifdef ATCA_ATSHA206A_SUPPORT
     else if (device->mIface.mIfaceCFG->devtype == ATSHA206A)
     {
         switch (zone)
@@ -313,6 +318,7 @@ ATCA_STATUS calib_get_zone_size(ATCADevice device, uint8_t zone, uint16_t slot, 
         default: status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid zone received"); break;
         }
     }
+#endif
 #ifdef ATCA_ECC204_SUPPORT
     else if (ECC204 == device->mIface.mIfaceCFG->devtype)
     {

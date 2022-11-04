@@ -162,12 +162,15 @@ ATCAIfaceCfg cfg_atsha20xa_kituart_default = {
 ATCAIfaceCfg cfg_atsha20xa_kithid_default = {
     .iface_type            = ATCA_HID_IFACE,
     .devtype               = ATSHA204A,
+    {
     .atcahid.dev_interface = ATCA_KIT_AUTO_IFACE,
     .atcahid.dev_identity  = 0,
     .atcahid.idx           = 0,
     .atcahid.vid           = 0x03EB,
     .atcahid.pid           = 0x2312,
     .atcahid.packetsize    = 64,
+    },
+    .rx_retries                = 1
 };
 #endif
 

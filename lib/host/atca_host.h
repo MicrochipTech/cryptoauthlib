@@ -33,6 +33,8 @@
 #include "cryptoauthlib.h"  // contains definitions used by chip and these routines
 #include "calib/calib_basic.h"
 
+#include "atca_host_config_check.h"
+
 /** \defgroup atcah Host side crypto methods (atcah_)
  *
  * \brief

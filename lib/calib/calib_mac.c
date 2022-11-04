@@ -35,6 +35,7 @@
 
 #include "cryptoauthlib.h"
 
+#if CALIB_MAC_EN
 /** \brief Executes MAC command, which computes a SHA-256 digest of a key
  *          stored in the device, a challenge, and other information on the
  *          device.
@@ -93,3 +94,4 @@ ATCA_STATUS calib_mac(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
 
     return status;
 }
+#endif  /* CALIB_MAC_EN */

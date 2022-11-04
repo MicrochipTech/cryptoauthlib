@@ -580,14 +580,16 @@ ATCA_STATUS atcac_sha256_hmac_finish(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_init(
-    atcac_pk_ctx* ctx,                          /**< [in] pointer to a pk context */
-    uint8_t*      buf,                          /**< [in] buffer containing a pem encoded key */
-    size_t        buflen,                       /**< [in] length of the input buffer */
-    uint8_t       key_type,
-    bool          pubkey                        /**< [in] buffer is a public key */
+    atcac_pk_ctx*   ctx,                        /**< [in] pointer to a pk context */
+    const uint8_t*  buf,                        /**< [in] buffer containing a pem encoded key */
+    size_t          buflen,                     /**< [in] length of the input buffer */
+    uint8_t         key_type,
+    bool            pubkey                      /**< [in] buffer is a public key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    ((void)key_type);
 
     if (ctx)
     {
@@ -596,36 +598,37 @@ ATCA_STATUS atcac_pk_init(
         if (ctx->ptr)
         {
             int ret = EVP_PKEY_set_type((EVP_PKEY*)ctx->ptr, EVP_PKEY_EC);
-
             if (0 < ret)
             {
                 EC_KEY* ec_key = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1);
+                const EC_GROUP * ec_group = EC_KEY_get0_group(ec_key);
+                EC_POINT* ec_point = EC_POINT_new(ec_group);
 
                 if (pubkey)
                 {
-                    /* Configure the public key */
-                    EC_POINT* ec_point = EC_POINT_new(EC_KEY_get0_group(ec_key));
-                    BIGNUM* x = BN_bin2bn(buf, 32, NULL);
-                    BIGNUM* y = BN_bin2bn(&buf[32], 32, NULL);
-
-                    ret = EC_POINT_set_affine_coordinates(EC_KEY_get0_group(ec_key), ec_point, x, y, NULL);
-
-                    if (0 < ret)
-                    {
-                        ret = EC_KEY_set_public_key(ec_key, ec_point);
-                    }
-
-                    EC_POINT_free(ec_point);
-                    BN_free(x);
+                    BIGNUM * x = BN_bin2bn(buf, 32, NULL);
+                    BIGNUM * y = BN_bin2bn(&buf[32], 32, NULL);
+                    ret = EC_POINT_set_affine_coordinates(ec_group, ec_point, x, y, NULL);
                     BN_free(y);
+                    BN_free(x);
                 }
                 else
                 {
                     /* Configure a private key */
                     BIGNUM* d = BN_bin2bn(buf, buflen, NULL);
-                    ret = EC_KEY_set_private_key(ec_key, d);
+                    if (1 == (ret = EC_KEY_set_private_key(ec_key, d)))
+                    {
+                        /* Generate the public key */
+                        ret = EC_POINT_mul(ec_group, ec_point, NULL, NULL, d, NULL);
+                    }
                     BN_free(d);
                 }
+
+                if(1 == ret)
+                {
+                    ret = EC_KEY_set_public_key(ec_key, ec_point);
+                }
+                EC_POINT_free(ec_point);
 
                 if (0 < ret)
                 {
@@ -656,10 +659,10 @@ ATCA_STATUS atcac_pk_init(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_init_pem(
-    atcac_pk_ctx* ctx,                          /**< [in] pointer to a pk context */
-    uint8_t *     buf,                          /**< [in] buffer containing a pem encoded key */
-    size_t        buflen,                       /**< [in] length of the input buffer */
-    bool          pubkey                        /**< [in] buffer is a public key */
+    atcac_pk_ctx*   ctx,                        /**< [in] pointer to a pk context */
+    const uint8_t * buf,                        /**< [in] buffer containing a pem encoded key */
+    size_t          buflen,                     /**< [in] length of the input buffer */
+    bool            pubkey                      /**< [in] buffer is a public key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -714,19 +717,25 @@ ATCA_STATUS atcac_pk_public(
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (ctx && buf && ctx->ptr)
+    if (ctx && ctx->ptr && buf && buflen && *buflen >= 64)
     {
         int ret = -1;
         if (EVP_PKEY_EC == EVP_PKEY_id((EVP_PKEY*)ctx->ptr))
         {
-            unsigned char pbuf[65];  // UNCOMPRESSED format
-            unsigned char *out = pbuf;
-
-            ret = i2o_ECPublicKey(EVP_PKEY_get0_EC_KEY((EVP_PKEY*)ctx->ptr), &out);
-
-            if (ret > 0)
+            EC_KEY * ec_key = EVP_PKEY_get0_EC_KEY((EVP_PKEY*)ctx->ptr);
+            if (ec_key)
             {
-                memcpy(buf, &pbuf[1], *buflen);
+                BIGNUM * x = BN_new();
+                BIGNUM * y = BN_new();
+
+                if (1 == (ret = EC_POINT_get_affine_coordinates(EC_KEY_get0_group(ec_key), EC_KEY_get0_public_key(ec_key), x, y, NULL)))
+            {
+                    BN_bn2bin(x, buf);
+                    BN_bn2bin(y, &buf[32]);
+                    *buflen = 64;
+                }
+                BN_free(x);
+                BN_free(y);
             }
         }
         status = (ret > 0) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
@@ -739,11 +748,11 @@ ATCA_STATUS atcac_pk_public(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_sign(
-    atcac_pk_ctx* ctx,
-    uint8_t *     digest,
-    size_t        dig_len,
-    uint8_t*      signature,
-    size_t*       sig_len
+    atcac_pk_ctx*   ctx,
+    const uint8_t * digest,
+    size_t          dig_len,
+    uint8_t*        signature,
+    size_t*         sig_len
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -806,11 +815,11 @@ ATCA_STATUS atcac_pk_sign(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_verify(
-    atcac_pk_ctx* ctx,
-    uint8_t*      digest,
-    size_t        dig_len,
-    uint8_t*      signature,
-    size_t        sig_len
+    atcac_pk_ctx*   ctx,
+    const uint8_t*  digest,
+    size_t          dig_len,
+    const uint8_t*  signature,
+    size_t          sig_len
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;

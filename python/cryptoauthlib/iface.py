@@ -21,8 +21,8 @@ Interface Configuration
 # THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
 # THIS SOFTWARE.
 
-from ctypes import Structure, Union, c_uint16, c_int, c_uint8, c_uint32, c_void_p
-from .library import get_cryptoauthlib, get_ctype_by_name
+from ctypes import c_uint16, c_int, c_uint8, c_uint32, c_void_p
+from .library import get_cryptoauthlib, AtcaStructure, AtcaUnion
 from .atcaenum import AtcaEnum
 from .exceptions import UnsupportedInterface
 
@@ -74,55 +74,71 @@ class ATCADeviceType(AtcaEnum):
 
 
 # The following must match atca_iface.h exactly
-class _U_Address(Union):
+class _U_Address(AtcaUnion):
     """Hidden union to provide backward compatibility with the api change"""
     _fields_ = [('slave_address', c_uint8),
                 ('address', c_uint8)]
 
 
-class _ATCAI2C(Structure):
+class _ATCAI2C(AtcaStructure):
     """I2C/TWI HAL configuration"""
-    _anonymous_ = ('u')
+    _anonymous_ = ('u',)
+    _map_ = {
+        'u': (1,)
+    }
     _fields_ = [('u', _U_Address),
                 ('bus', c_uint8),
                 ('baud', c_uint32)]
 
 
-class _ATCASWI(Structure):
+class _ATCASWI(AtcaStructure):
     """SWI (Atmel Single Wire Interface) HAL configuration"""
     _fields_ = [('address', c_uint8),
                 ('bus', c_uint8)]
 
 
-class _ATCASPI(Structure):
+class _ATCASPI(AtcaStructure):
     """SPI HAL configuration"""
     _fields_ = [('bus', c_uint8),
                 ('select_pin', c_uint8),
                 ('baud', c_uint32)]
 
 
-class _ATCAUART(Structure):
+class _ATCAUART(AtcaStructure):
     """Generic UART HAL configuration"""
-    _fields_ = [('dev_interface', get_ctype_by_name('ATCAKitType')),
-                ('dev_identity', c_uint8),
-                ('port', c_uint8),
-                ('baud', c_uint32),
-                ('wordsize', c_uint8),
-                ('parity', c_uint8),
-                ('stopbits', c_uint8)]
+    _def_ = {
+        'dev_interface': (ATCAKitType,),
+        'dev_identity': (c_uint8,),
+        'port': (c_uint8,),
+        'baud': (c_uint32,),
+        'wordsize': (c_uint8,),
+        'parity': (c_uint8,),
+        'stopbits': (c_uint8,)
+    }
+_ATCAUART.from_definition()
 
-
-class _ATCAHID(Structure):
+class _ATCAHID(AtcaStructure):
     """USB (HID) HAL configuration"""
-    _fields_ = [('idx', c_int),
-                ('dev_interface', get_ctype_by_name('ATCAKitType')),
-                ('dev_identity', c_uint8),
-                ('vid', c_uint32),
-                ('pid', c_uint32),
-                ('packetsize', c_uint32)]
+    _def_ = {
+        'idx': (c_int,),
+        'dev_interface': (ATCAKitType,),
+        'dev_identity': (c_uint8,),
+        'vid': (c_uint32,),
+        'pid': (c_uint32,),
+        'packetsize': (c_uint32,)
+    }
+_ATCAHID.from_definition()
 
+class _ATCAKIT(AtcaStructure):
+    """Kit (Bridge) HAL Configuration"""
+    _def_ = {
+        'dev_interface': (ATCAKitType,),
+        'dev_identity': (c_uint8,),
+        'flags': (c_uint32,)
+    }
+_ATCAKIT.from_definition()
 
-class _ATCACUSTOM(Structure):
+class _ATCACUSTOM(AtcaStructure):
     """Custom HAL configuration"""
     _fields_ = [('halinit', c_void_p),
                 ('halpostinit', c_void_p),
@@ -134,25 +150,41 @@ class _ATCACUSTOM(Structure):
                 ('halrelease', c_void_p)]
 
 
-class _ATCAIfaceParams(Union):
+class _ATCAIfaceParams(AtcaUnion):
     """HAL Configurations supported by the library (this is a union)"""
     _fields_ = [('atcai2c', _ATCAI2C),
                 ('atcaswi', _ATCASWI),
                 ('atcaspi', _ATCASPI),
                 ('atcauart', _ATCAUART),
                 ('atcahid', _ATCAHID),
+                ('atcakit', _ATCAKIT),
                 ('atcacustom', _ATCACUSTOM)]
 
 
-class ATCAIfaceCfg(Structure):
+class ATCAIfaceCfg(AtcaStructure):
     """Interface configuration structure used by atcab_init()"""
-    _fields_ = [('iface_type', get_ctype_by_name('ATCAIfaceType')),
-                ('devtype', get_ctype_by_name('ATCADeviceType')),
-                ('cfg', _ATCAIfaceParams),
-                ('wake_delay', c_uint16),
-                ('rx_retries', c_int),
-                ('cfg_data', c_void_p)]
-
+    _anonymous_ = ('cfg',)
+    _map_ = {
+        'cfg': ('iface_type', {
+            ATCAIfaceType.ATCA_I2C_IFACE: 'atcai2c',
+            ATCAIfaceType.ATCA_SWI_IFACE: 'atcaswi',
+            ATCAIfaceType.ATCA_UART_IFACE:'atcauart',
+            ATCAIfaceType.ATCA_SPI_IFACE: 'atcaspi',
+            ATCAIfaceType.ATCA_HID_IFACE: 'atcahid',
+            ATCAIfaceType.ATCA_KIT_IFACE: 'atcakit',
+            ATCAIfaceType.ATCA_CUSTOM_IFACE: 'atcacustom'
+        })
+    }
+    _def_ = {
+        'iface_type': (ATCAIfaceType,),
+        'devtype': (ATCADeviceType,),
+        'cfg': (_ATCAIfaceParams,),
+        'wake_delay': (c_uint16,),
+        'rx_retries': (c_int,),
+        'cfg_data': (c_void_p,)
+    }
+ATCAIfaceCfg.from_definition()
+ATCAIfaceCfg.check_rationality()
 
 def _iface_load_default_config(name):
     """"Attempt to load the default configuration structure from the library by name"""

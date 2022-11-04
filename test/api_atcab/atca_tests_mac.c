@@ -25,9 +25,13 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
 
-#if ATCA_CA_SUPPORT
+#ifndef TEST_ATCAB_MAC_EN
+#define TEST_ATCAB_MAC_EN       CALIB_MAC_EN
+#endif
+
+#if TEST_ATCAB_MAC_EN
 
 TEST(atca_cmd_basic_test, mac_key_challenge)
 {
@@ -326,21 +330,18 @@ TEST(atca_cmd_basic_test, checkmac)
         checkmac_params.other_data);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
+#endif
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info mac_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, mac_key_challenge),     DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, mac_key_tempkey),       DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, mac_tempkey_challenge), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, mac_tempkey_tempkey),   DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, checkmac),              DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC },
+#if TEST_ATCAB_MAC_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, mac_key_challenge),     DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, mac_key_tempkey),       DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, mac_tempkey_challenge), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, mac_tempkey_tempkey),   DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, checkmac),              DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC },
+#endif
     { (fp_test_case)NULL,                     (uint8_t)0 },           /* Array Termination element*/
 };
 // *INDENT-ON*
-#else
-t_test_case_info mac_basic_test_info[] =
-{
-    { (fp_test_case)NULL, (uint8_t)0 },
-};
-#endif

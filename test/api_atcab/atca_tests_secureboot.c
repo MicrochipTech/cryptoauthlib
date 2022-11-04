@@ -25,7 +25,7 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
 
 #ifdef ATCA_ATECC608_SUPPORT
 const uint8_t sboot_dummy_image[] =
@@ -59,7 +59,7 @@ TEST(atca_cmd_basic_test, sboot_digest)
     test_assert_data_is_locked();
 
     // Generate new key pair
-    status = atcab_genkey(private_key_id, public_key);
+    status = atca_test_genkey(private_key_id, public_key);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Reformat public key into padded format
@@ -185,3 +185,4 @@ t_test_case_info sboot_basic_test_info[] =
     { (fp_test_case)NULL,                     (uint8_t)0 },                      /* Array Termination element*/
 };
 // *INDENT-ON*
+

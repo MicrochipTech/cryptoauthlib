@@ -1,9 +1,8 @@
 /**
  * \file
- * \brief API wrapper for software ECDSA verify.  Currently unimplemented but could be
- *        implemented via a 3rd party library such as MicroECC.
+ * \brief Configuration check and defaults for the atcacert module
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2022 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -25,24 +24,35 @@
  * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
  * THIS SOFTWARE.
  */
+#ifndef ATCACERT_CHECK_CONFIG_H
+#define ATCACERT_CHECK_CONFIG_H
+
+/* The atcacert_ module is only set up to work with classic cryptoauth devices */
+#include "calib/calib_config_check.h"
 
 
-#include "atca_crypto_sw_ecdsa.h"
+#ifndef ATCACERT_HW_CHALLENGE_EN
+#define ATCACERT_HW_CHALLENGE_EN            CALIB_RANDOM_EN
+#endif
 
-/** \brief return software generated ECDSA verification result and the function is currently not implemented
- * \param[in] msg         ptr to message or challenge
- * \param[in] signature   ptr to the signature to verify
- * \param[in] public_key  ptr to public key of device which signed the challenge
- * return ATCA_UNIMPLEMENTED , as the function is currently not implemented
- */
+#ifndef ATCACERT_HW_VERIFY_EN
+#define ATCACERT_HW_VERIFY_EN               CALIB_VERIFY_EXTERN_EN
+#endif
 
-int atcac_sw_ecdsa_verify_p256(const uint8_t msg[ATCA_ECC_P256_FIELD_SIZE],
-                               const uint8_t signature[ATCA_ECC_P256_SIGNATURE_SIZE],
-                               const uint8_t public_key[ATCA_ECC_P256_PUBLIC_KEY_SIZE])
-{
-    (void)msg;
-    (void)signature;
-    (void)public_key;
+#ifndef ATCACERT_DATEFMT_ISO_EN
+#define ATCACERT_DATEFMT_ISO_EN             DEFAULT_ENABLED
+#endif
 
-    return ATCA_UNIMPLEMENTED;
-}
+#ifndef ATCACERT_DATEFMT_UTC_EN
+#define ATCACERT_DATEFMT_UTC_EN             DEFAULT_ENABLED
+#endif
+
+#ifndef ATCACERT_DATEFMT_POSIX_EN
+#define ATCACERT_DATEFMT_POSIX_EN           DEFAULT_ENABLED
+#endif
+
+#ifndef ATCACERT_DATEFMT_GEN_EN
+#define ATCACERT_DATEFMT_GEN_EN             DEFAULT_ENABLED
+#endif
+
+#endif /* ATCACERT_CHECK_CONFIG_H */

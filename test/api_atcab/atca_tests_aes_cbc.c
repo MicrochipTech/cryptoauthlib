@@ -28,10 +28,17 @@
 #ifdef _WIN32
 #include <time.h>
 #endif
-#include "atca_test.h"
-#include "atca_basic.h"
-#include "cryptoauthlib.h"
+#include "test_atcab.h"
 
+#ifndef TEST_ATCAB_AES_CBC_EN
+#define TEST_ATCAB_AES_CBC_EN           (ATCAB_AES_CBC_ENCRYPT_EN || ATCAB_AES_CBC_DECRYPT_EN)
+#endif
+
+#ifndef TEST_ATCAB_AES_CBC_UPDATE_EN
+#define TEST_ATCAB_AES_CBC_UPDATE_EN    ATCAB_AES_CBC_UPDATE_EN
+#endif
+
+#if TEST_ATCAB_AES_CBC_EN
 extern const uint8_t g_aes_keys[4][16];
 extern const uint8_t g_plaintext[64];
 
@@ -175,15 +182,198 @@ TEST(atca_cmd_basic_test, aes_cbc_decrypt_block_simple)
         TEST_ASSERT_EQUAL_MEMORY(&g_plaintext[data_block * ATCA_AES128_BLOCK_SIZE], plaintext, ATCA_AES128_BLOCK_SIZE);
     }
 }
+
+#if TEST_ATCAB_AES_CBC_UPDATE_EN
+TEST(atca_cmd_basic_test, aes_cbc_encrypt_update_simple)
+{
+    uint8_t ciphertext[sizeof(g_plaintext)];
+    size_t length = sizeof(ciphertext);
+    atca_aes_cbc_ctx_t ctx;
+    ATCA_STATUS status;
+    uint16_t key_slot;
+
+    // Skip test if data zone isn't locked
+    test_assert_data_is_locked();
+
+    // Skip test if AES is not enabled
+    check_config_aes_enable();
+
+    status = atca_test_config_get_id(TEST_TYPE_AES, &key_slot);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Load AES keys into slot
+    status = atcab_write_bytes_zone(ATCA_ZONE_DATA, key_slot, 0, g_aes_keys[0], 16);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Init CBC mode context using key in slot
+    status = atcab_aes_cbc_init(&ctx, key_slot, 0, g_iv);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Encrypt the entire plaintext
+    status = atcab_aes_cbc_encrypt_update(&ctx, (uint8_t*)g_plaintext, sizeof(g_plaintext), ciphertext, &length);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Finalize without padding
+    status = atcab_aes_cbc_encrypt_finish(&ctx, ciphertext, &length, 0);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL_MEMORY(&g_ciphertext_cbc[0][0], ciphertext, sizeof(ciphertext));
+}
+
+TEST(atca_cmd_basic_test, aes_cbc_encrypt_update_chunks)
+{
+    uint8_t ciphertext[sizeof(g_plaintext)];
+    uint8_t * cPtr = ciphertext;
+    size_t length = sizeof(ciphertext);
+    atca_aes_cbc_ctx_t ctx;
+    ATCA_STATUS status;
+    uint16_t key_slot;
+
+    // Skip test if data zone isn't locked
+    test_assert_data_is_locked();
+
+    // Skip test if AES is not enabled
+    check_config_aes_enable();
+
+    status = atca_test_config_get_id(TEST_TYPE_AES, &key_slot);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Load AES keys into slot
+    status = atcab_write_bytes_zone(ATCA_ZONE_DATA, key_slot, 0, g_aes_keys[0], 16);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Init CBC mode context using key in slot
+    status = atcab_aes_cbc_init(&ctx, key_slot, 0, g_iv);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Encrypt the a small chunk
+    status = atcab_aes_cbc_encrypt_update(&ctx, (uint8_t*)g_plaintext, 8, cPtr, &length);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    cPtr += length;
+
+    // Encrypt a large chunk
+    length = sizeof(g_plaintext) - (cPtr - ciphertext);
+    status = atcab_aes_cbc_encrypt_update(&ctx, (uint8_t*)&g_plaintext[8], 24, cPtr, &length);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    cPtr += length;
+
+    // Finish it up
+    length = sizeof(g_plaintext) - (cPtr - ciphertext);
+    status = atcab_aes_cbc_encrypt_update(&ctx, (uint8_t*)&g_plaintext[32], sizeof(g_plaintext)-32, cPtr, &length);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Finalize without padding
+    status = atcab_aes_cbc_encrypt_finish(&ctx, ciphertext, &length, 0);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL_MEMORY(&g_ciphertext_cbc[0][0], ciphertext, sizeof(ciphertext));
+}
+
+TEST(atca_cmd_basic_test, aes_cbc_decrypt_update_simple)
+{
+    uint8_t plaintext[sizeof(g_plaintext)];
+    size_t length = sizeof(plaintext);
+    atca_aes_cbc_ctx_t ctx;
+    ATCA_STATUS status;
+    uint16_t key_slot;
+
+    // Skip test if data zone isn't locked
+    test_assert_data_is_locked();
+
+    // Skip test if AES is not enabled
+    check_config_aes_enable();
+
+    status = atca_test_config_get_id(TEST_TYPE_AES, &key_slot);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Load AES keys into slot
+    status = atcab_write_bytes_zone(ATCA_ZONE_DATA, key_slot, 0, g_aes_keys[0], 16);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Init CBC mode context using key in slot
+    status = atcab_aes_cbc_init(&ctx, key_slot, 0, g_iv);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Encrypt the entire plaintext
+    status = atcab_aes_cbc_decrypt_update(&ctx, (uint8_t*)&g_ciphertext_cbc[0][0], sizeof(g_plaintext), plaintext, &length);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Finalize without padding
+    status = atcab_aes_cbc_decrypt_finish(&ctx, plaintext, &length, 0);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL_MEMORY(&g_plaintext, plaintext, sizeof(plaintext));
+}
+
+TEST(atca_cmd_basic_test, aes_cbc_decrypt_update_chunks)
+{
+    uint8_t plaintext[sizeof(g_plaintext)];
+    uint8_t * pPtr = plaintext;
+    size_t length = sizeof(plaintext);
+    atca_aes_cbc_ctx_t ctx;
+    ATCA_STATUS status;
+    uint16_t key_slot;
+
+    // Skip test if data zone isn't locked
+    test_assert_data_is_locked();
+
+    // Skip test if AES is not enabled
+    check_config_aes_enable();
+
+    status = atca_test_config_get_id(TEST_TYPE_AES, &key_slot);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Load AES keys into slot
+    status = atcab_write_bytes_zone(ATCA_ZONE_DATA, key_slot, 0, g_aes_keys[0], 16);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Init CBC mode context using key in slot
+    status = atcab_aes_cbc_init(&ctx, key_slot, 0, g_iv);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Encrypt the a small chunk
+    status = atcab_aes_cbc_decrypt_update(&ctx, (uint8_t*)&g_ciphertext_cbc[0][0], 8, pPtr, &length);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    pPtr += length;
+
+    // Encrypt a large chunk
+    length = sizeof(plaintext) - (pPtr - plaintext);
+    status = atcab_aes_cbc_decrypt_update(&ctx, (uint8_t*)&g_ciphertext_cbc[0][8], 24, pPtr, &length);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    pPtr += length;
+
+    // Finish it up
+    length = sizeof(plaintext) - (pPtr - plaintext);
+    status = atcab_aes_cbc_decrypt_update(&ctx, (uint8_t*)&g_ciphertext_cbc[0][32], sizeof(plaintext)-32, pPtr, &length);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    pPtr += length;
+
+    // Finalize without padding
+    length = sizeof(plaintext) - (pPtr - plaintext);
+    status = atcab_aes_cbc_decrypt_finish(&ctx, plaintext, &length, 0);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL_MEMORY(g_plaintext, plaintext, sizeof(plaintext));
+}
+#endif
+
+
+#endif /* TEST_ATCAB_AES_CBC_EN */
+
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info aes_cbc_basic_test_info[] =
 {
+#if TEST_ATCAB_AES_CBC_EN
 #ifdef ATCA_ATECC608_SUPPORT
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_block),            DEVICE_MASK(ATECC608) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_block),            DEVICE_MASK(ATECC608) },
 #endif
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_block_simple),     DEVICE_MASK(TA100) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_block_simple),     DEVICE_MASK(TA100) },
+#ifdef TEST_ATCAB_AES_CBC_UPDATE_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_update_simple),     DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_update_chunks),     DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_update_simple),     DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_update_chunks),     DEVICE_MASK(TA100) },
+
+#endif /* TEST_ATCAB_AES_CBC_UPDATE_EN */
+#endif /* TEST_ATCAB_AES_CBC_EN */
     { (fp_test_case)NULL,                     (uint8_t)0 },             /* Array Termination element*/
 };
 

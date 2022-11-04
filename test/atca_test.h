@@ -32,14 +32,17 @@
 #include "third_party/unity/unity_fixture.h"
 #include "cryptoauthlib.h"
 
-#define TEST_ASSERT_SUCCESS(x)  TEST_ASSERT_EQUAL(ATCA_SUCCESS, x)
+extern bool g_test_abort;
+extern ATCA_STATUS g_last_status;
+#define TEST_ASSERT_SUCCESS(x)          TEST_ASSERT_EQUAL(ATCA_SUCCESS, g_last_status=x)
+#define TEST_ASSERT_SUCCESS_MSG(x,m)    TEST_ASSERT_EQUAL_MESSAGE(ATCA_SUCCESS, g_last_status=x, m)
 
 extern ATCAIfaceCfg *gCfg;
 extern const uint8_t g_slot4_key[];
 
 #define AES_CONFIG_ENABLE_BIT_MASK   (uint8_t)0x01
 
-#define CMD_PROCESSOR_MAX_ARGS  10
+#define CMD_PROCESSOR_MAX_ARGS  16
 
 typedef void (*fp_test_case)(void);
 
@@ -54,15 +57,31 @@ typedef int (*fp_menu_handler)(int argc, char* argv[]);
 typedef struct
 {
     const char*     menu_cmd;
+    fp_menu_handler fp_handler;
+} t_menu_info_simple;
+#define MENU_ITEM_SIMPLE(c,f)   {c, f}
+
+#ifdef ATCA_TEST_SIMPLE_MENU
+typedef t_menu_info_simple t_menu_info
+#define MENU_ITEM   MENU_ITEM_SIMPLE
+#else
+typedef struct
+{
+    const char*     menu_cmd;
     const char*     menu_cmd_description;
     fp_menu_handler fp_handler;
 } t_menu_info;
+#define MENU_ITEM(c,d, f)   {c, d, f}
+#endif
 
 #define DEVICE_MASK(device)                 ((uint8_t)1 << device)
 #define REGISTER_TEST_CASE(group, name)     TEST_ ## group ## _ ## name ## _run
 
-#define DEVICE_MASK_ECC                     (DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608))
-
+#define DEVICE_MASK_SHA                     (DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATSHA206A))
+#define DEVICE_MASK_ATECC                   (DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608))
+#define DEVICE_MASK_ECC                     (DEVICE_MASK(ATECC108A) | DEVICE_MASK(ECC204) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608))
+#define DEVICE_MASK_NONE                    (0)
+#define DEVICE_MASK_ANY                     UINT32_MAX
 
 #if !defined(ATCA_ECC_SUPPORT) && !defined(DO_NOT_TEST_CERT)
 #define DO_NOT_TEST_CERT
@@ -76,58 +95,25 @@ typedef struct
 #include "api_talib/test_talib.h"
 #endif
 
+#ifdef ATCA_HAL_KIT_SUPPORT
+extern ATCA_STATUS hal_kit_bridge_connect(ATCAIfaceCfg * cfg);
+#endif
+
 extern bool g_atca_test_quiet_mode;
 
+/* Cryptoauthlib Test Api */
 void RunAllTests(t_test_case_info** tests_list);
 int run_test(int argc, char* argv[], void (*fptest)(void));
 void run_all_talib_tests(void);
 
-extern const char* TEST_GROUP_atca_cmd_basic_test;
-void TEST_atca_cmd_basic_test_SETUP(void);
-void TEST_atca_cmd_basic_test_TEAR_DOWN(void);
-
-extern const char* TEST_GROUP_atca_cmd_unit_test;
-void TEST_atca_cmd_unit_test_SETUP(void);
-void TEST_atca_cmd_unit_test_TEAR_DOWN(void);
-
-
-extern t_test_case_info startup_basic_test_info[];
-extern t_test_case_info info_basic_test_info[];
-extern t_test_case_info aes_basic_test_info[];
-extern t_test_case_info aes_cbc_basic_test_info[];
-extern t_test_case_info aes_cmac_basic_test_info[];
-extern t_test_case_info aes_ctr_basic_test_info[];
-extern t_test_case_info aes_cbcmac_basic_test_info[];
-extern t_test_case_info aes_gcm_basic_test_info[];
-extern t_test_case_info aes_ccm_basic_test_info[];
-extern t_test_case_info verify_basic_test_info[];
-extern t_test_case_info derivekey_basic_test_info[];
-extern t_test_case_info sha_basic_test_info[];
-extern t_test_case_info hmac_basic_test_info[];
-extern t_test_case_info sign_basic_test_info[];
-extern t_test_case_info mac_basic_test_info[];
-extern t_test_case_info ecdh_basic_test_info[];
-extern t_test_case_info write_basic_test_info[];
-extern t_test_case_info read_basic_test_info[];
-extern t_test_case_info genkey_basic_test_info[];
-extern t_test_case_info privwrite_basic_test_info[];
-extern t_test_case_info lock_basic_test_info[];
-extern t_test_case_info kdf_basic_test_info[];
-extern t_test_case_info selftest_basic_test_info[];
-extern t_test_case_info gendig_basic_test_info[];
-extern t_test_case_info random_basic_test_info[];
-extern t_test_case_info nonce_basic_test_info[];
-extern t_test_case_info pause_basic_test_info[];
-extern t_test_case_info updateextra_basic_test_info[];
-extern t_test_case_info counter_basic_test_info[];
-extern t_test_case_info sboot_basic_test_info[];
-
 extern t_test_case_info helper_basic_test_info[];
 extern t_test_case_info otpzero_basic_test_info[];
 
-extern t_test_case_info jwt_unit_test_info[];
 extern t_test_case_info tng_atca_unit_test_info[];
 extern t_test_case_info tng_atcacert_client_unit_test_info[];
+
+extern t_test_case_info wpccert_client_unit_test_info[];
+extern t_test_case_info wpc_apis_unit_test_info[];
 
 extern t_test_case_info test_crypto_pbkdf2_info[];
 
@@ -136,12 +122,22 @@ void test_assert_interface_deinit(void);
 
 #if ATCA_CA_SUPPORT
 extern uint8_t test_ecc608_configdata[ATCA_ECC_CONFIG_SIZE];
+#endif
+#if defined(ATCA_ATECC108A_SUPPORT) || defined(ATCA_ATECC508A_SUPPORT)
 extern const uint8_t test_ecc_configdata[ATCA_ECC_CONFIG_SIZE];
+#endif
+#ifdef ATCA_ATSHA204A_SUPPORT
 extern const uint8_t sha204_default_config[ATCA_SHA_CONFIG_SIZE];
+#endif
+#ifdef ATCA_ECC204_SUPPORT
+extern const uint8_t test_ecc204_configdata[ATCA_ECC204_CONFIG_SIZE];
 #endif
 #if ATCA_TA_SUPPORT
 extern const uint8_t test_ta100_configdata[TA_CONFIG_SIZE];
 #endif
+
+bool atca_test_already_exiting(void);
+bool atca_test_unresponsive(void);
 
 void atca_test_assert_config_is_unlocked(UNITY_LINE_TYPE from_line);
 void atca_test_assert_config_is_locked(UNITY_LINE_TYPE from_line);
@@ -195,28 +191,18 @@ ATCA_STATUS atca_test_config_get_id(uint8_t test_type, uint16_t* handle);
 int run_tests(int test);
 void RunAllHelperTests(void);
 void RunBasicOtpZero(void);
-void RunAllBasicTests(void);
-void RunAllFeatureTests(void);
 void RunTNGTests(void);
-void RunCryptoIntegrationTests(void);
+void RunWPCTests(void);
 void RunPbkdf2Tests(void);
 
 /* Setup & Configuration */
 void atca_test_config_set_ifacecfg(ATCAIfaceCfg * ifacecfg);
+ATCA_STATUS atca_test_genkey(uint16_t key_id, uint8_t *public_key);
 
 /* Commands */
 int process_options(int argc, char* argv[]);
+int select_device(int argc, char* argv[]);
 
-int select_204(int argc, char* argv[]);
-int select_206(int argc, char* argv[]);
-int select_108(int argc, char* argv[]);
-int select_508(int argc, char* argv[]);
-int select_608(int argc, char* argv[]);
-int select_ta100(int argc, char* argv[]);
-int select_ecc204(int argc, char* argv[]);
-
-int certdata_unit_tests(int argc, char* argv[]);
-int certio_unit_tests(int argc, char* argv[]);
 ATCA_STATUS is_config_locked(bool* isLocked);
 ATCA_STATUS is_data_locked(bool* isLocked);
 int lock_status(int argc, char* argv[]);
@@ -232,8 +218,6 @@ int info(int argc, char* argv[]);
 int read_sernum(int argc, char* argv[]);
 int discover(int argc, char* argv[]);
 
-int run_basic_tests(int argc, char* argv[]);
-int run_unit_tests(int argc, char* argv[]);
 int run_otpzero_tests(int argc, char* argv[]);
 int run_helper_tests(int argc, char* argv[]);
 int run_all_tests(int argc, char* argv[]);
@@ -244,8 +228,7 @@ int set_clock_divider_m0(int argc, char* argv[]);
 int set_clock_divider_m1(int argc, char* argv[]);
 int set_clock_divider_m2(int argc, char* argv[]);
 int run_tng_tests(int argc, char* argv[]);
-int run_crypto_integration_tests(int argc, char* argv[]);
-int run_pbkdf2_tests(int argc, char* argv[]);
+int run_wpc_tests(int argc, char* argv[]);
 
 ATCA_STATUS check_clock_divider(int argc, char* argv[]);
 

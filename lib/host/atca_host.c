@@ -35,6 +35,7 @@
  * \param[in,out] param pointer to parameter structure
  * \return pointer to command buffer byte that was copied last
  */
+#if ATCAH_INCLUDE_DATA
 uint8_t *atcah_include_data(struct atca_include_data_in_out *param)
 {
     if (param->mode & MAC_MODE_INCLUDE_OTP_88)
@@ -89,11 +90,13 @@ uint8_t *atcah_include_data(struct atca_include_data_in_out *param)
 
     return param->p_temp;
 }
+#endif /* ATCAH_INCLUDE_DATA */
 
 /** \brief This function calculates host side nonce with the parameters passed.
  *    \param[in,out] param pointer to parameter structure
  *   \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_NONCE
 ATCA_STATUS atcah_nonce(struct atca_nonce_in_out *param)
 {
     uint8_t temporary[ATCA_MSG_SIZE_NONCE];
@@ -212,6 +215,7 @@ ATCA_STATUS atcah_nonce(struct atca_nonce_in_out *param)
 
     return ATCA_SUCCESS;
 }
+#endif /* atcah_nonce */
 
 /** \brief Decrypt data that's been encrypted by the IO protection key.
  *          The ECDH and KDF commands on the ATECC608 are the only ones that
@@ -221,6 +225,7 @@ ATCA_STATUS atcah_nonce(struct atca_nonce_in_out *param)
  *
  *   \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_IO_DECRYPT
 ATCA_STATUS atcah_io_decrypt(struct atca_io_decrypt_in_out *param)
 {
     atcac_sha2_256_ctx ctx;
@@ -254,7 +259,7 @@ ATCA_STATUS atcah_io_decrypt(struct atca_io_decrypt_in_out *param)
 
     return ATCA_SUCCESS;
 }
-
+#endif /* ATCAH_IO_DECRYPT */
 
 /** \brief Calculate the expected MAC on the host side for the Verify command.
  *
@@ -262,6 +267,7 @@ ATCA_STATUS atcah_io_decrypt(struct atca_io_decrypt_in_out *param)
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_VERIFY_MAC
 ATCA_STATUS atcah_verify_mac(atca_verify_mac_in_out_t *param)
 {
     uint8_t verify_mode = (param->mode & VERIFY_MODE_MASK);
@@ -341,6 +347,7 @@ ATCA_STATUS atcah_verify_mac(atca_verify_mac_in_out_t *param)
 
     return ATCA_SUCCESS;
 }
+#endif
 
 /** \brief Encrypts the digest for the SecureBoot command when using the
  *          encrypted digest / validating mac option.
@@ -349,6 +356,7 @@ ATCA_STATUS atcah_verify_mac(atca_verify_mac_in_out_t *param)
  *
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_SECUREBOOT_ENC
 ATCA_STATUS atcah_secureboot_enc(atca_secureboot_enc_in_out_t* param)
 {
     atcac_sha2_256_ctx ctx;
@@ -374,6 +382,7 @@ ATCA_STATUS atcah_secureboot_enc(atca_secureboot_enc_in_out_t* param)
 
     return ATCA_SUCCESS;
 }
+#endif /* ATCAH_SECUREBOOT_ENC */
 
 /** \brief Calculates the expected MAC returned from the SecureBoot command
  *          when verification is a success.
@@ -385,6 +394,7 @@ ATCA_STATUS atcah_secureboot_enc(atca_secureboot_enc_in_out_t* param)
  *
  *   \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_SECUREBOOT_MAC
 ATCA_STATUS atcah_secureboot_mac(atca_secureboot_mac_in_out_t *param)
 {
     atcac_sha2_256_ctx ctx;
@@ -424,7 +434,7 @@ ATCA_STATUS atcah_secureboot_mac(atca_secureboot_mac_in_out_t *param)
 
     return ATCA_SUCCESS;
 }
-
+#endif /* ATCAH_SECUREBOOT_MAC */
 
 
 /** \brief This function generates an SHA-256 digest (MAC) of a key, challenge, and other information.
@@ -435,6 +445,7 @@ ATCA_STATUS atcah_secureboot_mac(atca_secureboot_mac_in_out_t *param)
  * \param[in,out] param pointer to parameter structure
  *   \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_MAC
 ATCA_STATUS atcah_mac(struct atca_mac_in_out *param)
 {
     uint8_t temporary[ATCA_MSG_SIZE_MAC];
@@ -508,7 +519,7 @@ ATCA_STATUS atcah_mac(struct atca_mac_in_out *param)
 
     return ATCA_SUCCESS;
 }
-
+#endif /* ATCAH_MAC */
 
 
 
@@ -516,6 +527,7 @@ ATCA_STATUS atcah_mac(struct atca_mac_in_out *param)
  * \param[in,out] param  Input and output parameters
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_CHECK_MAC
 ATCA_STATUS atcah_check_mac(struct atca_check_mac_in_out *param)
 {
     uint8_t msg[ATCA_MSG_SIZE_MAC];
@@ -610,7 +622,7 @@ ATCA_STATUS atcah_check_mac(struct atca_check_mac_in_out *param)
 
     return ATCA_SUCCESS;
 }
-
+#endif /* ATCAH_CHECK_MAC */
 
 /** \brief This function generates an HMAC / SHA-256 hash of a key and other information.
 
@@ -620,6 +632,7 @@ ATCA_STATUS atcah_check_mac(struct atca_check_mac_in_out *param)
  * \param[in,out] param pointer to parameter structure
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_HMAC
 ATCA_STATUS atcah_hmac(struct atca_hmac_in_out *param)
 {
     // Local Variables
@@ -716,7 +729,7 @@ ATCA_STATUS atcah_hmac(struct atca_hmac_in_out *param)
 
     return ATCA_SUCCESS;
 }
-
+#endif /* ATCAH_HMAC */
 
 /** \brief This function combines the current TempKey with a stored value.
 
@@ -731,6 +744,7 @@ ATCA_STATUS atcah_hmac(struct atca_hmac_in_out *param)
  * \param[in,out] param pointer to parameter structure
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_GENDIG
 ATCA_STATUS atcah_gen_dig(struct atca_gen_dig_in_out *param)
 {
     uint8_t temporary[ATCA_MSG_SIZE_GEN_DIG];
@@ -903,11 +917,13 @@ ATCA_STATUS atcah_gen_dig(struct atca_gen_dig_in_out *param)
 
     return ATCA_SUCCESS;
 }
+#endif /* ATCAH_GENDIG */
 
 /** \brief This function generates mac with session key with a plain text.
  * \param[in,out] param pointer to parameter structure
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_GEN_MAC
 ATCA_STATUS atcah_gen_mac(struct atca_gen_dig_in_out *param)
 {
     uint8_t temporary[ATCA_MSG_SIZE_GEN_DIG];
@@ -980,6 +996,7 @@ ATCA_STATUS atcah_gen_mac(struct atca_gen_dig_in_out *param)
 
     return ATCA_SUCCESS;
 }
+#endif /* ATCAH_GEN_MAC */
 
 /** \brief This function calculates the input MAC for the Write command.
 
@@ -988,6 +1005,7 @@ ATCA_STATUS atcah_gen_mac(struct atca_gen_dig_in_out *param)
  * \param[in,out] param pointer to parameter structure
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_WRITE_AUTH_MAC
 ATCA_STATUS atcah_write_auth_mac(struct atca_write_mac_in_out *param)
 {
     uint8_t mac_input[ATCA_MSG_SIZE_ENCRYPT_MAC];
@@ -1055,6 +1073,7 @@ ATCA_STATUS atcah_write_auth_mac(struct atca_write_mac_in_out *param)
 
     return ATCA_SUCCESS;
 }
+#endif /* ATCAH_WRITE_AUTH_MAC */
 
 /** \brief This function calculates the input MAC for the PrivWrite command.
 
@@ -1063,6 +1082,7 @@ ATCA_STATUS atcah_write_auth_mac(struct atca_write_mac_in_out *param)
  * \param[in,out] param pointer to parameter structure
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_PRIVWRITE_AUTH_MAC
 ATCA_STATUS atcah_privwrite_auth_mac(struct atca_write_mac_in_out *param)
 {
     uint8_t mac_input[ATCA_MSG_SIZE_PRIVWRITE_MAC];
@@ -1145,6 +1165,7 @@ ATCA_STATUS atcah_privwrite_auth_mac(struct atca_write_mac_in_out *param)
 
     return ATCA_SUCCESS;
 }
+#endif /* ATCAH_PRIVWRITE_AUTH_MAC */
 
 /** \brief This function derives a key with a key and TempKey.
 
@@ -1160,6 +1181,7 @@ ATCA_STATUS atcah_privwrite_auth_mac(struct atca_write_mac_in_out *param)
  * \param[in,out] param pointer to parameter structure
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_DERIVE_KEY
 ATCA_STATUS atcah_derive_key(struct atca_derive_key_in_out *param)
 {
     uint8_t temporary[ATCA_MSG_SIZE_DERIVE_KEY];
@@ -1226,7 +1248,7 @@ ATCA_STATUS atcah_derive_key(struct atca_derive_key_in_out *param)
 
     return ATCA_SUCCESS;
 }
-
+#endif /* ATCAH_DERIVE_KEY */
 
 /** \brief This function calculates the input MAC for a DeriveKey command.
 
@@ -1235,6 +1257,7 @@ ATCA_STATUS atcah_derive_key(struct atca_derive_key_in_out *param)
  * \param[in,out] param pointer to parameter structure
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_DERIVE_KEY_MAC
 ATCA_STATUS atcah_derive_key_mac(struct atca_derive_key_mac_in_out *param)
 {
     uint8_t temporary[ATCA_MSG_SIZE_DERIVE_KEY_MAC];
@@ -1276,7 +1299,7 @@ ATCA_STATUS atcah_derive_key_mac(struct atca_derive_key_mac_in_out *param)
 
     return ATCA_SUCCESS;
 }
-
+#endif /* ATCAH_DERIVE_KEY_MAC */
 
 /** \brief This function decrypts 32-byte encrypted data received with the Read command.
 
@@ -1294,6 +1317,7 @@ ATCA_STATUS atcah_derive_key_mac(struct atca_derive_key_mac_in_out *param)
  * \param[in,out] param pointer to parameter structure
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_DECRYPT
 ATCA_STATUS atcah_decrypt(struct atca_decrypt_in_out *param)
 {
     uint8_t i;
@@ -1334,6 +1358,7 @@ ATCA_STATUS atcah_decrypt(struct atca_decrypt_in_out *param)
 
     return ATCA_SUCCESS;
 }
+#endif /* ATCAH_DECRYPT */
 
 /** \brief This function creates a SHA256 digest on a little-endian system.
  *
@@ -1342,10 +1367,12 @@ ATCA_STATUS atcah_decrypt(struct atca_decrypt_in_out *param)
  * \param[out] digest SHA256 of message
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_SHA256
 ATCA_STATUS atcah_sha256(int32_t len, const uint8_t *message, uint8_t *digest)
 {
     return (ATCA_STATUS)atcac_sw_sha2_256(message, len, digest);
 }
+#endif /* ATCAH_SHA256 */
 
 /** \brief Calculate the PubKey digest created by GenKey and saved to TempKey.
  *
@@ -1354,6 +1381,7 @@ ATCA_STATUS atcah_sha256(int32_t len, const uint8_t *message, uint8_t *digest)
  *
    \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_GEN_KEY_MSG
 ATCA_STATUS atcah_gen_key_msg(struct atca_gen_key_in_out *param)
 {
     uint8_t msg[128];
@@ -1406,6 +1434,7 @@ ATCA_STATUS atcah_gen_key_msg(struct atca_gen_key_in_out *param)
 
     return ATCA_SUCCESS;
 }
+#endif /* ATCAH_GEN_KEY_MSG */
 
 /** \brief Populate the slot_config, key_config, and is_slot_locked fields in
  *         the atca_sign_internal_in_out structure from the provided config
@@ -1423,6 +1452,7 @@ ATCA_STATUS atcah_gen_key_msg(struct atca_gen_key_in_out *param)
  * \param[in]    config         Full 128 byte config zone for the device.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_CONFIG_TO_SIGN_INTERNAL
 ATCA_STATUS atcah_config_to_sign_internal(ATCADeviceType device_type, struct atca_sign_internal_in_out *param, const uint8_t* config)
 {
     const uint8_t* value = NULL;
@@ -1459,6 +1489,7 @@ ATCA_STATUS atcah_config_to_sign_internal(ATCADeviceType device_type, struct atc
 
     return ATCA_SUCCESS;
 }
+#endif /* ATCAH_CONFIG_TO_SIGN_INTERNAL */
 
 /** \brief Builds the full message that would be signed by the Sign(Internal)
  *         command.
@@ -1472,6 +1503,7 @@ ATCA_STATUS atcah_config_to_sign_internal(ATCADeviceType device_type, struct atc
  *
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_SIGN_INTERNAL_MSG
 ATCA_STATUS atcah_sign_internal_msg(ATCADeviceType device_type, struct atca_sign_internal_in_out *param)
 {
     uint8_t msg[55];
@@ -1548,6 +1580,7 @@ ATCA_STATUS atcah_sign_internal_msg(ATCADeviceType device_type, struct atca_sign
         return ATCA_SUCCESS;
     }
 }
+#endif /* ATCAH_SIGN_INTERNAL_MSG */
 
 /** \brief Builds the counter match value that needs to be stored in a slot.
  *
@@ -1559,6 +1592,7 @@ ATCA_STATUS atcah_sign_internal_msg(ATCADeviceType device_type, struct atca_sign
  *
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_ENCODE_COUNTER_MATCH
 ATCA_STATUS atcah_encode_counter_match(uint32_t counter_value, uint8_t * counter_match_value)
 {
     if ((counter_value > COUNTER_MAX_VALUE) || (counter_value % 32 != 0) || (counter_match_value == NULL))
@@ -1577,6 +1611,7 @@ ATCA_STATUS atcah_encode_counter_match(uint32_t counter_value, uint8_t * counter
 
     return ATCA_SUCCESS;
 }
+#endif /* ATCAH_ENCODE_COUNTER_MATCAH */
 
 /** \brief This function calculates the input MAC for the ECC204 Write command.
 
@@ -1585,6 +1620,7 @@ ATCA_STATUS atcah_encode_counter_match(uint32_t counter_value, uint8_t * counter
  * \param[in,out] param pointer to parameter structure
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_WRITE_AUTH_MAC
 ATCA_STATUS atcah_ecc204_write_auth_mac(struct atca_write_mac_in_out *param)
 {
     uint8_t mac_input[ATCA_MSG_SIZE_ENCRYPT_MAC];
@@ -1643,12 +1679,14 @@ ATCA_STATUS atcah_ecc204_write_auth_mac(struct atca_write_mac_in_out *param)
 
     return ATCA_SUCCESS;
 }
+#endif /* ATCAH_WRITE_AUTH_MAC */
 
 /** \brief This function calculates the session key for the ECC204.
  *
  * \param[in,out] param pointer to parameter structure
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if ATCAH_GEN_SESSION_KEY
 ATCA_STATUS atcah_gen_session_key(struct atca_session_key_in_out *param)
 {
     uint8_t session_key_input[ATCA_MSG_SIZE_SESSION_KEY];
@@ -1694,5 +1732,6 @@ ATCA_STATUS atcah_gen_session_key(struct atca_session_key_in_out *param)
 
     return ATCA_SUCCESS;
 }
+#endif /* ATCAH_GEN_SESSION_KEY */
 
 #endif

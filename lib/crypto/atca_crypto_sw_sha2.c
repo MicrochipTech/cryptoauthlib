@@ -29,7 +29,7 @@
 #include "atca_crypto_sw_sha2.h"
 #include "hashes/sha2_routines.h"
 
-#if ATCA_ENABLE_SHA256_IMPL
+#if ATCA_CRYPTO_SHA2_EN
 /** \brief initializes the SHA256 software
  * \param[in] ctx  ptr to context data structure
  * \return ATCA_SUCCESS on success, otherwise an error code.
@@ -73,7 +73,43 @@ int atcac_sw_sha2_256_finish(atcac_sha2_256_ctx* ctx, uint8_t digest[ATCA_SHA2_2
 
     return ATCA_SUCCESS;
 }
+#endif /* ATCA_CRYPTO_SHA2_EN */
 
+#if ATCAC_SHA256_EN
+/** \brief single call convenience function which computes Hash of given data using SHA256 software
+ * \param[in]  data       pointer to stream of data to hash
+ * \param[in]  data_size  size of data stream to hash
+ * \param[out] digest     result
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+int atcac_sw_sha2_256(const uint8_t* data, size_t data_size, uint8_t digest[ATCA_SHA2_256_DIGEST_SIZE])
+{
+    int ret;
+    atcac_sha2_256_ctx ctx;
+
+    ret = atcac_sw_sha2_256_init(&ctx);
+    if (ret != ATCA_SUCCESS)
+    {
+        return ret;
+    }
+
+    ret = atcac_sw_sha2_256_update(&ctx, data, data_size);
+    if (ret != ATCA_SUCCESS)
+    {
+        return ret;
+    }
+
+    ret = atcac_sw_sha2_256_finish(&ctx, digest);
+    if (ret != ATCA_SUCCESS)
+    {
+        return ret;
+    }
+
+    return ATCA_SUCCESS;
+}
+#endif /* ATCAC_SHA256_EN */
+
+#if ATCA_CRYPTO_SHA2_HMAC_EN
 /** \brief Initialize context for performing HMAC (sha256) in software.
  *
  * \return ATCA_SUCCESS on success, otherwise an error code.
@@ -150,7 +186,7 @@ ATCA_STATUS atcac_sha256_hmac_finish(
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (ctx)
+    if (ctx && digest_len && *digest_len >= ATCA_SHA2_256_DIGEST_SIZE )
     {
         uint8_t temp_dig[ATCA_SHA2_256_DIGEST_SIZE];
 
@@ -166,43 +202,9 @@ ATCA_STATUS atcac_sha256_hmac_finish(
     }
     return status;
 }
+#endif /* ATCA_CRYPTO_SHA2_HMAC_EN */
 
-
-#endif /* ATCA_ENABLE_SHA256_IMPL */
-
-/** \brief single call convenience function which computes Hash of given data using SHA256 software
- * \param[in]  data       pointer to stream of data to hash
- * \param[in]  data_size  size of data stream to hash
- * \param[out] digest     result
- * \return ATCA_SUCCESS on success, otherwise an error code.
- */
-
-int atcac_sw_sha2_256(const uint8_t* data, size_t data_size, uint8_t digest[ATCA_SHA2_256_DIGEST_SIZE])
-{
-    int ret;
-    atcac_sha2_256_ctx ctx;
-
-    ret = atcac_sw_sha2_256_init(&ctx);
-    if (ret != ATCA_SUCCESS)
-    {
-        return ret;
-    }
-
-    ret = atcac_sw_sha2_256_update(&ctx, data, data_size);
-    if (ret != ATCA_SUCCESS)
-    {
-        return ret;
-    }
-
-    ret = atcac_sw_sha2_256_finish(&ctx, digest);
-    if (ret != ATCA_SUCCESS)
-    {
-        return ret;
-    }
-
-    return ATCA_SUCCESS;
-}
-
+#if ATCA_CRYPTO_SHA2_HMAC_CTR_EN
 /** \brief Implements SHA256 HMAC-Counter per  NIST SP 800-108 used for KDF like operations */
 ATCA_STATUS atcac_sha256_hmac_counter(
     atcac_hmac_sha256_ctx* ctx,
@@ -234,3 +236,4 @@ ATCA_STATUS atcac_sha256_hmac_counter(
     }
     return ret;
 }
+#endif /* ATCA_CRYPTO_SHA2_HMAC_CTR_EN */

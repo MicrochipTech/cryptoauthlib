@@ -39,6 +39,7 @@ ATCAIfaceCfg ${NAME?lower_case}_${INDEX?string}_init_data = {
 <#elseif INTERFACE == "ATCA_SWI_GPIO_IFACE">
 <#assign plib_type = "bb">
 	.atcaswi.bus           = ${PLIB_NAME}_PIN_${SWIBB_CRYPTO_PIN?upper_case},
+    .atcaswi.address       = 0x${I2C_ADDR?upper_case},
 <#elseif INTERFACE == "ATCA_SWI_IFACE">
 <#assign plib_type = "uart">
     .atcaswi.bus           = 0,

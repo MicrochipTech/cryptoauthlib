@@ -34,6 +34,7 @@
 
 #include "cryptoauthlib.h"
 
+#if CALIB_COUNTER_EN
 /** \brief Compute the Counter functions
  *  \param[in]  device         Device context pointer
  *  \param[in]  mode           the mode used for the counter
@@ -125,3 +126,4 @@ ATCA_STATUS calib_counter_read(ATCADevice device, uint16_t counter_id, uint32_t*
 {
     return calib_counter(device, COUNTER_MODE_READ, counter_id, counter_value);
 }
+#endif /* CALIB_COUNTER_EN */

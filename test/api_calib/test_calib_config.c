@@ -38,6 +38,7 @@ const uint8_t g_slot4_key[] = {
 
 #include "test_calib.h"
 
+#ifdef ATCA_ATECC608_SUPPORT
 uint8_t test_ecc608_configdata[ATCA_ECC_CONFIG_SIZE] = {
     0x01, 0x23, 0x00, 0x00, 0x00, 0x00, 0x60, 0x00, 0x04, 0x05, 0x06, 0x07, 0xEE, 0x01, 0x01, 0x00,  //15
     0xC0, 0x00, 0xA1, 0x00, 0xAF, 0x2F, 0xC4, 0x44, 0x87, 0x20, 0xC4, 0xF4, 0x8F, 0x0F, 0x0F, 0x0F,  //31,
@@ -48,7 +49,9 @@ uint8_t test_ecc608_configdata[ATCA_ECC_CONFIG_SIZE] = {
     0x33, 0x00, 0x1C, 0x00, 0x13, 0x00, 0x1C, 0x00, 0x3C, 0x00, 0x3A, 0x10, 0x1C, 0x00, 0x33, 0x00,  //111
     0x1C, 0x00, 0x1C, 0x00, 0x38, 0x00, 0x30, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x32, 0x00, 0x30, 0x00   //127
 };
+#endif
 
+#if defined(ATCA_ATECC108A_SUPPORT) || defined(ATCA_ATECC508A_SUPPORT)
 const uint8_t test_ecc_configdata[ATCA_ECC_CONFIG_SIZE] = {
     0x01, 0x23, 0x00, 0x00, 0x00, 0x00, 0x50, 0x00, 0x04, 0x05, 0x06, 0x07, 0xEE, 0x00, 0x01, 0x00, //15
     0xC0, 0x00, 0x55, 0x00, 0x8F, 0x2F, 0xC4, 0x44, 0x87, 0x20, 0xC4, 0xF4, 0x8F, 0x0F, 0x8F, 0x8F, //31,
@@ -59,33 +62,67 @@ const uint8_t test_ecc_configdata[ATCA_ECC_CONFIG_SIZE] = {
     0x33, 0x00, 0x1C, 0x00, 0x13, 0x00, 0x1C, 0x00, 0x3C, 0x00, 0x1C, 0x00, 0x1C, 0x00, 0x33, 0x00, //111
     0x1C, 0x00, 0x1C, 0x00, 0x3C, 0x00, 0x30, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x32, 0x00, 0x30, 0x00  //127
 };
+#endif
+
 
 static device_object_meta_t calib_config_object_data[] =
 {
-    { TEST_TYPE_ECC_SIGN,   2,                    NULL                  },
-    { TEST_TYPE_ECC_VERIFY, 15,                   NULL                  },
-    { TEST_TYPE_ECC_GENKEY, 2,                    NULL                  },
-    { TEST_TYPE_ECDH,       0,                    NULL                  },
-    { TEST_TYPE_AES,        10,                   NULL                  },
-    { TEST_TYPE_HMAC,       4,                    NULL                  },
-    { TEST_TYPE_DATA,       11,                   NULL                  },
-    { 0,                    0,                    NULL                  }
+    { TEST_TYPE_ECC_SIGN,   2,          NULL         },
+    { TEST_TYPE_ECC_VERIFY, 15,         NULL         },
+    { TEST_TYPE_ECC_GENKEY, 2,          NULL         },
+    { TEST_TYPE_ECDH,       0,          NULL         },
+    { TEST_TYPE_AES,        10,         NULL         },
+    { TEST_TYPE_HMAC,       4,          NULL         },
+    { TEST_TYPE_DATA,       11,         NULL         },
+    { 0,                    0,          NULL         }
 };
 
-ATCA_STATUS calib_config_get_slot_by_test(uint8_t test_type, uint16_t* handle)
+
+
+static ATCA_STATUS calib_config_get_slot_internal(device_object_meta_t * table, uint8_t test_type, uint16_t* handle)
 {
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
-    device_object_meta_t* ptr = calib_config_object_data;
 
-    for (; ptr->test_type; ptr++)
+    for (; table->test_type; table++)
     {
-        if (ptr->test_type == test_type)
+        if (table->test_type == test_type)
         {
-            *handle = ptr->handle;
+            *handle = table->handle;
             status = ATCA_SUCCESS;
             break;
         }
     }
     return status;
 }
+
+ATCA_STATUS calib_config_get_slot_by_test(uint8_t test_type, uint16_t* handle)
+{
+    return calib_config_get_slot_internal(calib_config_object_data, test_type, handle);
+}
 #endif
+
+#ifdef ATCA_ECC204_SUPPORT
+
+const uint8_t test_ecc204_configdata[ATCA_ECC204_CONFIG_SIZE] = {
+    0xB9, 0xFA, 0x3C, 0x1A, 0xAA, 0xD4, 0x91, 0x7C, 0x03, 0x3C, 0x00, 0x00, 0x3E, 0xAF, 0x81, 0x80,
+    0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+    0x33, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+
+static device_object_meta_t calib_config_ecc204_object_data[] =
+{
+    { TEST_TYPE_ECC_SIGN,   0,          NULL         },
+    { TEST_TYPE_ECC_GENKEY, 0,          NULL         },
+    { TEST_TYPE_DATA,       1,          NULL         },
+    { 0,                    0,          NULL         }
+};
+
+ATCA_STATUS calib_config_get_ecc204_slot_by_test(uint8_t test_type, uint16_t* handle)
+{
+    return calib_config_get_slot_internal(calib_config_ecc204_object_data, test_type, handle);
+}
+
+
+#endif
+

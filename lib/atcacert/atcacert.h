@@ -33,6 +33,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "atcacert_check_config.h"
+
 /** \defgroup atcacert_ Certificate manipulation methods (atcacert_)
  *
  * \brief

@@ -1,6 +1,6 @@
 /**
  * \file
- * \brief API wrapper for software random
+ * \brief Test CryptoAuthLib Integrations into other Libraries
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
@@ -25,21 +25,24 @@
  * THIS SOFTWARE.
  */
 
-#include "cryptoauthlib.h"
+#ifndef TEST_INTEGRATION_H
+#define TEST_INTEGRATION_H
 
-#ifdef ATCA_ENABLE_RAND_IMPL
-
-#include "atca_crypto_sw_rand.h"
-
-/** \brief return software generated random number and the function is currently not implemented
- * \param[out] data       ptr to space to receive the random number
- * \param[in]  data_size  size of data buffer
- * return ATCA_UNIMPLEMENTED , as the function is not implemented
- */
-
-int atcac_sw_random(uint8_t* data, size_t data_size)
-{
-    return ATCA_UNIMPLEMENTED;
-}
-
+#ifdef __cplusplus
+extern "C" {
 #endif
+
+#include "atca_test.h"
+
+#if defined(ATCA_MBEDTLS)
+extern t_test_case_info mbedtls_ecdsa_test_info[];
+#endif
+
+/* Console function */
+int run_integration_tests(int argc, char* argv[]);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* TEST_INTEGRATION_H */

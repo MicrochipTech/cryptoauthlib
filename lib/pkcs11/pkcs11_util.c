@@ -64,8 +64,16 @@ CK_RV pkcs11_util_convert_rv(ATCA_STATUS status)
     {
     case ATCA_SUCCESS:
         return CKR_OK;
-    default:
+    case ATCA_FUNC_FAIL:
+        /* fallthrough */
+    case ATCA_GEN_FAIL:
+        /* fallthrough */
+    case ATCA_BAD_PARAM:
+        /* fallthrough */
+    case ATCA_NOT_INITIALIZED:
         return CKR_FUNCTION_FAILED;
+    default:
+        return CKR_DEVICE_ERROR;
     }
 }
 

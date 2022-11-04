@@ -179,6 +179,7 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define ATCA_WRITE        ((uint8_t)0x12)  //!< Write command op-code
 #define ATCA_ECDH         ((uint8_t)0x43)  //!< ECDH command op-code
 #define ATCA_COUNTER      ((uint8_t)0x24)  //!< Counter command op-code
+#define ATCA_DELETE       ((uint8_t)0x13)  //!< Delete command op-code
 #define ATCA_SHA          ((uint8_t)0x47)  //!< SHA command op-code
 #define ATCA_AES          ((uint8_t)0x51)  //!< AES command op-code
 #define ATCA_KDF          ((uint8_t)0x56)  //!< KDF command op-code

@@ -1,6 +1,34 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.4.0 (10/27/2022)
+
+### New Features
+  - Added framework for fine grain library configuration including configuration check
+    header files `<api>_config_check.h` see lib/atca_config_check.h for the top level
+    header
+  - Added WPC application files with reference message generation/parsing and library
+    configuration file to optimize to the smallest footprint
+  - TA100 read/write apis updated to segment incoming buffer into partial read/write
+    operations if it exceeds the maximum supported packet size
+  - Added PKCS7 padding algorithm for use with AES-CBC
+  - Expose PKCS11 configuration options to CMake configuration
+
+
+### Fixes
+  - Improve ECC204 apis to match cryptoauthlib apis and abstract the device differences
+  - Support for strict C99 compliance and clean up warnings from -Wall and pedantic levels
+  - Add rsa2048 key size support to talib_rsaenc command
+  - Fix for ta100 devupdate to set the proper auth session exit flags so the library will
+    properly reconnect when the ta100 reboots
+  - Fix ECC608 verify failure when ReqRandom bit is set for a stored public key by using
+    tempkey in this situation rather than the message digest buffer. See the ECC608
+    datasheet for more details of this special condition
+  - Improve ta100 auth session handling of long messages by reporting the message size
+    exceeds the wrapped message limit earlier in the packet creation process
+  - Fixes and Improvements for PKCS11 interface based on compliance testing
+
+
 ## Release v3.3.3 (10/06/2021)
 
 ### New features

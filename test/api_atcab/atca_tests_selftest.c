@@ -25,7 +25,13 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
+
+#ifndef TEST_ATCAB_SELFEST_EN
+#define TEST_ATCAB_SELFTEST_EN      CALIB_SELFTEST_EN
+#endif
+
+#if TEST_ATCAB_SELFTEST_EN
 
 TEST(atca_cmd_basic_test, selftest_individual)
 {
@@ -62,12 +68,17 @@ TEST(atca_cmd_basic_test, selftest_all)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(0, result);
 }
+#endif
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info selftest_basic_test_info[] =
 {
+#if TEST_ATCAB_SELFTEST_EN
     { REGISTER_TEST_CASE(atca_cmd_basic_test, selftest_individual), DEVICE_MASK(ATECC608) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, selftest_all),        DEVICE_MASK(ATECC608) },
+#endif
     { (fp_test_case)NULL,                     (uint8_t)0 },         /* Array Termination element*/
 };
 // *INDENT-ON*
+
+

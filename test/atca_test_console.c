@@ -27,7 +27,8 @@
 
 #include "cryptoauthlib.h"
 #include "atca_test.h"
-#include "atca_crypto_sw_tests.h"
+#include "api_atcab/test_atcab.h"
+#include "api_crypto/test_crypto.h"
 
 #ifndef ATCA_SERIAL_NUM_SIZE
 #define ATCA_SERIAL_NUM_SIZE        (9)
@@ -36,17 +37,6 @@
 #ifndef RANDOM_RSP_SIZE
 #define RANDOM_RSP_SIZE             (32)
 #endif
-
-int run_basic_tests(int argc, char* argv[])
-{
-#ifdef ATCA_ATECC608_SUPPORT
-    if (ATECC608 == (gCfg->devtype))
-    {
-        check_clock_divider(argc, argv);
-    }
-#endif
-    return run_test(argc, argv, RunAllBasicTests);
-}
 
 int run_otpzero_tests(int argc, char* argv[])
 {
@@ -146,7 +136,10 @@ int lock_config(int argc, char* argv[])
 {
     int ret = lock_config_zone(argc, argv);
 
-    lock_status(argc, argv);
+    if (ATCA_COMM_FAIL != ret)
+    {
+        lock_status(argc, argv);
+    }
     return ret;
 }
 
@@ -154,52 +147,58 @@ int lock_data(int argc, char* argv[])
 {
     int ret = lock_data_zone(argc, argv);
 
-    lock_status(argc, argv);
+    if (ATCA_COMM_FAIL != ret)
+    {
+        lock_status(argc, argv);
+    }
     return ret;
 }
 
 int do_randoms(int argc, char* argv[])
 {
-    ATCA_STATUS status;
-    uint8_t randout[RANDOM_RSP_SIZE];
-    char displayStr[100];
-    size_t displen = sizeof(displayStr);
-    int i;
-
+    ATCA_STATUS status = ATCA_GEN_FAIL;
     ((void)argc);
     ((void)argv);
 
     if ((gCfg->devtype == ATSHA206A) || (ECC204 == gCfg->devtype))
     {
         printf("Selected Device doesn't support random command\r\n");
-        return ATCA_GEN_FAIL;
     }
-
-    status = atcab_init(gCfg);
-    if (status != ATCA_SUCCESS)
+    else
     {
-        printf("atcab_init() failed with ret=0x%08X\r\n", status);
-        return status;
-    }
+#if CALIB_RANDOM_EN || TALIB_RANDOM_EN
+        uint8_t randout[RANDOM_RSP_SIZE];
+        char displayStr[100];
+        size_t displen = sizeof(displayStr);
+        int i;
 
-    printf("Random Numbers:\r\n");
-    for (i = 0; i < 5; i++)
-    {
-        if ((status = atcab_random(randout)) != ATCA_SUCCESS)
+        status = atcab_init(gCfg);
+        if (status != ATCA_SUCCESS)
         {
-            break;
+            printf("atcab_init() failed with ret=0x%08X\r\n", status);
+            return status;
         }
-        displen = sizeof(displayStr);
-        atcab_bin2hex(randout, 32, displayStr, &displen);
-        printf("%s\r\n", displayStr);
-    }
 
-    if (status != ATCA_SUCCESS)
-    {
-        printf("atcab_random() failed with ret=0x%08X\r\n", status);
-    }
+        printf("Random Numbers:\r\n");
+        for (i = 0; i < 5; i++)
+        {
+            if ((status = atcab_random(randout)) != ATCA_SUCCESS)
+            {
+                break;
+            }
+            displen = sizeof(displayStr);
+            atcab_bin2hex(randout, 32, displayStr, &displen);
+            printf("%s\r\n", displayStr);
+        }
 
-    atcab_release();
+        if (status != ATCA_SUCCESS)
+        {
+            printf("atcab_random() failed with ret=0x%08X\r\n", status);
+        }
+
+        atcab_release();
+#endif
+    }
 
     return status;
 }
@@ -249,15 +248,13 @@ int read_sernum(int argc, char* argv[])
 void RunAllCertDataTests(void);
 int certdata_unit_tests(int argc, char* argv[])
 {
-    UnityMain(argc, (const char**)argv, RunAllCertDataTests);
-    return ATCA_SUCCESS;
+    return run_test(argc, argv, RunAllCertDataTests);
 }
 
 void RunAllCertIOTests(void);
 int certio_unit_tests(int argc, char* argv[])
 {
-    UnityMain(argc, (const char**)argv, RunAllCertIOTests);
-    return ATCA_SUCCESS;
+    return run_test(argc, argv, RunAllCertIOTests);
 }
 #endif
 
@@ -431,24 +428,6 @@ ATCA_STATUS get_serial_no(uint8_t* sernum)
     return status;
 }
 
-int run_test(int argc, char* argv[], void (*fptest)(void))
-{
-    if (CMD_PROCESSOR_MAX_ARGS > argc)
-    {
-        argv[argc++] = "-v";
-    }
-
-    if (gCfg->devtype < ATCA_DEV_UNKNOWN)
-    {
-        return UnityMain(argc, (const char**)argv, fptest);
-    }
-    else
-    {
-        printf("Device is NOT Selected... Select device before running tests!!!");
-        return -1;
-    }
-}
-
 int run_all_tests(int argc, char* argv[])
 {
     ATCA_STATUS status;
@@ -596,8 +575,8 @@ int run_tng_tests(int argc, char* argv[])
 {
     ATCA_STATUS status;
 
-    gCfg->atcahid.dev_interface = ATCA_KIT_I2C_IFACE;
-    gCfg->atcahid.dev_identity = 0x6C;
+    ATCA_IFACECFG_VALUE(gCfg, atcahid.dev_interface) = ATCA_KIT_I2C_IFACE;
+    ATCA_IFACECFG_VALUE(gCfg, atcahid.dev_identity) = 0x6C;
 
     status = atcab_init(gCfg);
     if (status != ATCA_SUCCESS)
@@ -612,14 +591,22 @@ int run_tng_tests(int argc, char* argv[])
     return 0;
 }
 
-#if defined(ATCA_MBEDTLS)
-int run_crypto_integration_tests(int argc, char* argv[])
+int run_wpc_tests(int argc, char* argv[])
 {
-    return run_test(argc, argv, RunCryptoIntegrationTests);
-}
-#endif
+    ATCA_STATUS status;
 
-int run_pbkdf2_tests(int argc, char* argv[])
-{
-    return run_test(argc, argv, RunPbkdf2Tests);
+//    ATCA_IFACECFG_VALUE(gCfg, atcahid.dev_interface) = ATCA_KIT_I2C_IFACE;
+//   ATCA_IFACECFG_VALUE(gCfg, atcahid.dev_identity) = 0x70;
+
+    status = atcab_init(gCfg);
+    if (status != ATCA_SUCCESS)
+    {
+        printf("atcab_init() failed with ret=0x%08X\r\n", status);
+        return status;
+    }
+
+    run_test(argc, argv, RunWPCTests);
+
+    atcab_release();
+    return 0;
 }

@@ -44,6 +44,7 @@ ATCA_STATUS atca_trace_msg(ATCA_STATUS status, const char * msg)
     if (ATCA_SUCCESS != status)
     {
         fprintf(g_trace_fp ? g_trace_fp : stderr, msg, status);
+        fflush(g_trace_fp);
     }
     return status;
 }

@@ -34,6 +34,7 @@
 
 #include "cryptoauthlib.h"
 
+#if CALIB_UPDATEEXTRA_EN
 /** \brief Executes UpdateExtra command to update the values of the two
  *          extra bytes within the Configuration zone (bytes 84 and 85).
  *
@@ -82,3 +83,4 @@ ATCA_STATUS calib_updateextra(ATCADevice device, uint8_t mode, uint16_t new_valu
 
     return status;
 }
+#endif  /* CALIB_UPDATEEXTRA */

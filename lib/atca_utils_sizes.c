@@ -49,10 +49,16 @@ SIZE_OF_API_T(atcacert_def_t)
 SIZE_OF_API_T(atcacert_build_state_t)
 #endif
 
-/* atcab.h */
+/* atca_crypto_hw_aes.h */
+#ifdef atca_aes_cbc_ctx_t
 SIZE_OF_API_T(atca_aes_cbc_ctx_t)
+#endif
+#ifdef atca_aes_cmac_ctx_t
 SIZE_OF_API_T(atca_aes_cmac_ctx_t)
+#endif
+#ifdef atca_aes_ctr_ctx_t
 SIZE_OF_API_T(atca_aes_ctr_ctx_t)
+#endif
 
 #if ATCA_CA_SUPPORT
 #include "host/atca_host.h"

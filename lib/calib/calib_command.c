@@ -34,6 +34,7 @@
 
 #include "cryptoauthlib.h"
 
+#if CALIB_CHECKMAC_EN
 /** \brief ATCACommand CheckMAC method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -49,7 +50,9 @@ ATCA_STATUS atCheckMAC(ATCADeviceType device_type, ATCAPacket *packet)
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
+#if CALIB_COUNTER_EN
 /** \brief ATCACommand Counter method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -65,7 +68,9 @@ ATCA_STATUS atCounter(ATCADeviceType device_type, ATCAPacket *packet)
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
+#if CALIB_DERIVEKEY_EN
 /** \brief ATCACommand DeriveKey method
  * \param[in] ca_cmd   instance
  * \param[in] packet   pointer to the packet containing the command being built
@@ -92,7 +97,9 @@ ATCA_STATUS atDeriveKey(ATCADeviceType device_type, ATCAPacket *packet, bool has
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
+#if CALIB_ECDH_EN
 /** \brief ATCACommand ECDH method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -108,7 +115,9 @@ ATCA_STATUS atECDH(ATCADeviceType device_type, ATCAPacket *packet)
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
+#if CALIB_GENDIG_EN
 /** \brief ATCACommand Generate Digest method
  * \param[in] ca_cmd         instance
  * \param[in] packet         pointer to the packet containing the command being built
@@ -137,7 +146,9 @@ ATCA_STATUS atGenDig(ATCADeviceType device_type, ATCAPacket *packet, bool is_no_
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
+#if CALIB_GENKEY_EN
 /** \brief ATCACommand Generate Key method
  * \param[in] ca_cmd     instance
  * \param[in] packet    pointer to the packet containing the command being built
@@ -161,7 +172,9 @@ ATCA_STATUS atGenKey(ATCADeviceType device_type, ATCAPacket *packet)
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
+#if CALIB_HMAC_EN
 /** \brief ATCACommand HMAC method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -177,6 +190,7 @@ ATCA_STATUS atHMAC(ATCADeviceType device_type, ATCAPacket *packet)
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
 /** \brief ATCACommand Info method
  * \param[in] ca_cmd   instance
@@ -194,6 +208,7 @@ ATCA_STATUS atInfo(ATCADeviceType device_type, ATCAPacket *packet)
     return ATCA_SUCCESS;
 }
 
+#if CALIB_LOCK_EN || CALIB_LOCK_ECC204_EN
 /** \brief ATCACommand Lock method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -209,7 +224,9 @@ ATCA_STATUS atLock(ATCADeviceType device_type, ATCAPacket *packet)
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
+#if CALIB_MAC_EN
 /** \brief ATCACommand MAC method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -233,7 +250,9 @@ ATCA_STATUS atMAC(ATCADeviceType device_type, ATCAPacket *packet)
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
+#if CALIB_NONCE_EN
 /** \brief ATCACommand Nonce method
  * \param[in] ca_cmd   instance
  * \param[in] packet   pointer to the packet containing the command being built
@@ -275,6 +294,7 @@ ATCA_STATUS atNonce(ATCADeviceType device_type, ATCAPacket *packet)
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
 /** \brief ATCACommand Pause method
  * \param[in] ca_cmd   instance
@@ -292,6 +312,7 @@ ATCA_STATUS atPause(ATCADeviceType device_type, ATCAPacket *packet)
     return ATCA_SUCCESS;
 }
 
+#if CALIB_PRIVWRITE_EN
 /** \brief ATCACommand PrivWrite method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -307,7 +328,9 @@ ATCA_STATUS atPrivWrite(ATCADeviceType device_type, ATCAPacket *packet)
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
+#if CALIB_RANDOM_EN
 /** \brief ATCACommand Random method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -323,7 +346,9 @@ ATCA_STATUS atRandom(ATCADeviceType device_type, ATCAPacket *packet)
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
+#if CALIB_READ_EN || CALIB_READ_ECC204_EN
 /** \brief ATCACommand Read method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -339,7 +364,9 @@ ATCA_STATUS atRead(ATCADeviceType device_type, ATCAPacket *packet)
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
+#if CALIB_SECUREBOOT_EN
 /** \brief ATCACommand SecureBoot method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -371,7 +398,9 @@ ATCA_STATUS atSecureBoot(ATCADeviceType device_type, ATCAPacket *packet)
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
+#if CALIB_SHA_EN
 /** \brief ATCACommand SHA method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -416,7 +445,9 @@ ATCA_STATUS atSHA(ATCADeviceType device_type, ATCAPacket *packet, uint16_t write
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
+#if CALIB_SIGN_EN || CALIB_SIGN_ECC204_EN
 /** \brief ATCACommand Sign method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -434,7 +465,9 @@ ATCA_STATUS atSign(ATCADeviceType device_type, ATCAPacket *packet)
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
+#if CALIB_UPDATEEXTRA_EN
 /** \brief ATCACommand UpdateExtra method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -450,7 +483,9 @@ ATCA_STATUS atUpdateExtra(ATCADeviceType device_type, ATCAPacket *packet)
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
+#if CALIB_VERIFY_EN
 /** \brief ATCACommand ECDSA Verify method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -490,7 +525,9 @@ ATCA_STATUS atVerify(ATCADeviceType device_type, ATCAPacket *packet)
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
+#if CALIB_WRITE_EN || CALIB_WRITE_ECC204_EN
 /** \brief ATCACommand Write method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -537,7 +574,9 @@ ATCA_STATUS atWrite(ATCADeviceType device_type, ATCAPacket *packet, bool has_mac
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
+#if CALIB_AES_EN
 /** \brief ATCACommand AES method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -562,7 +601,9 @@ ATCA_STATUS atAES(ATCADeviceType device_type, ATCAPacket *packet)
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
+#if CALIB_SELFTEST_EN
 /** \brief ATCACommand AES method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -578,7 +619,9 @@ ATCA_STATUS atSelfTest(ATCADeviceType device_type, ATCAPacket *packet)
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
+#endif
 
+#if CALIB_KDF_EN
 /** \brief ATCACommand KDF method
  * \param[in]  ca_cmd  Instance
  * \param[in]  packet  Pointer to the packet containing the command being
@@ -606,7 +649,7 @@ ATCA_STATUS atKDF(ATCADeviceType device_type, ATCAPacket *packet)
     atCalcCrc(packet);
     return ATCA_SUCCESS;
 }
-
+#endif
 
 /** \brief Calculates CRC over the given raw data and returns the CRC in
  *         little-endian byte order.
@@ -688,6 +731,7 @@ bool atIsSHAFamily(ATCADeviceType device_type)
     switch (device_type)
     {
     case ATSHA204A:
+        /* fallthrough */
     case ATSHA206A:
         return true;
         break;
@@ -707,8 +751,11 @@ bool atIsECCFamily(ATCADeviceType device_type)
     switch (device_type)
     {
     case ATECC108A:
+        /* fallthrough */
     case ATECC508A:
+        /* fallthrough */
     case ATECC608:
+        /* fallthrough */
     case ECC204:
         return true;
         break;

@@ -35,6 +35,7 @@
 #include "cryptoauthlib.h"
 #include "calib/calib_basic.h"
 
+#if ATCAB_WRITE_EN
 // Perform floor integer division (-1 / 2 == -1) instead of truncate towards zero (-1 / 2 == 0)
 static int floor_div(int a, int b)
 {
@@ -43,6 +44,7 @@ static int floor_div(int a, int b)
 
     return r ? (d - ((a < 0) ^ (b < 0))) : d;
 }
+#endif
 
 int atcacert_get_response(uint8_t       device_private_key_slot,
                           const uint8_t challenge[32],
@@ -172,6 +174,7 @@ int atcacert_read_cert(const atcacert_def_t* cert_def,
     return ATCACERT_E_SUCCESS;
 }
 
+#if ATCAB_WRITE_EN
 int atcacert_write_cert(const atcacert_def_t* cert_def,
                         const uint8_t*        cert,
                         size_t                cert_size)
@@ -239,6 +242,7 @@ int atcacert_write_cert(const atcacert_def_t* cert_def,
 
     return ATCACERT_E_SUCCESS;
 }
+#endif
 
 int atcacert_create_csr_pem(const atcacert_def_t* csr_def, char* csr, size_t* csr_size)
 {
@@ -424,7 +428,10 @@ int atcacert_read_cert_size(const atcacert_def_t* cert_def,
 
     if (ATCACERT_E_SUCCESS == ret)
     {
-        ret = atcab_read_sig(cert_def->comp_cert_dev_loc.slot, &buffer[8]);
+        ret = atcab_read_bytes_zone(cert_def->comp_cert_dev_loc.zone,
+                                    cert_def->comp_cert_dev_loc.slot,
+                                    cert_def->comp_cert_dev_loc.offset,
+                                    &buffer[8], ATCA_ECCP256_SIG_SIZE);
     }
 
     if (ATCACERT_E_SUCCESS == ret)

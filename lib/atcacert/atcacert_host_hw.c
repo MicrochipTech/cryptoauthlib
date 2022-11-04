@@ -30,9 +30,7 @@
 #include "crypto/atca_crypto_sw_sha2.h"
 
 
-
-
-
+#if ATCACERT_HW_VERIFY_EN
 int atcacert_verify_cert_hw(const atcacert_def_t* cert_def,
                             const uint8_t*        cert,
                             size_t                cert_size,
@@ -68,10 +66,9 @@ int atcacert_verify_cert_hw(const atcacert_def_t* cert_def,
 
     return is_verified ? ATCACERT_E_SUCCESS : ATCACERT_E_VERIFY_FAILED;
 }
+#endif
 
-
-
-
+#if ATCACERT_HW_CHALLENGE_EN
 int atcacert_gen_challenge_hw(uint8_t challenge[32])
 {
     if (challenge == NULL)
@@ -81,8 +78,9 @@ int atcacert_gen_challenge_hw(uint8_t challenge[32])
 
     return atcab_random(challenge);
 }
+#endif
 
-
+#if ATCACERT_HW_VERIFY_EN
 int atcacert_verify_response_hw(const uint8_t device_public_key[64],
                                 const uint8_t challenge[32],
                                 const uint8_t response[64])
@@ -103,3 +101,4 @@ int atcacert_verify_response_hw(const uint8_t device_public_key[64],
 
     return is_verified ? ATCACERT_E_SUCCESS : ATCACERT_E_VERIFY_FAILED;
 }
+#endif

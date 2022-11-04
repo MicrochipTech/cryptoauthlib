@@ -51,7 +51,10 @@ ATCA_STATUS atca_jwt_add_claim_string(atca_jwt_t* jwt, const char* claim, const 
 ATCA_STATUS atca_jwt_add_claim_numeric(atca_jwt_t* jwt, const char* claim, int32_t value);
 ATCA_STATUS atca_jwt_finalize(atca_jwt_t* jwt, uint16_t key_id);
 void atca_jwt_check_payload_start(atca_jwt_t* jwt);
+
+#if ATCA_HOSTLIB_EN || CALIB_VERIFY_EXTERN_EN || TALIB_VERIFY_EXTERN_EN
 ATCA_STATUS atca_jwt_verify(const char* buf, uint16_t buflen, const uint8_t* pubkey);
+#endif
 
 /** @} */
 #ifdef __cplusplus

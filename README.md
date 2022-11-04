@@ -94,6 +94,9 @@ There are two major compiler defines that affect the operation of the library.
     changes required. The lower-level API will no longer use the new/delete
     functions and the init/release functions should be used directly.
 
+Some specific options are available in the fully documented configuration files `lib/calib/calib_config.h`,
+`atca_configuration.h`, `lib/crypto/crypto_config.h`, `lib/host/atca_host_config.h` which is also the place where features can be selected.
+ We provide some configurations focused on specific use cases and the checks are enabled by default. 
 
 Release notes
 -----------

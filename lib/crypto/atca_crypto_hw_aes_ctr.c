@@ -35,6 +35,7 @@
 #include "cryptoauthlib.h"
 #include "atca_crypto_hw_aes.h"
 
+#if ATCAB_AES_CTR_EN
 /** \brief Initialize context for AES CTR operation with an existing IV, which
  *         is common when start a decrypt operation.
  *
@@ -94,7 +95,9 @@ ATCA_STATUS atcab_aes_ctr_init(atca_aes_ctr_ctx_t* ctx, uint16_t key_id, uint8_t
 {
     return atcab_aes_ctr_init_ext(atcab_get_device(), ctx, key_id, key_block, counter_size, iv);
 }
+#endif /* ATCAB_AES_CTR_EN */
 
+#if ATCAB_AES_CTR_RAND_IV_EN
 /** \brief Initialize context for AES CTR operation with a random nonce and
  *         counter set to 0 as the IV, which is common when starting an
  *         encrypt operation.
@@ -136,10 +139,19 @@ ATCA_STATUS atcab_aes_ctr_init_rand_ext(ATCADevice device, atca_aes_ctr_ctx_t* c
     if (nonce_size != 0)
     {
         uint8_t random_nonce[32];
+#if ATCA_HOSTLIB_EN
+        if (ATCA_SUCCESS != (status = atcac_sw_random(random_nonce, 32)))
+        {
+            return status;
+        }
+#elif CALIB_RANDOM_EN || TALIB_RANDOM_EN
         if (ATCA_SUCCESS != (status = atcab_random_ext(device, random_nonce)))
         {
             return status;
         }
+#else
+        return ATCA_GEN_FAIL;
+#endif
         memcpy(iv, random_nonce, nonce_size);
     }
     memcpy(ctx->cb, iv, ATCA_AES128_BLOCK_SIZE);
@@ -171,7 +183,9 @@ ATCA_STATUS atcab_aes_ctr_init_rand(atca_aes_ctr_ctx_t* ctx, uint16_t key_id, ui
 {
     return atcab_aes_ctr_init_rand_ext(atcab_get_device(), ctx, key_id, key_block, counter_size, iv);
 }
+#endif /* ATCAB_AES_CTR_RAND_IV_EN */
 
+#if ATCAB_AES_CTR_EN
 /** \brief Increments AES CTR counter value.
  *
  * \param[in,out] ctx  AES CTR context
@@ -278,3 +292,4 @@ ATCA_STATUS atcab_aes_ctr_decrypt_block(atca_aes_ctr_ctx_t* ctx, const uint8_t* 
 {
     return atcab_aes_ctr_block(ctx, ciphertext, plaintext);
 }
+#endif /* ATCAB_AES_CTR_EN */

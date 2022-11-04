@@ -25,9 +25,13 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
 
-#if ATCA_CA_SUPPORT
+#ifndef TEST_ATCAB_OTP_EN
+#define TEST_ATCAB_OTP_EN       (CALIB_READ_EN && CALIB_WRITE_EN)
+#endif
+
+#if TEST_ATCAB_OTP_EN
 
 TEST(atca_cmd_basic_test, otp_zero)
 {
@@ -75,18 +79,15 @@ TEST(atca_cmd_basic_test, otp_zero)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL_MEMORY(zero_otp, read_otp, sizeof(zero_otp));
 }
+#endif
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info otpzero_basic_test_info[] =
 {
+#if TEST_ATCAB_OTP_EN
     { REGISTER_TEST_CASE(atca_cmd_basic_test, otp_zero), DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) },
+#endif
     { (fp_test_case)NULL,                     (uint8_t)0 },/* Array Termination element*/
 };
 // *INDENT-ON*
 
-#else
-t_test_case_info otpzero_basic_test_info[] =
-{
-    { (fp_test_case)NULL, (uint8_t)0 },
-};
-#endif

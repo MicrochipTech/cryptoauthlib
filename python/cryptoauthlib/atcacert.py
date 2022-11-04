@@ -23,8 +23,8 @@ ATCACERT: classes and functions for interacting with compressed certificates
 
 import binascii
 from datetime import datetime
-from ctypes import Structure, c_int, c_uint8, c_uint16, c_char, POINTER, create_string_buffer, c_uint32, byref, c_size_t
-from .library import get_cryptoauthlib, get_ctype_by_name, AtcaReference, AtcaStructure
+from ctypes import Structure, c_int, c_uint8, c_uint16, c_char, c_uint32, c_uint64, POINTER, create_string_buffer, byref, c_size_t
+from .library import get_cryptoauthlib, AtcaReference, AtcaStructure
 from .atcaenum import AtcaEnum
 from .status import Status
 
@@ -175,104 +175,118 @@ def _atcacert_convert_enum(kwargs, name, enum):
             kwargs[name] = int(getattr(enum, k))
 
 
+class atcacert_comp_data_t(AtcaStructure):
+    """
+    CTypes definition of certificate signature storage which includes other certificate metadata
+    which is why it's often identified as "compresessed cert" for the slot in configurators
+    """
+    _pack_ = 1
+    _size_ = 72
+    _fields_ = [
+        ('r', c_uint8*32),              # P256 signature 'r' value - big endian
+        ('s', c_uint8*32),              # P256 signature 's' value - big endian
+        ('year', c_uint64, 5),          # Years after 2000
+        ('month', c_uint64, 4),         # Month (0 - 11), see atcacert_tm_utc_t
+        ('day', c_uint64, 5),           # Day (1 - 31), see atcacert_tm_utc_t
+        ('hour', c_uint64, 5),          # Hour (0 - 23), see atcacert_tm_utc_t
+        ('expire', c_uint64, 5),        # Expire years (<=31)
+        ('signer_id', c_uint64, 16),    # Value used in the siging cert subject name
+        ('chain_id', c_uint64, 4),      # Revision identifier
+        ('template_id', c_uint64, 4),   # Location in a chain
+        ('reserved_70_4', c_uint64, 4), # Reserved - lower four bits of byte 70
+        ('sn_source', c_uint64, 4),     # Serial number format, see atcacert_cert_sn_src_t
+        ('reserved_71_8', c_uint64, 8)  # Reserved - byte 71
+    ]
+atcacert_comp_data_t.check_rationality()
+
 class atcacert_device_loc_t(AtcaStructure):
     """
     CTypes mirror of atcacert_device_loc_t from atcacert_def.h
     """
-    _fields_ = [
-        ('zone', get_ctype_by_name('atcacert_device_zone_t')),  # Zone in the device.
-        ('slot', c_uint8),  # Slot within the data zone. Only applies if zone is DEVZONE_DATA.
-        ('is_genkey', c_uint8),  # If true, use GenKey command to get the contents instead of Read.
-        ('offset', c_uint16),  # Byte offset in the zone.
-        ('count', c_uint16)  # Byte count.
-    ]
     _pack_ = 1
-
-    def __init__(self, *args, **kwargs):
-        if kwargs is not None:
-            _atcacert_convert_enum(kwargs, 'zone', atcacert_device_zone_t)
-
-        super(atcacert_device_loc_t, self).__init__(*args, **kwargs)
+    _def_ = {
+        'zone': (atcacert_device_zone_t,),  # Zone in the device.
+        'slot': (c_uint8,),  # Slot within the data zone. Only applies if zone is DEVZONE_DATA.
+        'is_genkey': (c_uint8,),  # If true, use GenKey command to get the contents instead of Read.
+        'offset': (c_uint16,),  # Byte offset in the zone.
+        'count': (c_uint16,)  # Byte count.
+    }
+atcacert_device_loc_t.from_definition()
 
 
 class atcacert_cert_loc_t(AtcaStructure):
     """
     CTypes mirror of atcacert_cert_loc_t from atcacert_def.h
     """
-    _fields_ = [('offset', c_uint16), ('count', c_uint16)]
     _pack_ = 1
+    _fields_ = [('offset', c_uint16), ('count', c_uint16)]
 
 
 class atcacert_cert_element_t(AtcaStructure):
     """
     CTypes mirror of atcacert_cert_element_t from atcacert_def.h
     """
-    _fields_ = [
-        ('id', c_char * 25),  # ID identifying this element.
-        ('device_loc', atcacert_device_loc_t),  # Location in the device for the element.
-        ('cert_loc', atcacert_cert_loc_t),  # Location in the certificate template for the element.
-        ('transforms', get_ctype_by_name('atcacert_transform_t') * 2)  # Transforms for converting the device data.
-
-    ]
     _pack_ = 1
+    _def_ = {
+        'id': (c_char, 25),  # ID identifying this element.
+        'device_loc': (atcacert_device_loc_t,),  # Location in the device for the element.
+        'cert_loc': (atcacert_cert_loc_t,),  # Location in the certificate template for the element.
+        'transforms': (atcacert_transform_t, 2)  # Transforms for converting the device data.
+    }
+atcacert_cert_element_t.from_definition()
+atcacert_cert_element_t.check_rationality()
 
 
 class atcacert_def_t(AtcaStructure):
     """
     CTypes mirror of atcacert_def_t from atcacert_def.h
     """
-    def __init__(self, *args, **kwargs):
-        if kwargs is not None:
-            _atcacert_convert_enum(kwargs, 'type', atcacert_cert_type_t)
-            _atcacert_convert_enum(kwargs, 'sn_source', atcacert_cert_sn_src_t)
-            _atcacert_convert_enum(kwargs, 'issue_date_format', atcacert_date_format_t)
-            _atcacert_convert_enum(kwargs, 'expire_date_format', atcacert_date_format_t)
-
-            _atcacert_convert_bytes(kwargs, 'cert_template', POINTER(c_uint8))
-
-        super(atcacert_def_t, self).__init__(*args, **kwargs)
+    _pack_ = 1
 
 # Need to define fields outside the class due to ca_cert_def, which is a pointer
 # to the same class.
-atcacert_def_t._fields_ = [  # pylint: disable=protected-access
+atcacert_def_t._def_ = {  # pylint: disable=protected-access
     # Certificate type.
-    ('type', get_ctype_by_name('atcacert_cert_type_t')),
+    'type': (atcacert_cert_type_t,),
     # ID for the this certificate definition (4-bit value).
-    ('template_id', c_uint8),
+    'template_id': (c_uint8,),
     # ID for the certificate chain this definition is a part of (4-bit value).
-    ('chain_id', c_uint8),
+    'chain_id': (c_uint8,),
     # If this is a device certificate template, this is the device slot for the device private key.
-    ('private_key_slot', c_uint8),
+    'private_key_slot': (c_uint8,),
     # Where the certificate serial number comes from (4-bit value).
-    ('sn_source', get_ctype_by_name('atcacert_cert_sn_src_t')),
+    'sn_source': (atcacert_cert_sn_src_t,),
     # Only applies when sn_source is SNSRC_STORED or SNSRC_STORED_DYNAMIC. Describes where to get the
     # certificate serial number on the device.
-    ('cert_sn_dev_loc', atcacert_device_loc_t),
+    'cert_sn_dev_loc': (atcacert_device_loc_t,),
     # Format of the issue date in the certificate.
-    ('issue_date_format', get_ctype_by_name('atcacert_date_format_t')),
+    'issue_date_format': (atcacert_date_format_t,),
     # format of the expire date in the certificate.
-    ('expire_date_format', get_ctype_by_name('atcacert_date_format_t')),
+    'expire_date_format': (atcacert_date_format_t,),
     # Location in the certificate for the TBS (to be signed) portion.
-    ('tbs_cert_loc', atcacert_cert_loc_t),
+    'tbs_cert_loc': (atcacert_cert_loc_t,),
     # Number of years the certificate is valid for (5-bit value). 0 means no expiration.
-    ('expire_years', c_uint8),
+    'expire_years': (c_uint8,),
     # Where on the device the public key can be found.
-    ('public_key_dev_loc', atcacert_device_loc_t),
+    'public_key_dev_loc': (atcacert_device_loc_t,),
     # Where on the device the compressed cert can be found.
-    ('comp_cert_dev_loc', atcacert_device_loc_t),
+    'comp_cert_dev_loc': (atcacert_device_loc_t,),
     # Where in the certificate template the standard cert elements are inserted.
-    ('std_cert_elements', atcacert_cert_loc_t * 8),
+    'std_cert_elements': (atcacert_cert_loc_t, atcacert_std_cert_element_t),
     # Additional certificate elements outside of the standard certificate contents.
-    ('cert_elements', POINTER(atcacert_cert_element_t)),
+    'cert_elements': (POINTER(atcacert_cert_element_t), 'cert_elements_count'),
     # Number of additional certificate elements in cert_elements.
-    ('cert_elements_count', c_uint8),
+    'cert_elements_count': (c_uint8,),
     # Pointer to the actual certificate template data.
-    ('cert_template', POINTER(c_uint8)),
+    'cert_template': (POINTER(c_uint8), 'cert_template_size'),
     # Size of the certificate template in cert_template in bytes.
-    ('cert_template_size', c_uint16),
+    'cert_template_size': (c_uint16,),
     # Certificate definition of the CA certificate
-    ('ca_cert_def', POINTER(atcacert_def_t))
-]
+    'ca_cert_def': (POINTER(atcacert_def_t),)
+}
+atcacert_def_t.from_definition()
+atcacert_def_t.check_rationality()
+
 
 class atcacert_tm_utc_t(Structure):
     """

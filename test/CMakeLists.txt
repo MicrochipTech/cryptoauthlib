@@ -6,12 +6,13 @@ option (ATCA_TEST_LOCK_ENABLE "Enable device locking functions and tests" OFF)
 file(GLOB TEST_ATCACERT_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "atcacert/*.c")
 file(GLOB TEST_JWT_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "jwt/*.c")
 file(GLOB TEST_TNG_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "tng/*.c")
+file(GLOB TEST_WPC_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "wpc/*.c")
 file(GLOB TEST_API_ATCAB RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "api_atcab/*.c")
 file(GLOB TEST_API_CALIB RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "api_calib/*.c")
 file(GLOB TEST_API_CRYPTO RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "api_crypto/*.c")
 file(GLOB TEST_API_TALIB RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "api_talib/*.c")
 file(GLOB TEST_VECTORS_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "vectors/*.c")
-file(GLOB TEST_MBEDTLDS_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mbedtls/*.c")
+file(GLOB TEST_INTEGRATION_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "integration/*.c")
 file(GLOB TEST_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.c")
 file(GLOB UNITY_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../third_party/unity/*.c")
 
@@ -28,6 +29,10 @@ if(ATCA_TA100_SUPPORT)
 set(CRYPTOAUTH_TEST_SRC ${CRYPTOAUTH_TEST_SRC} ${TEST_API_TALIB})
 endif(ATCA_TA100_SUPPORT)
 
+if(ATCA_WPC_SUPPORT)
+set(CRYPTOAUTH_TEST_SRC ${CRYPTOAUTH_TEST_SRC} ${TEST_WPC_SRC})
+endif(ATCA_WPC_SUPPORT)
+
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${CRYPTOAUTH_TEST_SRC})
 source_group("Unity" FILES ${UNITY_SRC})
 
@@ -38,7 +43,7 @@ source_group("External Files" FILES ${TEST_CUSTOM_CMD_SRC})
 endif()
 
 if(ATCA_MBEDTLS)
-set(CRYPTOAUTH_TEST_SRC ${CRYPTOAUTH_TEST_SRC} ${TEST_MBEDTLDS_SRC})
+set(CRYPTOAUTH_TEST_SRC ${CRYPTOAUTH_TEST_SRC} ${TEST_INTEGRATION_SRC})
 endif()
 
 add_executable(cryptoauth_test ${CRYPTOAUTH_TEST_SRC} ${UNITY_SRC})
@@ -49,6 +54,7 @@ include_directories(cryptoauth_test ${CMAKE_CURRENT_SOURCE_DIR}
                                     ${CMAKE_CURRENT_SOURCE_DIR}/api_calib
                                     ${CMAKE_CURRENT_SOURCE_DIR}/api_crypto
                                     ${CMAKE_CURRENT_SOURCE_DIR}/api_talib
+                                    ${CMAKE_CURRENT_SOURCE_DIR}/integration
                                     ${CMAKE_CURRENT_SOURCE_DIR}/../lib
                                     ${CMAKE_CURRENT_SOURCE_DIR}/../third_party
                                     ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/mbedtls/include
@@ -59,6 +65,19 @@ target_link_libraries(cryptoauth_test cryptoauth)
 
 if(UNIX)
 target_link_libraries(cryptoauth_test pthread)
+endif()
+
+if(NOT MSVC)
+target_compile_options(cryptoauth_test PRIVATE -ffile-prefix-map=${CMAKE_CURRENT_SOURCE_DIR}=./test
+                                                   -fmacro-prefix-map=${CMAKE_CURRENT_SOURCE_DIR}=./test)
+target_compile_options(cryptoauth_test PRIVATE -Wall -Wextra)
+endif()
+
+if(ATCA_STRICT_C99)
+set_property(TARGET cryptoauth_test PROPERTY C_STANDARD 99)
+if(NOT MSVC)
+target_compile_options(cryptoauth_test PRIVATE -Wpedantic)
+endif()
 endif()
 
 if(ATCA_BUILD_SHARED_LIBS)

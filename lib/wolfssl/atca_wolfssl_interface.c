@@ -326,6 +326,8 @@ ATCA_STATUS atcac_sha256_hmac_finish(
     size_t*                digest_len          /**< [inout] length of hmac */
     )
 {
+    ((void)digest_len);
+
     int ret = wc_HmacFinal(ctx, digest);
 
     wc_HmacFree(ctx);
@@ -338,14 +340,16 @@ ATCA_STATUS atcac_sha256_hmac_finish(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_init(
-    atcac_pk_ctx* ctx,                          /**< [in] pointer to a pk context */
-    uint8_t*      buf,                          /**< [in] buffer containing a pem encoded key */
-    size_t        buflen,                       /**< [in] length of the input buffer */
-    uint8_t       key_type,
-    bool          pubkey                        /**< [in] buffer is a public key */
+    atcac_pk_ctx*   ctx,                          /**< [in] pointer to a pk context */
+    const uint8_t*  buf,                          /**< [in] buffer containing a pem encoded key */
+    size_t          buflen,                       /**< [in] length of the input buffer */
+    uint8_t         key_type,
+    bool            pubkey                        /**< [in] buffer is a public key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    ((void)buflen);
 
     if (ctx)
     {
@@ -362,7 +366,7 @@ ATCA_STATUS atcac_pk_init(
                     if (pubkey)
                     {
                         /* Configure the public key */
-                        ret = wc_ecc_import_unsigned((ecc_key*)ctx->ptr, buf, &buf[32], NULL, ECC_SECP256R1);
+                        ret = wc_ecc_import_unsigned((ecc_key*)ctx->ptr, (byte*)buf, (byte*)&buf[32], NULL, ECC_SECP256R1);
                     }
                     else
                     {
@@ -391,10 +395,10 @@ ATCA_STATUS atcac_pk_init(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_init_pem(
-    atcac_pk_ctx* ctx,                          /**< [in] pointer to a pk context */
-    uint8_t *     buf,                          /**< [in] buffer containing a pem encoded key */
-    size_t        buflen,                       /**< [in] length of the input buffer */
-    bool          pubkey                        /**< [in] buffer is a public key */
+    atcac_pk_ctx*   ctx,                          /**< [in] pointer to a pk context */
+    const uint8_t * buf,                          /**< [in] buffer containing a pem encoded key */
+    size_t          buflen,                       /**< [in] length of the input buffer */
+    bool            pubkey                        /**< [in] buffer is a public key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -501,19 +505,18 @@ ATCA_STATUS atcac_pk_free(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_sign(
-    atcac_pk_ctx* ctx,
-    uint8_t *     digest,
-    size_t        dig_len,
-    uint8_t*      signature,
-    size_t*       sig_len
+    atcac_pk_ctx*   ctx,
+    const uint8_t * digest,
+    size_t          dig_len,
+    uint8_t*        signature,
+    size_t*         sig_len
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
-    int ret = 0;
-    WC_RNG rng;
 
     if (ctx && ctx->ptr && signature && digest && sig_len)
     {
+        WC_RNG rng;
         int ret = wc_InitRng(&rng);
 
         if (!ret)
@@ -553,11 +556,11 @@ ATCA_STATUS atcac_pk_sign(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_verify(
-    atcac_pk_ctx* ctx,
-    uint8_t*      digest,
-    size_t        dig_len,
-    uint8_t*      signature,
-    size_t        sig_len
+    atcac_pk_ctx*   ctx,
+    const uint8_t*  digest,
+    size_t          dig_len,
+    const uint8_t*  signature,
+    size_t          sig_len
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;

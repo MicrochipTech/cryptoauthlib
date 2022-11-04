@@ -70,16 +70,30 @@
 #define PKCS11_MAX_OBJECTS_ALLOWED      @PKCS11_MAX_OBJECTS_ALLOWED@
 #endif
 
+/** Maximum Config options - device, interface, label, freeslots, user_pin_handle, so_pin_handle, object */
+#ifndef PKCS11_MAX_CONFIG_ALLOWED
+#define PKCS11_MAX_CONFIG_ALLOWED       @PKCS11_MAX_CONFIG_ALLOWED@
+#endif
+
 /** Maximum label size in characters */
 #ifndef PKCS11_MAX_LABEL_SIZE
 #define PKCS11_MAX_LABEL_SIZE           @PKCS11_MAX_LABEL_SIZE@
 #endif
 
+/** Enables some additional test functionality for pkcs11 */
+#ifndef PKCS11_TESTING_ENABLE
+#cmakedefine PKCS11_TESTING_ENABLE
+#endif
+
 /** Define to always convert PIN using KDF */
+#ifndef PKCS11_PIN_KDF_ALWAYS
 #cmakedefine PKCS11_PIN_KDF_ALWAYS
+#endif
 
 /** Define to use PBKDF2 for PIN KDF */
+#ifndef PKCS11_PIN_PBKDF2_EN
 #cmakedefine PKCS11_PIN_PBKDF2_EN
+#endif
 
 /** Define how many iterations PBKDF2 will use for PIN KDF */
 #if defined(PKCS11_PIN_PBKDF2_EN) && !defined(PKCS11_PIN_PBKDF2_ITERATIONS)
@@ -129,6 +143,7 @@ typedef struct _pkcs11_object   *pkcs11_object_ptr;
 #if PKCS11_USE_STATIC_CONFIG
 CK_RV pkcs11_config_interface(pkcs11_slot_ctx_ptr pSlot);
 #endif
+void pkcs11_config_split_string(char* s, char splitter, int * argc, char* argv[]);
 CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr pSlot);
 CK_RV pkcs11_config_load(pkcs11_slot_ctx_ptr slot_ctx);
 CK_RV pkcs11_config_cert(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pcLabel);

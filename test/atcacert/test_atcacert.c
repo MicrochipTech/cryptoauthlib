@@ -42,18 +42,26 @@ void RunAllCertDataTests(void)
     RUN_TEST_GROUP(atcacert_der_enc_ecdsa_sig_value);
     RUN_TEST_GROUP(atcacert_der_dec_ecdsa_sig_value);
 
+#if ATCACERT_DATEFMT_ISO_EN
     RUN_TEST_GROUP(atcacert_date_enc_iso8601_sep);
+#endif
     RUN_TEST_GROUP(atcacert_date_enc_rfc5280_utc);
+#if ATCACERT_DATEFMT_POSIX_EN
     RUN_TEST_GROUP(atcacert_date_enc_posix_uint32_be);
     RUN_TEST_GROUP(atcacert_date_enc_posix_uint32_le);
+#endif
     RUN_TEST_GROUP(atcacert_date_enc_rfc5280_gen);
     RUN_TEST_GROUP(atcacert_date_enc_compcert);
     RUN_TEST_GROUP(atcacert_date_enc);
 
+#if ATCACERT_DATEFMT_ISO_EN
     RUN_TEST_GROUP(atcacert_date_dec_iso8601_sep);
+#endif
     RUN_TEST_GROUP(atcacert_date_dec_rfc5280_utc);
+#if ATCACERT_DATEFMT_POSIX_EN
     RUN_TEST_GROUP(atcacert_date_dec_posix_uint32_be);
     RUN_TEST_GROUP(atcacert_date_dec_posix_uint32_le);
+#endif
     RUN_TEST_GROUP(atcacert_date_dec_rfc5280_gen);
     RUN_TEST_GROUP(atcacert_date_get_max_date);
     RUN_TEST_GROUP(atcacert_date_dec_compcert);

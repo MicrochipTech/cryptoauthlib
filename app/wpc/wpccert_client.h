@@ -1,8 +1,8 @@
 /**
  * \file
- * \brief
+ * \brief Provides api interfaces for accessing WPC certificates from device.
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2021 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -25,29 +25,34 @@
  * THIS SOFTWARE.
  */
 
-#ifndef ATCA_CRYPTO_SW_RAND_H
-#define ATCA_CRYPTO_SW_RAND_H
+#ifndef WPCCERT_CLIENT_H
+#define WPCCERT_CLIENT_H
 
-#include "atca_crypto_sw.h"
-#include <stddef.h>
-#include <stdint.h>
-
-/** \defgroup atcac_ Software crypto methods (atcac_)
- *
- * \brief
- * These methods provide a software implementation of various crypto
- * algorithms
- *
-   @{ */
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-int atcac_sw_random(uint8_t* data, size_t data_size);
+#include "cryptoauthlib.h"
+#include "atcacert/atcacert_def.h"
+
+uint8_t wpccert_get_slots_populated(void);
+uint8_t wpccert_get_slot_count(void);
+
+ATCA_STATUS wpccert_get_slot_info(uint16_t * dig_handle, const atcacert_def_t** def, uint8_t slot);
+
+ATCA_STATUS wpccert_read_cert(ATCADevice device, const atcacert_def_t *cert_def, uint8_t *cert, size_t *cert_size);
+
+ATCA_STATUS wpccert_write_cert(ATCADevice device, const atcacert_def_t* cert_def, const uint8_t* cert, size_t cert_size);
+
+ATCA_STATUS wpccert_read_pdu_cert(ATCADevice device, uint8_t* cert, size_t* cert_size, uint8_t slot);
+
+ATCA_STATUS wpccert_read_mfg_cert(ATCADevice device, uint8_t* cert, size_t* cert_size, uint8_t slot);
+
+ATCA_STATUS wpccert_public_key(const atcacert_def_t* cert_def, uint8_t* public_key, uint8_t* cert);
 
 #ifdef __cplusplus
 }
 #endif
-/** @} */
 
 #endif

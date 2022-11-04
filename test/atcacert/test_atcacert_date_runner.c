@@ -34,6 +34,7 @@
 #undef min
 #undef max
 
+#if ATCACERT_DATEFMT_ISO_EN
 TEST_GROUP_RUNNER(atcacert_date_enc_iso8601_sep)
 {
     RUN_TEST_CASE(atcacert_date_enc_iso8601_sep, good);
@@ -47,6 +48,7 @@ TEST_GROUP_RUNNER(atcacert_date_enc_iso8601_sep)
     RUN_TEST_CASE(atcacert_date_enc_iso8601_sep, bad_sec);
     RUN_TEST_CASE(atcacert_date_enc_iso8601_sep, bad_params);
 }
+#endif
 
 TEST_GROUP_RUNNER(atcacert_date_enc_rfc5280_utc)
 {
@@ -63,6 +65,7 @@ TEST_GROUP_RUNNER(atcacert_date_enc_rfc5280_utc)
     RUN_TEST_CASE(atcacert_date_enc_rfc5280_utc, bad_params);
 }
 
+#if ATCACERT_DATEFMT_POSIX_EN
 TEST_GROUP_RUNNER(atcacert_date_enc_posix_uint32_be)
 {
     RUN_TEST_CASE(atcacert_date_enc_posix_uint32_be, good);
@@ -84,6 +87,7 @@ TEST_GROUP_RUNNER(atcacert_date_enc_posix_uint32_le)
     RUN_TEST_CASE(atcacert_date_enc_posix_uint32_le, bad_high);
     RUN_TEST_CASE(atcacert_date_enc_posix_uint32_le, bad_params);
 }
+#endif
 
 TEST_GROUP_RUNNER(atcacert_date_enc_rfc5280_gen)
 {
@@ -114,17 +118,21 @@ TEST_GROUP_RUNNER(atcacert_date_enc_compcert)
 
 TEST_GROUP_RUNNER(atcacert_date_enc)
 {
+#if ATCACERT_DATEFMT_ISO_EN
     RUN_TEST_CASE(atcacert_date_enc, iso8601_sep);
+#endif
     RUN_TEST_CASE(atcacert_date_enc, rfc5280_utc);
+#if ATCACERT_DATEFMT_POSIX_EN
     RUN_TEST_CASE(atcacert_date_enc, posix_uint32_be);
     RUN_TEST_CASE(atcacert_date_enc, posix_uint32_le);
+#endif
     RUN_TEST_CASE(atcacert_date_enc, rfc5280_gen);
     RUN_TEST_CASE(atcacert_date_enc, small_buf);
     RUN_TEST_CASE(atcacert_date_enc, bad_format);
     RUN_TEST_CASE(atcacert_date_enc, bad_params);
 }
 
-
+#if ATCACERT_DATEFMT_ISO_EN
 TEST_GROUP_RUNNER(atcacert_date_dec_iso8601_sep)
 {
     RUN_TEST_CASE(atcacert_date_dec_iso8601_sep, good);
@@ -133,6 +141,7 @@ TEST_GROUP_RUNNER(atcacert_date_dec_iso8601_sep)
     RUN_TEST_CASE(atcacert_date_dec_iso8601_sep, bad_int);
     RUN_TEST_CASE(atcacert_date_dec_iso8601_sep, bad_params);
 }
+#endif
 
 TEST_GROUP_RUNNER(atcacert_date_dec_rfc5280_utc)
 {
@@ -144,6 +153,7 @@ TEST_GROUP_RUNNER(atcacert_date_dec_rfc5280_utc)
     RUN_TEST_CASE(atcacert_date_dec_rfc5280_utc, bad_params);
 }
 
+#if ATCACERT_DATEFMT_POSIX_EN
 TEST_GROUP_RUNNER(atcacert_date_dec_posix_uint32_be)
 {
     RUN_TEST_CASE(atcacert_date_dec_posix_uint32_be, good);
@@ -163,6 +173,7 @@ TEST_GROUP_RUNNER(atcacert_date_dec_posix_uint32_le)
     RUN_TEST_CASE(atcacert_date_dec_posix_uint32_le, max);
     RUN_TEST_CASE(atcacert_date_dec_posix_uint32_le, bad_params);
 }
+#endif
 
 TEST_GROUP_RUNNER(atcacert_date_dec_rfc5280_gen)
 {
@@ -175,10 +186,14 @@ TEST_GROUP_RUNNER(atcacert_date_dec_rfc5280_gen)
 
 TEST_GROUP_RUNNER(atcacert_date_get_max_date)
 {
+#if ATCACERT_DATEFMT_ISO_EN
     RUN_TEST_CASE(atcacert_date_get_max_date, iso8601_sep);
+#endif
     RUN_TEST_CASE(atcacert_date_get_max_date, rfc5280_utc);
+#if ATCACERT_DATEFMT_POSIX_EN
     RUN_TEST_CASE(atcacert_date_get_max_date, posix_uint32_be);
     RUN_TEST_CASE(atcacert_date_get_max_date, posix_uint32_le);
+#endif
     RUN_TEST_CASE(atcacert_date_get_max_date, rfc5280_gen);
     RUN_TEST_CASE(atcacert_date_get_max_date, new_format);
     RUN_TEST_CASE(atcacert_date_get_max_date, bad_params);
@@ -195,10 +210,14 @@ TEST_GROUP_RUNNER(atcacert_date_dec_compcert)
 
 TEST_GROUP_RUNNER(atcacert_date_dec)
 {
+#if ATCACERT_DATEFMT_ISO_EN
     RUN_TEST_CASE(atcacert_date_dec, iso8601_sep);
+#endif
     RUN_TEST_CASE(atcacert_date_dec, rfc5280_utc);
+#if ATCACERT_DATEFMT_POSIX_EN
     RUN_TEST_CASE(atcacert_date_dec, posix_uint32_be);
     RUN_TEST_CASE(atcacert_date_dec, posix_uint32_le);
+#endif
     RUN_TEST_CASE(atcacert_date_dec, rfc5280_gen);
     RUN_TEST_CASE(atcacert_date_dec, small_buf);
     RUN_TEST_CASE(atcacert_date_dec, bad_format);

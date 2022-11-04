@@ -30,6 +30,10 @@
 #include "app/tng/tng_atca.h"
 #define ATCA_TEST_TNG
 #endif
+#if defined(ATCA_WPC_SUPPORT)
+#include "app/wpc/wpc_apis.h"
+#define ATCA_TEST_WPC
+#endif
 #if ATCA_CA_SUPPORT
 #include "api_calib/test_calib.h"
 #endif
@@ -37,14 +41,19 @@
 #include "api_talib/test_talib.h"
 #endif
 
-const char* ATCA_TEST_HELPER_FILE = "In helper: " __FILE__;
+/* Access to test runner internal details */
+extern struct UNITY_STORAGE_T Unity;
 
-const char* TEST_GROUP_atca_cmd_basic_test = "atca_cmd_basic_test";
+/* Track the last status code for the last command run (early abort) */
+ATCA_STATUS g_last_status;
 
+/* Terminate all testing immediately */
+bool g_test_abort;
+
+/* Answer yes to prompts in the next command run */
 bool g_atca_test_quiet_mode = false;
 
-#ifdef ATCA_SHA_SUPPORT
-
+#ifdef ATCA_ATSHA204A_SUPPORT
 const uint8_t sha204_default_config[ATCA_SHA_CONFIG_SIZE] = {
     // block 0
     // Not Written: First 16 bytes are not written
@@ -104,40 +113,6 @@ const uint8_t g_plaintext[64] = {
     0xf6, 0x9f, 0x24, 0x45, 0xdf, 0x4f, 0x9b, 0x17, 0xad, 0x2b, 0x41, 0x7b, 0xe6, 0x6c, 0x37, 0x10
 };
 
-t_test_case_info* basic_tests[] =
-{
-    startup_basic_test_info,
-    info_basic_test_info,
-    aes_basic_test_info,
-    aes_cbc_basic_test_info,
-    aes_cmac_basic_test_info,
-    aes_ctr_basic_test_info,
-    aes_cbcmac_basic_test_info,
-    aes_gcm_basic_test_info,
-    aes_ccm_basic_test_info,
-    verify_basic_test_info,
-    derivekey_basic_test_info,
-    sha_basic_test_info,
-    hmac_basic_test_info,
-    sign_basic_test_info,
-    mac_basic_test_info,
-    ecdh_basic_test_info,
-    write_basic_test_info,
-    read_basic_test_info,
-    genkey_basic_test_info,
-    privwrite_basic_test_info,
-    lock_basic_test_info,
-    kdf_basic_test_info,
-    sboot_basic_test_info,
-    selftest_basic_test_info,
-    gendig_basic_test_info,
-    random_basic_test_info,
-    nonce_basic_test_info,
-    updateextra_basic_test_info,
-    counter_basic_test_info,
-    (t_test_case_info*)NULL, /* Array Termination element*/
-};
-
 t_test_case_info* otpzero_tests[] =
 {
     otpzero_basic_test_info,
@@ -147,7 +122,6 @@ t_test_case_info* otpzero_tests[] =
 t_test_case_info* helper_tests[] =
 {
     helper_basic_test_info,
-    jwt_unit_test_info,
     (t_test_case_info*)NULL, /* Array Termination element*/
 };
 
@@ -162,18 +136,47 @@ t_test_case_info* tng_tests[] =
     (t_test_case_info*)NULL, /* Array Termination element*/
 };
 
-
-#ifdef ATCA_MBEDTLS
-
-extern t_test_case_info test_mbedtls_ecdsa_info[];
-
-t_test_case_info* crypto_integration_tests[] =
+t_test_case_info* wpc_tests[] =
 {
-    test_mbedtls_ecdsa_info,
+#ifdef ATCA_TEST_WPC
+    wpc_apis_unit_test_info,
+#ifndef DO_NOT_TEST_CERT
+    wpccert_client_unit_test_info,
+#endif
+#endif
     (t_test_case_info*)NULL, /* Array Termination element*/
 };
-#endif
 
+/** \brief Runs a test suite or individual test - the function is expected to call
+ * unity test operations
+*/
+int run_test(int argc, char* argv[], void (*fptest)(void))
+{
+    int ret;
+    if (CMD_PROCESSOR_MAX_ARGS > argc)
+    {
+        argv[argc++] = "-v";
+    }
+
+    /* Reset the last status result */
+    g_last_status = ATCA_SUCCESS;
+
+    /* Reset the abort */
+    g_test_abort = false;
+
+    /* Launch the unity test framework */
+    ret = UnityMain(argc, (const char**)argv, fptest);
+
+    if(!ret && !Unity.NumberOfTests)
+    {
+        /* The assumption is that tests were supposed to have been run so if
+        non were executed the assumption is there is a configuration problem.
+        If a test suite has no tests for a given configuration don't run it */
+        printf("No tests were run for this configuration\n");
+        ret = -1;
+    }
+    return ret;
+}
 
 void RunAllTests(t_test_case_info** tests_list)
 {
@@ -181,7 +184,7 @@ void RunAllTests(t_test_case_info** tests_list)
     uint32_t support_device_mask;
 
     /*Loop through all the commands test info*/
-    while (*tests_list != NULL)
+    while ((*tests_list != NULL) && !atca_test_unresponsive())
     {
         /*Get current command test info*/
         sp_current_test = *tests_list;
@@ -189,14 +192,21 @@ void RunAllTests(t_test_case_info** tests_list)
         /*Loop through till last test in the test info*/
         while (sp_current_test->fp_test != NULL)
         {
-            /*Get current device mask*/
-            support_device_mask = DEVICE_MASK(gCfg->devtype);
+            /*Get current device mask */
+            support_device_mask = (gCfg->devtype < ATCA_DEV_UNKNOWN) ? DEVICE_MASK(gCfg->devtype) : DEVICE_MASK_NONE;
 
             /*check if current test mask contains current device mask*/
-            if ((sp_current_test->support_device_mask & support_device_mask) == support_device_mask)
+            if (!sp_current_test->support_device_mask || 
+                ((sp_current_test->support_device_mask & support_device_mask) == support_device_mask))
             {
                 /*Execute current test case*/
                 sp_current_test->fp_test();
+            }
+
+            if(atca_test_unresponsive())
+            {
+                /* Early return on communication failures */
+                break;
             }
 
             /*Move to next test*/
@@ -207,11 +217,6 @@ void RunAllTests(t_test_case_info** tests_list)
         tests_list++;
     }
 }
-
-void RunAllBasicTests(void)
-{
-    RunAllTests(basic_tests);
-};
 
 void RunBasicOtpZero(void)
 {
@@ -228,24 +233,9 @@ void RunTNGTests(void)
     RunAllTests(tng_tests);
 }
 
-#if defined(ATCA_MBEDTLS)
-void RunCryptoIntegrationTests(void)
+void RunWPCTests(void)
 {
-    RunAllTests(crypto_integration_tests);
-}
-#endif
-
-extern t_test_case_info test_crypto_pbkdf2_info[];
-
-t_test_case_info* pbkdf2_tests[] =
-{
-    test_crypto_pbkdf2_info,
-    (t_test_case_info*)NULL, /* Array Termination element*/
-};
-
-void RunPbkdf2Tests(void)
-{
-    RunAllTests(pbkdf2_tests);
+    RunAllTests(wpc_tests);
 }
 
 #ifdef ATCA_NO_HEAP
@@ -255,6 +245,15 @@ ATCA_DLL struct atca_command g_atcab_command;
 ATCA_DLL struct atca_iface g_atcab_iface;
 #endif
 
+bool atca_test_unresponsive(void)
+{
+    return (g_test_abort || (ATCA_COMM_FAIL == g_last_status) || (ATCA_WAKE_FAILED == g_last_status));
+}
+
+bool atca_test_already_exiting(void)
+{
+    return (Unity.CurrentTestFailed || Unity.CurrentTestIgnored);
+}
 
 void atca_test_assert_config_is_unlocked(UNITY_LINE_TYPE from_line)
 {
@@ -389,9 +388,12 @@ ATCA_STATUS atca_test_config_get_id(uint8_t test_type, uint16_t* handle)
         case ATECC508A:
         /* fallthrough */
         case ATECC608:
-        /* fallthrough */
-        case ECC204:
             status = calib_config_get_slot_by_test(test_type, handle);
+            break;
+#endif
+#ifdef ATCA_ECC204_SUPPORT
+        case ECC204:
+            status = calib_config_get_ecc204_slot_by_test(test_type, handle);
             break;
 #endif
 #if ATCA_TA_SUPPORT
@@ -412,27 +414,16 @@ ATCA_STATUS atca_test_config_get_id(uint8_t test_type, uint16_t* handle)
     return status;
 }
 
-TEST_SETUP(atca_cmd_basic_test)
+/* Helper function to execute genkey and retry if there are failures since there is
+   a chance that the genkey will fail to produce a valid keypair and a retry is nearly
+   always successful */
+ATCA_STATUS atca_test_genkey(uint16_t key_id, uint8_t *public_key)
 {
-    UnityMalloc_StartTest();
-
-    ATCA_STATUS status = atcab_init(gCfg);
-
-    TEST_ASSERT_EQUAL_INT_MESSAGE(ATCA_SUCCESS, status, ATCA_TEST_HELPER_FILE);
-}
-
-TEST_TEAR_DOWN(atca_cmd_basic_test)
-{
+    int attempts = 2;
     ATCA_STATUS status;
-
-    status = atcab_wakeup();
-    TEST_ASSERT_EQUAL_INT_MESSAGE(ATCA_SUCCESS, status, ATCA_TEST_HELPER_FILE);
-
-    status = atcab_sleep();
-    TEST_ASSERT_EQUAL_INT_MESSAGE(ATCA_SUCCESS, status, ATCA_TEST_HELPER_FILE);
-
-    status = atcab_release();
-    TEST_ASSERT_EQUAL_INT_MESSAGE(ATCA_SUCCESS, status, ATCA_TEST_HELPER_FILE);
-
-    UnityMalloc_EndTest();
+    do
+    {
+        status = atcab_genkey(key_id, public_key);
+    } while (status && --attempts);
+    return status;
 }

@@ -28,7 +28,7 @@
 #ifdef _WIN32
 #include <time.h>
 #endif
-#include "atca_test.h"
+#include "test_atcab.h"
 
 extern const uint8_t g_aes_keys[4][16];
 extern const uint8_t g_plaintext[64];

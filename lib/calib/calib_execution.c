@@ -192,24 +192,24 @@ static const device_execution_time_t device_execution_time_608_m2[] = {
     { ATCA_VERIFY,       1085},
     { ATCA_WRITE,        45}
 };
+#endif
 
 /*Execution times for ECC204 supported commands...*/
 static const device_execution_time_t device_execution_time_ecc204[] = {
-    { ATCA_COUNTER,      1},
-    { ATCA_GENKEY,       100},
-    { ATCA_INFO,         1},
-    { ATCA_LOCK,         6},
-    { ATCA_NONCE,        35},
-    { ATCA_READ,         1},
-    { ATCA_SELFTEST,     110},
-    { ATCA_SHA,          4},
-    { ATCA_SIGN,         100},
-    { ATCA_WRITE,        10}
+    { ATCA_COUNTER,      20},
+    { ATCA_DELETE,       200},
+    { ATCA_GENKEY,       500},
+    { ATCA_INFO,         20},
+    { ATCA_LOCK,         80},
+    { ATCA_NONCE,        20},
+    { ATCA_READ,         40},
+    { ATCA_SELFTEST,     600},
+    { ATCA_SHA,          80},
+    { ATCA_SIGN,         500},
+    { ATCA_WRITE,        80}
 };
 // *INDENT-ON*
-#endif
 
-#ifdef ATCA_NO_POLL
 /** \brief return the typical execution time for the given command
  *  \param[in] opcode  Opcode value of the command
  *  \param[in] ca_cmd  Command object for which the execution times are associated
@@ -224,6 +224,7 @@ ATCA_STATUS calib_get_execution_time(uint8_t opcode, ATCADevice device)
 
     switch (device->mIface.mIfaceCFG->devtype)
     {
+#ifdef ATCA_NO_POLL
     case ATSHA204A:
         execution_times = device_execution_time_204;
         no_of_commands = sizeof(device_execution_time_204) / sizeof(device_execution_time_t);
@@ -262,6 +263,7 @@ ATCA_STATUS calib_get_execution_time(uint8_t opcode, ATCADevice device)
             no_of_commands = sizeof(device_execution_time_608_m0) / sizeof(device_execution_time_t);
         }
         break;
+#endif
 
     case ECC204:
         execution_times = device_execution_time_ecc204;
@@ -292,7 +294,6 @@ ATCA_STATUS calib_get_execution_time(uint8_t opcode, ATCADevice device)
 
     return status;
 }
-#endif
 
 ATCA_STATUS calib_execute_send(ATCADevice device, uint8_t device_address, uint8_t* txdata, uint16_t txlength)
 {
@@ -309,7 +310,7 @@ ATCA_STATUS calib_execute_send(ATCADevice device, uint8_t device_address, uint8_
 #else
     if (atca_iface_is_kit(&device->mIface))
     {
-        status = atsend(&device->mIface, 0xFF, (uint8_t*)txdata, (int)txlength - 1);
+        status = atsend(&device->mIface, 0xFF, (uint8_t*)&txdata[1], (int)txlength - 1);
     }
     else
     {
@@ -454,6 +455,19 @@ ATCA_STATUS calib_execute_command(ATCAPacket* packet, ATCADevice device)
 #else
         execution_or_wait_time = ATCA_POLLING_INIT_TIME_MSEC;
         max_delay_count = ATCA_POLLING_MAX_TIME_MSEC / ATCA_POLLING_FREQUENCY_TIME_MSEC;
+
+    #if defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT)
+        if ((ATCA_SWI_GPIO_IFACE == device->mIface.mIfaceCFG->iface_type) && ((ECC204 == device->mIface.mIfaceCFG->devtype) ||
+                (TA010 == device->mIface.mIfaceCFG->devtype)))
+        {
+            if ((status = calib_get_execution_time(packet->opcode, device)) != ATCA_SUCCESS)
+            {
+                return status;
+            }
+            execution_or_wait_time = device->execution_time_msec;
+            max_delay_count = 0;
+        }
+    #endif
 #endif
         retries = atca_iface_get_retries(&device->mIface);
         do
@@ -467,7 +481,7 @@ ATCA_STATUS calib_execute_command(ATCAPacket* packet, ATCADevice device)
             }
 
             /* Send the command packet to the device */
-            if (ATCA_I2C_IFACE == device->mIface.mIfaceCFG->iface_type)
+            if ((ATCA_I2C_IFACE == device->mIface.mIfaceCFG->iface_type) || (ATCA_CUSTOM_IFACE == device->mIface.mIfaceCFG->iface_type))
             {
                 packet->_reserved = 0x03;
             }

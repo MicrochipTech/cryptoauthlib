@@ -35,6 +35,9 @@
 extern "C" {
 #endif
 
+#define BRIDGE_PROTOCOL_VERSION (2)
+
+
 #define HAL_KIT_COMMAND_SEND    0x01
 #define HAL_KIT_COMMAND_RECV    0x02
 #define HAL_KIT_COMMAND_WAKE    0x03

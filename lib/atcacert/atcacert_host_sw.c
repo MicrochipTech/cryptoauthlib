@@ -26,15 +26,9 @@
  */
 
 #include "atcacert_host_sw.h"
-#include "crypto/atca_crypto_sw_sha2.h"
-#include "crypto/atca_crypto_sw_ecdsa.h"
-#include "crypto/atca_crypto_sw_rand.h"
+#include "crypto/atca_crypto_sw.h"
 
-
-
-
-
-
+#if ATCAC_VERIFY_EN
 int atcacert_verify_cert_sw(const atcacert_def_t* cert_def,
                             const uint8_t*        cert,
                             size_t                cert_size,
@@ -43,6 +37,7 @@ int atcacert_verify_cert_sw(const atcacert_def_t* cert_def,
     int ret = 0;
     uint8_t tbs_digest[32];
     uint8_t signature[64];
+    atcac_pk_ctx pkey_ctx;
 
     if (cert_def == NULL || ca_public_key == NULL || cert == NULL)
     {
@@ -61,17 +56,24 @@ int atcacert_verify_cert_sw(const atcacert_def_t* cert_def,
         return ret;
     }
 
-    ret = atcac_sw_ecdsa_verify_p256(tbs_digest, signature, ca_public_key);
+    /* Initialize the key using the provided X,Y cordinantes */
+    ret = atcac_pk_init(&pkey_ctx, ca_public_key, 64, 0, true);
     if (ret != ATCACERT_E_SUCCESS)
     {
         return ret;
     }
 
-    return ATCACERT_E_SUCCESS;
+    /* Perform the verification */
+    ret = atcac_pk_verify(&pkey_ctx, tbs_digest, sizeof(tbs_digest), signature, sizeof(signature));
+
+    /* Make sure to free the key before testing the result of the verify */
+    atcac_pk_free(&pkey_ctx);
+
+    return ret;
 }
+#endif /* ATCAC_VERIFY_EN */
 
-
-
+#if ATCAC_RANDOM_EN
 int atcacert_gen_challenge_sw(uint8_t challenge[32])
 {
     if (challenge == NULL)
@@ -81,17 +83,34 @@ int atcacert_gen_challenge_sw(uint8_t challenge[32])
 
     return atcac_sw_random(challenge, 32);
 }
+#endif /* ATCAC_RANDOM_EN */
 
-
-
+#if ATCAC_VERIFY_EN
 int atcacert_verify_response_sw(const uint8_t device_public_key[64],
                                 const uint8_t challenge[32],
                                 const uint8_t response[64])
 {
+    atcac_pk_ctx pkey_ctx;
+    int ret = ATCACERT_E_BAD_PARAMS;
+
     if (device_public_key == NULL || challenge == NULL || response == NULL)
     {
-        return ATCACERT_E_BAD_PARAMS;
+        return ret;
     }
 
-    return atcac_sw_ecdsa_verify_p256(challenge, response, device_public_key);
+    /* Initialize the key using the provided X,Y cordinantes */
+    ret = atcac_pk_init(&pkey_ctx, device_public_key, 64, 0, true);
+    if (ret != ATCACERT_E_SUCCESS)
+    {
+        return ret;
+    }
+
+    /* Perform the verification */
+    ret = atcac_pk_verify(&pkey_ctx, challenge, 32, response, 32);
+
+    /* Make sure to free the key before testing the result of the verify */
+    atcac_pk_free(&pkey_ctx);
+
+    return ret;
 }
+#endif /* ATCAC_VERIFY_EN */

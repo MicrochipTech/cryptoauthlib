@@ -25,13 +25,23 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
+
+#ifndef TEST_ATCAB_WRITE_EN
+#define TEST_ATCAB_WRITE_EN         (CALIB_WRITE_EN || CALIB_WRITE_ECC204_EN || TALIB_WRITE_EN)
+#endif
+
+#ifndef TEST_ATCAB_WRITE_ENC_EN
+#define TEST_ATCAB_WRITE_ENC_EN     CALIB_WRITE_ENC_EN
+#endif
+
+#if TEST_ATCAB_WRITE_EN
 
 #ifndef ATCA_BLOCK_SIZE
 #define ATCA_BLOCK_SIZE     (32)
 #endif
 
-#if ATCA_CA_SUPPORT
+#if CALIB_WRITE_EN
 TEST(atca_cmd_basic_test, write_boundary_conditions)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
@@ -390,17 +400,36 @@ TEST(atca_cmd_basic_test, write_data_zone_blocks)
     uint8_t read_data[sizeof(write_data)];
     uint16_t slot;
 
-    // Test assumes ECC slot sizes
-    test_assert_data_is_locked();
+    /* Note - This test assumes ECC slot sizes */
+    if (ECC204 == gCfg->devtype)
+    {
+        /* This test for the ECC204 needs to be run when the device data is unlocked */
+        test_assert_config_is_locked();
+        test_assert_data_is_unlocked();
+    }
+    else
+    {
+        /* For all other devices it has to be run when data zone is locked */
+        test_assert_data_is_locked();
+    }
 
     status = atca_test_config_get_id(TEST_TYPE_DATA, &slot);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    // Generate random data to be written
-    status = atcab_random(&write_data[0]);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    status = atcab_random(&write_data[ATCA_BLOCK_SIZE]);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    if (ECC204 != gCfg->devtype)
+    {
+#if CALIB_RANDOM_EN
+        // Generate random data to be written
+        status = atcab_random(&write_data[0]);
+        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+        status = atcab_random(&write_data[ATCA_BLOCK_SIZE]);
+        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+#endif
+    }
+    else
+    {
+        memset(write_data, 0x5A, sizeof(write_data));
+    }
 
     // Test cross-block writes
     status = atcab_write_bytes_zone(ATCA_ZONE_DATA, slot, 4, write_data, sizeof(write_data));
@@ -411,17 +440,20 @@ TEST(atca_cmd_basic_test, write_data_zone_blocks)
 
     TEST_ASSERT_EQUAL_MEMORY(write_data, read_data, sizeof(write_data));
 
-    // Test mid-block word writes
-    status = atcab_write_zone(ATCA_ZONE_DATA, slot, 1, 6, write_data, 4);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    if (ECC204 != gCfg->devtype)
+    {
+        // Test mid-block word writes
+        status = atcab_write_zone(ATCA_ZONE_DATA, slot, 1, 6, write_data, 4);
+        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    status = atcab_read_bytes_zone(ATCA_ZONE_DATA, slot, 56, read_data, 4);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+        status = atcab_read_bytes_zone(ATCA_ZONE_DATA, slot, 56, read_data, 4);
+        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    TEST_ASSERT_EQUAL_MEMORY(write_data, read_data, 4);
+        TEST_ASSERT_EQUAL_MEMORY(write_data, read_data, 4);
+    }
 }
 
-#if ATCA_CA_SUPPORT
+#if TEST_ATCAB_WRITE_ENC_EN
 TEST(atca_cmd_basic_test, write_bytes_zone_slot8)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
@@ -576,6 +608,11 @@ TEST(atca_cmd_basic_test, write_config_zone)
         status = atcab_write_config_zone(test_ecc608_configdata);
         break;
 #endif
+#ifdef ATCA_ECC204_SUPPORT
+    case ECC204:
+        status = atcab_write_config_zone(test_ecc204_configdata);
+        break;
+#endif
 
 #if ATCA_TA_SUPPORT
     case TA100:
@@ -590,6 +627,7 @@ TEST(atca_cmd_basic_test, write_config_zone)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
 
+#if CALIB_WRITE_EN || TALIB_WRITE_EN
 TEST(atca_cmd_basic_test, write_pubkey)
 {
     uint16_t public_key_id;
@@ -621,30 +659,38 @@ TEST(atca_cmd_basic_test, write_pubkey)
         TEST_ASSERT_EQUAL_MEMORY(public_key_ref, public_key, sizeof(public_key_ref));
     }
 }
+#endif
+
+#endif /* TEST_ATCAB_WRITE_EN */
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info write_basic_test_info[] =
 {
-#if ATCA_CA_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_boundary_conditions),   DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
+#if TEST_ATCAB_WRITE_EN
+#if CALIB_WRITE_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_boundary_conditions),   DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC                      },
     //{ REGISTER_TEST_CASE(atca_cmd_basic_test, write_upper_slots),                                    DEVICE_MASK_ECC                      },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_invalid_block),         DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_invalid_block_len),     DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_bytes_zone_config),     DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_otp_zone_nolock),       DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_otp_zone_nolock_check), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_otp_zone),              DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_slot4_key),             DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_invalid_block),         DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC                      },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_invalid_block_len),     DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC                      },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_bytes_zone_config),     DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC                    },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_otp_zone_nolock),       DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC                    },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_otp_zone_nolock_check), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC                    },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_otp_zone),              DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC                    },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_slot4_key),             DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC                     },
 #endif
     { REGISTER_TEST_CASE(atca_cmd_basic_test, write_data_zone_blocks),                               DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
-#if ATCA_CA_SUPPORT
+#if TEST_ATCAB_WRITE_ENC_EN
     //{ REGISTER_TEST_CASE(atca_cmd_basic_test, write_bytes_zone_slot8),                               DEVICE_MASK_ECC                      },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_enc),                   DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_enc_data_unlock),       DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_enc),                   DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC                      },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_enc_data_unlock),       DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC                      },
 #endif
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_zone),                  DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_config_zone),           DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100)},
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_pubkey),                                         DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_zone),                  DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC | DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_config_zone),           DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100)  },
+#if CALIB_WRITE_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_pubkey),                                         DEVICE_MASK_ATECC | DEVICE_MASK(TA100) },
+#endif
+#endif
     { (fp_test_case)NULL,                     (uint8_t)0 },                 /* Array Termination element*/
 };
 // *INDENT-ON*
+

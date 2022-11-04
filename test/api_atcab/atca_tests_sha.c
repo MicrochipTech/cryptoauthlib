@@ -25,7 +25,17 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
+
+#ifndef TEST_ATCAB_SHA_EN
+#define TEST_ATCAB_SHA_EN           (CALIB_SHA_EN || TALIB_SHA_EN)
+#endif
+
+#ifndef TEST_ATCAB_SHA_HMAC_EN
+#define TEST_ATCAB_SHA_HMAC_EN      (CALIB_SHA_HMAC_EN || TALIB_SHA_HMAC_EN)
+#endif
+
+#if TEST_ATCAB_SHA_EN
 
 static const uint8_t nist_hash_msg1[] = "abc";
 static const uint8_t nist_hash_msg2[] = "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq";
@@ -356,8 +366,7 @@ TEST(atca_cmd_basic_test, sha2_256_nist_monte)
     #endif
 }
 
-#if ATCA_CA_SUPPORT
-
+#if CALIB_SHA_CONTEXT_EN
 TEST(atca_cmd_basic_test, sha_context)
 {
     ATCA_STATUS status;
@@ -437,9 +446,10 @@ TEST(atca_cmd_basic_test, sha_context)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     TEST_ASSERT_EQUAL_MEMORY(digest1, digest2, ATCA_SHA256_DIGEST_SIZE);
-
 }
+#endif /* CALIB_SHA_CONTEXT_EN */
 
+#if TALIB_SHA_CONTEXT_EN
 TEST(atca_cmd_basic_test, sha_context_simple)
 {
     ATCA_STATUS status;
@@ -524,8 +534,11 @@ TEST(atca_cmd_basic_test, sha_context_simple)
 
     TEST_ASSERT_EQUAL_MEMORY(digest1, digest2, ATCA_SHA256_DIGEST_SIZE);
 }
-#endif
+#endif /* TALIB_SHA_CONTEXT_EN */
 
+#endif /* TEST_ATCAB_SHA_EN */
+
+#if TEST_ATCAB_SHA_HMAC_EN
 TEST(atca_cmd_basic_test, sha_hmac)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
@@ -598,11 +611,14 @@ TEST(atca_cmd_basic_test, sha_hmac_tempkey)
 
     TEST_ASSERT_EQUAL_MEMORY(hmac_ref, hmac, ATCA_SHA256_DIGEST_SIZE);
 }
-#endif
+#endif /* ATCA_ATECC608_SUPPORT */
+
+#endif /* TEST_ATCAB_SHA_HMAC_EN */
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info sha_basic_test_info[] =
 {
+#if TEST_ATCAB_SHA_EN
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha),                 DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_long),            DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_short),           DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
@@ -611,14 +627,21 @@ t_test_case_info sha_basic_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist_short), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
     //{ REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist_long),  DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
     //{ REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist_monte), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
-#if ATCA_CA_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_context),                                                           DEVICE_MASK(ATECC608)     },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_context_simple),                                                    DEVICE_MASK(TA100)     },
+#if CALIB_SHA_CONTEXT_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_context),                 DEVICE_MASK(ATECC608)     },
 #endif
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_hmac),                                                DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
+#if TALIB_SHA_CONTEXT_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_context_simple),      DEVICE_MASK(TA100)     },
+#endif
+#endif /* TEST_ATCAB_SHA_EN */
+
+#if TEST_ATCAB_SHA_HMAC_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_hmac),                DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
 #ifdef ATCA_ATECC608_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_hmac_tempkey),                                                             DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_hmac_tempkey),        DEVICE_MASK(ATECC608) },
 #endif
+#endif /* TEST_ATCAB_SHA_HMAC_EN */
     { (fp_test_case)NULL,                     (uint8_t)0 },         /* Array Termination element*/
 };
 // *INDENT-ON*
+

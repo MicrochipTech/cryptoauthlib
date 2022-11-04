@@ -34,6 +34,7 @@
 
 #include "cryptoauthlib.h"
 
+#if CALIB_GENKEY_EN
 /** \brief Issues GenKey command, which can generate a private key, compute a
  *          public key, nd/or compute a digest of a public key.
  *
@@ -136,6 +137,7 @@ ATCA_STATUS calib_get_pubkey(ATCADevice device, uint16_t key_id, uint8_t *public
 {
     return calib_genkey_base(device, GENKEY_MODE_PUBLIC, key_id, NULL, public_key);
 }
+#endif /* CALIB_GENKEY_EN */
 
 /** \brief Uses Genkey command to calculate SHA256 digest MAC of combining public key
  *         and session key
@@ -149,6 +151,8 @@ ATCA_STATUS calib_get_pubkey(ATCADevice device, uint16_t key_id, uint8_t *public
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
+
+#if CALIB_GENKEY_MAC_EN
 ATCA_STATUS calib_genkey_mac(ATCADevice device, uint8_t* public_key, uint8_t* mac)
 {
     ATCAPacket packet;
@@ -197,3 +201,4 @@ ATCA_STATUS calib_genkey_mac(ATCADevice device, uint8_t* public_key, uint8_t* ma
 
     return status;
 }
+#endif  /* CALIB_GENKEY_MAC_EN */

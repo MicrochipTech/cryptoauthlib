@@ -32,6 +32,10 @@
 #define ATCA_HAL_SWI
 #endif
 
+#if defined(ATCA_ECC204_SUPPORT) && (defined(ATCA_HAL_SWI_GPIO) || defined(ATCA_HAL_SWI_BB))
+#define ATCA_HAL_1WIRE
+#endif
+
 static ATCA_STATUS hal_swi_gpio_set_bit(
     ATCAIface iface,            /**< [in]   Device context */
     uint8_t   pin_state         /**< [in]   value to write */
@@ -48,7 +52,6 @@ static ATCA_STATUS hal_swi_gpio_read_bit(
     return iface->phy->halreceive(iface, 0, pin_state, NULL);
 }
 
-#ifdef ATCA_HAL_1WIRE
 static ATCA_STATUS hal_swi_gpio_set_dir(
     ATCAIface iface,           /**< [in]   Device context */
     uint8_t   pin_dir          /**< [in]   Pin type input/output */
@@ -56,7 +59,6 @@ static ATCA_STATUS hal_swi_gpio_set_dir(
 {
     return iface->phy->halcontrol(iface, ATCA_HAL_CONTROL_DIRECTION, &pin_dir, sizeof(pin_dir));
 }
-#endif
 
 /** \brief Function to send logic bit 1 or 0 over GPIO using 1WIRE
  *
@@ -419,13 +421,13 @@ static ATCA_STATUS device_discovery_1wire(ATCAIface iface)
 }
 
 /** \brief Function to read the data ACK for the transmitted byte
- * \param[in] dev_addr      7 bit device address
+ * \param[in] dev_addr      8 bit device address
  * \param[in] oper          indicates read or write operation
  * \return  8 bit device address for write or read operation
  */
 static uint8_t get_slave_addr_1wire(uint8_t dev_addr, uint8_t oper)
 {
-    return (dev_addr << 1) | oper;
+    return dev_addr | oper;
 }
 
 /** \brief Function to check wake condition for 1WIRE

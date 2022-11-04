@@ -28,8 +28,13 @@
 #ifdef _WIN32
 #include <time.h>
 #endif
-#include "atca_test.h"
-#include "atca_basic.h"
+#include "test_atcab.h"
+
+#ifndef TEST_ATCAB_AES_CTR_EN
+#define TEST_ATCAB_AES_CTR_EN           ATCAB_AES_CTR_EN
+#endif
+
+#if TEST_ATCAB_AES_CTR_EN
 
 extern const uint8_t g_aes_keys[4][16];
 extern const uint8_t g_plaintext[64];
@@ -303,10 +308,12 @@ TEST(atca_cmd_basic_test, aes_ctr_increment_simple)
     status = atcab_aes_ctr_encrypt_block(&ctx, &g_plaintext[0], ciphertext);
     TEST_ASSERT_EQUAL(ATCA_BAD_PARAM, status);
 }
+#endif /* TEST_ATCAB_AES_CTR_EN */
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info aes_ctr_basic_test_info[] =
 {
+#if TEST_ATCAB_AES_CTR_EN
 #ifdef ATCA_ATECC608_SUPPORT
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ctr_encrypt_block),            DEVICE_MASK(ATECC608) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ctr_decrypt_block),            DEVICE_MASK(ATECC608) },
@@ -315,6 +322,7 @@ t_test_case_info aes_ctr_basic_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ctr_encrypt_block_simple),     DEVICE_MASK(TA100) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ctr_decrypt_block_simple),     DEVICE_MASK(TA100) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ctr_increment_simple),         DEVICE_MASK(TA100) },
+#endif /* TEST_ATCAB_AES_CTR_EN */
     { (fp_test_case)NULL,                     (uint8_t)0 },             /* Array Termination element*/
 };
 

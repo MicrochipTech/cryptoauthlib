@@ -220,21 +220,21 @@ TEST(atcacert_client, init)
     ret = atcab_read_zone(ATCA_ZONE_CONFIG, 0, 0, 0, config32, 32);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
-    ret = atcab_genkey(signer_ca_private_key_slot, g_signer_ca_public_key);
+    ret = atca_test_genkey(signer_ca_private_key_slot, g_signer_ca_public_key);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     disp_size = sizeof(disp_str);
     ret = atcab_bin2hex(g_signer_ca_public_key, ATCA_ECCP256_PUBKEY_SIZE, disp_str, &disp_size);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     printf("Signer CA Public Key:\r\n%s\r\n", disp_str);
 
-    ret = atcab_genkey(signer_private_key_slot, g_signer_public_key);
+    ret = atca_test_genkey(signer_private_key_slot, g_signer_public_key);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     disp_size = sizeof(disp_str);
     ret = atcab_bin2hex(g_signer_public_key, ATCA_ECCP256_PUBKEY_SIZE, disp_str, &disp_size);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     printf("Signer Public Key:\r\n%s\r\n", disp_str);
 
-    ret = atcab_genkey(device_private_key_slot, g_device_public_key);
+    ret = atca_test_genkey(device_private_key_slot, g_device_public_key);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     disp_size = sizeof(disp_str);
     ret = atcab_bin2hex(g_device_public_key, ATCA_ECCP256_PUBKEY_SIZE, disp_str, &disp_size);

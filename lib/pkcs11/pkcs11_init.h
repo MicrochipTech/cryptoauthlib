@@ -43,13 +43,15 @@ typedef struct _pkcs11_lib_ctx
     CK_DESTROYMUTEX destroy_mutex;
     CK_LOCKMUTEX    lock_mutex;
     CK_UNLOCKMUTEX  unlock_mutex;
-    CK_VOID_PTR     mutex;
+    CK_VOID_PTR     lib_lock;
+    CK_VOID_PTR     dev_lock;
+    CK_BBOOL        lib_locked;
     CK_VOID_PTR     slots;
     CK_ULONG        slot_cnt;
 #if !PKCS11_USE_STATIC_CONFIG
     CK_CHAR config_path[200];
 #endif
-} pkcs11_lib_ctx, *pkcs11_lib_ctx_ptr;
+} pkcs11_lib_ctx;
 
 #ifdef __cplusplus
 }
@@ -62,5 +64,11 @@ CK_RV pkcs11_init_check(pkcs11_lib_ctx_ptr * ppContext, CK_BBOOL lock);
 pkcs11_lib_ctx_ptr pkcs11_get_context(void);
 CK_RV pkcs11_lock_context(pkcs11_lib_ctx_ptr pContext);
 CK_RV pkcs11_unlock_context(pkcs11_lib_ctx_ptr pContext);
+
+CK_RV pkcs11_lock_device(pkcs11_lib_ctx_ptr pContext);
+CK_RV pkcs11_unlock_device(pkcs11_lib_ctx_ptr pContext);
+
+CK_RV pkcs11_lock_both(pkcs11_lib_ctx_ptr pContext);
+CK_RV pkcs11_unlock_both(pkcs11_lib_ctx_ptr pContext);
 
 #endif /* PKCS11_INIT_H_ */

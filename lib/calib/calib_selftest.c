@@ -33,6 +33,7 @@
 
 #include "cryptoauthlib.h"
 
+#if CALIB_SELFTEST_EN
 /** \brief Executes the SelfTest command, which performs a test of one or more
  *          of the cryptographic engines within the ATECC608 chip.
  *
@@ -105,3 +106,4 @@ ATCA_STATUS calib_selftest(ATCADevice device, uint8_t mode, uint16_t param2, uin
 
     return status;
 }
+#endif /* CALIB_SELFTEST_EN */

@@ -113,7 +113,6 @@ TEST(tng_atcacert_client, tng_atcacert_read_signer_cert)
     uint8_t ca_public_key[ATCA_ECCP256_PUBKEY_SIZE];
     uint8_t tbs_digest[ATCA_SHA2_256_DIGEST_SIZE];
     uint8_t signature[ATCA_ECCP256_SIG_SIZE];
-    bool is_verified = false;
 
     ret = tng_atcacert_max_signer_cert_size(&cert_size);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
@@ -142,9 +141,24 @@ TEST(tng_atcacert_client, tng_atcacert_read_signer_cert)
         signature);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
+#if ATCA_HOSTLIB_EN
+    atcac_pk_ctx pkey_ctx;
+    ret = atcac_pk_init(&pkey_ctx, ca_public_key, sizeof(ca_public_key), 0, true);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+
+    ret = atcac_pk_verify(&pkey_ctx, tbs_digest, sizeof(tbs_digest), signature, sizeof(signature));
+
+    /* Make sure to free the key before testing the result of the verify */
+    atcac_pk_free(&pkey_ctx);
+
+    /* Check verification result */
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+#elif CALIB_VERIFY_EXTERN_EN || TALIB_VERIFY_EXTERN_EN
+    bool is_verified = false;
     ret = atcab_verify_extern(tbs_digest, signature, ca_public_key, &is_verified);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     TEST_ASSERT(is_verified);
+#endif
 }
 
 TEST(tng_atcacert_client, tng_atcacert_signer_public_key_no_cert)
@@ -224,7 +238,6 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_no_signer)
     uint8_t ca_public_key[ATCA_ECCP256_PUBKEY_SIZE];
     uint8_t tbs_digest[ATCA_SHA2_256_DIGEST_SIZE];
     uint8_t signature[ATCA_ECCP256_SIG_SIZE];
-    bool is_verified = false;
 
     ret = tng_atcacert_max_device_cert_size(&cert_size);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
@@ -253,9 +266,24 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_no_signer)
         signature);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
+#if ATCA_HOSTLIB_EN
+    atcac_pk_ctx pkey_ctx;
+    ret = atcac_pk_init(&pkey_ctx, ca_public_key, sizeof(ca_public_key), 0, true);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+
+    ret = atcac_pk_verify(&pkey_ctx, tbs_digest, sizeof(tbs_digest), signature, sizeof(signature));
+
+    /* Make sure to free the key before testing the result of the verify */
+    atcac_pk_free(&pkey_ctx);
+
+    /* Check verification result */
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+#elif CALIB_VERIFY_EXTERN_EN || TALIB_VERIFY_EXTERN_EN
+    bool is_verified = false;
     ret = atcab_verify_extern(tbs_digest, signature, ca_public_key, &is_verified);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     TEST_ASSERT(is_verified);
+#endif
 }
 
 TEST(tng_atcacert_client, tng_atcacert_read_device_cert_signer)
@@ -269,7 +297,6 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_signer)
     uint8_t ca_public_key[ATCA_ECCP256_PUBKEY_SIZE];
     uint8_t tbs_digest[ATCA_SHA2_256_DIGEST_SIZE];
     uint8_t signature[ATCA_ECCP256_SIG_SIZE];
-    bool is_verified = false;
 
     ret = tng_atcacert_max_signer_cert_size(&signer_cert_size);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
@@ -305,9 +332,24 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_signer)
         signature);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
+#if ATCA_HOSTLIB_EN
+    atcac_pk_ctx pkey_ctx;
+    ret = atcac_pk_init(&pkey_ctx, ca_public_key, sizeof(ca_public_key), 0, true);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+
+    ret = atcac_pk_verify(&pkey_ctx, tbs_digest, sizeof(tbs_digest), signature, sizeof(signature));
+
+    /* Make sure to free the key before testing the result of the verify */
+    atcac_pk_free(&pkey_ctx);
+
+    /* Check verification result */
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+#elif CALIB_VERIFY_EXTERN_EN || TALIB_VERIFY_EXTERN_EN
+    bool is_verified = false;
     ret = atcab_verify_extern(tbs_digest, signature, ca_public_key, &is_verified);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     TEST_ASSERT(is_verified);
+#endif
 }
 
 TEST(tng_atcacert_client, tng_atcacert_device_public_key_no_cert)

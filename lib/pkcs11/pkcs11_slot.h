@@ -47,6 +47,10 @@ typedef struct _pkcs11_slot_ctx
 #if ATCA_CA_SUPPORT
     atecc608_config_t cfg_zone;
 #endif
+#if ((defined(ATCA_HAL_KIT_BRIDGE) && defined(PKCS11_TESTING_ENABLE)) || \
+        (defined(__linux__) && (defined(ATCA_HAL_SWI_UART) || defined(ATCA_HAL_KIT_UART))))
+    uint8_t           devpath[24];
+#endif
     CK_FLAGS flags;
     uint16_t user_pin_handle;
     uint16_t so_pin_handle;
@@ -55,7 +59,7 @@ typedef struct _pkcs11_slot_ctx
 #endif
     CK_BBOOL logged_in;
     CK_BYTE  read_key[32];                      /**< Accepted through C_Login as the user pin */
-} pkcs11_slot_ctx, *pkcs11_slot_ctx_ptr;
+} pkcs11_slot_ctx;
 
 #ifdef __cplusplus
 }
@@ -65,6 +69,7 @@ CK_RV pkcs11_slot_init(CK_SLOT_ID slotID);
 CK_RV pkcs11_slot_config(CK_SLOT_ID slotID);
 CK_VOID_PTR pkcs11_slot_initslots(CK_ULONG pulCount);
 pkcs11_slot_ctx_ptr pkcs11_slot_get_context(pkcs11_lib_ctx_ptr lib_ctx, CK_SLOT_ID slotID);
+pkcs11_slot_ctx_ptr pkcs11_slot_get_new_context(pkcs11_lib_ctx_ptr lib_ctx);
 
 
 CK_RV pkcs11_slot_get_list(CK_BBOOL tokenPresent, CK_SLOT_ID_PTR pSlotList, CK_ULONG_PTR pulCount);

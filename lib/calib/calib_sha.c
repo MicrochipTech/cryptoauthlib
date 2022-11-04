@@ -34,6 +34,8 @@
 
 #include "cryptoauthlib.h"
 
+#if CALIB_SHA_EN
+
 typedef struct
 {
     uint32_t total_msg_size;                     //!< Total number of message bytes processed
@@ -72,19 +74,13 @@ ATCA_STATUS calib_sha_base(ATCADevice device, uint8_t mode, uint16_t length, con
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t cmd_mode = (mode & SHA_MODE_MASK);
 
-    if (device == NULL)
-    {
-        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
-    }
-    if (cmd_mode != SHA_MODE_SHA256_PUBLIC && cmd_mode != SHA_MODE_HMAC_START &&
-        cmd_mode != SHA_MODE_ECC204_HMAC_START && length > 0 && message == NULL)
-    {
-        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received"); // message data indicated, but nothing provided
-    }
-    if (data_out != NULL && data_out_size == NULL)
-    {
-        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
-    }
+    ATCA_CHECK_INVALID_MSG(!device, ATCA_BAD_PARAM, "NULL pointer received");
+
+    ATCA_CHECK_INVALID_MSG((cmd_mode != SHA_MODE_SHA256_PUBLIC && cmd_mode != SHA_MODE_HMAC_START &&
+                            cmd_mode != SHA_MODE_ECC204_HMAC_START && length > 0 && message == NULL),
+                           ATCA_BAD_PARAM, "NULL pointer received");// message data indicated, but nothing provided
+
+    ATCA_CHECK_INVALID_MSG((data_out && !data_out_size), ATCA_BAD_PARAM, "NULL pointer received");
 
     do
     {
@@ -165,6 +161,7 @@ ATCA_STATUS calib_sha_end(ATCADevice device, uint8_t *digest, uint16_t length, c
 
     return calib_sha_base(device, SHA_MODE_SHA256_END, length, message, digest, &digest_size);
 }
+#endif /* CALIB_SHA_EN */
 
 /** \brief Executes SHA command to read the SHA-256 context back. Only for
  *          ATECC608 with SHA-256 contexts. HMAC not supported.
@@ -177,6 +174,7 @@ ATCA_STATUS calib_sha_end(ATCADevice device, uint8_t *digest, uint16_t length, c
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if CALIB_SHA_CONTEXT_EN
 ATCA_STATUS calib_sha_read_context(ATCADevice device, uint8_t* context, uint16_t* context_size)
 {
     return calib_sha_base(device, SHA_MODE_READ_CONTEXT, 0, NULL, context, context_size);
@@ -195,7 +193,9 @@ ATCA_STATUS calib_sha_write_context(ATCADevice device, const uint8_t* context, u
 {
     return calib_sha_base(device, SHA_MODE_WRITE_CONTEXT, context_size, context, NULL, NULL);
 }
+#endif /* CALIB_SHA_CONTEXT_EN */
 
+#if CALIB_SHA_EN
 /** \brief Use the SHA command to compute a SHA-256 digest.
  *
  * \param[in]  device   Device context pointer
@@ -289,17 +289,18 @@ ATCA_STATUS calib_hw_sha2_256_update(ATCADevice device, atca_sha256_ctx_t* ctx, 
 ATCA_STATUS calib_hw_sha2_256_finish(ATCADevice device, atca_sha256_ctx_t* ctx, uint8_t* digest)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
-    uint32_t msg_size_bits;
-    uint32_t pad_zero_count;
-    uint16_t digest_size;
 
     if (device == NULL)
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
+#ifdef ATCA_ATSHA204A_SUPPORT
     if (device->mIface.mIfaceCFG->devtype == ATSHA204A)
     {
+        uint32_t msg_size_bits;
+        uint32_t pad_zero_count;
+        uint16_t digest_size;
         // ATSHA204A only implements the raw 64-byte block operation, but
         // doesn't add in the final footer information. So we do that manually
         // here.
@@ -341,6 +342,7 @@ ATCA_STATUS calib_hw_sha2_256_finish(ATCADevice device, atca_sha256_ctx_t* ctx, 
         }
     }
     else
+#endif
     {
         if (ATCA_SUCCESS != (status = calib_sha_end(device, digest, (uint16_t)ctx->block_size, ctx->block)))
         {
@@ -382,7 +384,9 @@ ATCA_STATUS calib_hw_sha2_256(ATCADevice device, const uint8_t * data, size_t da
 
     return ATCA_SUCCESS;
 }
+#endif  /* CALIB_SHA_EN */
 
+#if CALIB_SHA_HMAC_EN
 /** \brief Executes SHA command to start an HMAC/SHA-256 operation
  *
  * \param[in]  device   Device context pointer
@@ -542,3 +546,4 @@ ATCA_STATUS calib_sha_hmac(ATCADevice device, const uint8_t * data, size_t data_
 
     return ATCA_SUCCESS;
 }
+#endif  /* CALIB_SHA_HMAC_EN */

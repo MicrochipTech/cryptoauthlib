@@ -25,9 +25,13 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
 
-#if ATCA_CA_SUPPORT
+#ifndef TEST_ATCAB_HMAC_EN
+#define TEST_ATCAB_HMAC_EN              CALIB_HMAC_EN
+#endif
+
+#if TEST_ATCAB_HMAC_EN
 
 TEST(atca_cmd_basic_test, hmac)
 {
@@ -106,18 +110,14 @@ TEST(atca_cmd_basic_test, hmac)
         TEST_ASSERT_EQUAL_MEMORY(hmac_digest, hmac_params.response, sizeof(hmac_digest));
     }
 }
+#endif
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info hmac_basic_test_info[] =
 {
+#if TEST_ATCAB_HMAC_EN
     { REGISTER_TEST_CASE(atca_cmd_basic_test, hmac), DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) },
+#endif
     { (fp_test_case)NULL,                     (uint8_t)0 },/* Array Termination element*/
 };
 // *INDENT-ON*
-
-#else
-t_test_case_info hmac_basic_test_info[] =
-{
-    { (fp_test_case)NULL, (uint8_t)0 },
-};
-#endif

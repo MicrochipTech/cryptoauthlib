@@ -34,6 +34,7 @@
 
 #include "cryptoauthlib.h"
 
+#if CALIB_SIGN_EN
 /** \brief Executes the Sign command, which generates a signature using the
  *          ECDSA algorithm.
  *
@@ -116,13 +117,15 @@ ATCA_STATUS calib_sign(ATCADevice device, uint16_t key_id, const uint8_t *msg, u
 
     do
     {
+#if CALIB_RANDOM_EN
         // Make sure RNG has updated its seed
         if ((status = calib_random(device, NULL)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "calib_random - failed");
             break;
         }
-
+#endif
+#ifdef ATCA_ATECC608_SUPPORT
         // Load message into device
         if (ATECC608 == device->mIface.mIfaceCFG->devtype)
         {
@@ -130,6 +133,7 @@ ATCA_STATUS calib_sign(ATCADevice device, uint16_t key_id, const uint8_t *msg, u
             nonce_target = NONCE_MODE_TARGET_MSGDIGBUF;
             sign_source = SIGN_MODE_SOURCE_MSGDIGBUF;
         }
+#endif
         if ((status = calib_nonce_load(device, nonce_target, msg, 32)) != ATCA_SUCCESS)
         {
             ATCA_TRACE(status, "calib_nonce_load - failed");
@@ -148,6 +152,23 @@ ATCA_STATUS calib_sign(ATCADevice device, uint16_t key_id, const uint8_t *msg, u
     return status;
 }
 
+ATCA_STATUS calib_sign_ext(ATCADevice device, uint16_t key_id, const uint8_t *msg, uint8_t *signature)
+{
+#if CALIB_ECC204_EN
+    if (ECC204 == atcab_get_device_type_ext(device))
+    {
+        return calib_ecc204_sign(device, key_id, msg, signature);
+    }
+    else
+#endif
+    {
+        return calib_sign(device, key_id, msg, signature);
+    }
+}
+
+#endif
+
+#if CALIB_SIGN_INTERNAL_EN
 /** \brief Executes Sign command to sign an internally generated message.
  *
  *  \param[in]  device         Device context pointer
@@ -193,7 +214,9 @@ ATCA_STATUS calib_sign_internal(ATCADevice device, uint16_t key_id, bool is_inva
 
     return status;
 }
+#endif /* CALIB_SIGN_MODE_ENCODING */
 
+#if CALIB_SIGN_ECC204_EN
 /** \brief Execute sign command to sign the 32 bytes message digest using private key
  *         mentioned in slot.
  *
@@ -250,3 +273,4 @@ ATCA_STATUS calib_ecc204_sign(ATCADevice device, uint16_t key_id, const uint8_t*
 
     return status;
 }
+#endif

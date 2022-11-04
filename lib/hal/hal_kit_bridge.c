@@ -98,31 +98,23 @@ static void hal_kit_phy_packet_free(atca_hal_kit_phy_t* phy, uint8_t* packet)
 }
 #endif
 
-/** \brief Request a list of busses from the kit host
- */
-ATCA_STATUS hal_kit_discover_buses(int busses[], int max_buses)
+/** \brief Configure the header with the necesary values */
+static inline void hal_kit_header(ATCAIfaceCfg* cfg, uint8_t buffer[HAL_KIT_HEADER_LEN], uint8_t command)
 {
-    return ATCA_UNIMPLEMENTED;
-}
-
-/** \brief discover any CryptoAuth devices on a given logical bus number
- * \param[in] bus_num - logical bus number on which to look for CryptoAuth devices
- * \param[out] cfg[] - pointer to head of an array of interface config structures which get filled in by this method
- * \param[out] *found - number of devices found on this bus
- */
-ATCA_STATUS hal_kit_discover_devices(int bus_num, ATCAIfaceCfg cfg[], int* found)
-{
-    return ATCA_UNIMPLEMENTED;
+    buffer[0] = (BRIDGE_PROTOCOL_VERSION & 0x0F);
+    buffer[1] = command | (ATCA_IFACECFG_VALUE(cfg, atcakit.dev_interface) << 4);
+    buffer[2] = ATCA_IFACECFG_VALUE(cfg, atcakit.dev_identity);
 }
 
 /** \brief HAL implementation of Kit USB HID init
- *  \param[in] hal pointer to HAL specific data that is maintained by this HAL
+ *  \param[in] iface          instance
  *  \param[in] cfg pointer to HAL specific configuration data that is used to initialize this HAL
  * \return ATCA_STATUS
  */
-ATCA_STATUS hal_kit_init(void* hal, ATCAIfaceCfg* cfg)
+ATCA_STATUS hal_kit_init(ATCAIface iface, ATCAIfaceCfg* cfg)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
+    (void)iface;
 
     /* Perform rationality checks on the configuration structure */
     if (cfg && cfg->cfg_data)
@@ -144,6 +136,7 @@ ATCA_STATUS hal_kit_init(void* hal, ATCAIfaceCfg* cfg)
  */
 ATCA_STATUS hal_kit_post_init(ATCAIface iface)
 {
+    (void)iface;
     return ATCA_SUCCESS;
 }
 
@@ -168,13 +161,19 @@ ATCA_STATUS hal_kit_send(ATCAIface iface, uint8_t word_address, uint8_t* txdata,
 
         if (packet)
         {
-            packet[0] = 1;
-            packet[1] = HAL_KIT_COMMAND_SEND | (iface->mIfaceCFG->atcakit.dev_interface << 4);
-            packet[2] = iface->mIfaceCFG->atcakit.dev_identity;
+            hal_kit_header(iface->mIfaceCFG, packet, HAL_KIT_COMMAND_SEND);
             packet[3] = word_address;
-            memcpy(&packet[4], &txdata[1], txlength);
+            if (atcab_is_ta_device(iface->mIfaceCFG->devtype))
+            {
+                memcpy(&packet[4], &txdata[1], txlength-1);
+            }
+            else
+            {
+                memcpy(&packet[4], txdata, txlength);
+                txlength++;
+            }
 
-            status = hal_kit_phy_send(phy, packet, txlength + HAL_KIT_HEADER_LEN + 1);
+            status = hal_kit_phy_send(phy, packet, txlength + HAL_KIT_HEADER_LEN);
 
             if (ATCA_SUCCESS == status)
             {
@@ -212,9 +211,7 @@ ATCA_STATUS hal_kit_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxda
 
         if (packet)
         {
-            packet[0] = 1;
-            packet[1] = HAL_KIT_COMMAND_RECV | (iface->mIfaceCFG->atcakit.dev_interface << 4);
-            packet[2] = iface->mIfaceCFG->atcakit.dev_identity;
+            hal_kit_header(iface->mIfaceCFG, packet, HAL_KIT_COMMAND_RECV);
             packet[3] = word_address;
             packet[4] = *rxsize & 0xFF;
             packet[5] = (*rxsize >> 8) & 0xFF;
@@ -262,10 +259,7 @@ static ATCA_STATUS hal_kit_wake(ATCAIface iface)
 
         if (packet)
         {
-            packet[0] = 1;
-            packet[1] = HAL_KIT_COMMAND_WAKE | (iface->mIfaceCFG->atcakit.dev_interface << 4);
-            packet[2] = iface->mIfaceCFG->atcakit.dev_identity;
-
+            hal_kit_header(iface->mIfaceCFG, packet, HAL_KIT_COMMAND_WAKE);
             status = hal_kit_phy_send(phy, packet, packet_size);
 
             if (ATCA_SUCCESS == status)
@@ -302,10 +296,7 @@ static ATCA_STATUS hal_kit_idle(ATCAIface iface)
 
         if (packet)
         {
-            packet[0] = 1;
-            packet[1] = HAL_KIT_COMMAND_IDLE | (iface->mIfaceCFG->atcakit.dev_interface << 4);
-            packet[2] = iface->mIfaceCFG->atcakit.dev_identity;
-
+            hal_kit_header(iface->mIfaceCFG, packet, HAL_KIT_COMMAND_IDLE);
             status = hal_kit_phy_send(phy, packet, packet_size);
 
             if (ATCA_SUCCESS == status)
@@ -342,10 +333,7 @@ static ATCA_STATUS hal_kit_sleep(ATCAIface iface)
 
         if (packet)
         {
-            packet[0] = 1;
-            packet[1] = HAL_KIT_COMMAND_SLEEP | (iface->mIfaceCFG->atcakit.dev_interface << 4);
-            packet[2] = iface->mIfaceCFG->atcakit.dev_identity;
-
+            hal_kit_header(iface->mIfaceCFG, packet, HAL_KIT_COMMAND_SLEEP);
             status = hal_kit_phy_send(phy, packet, packet_size);
 
             if (ATCA_SUCCESS == status)
@@ -371,8 +359,11 @@ static ATCA_STATUS hal_kit_sleep(ATCAIface iface)
  * \param[in] option  Control option to use
  * \return ATCA_STATUS
  */
-ATCA_STATUS hal_kit_control(ATCAIface iface, uint8_t option)
+ATCA_STATUS hal_kit_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen)
 {
+    (void)param;
+    (void)paramlen;
+
     switch (option)
     {
     case ATCA_HAL_CONTROL_WAKE:
@@ -393,6 +384,7 @@ ATCA_STATUS hal_kit_control(ATCAIface iface, uint8_t option)
  */
 ATCA_STATUS hal_kit_release(void* hal_data)
 {
+    (void)hal_data;
     return ATCA_SUCCESS;
 }
 

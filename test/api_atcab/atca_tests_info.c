@@ -25,7 +25,7 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
 
 TEST(atca_cmd_basic_test, info)
 {
@@ -33,14 +33,25 @@ TEST(atca_cmd_basic_test, info)
     uint8_t revision[4];
 
     status = atcab_info(revision);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_SUCCESS(status);
+    if (atcab_is_ca_device(gCfg->devtype))
+    {
+#if ATCA_CA_SUPPORT
+        ATCADeviceType devtype = calib_get_devicetype(revision);
+        if (gCfg->devtype != devtype)
+        {
+            g_test_abort = true;
+        }
+        TEST_ASSERT_EQUAL_MESSAGE(gCfg->devtype, devtype, "Device Type Mismatch");
+#endif
+    }
 }
-
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info info_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, info), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, info), DEVICE_MASK_SHA | DEVICE_MASK_ECC },
     { (fp_test_case)NULL,                     (uint8_t)0 },/* Array Termination element*/
 };
 // *INDENT-ON*
+

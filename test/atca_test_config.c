@@ -30,16 +30,29 @@
 
 #ifdef ATCA_TEST_MULTIPLE_INSTANCES
 #include "atca_devcfg_list.h"
-void select_dev_cfg_data();
 #endif
 
 #ifdef ATCA_HAL_CUSTOM
 extern int select_204_custom(int argc, char* argv[]);
+extern int select_206_custom(int argc, char* argv[]);
 extern int select_108_custom(int argc, char* argv[]);
 extern int select_508_custom(int argc, char* argv[]);
 extern int select_608_custom(int argc, char* argv[]);
 extern int select_ta100_custom(int argc, char* argv[]);
 extern int select_ecc204_custom(int argc, char* argv[]);
+#endif
+
+#ifdef ATCA_HAL_KIT_BRIDGE
+/** The bridging protocol doesn't control the "physical" interface so to start
+    the connection inside the test application it needs to be linked to
+    something that exposes the following function */
+extern ATCA_STATUS hal_kit_bridge_connect(ATCAIfaceCfg *, int, char **);
+#endif
+
+//#if defined(__linux__) && (defined(ATCA_HAL_SWI_UART) || defined(ATCA_HAL_KIT_UART))
+#ifdef __linux__
+/** In order to access the uart on linux the full device path needs to be known */
+static char opt_device_name[20];
 #endif
 
 /** gCfg must point to one of the cfg_ structures for any unit test to work.  this allows
@@ -78,6 +91,17 @@ ATCAIfaceCfg g_iface_config = {
 
 ATCAIfaceCfg* gCfg = &g_iface_config;
 
+static void print_args(const char * f, int argc, char* argv[])
+{
+    int i;
+    printf("Called from %s with %d args: ", f, argc);
+    for(i=0; i<argc; i++, argv++)
+    {
+        printf("%s ", *argv);
+    }
+    printf("\n");
+}
+
 /** \brief Sets the device the command or test suite will use
  *
  * \param[in]  ifacecfg    Platform iface config to use
@@ -87,84 +111,135 @@ void atca_test_config_set_ifacecfg(ATCAIfaceCfg * ifacecfg)
     (void)memmove(gCfg, ifacecfg, sizeof(ATCAIfaceCfg));
 }
 
-static int select_device(ATCADeviceType device_type, bool interative)
+#ifdef ATCA_HAL_CUSTOM
+static int select_custom(int argc, char* argv[])
 {
-    gCfg->devtype = device_type;
-    if (interative)
+    int ret;
+    switch(gCfg->devtype)
     {
-        printf("Device Selected.\r\n");
+#ifdef ATCA_ATSHA204A_SUPPORT
+        case ATSHA204A:
+            ret = select_204_custom(argc, argv);
+            break;
+#endif
+#ifdef ATCA_ATECC108A_SUPPORT
+        case ATECC108A:
+            ret = select_108_custom(argc, argv);
+            break;
+#endif
+#ifdef ATCA_ATECC508A_SUPPORT
+        case ATECC508A:
+            ret = select_508_custom(argc, argv);
+            break;
+#endif
+#ifdef ATCA_ATECC608_SUPPORT
+        case ATECC608:
+            ret = select_608_custom(argc, argv);
+            break;
+#endif
+#ifdef ATCA_ATSHA206A_SUPPORT
+        case ATSHA206A:
+            ret = select_204_custom(argc, argv);
+            break;
+#endif
+#ifdef ATCA_ECC204_SUPPORT
+        case ECC204:
+            ret = select_ecc204_custom(argc, argv);
+            break;
+#endif
+#ifdef ATCA_ECC204_SUPPORT
+        case TA100:
+            ret = select_ta100_custom(argc, argv);
+            break;
+#endif
+        default:
+            ret = -1;
+            break;
     }
-    return 0;
+    return ret;
+}
+#endif
+
+static int select_device_internal(int argc, char* argv[], bool interactive)
+{
+    int ret = -1;
+
+    if (argc)
+    {
+        if (ATCA_DEV_UNKNOWN != (gCfg->devtype = iface_get_device_type_by_name(argv[0])))
+        {
+            ret = 0;
+        }
+    }
+
+#ifdef ATCA_HAL_CUSTOM
+    if (!ret)
+    {
+        ret = select_custom(argc, argv);
+    }
+#endif
+
+    if (!ret && interactive)
+    {
+        printf("Device Selected.\n");
+    }
+
+    return ret;
 }
 
-int select_204(int argc, char* argv[])
+/** \brief Select a device by it's name - expects one argument */
+int select_device(int argc, char* argv[])
 {
-#if defined(ATCA_HAL_CUSTOM) && defined(ATCA_ATSHA204A_SUPPORT)
-    return select_204_custom(argc, argv);
-#else
-    ((void)argc);
-    return select_device(ATSHA204A, NULL != argv);
-#endif
+    return select_device_internal(argc, argv, true);
 }
 
-int select_206(int argc, char* argv[])
+/** \brief Process an individual command option
+ * \return Number of arguments parsed from the list or an error
+ */
+static int process_option(
+    const t_menu_info_simple * list,    /**< [in] List of options */
+    int argc,                           /**< [in] Number of arguments in the arg list */
+    char* argv[]                        /**< [in] Argument list */
+)
 {
-#if defined(ATCA_HAL_CUSTOM) && defined(ATCA_ATSHA206A_SUPPORT)
-    return select_206_custom(argc, argv);
-#else
-    ((void)argc);
-    return select_device(ATSHA206A, NULL != argv);
-#endif
-}
+    int ret = -1;
+    const t_menu_info_simple * pList = list;
+    if (pList)
+    {
+        if (argc)
+        {
+            for (;pList->menu_cmd;pList++)
+            {
+                if (!strcmp(pList->menu_cmd, argv[0]))
+                {
+                    if (pList->fp_handler)
+                    {
+                        if(0 < (ret = pList->fp_handler(argc-1, &argv[1])))
+                        {
+                            ret = argc;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        else
+        {
+            ret = 0;
+        }
+        if (!ret)
+        {
+#ifdef ATCA_PRINTF
+            /* */
+            pList = list;
+            for (;pList->menu_cmd;pList++)
+            {
 
-int select_108(int argc, char* argv[])
-{
-#if defined(ATCA_HAL_CUSTOM) && defined(ATCA_ATECC108A_SUPPORT)
-    return select_108_custom(argc, argv);
-#else
-    ((void)argc);
-    return select_device(ATECC108A, NULL != argv);
+            }
 #endif
-}
-
-int select_508(int argc, char* argv[])
-{
-#if defined(ATCA_HAL_CUSTOM) && defined(ATCA_ATECC508A_SUPPORT)
-    return select_508_custom(argc, argv);
-#else
-    ((void)argc);
-    return select_device(ATECC508A, NULL != argv);
-#endif
-}
-
-int select_608(int argc, char* argv[])
-{
-#if defined(ATCA_HAL_CUSTOM) && defined(ATCA_ATECC608_SUPPORT)
-    return select_608_custom(argc, argv);
-#else
-    ((void)argc);
-    return select_device(ATECC608, NULL != argv);
-#endif
-}
-
-int select_ta100(int argc, char* argv[])
-{
-#if defined(ATCA_HAL_CUSTOM) && defined(ATCA_TA100_SUPPORT)
-    return select_ta100_custom(argc, argv);
-#else
-    ((void)argc);
-    return select_device(TA100, NULL != argv);
-#endif
-}
-
-int select_ecc204(int argc, char* argv[])
-{
-#if defined(ATCA_HAL_CUSTOM) && defined(ATCA_ECC204_SUPPORT)
-    return select_ecc204_custom(argc, argv);
-#else
-    ((void)argc);
-    return select_device(ECC204, NULL != argv);
-#endif
+        }
+    }
+    return ret;
 }
 
 /** \brief Sets the device the command or test suite will use
@@ -175,227 +250,258 @@ int select_ecc204(int argc, char* argv[])
  */
 static int opt_device_type(int argc, char* argv[])
 {
-    int ret = 0;
+    return select_device_internal(argc, argv, false);
+}
 
-    if (argc >= 2)
+/** \brief Map the name of an iterface to the enum */
+static ATCAKitType opt_get_kit_iface_type(const char * kit_iface_type_name)
+{
+    ATCAKitType ret = ATCA_KIT_AUTO_IFACE;
+    if (kit_iface_type_name)
     {
-        if (0 == strcmp("sha204", argv[1]))
+        if(lib_strcasestr(kit_iface_type_name, "i2c"))
         {
-            select_204(0, NULL);
+            ret = ATCA_KIT_I2C_IFACE;
         }
-        else if (0 == strcmp("sha206", argv[1]))
+        else if(lib_strcasestr(kit_iface_type_name, "spi"))
         {
-            select_206(0, NULL);
+            ret = ATCA_KIT_SPI_IFACE;
         }
-        else if (0 == strcmp("ecc108", argv[1]))
+        else if(lib_strcasestr(kit_iface_type_name, "swi"))
         {
-            select_108(0, NULL);
+            ret = ATCA_KIT_SWI_IFACE;
         }
-        else if (0 == strcmp("ecc508", argv[1]))
-        {
-            select_508(0, NULL);
-        }
-        else if (0 == strcmp("ecc608", argv[1]))
-        {
-            select_608(0, NULL);
-        }
-        else if (0 == strcmp("ta100", argv[1]))
-        {
-            select_ta100(0, NULL);
-        }
-        ret = 2;
     }
     return ret;
 }
 
-#ifndef _WIN32
-static char opt_device_name[20];
+#ifdef ATCA_HAL_KIT_HID
+/** \brief Configure the hid hal */
+static int opt_iface_hid(int argc, char* argv[])
+{
+    ((void)argc);
+
+    gCfg->iface_type = ATCA_HID_IFACE;
+
+    ATCA_IFACECFG_VALUE(gCfg, atcahid.idx) = 0;
+    ATCA_IFACECFG_VALUE(gCfg, atcahid.vid) = 0x03EB;
+    ATCA_IFACECFG_VALUE(gCfg, atcahid.pid) = 0x2312;
+    ATCA_IFACECFG_VALUE(gCfg, atcahid.packetsize) = 64;
+
+    ATCA_IFACECFG_VALUE(gCfg, atcahid.dev_interface) = opt_get_kit_iface_type(argv[0]);
+    ATCA_IFACECFG_VALUE(gCfg, atcahid.dev_identity) = 0;
+
+    return 0;
+}
 #endif
 
-/** \brief Sets the interface the command or test suite will use
- *
- * \param[in]  argc     Number of arguments in the arg list
- * \param[out] argv     Argument list
- * \return Number of arguments parsed
- */
-static int opt_iface_type(int argc, char* argv[])
+#ifdef ATCA_HAL_I2C
+/** \brief Configure the i2c hal */
+static int opt_iface_i2c(int argc, char* argv[])
+{
+    int ret = -1;
+    gCfg->iface_type = ATCA_I2C_IFACE;
+
+    if (argc)
+    {
+        ATCA_IFACECFG_VALUE(gCfg, atcai2c.bus) = (uint8_t)strtol(argv[0], NULL, 10);
+        ret = 0;
+    }
+
+    if (1 < argc)
+    {
+#ifdef __linux__
+        ATCA_IFACECFG_VALUE(gCfg, atcai2c.baud) = 100000;
+#else
+        ATCA_IFACECFG_VALUE(gCfg, atcai2c.baud) = (uint32_t)strtol(argv[1], NULL, 10);
+#endif
+    }
+
+    return ret;
+}
+#endif
+
+#if defined(ATCA_HAL_SWI_UART) || defined(ATCA_HAL_SWI_GPIO) || defined(ATCA_HAL_SWI_BB)
+/** \brief Configure the swi hal */
+static int opt_iface_swi(int argc, char* argv[])
+{
+    int ret = -1;
+
+    gCfg->iface_type = ATCA_SWI_IFACE;
+
+    if (argc)
+    {
+#ifdef __linux__
+        size_t len = strlen(argv[0]);
+        if (len < sizeof(opt_device_name) - 1)
+        {
+            memcpy(opt_device_name, argv[0], len);
+            opt_device_name[len] = '\0';
+            gCfg->cfg_data = opt_device_name;
+        }
+#else
+        ATCA_IFACECFG_VALUE(gCfg, atcaswi.bus) = (uint8_t)strtol(argv[0], NULL, 10);
+#endif
+        ret = 0;
+    }
+
+    return ret;
+}
+#endif
+
+#ifdef ATCA_HAL_SPI
+/** \brief Configure the spi hal */
+static int opt_iface_spi(int argc, char* argv[])
 {
     int ret = 0;
+    gCfg->iface_type = ATCA_SPI_IFACE;
 
-    if (argc >= 2)
+    if(argc)
     {
-        ret = 2;
-
-        if (0 == strcmp("hid", argv[1]))
-        {
-            gCfg->iface_type = ATCA_HID_IFACE;
-            gCfg->atcahid.dev_identity = 0;
-            gCfg->atcahid.idx = 0;
-            gCfg->atcahid.vid = 0x03EB;
-            gCfg->atcahid.pid = 0x2312;
-            gCfg->atcahid.packetsize = 64;
-
-            if (argc >= 3 && argv[2][0] != '-')
-            {
-                ret = 3;
-                if (0 == strcmp("i2c", argv[2]))
-                {
-                    gCfg->atcahid.dev_interface = ATCA_KIT_I2C_IFACE;
-                    if (argc >= 4 && argv[3][0] != '-')
-                    {
-                        uint32_t val = strtol(argv[3], NULL, 16);
-                        gCfg->atcahid.dev_identity = (uint8_t)val;
-                    }
-                }
-                else if (0 == strcmp("swi", argv[2]))
-                {
-                    gCfg->atcahid.dev_interface = ATCA_KIT_SWI_IFACE;
-                }
-                else if (0 == strcmp("spi", argv[2]))
-                {
-                    gCfg->atcahid.dev_interface = ATCA_KIT_SPI_IFACE;
-                }
-            }
-            else
-            {
-                gCfg->atcahid.dev_interface = ATCA_KIT_AUTO_IFACE;
-            }
-        }
-        else if (0 == strcmp("i2c", argv[1]))
-        {
-#ifdef ATCA_HAL_I2C
-            gCfg->iface_type = ATCA_I2C_IFACE;
-
-            if (argc >= 3 && argv[2][0] != '-')
-            {
-                uint32_t val = strtol(argv[2], NULL, 16);
-                gCfg->atcai2c.bus = (uint8_t)val;
-                ret = 3;
-            }
-#ifdef __linux__
-            gCfg->atcai2c.baud = 100000;
-#endif
-#endif      /* ATCA_HAL_KIT_HID */
-        }
-        else if (0 == strcmp("swi", argv[1]))
-        {
-            gCfg->iface_type = ATCA_SWI_IFACE;
-
-            if (argc >= 3 && argv[2][0] != '-')
-            {
-                uint32_t val = strtol(argv[2], NULL, 16);
-                gCfg->atcaswi.bus = (uint8_t)val;
-                ret = 3;
-            }
-        }
-        else if (0 == strcmp("spi", argv[1]))
-        {
-            gCfg->iface_type = ATCA_SPI_IFACE;
-
-            if (argc >= 3 && argv[2][0] != '-')
-            {
-                gCfg->atcaspi.bus = (uint8_t)strtol(argv[2], NULL, 16);
-                ret = 3;
-            }
-            else
-            {
-                gCfg->atcaspi.bus = 0;
-            }
-
-            if (argc >= 4 && argv[3][0] != '-')
-            {
-                gCfg->atcaspi.select_pin = (uint8_t)strtol(argv[3], NULL, 16);
-            }
-            else
-            {
-                gCfg->atcaspi.select_pin = 0;
-            }
-
-            if (argc >= 5 && argv[4][0] != '-')
-            {
-                gCfg->atcaspi.baud = (uint32_t)strtol(argv[4], NULL, 10);
-            }
-            else
-            {
-                gCfg->atcaspi.baud = 200000;
-            }
-        }
-        else if (0 == strcmp("uart", argv[1]))
-        {
-            gCfg->iface_type = ATCA_UART_IFACE;
-            gCfg->atcauart.dev_interface = ATCA_KIT_AUTO_IFACE;
-            gCfg->atcauart.dev_identity = 0;
-
-            if (argc >= 3 && argv[2][0] != '-')
-            {
-                /* Port/Device */
-#ifdef _WIN32
-                gCfg->atcauart.port = (uint8_t)strtol(argv[2], NULL, 10);
-#else
-                size_t len = strlen(argv[2]);
-                if (len < sizeof(opt_device_name))
-                {
-                    memcpy(opt_device_name, argv[2], len);
-                    gCfg->cfg_data = opt_device_name;
-                }
-#endif
-                ret = 3;
-            }
-
-            if (argc >= 4 && argv[3][0] != '-')
-            {
-                /* Baud rate */
-                gCfg->atcauart.baud = (uint8_t)strtol(argv[3], NULL, 10);
-                ret++;
-            }
-            else
-            {
-                gCfg->atcauart.baud = 115200UL;
-            }
-
-            if (argc >= 5 && argv[4][0] != '-')
-            {
-                /* Word size */
-                gCfg->atcauart.wordsize = (uint8_t)strtol(argv[4], NULL, 10);
-                ret++;
-            }
-            else
-            {
-                gCfg->atcauart.wordsize = 8;
-            }
-
-            if (argc >= 6 && argv[5][0] != '-')
-            {
-                /* Stop Bits */
-                gCfg->atcauart.stopbits = (uint8_t)strtol(argv[5], NULL, 10);
-                ret++;
-            }
-            else
-            {
-                gCfg->atcauart.stopbits = 1;
-            }
-
-            if (argc >= 7 && argv[6][0] != '-')
-            {
-                /* Parity Bits */
-                //gCfg->atcauart.parity = (uint8_t)strtol(argv[6], NULL, 16);
-                ret++;
-            }
-            else
-            {
-                gCfg->atcauart.parity = 2;
-            }
-        }
+        ATCA_IFACECFG_VALUE(gCfg, atcaspi.bus) = (uint8_t)strtol(argv[0], NULL, 16);
+    }
+    else
+    {
+        ATCA_IFACECFG_VALUE(gCfg, atcaspi.bus) = 0;
     }
 
-#ifdef ATCA_TEST_MULTIPLE_INSTANCES
-    select_dev_cfg_data();
-#endif
+    if (1 < argc)
+    {
+        ATCA_IFACECFG_VALUE(gCfg, atcaspi.select_pin) = (uint8_t)strtol(argv[1], NULL, 16);
+    }
+    else
+    {
+        ATCA_IFACECFG_VALUE(gCfg, atcaspi.select_pin) = 0;
+    }
+
+    if (2 < argc)
+    {
+        ATCA_IFACECFG_VALUE(gCfg, atcaspi.baud) = (uint32_t)strtol(argv[2], NULL, 10);
+    }
+    else
+    {
+        ATCA_IFACECFG_VALUE(gCfg, atcaspi.baud) = 200000;
+    }
+
     return ret;
 }
+#endif
+
+#ifdef ATCA_HAL_KIT_UART
+/** \brief Configure the kit uart hal */
+static int opt_iface_uart(int argc, char* argv[])
+{
+    int ret = -1;
+
+    gCfg->iface_type = ATCA_UART_IFACE;
+    ATCA_IFACECFG_VALUE(gCfg, atcauart.dev_interface) = ATCA_KIT_AUTO_IFACE;
+    ATCA_IFACECFG_VALUE(gCfg, atcauart.dev_identity) = 0;
+
+    if (argc)
+    {
+        /* Port/Device */
+#ifdef __linux__
+        size_t len = strlen(argv[0]);
+        if (len < sizeof(opt_device_name))
+        {
+            memcpy(opt_device_name, argv[0], len);
+            gCfg->cfg_data = opt_device_name;
+        }
+#else
+    ATCA_IFACECFG_VALUE(gCfg, atcauart.port) = (uint8_t)strtol(argv[0], NULL, 10);
+#endif
+        ret = 0;
+    }
+
+    if (1 < argc)
+    {
+        /* Baud rate */
+        ATCA_IFACECFG_VALUE(gCfg, atcauart.baud) = (uint8_t)strtol(argv[1], NULL, 10);
+    }
+    else
+    {
+        ATCA_IFACECFG_VALUE(gCfg, atcauart.baud) = 115200UL;
+    }
+
+    if (2 < argc)
+    {
+        /* Word size */
+        ATCA_IFACECFG_VALUE(gCfg, atcauart.wordsize) = (uint8_t)strtol(argv[2], NULL, 10);
+    }
+    else
+    {
+        ATCA_IFACECFG_VALUE(gCfg, atcauart.wordsize) = 8;
+    }
+
+    if (3 < argc)
+    {
+        /* Stop Bits */
+        ATCA_IFACECFG_VALUE(gCfg, atcauart.stopbits) = (uint8_t)strtol(argv[3], NULL, 10);
+    }
+    else
+    {
+        ATCA_IFACECFG_VALUE(gCfg, atcauart.stopbits) = 1;
+    }
+
+    if (4 < argc)
+    {
+        /* Parity Bits */
+        //gCfg->atcauart.parity = (uint8_t)strtol(argv[4], NULL, 16);
+    }
+    else
+    {
+        ATCA_IFACECFG_VALUE(gCfg, atcauart.parity) = 2;
+    }
+
+    return ret;
+}
+#endif
+
+#ifdef ATCA_HAL_KIT_BRIDGE
+/** \brief Configure the bridge hal - requires hal_kit_bridge_connect to be
+ * linked into the application */
+static int opt_iface_bridge(int argc, char* argv[])
+{
+    int ret = -1;
+
+    gCfg->iface_type = ATCA_KIT_IFACE,
+    ATCA_IFACECFG_VALUE(gCfg, atcakit.dev_interface) = ATCA_KIT_AUTO_IFACE;
+    ATCA_IFACECFG_VALUE(gCfg, atcakit.dev_identity) = 0;
+
+    if(ATCA_SUCCESS == hal_kit_bridge_connect(gCfg, argc, argv))
+    {
+        ret = 0;
+    }
+
+    return ret;
+}
+#endif
+
+/** List of support interface types */
+static t_menu_info_simple opt_iface_type_list[] = {
+#ifdef ATCA_HAL_KIT_HID
+    MENU_ITEM_SIMPLE("hid", opt_iface_hid),
+#endif
+#ifdef ATCA_HAL_I2C
+    MENU_ITEM_SIMPLE("i2c", opt_iface_i2c),
+#endif
+#if defined(ATCA_HAL_SWI_UART) || defined(ATCA_HAL_SWI_GPIO) || defined(ATCA_HAL_SWI_BB)
+    MENU_ITEM_SIMPLE("swi", opt_iface_swi),
+#endif
+#ifdef ATCA_HAL_SPI
+    MENU_ITEM_SIMPLE("spi", opt_iface_spi),
+#endif
+#ifdef ATCA_HAL_KIT_UART
+    MENU_ITEM_SIMPLE("uart", opt_iface_uart),
+#endif
+#ifdef ATCA_HAL_KIT_BRIDGE
+    MENU_ITEM_SIMPLE("bridge", opt_iface_bridge),
+#endif
+    MENU_ITEM_SIMPLE(NULL, NULL)
+};
 
 #ifdef ATCA_TEST_MULTIPLE_INSTANCES
-void select_dev_cfg_data()
+static void select_dev_cfg_data()
 {
     size_t num_of_elements;
     int i;
@@ -432,6 +538,22 @@ void select_dev_cfg_data()
 }
 #endif
 
+/** \brief Sets the interface the command or test suite will use
+ *
+ * \param[in]  argc     Number of arguments in the arg list
+ * \param[out] argv     Argument list
+ * \return Number of arguments parsed
+ */
+static int opt_iface_type(int argc, char* argv[])
+{
+    int ret = process_option(opt_iface_type_list, argc, argv);
+
+#ifdef ATCA_TEST_MULTIPLE_INSTANCES
+    select_dev_cfg_data();
+#endif
+    return ret;
+}
+
 /** \brief Sets the device address based on interface type (this option must be provided after
  * specifying the interface type otherwise it might produce unexpected results).
  *
@@ -442,66 +564,27 @@ void select_dev_cfg_data()
 static int opt_address(int argc, char* argv[])
 {
     int ret = 0;
-    ATCAKitType kit_type = ATCA_KIT_AUTO_IFACE;
+    uint8_t address = 0;
+    ATCAKitType kit_type = ATCA_KIT_UNKNOWN_IFACE;
 
-    if (argc >= 2)
+    if(argc)
     {
-        uint32_t val = strtol(argv[1], NULL, 16);
+        address = (uint8_t)strtol(argv[0], NULL, 16);
+    }
+    else
+    {
+        ret = -1;
+    }
 
-        if (argc >= 3 && argv[2][0] != '-')
+    if( 1 < argc )
+    {
+        if(ifacetype_is_kit(gCfg->iface_type))
         {
-            if (0 == strcmp("i2c", argv[2]))
-            {
-                kit_type = ATCA_KIT_I2C_IFACE;
-            }
-            else if (0 == strcmp("swi", argv[2]))
-            {
-                kit_type = ATCA_KIT_SWI_IFACE;
-            }
-            else if (0 == strcmp("spi", argv[2]))
-            {
-                kit_type = ATCA_KIT_SPI_IFACE;
-            }
-            ret = 3;
-        }
-        else
-        {
-            ret = 2;
-        }
-
-        switch (gCfg->iface_type)
-        {
-        case ATCA_I2C_IFACE:
-#ifdef ATCA_ENABLE_DEPRECATED
-            gCfg->atcai2c.slave_address = (uint8_t)val;
-#else
-            gCfg->atcai2c.address = (uint8_t)val;
-#endif
-            break;
-        case ATCA_SWI_IFACE:
-            gCfg->atcaswi.address = (uint8_t)val;
-            break;
-        case ATCA_UART_IFACE:
-            gCfg->atcauart.dev_identity = (uint8_t)val;
-            if (argc >= 3)
-            {
-                gCfg->atcauart.dev_interface = kit_type;
-            }
-            break;
-        case ATCA_SPI_IFACE:
-            gCfg->atcaspi.select_pin = (uint8_t)val;
-            break;
-        case ATCA_HID_IFACE:
-            gCfg->atcahid.dev_identity = (uint8_t)val;
-            if (argc >= 3)
-            {
-                gCfg->atcahid.dev_interface = kit_type;
-            }
-            break;
-        default:
-            break;
+            kit_type = opt_get_kit_iface_type(argv[1]);
         }
     }
+
+    (void)ifacecfg_set_address(gCfg, address, kit_type);
 
 #ifdef ATCA_TEST_MULTIPLE_INSTANCES
     select_dev_cfg_data();
@@ -512,69 +595,79 @@ static int opt_address(int argc, char* argv[])
 
 static int opt_quiet(int argc, char* argv[])
 {
+    print_args(__func__, argc, argv);
     ((void)argc);
     ((void)argv);
     g_atca_test_quiet_mode = true;
     return 1;
 }
 
-// *INDENT-OFF*  - Preserve formatting
-static t_menu_info cmd_options[] =
+/** \brief Options support for the command line - '-p' is reserved to
+ * stop any argument parsing and to pass the remaining arguments through
+ * to the command itself */
+static const t_menu_info_simple cmd_options[] =
 {
-    { "-d",       "device type",       opt_device_type                      },
-    { "-i",       "interface",         opt_iface_type                       },
-    { "-a",       "address",           opt_address                          },
-    { "-y",       "silence prompts (implicit agreement)",   opt_quiet       },
-    { NULL,       NULL,                NULL                                 },
+    MENU_ITEM_SIMPLE("-d", opt_device_type),
+    MENU_ITEM_SIMPLE("-i", opt_iface_type),
+    MENU_ITEM_SIMPLE("-a", opt_address),
+    MENU_ITEM_SIMPLE("-y", opt_quiet),
+    MENU_ITEM_SIMPLE(NULL, NULL)
 };
-// *INDENT-ON*
 
-/** \brief Process an individual command option
- *
- * \param[in]  argc     Number of arguments in the arg list
- * \param[out] argv     Argument list
- * \return Number of arguments parsed from the list
- */
-static int process_option(int argc, char* argv[])
+/** \brief Helper function to count parameters before another 
+    argument is encountered */
+static inline int process_options_count_params(int argc, char* argv[])
 {
-    t_menu_info* menu_item = cmd_options;
-    int ret = -1;
-
-    if (argc)
+    int i = 1;
+    if (argv)
     {
-        do
-        {
-            if (0 == strcmp(menu_item->menu_cmd, argv[0]))
-            {
-                if (menu_item->fp_handler)
-                {
-                    ret = menu_item->fp_handler(argc, argv);
-                }
-                break;
-            }
-        }
-        while ((++menu_item)->menu_cmd);
+        for(; i<argc && argv[i] && argv[i][0] != '-'; i++);
     }
-    return ret;
+    return i;
 }
 
 /** \brief Iterate through and argument list and process all options
  *
  * \param[in]  argc     Number of arguments in the arg list
  * \param[out] argv     Argument list
- * \return Number of arguments parsed from the list
+ * \return              Error (<0) or remaining arguments
  */
 int process_options(int argc, char* argv[])
 {
-    int ret;
-    int cur_arg = 0;
+    int ret = -1;
 
-    do
+    if(argc && argv)
     {
-        ret = process_option(argc - cur_arg, &argv[cur_arg]);
-        cur_arg += ret;
+        char** pargv = argv;
+        do
+        {
+            int opt_argc = process_options_count_params(argc, pargv);
+            if (!strcmp("-p", *pargv))
+            {
+                /* Special command at the end the parsing and passthrough 
+                    arguments to the test framework */
+                int i;
+                pargv++;
+                --argc;
+                for(i=0; i < argc; i++)
+                {
+                    argv[i] = pargv[i];
+                }
+                ret = 0;
+                break;
+            }
+            else if (0 <= (ret = process_option(cmd_options, opt_argc, pargv)))
+            {
+                argc -= opt_argc;
+                pargv += opt_argc;
+            }
+        }
+        while (argc > 0 && ret >= 0 && *pargv);
     }
-    while (argc > cur_arg && ret >= 0);
+    else if(!argc)
+    {
+        ret = 0;
+    }
 
-    return ret;
+    return (0 > ret) ? ret : argc;
 }

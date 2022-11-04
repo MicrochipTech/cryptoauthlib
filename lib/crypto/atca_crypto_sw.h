@@ -28,10 +28,11 @@
 #ifndef ATCA_CRYPTO_SW_H
 #define ATCA_CRYPTO_SW_H
 
+
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "atca_config.h"
+#include "crypto/crypto_config_check.h"
 #include "atca_status.h"
 
 #ifdef __cplusplus
@@ -114,18 +115,6 @@ typedef atca_wc_ctx atcac_pk_ctx;
 #include "wolfssl/wolfcrypt/ecc.h"
 
 #else
-#ifndef ATCA_ENABLE_SHA1_IMPL
-#define ATCA_ENABLE_SHA1_IMPL       1
-#endif
-
-#ifndef ATCA_ENABLE_SHA256_IMPL
-#define ATCA_ENABLE_SHA256_IMPL     1
-#endif
-
-#ifndef ATCA_ENABLE_RAND_IMPL
-#define ATCA_ENABLE_RAND_IMPL       1
-#endif
-
 typedef struct
 {
     uint32_t pad[32]; //!< Filler value to make sure the actual implementation has enough room to store its context. uint32_t is used to remove some alignment warnings.
@@ -152,12 +141,12 @@ ATCA_STATUS atcac_aes_cmac_init(atcac_aes_cmac_ctx* ctx, const uint8_t* key, con
 ATCA_STATUS atcac_aes_cmac_update(atcac_aes_cmac_ctx* ctx, const uint8_t* data, const size_t data_size);
 ATCA_STATUS atcac_aes_cmac_finish(atcac_aes_cmac_ctx* ctx, uint8_t* cmac, size_t* cmac_size);
 
-ATCA_STATUS atcac_pk_init(atcac_pk_ctx* ctx, uint8_t* buf, size_t buflen, uint8_t key_type, bool pubkey);
-ATCA_STATUS atcac_pk_init_pem(atcac_pk_ctx* ctx, uint8_t* buf, size_t buflen, bool pubkey);
+ATCA_STATUS atcac_pk_init(atcac_pk_ctx* ctx, const uint8_t* buf, size_t buflen, uint8_t key_type, bool pubkey);
+ATCA_STATUS atcac_pk_init_pem(atcac_pk_ctx* ctx, const uint8_t* buf, size_t buflen, bool pubkey);
 ATCA_STATUS atcac_pk_free(atcac_pk_ctx* ctx);
 ATCA_STATUS atcac_pk_public(atcac_pk_ctx* ctx, uint8_t* buf, size_t* buflen);
-ATCA_STATUS atcac_pk_sign(atcac_pk_ctx* ctx, uint8_t* digest, size_t dig_len, uint8_t* signature, size_t* sig_len);
-ATCA_STATUS atcac_pk_verify(atcac_pk_ctx* ctx, uint8_t* digest, size_t dig_len, uint8_t* signature, size_t sig_len);
+ATCA_STATUS atcac_pk_sign(atcac_pk_ctx* ctx, const uint8_t* digest, size_t dig_len, uint8_t* signature, size_t* sig_len);
+ATCA_STATUS atcac_pk_verify(atcac_pk_ctx* ctx, const uint8_t* digest, size_t dig_len, const uint8_t* signature, size_t sig_len);
 ATCA_STATUS atcac_pk_derive(atcac_pk_ctx* private_ctx, atcac_pk_ctx* public_ctx, uint8_t* buf, size_t* buflen);
 #endif
 
@@ -179,7 +168,14 @@ ATCA_STATUS atcac_aes_gcm_decrypt(atcac_aes_gcm_ctx* ctx, const uint8_t* ciphert
                                   size_t tag_len, const uint8_t* aad, const size_t aad_len, bool* is_verified);
 #endif
 
+#if ATCA_HOSTLIB_EN
+int atcac_sw_random(uint8_t* data, size_t data_size);
+#endif
+
 ATCA_STATUS atcac_pbkdf2_sha256(const uint32_t iter, const uint8_t* password, const size_t password_len, const uint8_t* salt, const size_t salt_len, uint8_t* result, size_t result_len);
+
+ATCA_STATUS atcac_pkcs7_pad(uint8_t * buffer, size_t * buflen, const size_t datalen, uint8_t blocksize);
+ATCA_STATUS atcac_pkcs7_unpad(uint8_t * buffer, size_t * buflen, const uint8_t blocksize);
 
 #ifdef __cplusplus
 }

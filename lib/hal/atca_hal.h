@@ -205,26 +205,9 @@ ATCA_STATUS hal_destroy_mutex(void * pMutex);
 ATCA_STATUS hal_lock_mutex(void * pMutex);
 ATCA_STATUS hal_unlock_mutex(void * pMutex);
 
-#ifndef ATCA_NO_HEAP
-#ifdef ATCA_TESTS_ENABLED
+#if !defined(ATCA_NO_HEAP) && defined(ATCA_TESTS_ENABLED)
 void hal_test_set_memory_f(void* (*malloc_func)(size_t), void (*free_func)(void*));
 #endif
-
-#if defined(ATCA_TESTS_ENABLED) || !defined(ATCA_PLATFORM_MALLOC)
-void*   hal_malloc(size_t size);
-void    hal_free(void* ptr);
-#else
-#define hal_malloc      ATCA_PLATFORM_MALLOC
-#define hal_free        ATCA_PLATFORM_FREE
-#endif
-#endif
-
-#ifdef memset_s
-#define hal_memset_s    memset_s
-#else
-#define hal_memset_s    atcab_memset_s
-#endif
-
 
 ATCA_STATUS hal_iface_register_hal(ATCAIfaceType iface_type, ATCAHAL_t *hal, ATCAHAL_t **old_hal, ATCAHAL_t* phy, ATCAHAL_t** old_phy);
 uint8_t hal_is_command_word(uint8_t word_address);

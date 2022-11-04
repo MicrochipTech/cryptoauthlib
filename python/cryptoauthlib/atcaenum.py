@@ -32,6 +32,9 @@ class AtcaEnum(Enum):
     def __int__(self):
         return int(self.value)
 
+    def __hash__(self):
+        return hash(int(self.value))
+
 
 # Make module import * safe - keep at the end of the file
 __all__ = ['AtcaEnum']

@@ -48,6 +48,8 @@ static CK_RV pkcs11_key_get_derivekey_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR
 
     if (obj_ptr)
     {
+        if (atcab_is_ca_device(atcab_get_device_type()))
+        {
 #if ATCA_CA_SUPPORT
         atecc508a_config_t * pConfig = (atecc508a_config_t*)obj_ptr->config;
 
@@ -66,6 +68,11 @@ static CK_RV pkcs11_key_get_derivekey_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR
         }
 #endif
     }
+        else
+        {
+            return pkcs11_attrib_false(NULL, pAttribute);
+        }
+    }
 
     return CKR_ARGUMENTS_BAD;
 }
@@ -76,6 +83,8 @@ static CK_RV pkcs11_key_get_local_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAt
 
     if (obj_ptr)
     {
+        if (atcab_is_ca_device(atcab_get_device_type()))
+        {
 #if ATCA_CA_SUPPORT
         atecc508a_config_t * pConfig = (atecc508a_config_t*)obj_ptr->config;
 
@@ -93,6 +102,11 @@ static CK_RV pkcs11_key_get_local_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAt
             return pkcs11_attrib_false(NULL, pAttribute);
         }
 #endif
+    }
+        else
+        {
+            return pkcs11_attrib_false(NULL, pAttribute);
+        }
     }
 
     return CKR_ARGUMENTS_BAD;
@@ -118,10 +132,12 @@ static const CK_MECHANISM_TYPE pkcs11_key_508_private_mech[] = {
     CKM_ECDSA_SHA256
 };
 
+#if ATCA_CA_SUPPORT
 static const CK_MECHANISM_TYPE pkcs11_key_508_secret_mech[] = {
     CKM_SHA256_HMAC,
 //    CKM_SHA256_HMAC_GENERAL
 };
+#endif
 
 static const CK_MECHANISM_TYPE pkcs11_key_608_secret_mech[] = {
     CKM_SHA256_HMAC,
@@ -143,6 +159,8 @@ static CK_RV pkcs11_key_get_allowed_mechanisms(CK_VOID_PTR pObject, CK_ATTRIBUTE
 
     if (obj_ptr)
     {
+        if (atcab_is_ca_device(atcab_get_device_type()))
+        {
 #if ATCA_CA_SUPPORT
         atecc508a_config_t * pConfig = (atecc508a_config_t*)obj_ptr->config;
 
@@ -182,6 +200,25 @@ static CK_RV pkcs11_key_get_allowed_mechanisms(CK_VOID_PTR pObject, CK_ATTRIBUTE
 
         }
 #endif
+    }
+        else
+        {
+            if(CKO_PRIVATE_KEY == obj_ptr->class_id)
+            {
+                return pkcs11_attrib_fill(pAttribute, (CK_VOID_PTR)pkcs11_key_508_private_mech,
+                                        sizeof(pkcs11_key_508_private_mech));
+            }
+            else if (CKO_PUBLIC_KEY == obj_ptr->class_id)
+            {
+                return pkcs11_attrib_fill(pAttribute, (CK_VOID_PTR)pkcs11_key_508_public_mech,
+                                        sizeof(pkcs11_key_508_public_mech));
+            }
+            else if (CKO_SECRET_KEY == obj_ptr->class_id)
+            {
+                return pkcs11_attrib_fill(pAttribute, (CK_VOID_PTR)pkcs11_key_608_secret_mech,
+                                            sizeof(pkcs11_key_608_secret_mech));
+            }
+        }
     }
 
     return CKR_ARGUMENTS_BAD;
@@ -246,6 +283,7 @@ static const uint8_t pkcs11_key_ec_params[] = { 0x06, 0x08, 0x2a, 0x86, 0x48, 0x
 
 static CK_RV pkcs11_key_get_ec_params(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
 {
+    ((void)pObject);
     return pkcs11_attrib_fill(pAttribute, (CK_VOID_PTR)pkcs11_key_ec_params, sizeof(pkcs11_key_ec_params));
 }
 
@@ -293,6 +331,7 @@ static CK_RV pkcs11_key_get_ec_point(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttr
 
 static CK_RV pkcs11_key_get_secret(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
 {
+#if ATCA_CA_SUPPORT
     pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
 
     if (obj_ptr)
@@ -303,6 +342,9 @@ static CK_RV pkcs11_key_get_secret(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttrib
     {
         return CKR_ARGUMENTS_BAD;
     }
+#else
+    return pkcs11_attrib_empty(pObject, pAttribute);
+#endif
 }
 
 static CK_RV pkcs11_key_get_secret_length(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
@@ -321,6 +363,7 @@ static CK_RV pkcs11_key_get_secret_length(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR 
 
 static CK_RV pkcs11_key_get_check_value(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
 {
+    ((void)pObject);
     return pkcs11_attrib_empty(NULL, pAttribute);
 #if 0
     pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
@@ -354,6 +397,7 @@ static CK_RV pkcs11_key_auth_required(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAtt
         if (atcab_is_ca_device(atcab_get_device_type()))
         {
 #if ATCA_CA_SUPPORT
+            ((void)pAttribute);
 #endif
         }
         else
@@ -727,11 +771,14 @@ const CK_ULONG pkcs11_key_secret_attributes_count = PKCS11_UTIL_ARRAY_SIZE(pkcs1
 
 static CK_RV pkcs11_key_privwrite_ca(CK_VOID_PTR pSession, pkcs11_object_ptr pObject, CK_VOID_PTR pValue, CK_ULONG ulValueLen)
 {
-#if ATCA_CA_SUPPORT
+
     CK_RV rv = CKR_ARGUMENTS_BAD;
 
     if (pSession && pObject && pValue && ulValueLen)
     {
+        if (atcab_is_ca_device(atcab_get_device_type()))
+        {
+#if ATCA_CA_SUPPORT
         pkcs11_session_ctx_ptr session_ctx = (pkcs11_session_ctx_ptr)pSession;
         uint8_t key_buf[36] = { 0, 0, 0, 0 };
         uint8_t num_in[32] = { 0, 1, 2, 3 };
@@ -747,12 +794,17 @@ static CK_RV pkcs11_key_privwrite_ca(CK_VOID_PTR pSession, pkcs11_object_ptr pOb
             configuration to support this - should only be enabled for testing purposes.
             Production devices should never have this feature enabled. */
         rv = pkcs11_util_convert_rv(atcab_priv_write(pObject->slot, key_buf, write_key_id, session_ctx->slot->read_key, num_in));
+#endif
+        }
+        else
+        {
+#if ATCA_TA_SUPPORT
+            rv = pkcs11_util_convert_rv(talib_write_element(atcab_get_device(), pObject->slot, ulValueLen, pValue));
+#endif
+        }
     }
 
     return rv;
-#else
-    return CKR_GENERAL_ERROR;
-#endif
 }
 
 
@@ -827,8 +879,7 @@ CK_RV pkcs11_key_generate
     pkcs11_lib_ctx_ptr pLibCtx;
     pkcs11_session_ctx_ptr pSession;
     pkcs11_object_ptr pKey = NULL;
-    uint8_t buf[32];
-    int i;
+    CK_ULONG i;
     CK_RV rv = CKR_OK;
     ATCA_STATUS status = ATCA_SUCCESS;
 
@@ -876,7 +927,7 @@ CK_RV pkcs11_key_generate
 
     if (CKR_OK == rv)
     {
-        rv = pkcs11_object_alloc(&pKey);
+        rv = pkcs11_object_alloc(pSession->slot->slot_id, &pKey);
     }
 
     if (CKR_OK == rv)
@@ -887,8 +938,12 @@ CK_RV pkcs11_key_generate
 
     if (CKR_OK == rv)
     {
-        if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
+        if (CKR_OK == (rv = pkcs11_lock_both(pLibCtx)))
         {
+            if(atcab_is_ca_device(atcab_get_device_type()))
+            {
+#if ATCA_CA_SUPPORT
+                uint8_t buf[32];
             atecc508a_config_t * pConfig = (atecc508a_config_t*)pKey->config;
 
             if (pConfig->KeyConfig[pKey->slot] & 0x0018)
@@ -908,7 +963,15 @@ CK_RV pkcs11_key_generate
                     }
                 }
             }
-            (void)pkcs11_unlock_context(pLibCtx);
+#endif
+            }
+            else
+            {
+#if ATCA_TA_SUPPORT
+                status = talib_genkey_symmetric_key(atcab_get_device(), pKey->slot);
+#endif
+            }
+            (void)pkcs11_unlock_both(pLibCtx);
         }
     }
 
@@ -952,7 +1015,7 @@ CK_RV pkcs11_key_generate_pair
     pkcs11_session_ctx_ptr pSession;
     pkcs11_object_ptr pPublic = NULL;
     pkcs11_object_ptr pPrivate = NULL;
-    int i;
+    CK_ULONG i;
     CK_RV rv = CKR_OK;
 
     rv = pkcs11_init_check(&pLibCtx, FALSE);
@@ -1000,12 +1063,12 @@ CK_RV pkcs11_key_generate_pair
 
     if (CKR_OK == rv)
     {
-        rv = pkcs11_object_alloc(&pPrivate);
+        rv = pkcs11_object_alloc(pSession->slot->slot_id, &pPrivate);
     }
 
     if (CKR_OK == rv)
     {
-        rv = pkcs11_object_alloc(&pPublic);
+        rv = pkcs11_object_alloc(pSession->slot->slot_id, &pPublic);
     }
 
     if (CKR_OK == rv)
@@ -1019,6 +1082,12 @@ CK_RV pkcs11_key_generate_pair
     if (CKR_OK == rv)
     {
         pPrivate->class_id = CKO_PRIVATE_KEY;
+#if ATCA_TA_SUPPORT
+        (void)talib_handle_init_private_key(&pPrivate->handle_info, TA_KEY_TYPE_ECCP256,
+                                           TA_ALG_MODE_ECC_ECDSA, TA_PROP_SIGN_INT_EXT_DIGEST,
+                                           TA_PROP_NO_KEY_AGREEMENT);
+#endif
+
         rv = pkcs11_config_key(pLibCtx, pSession->slot, pPrivate, pName);
     }
 
@@ -1036,7 +1105,7 @@ CK_RV pkcs11_key_generate_pair
         pPublic->config = &((pkcs11_slot_ctx_ptr)pSession->slot)->cfg_zone;
 #endif
 
-        if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
+        if (CKR_OK == (rv = pkcs11_lock_both(pLibCtx)))
         {
             rv = pkcs11_util_convert_rv(atcab_genkey(pPrivate->slot, NULL));
             if (rv)
@@ -1045,7 +1114,7 @@ CK_RV pkcs11_key_generate_pair
                 (void)pkcs11_config_remove_object(pLibCtx, pSession->slot, pPrivate);
 #endif
             }
-            (void)pkcs11_unlock_context(pLibCtx);
+            (void)pkcs11_unlock_both(pLibCtx);
         }
     }
 
@@ -1090,19 +1159,13 @@ static uint8_t pkcs11_key_used(uint8_t * key, size_t keylen)
 
 static CK_RV pkcs11_key_derive_ca(pkcs11_session_ctx_ptr pSession, pkcs11_object_ptr pBaseKey, pkcs11_object_ptr pSecretKey, CK_ECDH1_DERIVE_PARAMS_PTR pEcdhParameters)
 {
-#if ATCA_CA_SUPPORT
     CK_RV rv = CKR_ARGUMENTS_BAD;
 
     if (pSession && pBaseKey && pSecretKey && pEcdhParameters)
     {
-        pkcs11_lib_ctx_ptr pLibCtx = pkcs11_get_context();
-
-        /* Use the tempkey slot id */
-        pSecretKey->slot = ATCA_TEMPKEY_KEYID;
         pSecretKey->attributes = pkcs11_key_secret_attributes;
         pSecretKey->count = pkcs11_key_secret_attributes_count;
         pSecretKey->size = 32;
-        pSecretKey->config = &((pkcs11_slot_ctx_ptr)pSession->slot)->cfg_zone;
         pSecretKey->flags = PKCS11_OBJECT_FLAG_DESTROYABLE | PKCS11_OBJECT_FLAG_SENSITIVE;
 #ifdef ATCA_NO_HEAP
         if (!pkcs11_key_used(pkcs11_key_cache, sizeof(pkcs11_key_cache)))
@@ -1116,11 +1179,19 @@ static CK_RV pkcs11_key_derive_ca(pkcs11_session_ctx_ptr pSession, pkcs11_object
         {
             rv = CKR_HOST_MEMORY;
         }
-
-        if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
+        else
         {
             ATCA_STATUS status = ATCA_SUCCESS;
+            if(atcab_is_ca_device(atcab_get_device_type()))
+            {
+        #if ATCA_CA_SUPPORT
+                pkcs11_lib_ctx_ptr pLibCtx = pkcs11_get_context();
 
+                pSecretKey->slot = ATCA_TEMPKEY_KEYID;
+                pSecretKey->config = &((pkcs11_slot_ctx_ptr)pSession->slot)->cfg_zone;
+
+                if (CKR_OK == (rv = pkcs11_lock_both(pLibCtx)))
+                {
             /* Because of the number of ECDH options this function unfortunately has a complex bit of logic
                to walk through to select the proper ECDH command. Normally this would be left up to the user
                to chose */
@@ -1161,17 +1232,22 @@ static CK_RV pkcs11_key_derive_ca(pkcs11_session_ctx_ptr pSession, pkcs11_object
             {
                 status = ATCA_GEN_FAIL;
             }
+                    (void)pkcs11_unlock_both(pLibCtx);
 
-            (void)pkcs11_unlock_context(pLibCtx);
-
+                }
+        #endif
+            }
+            else
+            {
+    #if ATCA_TA_SUPPORT
+                status = atcab_ecdh(pBaseKey->slot, &pEcdhParameters->pPublicData[1], pSecretKey->data);
+    #endif
+            }
             rv = pkcs11_util_convert_rv(status);
         }
     }
 
     return rv;
-#else
-    return CKR_GENERAL_ERROR;
-#endif
 }
 
 CK_RV pkcs11_key_derive
@@ -1189,6 +1265,7 @@ CK_RV pkcs11_key_derive
     pkcs11_object_ptr pBaseKey = NULL;
     pkcs11_object_ptr pSecretKey = NULL;
     CK_ECDH1_DERIVE_PARAMS_PTR pEcdhParameters = NULL;
+    CK_ULONG i;
     CK_RV rv = CKR_OK;
 
     rv = pkcs11_init_check(&pLibCtx, FALSE);
@@ -1238,10 +1315,10 @@ CK_RV pkcs11_key_derive
 
     if (CKR_OK == rv)
     {
-        rv = pkcs11_object_alloc(&pSecretKey);
+        rv = pkcs11_object_alloc(pSession->slot->slot_id, &pSecretKey);
     }
 
-    for (int i = 0; (i < ulCount) && (CKR_OK == rv); i++)
+    for (i = 0; (i < ulCount) && (CKR_OK == rv); i++)
     {
         if (CKA_LABEL == pTemplate[i].type)
         {

@@ -37,6 +37,10 @@ def loadModule():
     cryptoAuthLibTng.setDisplayType("TNGTLS & TNGLORA Certificates")
     cryptoAuthLibTng.addDependency("CAL_LIB_CAP", "CA_LIB", True, False)
 
+    cryptoAuthLibWpc = Module.CreateSharedComponent("cryptoauthlib_wpc", "TrustFLEX WPC", "/Libraries/Cryptoauthlib", "/harmony/config/wpc.py")
+    cryptoAuthLibWpc.setDisplayType("TFLXWPC Certificates")
+    cryptoAuthLibWpc.addDependency("CAL_LIB_CAP", "CA_LIB", True, False)
+
     cryptoAuthLibPkcs11 = Module.CreateSharedComponent("cryptoauthlib_pkcs11", "PKCS11", "/Libraries/Cryptoauthlib", "/harmony/config/pkcs11.py")
     cryptoAuthLibPkcs11.setDisplayType("PKCS#11 Interface")
     cryptoAuthLibPkcs11.addDependency("CAL_LIB_CAP", "CA_LIB", True, False)

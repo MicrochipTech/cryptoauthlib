@@ -160,7 +160,6 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t address, uint8_t *txdata, int 
     }
 
     /* Wait for the I2C bus to be ready */
-    /* Since the wait time is unknown, waiting for 30 bytes duration */
     status = hal_i2c_wait(plib, cfg->atcai2c.baud, 30);
 
     if (ATCA_SUCCESS == status)
@@ -256,7 +255,6 @@ ATCA_STATUS change_i2c_speed(ATCAIface iface, uint32_t speed)
     setup.clkSpeed = speed;
 
     /* Make sure I2C is not busy before changing the I2C clock speed */
-    /* Since wait time is unknown, wait for 30 bytes */
     status = hal_i2c_wait(plib, cfg->atcai2c.baud, 30);
 
     if (ATCA_SUCCESS == status)

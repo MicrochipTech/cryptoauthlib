@@ -279,6 +279,7 @@ ATCA_STATUS atca_jwt_add_claim_numeric(
     }
 }
 
+#if ATCA_HOSTLIB_EN || CALIB_VERIFY_EXTERN_EN || TALIB_VERIFY_EXTERN_EN
 /**
  * \brief Verifies the signature of a jwt using the provided public key
  */
@@ -330,12 +331,34 @@ ATCA_STATUS atca_jwt_verify(
             break;
         }
 
+#if CALIB_VERIFY_EXTERN_EN || TALIB_VERIFY_EXTERN_EN
         /* Do a signature verification using the device */
         if (ATCA_SUCCESS != (status = atcab_verify_extern(digest, signature,
                                                           pubkey, &verified)))
         {
             break;
         }
+#elif ATCA_HOSTLIB_EN
+        atcac_pk_ctx pkey_ctx;
+
+        /* Initialize the key using the provided X,Y cordinantes */
+        if(ATCA_SUCCESS != (status = atcac_pk_init(&pkey_ctx, pubkey, 
+                                                   sizeof(pubkey), 0, true)))
+        {
+            break;
+        }
+
+        /* Perform the verification */
+        if(ATCA_SUCCESS == (status = atcac_pk_verify(&pkey_ctx, digest, 
+                                                     sizeof(digest), 
+                                                     signature, sizeof(signature))))
+        {
+            verified = true;
+        }
+
+        /* Make sure to free the key before testing the result of the verify */
+        atcac_pk_free(&pkey_ctx);
+#endif
 
         if (!verified)
         {
@@ -346,3 +369,4 @@ ATCA_STATUS atca_jwt_verify(
 
     return status;
 }
+#endif

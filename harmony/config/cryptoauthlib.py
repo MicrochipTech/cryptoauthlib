@@ -359,6 +359,434 @@ def instantiateComponent(calComponent):
     calPollingTimeout.setLabel('Polling Timeout (ms)')
     calPollingTimeout.setDefaultValue(2500)
 
+    # Symmetric Cryptography Commands
+    symmetricCommands = calComponent.createMenuSymbol("cal_symmetric_commands", None)
+    symmetricCommands.setLabel("Symmetric Cryptography Commands")
+    symmetricCommands.setVisible(True)
+
+    # AES
+    calAesEnabledSymbol = calComponent.createBooleanSymbol("cal_aes", symmetricCommands)
+    calAesEnabledSymbol.setLabel("Support AES?")
+    calAesEnabledSymbol.setDescription("Enable support for AES Command")
+    calAesEnabledSymbol.setVisible(True)
+    calAesEnabledSymbol.setDefaultValue(True)
+
+    calAesEcbEnabledSymbol = calComponent.createBooleanSymbol("cal_aes_ecb", calAesEnabledSymbol)
+    calAesEcbEnabledSymbol.setLabel("Support ECB Mode?")
+    calAesEcbEnabledSymbol.setDescription("Enable support for AES ECB Mode")
+    calAesEcbEnabledSymbol.setVisible(True)
+    calAesEcbEnabledSymbol.setDefaultValue(True)
+    calAesEcbEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_aes"])
+
+    calAesGfmEnabledSymbol = calComponent.createBooleanSymbol("cal_aes_gfm", calAesEnabledSymbol)
+    calAesGfmEnabledSymbol.setLabel("Support GFM Mode?")
+    calAesGfmEnabledSymbol.setDescription("Enable support for AES GFM Mode")
+    calAesGfmEnabledSymbol.setVisible(True)
+    calAesGfmEnabledSymbol.setDefaultValue(True)
+    calAesGfmEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_aes"])
+
+    calAesGcmEnabledSymbol = calComponent.createBooleanSymbol("cal_aes_gcm", calAesEnabledSymbol)
+    calAesGcmEnabledSymbol.setLabel("Support GCM Mode?")
+    calAesGcmEnabledSymbol.setDescription("Enable support for AES GCM Mode")
+    calAesGcmEnabledSymbol.setVisible(True)
+    calAesGcmEnabledSymbol.setDefaultValue(True)
+    calAesGcmEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_aes"])
+
+    # CHECKMAC
+    calCheckmacEnabledSymbol = calComponent.createBooleanSymbol("cal_checkmac", symmetricCommands)
+    calCheckmacEnabledSymbol.setLabel("Support Checkmac?")
+    calCheckmacEnabledSymbol.setDescription("Enable support for CHECKMAC Command")
+    calCheckmacEnabledSymbol.setVisible(True)
+    calCheckmacEnabledSymbol.setDefaultValue(True)
+
+    # GENDIG
+    calGendigEnabledSymbol = calComponent.createBooleanSymbol("cal_gendig", symmetricCommands)
+    calGendigEnabledSymbol.setLabel("Support Gendig?")
+    calGendigEnabledSymbol.setDescription("Enable support for GENDIG Command")
+    calGendigEnabledSymbol.setVisible(True)
+    calGendigEnabledSymbol.setDefaultValue(True)
+
+    # KDF
+    calKdfEnabledSymbol = calComponent.createBooleanSymbol("cal_kdf", symmetricCommands)
+    calKdfEnabledSymbol.setLabel("Support KDF?")
+    calKdfEnabledSymbol.setDescription("Enable support for KDF Command")
+    calKdfEnabledSymbol.setVisible(True)
+    calKdfEnabledSymbol.setDefaultValue(True)
+
+    # MAC
+    calMacEnabledSymbol = calComponent.createBooleanSymbol("cal_mac", symmetricCommands)
+    calMacEnabledSymbol.setLabel("Support MAC?")
+    calMacEnabledSymbol.setDescription("Enable support for MAC Command")
+    calMacEnabledSymbol.setVisible(True)
+    calMacEnabledSymbol.setDefaultValue(True)
+
+    # HMAC
+    calHmacEnabledSymbol = calComponent.createBooleanSymbol("cal_hmac", symmetricCommands)
+    calHmacEnabledSymbol.setLabel("Support HMAC?")
+    calHmacEnabledSymbol.setDescription("Enable support for Hmac Command")
+    calHmacEnabledSymbol.setVisible(True)
+    calHmacEnabledSymbol.setDefaultValue(True)  
+
+    # Asymmetric Cryptography Commands
+    asymmetricCommands = calComponent.createMenuSymbol("cal_asymmetric_commands", None)
+    asymmetricCommands.setLabel("Asymmetric Cryptography Commands")
+    asymmetricCommands.setVisible(True)
+
+    # ECDH
+    calEcdhEnabledSymbol = calComponent.createBooleanSymbol("cal_ecdh", asymmetricCommands)
+    calEcdhEnabledSymbol.setLabel("Support ECDH?")
+    calEcdhEnabledSymbol.setDescription("Enable support for ECDH Command")
+    calEcdhEnabledSymbol.setVisible(True)
+    calEcdhEnabledSymbol.setDefaultValue(True)
+
+    calEcdhEncEnabledSymbol = calComponent.createBooleanSymbol("cal_ecdh_enc", calEcdhEnabledSymbol)
+    calEcdhEncEnabledSymbol.setLabel("Support ECDH Encryption?")
+    calEcdhEncEnabledSymbol.setDescription("Enable support for ECDH ENC")
+    calEcdhEncEnabledSymbol.setVisible(True)
+    calEcdhEncEnabledSymbol.setDefaultValue(True)
+    calEcdhEncEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_ecdh"])
+
+    # GENKEY
+    calGenkeyEnabledSymbol = calComponent.createBooleanSymbol("cal_genkey", asymmetricCommands)
+    calGenkeyEnabledSymbol.setLabel("Support Genkey?")
+    calGenkeyEnabledSymbol.setDescription("Enable support for Genkey Command")
+    calGenkeyEnabledSymbol.setVisible(True)
+    calGenkeyEnabledSymbol.setDefaultValue(True)
+
+    calGenkeyMacEnabledSymbol = calComponent.createBooleanSymbol("cal_genkey_mac", calGenkeyEnabledSymbol)
+    calGenkeyMacEnabledSymbol.setLabel("Support Genkey MAC?")
+    calGenkeyMacEnabledSymbol.setDescription("Enable support for GENKEY MAC")
+    calGenkeyMacEnabledSymbol.setVisible(True)
+    calGenkeyMacEnabledSymbol.setDefaultValue(True)
+
+    # SIGN
+    calSignEnabledSymbol = calComponent.createBooleanSymbol("cal_sign", asymmetricCommands)
+    calSignEnabledSymbol.setLabel("Support Sign?")
+    calSignEnabledSymbol.setDescription("Enable support for SIGN Command")
+    calSignEnabledSymbol.setVisible(True)
+    calSignEnabledSymbol.setDefaultValue(True)
+
+    calSignInternalEnabledSymbol = calComponent.createBooleanSymbol("cal_sign_internal", calSignEnabledSymbol)
+    calSignInternalEnabledSymbol.setLabel("Support Sign Internal?")
+    calSignInternalEnabledSymbol.setDescription("Enable support for Sign Internal")
+    calSignInternalEnabledSymbol.setVisible(True)
+    calSignInternalEnabledSymbol.setDefaultValue(True)
+    calSignInternalEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_sign"]) 
+
+    # VERIFY
+    calVerifyEnabledSymbol = calComponent.createBooleanSymbol("cal_verify", asymmetricCommands)
+    calVerifyEnabledSymbol.setLabel("Support Verify?")
+    calVerifyEnabledSymbol.setDescription("Enable support for VERIFY Command")
+    calVerifyEnabledSymbol.setVisible(True)
+    calVerifyEnabledSymbol.setDefaultValue(True)
+
+    calVerifyStoredEnabledSymbol = calComponent.createBooleanSymbol("cal_verify_stored", calVerifyEnabledSymbol)
+    calVerifyStoredEnabledSymbol.setLabel("Support Verify Stored?")
+    calVerifyStoredEnabledSymbol.setDescription("Enable support for Verify Stored")
+    calVerifyStoredEnabledSymbol.setVisible(True)
+    calVerifyStoredEnabledSymbol.setDefaultValue(True)
+    calVerifyStoredEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_verify"]) 
+
+    calVerifyExternEnabledSymbol = calComponent.createBooleanSymbol("cal_verify_extern", calVerifyEnabledSymbol)
+    calVerifyExternEnabledSymbol.setLabel("Support Verify Extern?")
+    calVerifyExternEnabledSymbol.setDescription("Enable support for Verify Extern")
+    calVerifyExternEnabledSymbol.setVisible(True)
+    calVerifyExternEnabledSymbol.setDefaultValue(True)
+    calVerifyExternEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_verify"]) 
+
+    calVerifyValidateEnabledSymbol = calComponent.createBooleanSymbol("cal_verify_validate", calVerifyEnabledSymbol)
+    calVerifyValidateEnabledSymbol.setLabel("Support Verify Validate?")
+    calVerifyValidateEnabledSymbol.setDescription("Enable support for Verify Validate")
+    calVerifyValidateEnabledSymbol.setVisible(True)
+    calVerifyValidateEnabledSymbol.setDefaultValue(True)
+    calVerifyValidateEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_verify"]) 
+
+    calVerifyMacEnabledSymbol = calComponent.createBooleanSymbol("cal_verify_mac", calVerifyEnabledSymbol)
+    calVerifyMacEnabledSymbol.setLabel("Support Verify Mac?")
+    calVerifyMacEnabledSymbol.setDescription("Enable support for Verify Mac")
+    calVerifyMacEnabledSymbol.setVisible(True)
+    calVerifyMacEnabledSymbol.setDefaultValue(True)
+    calVerifyMacEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_verify"])
+
+    # General Device Commands
+    deviceCommands = calComponent.createMenuSymbol("cal_device_commands", None)
+    deviceCommands.setLabel("General Device Commands")
+    deviceCommands.setVisible(True)
+
+    # COUNTER
+    calCounterEnabledSymbol = calComponent.createBooleanSymbol("cal_counter", deviceCommands)
+    calCounterEnabledSymbol.setLabel("Support Counter?")
+    calCounterEnabledSymbol.setDescription("Enable support for COUNTER Command")
+    calCounterEnabledSymbol.setVisible(True)
+    calCounterEnabledSymbol.setDefaultValue(True)
+
+    # DERIVEKEY
+    calDerivekeyEnabledSymbol = calComponent.createBooleanSymbol("cal_derivekey", deviceCommands)
+    calDerivekeyEnabledSymbol.setLabel("Support Derivekey?")
+    calDerivekeyEnabledSymbol.setDescription("Enable support for Derivekey Command")
+    calDerivekeyEnabledSymbol.setVisible(True)
+    calDerivekeyEnabledSymbol.setDefaultValue(True) 
+
+    # INFO
+    calInfoEnabledSymbol = calComponent.createBooleanSymbol("cal_info", deviceCommands)
+    calInfoEnabledSymbol.setLabel("Support Info?")
+    calInfoEnabledSymbol.setDescription("Enable support for INFO Command")
+    calInfoEnabledSymbol.setVisible(True)
+    calInfoEnabledSymbol.setDefaultValue(True)
+
+    # LOCK
+    calLockEnabledSymbol = calComponent.createBooleanSymbol("cal_lock", deviceCommands)
+    calLockEnabledSymbol.setLabel("Support Lock?")
+    calLockEnabledSymbol.setDescription("Enable support for LOCK Command")
+    calLockEnabledSymbol.setVisible(True)
+    calLockEnabledSymbol.setDefaultValue(True)
+
+    # NONCE
+    calNonceEnabledSymbol = calComponent.createBooleanSymbol("cal_nonce", deviceCommands)
+    calNonceEnabledSymbol.setLabel("Support Nonce?")
+    calNonceEnabledSymbol.setDescription("Enable support for Nonce Command")
+    calNonceEnabledSymbol.setVisible(True)
+    calNonceEnabledSymbol.setDefaultValue(True)
+
+    # PRIVWRITE
+    calPrivWriteEnabledSymbol = calComponent.createBooleanSymbol("cal_privwrite", deviceCommands)
+    calPrivWriteEnabledSymbol.setLabel("Support PrivWrite?")
+    calPrivWriteEnabledSymbol.setDescription("Enable support for PrivWrite Command")
+    calPrivWriteEnabledSymbol.setVisible(True)
+    calPrivWriteEnabledSymbol.setDefaultValue(True) 
+
+    # RANDOM
+    calRandomEnabledSymbol = calComponent.createBooleanSymbol("cal_random", deviceCommands)
+    calRandomEnabledSymbol.setLabel("Support Random?")
+    calRandomEnabledSymbol.setDescription("Enable support for Random Command")
+    calRandomEnabledSymbol.setVisible(True)
+    calRandomEnabledSymbol.setDefaultValue(True)
+
+    # READ
+    calReadEnabledSymbol = calComponent.createBooleanSymbol("cal_read", deviceCommands)
+    calReadEnabledSymbol.setLabel("Support Read?")
+    calReadEnabledSymbol.setDescription("Enable support for Read Command")
+    calReadEnabledSymbol.setVisible(True)
+    calReadEnabledSymbol.setDefaultValue(True)
+
+    calReadEncEnabledSymbol = calComponent.createBooleanSymbol("cal_read_enc", calReadEnabledSymbol)
+    calReadEncEnabledSymbol.setLabel("Support Encrypted Read?")
+    calReadEncEnabledSymbol.setDescription("Enable support for READ ENC")
+    calReadEncEnabledSymbol.setVisible(True)
+    calReadEncEnabledSymbol.setDefaultValue(True)
+    calReadEncEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_read"])
+
+    # SECUREBOOT
+    calSecurebootEnabledSymbol = calComponent.createBooleanSymbol("cal_secureboot", deviceCommands)
+    calSecurebootEnabledSymbol.setLabel("Support Secureboot?")
+    calSecurebootEnabledSymbol.setDescription("Enable support for Secureboot Command")
+    calSecurebootEnabledSymbol.setVisible(True)
+    calSecurebootEnabledSymbol.setDefaultValue(True) 
+
+    calSecurebootMacEnabledSymbol = calComponent.createBooleanSymbol("cal_secureboot_mac", calSecurebootEnabledSymbol)
+    calSecurebootMacEnabledSymbol.setLabel("Support Secureboot MAC?")
+    calSecurebootMacEnabledSymbol.setDescription("Enable support for SECUREBOOT MAC")
+    calSecurebootMacEnabledSymbol.setVisible(True)
+    calSecurebootMacEnabledSymbol.setDefaultValue(True)
+    calSecurebootMacEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_secureboot"])
+
+    # SELFTEST
+    calSelftestEnabledSymbol = calComponent.createBooleanSymbol("cal_selftest", deviceCommands)
+    calSelftestEnabledSymbol.setLabel("Support Selftest?")
+    calSelftestEnabledSymbol.setDescription("Enable support for Selftest Command")
+    calSelftestEnabledSymbol.setVisible(True)
+    calSelftestEnabledSymbol.setDefaultValue(True)
+
+    # SHA
+    calShaEnabledSymbol = calComponent.createBooleanSymbol("cal_sha", deviceCommands)
+    calShaEnabledSymbol.setLabel("Support SHA?")
+    calShaEnabledSymbol.setDescription("Enable support for Sha Command")
+    calShaEnabledSymbol.setVisible(True)
+    calShaEnabledSymbol.setDefaultValue(True)
+
+    calShaHmacEnabledSymbol = calComponent.createBooleanSymbol("cal_sha_hmac", calShaEnabledSymbol)
+    calShaHmacEnabledSymbol.setLabel("Support SHA HMAC?")
+    calShaHmacEnabledSymbol.setDescription("Enable support for SHA HMAC")
+    calShaHmacEnabledSymbol.setVisible(True)
+    calShaHmacEnabledSymbol.setDefaultValue(True)
+    calShaHmacEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_sha"])
+
+    calShaContextEnabledSymbol = calComponent.createBooleanSymbol("cal_sha_context", calShaEnabledSymbol)
+    calShaContextEnabledSymbol.setLabel("Support SHA Context?")
+    calShaContextEnabledSymbol.setDescription("Enable support for SHA CONTEXT")
+    calShaContextEnabledSymbol.setVisible(True)
+    calShaContextEnabledSymbol.setDefaultValue(True)
+    calShaContextEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_sha"])     
+
+    # UPDATEEXTRA
+    calUpdateextraEnabledSymbol = calComponent.createBooleanSymbol("cal_updateextra", deviceCommands)
+    calUpdateextraEnabledSymbol.setLabel("Support UpdateExtra?")
+    calUpdateextraEnabledSymbol.setDescription("Enable support for Updateextra Command")
+    calUpdateextraEnabledSymbol.setVisible(True)
+    calUpdateextraEnabledSymbol.setDefaultValue(True)
+
+    # WRITE
+    calWriteEnabledSymbol = calComponent.createBooleanSymbol("cal_write", deviceCommands)
+    calWriteEnabledSymbol.setLabel("Support Write?")
+    calWriteEnabledSymbol.setDescription("Enable support for Write Command")
+    calWriteEnabledSymbol.setVisible(True)
+    calWriteEnabledSymbol.setDefaultValue(True)
+
+    calWriteEncEnabledSymbol = calComponent.createBooleanSymbol("cal_write_enc", calWriteEnabledSymbol)
+    calWriteEncEnabledSymbol.setLabel("Support Encrypted Write?")
+    calWriteEncEnabledSymbol.setDescription("Enable support for WRITE ENC")
+    calWriteEncEnabledSymbol.setVisible(True)
+    calWriteEncEnabledSymbol.setDefaultValue(True)
+    calWriteEncEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_write"])
+
+    # Configurations for crypto implementations external library support
+    calCryptoConfig = calComponent.createMenuSymbol("cal_crypto_config", None)
+    calCryptoConfig.setLabel("Crypto Configurations")
+    calCryptoConfig.setVisible(True)
+
+    # Crypto HW AES
+    calHwAesEnabledSymbol = calComponent.createBooleanSymbol("cal_hw_aes", calCryptoConfig)
+    calHwAesEnabledSymbol.setLabel("Support Crypto Hw AES?")
+    calHwAesEnabledSymbol.setDescription("Enable support for HArdware AES")
+    calHwAesEnabledSymbol.setVisible(True)
+    calHwAesEnabledSymbol.setDefaultValue(True)
+
+    # Crypto HW AES-CBC
+    calCryptoHWAESCBCEnabledSymbol = calComponent.createBooleanSymbol("cal_crypto_aes_cbc", calHwAesEnabledSymbol)
+    calCryptoHWAESCBCEnabledSymbol.setLabel("Support Crypto Hw AES-CBC?")
+    calCryptoHWAESCBCEnabledSymbol.setDescription("Enable support for Hardware AES-CBC")
+    calCryptoHWAESCBCEnabledSymbol.setVisible(True)
+    calCryptoHWAESCBCEnabledSymbol.setDefaultValue(True)
+    calCryptoHWAESCBCEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_hw_aes"])
+
+    calCryptoHWAESCBCEncEnabledSymbol = calComponent.createBooleanSymbol("cal_crypto_aes_cbc_encrypt", calCryptoHWAESCBCEnabledSymbol)
+    calCryptoHWAESCBCEncEnabledSymbol.setLabel("Support Crypto Hw AES-CBC Encrypt?")
+    calCryptoHWAESCBCEncEnabledSymbol.setDescription("Enable support for Hardware AES-CBC Encrypt")
+    calCryptoHWAESCBCEncEnabledSymbol.setVisible(True)
+    calCryptoHWAESCBCEncEnabledSymbol.setDefaultValue(True)
+    calCryptoHWAESCBCEncEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_crypto_aes_cbc"])
+
+    calCryptoHWAESCBCDecEnabledSymbol = calComponent.createBooleanSymbol("cal_crypto_aes_cbc_decrypt", calCryptoHWAESCBCEnabledSymbol)
+    calCryptoHWAESCBCDecEnabledSymbol.setLabel("Support Crypto Hw AES-CBC Decrypt?")
+    calCryptoHWAESCBCDecEnabledSymbol.setDescription("Enable support for Hardware AES-CBC Decrypt")
+    calCryptoHWAESCBCDecEnabledSymbol.setVisible(True)
+    calCryptoHWAESCBCDecEnabledSymbol.setDefaultValue(True)
+    calCryptoHWAESCBCDecEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_crypto_aes_cbc"])
+
+    # Crypto HW AES-CBCMAC
+    calCryptoHWAESCBCMACEnabledSymbol = calComponent.createBooleanSymbol("cal_crypto_aes_cbcmac", calHwAesEnabledSymbol)
+    calCryptoHWAESCBCMACEnabledSymbol.setLabel("Support Crypto Hw AES-CBCMAC?")
+    calCryptoHWAESCBCMACEnabledSymbol.setDescription("Enable support for Hardware AES-CBCMAC")
+    calCryptoHWAESCBCMACEnabledSymbol.setVisible(True)
+    calCryptoHWAESCBCMACEnabledSymbol.setDefaultValue(True)
+    calCryptoHWAESCBCMACEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_hw_aes"])
+
+    # Crypto HW AES-CTR
+    calCryptoHWAESCTREnabledSymbol = calComponent.createBooleanSymbol("cal_crypto_aes_ctr", calHwAesEnabledSymbol)
+    calCryptoHWAESCTREnabledSymbol.setLabel("Support Crypto Hw AES-CTR?")
+    calCryptoHWAESCTREnabledSymbol.setDescription("Enable support for Hardware AES-CTR")
+    calCryptoHWAESCTREnabledSymbol.setVisible(True)
+    calCryptoHWAESCTREnabledSymbol.setDefaultValue(True)
+    calCryptoHWAESCTREnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_hw_aes"])
+
+    calCryptoHWAESCTRRANDEnabledSymbol = calComponent.createBooleanSymbol("cal_crypto_aes_ctr_rand_iv", calCryptoHWAESCTREnabledSymbol)
+    calCryptoHWAESCTRRANDEnabledSymbol.setLabel("Support Crypto Hw AES-CTR Random Nonce?")
+    calCryptoHWAESCTRRANDEnabledSymbol.setDescription("Enable support for Hardware AES-CTR Random Nonce")
+    calCryptoHWAESCTRRANDEnabledSymbol.setVisible(True)
+    calCryptoHWAESCTRRANDEnabledSymbol.setDefaultValue(True)
+    calCryptoHWAESCTRRANDEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_crypto_aes_ctr"])
+
+    # Crypto HW AES-CCM
+    calCryptoHWAESCCMEnabledSymbol = calComponent.createBooleanSymbol("cal_crypto_aes_ccm", calHwAesEnabledSymbol)
+    calCryptoHWAESCCMEnabledSymbol.setLabel("Support Crypto Hw AES-CCM?")
+    calCryptoHWAESCCMEnabledSymbol.setDescription("Enable support for Hardware AES-CCM")
+    calCryptoHWAESCCMEnabledSymbol.setVisible(True)
+    calCryptoHWAESCCMEnabledSymbol.setDefaultValue(True)
+    calCryptoHWAESCCMEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_hw_aes"])
+
+    calCryptoHWAESCCMRANDEnabledSymbol = calComponent.createBooleanSymbol("cal_crypto_aes_ccm_rand_iv", calCryptoHWAESCCMEnabledSymbol)
+    calCryptoHWAESCCMRANDEnabledSymbol.setLabel("Support Crypto Hw AES-CCM Random Nonce?")
+    calCryptoHWAESCCMRANDEnabledSymbol.setDescription("Enable support for Hardware AES-CCM Random Nonce")
+    calCryptoHWAESCCMRANDEnabledSymbol.setVisible(True)
+    calCryptoHWAESCCMRANDEnabledSymbol.setDefaultValue(True)
+    calCryptoHWAESCCMRANDEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_crypto_aes_ccm"])
+
+    # Crypto HW AES-CMAC
+    calCryptoHWAESCMACEnabledSymbol = calComponent.createBooleanSymbol("cal_crypto_aes_cmac", calHwAesEnabledSymbol)
+    calCryptoHWAESCMACEnabledSymbol.setLabel("Support Crypto Hw AES-CMAC?")
+    calCryptoHWAESCMACEnabledSymbol.setDescription("Enable support for Hardware AES-CMAC")
+    calCryptoHWAESCMACEnabledSymbol.setVisible(True)
+    calCryptoHWAESCMACEnabledSymbol.setDefaultValue(True)
+    calCryptoHWAESCMACEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_hw_aes"])
+
+    # Crypto SW SHA
+    calSwShaEnabledSymbol = calComponent.createBooleanSymbol("cal_sw_sha", calCryptoConfig)
+    calSwShaEnabledSymbol.setLabel("Support Crypto Sw SHA?")
+    calSwShaEnabledSymbol.setDescription("Enable support for Software SHA")
+    calSwShaEnabledSymbol.setVisible(True)
+    calSwShaEnabledSymbol.setDefaultValue(True)
+
+    # Crypto SW SHA1
+    calCryptoSwSha1EnabledSymbol = calComponent.createBooleanSymbol("cal_sw_sha1", calSwShaEnabledSymbol)
+    calCryptoSwSha1EnabledSymbol.setLabel("Support Crypto Sw SHA1?")
+    calCryptoSwSha1EnabledSymbol.setDescription("Enable support for Software SHA1")
+    calCryptoSwSha1EnabledSymbol.setVisible(True)
+    calCryptoSwSha1EnabledSymbol.setDefaultValue(True)
+    calCryptoSwSha1EnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_sw_sha"])
+
+    # Crypto SW SHA256
+    calCryptoSwSha2EnabledSymbol = calComponent.createBooleanSymbol("cal_sw_sha2", calSwShaEnabledSymbol)
+    calCryptoSwSha2EnabledSymbol.setLabel("Support Crypto Sw SHA256?")
+    calCryptoSwSha2EnabledSymbol.setDescription("Enable support for Software SHA256")
+    calCryptoSwSha2EnabledSymbol.setVisible(True)
+    calCryptoSwSha2EnabledSymbol.setDefaultValue(True)
+    calCryptoSwSha2EnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_sw_sha"])
+
+    # Crypto SW SHA256 Hmac
+    calCryptoSwSha2HmacEnabledSymbol = calComponent.createBooleanSymbol("cal_sw_sha2_hmac", calSwShaEnabledSymbol)
+    calCryptoSwSha2HmacEnabledSymbol.setLabel("Support Crypto Sw SHA256 Hmac?")
+    calCryptoSwSha2HmacEnabledSymbol.setDescription("Enable support for Software SHA256 Hmac")
+    calCryptoSwSha2HmacEnabledSymbol.setVisible(True)
+    calCryptoSwSha2HmacEnabledSymbol.setDefaultValue(True)
+    calCryptoSwSha2HmacEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_sw_sha"])
+
+    # Crypto SW SHA Hmac Counter
+    calCryptoSwSha2HmacCtrEnabledSymbol = calComponent.createBooleanSymbol("cal_sw_sha2_hmac_ctr", calSwShaEnabledSymbol)
+    calCryptoSwSha2HmacCtrEnabledSymbol.setLabel("Support Crypto Sw SHA256 Hmac Counter?")
+    calCryptoSwSha2HmacCtrEnabledSymbol.setDescription("Enable support for Software SHA256 Hmac Counter")
+    calCryptoSwSha2HmacCtrEnabledSymbol.setVisible(True)
+    calCryptoSwSha2HmacCtrEnabledSymbol.setDefaultValue(True)
+    calCryptoSwSha2HmacCtrEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_sw_sha"])
+
+    # Crypto SW PBKDF2 SHA256
+    calCryptoSwPbkdf2EnabledSymbol = calComponent.createBooleanSymbol("cal_sw_pbkdf2_sha2", calSwShaEnabledSymbol)
+    calCryptoSwPbkdf2EnabledSymbol.setLabel("Support Crypto Sw PBKDF2 SHA256?")
+    calCryptoSwPbkdf2EnabledSymbol.setDescription("Support Crypto Sw PBKDF2 SHA256")
+    calCryptoSwPbkdf2EnabledSymbol.setVisible(True)
+    calCryptoSwPbkdf2EnabledSymbol.setDefaultValue(True)
+    calCryptoSwPbkdf2EnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_sw_sha"])
+
+    # Crypto SW Random
+    calHostSwRandEnabledSymbol = calComponent.createBooleanSymbol("cal_sw_rand", calCryptoConfig)
+    calHostSwRandEnabledSymbol.setLabel("Enable SW crypto implementation to get random num")
+    calHostSwRandEnabledSymbol.setDescription("Enable support for Software Random")
+    calHostSwRandEnabledSymbol.setVisible(True)
+    calHostSwRandEnabledSymbol.setDefaultValue(True)
+
+    # Crypto SW Sign
+    calHostSwSignEnabledSymbol = calComponent.createBooleanSymbol("cal_sw_sign", calCryptoConfig)
+    calHostSwSignEnabledSymbol.setLabel("Enable SW crypto implementation to perform sign?")
+    calHostSwSignEnabledSymbol.setDescription("Enable Software Implementation to perform sign")
+    calHostSwSignEnabledSymbol.setVisible(True)
+    calHostSwSignEnabledSymbol.setDefaultValue(True)
+
+    # Crypto SW Verify
+    calHostSwVerifyEnabledSymbol = calComponent.createBooleanSymbol("cal_sw_verify", calCryptoConfig)
+    calHostSwVerifyEnabledSymbol.setLabel("Enable SW crypto implementation to perform verify?")
+    calHostSwVerifyEnabledSymbol.setDescription("Enable Software Implementation to perform verify")
+    calHostSwVerifyEnabledSymbol.setVisible(True)
+    calHostSwVerifyEnabledSymbol.setDefaultValue(True)
+
     # FreeRTOS Support - The hal file gets included as a symbol here and turned on/off via connections
     calEnableRtos = calComponent.createBooleanSymbol("CAL_ENABLE_RTOS", None)
     calEnableRtos.setValue(False)
@@ -533,3 +961,6 @@ def instantiateComponent(calComponent):
         calSecurity.setDisplayMode("Key")
         calSecurity.setVisible(True)
         calSecurity.setDefaultValue(0)
+
+def handleParentSymbolChange(symbol, event):
+    symbol.setVisible(event["value"])

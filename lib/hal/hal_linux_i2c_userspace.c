@@ -85,7 +85,7 @@ ATCA_STATUS hal_i2c_init(ATCAIface iface, ATCAIfaceCfg* cfg)
     else
     {
         atca_i2c_host_t * hal_data = malloc(sizeof(atca_i2c_host_t));
-        int bus = cfg->atcai2c.bus; // 0-based logical bus number
+        int bus = ATCA_IFACECFG_VALUE(cfg, atcai2c.bus); // 0-based logical bus number
 
         if (hal_data)
         {

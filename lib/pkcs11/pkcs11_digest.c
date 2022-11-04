@@ -1,15 +1,11 @@
+#include "cryptoauthlib.h"
 #include "pkcs11_init.h"
 #include "pkcs11_digest.h"
+#include "pkcs11_mech.h"
 #include "pkcs11_object.h"
 #include "pkcs11_session.h"
 #include "pkcs11_util.h"
-#include "cryptoauthlib.h"
 
-#if !PKCS11_HARDWARE_SHA256
-#include "crypto/atca_crypto_sw_sha2.h"
-static atcac_sha2_256_ctx pkcs11_digest_ctx;
-static bool pkcs11_digest_initalized;
-#endif
 
 /**
  * \brief Initializes a message-digesting operation using the specified mechanism in the specified session
@@ -34,6 +30,10 @@ CK_RV pkcs11_digest_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism
     {
         return CKR_MECHANISM_INVALID;
     }
+    else if (CKM_VENDOR_DEFINED != pSession->active_mech)
+    {
+        return CKR_OPERATION_ACTIVE;
+    }
 
     rv = pkcs11_session_check(&pSession, hSession);
     if (rv)
@@ -43,11 +43,11 @@ CK_RV pkcs11_digest_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism
 #if PKCS11_HARDWARE_SHA256
     return CKR_FUNCTION_NOT_SUPPORTED;
 #else
-    rv = atcac_sw_sha2_256_init(&pkcs11_digest_ctx);
+    rv = atcac_sw_sha2_256_init(&pSession->active_mech_data.sha256);
 
     if (ATCA_SUCCESS == rv)
     {
-        pkcs11_digest_initalized = TRUE;
+        pSession->active_mech = CKM_SHA256;
     }
 
     return pkcs11_util_convert_rv(rv);
@@ -98,14 +98,14 @@ CK_RV pkcs11_digest(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDa
 
     return CKR_FUNCTION_NOT_SUPPORTED;
 #else
-    if (!pkcs11_digest_initalized)
+    if (CKM_SHA256 != pSession->active_mech)
     {
         return CKR_OPERATION_NOT_INITIALIZED;
     }
 
     rv = atcac_sw_sha2_256(pData, ulDataLen, pDigest);
 
-    pkcs11_digest_initalized = FALSE;
+    pSession->active_mech = CKM_VENDOR_DEFINED;
 
     return pkcs11_util_convert_rv(rv);
 #endif
@@ -143,12 +143,12 @@ CK_RV pkcs11_digest_update(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULO
 
     return CKR_FUNCTION_NOT_SUPPORTED;
 #else
-    if (!pkcs11_digest_initalized)
+    if (CKM_SHA256 != pSession->active_mech)
     {
         return CKR_OPERATION_NOT_INITIALIZED;
     }
 
-    rv = atcac_sw_sha2_256_update(&pkcs11_digest_ctx, pPart, ulPartLen);
+    rv = atcac_sw_sha2_256_update(&pSession->active_mech_data.sha256, pPart, ulPartLen);
 
     return pkcs11_util_convert_rv(rv);
 #endif
@@ -197,14 +197,14 @@ CK_RV pkcs11_digest_final(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pDigest, CK_UL
 
     return CKR_FUNCTION_NOT_SUPPORTED;
 #else
-    if (!pkcs11_digest_initalized)
+    if (CKM_SHA256 != pSession->active_mech)
     {
         return CKR_OPERATION_NOT_INITIALIZED;
     }
 
-    rv = atcac_sw_sha2_256_finish(&pkcs11_digest_ctx, pDigest);
+    rv = atcac_sw_sha2_256_finish(&pSession->active_mech_data.sha256, pDigest);
 
-    pkcs11_digest_initalized = FALSE;
+    pSession->active_mech = CKM_VENDOR_DEFINED;
 
     return pkcs11_util_convert_rv(rv);
 #endif

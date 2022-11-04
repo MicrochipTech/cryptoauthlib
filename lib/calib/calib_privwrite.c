@@ -33,6 +33,9 @@
  */
 
 #include "cryptoauthlib.h"
+
+#if CALIB_PRIVWRITE_EN
+
 #include "host/atca_host.h"
 
 /** \brief Executes PrivWrite command, to write externally generated ECC
@@ -188,3 +191,4 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
 
     return status;
 }
+#endif  /* CALIB_PRIVWRITE_EN */

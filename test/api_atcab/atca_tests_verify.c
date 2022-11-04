@@ -25,7 +25,88 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
+
+#ifndef TEST_ATCAB_VERIFY_STORED_EN
+#define TEST_ATCAB_VERIFY_STORED_EN         (CALIB_VERIFY_STORED_EN || TALIB_VERIFY_STORED_EN)
+#endif
+
+#ifndef TEST_ATCAB_VERIFY_EXTERN_EN
+#define TEST_ATCAB_VERIFY_EXTERN_EN         (CALIB_VERIFY_EXTERN_EN || TALIB_VERIFY_EXTERN_EN)
+#endif
+
+#ifndef TEST_ATCAB_VERIFY_MAC_EN
+#define TEST_ATCAB_VERIFY_MAC_EN            CALIB_VERIFY_MAC_EN
+#endif
+
+#ifndef TEST_ATCAB_VERIFY_VALIDATE_EN
+#define TEST_ATCAB_VERIFY_VALIDATE_EN       CALIB_VERIFY_VALIDATE_EN
+#endif
+
+#ifndef TEST_ATCAB_VERIFY_REQRANDOM_EN
+#define TEST_ATCAB_VERIFY_REQRANDOM_EN      defined(ATCA_ATECC608_SUPPORT) || defined(ATCA_MBEDTLS) || defined(ATCA_OPENSSL) || defined(ATCA_WOLFSSL)
+#endif
+
+#include "vectors/ecdsa_nist_vectors.h"
+#include "vectors/ecdh_nist_vectors.h"
+
+
+void print_buffer(uint8_t *buf, int len)
+{
+    for (int i=0; i<len; i++, buf++)
+    {
+        if (i && !(i % 16))
+            printf("\n");
+        printf("%02x", *buf);
+    }
+    printf("\n");
+}
+
+#if TEST_ATCAB_VERIFY_EXTERN_EN
+TEST(atca_cmd_basic_test, verify_extern_nist)
+{
+    uint8_t pubkey[64];
+    uint8_t signature[64];
+    uint8_t digest[32];
+    ATCA_STATUS status;
+    size_t i;
+    bool is_verified = false;
+
+    /* Test verification using [P-256,SHA-256] vectors */
+    for (i = 0; i < ecdsa_p256_test_vectors_count; i++)
+    {
+        /* Copy pubkey */
+        memcpy(pubkey, ecdsa_p256_test_vectors[i].Qx, 32);
+        memcpy(&pubkey[32], ecdsa_p256_test_vectors[i].Qy, 32);
+
+
+//	printf("Public key for test %d\n", i);
+//        print_buffer(pubkey, 64);
+
+        /* Copy the signature */
+        memcpy(signature, ecdsa_p256_test_vectors[i].R, 32);
+        memcpy(&signature[32], ecdsa_p256_test_vectors[i].S, 32);
+
+        /* Hash the message */
+        status = atcac_sw_sha2_256(ecdsa_p256_test_vectors[i].Msg, sizeof(ecdsa_p256_test_vectors[i].Msg), digest);
+        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+
+        /* Perform the verification */
+        status = atcab_verify_extern(digest, signature, pubkey, &is_verified);
+        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+        /* Check verification result against the expected success/failure */
+        if (ecdsa_p256_test_vectors[i].Result)
+        {
+            TEST_ASSERT(is_verified);
+        }
+        else
+        {
+            TEST_ASSERT(!is_verified);
+        }
+    }
+}
 
 TEST(atca_cmd_basic_test, verify_extern)
 {
@@ -61,7 +142,7 @@ TEST(atca_cmd_basic_test, verify_extern)
     TEST_ASSERT(!is_verified);
 }
 
-#ifdef ATCA_ATECC608_SUPPORT
+#if TEST_ATCAB_VERIFY_MAC_EN
 TEST(atca_cmd_basic_test, verify_extern_mac)
 {
     ATCA_STATUS status;
@@ -103,8 +184,11 @@ TEST(atca_cmd_basic_test, verify_extern_mac)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT(!is_verified);
 }
-#endif
+#endif /* TEST_ATCAB_VERIFY_MAC_EN */
 
+#endif /* TEST_ATCAB_VERIFY_EXTERN_EN */
+
+#if TEST_ATCAB_VERIFY_STORED_EN
 TEST(atca_cmd_basic_test, verify_stored)
 {
     ATCA_STATUS status;
@@ -124,7 +208,7 @@ TEST(atca_cmd_basic_test, verify_stored)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Generate new key pair
-    status = atcab_genkey(private_key_id, public_key);
+    status = atca_test_genkey(private_key_id, public_key);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Write public key to slot
@@ -152,7 +236,100 @@ TEST(atca_cmd_basic_test, verify_stored)
     TEST_ASSERT(!is_verified);
 }
 
-#ifdef ATCA_ATECC608_SUPPORT
+#if TEST_ATCAB_VERIFY_REQRANDOM_EN
+TEST(atca_cmd_basic_test, verify_stored_on_reqrandom_set)
+{
+    ATCA_STATUS status;
+    bool is_verified = false;
+    uint16_t public_key_id;
+    uint8_t message[ATCA_SHA256_DIGEST_SIZE];
+    uint8_t signature[ATCA_ECCP256_SIG_SIZE];
+    uint8_t public_key[ATCA_ECCP256_PUBKEY_SIZE];
+    uint8_t rand_out[RANDOM_NUM_SIZE] = { 0 };
+    atca_nonce_in_out_t nonce_params;
+    atca_temp_key_t temp_key;
+
+    test_assert_data_is_locked();
+
+    status = atca_test_config_get_id(TEST_TYPE_ECC_VERIFY, &public_key_id);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+#if defined(ATCA_MBEDTLS) || defined(ATCA_OPENSSL) || defined(ATCA_WOLFSSL)
+    atcac_pk_ctx sign_ctx;
+    uint8_t private_key_pem[] =
+    "-----BEGIN EC PRIVATE KEY-----\n"
+    "MHcCAQEEICFZhAyzqkUgyheo51bhg3mcp+qwfl+koE+Mhs/sRyzBoAoGCCqGSM49\n"
+    "AwEHoUQDQgAExAE2yqujppBzD0hIpdqdXmMgtlXT90QqllaQYWEVBjdf+LmY5DCf\n"
+    "Mx8PXEVxhbDmgo6HHbz0S4VaZjShBLMaPw==\n"
+    "-----END EC PRIVATE KEY-----\n";
+    size_t sig_size = sizeof(signature);
+    size_t pubkey_len = sizeof(public_key);
+
+    /* Initialization of a private key with a pem encoded key (without password) */
+    status = atcac_pk_init_pem(&sign_ctx, private_key_pem, sizeof(private_key_pem), false);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    /* Retrieve the public key */
+    status = atcac_pk_public(&sign_ctx, public_key, &pubkey_len);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+#else
+    uint16_t private_key_id;
+
+    status = atca_test_config_get_id(TEST_TYPE_ECC_GENKEY, &private_key_id);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Generate new key pair
+    status = atca_test_genkey(private_key_id, public_key);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+#endif
+
+    // Write public key to slot
+    status = atcab_write_pubkey(public_key_id, public_key);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Generate random message to be signed
+    status = atcab_random(message);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Send the random nonce command 
+    status = atcab_nonce_rand(message, rand_out);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Calculate Tempkey
+    memset(&temp_key, 0, sizeof(temp_key));
+    memset(&nonce_params, 0, sizeof(nonce_params));
+    nonce_params.mode = NONCE_MODE_SEED_UPDATE;
+    nonce_params.zero = 0;
+    nonce_params.num_in = (uint8_t*)&message[0];
+    nonce_params.rand_out = rand_out;
+    nonce_params.temp_key = &temp_key;
+    status = atcah_nonce(&nonce_params);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Sign the message
+#if defined(ATCA_MBEDTLS) || defined(ATCA_OPENSSL) || defined(ATCA_WOLFSSL)
+    status = atcac_pk_sign(&sign_ctx, nonce_params.temp_key->value, ATCA_SHA256_DIGEST_SIZE, signature, &sig_size);
+#else
+    // Only the 608 has the message digest buffer - other devices will invalidate tempkey
+    status = atcab_sign(private_key_id, nonce_params.temp_key->value, signature);
+#endif
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Verify the signature (Message is already loaded into tempkey)
+    is_verified = false;
+    status = atcab_verify_stored_with_tempkey(signature, public_key_id, &is_verified);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT(is_verified);
+
+    // Verify with bad message, should fail
+    message[0]++;
+    status = atcab_verify_stored_with_tempkey(signature, public_key_id, &is_verified);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT(!is_verified);
+}
+#endif /* TEST_ATCAB_VERIFY_REQRANDOM_EN */
+
+#if TEST_ATCAB_VERIFY_MAC_EN
 TEST(atca_cmd_basic_test, verify_stored_mac)
 {
     ATCA_STATUS status;
@@ -167,7 +344,7 @@ TEST(atca_cmd_basic_test, verify_stored_mac)
     test_assert_data_is_locked();
 
     // Generate new key pair
-    status = atcab_genkey(private_key_id, public_key);
+    status = atca_test_genkey(private_key_id, public_key);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Write public key to slot
@@ -196,9 +373,11 @@ TEST(atca_cmd_basic_test, verify_stored_mac)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT(!is_verified);
 }
-#endif
+#endif /* TEST_ATCAB_VERIFY_MAC_EN */
 
-#ifdef ATCA_ECC_SUPPORT
+#endif /* TEST_ATCAB_VERIFY_STORED_EN */
+
+#if TEST_ATCAB_VERIFY_VALIDATE_EN
 static void test_basic_verify_validate(void)
 {
     const uint16_t public_key_id = 14;
@@ -239,7 +418,7 @@ static void test_basic_verify_validate(void)
 
     // Generate key pair for validation
     // Typically, the validation private key wouldn't be on the same device as its public key
-    status = atcab_genkey(validation_private_key_id, validation_public_key);
+    status = atca_test_genkey(validation_private_key_id, validation_public_key);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Write validation public key
@@ -254,7 +433,7 @@ static void test_basic_verify_validate(void)
     // key) is required to validate the new public key before it can be used.
 
     // Validation Authority: Generate new key pair.
-    status = atcab_genkey(private_key_id, public_key);
+    status = atca_test_genkey(private_key_id, public_key);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Create and sign some data for testing the new key pair
@@ -490,21 +669,29 @@ TEST(atca_cmd_basic_test, verify_invalidate)
     status = atcab_verify_stored(test_msg, test_signature, public_key_id, &is_verified);
     TEST_ASSERT_EQUAL(ATCA_EXECUTION_ERROR, status);
 }
-#endif
+#endif /* TEST_ATCAB_VERIFY_VALIDATE_EN */
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info verify_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_extern),     DEVICE_MASK_ECC        | DEVICE_MASK(TA100)     },
-#ifdef ATCA_ATECC608_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_extern_mac), DEVICE_MASK(ATECC608)                          },
+#if TEST_ATCAB_VERIFY_EXTERN_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_extern_nist),     DEVICE_MASK_ATECC | DEVICE_MASK(TA100)  },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_extern),     DEVICE_MASK_ATECC | DEVICE_MASK(TA100)  },
+#if TEST_ATCAB_VERIFY_MAC_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_extern_mac), DEVICE_MASK(ATECC608)                   },
 #endif
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_stored),     DEVICE_MASK_ECC        | DEVICE_MASK(TA100)     },
-#ifdef ATCA_ATECC608_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_stored_mac), DEVICE_MASK(ATECC608)                          },
+#endif /* TEST_ATCAB_VERIFY_EXTERN_EN */
+#if TEST_ATCAB_VERIFY_STORED_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_stored),     DEVICE_MASK_ATECC | DEVICE_MASK(TA100)  },
+#if TEST_ATCAB_VERIFY_REQRANDOM_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_stored_on_reqrandom_set),     DEVICE_MASK_ATECC },
 #endif
-#ifdef ATCA_ECC_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_validate),   DEVICE_MASK_ECC                                 },
+#if TEST_ATCAB_VERIFY_MAC_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_stored_mac), DEVICE_MASK(ATECC608)                    },
+#endif
+#endif /* TEST_ATCAB_VERIFY_STORED_EN */
+#if TEST_ATCAB_VERIFY_VALIDATE_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_validate),   DEVICE_MASK_ATECC                        },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_invalidate), DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
 #endif
     { (fp_test_case)NULL,                     (uint8_t)0 },       /* Array Termination element*/

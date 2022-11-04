@@ -25,7 +25,13 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
+
+#ifndef TEST_ATCAB_LOCK_EN
+#define TEST_ATCAB_LOCK_EN          CALIB_LOCK_EN || TALIB_LOCK_EN
+#endif
+
+#if TEST_ATCAB_LOCK_EN
 
 TEST(atca_cmd_basic_test, lock_config_zone)
 {
@@ -83,13 +89,17 @@ TEST(atca_cmd_basic_test, lock_data_slot)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(true, is_locked);
 }
+#endif
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info lock_basic_test_info[] =
 {
+#if TEST_ATCAB_LOCK_EN
     //{ REGISTER_TEST_CASE(atca_cmd_basic_test, lock_config_zone),	DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
     //{ REGISTER_TEST_CASE(atca_cmd_basic_test, lock_data_zone),	DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, lock_data_slot), DEVICE_MASK_ECC },
+#endif
     { (fp_test_case)NULL,                     (uint8_t)0 },    /* Array Termination element*/
 };
 // *INDENT-ON*
+

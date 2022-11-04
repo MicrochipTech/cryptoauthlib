@@ -34,6 +34,9 @@
  */
 #include "cryptoauthlib.h"
 
+#include "crypto_config_check.h"
+
+#if ATCAB_AES_CBCMAC_EN
 /** \brief Initialize context for AES CBC-MAC operation.
  *
  * \param[in] ctx        AES CBC-MAC context to be initialized
@@ -159,3 +162,4 @@ ATCA_STATUS atcab_aes_cbcmac_finish(atca_aes_cbcmac_ctx_t* ctx, uint8_t* mac, ui
 
     return ATCA_SUCCESS;
 }
+#endif /* ATCAB_AES_CBCMAC_EN */

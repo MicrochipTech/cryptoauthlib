@@ -25,7 +25,7 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
 
 #define AES_CONFIG_ENABLE_BIT_MASK   (uint8_t)0x01
 

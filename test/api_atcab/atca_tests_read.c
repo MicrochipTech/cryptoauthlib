@@ -25,9 +25,15 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
 
-#if ATCA_CA_SUPPORT
+#ifndef TEST_ATCAB_READ_EN
+#define TEST_ATCAB_READ_EN      (CALIB_READ_EN || CALIB_READ_ECC204_EN || TALIB_READ_EN)
+#endif
+
+#if TEST_ATCAB_READ_EN
+
+#if CALIB_READ_EN
 TEST(atca_cmd_basic_test, read_zone)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
@@ -122,7 +128,7 @@ TEST(atca_cmd_basic_test, read_config_zone)
     }
 }
 
-#if ATCA_CA_SUPPORT
+#if CALIB_READ_EN
 TEST(atca_cmd_basic_test, read_otp_zone)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
@@ -153,18 +159,20 @@ TEST(atca_cmd_basic_test, read_data_zone)
     status = atcab_read_bytes_zone(ATCA_ZONE_DATA, slot, 0, read_data, sizeof(read_data));
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
+#endif
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info read_basic_test_info[] =
 {
-#if ATCA_CA_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, read_zone),        DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC },
-#endif
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, read_config_zone), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
-#if ATCA_CA_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, read_otp_zone),    DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC },
-#endif
+#if TEST_ATCAB_READ_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, read_config_zone), DEVICE_MASK_SHA | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, read_data_zone),   DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
+#if CALIB_READ_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, read_zone),        DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, read_otp_zone),    DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC },
+#endif
+#endif /* TEST_ATCAB_READ_EN */
     { (fp_test_case)NULL,                     (uint8_t)0 },      /* Array Termination element*/
 };
 // *INDENT-ON*
+

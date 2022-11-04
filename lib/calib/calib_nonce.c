@@ -35,6 +35,7 @@
 
 #include "cryptoauthlib.h"
 
+#if CALIB_NONCE_EN
 /** \brief Executes Nonce command, which loads a random or fixed nonce/data
  *          into the device for use by subsequent commands.
  *
@@ -119,7 +120,6 @@ ATCA_STATUS calib_nonce_base(ATCADevice device, uint8_t mode, uint16_t param2, c
     return status;
 }
 
-
 /** \brief Execute a Nonce command in pass-through mode to initialize TempKey
  *         to a specified value.
  *
@@ -132,7 +132,6 @@ ATCA_STATUS calib_nonce(ATCADevice device, const uint8_t *num_in)
 {
     return calib_nonce_base(device, NONCE_MODE_PASSTHROUGH, 0, num_in, NULL);
 }
-
 
 /** \brief Execute a Nonce command in pass-through mode to load one of the
  *          device's internal buffers with a fixed value.
@@ -234,3 +233,4 @@ ATCA_STATUS calib_nonce_gen_session_key(ATCADevice device, uint16_t param2, uint
 {
     return calib_nonce_base(device, NONCE_MODE_GEN_SESSION_KEY, param2, num_in, rand_out);
 }
+#endif /* CALIB_NONCE_EN */

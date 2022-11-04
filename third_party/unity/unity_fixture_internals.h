@@ -19,7 +19,9 @@ struct UNITY_FIXTURE_T
     int Silent;
     unsigned int RepeatCount;
     const char* NameFilter;
+    int NameInvert;
     const char* GroupFilter;
+    int GroupInvert;
 };
 extern struct UNITY_FIXTURE_T UnityFixture;
 

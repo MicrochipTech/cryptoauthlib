@@ -23,9 +23,16 @@
  * THIS SOFTWARE.
  */
 
-#include "third_party/unity/unity_fixture.h"
-#include "atca_test.h"
+#include "test_jwt.h"
 #include "jwt/atca_jwt.h"
+
+#ifndef TEST_JWT_SIGN_EN
+#define TEST_JWT_SIGN_EN    (CALIB_SIGN_ECC204_EN || CALIB_SIGN_EN || TALIB_SIGN_EN)
+#endif
+
+#ifndef TEST_JWT_VERIFY_EN
+#define TEST_JWT_VERIFY_EN  (ATCA_HOSTLIB_EN || CALIB_VERIFY_EXTERN_EN || TALIB_VERIFY_EXTERN_EN)
+#endif
 
 /* Configuration Options */
 #define ATCA_JWT_TEST_DEVICES  ( DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) )
@@ -42,6 +49,7 @@ static const char atca_jwt_test_vector_payload_aud[] = "audience";
 static const char atca_jwt_test_vector_payload[] =
     "eyJpYXQiOjEyMzQ1Njc4OSwiZXhwIjoyMzQ1Njc4OTAsImF1ZCI6ImF1ZGllbmNlIn0.";
 
+#if TEST_JWT_VERIFY_EN
 static const uint8_t atca_jwt_test_vector_pubkey[ATCA_ECCP256_PUBKEY_SIZE] = {
     0x01, 0x31, 0x95, 0xB2, 0x30, 0x4D, 0xC7, 0x7E, 0xC0, 0x94, 0x6A, 0x02, 0xE0, 0x4E, 0xDC, 0x51,
     0xED, 0xF7, 0xE8, 0x77, 0x9D, 0x44, 0xC9, 0x2B, 0x90, 0xB8, 0xF7, 0xC3, 0x4B, 0x72, 0x9B, 0xD8,
@@ -53,6 +61,7 @@ static const char atca_jwt_test_vector_sig[] =
 
 static const char atca_jwt_test_vector_invalid_sig[] =
     "OgnwEMP1l7x67pYNgGxHAIyHZkAwRT3cbWHKCrH4Zi5fOrxXLwFUpnF_0FdPGz3WakETEeWYg79h36tZG_Q_uw";
+#endif
 
 TEST_GROUP(atca_jwt);
 
@@ -222,6 +231,7 @@ TEST(atca_jwt, claim_add_numeric_invalid_params)
     TEST_ASSERT_EQUAL_MEMORY(".", buf, 2);
 }
 
+#if TEST_JWT_VERIFY_EN
 TEST(atca_jwt, verify_invalid_params)
 {
     char buf[512];
@@ -233,7 +243,9 @@ TEST(atca_jwt, verify_invalid_params)
 
     TEST_ASSERT_EQUAL(ATCA_BAD_PARAM, atca_jwt_verify(buf, sizeof(buf), NULL));
 }
+#endif
 
+#if TEST_JWT_SIGN_EN
 TEST(atca_jwt, finalize_invalid_params)
 {
     atca_jwt_t jwt;
@@ -256,6 +268,7 @@ TEST(atca_jwt, finalize_invalid_params)
     jwt.cur = 0;
     TEST_ASSERT_EQUAL(ATCA_BAD_PARAM, atca_jwt_finalize(&jwt, ATCA_JWT_TEST_SIGNING_KEY_ID));
 }
+#endif
 
 /* These tests require an attached and configured device */
 TEST_GROUP(atca_jwt_crypto);
@@ -283,6 +296,7 @@ TEST_TEAR_DOWN(atca_jwt_crypto)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
 
+#if TEST_JWT_VERIFY_EN
 TEST(atca_jwt_crypto, verify)
 {
     char buf[512];
@@ -308,7 +322,9 @@ TEST(atca_jwt_crypto, verify_invalid)
     TEST_ASSERT_EQUAL(ATCA_CHECKMAC_VERIFY_FAILED, atca_jwt_verify(buf, sizeof(buf),
                                                                    atca_jwt_test_vector_pubkey));
 }
+#endif
 
+#if TEST_JWT_SIGN_EN
 TEST(atca_jwt_crypto, finalize)
 {
     atca_jwt_t jwt;
@@ -340,9 +356,12 @@ TEST(atca_jwt_crypto, finalize)
     /* Load the device public key */
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, atcab_get_pubkey(ATCA_JWT_TEST_SIGNING_KEY_ID, pubkey));
 
+#if TEST_JWT_VERIFY_EN
     /* Verify the token with the public key */
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, atca_jwt_verify(buf, sizeof(buf), pubkey));
+#endif
 }
+#endif /* TEST_JWT_SIGN_EN */
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info jwt_unit_test_info[] =
@@ -359,13 +378,37 @@ t_test_case_info jwt_unit_test_info[] =
     { REGISTER_TEST_CASE(atca_jwt,        claim_add_numeric),                         ATCA_JWT_TEST_DEVICES},
     { REGISTER_TEST_CASE(atca_jwt,        claim_add_numeric_invalid_params),          ATCA_JWT_TEST_DEVICES},
 
+#if TEST_JWT_VERIFY_EN
     { REGISTER_TEST_CASE(atca_jwt,        verify_invalid_params),                     ATCA_JWT_TEST_DEVICES},
+#endif
+#if TEST_JWT_SIGN_EN 
     { REGISTER_TEST_CASE(atca_jwt,        finalize_invalid_params),                   ATCA_JWT_TEST_DEVICES},
+#endif
 
+#if TEST_JWT_VERIFY_EN
     { REGISTER_TEST_CASE(atca_jwt_crypto, verify),                                    ATCA_JWT_TEST_DEVICES},
     { REGISTER_TEST_CASE(atca_jwt_crypto, verify_invalid),                            ATCA_JWT_TEST_DEVICES},
+#endif
+#if TEST_JWT_SIGN_EN
     { REGISTER_TEST_CASE(atca_jwt_crypto, finalize),                                  ATCA_JWT_TEST_DEVICES},
-
+#endif
     { (fp_test_case)NULL,                 (uint8_t)0 },                               /* Array Termination element*/
 };
 // *INDENT-ON*
+
+static t_test_case_info* jwt_tests[] = {
+    jwt_unit_test_info,
+    /* Array Termination element*/
+    (t_test_case_info*)NULL
+};
+
+static void jwt_test_runner(void)
+{
+    RunAllTests(jwt_tests);
+}
+
+/* Console function */
+int run_jwt_tests(int argc, char* argv[])
+{
+    return run_test(argc, argv, jwt_test_runner);
+}

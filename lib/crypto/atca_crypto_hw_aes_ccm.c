@@ -36,7 +36,7 @@
 
 #include "cryptoauthlib.h"
 
-
+#if ATCAB_AES_CCM_EN
 /** \brief Initialize context for AES CCM operation with an existing IV, which
  *         is common when starting a decrypt operation.
  *
@@ -205,7 +205,9 @@ ATCA_STATUS atcab_aes_ccm_init(atca_aes_ccm_ctx_t* ctx, uint16_t key_id, uint8_t
 {
     return atcab_aes_ccm_init_ext(atcab_get_device(), ctx, key_id, key_block, iv, iv_size, aad_size, text_size, tag_size);
 }
+#endif /* ATCAB_AES_CCM_EN */
 
+#if ATCAB_AES_CCM_RAND_IV_EN
 /** \brief Initialize context for AES CCM operation with a random nonce
  *
  * \param[in] ctx          AES CCM context to be initialized
@@ -232,11 +234,19 @@ ATCA_STATUS atcab_aes_ccm_init_rand_ext(ATCADevice device, atca_aes_ccm_ctx_t* c
     if (iv_size < 7 || iv_size > 13)
     {
         // Generating random number to feed into calib_aes_ccm_init function.
-        status = atcab_random_ext(device, random_nonce);
-        if (status != ATCA_SUCCESS)
+#if ATCA_HOSTLIB_EN
+        if (ATCA_SUCCESS != (status = atcac_sw_random(random_nonce, 32)))
         {
             return status;
         }
+#elif CALIB_RANDOM_EN || TALIB_RANDOM_EN
+        if (ATCA_SUCCESS != (status = atcab_random_ext(device, random_nonce)))
+        {
+            return status;
+        }
+#else
+        return ATCA_GEN_FAIL;
+#endif
         memcpy(iv, random_nonce, iv_size);
     }
 
@@ -271,7 +281,9 @@ ATCA_STATUS atcab_aes_ccm_init_rand(atca_aes_ccm_ctx_t* ctx, uint16_t key_id, ui
 {
     return atcab_aes_ccm_init_rand_ext(atcab_get_device(), ctx, key_id, key_block, iv, iv_size, aad_size, text_size, tag_size);
 }
+#endif /* ATCAB_AES_CCM_RAND_IV_EN */
 
+#if ATCAB_AES_CCM_EN
 /** \brief Process Additional Authenticated Data (AAD) using CCM mode and a
  *         key within the ATECC608A device.
  *
@@ -595,3 +607,4 @@ ATCA_STATUS atcab_aes_ccm_decrypt_finish(atca_aes_ccm_ctx_t* ctx, const uint8_t*
 
     return ATCA_SUCCESS;
 }
+#endif /* ATCAB_AES_CCM_EN */

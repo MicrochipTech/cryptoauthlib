@@ -39,6 +39,8 @@
 #include <stdlib.h>
 #endif
 
+#if ATCAB_AES_CMAC_EN
+
 static const uint8_t g_aes_zero_block[ATCA_AES128_BLOCK_SIZE] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -232,3 +234,4 @@ ATCA_STATUS atcab_aes_cmac_finish(atca_aes_cmac_ctx_t* ctx, uint8_t* cmac, uint3
 
     return ATCA_SUCCESS;
 }
+#endif /* ATCAB_AES_CMAC_EN */

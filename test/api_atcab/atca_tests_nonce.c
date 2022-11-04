@@ -25,25 +25,37 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
+
+#ifndef TEST_ATCAB_NONCE_EN
+#define TEST_ATCAB_NONCE_EN             CALIB_NONCE_EN
+#endif
+
+#if TEST_ATCAB_NONCE_EN
 
 TEST(atca_cmd_basic_test, challenge)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t random_number[32];
 
+#if CALIB_RANDOM_EN
     status = atcab_random(random_number);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+#endif
 
     status = atcab_nonce(random_number);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
+#endif /* TEST_ATCAB_NONCE_EN */
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info nonce_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, challenge), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
+#if TEST_ATCAB_NONCE_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, challenge), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC },
+#endif
     { (fp_test_case)NULL,                     (uint8_t)0 },/* Array Termination element*/
 };
 
 // *INDENT-ON*
+

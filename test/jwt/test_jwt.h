@@ -1,6 +1,6 @@
 /**
  * \file
- * \brief Unity tests for the CryptoAuthLib software crypto API.
+ * \brief Test CryptoAuthLib JWT Implementation
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
@@ -25,35 +25,20 @@
  * THIS SOFTWARE.
  */
 
-#ifndef ATCA_CRYPTO_TESTS_H_
-#define ATCA_CRYPTO_TESTS_H_
+#ifndef TEST_JWT_H
+#define TEST_JWT_H
 
-#include "third_party/unity/unity.h"
-
-int atca_crypto_sw_tests(int argc, char* argv[]);
-
-void test_atcac_sw_sha1_nist1(void);
-void test_atcac_sw_sha1_nist2(void);
-void test_atcac_sw_sha1_nist3(void);
-void test_atcac_sw_sha1_nist_short(void);
-void test_atcac_sw_sha1_nist_long(void);
-void test_atcac_sw_sha1_nist_monte(void);
-void test_atcac_sw_sha2_256_nist1(void);
-void test_atcac_sw_sha2_256_nist2(void);
-void test_atcac_sw_sha2_256_nist3(void);
-void test_atcac_sw_sha2_256_nist_short(void);
-void test_atcac_sw_sha2_256_nist_long(void);
-void test_atcac_sw_sha2_256_nist_monte(void);
-
-void test_atcac_aes128_gcm(void);
-void test_atcac_aes128_cmac(void);
-void test_atcac_sha256_hmac(void);
-void test_atcac_sha256_hmac_nist(void);
-
-void test_atcac_verify_nist(void);
-void test_atcac_public(void);
-void test_atcac_sign(void);
-void test_atcac_derive_nist(void);
-
-
+#ifdef __cplusplus
+extern "C" {
 #endif
+
+#include "atca_test.h"
+
+/* Console function */
+int run_jwt_tests(int argc, char* argv[]);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* TEST_JWT_H */

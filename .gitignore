@@ -48,6 +48,7 @@ local.properties
 *.o
 
 .vs
+.vscode
 
 # Python
 .tox/
@@ -61,3 +62,14 @@ dist/
 /python/venv*
 /python/cryptoauthlib.egg-info
 /python/VERSION
+
+# Documents
+docs/**/*
+docs/html/**/*
+docs/latex/**/*
+dist-tools/cryptoauthlib*
+
+# Third party libraries
+third_party/mbedtls/*
+third_party/wolfssl/*
+

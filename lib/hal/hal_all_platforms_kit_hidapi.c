@@ -47,9 +47,6 @@
  */
 ATCA_STATUS hal_kit_hid_init(ATCAIface iface, ATCAIfaceCfg* cfg)
 {
-    int i = 0;
-    int index = 0;
-
     // Check the input variables
     if ((cfg == NULL) || (iface == NULL))
     {
@@ -62,7 +59,7 @@ ATCA_STATUS hal_kit_hid_init(ATCAIface iface, ATCAIfaceCfg* cfg)
 #endif
     hid_init();
 
-    iface->hal_data = hid_open(cfg->atcahid.vid, cfg->atcahid.pid, NULL);
+    iface->hal_data = hid_open(ATCA_IFACECFG_VALUE(cfg, atcahid.vid), ATCA_IFACECFG_VALUE(cfg, atcahid.pid), NULL);
 
     return (iface->hal_data) ? ATCA_SUCCESS : ATCA_COMM_FAIL;
 }
@@ -73,6 +70,7 @@ ATCA_STATUS hal_kit_hid_init(ATCAIface iface, ATCAIfaceCfg* cfg)
  */
 ATCA_STATUS hal_kit_hid_post_init(ATCAIface iface)
 {
+    ((void)iface);
     return ATCA_SUCCESS;
 }
 
@@ -87,7 +85,10 @@ ATCA_STATUS hal_kit_hid_send(ATCAIface iface, uint8_t word_address, uint8_t* txd
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
     hid_device* pHid = (hid_device*)atgetifacehaldat(iface);
-    int bytes_written;
+    uint32_t bytes_written;
+
+    ((void)word_address);
+    ((void)txlength);
 
     if ((txdata == NULL) || (cfg == NULL) || (pHid == NULL))
     {
@@ -98,8 +99,8 @@ ATCA_STATUS hal_kit_hid_send(ATCAIface iface, uint8_t word_address, uint8_t* txd
     printf("HID layer: Write: %s", txdata);
 #endif
 
-    bytes_written = hid_write(pHid, txdata, (size_t)cfg->atcahid.packetsize + 1);
-    if (bytes_written != cfg->atcahid.packetsize + 1)
+    bytes_written = (uint32_t)hid_write(pHid, txdata, (size_t)ATCA_IFACECFG_VALUE(cfg, atcahid.packetsize) + 1);
+    if (bytes_written != ATCA_IFACECFG_VALUE(cfg, atcahid.packetsize) + 1)
     {
         return ATCA_TX_FAIL;
     }
@@ -117,16 +118,23 @@ ATCA_STATUS hal_kit_hid_send(ATCAIface iface, uint8_t word_address, uint8_t* txd
 ATCA_STATUS hal_kit_hid_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, uint16_t* rxsize)
 {
     hid_device* pHid = (hid_device*)atgetifacehaldat(iface);
+    int ret;
+
+    ((void)word_address);
 
     if ((rxdata == NULL) || (rxsize == NULL) || (pHid == NULL))
     {
         return ATCA_BAD_PARAM;
     }
 
-    *rxsize = (uint16_t)hid_read(pHid, rxdata, (size_t)*rxsize);
-    if (*rxsize == -1)
+    ret = (uint16_t)hid_read(pHid, rxdata, (size_t)*rxsize);
+    if (ret < 0)
     {
         return ATCA_RX_FAIL;
+    }
+    else
+    {
+        *rxsize = (uint16_t)ret;
     }
 
 #ifdef KIT_DEBUG
@@ -145,8 +153,9 @@ ATCA_STATUS hal_kit_hid_receive(ATCAIface iface, uint8_t word_address, uint8_t* 
  */
 ATCA_STATUS hal_kit_hid_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen)
 {
-    (void)param;
-    (void)paramlen;
+    ((void)option);
+    ((void)param);
+    ((void)paramlen);
 
     if (iface && iface->mIfaceCFG)
     {
@@ -163,7 +172,6 @@ ATCA_STATUS hal_kit_hid_control(ATCAIface iface, uint8_t option, void* param, si
 ATCA_STATUS hal_kit_hid_release(void* hal_data)
 {
     hid_device* pHid = (hid_device*)hal_data;
-    int i = 0;
 
     if (pHid == NULL)
     {

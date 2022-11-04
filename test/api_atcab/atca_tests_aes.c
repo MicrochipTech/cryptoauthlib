@@ -28,9 +28,15 @@
 #ifdef _WIN32
 #include <time.h>
 #endif
-#include "atca_test.h"
-#include "atca_basic.h"
-#include "cryptoauthlib.h"
+#include "test_atcab.h"
+
+#ifndef TEST_ATCAB_AES_EN
+#define TEST_ATCAB_AES_EN           CALIB_AES_EN || TALIB_AES_EN
+#endif
+
+#ifndef TEST_ATCAB_AES_GCM_EN
+#define TEST_ATCAB_AES_GCM_EN       CALIB_AES_GCM_EN || TALIB_AES_GCM_EN
+#endif
 
 extern const uint8_t g_aes_keys[4][16];
 extern const uint8_t g_plaintext[64];
@@ -65,7 +71,7 @@ const uint8_t g_ciphertext_ecb[4][64] = {
     }
 };
 
-#ifdef ATCA_ATECC608_SUPPORT
+#if TEST_ATCAB_AES_EN && defined(ATCA_ATECC608_SUPPORT)
 
 TEST(atca_cmd_basic_test, aes_encrypt_key_tempkey)
 {
@@ -121,6 +127,7 @@ TEST(atca_cmd_basic_test, aes_decrypt_key_tempkey)
 
 #endif
 
+#if TEST_ATCAB_AES_EN
 TEST(atca_cmd_basic_test, aes_encrypt_key_slot)
 {
     ATCA_STATUS status;
@@ -243,10 +250,10 @@ TEST(atca_cmd_basic_test, aes_decrypt_key_slot_simple)
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
         TEST_ASSERT_EQUAL_MEMORY(&g_plaintext[data_block * ATCA_AES128_BLOCK_SIZE], decrypted_data_out, ATCA_AES128_BLOCK_SIZE);
     }
-
 }
+#endif
 
-#ifdef ATCA_ATECC608_SUPPORT
+#if TEST_ATCAB_AES_GCM_EN && defined(ATCA_ATECC608_SUPPORT)
 TEST(atca_cmd_basic_test, aes_gfm)
 {
     ATCA_STATUS status;
@@ -268,7 +275,7 @@ TEST(atca_cmd_basic_test, aes_gfm)
 }
 #endif
 
-#ifdef ATCA_ATECC608_SUPPORT
+#if TEST_ATCAB_AES_EN && defined(ATCA_ATECC608_SUPPORT)
 TEST(atca_cmd_basic_test, volatile_key_permit)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
@@ -361,8 +368,6 @@ TEST(atca_cmd_basic_test, volatile_key_permit)
     status = atcab_info_set_latch(true); //persistent latch is set
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-
-
     status = atcab_aes_encrypt(key_slot, 0, data_in, encrypted_data_out); //Encrypting data with first 16 bytes in slot 10 as key
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);                              //Encryption should pass as persistent latch is set
 
@@ -380,8 +385,10 @@ t_test_case_info aes_basic_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_encrypt_key_slot),             DEVICE_MASK(ATECC608) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_decrypt_key_slot),             DEVICE_MASK(ATECC608) },
 #endif
+#if TEST_ATCAB_AES_EN
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_encrypt_key_slot_simple),      DEVICE_MASK(TA100) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_decrypt_key_slot_simple),      DEVICE_MASK(TA100) },
+#endif
     /* Array Termination element*/
     { (fp_test_case)NULL,                     (uint8_t)0 },
 };

@@ -34,13 +34,32 @@
 #endif
 #include "cryptoauthlib.h"
 #include "atca_test.h"
-#include "atca_crypto_sw_tests.h"
 #include "cmd-processor.h"
 #include "atca_cfgs.h"
+
+#if ATCA_CA_SUPPORT
+#include "api_calib/test_calib.h"
+#endif
+
+#if ATCA_CA_SUPPORT && !defined(DO_NOT_TEST_CERT)
+#include "atcacert/test_atcacert.h"
+#endif
 
 #if ATCA_TA_SUPPORT
 #include "api_talib/test_talib.h"
 #endif
+
+/* Common API Testing - atcab_ is the classic Cryptoauthlib API */
+#include "api_atcab/test_atcab.h"
+
+/* Host side Cryptographic API Testing */
+#include "api_crypto/test_crypto.h"
+
+/* Library Integration Tests - Tests to ensure the library accesses device properly*/
+#include "integration/test_integration.h"
+
+/* JWT Support */
+#include "jwt/test_jwt.h"
 
 static int help(int argc, char* argv[]);
 
@@ -54,25 +73,25 @@ static t_menu_info mas_menu_info[] =
 {
     { "help",     "Display Menu",                                   help                                 },
 #ifdef ATCA_ATSHA204A_SUPPORT
-    { "sha204",      "Set Target Device to ATSHA204A",              select_204                           },
+    { "sha204",      "Set Target Device to ATSHA204A",              select_device                        },
 #endif
 #ifdef ATCA_ATSHA206A_SUPPORT
-    { "sha206",      "Set Target Device to ATSHA206A",              select_206                           },
+    { "sha206",      "Set Target Device to ATSHA206A",              select_device                        },
 #endif
 #ifdef ATCA_ATECC108A_SUPPORT
-    { "ecc108",      "Set Target Device to ATECC108A",              select_108                           },
+    { "ecc108",      "Set Target Device to ATECC108A",              select_device                        },
 #endif
 #ifdef ATCA_ECC204_SUPPORT
-    { "ecc204",    "Set Target Device to ECC204",                   select_ecc204                        },
+    { "ecc204",    "Set Target Device to ECC204",                   select_device                        },
 #endif
 #ifdef ATCA_ATECC508A_SUPPORT
-    { "ecc508",      "Set Target Device to ATECC508A",              select_508                           },
+    { "ecc508",      "Set Target Device to ATECC508A",              select_device                        },
 #endif
 #ifdef ATCA_ATECC608_SUPPORT
-    { "ecc608",      "Set Target Device to ATECC608",               select_608                           },
+    { "ecc608",      "Set Target Device to ATECC608",               select_device                        },
 #endif
 #ifdef ATCA_TA100_SUPPORT
-    { "ta100",    "Set Target Device to TA100",                     select_ta100                         },
+    { "ta100",    "Set Target Device to TA100",                     select_device                        },
 #endif
     { "info",     "Get the Chip Revision",                          info                                 },
     { "sernum",   "Get the Chip Serial Number",                     read_sernum                          },
@@ -85,6 +104,7 @@ static t_menu_info mas_menu_info[] =
     { "all",      "Run all unit tests, locking as needed.",         run_all_tests                        },
 #endif
     { "tng",      "Run unit tests on TNG type part.",               run_tng_tests                        },
+    { "wpc",      "Run unit tests on WPC type part.",               run_wpc_tests                        },
 #ifndef DO_NOT_TEST_BASIC_UNIT
     { "basic",    "Run Basic Test on Selected Device",              run_basic_tests                      },
 #ifdef ATCA_TEST_LOCK_ENABLE
@@ -104,10 +124,10 @@ static t_menu_info mas_menu_info[] =
 #ifndef DO_NOT_TEST_SW_CRYPTO
     { "crypto",   "Run Unit Tests for Software Crypto Functions",   atca_crypto_sw_tests                 },
 #endif
-    { "pbkdf2",   "Run pbkdf2 tests",                               run_pbkdf2_tests                     },
 #if defined(ATCA_MBEDTLS)
-    { "crypto_int", "Run crypto library integration tests",         run_crypto_integration_tests         },
+    { "crypto_int", "Run crypto library integration tests",         run_integration_tests               },
 #endif
+    { "jwt",        "Run JWT support tests",                        run_jwt_tests                       },
 #if ATCA_TA_SUPPORT
     { "config",    "Create testing handles in TA100 device",        talib_configure_device               },
     { "handles",   "Print info for stored handles in TA100 device", talib_config_print_handles           },
@@ -176,28 +196,27 @@ int parse_cmd_string(char* buffer, const size_t buf_len, const int argc, char* a
  * \param[in] argv     Argument list
  * \return Execution return code
  */
-static int run_cmd(int argc, char* argv[])
+static int run_cmd(t_menu_info* menu_item, int argc, char* argv[])
 {
-    t_menu_info* menu_item = mas_menu_info;
     int ret = -1;
 
-    printf("\r\n");
-    if (argc)
+    printf("\n");
+    if (argc && argv)
     {
-        (void)process_options(argc - 1, &argv[1]);
-
-        do
+        if(0 <= (ret = process_options(argc - 1, &argv[1])))
         {
-            if (0 == strcmp(menu_item->menu_cmd, argv[0]))
+            for( ;menu_item->menu_cmd; menu_item++)
             {
-                if (menu_item->fp_handler)
+                if (0 == strcmp(menu_item->menu_cmd, argv[0]))
                 {
-                    ret = menu_item->fp_handler(argc, argv);
+                    if (menu_item->fp_handler)
+                    {
+                        ret = menu_item->fp_handler(ret+1, argv);
+                    }
+                    break;
                 }
-                break;
             }
         }
-        while ((++menu_item)->menu_cmd);
     }
 
     if (!menu_item->menu_cmd)
@@ -205,7 +224,10 @@ static int run_cmd(int argc, char* argv[])
         printf("syntax error in command: %s", argv[0]);
     }
 
-    printf("\r\n");
+    /* Reset quiet mode for the next command */
+    g_atca_test_quiet_mode = false;
+
+    printf("\n");
     return ret;
 }
 
@@ -227,7 +249,7 @@ static int parse_cmd(char *command, size_t max_len)
 
     argc = parse_cmd_string(command, max_len, argc, argv);
 
-    return run_cmd(argc, argv);
+    return run_cmd(mas_menu_info, argc, argv);
 }
 
 #if defined(_WIN32) || defined(__linux__) || defined(__APPLE__)
@@ -249,7 +271,7 @@ int main(int argc, char* argv[])
 {
     if (argc > 1)
     {
-        exit_code = run_cmd(argc - 1, &argv[1]);
+        exit_code = run_cmd(mas_menu_info, argc - 1, &argv[1]);
     }
     else
     {
@@ -258,6 +280,7 @@ int main(int argc, char* argv[])
         while (!exit_code)
         {
             printf("$ ");
+            fflush(stdout);
             if (fgets(buffer, sizeof(buffer), stdin))
             {
                 parse_cmd(buffer, sizeof(buffer));

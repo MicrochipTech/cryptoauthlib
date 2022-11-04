@@ -51,9 +51,8 @@ def updateTracker(id, src):
     tnglora = Database.getComponentByID('cryptoauthlib_tng').getSymbolByID('CAL_TNGLORA_SUPPORT')
     tnglora.setValue('TNGLORA' in values)
 
-    trustflex = Database.getComponentByID('cryptoauthlib_tng').getSymbolByID('CAL_TFLEX_SUPPORT')
-    trustflex.setValue('TFLEX' in values)
-
+    tflxtls = Database.getComponentByID('cryptoauthlib_tng').getSymbolByID('CAL_TFLXTLS_SUPPORT')
+    tflxtls.setValue('TFLXTLS' in values)
 
 def handleMessage(messageID, args):
     if (messageID == 'UPDATE_TNG_TYPE'):
@@ -88,7 +87,7 @@ def AddFilesDir(component, configName, dirPath):
         for filename in files:
             filepath = str(root + os.sep + filename)
             source_path = filepath[len(modulePath):]
-            destination_path = "library" + os.sep + "cryptoauthlib" + os.sep + "tng" + root[len(dirPath):]
+            destination_path = "library" + os.sep + "cryptoauthlib" + os.sep + os.path.basename(dirPath) + root[len(dirPath):]
             project_path = str("config" + os.sep + configName + os.sep + destination_path)
             if (".c" in filename):
                 AddFile(component, source_path , destination_path, project_path)
@@ -131,9 +130,9 @@ def instantiateComponent(tngComponent):
     tnglora.setLabel("TNGLORA Certificates?")
     tnglora.setVisible(True)
 
-    trustflex = tngComponent.createBooleanSymbol("CAL_TFLEX_SUPPORT", None)
-    trustflex.setLabel("Trust Flex Certificates?")
-    trustflex.setVisible(True)
+    tflxtls = tngComponent.createBooleanSymbol("CAL_TFLXTLS_SUPPORT", None)
+    tflxtls.setLabel("TFLXTLS Certificates?")
+    tflxtls.setVisible(True)
 
     trustlegacy = tngComponent.createBooleanSymbol("CAL_TNG_LEGACY_SUPPORT", None)
     trustlegacy.setLabel("Legacy Trust Certificates?")

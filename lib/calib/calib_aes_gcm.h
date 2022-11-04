@@ -35,6 +35,10 @@
 extern "C" {
 #endif
 
+#include "calib_config_check.h"
+
+#if CALIB_AES_GCM_EN
+
 #define ATCA_AES_GCM_IV_STD_LENGTH      12
 
 extern const char* atca_basic_aes_gcm_version;
@@ -66,6 +70,8 @@ ATCA_STATUS calib_aes_gcm_encrypt_update(ATCADevice device, atca_aes_gcm_ctx_t* 
 ATCA_STATUS calib_aes_gcm_encrypt_finish(ATCADevice device, atca_aes_gcm_ctx_t* ctx, uint8_t* tag, size_t tag_size);
 ATCA_STATUS calib_aes_gcm_decrypt_update(ATCADevice device, atca_aes_gcm_ctx_t* ctx, const uint8_t* ciphertext, uint32_t ciphertext_size, uint8_t* plaintext);
 ATCA_STATUS calib_aes_gcm_decrypt_finish(ATCADevice device, atca_aes_gcm_ctx_t* ctx, const uint8_t* tag, size_t tag_size, bool* is_verified);
+
+#endif
 
 #ifdef __cplusplus
 }

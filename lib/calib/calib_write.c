@@ -35,8 +35,10 @@
  */
 
 #include "cryptoauthlib.h"
+
 #include "host/atca_host.h"
 
+#if CALIB_WRITE_EN
 /**
  * \brief Executes the Write command, which writes either one four byte word or
  *        a 32-byte block to one of the EEPROM zones on the device. Depending
@@ -105,6 +107,20 @@ ATCA_STATUS calib_write(ATCADevice device, uint8_t zone, uint16_t address, const
     return status;
 }
 
+ATCA_STATUS calib_write_ext(ATCADevice device, uint8_t zone, uint16_t address, const uint8_t *value, const uint8_t *mac)
+{
+#if CALIB_ECC204_EN
+    if(ECC204 == atcab_get_device_type_ext(device))
+    {
+        return calib_ecc204_write(device, zone, address, value, mac);
+    }
+    else
+#endif
+    {
+        return calib_write_ext(device, zone, address, value, mac);
+    }
+}
+
 /** \brief Executes the Write command, which writes either 4 or 32 bytes of
  *          data into a device zone.
  *
@@ -158,8 +174,9 @@ ATCA_STATUS calib_write_zone(ATCADevice device, uint8_t zone, uint16_t slot, uin
 
     return status;
 }
+#endif /* CALIB_WRITE_EN */
 
-
+#if CALIB_WRITE_ENC_EN
 /** \brief Executes the Write command, which performs an encrypted write of
  *          a 32 byte block into given slot.
  *
@@ -301,6 +318,7 @@ ATCA_STATUS calib_write_enc(ATCADevice device, uint16_t key_id, uint8_t block, c
 
     return status;
 }
+#endif /* CALIB_WRITE_ENC_EN */
 
 /** \brief Executes the Write command, which writes the configuration zone.
  *
@@ -318,6 +336,8 @@ ATCA_STATUS calib_write_enc(ATCADevice device, uint16_t key_id, uint8_t block, c
  *
  *  \returns ATCA_SUCCESS on success, otherwise an error code.
  */
+
+#if CALIB_WRITE_EN
 ATCA_STATUS calib_write_config_zone(ATCADevice device, const uint8_t* config_data)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
@@ -362,50 +382,18 @@ ATCA_STATUS calib_write_config_zone(ATCADevice device, const uint8_t* config_dat
     return status;
 }
 
-/** \brief Uses the write command to write a public key to a slot in the
- *         proper format.
- *
- *  \param[in] device     Device context pointer
- *  \param[in] slot        Slot number to write. Only slots 8 to 15 are large
- *                         enough to store a public key.
- *  \param[in] public_key  Public key to write into the slot specified. X and Y
- *                         integers in big-endian format. 64 bytes for P256
- *                         curve.
- *
- *  \return ATCA_SUCCESS on success, otherwise an error code.
- */
-ATCA_STATUS calib_write_pubkey(ATCADevice device, uint16_t slot, const uint8_t *public_key)
+ATCA_STATUS calib_write_config_zone_ext(ATCADevice device, const uint8_t* config_data)
 {
-    ATCA_STATUS status = ATCA_SUCCESS;
-    uint8_t public_key_formatted[ATCA_BLOCK_SIZE * 3];
-    uint8_t block;
-
-    // Check the pointers
-    if (public_key == NULL)
+#if CALIB_ECC204_EN
+    if(ECC204 == atcab_get_device_type_ext(device))
     {
-        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+        return calib_ecc204_write_config_zone(device, config_data);
     }
-
-    // The 64 byte P256 public key gets written to a 72 byte slot in the following pattern
-    // | Block 1                     | Block 2                                      | Block 3       |
-    // | Pad: 4 Bytes | PubKey[0:27] | PubKey[28:31] | Pad: 4 Bytes | PubKey[32:55] | PubKey[56:63] |
-
-    memset(public_key_formatted, 0, sizeof(public_key_formatted));
-    memcpy(&public_key_formatted[4], &public_key[0], 32);   // Move X to padded position
-    memcpy(&public_key_formatted[40], &public_key[32], 32); // Move Y to padded position
-
-    // Using this instead of calib_write_zone_bytes, as that function doesn't work when
-    // the data zone is unlocked
-    for (block = 0; block < 3; block++)
+    else
+#endif
     {
-        if (ATCA_SUCCESS != (status = calib_write_zone(device, ATCA_ZONE_DATA, slot, block, 0, &public_key_formatted[ATCA_BLOCK_SIZE * block], ATCA_BLOCK_SIZE)))
-        {
-            ATCA_TRACE(status, "calib_write_zone - failed");
-            break;
-        }
+        return calib_write_config_zone(device, config_data);
     }
-
-    return status;
 }
 
 /** \brief Executes the Write command, which writes data into the
@@ -512,6 +500,20 @@ ATCA_STATUS calib_write_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slo
     return status;
 }
 
+ATCA_STATUS calib_write_bytes_zone_ext(ATCADevice device, uint8_t zone, uint16_t slot, size_t offset_bytes, const uint8_t *data, size_t length)
+{
+#if CALIB_ECC204_EN
+    if(ECC204 == atcab_get_device_type_ext(device))
+    {
+        return calib_ecc204_write_bytes_zone(device, zone, slot, offset_bytes, data, length);
+    }
+    else
+#endif
+    {
+        return calib_write_bytes_zone(device, zone, slot, offset_bytes, data, length);
+    }
+}
+
 /** \brief Initialize one of the monotonic counters in device with a specific
  *          value.
  *
@@ -556,8 +558,8 @@ ATCA_STATUS calib_write_config_counter(ATCADevice device, uint16_t counter_id, u
 
     return status;
 }
+#endif /* CALIB_WRITE_EN */
 
-#if defined(ATCA_ECC204_SUPPORT)
 /** \brief Execute write command to write either 16 byte or 32 byte to one of the EEPROM zones
  *         on the ECC204 device.
  *
@@ -571,11 +573,13 @@ ATCA_STATUS calib_write_config_counter(ATCADevice device, uint16_t counter_id, u
  *
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
+#if CALIB_WRITE_ECC204_EN
 ATCA_STATUS calib_ecc204_write(ATCADevice device, uint8_t zone, uint16_t address, const uint8_t *value,
                                const uint8_t *mac)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     ATCAPacket packet;
+    uint8_t write_zone = (zone == ATCA_ZONE_CONFIG) ? ATCA_ECC204_ZONE_CONFIG : ATCA_ECC204_ZONE_DATA;
 
     if ((NULL == device) && (NULL == value))
     {
@@ -584,14 +588,14 @@ ATCA_STATUS calib_ecc204_write(ATCADevice device, uint8_t zone, uint16_t address
 
     if (ATCA_SUCCESS == status)
     {
-        packet.param1 = zone;
+        packet.param1 = write_zone;
         packet.param2 = address;
 
-        if (ATCA_ECC204_ZONE_CONFIG == zone)
+        if (ATCA_ECC204_ZONE_CONFIG == write_zone)
         {
             memcpy(packet.data, value, 16);
         }
-        else if (ATCA_ECC204_ZONE_DATA == zone)
+        else if (ATCA_ECC204_ZONE_DATA == write_zone)
         {
             memcpy(packet.data, value, ATCA_BLOCK_SIZE);
         }
@@ -602,12 +606,12 @@ ATCA_STATUS calib_ecc204_write(ATCADevice device, uint8_t zone, uint16_t address
 
         if (ATCA_SUCCESS == status)
         {
-            if (mac && (ATCA_ECC204_ZONE_DATA == zone))
+            if (mac && (ATCA_ECC204_ZONE_DATA == write_zone))
             {
                 memcpy(&packet.data[ATCA_BLOCK_SIZE], mac, MAC_SIZE);
             }
 
-            (void)atWrite(atcab_get_device_type_ext(device), &packet, mac && (ATCA_ECC204_ZONE_DATA == zone));
+            (void)atWrite(atcab_get_device_type_ext(device), &packet, mac && (ATCA_ECC204_ZONE_DATA == write_zone));
         }
     }
 
@@ -641,7 +645,6 @@ ATCA_STATUS calib_ecc204_write_zone(ATCADevice device, uint8_t zone, uint16_t sl
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     uint16_t addr;
-    uint8_t write_zone = (zone == ATCA_ZONE_CONFIG) ? ATCA_ECC204_ZONE_CONFIG : ATCA_ECC204_ZONE_DATA;
 
     ((void)offset);
 
@@ -649,22 +652,22 @@ ATCA_STATUS calib_ecc204_write_zone(ATCADevice device, uint8_t zone, uint16_t sl
     {
         status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
     }
-    else if (((ATCA_ECC204_ZONE_CONFIG == write_zone) && (16 != len)) ||
-             ((ATCA_ECC204_ZONE_DATA == write_zone) && (ATCA_BLOCK_SIZE != len)))
+    else if (((ATCA_ZONE_CONFIG == zone) && (16 != len)) ||
+             ((ATCA_ZONE_DATA == zone) && (ATCA_BLOCK_SIZE != len)))
     {
         status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid length received");
     }
 
     if (ATCA_SUCCESS == status)
     {
-        if (ATCA_SUCCESS != (status = calib_ecc204_get_addr(write_zone, slot, block, 0, &addr)))
+        if (ATCA_SUCCESS != (status = calib_ecc204_get_addr(zone, slot, block, 0, &addr)))
         {
             ATCA_TRACE(status, "calib_ecc204_get_addr - failed");
         }
 
         if (ATCA_SUCCESS == status)
         {
-            status = calib_ecc204_write(device, write_zone, addr, data, NULL);
+            status = calib_ecc204_write(device, zone, addr, data, NULL);
         }
     }
 
@@ -692,7 +695,7 @@ ATCA_STATUS calib_ecc204_write_config_zone(ATCADevice device, const uint8_t* con
     {
         while (slot <= 3)
         {
-            if (ATCA_SUCCESS != (status = calib_ecc204_write_zone(device, ATCA_ECC204_ZONE_CONFIG, slot,
+            if (ATCA_SUCCESS != (status = calib_ecc204_write_zone(device, ATCA_ZONE_CONFIG, slot,
                                                                   0, 0, &config_data[16 * slot], 16)))
             {
                 ATCA_TRACE(status, "calib_ecc204_write_zone - failed");
@@ -703,7 +706,9 @@ ATCA_STATUS calib_ecc204_write_config_zone(ATCADevice device, const uint8_t* con
 
     return status;
 }
+#endif /* CALIB_WRITE_EN */
 
+#if CALIB_WRITE_ENC_EN && defined(ATCA_ECC204_SUPPORT)
 /** \brief Executes write command, performs an encrypted write of a 32 byte block into given slot.
  *
  *  \param[in]  device          Device context pointer
@@ -715,17 +720,9 @@ ATCA_STATUS calib_ecc204_write_config_zone(ATCADevice device, const uint8_t* con
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code
  */
-#if defined(ATCA_USE_CONSTANT_HOST_NONCE)
-ATCA_STATUS calib_ecc204_write_enc(ATCADevice device, uint16_t slot, uint8_t* data, uint8_t* transport_key,
-                                   uint8_t transport_key_id)
-{
-    uint8_t num_in[NONCE_NUMIN_SIZE] = { 0 };
-
-#else
 ATCA_STATUS calib_ecc204_write_enc(ATCADevice device, uint16_t slot, uint8_t* data, uint8_t* transport_key,
                                    uint8_t transport_key_id, uint8_t num_in[NONCE_NUMIN_SIZE])
 {
-#endif
     ATCA_STATUS status = ATCA_SUCCESS;
     atca_nonce_in_out_t nonce_params;
     atca_write_mac_in_out_t write_mac_param;
@@ -790,7 +787,7 @@ ATCA_STATUS calib_ecc204_write_enc(ATCADevice device, uint16_t slot, uint8_t* da
             break;
         }
 
-        if (ATCA_SUCCESS != (status = calib_ecc204_get_addr(ATCA_ECC204_ZONE_DATA, slot, 0, 0, &addr)))
+        if (ATCA_SUCCESS != (status = calib_ecc204_get_addr(ATCA_ZONE_DATA, slot, 0, 0, &addr)))
         {
             ATCA_TRACE(status, "Calculate slot address failed");
             break;
@@ -815,12 +812,13 @@ ATCA_STATUS calib_ecc204_write_enc(ATCADevice device, uint16_t slot, uint8_t* da
             break;
         }
 
-        status = calib_ecc204_write(device, write_mac_param.zone, write_mac_param.key_id, write_mac_param.encrypted_data, write_mac_param.auth_mac);
+        status = calib_ecc204_write(device, ATCA_ZONE_DATA, write_mac_param.key_id, write_mac_param.encrypted_data, write_mac_param.auth_mac);
     }
     while (0);
 
     return status;
 }
+#endif  /* CALIB_WRITE_ENC_EN */
 
 /** \brief Use Write command to write bytes
  *
@@ -836,6 +834,7 @@ ATCA_STATUS calib_ecc204_write_enc(ATCADevice device, uint16_t slot, uint8_t* da
  *
  *  \return ATCA_SUCCESS on success, otheriwse an error code
  */
+#if CALIB_WRITE_ECC204_EN
 ATCA_STATUS calib_ecc204_write_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot, size_t block,
                                           const uint8_t *data, size_t length)
 {
@@ -881,5 +880,73 @@ ATCA_STATUS calib_ecc204_write_bytes_zone(ATCADevice device, uint8_t zone, uint1
 
     return status;
 }
+#endif  /* CALIB_WRITE_ECC204_EN */
 
+#if CALIB_WRITE_EN || CALIB_WRITE_ECC204_EN
+ATCA_STATUS calib_write_zone_ext(ATCADevice device, uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, const uint8_t *data, uint8_t len)
+{
+#if CALIB_ECC204_EN
+    ATCADeviceType devtype = atcab_get_device_type_ext(device);
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+    if(ECC204 == devtype)
+    {
+        status = calib_ecc204_write_zone(device, zone, slot, block, offset, data, len);
+    }
+#if CALIB_WRITE_EN
+    else if (atcab_is_ca_device(devtype))
+    {
+        status = calib_write_zone(device, zone, slot, block, offset, data, len);
+    }
+#endif /* CALIB_WRITE_EN */
+    return status;
+#else
+    return calib_write_zone(device, zone, slot, block, offset, data, len);
+#endif /* CALIB_ECC204_EN */
+}
+
+/** \brief Uses the write command to write a public key to a slot in the
+ *         proper format.
+ *
+ *  \param[in] device     Device context pointer
+ *  \param[in] slot        Slot number to write. Only slots 8 to 15 are large
+ *                         enough to store a public key.
+ *  \param[in] public_key  Public key to write into the slot specified. X and Y
+ *                         integers in big-endian format. 64 bytes for P256
+ *                         curve.
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS calib_write_pubkey(ATCADevice device, uint16_t slot, const uint8_t *public_key)
+{
+    ATCA_STATUS status = ATCA_SUCCESS;
+    uint8_t public_key_formatted[ATCA_BLOCK_SIZE * 3];
+    uint8_t block;
+
+    // Check the pointers
+    if (public_key == NULL)
+    {
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+    }
+
+    // The 64 byte P256 public key gets written to a 72 byte slot in the following pattern
+    // | Block 1                     | Block 2                                      | Block 3       |
+    // | Pad: 4 Bytes | PubKey[0:27] | PubKey[28:31] | Pad: 4 Bytes | PubKey[32:55] | PubKey[56:63] |
+
+    memset(public_key_formatted, 0, sizeof(public_key_formatted));
+    memcpy(&public_key_formatted[4], &public_key[0], 32);   // Move X to padded position
+    memcpy(&public_key_formatted[40], &public_key[32], 32); // Move Y to padded position
+
+    // Using this instead of calib_write_zone_bytes, as that function doesn't work when
+    // the data zone is unlocked
+    for (block = 0; block < 3; block++)
+    {
+        if (ATCA_SUCCESS != (status = calib_write_zone_ext(device, ATCA_ZONE_DATA, slot, block, 0, &public_key_formatted[ATCA_BLOCK_SIZE * block], ATCA_BLOCK_SIZE)))
+        {
+            ATCA_TRACE(status, "calib_write_zone - failed");
+            break;
+        }
+    }
+
+    return status;
+}
 #endif

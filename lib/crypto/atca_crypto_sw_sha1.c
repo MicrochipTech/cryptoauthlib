@@ -28,9 +28,9 @@
 
 #include "atca_crypto_sw_sha1.h"
 #include "hashes/sha1_routines.h"
+#include "cryptoauthlib.h"
 
-#if ATCA_ENABLE_SHA1_IMPL
-
+#if ATCA_CRYPTO_SHA1_EN
 /** \brief Initialize context for performing SHA1 hash in software.
  * \param[in] ctx  Hash context
  * \return ATCA_SUCCESS on success, otherwise an error code.
@@ -72,8 +72,9 @@ int atcac_sw_sha1_finish(atcac_sha1_ctx* ctx, uint8_t digest[ATCA_SHA1_DIGEST_SI
 
     return ATCA_SUCCESS;
 }
-#endif
+#endif /* ATCA_CRYPTO_SHA1_EN */
 
+#if ATCAC_SHA1_EN
 /** \brief Perform SHA1 hash of data in software.
  * \param[in]  data       Data to be hashed
  * \param[in]  data_size  Data size in bytes
@@ -105,3 +106,4 @@ int atcac_sw_sha1(const uint8_t* data, size_t data_size, uint8_t digest[ATCA_SHA
 
     return ATCA_SUCCESS;
 }
+#endif /* ATCA_CRYPTO_SHA1_EN */

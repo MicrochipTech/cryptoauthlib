@@ -60,6 +60,364 @@
 #endif
 </#if>
 
+/** Symmetric Commands Configurations */
+
+/* AES Command */
+<#if cal_aes == false>
+        <#lt>#define   ATCAB_AES_EN                     (FEATURE_DISABLED)
+<#else>
+        <#lt>#define   ATCAB_AES_EN                     (FEATURE_ENABLED)
+
+    <#if cal_aes_gcm == false>
+        <#lt>#define ATCAB_AES_GCM_EN                   (FEATURE_DISABLED)
+    <#else>
+        <#lt>#define ATCAB_AES_GCM_EN                   (FEATURE_ENABLED)
+    </#if>
+    <#if cal_aes_gfm == false>
+        <#lt>#define ATCAB_AES_GFM_EN                   (FEATURE_DISABLED)
+    <#else>
+        <#lt>#define ATCAB_AES_GFM_EN                   (FEATURE_ENABLED)
+    </#if>
+</#if>
+
+/* Checkmac Command */
+<#if cal_checkmac == false>
+    <#lt>#define ATCAB_CHECKMAC_EN                      (FEATURE_DISABLED)
+<#else>
+    <#lt>#define ATCAB_CHECKMAC_EN                      (FEATURE_ENABLED)
+</#if>
+
+/* Gendig Command */
+<#if cal_gendig == false>
+    <#lt>#define ATCAB_GENDIG_EN                        (FEATURE_DISABLED)
+<#else>
+    <#lt>#define ATCAB_GENDIG_EN                        (FEATURE_ENABLED)
+</#if>
+
+/* KDF Command */
+<#if cal_kdf == false>
+    <#lt>#define ATCAB_KDF_EN                           (FEATURE_DISABLED)
+<#else>
+    <#lt>#define ATCAB_KDF_EN                           (FEATURE_ENABLED)
+</#if>
+
+/* MAC Command */
+<#if cal_mac == false>
+    <#lt>#define ATCAB_MAC_EN                           (FEATURE_DISABLED)
+<#else>
+    <#lt>#define ATCAB_MAC_EN                           (FEATURE_ENABLED)
+</#if>
+
+/* HMAC Command */
+<#if cal_hmac == false>
+        <#lt>#define ATCAB_HMAC_EN                      (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_HMAC_EN                      (FEATURE_ENABLED)
+</#if>
+
+/** Asymmetric Commands Configurations */
+
+/* ECDH Command */
+<#if cal_ecdh == false>
+        <#lt>#define ATCAB_ECDH_EN                      (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_ECDH_EN                      (FEATURE_ENABLED)
+
+    <#if cal_ecdh_enc == false>
+        <#lt>#define ATCAB_ECDH_ENC_EN                  (FEATURE_DISABLED)
+    <#else>
+        <#lt>#define ATCAB_ECDH_ENC_EN                  (FEATURE_ENABLED)
+    </#if>
+</#if>
+
+/* Genkey Command */
+<#if cal_genkey == false>
+        <#lt>#define ATCAB_GENKEY_EN                    (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_GENKEY_EN                    (FEATURE_ENABLED)
+
+    <#if cal_genkey_mac == false>
+        <#lt>#define ATCAB_GENKEY_MAC_EN                (FEATURE_DISABLED)
+    <#else>
+        <#lt>#define ATCAB_GENKEY_MAC_EN                (ATCAB_GENKEY_EN)
+    </#if>
+</#if>
+
+/* Sign Command */
+<#if cal_sign == false>
+        <#lt>#define ATCAB_SIGN_EN                      (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_SIGN_EN                      (FEATURE_ENABLED)
+
+    <#if cal_sign_internal == false>
+        <#lt>#define ATCAB_SIGN_INTERNAL_EN             (FEATURE_DISABLED)
+    <#else>
+        <#lt>#define ATCAB_SIGN_INTERNAL_EN             (ATCAB_SIGN_EN)
+    </#if>
+</#if>
+
+/* VERIFY Command */
+<#if cal_verify == false>
+        <#lt>#define ATCAB_VERIFY_EN                    (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_VERIFY_EN                    (FEATURE_ENABLED)
+
+    <#if cal_verify_stored == false>
+        <#lt>#define ATCAB_VERIFY_STORED_EN             (FEATURE_DISABLED)
+    <#else>
+        <#lt>#define ATCAB_VERIFY_STORED_EN             (ATCAB_VERIFY_EN)
+    </#if>
+
+    <#if cal_verify_extern == false>
+        <#lt>#define ATCAB_VERIFY_EXTERN_EN             (FEATURE_DISABLED)
+    <#else>
+        <#lt>#define ATCAB_VERIFY_EXTERN_EN             (ATCAB_VERIFY_EN)
+    </#if>
+
+    <#if cal_verify_validate == false>
+        <#lt>#define ATCAB_VERIFY_VALIDATE_EN           (FEATURE_DISABLED)
+    <#else>
+        <#lt>#define ATCAB_VERIFY_VALIDATE_EN           (ATCAB_VERIFY_EN)
+    </#if>
+
+    <#if cal_verify_mac == false>
+        <#lt>#define ATCAB_VERIFY_EXTERN_STORED_MAC_EN  (FEATURE_DISABLED)
+    <#else>
+        <#lt>#define ATCAB_VERIFY_EXTERN_STORED_MAC_EN  (ATCAB_VERIFY_EN)
+    </#if>
+</#if>
+
+/** General Device Commands Configurations */
+
+/* Counter Command */
+<#if cal_counter == false>
+        <#lt>#define ATCAB_COUNTER_EN                   (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_COUNTER_EN                   (FEATURE_ENABLED)
+</#if>
+
+/* Derivekey Command */
+<#if cal_derivekey == false>
+        <#lt>#define ATCAB_DERIVEKEY_EN                 (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_DERIVEKEY_EN                 (FEATURE_ENABLED)
+</#if>
+
+/* Info Command */
+<#if cal_info == false>
+        <#lt>#define ATCAB_INFO_LATCH_EN                (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_INFO_LATCH_EN                (FEATURE_ENABLED)
+</#if>
+
+/* Lock Command */
+<#if cal_lock == false>
+        <#lt>#define ATCAB_LOCK_EN                      (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_LOCK_EN                      (FEATURE_ENABLED)
+</#if>
+
+/* Nonce Command */
+<#if cal_derivekey == false>
+        <#lt>#define ATCAB_NONCE_EN                     (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_NONCE_EN                     (FEATURE_ENABLED)
+</#if>
+
+/* PrivWrite Command */
+<#if cal_privwrite == false>
+        <#lt>#define ATCAB_PRIVWRITE_EN                 (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_PRIVWRITE_EN                 (FEATURE_ENABLED)
+</#if>
+
+/* Random Command */
+<#if cal_random == false>
+        <#lt>#define ATCAB_RANDOM_EN                    (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_RANDOM_EN                    (FEATURE_ENABLED)
+</#if>
+
+/* Read Command */
+<#if cal_read == false>
+        <#lt>#define ATCAB_READ_EN                      (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_READ_EN                      (FEATURE_ENABLED)
+
+        <#if cal_read_enc == false>
+            <#lt>#define ATCAB_READ_ENC_EN              (FEATURE_DISABLED)
+        <#else>
+            <#lt>#define ATCAB_READ_ENC_EN              (ATCAB_READ_EN)
+    </#if>
+</#if>
+
+/* Secureboot Command */
+<#if cal_secureboot == false>
+        <#lt>#define ATCAB_SECUREBOOT_EN                (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_SECUREBOOT_EN                (FEATURE_ENABLED)
+
+        <#if cal_secureboot_mac == false>
+            <#lt>#define ATCAB_SECUREBOOT_MAC_EN        (FEATURE_DISABLED)
+        <#else>
+            <#lt>#define ATCAB_SECUREBOOT_MAC_EN        (ATCAB_SECUREBOOT_EN)
+        </#if>
+</#if>
+
+/* Selftest Command */
+<#if cal_selftest == false>
+        <#lt>#define ATCAB_SELFTEST_EN                  (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_SELFTEST_EN                  (FEATURE_ENABLED)
+</#if>
+
+/* SHA Command */
+<#if cal_sha == false>
+        <#lt>#define ATCAB_SHA_EN                       (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_SHA_EN                       (FEATURE_ENABLED)
+
+        <#if cal_sha_hmac == false>
+            <#lt>#define ATCAB_SHA_HMAC_EN              (FEATURE_DISABLED)
+        <#else>
+            <#lt>#define ATCAB_SHA_HMAC_EN              (ATCAB_SHA_EN)
+        </#if>
+
+        <#if cal_sha_context == false>
+            <#lt>#define ATCAB_SHA_CONTEXT_EN           (FEATURE_DISABLED)
+        <#else>
+            <#lt>#define ATCAB_SHA_CONTEXT_EN           (ATCAB_SHA_EN)
+        </#if>
+</#if>
+
+/* UpdateExtra Command */
+<#if cal_updateextra == false>
+        <#lt>#define ATCAB_UPDATEEXTRA_EN               (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_UPDATEEXTRA_EN               (FEATURE_ENABLED)
+</#if>
+
+/* Write Command */
+<#if cal_write == false>
+        <#lt>#define ATCAB_WRITE_EN               (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_WRITE_EN               (FEATURE_ENABLED)
+
+        <#if cal_write_enc == false>
+            <#lt>#define ATCAB_WRITE_ENC_EN               (FEATURE_DISABLED)
+        <#else>
+            <#lt>#define ATCAB_WRITE_ENC_EN               (ATCAB_WRITE_EN)
+        </#if>
+</#if>
+
+/* Host side Cryptographic functionality required by the library  */
+
+/* Crypto Hardware AES Configurations */
+<#if cal_hw_aes == false>
+        <#lt>#define ATCAB_AES_EXTRAS_EN                (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_AES_EXTRAS_EN                (CALIB_AES_EN || TALIB_AES_EN)
+
+        <#if cal_crypto_aes_cbc_encrypt == false>
+            <#lt>#define ATCAB_AES_CBC_ENCRYPT_EN       (FEATURE_DISABLED)
+        <#else>
+            <#lt>#define ATCAB_AES_CBC_ENCRYPT_EN       (ATCAB_AES_EXTRAS_EN)
+        </#if>
+
+        <#if cal_crypto_aes_cbc_decrypt == false>
+            <#lt>#define ATCAB_AES_CBC_DECRYPT_EN       (FEATURE_DISABLED)
+        <#else>
+            <#lt>#define ATCAB_AES_CBC_DECRYPT_EN       (ATCAB_AES_EXTRAS_EN)
+        </#if>
+
+        <#if cal_crypto_aes_cbcmac == false>
+            <#lt>#define ATCAB_AES_CBCMAC_EN            (FEATURE_DISABLED)
+        <#else>
+            <#lt>#define ATCAB_AES_CBCMAC_EN            (ATCAB_AES_CBC_ENCRYPT_EN)
+        </#if>
+
+        <#if cal_crypto_aes_ctr == false>
+            <#lt>#define ATCAB_AES_CTR_EN               (FEATURE_DISABLED)
+        <#else>
+            <#lt>#define ATCAB_AES_CTR_EN               (ATCAB_AES_EXTRAS_EN)
+        </#if>
+
+        <#if cal_crypto_aes_ctr_rand_iv == false>
+            <#lt>#define ATCAB_AES_CTR_RAND_IV_EN       (FEATURE_DISABLED)
+        <#else>
+            <#lt>#define ATCAB_AES_CTR_RAND_IV_EN       (ATCAB_AES_CTR_EN && ATCAB_AES_RANDOM_IV_EN)
+        </#if>
+
+        <#if cal_crypto_aes_ccm == false>
+            <#lt>#define ATCAB_AES_CCM_EN               (FEATURE_DISABLED)
+        <#else>
+            <#lt>#define ATCAB_AES_CCM_EN               (ATCAB_AES_CBCMAC_EN && ATCAB_AES_CTR_EN)
+        </#if>
+
+        <#if cal_crypto_aes_ccm_rand_iv == false>
+            <#lt>#define ATCAB_AES_CCM_RAND_IV_EN       (FEATURE_DISABLED)
+        <#else>
+            <#lt>#define ATCAB_AES_CCM_RAND_IV_EN       (ATCAB_AES_CCM_EN && ATCAB_AES_RANDOM_IV_EN)
+        </#if>
+
+        <#if cal_crypto_aes_cmac == false>
+            <#lt>#define ATCAB_AES_CMAC_EN              (FEATURE_DISABLED)
+        <#else>
+            <#lt>#define ATCAB_AES_CMAC_EN              (ATCAB_AES_CBC_ENCRYPT_EN)
+        </#if>
+</#if>
+
+/* Crypto Software SHA Configurations */
+<#if cal_sw_sha1 == false>
+        <#lt>#define ATCAC_SHA1_EN                      (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAC_SHA1_EN                      (FEATURE_ENABLED)
+</#if>
+
+<#if cal_sw_sha2 == false>
+        <#lt>#define ATCAC_SHA256_EN                    (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAC_SHA256_EN                    (FEATURE_ENABLED)
+</#if>
+
+<#if cal_sw_sha2_hmac == false>
+        <#lt>#define ATCAC_SHA256_HMAC_EN               (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAC_SHA256_HMAC_EN               (ATCAC_SHA256_EN)
+</#if>
+
+<#if cal_sw_sha2_hmac_ctr == false>
+        <#lt>#define ATCAC_SHA256_HMAC_CTR_EN           (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAC_SHA256_HMAC_CTR_EN           (ATCAC_SHA256_HMAC_EN)
+</#if>
+
+<#if cal_sw_pbkdf2_sha2 == false>
+        <#lt>#define ATCAC_PBKDF2_SHA256_EN             (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAC_PBKDF2_SHA256_EN             (ATCAC_SHA256_HMAC_EN)
+</#if>
+
+/* External Crypto libraries configurations for host side operations */
+
+<#if cal_sw_rand == false>
+        <#lt>#define ATCAC_RANDOM_EN                    (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAC_RANDOM_EN                    (ATCA_HOSTLIB_EN)
+</#if>
+
+<#if cal_sw_sign == false>
+        <#lt>#define ATCAC_SIGN_EN                      (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAC_SIGN_EN                      (ATCA_HOSTLIB_EN)
+</#if>
+
+<#if cal_sw_verify == false>
+        <#lt>#define ATCAC_VERIFY_EN                    (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAC_VERIFY_EN                    (ATCA_HOSTLIB_EN)
+</#if>
+
 <#if CAL_ENABLE_RTOS>
 /** Define platform malloc/free */
 #define ATCA_PLATFORM_MALLOC    OSAL_Malloc
@@ -286,7 +644,7 @@ extern atca_plib_${plib_drv!"i2c"}_api_t ${plib_info[0]}_plib_${plib_drv!"i2c"}_
 <#if cryptoauthlib_tng.CAL_TNGLORA_SUPPORT>
 #define ATCA_TNGLORA_SUPPORT
 </#if>
-<#if cryptoauthlib_tng.CAL_TFLEX_SUPPORT>
+<#if cryptoauthlib_tng.CAL_TFLXTLS_SUPPORT>
 #define ATCA_TFLEX_SUPPORT
 </#if>
 <#if cryptoauthlib_tng.CAL_TNG_LEGACY_SUPPORT>

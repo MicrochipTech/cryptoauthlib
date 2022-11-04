@@ -46,12 +46,12 @@
 
 /** Library intialization defaults if none were provided */
 static const CK_C_INITIALIZE_ARGS pkcs11_init_defaults = {
-    NULL_PTR,   /**< Callback to create a mutex */
-    NULL_PTR,   /**< Callback to destroy a mutex */
-    NULL_PTR,   /**< Callback to lock a mutex */
-    NULL_PTR,   /**< Callback to unlock a mutex */
-    0,          /**< Initialization Flags  */
-    NULL_PTR,   /**< Reserved - Must be NULL */
+    NULL_PTR,           /**< Callback to create a mutex */
+    NULL_PTR,           /**< Callback to destroy a mutex */
+    NULL_PTR,           /**< Callback to lock a mutex */
+    NULL_PTR,           /**< Callback to unlock a mutex */
+    CKF_OS_LOCKING_OK,  /**< Initialization Flags  */
+    NULL_PTR,           /**< Reserved - Must be NULL */
 };
 
 /**
@@ -69,19 +69,22 @@ pkcs11_lib_ctx_ptr pkcs11_get_context(void)
 
 CK_RV pkcs11_lock_context(pkcs11_lib_ctx_ptr pContext)
 {
-    CK_RV rv = CKR_ARGUMENTS_BAD;
-
-//    PKCS11_DEBUG("%p\r\n", pkcs11_context.lock_mutex);
+    CK_RV rv = CKR_OK;
 
     if (pContext)
     {
         if (pContext->lock_mutex)
         {
-            rv = pContext->lock_mutex(pContext->mutex);
+            rv = pContext->lock_mutex(pContext->lib_lock);
         }
         else
         {
-            rv = CKR_CANT_LOCK;
+            rv = pkcs11_os_lock_mutex(pContext->lib_lock);
+        }
+
+        if (CKR_OK == rv)
+        {
+            pContext->lib_locked = TRUE;
         }
     }
     return rv;
@@ -91,8 +94,6 @@ CK_RV pkcs11_unlock_context(pkcs11_lib_ctx_ptr pContext)
 {
     CK_RV rv = CKR_CRYPTOKI_NOT_INITIALIZED;
 
-//    PKCS11_DEBUG("%p\r\n", pkcs11_context.unlock_mutex);
-
     if (!pContext)
     {
         pContext = pkcs11_get_context();
@@ -100,18 +101,91 @@ CK_RV pkcs11_unlock_context(pkcs11_lib_ctx_ptr pContext)
 
     if (pContext)
     {
+        /* Assume that even if unlock fails it will still have unlocked the mutex */
+        pContext->lib_locked = FALSE;
+
         if (pContext->unlock_mutex)
         {
-            rv = pContext->unlock_mutex(pContext->mutex);
+            rv = pContext->unlock_mutex(pContext->lib_lock);
         }
         else
         {
-            rv = CKR_CANT_LOCK;
+            rv = pkcs11_os_unlock_mutex(pContext->lib_lock);
         }
     }
 
     return rv;
 }
+
+CK_RV pkcs11_lock_device(pkcs11_lib_ctx_ptr pContext)
+{
+    CK_RV rv = CKR_OK;
+
+    if (pContext)
+    {
+        if (pContext->lib_locked)
+        {
+            if (pContext->dev_lock)
+            {
+                rv = pkcs11_os_lock_mutex(pContext->dev_lock);
+            }
+        }
+        else
+        {
+            PKCS11_DEBUG("Library tried to lock out of order\n");
+            rv = CKR_GENERAL_ERROR;
+        }
+    }
+    return rv;
+}
+
+CK_RV pkcs11_unlock_device(pkcs11_lib_ctx_ptr pContext)
+{
+    if (!pContext)
+    {
+        pContext = pkcs11_get_context();
+    }
+
+    if (pContext && pContext->dev_lock)
+    {
+        return pkcs11_os_unlock_mutex(pContext->dev_lock);
+    }
+    else
+    {
+        return CKR_OK;
+    }
+}
+
+CK_RV pkcs11_lock_both(pkcs11_lib_ctx_ptr pContext)
+{
+    CK_RV rv = CKR_OK;
+
+    if (CKR_OK == (rv = pkcs11_lock_context(pContext)))
+    {
+        if(CKR_OK != (rv = pkcs11_lock_device(pContext)))
+        {
+            (void)pkcs11_unlock_context(pContext);
+        }
+    }
+    return rv;
+}
+
+CK_RV pkcs11_unlock_both(pkcs11_lib_ctx_ptr pContext)
+{
+    CK_RV rv1 = CKR_OK;
+    CK_RV rv2 = CKR_OK;
+
+    if (!pContext)
+    {
+        pContext = pkcs11_get_context();
+    }
+
+    rv1 = pkcs11_unlock_device(pContext);
+    rv2 = pkcs11_unlock_context(pContext);
+
+    return rv1 ? rv1 : rv2;
+}
+
 
 /**
  * \brief Check if the library is initialized properly
@@ -184,83 +258,110 @@ CK_RV pkcs11_init(CK_C_INITIALIZE_ARGS_PTR pInitArgs)
         return CKR_ARGUMENTS_BAD;
     }
 
-    /* PKCS11 Sec 5.4 Rules 2 & 3 */
-    if (allset || (CKF_OS_LOCKING_OK & pInitArgs->flags))
-    {
-        /* Calling system plans to make calls to the library from multiple threads */
-        if (allset)
-        {
-            /* Use the provided callbacks to perform locking operations */
-            lib_ctx->create_mutex = pInitArgs->CreateMutex;
-            lib_ctx->destroy_mutex = pInitArgs->DestroyMutex;
-            lib_ctx->lock_mutex = pInitArgs->LockMutex;
-            lib_ctx->unlock_mutex = pInitArgs->UnlockMutex;
-        }
-        else
-        {
-            /* Means we need to use native calls */
-            lib_ctx->create_mutex = pkcs11_os_create_mutex;
-            lib_ctx->destroy_mutex = pkcs11_os_destroy_mutex;
-            lib_ctx->lock_mutex = pkcs11_os_lock_mutex;
-            lib_ctx->unlock_mutex = pkcs11_os_unlock_mutex;
-        }
-    }
-
     /* Only need to check if our library needs to create threads */
     if (CKF_LIBRARY_CANT_CREATE_OS_THREADS & pInitArgs->flags)
     {
         /* If we can't operate successfully without creating threads we'd respond: */
         // return CKR_NEED_TO_CREATE_THREADS;
     }
-
-    /* Perform library initialization steps */
-    if (lib_ctx->create_mutex)
+    
+    if (CKF_OS_LOCKING_OK & pInitArgs->flags)
     {
-        if (lib_ctx->create_mutex(&lib_ctx->mutex))
+        /* 2. If the flag is set, and the function pointer fields aren’t supplied
+              (i.e., they all have the value NULL_PTR), that means that the application
+              will be performing multi-threaded Cryptoki access, and the library needs
+              to use the native operating system primitives to ensure safe multi-threaded
+              access.  If the library is unable to do this, C_Initialize should return
+              with the value CKR_CANT_LOCK. */
+        /* 4. If the flag is set, and the function pointer fields are supplied (i.e., they
+              all have non-NULL_PTR values), that means that the application will be performing
+              multi-threaded Cryptoki access, and the library needs to use either the native
+              operating system primitives or the supplied function pointers for mutex-handling
+              to ensure safe multi-threaded access.  If the library is unable to do this, 
+              C_Initialize should return with the value CKR_CANT_LOCK. */
+        
+        /* Per the above PKCS11 rules we will use our own mutex. One mutex is always a better
+        choice to avoid deadlocks. */
+        if (pkcs11_os_create_mutex(&lib_ctx->lib_lock))
         {
-            PKCS11_DEBUG("Create Failed\r\n");
+            PKCS11_DEBUG("Mutex Create Failed - Rule 2 or 4\n");
             return CKR_CANT_LOCK;
         }
     }
-
-    /* Lock the library mutex */
-    if (lib_ctx->lock_mutex)
+    else
     {
-        if (lib_ctx->lock_mutex(lib_ctx->mutex))
+        if (allset)
         {
-            PKCS11_DEBUG("Lock Failed\r\n");
-            return CKR_CANT_LOCK;
+        /* 3. If the flag isn’t set, and the function pointer fields are supplied (i.e.,
+              they all have non-NULL_PTR values), that means that the application will
+              be performing multi-threaded Cryptoki access, and the library needs to use
+              the supplied function pointers for mutex-handling to ensure safe multi-threaded
+              access.  If the library is unable to do this, C_Initialize should return with
+              the value CKR_CANT_LOCK. */
+            lib_ctx->create_mutex = pInitArgs->CreateMutex;
+            lib_ctx->destroy_mutex = pInitArgs->DestroyMutex;
+            lib_ctx->lock_mutex = pInitArgs->LockMutex;
+            lib_ctx->unlock_mutex = pInitArgs->UnlockMutex;
+
+            /* Perform library initialization steps */
+            if (lib_ctx->create_mutex(&lib_ctx->lib_lock))
+            {
+                PKCS11_DEBUG("Mutex Create Failed - Rule 3\n");
+                return CKR_CANT_LOCK;
+            }
+
+            /* Regardless of the User's mutex arrangements the library has to protect the device */
+            if (pkcs11_os_create_mutex(&lib_ctx->dev_lock))
+            {
+                /* Clean up the best we can */
+                if (lib_ctx->lib_lock && lib_ctx->destroy_mutex)
+                {
+                    (void)lib_ctx->destroy_mutex(lib_ctx->lib_lock);
+                    lib_ctx->lib_lock = NULL;
+                }
+                PKCS11_DEBUG("Device Mutex Create Failed - Rule 3\n");
+                return CKR_GENERAL_ERROR;
+            }
+        }
+        else
+        {
+        /* 1. If the flag isn’t set, and the function pointer fields aren’t supplied (i.e., they all
+              have the value NULL_PTR), that means that the application won’t be accessing the
+              Cryptoki library from multiple threads simultaneously. */
+
+            /* Regardless of the user's mutex arrangements the library has to protect the device so
+            we always lock the context at the safest location. */
+            if (pkcs11_os_create_mutex(&lib_ctx->lib_lock))
+            {
+                PKCS11_DEBUG("Mutex Create Failed - Rule 1\n");
+                return CKR_CANT_LOCK;
+            }
         }
     }
 
-    /* Initialize the Crypto device */
-    lib_ctx->slots = pkcs11_slot_initslots(PKCS11_MAX_SLOTS_ALLOWED);
-    if (lib_ctx->slots)
+    /* Lock the library context */
+    if (CKR_OK == (rv = pkcs11_lock_both(lib_ctx)))
     {
-        lib_ctx->slot_cnt = PKCS11_MAX_SLOTS_ALLOWED;
-    }
-
-    /* Set up a slot with a configuration */
-    rv = pkcs11_slot_config(0);
-
-    if (CKR_OK == rv)
-    {
-        /* Attempt to Initialize the slot */
-        rv = pkcs11_slot_init(0);
-    }
-
-    if (CKR_OK == rv)
-    {
-        lib_ctx->initialized = TRUE;
-    }
-
-    /* UnLock the library mutex */
-    if (lib_ctx->unlock_mutex)
-    {
-        if (lib_ctx->unlock_mutex(lib_ctx->mutex))
+        /* Initialize the Crypto device */
+        lib_ctx->slots = pkcs11_slot_initslots(PKCS11_MAX_SLOTS_ALLOWED);
+        if (lib_ctx->slots)
         {
-            return CKR_CANT_LOCK;
+            lib_ctx->slot_cnt = PKCS11_MAX_SLOTS_ALLOWED;
         }
+
+        /* Set up a slot with a configuration */
+        if (CKR_OK == (rv = pkcs11_slot_config(0)))
+        {
+            /* Attempt to Initialize the slot */
+            rv = pkcs11_slot_init(0);
+        }
+
+        if (CKR_OK == rv)
+        {
+            lib_ctx->initialized = TRUE;
+        }
+
+        rv = pkcs11_unlock_both(lib_ctx);
     }
 
     return rv;
@@ -269,48 +370,81 @@ CK_RV pkcs11_init(CK_C_INITIALIZE_ARGS_PTR pInitArgs)
 /* Close the library */
 CK_RV pkcs11_deinit(CK_VOID_PTR pReserved)
 {
+    CK_RV rv = CKR_OK;
     uint32_t ulSlot = 0;
+    pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
 
     if (pReserved)
     {
         return CKR_ARGUMENTS_BAD;
     }
 
-    if (!pkcs11_context.initialized)
+    if (!lib_ctx || !lib_ctx->initialized)
     {
         return CKR_CRYPTOKI_NOT_INITIALIZED;
     }
 
-#if ATCA_TA_SUPPORT
-    if (atcab_is_ta_device(atcab_get_device_type()))
+    /* Lock the library */
+    if (CKR_OK == (rv == pkcs11_lock_context(lib_ctx)))
     {
-        (void)talib_auth_terminate(atcab_get_device());
-    }
-#endif
-
-    /* Release the crypto device */
-    atcab_release();
-
-    /* Close all the sessions that might be open */
-    for (; ulSlot < pkcs11_context.slot_cnt; ulSlot++)
-    {
-        pkcs11_slot_ctx_ptr slot_ctx_ptr = &((pkcs11_slot_ctx_ptr)(pkcs11_context.slots))[ulSlot];
-        if (slot_ctx_ptr)
+        if (CKR_OK == pkcs11_lock_device(lib_ctx))
         {
-            (void)pkcs11_session_closeall(slot_ctx_ptr->slot_id);
+        #if ATCA_TA_SUPPORT
+            if (atcab_is_ta_device(atcab_get_device_type()))
+            {
+                (void)talib_auth_terminate(atcab_get_device());
+            }
+        #endif
+
+            /* Release the crypto device */
+            atcab_release();
+
+            /* No more device communciation will be occuring */
+            (void)pkcs11_unlock_device(lib_ctx);
         }
+
+        /* Clean up the device specific mutex if it exists*/
+        if (lib_ctx->dev_lock)
+        {
+            (void)pkcs11_os_destroy_mutex(lib_ctx->dev_lock);
+            lib_ctx->dev_lock = NULL;
+        }
+
+        /* Close all the sessions that might be open */
+        for (; ulSlot < pkcs11_context.slot_cnt; ulSlot++)
+        {
+            pkcs11_slot_ctx_ptr slot_ctx_ptr = &((pkcs11_slot_ctx_ptr)(pkcs11_context.slots))[ulSlot];
+            if (slot_ctx_ptr)
+            {
+                (void)pkcs11_session_closeall(slot_ctx_ptr->slot_id);
+            }
+        }
+
+        /* Clear the object cache */
+        (void)pkcs11_object_deinit(&pkcs11_context);
+
+        /** \todo If other threads are waiting for something to happen this call should
+        cause those calls to unblock and return CKR_CRYPTOKI_NOT_INITIALIZED - How
+        that is done by this simplified mutex API is yet to be determined */
+
+        /* the library is now closing */
+        (void)pkcs11_unlock_context(lib_ctx);
+        
+        /* Clean up the library lock */
+        if (lib_ctx->destroy_mutex(lib_ctx->lib_lock)) 
+        {
+            (void)lib_ctx->destroy_mutex(lib_ctx->lib_lock);
+        }
+        else
+        {
+            (void)pkcs11_os_destroy_mutex(lib_ctx->lib_lock);
+        }
+        lib_ctx->lib_lock = NULL;
+
+        pkcs11_context.initialized = FALSE;
     }
 
-    /* Clear the object cache */
-    (void)pkcs11_object_deinit(&pkcs11_context);
-
-    /** \todo If other threads are waiting for something to happen this call should
-       cause those calls to unblock and return CKR_CRYPTOKI_NOT_INITIALIZED - How
-       that is done by this simplified mutex API is yet to be determined */
-
-    pkcs11_context.initialized = FALSE;
-
-    return CKR_OK;
+    return rv;
 }
 
 /** @} */

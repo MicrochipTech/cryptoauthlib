@@ -42,10 +42,10 @@
 /**
  * \defgroup pkcs11 Key (pkcs11_key_)
    @{ */
-
+#if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
 static void pkcs11_cert_check_trust_data(pkcs11_object_ptr pObject)
 {
-#if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
+
     if (PKCS11_OBJECT_FLAG_TRUST_TYPE & pObject->flags && !pObject->data)
     {
         const atcacert_def_t * cert_def = NULL;
@@ -63,13 +63,12 @@ static void pkcs11_cert_check_trust_data(pkcs11_object_ptr pObject)
             }
         }
     }
-#endif
 }
+#endif
 
-
+#if ATCA_CA_SUPPORT
 static CK_RV pkcs11_cert_load_ca(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pAttribute)
 {
-#if ATCA_CA_SUPPORT
     ATCA_STATUS status = ATCA_SUCCESS;
 
     if (pObject->data)
@@ -129,15 +128,12 @@ static CK_RV pkcs11_cert_load_ca(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pAt
     {
         return pkcs11_attrib_empty(NULL, pAttribute);
     }
-#else
-    return CKR_GENERAL_ERROR;
-#endif
 }
+#endif
 
-
+#if ATCA_TA_SUPPORT
 static CK_RV pkcs11_cert_load_ta(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pAttribute)
 {
-#if ATCA_TA_SUPPORT
     uint8_t handle_info[TA_HANDLE_INFO_SIZE];
     ATCA_STATUS status = talib_info_get_handle_info(atcab_get_device(), pObject->slot, handle_info);
 
@@ -160,11 +156,8 @@ static CK_RV pkcs11_cert_load_ta(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pAt
         return CKR_GENERAL_ERROR;
     }
     return CKR_OK;
-#else
-    return CKR_GENERAL_ERROR;
-#endif
 }
-
+#endif
 
 static CK_RV pkcs11_cert_load(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pAttribute)
 {
@@ -173,13 +166,16 @@ static CK_RV pkcs11_cert_load(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pAttri
 
     if (atcab_is_ca_device(dev_type))
     {
+#if ATCA_CA_SUPPORT
         ret = pkcs11_cert_load_ca(pObject, pAttribute);
+#endif
     }
     else if (atcab_is_ta_device(dev_type))
     {
+#if ATCA_TA_SUPPORT
         ret = pkcs11_cert_load_ta(pObject, pAttribute);
+#endif
     }
-
     return ret;
 }
 
@@ -189,20 +185,24 @@ CK_RV pkcs11_cert_get_encoded(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
 
     if (obj_ptr)
     {
+#if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
         pkcs11_cert_check_trust_data(obj_ptr);
+#endif
         return pkcs11_cert_load(obj_ptr, pAttribute);
     }
 
     return CKR_ARGUMENTS_BAD;
 }
 
+#if ATCA_CA_SUPPORT
 static CK_RV pkcs11_cert_get_type_ca(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pAttribute)
 {
-#if ATCA_CA_SUPPORT
     CK_RV rv = CKR_ARGUMENTS_BAD;
     if (pObject)
     {
+#if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
         pkcs11_cert_check_trust_data(pObject);
+#endif
 
         if (pObject->data)
         {
@@ -224,18 +224,20 @@ static CK_RV pkcs11_cert_get_type_ca(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR
     }
 
     return rv;
-#else
-    return CKR_GENERAL_ERROR;
-#endif
 }
+#endif
 
 CK_RV pkcs11_cert_get_type(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
 {
-    CK_RV rv;
+    CK_RV rv = CKR_GENERAL_ERROR;
 
     if (atcab_is_ca_device(atcab_get_device_type()))
     {
+#if ATCA_CA_SUPPORT
         rv = pkcs11_cert_get_type_ca(pObject, pAttribute);
+#else
+        ((void)pObject);
+#endif
     }
     else
     {
@@ -253,7 +255,9 @@ CK_RV pkcs11_cert_get_subject(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
 
     if (obj_ptr)
     {
+#if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
         pkcs11_cert_check_trust_data(obj_ptr);
+#endif
 
         if (obj_ptr->data)
         {
@@ -313,7 +317,9 @@ CK_RV pkcs11_cert_get_subject_key_id(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttr
 
     if (obj_ptr)
     {
+#if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
         pkcs11_cert_check_trust_data(obj_ptr);
+#endif
 
         if (obj_ptr->data)
         {
@@ -349,13 +355,13 @@ CK_RV pkcs11_cert_get_subject_key_id(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttr
 
     return CKR_ARGUMENTS_BAD;
 #else
-    return pkcs11_attrib_empty(NULL, pAttribute);
+    return pkcs11_attrib_empty(pObject, pAttribute);
 #endif
 }
 
 CK_RV pkcs11_cert_get_authority_key_id(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
 {
-    return pkcs11_attrib_empty(NULL, pAttribute);
+    return pkcs11_attrib_empty(pObject, pAttribute);
 }
 
 CK_RV pkcs11_cert_get_trusted_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)

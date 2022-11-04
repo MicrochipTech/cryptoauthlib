@@ -222,6 +222,16 @@ TEST(atcacert_host_hw, atcacert_gen_challenge_hw)
     uint8_t init[32];
     uint8_t challenge1[32];
     uint8_t challenge2[32];
+    bool lockstate = false;
+
+    /* The random command for unlocked cryptoauth devices returns
+    a fixed pattern that never changes */
+    ret = atcab_is_config_locked(&lockstate);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+    if (!lockstate)
+    {
+        TEST_IGNORE_MESSAGE("Config zone must be locked for this test.");
+    }
 
     memset(init, 0, sizeof(init));
     memcpy(challenge1, init, sizeof(challenge1));

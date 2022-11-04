@@ -60,11 +60,19 @@ int atcacert_date_enc(atcacert_date_format_t   format,
     }
     switch (format)
     {
+#if ATCACERT_DATEFMT_ISO_EN
     case DATEFMT_ISO8601_SEP:     return atcacert_date_enc_iso8601_sep(timestamp, formatted_date);
+#endif
+#if ATCACERT_DATEFMT_UTC_EN
     case DATEFMT_RFC5280_UTC:     return atcacert_date_enc_rfc5280_utc(timestamp, formatted_date);
+#endif
+#if ATCACERT_DATEFMT_POSIX_EN
     case DATEFMT_POSIX_UINT32_BE: return atcacert_date_enc_posix_uint32_be(timestamp, formatted_date);
     case DATEFMT_POSIX_UINT32_LE: return atcacert_date_enc_posix_uint32_le(timestamp, formatted_date);
+#endif
+#if ATCACERT_DATEFMT_GEN_EN
     case DATEFMT_RFC5280_GEN:     return atcacert_date_enc_rfc5280_gen(timestamp, formatted_date);
+#endif
     default: break;
     }
 
@@ -88,11 +96,19 @@ int atcacert_date_dec(atcacert_date_format_t format,
     }
     switch (format)
     {
+#if ATCACERT_DATEFMT_ISO_EN
     case DATEFMT_ISO8601_SEP:     return atcacert_date_dec_iso8601_sep(formatted_date, timestamp);
+#endif
+#if ATCACERT_DATEFMT_UTC_EN
     case DATEFMT_RFC5280_UTC:     return atcacert_date_dec_rfc5280_utc(formatted_date, timestamp);
+#endif
+#if ATCACERT_DATEFMT_POSIX_EN
     case DATEFMT_POSIX_UINT32_BE: return atcacert_date_dec_posix_uint32_be(formatted_date, timestamp);
     case DATEFMT_POSIX_UINT32_LE: return atcacert_date_dec_posix_uint32_le(formatted_date, timestamp);
+#endif
+#if ATCACERT_DATEFMT_GEN_EN
     case DATEFMT_RFC5280_GEN:     return atcacert_date_dec_rfc5280_gen(formatted_date, timestamp);
+#endif
     default: break;
     }
 
@@ -109,6 +125,7 @@ int atcacert_date_get_max_date(atcacert_date_format_t format, atcacert_tm_utc_t*
 
     switch (format)
     {
+#if ATCACERT_DATEFMT_ISO_EN
     case DATEFMT_ISO8601_SEP:
         timestamp->tm_year = 9999 - 1900;
         timestamp->tm_mon  = 12 - 1;
@@ -117,7 +134,8 @@ int atcacert_date_get_max_date(atcacert_date_format_t format, atcacert_tm_utc_t*
         timestamp->tm_min  = 59;
         timestamp->tm_sec  = 59;
         break;
-
+#endif
+#if ATCACERT_DATEFMT_UTC_EN
     case DATEFMT_RFC5280_UTC:
         timestamp->tm_year = 2049 - 1900;
         timestamp->tm_mon  = 12 - 1;
@@ -126,7 +144,8 @@ int atcacert_date_get_max_date(atcacert_date_format_t format, atcacert_tm_utc_t*
         timestamp->tm_min  = 59;
         timestamp->tm_sec  = 59;
         break;
-
+#endif
+#if ATCACERT_DATEFMT_POSIX_EN
     case DATEFMT_POSIX_UINT32_BE:
         timestamp->tm_year = 2106 - 1900;
         timestamp->tm_mon  = 2 - 1;
@@ -144,7 +163,8 @@ int atcacert_date_get_max_date(atcacert_date_format_t format, atcacert_tm_utc_t*
         timestamp->tm_min  = 28;
         timestamp->tm_sec  = 15;
         break;
-
+#endif
+#if ATCACERT_DATEFMT_GEN_EN
     case DATEFMT_RFC5280_GEN:
         timestamp->tm_year = 9999 - 1900;
         timestamp->tm_mon  = 12 - 1;
@@ -153,7 +173,7 @@ int atcacert_date_get_max_date(atcacert_date_format_t format, atcacert_tm_utc_t*
         timestamp->tm_min  = 59;
         timestamp->tm_sec  = 59;
         break;
-
+#endif
     default: return ATCACERT_E_BAD_PARAMS;
     }
 
@@ -245,6 +265,7 @@ static const uint8_t* str_to_int(const uint8_t* str, int width, int* num)
     return ret;
 }
 
+#if ATCACERT_DATEFMT_ISO_EN
 int atcacert_date_enc_iso8601_sep(const atcacert_tm_utc_t* timestamp,
                                   uint8_t                  formatted_date[DATEFMT_ISO8601_SEP_SIZE])
 {
@@ -398,7 +419,9 @@ int atcacert_date_dec_iso8601_sep(const uint8_t      formatted_date[DATEFMT_ISO8
     }
     return ATCACERT_E_SUCCESS;
 }
+#endif
 
+#if ATCACERT_DATEFMT_UTC_EN
 int atcacert_date_enc_rfc5280_utc(const atcacert_tm_utc_t* timestamp,
                                   uint8_t                  formatted_date[DATEFMT_RFC5280_UTC_SIZE])
 {
@@ -533,7 +556,9 @@ int atcacert_date_dec_rfc5280_utc(const uint8_t      formatted_date[DATEFMT_RFC5
     }
     return ATCACERT_E_SUCCESS;
 }
+#endif
 
+#if ATCACERT_DATEFMT_GEN_EN
 int atcacert_date_enc_rfc5280_gen(const atcacert_tm_utc_t* timestamp,
                                   uint8_t                  formatted_date[DATEFMT_RFC5280_GEN_SIZE])
 {
@@ -652,7 +677,9 @@ int atcacert_date_dec_rfc5280_gen(const uint8_t      formatted_date[DATEFMT_RFC5
     }
     return ATCACERT_E_SUCCESS;
 }
+#endif
 
+#if ATCACERT_DATEFMT_POSIX_EN
 static int is_leap_year(int year)
 {
     return (year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0));
@@ -987,6 +1014,7 @@ int atcacert_date_dec_posix_uint32_le(const uint8_t      formatted_date[DATEFMT_
 
     return atcacert_date_dec_posix_uint32(posix_uint32, timestamp);
 }
+#endif
 
 int atcacert_date_enc_compcert(const atcacert_tm_utc_t* issue_date,
                                uint8_t                  expire_years,

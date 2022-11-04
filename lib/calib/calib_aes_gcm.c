@@ -34,7 +34,11 @@
  */
 
 #include "cryptoauthlib.h"
+
+#if CALIB_AES_GCM_EN
+
 #include "calib_aes_gcm.h"
+
 
 /** \ingroup calib_
  * @{
@@ -593,5 +597,5 @@ ATCA_STATUS calib_aes_gcm_decrypt_finish(ATCADevice device, atca_aes_gcm_ctx_t* 
 
     return ATCA_SUCCESS;
 }
-
+#endif  /* CALIB_AES_GCM */
 /** @} */

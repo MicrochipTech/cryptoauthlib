@@ -44,29 +44,30 @@ typedef struct _pcks11_mech_table_e
 
 #define PCKS11_MECH_ECC508_EC_CAPABILITY   (CKF_EC_F_P | CKF_EC_NAMEDCURVE | CKF_EC_UNCOMPRESS)
 
+#ifdef ATCA_ATECC508A_SUPPORT
 /* CK_MECHANISM_TYPE, MinKeySize, MaxKeySize, Flags */
 static pcks11_mech_table_e pkcs11_mech_list_ecc508[] = {
     //CKM_DH_PKCS_KEY_PAIR_GEN,
     //CKM_DH_PKCS_DERIVE,
-    { CKM_SHA256,                                                                                                                                       { 256, 256, CKF_HW | CKF_DIGEST                                                                        } },
-    { CKM_SHA256_HMAC,                                                                                                                                  { 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY                                                             } },
-    { CKM_SHA256_HMAC_GENERAL,                                                                                                                          { 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY                                                             } },
-    { CKM_GENERIC_SECRET_KEY_GEN,                                                                                                                       { 0,   0,   CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR                                              } },
-    { CKM_CONCATENATE_BASE_AND_KEY,                                                                                                                     { 0,   0,   CKF_HW | CKF_DERIVE                                                                        } },
-    { CKM_CONCATENATE_BASE_AND_DATA,                                                                                                                    { 0,   0,   CKF_HW | CKF_DERIVE                                                                        } },
-    { CKM_CONCATENATE_DATA_AND_BASE,                                                                                                                    { 0,   0,   CKF_HW | CKF_DERIVE                                                                        } },
-    { CKM_XOR_BASE_AND_DATA,                                                                                                                            { 0,   0,   CKF_HW | CKF_DERIVE                                                                        } },
-    { CKM_EXTRACT_KEY_FROM_KEY,                                                                                                                         { 0,   0,   CKF_HW | CKF_DERIVE                                                                        } },
-    { CKM_SSL3_PRE_MASTER_KEY_GEN,                                                                                                                      { 0,   0,   CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR                                              } },
-    { CKM_SSL3_MASTER_KEY_DERIVE,                                                                                                                       { 0,   0,   CKF_HW | CKF_DERIVE                                                                        } },
-    { CKM_SSL3_KEY_AND_MAC_DERIVE,                                                                                                                      { 0,   0,   CKF_HW | CKF_DERIVE                                                                        } },
-    { CKM_SSL3_MASTER_KEY_DERIVE_DH,                                                                                                                    { 0,   0,   CKF_HW | CKF_DERIVE                                                                        } },
-    { CKM_TLS_PRE_MASTER_KEY_GEN,                                                                                                                       { 0,   0,   CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR                                              } },
-    { CKM_TLS_MASTER_KEY_DERIVE,                                                                                                                        { 0,   0,   CKF_HW | CKF_DERIVE                                                                        } },
-    { CKM_TLS_KEY_AND_MAC_DERIVE,                                                                                                                       { 0,   0,   CKF_HW | CKF_DERIVE                                                                        } },
-    { CKM_TLS_MASTER_KEY_DERIVE_DH,                                                                                                                     { 0,   0,   CKF_HW | CKF_DERIVE                                                                        } },
-    { CKM_TLS_PRF,                                                                                                                                      { 0,   0,   CKF_HW | CKF_DERIVE                                                                        } },
-    { CKM_SHA256_KEY_DERIVATION,                                                                                                                        { 256, 256, CKF_HW | CKF_DERIVE                                                                        } },
+    { CKM_SHA256,                                                                                                                   { 256, 256, CKF_HW | CKF_DIGEST                                                                      } },
+    { CKM_SHA256_HMAC,                                                                                                              { 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY                                                           } },
+    { CKM_SHA256_HMAC_GENERAL,                                                                                                      { 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY                                                           } },
+    { CKM_GENERIC_SECRET_KEY_GEN,                                                                                                   { 0,   0,   CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR                                            } },
+    { CKM_CONCATENATE_BASE_AND_KEY,                                                                                                 { 0,   0,   CKF_HW | CKF_DERIVE                                                                      } },
+    { CKM_CONCATENATE_BASE_AND_DATA,                                                                                                { 0,   0,   CKF_HW | CKF_DERIVE                                                                      } },
+    { CKM_CONCATENATE_DATA_AND_BASE,                                                                                                { 0,   0,   CKF_HW | CKF_DERIVE                                                                      } },
+    { CKM_XOR_BASE_AND_DATA,                                                                                                        { 0,   0,   CKF_HW | CKF_DERIVE                                                                      } },
+    { CKM_EXTRACT_KEY_FROM_KEY,                                                                                                     { 0,   0,   CKF_HW | CKF_DERIVE                                                                      } },
+    { CKM_SSL3_PRE_MASTER_KEY_GEN,                                                                                                  { 0,   0,   CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR                                            } },
+    { CKM_SSL3_MASTER_KEY_DERIVE,                                                                                                   { 0,   0,   CKF_HW | CKF_DERIVE                                                                      } },
+    { CKM_SSL3_KEY_AND_MAC_DERIVE,                                                                                                  { 0,   0,   CKF_HW | CKF_DERIVE                                                                      } },
+    { CKM_SSL3_MASTER_KEY_DERIVE_DH,                                                                                                { 0,   0,   CKF_HW | CKF_DERIVE                                                                      } },
+    { CKM_TLS_PRE_MASTER_KEY_GEN,                                                                                                   { 0,   0,   CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR                                            } },
+    { CKM_TLS_MASTER_KEY_DERIVE,                                                                                                    { 0,   0,   CKF_HW | CKF_DERIVE                                                                      } },
+    { CKM_TLS_KEY_AND_MAC_DERIVE,                                                                                                   { 0,   0,   CKF_HW | CKF_DERIVE                                                                      } },
+    { CKM_TLS_MASTER_KEY_DERIVE_DH,                                                                                                 { 0,   0,   CKF_HW | CKF_DERIVE                                                                      } },
+    { CKM_TLS_PRF,                                                                                                                  { 0,   0,   CKF_HW | CKF_DERIVE                                                                      } },
+    { CKM_SHA256_KEY_DERIVATION,                                                                                                    { 256, 256, CKF_HW | CKF_DERIVE                                                                      } },
     //CKM_WTLS_PRE_MASTER_KEY_GEN,
     //CKM_WTLS_MASTER_KEY_DERIVE,
     //CKM_WTLS_MASTER_KEY_DERIVE_DH_ECC,
@@ -97,13 +98,13 @@ static pcks11_mech_table_e pkcs11_mech_list_ecc508[] = {
     //CKM_SEED_CBC_PAD,
     //CKM_SEED_ECB_ENCRYPT_DATA,
     //CKM_SEED_CBC_ENCRYPT_DATA,
-    { CKM_EC_KEY_PAIR_GEN,                                                                                                                              { 0,   0,   CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR | PCKS11_MECH_ECC508_EC_CAPABILITY           } },
-    { CKM_ECDSA,                                                                                                                                        { 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY | PCKS11_MECH_ECC508_EC_CAPABILITY                          } },
-    { CKM_ECDSA_SHA256,                                                                                                                                 { 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY | PCKS11_MECH_ECC508_EC_CAPABILITY                          } },
-    { CKM_ECDH1_DERIVE,                                                                                                                                 { 0,   0,   CKF_HW | CKF_DERIVE | PCKS11_MECH_ECC508_EC_CAPABILITY                                     } },
-    { CKM_ECDH1_COFACTOR_DERIVE,                                                                                                                        { 0,   0,   CKF_HW | CKF_DERIVE | PCKS11_MECH_ECC508_EC_CAPABILITY                                     } },
-    { CKM_ECMQV_DERIVE,                                                                                                                                 { 0,   0,   CKF_HW | CKF_DERIVE | PCKS11_MECH_ECC508_EC_CAPABILITY                                     } },
-    { CKM_ECDH_AES_KEY_WRAP,                                                                                                                            { 0,   0,   CKF_HW | CKF_WRAP | CKF_UNWRAP | PCKS11_MECH_ECC508_EC_CAPABILITY                          } },
+    { CKM_EC_KEY_PAIR_GEN,                                                                                                          { 0,   0,   CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR | PCKS11_MECH_ECC508_EC_CAPABILITY         } },
+    { CKM_ECDSA,                                                                                                                    { 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY | PCKS11_MECH_ECC508_EC_CAPABILITY                        } },
+    { CKM_ECDSA_SHA256,                                                                                                             { 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY | PCKS11_MECH_ECC508_EC_CAPABILITY                        } },
+    { CKM_ECDH1_DERIVE,                                                                                                             { 0,   0,   CKF_HW | CKF_DERIVE | PCKS11_MECH_ECC508_EC_CAPABILITY                                   } },
+    { CKM_ECDH1_COFACTOR_DERIVE,                                                                                                    { 0,   0,   CKF_HW | CKF_DERIVE | PCKS11_MECH_ECC508_EC_CAPABILITY                                   } },
+    { CKM_ECMQV_DERIVE,                                                                                                             { 0,   0,   CKF_HW | CKF_DERIVE | PCKS11_MECH_ECC508_EC_CAPABILITY                                   } },
+    { CKM_ECDH_AES_KEY_WRAP,                                                                                                        { 0,   0,   CKF_HW | CKF_WRAP | CKF_UNWRAP | PCKS11_MECH_ECC508_EC_CAPABILITY                        } },
     //CKM_FASTHASH,
     //CKM_AES_KEY_GEN,
     //CKM_AES_ECB,
@@ -122,7 +123,7 @@ static pcks11_mech_table_e pkcs11_mech_list_ecc508[] = {
     //{CKM_AES_GMAC,
     //CKM_AES_ECB_ENCRYPT_DATA,
     //CKM_AES_CBC_ENCRYPT_DATA,
-    { CKM_DH_PKCS_PARAMETER_GEN,                                                                                                                        { 0,   0,   CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR                                              } }
+    { CKM_DH_PKCS_PARAMETER_GEN,                                                                                                    { 0,   0,   CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR                                            } }
     //CKM_AES_OFB,
     //CKM_AES_CFB64,
     //CKM_AES_CFB8,
@@ -131,14 +132,16 @@ static pcks11_mech_table_e pkcs11_mech_list_ecc508[] = {
     //CKM_AES_KEY_WRAP,
     //CKM_AES_KEY_WRAP_PAD,
 };
+#endif
 
+#ifdef ATCA_ATECC608_SUPPORT
 /* CK_MECHANISM_TYPE, MinKeySize, MaxKeySize, Flags */
 static pcks11_mech_table_e pkcs11_mech_list_ecc608[] = {
     //CKM_DH_PKCS_KEY_PAIR_GEN,
     //CKM_DH_PKCS_DERIVE,
-    { CKM_SHA256,                                                                                                { 256, 256, CKF_HW | CKF_DIGEST                                                              } },
-    { CKM_SHA256_HMAC,                                                                                           { 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY                                                   } },
-    { CKM_SHA256_HMAC_GENERAL,                                                                                   { 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY                                                   } },
+    { CKM_SHA256,                                                                                 { 256, 256, CKF_HW | CKF_DIGEST                                                              } },
+    { CKM_SHA256_HMAC,                                                                            { 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY                                                   } },
+    { CKM_SHA256_HMAC_GENERAL,                                                                    { 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY                                                   } },
     //{ CKM_GENERIC_SECRET_KEY_GEN,{ 0,   0,   CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR } },
     //{ CKM_CONCATENATE_BASE_AND_KEY,{ 0,   0,   CKF_HW | CKF_DERIVE } },
     //{ CKM_CONCATENATE_BASE_AND_DATA,{ 0,   0,   CKF_HW | CKF_DERIVE } },
@@ -185,8 +188,8 @@ static pcks11_mech_table_e pkcs11_mech_list_ecc608[] = {
     //CKM_SEED_CBC_PAD,
     //CKM_SEED_ECB_ENCRYPT_DATA,
     //CKM_SEED_CBC_ENCRYPT_DATA,
-    { CKM_EC_KEY_PAIR_GEN,                                                                                       { 256, 256, CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR | PCKS11_MECH_ECC508_EC_CAPABILITY } },
-    { CKM_ECDSA,                                                                                                 { 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY | PCKS11_MECH_ECC508_EC_CAPABILITY                } },
+    { CKM_EC_KEY_PAIR_GEN,                                                                        { 256, 256, CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR | PCKS11_MECH_ECC508_EC_CAPABILITY } },
+    { CKM_ECDSA,                                                                                  { 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY | PCKS11_MECH_ECC508_EC_CAPABILITY                } },
     //{ CKM_ECDSA_SHA256,{ 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY | PCKS11_MECH_ECC508_EC_CAPABILITY } },
     //{ CKM_ECDH1_DERIVE,{ 0,   0,   CKF_HW | CKF_DERIVE | PCKS11_MECH_ECC508_EC_CAPABILITY } },
     //{ CKM_ECDH1_COFACTOR_DERIVE,{ 0,   0,   CKF_HW | CKF_DERIVE | PCKS11_MECH_ECC508_EC_CAPABILITY } },
@@ -194,22 +197,22 @@ static pcks11_mech_table_e pkcs11_mech_list_ecc608[] = {
     //{ CKM_ECDH_AES_KEY_WRAP,{ 0,   0,   CKF_HW | CKF_WRAP | CKF_UNWRAP | PCKS11_MECH_ECC508_EC_CAPABILITY } },
     //CKM_FASTHASH,
     //CKM_AES_KEY_GEN,
-    { CKM_AES_ECB,                                                                                               { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
-    { CKM_AES_CBC,                                                                                               { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    { CKM_AES_ECB,                                                                                { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    { CKM_AES_CBC,                                                                                { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
     //{CKM_AES_MAC,           { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT} },
     //{CKM_AES_MAC_GENERAL,   { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT} },
-    //CKM_AES_CBC_PAD,
-    { CKM_AES_CTR,                                                                                               { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
-    { CKM_AES_GCM,                                                                                               { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
-    { CKM_AES_CCM,                                                                                               { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    { CKM_AES_CBC_PAD,                                                                            { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    { CKM_AES_CTR,                                                                                { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    { CKM_AES_GCM,                                                                                { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    { CKM_AES_CCM,                                                                                { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
     //CKM_AES_CTS,
-    { CKM_AES_CMAC,                                                                                              { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
-    { CKM_AES_CMAC_GENERAL,                                                                                      { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    { CKM_AES_CMAC,                                                                               { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    { CKM_AES_CMAC_GENERAL,                                                                       { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
     //CKM_AES_XCBC_MAC,
     //CKM_AES_XCBC_MAC_96,
     //{CKM_AES_GMAC,
-    { CKM_AES_ECB_ENCRYPT_DATA,                                                                                  { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
-    { CKM_AES_CBC_ENCRYPT_DATA,                                                                                  { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    { CKM_AES_ECB_ENCRYPT_DATA,                                                                   { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    { CKM_AES_CBC_ENCRYPT_DATA,                                                                   { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
     //{ CKM_DH_PKCS_PARAMETER_GEN,{ 0,   0,   CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR } }
     //CKM_AES_OFB,
     //CKM_AES_CFB64,
@@ -219,6 +222,97 @@ static pcks11_mech_table_e pkcs11_mech_list_ecc608[] = {
     //CKM_AES_KEY_WRAP,
     //CKM_AES_KEY_WRAP_PAD,
 };
+#endif
+
+#ifdef ATCA_TA100_SUPPORT
+/* CK_MECHANISM_TYPE, MinKeySize, MaxKeySize, Flags */
+static pcks11_mech_table_e pkcs11_mech_list_ta100[] = {
+    //CKM_DH_PKCS_KEY_PAIR_GEN,
+    //CKM_DH_PKCS_DERIVE,
+    { CKM_SHA256,                                                                                 { 256, 256, CKF_HW | CKF_DIGEST                                                              } },
+    { CKM_SHA256_HMAC,                                                                            { 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY                                                   } },
+    { CKM_SHA256_HMAC_GENERAL,                                                                    { 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY                                                   } },
+    //{ CKM_GENERIC_SECRET_KEY_GEN,{ 0,   0,   CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR } },
+    //{ CKM_CONCATENATE_BASE_AND_KEY,{ 0,   0,   CKF_HW | CKF_DERIVE } },
+    //{ CKM_CONCATENATE_BASE_AND_DATA,{ 0,   0,   CKF_HW | CKF_DERIVE } },
+    //{ CKM_CONCATENATE_DATA_AND_BASE,{ 0,   0,   CKF_HW | CKF_DERIVE } },
+    //{ CKM_XOR_BASE_AND_DATA,{ 0,   0,   CKF_HW | CKF_DERIVE } },
+    //{ CKM_EXTRACT_KEY_FROM_KEY,{ 0,   0,   CKF_HW | CKF_DERIVE } },
+    //{ CKM_SSL3_PRE_MASTER_KEY_GEN,{ 0,   0,   CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR } },
+    //{ CKM_SSL3_MASTER_KEY_DERIVE,{ 0,   0,   CKF_HW | CKF_DERIVE } },
+    //{ CKM_SSL3_KEY_AND_MAC_DERIVE,{ 0,   0,   CKF_HW | CKF_DERIVE } },
+    //{ CKM_SSL3_MASTER_KEY_DERIVE_DH,{ 0,   0,   CKF_HW | CKF_DERIVE } },
+    //{ CKM_TLS_PRE_MASTER_KEY_GEN,{ 0,   0,   CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR } },
+    //{ CKM_TLS_MASTER_KEY_DERIVE,{ 0,   0,   CKF_HW | CKF_DERIVE } },
+    //{ CKM_TLS_KEY_AND_MAC_DERIVE,{ 0,   0,   CKF_HW | CKF_DERIVE } },
+    //{ CKM_TLS_MASTER_KEY_DERIVE_DH,{ 0,   0,   CKF_HW | CKF_DERIVE } },
+    //{ CKM_TLS_PRF,{ 0,   0,   CKF_HW | CKF_DERIVE } },
+    //{ CKM_SHA256_KEY_DERIVATION,{ 256, 256, CKF_HW | CKF_DERIVE } },
+    //CKM_WTLS_PRE_MASTER_KEY_GEN,
+    //CKM_WTLS_MASTER_KEY_DERIVE,
+    //CKM_WTLS_MASTER_KEY_DERIVE_DH_ECC,
+    //CKM_WTLS_PRF,
+    //CKM_WTLS_SERVER_KEY_AND_MAC_DERIVE,
+    //CKM_WTLS_CLIENT_KEY_AND_MAC_DERIVE,
+    //CKM_TLS10_MAC_SERVER,
+    //CKM_TLS10_MAC_CLIENT,
+    //CKM_TLS12_MAC,
+    //CKM_TLS12_KDF,
+    //CKM_TLS12_MASTER_KEY_DERIVE,
+    //CKM_TLS12_KEY_AND_MAC_DERIVE,
+    //CKM_TLS12_MASTER_KEY_DERIVE_DH,
+    //CKM_TLS12_KEY_SAFE_DERIVE,
+    //CKM_TLS_MAC,
+    //CKM_TLS_KDF,
+    //CKM_KEY_WRAP_LYNKS,
+    //CKM_KEY_WRAP_SET_OAEP,
+    //CKM_CMS_SIG,
+    //CKM_KIP_DERIVE,
+    //CKM_KIP_WRAP,
+    //CKM_KIP_MAC,
+    //CKM_SEED_KEY_GEN,
+    //CKM_SEED_ECB,
+    //CKM_SEED_CBC,
+    //CKM_SEED_MAC,
+    //CKM_SEED_MAC_GENERAL,
+    //CKM_SEED_CBC_PAD,
+    //CKM_SEED_ECB_ENCRYPT_DATA,
+    //CKM_SEED_CBC_ENCRYPT_DATA,
+    { CKM_EC_KEY_PAIR_GEN,                                                                        { 256, 256, CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR | PCKS11_MECH_ECC508_EC_CAPABILITY } },
+    { CKM_ECDSA,                                                                                  { 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY | PCKS11_MECH_ECC508_EC_CAPABILITY                } },
+    //{ CKM_ECDSA_SHA256,{ 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY | PCKS11_MECH_ECC508_EC_CAPABILITY } },
+    //{ CKM_ECDH1_DERIVE,{ 0,   0,   CKF_HW | CKF_DERIVE | PCKS11_MECH_ECC508_EC_CAPABILITY } },
+    //{ CKM_ECDH1_COFACTOR_DERIVE,{ 0,   0,   CKF_HW | CKF_DERIVE | PCKS11_MECH_ECC508_EC_CAPABILITY } },
+    //{ CKM_ECMQV_DERIVE,{ 0,   0,   CKF_HW | CKF_DERIVE | PCKS11_MECH_ECC508_EC_CAPABILITY } },
+    //{ CKM_ECDH_AES_KEY_WRAP,{ 0,   0,   CKF_HW | CKF_WRAP | CKF_UNWRAP | PCKS11_MECH_ECC508_EC_CAPABILITY } },
+    //CKM_FASTHASH,
+    //CKM_AES_KEY_GEN,
+    { CKM_AES_ECB,                                                                                { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    { CKM_AES_CBC,                                                                                { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    //{CKM_AES_MAC,           { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT} },
+    //{CKM_AES_MAC_GENERAL,   { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT} },
+    { CKM_AES_CBC_PAD,                                                                            { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    { CKM_AES_CTR,                                                                                { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    { CKM_AES_GCM,                                                                                { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    { CKM_AES_CCM,                                                                                { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    //CKM_AES_CTS,
+    { CKM_AES_CMAC,                                                                               { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    { CKM_AES_CMAC_GENERAL,                                                                       { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    //CKM_AES_XCBC_MAC,
+    //CKM_AES_XCBC_MAC_96,
+    //{CKM_AES_GMAC,
+    { CKM_AES_ECB_ENCRYPT_DATA,                                                                   { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    { CKM_AES_CBC_ENCRYPT_DATA,                                                                   { 128, 128, CKF_HW | CKF_ENCRYPT | CKF_DECRYPT                                               } },
+    //{ CKM_DH_PKCS_PARAMETER_GEN,{ 0,   0,   CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR } }
+    //CKM_AES_OFB,
+    //CKM_AES_CFB64,
+    //CKM_AES_CFB8,
+    //CKM_AES_CFB128,
+    //CKM_AES_CFB1,
+    //CKM_AES_KEY_WRAP,
+    //CKM_AES_KEY_WRAP_PAD,
+};
+#endif
 
 #define TABLE_SIZE(x)   sizeof(x) / sizeof(x[0])
 
@@ -260,7 +354,7 @@ CK_RV pkcs11_mech_get_list(CK_SLOT_ID slotID, CK_MECHANISM_TYPE_PTR pMechanismLi
     pcks11_mech_table_ptr mech_list_ptr = NULL_PTR;
     CK_ULONG mech_cnt = 0;
 
-    if (!lib_ctx)
+    if (!lib_ctx || !lib_ctx->initialized)
     {
         return CKR_CRYPTOKI_NOT_INITIALIZED;
     }
@@ -281,14 +375,24 @@ CK_RV pkcs11_mech_get_list(CK_SLOT_ID slotID, CK_MECHANISM_TYPE_PTR pMechanismLi
 
     switch (slot_ctx->interface_config.devtype)
     {
+#ifdef ATCA_ATECC508A_SUPPORT
     case ATECC508A:
         mech_cnt = TABLE_SIZE(pkcs11_mech_list_ecc508);
         mech_list_ptr = pkcs11_mech_list_ecc508;
         break;
+#endif
+#ifdef ATCA_ATECC608_SUPPORT
     case ATECC608:
         mech_cnt = TABLE_SIZE(pkcs11_mech_list_ecc608);
         mech_list_ptr = pkcs11_mech_list_ecc608;
         break;
+#endif
+#ifdef ATCA_TA100_SUPPORT
+    case TA100:
+        mech_cnt = TABLE_SIZE(pkcs11_mech_list_ta100);
+        mech_list_ptr = pkcs11_mech_list_ta100;
+        break;
+#endif
     default:
         break;
     }
@@ -339,12 +443,21 @@ CK_RV pkcs_mech_get_info(CK_SLOT_ID slotID, CK_MECHANISM_TYPE type, CK_MECHANISM
 
     switch (slot_ctx->interface_config.devtype)
     {
+#ifdef ATCA_ATECC508A_SUPPORT
     case ATECC508A:
         mech_info_ptr = pkcs11_mech_find_info(pkcs11_mech_list_ecc508, TABLE_SIZE(pkcs11_mech_list_ecc508), type);
         break;
+#endif
+#ifdef ATCA_ATECC608_SUPPORT
     case ATECC608:
         mech_info_ptr = pkcs11_mech_find_info(pkcs11_mech_list_ecc608, TABLE_SIZE(pkcs11_mech_list_ecc608), type);
         break;
+#endif
+#ifdef ATCA_TA100_SUPPORT
+    case TA100:
+        mech_info_ptr = pkcs11_mech_find_info(pkcs11_mech_list_ta100, TABLE_SIZE(pkcs11_mech_list_ta100), type);
+        break;
+#endif
     default:
         break;
     }

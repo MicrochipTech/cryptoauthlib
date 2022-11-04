@@ -25,9 +25,68 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
 
 TEST(atca_cmd_basic_test, sign)
+{
+    ATCA_STATUS status = ATCA_SUCCESS;
+    uint8_t msg[ATCA_SHA256_DIGEST_SIZE];
+    uint8_t signature[ATCA_ECCP256_SIG_SIZE];
+    uint16_t private_key_id = 0;
+
+    test_assert_config_is_locked();
+    test_assert_data_is_locked();
+
+    status = atca_test_config_get_id(TEST_TYPE_ECC_SIGN, &private_key_id);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Sign message
+    status = atcab_sign(private_key_id, msg, signature);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+}
+
+#if defined(ATCA_MBEDTLS) || defined(ATCA_OPENSSL) || defined(ATCA_WOLFSSL)
+#include "crypto/atca_crypto_sw.h"
+
+TEST(atca_cmd_basic_test, sign_sw_verify)
+{
+    ATCA_STATUS status = ATCA_SUCCESS;
+    uint8_t msg[ATCA_SHA256_DIGEST_SIZE];
+    uint8_t public_key[ATCA_ECCP256_PUBKEY_SIZE];
+    uint8_t signature[ATCA_ECCP256_SIG_SIZE];
+    atcac_pk_ctx pkey;
+    uint16_t private_key_id = 0;
+
+    test_assert_config_is_locked();
+    test_assert_data_is_locked();
+
+    /* Create a message digest */
+    status = atcac_sw_sha2_256((uint8_t*)"abcd", 4, msg);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    status = atca_test_config_get_id(TEST_TYPE_ECC_SIGN, &private_key_id);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    /* Load the public key */
+    status = atcab_get_pubkey(private_key_id, public_key);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    /* Initialize a software public key context */
+    status = atcac_pk_init(&pkey, public_key, ATCA_ECCP256_PUBKEY_SIZE, 0, true);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    /* Sign message */
+    status = atcab_sign(private_key_id, msg, signature);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    /* Verify the signature */
+    status = atcac_pk_verify(&pkey, msg, sizeof(msg), signature, sizeof(signature));
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+}
+#endif
+
+#if defined(ATCA_ECC_SUPPORT) || defined(ATCA_TA100_SUPPORT)
+TEST(atca_cmd_basic_test, sign_hw_verify)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     uint8_t msg[ATCA_SHA256_DIGEST_SIZE];
@@ -47,7 +106,7 @@ TEST(atca_cmd_basic_test, sign)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Generate key pair
-    status = atcab_genkey(private_key_id, public_key);
+    status = atca_test_genkey(private_key_id, public_key);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Sign message
@@ -59,9 +118,9 @@ TEST(atca_cmd_basic_test, sign)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(true, is_verified);
 }
+#endif
 
 #ifdef ATCA_ECC_SUPPORT
-
 TEST(atca_cmd_basic_test, sign_internal)
 {
     uint8_t internal_key_id = 4; // Which slot to sign digest of (via GenDig)
@@ -91,7 +150,7 @@ TEST(atca_cmd_basic_test, sign_internal)
     memcpy(&sn[4], &config[8], 5);
 
     // Generate key pair and get public key
-    status = atcab_genkey(private_key_id, public_key);
+    status = atca_test_genkey(private_key_id, public_key);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Start with random nonce
@@ -145,19 +204,29 @@ TEST(atca_cmd_basic_test, sign_internal)
 }
 #endif
 
+#if 0
 TEST(atca_cmd_basic_test, read_sig)
 {
     TEST_IGNORE_MESSAGE("Pending");
 }
+#endif
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info sign_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sign),          DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
-#ifdef ATCA_ECC_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sign_internal), DEVICE_MASK_ECC },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sign),            DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
+#if ATCA_HOSTLIB_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sign_sw_verify),  DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
 #endif
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, read_sig),      DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
+#if !ATCA_HOSTLIB_EN && (defined(ATCA_ECC_SUPPORT) || defined(ATCA_TA100_SUPPORT))
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sign_hw_verify),  DEVICE_MASK_ATECC | DEVICE_MASK(TA100) },
+#endif
+#ifdef ATCA_ECC_SUPPORT
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sign_internal),   DEVICE_MASK_ATECC },
+#endif
+#if 0
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, read_sig),      DEVICE_MASK_ATECC | DEVICE_MASK(TA100) },
+#endif
     { (fp_test_case)NULL,                     (uint8_t)0 },   /* Array Termination element*/
 };
 // *INDENT-OFN*

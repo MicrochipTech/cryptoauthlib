@@ -25,7 +25,7 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
 
 #ifdef ATCA_ECC_SUPPORT
 
@@ -101,9 +101,10 @@ TEST(atca_cmd_basic_test, priv_write_encrypted)
 t_test_case_info privwrite_basic_test_info[] =
 {
 #ifdef ATCA_ECC_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, priv_write_unencrypted), DEVICE_MASK_ECC                      },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, priv_write_encrypted),   DEVICE_MASK_ECC                      },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, priv_write_unencrypted), DEVICE_MASK_ATECC    },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, priv_write_encrypted),   DEVICE_MASK_ATECC    },
 #endif
     { (fp_test_case)NULL,                     (uint8_t)0 },            /* Array Termination element*/
 };
 // *INDENT-ON*
+

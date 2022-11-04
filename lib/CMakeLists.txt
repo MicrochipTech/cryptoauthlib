@@ -20,6 +20,7 @@ option(ATCA_BUILD_SHARED_LIBS "Build CryptoAuthLib as shared library" ON)
 option(ATCA_NO_HEAP "Do not use dynamic (heap) allocation functions" OFF)
 option(ATCA_USE_ATCAB_FUNCTIONS "Build the atcab_ api functions rather than using macros" OFF)
 option(ATCA_ENABLE_DEPRECATED "Enable the use of older APIs that that been replaced" OFF)
+option(ATCA_STRICT_C99 "Enable strict C99 compliance for the libray" OFF)
 
 # Software Cryptographic backend for host crypto abstractions
 option(ATCA_MBEDTLS "Integrate with mbedtls" OFF)
@@ -31,6 +32,9 @@ option(ATCA_TNGTLS_SUPPORT "Include Trust & Go TLS Certificates")
 option(ATCA_TNGLORA_SUPPORT "Include Trust & Go LORA Certificates")
 option(ATCA_TFLEX_SUPPORT "Include Trust Flex Certificates")
 option(ATCA_TNG_LEGACY_SUPPORT "Include previous version of Trust & Go Certificates")
+
+# WPC Options
+option(ATCA_WPC_SUPPORT "Include WPC Certificates")
 
 # Device enablement
 option(ATCA_ATSHA204A_SUPPORT "Include support for ATSHA204A device" ON)
@@ -64,6 +68,8 @@ endif()
 # Check Platform Information
 check_symbol_exists(malloc "stdlib.h" HAS_MALLOC)
 check_symbol_exists(free "stdlib.h" HAS_FREE)
+check_symbol_exists(strcasestr "string.h" HAS_STRCASESTR)
+check_symbol_exists(memset_s "string.h" HAS_MEMSET_S)
 
 
 set(BUILD_SHARED_LIBS ${ATCA_BUILD_SHARED_LIBS})
@@ -86,11 +92,13 @@ file(GLOB JWT_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "jwt/*.c")
 file(GLOB JWT_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "jwt/*.h")
 file(GLOB TNG_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../app/tng/*.c")
 file(GLOB TNG_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../app/tng/*.h")
+file(GLOB WPC_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../app/wpc/*.c")
+file(GLOB WPC_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../app/wpc/*.h")
 file(GLOB SHA206_API_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../app/api_206a/*.c")
 file(GLOB SHA206_API_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../app/api_206a/*.h")
 
-if(ATCA_PKCS11)
-include(cmake/pkcs11.cmake)
+if(ATCA_PKCS11 AND (ATCA_TNGTLS_SUPPORT OR ATCA_TNGLORA_SUPPORT OR ATCA_TFLEX_SUPPORT))
+SET(TNG_SRC ${TNG_SRC} ../app/pkcs11/trust_pkcs11_config.c)
 endif()
 
 if(${CMAKE_VERSION} VERSION_GREATER "3.8.0")
@@ -100,7 +108,9 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TALIB_SRC})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${CRYPTO_SRC})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${HOST_SRC})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${JWT_SRC})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${PKCS11_SRC})
 source_group("App/Tng" FILES ${TNG_SRC})
+source_group("App/Wpc" FILES ${WPC_SRC})
 endif()
 
 if (ATCA_MBEDTLS)
@@ -116,7 +126,7 @@ file(GLOB MBEDTLS_LIB_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../third_party/m
 add_library(mbedtls STATIC ${MBEDTLS_LIB_SRC})
 
 target_compile_definitions(mbedtls PUBLIC -DMBEDTLS_CMAC_C)
-if(NOT WIN32)
+if(NOT MSVC)
 target_compile_options(mbedtls PRIVATE -fPIC)
 endif()
 include_directories(mbedtls PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
@@ -124,6 +134,10 @@ include_directories(mbedtls PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
 endif()
 
 file(GLOB MBEDTLS_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mbedtls/*.c")
+
+if(NOT MSVC)
+set_source_files_properties(mbedtls/atca_mbedtls_wrap.c PROPERTIES COMPILE_FLAGS -Wno-pedantic)
+endif()
 
 if(${CMAKE_VERSION} VERSION_GREATER "3.8.0")
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${MBEDTLS_SRC})
@@ -148,6 +162,7 @@ set(WOLFSSL_LIB_SRC ../third_party/wolfssl/wolfcrypt/src/aes.c
                     ../third_party/wolfssl/wolfcrypt/src/cmac.c
                     ../third_party/wolfssl/wolfcrypt/src/coding.c
                     ../third_party/wolfssl/wolfcrypt/src/des3.c
+                    ../third_party/wolfssl/wolfcrypt/src/dsa.c
                     ../third_party/wolfssl/wolfcrypt/src/ecc.c
                     ../third_party/wolfssl/wolfcrypt/src/hash.c
                     ../third_party/wolfssl/wolfcrypt/src/hmac.c
@@ -170,7 +185,7 @@ target_compile_definitions(wolfssl PRIVATE -DWOLFSSL_USER_SETTINGS)
 configure_file(../third_party/wolfssl_settings.h.in user_settings.h @ONLY)
 set(WOLFSSL_USER_SETTINGS TRUE)
 
-if(NOT WIN32)
+if(NOT MSVC)
 target_compile_options(wolfssl PRIVATE -fPIC)
 endif()
 
@@ -213,7 +228,6 @@ set(CRYPTOAUTH_SRC ${LIB_SRC}
                    ${CRYPTO_SRC}
                    ${JWT_SRC}
                    ${TNG_SRC}
-                   ${PKCS11_SRC}
                    ${MBEDTLS_SRC}
                    ${WOLFSSL_SRC}
                    ${OPENSSL_SRC}
@@ -263,7 +277,7 @@ set(USE_UDEV TRUE)
 elseif(LIBUSB_GOOD)
 set(USE_LIBUSB TRUE)
 else()
-message(FATAL_ERROR "Missing Build Dependencies for USB - install libusb-1.0-0-dev or libudev-dev")
+message(FATAL_ERROR, "Missing Build Dependencies for USB - install libusb-1.0-0-dev or libudev-dev")
 endif()
 
 endif(LINUX AND NEED_USB)
@@ -310,9 +324,19 @@ if(ATCA_HAL_KIT_BRIDGE)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_kit_bridge.c)
 endif(ATCA_HAL_KIT_BRIDGE)
 
+if(ATCA_WPC_SUPPORT)
+set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${WPC_SRC})
+endif(ATCA_WPC_SUPPORT)
+
 # Add Remaining Sources depending on target library type
 if(ATCA_MBEDTLS)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${MBEDTLS_SRC})
+endif()
+
+if(ATCA_PKCS11)
+include(cmake/pkcs11.cmake)
+set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${PKCS11_SRC})
+set(ATCA_LIBRARY_CONF ${DEFAULT_CONF_PATH}/${DEFAULT_CONF_FILE_NAME} CACHE STRING "" FORCE)
 endif()
 
 if(ATCA_BUILD_SHARED_LIBS)
@@ -332,11 +356,17 @@ if(HAS_FREE)
 set(ATCA_PLATFORM_FREE free CACHE STRING "" FORCE)
 endif(HAS_FREE)
 
+if(HAS_STRCASESTR)
+set(ATCA_PLATFORM_STRCASESTR strcasestr CACHE STRING "" FORCE)
+endif(HAS_STRCASESTR)
+
+if(HAS_MEMSET_S)
+set(ATCA_PLATFORM_MEMSET_S memset_s CACHE STRING "" FORCE)
+endif(HAS_MEMSET_S)
+
 if(BUILD_TESTS)
 set(ATCA_TESTS_ENABLED ON CACHE INTERNAL "")
 endif(BUILD_TESTS)
-
-set(ATCA_LIBRARY_CONF ${DEFAULT_CONF_PATH}/${DEFAULT_CONF_FILE_NAME} CACHE STRING "" FORCE)
 
 configure_file(atca_config.h.in atca_config.h @ONLY)
 set(LIB_INC ${LIB_INC} ${CMAKE_CURRENT_BINARY_DIR}/atca_config.h)
@@ -377,6 +407,24 @@ endif()
 target_link_libraries(cryptoauth rt)
 endif(LINUX)
 
+if(NOT MSVC)
+target_compile_options(cryptoauth PRIVATE -ffile-prefix-map=${CMAKE_CURRENT_SOURCE_DIR}=.
+                                                   -fmacro-prefix-map=${CMAKE_CURRENT_SOURCE_DIR}=.)
+#target_compile_options(cryptoauth PRIVATE -Wall -Wextra -Werror)
+target_compile_options(cryptoauth PRIVATE -Wall -Wextra)
+endif()
+
+if(ATCA_STRICT_C99)
+set_property(TARGET cryptoauth PROPERTY C_STANDARD 99)
+if(NOT MSVC)
+target_compile_options(cryptoauth PRIVATE -Wpedantic)
+endif()
+endif()
+
+if(NOT MSVC AND ATCA_HAL_KIT_HID)
+set_source_files_properties(${HID_SRC} PROPERTIES COMPILE_FLAGS "-w")
+endif()
+
 if(DEFAULT_LIB_PATH)
 if(${CMAKE_VERSION} VERSION_GREATER "3.12.0")
 install(TARGETS ${PROJECT_NAME}
@@ -406,5 +454,6 @@ if (ATCA_PKCS11)
 install(FILES ${PKCS11_INC} DESTINATION ${DEFAULT_INC_PATH}/pkcs11 COMPONENT Development)
 endif()
 install(FILES ${TNG_INC} DESTINATION ${DEFAULT_INC_PATH}/app/tng COMPONENT Development)
+install(FILES ${WPC_INC} DESTINATION ${DEFAULT_INC_PATH}/app/wpc COMPONENT Development)
 install(FILES ${SHA206_API_INC} DESTINATION ${DEFAULT_INC_PATH}/app/api_206a COMPONENT Development)
 endif(DEFAULT_INC_PATH)

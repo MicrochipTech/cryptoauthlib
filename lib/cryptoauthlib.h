@@ -37,39 +37,10 @@
 
 /** Library Configuration File - All build attributes should be included in
     atca_config.h */
-#include "atca_config.h"
+#include "atca_config_check.h"
 #include "atca_compiler.h"
 #include "atca_version.h"
-
-/* Configuration Macros to detect device classes */
-#if defined(ATCA_ATSHA204A_SUPPORT) || defined(ATCA_ATSHA206A_SUPPORT)
-#define ATCA_SHA_SUPPORT    1
-#endif
-
-/* Make sure all configuration options work */
-#if defined(ATCA_ATECC608A_SUPPORT) && !defined(ATCA_ATECC608_SUPPORT)
-#define ATCA_ATECC608_SUPPORT
-#endif
-
-#if defined(ATCA_ATECC108A_SUPPORT) || defined(ATCA_ATECC508A_SUPPORT) \
-    || defined(ATCA_ATECC608_SUPPORT)
-#define ATCA_ECC_SUPPORT    1
-#endif
-
-/* Classic Cryptoauth Devices */
-#if defined(ATCA_SHA_SUPPORT) || defined(ATCA_ECC_SUPPORT) || defined(ATCA_ECC204_SUPPORT)
-#define ATCA_CA_SUPPORT     1
-#else
-#define ATCA_CA_SUPPORT     0
-#endif
-
-/* New Trust Anchor Devices */
-#if defined(ATCA_TA100_SUPPORT)
-#define ATCA_TA_SUPPORT     1
-#else
-#define ATCA_TA_SUPPORT     0
-#endif
-
+#include "atca_platform.h"
 #include "atca_status.h"
 #include "atca_debug.h"
 #include "atca_iface.h"
@@ -116,6 +87,7 @@
 #include "talib/talib_basic.h"
 #endif
 
+/* Common Library Functions */
 #include "atca_basic.h"
 
 #define ATCA_STRINGIFY(x) #x

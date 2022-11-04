@@ -28,17 +28,28 @@
 #include "atca_test.h"
 #include "vectors/pbkdf2_sha256_vectors.h"
 
-TEST_GROUP(atca_crypto_pbkdf2_sw);
+#ifndef TEST_ATCAC_PBKDF2_EN
+#define TEST_ATCAC_PBKDF2_EN      ATCAC_PBKDF2_SHA256_EN
+#endif
 
-TEST_SETUP(atca_crypto_pbkdf2_sw)
+#ifndef TEST_ATCAB_PBKDF2_EN
+#define TEST_ATCAB_PBKDF2_EN      ATCAB_PBKDF2_SHA256_EN
+#endif
+
+#if TEST_ATCAC_PBKDF2_EN
+TEST_GROUP(atcac_pbkdf2);
+
+TEST_SETUP(atcac_pbkdf2)
 {
+    UnityMalloc_StartTest();
 }
 
-TEST_TEAR_DOWN(atca_crypto_pbkdf2_sw)
+TEST_TEAR_DOWN(atcac_pbkdf2)
 {
+    UnityMalloc_EndTest();
 }
 
-TEST(atca_crypto_pbkdf2_sw, vectors)
+TEST(atcac_pbkdf2, vectors)
 {
     ATCA_STATUS status;
     const pbkdf2_sha256_test_vector * pVector = pbkdf2_sha256_test_vectors;
@@ -53,8 +64,38 @@ TEST(atca_crypto_pbkdf2_sw, vectors)
         TEST_ASSERT_EQUAL_MEMORY(pVector->dk, result, pVector->dklen);
     }
 }
+#endif /* TEST_ATCAC_PBKDF2_EN */
 
-TEST(atca_cmd_basic_test, pdkdf2_hw_vectors)
+#if TEST_ATCAB_PBKDF2_EN
+TEST_GROUP(atcab_pbkdf2);
+
+TEST_SETUP(atcab_pbkdf2)
+{
+    UnityMalloc_StartTest();
+
+    TEST_IGNORE_MESSAGE("Skipping because a device is NOT selected");
+
+    ATCA_STATUS status = atcab_init(gCfg);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+}
+
+TEST_TEAR_DOWN(atcab_pbkdf2)
+{
+    ATCA_STATUS status;
+
+    status = atcab_wakeup();
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    status = atcab_sleep();
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    status = atcab_release();
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    UnityMalloc_EndTest();
+}
+
+TEST(atcab_pbkdf2, vectors)
 {
     ATCA_STATUS status;
     const pbkdf2_sha256_fixed_size_test_vector* pVector = pbkdf2_sha256_fixed_size_test_vectors;
@@ -72,11 +113,18 @@ TEST(atca_cmd_basic_test, pdkdf2_hw_vectors)
         TEST_ASSERT_EQUAL_MEMORY(pVector->dk, result, ATCA_SHA256_DIGEST_SIZE);
     }
 }
+#endif /* TEST_ATCAB_PBKDF2_EN */
 
-t_test_case_info test_crypto_pbkdf2_info[] =
+t_test_case_info atcac_pbkdf2_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_crypto_pbkdf2_sw, vectors),             DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100)                     },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test,   pdkdf2_hw_vectors),   DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100)                     },
+#if TEST_ATCAC_PBKDF2_EN
+    { REGISTER_TEST_CASE(atcac_pbkdf2, vectors), DEVICE_MASK_NONE },
+#endif
+#if TEST_ATCAB_PBKDF2_EN
+    { REGISTER_TEST_CASE(atcab_pbkdf2, vectors), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
+#endif
     /* Array Termination element*/
     { (fp_test_case)NULL,                       (uint8_t)0 },
 };
+
+

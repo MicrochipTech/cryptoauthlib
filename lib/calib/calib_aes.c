@@ -35,6 +35,7 @@
 
 #include "cryptoauthlib.h"
 
+#if CALIB_AES_EN
 /** \brief Compute the AES-128 encrypt, decrypt, or GFM calculation.
  *
  *  \param[in]  device   Device context pointer
@@ -134,7 +135,9 @@ ATCA_STATUS calib_aes_decrypt(ATCADevice device, uint16_t key_id, uint8_t key_bl
     mode = AES_MODE_DECRYPT | (AES_MODE_KEY_BLOCK_MASK & (key_block << AES_MODE_KEY_BLOCK_POS));
     return calib_aes(device, mode, key_id, ciphertext, plaintext);
 }
+#endif
 
+#if CALIB_AES_EN && CALIB_AES_GCM_EN
 /** \brief Perform a Galois Field Multiply (GFM) operation.
  *
  * \param[in]   device  Device context pointer
@@ -153,3 +156,4 @@ ATCA_STATUS calib_aes_gfm(ATCADevice device, const uint8_t* h, const uint8_t* in
     // KeyID is ignored for GFM mode
     return calib_aes(device, AES_MODE_GFM, 0x0000, aes_in, output);
 }
+#endif   /* CALIB_AES_MODE_ENCODING  */

@@ -5435,6 +5435,7 @@ TEST(atcacert_cert_build, start_signer)
         .device_sn      = { 0x00,     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
     };
     atcacert_build_state_t build_state;
+    memset(&build_state, 0, sizeof(build_state));
 
     ret = atcacert_cert_build_start(
         &build_state,

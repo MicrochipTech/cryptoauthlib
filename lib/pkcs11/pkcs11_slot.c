@@ -56,19 +56,46 @@ static pkcs11_slot_ctx pkcs11_slot_cache[PKCS11_MAX_SLOTS_ALLOWED];
  */
 pkcs11_slot_ctx_ptr pkcs11_slot_get_context(pkcs11_lib_ctx_ptr lib_ctx, CK_SLOT_ID slotID)
 {
-    pkcs11_slot_ctx_ptr rv = NULL_PTR;
-
-    if (lib_ctx)
+    if (!lib_ctx)
     {
-        if (lib_ctx->slots)
+        lib_ctx = pkcs11_get_context();
+    }
+
+    if (lib_ctx && lib_ctx->slots)
+    {
+        pkcs11_slot_ctx_ptr rv = (pkcs11_slot_ctx_ptr)lib_ctx->slots;
+        CK_ULONG idx =0;
+        for (idx=0; idx<lib_ctx->slot_cnt; idx++, rv++)
         {
-            if (slotID < lib_ctx->slot_cnt)
+            if (rv->slot_id == slotID)
             {
-                rv = &((pkcs11_slot_ctx_ptr)lib_ctx->slots)[slotID];
+                return rv;
             }
         }
     }
-    return rv;
+    return NULL;
+}
+
+pkcs11_slot_ctx_ptr pkcs11_slot_get_new_context(pkcs11_lib_ctx_ptr lib_ctx)
+{
+    if (!lib_ctx)
+    {
+        lib_ctx = pkcs11_get_context();
+    }
+
+    if (lib_ctx && lib_ctx->slots)
+    {
+        pkcs11_slot_ctx_ptr rv = (pkcs11_slot_ctx_ptr)lib_ctx->slots;
+        CK_ULONG idx =0;
+        for (idx=0; idx<lib_ctx->slot_cnt; idx++, rv++)
+        {
+            if (!rv->label[0])
+            {
+                return rv;
+            }
+        }
+    }
+    return NULL;
 }
 
 CK_VOID_PTR pkcs11_slot_initslots(CK_ULONG pulCount)
@@ -119,6 +146,10 @@ CK_RV pkcs11_slot_config(CK_SLOT_ID slotID)
     return rv;
 }
 
+#if defined(ATCA_HAL_KIT_BRIDGE) && defined(PKCS11_TESTING_ENABLE)
+extern ATCA_STATUS hal_kit_bridge_connect(ATCAIfaceCfg *, int, char **);
+#endif
+
 #if PKCS11_508_SUPPORT && PKCS11_608_SUPPORT
 static ATCA_STATUS pkcs11_slot_check_device_type(ATCAIfaceCfg * ifacecfg)
 {
@@ -155,6 +186,7 @@ static ATCA_STATUS pkcs11_slot_check_device_type(ATCAIfaceCfg * ifacecfg)
 }
 #endif
 
+/** \brief This is an internal function that initializes a pkcs11 slot - it must already have the locks in place before being called. */
 CK_RV pkcs11_slot_init(CK_SLOT_ID slotID)
 {
     pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
@@ -188,27 +220,33 @@ CK_RV pkcs11_slot_init(CK_SLOT_ID slotID)
         retries = 2;
         do
         {
+#if defined(ATCA_HAL_KIT_BRIDGE) && defined(PKCS11_TESTING_ENABLE)
+            if (ATCA_KIT_IFACE == ifacecfg->iface_type)
+            {
+                int argc = 3;
+                char * argv[3];
+                pkcs11_config_split_string((char*)slot_ctx->devpath, ':', &argc, argv);
+                status = hal_kit_bridge_connect(ifacecfg, argc, argv);
+            }
+#endif
+
             /* If a PKCS11 was killed an left the device in the idle state then
                starting up again will require the device to go back to a known state
                that is accomplished here by retrying the initalization */
-            status = atcab_init(ifacecfg);
+            if(ATCA_SUCCESS == status)
+            {
+                status = atcab_init(ifacecfg);
+            }
         }
         while (retries-- && status);
 
     #ifdef ATCA_HAL_I2C
         if (ATCA_SUCCESS != status)
         {
-#ifdef ATCA_ENABLE_DEPRECATED
-            if (0xC0 != ifacecfg->atcai2c.slave_address)
+            if (0xC0 != ATCA_IFACECFG_VALUE(ifacecfg, atcai2c.address))
             {
                 /* Try the default address */
-                ifacecfg->atcai2c.slave_address = 0xC0;
-#else
-            if (0xC0 != ifacecfg->atcai2c.address)
-            {
-                /* Try the default address */
-                ifacecfg->atcai2c.address = 0xC0;
-#endif
+                ATCA_IFACECFG_VALUE(ifacecfg, atcai2c.address) = 0xC0;
                 atcab_release();
                 atca_delay_ms(1);
                 retries = 2;
@@ -304,7 +342,7 @@ CK_RV pkcs11_slot_get_list(CK_BBOOL tokenPresent, CK_SLOT_ID_PTR pSlotList, CK_U
     pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
     CK_ULONG slot_cnt = 0;
 
-    if (!lib_ctx)
+    if (!lib_ctx || !lib_ctx->initialized)
     {
         return CKR_CRYPTOKI_NOT_INITIALIZED;
     }
@@ -353,6 +391,7 @@ CK_RV pkcs11_slot_get_info(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
     pkcs11_slot_ctx_ptr slot_ctx;
     ATCAIfaceCfg *if_cfg_ptr;
     CK_UTF8CHAR buf[8];
+    CK_RV rv = CKR_OK;
 
     if (!lib_ctx || !lib_ctx->initialized)
     {
@@ -409,16 +448,16 @@ CK_RV pkcs11_slot_get_info(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
 
     if (slot_ctx->initialized)
     {
-        (void)pkcs11_lock_context(lib_ctx);
-
-        if (!atcab_info(buf))
+        if (CKR_OK == (rv = pkcs11_lock_both(lib_ctx)))
         {
-            /* SHA204 = 00 02 00 09, ECC508 = 00 00 50 00, AES132 = 0A 07*/
-            pInfo->hardwareVersion.major = 0;
-            pInfo->hardwareVersion.minor = buf[3];
+            if (CKR_OK == (rv = pkcs11_util_convert_rv(atcab_info(buf))))
+            {
+                /* SHA204 = 00 02 00 09, ECC508 = 00 00 50 00, AES132 = 0A 07*/
+                pInfo->hardwareVersion.major = 0;
+                pInfo->hardwareVersion.minor = buf[3];
+            }
+            (void)pkcs11_unlock_both(lib_ctx);
         }
-
-        (void)pkcs11_unlock_context(lib_ctx);
     }
 
     /* Use the same manufacturer ID we use throughout */
@@ -428,7 +467,7 @@ CK_RV pkcs11_slot_get_info(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
     pkcs11_util_escape_string(pInfo->manufacturerID, sizeof(pInfo->manufacturerID));
     pkcs11_util_escape_string(pInfo->slotDescription, sizeof(pInfo->slotDescription));
 
-    return CKR_OK;
+    return rv;
 }
 
 /** @} */

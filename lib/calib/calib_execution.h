@@ -53,7 +53,6 @@ extern "C" {
 #define CALIB_SWI_FLAG_IDLE     0xBB    //!< flag requesting to go into Idle mode
 #define CALIB_SWI_FLAG_SLEEP    0xCC    //!< flag requesting to go into Sleep mode
 
-#ifdef ATCA_NO_POLL
 /** \brief Structure to hold the device execution time and the opcode for the
  *         corresponding command
  */
@@ -64,7 +63,6 @@ typedef struct
 }device_execution_time_t;
 
 ATCA_STATUS calib_get_execution_time(uint8_t opcode, ATCADevice device);
-#endif
 
 #ifndef ATCA_HAL_LEGACY_API
 ATCA_STATUS calib_execute_receive(ATCADevice device, uint8_t device_address, uint8_t* rxdata, uint16_t* rxlength);

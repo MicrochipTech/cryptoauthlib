@@ -72,8 +72,6 @@ ATCA_STATUS hal_spi_open_file(const char * dev_name, uint32_t speed, int * fd)
 
 ATCA_STATUS hal_spi_init(ATCAIface iface, ATCAIfaceCfg *cfg)
 {
-
-    int f_spi;
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
     if (iface && cfg)
@@ -84,7 +82,8 @@ ATCA_STATUS hal_spi_init(ATCAIface iface, ATCAIfaceCfg *cfg)
             if (hal_data)
             {
                 (void)snprintf(hal_data->spi_file, sizeof(hal_data->spi_file) - 1,
-                               "/dev/spidev%d.%d", (uint8_t)cfg->atcaspi.bus, (uint8_t)cfg->atcaspi.select_pin);
+                               "/dev/spidev%d.%d", (uint8_t)ATCA_IFACECFG_VALUE(cfg, atcaspi.bus), 
+                               (uint8_t)ATCA_IFACECFG_VALUE(cfg, atcaspi.select_pin));
 
                 iface->hal_data = hal_data;
                 status = ATCA_SUCCESS;
@@ -105,6 +104,7 @@ ATCA_STATUS hal_spi_init(ATCAIface iface, ATCAIfaceCfg *cfg)
 
 ATCA_STATUS hal_spi_post_init(ATCAIface iface)
 {
+    ((void)iface);
     return ATCA_SUCCESS;
 }
 
@@ -120,7 +120,8 @@ ATCA_STATUS hal_spi_select(ATCAIface iface)
 
     if (hal_data && cfg)
     {
-        return hal_spi_open_file(hal_data->spi_file, cfg->atcaspi.baud, &hal_data->f_spi);
+        return hal_spi_open_file(hal_data->spi_file, 
+                                ATCA_IFACECFG_VALUE(cfg, atcaspi.baud), &hal_data->f_spi);
     }
     else
     {
@@ -162,9 +163,10 @@ ATCA_STATUS hal_spi_deselect(ATCAIface iface)
  */
 ATCA_STATUS hal_spi_receive(ATCAIface iface, uint8_t flags, uint8_t *rxdata, uint16_t *rxlength)
 {
-    int f_spi;
     ATCA_STATUS status = ATCA_BAD_PARAM;
     atca_spi_host_t * hal_data = (atca_spi_host_t*)atgetifacehaldat(iface);
+
+    ((void)flags);
 
     if (hal_data)
     {
@@ -197,10 +199,10 @@ ATCA_STATUS hal_spi_receive(ATCAIface iface, uint8_t flags, uint8_t *rxdata, uin
 
 ATCA_STATUS hal_spi_send(ATCAIface iface, uint8_t flags, uint8_t *txdata, int txlen)
 {
-    int f_spi;
     ATCA_STATUS status = ATCA_SUCCESS;
     atca_spi_host_t * hal_data = (atca_spi_host_t*)atgetifacehaldat(iface);
-    int ret;
+
+    ((void)flags);
 
     if (hal_data)
     {

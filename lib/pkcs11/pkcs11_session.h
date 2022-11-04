@@ -37,21 +37,30 @@ extern "C" {
 
 /* Some mechanism require the context to be initialized first and it is done
    in a previous command than the target operation */
-typedef union _pkcs11_session_mech_ctx
+typedef struct _pkcs11_session_mech_ctx
 {
-    struct
-    {
-        atca_hmac_sha256_ctx_t context;
-    } hmac;
-    struct
-    {
-        atca_aes_cmac_ctx_t context;
-    } cmac;
-    struct
-    {
+#if PKCS11_HARDWARE_SHA256
+    atca_hmac_sha256_ctx_t  hmac;
+    atca_sha256_ctx_t       sha256;
+#else
+    atcac_hmac_sha256_ctx   hmac;
+    atcac_sha2_256_ctx      sha256;
+#endif
+    atca_aes_cmac_ctx_t     cmac;
+    atca_aes_cbc_ctx_t      cbc;
+#ifdef ATCA_ATECC608_SUPPORT
+    struct {
         atca_aes_gcm_ctx_t context;
         CK_BYTE            tag_len;
     } gcm;
+#endif
+#ifdef ATCA_TA100_SUPPORT
+    struct {
+        uint8_t     iv[TA_AES_GCM_IV_LENGTH];
+        uint8_t     aad[ATCA_AES128_BLOCK_SIZE];
+        CK_BYTE     aad_len;
+    } gcm_single;
+#endif
 } pkcs11_session_mech_ctx, *pkcs11_session_mech_ctx_ptr;
 
 /** Session Context */

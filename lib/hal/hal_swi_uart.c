@@ -43,7 +43,8 @@
 
 ATCA_STATUS hal_swi_init(ATCAIface iface, ATCAIfaceCfg *cfg)
 {
-
+    ((void)iface);
+    ((void)cfg);
     return ATCA_SUCCESS;
 }
 
@@ -54,6 +55,7 @@ ATCA_STATUS hal_swi_init(ATCAIface iface, ATCAIfaceCfg *cfg)
 
 ATCA_STATUS hal_swi_post_init(ATCAIface iface)
 {
+    ((void)iface);
     return ATCA_SUCCESS;
 }
 
@@ -294,7 +296,7 @@ ATCA_STATUS hal_swi_control(ATCAIface iface, uint8_t option, void* param, size_t
 
 ATCA_STATUS hal_swi_release(void *hal_data)
 {
-
+    ((void)hal_data);
     return ATCA_SUCCESS;
 }
 

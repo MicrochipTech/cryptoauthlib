@@ -25,10 +25,13 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
 
-#if ATCA_CA_SUPPORT
+#ifndef TEST_ATCAB_DERIVEKEY_EN
+#define TEST_ATCAB_DERIVEKEY_EN         CALIB_DERIVEKEY_EN
+#endif
 
+#if TEST_ATCAB_DERIVEKEY_EN
 TEST(atca_cmd_basic_test, derivekey)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
@@ -224,19 +227,15 @@ TEST(atca_cmd_basic_test, derivekey_mac)
     status = atcab_checkmac(checkmac_params.mode, checkmac_params.key_id, checkmac_params.client_chal, checkmac_params.client_resp, checkmac_params.other_data);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
+#endif
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info derivekey_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, derivekey),     DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, derivekey_mac), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC },
+#if TEST_ATCAB_DERIVEKEY_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, derivekey),     DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, derivekey_mac), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC },
+#endif
     { (fp_test_case)NULL,                     (uint8_t)0 },   /* Array Termination element*/
 };
 // *INDENT-ON*
-
-#else
-t_test_case_info derivekey_basic_test_info[] =
-{
-    { (fp_test_case)NULL, (uint8_t)0 },
-};
-#endif

@@ -25,7 +25,7 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
 
 TEST(atca_cmd_basic_test, version)
 {
@@ -35,7 +35,7 @@ TEST(atca_cmd_basic_test, version)
     ver_str[0] = '\0';
     status = atcab_version(ver_str);
 
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_SUCCESS(status);
     TEST_ASSERT_EQUAL(8, strlen(ver_str));
 }
 
@@ -54,17 +54,17 @@ TEST(atca_cmd_basic_test, doubleinit)
 
     // Make sure communication works initially
     status = atcab_info(rev);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_SUCCESS(status);
 
     // a double init should be benign
     status = atcab_init(gCfg);
 
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_SUCCESS(status);
     TEST_ASSERT_NOT_EQUAL(NULL, _gDevice);
 
     // Make sure communication still works
     status = atcab_info(rev);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_SUCCESS(status);
 }
 
 // *INDENT-OFF* - Preserve formatting
@@ -76,3 +76,4 @@ t_test_case_info startup_basic_test_info[] =
     { (fp_test_case)NULL,                     (uint8_t)0 },/* Array Termination element*/
 };
 // *INDENT-ON*
+

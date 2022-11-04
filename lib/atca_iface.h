@@ -47,6 +47,13 @@ extern "C" {
 #include "atca_devtypes.h"
 #include "atca_status.h"
 
+#ifdef ATCA_STRICT_C99
+#define ATCA_IFACECFG_NAME(x)  x
+#define ATCA_IFACECFG_VALUE(c, v) c->cfg.v
+#else
+#define ATCA_IFACECFG_NAME(x)
+#define ATCA_IFACECFG_VALUE(c, v) c->v
+#endif
 
 typedef enum
 {
@@ -89,7 +96,7 @@ typedef struct
         struct
         {
 #ifdef ATCA_ENABLE_DEPRECATED
-            uint8_t slave_address;  // 8-bit slave address
+            uint8_t slave_address;  // 8-bit device address
 #else
             uint8_t address;        /**< Device address - the upper 7 bits are the I2c address bits */
 #endif
@@ -149,8 +156,7 @@ typedef struct
             ATCA_STATUS (*halsleep)(void *iface);
             ATCA_STATUS (*halrelease)(void* hal_data);
         } atcacustom;
-
-    };
+    } ATCA_IFACECFG_NAME(cfg);
 
     uint16_t wake_delay;    // microseconds of tWHI + tWLO which varies based on chip type
     int      rx_retries;    // the number of retries to attempt for receiving bytes
@@ -200,12 +206,18 @@ ATCA_STATUS atsleep(ATCAIface ca_iface);
 // accessors
 ATCAIfaceCfg * atgetifacecfg(ATCAIface ca_iface);
 void* atgetifacehaldat(ATCAIface ca_iface);
+ATCA_STATUS ifacecfg_set_address(ATCAIfaceCfg * cfg, uint8_t address, ATCAKitType kitiface);
+uint8_t ifacecfg_get_address(ATCAIfaceCfg * cfg);
 
 /* Utilities */
+bool ifacetype_is_kit(ATCAIfaceType iface_type);
+
 bool atca_iface_is_kit(ATCAIface ca_iface);
 bool atca_iface_is_swi(ATCAIface ca_iface);
 int atca_iface_get_retries(ATCAIface ca_iface);
 uint16_t atca_iface_get_wake_delay(ATCAIface ca_iface);
+ATCADeviceType iface_get_device_type_by_name(const char * name);
+
 
 #ifdef __cplusplus
 }

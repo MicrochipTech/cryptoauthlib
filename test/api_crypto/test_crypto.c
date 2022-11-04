@@ -1,6 +1,6 @@
 /**
  * \file
- * \brief
+ * \brief Tests for the CryptoAuthLib software crypto API.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
@@ -25,38 +25,27 @@
  * THIS SOFTWARE.
  */
 
+#include "test_crypto.h"
 
-#ifndef ATCA_CRYPTO_SW_ECDSA_H
-#define ATCA_CRYPTO_SW_ECDSA_H
-
-#include "atca_crypto_sw.h"
-#include <stddef.h>
-#include <stdint.h>
-
-/** \defgroup atcac_ Software crypto methods (atcac_)
- *
- * \brief
- * These methods provide a software implementation of various crypto
- * algorithms
- *
-   @{ */
-
-#define ATCA_ECC_P256_FIELD_SIZE       (256 / 8)
-#define ATCA_ECC_P256_PRIVATE_KEY_SIZE (ATCA_ECC_P256_FIELD_SIZE)
-#define ATCA_ECC_P256_PUBLIC_KEY_SIZE  (ATCA_ECC_P256_FIELD_SIZE * 2)
-#define ATCA_ECC_P256_SIGNATURE_SIZE   (ATCA_ECC_P256_FIELD_SIZE * 2)
-
-#ifdef __cplusplus
-extern "C" {
+static t_test_case_info* atcac_tests[] =
+{
+    atcac_sha_test_info,
+    atcac_pbkdf2_test_info,
+    atcac_pad_test_info,
+#if defined(ATCA_MBEDTLS) || defined(ATCA_OPENSSL) || defined(ATCA_WOLFSSL)
+    atcac_aes_test_info,
+    atcac_pk_test_info,
 #endif
+    (t_test_case_info*)NULL, /* Array Termination element*/
+};
 
-int atcac_sw_ecdsa_verify_p256(const uint8_t msg[ATCA_ECC_P256_FIELD_SIZE],
-                               const uint8_t signature[ATCA_ECC_P256_SIGNATURE_SIZE],
-                               const uint8_t public_key[ATCA_ECC_P256_PUBLIC_KEY_SIZE]);
-
-#ifdef __cplusplus
+static void run_atcac_tests(void)
+{
+    RunAllTests(atcac_tests);
 }
-#endif
 
-/** @} */
-#endif
+/* Console function */
+int atca_crypto_sw_tests(int argc, char* argv[])
+{
+    return run_test(argc, argv, run_atcac_tests);
+}

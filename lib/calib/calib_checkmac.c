@@ -35,6 +35,7 @@
 
 #include "cryptoauthlib.h"
 
+#if CALIB_CHECKMAC_EN
 /** \brief Compares a MAC response with input values
  *
  *  \param[in] device      Device context pointer
@@ -91,3 +92,4 @@ ATCA_STATUS calib_checkmac(ATCADevice device, uint8_t mode, uint16_t key_id, con
 
     return status;
 }
+#endif /* CALIB_CHECKMAC */

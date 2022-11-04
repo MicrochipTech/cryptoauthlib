@@ -34,6 +34,7 @@
 
 #include "cryptoauthlib.h"
 
+#if CALIB_DERIVEKEY_EN
 /** \brief Executes the DeviveKey command for deriving a new key from a
  *          nonce (TempKey) and an existing key.
  *
@@ -84,3 +85,4 @@ ATCA_STATUS calib_derivekey(ATCADevice device, uint8_t mode, uint16_t target_key
 
     return status;
 }
+#endif /* CALIB_DERIVEKEY_EN */

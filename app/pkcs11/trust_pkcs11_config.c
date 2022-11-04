@@ -164,7 +164,7 @@ CK_RV pkcs11_trust_load_objects(pkcs11_slot_ctx_ptr pSlot)
 
     if (CKR_OK == rv)
     {
-        rv = pkcs11_object_alloc(&pObject);
+        rv = pkcs11_object_alloc(pSlot->slot_id, &pObject);
         if (pObject)
         {
             /* Slot 0 - Device Private Key */
@@ -177,7 +177,7 @@ CK_RV pkcs11_trust_load_objects(pkcs11_slot_ctx_ptr pSlot)
 
     if (CKR_OK == rv)
     {
-        rv = pkcs11_object_alloc(&pObject);
+        rv = pkcs11_object_alloc(pSlot->slot_id, &pObject);
         if (pObject)
         {
             /* Slot 0 - Device Public Key */
@@ -190,7 +190,7 @@ CK_RV pkcs11_trust_load_objects(pkcs11_slot_ctx_ptr pSlot)
 
     if (CKR_OK == rv)
     {
-        rv = pkcs11_object_alloc(&pObject);
+        rv = pkcs11_object_alloc(pSlot->slot_id, &pObject);
         if (pObject)
         {
             /* Device Certificate */
@@ -203,7 +203,7 @@ CK_RV pkcs11_trust_load_objects(pkcs11_slot_ctx_ptr pSlot)
 
     if (CKR_OK == rv)
     {
-        rv = pkcs11_object_alloc(&pObject);
+        rv = pkcs11_object_alloc(pSlot->slot_id, &pObject);
         if (pObject)
         {
             /* Signer Certificate */

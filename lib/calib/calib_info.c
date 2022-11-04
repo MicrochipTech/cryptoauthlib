@@ -129,6 +129,7 @@ ATCA_STATUS calib_info(ATCADevice device, uint8_t* revision)
     return calib_info_base(device, INFO_MODE_REVISION, 0, revision);
 }
 
+#if CALIB_INFO_LATCH_EN
 /** \brief Use the Info command to get the persistent latch current state for
  *          an ATECC608 device.
  *
@@ -173,6 +174,7 @@ ATCA_STATUS calib_info_set_latch(ATCADevice device, bool state)
     param2 |= state ? INFO_PARAM2_LATCH_SET : INFO_PARAM2_LATCH_CLEAR;
     return calib_info_base(device, INFO_MODE_VOL_KEY_PERMIT, param2, NULL);
 }
+#endif /* CALIB_INFO_LATCH_EN */
 
 /** \brief Use Info command to check ECC Private key stored in key slot is valid or not
  *
@@ -201,4 +203,4 @@ ATCA_STATUS calib_info_lock_status(ATCADevice device, uint16_t param2, uint8_t* 
 {
     return calib_info_base(device, INFO_MODE_LOCK_STATUS, param2, is_locked);
 }
-#endif
+#endif   /* ATCA_ECC204_SUPPORT */

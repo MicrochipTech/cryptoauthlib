@@ -25,7 +25,7 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "atca_test.h"
+#include "test_atcab.h"
 
 /** \brief this test assumes a specific configuration and locked config zone
  * test will generate a private key if data zone is unlocked and return a public key
@@ -43,10 +43,15 @@ TEST(atca_cmd_basic_test, genkey)
 
     test_assert_config_is_locked();
 
+    if (ECC204 == gCfg->devtype)
+    {
+        test_assert_data_is_unlocked();
+    }
+
     status = atca_test_config_get_id(TEST_TYPE_ECC_GENKEY, &private_key_id);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    status = atcab_genkey(private_key_id, public_key);
+    status = atca_test_genkey(private_key_id, public_key);
     TEST_ASSERT_EQUAL_MESSAGE(ATCA_SUCCESS, status, "Key generation failed");
 
     // spot check public key for bogus data, there should be none
@@ -83,3 +88,4 @@ t_test_case_info genkey_basic_test_info[] =
     { (fp_test_case)NULL,                     (uint8_t)0 },/* Array Termination element*/
 };
 // *INDENT-ON*
+
