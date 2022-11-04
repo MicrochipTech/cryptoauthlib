@@ -129,6 +129,7 @@ static ATCA_STATUS hal_uart_open_file(atca_uart_host_t * hal_data, ATCAIfaceCfg 
         {
             struct termios tty;
             speed_t rate;
+            int flags;
 
             /* Get existing device attributes */
             tcgetattr(hal_data->fd_uart, &tty);
@@ -185,6 +186,13 @@ static ATCA_STATUS hal_uart_open_file(atca_uart_host_t * hal_data, ATCAIfaceCfg 
 
             /* Configure the port with the configured settings immediately */
             if (tcsetattr(hal_data->fd_uart, TCSANOW, &tty))
+            {
+                close(hal_data->fd_uart);
+                return ATCA_COMM_FAIL;
+            }
+
+            flags = TIOCM_DTR;
+            if (-1 == ioctl(hal_data->fd_uart, TIOCMBIS, &flags))
             {
                 close(hal_data->fd_uart);
                 return ATCA_COMM_FAIL;

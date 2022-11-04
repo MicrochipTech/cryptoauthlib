@@ -28,6 +28,7 @@
 #define ATCA_PLATFORM_H
 
 #include <stddef.h>
+#include <string.h>
 
 #if defined(ATCA_TESTS_ENABLED) || !defined(ATCA_PLATFORM_MALLOC)
 void*   hal_malloc(size_t size);
@@ -36,22 +37,20 @@ void    hal_free(void* ptr);
 #define hal_malloc      ATCA_PLATFORM_MALLOC
 #define hal_free        ATCA_PLATFORM_FREE
 #endif
-#endif
 
 #ifdef ATCA_PLATFORM_MEMSET_S
 #define hal_memset_s    ATCA_PLATFORM_MEMSET_S
 #else
-#include <string.h>
 #ifndef memset_s
 #define hal_memset_s    atcab_memset_s
 #else
 #define hal_memset_s    memset_s
 #endif
+#endif
 
 #ifdef ATCA_PLATFORM_STRCASESTR
 #define lib_strcasestr  ATCA_PLATFORM_STRCASESTR
 #else
-#include <string.h>
 #ifndef strcasestr
 char *lib_strcasestr(const char *haystack, const char *needle);
 #else

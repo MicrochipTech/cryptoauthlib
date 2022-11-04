@@ -241,7 +241,7 @@ class atcacert_def_t(AtcaStructure):
     """
     CTypes mirror of atcacert_def_t from atcacert_def.h
     """
-    _pack_ = 1
+    pass
 
 # Need to define fields outside the class due to ca_cert_def, which is a pointer
 # to the same class.
