@@ -135,14 +135,28 @@ CK_RV pkcs11_signature_sign(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_UL
     case CKM_SHA256_HMAC:
         if (pSignature)
         {
-            rv = pkcs11_util_convert_rv(atcab_sha_hmac(pData, ulDataLen, pKey->slot, pSignature, SHA_MODE_TARGET_OUT_ONLY));
+            if (*pulSignatureLen < ATCA_SHA256_DIGEST_SIZE)
+            {
+                rv = CKR_BUFFER_TOO_SMALL;
+            }
+            else
+            {
+                rv = pkcs11_util_convert_rv(atcab_sha_hmac(pData, ulDataLen, pKey->slot, pSignature, SHA_MODE_TARGET_OUT_ONLY));
+            }
         }
         *pulSignatureLen = ATCA_SHA256_DIGEST_SIZE;
         break;
     case CKM_ECDSA:
         if (pSignature)
         {
-            rv = pkcs11_util_convert_rv(atcab_sign(pKey->slot, pData, pSignature));
+            if (*pulSignatureLen < ATCA_ECCP256_SIG_SIZE)
+            {
+                rv = CKR_BUFFER_TOO_SMALL;
+            }
+            else
+            {
+                rv = pkcs11_util_convert_rv(atcab_sign(pKey->slot, pData, pSignature));
+            }
         }
         *pulSignatureLen = ATCA_ECCP256_SIG_SIZE;
         break;
@@ -150,7 +164,7 @@ CK_RV pkcs11_signature_sign(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_UL
         rv = CKR_MECHANISM_INVALID;
         break;
     }
-    if (pSignature)
+    if (pSignature && CKR_BUFFER_TOO_SMALL != rv)
     {
         pSession->active_mech = CKM_VENDOR_DEFINED;
     }
