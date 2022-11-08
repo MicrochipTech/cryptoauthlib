@@ -234,7 +234,6 @@ CK_RV pkcs11_signature_verify_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR 
     {
         pSession->active_object = hKey;
         pSession->active_mech = pMechanism->mechanism;
-        rv = CKR_OK;
     }
     else
     {
