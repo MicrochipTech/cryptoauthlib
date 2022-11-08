@@ -94,10 +94,9 @@ CK_RV pkcs11_signature_sign(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_UL
     pkcs11_session_ctx_ptr pSession;
     pkcs11_object_ptr pKey;
     CK_RV rv;
-    ATCA_STATUS status;
 
     /* Check parameters */
-    if (!pData || !pSignature || !pulSignatureLen)
+    if (!pData || !pulSignatureLen)
     {
         return CKR_ARGUMENTS_BAD;
     }
@@ -125,7 +124,8 @@ CK_RV pkcs11_signature_sign(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_UL
         return rv;
     }
 
-    if (CKR_OK != (rv = pkcs11_lock_both(pLibCtx)))
+    rv = pkcs11_lock_both(pLibCtx);
+    if (rv)
     {
         return rv;
     }
@@ -133,26 +133,31 @@ CK_RV pkcs11_signature_sign(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_UL
     switch (pSession->active_mech)
     {
     case CKM_SHA256_HMAC:
-        status = atcab_sha_hmac(pData, ulDataLen, pKey->slot, pSignature, SHA_MODE_TARGET_OUT_ONLY);
+        if (pSignature)
+        {
+            rv = pkcs11_util_convert_rv(atcab_sha_hmac(pData, ulDataLen, pKey->slot, pSignature, SHA_MODE_TARGET_OUT_ONLY));
+        }
         *pulSignatureLen = ATCA_SHA256_DIGEST_SIZE;
         break;
     case CKM_ECDSA:
-        status = atcab_sign(pKey->slot, pData, pSignature);
+        if (pSignature)
+        {
+            rv = pkcs11_util_convert_rv(atcab_sign(pKey->slot, pData, pSignature));
+        }
         *pulSignatureLen = ATCA_ECCP256_SIG_SIZE;
         break;
     default:
-        status = ATCA_GEN_FAIL;
+        rv = CKR_MECHANISM_INVALID;
         break;
     }
-    pSession->active_mech = CKM_VENDOR_DEFINED;
-
-    (void)pkcs11_unlock_both(pLibCtx);
-    if (CKR_OK == rv && ATCA_SUCCESS != status)
+    if (pSignature)
     {
-        return pkcs11_util_convert_rv(status);
+        pSession->active_mech = CKM_VENDOR_DEFINED;
     }
 
-    return CKR_OK;
+    (void)pkcs11_unlock_both(pLibCtx);
+
+    return rv;
 }
 
 /**
