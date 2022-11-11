@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_derivekey.c File Reference</title>
+<title>CryptoAuthLib: pkcs11_util.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.3.3</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,33 +85,63 @@ $(document).ready(function(){initNavTree('a01565.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">calib_derivekey.c File Reference</div>  </div>
+<div class="title">pkcs11_util.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for DeriveKey command.  
+<p>PKCS11 Library Utilities.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01694_source.html">cryptoauthlib.h</a>&quot;</code><br />
-</div><table class="memberdecls">
+<div class="textblock"><code>#include &quot;pkcs11_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01451_source.html">cryptoki.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01298_source.html">cryptoauthlib.h</a>&quot;</code><br />
+</div>
+<p><a href="a01565_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a599c24418585185172b26db696a67f78"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01565.html#a599c24418585185172b26db696a67f78">PKCS11_UTIL_ARRAY_SIZE</a>(x)&#160;&#160;&#160;sizeof(x) / sizeof(x[0])</td></tr>
+<tr class="separator:a599c24418585185172b26db696a67f78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga4b7a1a8772d52c2eb79e6c25498dd880"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05733.html#ga4b7a1a8772d52c2eb79e6c25498dd880">calib_derivekey</a> (<a class="el" href="a05730.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t target_key, const uint8_t *mac)</td></tr>
-<tr class="memdesc:ga4b7a1a8772d52c2eb79e6c25498dd880"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the DeviveKey command for deriving a new key from a nonce (TempKey) and an existing key.  <a href="a05733.html#ga4b7a1a8772d52c2eb79e6c25498dd880">More...</a><br /></td></tr>
-<tr class="separator:ga4b7a1a8772d52c2eb79e6c25498dd880"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga89b7e38b830e6c5348a1640040be5935"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga89b7e38b830e6c5348a1640040be5935">pkcs11_util_escape_string</a> (<a class="el" href="a01571.html#af25c3841a3f605e6414f4c9ef5592ed9">CK_UTF8CHAR_PTR</a> buf, <a class="el" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> buf_len)</td></tr>
+<tr class="separator:ga89b7e38b830e6c5348a1640040be5935"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga747cebf2d5a1cb09e0a6e8db0a7584b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga747cebf2d5a1cb09e0a6e8db0a7584b6">pkcs11_util_convert_rv</a> (<a class="el" href="a01088.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="el" href="a01319.html#ab58253322bcadfefd7ab8c3ec0fb65fb">status</a>)</td></tr>
+<tr class="separator:ga747cebf2d5a1cb09e0a6e8db0a7584b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4c491559c7692bafa75e520931aa53a5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga4c491559c7692bafa75e520931aa53a5">pkcs11_util_memset</a> (void *dest, size_t destsz, int ch, size_t count)</td></tr>
+<tr class="separator:ga4c491559c7692bafa75e520931aa53a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for DeriveKey command. </p>
-<p>The DeriveKey command combines the current value of a key with the nonce stored in TempKey using SHA-256 and derives a new key.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, and ATECC608A/B. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><p>PKCS11 Library Utilities. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a599c24418585185172b26db696a67f78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a599c24418585185172b26db696a67f78">&#9670;&nbsp;</a></span>PKCS11_UTIL_ARRAY_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PKCS11_UTIL_ARRAY_SIZE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x</td><td>)</td>
+          <td>&#160;&#160;&#160;sizeof(x) / sizeof(x[0])</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_f2afb92a7160c3886de26b5de38b145a.html">calib</a></li><li class="navelem"><a class="el" href="a01565.html">calib_derivekey.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_de8763fbd32fa6c533e8e0dca5fc697b.html">cryptauthlib-v3.3.3_</a></li><li class="navelem"><a class="el" href="dir_76c6e33311c14dc6ff7c294bf952470f.html">lib</a></li><li class="navelem"><a class="el" href="dir_9bd2612bd55169c9881c7cd36a33cdb4.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01565.html">pkcs11_util.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

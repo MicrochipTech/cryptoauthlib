@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_debug.h Source File</title>
+<title>CryptoAuthLib: pkcs11_attrib.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.3.3</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,32 +85,63 @@ $(document).ready(function(){initNavTree('a01460_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">atca_debug.h</div>  </div>
+<div class="title">pkcs11_attrib.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a01460.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef _ATCA_DEBUG_H</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define _ATCA_DEBUG_H</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01484.html">atca_status.h</a>&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a01460.html#aaf7947b74c12dac486d03bb6f6b148d9">atca_trace_config</a>(FILE* fp);</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<a class="code" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a01460.html#a60326372db8190ddb9f191fca5bdc38a">atca_trace</a>(<a class="code" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a01715.html#ab58253322bcadfefd7ab8c3ec0fb65fb">status</a>);</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<a class="code" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a01460.html#a37c973beed068b00d261521bfe29299a">atca_trace_msg</a>(<a class="code" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a01715.html#ab58253322bcadfefd7ab8c3ec0fb65fb">status</a>, <span class="keyword">const</span> <span class="keywordtype">char</span> * msg);</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* _ATCA_DEBUG_H */</span><span class="preprocessor"></span></div>
+<a href="a01460.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef PKCS11_ATTRIB_H_</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define PKCS11_ATTRIB_H_</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01451.html">cryptoki.h</a>&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="a01460.html#a5a0b1cd7e76456a031118d97060eecb9">   38</a></span>&#160;<span class="keyword">typedef</span> <a class="code" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> (*<a class="code" href="a01460.html#a5a0b1cd7e76456a031118d97060eecb9">attrib_f</a>)(<a class="code" href="a01571.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="code" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="a08850.html">   40</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="a08850.html">_pkcs11_attrib_model</a></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;{</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="a08850.html#ae0c8aa34f550a71d97c0d0ca3b4eb98a">   42</a></span>&#160;    <span class="keyword">const</span> <a class="code" href="a01571.html#ad95456bab28dc2208c2d0e1d01f8ae8a">CK_ATTRIBUTE_TYPE</a> <a class="code" href="a08850.html#ae0c8aa34f550a71d97c0d0ca3b4eb98a">type</a>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="a08850.html#a5ce2da5ba866bfb3b9412de7ccdb76f7">   43</a></span>&#160;    <span class="keyword">const</span> <a class="code" href="a01460.html#a5a0b1cd7e76456a031118d97060eecb9">attrib_f</a>          <a class="code" href="a08850.html#a5ce2da5ba866bfb3b9412de7ccdb76f7">func</a>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="a01460.html#a989f60ace1b798f527c3065087a21162">   44</a></span>&#160;} <a class="code" href="a01460.html#a5808b2771bb5bd3fdb344fd9b33b48ed">pkcs11_attrib_model</a>, *<a class="code" href="a01460.html#a989f60ace1b798f527c3065087a21162">pkcs11_attrib_model_ptr</a>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<a class="code" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a08589.html#gae518fd798cd7352bd7e1ea47cc9d8d33">pkcs11_attrib_fill</a>(<a class="code" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute, <span class="keyword">const</span> <a class="code" href="a01571.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pData, <span class="keyword">const</span> <a class="code" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulSize);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<a class="code" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a08589.html#ga50e9c64b899d1b2f78c9634298225303">pkcs11_attrib_value</a>(<a class="code" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute, <span class="keyword">const</span> <a class="code" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulValue, <span class="keyword">const</span> <a class="code" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulSize);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<a class="code" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a08589.html#ga3bebbc6283e197f203ea5905ab5caee3">pkcs11_attrib_false</a>(<span class="keyword">const</span> <a class="code" href="a01571.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="code" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<a class="code" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a08589.html#ga0bfb7c14a9c1daf120a61a65499bdc55">pkcs11_attrib_true</a>(<span class="keyword">const</span> <a class="code" href="a01571.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="code" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<a class="code" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a08589.html#ga89c04713bd2e0df331bd4f8f5abf14ab">pkcs11_attrib_empty</a>(<span class="keyword">const</span> <a class="code" href="a01571.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="code" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PKCS11_ATTRIB_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aa01715_html_ab58253322bcadfefd7ab8c3ec0fb65fb"><div class="ttname"><a href="a01715.html#ab58253322bcadfefd7ab8c3ec0fb65fb">status</a></div><div class="ttdeci">ATCA_STATUS status</div><div class="ttdef"><b>Definition:</b> hal_esp32_i2c.c:49</div></div>
-<div class="ttc" id="aa01460_html_a60326372db8190ddb9f191fca5bdc38a"><div class="ttname"><a href="a01460.html#a60326372db8190ddb9f191fca5bdc38a">atca_trace</a></div><div class="ttdeci">ATCA_STATUS atca_trace(ATCA_STATUS status)</div><div class="ttdef"><b>Definition:</b> atca_debug.c:37</div></div>
-<div class="ttc" id="aa01484_html"><div class="ttname"><a href="a01484.html">atca_status.h</a></div><div class="ttdoc">Microchip Crypto Auth status codes.</div></div>
-<div class="ttc" id="aa01484_html_a22bd6643f31f1d75dc3e7ea939f468cd"><div class="ttname"><a href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a></div><div class="ttdeci">ATCA_STATUS</div><div class="ttdef"><b>Definition:</b> atca_status.h:43</div></div>
-<div class="ttc" id="aa01460_html_aaf7947b74c12dac486d03bb6f6b148d9"><div class="ttname"><a href="a01460.html#aaf7947b74c12dac486d03bb6f6b148d9">atca_trace_config</a></div><div class="ttdeci">void atca_trace_config(FILE *fp)</div><div class="ttdef"><b>Definition:</b> atca_debug.c:32</div></div>
-<div class="ttc" id="aa01460_html_a37c973beed068b00d261521bfe29299a"><div class="ttname"><a href="a01460.html#a37c973beed068b00d261521bfe29299a">atca_trace_msg</a></div><div class="ttdeci">ATCA_STATUS atca_trace_msg(ATCA_STATUS status, const char *msg)</div><div class="ttdef"><b>Definition:</b> atca_debug.c:42</div></div>
+<div class="ttc" id="aa01571_html_ace49359127edfc5665608140005b9a96"><div class="ttname"><a href="a01571.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a></div><div class="ttdeci">void CK_PTR CK_VOID_PTR</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:67</div></div>
+<div class="ttc" id="aa01451_html"><div class="ttname"><a href="a01451.html">cryptoki.h</a></div></div>
+<div class="ttc" id="aa01571_html_a5e825285ada96a9920d361d33698ce04"><div class="ttname"><a href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a></div><div class="ttdeci">CK_ATTRIBUTE CK_PTR CK_ATTRIBUTE_PTR</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:577</div></div>
+<div class="ttc" id="aa08589_html_ga0bfb7c14a9c1daf120a61a65499bdc55"><div class="ttname"><a href="a08589.html#ga0bfb7c14a9c1daf120a61a65499bdc55">pkcs11_attrib_true</a></div><div class="ttdeci">CK_RV pkcs11_attrib_true(const CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)</div><div class="ttdef"><b>Definition:</b> pkcs11_attrib.c:109</div></div>
+<div class="ttc" id="aa08850_html_a5ce2da5ba866bfb3b9412de7ccdb76f7"><div class="ttname"><a href="a08850.html#a5ce2da5ba866bfb3b9412de7ccdb76f7">_pkcs11_attrib_model::func</a></div><div class="ttdeci">const attrib_f func</div><div class="ttdef"><b>Definition:</b> pkcs11_attrib.h:43</div></div>
+<div class="ttc" id="aa01571_html_ad95456bab28dc2208c2d0e1d01f8ae8a"><div class="ttname"><a href="a01571.html#ad95456bab28dc2208c2d0e1d01f8ae8a">CK_ATTRIBUTE_TYPE</a></div><div class="ttdeci">CK_ULONG CK_ATTRIBUTE_TYPE</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:422</div></div>
+<div class="ttc" id="aa08589_html_gae518fd798cd7352bd7e1ea47cc9d8d33"><div class="ttname"><a href="a08589.html#gae518fd798cd7352bd7e1ea47cc9d8d33">pkcs11_attrib_fill</a></div><div class="ttdeci">CK_RV pkcs11_attrib_fill(CK_ATTRIBUTE_PTR pAttribute, const CK_VOID_PTR pData, const CK_ULONG ulSize)</div><div class="ttdoc">Perform the nessasary checks and copy data into an attribute structure.</div><div class="ttdef"><b>Definition:</b> pkcs11_attrib.c:52</div></div>
+<div class="ttc" id="aa08850_html"><div class="ttname"><a href="a08850.html">_pkcs11_attrib_model</a></div><div class="ttdef"><b>Definition:</b> pkcs11_attrib.h:41</div></div>
+<div class="ttc" id="aa08589_html_ga50e9c64b899d1b2f78c9634298225303"><div class="ttname"><a href="a08589.html#ga50e9c64b899d1b2f78c9634298225303">pkcs11_attrib_value</a></div><div class="ttdeci">CK_RV pkcs11_attrib_value(CK_ATTRIBUTE_PTR pAttribute, const CK_ULONG ulValue, const CK_ULONG ulSize)</div><div class="ttdoc">Helper function to write a numerical value to an attribute buffer.</div><div class="ttdef"><b>Definition:</b> pkcs11_attrib.c:96</div></div>
+<div class="ttc" id="aa01460_html_a5a0b1cd7e76456a031118d97060eecb9"><div class="ttname"><a href="a01460.html#a5a0b1cd7e76456a031118d97060eecb9">attrib_f</a></div><div class="ttdeci">CK_RV(* attrib_f)(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)</div><div class="ttdef"><b>Definition:</b> pkcs11_attrib.h:38</div></div>
+<div class="ttc" id="aa01460_html_a989f60ace1b798f527c3065087a21162"><div class="ttname"><a href="a01460.html#a989f60ace1b798f527c3065087a21162">pkcs11_attrib_model_ptr</a></div><div class="ttdeci">struct _pkcs11_attrib_model * pkcs11_attrib_model_ptr</div></div>
+<div class="ttc" id="aa08589_html_ga3bebbc6283e197f203ea5905ab5caee3"><div class="ttname"><a href="a08589.html#ga3bebbc6283e197f203ea5905ab5caee3">pkcs11_attrib_false</a></div><div class="ttdeci">CK_RV pkcs11_attrib_false(const CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)</div><div class="ttdef"><b>Definition:</b> pkcs11_attrib.c:102</div></div>
+<div class="ttc" id="aa08850_html_ae0c8aa34f550a71d97c0d0ca3b4eb98a"><div class="ttname"><a href="a08850.html#ae0c8aa34f550a71d97c0d0ca3b4eb98a">_pkcs11_attrib_model::type</a></div><div class="ttdeci">const CK_ATTRIBUTE_TYPE type</div><div class="ttdef"><b>Definition:</b> pkcs11_attrib.h:42</div></div>
+<div class="ttc" id="aa01571_html_a35181858a3b7a0a81f49d180d8f446ef"><div class="ttname"><a href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a></div><div class="ttdeci">unsigned long int CK_ULONG</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:49</div></div>
+<div class="ttc" id="aa01460_html_a5808b2771bb5bd3fdb344fd9b33b48ed"><div class="ttname"><a href="a01460.html#a5808b2771bb5bd3fdb344fd9b33b48ed">pkcs11_attrib_model</a></div><div class="ttdeci">struct _pkcs11_attrib_model pkcs11_attrib_model</div></div>
+<div class="ttc" id="aa08589_html_ga89c04713bd2e0df331bd4f8f5abf14ab"><div class="ttname"><a href="a08589.html#ga89c04713bd2e0df331bd4f8f5abf14ab">pkcs11_attrib_empty</a></div><div class="ttdeci">CK_RV pkcs11_attrib_empty(const CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)</div><div class="ttdef"><b>Definition:</b> pkcs11_attrib.c:115</div></div>
+<div class="ttc" id="aa01571_html_a33839c131011ca3849dc35c11f69c39d"><div class="ttname"><a href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a></div><div class="ttdeci">CK_ULONG CK_RV</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:1046</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="a01460.html">atca_debug.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_de8763fbd32fa6c533e8e0dca5fc697b.html">cryptauthlib-v3.3.3_</a></li><li class="navelem"><a class="el" href="dir_76c6e33311c14dc6ff7c294bf952470f.html">lib</a></li><li class="navelem"><a class="el" href="dir_9bd2612bd55169c9881c7cd36a33cdb4.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01460.html">pkcs11_attrib.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

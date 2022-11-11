@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_gpio_harmony.h File Reference</title>
+<title>CryptoAuthLib: atca_basic.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">3.4.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -84,1262 +84,425 @@ $(document).ready(function(){initNavTree('a01727.html',''); initResizable(); });
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">hal_gpio_harmony.h File Reference</div>  </div>
+<div class="title">atca_basic.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for SWI over GPIO drivers.  
+<p>CryptoAuthLib Basic API methods - a simple crypto authentication API. These methods manage a global ATCADevice object behind the scenes. They also manage the wake/idle state transitions so callers don't need to.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a01694_source.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01484_source.html">atca_status.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01703_source.html">atca_hal.h</a>&quot;</code><br />
-<code>#include &quot;atca_config.h&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a01988_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01970_source.html">crypto/atca_crypto_sw_sha2.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01934_source.html">crypto/atca_crypto_hw_aes.h</a>&quot;</code><br />
 </div>
 <p><a href="a01727_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr><td colspan="2"><div class="groupHeader">Macros for Bit-Banged 1WIRE Timing</div></td></tr>
-<tr><td colspan="2"><div class="groupText"><p>Times to drive bits at 230.4 kbps. </p>
-</div></td></tr>
-<tr class="memitem:a9851aacd49666214d7cc48d70dabc24f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a9851aacd49666214d7cc48d70dabc24f">tPUP</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a9851aacd49666214d7cc48d70dabc24f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afaf1831ae17da9ce865cee405d7763c7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#afaf1831ae17da9ce865cee405d7763c7">tDSCHG</a>&#160;&#160;&#160;150</td></tr>
-<tr class="separator:afaf1831ae17da9ce865cee405d7763c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6bb6a44bc566ef36ae734081b331dc3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#ac6bb6a44bc566ef36ae734081b331dc3">tRESET</a>&#160;&#160;&#160;96</td></tr>
-<tr class="separator:ac6bb6a44bc566ef36ae734081b331dc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f34aa16740705c51e13be0fa9c69e47"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a2f34aa16740705c51e13be0fa9c69e47">tRRT</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:a2f34aa16740705c51e13be0fa9c69e47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a963b4c5f749e54295d0fb86a9b5981e7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a963b4c5f749e54295d0fb86a9b5981e7">tDRR</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:a963b4c5f749e54295d0fb86a9b5981e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a559899ca08e3e388f6dce508f94c57ca"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a559899ca08e3e388f6dce508f94c57ca">tMSDR</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:a559899ca08e3e388f6dce508f94c57ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a525c6372dfb6a7087af4524512b1973e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a525c6372dfb6a7087af4524512b1973e">tHTSS</a>&#160;&#160;&#160;150</td></tr>
-<tr class="separator:a525c6372dfb6a7087af4524512b1973e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1560fd4120622873ce179b924db753b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#ad1560fd4120622873ce179b924db753b">tDACK</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:ad1560fd4120622873ce179b924db753b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a841f7caf64df8c88c3716a81c902692f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a841f7caf64df8c88c3716a81c902692f">tDACK_DLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#ad1560fd4120622873ce179b924db753b">tDACK</a>)</td></tr>
-<tr class="separator:a841f7caf64df8c88c3716a81c902692f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80a41baf9fd49236831572d2dd284e32"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a80a41baf9fd49236831572d2dd284e32">tRRT_DLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a4b83848e938fac7ec4dde79e584b6f71">atca_delay_ms</a>(<a class="el" href="a01727.html#a2f34aa16740705c51e13be0fa9c69e47">tRRT</a>)</td></tr>
-<tr class="separator:a80a41baf9fd49236831572d2dd284e32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd3d90f72e5c1aa95bf5d69a883b697c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#afd3d90f72e5c1aa95bf5d69a883b697c">tDRR_DLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#a963b4c5f749e54295d0fb86a9b5981e7">tDRR</a>)</td></tr>
-<tr class="separator:afd3d90f72e5c1aa95bf5d69a883b697c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b3815eccc6bbec8680275f32086e839"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a3b3815eccc6bbec8680275f32086e839">tMSDR_DLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#a559899ca08e3e388f6dce508f94c57ca">tMSDR</a>)</td></tr>
-<tr class="separator:a3b3815eccc6bbec8680275f32086e839"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06f5a45eca79f59745271042a19d09a1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a06f5a45eca79f59745271042a19d09a1">tDSCHG_DLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#afaf1831ae17da9ce865cee405d7763c7">tDSCHG</a>)</td></tr>
-<tr class="separator:a06f5a45eca79f59745271042a19d09a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2c296257356a87a73b10f5377ec7cee"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#aa2c296257356a87a73b10f5377ec7cee">tRESET_DLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#ac6bb6a44bc566ef36ae734081b331dc3">tRESET</a>)</td></tr>
-<tr class="separator:aa2c296257356a87a73b10f5377ec7cee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e988486a0cb2c61f6df8de27aedfcff"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a3e988486a0cb2c61f6df8de27aedfcff">tHTSS_DLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#a525c6372dfb6a7087af4524512b1973e">tHTSS</a>)</td></tr>
-<tr class="separator:a3e988486a0cb2c61f6df8de27aedfcff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e9d6baa27842ccd73f2e2d28ad59a09"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a5e9d6baa27842ccd73f2e2d28ad59a09">tLOW0_MIN</a>&#160;&#160;&#160;6</td></tr>
-<tr class="separator:a5e9d6baa27842ccd73f2e2d28ad59a09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5b2218755123dedbffc624dfcf36a34"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#af5b2218755123dedbffc624dfcf36a34">tLOW0_MAX</a>&#160;&#160;&#160;16</td></tr>
-<tr class="separator:af5b2218755123dedbffc624dfcf36a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80ab122bd74f680591ab0b4d847a65bb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a80ab122bd74f680591ab0b4d847a65bb">tLOW1_MIN</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:a80ab122bd74f680591ab0b4d847a65bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d500117005d8c6844067932b5e04e22"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a4d500117005d8c6844067932b5e04e22">tLOW1_MAX</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:a4d500117005d8c6844067932b5e04e22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd91898f2f43ec8c65cc27afa437f67d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#afd91898f2f43ec8c65cc27afa437f67d">tRCV_MIN</a>&#160;&#160;&#160;4</td></tr>
-<tr class="separator:afd91898f2f43ec8c65cc27afa437f67d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af09ae5d0bdc80815278920b346ab54ec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#af09ae5d0bdc80815278920b346ab54ec">tRCV_MAX</a>&#160;&#160;&#160;6</td></tr>
-<tr class="separator:af09ae5d0bdc80815278920b346ab54ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cf23c02906a3896b322b8f38ffccd7a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a0cf23c02906a3896b322b8f38ffccd7a">tBIT_MIN</a>&#160;&#160;&#160;(<a class="el" href="a01727.html#a5e9d6baa27842ccd73f2e2d28ad59a09">tLOW0_MIN</a> + <a class="el" href="a01727.html#a9851aacd49666214d7cc48d70dabc24f">tPUP</a> + <a class="el" href="a01727.html#afd91898f2f43ec8c65cc27afa437f67d">tRCV_MIN</a>)</td></tr>
-<tr class="separator:a0cf23c02906a3896b322b8f38ffccd7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35bfb2591822f6234cfc11bd5f05aded"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a35bfb2591822f6234cfc11bd5f05aded">tBIT_MAX</a>&#160;&#160;&#160;75</td></tr>
-<tr class="separator:a35bfb2591822f6234cfc11bd5f05aded"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6cf944d9658e800b8855285ca9de13f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#ab6cf944d9658e800b8855285ca9de13f">tWAKEUP</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:ab6cf944d9658e800b8855285ca9de13f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af69cfd1e5c344ba454e516f96c42ba48"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#af69cfd1e5c344ba454e516f96c42ba48">tLOW0_TYPICAL</a>&#160;&#160;&#160;(<a class="el" href="a01727.html#a5e9d6baa27842ccd73f2e2d28ad59a09">tLOW0_MIN</a> + ((<a class="el" href="a01727.html#af5b2218755123dedbffc624dfcf36a34">tLOW0_MAX</a> - <a class="el" href="a01727.html#a5e9d6baa27842ccd73f2e2d28ad59a09">tLOW0_MIN</a>) / 2))</td></tr>
-<tr class="separator:af69cfd1e5c344ba454e516f96c42ba48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a439c3fe5adb24ae60fa6e992ed7eea94"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a439c3fe5adb24ae60fa6e992ed7eea94">tLOW1_TYPICAL</a>&#160;&#160;&#160;(<a class="el" href="a01727.html#a80ab122bd74f680591ab0b4d847a65bb">tLOW1_MIN</a> + ((<a class="el" href="a01727.html#a4d500117005d8c6844067932b5e04e22">tLOW1_MAX</a> - <a class="el" href="a01727.html#a80ab122bd74f680591ab0b4d847a65bb">tLOW1_MIN</a>) / 2))</td></tr>
-<tr class="separator:a439c3fe5adb24ae60fa6e992ed7eea94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb79dae6000c16a1e1fb1aab4b381087"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#aeb79dae6000c16a1e1fb1aab4b381087">tBIT_TYPICAL</a>&#160;&#160;&#160;(<a class="el" href="a01727.html#a0cf23c02906a3896b322b8f38ffccd7a">tBIT_MIN</a> + ((<a class="el" href="a01727.html#a35bfb2591822f6234cfc11bd5f05aded">tBIT_MAX</a> - <a class="el" href="a01727.html#a0cf23c02906a3896b322b8f38ffccd7a">tBIT_MIN</a>) / 2 ))</td></tr>
-<tr class="separator:aeb79dae6000c16a1e1fb1aab4b381087"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3b05028782c6548a822ebd3fe77a7e5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#af3b05028782c6548a822ebd3fe77a7e5">tLOW0_HDLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(11)</td></tr>
-<tr class="separator:af3b05028782c6548a822ebd3fe77a7e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a421634b53ea0efe0adb372cb7b990589"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a421634b53ea0efe0adb372cb7b990589">tRD_HDLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(1)</td></tr>
-<tr class="separator:a421634b53ea0efe0adb372cb7b990589"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4fea6777381cea1f29cb9d67ed054fe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#aa4fea6777381cea1f29cb9d67ed054fe">tLOW1_HDLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(1)</td></tr>
-<tr class="separator:aa4fea6777381cea1f29cb9d67ed054fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb31653547deaa7884c12937ae985980"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#acb31653547deaa7884c12937ae985980">tRCV0_HDLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(11)</td></tr>
-<tr class="separator:acb31653547deaa7884c12937ae985980"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e380a3931c715608118bad11cc01798"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a8e380a3931c715608118bad11cc01798">tRCV1_HDLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(14)</td></tr>
-<tr class="separator:a8e380a3931c715608118bad11cc01798"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a837720a4ac39140692eedf9d4f9bdc67"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a837720a4ac39140692eedf9d4f9bdc67">tRD_DLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(1)</td></tr>
-<tr class="separator:a837720a4ac39140692eedf9d4f9bdc67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd0d3869b6b02735e2f607c5b7800190"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#abd0d3869b6b02735e2f607c5b7800190">tHIGH_SPEED_DLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(1)</td></tr>
-<tr class="separator:abd0d3869b6b02735e2f607c5b7800190"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29d041bf7696369ce7a61a30fa903d7d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a29d041bf7696369ce7a61a30fa903d7d">tSWIN_DLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(1)</td></tr>
-<tr class="separator:a29d041bf7696369ce7a61a30fa903d7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e5eba16a729eb22c12202ac3fd1273a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a6e5eba16a729eb22c12202ac3fd1273a">tLOW0_DLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#af69cfd1e5c344ba454e516f96c42ba48">tLOW0_TYPICAL</a>)</td></tr>
-<tr class="separator:a6e5eba16a729eb22c12202ac3fd1273a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4de8c9e02117694e95d503b601b560c3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a4de8c9e02117694e95d503b601b560c3">tLOW1_DLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#a439c3fe5adb24ae60fa6e992ed7eea94">tLOW1_TYPICAL</a>)</td></tr>
-<tr class="separator:a4de8c9e02117694e95d503b601b560c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab029dfcfe978b8447c36c6c99a8014e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#aab029dfcfe978b8447c36c6c99a8014e">tBIT_DLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#aeb79dae6000c16a1e1fb1aab4b381087">tBIT_TYPICAL</a>)</td></tr>
-<tr class="separator:aab029dfcfe978b8447c36c6c99a8014e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96307dfcd31f60d709a005969cf6b46d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a96307dfcd31f60d709a005969cf6b46d">tRCV0_DLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#aeb79dae6000c16a1e1fb1aab4b381087">tBIT_TYPICAL</a> - <a class="el" href="a01727.html#af69cfd1e5c344ba454e516f96c42ba48">tLOW0_TYPICAL</a>)</td></tr>
-<tr class="separator:a96307dfcd31f60d709a005969cf6b46d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f3f68dbcc897865ae9a540ee5c23d2a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a6f3f68dbcc897865ae9a540ee5c23d2a">tRCV1_DLY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#aeb79dae6000c16a1e1fb1aab4b381087">tBIT_TYPICAL</a> - <a class="el" href="a01727.html#a439c3fe5adb24ae60fa6e992ed7eea94">tLOW1_TYPICAL</a>)</td></tr>
-<tr class="separator:a6f3f68dbcc897865ae9a540ee5c23d2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafbb9b3f93a98add2a383024fb954efd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#aafbb9b3f93a98add2a383024fb954efd">send_logic0_1wire</a>(...)&#160;&#160;&#160;send_logic_bit(__VA_ARGS__, <a class="el" href="a01727.html#a2da4af5eaad1cd580eac59f9cc81c22d">ATCA_GPIO_LOGIC_BIT0</a>)</td></tr>
-<tr class="separator:aafbb9b3f93a98add2a383024fb954efd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b93a2c6bc6a7c80996cf2b63ac59614"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a5b93a2c6bc6a7c80996cf2b63ac59614">send_logic1_1wire</a>(...)&#160;&#160;&#160;send_logic_bit(__VA_ARGS__, <a class="el" href="a01727.html#aa217efbd8aa1a71048f1b4e2110b279e">ATCA_GPIO_LOGIC_BIT1</a>)</td></tr>
-<tr class="separator:a5b93a2c6bc6a7c80996cf2b63ac59614"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a984e0870d283bc509d0bee0a87a787f6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a984e0870d283bc509d0bee0a87a787f6">send_ACK_1wire</a>(...)&#160;&#160;&#160;<a class="el" href="a01727.html#aafbb9b3f93a98add2a383024fb954efd">send_logic0_1wire</a>(__VA_ARGS__)</td></tr>
-<tr class="separator:a984e0870d283bc509d0bee0a87a787f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a927daf2731f0f952ce011db114b84055"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a927daf2731f0f952ce011db114b84055">send_NACK_1wire</a>(...)&#160;&#160;&#160;<a class="el" href="a01727.html#a5b93a2c6bc6a7c80996cf2b63ac59614">send_logic1_1wire</a>(__VA_ARGS__)</td></tr>
-<tr class="separator:a927daf2731f0f952ce011db114b84055"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac96ddd0b39dd8b447b7cb4b98212e3e4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#ac96ddd0b39dd8b447b7cb4b98212e3e4">ATCA_1WIRE_RESET_WORD_ADDR</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:ac96ddd0b39dd8b447b7cb4b98212e3e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c13314beda92827abe152579a26b1b6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a5c13314beda92827abe152579a26b1b6">ATCA_1WIRE_SLEEP_WORD_ADDR</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:a5c13314beda92827abe152579a26b1b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab30f7c52f74cd8c9c57def65253afc18"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#ab30f7c52f74cd8c9c57def65253afc18">ATCA_1WIRE_SLEEP_WORD_ADDR_ALTERNATE</a>&#160;&#160;&#160;0x02</td></tr>
-<tr class="separator:ab30f7c52f74cd8c9c57def65253afc18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4730461247b76c69577905fa614c035"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#ad4730461247b76c69577905fa614c035">ATCA_1WIRE_COMMAND_WORD_ADDR</a>&#160;&#160;&#160;0x03</td></tr>
-<tr class="separator:ad4730461247b76c69577905fa614c035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cee8fe70329fcc829cddea75eb26593"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a5cee8fe70329fcc829cddea75eb26593">ATCA_1WIRE_RESPONSE_LENGTH_SIZE</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:a5cee8fe70329fcc829cddea75eb26593"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a830854de5bc672bc4e02c314809eec37"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a830854de5bc672bc4e02c314809eec37">ATCA_1WIRE_BIT_MASK</a>&#160;&#160;&#160;0x80</td></tr>
-<tr class="separator:a830854de5bc672bc4e02c314809eec37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80cdd7f70abefd3e2c797f0cc6fb2b2d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a80cdd7f70abefd3e2c797f0cc6fb2b2d">ATCA_GPIO_WRITE</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a80cdd7f70abefd3e2c797f0cc6fb2b2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42fd16c4508438e85f7ed3e242e062e6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a42fd16c4508438e85f7ed3e242e062e6">ATCA_GPIO_READ</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:a42fd16c4508438e85f7ed3e242e062e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9e0e282ea6b57495625fe459d8f6f96"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#af9e0e282ea6b57495625fe459d8f6f96">ATCA_GPIO_INPUT_DIR</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:af9e0e282ea6b57495625fe459d8f6f96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13ba832338b5f0b433ca28764c2066a3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a13ba832338b5f0b433ca28764c2066a3">ATCA_GPIO_OUTPUT_DIR</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:a13ba832338b5f0b433ca28764c2066a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2da4af5eaad1cd580eac59f9cc81c22d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a2da4af5eaad1cd580eac59f9cc81c22d">ATCA_GPIO_LOGIC_BIT0</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a2da4af5eaad1cd580eac59f9cc81c22d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa217efbd8aa1a71048f1b4e2110b279e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#aa217efbd8aa1a71048f1b4e2110b279e">ATCA_GPIO_LOGIC_BIT1</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:aa217efbd8aa1a71048f1b4e2110b279e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbac5fe9e08b848d353d8c9d1c252498"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#afbac5fe9e08b848d353d8c9d1c252498">ATCA_GPIO_ACK</a>&#160;&#160;&#160;<a class="el" href="a01727.html#a2da4af5eaad1cd580eac59f9cc81c22d">ATCA_GPIO_LOGIC_BIT0</a></td></tr>
-<tr class="separator:afbac5fe9e08b848d353d8c9d1c252498"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13edf4be3cb4c99ffa58564e11fc4493"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a13edf4be3cb4c99ffa58564e11fc4493">ATCA_GPIO_CLEAR</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a13edf4be3cb4c99ffa58564e11fc4493"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa5159a96d13bdd1ede3901af736a03b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#aaa5159a96d13bdd1ede3901af736a03b">ATCA_GPIO_SET</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:aaa5159a96d13bdd1ede3901af736a03b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbbebceebc001e7bf09c60b4a4e3ffe8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#afbbebceebc001e7bf09c60b4a4e3ffe8">ATCA_MIN_RESPONSE_LENGTH</a>&#160;&#160;&#160;4</td></tr>
-<tr class="separator:afbbebceebc001e7bf09c60b4a4e3ffe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga55663492574ac6d6b6cb5ad39c632031"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga55663492574ac6d6b6cb5ad39c632031">atcab_get_addr</a>(...)&#160;&#160;&#160;<a class="el" href="a23283.html#gae51a67781e9e4618e669db1c999e6ec2">calib_get_addr</a>(__VA_ARGS__)</td></tr>
+<tr class="separator:ga55663492574ac6d6b6cb5ad39c632031"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadf7f8ac7b0159edf31a623dbaac0ae97"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gadf7f8ac7b0159edf31a623dbaac0ae97">atca_execute_command</a>(...)&#160;&#160;&#160;<a class="el" href="a01874.html#a19fc558e09f03a2f8f5ee89b1e396b2e">calib_execute_command</a>(__VA_ARGS__)</td></tr>
+<tr class="separator:gadf7f8ac7b0159edf31a623dbaac0ae97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3d37a5da1c43d44e49c4e6614d133c7e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga3d37a5da1c43d44e49c4e6614d133c7e">SHA_CONTEXT_MAX_SIZE</a>&#160;&#160;&#160;(109)</td></tr>
+<tr class="separator:ga3d37a5da1c43d44e49c4e6614d133c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Macros for Bit-Banged SWI Timing</h2></td></tr>
-<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrp786d2d6f742af2057c8339e20d8ffbfd"></a>Times to drive bits at 230.4 kbps. </p>
-</td></tr>
-<tr class="memitem:ad884cf7d66d88b38180369a791a9824b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#ad884cf7d66d88b38180369a791a9824b">BIT_DELAY_1L</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(4)</td></tr>
-<tr class="separator:ad884cf7d66d88b38180369a791a9824b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ce4882b7d053eafcec22cd84fb5727d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a1ce4882b7d053eafcec22cd84fb5727d">BIT_DELAY_1H</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(4)</td></tr>
-<tr class="memdesc:a1ce4882b7d053eafcec22cd84fb5727d"><td class="mdescLeft">&#160;</td><td class="mdescRight">should be 4.34 us, is 4.05us  <a href="a01727.html#a1ce4882b7d053eafcec22cd84fb5727d">More...</a><br /></td></tr>
-<tr class="separator:a1ce4882b7d053eafcec22cd84fb5727d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ced4699fc4ab5162dbb9453edecb32e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a2ced4699fc4ab5162dbb9453edecb32e">BIT_DELAY_5</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(26)</td></tr>
-<tr class="separator:a2ced4699fc4ab5162dbb9453edecb32e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd0d20a34060650b8a2895c17f842f44"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#abd0d20a34060650b8a2895c17f842f44">BIT_DELAY_7</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(34)</td></tr>
-<tr class="separator:abd0d20a34060650b8a2895c17f842f44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60ba93807a2c0ea2ce1432245f3f7da0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a60ba93807a2c0ea2ce1432245f3f7da0">RX_TX_DELAY</a>&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(65)</td></tr>
-<tr class="separator:a60ba93807a2c0ea2ce1432245f3f7da0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35e9d98d207f17ebac66dc86e29a6464"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a35e9d98d207f17ebac66dc86e29a6464">ATCA_SWI_WAKE_WORD_ADDR</a>&#160;&#160;&#160;((uint8_t)0x00)</td></tr>
-<tr class="separator:a35e9d98d207f17ebac66dc86e29a6464"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4a438b8a49f5dcff058572af8524caf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#ab4a438b8a49f5dcff058572af8524caf">ATCA_SWI_CMD_WORD_ADDR</a>&#160;&#160;&#160;((uint8_t)0x77)</td></tr>
-<tr class="separator:ab4a438b8a49f5dcff058572af8524caf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a38ba8017304eccded253014991d317"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a0a38ba8017304eccded253014991d317">ATCA_SWI_TX_WORD_ADDR</a>&#160;&#160;&#160;((uint8_t)0x88)</td></tr>
-<tr class="separator:a0a38ba8017304eccded253014991d317"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14b35a7b7b4fc3e4c6d85fdb4add4c73"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a14b35a7b7b4fc3e4c6d85fdb4add4c73">ATCA_SWI_IDLE_WORD_ADDR</a>&#160;&#160;&#160;((uint8_t)0xBB)</td></tr>
-<tr class="separator:a14b35a7b7b4fc3e4c6d85fdb4add4c73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e670222365b6754841a73376ebe7b27"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a4e670222365b6754841a73376ebe7b27">ATCA_SWI_SLEEP_WORD_ADDR</a>&#160;&#160;&#160;((uint8_t)0xCC)</td></tr>
-<tr class="separator:a4e670222365b6754841a73376ebe7b27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5489f5ec515e47686889f17f2a5c9443"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#a5489f5ec515e47686889f17f2a5c9443">ATCA_SWI_BIT_MASK</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:a5489f5ec515e47686889f17f2a5c9443"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac921c2e8625e26392a9679359d60e396"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#ac921c2e8625e26392a9679359d60e396">protocol_type</a> { <a class="el" href="a01727.html#ac921c2e8625e26392a9679359d60e396a0bd16b106398959a7f795b672678bcb8">ATCA_PROTOCOL_1WIRE</a>, 
-<a class="el" href="a01727.html#ac921c2e8625e26392a9679359d60e396a0df4a65c891005acf8f3b83d8fbbad8e">ATCA_PROTOCOL_SWI</a>, 
-<a class="el" href="a01727.html#ac921c2e8625e26392a9679359d60e396a87989af86cf2eb23059bcbc9cd61fad2">NO_OF_PROTOCOL</a>
- }</td></tr>
-<tr class="separator:ac921c2e8625e26392a9679359d60e396"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae07c4ab9832b4a73aa58ca8c11eb0b0d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html#ae07c4ab9832b4a73aa58ca8c11eb0b0d">delay_type</a> { <br />
-&#160;&#160;<a class="el" href="a01727.html#ae07c4ab9832b4a73aa58ca8c11eb0b0da3c6894a5f8a2801269921d6c135deb30">LOGIC0_1</a>, 
-<a class="el" href="a01727.html#ae07c4ab9832b4a73aa58ca8c11eb0b0da5d8a4ca6eeed894a36bc23ee78ec7f09">LOGIC0_2</a>, 
-<a class="el" href="a01727.html#ae07c4ab9832b4a73aa58ca8c11eb0b0da00b39e98fb8e19e176495b77f9785912">LOGIC0_3</a>, 
-<a class="el" href="a01727.html#ae07c4ab9832b4a73aa58ca8c11eb0b0da20495bb1a5394af8d878c979b40e8d3b">LOGIC0_4</a>, 
-<br />
-&#160;&#160;<a class="el" href="a01727.html#ae07c4ab9832b4a73aa58ca8c11eb0b0dac2e4b7648a73f00d921b1578649c5dff">LOGIC1_1</a>, 
-<a class="el" href="a01727.html#ae07c4ab9832b4a73aa58ca8c11eb0b0dae65669a469f2c6beca926228ca9a3afa">LOGIC1_2</a>, 
-<a class="el" href="a01727.html#ae07c4ab9832b4a73aa58ca8c11eb0b0da1f432faab4ab3396a72c16ab9e6a16b4">NO_OF_DELAYS</a>
-<br />
- }</td></tr>
-<tr class="separator:ae07c4ab9832b4a73aa58ca8c11eb0b0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaff701132013eaac5600dd9fd6253505d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gaff701132013eaac5600dd9fd6253505d">atcab_version</a> (char *ver_str)</td></tr>
+<tr class="memdesc:gaff701132013eaac5600dd9fd6253505d"><td class="mdescLeft">&#160;</td><td class="mdescRight">basic API methods are all prefixed with atcab_ (CryptoAuthLib Basic) the fundamental premise of the basic API is it is based on a single interface instance and that instance is global, so all basic API commands assume that one global device is the one to operate on.  <a href="a23278.html#gaff701132013eaac5600dd9fd6253505d">More...</a><br /></td></tr>
+<tr class="separator:gaff701132013eaac5600dd9fd6253505d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1d392a2b2ae7a51907cb724f0465741"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gaa1d392a2b2ae7a51907cb724f0465741">atcab_init_ext</a> (<a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> *device, <a class="el" href="a23315.html">ATCAIfaceCfg</a> *cfg)</td></tr>
+<tr class="memdesc:gaa1d392a2b2ae7a51907cb724f0465741"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and initializes a ATCADevice context.  <a href="a23278.html#gaa1d392a2b2ae7a51907cb724f0465741">More...</a><br /></td></tr>
+<tr class="separator:gaa1d392a2b2ae7a51907cb724f0465741"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacdc4fa3d2f2f6d197af8c10ab1f288b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gacdc4fa3d2f2f6d197af8c10ab1f288b8">atcab_init</a> (<a class="el" href="a23315.html">ATCAIfaceCfg</a> *cfg)</td></tr>
+<tr class="memdesc:gacdc4fa3d2f2f6d197af8c10ab1f288b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a global ATCADevice object used by Basic API.  <a href="a23278.html#gacdc4fa3d2f2f6d197af8c10ab1f288b8">More...</a><br /></td></tr>
+<tr class="separator:gacdc4fa3d2f2f6d197af8c10ab1f288b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab22d2a32e6c32c14c4e58ce794ff3ec4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gab22d2a32e6c32c14c4e58ce794ff3ec4">atcab_init_device</a> (<a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> ca_device)</td></tr>
+<tr class="memdesc:gab22d2a32e6c32c14c4e58ce794ff3ec4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the global ATCADevice object to point to one of your choosing for use with all the atcab_ basic API.  <a href="a23278.html#gab22d2a32e6c32c14c4e58ce794ff3ec4">More...</a><br /></td></tr>
+<tr class="separator:gab22d2a32e6c32c14c4e58ce794ff3ec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga147803646532319e585a0fe7a6c028ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga147803646532319e585a0fe7a6c028ef">atcab_release_ext</a> (<a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> *device)</td></tr>
+<tr class="memdesc:ga147803646532319e585a0fe7a6c028ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">release (free) the an ATCADevice instance.  <a href="a23278.html#ga147803646532319e585a0fe7a6c028ef">More...</a><br /></td></tr>
+<tr class="separator:ga147803646532319e585a0fe7a6c028ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3a061c1f96bb641b36fc56b6cb2dd4e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga3a061c1f96bb641b36fc56b6cb2dd4e4">atcab_release</a> (void)</td></tr>
+<tr class="memdesc:ga3a061c1f96bb641b36fc56b6cb2dd4e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">release (free) the global ATCADevice instance. This must be called in order to release or free up the interface.  <a href="a23278.html#ga3a061c1f96bb641b36fc56b6cb2dd4e4">More...</a><br /></td></tr>
+<tr class="separator:ga3a061c1f96bb641b36fc56b6cb2dd4e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4af82005556c549c30e1c4bd35d4f4e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga4af82005556c549c30e1c4bd35d4f4e4">atcab_get_device</a> (void)</td></tr>
+<tr class="memdesc:ga4af82005556c549c30e1c4bd35d4f4e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the global device object.  <a href="a23278.html#ga4af82005556c549c30e1c4bd35d4f4e4">More...</a><br /></td></tr>
+<tr class="separator:ga4af82005556c549c30e1c4bd35d4f4e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4882d4c30f1af2d1aab24a0c465f181d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a23280.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga4882d4c30f1af2d1aab24a0c465f181d">atcab_get_device_type_ext</a> (<a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:ga4882d4c30f1af2d1aab24a0c465f181d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the selected device type of rthe device context.  <a href="a23278.html#ga4882d4c30f1af2d1aab24a0c465f181d">More...</a><br /></td></tr>
+<tr class="separator:ga4882d4c30f1af2d1aab24a0c465f181d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b02163fab87313b81dd7f51345d3eb6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a23280.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga2b02163fab87313b81dd7f51345d3eb6">atcab_get_device_type</a> (void)</td></tr>
+<tr class="memdesc:ga2b02163fab87313b81dd7f51345d3eb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current device type configured for the global ATCADevice.  <a href="a23278.html#ga2b02163fab87313b81dd7f51345d3eb6">More...</a><br /></td></tr>
+<tr class="separator:ga2b02163fab87313b81dd7f51345d3eb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga775bea13de8cc26e61a34ada48358568"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga775bea13de8cc26e61a34ada48358568">atcab_get_device_address</a> (<a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:ga775bea13de8cc26e61a34ada48358568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current device address based on the configured device and interface.  <a href="a23278.html#ga775bea13de8cc26e61a34ada48358568">More...</a><br /></td></tr>
+<tr class="separator:ga775bea13de8cc26e61a34ada48358568"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6e74da1e2ef3168e48bbc89c44b16d2f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga6e74da1e2ef3168e48bbc89c44b16d2f">atcab_is_ca_device</a> (<a class="el" href="a23280.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a> dev_type)</td></tr>
+<tr class="memdesc:ga6e74da1e2ef3168e48bbc89c44b16d2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the device is cryptoauth device.  <a href="a23278.html#ga6e74da1e2ef3168e48bbc89c44b16d2f">More...</a><br /></td></tr>
+<tr class="separator:ga6e74da1e2ef3168e48bbc89c44b16d2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadd4e462d88600ee2d36c3c5bf699fde3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gadd4e462d88600ee2d36c3c5bf699fde3">atcab_is_ta_device</a> (<a class="el" href="a23280.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a> dev_type)</td></tr>
+<tr class="memdesc:gadd4e462d88600ee2d36c3c5bf699fde3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the device is Trust Anchor device.  <a href="a23278.html#gadd4e462d88600ee2d36c3c5bf699fde3">More...</a><br /></td></tr>
+<tr class="separator:gadd4e462d88600ee2d36c3c5bf699fde3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf944ef6828e73f64cd0c327aa5a5e0e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gacf944ef6828e73f64cd0c327aa5a5e0e">atcab_pbkdf2_sha256_ext</a> (<a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint32_t iter, const uint16_t slot, const uint8_t *salt, const size_t salt_len, uint8_t *result, size_t result_len)</td></tr>
+<tr class="separator:gacf944ef6828e73f64cd0c327aa5a5e0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaffacce78575dc87106d402d74178da95"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gaffacce78575dc87106d402d74178da95">atcab_pbkdf2_sha256</a> (const uint32_t iter, const uint16_t slot, const uint8_t *salt, const size_t salt_len, uint8_t *result, size_t result_len)</td></tr>
+<tr class="separator:gaffacce78575dc87106d402d74178da95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5802cd6847a837458604db5dbec4a6f0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga5802cd6847a837458604db5dbec4a6f0">_atcab_exit</a> (void)</td></tr>
+<tr class="separator:ga5802cd6847a837458604db5dbec4a6f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad3bc620aedd9322d160eece0d8d20c82"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gad3bc620aedd9322d160eece0d8d20c82">atcab_wakeup</a> (void)</td></tr>
+<tr class="memdesc:gad3bc620aedd9322d160eece0d8d20c82"><td class="mdescLeft">&#160;</td><td class="mdescRight">wakeup the CryptoAuth device  <a href="a23278.html#gad3bc620aedd9322d160eece0d8d20c82">More...</a><br /></td></tr>
+<tr class="separator:gad3bc620aedd9322d160eece0d8d20c82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf47433a371b9fcb8d65a4214cd9e4fa0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gaf47433a371b9fcb8d65a4214cd9e4fa0">atcab_idle</a> (void)</td></tr>
+<tr class="memdesc:gaf47433a371b9fcb8d65a4214cd9e4fa0"><td class="mdescLeft">&#160;</td><td class="mdescRight">idle the CryptoAuth device  <a href="a23278.html#gaf47433a371b9fcb8d65a4214cd9e4fa0">More...</a><br /></td></tr>
+<tr class="separator:gaf47433a371b9fcb8d65a4214cd9e4fa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9475e032c388144c5a0df45d1df182a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga9475e032c388144c5a0df45d1df182a5">atcab_sleep</a> (void)</td></tr>
+<tr class="memdesc:ga9475e032c388144c5a0df45d1df182a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">invoke sleep on the CryptoAuth device  <a href="a23278.html#ga9475e032c388144c5a0df45d1df182a5">More...</a><br /></td></tr>
+<tr class="separator:ga9475e032c388144c5a0df45d1df182a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a823d2a391bf80ff336eb2ccbd37412"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga7a823d2a391bf80ff336eb2ccbd37412">atcab_get_zone_size</a> (uint8_t zone, uint16_t slot, size_t *size)</td></tr>
+<tr class="memdesc:ga7a823d2a391bf80ff336eb2ccbd37412"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the specified zone in bytes.  <a href="a23278.html#ga7a823d2a391bf80ff336eb2ccbd37412">More...</a><br /></td></tr>
+<tr class="separator:ga7a823d2a391bf80ff336eb2ccbd37412"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad115ce255664a48b80e90ea19c156b79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gad115ce255664a48b80e90ea19c156b79">atcab_aes</a> (uint8_t mode, uint16_t key_id, const uint8_t *aes_in, uint8_t *aes_out)</td></tr>
+<tr class="memdesc:gad115ce255664a48b80e90ea19c156b79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the AES-128 encrypt, decrypt, or GFM calculation.  <a href="a23278.html#gad115ce255664a48b80e90ea19c156b79">More...</a><br /></td></tr>
+<tr class="separator:gad115ce255664a48b80e90ea19c156b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacc9a58dc49f91674213f34fa7bbd05e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gacc9a58dc49f91674213f34fa7bbd05e1">atcab_aes_encrypt</a> (uint16_t key_id, uint8_t key_block, const uint8_t *plaintext, uint8_t *ciphertext)</td></tr>
+<tr class="memdesc:gacc9a58dc49f91674213f34fa7bbd05e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform an AES-128 encrypt operation with a key in the device.  <a href="a23278.html#gacc9a58dc49f91674213f34fa7bbd05e1">More...</a><br /></td></tr>
+<tr class="separator:gacc9a58dc49f91674213f34fa7bbd05e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa5c5cba4f9be5bc0e4b1c5691f60e4ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gaa5c5cba4f9be5bc0e4b1c5691f60e4ba">atcab_aes_encrypt_ext</a> (<a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, uint8_t key_block, const uint8_t *plaintext, uint8_t *ciphertext)</td></tr>
+<tr class="memdesc:gaa5c5cba4f9be5bc0e4b1c5691f60e4ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform an AES-128 encrypt operation with a key in the device.  <a href="a23278.html#gaa5c5cba4f9be5bc0e4b1c5691f60e4ba">More...</a><br /></td></tr>
+<tr class="separator:gaa5c5cba4f9be5bc0e4b1c5691f60e4ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9658e84055727e6357cf7ef636b4e398"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga9658e84055727e6357cf7ef636b4e398">atcab_aes_decrypt</a> (uint16_t key_id, uint8_t key_block, const uint8_t *ciphertext, uint8_t *plaintext)</td></tr>
+<tr class="memdesc:ga9658e84055727e6357cf7ef636b4e398"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform an AES-128 decrypt operation with a key in the device.  <a href="a23278.html#ga9658e84055727e6357cf7ef636b4e398">More...</a><br /></td></tr>
+<tr class="separator:ga9658e84055727e6357cf7ef636b4e398"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaebaf49a3412181fa47ba3a761c5a2d5b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gaebaf49a3412181fa47ba3a761c5a2d5b">atcab_aes_decrypt_ext</a> (<a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, uint8_t key_block, const uint8_t *ciphertext, uint8_t *plaintext)</td></tr>
+<tr class="memdesc:gaebaf49a3412181fa47ba3a761c5a2d5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform an AES-128 decrypt operation with a key in the device.  <a href="a23278.html#gaebaf49a3412181fa47ba3a761c5a2d5b">More...</a><br /></td></tr>
+<tr class="separator:gaebaf49a3412181fa47ba3a761c5a2d5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5554940ed4c7c7e28652ce6923cf9314"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga5554940ed4c7c7e28652ce6923cf9314">atcab_aes_gfm</a> (const uint8_t *h, const uint8_t *input, uint8_t *output)</td></tr>
+<tr class="memdesc:ga5554940ed4c7c7e28652ce6923cf9314"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a Galois Field Multiply (GFM) operation.  <a href="a23278.html#ga5554940ed4c7c7e28652ce6923cf9314">More...</a><br /></td></tr>
+<tr class="separator:ga5554940ed4c7c7e28652ce6923cf9314"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4805112b62e86b5465e24648504dc374"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga4805112b62e86b5465e24648504dc374">atcab_aes_gcm_init</a> (atca_aes_gcm_ctx_t *ctx, uint16_t key_id, uint8_t key_block, const uint8_t *iv, size_t iv_size)</td></tr>
+<tr class="memdesc:ga4805112b62e86b5465e24648504dc374"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for AES GCM operation with an existing IV, which is common when starting a decrypt operation.  <a href="a23278.html#ga4805112b62e86b5465e24648504dc374">More...</a><br /></td></tr>
+<tr class="separator:ga4805112b62e86b5465e24648504dc374"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad71a5720ceaddf2c76476aead5f0c3e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gad71a5720ceaddf2c76476aead5f0c3e6">atcab_aes_gcm_init_rand</a> (atca_aes_gcm_ctx_t *ctx, uint16_t key_id, uint8_t key_block, size_t rand_size, const uint8_t *free_field, size_t free_field_size, uint8_t *iv)</td></tr>
+<tr class="memdesc:gad71a5720ceaddf2c76476aead5f0c3e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for AES GCM operation with a IV composed of a random and optional fixed(free) field, which is common when starting an encrypt operation.  <a href="a23278.html#gad71a5720ceaddf2c76476aead5f0c3e6">More...</a><br /></td></tr>
+<tr class="separator:gad71a5720ceaddf2c76476aead5f0c3e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d6fd831a8125a366504a0ab77b62da8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga1d6fd831a8125a366504a0ab77b62da8">atcab_aes_gcm_aad_update</a> (atca_aes_gcm_ctx_t *ctx, const uint8_t *aad, uint32_t aad_size)</td></tr>
+<tr class="memdesc:ga1d6fd831a8125a366504a0ab77b62da8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process Additional Authenticated Data (AAD) using GCM mode and a key within the ATECC608 device.  <a href="a23278.html#ga1d6fd831a8125a366504a0ab77b62da8">More...</a><br /></td></tr>
+<tr class="separator:ga1d6fd831a8125a366504a0ab77b62da8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab3fda8219d17d1b7bc50b1040399a47d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gab3fda8219d17d1b7bc50b1040399a47d">atcab_aes_gcm_encrypt_update</a> (atca_aes_gcm_ctx_t *ctx, const uint8_t *plaintext, uint32_t plaintext_size, uint8_t *ciphertext)</td></tr>
+<tr class="memdesc:gab3fda8219d17d1b7bc50b1040399a47d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypt data using GCM mode and a key within the ATECC608 device. <a class="el" href="a23278.html#ga4805112b62e86b5465e24648504dc374" title="Initialize context for AES GCM operation with an existing IV, which is common when starting a decrypt...">atcab_aes_gcm_init()</a> or <a class="el" href="a23278.html#gad71a5720ceaddf2c76476aead5f0c3e6" title="Initialize context for AES GCM operation with a IV composed of a random and optional fixed(free) fiel...">atcab_aes_gcm_init_rand()</a> should be called before the first use of this function.  <a href="a23278.html#gab3fda8219d17d1b7bc50b1040399a47d">More...</a><br /></td></tr>
+<tr class="separator:gab3fda8219d17d1b7bc50b1040399a47d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gada2d38835826587970de3868ca48eaa4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gada2d38835826587970de3868ca48eaa4">atcab_aes_gcm_encrypt_finish</a> (atca_aes_gcm_ctx_t *ctx, uint8_t *tag, size_t tag_size)</td></tr>
+<tr class="memdesc:gada2d38835826587970de3868ca48eaa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete a GCM encrypt operation returning the authentication tag.  <a href="a23278.html#gada2d38835826587970de3868ca48eaa4">More...</a><br /></td></tr>
+<tr class="separator:gada2d38835826587970de3868ca48eaa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2ad3270d8bebf6172dc02d0c7d9fb738"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga2ad3270d8bebf6172dc02d0c7d9fb738">atcab_aes_gcm_decrypt_update</a> (atca_aes_gcm_ctx_t *ctx, const uint8_t *ciphertext, uint32_t ciphertext_size, uint8_t *plaintext)</td></tr>
+<tr class="memdesc:ga2ad3270d8bebf6172dc02d0c7d9fb738"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypt data using GCM mode and a key within the ATECC608 device. <a class="el" href="a23278.html#ga4805112b62e86b5465e24648504dc374" title="Initialize context for AES GCM operation with an existing IV, which is common when starting a decrypt...">atcab_aes_gcm_init()</a> or <a class="el" href="a23278.html#gad71a5720ceaddf2c76476aead5f0c3e6" title="Initialize context for AES GCM operation with a IV composed of a random and optional fixed(free) fiel...">atcab_aes_gcm_init_rand()</a> should be called before the first use of this function.  <a href="a23278.html#ga2ad3270d8bebf6172dc02d0c7d9fb738">More...</a><br /></td></tr>
+<tr class="separator:ga2ad3270d8bebf6172dc02d0c7d9fb738"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa86508958ff3d81f9bd8e79344537218"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gaa86508958ff3d81f9bd8e79344537218">atcab_aes_gcm_decrypt_finish</a> (atca_aes_gcm_ctx_t *ctx, const uint8_t *tag, size_t tag_size, bool *is_verified)</td></tr>
+<tr class="memdesc:gaa86508958ff3d81f9bd8e79344537218"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete a GCM decrypt operation verifying the authentication tag.  <a href="a23278.html#gaa86508958ff3d81f9bd8e79344537218">More...</a><br /></td></tr>
+<tr class="separator:gaa86508958ff3d81f9bd8e79344537218"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5ba49c05f7b3fb5acaf55df993ccd3ee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga5ba49c05f7b3fb5acaf55df993ccd3ee">atcab_checkmac</a> (uint8_t mode, uint16_t key_id, const uint8_t *challenge, const uint8_t *response, const uint8_t *other_data)</td></tr>
+<tr class="memdesc:ga5ba49c05f7b3fb5acaf55df993ccd3ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares a MAC response with input values.  <a href="a23278.html#ga5ba49c05f7b3fb5acaf55df993ccd3ee">More...</a><br /></td></tr>
+<tr class="separator:ga5ba49c05f7b3fb5acaf55df993ccd3ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabaaaef242649206029e1c10ac6d1fb7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gabaaaef242649206029e1c10ac6d1fb7d">atcab_counter</a> (uint8_t mode, uint16_t counter_id, uint32_t *counter_value)</td></tr>
+<tr class="memdesc:gabaaaef242649206029e1c10ac6d1fb7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the Counter functions.  <a href="a23278.html#gabaaaef242649206029e1c10ac6d1fb7d">More...</a><br /></td></tr>
+<tr class="separator:gabaaaef242649206029e1c10ac6d1fb7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6e510e056ea16a0a34b405b7ca378f16"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga6e510e056ea16a0a34b405b7ca378f16">atcab_counter_increment</a> (uint16_t counter_id, uint32_t *counter_value)</td></tr>
+<tr class="memdesc:ga6e510e056ea16a0a34b405b7ca378f16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increments one of the device's monotonic counters.  <a href="a23278.html#ga6e510e056ea16a0a34b405b7ca378f16">More...</a><br /></td></tr>
+<tr class="separator:ga6e510e056ea16a0a34b405b7ca378f16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeee666028a097659af69cc828a6bd68b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gaeee666028a097659af69cc828a6bd68b">atcab_counter_read</a> (uint16_t counter_id, uint32_t *counter_value)</td></tr>
+<tr class="memdesc:gaeee666028a097659af69cc828a6bd68b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read one of the device's monotonic counters.  <a href="a23278.html#gaeee666028a097659af69cc828a6bd68b">More...</a><br /></td></tr>
+<tr class="separator:gaeee666028a097659af69cc828a6bd68b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga34b7b6d46868f0d63d195216ef9939b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga34b7b6d46868f0d63d195216ef9939b1">atcab_derivekey</a> (uint8_t mode, uint16_t key_id, const uint8_t *mac)</td></tr>
+<tr class="memdesc:ga34b7b6d46868f0d63d195216ef9939b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the DeviveKey command for deriving a new key from a nonce (TempKey) and an existing key.  <a href="a23278.html#ga34b7b6d46868f0d63d195216ef9939b1">More...</a><br /></td></tr>
+<tr class="separator:ga34b7b6d46868f0d63d195216ef9939b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga211c9405bb5049dd4a5da92d25c83f3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga211c9405bb5049dd4a5da92d25c83f3c">atcab_ecdh_base</a> (uint8_t mode, uint16_t key_id, const uint8_t *public_key, uint8_t *pms, uint8_t *out_nonce)</td></tr>
+<tr class="memdesc:ga211c9405bb5049dd4a5da92d25c83f3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base function for generating premaster secret key using ECDH.  <a href="a23278.html#ga211c9405bb5049dd4a5da92d25c83f3c">More...</a><br /></td></tr>
+<tr class="separator:ga211c9405bb5049dd4a5da92d25c83f3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6fc480ad2824df6309f4f370ffad15f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga6fc480ad2824df6309f4f370ffad15f9">atcab_ecdh</a> (uint16_t key_id, const uint8_t *public_key, uint8_t *pms)</td></tr>
+<tr class="memdesc:ga6fc480ad2824df6309f4f370ffad15f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in a slot and the premaster secret is returned in the clear.  <a href="a23278.html#ga6fc480ad2824df6309f4f370ffad15f9">More...</a><br /></td></tr>
+<tr class="separator:ga6fc480ad2824df6309f4f370ffad15f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga51e3ae10f0596d473f646074650904e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga51e3ae10f0596d473f646074650904e6">atcab_ecdh_enc</a> (uint16_t key_id, const uint8_t *public_key, uint8_t *pms, const uint8_t *read_key, uint16_t read_key_id, const uint8_t num_in[(20)])</td></tr>
+<tr class="memdesc:ga51e3ae10f0596d473f646074650904e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in a slot and the premaster secret is read from the next slot.  <a href="a23278.html#ga51e3ae10f0596d473f646074650904e6">More...</a><br /></td></tr>
+<tr class="separator:ga51e3ae10f0596d473f646074650904e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga975f7303086190d3b6f76c367583d622"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga975f7303086190d3b6f76c367583d622">atcab_ecdh_ioenc</a> (uint16_t key_id, const uint8_t *public_key, uint8_t *pms, const uint8_t *io_key)</td></tr>
+<tr class="memdesc:ga975f7303086190d3b6f76c367583d622"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in a slot and the premaster secret is returned encrypted using the IO protection key.  <a href="a23278.html#ga975f7303086190d3b6f76c367583d622">More...</a><br /></td></tr>
+<tr class="separator:ga975f7303086190d3b6f76c367583d622"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac244b83b061ffd8ae3d59b5f973baa53"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gac244b83b061ffd8ae3d59b5f973baa53">atcab_ecdh_tempkey</a> (const uint8_t *public_key, uint8_t *pms)</td></tr>
+<tr class="memdesc:gac244b83b061ffd8ae3d59b5f973baa53"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in TempKey and the premaster secret is returned in the clear.  <a href="a23278.html#gac244b83b061ffd8ae3d59b5f973baa53">More...</a><br /></td></tr>
+<tr class="separator:gac244b83b061ffd8ae3d59b5f973baa53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafaccb0c9d12154b0c5b917f89f233721"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gafaccb0c9d12154b0c5b917f89f233721">atcab_ecdh_tempkey_ioenc</a> (const uint8_t *public_key, uint8_t *pms, const uint8_t *io_key)</td></tr>
+<tr class="memdesc:gafaccb0c9d12154b0c5b917f89f233721"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH command with a private key in TempKey and the premaster secret is returned encrypted using the IO protection key.  <a href="a23278.html#gafaccb0c9d12154b0c5b917f89f233721">More...</a><br /></td></tr>
+<tr class="separator:gafaccb0c9d12154b0c5b917f89f233721"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga70751ea87f2cf913986bc7bca2cc661f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga70751ea87f2cf913986bc7bca2cc661f">atcab_gendig</a> (uint8_t zone, uint16_t key_id, const uint8_t *other_data, uint8_t other_data_size)</td></tr>
+<tr class="memdesc:ga70751ea87f2cf913986bc7bca2cc661f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues a GenDig command, which performs a SHA256 hash on the source data indicated by zone with the contents of TempKey. See the CryptoAuth datasheet for your chip to see what the values of zone correspond to.  <a href="a23278.html#ga70751ea87f2cf913986bc7bca2cc661f">More...</a><br /></td></tr>
+<tr class="separator:ga70751ea87f2cf913986bc7bca2cc661f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa8b6953ad2c7f749e61566fd38fe6903"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gaa8b6953ad2c7f749e61566fd38fe6903">atcab_genkey_base</a> (uint8_t mode, uint16_t key_id, const uint8_t *other_data, uint8_t *public_key)</td></tr>
+<tr class="memdesc:gaa8b6953ad2c7f749e61566fd38fe6903"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues GenKey command, which can generate a private key, compute a public key, nd/or compute a digest of a public key.  <a href="a23278.html#gaa8b6953ad2c7f749e61566fd38fe6903">More...</a><br /></td></tr>
+<tr class="separator:gaa8b6953ad2c7f749e61566fd38fe6903"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga617bdbdce7b5736351d93214d44c5b8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga617bdbdce7b5736351d93214d44c5b8f">atcab_genkey</a> (uint16_t key_id, uint8_t *public_key)</td></tr>
+<tr class="memdesc:ga617bdbdce7b5736351d93214d44c5b8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues GenKey command, which generates a new random private key in slot/handle and returns the public key.  <a href="a23278.html#ga617bdbdce7b5736351d93214d44c5b8f">More...</a><br /></td></tr>
+<tr class="separator:ga617bdbdce7b5736351d93214d44c5b8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2096a4618dd37c48ed48847fe63d844"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gad2096a4618dd37c48ed48847fe63d844">atcab_get_pubkey</a> (uint16_t key_id, uint8_t *public_key)</td></tr>
+<tr class="memdesc:gad2096a4618dd37c48ed48847fe63d844"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses GenKey command to calculate the public key from an existing private key in a slot.  <a href="a23278.html#gad2096a4618dd37c48ed48847fe63d844">More...</a><br /></td></tr>
+<tr class="separator:gad2096a4618dd37c48ed48847fe63d844"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae2cbb1989eff2c66935040f41a593bf6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gae2cbb1989eff2c66935040f41a593bf6">atcab_get_pubkey_ext</a> (<a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, uint8_t *public_key)</td></tr>
+<tr class="memdesc:gae2cbb1989eff2c66935040f41a593bf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses GenKey command to calculate the public key from an existing private key in a slot.  <a href="a23278.html#gae2cbb1989eff2c66935040f41a593bf6">More...</a><br /></td></tr>
+<tr class="separator:gae2cbb1989eff2c66935040f41a593bf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga45f1d09a51f7a1f68916536ab5125b9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga45f1d09a51f7a1f68916536ab5125b9d">atcab_hmac</a> (uint8_t mode, uint16_t key_id, uint8_t *digest)</td></tr>
+<tr class="memdesc:ga45f1d09a51f7a1f68916536ab5125b9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues a HMAC command, which computes an HMAC/SHA-256 digest of a key stored in the device, a challenge, and other information on the device.  <a href="a23278.html#ga45f1d09a51f7a1f68916536ab5125b9d">More...</a><br /></td></tr>
+<tr class="separator:ga45f1d09a51f7a1f68916536ab5125b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga806d07982fda5c30755af6b5b4ef9314"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga806d07982fda5c30755af6b5b4ef9314">atcab_info_base</a> (uint8_t mode, uint16_t param2, uint8_t *out_data)</td></tr>
+<tr class="memdesc:ga806d07982fda5c30755af6b5b4ef9314"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues an Info command, which return internal device information and can control GPIO and the persistent latch.  <a href="a23278.html#ga806d07982fda5c30755af6b5b4ef9314">More...</a><br /></td></tr>
+<tr class="separator:ga806d07982fda5c30755af6b5b4ef9314"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6e19ecd60be4c74665d9ec142e460771"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga6e19ecd60be4c74665d9ec142e460771">atcab_info</a> (uint8_t *revision)</td></tr>
+<tr class="memdesc:ga6e19ecd60be4c74665d9ec142e460771"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the Info command to get the device revision (DevRev).  <a href="a23278.html#ga6e19ecd60be4c74665d9ec142e460771">More...</a><br /></td></tr>
+<tr class="separator:ga6e19ecd60be4c74665d9ec142e460771"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2649126606db8a0b64ae8e19d09f6600"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga2649126606db8a0b64ae8e19d09f6600">atcab_info_set_latch</a> (bool state)</td></tr>
+<tr class="memdesc:ga2649126606db8a0b64ae8e19d09f6600"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the Info command to set the persistent latch state for an ATECC608 device.  <a href="a23278.html#ga2649126606db8a0b64ae8e19d09f6600">More...</a><br /></td></tr>
+<tr class="separator:ga2649126606db8a0b64ae8e19d09f6600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga376b6ae92f14c60fba4ca5c6461e0b48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga376b6ae92f14c60fba4ca5c6461e0b48">atcab_info_get_latch</a> (bool *state)</td></tr>
+<tr class="memdesc:ga376b6ae92f14c60fba4ca5c6461e0b48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the Info command to get the persistent latch current state for an ATECC608 device.  <a href="a23278.html#ga376b6ae92f14c60fba4ca5c6461e0b48">More...</a><br /></td></tr>
+<tr class="separator:ga376b6ae92f14c60fba4ca5c6461e0b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga40a6c01492a76366f9402302b527c4e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga40a6c01492a76366f9402302b527c4e1">atcab_kdf</a> (uint8_t mode, uint16_t key_id, const uint32_t details, const uint8_t *message, uint8_t *out_data, uint8_t *out_nonce)</td></tr>
+<tr class="memdesc:ga40a6c01492a76366f9402302b527c4e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the KDF command, which derives a new key in PRF, AES, or HKDF modes.  <a href="a23278.html#ga40a6c01492a76366f9402302b527c4e1">More...</a><br /></td></tr>
+<tr class="separator:ga40a6c01492a76366f9402302b527c4e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga25d2895192d93c524f5dba92a492cdfb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga25d2895192d93c524f5dba92a492cdfb">atcab_lock</a> (uint8_t mode, uint16_t summary_crc)</td></tr>
+<tr class="memdesc:ga25d2895192d93c524f5dba92a492cdfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Lock command prevents future modifications of the Configuration and/or Data and OTP zones. If the device is so configured, then this command can be used to lock individual data slots. This command fails if the designated area is already locked.  <a href="a23278.html#ga25d2895192d93c524f5dba92a492cdfb">More...</a><br /></td></tr>
+<tr class="separator:ga25d2895192d93c524f5dba92a492cdfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7cd67c03c7184ad041e2c0ad4f27db23"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga7cd67c03c7184ad041e2c0ad4f27db23">atcab_lock_config_zone</a> (void)</td></tr>
+<tr class="memdesc:ga7cd67c03c7184ad041e2c0ad4f27db23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unconditionally (no CRC required) lock the config zone.  <a href="a23278.html#ga7cd67c03c7184ad041e2c0ad4f27db23">More...</a><br /></td></tr>
+<tr class="separator:ga7cd67c03c7184ad041e2c0ad4f27db23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0698e0c55ad700fe57498321e842cb38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga0698e0c55ad700fe57498321e842cb38">atcab_lock_config_zone_crc</a> (uint16_t summary_crc)</td></tr>
+<tr class="memdesc:ga0698e0c55ad700fe57498321e842cb38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock the config zone with summary CRC.  <a href="a23278.html#ga0698e0c55ad700fe57498321e842cb38">More...</a><br /></td></tr>
+<tr class="separator:ga0698e0c55ad700fe57498321e842cb38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8020aa89a5bed09ad35320b78e0fb890"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga8020aa89a5bed09ad35320b78e0fb890">atcab_lock_data_zone</a> (void)</td></tr>
+<tr class="memdesc:ga8020aa89a5bed09ad35320b78e0fb890"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unconditionally (no CRC required) lock the data zone (slots and OTP). for CryptoAuth devices and lock the setup for Trust Anchor device.  <a href="a23278.html#ga8020aa89a5bed09ad35320b78e0fb890">More...</a><br /></td></tr>
+<tr class="separator:ga8020aa89a5bed09ad35320b78e0fb890"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf29e398e2aca927ab4606aa1ec0308c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gaf29e398e2aca927ab4606aa1ec0308c6">atcab_lock_data_zone_crc</a> (uint16_t summary_crc)</td></tr>
+<tr class="memdesc:gaf29e398e2aca927ab4606aa1ec0308c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock the data zone (slots and OTP) with summary CRC.  <a href="a23278.html#gaf29e398e2aca927ab4606aa1ec0308c6">More...</a><br /></td></tr>
+<tr class="separator:gaf29e398e2aca927ab4606aa1ec0308c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga958190a9182d1b54f82fbca8216406ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga958190a9182d1b54f82fbca8216406ea">atcab_lock_data_slot</a> (uint16_t slot)</td></tr>
+<tr class="memdesc:ga958190a9182d1b54f82fbca8216406ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock an individual slot in the data zone on an ATECC device. Not available for ATSHA devices. Slot must be configured to be slot lockable (KeyConfig.Lockable=1) (for cryptoauth devices) or Lock an individual handle in shared data element on an Trust Anchor device (for Trust Anchor devices).  <a href="a23278.html#ga958190a9182d1b54f82fbca8216406ea">More...</a><br /></td></tr>
+<tr class="separator:ga958190a9182d1b54f82fbca8216406ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98cb802fbb5d78cd552bb05c21d6c791"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga98cb802fbb5d78cd552bb05c21d6c791">atcab_mac</a> (uint8_t mode, uint16_t key_id, const uint8_t *challenge, uint8_t *digest)</td></tr>
+<tr class="memdesc:ga98cb802fbb5d78cd552bb05c21d6c791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes MAC command, which computes a SHA-256 digest of a key stored in the device, a challenge, and other information on the device.  <a href="a23278.html#ga98cb802fbb5d78cd552bb05c21d6c791">More...</a><br /></td></tr>
+<tr class="separator:ga98cb802fbb5d78cd552bb05c21d6c791"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf8e10791759a8a5e5dcd82774f4895d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gaf8e10791759a8a5e5dcd82774f4895d6">atcab_nonce_base</a> (uint8_t mode, uint16_t zero, const uint8_t *num_in, uint8_t *rand_out)</td></tr>
+<tr class="memdesc:gaf8e10791759a8a5e5dcd82774f4895d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Nonce command, which loads a random or fixed nonce/data into the device for use by subsequent commands.  <a href="a23278.html#gaf8e10791759a8a5e5dcd82774f4895d6">More...</a><br /></td></tr>
+<tr class="separator:gaf8e10791759a8a5e5dcd82774f4895d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2293df1c1c794496790bae25d3844fa5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga2293df1c1c794496790bae25d3844fa5">atcab_nonce</a> (const uint8_t *num_in)</td></tr>
+<tr class="memdesc:ga2293df1c1c794496790bae25d3844fa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command in pass-through mode to initialize TempKey to a specified value.  <a href="a23278.html#ga2293df1c1c794496790bae25d3844fa5">More...</a><br /></td></tr>
+<tr class="separator:ga2293df1c1c794496790bae25d3844fa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2239ae3a87c341a48aa108bd82a58552"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga2239ae3a87c341a48aa108bd82a58552">atcab_nonce_load</a> (uint8_t target, const uint8_t *num_in, uint16_t num_in_size)</td></tr>
+<tr class="memdesc:ga2239ae3a87c341a48aa108bd82a58552"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command in pass-through mode to load one of the device's internal buffers with a fixed value.  <a href="a23278.html#ga2239ae3a87c341a48aa108bd82a58552">More...</a><br /></td></tr>
+<tr class="separator:ga2239ae3a87c341a48aa108bd82a58552"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed67d447d547c67b7b8be6b958d1fb5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gaed67d447d547c67b7b8be6b958d1fb5c">atcab_nonce_rand</a> (const uint8_t *num_in, uint8_t *rand_out)</td></tr>
+<tr class="memdesc:gaed67d447d547c67b7b8be6b958d1fb5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command to generate a random nonce combining a host nonce (num_in) and a device random number.  <a href="a23278.html#gaed67d447d547c67b7b8be6b958d1fb5c">More...</a><br /></td></tr>
+<tr class="separator:gaed67d447d547c67b7b8be6b958d1fb5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga114a721517c95d5ba5fcac5b226669d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga114a721517c95d5ba5fcac5b226669d6">atcab_challenge</a> (const uint8_t *num_in)</td></tr>
+<tr class="memdesc:ga114a721517c95d5ba5fcac5b226669d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command in pass-through mode to initialize TempKey to a specified value.  <a href="a23278.html#ga114a721517c95d5ba5fcac5b226669d6">More...</a><br /></td></tr>
+<tr class="separator:ga114a721517c95d5ba5fcac5b226669d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaadde4309089c569fd87c24a1a2326cd4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gaadde4309089c569fd87c24a1a2326cd4">atcab_challenge_seed_update</a> (const uint8_t *num_in, uint8_t *rand_out)</td></tr>
+<tr class="memdesc:gaadde4309089c569fd87c24a1a2326cd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a Nonce command to generate a random challenge combining a host nonce (num_in) and a device random number.  <a href="a23278.html#gaadde4309089c569fd87c24a1a2326cd4">More...</a><br /></td></tr>
+<tr class="separator:gaadde4309089c569fd87c24a1a2326cd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaead7151af044da249b398dc457fc8e06"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gaead7151af044da249b398dc457fc8e06">atcab_priv_write</a> (uint16_t key_id, const uint8_t priv_key[36], uint16_t write_key_id, const uint8_t write_key[32], const uint8_t num_in[(20)])</td></tr>
+<tr class="memdesc:gaead7151af044da249b398dc457fc8e06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes PrivWrite command, to write externally generated ECC private keys into the device.  <a href="a23278.html#gaead7151af044da249b398dc457fc8e06">More...</a><br /></td></tr>
+<tr class="separator:gaead7151af044da249b398dc457fc8e06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4fa442396dfbb89e59dfca837b565cec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga4fa442396dfbb89e59dfca837b565cec">atcab_random</a> (uint8_t *rand_out)</td></tr>
+<tr class="memdesc:ga4fa442396dfbb89e59dfca837b565cec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Random command, which generates a 32 byte random number from the device.  <a href="a23278.html#ga4fa442396dfbb89e59dfca837b565cec">More...</a><br /></td></tr>
+<tr class="separator:ga4fa442396dfbb89e59dfca837b565cec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga103f4596f0f9590971763592c5233ec3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga103f4596f0f9590971763592c5233ec3">atcab_random_ext</a> (<a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t *rand_out)</td></tr>
+<tr class="memdesc:ga103f4596f0f9590971763592c5233ec3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Random command, which generates a 32 byte random number from the device.  <a href="a23278.html#ga103f4596f0f9590971763592c5233ec3">More...</a><br /></td></tr>
+<tr class="separator:ga103f4596f0f9590971763592c5233ec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3ce01f02f456c08891ca1d67cd3ed0eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga3ce01f02f456c08891ca1d67cd3ed0eb">atcab_read_zone</a> (uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint8_t *data, uint8_t len)</td></tr>
+<tr class="memdesc:ga3ce01f02f456c08891ca1d67cd3ed0eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command, which reads either 4 or 32 bytes of data from a given slot, configuration zone, or the OTP zone.  <a href="a23278.html#ga3ce01f02f456c08891ca1d67cd3ed0eb">More...</a><br /></td></tr>
+<tr class="separator:ga3ce01f02f456c08891ca1d67cd3ed0eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaefce484222bdbedef37787a9b10d4426"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gaefce484222bdbedef37787a9b10d4426">atcab_is_locked</a> (uint8_t zone, bool *is_locked)</td></tr>
+<tr class="memdesc:gaefce484222bdbedef37787a9b10d4426"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command, which reads the configuration zone to see if the specified zone is locked.  <a href="a23278.html#gaefce484222bdbedef37787a9b10d4426">More...</a><br /></td></tr>
+<tr class="separator:gaefce484222bdbedef37787a9b10d4426"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga25d0626815c3df9dd2b43d72eecd3a36"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga25d0626815c3df9dd2b43d72eecd3a36">atcab_is_config_locked</a> (bool *is_locked)</td></tr>
+<tr class="memdesc:ga25d0626815c3df9dd2b43d72eecd3a36"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function check whether configuration zone is locked or not.  <a href="a23278.html#ga25d0626815c3df9dd2b43d72eecd3a36">More...</a><br /></td></tr>
+<tr class="separator:ga25d0626815c3df9dd2b43d72eecd3a36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga44aae7e0a28993eb6abf78bb3d42e26d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga44aae7e0a28993eb6abf78bb3d42e26d">atcab_is_data_locked</a> (bool *is_locked)</td></tr>
+<tr class="memdesc:ga44aae7e0a28993eb6abf78bb3d42e26d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function check whether data/setup zone is locked or not.  <a href="a23278.html#ga44aae7e0a28993eb6abf78bb3d42e26d">More...</a><br /></td></tr>
+<tr class="separator:ga44aae7e0a28993eb6abf78bb3d42e26d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga802de50265ff91dc30dd7c93d9e026e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga802de50265ff91dc30dd7c93d9e026e1">atcab_is_slot_locked</a> (uint16_t slot, bool *is_locked)</td></tr>
+<tr class="memdesc:ga802de50265ff91dc30dd7c93d9e026e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function check whether slot/handle is locked or not.  <a href="a23278.html#ga802de50265ff91dc30dd7c93d9e026e1">More...</a><br /></td></tr>
+<tr class="separator:ga802de50265ff91dc30dd7c93d9e026e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac5f4cc263fd729871446e01cb063f141"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gac5f4cc263fd729871446e01cb063f141">atcab_is_private_ext</a> (<a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t slot, bool *is_private)</td></tr>
+<tr class="memdesc:gac5f4cc263fd729871446e01cb063f141"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check to see if the key is a private key or not.  <a href="a23278.html#gac5f4cc263fd729871446e01cb063f141">More...</a><br /></td></tr>
+<tr class="separator:gac5f4cc263fd729871446e01cb063f141"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac0d916826086a53649672f8abc009f3d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gac0d916826086a53649672f8abc009f3d">atcab_is_private</a> (uint16_t slot, bool *is_private)</td></tr>
+<tr class="separator:gac0d916826086a53649672f8abc009f3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga649af88b2dc1d2c235c6e5a1842340fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga649af88b2dc1d2c235c6e5a1842340fa">atcab_read_bytes_zone_ext</a> (<a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t zone, uint16_t slot, size_t offset, uint8_t *data, size_t length)</td></tr>
+<tr class="separator:ga649af88b2dc1d2c235c6e5a1842340fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga750704332198726725a327344f4f7dd5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga750704332198726725a327344f4f7dd5">atcab_read_bytes_zone</a> (uint8_t zone, uint16_t slot, size_t offset, uint8_t *data, size_t length)</td></tr>
+<tr class="memdesc:ga750704332198726725a327344f4f7dd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to read an arbitrary number of bytes from any zone configured for clear reads.  <a href="a23278.html#ga750704332198726725a327344f4f7dd5">More...</a><br /></td></tr>
+<tr class="separator:ga750704332198726725a327344f4f7dd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga96c434878e1f435e2cda5b0b5fec444f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga96c434878e1f435e2cda5b0b5fec444f">atcab_read_serial_number</a> (uint8_t *serial_number)</td></tr>
+<tr class="memdesc:ga96c434878e1f435e2cda5b0b5fec444f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns serial number of the device.  <a href="a23278.html#ga96c434878e1f435e2cda5b0b5fec444f">More...</a><br /></td></tr>
+<tr class="separator:ga96c434878e1f435e2cda5b0b5fec444f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga782ca1e5b1574b2b6793c841be22b28b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga782ca1e5b1574b2b6793c841be22b28b">atcab_read_pubkey</a> (uint16_t slot, uint8_t *public_key)</td></tr>
+<tr class="memdesc:ga782ca1e5b1574b2b6793c841be22b28b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command to read an ECC P256 public key from a slot configured for clear reads.  <a href="a23278.html#ga782ca1e5b1574b2b6793c841be22b28b">More...</a><br /></td></tr>
+<tr class="separator:ga782ca1e5b1574b2b6793c841be22b28b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2ea51a5aafd900c9bdffeffe82274255"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga2ea51a5aafd900c9bdffeffe82274255">atcab_read_pubkey_ext</a> (<a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t slot, uint8_t *public_key)</td></tr>
+<tr class="memdesc:ga2ea51a5aafd900c9bdffeffe82274255"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command to read an ECC P256 public key from a slot configured for clear reads.  <a href="a23278.html#ga2ea51a5aafd900c9bdffeffe82274255">More...</a><br /></td></tr>
+<tr class="separator:ga2ea51a5aafd900c9bdffeffe82274255"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga098c4c2c724b90b7e2f4ecf12b9530b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga098c4c2c724b90b7e2f4ecf12b9530b7">atcab_read_sig</a> (uint16_t slot, uint8_t *sig)</td></tr>
+<tr class="memdesc:ga098c4c2c724b90b7e2f4ecf12b9530b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command to read a 64 byte ECDSA P256 signature from a slot configured for clear reads.  <a href="a23278.html#ga098c4c2c724b90b7e2f4ecf12b9530b7">More...</a><br /></td></tr>
+<tr class="separator:ga098c4c2c724b90b7e2f4ecf12b9530b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8ef47330eef6bc72ae8f7a8ef026dae3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga8ef47330eef6bc72ae8f7a8ef026dae3">atcab_read_config_zone</a> (uint8_t *config_data)</td></tr>
+<tr class="memdesc:ga8ef47330eef6bc72ae8f7a8ef026dae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command to read the complete device configuration zone.  <a href="a23278.html#ga8ef47330eef6bc72ae8f7a8ef026dae3">More...</a><br /></td></tr>
+<tr class="separator:ga8ef47330eef6bc72ae8f7a8ef026dae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb91d2c3601b95f0ad413cf84a4dfd87"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gadb91d2c3601b95f0ad413cf84a4dfd87">atcab_cmp_config_zone</a> (uint8_t *config_data, bool *same_config)</td></tr>
+<tr class="memdesc:gadb91d2c3601b95f0ad413cf84a4dfd87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares a specified configuration zone with the configuration zone currently on the device.  <a href="a23278.html#gadb91d2c3601b95f0ad413cf84a4dfd87">More...</a><br /></td></tr>
+<tr class="separator:gadb91d2c3601b95f0ad413cf84a4dfd87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0cf0048247bb577c85142510225ea960"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga0cf0048247bb577c85142510225ea960">atcab_read_enc</a> (uint16_t key_id, uint8_t block, uint8_t *data, const uint8_t *enc_key, const uint16_t enc_key_id, const uint8_t num_in[(20)])</td></tr>
+<tr class="memdesc:ga0cf0048247bb577c85142510225ea960"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command on a slot configured for encrypted reads and decrypts the data to return it as plaintext.  <a href="a23278.html#ga0cf0048247bb577c85142510225ea960">More...</a><br /></td></tr>
+<tr class="separator:ga0cf0048247bb577c85142510225ea960"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9506331ea7d454fe3c9b2585128c77aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga9506331ea7d454fe3c9b2585128c77aa">atcab_secureboot</a> (uint8_t mode, uint16_t param2, const uint8_t *digest, const uint8_t *signature, uint8_t *mac)</td></tr>
+<tr class="memdesc:ga9506331ea7d454fe3c9b2585128c77aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Secure Boot command, which provides support for secure boot of an external MCU or MPU.  <a href="a23278.html#ga9506331ea7d454fe3c9b2585128c77aa">More...</a><br /></td></tr>
+<tr class="separator:ga9506331ea7d454fe3c9b2585128c77aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5c11f2012a03ec79cb46de8e03ed0534"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga5c11f2012a03ec79cb46de8e03ed0534">atcab_secureboot_mac</a> (uint8_t mode, const uint8_t *digest, const uint8_t *signature, const uint8_t *num_in, const uint8_t *io_key, bool *is_verified)</td></tr>
+<tr class="memdesc:ga5c11f2012a03ec79cb46de8e03ed0534"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Secure Boot command with encrypted digest and validated MAC response using the IO protection key.  <a href="a23278.html#ga5c11f2012a03ec79cb46de8e03ed0534">More...</a><br /></td></tr>
+<tr class="separator:ga5c11f2012a03ec79cb46de8e03ed0534"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb4a36bc6992612cc3b1f950c0d020b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gaeb4a36bc6992612cc3b1f950c0d020b7">atcab_selftest</a> (uint8_t mode, uint16_t param2, uint8_t *result)</td></tr>
+<tr class="memdesc:gaeb4a36bc6992612cc3b1f950c0d020b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the SelfTest command, which performs a test of one or more of the cryptographic engines within the ATECC608 chip.  <a href="a23278.html#gaeb4a36bc6992612cc3b1f950c0d020b7">More...</a><br /></td></tr>
+<tr class="separator:gaeb4a36bc6992612cc3b1f950c0d020b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab3a32e171ca1c30bd31a216b32c9b5a4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gab3a32e171ca1c30bd31a216b32c9b5a4">atcab_sha_base</a> (uint8_t mode, uint16_t length, const uint8_t *data_in, uint8_t *data_out, uint16_t *data_out_size)</td></tr>
+<tr class="memdesc:gab3a32e171ca1c30bd31a216b32c9b5a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command, which computes a SHA-256 or HMAC/SHA-256 digest for general purpose use by the host system.  <a href="a23278.html#gab3a32e171ca1c30bd31a216b32c9b5a4">More...</a><br /></td></tr>
+<tr class="separator:gab3a32e171ca1c30bd31a216b32c9b5a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae0a7ef89fce4cbd0ee1c76759cd93b9a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gae0a7ef89fce4cbd0ee1c76759cd93b9a">atcab_sha_start</a> (void)</td></tr>
+<tr class="memdesc:gae0a7ef89fce4cbd0ee1c76759cd93b9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to initialize SHA-256 calculation engine.  <a href="a23278.html#gae0a7ef89fce4cbd0ee1c76759cd93b9a">More...</a><br /></td></tr>
+<tr class="separator:gae0a7ef89fce4cbd0ee1c76759cd93b9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga39bd70baa7a4c7f4849fcf8b94d4d949"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga39bd70baa7a4c7f4849fcf8b94d4d949">atcab_sha_update</a> (const uint8_t *message)</td></tr>
+<tr class="memdesc:ga39bd70baa7a4c7f4849fcf8b94d4d949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to add 64 bytes of message data to the current context.  <a href="a23278.html#ga39bd70baa7a4c7f4849fcf8b94d4d949">More...</a><br /></td></tr>
+<tr class="separator:ga39bd70baa7a4c7f4849fcf8b94d4d949"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1db86704035048066a370815b657234d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga1db86704035048066a370815b657234d">atcab_sha_end</a> (uint8_t *digest, uint16_t length, const uint8_t *message)</td></tr>
+<tr class="memdesc:ga1db86704035048066a370815b657234d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to complete SHA-256 or HMAC/SHA-256 operation.  <a href="a23278.html#ga1db86704035048066a370815b657234d">More...</a><br /></td></tr>
+<tr class="separator:ga1db86704035048066a370815b657234d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga74d1db50562642ce511fa7cbd384c2ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga74d1db50562642ce511fa7cbd384c2ab">atcab_sha_read_context</a> (uint8_t *context, uint16_t *context_size)</td></tr>
+<tr class="memdesc:ga74d1db50562642ce511fa7cbd384c2ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to read the SHA-256 context back. Only for ATECC608 with SHA-256 contexts. HMAC not supported.  <a href="a23278.html#ga74d1db50562642ce511fa7cbd384c2ab">More...</a><br /></td></tr>
+<tr class="separator:ga74d1db50562642ce511fa7cbd384c2ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga070fa80ac0d76f6816d9f7affbcfb120"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga070fa80ac0d76f6816d9f7affbcfb120">atcab_sha_write_context</a> (const uint8_t *context, uint16_t context_size)</td></tr>
+<tr class="memdesc:ga070fa80ac0d76f6816d9f7affbcfb120"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to write (restore) a SHA-256 context into the the device. Only supported for ATECC608 with SHA-256 contexts.  <a href="a23278.html#ga070fa80ac0d76f6816d9f7affbcfb120">More...</a><br /></td></tr>
+<tr class="separator:ga070fa80ac0d76f6816d9f7affbcfb120"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31d269ccdafd08519a899a8aebf53df1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga31d269ccdafd08519a899a8aebf53df1">atcab_sha</a> (uint16_t length, const uint8_t *message, uint8_t *digest)</td></tr>
+<tr class="memdesc:ga31d269ccdafd08519a899a8aebf53df1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the SHA command to compute a SHA-256 digest.  <a href="a23278.html#ga31d269ccdafd08519a899a8aebf53df1">More...</a><br /></td></tr>
+<tr class="separator:ga31d269ccdafd08519a899a8aebf53df1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4bf8b665fe1712626a480742c2daa16b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga4bf8b665fe1712626a480742c2daa16b">atcab_hw_sha2_256</a> (const uint8_t *data, size_t data_size, uint8_t *digest)</td></tr>
+<tr class="memdesc:ga4bf8b665fe1712626a480742c2daa16b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the SHA command to compute a SHA-256 digest.  <a href="a23278.html#ga4bf8b665fe1712626a480742c2daa16b">More...</a><br /></td></tr>
+<tr class="separator:ga4bf8b665fe1712626a480742c2daa16b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gade49e7746864105730fa7d531645ff62"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gade49e7746864105730fa7d531645ff62">atcab_hw_sha2_256_init</a> (<a class="el" href="a23283.html#ga7dc326cdf6fbade0eee6081225a379de">atca_sha256_ctx_t</a> *ctx)</td></tr>
+<tr class="memdesc:gade49e7746864105730fa7d531645ff62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a SHA context for performing a hardware SHA-256 operation on a device. Note that only one SHA operation can be run at a time.  <a href="a23278.html#gade49e7746864105730fa7d531645ff62">More...</a><br /></td></tr>
+<tr class="separator:gade49e7746864105730fa7d531645ff62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga67f2ce6224651d9cc65e9915e35558bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga67f2ce6224651d9cc65e9915e35558bd">atcab_hw_sha2_256_update</a> (<a class="el" href="a23283.html#ga7dc326cdf6fbade0eee6081225a379de">atca_sha256_ctx_t</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
+<tr class="memdesc:ga67f2ce6224651d9cc65e9915e35558bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add message data to a SHA context for performing a hardware SHA-256 operation on a device.  <a href="a23278.html#ga67f2ce6224651d9cc65e9915e35558bd">More...</a><br /></td></tr>
+<tr class="separator:ga67f2ce6224651d9cc65e9915e35558bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6ed7e645262fcc32b00d8a9facf09e91"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga6ed7e645262fcc32b00d8a9facf09e91">atcab_hw_sha2_256_finish</a> (<a class="el" href="a23283.html#ga7dc326cdf6fbade0eee6081225a379de">atca_sha256_ctx_t</a> *ctx, uint8_t *digest)</td></tr>
+<tr class="memdesc:ga6ed7e645262fcc32b00d8a9facf09e91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finish SHA-256 digest for a SHA context for performing a hardware SHA-256 operation on a device.  <a href="a23278.html#ga6ed7e645262fcc32b00d8a9facf09e91">More...</a><br /></td></tr>
+<tr class="separator:ga6ed7e645262fcc32b00d8a9facf09e91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga310a017cddce9ef05071cb619b4b6db9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga310a017cddce9ef05071cb619b4b6db9">atcab_sha_hmac_init</a> (<a class="el" href="a23283.html#ga4c1f62e502c168be9261d2af921e78ba">atca_hmac_sha256_ctx_t</a> *ctx, uint16_t key_slot)</td></tr>
+<tr class="memdesc:ga310a017cddce9ef05071cb619b4b6db9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to start an HMAC/SHA-256 operation.  <a href="a23278.html#ga310a017cddce9ef05071cb619b4b6db9">More...</a><br /></td></tr>
+<tr class="separator:ga310a017cddce9ef05071cb619b4b6db9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae3343c160e80365b7e96bdfdc9b6365c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gae3343c160e80365b7e96bdfdc9b6365c">atcab_sha_hmac_update</a> (<a class="el" href="a23283.html#ga4c1f62e502c168be9261d2af921e78ba">atca_hmac_sha256_ctx_t</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
+<tr class="memdesc:gae3343c160e80365b7e96bdfdc9b6365c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to add an arbitrary amount of message data to a HMAC/SHA-256 operation.  <a href="a23278.html#gae3343c160e80365b7e96bdfdc9b6365c">More...</a><br /></td></tr>
+<tr class="separator:gae3343c160e80365b7e96bdfdc9b6365c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4be9972396b7cadb08dd8e2199daf08"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gaa4be9972396b7cadb08dd8e2199daf08">atcab_sha_hmac_finish</a> (<a class="el" href="a23283.html#ga4c1f62e502c168be9261d2af921e78ba">atca_hmac_sha256_ctx_t</a> *ctx, uint8_t *digest, uint8_t target)</td></tr>
+<tr class="memdesc:gaa4be9972396b7cadb08dd8e2199daf08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes SHA command to complete a HMAC/SHA-256 operation.  <a href="a23278.html#gaa4be9972396b7cadb08dd8e2199daf08">More...</a><br /></td></tr>
+<tr class="separator:gaa4be9972396b7cadb08dd8e2199daf08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae655ce06583c08169170102fbb0b55c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gae655ce06583c08169170102fbb0b55c9">atcab_sha_hmac</a> (const uint8_t *data, size_t data_size, uint16_t key_slot, uint8_t *digest, uint8_t target)</td></tr>
+<tr class="memdesc:gae655ce06583c08169170102fbb0b55c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the SHA command to compute an HMAC/SHA-256 operation.  <a href="a23278.html#gae655ce06583c08169170102fbb0b55c9">More...</a><br /></td></tr>
+<tr class="separator:gae655ce06583c08169170102fbb0b55c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaede6ae09e6192e452ad261f4e15e1c62"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gaede6ae09e6192e452ad261f4e15e1c62">atcab_sha_hmac_ext</a> (<a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *data, size_t data_size, uint16_t key_slot, uint8_t *digest, uint8_t target)</td></tr>
+<tr class="memdesc:gaede6ae09e6192e452ad261f4e15e1c62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the SHA command to compute an HMAC/SHA-256 operation.  <a href="a23278.html#gaede6ae09e6192e452ad261f4e15e1c62">More...</a><br /></td></tr>
+<tr class="separator:gaede6ae09e6192e452ad261f4e15e1c62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5c1e598bf3d4d25b522f42d6038a4268"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga5c1e598bf3d4d25b522f42d6038a4268">atcab_sign_base</a> (uint8_t mode, uint16_t key_id, uint8_t *signature)</td></tr>
+<tr class="memdesc:ga5c1e598bf3d4d25b522f42d6038a4268"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Sign command, which generates a signature using the ECDSA algorithm.  <a href="a23278.html#ga5c1e598bf3d4d25b522f42d6038a4268">More...</a><br /></td></tr>
+<tr class="separator:ga5c1e598bf3d4d25b522f42d6038a4268"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga69b8282d1b1e0c54b9a7d286fed503b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga69b8282d1b1e0c54b9a7d286fed503b8">atcab_sign</a> (uint16_t key_id, const uint8_t *msg, uint8_t *signature)</td></tr>
+<tr class="memdesc:ga69b8282d1b1e0c54b9a7d286fed503b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Sign command, to sign a 32-byte external message using the private key in the specified slot. The message to be signed will be loaded into the Message Digest Buffer to the ATECC608 device or TempKey for other devices.  <a href="a23278.html#ga69b8282d1b1e0c54b9a7d286fed503b8">More...</a><br /></td></tr>
+<tr class="separator:ga69b8282d1b1e0c54b9a7d286fed503b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b76ca12e6f7236d9ef3235b174f48cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga4b76ca12e6f7236d9ef3235b174f48cc">atcab_sign_ext</a> (<a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, const uint8_t *msg, uint8_t *signature)</td></tr>
+<tr class="memdesc:ga4b76ca12e6f7236d9ef3235b174f48cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Sign command, to sign a 32-byte external message using the private key in the specified slot. The message to be signed will be loaded into the Message Digest Buffer to the ATECC608 device or TempKey for other devices.  <a href="a23278.html#ga4b76ca12e6f7236d9ef3235b174f48cc">More...</a><br /></td></tr>
+<tr class="separator:ga4b76ca12e6f7236d9ef3235b174f48cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga559add3e8b4f85a9d91fc0ed86aefa29"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga559add3e8b4f85a9d91fc0ed86aefa29">atcab_sign_internal</a> (uint16_t key_id, bool is_invalidate, bool is_full_sn, uint8_t *signature)</td></tr>
+<tr class="memdesc:ga559add3e8b4f85a9d91fc0ed86aefa29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Sign command to sign an internally generated message.  <a href="a23278.html#ga559add3e8b4f85a9d91fc0ed86aefa29">More...</a><br /></td></tr>
+<tr class="separator:ga559add3e8b4f85a9d91fc0ed86aefa29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga416e4aeacf3acc35b1d5b76028c6947d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga416e4aeacf3acc35b1d5b76028c6947d">atcab_updateextra</a> (uint8_t mode, uint16_t new_value)</td></tr>
+<tr class="memdesc:ga416e4aeacf3acc35b1d5b76028c6947d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes UpdateExtra command to update the values of the two extra bytes within the Configuration zone (bytes 84 and 85).  <a href="a23278.html#ga416e4aeacf3acc35b1d5b76028c6947d">More...</a><br /></td></tr>
+<tr class="separator:ga416e4aeacf3acc35b1d5b76028c6947d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga694d921c7bc17a0e158ef96e3d476700"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga694d921c7bc17a0e158ef96e3d476700">atcab_verify</a> (uint8_t mode, uint16_t key_id, const uint8_t *signature, const uint8_t *public_key, const uint8_t *other_data, uint8_t *mac)</td></tr>
+<tr class="memdesc:ga694d921c7bc17a0e158ef96e3d476700"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command, which takes an ECDSA [R,S] signature and verifies that it is correctly generated from a given message and public key. In all cases, the signature is an input to the command.  <a href="a23278.html#ga694d921c7bc17a0e158ef96e3d476700">More...</a><br /></td></tr>
+<tr class="separator:ga694d921c7bc17a0e158ef96e3d476700"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2c3e18de900ba705192963d08b37f600"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga2c3e18de900ba705192963d08b37f600">atcab_verify_extern</a> (const uint8_t *message, const uint8_t *signature, const uint8_t *public_key, bool *is_verified)</td></tr>
+<tr class="memdesc:ga2c3e18de900ba705192963d08b37f600"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command, which verifies a signature (ECDSA verify operation) with all components (message, signature, and public key) supplied. The message to be signed will be loaded into the Message Digest Buffer to the ATECC608 device or TempKey for other devices.  <a href="a23278.html#ga2c3e18de900ba705192963d08b37f600">More...</a><br /></td></tr>
+<tr class="separator:ga2c3e18de900ba705192963d08b37f600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3a4e2ffada9173db1a775a697bbebf18"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga3a4e2ffada9173db1a775a697bbebf18">atcab_verify_extern_ext</a> (<a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *message, const uint8_t *signature, const uint8_t *public_key, bool *is_verified)</td></tr>
+<tr class="memdesc:ga3a4e2ffada9173db1a775a697bbebf18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command, which verifies a signature (ECDSA verify operation) with all components (message, signature, and public key) supplied. The message to be signed will be loaded into the Message Digest Buffer to the ATECC608 device or TempKey for other devices.  <a href="a23278.html#ga3a4e2ffada9173db1a775a697bbebf18">More...</a><br /></td></tr>
+<tr class="separator:ga3a4e2ffada9173db1a775a697bbebf18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga17bf17c4786be097a0bb111a6f9d8ca6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga17bf17c4786be097a0bb111a6f9d8ca6">atcab_verify_extern_mac</a> (const uint8_t *message, const uint8_t *signature, const uint8_t *public_key, const uint8_t *num_in, const uint8_t *io_key, bool *is_verified)</td></tr>
+<tr class="separator:ga17bf17c4786be097a0bb111a6f9d8ca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae8cc7670847805423ad591985eecd832"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gae8cc7670847805423ad591985eecd832">atcab_verify_stored</a> (const uint8_t *message, const uint8_t *signature, uint16_t key_id, bool *is_verified)</td></tr>
+<tr class="memdesc:gae8cc7670847805423ad591985eecd832"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command, which verifies a signature (ECDSA verify operation) with a public key stored in the device. The message to be signed will be loaded into the Message Digest Buffer to the ATECC608 device or TempKey for other devices.  <a href="a23278.html#gae8cc7670847805423ad591985eecd832">More...</a><br /></td></tr>
+<tr class="separator:gae8cc7670847805423ad591985eecd832"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad08f6cceac6e8147aeb6f665dc0a2aff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gad08f6cceac6e8147aeb6f665dc0a2aff">atcab_verify_stored_ext</a> (<a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, const uint8_t *message, const uint8_t *signature, uint16_t key_id, bool *is_verified)</td></tr>
+<tr class="memdesc:gad08f6cceac6e8147aeb6f665dc0a2aff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command, which verifies a signature (ECDSA verify operation) with a public key stored in the device. The message to be signed will be loaded into the Message Digest Buffer to the ATECC608 device or TempKey for other devices.  <a href="a23278.html#gad08f6cceac6e8147aeb6f665dc0a2aff">More...</a><br /></td></tr>
+<tr class="separator:gad08f6cceac6e8147aeb6f665dc0a2aff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga582dc8686f0491ad4292287f6971543c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga582dc8686f0491ad4292287f6971543c">atcab_verify_stored_with_tempkey</a> (const uint8_t *signature, uint16_t key_id, bool *is_verified)</td></tr>
+<tr class="memdesc:ga582dc8686f0491ad4292287f6971543c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command, which verifies a signature (ECDSA verify operation) with a public key stored in the device. keyConfig.reqrandom bit should be set and the message to be signed should be already loaded into TempKey for all devices.  <a href="a23278.html#ga582dc8686f0491ad4292287f6971543c">More...</a><br /></td></tr>
+<tr class="separator:ga582dc8686f0491ad4292287f6971543c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa52cdbbfd2f089d8eb42ef2640204ca7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gaa52cdbbfd2f089d8eb42ef2640204ca7">atcab_verify_stored_mac</a> (const uint8_t *message, const uint8_t *signature, uint16_t key_id, const uint8_t *num_in, const uint8_t *io_key, bool *is_verified)</td></tr>
+<tr class="separator:gaa52cdbbfd2f089d8eb42ef2640204ca7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf9a0c7772ebb65b87c4a4788850702b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gacf9a0c7772ebb65b87c4a4788850702b">atcab_verify_validate</a> (uint16_t key_id, const uint8_t *signature, const uint8_t *other_data, bool *is_verified)</td></tr>
+<tr class="memdesc:gacf9a0c7772ebb65b87c4a4788850702b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command in Validate mode to validate a public key stored in a slot.  <a href="a23278.html#gacf9a0c7772ebb65b87c4a4788850702b">More...</a><br /></td></tr>
+<tr class="separator:gacf9a0c7772ebb65b87c4a4788850702b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9393b545b2fa1fdd539672a0428a30ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga9393b545b2fa1fdd539672a0428a30ab">atcab_verify_invalidate</a> (uint16_t key_id, const uint8_t *signature, const uint8_t *other_data, bool *is_verified)</td></tr>
+<tr class="memdesc:ga9393b545b2fa1fdd539672a0428a30ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command in Invalidate mode which invalidates a previously validated public key stored in a slot.  <a href="a23278.html#ga9393b545b2fa1fdd539672a0428a30ab">More...</a><br /></td></tr>
+<tr class="separator:ga9393b545b2fa1fdd539672a0428a30ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabf2b29b4d3ae926b63c403d084380dbe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gabf2b29b4d3ae926b63c403d084380dbe">atcab_write</a> (uint8_t zone, uint16_t address, const uint8_t *value, const uint8_t *mac)</td></tr>
+<tr class="memdesc:gabf2b29b4d3ae926b63c403d084380dbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Write command, which writes either one four byte word or a 32-byte block to one of the EEPROM zones on the device. Depending upon the value of the WriteConfig byte for this slot, the data may be required to be encrypted by the system prior to being sent to the device. This command cannot be used to write slots configured as ECC private keys.  <a href="a23278.html#gabf2b29b4d3ae926b63c403d084380dbe">More...</a><br /></td></tr>
+<tr class="separator:gabf2b29b4d3ae926b63c403d084380dbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1f5a6bbcf4f840803635fb8951b3a7e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga1f5a6bbcf4f840803635fb8951b3a7e2">atcab_write_zone</a> (uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, const uint8_t *data, uint8_t len)</td></tr>
+<tr class="memdesc:ga1f5a6bbcf4f840803635fb8951b3a7e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Write command, which writes either 4 or 32 bytes of data into a device zone.  <a href="a23278.html#ga1f5a6bbcf4f840803635fb8951b3a7e2">More...</a><br /></td></tr>
+<tr class="separator:ga1f5a6bbcf4f840803635fb8951b3a7e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1442f24118397b11eb46a0cbe1601016"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga1442f24118397b11eb46a0cbe1601016">atcab_write_bytes_zone_ext</a> (<a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t zone, uint16_t slot, size_t offset_bytes, const uint8_t *data, size_t length)</td></tr>
+<tr class="separator:ga1442f24118397b11eb46a0cbe1601016"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac395a7e195aa3cf28b48de345755feb0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gac395a7e195aa3cf28b48de345755feb0">atcab_write_bytes_zone</a> (uint8_t zone, uint16_t slot, size_t offset_bytes, const uint8_t *data, size_t length)</td></tr>
+<tr class="memdesc:gac395a7e195aa3cf28b48de345755feb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Write command, which writes data into the configuration, otp, or data zones with a given byte offset and length. Offset and length must be multiples of a word (4 bytes).  <a href="a23278.html#gac395a7e195aa3cf28b48de345755feb0">More...</a><br /></td></tr>
+<tr class="separator:gac395a7e195aa3cf28b48de345755feb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47cbedeb3c3e9f7cbf2b9433cd60d1aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga47cbedeb3c3e9f7cbf2b9433cd60d1aa">atcab_write_pubkey</a> (uint16_t slot, const uint8_t *public_key)</td></tr>
+<tr class="memdesc:ga47cbedeb3c3e9f7cbf2b9433cd60d1aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses the write command to write a public key to a slot in the proper format.  <a href="a23278.html#ga47cbedeb3c3e9f7cbf2b9433cd60d1aa">More...</a><br /></td></tr>
+<tr class="separator:ga47cbedeb3c3e9f7cbf2b9433cd60d1aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0777a86aa412a97b19cc72a12c171b94"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga0777a86aa412a97b19cc72a12c171b94">atcab_write_config_zone</a> (const uint8_t *config_data)</td></tr>
+<tr class="memdesc:ga0777a86aa412a97b19cc72a12c171b94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Write command, which writes the configuration zone.  <a href="a23278.html#ga0777a86aa412a97b19cc72a12c171b94">More...</a><br /></td></tr>
+<tr class="separator:ga0777a86aa412a97b19cc72a12c171b94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga78a5394997ea31b125cd57d07aa73636"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga78a5394997ea31b125cd57d07aa73636">atcab_write_enc</a> (uint16_t key_id, uint8_t block, const uint8_t *data, const uint8_t *enc_key, const uint16_t enc_key_id, const uint8_t num_in[(20)])</td></tr>
+<tr class="memdesc:ga78a5394997ea31b125cd57d07aa73636"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Write command, which performs an encrypted write of a 32 byte block into given slot.  <a href="a23278.html#ga78a5394997ea31b125cd57d07aa73636">More...</a><br /></td></tr>
+<tr class="separator:ga78a5394997ea31b125cd57d07aa73636"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab25ca44957dff1c2df34607738ca3bf7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#gab25ca44957dff1c2df34607738ca3bf7">atcab_write_config_counter</a> (uint16_t counter_id, uint32_t counter_value)</td></tr>
+<tr class="memdesc:gab25ca44957dff1c2df34607738ca3bf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize one of the monotonic counters in device with a specific value.  <a href="a23278.html#gab25ca44957dff1c2df34607738ca3bf7">More...</a><br /></td></tr>
+<tr class="separator:gab25ca44957dff1c2df34607738ca3bf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga692423e9c45adde594c36360756b8882"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a23280.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a23278.html#ga692423e9c45adde594c36360756b8882">_gDevice</a></td></tr>
+<tr class="separator:ga692423e9c45adde594c36360756b8882"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for SWI over GPIO drivers. </p>
+<div class="textblock"><p>CryptoAuthLib Basic API methods - a simple crypto authentication API. These methods manage a global ATCADevice object behind the scenes. They also manage the wake/idle state transitions so callers don't need to. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a830854de5bc672bc4e02c314809eec37"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a830854de5bc672bc4e02c314809eec37">&#9670;&nbsp;</a></span>ATCA_1WIRE_BIT_MASK</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_1WIRE_BIT_MASK&#160;&#160;&#160;0x80</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad4730461247b76c69577905fa614c035"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad4730461247b76c69577905fa614c035">&#9670;&nbsp;</a></span>ATCA_1WIRE_COMMAND_WORD_ADDR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_1WIRE_COMMAND_WORD_ADDR&#160;&#160;&#160;0x03</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac96ddd0b39dd8b447b7cb4b98212e3e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac96ddd0b39dd8b447b7cb4b98212e3e4">&#9670;&nbsp;</a></span>ATCA_1WIRE_RESET_WORD_ADDR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_1WIRE_RESET_WORD_ADDR&#160;&#160;&#160;0x00</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5cee8fe70329fcc829cddea75eb26593"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5cee8fe70329fcc829cddea75eb26593">&#9670;&nbsp;</a></span>ATCA_1WIRE_RESPONSE_LENGTH_SIZE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_1WIRE_RESPONSE_LENGTH_SIZE&#160;&#160;&#160;0x01</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5c13314beda92827abe152579a26b1b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c13314beda92827abe152579a26b1b6">&#9670;&nbsp;</a></span>ATCA_1WIRE_SLEEP_WORD_ADDR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_1WIRE_SLEEP_WORD_ADDR&#160;&#160;&#160;0x01</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ab30f7c52f74cd8c9c57def65253afc18"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab30f7c52f74cd8c9c57def65253afc18">&#9670;&nbsp;</a></span>ATCA_1WIRE_SLEEP_WORD_ADDR_ALTERNATE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_1WIRE_SLEEP_WORD_ADDR_ALTERNATE&#160;&#160;&#160;0x02</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="afbac5fe9e08b848d353d8c9d1c252498"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbac5fe9e08b848d353d8c9d1c252498">&#9670;&nbsp;</a></span>ATCA_GPIO_ACK</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_GPIO_ACK&#160;&#160;&#160;<a class="el" href="a01727.html#a2da4af5eaad1cd580eac59f9cc81c22d">ATCA_GPIO_LOGIC_BIT0</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a13edf4be3cb4c99ffa58564e11fc4493"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13edf4be3cb4c99ffa58564e11fc4493">&#9670;&nbsp;</a></span>ATCA_GPIO_CLEAR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_GPIO_CLEAR&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af9e0e282ea6b57495625fe459d8f6f96"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af9e0e282ea6b57495625fe459d8f6f96">&#9670;&nbsp;</a></span>ATCA_GPIO_INPUT_DIR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_GPIO_INPUT_DIR&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a2da4af5eaad1cd580eac59f9cc81c22d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2da4af5eaad1cd580eac59f9cc81c22d">&#9670;&nbsp;</a></span>ATCA_GPIO_LOGIC_BIT0</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_GPIO_LOGIC_BIT0&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa217efbd8aa1a71048f1b4e2110b279e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa217efbd8aa1a71048f1b4e2110b279e">&#9670;&nbsp;</a></span>ATCA_GPIO_LOGIC_BIT1</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_GPIO_LOGIC_BIT1&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a13ba832338b5f0b433ca28764c2066a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13ba832338b5f0b433ca28764c2066a3">&#9670;&nbsp;</a></span>ATCA_GPIO_OUTPUT_DIR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_GPIO_OUTPUT_DIR&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a42fd16c4508438e85f7ed3e242e062e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42fd16c4508438e85f7ed3e242e062e6">&#9670;&nbsp;</a></span>ATCA_GPIO_READ</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_GPIO_READ&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aaa5159a96d13bdd1ede3901af736a03b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaa5159a96d13bdd1ede3901af736a03b">&#9670;&nbsp;</a></span>ATCA_GPIO_SET</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_GPIO_SET&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a80cdd7f70abefd3e2c797f0cc6fb2b2d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a80cdd7f70abefd3e2c797f0cc6fb2b2d">&#9670;&nbsp;</a></span>ATCA_GPIO_WRITE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_GPIO_WRITE&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="afbbebceebc001e7bf09c60b4a4e3ffe8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbbebceebc001e7bf09c60b4a4e3ffe8">&#9670;&nbsp;</a></span>ATCA_MIN_RESPONSE_LENGTH</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_MIN_RESPONSE_LENGTH&#160;&#160;&#160;4</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5489f5ec515e47686889f17f2a5c9443"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5489f5ec515e47686889f17f2a5c9443">&#9670;&nbsp;</a></span>ATCA_SWI_BIT_MASK</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_SWI_BIT_MASK&#160;&#160;&#160;0x01</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ab4a438b8a49f5dcff058572af8524caf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab4a438b8a49f5dcff058572af8524caf">&#9670;&nbsp;</a></span>ATCA_SWI_CMD_WORD_ADDR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_SWI_CMD_WORD_ADDR&#160;&#160;&#160;((uint8_t)0x77)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a14b35a7b7b4fc3e4c6d85fdb4add4c73"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14b35a7b7b4fc3e4c6d85fdb4add4c73">&#9670;&nbsp;</a></span>ATCA_SWI_IDLE_WORD_ADDR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_SWI_IDLE_WORD_ADDR&#160;&#160;&#160;((uint8_t)0xBB)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a4e670222365b6754841a73376ebe7b27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e670222365b6754841a73376ebe7b27">&#9670;&nbsp;</a></span>ATCA_SWI_SLEEP_WORD_ADDR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_SWI_SLEEP_WORD_ADDR&#160;&#160;&#160;((uint8_t)0xCC)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0a38ba8017304eccded253014991d317"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a38ba8017304eccded253014991d317">&#9670;&nbsp;</a></span>ATCA_SWI_TX_WORD_ADDR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_SWI_TX_WORD_ADDR&#160;&#160;&#160;((uint8_t)0x88)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a35e9d98d207f17ebac66dc86e29a6464"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35e9d98d207f17ebac66dc86e29a6464">&#9670;&nbsp;</a></span>ATCA_SWI_WAKE_WORD_ADDR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_SWI_WAKE_WORD_ADDR&#160;&#160;&#160;((uint8_t)0x00)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>SWI WORD Address </p>
-
-</div>
-</div>
-<a id="a1ce4882b7d053eafcec22cd84fb5727d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ce4882b7d053eafcec22cd84fb5727d">&#9670;&nbsp;</a></span>BIT_DELAY_1H</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BIT_DELAY_1H&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(4)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>should be 4.34 us, is 4.05us </p>
-
-</div>
-</div>
-<a id="ad884cf7d66d88b38180369a791a9824b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad884cf7d66d88b38180369a791a9824b">&#9670;&nbsp;</a></span>BIT_DELAY_1L</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BIT_DELAY_1L&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(4)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>delay macro for width of one pulse (start pulse or zero pulse) should be 4.34 us, is 4.05 us </p>
-
-</div>
-</div>
-<a id="a2ced4699fc4ab5162dbb9453edecb32e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ced4699fc4ab5162dbb9453edecb32e">&#9670;&nbsp;</a></span>BIT_DELAY_5</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BIT_DELAY_5&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(26)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>time to keep pin high for five pulses plus stop bit (used to bit-bang CryptoAuth 'zero' bit) should be 26.04 us, is 26.92 us </p>
-
-</div>
-</div>
-<a id="abd0d20a34060650b8a2895c17f842f44"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd0d20a34060650b8a2895c17f842f44">&#9670;&nbsp;</a></span>BIT_DELAY_7</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BIT_DELAY_7&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(34)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>time to keep pin high for seven bits plus stop bit (used to bit-bang CryptoAuth 'one' bit) should be 34.72 us, is 35.13 us </p>
-
-</div>
-</div>
-<a id="a60ba93807a2c0ea2ce1432245f3f7da0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a60ba93807a2c0ea2ce1432245f3f7da0">&#9670;&nbsp;</a></span>RX_TX_DELAY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define RX_TX_DELAY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(65)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>turn around time when switching from receive to transmit should be 93 us (Setting little less value as there would be other process before these steps) </p>
-
-</div>
-</div>
-<a id="a984e0870d283bc509d0bee0a87a787f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a984e0870d283bc509d0bee0a87a787f6">&#9670;&nbsp;</a></span>send_ACK_1wire</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define send_ACK_1wire</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em></td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="a01727.html#aafbb9b3f93a98add2a383024fb954efd">send_logic0_1wire</a>(__VA_ARGS__)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aafbb9b3f93a98add2a383024fb954efd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aafbb9b3f93a98add2a383024fb954efd">&#9670;&nbsp;</a></span>send_logic0_1wire</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define send_logic0_1wire</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em></td><td>)</td>
-          <td>&#160;&#160;&#160;send_logic_bit(__VA_ARGS__, <a class="el" href="a01727.html#a2da4af5eaad1cd580eac59f9cc81c22d">ATCA_GPIO_LOGIC_BIT0</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5b93a2c6bc6a7c80996cf2b63ac59614"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b93a2c6bc6a7c80996cf2b63ac59614">&#9670;&nbsp;</a></span>send_logic1_1wire</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define send_logic1_1wire</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em></td><td>)</td>
-          <td>&#160;&#160;&#160;send_logic_bit(__VA_ARGS__, <a class="el" href="a01727.html#aa217efbd8aa1a71048f1b4e2110b279e">ATCA_GPIO_LOGIC_BIT1</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a927daf2731f0f952ce011db114b84055"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a927daf2731f0f952ce011db114b84055">&#9670;&nbsp;</a></span>send_NACK_1wire</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define send_NACK_1wire</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em></td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="a01727.html#a5b93a2c6bc6a7c80996cf2b63ac59614">send_logic1_1wire</a>(__VA_ARGS__)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aab029dfcfe978b8447c36c6c99a8014e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab029dfcfe978b8447c36c6c99a8014e">&#9670;&nbsp;</a></span>tBIT_DLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tBIT_DLY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#aeb79dae6000c16a1e1fb1aab4b381087">tBIT_TYPICAL</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a35bfb2591822f6234cfc11bd5f05aded"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35bfb2591822f6234cfc11bd5f05aded">&#9670;&nbsp;</a></span>tBIT_MAX</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tBIT_MAX&#160;&#160;&#160;75</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0cf23c02906a3896b322b8f38ffccd7a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0cf23c02906a3896b322b8f38ffccd7a">&#9670;&nbsp;</a></span>tBIT_MIN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tBIT_MIN&#160;&#160;&#160;(<a class="el" href="a01727.html#a5e9d6baa27842ccd73f2e2d28ad59a09">tLOW0_MIN</a> + <a class="el" href="a01727.html#a9851aacd49666214d7cc48d70dabc24f">tPUP</a> + <a class="el" href="a01727.html#afd91898f2f43ec8c65cc27afa437f67d">tRCV_MIN</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aeb79dae6000c16a1e1fb1aab4b381087"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb79dae6000c16a1e1fb1aab4b381087">&#9670;&nbsp;</a></span>tBIT_TYPICAL</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tBIT_TYPICAL&#160;&#160;&#160;(<a class="el" href="a01727.html#a0cf23c02906a3896b322b8f38ffccd7a">tBIT_MIN</a> + ((<a class="el" href="a01727.html#a35bfb2591822f6234cfc11bd5f05aded">tBIT_MAX</a> - <a class="el" href="a01727.html#a0cf23c02906a3896b322b8f38ffccd7a">tBIT_MIN</a>) / 2 ))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad1560fd4120622873ce179b924db753b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad1560fd4120622873ce179b924db753b">&#9670;&nbsp;</a></span>tDACK</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tDACK&#160;&#160;&#160;2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a841f7caf64df8c88c3716a81c902692f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a841f7caf64df8c88c3716a81c902692f">&#9670;&nbsp;</a></span>tDACK_DLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tDACK_DLY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#ad1560fd4120622873ce179b924db753b">tDACK</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a963b4c5f749e54295d0fb86a9b5981e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a963b4c5f749e54295d0fb86a9b5981e7">&#9670;&nbsp;</a></span>tDRR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tDRR&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="afd3d90f72e5c1aa95bf5d69a883b697c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd3d90f72e5c1aa95bf5d69a883b697c">&#9670;&nbsp;</a></span>tDRR_DLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tDRR_DLY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#a963b4c5f749e54295d0fb86a9b5981e7">tDRR</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="afaf1831ae17da9ce865cee405d7763c7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afaf1831ae17da9ce865cee405d7763c7">&#9670;&nbsp;</a></span>tDSCHG</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tDSCHG&#160;&#160;&#160;150</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a06f5a45eca79f59745271042a19d09a1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06f5a45eca79f59745271042a19d09a1">&#9670;&nbsp;</a></span>tDSCHG_DLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tDSCHG_DLY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#afaf1831ae17da9ce865cee405d7763c7">tDSCHG</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="abd0d3869b6b02735e2f607c5b7800190"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd0d3869b6b02735e2f607c5b7800190">&#9670;&nbsp;</a></span>tHIGH_SPEED_DLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tHIGH_SPEED_DLY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(1)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a525c6372dfb6a7087af4524512b1973e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a525c6372dfb6a7087af4524512b1973e">&#9670;&nbsp;</a></span>tHTSS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tHTSS&#160;&#160;&#160;150</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3e988486a0cb2c61f6df8de27aedfcff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e988486a0cb2c61f6df8de27aedfcff">&#9670;&nbsp;</a></span>tHTSS_DLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tHTSS_DLY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#a525c6372dfb6a7087af4524512b1973e">tHTSS</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a6e5eba16a729eb22c12202ac3fd1273a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e5eba16a729eb22c12202ac3fd1273a">&#9670;&nbsp;</a></span>tLOW0_DLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tLOW0_DLY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#af69cfd1e5c344ba454e516f96c42ba48">tLOW0_TYPICAL</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af3b05028782c6548a822ebd3fe77a7e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af3b05028782c6548a822ebd3fe77a7e5">&#9670;&nbsp;</a></span>tLOW0_HDLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tLOW0_HDLY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(11)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af5b2218755123dedbffc624dfcf36a34"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af5b2218755123dedbffc624dfcf36a34">&#9670;&nbsp;</a></span>tLOW0_MAX</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tLOW0_MAX&#160;&#160;&#160;16</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5e9d6baa27842ccd73f2e2d28ad59a09"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e9d6baa27842ccd73f2e2d28ad59a09">&#9670;&nbsp;</a></span>tLOW0_MIN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tLOW0_MIN&#160;&#160;&#160;6</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af69cfd1e5c344ba454e516f96c42ba48"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af69cfd1e5c344ba454e516f96c42ba48">&#9670;&nbsp;</a></span>tLOW0_TYPICAL</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tLOW0_TYPICAL&#160;&#160;&#160;(<a class="el" href="a01727.html#a5e9d6baa27842ccd73f2e2d28ad59a09">tLOW0_MIN</a> + ((<a class="el" href="a01727.html#af5b2218755123dedbffc624dfcf36a34">tLOW0_MAX</a> - <a class="el" href="a01727.html#a5e9d6baa27842ccd73f2e2d28ad59a09">tLOW0_MIN</a>) / 2))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a4de8c9e02117694e95d503b601b560c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4de8c9e02117694e95d503b601b560c3">&#9670;&nbsp;</a></span>tLOW1_DLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tLOW1_DLY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#a439c3fe5adb24ae60fa6e992ed7eea94">tLOW1_TYPICAL</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa4fea6777381cea1f29cb9d67ed054fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4fea6777381cea1f29cb9d67ed054fe">&#9670;&nbsp;</a></span>tLOW1_HDLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tLOW1_HDLY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(1)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a4d500117005d8c6844067932b5e04e22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d500117005d8c6844067932b5e04e22">&#9670;&nbsp;</a></span>tLOW1_MAX</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tLOW1_MAX&#160;&#160;&#160;2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a80ab122bd74f680591ab0b4d847a65bb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a80ab122bd74f680591ab0b4d847a65bb">&#9670;&nbsp;</a></span>tLOW1_MIN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tLOW1_MIN&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a439c3fe5adb24ae60fa6e992ed7eea94"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a439c3fe5adb24ae60fa6e992ed7eea94">&#9670;&nbsp;</a></span>tLOW1_TYPICAL</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tLOW1_TYPICAL&#160;&#160;&#160;(<a class="el" href="a01727.html#a80ab122bd74f680591ab0b4d847a65bb">tLOW1_MIN</a> + ((<a class="el" href="a01727.html#a4d500117005d8c6844067932b5e04e22">tLOW1_MAX</a> - <a class="el" href="a01727.html#a80ab122bd74f680591ab0b4d847a65bb">tLOW1_MIN</a>) / 2))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a559899ca08e3e388f6dce508f94c57ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a559899ca08e3e388f6dce508f94c57ca">&#9670;&nbsp;</a></span>tMSDR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tMSDR&#160;&#160;&#160;2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3b3815eccc6bbec8680275f32086e839"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3b3815eccc6bbec8680275f32086e839">&#9670;&nbsp;</a></span>tMSDR_DLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tMSDR_DLY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#a559899ca08e3e388f6dce508f94c57ca">tMSDR</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a9851aacd49666214d7cc48d70dabc24f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9851aacd49666214d7cc48d70dabc24f">&#9670;&nbsp;</a></span>tPUP</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tPUP&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a96307dfcd31f60d709a005969cf6b46d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a96307dfcd31f60d709a005969cf6b46d">&#9670;&nbsp;</a></span>tRCV0_DLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tRCV0_DLY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#aeb79dae6000c16a1e1fb1aab4b381087">tBIT_TYPICAL</a> - <a class="el" href="a01727.html#af69cfd1e5c344ba454e516f96c42ba48">tLOW0_TYPICAL</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="acb31653547deaa7884c12937ae985980"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb31653547deaa7884c12937ae985980">&#9670;&nbsp;</a></span>tRCV0_HDLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tRCV0_HDLY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(11)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a6f3f68dbcc897865ae9a540ee5c23d2a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f3f68dbcc897865ae9a540ee5c23d2a">&#9670;&nbsp;</a></span>tRCV1_DLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tRCV1_DLY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#aeb79dae6000c16a1e1fb1aab4b381087">tBIT_TYPICAL</a> - <a class="el" href="a01727.html#a439c3fe5adb24ae60fa6e992ed7eea94">tLOW1_TYPICAL</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8e380a3931c715608118bad11cc01798"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e380a3931c715608118bad11cc01798">&#9670;&nbsp;</a></span>tRCV1_HDLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tRCV1_HDLY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(14)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af09ae5d0bdc80815278920b346ab54ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af09ae5d0bdc80815278920b346ab54ec">&#9670;&nbsp;</a></span>tRCV_MAX</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tRCV_MAX&#160;&#160;&#160;6</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="afd91898f2f43ec8c65cc27afa437f67d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd91898f2f43ec8c65cc27afa437f67d">&#9670;&nbsp;</a></span>tRCV_MIN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tRCV_MIN&#160;&#160;&#160;4</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a837720a4ac39140692eedf9d4f9bdc67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a837720a4ac39140692eedf9d4f9bdc67">&#9670;&nbsp;</a></span>tRD_DLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tRD_DLY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(1)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a421634b53ea0efe0adb372cb7b990589"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a421634b53ea0efe0adb372cb7b990589">&#9670;&nbsp;</a></span>tRD_HDLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tRD_HDLY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(1)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac6bb6a44bc566ef36ae734081b331dc3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac6bb6a44bc566ef36ae734081b331dc3">&#9670;&nbsp;</a></span>tRESET</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tRESET&#160;&#160;&#160;96</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa2c296257356a87a73b10f5377ec7cee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa2c296257356a87a73b10f5377ec7cee">&#9670;&nbsp;</a></span>tRESET_DLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tRESET_DLY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(<a class="el" href="a01727.html#ac6bb6a44bc566ef36ae734081b331dc3">tRESET</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a2f34aa16740705c51e13be0fa9c69e47"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2f34aa16740705c51e13be0fa9c69e47">&#9670;&nbsp;</a></span>tRRT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tRRT&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a80a41baf9fd49236831572d2dd284e32"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a80a41baf9fd49236831572d2dd284e32">&#9670;&nbsp;</a></span>tRRT_DLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tRRT_DLY&#160;&#160;&#160;<a class="el" href="a01718.html#a4b83848e938fac7ec4dde79e584b6f71">atca_delay_ms</a>(<a class="el" href="a01727.html#a2f34aa16740705c51e13be0fa9c69e47">tRRT</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a29d041bf7696369ce7a61a30fa903d7d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29d041bf7696369ce7a61a30fa903d7d">&#9670;&nbsp;</a></span>tSWIN_DLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tSWIN_DLY&#160;&#160;&#160;<a class="el" href="a01718.html#a7598dfcd6dcac882836544d48356d02f">atca_delay_us</a>(1)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ab6cf944d9658e800b8855285ca9de13f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab6cf944d9658e800b8855285ca9de13f">&#9670;&nbsp;</a></span>tWAKEUP</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define tWAKEUP&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="ae07c4ab9832b4a73aa58ca8c11eb0b0d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae07c4ab9832b4a73aa58ca8c11eb0b0d">&#9670;&nbsp;</a></span>delay_type</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a01727.html#ae07c4ab9832b4a73aa58ca8c11eb0b0d">delay_type</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ae07c4ab9832b4a73aa58ca8c11eb0b0da3c6894a5f8a2801269921d6c135deb30"></a>LOGIC0_1&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ae07c4ab9832b4a73aa58ca8c11eb0b0da5d8a4ca6eeed894a36bc23ee78ec7f09"></a>LOGIC0_2&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ae07c4ab9832b4a73aa58ca8c11eb0b0da00b39e98fb8e19e176495b77f9785912"></a>LOGIC0_3&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ae07c4ab9832b4a73aa58ca8c11eb0b0da20495bb1a5394af8d878c979b40e8d3b"></a>LOGIC0_4&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ae07c4ab9832b4a73aa58ca8c11eb0b0dac2e4b7648a73f00d921b1578649c5dff"></a>LOGIC1_1&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ae07c4ab9832b4a73aa58ca8c11eb0b0dae65669a469f2c6beca926228ca9a3afa"></a>LOGIC1_2&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ae07c4ab9832b4a73aa58ca8c11eb0b0da1f432faab4ab3396a72c16ab9e6a16b4"></a>NO_OF_DELAYS&#160;</td><td class="fielddoc"></td></tr>
-</table>
-
-</div>
-</div>
-<a id="ac921c2e8625e26392a9679359d60e396"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac921c2e8625e26392a9679359d60e396">&#9670;&nbsp;</a></span>protocol_type</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a01727.html#ac921c2e8625e26392a9679359d60e396">protocol_type</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ac921c2e8625e26392a9679359d60e396a0bd16b106398959a7f795b672678bcb8"></a>ATCA_PROTOCOL_1WIRE&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac921c2e8625e26392a9679359d60e396a0df4a65c891005acf8f3b83d8fbbad8e"></a>ATCA_PROTOCOL_SWI&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac921c2e8625e26392a9679359d60e396a87989af86cf2eb23059bcbc9cd61fad2"></a>NO_OF_PROTOCOL&#160;</td><td class="fielddoc"></td></tr>
-</table>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_381c8d42bbdb26858cb443b28149b615.html">hal</a></li><li class="navelem"><a class="el" href="a01727.html">hal_gpio_harmony.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_8dc63a03da68b48fe24499eda36221e7.html">cryptauthlib-3.4.0_talib</a></li><li class="navelem"><a class="el" href="dir_309af5a16ec1b403c44bf5d5d5ea4cca.html">lib</a></li><li class="navelem"><a class="el" href="a01727.html">atca_basic.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_jwt.c File Reference</title>
+<title>CryptoAuthLib: calib_aes_gcm.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.4.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -84,51 +84,25 @@ $(document).ready(function(){initNavTree('a01826.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_jwt.c File Reference</div>  </div>
+<div class="title">calib_aes_gcm.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Utilities to create and verify a JSON Web Token (JWT)  
+<p>Unity tests for the cryptoauthlib AES GCM functions.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01694_source.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01475_source.html">atca_helpers.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01679_source.html">crypto/atca_crypto_sw_sha2.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01829_source.html">jwt/atca_jwt.h</a>&quot;</code><br />
-<code>#include &lt;stdio.h&gt;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga167fe35631a0dd191293c6ad3a6485aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05737.html#ga167fe35631a0dd191293c6ad3a6485aa">atca_jwt_check_payload_start</a> (<a class="el" href="a05988.html">atca_jwt_t</a> *jwt)</td></tr>
-<tr class="memdesc:ga167fe35631a0dd191293c6ad3a6485aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the provided context to see what character needs to be added in order to append a claim.  <a href="a05737.html#ga167fe35631a0dd191293c6ad3a6485aa">More...</a><br /></td></tr>
-<tr class="separator:ga167fe35631a0dd191293c6ad3a6485aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad3ea09543f0569a5368130f4a3d7bce0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05737.html#gad3ea09543f0569a5368130f4a3d7bce0">atca_jwt_init</a> (<a class="el" href="a05988.html">atca_jwt_t</a> *jwt, char *buf, uint16_t buflen)</td></tr>
-<tr class="memdesc:gad3ea09543f0569a5368130f4a3d7bce0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a JWT structure.  <a href="a05737.html#gad3ea09543f0569a5368130f4a3d7bce0">More...</a><br /></td></tr>
-<tr class="separator:gad3ea09543f0569a5368130f4a3d7bce0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6d1bf5c8bf4fb49e1e80c19911157d4b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05737.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b">atca_jwt_finalize</a> (<a class="el" href="a05988.html">atca_jwt_t</a> *jwt, uint16_t key_id)</td></tr>
-<tr class="memdesc:ga6d1bf5c8bf4fb49e1e80c19911157d4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the claims of a token, encode them, then sign the result.  <a href="a05737.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b">More...</a><br /></td></tr>
-<tr class="separator:ga6d1bf5c8bf4fb49e1e80c19911157d4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3e6036b2c0e6dbc96a30f078e56cacff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05737.html#ga3e6036b2c0e6dbc96a30f078e56cacff">atca_jwt_add_claim_string</a> (<a class="el" href="a05988.html">atca_jwt_t</a> *jwt, const char *claim, const char *value)</td></tr>
-<tr class="memdesc:ga3e6036b2c0e6dbc96a30f078e56cacff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a string claim to a token.  <a href="a05737.html#ga3e6036b2c0e6dbc96a30f078e56cacff">More...</a><br /></td></tr>
-<tr class="separator:ga3e6036b2c0e6dbc96a30f078e56cacff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7073a7cfb7c77ad02923cdbb1226d2ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05737.html#ga7073a7cfb7c77ad02923cdbb1226d2ad">atca_jwt_add_claim_numeric</a> (<a class="el" href="a05988.html">atca_jwt_t</a> *jwt, const char *claim, int32_t value)</td></tr>
-<tr class="memdesc:ga7073a7cfb7c77ad02923cdbb1226d2ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a numeric claim to a token.  <a href="a05737.html#ga7073a7cfb7c77ad02923cdbb1226d2ad">More...</a><br /></td></tr>
-<tr class="separator:ga7073a7cfb7c77ad02923cdbb1226d2ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0e2ca8c9bd4954e004cd10cdc29c9a9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05737.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b">atca_jwt_verify</a> (const char *buf, uint16_t buflen, const uint8_t *pubkey)</td></tr>
-<tr class="memdesc:ga0e2ca8c9bd4954e004cd10cdc29c9a9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies the signature of a jwt using the provided public key.  <a href="a05737.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b">More...</a><br /></td></tr>
-<tr class="separator:ga0e2ca8c9bd4954e004cd10cdc29c9a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
+<div class="textblock"><code>#include &quot;<a class="el" href="a01844_source.html">calib_config_check.h</a>&quot;</code><br />
+</div>
+<p><a href="a01826_source.html">Go to the source code of this file.</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Utilities to create and verify a JSON Web Token (JWT) </p>
+<div class="textblock"><p>Unity tests for the cryptoauthlib AES GCM functions. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_a36b4bcb1707fbf5292e9c9ce5c3237c.html">jwt</a></li><li class="navelem"><a class="el" href="a01826.html">atca_jwt.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ac97eb41c075753f4733aae2239a389a.html">cryptauthlib-v3.4.0_</a></li><li class="navelem"><a class="el" href="dir_cff6911667c1a559ef1c32fb411fa0d0.html">lib</a></li><li class="navelem"><a class="el" href="dir_cc347709d196869109d4b86e0c9b33b5.html">calib</a></li><li class="navelem"><a class="el" href="a01826.html">calib_aes_gcm.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

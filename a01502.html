@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_date.c File Reference</title>
+<title>CryptoAuthLib: pkcs11_info.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.3.3</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -88,67 +88,38 @@ $(document).ready(function(){initNavTree('a01502.html',''); initResizable(); });
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">atcacert_date.c File Reference</div>  </div>
+<div class="title">pkcs11_info.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Date handling with regard to certificates.  
+<p>PKCS11 Library Information Functions.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;string.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a01505_source.html">atcacert_date.h</a>&quot;</code><br />
-</div><table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a01451_source.html">cryptoki.h</a>&quot;</code><br />
+</div>
+<p><a href="a01502_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaab946b2ea5dba6d1addacc995a6989ae"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#gaab946b2ea5dba6d1addacc995a6989ae">atcacert_date_enc</a> (<a class="el" href="a05732.html#ga5839c985add2fc72ea2eecf9d39bca1a">atcacert_date_format_t</a> format, const <a class="el" href="a05732.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp, uint8_t *formatted_date, size_t *formatted_date_size)</td></tr>
-<tr class="memdesc:gaab946b2ea5dba6d1addacc995a6989ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format a timestamp according to the format type.  <a href="a05732.html#gaab946b2ea5dba6d1addacc995a6989ae">More...</a><br /></td></tr>
-<tr class="separator:gaab946b2ea5dba6d1addacc995a6989ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga368d038c02673b1e6ddacfd175786e6a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#ga368d038c02673b1e6ddacfd175786e6a">atcacert_date_dec</a> (<a class="el" href="a05732.html#ga5839c985add2fc72ea2eecf9d39bca1a">atcacert_date_format_t</a> format, const uint8_t *formatted_date, size_t formatted_date_size, <a class="el" href="a05732.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp)</td></tr>
-<tr class="memdesc:ga368d038c02673b1e6ddacfd175786e6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse a formatted timestamp according to the specified format.  <a href="a05732.html#ga368d038c02673b1e6ddacfd175786e6a">More...</a><br /></td></tr>
-<tr class="separator:ga368d038c02673b1e6ddacfd175786e6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1d267b06c94e1db2aa2f6e91df1c843f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#ga1d267b06c94e1db2aa2f6e91df1c843f">atcacert_date_get_max_date</a> (<a class="el" href="a05732.html#ga5839c985add2fc72ea2eecf9d39bca1a">atcacert_date_format_t</a> format, <a class="el" href="a05732.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp)</td></tr>
-<tr class="memdesc:ga1d267b06c94e1db2aa2f6e91df1c843f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the maximum date available for the given format.  <a href="a05732.html#ga1d267b06c94e1db2aa2f6e91df1c843f">More...</a><br /></td></tr>
-<tr class="separator:ga1d267b06c94e1db2aa2f6e91df1c843f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4a8601a2ed433edf6c76a841cc344d62"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#ga4a8601a2ed433edf6c76a841cc344d62">atcacert_date_enc_iso8601_sep</a> (const <a class="el" href="a05732.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp, uint8_t formatted_date[(20)])</td></tr>
-<tr class="separator:ga4a8601a2ed433edf6c76a841cc344d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8debff09e4382ca842f8ff427a69ea9b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#ga8debff09e4382ca842f8ff427a69ea9b">atcacert_date_dec_iso8601_sep</a> (const uint8_t formatted_date[(20)], <a class="el" href="a05732.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp)</td></tr>
-<tr class="separator:ga8debff09e4382ca842f8ff427a69ea9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabfc00e2698813a776f33c9d2cf83cb80"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#gabfc00e2698813a776f33c9d2cf83cb80">atcacert_date_enc_rfc5280_utc</a> (const <a class="el" href="a05732.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp, uint8_t formatted_date[(13)])</td></tr>
-<tr class="separator:gabfc00e2698813a776f33c9d2cf83cb80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9dbd113bafa7e801fb2f9b70c3f4e944"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#ga9dbd113bafa7e801fb2f9b70c3f4e944">atcacert_date_dec_rfc5280_utc</a> (const uint8_t formatted_date[(13)], <a class="el" href="a05732.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp)</td></tr>
-<tr class="separator:ga9dbd113bafa7e801fb2f9b70c3f4e944"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadb4e23a98babbd464e67e3572f587fa3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#gadb4e23a98babbd464e67e3572f587fa3">atcacert_date_enc_rfc5280_gen</a> (const <a class="el" href="a05732.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp, uint8_t formatted_date[(15)])</td></tr>
-<tr class="separator:gadb4e23a98babbd464e67e3572f587fa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga40cf0a95b4d7a4ea15625922eea5b1da"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#ga40cf0a95b4d7a4ea15625922eea5b1da">atcacert_date_dec_rfc5280_gen</a> (const uint8_t formatted_date[(15)], <a class="el" href="a05732.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp)</td></tr>
-<tr class="separator:ga40cf0a95b4d7a4ea15625922eea5b1da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga602245b21096fbd91cbb8650b8745bf3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#ga602245b21096fbd91cbb8650b8745bf3">atcacert_date_enc_posix_uint32_be</a> (const <a class="el" href="a05732.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp, uint8_t formatted_date[(4)])</td></tr>
-<tr class="separator:ga602245b21096fbd91cbb8650b8745bf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaef5f088f05b5cd9bbd671d4691e4767f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#gaef5f088f05b5cd9bbd671d4691e4767f">atcacert_date_dec_posix_uint32_be</a> (const uint8_t formatted_date[(4)], <a class="el" href="a05732.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp)</td></tr>
-<tr class="separator:gaef5f088f05b5cd9bbd671d4691e4767f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa0f9f87e2eb1fa3e7c77492515d09572"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#gaa0f9f87e2eb1fa3e7c77492515d09572">atcacert_date_enc_posix_uint32_le</a> (const <a class="el" href="a05732.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp, uint8_t formatted_date[(4)])</td></tr>
-<tr class="separator:gaa0f9f87e2eb1fa3e7c77492515d09572"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga690a6bafa70a21db397f3d078190973e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#ga690a6bafa70a21db397f3d078190973e">atcacert_date_dec_posix_uint32_le</a> (const uint8_t formatted_date[(4)], <a class="el" href="a05732.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp)</td></tr>
-<tr class="separator:ga690a6bafa70a21db397f3d078190973e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5da5a0589a6168aafd34b4aac4e07553"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#ga5da5a0589a6168aafd34b4aac4e07553">atcacert_date_enc_compcert</a> (const <a class="el" href="a05732.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *issue_date, uint8_t expire_years, uint8_t enc_dates[3])</td></tr>
-<tr class="memdesc:ga5da5a0589a6168aafd34b4aac4e07553"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode the issue and expire dates in the format used by the compressed certificate.  <a href="a05732.html#ga5da5a0589a6168aafd34b4aac4e07553">More...</a><br /></td></tr>
-<tr class="separator:ga5da5a0589a6168aafd34b4aac4e07553"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaba31331bcfab203c786004b027512fab"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#gaba31331bcfab203c786004b027512fab">atcacert_date_dec_compcert</a> (const uint8_t enc_dates[3], <a class="el" href="a05732.html#ga5839c985add2fc72ea2eecf9d39bca1a">atcacert_date_format_t</a> expire_date_format, <a class="el" href="a05732.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *issue_date, <a class="el" href="a05732.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *expire_date)</td></tr>
-<tr class="memdesc:gaba31331bcfab203c786004b027512fab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode the issue and expire dates from the format used by the compressed certificate.  <a href="a05732.html#gaba31331bcfab203c786004b027512fab">More...</a><br /></td></tr>
-<tr class="separator:gaba31331bcfab203c786004b027512fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae56826104269ca730066136fb3eb995"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#gaae56826104269ca730066136fb3eb995">pkcs11_get_lib_info</a> (<a class="el" href="a01571.html#a2d8a8dcb105d17ae3a86aced319789fd">CK_INFO_PTR</a> pInfo)</td></tr>
+<tr class="memdesc:gaae56826104269ca730066136fb3eb995"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains general information about Cryptoki.  <a href="a08589.html#gaae56826104269ca730066136fb3eb995">More...</a><br /></td></tr>
+<tr class="separator:gaae56826104269ca730066136fb3eb995"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga66f248d2f10fc94689c6f1f92fdae5b4"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#ga66f248d2f10fc94689c6f1f92fdae5b4">ATCACERT_DATE_FORMAT_SIZES</a> [5]</td></tr>
-<tr class="separator:ga66f248d2f10fc94689c6f1f92fdae5b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8ac50a3d8a0c4f1ddf04cdf02c757030"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga8ac50a3d8a0c4f1ddf04cdf02c757030">pkcs11_lib_manufacturer_id</a> []</td></tr>
+<tr class="separator:ga8ac50a3d8a0c4f1ddf04cdf02c757030"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47daad4918afdf7ec808a5a57a4bce9d"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga47daad4918afdf7ec808a5a57a4bce9d">pkcs11_lib_description</a> []</td></tr>
+<tr class="separator:ga47daad4918afdf7ec808a5a57a4bce9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Date handling with regard to certificates. </p>
+<div class="textblock"><p>PKCS11 Library Information Functions. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_7954b4fafcb137335b30c508af9db3b0.html">atcacert</a></li><li class="navelem"><a class="el" href="a01502.html">atcacert_date.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_de8763fbd32fa6c533e8e0dca5fc697b.html">cryptauthlib-v3.3.3_</a></li><li class="navelem"><a class="el" href="dir_76c6e33311c14dc6ff7c294bf952470f.html">lib</a></li><li class="navelem"><a class="el" href="dir_9bd2612bd55169c9881c7cd36a33cdb4.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01502.html">pkcs11_info.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

@@ -1,10 +1,10 @@
 var a01796 =
 [
-    [ "hal_create_mutex", "a05735.html#gab289a3949663589ac6be71d72fb18278", null ],
-    [ "hal_delay_10us", "a05735.html#gaa7df07f9efb18d8cef1d9602372aca8c", null ],
-    [ "hal_delay_ms", "a05735.html#gadc23b8130e72a445f76c68d62e8c95c5", null ],
-    [ "hal_delay_us", "a05735.html#ga7e9019810ba5ab81b256282392cd5079", null ],
-    [ "hal_destroy_mutex", "a05735.html#ga4589d7b3e951f40b7928f1cf31f7ddf3", null ],
-    [ "hal_lock_mutex", "a05735.html#gad4cd02ff7ae4e75844eab4e84eb61994", null ],
-    [ "hal_unlock_mutex", "a05735.html#ga31fd8170a49623686543f6247b883bd1", null ]
+    [ "atcacert_der_adjust_length", "a25343.html#ga165018175f52421ea26fb33ccf335108", null ],
+    [ "atcacert_der_dec_ecdsa_sig_value", "a25343.html#gac3f22b75f15e8508f35d99b95d955842", null ],
+    [ "atcacert_der_dec_integer", "a25343.html#ga3b095e11adc55a61e3cfb2957d0c6c77", null ],
+    [ "atcacert_der_dec_length", "a25343.html#gaeee4091e249b8fc202d5126a8374eeb1", null ],
+    [ "atcacert_der_enc_ecdsa_sig_value", "a25343.html#ga3583ada6da51d31cfe819894e8a9deeb", null ],
+    [ "atcacert_der_enc_integer", "a25343.html#gaf156257cda87df879f54c07e80bc0e8d", null ],
+    [ "atcacert_der_enc_length", "a25343.html#gaafc9ef8e0164226481b670fde0223e13", null ]
 ];

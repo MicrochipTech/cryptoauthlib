@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_swi_uart.c File Reference</title>
+<title>CryptoAuthLib: atcacert_client.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.4.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -87,53 +87,52 @@ $(document).ready(function(){initNavTree('a01778.html',''); initResizable(); });
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">hal_swi_uart.c File Reference</div>  </div>
+<div class="title">atcacert_client.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for SWI over UART drivers.  
+<p>Client side cert i/o methods. These declarations deal with the client-side, the node being authenticated, of the authentication process. It is assumed the client has an ECC CryptoAuthentication device (e.g. ATECC508A) and the certificates are stored on that device.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01694_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a01781_source.html">atcacert_client.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01799_source.html">atcacert_der.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01817_source.html">atcacert_pem.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01976_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01832_source.html">calib/calib_basic.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gae3e41d9b466fb912625402db629b1a62"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#gae3e41d9b466fb912625402db629b1a62">hal_swi_init</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, <a class="el" href="a05760.html">ATCAIfaceCfg</a> *cfg)</td></tr>
-<tr class="memdesc:gae3e41d9b466fb912625402db629b1a62"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize an SWI interface using given config  <a href="a05735.html#gae3e41d9b466fb912625402db629b1a62">More...</a><br /></td></tr>
-<tr class="separator:gae3e41d9b466fb912625402db629b1a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9186e5235979216330ae580290872c77"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga9186e5235979216330ae580290872c77">hal_swi_post_init</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga9186e5235979216330ae580290872c77"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI post init.  <a href="a05735.html#ga9186e5235979216330ae580290872c77">More...</a><br /></td></tr>
-<tr class="separator:ga9186e5235979216330ae580290872c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9df4dbd666a87efe49578842e53ad91e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga9df4dbd666a87efe49578842e53ad91e">hal_swi_send</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
-<tr class="memdesc:ga9df4dbd666a87efe49578842e53ad91e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send byte(s) via SWI.  <a href="a05735.html#ga9df4dbd666a87efe49578842e53ad91e">More...</a><br /></td></tr>
-<tr class="separator:ga9df4dbd666a87efe49578842e53ad91e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga159bdf9c24e429d54800da1eb1c21058"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga159bdf9c24e429d54800da1eb1c21058">hal_swi_receive</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
-<tr class="memdesc:ga159bdf9c24e429d54800da1eb1c21058"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive byte(s) via SWI.  <a href="a05735.html#ga159bdf9c24e429d54800da1eb1c21058">More...</a><br /></td></tr>
-<tr class="separator:ga159bdf9c24e429d54800da1eb1c21058"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafc428980ec95e37eee94813db229fe70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#gafc428980ec95e37eee94813db229fe70">hal_swi_wake</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:gafc428980ec95e37eee94813db229fe70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send Wake flag via SWI.  <a href="a05735.html#gafc428980ec95e37eee94813db229fe70">More...</a><br /></td></tr>
-<tr class="separator:gafc428980ec95e37eee94813db229fe70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga252e365a30f2583dae8a8eac073a9f53"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga252e365a30f2583dae8a8eac073a9f53">hal_swi_sleep</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga252e365a30f2583dae8a8eac073a9f53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send Sleep flag via SWI.  <a href="a05735.html#ga252e365a30f2583dae8a8eac073a9f53">More...</a><br /></td></tr>
-<tr class="separator:ga252e365a30f2583dae8a8eac073a9f53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga618291172976da96c4f02dc9200c845c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga618291172976da96c4f02dc9200c845c">hal_swi_idle</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga618291172976da96c4f02dc9200c845c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send Idle flag via SWI.  <a href="a05735.html#ga618291172976da96c4f02dc9200c845c">More...</a><br /></td></tr>
-<tr class="separator:ga618291172976da96c4f02dc9200c845c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad6ba20fd0d0d393f0cbf03ea9cb63346"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#gad6ba20fd0d0d393f0cbf03ea9cb63346">hal_swi_control</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t option, void *param, size_t paramlen)</td></tr>
-<tr class="memdesc:gad6ba20fd0d0d393f0cbf03ea9cb63346"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform control operations for the kit protocol.  <a href="a05735.html#gad6ba20fd0d0d393f0cbf03ea9cb63346">More...</a><br /></td></tr>
-<tr class="separator:gad6ba20fd0d0d393f0cbf03ea9cb63346"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga196dbc62546b39ac3e556a0f7f6b7132"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga196dbc62546b39ac3e556a0f7f6b7132">hal_swi_release</a> (void *hal_data)</td></tr>
-<tr class="memdesc:ga196dbc62546b39ac3e556a0f7f6b7132"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manages reference count on given bus and releases resource if no more reference(s) exist.  <a href="a05735.html#ga196dbc62546b39ac3e556a0f7f6b7132">More...</a><br /></td></tr>
-<tr class="separator:ga196dbc62546b39ac3e556a0f7f6b7132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f7223a578ce5c07a831638106c6ff6c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#ga9f7223a578ce5c07a831638106c6ff6c">atcacert_get_response</a> (uint8_t device_private_key_slot, const uint8_t challenge[32], uint8_t response[64])</td></tr>
+<tr class="memdesc:ga9f7223a578ce5c07a831638106c6ff6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the response to a challenge sent from the host.  <a href="a25343.html#ga9f7223a578ce5c07a831638106c6ff6c">More...</a><br /></td></tr>
+<tr class="separator:ga9f7223a578ce5c07a831638106c6ff6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9a6222ede3a3f3f331882b613066b8a8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#ga9a6222ede3a3f3f331882b613066b8a8">atcacert_read_device_loc</a> (const <a class="el" href="a25343.html#ga7d54259db5c5ea4f20016264867971ae">atcacert_device_loc_t</a> *device_loc, uint8_t *data)</td></tr>
+<tr class="memdesc:ga9a6222ede3a3f3f331882b613066b8a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the data from a device location.  <a href="a25343.html#ga9a6222ede3a3f3f331882b613066b8a8">More...</a><br /></td></tr>
+<tr class="separator:ga9a6222ede3a3f3f331882b613066b8a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf13dfd0ea4e563194cec6e62892b5c4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#gaaf13dfd0ea4e563194cec6e62892b5c4">atcacert_read_cert</a> (const <a class="el" href="a25343.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t ca_public_key[64], uint8_t *cert, size_t *cert_size)</td></tr>
+<tr class="memdesc:gaaf13dfd0ea4e563194cec6e62892b5c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the certificate specified by the certificate definition from the ATECC508A device.  <a href="a25343.html#gaaf13dfd0ea4e563194cec6e62892b5c4">More...</a><br /></td></tr>
+<tr class="separator:gaaf13dfd0ea4e563194cec6e62892b5c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b492025e27a705b1792b6276eeaaf68"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#ga0b492025e27a705b1792b6276eeaaf68">atcacert_create_csr_pem</a> (const <a class="el" href="a25343.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *csr_def, char *csr, size_t *csr_size)</td></tr>
+<tr class="memdesc:ga0b492025e27a705b1792b6276eeaaf68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a CSR specified by the CSR definition from the ATECC508A device. This process involves reading the dynamic CSR data from the device and combining it with the template found in the CSR definition, then signing it. Return the CSR int der format.  <a href="a25343.html#ga0b492025e27a705b1792b6276eeaaf68">More...</a><br /></td></tr>
+<tr class="separator:ga0b492025e27a705b1792b6276eeaaf68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6">atcacert_create_csr</a> (const <a class="el" href="a25343.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *csr_def, uint8_t *csr, size_t *csr_size)</td></tr>
+<tr class="memdesc:gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a CSR specified by the CSR definition from the ATECC508A device. This process involves reading the dynamic CSR data from the device and combining it with the template found in the CSR definition, then signing it. Return the CSR int der format.  <a href="a25343.html#gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6">More...</a><br /></td></tr>
+<tr class="separator:gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga83897818bb9152464dbaa4ad2b85ce10"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#ga83897818bb9152464dbaa4ad2b85ce10">atcacert_read_subj_key_id</a> (const <a class="el" href="a25343.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, uint8_t subj_key_id[20])</td></tr>
+<tr class="memdesc:ga83897818bb9152464dbaa4ad2b85ce10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the subject key ID based on a certificate definition.  <a href="a25343.html#ga83897818bb9152464dbaa4ad2b85ce10">More...</a><br /></td></tr>
+<tr class="separator:ga83897818bb9152464dbaa4ad2b85ce10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7af0248a5c3857e56e51b7cac88c882f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#ga7af0248a5c3857e56e51b7cac88c882f">atcacert_read_cert_size</a> (const <a class="el" href="a25343.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, size_t *cert_size)</td></tr>
+<tr class="memdesc:ga7af0248a5c3857e56e51b7cac88c882f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the actual certificate size in bytes for a given cert def. Certificate can be variable size, so this gives the absolute buffer size when reading the certificates.  <a href="a25343.html#ga7af0248a5c3857e56e51b7cac88c882f">More...</a><br /></td></tr>
+<tr class="separator:ga7af0248a5c3857e56e51b7cac88c882f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for SWI over UART drivers. </p>
+<div class="textblock"><p>Client side cert i/o methods. These declarations deal with the client-side, the node being authenticated, of the authentication process. It is assumed the client has an ECC CryptoAuthentication device (e.g. ATECC508A) and the certificates are stored on that device. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_381c8d42bbdb26858cb443b28149b615.html">hal</a></li><li class="navelem"><a class="el" href="a01778.html">hal_swi_uart.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ac97eb41c075753f4733aae2239a389a.html">cryptauthlib-v3.4.0_</a></li><li class="navelem"><a class="el" href="dir_cff6911667c1a559ef1c32fb411fa0d0.html">lib</a></li><li class="navelem"><a class="el" href="dir_9ba6923e882ec25e6b2d9c3d59f5aadf.html">atcacert</a></li><li class="navelem"><a class="el" href="a01778.html">atcacert_client.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

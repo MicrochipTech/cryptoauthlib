@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['y_5543',['y',['../a05828.html#a9c1e7c3354912a5ef370b17e583c48f7',1,'atca_aes_gcm_ctx']]],
-  ['year_5544',['year',['../a06068.html#a2741ea8c5dcaccccdf431005b457331a',1,'CK_DATE']]]
+  ['zero_5432',['zero',['../a19716.html#ga876993158b491f4626155b468ffb6edc',1,'atca_nonce_in_out']]],
+  ['zone_5433',['zone',['../a19792.html#a107ad412023faa68c4ac0c7cfd921a02',1,'atcacert_device_loc_s::zone()'],['../a19908.html#ac746c3d65092170bfaf5b0d9950d8438',1,'atca_gen_dig_in_out::zone()'],['../a19912.html#ac746c3d65092170bfaf5b0d9950d8438',1,'atca_write_mac_in_out::zone()']]]
 ];

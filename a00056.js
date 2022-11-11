@@ -1,6 +1,6 @@
 var a00056 =
 [
-    [ "memory_parameters", "a06324.html", "a06324" ],
+    [ "memory_parameters", "a20276.html", "a20276" ],
     [ "secure_boot_check_full_copy_completion", "a00056.html#a6378e763208c43ba1fbcadd8bc8a084c", null ],
     [ "secure_boot_deinit_memory", "a00056.html#abf726b809a542bc68519520b61b755a3", null ],
     [ "secure_boot_init_memory", "a00056.html#ad744cc79ced98d366fed07780032bc47", null ],

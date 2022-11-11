@@ -1,10 +1,9 @@
 var a01784 =
 [
-    [ "hal_uart_control", "a01784.html#a41ed83bbc8e0fd3abea7beb513fbdb96", null ],
-    [ "hal_uart_init", "a01784.html#afb6d836af248aed1afe715ae2f2f7c2b", null ],
-    [ "hal_uart_post_init", "a01784.html#a1c5f894db539ea5cb0d5ae0fa38449d7", null ],
-    [ "hal_uart_receive", "a01784.html#a1a0256b61c3579519f8cc6d6157bc126", null ],
-    [ "hal_uart_release", "a01784.html#a1e0c17bf7342c21ca69d066eefa1f1eb", null ],
-    [ "hal_uart_send", "a01784.html#aae0b332270c1e8df223b430d8e8ddbbc", null ],
-    [ "serial_setup", "a01784.html#aa65d10cf61c7c49509d8b71edce708df", null ]
+    [ "atcacert_date_dec", "a25343.html#ga368d038c02673b1e6ddacfd175786e6a", null ],
+    [ "atcacert_date_dec_compcert", "a25343.html#gaba31331bcfab203c786004b027512fab", null ],
+    [ "atcacert_date_enc", "a25343.html#gaab946b2ea5dba6d1addacc995a6989ae", null ],
+    [ "atcacert_date_enc_compcert", "a25343.html#ga5da5a0589a6168aafd34b4aac4e07553", null ],
+    [ "atcacert_date_get_max_date", "a25343.html#ga1d267b06c94e1db2aa2f6e91df1c843f", null ],
+    [ "ATCACERT_DATE_FORMAT_SIZES", "a25343.html#ga66f248d2f10fc94689c6f1f92fdae5b4", null ]
 ];

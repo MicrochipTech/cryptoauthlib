@@ -1,7 +1,7 @@
 var a00053 =
 [
-    [ "secure_boot_config_bits", "a06316.html", "a06316" ],
-    [ "secure_boot_parameters", "a06320.html", "a06320" ],
+    [ "secure_boot_config_bits", "a20268.html", "a20268" ],
+    [ "secure_boot_parameters", "a20272.html", "a20272" ],
     [ "SECURE_BOOT_CONFIG_DISABLE", "a00053.html#abda1d3106b26d6e32fddd71223ecb491", null ],
     [ "SECURE_BOOT_CONFIG_FULL_BOTH", "a00053.html#a5aae2464eb2bb84cec34bfd422697a27", null ],
     [ "SECURE_BOOT_CONFIG_FULL_DIG", "a00053.html#a61ab82e3ca8c3f985cfc8b1a06daaced", null ],

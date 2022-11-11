@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: swi_uart_samd21_asf.h File Reference</title>
+<title>CryptoAuthLib: atcacert_host_sw.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.4.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,85 +85,41 @@ $(document).ready(function(){initNavTree('a01811.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">swi_uart_samd21_asf.h File Reference</div>  </div>
+<div class="title">atcacert_host_sw.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATXMEGA's ATCA Hardware abstraction layer for SWI interface over UART drivers.  
+<p>Host side methods using software implementations. host-side, the one authenticating a client, of the authentication process. Crypto functions are performed using a software library.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;asf.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a01694_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a01793_source.html">atcacert_def.h</a>&quot;</code><br />
 </div>
 <p><a href="a01811_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05908.html">atcaSWImaster</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">this is the hal_data for ATCA HAL for ASF SERCOM  <a href="a05908.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gaf9d9d027ce20f528edea144203141714"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#gaf9d9d027ce20f528edea144203141714">MAX_SWI_BUSES</a>&#160;&#160;&#160;6</td></tr>
-<tr class="separator:gaf9d9d027ce20f528edea144203141714"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab45577245cf4a8ead70e2d56965f2df3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#gab45577245cf4a8ead70e2d56965f2df3">RECEIVE_MODE</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:gab45577245cf4a8ead70e2d56965f2df3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4b85133b317e72410ea0762d637d3460"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga4b85133b317e72410ea0762d637d3460">TRANSMIT_MODE</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:ga4b85133b317e72410ea0762d637d3460"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac55a27e4c3eae59bb1687eb7e8d1fe4b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#gac55a27e4c3eae59bb1687eb7e8d1fe4b">RX_DELAY</a>&#160;&#160;&#160;10</td></tr>
-<tr class="separator:gac55a27e4c3eae59bb1687eb7e8d1fe4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f3816567a2f513dd0e1f9eb17992fb2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga3f3816567a2f513dd0e1f9eb17992fb2">TX_DELAY</a>&#160;&#160;&#160;90</td></tr>
-<tr class="separator:ga3f3816567a2f513dd0e1f9eb17992fb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab12a92582aefe426bb194e0c298e8f98"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#gab12a92582aefe426bb194e0c298e8f98">DEBUG_PIN_1</a>&#160;&#160;&#160;EXT2_PIN_5</td></tr>
-<tr class="separator:gab12a92582aefe426bb194e0c298e8f98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6a2579114d13238c7ba20d147a74090a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga6a2579114d13238c7ba20d147a74090a">DEBUG_PIN_2</a>&#160;&#160;&#160;EXT2_PIN_6</td></tr>
-<tr class="separator:ga6a2579114d13238c7ba20d147a74090a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga626ead73d3ae1cc2ed09d5fa509f80ff"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a05908.html">atcaSWImaster</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a></td></tr>
-<tr class="memdesc:ga626ead73d3ae1cc2ed09d5fa509f80ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">this is the hal_data for ATCA HAL for ASF SERCOM  <a href="a05735.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">More...</a><br /></td></tr>
-<tr class="separator:ga626ead73d3ae1cc2ed09d5fa509f80ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga003b63648f1a5f9eba274760559688f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga003b63648f1a5f9eba274760559688f2">swi_uart_init</a> (<a class="el" href="a05735.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance)</td></tr>
-<tr class="memdesc:ga003b63648f1a5f9eba274760559688f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of SWI UART init.  <a href="a05735.html#ga003b63648f1a5f9eba274760559688f2">More...</a><br /></td></tr>
-<tr class="separator:ga003b63648f1a5f9eba274760559688f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0b1aad3936bf003686d8db7fa2be5132"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga0b1aad3936bf003686d8db7fa2be5132">swi_uart_deinit</a> (<a class="el" href="a05735.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance)</td></tr>
-<tr class="memdesc:ga0b1aad3936bf003686d8db7fa2be5132"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of SWI UART deinit.  <a href="a05735.html#ga0b1aad3936bf003686d8db7fa2be5132">More...</a><br /></td></tr>
-<tr class="separator:ga0b1aad3936bf003686d8db7fa2be5132"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#gaba296f70baf68b768d6c4bb9cf7ba67d">swi_uart_setbaud</a> (<a class="el" href="a05735.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance, uint32_t baudrate)</td></tr>
-<tr class="memdesc:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="mdescLeft">&#160;</td><td class="mdescRight">implementation of SWI UART change baudrate.  <a href="a05735.html#gaba296f70baf68b768d6c4bb9cf7ba67d">More...</a><br /></td></tr>
-<tr class="separator:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#gacc2a96c86ce4c07249b81bc6a7eb2e41">swi_uart_mode</a> (<a class="el" href="a05735.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance, uint8_t mode)</td></tr>
-<tr class="memdesc:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="mdescLeft">&#160;</td><td class="mdescRight">implementation of SWI UART change mode.  <a href="a05735.html#gacc2a96c86ce4c07249b81bc6a7eb2e41">More...</a><br /></td></tr>
-<tr class="separator:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad640b598d581ee7c8a4c804bee602906"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#gad640b598d581ee7c8a4c804bee602906">swi_uart_discover_buses</a> (int swi_uart_buses[], int max_buses)</td></tr>
-<tr class="memdesc:gad640b598d581ee7c8a4c804bee602906"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover UART buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge  <a href="a05735.html#gad640b598d581ee7c8a4c804bee602906">More...</a><br /></td></tr>
-<tr class="separator:gad640b598d581ee7c8a4c804bee602906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4a4d491006d9683d67838963706ac9c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga4a4d491006d9683d67838963706ac9c1">swi_uart_send_byte</a> (<a class="el" href="a05735.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance, uint8_t data)</td></tr>
-<tr class="memdesc:ga4a4d491006d9683d67838963706ac9c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI UART send byte over ASF. This function send one byte over UART.  <a href="a05735.html#ga4a4d491006d9683d67838963706ac9c1">More...</a><br /></td></tr>
-<tr class="separator:ga4a4d491006d9683d67838963706ac9c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga93f3dab17c14f71641ca970998ede823"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga93f3dab17c14f71641ca970998ede823">swi_uart_receive_byte</a> (<a class="el" href="a05735.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance, uint8_t *data)</td></tr>
-<tr class="memdesc:ga93f3dab17c14f71641ca970998ede823"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI UART receive bytes over ASF. This function receive one byte over UART.  <a href="a05735.html#ga93f3dab17c14f71641ca970998ede823">More...</a><br /></td></tr>
-<tr class="separator:ga93f3dab17c14f71641ca970998ede823"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab78271af8c3e2837810fcdae6e3f5e28"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#gab78271af8c3e2837810fcdae6e3f5e28">atcacert_verify_cert_sw</a> (const <a class="el" href="a25343.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, const uint8_t ca_public_key[64])</td></tr>
+<tr class="memdesc:gab78271af8c3e2837810fcdae6e3f5e28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a certificate against its certificate authority's public key using software crypto functions.The function is currently not implemented.  <a href="a25343.html#gab78271af8c3e2837810fcdae6e3f5e28">More...</a><br /></td></tr>
+<tr class="separator:gab78271af8c3e2837810fcdae6e3f5e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa9829e5aa1ece3d3a933db9827d3e8f3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#gaa9829e5aa1ece3d3a933db9827d3e8f3">atcacert_gen_challenge_sw</a> (uint8_t challenge[32])</td></tr>
+<tr class="memdesc:gaa9829e5aa1ece3d3a933db9827d3e8f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a random challenge to be sent to the client using a software PRNG.The function is currently not implemented.  <a href="a25343.html#gaa9829e5aa1ece3d3a933db9827d3e8f3">More...</a><br /></td></tr>
+<tr class="separator:gaa9829e5aa1ece3d3a933db9827d3e8f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d5bf9ec84d28a0412377818805c32c4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#ga9d5bf9ec84d28a0412377818805c32c4">atcacert_verify_response_sw</a> (const uint8_t device_public_key[64], const uint8_t challenge[32], const uint8_t response[64])</td></tr>
+<tr class="memdesc:ga9d5bf9ec84d28a0412377818805c32c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a client's response to a challenge using software crypto functions.The function is currently not implemented.  <a href="a25343.html#ga9d5bf9ec84d28a0412377818805c32c4">More...</a><br /></td></tr>
+<tr class="separator:ga9d5bf9ec84d28a0412377818805c32c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATXMEGA's ATCA Hardware abstraction layer for SWI interface over UART drivers. </p>
-<p>Prerequisite: add UART Polled support to application in Atmel Studio</p>
+<div class="textblock"><p>Host side methods using software implementations. host-side, the one authenticating a client, of the authentication process. Crypto functions are performed using a software library. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_381c8d42bbdb26858cb443b28149b615.html">hal</a></li><li class="navelem"><a class="el" href="a01811.html">swi_uart_samd21_asf.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ac97eb41c075753f4733aae2239a389a.html">cryptauthlib-v3.4.0_</a></li><li class="navelem"><a class="el" href="dir_cff6911667c1a559ef1c32fb411fa0d0.html">lib</a></li><li class="navelem"><a class="el" href="dir_9ba6923e882ec25e6b2d9c3d59f5aadf.html">atcacert</a></li><li class="navelem"><a class="el" href="a01811.html">atcacert_host_sw.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

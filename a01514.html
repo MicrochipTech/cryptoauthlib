@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_der.c File Reference</title>
+<title>CryptoAuthLib: pkcs11_key.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.3.3</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,49 +85,54 @@ $(document).ready(function(){initNavTree('a01514.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">atcacert_der.c File Reference</div>  </div>
+<div class="title">pkcs11_key.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>functions required to work with DER encoded data related to X.509 certificates.  
+<p>PKCS11 Library Object Handling.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01517_source.html">atcacert_der.h</a>&quot;</code><br />
-<code>#include &lt;string.h&gt;</code><br />
-</div><table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a01529_source.html">pkcs11_object.h</a>&quot;</code><br />
+</div>
+<p><a href="a01514_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaafc9ef8e0164226481b670fde0223e13"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#gaafc9ef8e0164226481b670fde0223e13">atcacert_der_enc_length</a> (uint32_t length, uint8_t *der_length, size_t *der_length_size)</td></tr>
-<tr class="memdesc:gaafc9ef8e0164226481b670fde0223e13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode a length in DER format.  <a href="a05732.html#gaafc9ef8e0164226481b670fde0223e13">More...</a><br /></td></tr>
-<tr class="separator:gaafc9ef8e0164226481b670fde0223e13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeee4091e249b8fc202d5126a8374eeb1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#gaeee4091e249b8fc202d5126a8374eeb1">atcacert_der_dec_length</a> (const uint8_t *der_length, size_t *der_length_size, uint32_t *length)</td></tr>
-<tr class="memdesc:gaeee4091e249b8fc202d5126a8374eeb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode a DER format length.  <a href="a05732.html#gaeee4091e249b8fc202d5126a8374eeb1">More...</a><br /></td></tr>
-<tr class="separator:gaeee4091e249b8fc202d5126a8374eeb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga165018175f52421ea26fb33ccf335108"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#ga165018175f52421ea26fb33ccf335108">atcacert_der_adjust_length</a> (uint8_t *der_length, size_t *der_length_size, int delta_length, uint32_t *new_length)</td></tr>
-<tr class="separator:ga165018175f52421ea26fb33ccf335108"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf156257cda87df879f54c07e80bc0e8d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#gaf156257cda87df879f54c07e80bc0e8d">atcacert_der_enc_integer</a> (const uint8_t *int_data, size_t int_data_size, uint8_t is_unsigned, uint8_t *der_int, size_t *der_int_size)</td></tr>
-<tr class="memdesc:gaf156257cda87df879f54c07e80bc0e8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode an ASN.1 integer in DER format, including tag and length fields.  <a href="a05732.html#gaf156257cda87df879f54c07e80bc0e8d">More...</a><br /></td></tr>
-<tr class="separator:gaf156257cda87df879f54c07e80bc0e8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3b095e11adc55a61e3cfb2957d0c6c77"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#ga3b095e11adc55a61e3cfb2957d0c6c77">atcacert_der_dec_integer</a> (const uint8_t *der_int, size_t *der_int_size, uint8_t *int_data, size_t *int_data_size)</td></tr>
-<tr class="memdesc:ga3b095e11adc55a61e3cfb2957d0c6c77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode an ASN.1 DER encoded integer.  <a href="a05732.html#ga3b095e11adc55a61e3cfb2957d0c6c77">More...</a><br /></td></tr>
-<tr class="separator:ga3b095e11adc55a61e3cfb2957d0c6c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3583ada6da51d31cfe819894e8a9deeb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#ga3583ada6da51d31cfe819894e8a9deeb">atcacert_der_enc_ecdsa_sig_value</a> (const uint8_t raw_sig[64], uint8_t *der_sig, size_t *der_sig_size)</td></tr>
-<tr class="memdesc:ga3583ada6da51d31cfe819894e8a9deeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a raw ECDSA P256 signature in the DER encoding found in X.509 certificates.  <a href="a05732.html#ga3583ada6da51d31cfe819894e8a9deeb">More...</a><br /></td></tr>
-<tr class="separator:ga3583ada6da51d31cfe819894e8a9deeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac3f22b75f15e8508f35d99b95d955842"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#gac3f22b75f15e8508f35d99b95d955842">atcacert_der_dec_ecdsa_sig_value</a> (const uint8_t *der_sig, size_t *der_sig_size, uint8_t raw_sig[64])</td></tr>
-<tr class="memdesc:gac3f22b75f15e8508f35d99b95d955842"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses an ECDSA P256 signature in the DER encoding as found in X.509 certificates.  <a href="a05732.html#gac3f22b75f15e8508f35d99b95d955842">More...</a><br /></td></tr>
-<tr class="separator:gac3f22b75f15e8508f35d99b95d955842"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf3fdce991fe05099aa8552912e26dee7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#gaf3fdce991fe05099aa8552912e26dee7">pkcs11_key_write</a> (<a class="el" href="a01571.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pSession, <a class="el" href="a01571.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:gaf3fdce991fe05099aa8552912e26dee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae2748ca15b76254a518b28bf3dccb63f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#gae2748ca15b76254a518b28bf3dccb63f">pkcs11_key_generate</a> (<a class="el" href="a01571.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01571.html#afa4c48ba8a588833ea04f0910583592e">CK_MECHANISM_PTR</a> pMechanism, <a class="el" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pTemplate, <a class="el" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulCount, <a class="el" href="a01571.html#a42a298b2f343261d27b87140090106d4">CK_OBJECT_HANDLE_PTR</a> phKey)</td></tr>
+<tr class="separator:gae2748ca15b76254a518b28bf3dccb63f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaac5c7d6ae9b8262fb705083302efd90a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#gaac5c7d6ae9b8262fb705083302efd90a">pkcs11_key_generate_pair</a> (<a class="el" href="a01571.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01571.html#afa4c48ba8a588833ea04f0910583592e">CK_MECHANISM_PTR</a> pMechanism, <a class="el" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pPublicKeyTemplate, <a class="el" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulPublicKeyAttributeCount, <a class="el" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pPrivateKeyTemplate, <a class="el" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulPrivateKeyAttributeCount, <a class="el" href="a01571.html#a42a298b2f343261d27b87140090106d4">CK_OBJECT_HANDLE_PTR</a> phPublicKey, <a class="el" href="a01571.html#a42a298b2f343261d27b87140090106d4">CK_OBJECT_HANDLE_PTR</a> phPrivateKey)</td></tr>
+<tr class="separator:gaac5c7d6ae9b8262fb705083302efd90a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8ace04a2049a5d7e527558da10e68dcd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga8ace04a2049a5d7e527558da10e68dcd">pkcs11_key_derive</a> (<a class="el" href="a01571.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01571.html#afa4c48ba8a588833ea04f0910583592e">CK_MECHANISM_PTR</a> pMechanism, <a class="el" href="a01571.html#ad1cdd703196214cd34e6f9f52bc67683">CK_OBJECT_HANDLE</a> hBaseKey, <a class="el" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pTemplate, <a class="el" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulCount, <a class="el" href="a01571.html#a42a298b2f343261d27b87140090106d4">CK_OBJECT_HANDLE_PTR</a> phKey)</td></tr>
+<tr class="separator:ga8ace04a2049a5d7e527558da10e68dcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:gadf3e8d1e6b01d9fe85f54c9478d8d215"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01460.html#a5808b2771bb5bd3fdb344fd9b33b48ed">pkcs11_attrib_model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#gadf3e8d1e6b01d9fe85f54c9478d8d215">pkcs11_key_public_attributes</a> []</td></tr>
+<tr class="separator:gadf3e8d1e6b01d9fe85f54c9478d8d215"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc78586c61388b3756395f0098fa4505"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#gadc78586c61388b3756395f0098fa4505">pkcs11_key_public_attributes_count</a></td></tr>
+<tr class="separator:gadc78586c61388b3756395f0098fa4505"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga40d8e67ef0fae7bdc2dca013ad8410aa"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01460.html#a5808b2771bb5bd3fdb344fd9b33b48ed">pkcs11_attrib_model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga40d8e67ef0fae7bdc2dca013ad8410aa">pkcs11_key_private_attributes</a> []</td></tr>
+<tr class="separator:ga40d8e67ef0fae7bdc2dca013ad8410aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf358031996abf87fc21bc259e1e90644"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#gaf358031996abf87fc21bc259e1e90644">pkcs11_key_private_attributes_count</a></td></tr>
+<tr class="separator:gaf358031996abf87fc21bc259e1e90644"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6ef03269a32699359d90901cc84954f3"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01460.html#a5808b2771bb5bd3fdb344fd9b33b48ed">pkcs11_attrib_model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga6ef03269a32699359d90901cc84954f3">pkcs11_key_secret_attributes</a> []</td></tr>
+<tr class="separator:ga6ef03269a32699359d90901cc84954f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga55a0ac12b2ed4daefadaf3fa94edf78e"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga55a0ac12b2ed4daefadaf3fa94edf78e">pkcs11_key_secret_attributes_count</a></td></tr>
+<tr class="separator:ga55a0ac12b2ed4daefadaf3fa94edf78e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>functions required to work with DER encoded data related to X.509 certificates. </p>
+<div class="textblock"><p>PKCS11 Library Object Handling. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_7954b4fafcb137335b30c508af9db3b0.html">atcacert</a></li><li class="navelem"><a class="el" href="a01514.html">atcacert_der.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_de8763fbd32fa6c533e8e0dca5fc697b.html">cryptauthlib-v3.3.3_</a></li><li class="navelem"><a class="el" href="dir_76c6e33311c14dc6ff7c294bf952470f.html">lib</a></li><li class="navelem"><a class="el" href="dir_9bd2612bd55169c9881c7cd36a33cdb4.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01514.html">pkcs11_key.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

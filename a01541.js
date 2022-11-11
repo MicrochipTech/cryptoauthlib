@@ -1,12 +1,17 @@
 var a01541 =
 [
-    [ "RETURN", "a01541.html#a6a0e6b80dd3d5ca395cf58151749f5e2", null ],
-    [ "calib_aes_gcm_aad_update", "a01541.html#a465c622e2dc00fa7d6b12e72b5e18163", null ],
-    [ "calib_aes_gcm_decrypt_finish", "a01541.html#a503c84eaf2b95e3524477e366ad31fb7", null ],
-    [ "calib_aes_gcm_decrypt_update", "a01541.html#a689c84bd0d7b914a551763d2e9bf8995", null ],
-    [ "calib_aes_gcm_encrypt_finish", "a01541.html#a405cedf561a767000251a76088f2d63f", null ],
-    [ "calib_aes_gcm_encrypt_update", "a01541.html#a5403947bb6b0caa35d77a555493a10d9", null ],
-    [ "calib_aes_gcm_init", "a01541.html#a049b1d6c0e21e011a90c783fbc2932be", null ],
-    [ "calib_aes_gcm_init_rand", "a01541.html#a6f2bb3db5006b0b7fd1f4c48a167f6af", null ],
-    [ "atca_basic_aes_gcm_version", "a05733.html#gaa5990c6c2a55759960d25a1f8ad1973d", null ]
+    [ "_pkcs11_session_mech_ctx", "a08870.html", "a08870" ],
+    [ "_pkcs11_session_ctx", "a08886.html", "a08886" ],
+    [ "pkcs11_session_ctx", "a01541.html#ace788f45b1b41ff633b00645960a1e56", null ],
+    [ "pkcs11_session_ctx_ptr", "a01541.html#a4088a7eeba6972be68d129b499a30161", null ],
+    [ "pkcs11_session_mech_ctx", "a01541.html#a149c7c06b53d8a1d33639b7a392ba02b", null ],
+    [ "pkcs11_session_mech_ctx_ptr", "a01541.html#a13b46e0d0c39dc12930285dd44a500a1", null ],
+    [ "pkcs11_session_authorize", "a01541.html#ac31d85d2efc0eadb6b0c7b5264554a59", null ],
+    [ "pkcs11_session_check", "a08589.html#ga7eb04614661e0cedf6cb926787f5ff9b", null ],
+    [ "pkcs11_session_close", "a08589.html#gac082a1a5af11c561af58d333414f4a27", null ],
+    [ "pkcs11_session_closeall", "a08589.html#ga43525e77f9049b545fa09129cacf9c9a", null ],
+    [ "pkcs11_session_get_info", "a08589.html#ga236a002e179ed36a0b81399a3e11fcb8", null ],
+    [ "pkcs11_session_login", "a08589.html#ga4d70fd7e9799d0428c308a3e1ed146df", null ],
+    [ "pkcs11_session_logout", "a08589.html#gafefc70d16edaf998a521daf6b8aed3e6", null ],
+    [ "pkcs11_session_open", "a08589.html#gad015e297476bdc4df61870f8d1209ddb", null ]
 ];

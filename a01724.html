@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_gpio_harmony.c File Reference</title>
+<title>CryptoAuthLib: atca_compiler.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.4.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,350 +85,53 @@ $(document).ready(function(){initNavTree('a01724.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">hal_gpio_harmony.c File Reference</div>  </div>
+<div class="title">atca_compiler.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for 1WIRE or SWI over GPIO.  
+<p>CryptoAuthLiub is meant to be portable across architectures, even non-Microchip architectures and compiler environments. This file is for isolating compiler specific macros.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01727_source.html">hal_gpio_harmony.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a053931b7df85bcb458f70b42cd7291ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01724.html#a053931b7df85bcb458f70b42cd7291ff">hal_gpio_init</a> (void *hal, <a class="el" href="a05760.html">ATCAIfaceCfg</a> *cfg)</td></tr>
-<tr class="memdesc:a053931b7df85bcb458f70b42cd7291ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize an GPIO interface using given config  <a href="a01724.html#a053931b7df85bcb458f70b42cd7291ff">More...</a><br /></td></tr>
-<tr class="separator:a053931b7df85bcb458f70b42cd7291ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a680903ede9921710475c23f3e0f5c56c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01724.html#a680903ede9921710475c23f3e0f5c56c">hal_gpio_post_init</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:a680903ede9921710475c23f3e0f5c56c"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of GPIO post init.  <a href="a01724.html#a680903ede9921710475c23f3e0f5c56c">More...</a><br /></td></tr>
-<tr class="separator:a680903ede9921710475c23f3e0f5c56c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9245156928911351edf9f6eac4e5614"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01724.html#ad9245156928911351edf9f6eac4e5614">hal_gpio_device_discovery</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ad9245156928911351edf9f6eac4e5614"><td class="mdescLeft">&#160;</td><td class="mdescRight">Discovery Response sequence is used by the master to perform a general bus call to determine if a device is present on the bus.  <a href="a01724.html#ad9245156928911351edf9f6eac4e5614">More...</a><br /></td></tr>
-<tr class="separator:ad9245156928911351edf9f6eac4e5614"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4cb123d24a3d8da914ecd773b2ddcf4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01724.html#af4cb123d24a3d8da914ecd773b2ddcf4">hal_gpio_send</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
-<tr class="memdesc:af4cb123d24a3d8da914ecd773b2ddcf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of bit banging send over Harmony.  <a href="a01724.html#af4cb123d24a3d8da914ecd773b2ddcf4">More...</a><br /></td></tr>
-<tr class="separator:af4cb123d24a3d8da914ecd773b2ddcf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f3e92b2eaa40631b1eda3611e2c894a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01724.html#a1f3e92b2eaa40631b1eda3611e2c894a">hal_gpio_receive</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
-<tr class="memdesc:a1f3e92b2eaa40631b1eda3611e2c894a"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of bit banging receive from HARMONY.  <a href="a01724.html#a1f3e92b2eaa40631b1eda3611e2c894a">More...</a><br /></td></tr>
-<tr class="separator:a1f3e92b2eaa40631b1eda3611e2c894a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1c8af7ea618cc3848b81388522bb879"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01724.html#aa1c8af7ea618cc3848b81388522bb879">hal_gpio_idle</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:aa1c8af7ea618cc3848b81388522bb879"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put the device in idle mode.  <a href="a01724.html#aa1c8af7ea618cc3848b81388522bb879">More...</a><br /></td></tr>
-<tr class="separator:aa1c8af7ea618cc3848b81388522bb879"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0102f79a56117c7e08108156e96af5c3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01724.html#a0102f79a56117c7e08108156e96af5c3">hal_gpio_sleep</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:a0102f79a56117c7e08108156e96af5c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">send sleep command  <a href="a01724.html#a0102f79a56117c7e08108156e96af5c3">More...</a><br /></td></tr>
-<tr class="separator:a0102f79a56117c7e08108156e96af5c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17a1086ee3cdf4b52ffa7387834f1df5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01724.html#a17a1086ee3cdf4b52ffa7387834f1df5">hal_gpio_wake</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:a17a1086ee3cdf4b52ffa7387834f1df5"><td class="mdescLeft">&#160;</td><td class="mdescRight">send wake token  <a href="a01724.html#a17a1086ee3cdf4b52ffa7387834f1df5">More...</a><br /></td></tr>
-<tr class="separator:a17a1086ee3cdf4b52ffa7387834f1df5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34a8c0ab6cfceb80c15080b571c0b3f7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01724.html#a34a8c0ab6cfceb80c15080b571c0b3f7">hal_gpio_release</a> (void *hal_data)</td></tr>
-<tr class="memdesc:a34a8c0ab6cfceb80c15080b571c0b3f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">releases resource if no more communication  <a href="a01724.html#a34a8c0ab6cfceb80c15080b571c0b3f7">More...</a><br /></td></tr>
-<tr class="separator:a34a8c0ab6cfceb80c15080b571c0b3f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+
+<p><a href="a01724_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a19e63228967ce8a061f9f0d227dc6830"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01724.html#a19e63228967ce8a061f9f0d227dc6830">SHARED_LIB_EXPORT</a></td></tr>
+<tr class="separator:a19e63228967ce8a061f9f0d227dc6830"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c406311bad62403b4ba379576214108"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01724.html#a3c406311bad62403b4ba379576214108">ATCA_DLL</a>&#160;&#160;&#160;extern</td></tr>
+<tr class="separator:a3c406311bad62403b4ba379576214108"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for 1WIRE or SWI over GPIO. </p>
+<div class="textblock"><p>CryptoAuthLiub is meant to be portable across architectures, even non-Microchip architectures and compiler environments. This file is for isolating compiler specific macros. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="ad9245156928911351edf9f6eac4e5614"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad9245156928911351edf9f6eac4e5614">&#9670;&nbsp;</a></span>hal_gpio_device_discovery()</h2>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a3c406311bad62403b4ba379576214108"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c406311bad62403b4ba379576214108">&#9670;&nbsp;</a></span>ATCA_DLL</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_gpio_device_discovery </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>iface</em></td><td>)</td>
-          <td></td>
+          <td class="memname">#define ATCA_DLL&#160;&#160;&#160;extern</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Discovery Response sequence is used by the master to perform a general bus call to determine if a device is present on the bus. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>Device to interact with. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
-
 </div>
 </div>
-<a id="aa1c8af7ea618cc3848b81388522bb879"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1c8af7ea618cc3848b81388522bb879">&#9670;&nbsp;</a></span>hal_gpio_idle()</h2>
+<a id="a19e63228967ce8a061f9f0d227dc6830"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19e63228967ce8a061f9f0d227dc6830">&#9670;&nbsp;</a></span>SHARED_LIB_EXPORT</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_gpio_idle </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>iface</em></td><td>)</td>
-          <td></td>
+          <td class="memname">#define SHARED_LIB_EXPORT</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Put the device in idle mode. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>interface to logical device to idle </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
-
-</div>
-</div>
-<a id="a053931b7df85bcb458f70b42cd7291ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a053931b7df85bcb458f70b42cd7291ff">&#9670;&nbsp;</a></span>hal_gpio_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_gpio_init </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>hal</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a05760.html">ATCAIfaceCfg</a> *&#160;</td>
-          <td class="paramname"><em>cfg</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>initialize an GPIO interface using given config </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>- interface configuration </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
-
-</div>
-</div>
-<a id="a680903ede9921710475c23f3e0f5c56c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a680903ede9921710475c23f3e0f5c56c">&#9670;&nbsp;</a></span>hal_gpio_post_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_gpio_post_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>iface</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>HAL implementation of GPIO post init. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>ATCAIface instance</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS </dd></dl>
-
-</div>
-</div>
-<a id="a1f3e92b2eaa40631b1eda3611e2c894a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1f3e92b2eaa40631b1eda3611e2c894a">&#9670;&nbsp;</a></span>hal_gpio_receive()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_gpio_receive </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>iface</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>word_address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>rxdata</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>rxlength</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>HAL implementation of bit banging receive from HARMONY. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>Device to interact with. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">word_address</td><td>device transaction type </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">rxdata</td><td>Data received will be returned here. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">rxlength</td><td>As input, the size of the rxdata buffer. As output, the number of bytes received. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
-
-</div>
-</div>
-<a id="a34a8c0ab6cfceb80c15080b571c0b3f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34a8c0ab6cfceb80c15080b571c0b3f7">&#9670;&nbsp;</a></span>hal_gpio_release()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_gpio_release </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>hal_data</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>releases resource if no more communication </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">hal_data</td><td>- opaque pointer to hal data structure - known only to the HAL implementation </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
-
-</div>
-</div>
-<a id="af4cb123d24a3d8da914ecd773b2ddcf4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af4cb123d24a3d8da914ecd773b2ddcf4">&#9670;&nbsp;</a></span>hal_gpio_send()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_gpio_send </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>iface</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>word_address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>txdata</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>txlength</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>HAL implementation of bit banging send over Harmony. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>instance </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">word_address</td><td>device transaction type </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">txdata</td><td>pointer to space to bytes to send </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">txlength</td><td>number of bytes to send </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
-
-</div>
-</div>
-<a id="a0102f79a56117c7e08108156e96af5c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0102f79a56117c7e08108156e96af5c3">&#9670;&nbsp;</a></span>hal_gpio_sleep()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_gpio_sleep </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>iface</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>send sleep command </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>interface to logical device to sleep </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
-
-</div>
-</div>
-<a id="a17a1086ee3cdf4b52ffa7387834f1df5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a17a1086ee3cdf4b52ffa7387834f1df5">&#9670;&nbsp;</a></span>hal_gpio_wake()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> hal_gpio_wake </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>iface</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>send wake token </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>interface to logical device to wakeup </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_WAKE_SUCCESS on success, otherwise an error code. </dd></dl>
 
 </div>
 </div>
@@ -437,7 +140,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_381c8d42bbdb26858cb443b28149b615.html">hal</a></li><li class="navelem"><a class="el" href="a01724.html">hal_gpio_harmony.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ac97eb41c075753f4733aae2239a389a.html">cryptauthlib-v3.4.0_</a></li><li class="navelem"><a class="el" href="dir_cff6911667c1a559ef1c32fb411fa0d0.html">lib</a></li><li class="navelem"><a class="el" href="a01724.html">atca_compiler.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

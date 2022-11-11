@@ -1,11 +1,11 @@
 var a01955 =
 [
-    [ "pkcs11_token_convert_pin_to_key", "a05739.html#ga9e4aef0d030b3b8d4a0f77a1fec4ed3d", null ],
-    [ "pkcs11_token_get_access_type", "a05739.html#ga6f92db83ad7904096b24c6b25774f4b7", null ],
-    [ "pkcs11_token_get_info", "a05739.html#ga7bf2fea766cab4645fe615661bcf0db9", null ],
-    [ "pkcs11_token_get_storage", "a05739.html#gabf87951ca453a2eaff25df22bc136a57", null ],
-    [ "pkcs11_token_get_writable", "a05739.html#ga5521260e489c703aea4f15912f52ad31", null ],
-    [ "pkcs11_token_init", "a05739.html#ga7e207adf2d26c1d6ea64f7c60252bf45", null ],
-    [ "pkcs11_token_random", "a05739.html#gaf4c0c6a2d12d879308f2d42cc61ef401", null ],
-    [ "pkcs11_token_set_pin", "a05739.html#ga75272ae3120c6d9fc42862ac8b52da17", null ]
+    [ "atcac_sha256_hmac_counter", "a15790.html#ga1598511b7077693ee99d160dbebfc16d", null ],
+    [ "atcac_sha256_hmac_finish", "a15790.html#ga4aabb5258b261af2802b45a817fb7113", null ],
+    [ "atcac_sha256_hmac_init", "a15790.html#ga4e23a2ff2f57f730a1490afaac2ea3dc", null ],
+    [ "atcac_sha256_hmac_update", "a15790.html#gaa4493b637590b0d3f5da0bd66b386d8a", null ],
+    [ "atcac_sw_sha2_256", "a15790.html#ga72ceba9df57d884c85321abe92994c4f", null ],
+    [ "atcac_sw_sha2_256_finish", "a15790.html#ga135e9b88fe057af52d4116b1352be822", null ],
+    [ "atcac_sw_sha2_256_init", "a15790.html#ga58283666b662f084155ba693870c1077", null ],
+    [ "atcac_sw_sha2_256_update", "a15790.html#gab1a09fa1d854722cc667cea319ca9984", null ]
 ];

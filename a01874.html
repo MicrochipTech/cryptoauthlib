@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_debug.h File Reference</title>
+<title>CryptoAuthLib: calib_info.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.4.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,121 +85,41 @@ $(document).ready(function(){initNavTree('a01874.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">pkcs11_debug.h File Reference</div>  </div>
+<div class="title">calib_info.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Library Debugging.  
+<p>CryptoAuthLib Basic API methods for Info command.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;pkcs11_config.h&quot;</code><br />
-</div>
-<p><a href="a01874_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a747bc19e378f56f24664e615ecd996bd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01874.html#a747bc19e378f56f24664e615ecd996bd">PKCS11_DEBUG_NOFILE</a>(...)</td></tr>
-<tr class="separator:a747bc19e378f56f24664e615ecd996bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a660e603d036b884434faff8d5a6bb443"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01874.html#a660e603d036b884434faff8d5a6bb443">PKCS11_DEBUG</a>(...)</td></tr>
-<tr class="separator:a660e603d036b884434faff8d5a6bb443"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c844aa5e64c02064e137f20d82f0313"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01874.html#a9c844aa5e64c02064e137f20d82f0313">PKCS11_DEBUG_RETURN</a>(x)&#160;&#160;&#160;{ return x; }</td></tr>
-<tr class="separator:a9c844aa5e64c02064e137f20d82f0313"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2549fbb058dd2934f6a3b4bf983bfa5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01874.html#ac2549fbb058dd2934f6a3b4bf983bfa5">pkcs11_debug_attributes</a>(x,  y)</td></tr>
-<tr class="separator:ac2549fbb058dd2934f6a3b4bf983bfa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><code>#include &quot;<a class="el" href="a01976_source.html">cryptoauthlib.h</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gabc7aff4f1707fbe0a05cf416955f43b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#gabc7aff4f1707fbe0a05cf416955f43b0">calib_info_base</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t param2, uint8_t *out_data)</td></tr>
+<tr class="memdesc:gabc7aff4f1707fbe0a05cf416955f43b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues an Info command, which return internal device information and can control GPIO and the persistent latch.  <a href="a25344.html#gabc7aff4f1707fbe0a05cf416955f43b0">More...</a><br /></td></tr>
+<tr class="separator:gabc7aff4f1707fbe0a05cf416955f43b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga132cfbb5c581c5cc5adf5350d4161966"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#ga132cfbb5c581c5cc5adf5350d4161966">calib_info</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t *revision)</td></tr>
+<tr class="memdesc:ga132cfbb5c581c5cc5adf5350d4161966"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the Info command to get the device revision (DevRev).  <a href="a25344.html#ga132cfbb5c581c5cc5adf5350d4161966">More...</a><br /></td></tr>
+<tr class="separator:ga132cfbb5c581c5cc5adf5350d4161966"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga39e3e31e7573d3d73f4b757db7704cce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#ga39e3e31e7573d3d73f4b757db7704cce">calib_info_privkey_valid</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, uint8_t *is_valid)</td></tr>
+<tr class="memdesc:ga39e3e31e7573d3d73f4b757db7704cce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use Info command to check ECC Private key stored in key slot is valid or not.  <a href="a25344.html#ga39e3e31e7573d3d73f4b757db7704cce">More...</a><br /></td></tr>
+<tr class="separator:ga39e3e31e7573d3d73f4b757db7704cce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Library Debugging. </p>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for Info command. </p>
+<p>Info command returns a variety of static and dynamic information about the device and its state. Also is used to control the GPIO pin and the persistent latch.</p>
+<dl class="section note"><dt>Note</dt><dd>The ATSHA204A refers to this command as DevRev instead of Info, however, the OpCode and operation is the same.</dd>
+<dd>
+List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A &amp; ATECC608A/B. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a660e603d036b884434faff8d5a6bb443"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a660e603d036b884434faff8d5a6bb443">&#9670;&nbsp;</a></span>PKCS11_DEBUG</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PKCS11_DEBUG</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac2549fbb058dd2934f6a3b4bf983bfa5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac2549fbb058dd2934f6a3b4bf983bfa5">&#9670;&nbsp;</a></span>pkcs11_debug_attributes</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define pkcs11_debug_attributes</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">x, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">y&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a747bc19e378f56f24664e615ecd996bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a747bc19e378f56f24664e615ecd996bd">&#9670;&nbsp;</a></span>PKCS11_DEBUG_NOFILE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PKCS11_DEBUG_NOFILE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a9c844aa5e64c02064e137f20d82f0313"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c844aa5e64c02064e137f20d82f0313">&#9670;&nbsp;</a></span>PKCS11_DEBUG_RETURN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PKCS11_DEBUG_RETURN</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">x</td><td>)</td>
-          <td>&#160;&#160;&#160;{ return x; }</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_2ecf364fc0c935f498a2ac4d9ead3473.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01874.html">pkcs11_debug.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ac97eb41c075753f4733aae2239a389a.html">cryptauthlib-v3.4.0_</a></li><li class="navelem"><a class="el" href="dir_cff6911667c1a559ef1c32fb411fa0d0.html">lib</a></li><li class="navelem"><a class="el" href="dir_cc347709d196869109d4b86e0c9b33b5.html">calib</a></li><li class="navelem"><a class="el" href="a01874.html">calib_info.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

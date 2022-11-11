@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_host_hw.c File Reference</title>
+<title>CryptoAuthLib: pkcs11_mech.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.3.3</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,39 +85,59 @@ $(document).ready(function(){initNavTree('a01520.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atcacert_host_hw.c File Reference</div>  </div>
+<div class="title">pkcs11_mech.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>host side methods using CryptoAuth hardware  
+<p>PKCS11 Library Mechanism Handling.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01523_source.html">atcacert_host_hw.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01439_source.html">atca_basic.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01679_source.html">crypto/atca_crypto_sw_sha2.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;pkcs11_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01478_source.html">pkcs11_debug.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01508_source.html">pkcs11_init.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01523_source.html">pkcs11_mech.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01553_source.html">pkcs11_slot.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01298_source.html">cryptoauthlib.h</a>&quot;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08858.html">_pcks11_mech_table_e</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga148b7615f20d8432f0e5ac4e6683aa7d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga148b7615f20d8432f0e5ac4e6683aa7d">PCKS11_MECH_ECC508_EC_CAPABILITY</a>&#160;&#160;&#160;(<a class="el" href="a01571.html#a605a609c288ffcd840a307f4d4458cbb">CKF_EC_F_P</a> | <a class="el" href="a01571.html#afa127ac10a423b09246f36946d6ea788">CKF_EC_NAMEDCURVE</a> | <a class="el" href="a01571.html#a1084ffbde21a69579b39084c3ec866de">CKF_EC_UNCOMPRESS</a>)</td></tr>
+<tr class="separator:ga148b7615f20d8432f0e5ac4e6683aa7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga178ac9759ade77839a52329537e3784b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga178ac9759ade77839a52329537e3784b">TABLE_SIZE</a>(x)&#160;&#160;&#160;sizeof(x) / sizeof(x[0])</td></tr>
+<tr class="separator:ga178ac9759ade77839a52329537e3784b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gadbb018cf35cbcf4935ee405f069dbdb9"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a08858.html">_pcks11_mech_table_e</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#gadbb018cf35cbcf4935ee405f069dbdb9">pcks11_mech_table_e</a></td></tr>
+<tr class="separator:gadbb018cf35cbcf4935ee405f069dbdb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8fa74592503b8d6fee8164d6ffbc1df0"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a08858.html">_pcks11_mech_table_e</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga8fa74592503b8d6fee8164d6ffbc1df0">pcks11_mech_table_ptr</a></td></tr>
+<tr class="separator:ga8fa74592503b8d6fee8164d6ffbc1df0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga81e92ea606e86051afa84f2fac4898d6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#ga81e92ea606e86051afa84f2fac4898d6">atcacert_verify_cert_hw</a> (const <a class="el" href="a05732.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, const uint8_t ca_public_key[64])</td></tr>
-<tr class="memdesc:ga81e92ea606e86051afa84f2fac4898d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a certificate against its certificate authority's public key using the host's ATECC device for crypto functions.  <a href="a05732.html#ga81e92ea606e86051afa84f2fac4898d6">More...</a><br /></td></tr>
-<tr class="separator:ga81e92ea606e86051afa84f2fac4898d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga208c1ea765f192bd86b26964fbb5edcb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#ga208c1ea765f192bd86b26964fbb5edcb">atcacert_gen_challenge_hw</a> (uint8_t challenge[32])</td></tr>
-<tr class="memdesc:ga208c1ea765f192bd86b26964fbb5edcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a random challenge to be sent to the client using the RNG on the host's ATECC device.  <a href="a05732.html#ga208c1ea765f192bd86b26964fbb5edcb">More...</a><br /></td></tr>
-<tr class="separator:ga208c1ea765f192bd86b26964fbb5edcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafeffa7a36a7b5a343f5f568d090e8eed"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05732.html#gafeffa7a36a7b5a343f5f568d090e8eed">atcacert_verify_response_hw</a> (const uint8_t device_public_key[64], const uint8_t challenge[32], const uint8_t response[64])</td></tr>
-<tr class="memdesc:gafeffa7a36a7b5a343f5f568d090e8eed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a client's response to a challenge using the host's ATECC device for crypto functions.  <a href="a05732.html#gafeffa7a36a7b5a343f5f568d090e8eed">More...</a><br /></td></tr>
-<tr class="separator:gafeffa7a36a7b5a343f5f568d090e8eed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9678c431b8d5479e53417b109b32c20f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga9678c431b8d5479e53417b109b32c20f">pkcs11_mech_get_list</a> (<a class="el" href="a01571.html#a53398953158f3b452e0513a0b78a0c5a">CK_SLOT_ID</a> slotID, <a class="el" href="a01571.html#a653265da2fe1c5336cadced022575156">CK_MECHANISM_TYPE_PTR</a> pMechanismList, <a class="el" href="a01571.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulCount)</td></tr>
+<tr class="separator:ga9678c431b8d5479e53417b109b32c20f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac66d133f84b945f9c26727ee9f7a7d57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#gac66d133f84b945f9c26727ee9f7a7d57">pkcs_mech_get_info</a> (<a class="el" href="a01571.html#a53398953158f3b452e0513a0b78a0c5a">CK_SLOT_ID</a> slotID, <a class="el" href="a01571.html#aaf1084907f5cc09a3e0b85ab022a240d">CK_MECHANISM_TYPE</a> type, <a class="el" href="a01571.html#a81131602c4689b717951c9c59f827661">CK_MECHANISM_INFO_PTR</a> pInfo)</td></tr>
+<tr class="separator:gac66d133f84b945f9c26727ee9f7a7d57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>host side methods using CryptoAuth hardware </p>
+<div class="textblock"><p>PKCS11 Library Mechanism Handling. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_7954b4fafcb137335b30c508af9db3b0.html">atcacert</a></li><li class="navelem"><a class="el" href="a01520.html">atcacert_host_hw.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_de8763fbd32fa6c533e8e0dca5fc697b.html">cryptauthlib-v3.3.3_</a></li><li class="navelem"><a class="el" href="dir_76c6e33311c14dc6ff7c294bf952470f.html">lib</a></li><li class="navelem"><a class="el" href="dir_9bd2612bd55169c9881c7cd36a33cdb4.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01520.html">pkcs11_mech.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

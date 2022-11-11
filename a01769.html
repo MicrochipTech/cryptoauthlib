@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_sam_timer_asf.c File Reference</title>
+<title>CryptoAuthLib: atca_version.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.4.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,39 +85,94 @@ $(document).ready(function(){initNavTree('a01769.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">hal_sam_timer_asf.c File Reference</div>  </div>
+<div class="title">atca_version.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for SAMD21 timer/delay over ASF drivers.  
+<p>Microchip CryptoAuth Library Version.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;asf.h&gt;</code><br />
-<code>#include &lt;delay.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a01703_source.html">atca_hal.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga19891182689551cc3a88603135959351"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga19891182689551cc3a88603135959351">atca_delay_10us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga19891182689551cc3a88603135959351"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of tens of microseconds.  <a href="a05735.html#ga19891182689551cc3a88603135959351">More...</a><br /></td></tr>
-<tr class="separator:ga19891182689551cc3a88603135959351"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7598dfcd6dcac882836544d48356d02f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga7598dfcd6dcac882836544d48356d02f">atca_delay_us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga7598dfcd6dcac882836544d48356d02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of microseconds.  <a href="a05735.html#ga7598dfcd6dcac882836544d48356d02f">More...</a><br /></td></tr>
-<tr class="separator:ga7598dfcd6dcac882836544d48356d02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0544f36422b5e9a8890fb9c90fc5eb55"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga0544f36422b5e9a8890fb9c90fc5eb55">atca_delay_ms</a> (uint32_t ms)</td></tr>
-<tr class="memdesc:ga0544f36422b5e9a8890fb9c90fc5eb55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API for legacy implementations.  <a href="a05735.html#ga0544f36422b5e9a8890fb9c90fc5eb55">More...</a><br /></td></tr>
-<tr class="separator:ga0544f36422b5e9a8890fb9c90fc5eb55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+
+<p><a href="a01769_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:aceddbd0ae1c41554eb2f0fabc0a2dc0c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01769.html#aceddbd0ae1c41554eb2f0fabc0a2dc0c">ATCA_LIBRARY_VERSION_DATE</a>&#160;&#160;&#160;&quot;20221027&quot;</td></tr>
+<tr class="separator:aceddbd0ae1c41554eb2f0fabc0a2dc0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4634f4de0131c8eee8f064dc3e9064b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01769.html#ab4634f4de0131c8eee8f064dc3e9064b">ATCA_LIBRARY_VERSION_MAJOR</a>&#160;&#160;&#160;3</td></tr>
+<tr class="separator:ab4634f4de0131c8eee8f064dc3e9064b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ec591139c9e733853063ea898bac376"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01769.html#a0ec591139c9e733853063ea898bac376">ATCA_LIBRARY_VERSION_MINOR</a>&#160;&#160;&#160;4</td></tr>
+<tr class="separator:a0ec591139c9e733853063ea898bac376"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78849ac2eed512d15a0b22ca781f83e8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01769.html#a78849ac2eed512d15a0b22ca781f83e8">ATCA_LIBRARY_VERSION_BUILD</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:a78849ac2eed512d15a0b22ca781f83e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for SAMD21 timer/delay over ASF drivers. </p>
+<div class="textblock"><p>Microchip CryptoAuth Library Version. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a78849ac2eed512d15a0b22ca781f83e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78849ac2eed512d15a0b22ca781f83e8">&#9670;&nbsp;</a></span>ATCA_LIBRARY_VERSION_BUILD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_LIBRARY_VERSION_BUILD&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aceddbd0ae1c41554eb2f0fabc0a2dc0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aceddbd0ae1c41554eb2f0fabc0a2dc0c">&#9670;&nbsp;</a></span>ATCA_LIBRARY_VERSION_DATE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_LIBRARY_VERSION_DATE&#160;&#160;&#160;&quot;20221027&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab4634f4de0131c8eee8f064dc3e9064b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4634f4de0131c8eee8f064dc3e9064b">&#9670;&nbsp;</a></span>ATCA_LIBRARY_VERSION_MAJOR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_LIBRARY_VERSION_MAJOR&#160;&#160;&#160;3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0ec591139c9e733853063ea898bac376"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ec591139c9e733853063ea898bac376">&#9670;&nbsp;</a></span>ATCA_LIBRARY_VERSION_MINOR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_LIBRARY_VERSION_MINOR&#160;&#160;&#160;4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_381c8d42bbdb26858cb443b28149b615.html">hal</a></li><li class="navelem"><a class="el" href="a01769.html">hal_sam_timer_asf.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ac97eb41c075753f4733aae2239a389a.html">cryptauthlib-v3.4.0_</a></li><li class="navelem"><a class="el" href="dir_cff6911667c1a559ef1c32fb411fa0d0.html">lib</a></li><li class="navelem"><a class="el" href="a01769.html">atca_version.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

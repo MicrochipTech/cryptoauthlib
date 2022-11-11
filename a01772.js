@@ -1,13 +1,19 @@
 var a01772 =
 [
-    [ "hal_spi_control", "a05735.html#gac7f3951634faf0a7c16c234d471c3660", null ],
-    [ "hal_spi_deselect", "a05735.html#ga6bcb25e01ba6242973eedb32fa9dac2a", null ],
-    [ "hal_spi_discover_buses", "a05735.html#ga92cecc8e30a88dee1cbedd49141bc209", null ],
-    [ "hal_spi_discover_devices", "a05735.html#ga6cf45c115bcb721e951e8792e0feb3f0", null ],
-    [ "hal_spi_init", "a05735.html#ga24b3ca4076a0e4093644d4f58cd80a69", null ],
-    [ "hal_spi_post_init", "a05735.html#gaeb831d9894ce11146bd00c79a98b7f0f", null ],
-    [ "hal_spi_receive", "a05735.html#ga410c24762579358a576a58610a877e63", null ],
-    [ "hal_spi_release", "a05735.html#ga8c3f1c6c20d939c4ca976fdda6279359", null ],
-    [ "hal_spi_select", "a05735.html#ga237aa1d0ee551a61991b52dc7812ff64", null ],
-    [ "hal_spi_send", "a05735.html#ga16661176757d0ef155155b07267a44ed", null ]
+    [ "ATCACERT_E_BAD_CERT", "a25343.html#ga822ee0620c8d2d12ff971b9b35f9f5cd", null ],
+    [ "ATCACERT_E_BAD_PARAMS", "a25343.html#ga47509d283523ab1892fb8746d6f4e37d", null ],
+    [ "ATCACERT_E_BUFFER_TOO_SMALL", "a25343.html#ga7a2e774fc8b12c4045dea335a86afca6", null ],
+    [ "ATCACERT_E_DECODING_ERROR", "a25343.html#gaea155533fdd352d6602d3e2fc717930f", null ],
+    [ "ATCACERT_E_ELEM_MISSING", "a25343.html#ga8e3e7c64650c92364bbac17f6a75474a", null ],
+    [ "ATCACERT_E_ELEM_OUT_OF_BOUNDS", "a25343.html#ga62604c78d688530173e203b02df180fa", null ],
+    [ "ATCACERT_E_ERROR", "a25343.html#ga048a6bb9781dbbc402409a172f976f74", null ],
+    [ "ATCACERT_E_INVALID_DATE", "a25343.html#gaafd66d6744314225ead24b3901bd6372", null ],
+    [ "ATCACERT_E_INVALID_TRANSFORM", "a25343.html#ga2396e500bd36c2316a1a6e13e3117958", null ],
+    [ "ATCACERT_E_SUCCESS", "a25343.html#ga7bd1ad830360fc8b988f855da6d0d5ba", null ],
+    [ "ATCACERT_E_UNEXPECTED_ELEM_SIZE", "a25343.html#ga5a7cb98e18ad338f2eaf6594acb67c32", null ],
+    [ "ATCACERT_E_UNIMPLEMENTED", "a25343.html#ga4b6db1523875a2b1453ef5e16989ecd4", null ],
+    [ "ATCACERT_E_VERIFY_FAILED", "a25343.html#gae1da5e02cd9b4ee7b8617d7bce0a5b5d", null ],
+    [ "ATCACERT_E_WRONG_CERT_DEF", "a25343.html#ga01010ef58d52a05292f6a70ff3d53ce8", null ],
+    [ "FALSE", "a25343.html#gaa93f0eb578d23995850d61f7d61c55c1", null ],
+    [ "TRUE", "a25343.html#gaa8cecfc5c5c054d2875c03e77b7be15d", null ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_jwt.h File Reference</title>
+<title>CryptoAuthLib: calib_basic.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.4.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,55 +85,70 @@ $(document).ready(function(){initNavTree('a01829.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_jwt.h File Reference</div>  </div>
+<div class="title">calib_basic.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Utilities to create and verify a JSON Web Token (JWT)  
+<p>CryptoAuthLib Basic API methods. These methods provide a simpler way to access the core crypto methods.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01694_source.html">cryptoauthlib.h</a>&quot;</code><br />
-</div>
-<p><a href="a01829_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05988.html">atca_jwt_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to hold metadata information about the jwt being built.  <a href="a05988.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a01976_source.html">cryptoauthlib.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gad3ea09543f0569a5368130f4a3d7bce0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05737.html#gad3ea09543f0569a5368130f4a3d7bce0">atca_jwt_init</a> (<a class="el" href="a05988.html">atca_jwt_t</a> *jwt, char *buf, uint16_t buflen)</td></tr>
-<tr class="memdesc:gad3ea09543f0569a5368130f4a3d7bce0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a JWT structure.  <a href="a05737.html#gad3ea09543f0569a5368130f4a3d7bce0">More...</a><br /></td></tr>
-<tr class="separator:gad3ea09543f0569a5368130f4a3d7bce0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3e6036b2c0e6dbc96a30f078e56cacff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05737.html#ga3e6036b2c0e6dbc96a30f078e56cacff">atca_jwt_add_claim_string</a> (<a class="el" href="a05988.html">atca_jwt_t</a> *jwt, const char *claim, const char *value)</td></tr>
-<tr class="memdesc:ga3e6036b2c0e6dbc96a30f078e56cacff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a string claim to a token.  <a href="a05737.html#ga3e6036b2c0e6dbc96a30f078e56cacff">More...</a><br /></td></tr>
-<tr class="separator:ga3e6036b2c0e6dbc96a30f078e56cacff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7073a7cfb7c77ad02923cdbb1226d2ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05737.html#ga7073a7cfb7c77ad02923cdbb1226d2ad">atca_jwt_add_claim_numeric</a> (<a class="el" href="a05988.html">atca_jwt_t</a> *jwt, const char *claim, int32_t value)</td></tr>
-<tr class="memdesc:ga7073a7cfb7c77ad02923cdbb1226d2ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a numeric claim to a token.  <a href="a05737.html#ga7073a7cfb7c77ad02923cdbb1226d2ad">More...</a><br /></td></tr>
-<tr class="separator:ga7073a7cfb7c77ad02923cdbb1226d2ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6d1bf5c8bf4fb49e1e80c19911157d4b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05737.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b">atca_jwt_finalize</a> (<a class="el" href="a05988.html">atca_jwt_t</a> *jwt, uint16_t key_id)</td></tr>
-<tr class="memdesc:ga6d1bf5c8bf4fb49e1e80c19911157d4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the claims of a token, encode them, then sign the result.  <a href="a05737.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b">More...</a><br /></td></tr>
-<tr class="separator:ga6d1bf5c8bf4fb49e1e80c19911157d4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga167fe35631a0dd191293c6ad3a6485aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05737.html#ga167fe35631a0dd191293c6ad3a6485aa">atca_jwt_check_payload_start</a> (<a class="el" href="a05988.html">atca_jwt_t</a> *jwt)</td></tr>
-<tr class="memdesc:ga167fe35631a0dd191293c6ad3a6485aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the provided context to see what character needs to be added in order to append a claim.  <a href="a05737.html#ga167fe35631a0dd191293c6ad3a6485aa">More...</a><br /></td></tr>
-<tr class="separator:ga167fe35631a0dd191293c6ad3a6485aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0e2ca8c9bd4954e004cd10cdc29c9a9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05737.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b">atca_jwt_verify</a> (const char *buf, uint16_t buflen, const uint8_t *pubkey)</td></tr>
-<tr class="memdesc:ga0e2ca8c9bd4954e004cd10cdc29c9a9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies the signature of a jwt using the provided public key.  <a href="a05737.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b">More...</a><br /></td></tr>
-<tr class="separator:ga0e2ca8c9bd4954e004cd10cdc29c9a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a884790e08be94431e1fbe92bf6106e06"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01829.html#a884790e08be94431e1fbe92bf6106e06">calib_wakeup_i2c</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:a884790e08be94431e1fbe92bf6106e06"><td class="mdescLeft">&#160;</td><td class="mdescRight">basic API methods are all prefixed with atcab_ (CryptoAuthLib Basic) the fundamental premise of the basic API is it is based on a single interface instance and that instance is global, so all basic API commands assume that one global device is the one to operate on.  <a href="a01829.html#a884790e08be94431e1fbe92bf6106e06">More...</a><br /></td></tr>
+<tr class="separator:a884790e08be94431e1fbe92bf6106e06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafbc037d57a4cc4fec6a2f291736170cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#gafbc037d57a4cc4fec6a2f291736170cb">calib_wakeup</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:gafbc037d57a4cc4fec6a2f291736170cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">wakeup the CryptoAuth device  <a href="a25344.html#gafbc037d57a4cc4fec6a2f291736170cb">More...</a><br /></td></tr>
+<tr class="separator:gafbc037d57a4cc4fec6a2f291736170cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59750d83d93368b2944f57bb38bf4d1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#ga59750d83d93368b2944f57bb38bf4d1f">calib_idle</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:ga59750d83d93368b2944f57bb38bf4d1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">idle the CryptoAuth device  <a href="a25344.html#ga59750d83d93368b2944f57bb38bf4d1f">More...</a><br /></td></tr>
+<tr class="separator:ga59750d83d93368b2944f57bb38bf4d1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad26b70951a0da6d80fb98027faae7a1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#gad26b70951a0da6d80fb98027faae7a1f">calib_sleep</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:gad26b70951a0da6d80fb98027faae7a1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">invoke sleep on the CryptoAuth device  <a href="a25344.html#gad26b70951a0da6d80fb98027faae7a1f">More...</a><br /></td></tr>
+<tr class="separator:gad26b70951a0da6d80fb98027faae7a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2167248c704fb8d6864760c066bec13b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#ga2167248c704fb8d6864760c066bec13b">_calib_exit</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:ga2167248c704fb8d6864760c066bec13b"><td class="mdescLeft">&#160;</td><td class="mdescRight">common cleanup code which idles the device after any operation  <a href="a25344.html#ga2167248c704fb8d6864760c066bec13b">More...</a><br /></td></tr>
+<tr class="separator:ga2167248c704fb8d6864760c066bec13b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae51a67781e9e4618e669db1c999e6ec2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#gae51a67781e9e4618e669db1c999e6ec2">calib_get_addr</a> (uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t *addr)</td></tr>
+<tr class="memdesc:gae51a67781e9e4618e669db1c999e6ec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the address given the zone, slot, block, and offset.  <a href="a25344.html#gae51a67781e9e4618e669db1c999e6ec2">More...</a><br /></td></tr>
+<tr class="separator:gae51a67781e9e4618e669db1c999e6ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga023735b1c0b10e70832d9a957bc99ae3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#ga023735b1c0b10e70832d9a957bc99ae3">calib_get_zone_size</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t zone, uint16_t slot, size_t *size)</td></tr>
+<tr class="memdesc:ga023735b1c0b10e70832d9a957bc99ae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the specified zone in bytes.  <a href="a25344.html#ga023735b1c0b10e70832d9a957bc99ae3">More...</a><br /></td></tr>
+<tr class="separator:ga023735b1c0b10e70832d9a957bc99ae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Utilities to create and verify a JSON Web Token (JWT) </p>
+<div class="textblock"><p>CryptoAuthLib Basic API methods. These methods provide a simpler way to access the core crypto methods. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a884790e08be94431e1fbe92bf6106e06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a884790e08be94431e1fbe92bf6106e06">&#9670;&nbsp;</a></span>calib_wakeup_i2c()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_wakeup_i2c </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>basic API methods are all prefixed with atcab_ (CryptoAuthLib Basic) the fundamental premise of the basic API is it is based on a single interface instance and that instance is global, so all basic API commands assume that one global device is the one to operate on. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_a36b4bcb1707fbf5292e9c9ce5c3237c.html">jwt</a></li><li class="navelem"><a class="el" href="a01829.html">atca_jwt.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ac97eb41c075753f4733aae2239a389a.html">cryptauthlib-v3.4.0_</a></li><li class="navelem"><a class="el" href="dir_cff6911667c1a559ef1c32fb411fa0d0.html">lib</a></li><li class="navelem"><a class="el" href="dir_cc347709d196869109d4b86e0c9b33b5.html">calib</a></li><li class="navelem"><a class="el" href="a01829.html">calib_basic.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_version.h File Reference</title>
+<title>CryptoAuthLib: pkcs11_encrypt.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.3.3</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,94 +85,48 @@ $(document).ready(function(){initNavTree('a01490.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_version.h File Reference</div>  </div>
+<div class="title">pkcs11_encrypt.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Microchip CryptoAuth Library Version.  
+<p>PKCS11 Library AES Support.  
 <a href="#details">More...</a></p>
-
+<div class="textblock"><code>#include &quot;<a class="el" href="a01454_source.html">pkcs11.h</a>&quot;</code><br />
+</div>
 <p><a href="a01490_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:aceddbd0ae1c41554eb2f0fabc0a2dc0c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01490.html#aceddbd0ae1c41554eb2f0fabc0a2dc0c">ATCA_LIBRARY_VERSION_DATE</a>&#160;&#160;&#160;&quot;20210126&quot;</td></tr>
-<tr class="separator:aceddbd0ae1c41554eb2f0fabc0a2dc0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4634f4de0131c8eee8f064dc3e9064b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01490.html#ab4634f4de0131c8eee8f064dc3e9064b">ATCA_LIBRARY_VERSION_MAJOR</a>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:ab4634f4de0131c8eee8f064dc3e9064b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ec591139c9e733853063ea898bac376"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01490.html#a0ec591139c9e733853063ea898bac376">ATCA_LIBRARY_VERSION_MINOR</a>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:a0ec591139c9e733853063ea898bac376"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78849ac2eed512d15a0b22ca781f83e8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01490.html#a78849ac2eed512d15a0b22ca781f83e8">ATCA_LIBRARY_VERSION_BUILD</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a78849ac2eed512d15a0b22ca781f83e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga15ac03fa8dac568af6652d0ed4dd21b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga15ac03fa8dac568af6652d0ed4dd21b9">pkcs11_encrypt_init</a> (<a class="el" href="a01571.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01571.html#afa4c48ba8a588833ea04f0910583592e">CK_MECHANISM_PTR</a> pMechanism, <a class="el" href="a01571.html#ad1cdd703196214cd34e6f9f52bc67683">CK_OBJECT_HANDLE</a> hObject)</td></tr>
+<tr class="separator:ga15ac03fa8dac568af6652d0ed4dd21b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0df6b857ebf689b4891b37117922c2ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga0df6b857ebf689b4891b37117922c2ca">pkcs11_encrypt</a> (<a class="el" href="a01571.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01571.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pData, <a class="el" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulDataLen, <a class="el" href="a01571.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pEncryptedData, <a class="el" href="a01571.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulEncryptedDataLen)</td></tr>
+<tr class="separator:ga0df6b857ebf689b4891b37117922c2ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae037e8f4262948999f4e2fb526752a40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#gae037e8f4262948999f4e2fb526752a40">pkcs11_encrypt_update</a> (<a class="el" href="a01571.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01571.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pData, <a class="el" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulDataLen, <a class="el" href="a01571.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pEncryptedData, <a class="el" href="a01571.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulEncryptedDataLen)</td></tr>
+<tr class="separator:gae037e8f4262948999f4e2fb526752a40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae94f85980031bec34148341efd537e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#gaae94f85980031bec34148341efd537e3">pkcs11_encrypt_final</a> (<a class="el" href="a01571.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01571.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pEncryptedData, <a class="el" href="a01571.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulEncryptedDataLen)</td></tr>
+<tr class="memdesc:gaae94f85980031bec34148341efd537e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part encryption operation.  <a href="a08589.html#gaae94f85980031bec34148341efd537e3">More...</a><br /></td></tr>
+<tr class="separator:gaae94f85980031bec34148341efd537e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0fecfe06a4e6a9e96f783db39f5c3f1d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga0fecfe06a4e6a9e96f783db39f5c3f1d">pkcs11_decrypt_init</a> (<a class="el" href="a01571.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01571.html#afa4c48ba8a588833ea04f0910583592e">CK_MECHANISM_PTR</a> pMechanism, <a class="el" href="a01571.html#ad1cdd703196214cd34e6f9f52bc67683">CK_OBJECT_HANDLE</a> hObject)</td></tr>
+<tr class="separator:ga0fecfe06a4e6a9e96f783db39f5c3f1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b2aaee6288061f2d56f4e99f0178709"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga4b2aaee6288061f2d56f4e99f0178709">pkcs11_decrypt</a> (<a class="el" href="a01571.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01571.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pEncryptedData, <a class="el" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulEncryptedDataLen, <a class="el" href="a01571.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pData, <a class="el" href="a01571.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulDataLen)</td></tr>
+<tr class="separator:ga4b2aaee6288061f2d56f4e99f0178709"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga000cfc27505b694c031f8b66979d0c1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga000cfc27505b694c031f8b66979d0c1f">pkcs11_decrypt_update</a> (<a class="el" href="a01571.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01571.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pEncryptedData, <a class="el" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulEncryptedDataLen, <a class="el" href="a01571.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pData, <a class="el" href="a01571.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pDataLen)</td></tr>
+<tr class="separator:ga000cfc27505b694c031f8b66979d0c1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga045a35287c46a29da2ad13e700087e0d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga045a35287c46a29da2ad13e700087e0d">pkcs11_decrypt_final</a> (<a class="el" href="a01571.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01571.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pData, <a class="el" href="a01571.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pDataLen)</td></tr>
+<tr class="memdesc:ga045a35287c46a29da2ad13e700087e0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part decryption operation.  <a href="a08589.html#ga045a35287c46a29da2ad13e700087e0d">More...</a><br /></td></tr>
+<tr class="separator:ga045a35287c46a29da2ad13e700087e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Microchip CryptoAuth Library Version. </p>
+<div class="textblock"><p>PKCS11 Library AES Support. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a78849ac2eed512d15a0b22ca781f83e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78849ac2eed512d15a0b22ca781f83e8">&#9670;&nbsp;</a></span>ATCA_LIBRARY_VERSION_BUILD</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_LIBRARY_VERSION_BUILD&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aceddbd0ae1c41554eb2f0fabc0a2dc0c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aceddbd0ae1c41554eb2f0fabc0a2dc0c">&#9670;&nbsp;</a></span>ATCA_LIBRARY_VERSION_DATE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_LIBRARY_VERSION_DATE&#160;&#160;&#160;&quot;20210126&quot;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ab4634f4de0131c8eee8f064dc3e9064b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab4634f4de0131c8eee8f064dc3e9064b">&#9670;&nbsp;</a></span>ATCA_LIBRARY_VERSION_MAJOR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_LIBRARY_VERSION_MAJOR&#160;&#160;&#160;3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0ec591139c9e733853063ea898bac376"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ec591139c9e733853063ea898bac376">&#9670;&nbsp;</a></span>ATCA_LIBRARY_VERSION_MINOR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_LIBRARY_VERSION_MINOR&#160;&#160;&#160;3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="a01490.html">atca_version.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_de8763fbd32fa6c533e8e0dca5fc697b.html">cryptauthlib-v3.3.3_</a></li><li class="navelem"><a class="el" href="dir_76c6e33311c14dc6ff7c294bf952470f.html">lib</a></li><li class="navelem"><a class="el" href="dir_9bd2612bd55169c9881c7cd36a33cdb4.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01490.html">pkcs11_encrypt.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

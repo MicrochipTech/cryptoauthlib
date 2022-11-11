@@ -1,6 +1,5 @@
 var a01523 =
 [
-    [ "atcacert_gen_challenge_hw", "a05732.html#ga208c1ea765f192bd86b26964fbb5edcb", null ],
-    [ "atcacert_verify_cert_hw", "a05732.html#ga81e92ea606e86051afa84f2fac4898d6", null ],
-    [ "atcacert_verify_response_hw", "a05732.html#gafeffa7a36a7b5a343f5f568d090e8eed", null ]
+    [ "pkcs11_mech_get_list", "a08589.html#ga9678c431b8d5479e53417b109b32c20f", null ],
+    [ "pkcs_mech_get_info", "a08589.html#gac66d133f84b945f9c26727ee9f7a7d57", null ]
 ];

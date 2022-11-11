@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_cert.c File Reference</title>
+<title>CryptoAuthLib: calib_execution.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.4.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,66 +85,283 @@ $(document).ready(function(){initNavTree('a01859.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">pkcs11_cert.c File Reference</div>  </div>
+<div class="title">calib_execution.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Library Certificate Handling.  
+<p>Defines an execution handler that executes a given command on a device and returns the results.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01694_source.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01511_source.html">atcacert/atcacert_def.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01499_source.html">atcacert/atcacert_client.h</a>&quot;</code><br />
-<code>#include &quot;pkcs11_config.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01874_source.html">pkcs11_debug.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01955_source.html">pkcs11_token.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01862_source.html">pkcs11_cert.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01931_source.html">pkcs11_os.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01961_source.html">pkcs11_util.h</a>&quot;</code><br />
-</div><table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="a01763_source.html">atca_status.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01841_source.html">calib_command.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01742_source.html">atca_device.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00122_source.html">atca_config.h</a>&quot;</code><br />
+</div>
+<p><a href="a01859_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25451.html">device_execution_time_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to hold the device execution time and the opcode for the corresponding command.  <a href="a25451.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:aa025be8149d8f6e4d07aaa436b026db2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01859.html#aa025be8149d8f6e4d07aaa436b026db2">ATCA_UNSUPPORTED_CMD</a>&#160;&#160;&#160;((uint16_t)0xFFFF)</td></tr>
+<tr class="separator:aa025be8149d8f6e4d07aaa436b026db2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55c5fe347b23c42f6359e97ae82b4729"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01859.html#a55c5fe347b23c42f6359e97ae82b4729">CALIB_SWI_FLAG_WAKE</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="memdesc:a55c5fe347b23c42f6359e97ae82b4729"><td class="mdescLeft">&#160;</td><td class="mdescRight">flag preceding a command  <a href="a01859.html#a55c5fe347b23c42f6359e97ae82b4729">More...</a><br /></td></tr>
+<tr class="separator:a55c5fe347b23c42f6359e97ae82b4729"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7946c257bcbaf0e1589e960b83d23df"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01859.html#ac7946c257bcbaf0e1589e960b83d23df">CALIB_SWI_FLAG_CMD</a>&#160;&#160;&#160;0x77</td></tr>
+<tr class="memdesc:ac7946c257bcbaf0e1589e960b83d23df"><td class="mdescLeft">&#160;</td><td class="mdescRight">flag preceding a command  <a href="a01859.html#ac7946c257bcbaf0e1589e960b83d23df">More...</a><br /></td></tr>
+<tr class="separator:ac7946c257bcbaf0e1589e960b83d23df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c46cc5ed5e30945d62e9ea369c94cdb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01859.html#a1c46cc5ed5e30945d62e9ea369c94cdb">CALIB_SWI_FLAG_TX</a>&#160;&#160;&#160;0x88</td></tr>
+<tr class="memdesc:a1c46cc5ed5e30945d62e9ea369c94cdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">flag requesting a response  <a href="a01859.html#a1c46cc5ed5e30945d62e9ea369c94cdb">More...</a><br /></td></tr>
+<tr class="separator:a1c46cc5ed5e30945d62e9ea369c94cdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a525ae62bb76a8ba01d4d85264f832c8e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01859.html#a525ae62bb76a8ba01d4d85264f832c8e">CALIB_SWI_FLAG_IDLE</a>&#160;&#160;&#160;0xBB</td></tr>
+<tr class="memdesc:a525ae62bb76a8ba01d4d85264f832c8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">flag requesting to go into Idle mode  <a href="a01859.html#a525ae62bb76a8ba01d4d85264f832c8e">More...</a><br /></td></tr>
+<tr class="separator:a525ae62bb76a8ba01d4d85264f832c8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dd3e14e93cec4aea30e27104935d51b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01859.html#a8dd3e14e93cec4aea30e27104935d51b">CALIB_SWI_FLAG_SLEEP</a>&#160;&#160;&#160;0xCC</td></tr>
+<tr class="memdesc:a8dd3e14e93cec4aea30e27104935d51b"><td class="mdescLeft">&#160;</td><td class="mdescRight">flag requesting to go into Sleep mode  <a href="a01859.html#a8dd3e14e93cec4aea30e27104935d51b">More...</a><br /></td></tr>
+<tr class="separator:a8dd3e14e93cec4aea30e27104935d51b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga7c1c4563e1c3b21f009966bfbeb90541"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#ga7c1c4563e1c3b21f009966bfbeb90541">pkcs11_cert_get_encoded</a> (<a class="el" href="a01967.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01967.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
-<tr class="separator:ga7c1c4563e1c3b21f009966bfbeb90541"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga80a4d4deaad0e8893ff9b6cecb594c5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#ga80a4d4deaad0e8893ff9b6cecb594c5c">pkcs11_cert_get_type</a> (<a class="el" href="a01967.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01967.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
-<tr class="separator:ga80a4d4deaad0e8893ff9b6cecb594c5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga710c95124c627373e383d123c0ab5b1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#ga710c95124c627373e383d123c0ab5b1f">pkcs11_cert_get_subject</a> (<a class="el" href="a01967.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01967.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
-<tr class="separator:ga710c95124c627373e383d123c0ab5b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae42580eee339e29aab9698251c3e7e2a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#gae42580eee339e29aab9698251c3e7e2a">pkcs11_cert_get_subject_key_id</a> (<a class="el" href="a01967.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01967.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
-<tr class="separator:gae42580eee339e29aab9698251c3e7e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8615e62ff44d3df242534e5805e26a82"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#ga8615e62ff44d3df242534e5805e26a82">pkcs11_cert_get_authority_key_id</a> (<a class="el" href="a01967.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01967.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
-<tr class="separator:ga8615e62ff44d3df242534e5805e26a82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga96af56861fd0c9e00b96ff6243b84447"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#ga96af56861fd0c9e00b96ff6243b84447">pkcs11_cert_get_trusted_flag</a> (<a class="el" href="a01967.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01967.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
-<tr class="separator:ga96af56861fd0c9e00b96ff6243b84447"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga34fcca1dafb0a410d242fcb5ff3d69a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#ga34fcca1dafb0a410d242fcb5ff3d69a5">pkcs11_cert_x509_write</a> (<a class="el" href="a01967.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01967.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
-<tr class="separator:ga34fcca1dafb0a410d242fcb5ff3d69a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:ga8de4193ede04a12ab4e44b8df9eec478"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01856.html#a5808b2771bb5bd3fdb344fd9b33b48ed">pkcs11_attrib_model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#ga8de4193ede04a12ab4e44b8df9eec478">pkcs11_cert_x509public_attributes</a> []</td></tr>
-<tr class="separator:ga8de4193ede04a12ab4e44b8df9eec478"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafd21e04ab9248b3d58c3f5e4bd076ac9"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01967.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#gafd21e04ab9248b3d58c3f5e4bd076ac9">pkcs11_cert_x509public_attributes_count</a> = sizeof( <a class="el" href="a05739.html#ga8de4193ede04a12ab4e44b8df9eec478">pkcs11_cert_x509public_attributes</a> ) / sizeof( <a class="el" href="a05739.html#ga8de4193ede04a12ab4e44b8df9eec478">pkcs11_cert_x509public_attributes</a> [0])</td></tr>
-<tr class="separator:gafd21e04ab9248b3d58c3f5e4bd076ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabc10a1f1b90bc7d2fb047db0af539e80"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01856.html#a5808b2771bb5bd3fdb344fd9b33b48ed">pkcs11_attrib_model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#gabc10a1f1b90bc7d2fb047db0af539e80">pkcs11_cert_wtlspublic_attributes</a> []</td></tr>
-<tr class="separator:gabc10a1f1b90bc7d2fb047db0af539e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad8232cd440c12745d24471e2676a117f"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01967.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#gad8232cd440c12745d24471e2676a117f">pkcs11_cert_wtlspublic_attributes_count</a> = sizeof( <a class="el" href="a05739.html#gabc10a1f1b90bc7d2fb047db0af539e80">pkcs11_cert_wtlspublic_attributes</a> ) / sizeof( <a class="el" href="a05739.html#gabc10a1f1b90bc7d2fb047db0af539e80">pkcs11_cert_wtlspublic_attributes</a> [0])</td></tr>
-<tr class="separator:gad8232cd440c12745d24471e2676a117f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa471eb33699e2cba5dc3cc50a2d8df7"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01856.html#a5808b2771bb5bd3fdb344fd9b33b48ed">pkcs11_attrib_model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#gafa471eb33699e2cba5dc3cc50a2d8df7">pkcs11_cert_x509_attributes</a> []</td></tr>
-<tr class="separator:gafa471eb33699e2cba5dc3cc50a2d8df7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc2b14c7a052fdc0bb751259d28dfdc0"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01967.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#gadc2b14c7a052fdc0bb751259d28dfdc0">pkcs11_cert_x509_attributes_count</a> = sizeof( <a class="el" href="a05739.html#gafa471eb33699e2cba5dc3cc50a2d8df7">pkcs11_cert_x509_attributes</a> ) / sizeof( <a class="el" href="a05739.html#gafa471eb33699e2cba5dc3cc50a2d8df7">pkcs11_cert_x509_attributes</a> [0])</td></tr>
-<tr class="separator:gadc2b14c7a052fdc0bb751259d28dfdc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa08ad4e89a8218e9598abbd36c11d07a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01859.html#aa08ad4e89a8218e9598abbd36c11d07a">calib_get_execution_time</a> (uint8_t opcode, <a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:aa08ad4e89a8218e9598abbd36c11d07a"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the typical execution time for the given command  <a href="a01859.html#aa08ad4e89a8218e9598abbd36c11d07a">More...</a><br /></td></tr>
+<tr class="separator:aa08ad4e89a8218e9598abbd36c11d07a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a345bde60ef4556a595cdad71141c4afe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01859.html#a345bde60ef4556a595cdad71141c4afe">calib_execute_receive</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t device_address, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
+<tr class="separator:a345bde60ef4556a595cdad71141c4afe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19fc558e09f03a2f8f5ee89b1e396b2e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01859.html#a19fc558e09f03a2f8f5ee89b1e396b2e">calib_execute_command</a> (<a class="el" href="a25447.html">ATCAPacket</a> *packet, <a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:a19fc558e09f03a2f8f5ee89b1e396b2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wakes up device, sends the packet, waits for command completion, receives response, and puts the device into the idle state.  <a href="a01859.html#a19fc558e09f03a2f8f5ee89b1e396b2e">More...</a><br /></td></tr>
+<tr class="separator:a19fc558e09f03a2f8f5ee89b1e396b2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Library Certificate Handling. </p>
+<div class="textblock"><p>Defines an execution handler that executes a given command on a device and returns the results. </p>
+<p>The basic flow is to wake the device, send the command, wait/poll for completion, and finally receives the response from the device and does basic checks before returning to caller.</p>
+<p>This handler supports the ATSHA and ATECC device family.</p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="aa025be8149d8f6e4d07aaa436b026db2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa025be8149d8f6e4d07aaa436b026db2">&#9670;&nbsp;</a></span>ATCA_UNSUPPORTED_CMD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_UNSUPPORTED_CMD&#160;&#160;&#160;((uint16_t)0xFFFF)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac7946c257bcbaf0e1589e960b83d23df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7946c257bcbaf0e1589e960b83d23df">&#9670;&nbsp;</a></span>CALIB_SWI_FLAG_CMD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CALIB_SWI_FLAG_CMD&#160;&#160;&#160;0x77</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>flag preceding a command </p>
+
+</div>
+</div>
+<a id="a525ae62bb76a8ba01d4d85264f832c8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a525ae62bb76a8ba01d4d85264f832c8e">&#9670;&nbsp;</a></span>CALIB_SWI_FLAG_IDLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CALIB_SWI_FLAG_IDLE&#160;&#160;&#160;0xBB</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>flag requesting to go into Idle mode </p>
+
+</div>
+</div>
+<a id="a8dd3e14e93cec4aea30e27104935d51b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8dd3e14e93cec4aea30e27104935d51b">&#9670;&nbsp;</a></span>CALIB_SWI_FLAG_SLEEP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CALIB_SWI_FLAG_SLEEP&#160;&#160;&#160;0xCC</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>flag requesting to go into Sleep mode </p>
+
+</div>
+</div>
+<a id="a1c46cc5ed5e30945d62e9ea369c94cdb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c46cc5ed5e30945d62e9ea369c94cdb">&#9670;&nbsp;</a></span>CALIB_SWI_FLAG_TX</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CALIB_SWI_FLAG_TX&#160;&#160;&#160;0x88</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>flag requesting a response </p>
+
+</div>
+</div>
+<a id="a55c5fe347b23c42f6359e97ae82b4729"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55c5fe347b23c42f6359e97ae82b4729">&#9670;&nbsp;</a></span>CALIB_SWI_FLAG_WAKE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CALIB_SWI_FLAG_WAKE&#160;&#160;&#160;0x00</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>flag preceding a command </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a19fc558e09f03a2f8f5ee89b1e396b2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19fc558e09f03a2f8f5ee89b1e396b2e">&#9670;&nbsp;</a></span>calib_execute_command()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_execute_command </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a25447.html">ATCAPacket</a> *&#160;</td>
+          <td class="paramname"><em>packet</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Wakes up device, sends the packet, waits for command completion, receives response, and puts the device into the idle state. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">packet</td><td>As input, the packet to be sent. As output, the data buffer in the packet structure will contain the response. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>CryptoAuthentication device to send the command to.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="a345bde60ef4556a595cdad71141c4afe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a345bde60ef4556a595cdad71141c4afe">&#9670;&nbsp;</a></span>calib_execute_receive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_execute_receive </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>device_address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>rxdata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramname"><em>rxlength</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa08ad4e89a8218e9598abbd36c11d07a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa08ad4e89a8218e9598abbd36c11d07a">&#9670;&nbsp;</a></span>calib_get_execution_time()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_get_execution_time </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>opcode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>return the typical execution time for the given command </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">opcode</td><td>Opcode value of the command </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ca_cmd</td><td>Command object for which the execution times are associated </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_2ecf364fc0c935f498a2ac4d9ead3473.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01859.html">pkcs11_cert.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ac97eb41c075753f4733aae2239a389a.html">cryptauthlib-v3.4.0_</a></li><li class="navelem"><a class="el" href="dir_cff6911667c1a559ef1c32fb411fa0d0.html">lib</a></li><li class="navelem"><a class="el" href="dir_cc347709d196869109d4b86e0c9b33b5.html">calib</a></li><li class="navelem"><a class="el" href="a01859.html">calib_execution.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

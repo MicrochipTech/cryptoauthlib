@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_encrypt.h File Reference</title>
+<title>CryptoAuthLib: calib_nonce.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.4.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -84,49 +84,25 @@ $(document).ready(function(){initNavTree('a01886.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">pkcs11_encrypt.h File Reference</div>  </div>
+<div class="title">calib_nonce.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Library AES Support.  
+<p>CryptoAuthLib Basic API methods for Nonce command.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01850_source.html">pkcs11.h</a>&quot;</code><br />
-</div>
-<p><a href="a01886_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga15ac03fa8dac568af6652d0ed4dd21b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#ga15ac03fa8dac568af6652d0ed4dd21b9">pkcs11_encrypt_init</a> (<a class="el" href="a01967.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01967.html#afa4c48ba8a588833ea04f0910583592e">CK_MECHANISM_PTR</a> pMechanism, <a class="el" href="a01967.html#ad1cdd703196214cd34e6f9f52bc67683">CK_OBJECT_HANDLE</a> hObject)</td></tr>
-<tr class="separator:ga15ac03fa8dac568af6652d0ed4dd21b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0df6b857ebf689b4891b37117922c2ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#ga0df6b857ebf689b4891b37117922c2ca">pkcs11_encrypt</a> (<a class="el" href="a01967.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01967.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pData, <a class="el" href="a01967.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulDataLen, <a class="el" href="a01967.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pEncryptedData, <a class="el" href="a01967.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulEncryptedDataLen)</td></tr>
-<tr class="separator:ga0df6b857ebf689b4891b37117922c2ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae037e8f4262948999f4e2fb526752a40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#gae037e8f4262948999f4e2fb526752a40">pkcs11_encrypt_update</a> (<a class="el" href="a01967.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01967.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pData, <a class="el" href="a01967.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulDataLen, <a class="el" href="a01967.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pEncryptedData, <a class="el" href="a01967.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulEncryptedDataLen)</td></tr>
-<tr class="separator:gae037e8f4262948999f4e2fb526752a40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaae94f85980031bec34148341efd537e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#gaae94f85980031bec34148341efd537e3">pkcs11_encrypt_final</a> (<a class="el" href="a01967.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01967.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pEncryptedData, <a class="el" href="a01967.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulEncryptedDataLen)</td></tr>
-<tr class="memdesc:gaae94f85980031bec34148341efd537e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part encryption operation.  <a href="a05739.html#gaae94f85980031bec34148341efd537e3">More...</a><br /></td></tr>
-<tr class="separator:gaae94f85980031bec34148341efd537e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0fecfe06a4e6a9e96f783db39f5c3f1d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#ga0fecfe06a4e6a9e96f783db39f5c3f1d">pkcs11_decrypt_init</a> (<a class="el" href="a01967.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01967.html#afa4c48ba8a588833ea04f0910583592e">CK_MECHANISM_PTR</a> pMechanism, <a class="el" href="a01967.html#ad1cdd703196214cd34e6f9f52bc67683">CK_OBJECT_HANDLE</a> hObject)</td></tr>
-<tr class="separator:ga0fecfe06a4e6a9e96f783db39f5c3f1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4b2aaee6288061f2d56f4e99f0178709"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#ga4b2aaee6288061f2d56f4e99f0178709">pkcs11_decrypt</a> (<a class="el" href="a01967.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01967.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pEncryptedData, <a class="el" href="a01967.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulEncryptedDataLen, <a class="el" href="a01967.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pData, <a class="el" href="a01967.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pulDataLen)</td></tr>
-<tr class="separator:ga4b2aaee6288061f2d56f4e99f0178709"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga000cfc27505b694c031f8b66979d0c1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#ga000cfc27505b694c031f8b66979d0c1f">pkcs11_decrypt_update</a> (<a class="el" href="a01967.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01967.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pEncryptedData, <a class="el" href="a01967.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulEncryptedDataLen, <a class="el" href="a01967.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pData, <a class="el" href="a01967.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pDataLen)</td></tr>
-<tr class="separator:ga000cfc27505b694c031f8b66979d0c1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga045a35287c46a29da2ad13e700087e0d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#ga045a35287c46a29da2ad13e700087e0d">pkcs11_decrypt_final</a> (<a class="el" href="a01967.html#a5a263e303e42c8b2f3bc08315e34fc4f">CK_SESSION_HANDLE</a> hSession, <a class="el" href="a01967.html#a3d7233a4077fbaf7ae76b64da0a62a21">CK_BYTE_PTR</a> pData, <a class="el" href="a01967.html#af18ced3aa6adcd9f76ae8c132ed2eeb9">CK_ULONG_PTR</a> pDataLen)</td></tr>
-<tr class="memdesc:ga045a35287c46a29da2ad13e700087e0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part decryption operation.  <a href="a05739.html#ga045a35287c46a29da2ad13e700087e0d">More...</a><br /></td></tr>
-<tr class="separator:ga045a35287c46a29da2ad13e700087e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Library AES Support. </p>
+<div class="textblock"><code>#include &quot;<a class="el" href="a01976_source.html">cryptoauthlib.h</a>&quot;</code><br />
+</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for Nonce command. </p>
+<p>The Nonce command generates a nonce for use by a subsequent commands of the device by combining an internally generated random number with an input value from the system.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, and ATECC608A/B. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_2ecf364fc0c935f498a2ac4d9ead3473.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01886.html">pkcs11_encrypt.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ac97eb41c075753f4733aae2239a389a.html">cryptauthlib-v3.4.0_</a></li><li class="navelem"><a class="el" href="dir_cff6911667c1a559ef1c32fb411fa0d0.html">lib</a></li><li class="navelem"><a class="el" href="dir_cc347709d196869109d4b86e0c9b33b5.html">calib</a></li><li class="navelem"><a class="el" href="a01886.html">calib_nonce.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

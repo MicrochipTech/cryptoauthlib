@@ -1,10 +1,21 @@
 var a01745 =
 [
-    [ "hal_create_mutex", "a05735.html#gab289a3949663589ac6be71d72fb18278", null ],
-    [ "hal_delay_10us", "a05735.html#gaa7df07f9efb18d8cef1d9602372aca8c", null ],
-    [ "hal_delay_ms", "a05735.html#gadc23b8130e72a445f76c68d62e8c95c5", null ],
-    [ "hal_delay_us", "a05735.html#ga7e9019810ba5ab81b256282392cd5079", null ],
-    [ "hal_destroy_mutex", "a05735.html#ga4589d7b3e951f40b7928f1cf31f7ddf3", null ],
-    [ "hal_lock_mutex", "a05735.html#gad4cd02ff7ae4e75844eab4e84eb61994", null ],
-    [ "hal_unlock_mutex", "a05735.html#ga31fd8170a49623686543f6247b883bd1", null ]
+    [ "ATCADeviceType", "a25341.html#gafb234ccd6a80d09c0efbe336c2354267", [
+      [ "ATSHA204A", "a25341.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268", null ],
+      [ "ATECC108A", "a25341.html#ggafb234ccd6a80d09c0efbe336c2354267a20efd97b5b1001eec4a52e0ed5bf594c", null ],
+      [ "ATECC508A", "a25341.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae", null ],
+      [ "ATECC608A", "a25341.html#ggafb234ccd6a80d09c0efbe336c2354267a183a6224a93e6c2b82c6dc0e132398bf", null ],
+      [ "ATECC608B", "a25341.html#ggafb234ccd6a80d09c0efbe336c2354267a6139512f9df589306dfc579a4e670d5a", null ],
+      [ "ATECC608", "a25341.html#ggafb234ccd6a80d09c0efbe336c2354267af2f230354639df34317e81b1d9fb3dfe", null ],
+      [ "ATSHA206A", "a25341.html#ggafb234ccd6a80d09c0efbe336c2354267a6816489510886c97abe08d80c7207f3f", null ],
+      [ "ECC204", "a25341.html#ggafb234ccd6a80d09c0efbe336c2354267a1a8bdd24116c11dbe5e8d7fa350315de", null ],
+      [ "ECC206", "a25341.html#ggafb234ccd6a80d09c0efbe336c2354267a5f42eb65518de6be5e6c2cc6fff01716", null ],
+      [ "TA010", "a25341.html#ggafb234ccd6a80d09c0efbe336c2354267a8a2e85997c79d4db6cb8de37ee299224", null ],
+      [ "RNG90", "a25341.html#ggafb234ccd6a80d09c0efbe336c2354267a9bcff6ce01e119e4a99361714a4e181f", null ],
+      [ "SHA104", "a25341.html#ggafb234ccd6a80d09c0efbe336c2354267a06550d393d77e31897a338ae584e2c07", null ],
+      [ "SHA105", "a25341.html#ggafb234ccd6a80d09c0efbe336c2354267aaee47161f605e4857ecc6c138d2f4916", null ],
+      [ "SHA106", "a25341.html#ggafb234ccd6a80d09c0efbe336c2354267a9f1b5538fba6e4147dbfb9ac54721f8d", null ],
+      [ "TA100", "a25341.html#ggafb234ccd6a80d09c0efbe336c2354267a4af1fa9171e503676c56f45144d3b2f0", null ],
+      [ "ATCA_DEV_UNKNOWN", "a25341.html#ggafb234ccd6a80d09c0efbe336c2354267a3488f672341dda0ad20508ad888280ad", null ]
+    ] ]
 ];

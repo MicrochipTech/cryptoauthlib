@@ -1,12 +1,10 @@
 var a01778 =
 [
-    [ "hal_swi_control", "a05735.html#gad6ba20fd0d0d393f0cbf03ea9cb63346", null ],
-    [ "hal_swi_idle", "a05735.html#ga618291172976da96c4f02dc9200c845c", null ],
-    [ "hal_swi_init", "a05735.html#gae3e41d9b466fb912625402db629b1a62", null ],
-    [ "hal_swi_post_init", "a05735.html#ga9186e5235979216330ae580290872c77", null ],
-    [ "hal_swi_receive", "a05735.html#ga159bdf9c24e429d54800da1eb1c21058", null ],
-    [ "hal_swi_release", "a05735.html#ga196dbc62546b39ac3e556a0f7f6b7132", null ],
-    [ "hal_swi_send", "a05735.html#ga9df4dbd666a87efe49578842e53ad91e", null ],
-    [ "hal_swi_sleep", "a05735.html#ga252e365a30f2583dae8a8eac073a9f53", null ],
-    [ "hal_swi_wake", "a05735.html#gafc428980ec95e37eee94813db229fe70", null ]
+    [ "atcacert_create_csr", "a25343.html#gabd66cb9a5c50c7c62e3bc0a8ff0fc4d6", null ],
+    [ "atcacert_create_csr_pem", "a25343.html#ga0b492025e27a705b1792b6276eeaaf68", null ],
+    [ "atcacert_get_response", "a25343.html#ga9f7223a578ce5c07a831638106c6ff6c", null ],
+    [ "atcacert_read_cert", "a25343.html#gaaf13dfd0ea4e563194cec6e62892b5c4", null ],
+    [ "atcacert_read_cert_size", "a25343.html#ga7af0248a5c3857e56e51b7cac88c882f", null ],
+    [ "atcacert_read_device_loc", "a25343.html#ga9a6222ede3a3f3f331882b613066b8a8", null ],
+    [ "atcacert_read_subj_key_id", "a25343.html#ga83897818bb9152464dbaa4ad2b85ce10", null ]
 ];

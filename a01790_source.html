@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_uc3_i2c_asf.h Source File</title>
+<title>CryptoAuthLib: atcacert_check_config.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">3.4.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,45 +85,49 @@ $(document).ready(function(){initNavTree('a01790_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">hal_uc3_i2c_asf.h</div>  </div>
+<div class="title">atcacert_check_config.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a01790.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef HAL_SAMV71_I2C_ASF_H_</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define HAL_SAMV71_I2C_ASF_H_</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#ifndef ATCACERT_CHECK_CONFIG_H</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#define ATCACERT_CHECK_CONFIG_H</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">/* The atcacert_ module is only set up to work with classic cryptoauth devices */</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01859.html">calib/calib_config_check.h</a>&quot;</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;asf.h&gt;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;twi.h&quot;</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="a05735.html#gaf89a7a4080a47aa10a5504291db285bf">   45</a></span>&#160;<span class="preprocessor">#define MAX_I2C_BUSES    3</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="a05880.html">atcaI2Cmaster</a></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;{</div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="a05880.html#a3592aa831cd642b3e53af87537944d5a">   51</a></span>&#160;    uint8_t       <a class="code" href="a05880.html#a3592aa831cd642b3e53af87537944d5a">twi_id</a>;</div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="a05880.html#a9f03d6b609fdcf7623a985087e4bdc31">   52</a></span>&#160;    avr32_twi_t * <a class="code" href="a05880.html#a9f03d6b609fdcf7623a985087e4bdc31">twi_master_instance</a>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">int</span>           <a class="code" href="a05880.html#ad72ba8c994f4d0e5ce354e17f7c427c0">ref_ct</a>;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="comment">// for conveniences during interface release phase</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="a05880.html#af5c011e6c2e8d49675f7029e8ec2c0a6">   55</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="a05880.html#af5c011e6c2e8d49675f7029e8ec2c0a6">bus_index</a>;</div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="a05735.html#ga06b19a932aea9cf3a5165fefacb24f7b">   56</a></span>&#160;} <a class="code" href="a05735.html#ga06b19a932aea9cf3a5165fefacb24f7b">ATCAI2CMaster_t</a>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#ifndef ATCACERT_HW_CHALLENGE_EN</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="a01790.html#a2894900773b25424610b3d4441802fad">   35</a></span>&#160;<span class="preprocessor">#define ATCACERT_HW_CHALLENGE_EN            CALIB_RANDOM_EN</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#ifndef ATCACERT_HW_VERIFY_EN</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="a01790.html#af247eb22827965004abb8b3b8aed35f1">   39</a></span>&#160;<span class="preprocessor">#define ATCACERT_HW_VERIFY_EN               CALIB_VERIFY_EXTERN_EN</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#ifndef ATCACERT_DATEFMT_ISO_EN</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="a01790.html#ab4f6e00c9f67ccad2783628a6fe7e7af">   43</a></span>&#160;<span class="preprocessor">#define ATCACERT_DATEFMT_ISO_EN             DEFAULT_ENABLED</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#ifndef ATCACERT_DATEFMT_UTC_EN</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="a01790.html#a2e59ca45591de8524a95a45705269682">   47</a></span>&#160;<span class="preprocessor">#define ATCACERT_DATEFMT_UTC_EN             DEFAULT_ENABLED</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#ifndef ATCACERT_DATEFMT_POSIX_EN</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="a01790.html#a8a7f452650c0f0659fe3ca21b3e2863b">   51</a></span>&#160;<span class="preprocessor">#define ATCACERT_DATEFMT_POSIX_EN           DEFAULT_ENABLED</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#ifndef ATCACERT_DATEFMT_GEN_EN</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="a01790.html#a96e7eaed048b2ecf32a4d6b9623f8b4e">   55</a></span>&#160;<span class="preprocessor">#define ATCACERT_DATEFMT_GEN_EN             DEFAULT_ENABLED</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<a class="code" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a05735.html#gadc420e4b166a1b339d1a2687e0f12cb1">change_i2c_speed</a>(<a class="code" href="a05800.html">ATCAIface</a> iface, uint32_t speed);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HAL_SAMD21_I2C_ASF_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* ATCACERT_CHECK_CONFIG_H */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aa05880_html_a3592aa831cd642b3e53af87537944d5a"><div class="ttname"><a href="a05880.html#a3592aa831cd642b3e53af87537944d5a">atcaI2Cmaster::twi_id</a></div><div class="ttdeci">uint8_t twi_id</div><div class="ttdef"><b>Definition:</b> hal_uc3_i2c_asf.h:51</div></div>
-<div class="ttc" id="aa05880_html"><div class="ttname"><a href="a05880.html">atcaI2Cmaster</a></div><div class="ttdoc">this is the hal_data for ATCA HAL for ASF SERCOM</div><div class="ttdef"><b>Definition:</b> hal_esp32_i2c.c:39</div></div>
-<div class="ttc" id="aa05735_html_ga06b19a932aea9cf3a5165fefacb24f7b"><div class="ttname"><a href="a05735.html#ga06b19a932aea9cf3a5165fefacb24f7b">ATCAI2CMaster_t</a></div><div class="ttdeci">struct atcaI2Cmaster ATCAI2CMaster_t</div><div class="ttdoc">this is the hal_data for ATCA HAL for ASF SERCOM</div></div>
-<div class="ttc" id="aa05735_html_gadc420e4b166a1b339d1a2687e0f12cb1"><div class="ttname"><a href="a05735.html#gadc420e4b166a1b339d1a2687e0f12cb1">change_i2c_speed</a></div><div class="ttdeci">ATCA_STATUS change_i2c_speed(ATCAIface iface, uint32_t speed)</div><div class="ttdoc">method to change the bus speec of I2C</div><div class="ttdef"><b>Definition:</b> hal_i2c_harmony.c:238</div></div>
-<div class="ttc" id="aa05880_html_af5c011e6c2e8d49675f7029e8ec2c0a6"><div class="ttname"><a href="a05880.html#af5c011e6c2e8d49675f7029e8ec2c0a6">atcaI2Cmaster::bus_index</a></div><div class="ttdeci">int bus_index</div><div class="ttdef"><b>Definition:</b> hal_uc3_i2c_asf.h:55</div></div>
-<div class="ttc" id="aa05800_html"><div class="ttname"><a href="a05800.html">atca_iface</a></div><div class="ttdoc">atca_iface is the context structure for a configured interface</div><div class="ttdef"><b>Definition:</b> atca_iface.h:180</div></div>
-<div class="ttc" id="aa01484_html_a22bd6643f31f1d75dc3e7ea939f468cd"><div class="ttname"><a href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a></div><div class="ttdeci">ATCA_STATUS</div><div class="ttdef"><b>Definition:</b> atca_status.h:43</div></div>
-<div class="ttc" id="aa05880_html_ad72ba8c994f4d0e5ce354e17f7c427c0"><div class="ttname"><a href="a05880.html#ad72ba8c994f4d0e5ce354e17f7c427c0">atcaI2Cmaster::ref_ct</a></div><div class="ttdeci">int ref_ct</div><div class="ttdef"><b>Definition:</b> hal_esp32_i2c.c:42</div></div>
-<div class="ttc" id="aa05880_html_a9f03d6b609fdcf7623a985087e4bdc31"><div class="ttname"><a href="a05880.html#a9f03d6b609fdcf7623a985087e4bdc31">atcaI2Cmaster::twi_master_instance</a></div><div class="ttdeci">avr32_twi_t * twi_master_instance</div><div class="ttdef"><b>Definition:</b> hal_uc3_i2c_asf.h:52</div></div>
+<div class="ttc" id="aa01859_html"><div class="ttname"><a href="a01859.html">calib_config_check.h</a></div><div class="ttdoc">Consistency checks for configuration options.</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_381c8d42bbdb26858cb443b28149b615.html">hal</a></li><li class="navelem"><a class="el" href="a01790.html">hal_uc3_i2c_asf.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_8dc63a03da68b48fe24499eda36221e7.html">cryptauthlib-3.4.0_talib</a></li><li class="navelem"><a class="el" href="dir_309af5a16ec1b403c44bf5d5d5ea4cca.html">lib</a></li><li class="navelem"><a class="el" href="dir_0893653a695b86d408f4b17b7a625a82.html">atcacert</a></li><li class="navelem"><a class="el" href="a01790.html">atcacert_check_config.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

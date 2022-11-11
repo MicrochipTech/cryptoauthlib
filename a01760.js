@@ -1,6 +1,7 @@
 var a01760 =
 [
-    [ "i2c_sam0_instance", "a05900.html", "a05900" ],
-    [ "i2c_sam0_instance_t", "a01760.html#abc52bbb3cf5a8db38f9929b63d8d2171", null ],
-    [ "sam0_change_baudrate", "a01760.html#aa09b1baa19c0d9232b191bffe0a200c0", null ]
+    [ "hal_memset_s", "a01760.html#a4f60d6c21f0543b2187329461cffd466", null ],
+    [ "hal_free", "a25346.html#gafa6d47ddbfd92184e624c55bf69328e0", null ],
+    [ "hal_malloc", "a25346.html#ga123ea0df03cae5ca06ec355d795deb6f", null ],
+    [ "lib_strcasestr", "a01760.html#a305f00f444730e14f8e92b6423ca2ea7", null ]
 ];

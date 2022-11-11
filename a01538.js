@@ -1,7 +1,11 @@
 var a01538 =
 [
-    [ "calib_aes", "a05733.html#gaf7e1ca9721d60824d7e5acbed5434ec0", null ],
-    [ "calib_aes_decrypt", "a05733.html#ga4f02958e2e68c685ccb7286113044be9", null ],
-    [ "calib_aes_encrypt", "a05733.html#gacb3622846e280fb209556193bee08684", null ],
-    [ "calib_aes_gfm", "a05733.html#ga0ab4d859b52e82ed0ebf611cbf51cfc1", null ]
+    [ "pkcs11_get_session_context", "a08589.html#ga33b843d3e0cb28b80d38056f18fe9519", null ],
+    [ "pkcs11_session_check", "a08589.html#ga7eb04614661e0cedf6cb926787f5ff9b", null ],
+    [ "pkcs11_session_close", "a08589.html#gac082a1a5af11c561af58d333414f4a27", null ],
+    [ "pkcs11_session_closeall", "a08589.html#ga43525e77f9049b545fa09129cacf9c9a", null ],
+    [ "pkcs11_session_get_info", "a08589.html#ga236a002e179ed36a0b81399a3e11fcb8", null ],
+    [ "pkcs11_session_login", "a08589.html#ga4d70fd7e9799d0428c308a3e1ed146df", null ],
+    [ "pkcs11_session_logout", "a08589.html#gafefc70d16edaf998a521daf6b8aed3e6", null ],
+    [ "pkcs11_session_open", "a08589.html#gad015e297476bdc4df61870f8d1209ddb", null ]
 ];

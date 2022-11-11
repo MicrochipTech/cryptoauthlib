@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_debug.c File Reference</title>
+<title>CryptoAuthLib: pkcs11_attrib.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.3.3</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,120 +85,42 @@ $(document).ready(function(){initNavTree('a01457.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_debug.c File Reference</div>  </div>
+<div class="title">pkcs11_attrib.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Debug/Trace for CryptoAuthLib calls.  
+<p>PKCS11 Library Object Attributes Handling.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;<a class="el" href="a01694_source.html">cryptoauthlib.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &quot;pkcs11_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01460_source.html">pkcs11_attrib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01298_source.html">cryptoauthlib.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aaf7947b74c12dac486d03bb6f6b148d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01457.html#aaf7947b74c12dac486d03bb6f6b148d9">atca_trace_config</a> (FILE *fp)</td></tr>
-<tr class="separator:aaf7947b74c12dac486d03bb6f6b148d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60326372db8190ddb9f191fca5bdc38a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01457.html#a60326372db8190ddb9f191fca5bdc38a">atca_trace</a> (<a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="el" href="a01715.html#ab58253322bcadfefd7ab8c3ec0fb65fb">status</a>)</td></tr>
-<tr class="separator:a60326372db8190ddb9f191fca5bdc38a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37c973beed068b00d261521bfe29299a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01457.html#a37c973beed068b00d261521bfe29299a">atca_trace_msg</a> (<a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="el" href="a01715.html#ab58253322bcadfefd7ab8c3ec0fb65fb">status</a>, const char *msg)</td></tr>
-<tr class="separator:a37c973beed068b00d261521bfe29299a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a3a81f3cd1d6204da295b87e92c7a039e"><td class="memItemLeft" align="right" valign="top">FILE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01457.html#a3a81f3cd1d6204da295b87e92c7a039e">g_trace_fp</a></td></tr>
-<tr class="separator:a3a81f3cd1d6204da295b87e92c7a039e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae518fd798cd7352bd7e1ea47cc9d8d33"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#gae518fd798cd7352bd7e1ea47cc9d8d33">pkcs11_attrib_fill</a> (<a class="el" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute, const <a class="el" href="a01571.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pData, const <a class="el" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulSize)</td></tr>
+<tr class="memdesc:gae518fd798cd7352bd7e1ea47cc9d8d33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the nessasary checks and copy data into an attribute structure.  <a href="a08589.html#gae518fd798cd7352bd7e1ea47cc9d8d33">More...</a><br /></td></tr>
+<tr class="separator:gae518fd798cd7352bd7e1ea47cc9d8d33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50e9c64b899d1b2f78c9634298225303"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga50e9c64b899d1b2f78c9634298225303">pkcs11_attrib_value</a> (<a class="el" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute, const <a class="el" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulValue, const <a class="el" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> ulSize)</td></tr>
+<tr class="memdesc:ga50e9c64b899d1b2f78c9634298225303"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to write a numerical value to an attribute buffer.  <a href="a08589.html#ga50e9c64b899d1b2f78c9634298225303">More...</a><br /></td></tr>
+<tr class="separator:ga50e9c64b899d1b2f78c9634298225303"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3bebbc6283e197f203ea5905ab5caee3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga3bebbc6283e197f203ea5905ab5caee3">pkcs11_attrib_false</a> (const <a class="el" href="a01571.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:ga3bebbc6283e197f203ea5905ab5caee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0bfb7c14a9c1daf120a61a65499bdc55"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga0bfb7c14a9c1daf120a61a65499bdc55">pkcs11_attrib_true</a> (const <a class="el" href="a01571.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:ga0bfb7c14a9c1daf120a61a65499bdc55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga89c04713bd2e0df331bd4f8f5abf14ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga89c04713bd2e0df331bd4f8f5abf14ab">pkcs11_attrib_empty</a> (const <a class="el" href="a01571.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:ga89c04713bd2e0df331bd4f8f5abf14ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Debug/Trace for CryptoAuthLib calls. </p>
+<div class="textblock"><p>PKCS11 Library Object Attributes Handling. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="a60326372db8190ddb9f191fca5bdc38a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a60326372db8190ddb9f191fca5bdc38a">&#9670;&nbsp;</a></span>atca_trace()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atca_trace </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td>
-          <td class="paramname"><em>status</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aaf7947b74c12dac486d03bb6f6b148d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf7947b74c12dac486d03bb6f6b148d9">&#9670;&nbsp;</a></span>atca_trace_config()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void atca_trace_config </td>
-          <td>(</td>
-          <td class="paramtype">FILE *&#160;</td>
-          <td class="paramname"><em>fp</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a37c973beed068b00d261521bfe29299a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37c973beed068b00d261521bfe29299a">&#9670;&nbsp;</a></span>atca_trace_msg()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> atca_trace_msg </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td>
-          <td class="paramname"><em>status</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>msg</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="a3a81f3cd1d6204da295b87e92c7a039e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a81f3cd1d6204da295b87e92c7a039e">&#9670;&nbsp;</a></span>g_trace_fp</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">FILE* g_trace_fp</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="a01457.html">atca_debug.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_de8763fbd32fa6c533e8e0dca5fc697b.html">cryptauthlib-v3.3.3_</a></li><li class="navelem"><a class="el" href="dir_76c6e33311c14dc6ff7c294bf952470f.html">lib</a></li><li class="navelem"><a class="el" href="dir_9bd2612bd55169c9881c7cd36a33cdb4.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01457.html">pkcs11_attrib.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

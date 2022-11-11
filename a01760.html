@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_sam0_i2c_asf.h File Reference</title>
+<title>CryptoAuthLib: atca_platform.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.4.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,62 +85,81 @@ $(document).ready(function(){initNavTree('a01760.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">hal_sam0_i2c_asf.h File Reference</div>  </div>
+<div class="title">atca_platform.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for SAMD21 I2C over ASF drivers.  
+<p>Configure the platform interfaces for cryptoauthlib.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;asf.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a01694_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
 </div>
 <p><a href="a01760_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05900.html">i2c_sam0_instance</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a4f60d6c21f0543b2187329461cffd466"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01760.html#a4f60d6c21f0543b2187329461cffd466">hal_memset_s</a>&#160;&#160;&#160;<a class="el" href="a01751.html#ac37b319dabc5b9492a422f6d3d4e118b">atcab_memset_s</a></td></tr>
+<tr class="separator:a4f60d6c21f0543b2187329461cffd466"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:aa09b1baa19c0d9232b191bffe0a200c0"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01760.html#aa09b1baa19c0d9232b191bffe0a200c0">sam0_change_baudrate</a>) (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint32_t speed)</td></tr>
-<tr class="separator:aa09b1baa19c0d9232b191bffe0a200c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc52bbb3cf5a8db38f9929b63d8d2171"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a05900.html">i2c_sam0_instance</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01760.html#abc52bbb3cf5a8db38f9929b63d8d2171">i2c_sam0_instance_t</a></td></tr>
-<tr class="separator:abc52bbb3cf5a8db38f9929b63d8d2171"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga123ea0df03cae5ca06ec355d795deb6f"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25346.html#ga123ea0df03cae5ca06ec355d795deb6f">hal_malloc</a> (size_t size)</td></tr>
+<tr class="separator:ga123ea0df03cae5ca06ec355d795deb6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa6d47ddbfd92184e624c55bf69328e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25346.html#gafa6d47ddbfd92184e624c55bf69328e0">hal_free</a> (void *ptr)</td></tr>
+<tr class="separator:gafa6d47ddbfd92184e624c55bf69328e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a305f00f444730e14f8e92b6423ca2ea7"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01760.html#a305f00f444730e14f8e92b6423ca2ea7">lib_strcasestr</a> (const char *haystack, const char *needle)</td></tr>
+<tr class="memdesc:a305f00f444730e14f8e92b6423ca2ea7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search for a substring in a case insenstive format.  <a href="a01760.html#a305f00f444730e14f8e92b6423ca2ea7">More...</a><br /></td></tr>
+<tr class="separator:a305f00f444730e14f8e92b6423ca2ea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for SAMD21 I2C over ASF drivers. </p>
-<p>Prerequisite: add SERCOM I2C Master Polled support to application in Atmel Studio</p>
+<div class="textblock"><p>Configure the platform interfaces for cryptoauthlib. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="abc52bbb3cf5a8db38f9929b63d8d2171"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc52bbb3cf5a8db38f9929b63d8d2171">&#9670;&nbsp;</a></span>i2c_sam0_instance_t</h2>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a4f60d6c21f0543b2187329461cffd466"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f60d6c21f0543b2187329461cffd466">&#9670;&nbsp;</a></span>hal_memset_s</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef struct <a class="el" href="a05900.html">i2c_sam0_instance</a> <a class="el" href="a01760.html#abc52bbb3cf5a8db38f9929b63d8d2171">i2c_sam0_instance_t</a></td>
+          <td class="memname">#define hal_memset_s&#160;&#160;&#160;<a class="el" href="a01751.html#ac37b319dabc5b9492a422f6d3d4e118b">atcab_memset_s</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="aa09b1baa19c0d9232b191bffe0a200c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa09b1baa19c0d9232b191bffe0a200c0">&#9670;&nbsp;</a></span>sam0_change_baudrate</h2>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a305f00f444730e14f8e92b6423ca2ea7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a305f00f444730e14f8e92b6423ca2ea7">&#9670;&nbsp;</a></span>lib_strcasestr()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* sam0_change_baudrate) (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint32_t speed)</td>
+          <td class="memname">char* lib_strcasestr </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>haystack</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>needle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Search for a substring in a case insenstive format. </p>
 
 </div>
 </div>
@@ -149,7 +168,7 @@ Typedefs</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_381c8d42bbdb26858cb443b28149b615.html">hal</a></li><li class="navelem"><a class="el" href="a01760.html">hal_sam0_i2c_asf.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ac97eb41c075753f4733aae2239a389a.html">cryptauthlib-v3.4.0_</a></li><li class="navelem"><a class="el" href="dir_cff6911667c1a559ef1c32fb411fa0d0.html">lib</a></li><li class="navelem"><a class="el" href="a01760.html">atca_platform.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

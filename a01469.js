@@ -1,15 +1,12 @@
 var a01469 =
 [
-    [ "ATCADeviceType", "a05730.html#gafb234ccd6a80d09c0efbe336c2354267", [
-      [ "ATSHA204A", "a05730.html#ggafb234ccd6a80d09c0efbe336c2354267a91729743caf308351a2b47c58536d268", null ],
-      [ "ATECC108A", "a05730.html#ggafb234ccd6a80d09c0efbe336c2354267a20efd97b5b1001eec4a52e0ed5bf594c", null ],
-      [ "ATECC508A", "a05730.html#ggafb234ccd6a80d09c0efbe336c2354267af463439df0f95803fc57cc58bbff2dae", null ],
-      [ "ATECC608A", "a05730.html#ggafb234ccd6a80d09c0efbe336c2354267a183a6224a93e6c2b82c6dc0e132398bf", null ],
-      [ "ATECC608B", "a05730.html#ggafb234ccd6a80d09c0efbe336c2354267a6139512f9df589306dfc579a4e670d5a", null ],
-      [ "ATECC608", "a05730.html#ggafb234ccd6a80d09c0efbe336c2354267af2f230354639df34317e81b1d9fb3dfe", null ],
-      [ "ATSHA206A", "a05730.html#ggafb234ccd6a80d09c0efbe336c2354267a6816489510886c97abe08d80c7207f3f", null ],
-      [ "ECC204", "a05730.html#ggafb234ccd6a80d09c0efbe336c2354267a1a8bdd24116c11dbe5e8d7fa350315de", null ],
-      [ "TA100", "a05730.html#ggafb234ccd6a80d09c0efbe336c2354267a4af1fa9171e503676c56f45144d3b2f0", null ],
-      [ "ATCA_DEV_UNKNOWN", "a05730.html#ggafb234ccd6a80d09c0efbe336c2354267a3488f672341dda0ad20508ad888280ad", null ]
-    ] ]
+    [ "pkcs11_config_cert", "a08589.html#ga7afb784fad2dd8b8b2befd6159e2a053", null ],
+    [ "pkcs11_config_init_cert", "a08589.html#ga1de4cccdfd83ce723eb050e09266a3ae", null ],
+    [ "pkcs11_config_init_private", "a08589.html#gab36c9d4f392c0eb613fb3833dd852495", null ],
+    [ "pkcs11_config_init_public", "a08589.html#gad8164c3b6e1c4287b665ce18c143bdd3", null ],
+    [ "pkcs11_config_init_secret", "a08589.html#gad555f5477b8ea4ed38abba20bc3ffa56", null ],
+    [ "pkcs11_config_key", "a08589.html#ga0e5ec966dd01f9eb6f1cc2f4b3085f9f", null ],
+    [ "pkcs11_config_load", "a08589.html#ga4804f397bd49dd23ec903e4249e22d9e", null ],
+    [ "pkcs11_config_load_objects", "a08589.html#gafbf88cd1298ee01568385688019ba80c", null ],
+    [ "pkcs11_config_remove_object", "a08589.html#ga02347d90fe77c323677712e685aa8c6a", null ]
 ];

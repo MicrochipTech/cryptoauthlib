@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_mbedtls_ecdh.c File Reference</title>
+<title>CryptoAuthLib: calib_basic.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.4.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -84,17 +84,90 @@ $(document).ready(function(){initNavTree('a01832.html',''); initResizable(); });
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">atca_mbedtls_ecdh.c File Reference</div>  </div>
+<div class="title">calib_basic.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;mbedtls/config.h&quot;</code><br />
-</div></div><!-- contents -->
+<div class="textblock"><code>#include &quot;<a class="el" href="a01844_source.html">calib_config_check.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01841_source.html">calib_command.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01859_source.html">calib_execution.h</a>&quot;</code><br />
+</div>
+<p><a href="a01832_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25443.html">atca_sha256_ctx</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga7dc326cdf6fbade0eee6081225a379de"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a25443.html">atca_sha256_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#ga7dc326cdf6fbade0eee6081225a379de">atca_sha256_ctx_t</a></td></tr>
+<tr class="separator:ga7dc326cdf6fbade0eee6081225a379de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4c1f62e502c168be9261d2af921e78ba"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a25344.html#ga7dc326cdf6fbade0eee6081225a379de">atca_sha256_ctx_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#ga4c1f62e502c168be9261d2af921e78ba">atca_hmac_sha256_ctx_t</a></td></tr>
+<tr class="separator:ga4c1f62e502c168be9261d2af921e78ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gafbc037d57a4cc4fec6a2f291736170cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#gafbc037d57a4cc4fec6a2f291736170cb">calib_wakeup</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:gafbc037d57a4cc4fec6a2f291736170cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">wakeup the CryptoAuth device  <a href="a25344.html#gafbc037d57a4cc4fec6a2f291736170cb">More...</a><br /></td></tr>
+<tr class="separator:gafbc037d57a4cc4fec6a2f291736170cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59750d83d93368b2944f57bb38bf4d1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#ga59750d83d93368b2944f57bb38bf4d1f">calib_idle</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:ga59750d83d93368b2944f57bb38bf4d1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">idle the CryptoAuth device  <a href="a25344.html#ga59750d83d93368b2944f57bb38bf4d1f">More...</a><br /></td></tr>
+<tr class="separator:ga59750d83d93368b2944f57bb38bf4d1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad26b70951a0da6d80fb98027faae7a1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#gad26b70951a0da6d80fb98027faae7a1f">calib_sleep</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:gad26b70951a0da6d80fb98027faae7a1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">invoke sleep on the CryptoAuth device  <a href="a25344.html#gad26b70951a0da6d80fb98027faae7a1f">More...</a><br /></td></tr>
+<tr class="separator:gad26b70951a0da6d80fb98027faae7a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2167248c704fb8d6864760c066bec13b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#ga2167248c704fb8d6864760c066bec13b">_calib_exit</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:ga2167248c704fb8d6864760c066bec13b"><td class="mdescLeft">&#160;</td><td class="mdescRight">common cleanup code which idles the device after any operation  <a href="a25344.html#ga2167248c704fb8d6864760c066bec13b">More...</a><br /></td></tr>
+<tr class="separator:ga2167248c704fb8d6864760c066bec13b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae51a67781e9e4618e669db1c999e6ec2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#gae51a67781e9e4618e669db1c999e6ec2">calib_get_addr</a> (uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t *addr)</td></tr>
+<tr class="memdesc:gae51a67781e9e4618e669db1c999e6ec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the address given the zone, slot, block, and offset.  <a href="a25344.html#gae51a67781e9e4618e669db1c999e6ec2">More...</a><br /></td></tr>
+<tr class="separator:gae51a67781e9e4618e669db1c999e6ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga023735b1c0b10e70832d9a957bc99ae3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#ga023735b1c0b10e70832d9a957bc99ae3">calib_get_zone_size</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t zone, uint16_t slot, size_t *size)</td></tr>
+<tr class="memdesc:ga023735b1c0b10e70832d9a957bc99ae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the specified zone in bytes.  <a href="a25344.html#ga023735b1c0b10e70832d9a957bc99ae3">More...</a><br /></td></tr>
+<tr class="separator:ga023735b1c0b10e70832d9a957bc99ae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6c9404e7b3b4a42c67080b84610352ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#ga6c9404e7b3b4a42c67080b84610352ca">calib_ecc204_get_addr</a> (uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t *addr)</td></tr>
+<tr class="separator:ga6c9404e7b3b4a42c67080b84610352ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga53d3cce5a7f1edfb8386c92d63d3cb5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#ga53d3cce5a7f1edfb8386c92d63d3cb5c">calib_is_locked</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t zone, bool *is_locked)</td></tr>
+<tr class="separator:ga53d3cce5a7f1edfb8386c92d63d3cb5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa99ca9ceda671a64614e9ecf4297c9d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#gaa99ca9ceda671a64614e9ecf4297c9d9">calib_is_locked_ext</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t zone, bool *is_locked)</td></tr>
+<tr class="separator:gaa99ca9ceda671a64614e9ecf4297c9d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadfd40a59b7398ab8a963aa5869a00eab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#gadfd40a59b7398ab8a963aa5869a00eab">calib_is_slot_locked</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t slot, bool *is_locked)</td></tr>
+<tr class="separator:gadfd40a59b7398ab8a963aa5869a00eab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga81b111170b907f33eb925a30f675f7b2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#ga81b111170b907f33eb925a30f675f7b2">calib_is_private</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t slot, bool *is_private)</td></tr>
+<tr class="memdesc:ga81b111170b907f33eb925a30f675f7b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command, which reads the configuration zone to see if the specified slot is locked.  <a href="a25344.html#ga81b111170b907f33eb925a30f675f7b2">More...</a><br /></td></tr>
+<tr class="separator:ga81b111170b907f33eb925a30f675f7b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga48afea3ed790063508de2f9e5b1657fb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#ga48afea3ed790063508de2f9e5b1657fb">calib_ecc204_is_locked</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t zone, bool *is_locked)</td></tr>
+<tr class="separator:ga48afea3ed790063508de2f9e5b1657fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab32dd75e53f13eff942ab94919d7dc14"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#gab32dd75e53f13eff942ab94919d7dc14">calib_ecc204_is_data_locked</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, bool *is_locked)</td></tr>
+<tr class="separator:gab32dd75e53f13eff942ab94919d7dc14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4c2e8a2404a791ac525acf9989d8bada"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#ga4c2e8a2404a791ac525acf9989d8bada">calib_ecc204_is_config_locked</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, bool *is_locked)</td></tr>
+<tr class="separator:ga4c2e8a2404a791ac525acf9989d8bada"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga00e2fc1d5b517b275066c31be0be2304"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a25341.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#ga00e2fc1d5b517b275066c31be0be2304">calib_get_devicetype</a> (uint8_t revision[4])</td></tr>
+<tr class="memdesc:ga00e2fc1d5b517b275066c31be0be2304"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse the revision field to get the device type.  <a href="a25344.html#ga00e2fc1d5b517b275066c31be0be2304">More...</a><br /></td></tr>
+<tr class="separator:ga00e2fc1d5b517b275066c31be0be2304"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc7aff4f1707fbe0a05cf416955f43b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#gabc7aff4f1707fbe0a05cf416955f43b0">calib_info_base</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t mode, uint16_t param2, uint8_t *out_data)</td></tr>
+<tr class="memdesc:gabc7aff4f1707fbe0a05cf416955f43b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues an Info command, which return internal device information and can control GPIO and the persistent latch.  <a href="a25344.html#gabc7aff4f1707fbe0a05cf416955f43b0">More...</a><br /></td></tr>
+<tr class="separator:gabc7aff4f1707fbe0a05cf416955f43b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga132cfbb5c581c5cc5adf5350d4161966"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#ga132cfbb5c581c5cc5adf5350d4161966">calib_info</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint8_t *revision)</td></tr>
+<tr class="memdesc:ga132cfbb5c581c5cc5adf5350d4161966"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the Info command to get the device revision (DevRev).  <a href="a25344.html#ga132cfbb5c581c5cc5adf5350d4161966">More...</a><br /></td></tr>
+<tr class="separator:ga132cfbb5c581c5cc5adf5350d4161966"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga39e3e31e7573d3d73f4b757db7704cce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#ga39e3e31e7573d3d73f4b757db7704cce">calib_info_privkey_valid</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t key_id, uint8_t *is_valid)</td></tr>
+<tr class="memdesc:ga39e3e31e7573d3d73f4b757db7704cce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use Info command to check ECC Private key stored in key slot is valid or not.  <a href="a25344.html#ga39e3e31e7573d3d73f4b757db7704cce">More...</a><br /></td></tr>
+<tr class="separator:ga39e3e31e7573d3d73f4b757db7704cce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacd82ed053319a63bbe06755632e377bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01763.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25344.html#gacd82ed053319a63bbe06755632e377bc">calib_info_lock_status</a> (<a class="el" href="a25341.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> device, uint16_t param2, uint8_t *is_locked)</td></tr>
+<tr class="separator:gacd82ed053319a63bbe06755632e377bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_6667dc41dbf13a9cbb98c160a7cb22da.html">mbedtls</a></li><li class="navelem"><a class="el" href="a01832.html">atca_mbedtls_ecdh.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ac97eb41c075753f4733aae2239a389a.html">cryptauthlib-v3.4.0_</a></li><li class="navelem"><a class="el" href="dir_cff6911667c1a559ef1c32fb411fa0d0.html">lib</a></li><li class="navelem"><a class="el" href="dir_cc347709d196869109d4b86e0c9b33b5.html">calib</a></li><li class="navelem"><a class="el" href="a01832.html">calib_basic.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

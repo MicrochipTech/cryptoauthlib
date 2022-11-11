@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_device.c File Reference</title>
+<title>CryptoAuthLib: pkcs11_cert.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.3.3</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,43 +85,66 @@ $(document).ready(function(){initNavTree('a01463.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">atca_device.c File Reference</div>  </div>
+<div class="title">pkcs11_cert.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Microchip CryptoAuth device object.  
+<p>PKCS11 Library Certificate Handling.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;<a class="el" href="a01694_source.html">cryptoauthlib.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a01298_source.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01115_source.html">atcacert/atcacert_def.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01103_source.html">atcacert/atcacert_client.h</a>&quot;</code><br />
+<code>#include &quot;pkcs11_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01478_source.html">pkcs11_debug.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01559_source.html">pkcs11_token.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01466_source.html">pkcs11_cert.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01535_source.html">pkcs11_os.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a01565_source.html">pkcs11_util.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gad5e12e12d3030e28d75164286df9e5e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a05730.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05730.html#gad5e12e12d3030e28d75164286df9e5e9">newATCADevice</a> (<a class="el" href="a05760.html">ATCAIfaceCfg</a> *cfg)</td></tr>
-<tr class="memdesc:gad5e12e12d3030e28d75164286df9e5e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor for a Microchip CryptoAuth device  <a href="a05730.html#gad5e12e12d3030e28d75164286df9e5e9">More...</a><br /></td></tr>
-<tr class="separator:gad5e12e12d3030e28d75164286df9e5e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac087cf04cd5bd6ff2e026d89bfbf5e12"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05730.html#gac087cf04cd5bd6ff2e026d89bfbf5e12">deleteATCADevice</a> (<a class="el" href="a05730.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> *ca_dev)</td></tr>
-<tr class="memdesc:gac087cf04cd5bd6ff2e026d89bfbf5e12"><td class="mdescLeft">&#160;</td><td class="mdescRight">destructor for a device NULLs reference after object is freed  <a href="a05730.html#gac087cf04cd5bd6ff2e026d89bfbf5e12">More...</a><br /></td></tr>
-<tr class="separator:gac087cf04cd5bd6ff2e026d89bfbf5e12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8eec7f2190d1f9bda6684f5d2177db15"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05730.html#ga8eec7f2190d1f9bda6684f5d2177db15">initATCADevice</a> (<a class="el" href="a05760.html">ATCAIfaceCfg</a> *cfg, <a class="el" href="a05730.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> ca_dev)</td></tr>
-<tr class="memdesc:ga8eec7f2190d1f9bda6684f5d2177db15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializer for an Microchip CryptoAuth device.  <a href="a05730.html#ga8eec7f2190d1f9bda6684f5d2177db15">More...</a><br /></td></tr>
-<tr class="separator:ga8eec7f2190d1f9bda6684f5d2177db15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f98e29cffa06446fc91b329703606af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05730.html#ga3f98e29cffa06446fc91b329703606af">atGetIFace</a> (<a class="el" href="a05730.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> dev)</td></tr>
-<tr class="memdesc:ga3f98e29cffa06446fc91b329703606af"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns a reference to the ATCAIface interface object for the device  <a href="a05730.html#ga3f98e29cffa06446fc91b329703606af">More...</a><br /></td></tr>
-<tr class="separator:ga3f98e29cffa06446fc91b329703606af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab729e6c838c0a247d4f226fb92492d96"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05730.html#gab729e6c838c0a247d4f226fb92492d96">releaseATCADevice</a> (<a class="el" href="a05730.html#gaa94f7bb4af0a3d6735225cc85d92cb50">ATCADevice</a> ca_dev)</td></tr>
-<tr class="memdesc:gab729e6c838c0a247d4f226fb92492d96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release any resources associated with the device.  <a href="a05730.html#gab729e6c838c0a247d4f226fb92492d96">More...</a><br /></td></tr>
-<tr class="separator:gab729e6c838c0a247d4f226fb92492d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c1c4563e1c3b21f009966bfbeb90541"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga7c1c4563e1c3b21f009966bfbeb90541">pkcs11_cert_get_encoded</a> (<a class="el" href="a01571.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:ga7c1c4563e1c3b21f009966bfbeb90541"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga80a4d4deaad0e8893ff9b6cecb594c5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga80a4d4deaad0e8893ff9b6cecb594c5c">pkcs11_cert_get_type</a> (<a class="el" href="a01571.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:ga80a4d4deaad0e8893ff9b6cecb594c5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga710c95124c627373e383d123c0ab5b1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga710c95124c627373e383d123c0ab5b1f">pkcs11_cert_get_subject</a> (<a class="el" href="a01571.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:ga710c95124c627373e383d123c0ab5b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae42580eee339e29aab9698251c3e7e2a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#gae42580eee339e29aab9698251c3e7e2a">pkcs11_cert_get_subject_key_id</a> (<a class="el" href="a01571.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:gae42580eee339e29aab9698251c3e7e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8615e62ff44d3df242534e5805e26a82"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga8615e62ff44d3df242534e5805e26a82">pkcs11_cert_get_authority_key_id</a> (<a class="el" href="a01571.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:ga8615e62ff44d3df242534e5805e26a82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga96af56861fd0c9e00b96ff6243b84447"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga96af56861fd0c9e00b96ff6243b84447">pkcs11_cert_get_trusted_flag</a> (<a class="el" href="a01571.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:ga96af56861fd0c9e00b96ff6243b84447"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga34fcca1dafb0a410d242fcb5ff3d69a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01571.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga34fcca1dafb0a410d242fcb5ff3d69a5">pkcs11_cert_x509_write</a> (<a class="el" href="a01571.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pObject, <a class="el" href="a01571.html#a5e825285ada96a9920d361d33698ce04">CK_ATTRIBUTE_PTR</a> pAttribute)</td></tr>
+<tr class="separator:ga34fcca1dafb0a410d242fcb5ff3d69a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga8de4193ede04a12ab4e44b8df9eec478"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01460.html#a5808b2771bb5bd3fdb344fd9b33b48ed">pkcs11_attrib_model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#ga8de4193ede04a12ab4e44b8df9eec478">pkcs11_cert_x509public_attributes</a> []</td></tr>
+<tr class="separator:ga8de4193ede04a12ab4e44b8df9eec478"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd21e04ab9248b3d58c3f5e4bd076ac9"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#gafd21e04ab9248b3d58c3f5e4bd076ac9">pkcs11_cert_x509public_attributes_count</a> = sizeof( <a class="el" href="a08589.html#ga8de4193ede04a12ab4e44b8df9eec478">pkcs11_cert_x509public_attributes</a> ) / sizeof( <a class="el" href="a08589.html#ga8de4193ede04a12ab4e44b8df9eec478">pkcs11_cert_x509public_attributes</a> [0])</td></tr>
+<tr class="separator:gafd21e04ab9248b3d58c3f5e4bd076ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc10a1f1b90bc7d2fb047db0af539e80"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01460.html#a5808b2771bb5bd3fdb344fd9b33b48ed">pkcs11_attrib_model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#gabc10a1f1b90bc7d2fb047db0af539e80">pkcs11_cert_wtlspublic_attributes</a> []</td></tr>
+<tr class="separator:gabc10a1f1b90bc7d2fb047db0af539e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad8232cd440c12745d24471e2676a117f"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#gad8232cd440c12745d24471e2676a117f">pkcs11_cert_wtlspublic_attributes_count</a> = sizeof( <a class="el" href="a08589.html#gabc10a1f1b90bc7d2fb047db0af539e80">pkcs11_cert_wtlspublic_attributes</a> ) / sizeof( <a class="el" href="a08589.html#gabc10a1f1b90bc7d2fb047db0af539e80">pkcs11_cert_wtlspublic_attributes</a> [0])</td></tr>
+<tr class="separator:gad8232cd440c12745d24471e2676a117f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa471eb33699e2cba5dc3cc50a2d8df7"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01460.html#a5808b2771bb5bd3fdb344fd9b33b48ed">pkcs11_attrib_model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#gafa471eb33699e2cba5dc3cc50a2d8df7">pkcs11_cert_x509_attributes</a> []</td></tr>
+<tr class="separator:gafa471eb33699e2cba5dc3cc50a2d8df7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc2b14c7a052fdc0bb751259d28dfdc0"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01571.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a08589.html#gadc2b14c7a052fdc0bb751259d28dfdc0">pkcs11_cert_x509_attributes_count</a> = sizeof( <a class="el" href="a08589.html#gafa471eb33699e2cba5dc3cc50a2d8df7">pkcs11_cert_x509_attributes</a> ) / sizeof( <a class="el" href="a08589.html#gafa471eb33699e2cba5dc3cc50a2d8df7">pkcs11_cert_x509_attributes</a> [0])</td></tr>
+<tr class="separator:gadc2b14c7a052fdc0bb751259d28dfdc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Microchip CryptoAuth device object. </p>
+<div class="textblock"><p>PKCS11 Library Certificate Handling. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="a01463.html">atca_device.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_de8763fbd32fa6c533e8e0dca5fc697b.html">cryptauthlib-v3.3.3_</a></li><li class="navelem"><a class="el" href="dir_76c6e33311c14dc6ff7c294bf952470f.html">lib</a></li><li class="navelem"><a class="el" href="dir_9bd2612bd55169c9881c7cd36a33cdb4.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01463.html">pkcs11_cert.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

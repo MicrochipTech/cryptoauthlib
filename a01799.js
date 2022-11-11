@@ -1,11 +1,10 @@
 var a01799 =
 [
-    [ "atca_uart_host_s", "a05896.html", "a05896" ],
-    [ "atca_uart_host_t", "a01799.html#aa5e760da2db59b4d54f61979f56cce86", null ],
-    [ "hal_uart_control", "a01799.html#a41ed83bbc8e0fd3abea7beb513fbdb96", null ],
-    [ "hal_uart_init", "a01799.html#afb6d836af248aed1afe715ae2f2f7c2b", null ],
-    [ "hal_uart_post_init", "a01799.html#a1c5f894db539ea5cb0d5ae0fa38449d7", null ],
-    [ "hal_uart_receive", "a01799.html#a1a0256b61c3579519f8cc6d6157bc126", null ],
-    [ "hal_uart_release", "a01799.html#a1e0c17bf7342c21ca69d066eefa1f1eb", null ],
-    [ "hal_uart_send", "a01799.html#aae0b332270c1e8df223b430d8e8ddbbc", null ]
+    [ "atcacert_der_adjust_length", "a25343.html#ga165018175f52421ea26fb33ccf335108", null ],
+    [ "atcacert_der_dec_ecdsa_sig_value", "a25343.html#gac3f22b75f15e8508f35d99b95d955842", null ],
+    [ "atcacert_der_dec_integer", "a25343.html#ga3b095e11adc55a61e3cfb2957d0c6c77", null ],
+    [ "atcacert_der_dec_length", "a25343.html#gaeee4091e249b8fc202d5126a8374eeb1", null ],
+    [ "atcacert_der_enc_ecdsa_sig_value", "a25343.html#ga3583ada6da51d31cfe819894e8a9deeb", null ],
+    [ "atcacert_der_enc_integer", "a25343.html#gaf156257cda87df879f54c07e80bc0e8d", null ],
+    [ "atcacert_der_enc_length", "a25343.html#gaafc9ef8e0164226481b670fde0223e13", null ]
 ];

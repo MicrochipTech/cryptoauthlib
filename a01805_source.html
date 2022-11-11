@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: kit_protocol.h Source File</title>
+<title>CryptoAuthLib: atcacert_host_hw.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.4.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,77 +85,51 @@ $(document).ready(function(){initNavTree('a01805_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">kit_protocol.h</div>  </div>
+<div class="title">atcacert_host_hw.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a01805.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#ifndef KIT_PROTOCOL_H_</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#define KIT_PROTOCOL_H_</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01694.html">cryptoauthlib.h</a>&quot;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#ifndef ATCACERT_HOST_HA_H</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#define ATCACERT_HOST_HA_H</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01793.html">atcacert_def.h</a>&quot;</span></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">// Define this for debugging communication</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">//#define KIT_DEBUG</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">// The number of bytes to wrap a command in kit protocol.  sizeof(&quot;d:send()\n&lt;null&gt;&quot;)</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="a05735.html#ga8a649555029d4f23edfc15a8c01b2d3d">   45</a></span>&#160;<span class="preprocessor">#define KIT_TX_WRAP_SIZE    (10)</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">// The number of bytes to wrap a response in kit protocol.  sizeof(&quot;&lt;KIT_MSG_SIZE&gt;00()\n&lt;null&gt;&quot;)</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="a05735.html#ga0810d89c328e48fd91eb604323cca4e9">   48</a></span>&#160;<span class="preprocessor">#define KIT_MSG_SIZE        (32)</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="a05735.html#ga59e33124fc2fa800cc9c90a6ee3ff543">   49</a></span>&#160;<span class="preprocessor">#define KIT_RX_WRAP_SIZE    (KIT_MSG_SIZE + 6)</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="a05735.html#gabcd34c3420940261f5740d665a57899b">   55</a></span>&#160;<a class="code" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a05735.html#gabcd34c3420940261f5740d665a57899b">kit_init</a>(<a class="code" href="a05800.html">ATCAIface</a> iface, <a class="code" href="a05760.html">ATCAIfaceCfg</a>* cfg);</div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="a05735.html#ga705fcfdff5248c2aa97205f08615074c">   56</a></span>&#160;<a class="code" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a05735.html#ga705fcfdff5248c2aa97205f08615074c">kit_post_init</a>(<a class="code" href="a05800.html">ATCAIface</a> iface);</div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="a05735.html#gacd6849349e1ba6ccbb4587a1d80562c8">   57</a></span>&#160;<a class="code" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a05735.html#gacd6849349e1ba6ccbb4587a1d80562c8">kit_send</a>(<a class="code" href="a05800.html">ATCAIface</a> iface, uint8_t word_address, uint8_t* txdata, <span class="keywordtype">int</span> txlength);</div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="a05735.html#gac31292c951353a25a81c7fe1308589c0">   58</a></span>&#160;<a class="code" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a05735.html#gac31292c951353a25a81c7fe1308589c0">kit_receive</a>(<a class="code" href="a05800.html">ATCAIface</a> iface, uint8_t word_address, uint8_t* rxdata, uint16_t* rxsize);</div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="a05735.html#ga579466eb74d580602904477ec8fde7e5">   59</a></span>&#160;<a class="code" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a05735.html#ga579466eb74d580602904477ec8fde7e5">kit_control</a>(<a class="code" href="a05800.html">ATCAIface</a> iface, uint8_t option, <span class="keywordtype">void</span>* param, <span class="keywordtype">size_t</span> paramlen);</div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="a05735.html#ga686968b014491551d2e348ca6be05fd3">   60</a></span>&#160;<a class="code" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a05735.html#ga686968b014491551d2e348ca6be05fd3">kit_release</a>(<span class="keywordtype">void</span>* hal_data);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="a05735.html#ga31ef9cc0a7c68e3e9c87f8705567cf0c">   62</a></span>&#160;<a class="code" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a05735.html#ga31ef9cc0a7c68e3e9c87f8705567cf0c">kit_wrap_cmd</a>(<span class="keyword">const</span> uint8_t* txdata, <span class="keywordtype">int</span> txlength, <span class="keywordtype">char</span>* pkitbuf, <span class="keywordtype">int</span>* nkitbuf, <span class="keywordtype">char</span> target);</div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="a05735.html#ga373b86f7433cf73db75616aa83e14d51">   63</a></span>&#160;<a class="code" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a05735.html#ga373b86f7433cf73db75616aa83e14d51">kit_parse_rsp</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* pkitbuf, <span class="keywordtype">int</span> nkitbuf, uint8_t* kitstatus, uint8_t* rxdata, <span class="keywordtype">int</span>* nrxdata);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="a05735.html#gaf7ce58d02b067b956abd32127f5519e9">   65</a></span>&#160;<a class="code" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a05735.html#gaf7ce58d02b067b956abd32127f5519e9">kit_wake</a>(<a class="code" href="a05800.html">ATCAIface</a> iface);</div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="a05735.html#gaeaee19ff7623f0eab9839e68dae583af">   66</a></span>&#160;<a class="code" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a05735.html#gaeaee19ff7623f0eab9839e68dae583af">kit_idle</a>(<a class="code" href="a05800.html">ATCAIface</a> iface);</div>
-<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="a05735.html#gaf6054a0c971830411d5008b94923bdd8">   67</a></span>&#160;<a class="code" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a05735.html#gaf6054a0c971830411d5008b94923bdd8">kit_sleep</a>(<a class="code" href="a05800.html">ATCAIface</a> iface);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">// Inform function naming when compiling in C++</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="a25343.html#ga81e92ea606e86051afa84f2fac4898d6">   63</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a25343.html#ga81e92ea606e86051afa84f2fac4898d6">atcacert_verify_cert_hw</a>(<span class="keyword">const</span> <a class="code" href="a25435.html">atcacert_def_t</a>* cert_def,</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                            <span class="keyword">const</span> uint8_t*        cert,</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                            <span class="keywordtype">size_t</span>                cert_size,</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                            <span class="keyword">const</span> uint8_t         ca_public_key[64]);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="a05735.html#ga554072f32204a0eb8d7b8c7931e43343">kit_id_from_devtype</a>(<a class="code" href="a05730.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a> devtype);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="a05735.html#ga31075898964b61f4877ba882477b71c3">kit_interface_from_kittype</a>(<a class="code" href="a05731.html#ga4a5c4554e7355754d28123f08f05a060">ATCAKitType</a> kittype);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">#endif // KIT_PROTOCOL_H</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="a25343.html#ga208c1ea765f192bd86b26964fbb5edcb">   77</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a25343.html#ga208c1ea765f192bd86b26964fbb5edcb">atcacert_gen_challenge_hw</a>(uint8_t challenge[32]);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="a25343.html#gafeffa7a36a7b5a343f5f568d090e8eed">   97</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="a25343.html#gafeffa7a36a7b5a343f5f568d090e8eed">atcacert_verify_response_hw</a>(<span class="keyword">const</span> uint8_t device_public_key[64],</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                                <span class="keyword">const</span> uint8_t challenge[32],</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                                <span class="keyword">const</span> uint8_t response[64]);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;}</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aa05735_html_ga686968b014491551d2e348ca6be05fd3"><div class="ttname"><a href="a05735.html#ga686968b014491551d2e348ca6be05fd3">kit_release</a></div><div class="ttdeci">ATCA_STATUS kit_release(void *hal_data)</div></div>
-<div class="ttc" id="aa01694_html"><div class="ttname"><a href="a01694.html">cryptoauthlib.h</a></div><div class="ttdoc">Single aggregation point for all CryptoAuthLib header files.</div></div>
-<div class="ttc" id="aa05760_html"><div class="ttname"><a href="a05760.html">ATCAIfaceCfg</a></div><div class="ttdef"><b>Definition:</b> atca_iface.h:83</div></div>
-<div class="ttc" id="aa05735_html_ga373b86f7433cf73db75616aa83e14d51"><div class="ttname"><a href="a05735.html#ga373b86f7433cf73db75616aa83e14d51">kit_parse_rsp</a></div><div class="ttdeci">ATCA_STATUS kit_parse_rsp(const char *pkitbuf, int nkitbuf, uint8_t *kitstatus, uint8_t *rxdata, int *nrxdata)</div></div>
-<div class="ttc" id="aa05735_html_ga554072f32204a0eb8d7b8c7931e43343"><div class="ttname"><a href="a05735.html#ga554072f32204a0eb8d7b8c7931e43343">kit_id_from_devtype</a></div><div class="ttdeci">const char * kit_id_from_devtype(ATCADeviceType devtype)</div><div class="ttdef"><b>Definition:</b> kit_protocol.c:65</div></div>
-<div class="ttc" id="aa05735_html_gac31292c951353a25a81c7fe1308589c0"><div class="ttname"><a href="a05735.html#gac31292c951353a25a81c7fe1308589c0">kit_receive</a></div><div class="ttdeci">ATCA_STATUS kit_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxsize)</div></div>
-<div class="ttc" id="aa05735_html_gaf7ce58d02b067b956abd32127f5519e9"><div class="ttname"><a href="a05735.html#gaf7ce58d02b067b956abd32127f5519e9">kit_wake</a></div><div class="ttdeci">ATCA_STATUS kit_wake(ATCAIface iface)</div></div>
-<div class="ttc" id="aa05735_html_gaf6054a0c971830411d5008b94923bdd8"><div class="ttname"><a href="a05735.html#gaf6054a0c971830411d5008b94923bdd8">kit_sleep</a></div><div class="ttdeci">ATCA_STATUS kit_sleep(ATCAIface iface)</div></div>
-<div class="ttc" id="aa05731_html_ga4a5c4554e7355754d28123f08f05a060"><div class="ttname"><a href="a05731.html#ga4a5c4554e7355754d28123f08f05a060">ATCAKitType</a></div><div class="ttdeci">ATCAKitType</div><div class="ttdef"><b>Definition:</b> atca_iface.h:71</div></div>
-<div class="ttc" id="aa05735_html_gabcd34c3420940261f5740d665a57899b"><div class="ttname"><a href="a05735.html#gabcd34c3420940261f5740d665a57899b">kit_init</a></div><div class="ttdeci">ATCA_STATUS kit_init(ATCAIface iface, ATCAIfaceCfg *cfg)</div></div>
-<div class="ttc" id="aa05800_html"><div class="ttname"><a href="a05800.html">atca_iface</a></div><div class="ttdoc">atca_iface is the context structure for a configured interface</div><div class="ttdef"><b>Definition:</b> atca_iface.h:180</div></div>
-<div class="ttc" id="aa05735_html_ga579466eb74d580602904477ec8fde7e5"><div class="ttname"><a href="a05735.html#ga579466eb74d580602904477ec8fde7e5">kit_control</a></div><div class="ttdeci">ATCA_STATUS kit_control(ATCAIface iface, uint8_t option, void *param, size_t paramlen)</div></div>
-<div class="ttc" id="aa05735_html_gacd6849349e1ba6ccbb4587a1d80562c8"><div class="ttname"><a href="a05735.html#gacd6849349e1ba6ccbb4587a1d80562c8">kit_send</a></div><div class="ttdeci">ATCA_STATUS kit_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength)</div></div>
-<div class="ttc" id="aa05735_html_ga31075898964b61f4877ba882477b71c3"><div class="ttname"><a href="a05735.html#ga31075898964b61f4877ba882477b71c3">kit_interface_from_kittype</a></div><div class="ttdeci">const char * kit_interface_from_kittype(ATCAKitType kittype)</div><div class="ttdef"><b>Definition:</b> kit_protocol.c:90</div></div>
-<div class="ttc" id="aa05735_html_ga31ef9cc0a7c68e3e9c87f8705567cf0c"><div class="ttname"><a href="a05735.html#ga31ef9cc0a7c68e3e9c87f8705567cf0c">kit_wrap_cmd</a></div><div class="ttdeci">ATCA_STATUS kit_wrap_cmd(const uint8_t *txdata, int txlength, char *pkitbuf, int *nkitbuf, char target)</div></div>
-<div class="ttc" id="aa05735_html_gaeaee19ff7623f0eab9839e68dae583af"><div class="ttname"><a href="a05735.html#gaeaee19ff7623f0eab9839e68dae583af">kit_idle</a></div><div class="ttdeci">ATCA_STATUS kit_idle(ATCAIface iface)</div></div>
-<div class="ttc" id="aa01484_html_a22bd6643f31f1d75dc3e7ea939f468cd"><div class="ttname"><a href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a></div><div class="ttdeci">ATCA_STATUS</div><div class="ttdef"><b>Definition:</b> atca_status.h:43</div></div>
-<div class="ttc" id="aa05735_html_ga705fcfdff5248c2aa97205f08615074c"><div class="ttname"><a href="a05735.html#ga705fcfdff5248c2aa97205f08615074c">kit_post_init</a></div><div class="ttdeci">ATCA_STATUS kit_post_init(ATCAIface iface)</div></div>
-<div class="ttc" id="aa05730_html_gafb234ccd6a80d09c0efbe336c2354267"><div class="ttname"><a href="a05730.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a></div><div class="ttdeci">ATCADeviceType</div><div class="ttdoc">The supported Device type in Cryptoauthlib library.</div><div class="ttdef"><b>Definition:</b> atca_devtypes.h:42</div></div>
+<div class="ttc" id="aa25343_html_ga208c1ea765f192bd86b26964fbb5edcb"><div class="ttname"><a href="a25343.html#ga208c1ea765f192bd86b26964fbb5edcb">atcacert_gen_challenge_hw</a></div><div class="ttdeci">int atcacert_gen_challenge_hw(uint8_t challenge[32])</div><div class="ttdoc">Generate a random challenge to be sent to the client using the RNG on the host's ATECC device.</div></div>
+<div class="ttc" id="aa25343_html_ga81e92ea606e86051afa84f2fac4898d6"><div class="ttname"><a href="a25343.html#ga81e92ea606e86051afa84f2fac4898d6">atcacert_verify_cert_hw</a></div><div class="ttdeci">int atcacert_verify_cert_hw(const atcacert_def_t *cert_def, const uint8_t *cert, size_t cert_size, const uint8_t ca_public_key[64])</div><div class="ttdoc">Verify a certificate against its certificate authority's public key using the host's ATECC device for...</div></div>
+<div class="ttc" id="aa25435_html"><div class="ttname"><a href="a25435.html">atcacert_def_s</a></div><div class="ttdef"><b>Definition:</b> atcacert_def.h:180</div></div>
+<div class="ttc" id="aa25343_html_gafeffa7a36a7b5a343f5f568d090e8eed"><div class="ttname"><a href="a25343.html#gafeffa7a36a7b5a343f5f568d090e8eed">atcacert_verify_response_hw</a></div><div class="ttdeci">int atcacert_verify_response_hw(const uint8_t device_public_key[64], const uint8_t challenge[32], const uint8_t response[64])</div><div class="ttdoc">Verify a client's response to a challenge using the host's ATECC device for crypto functions.</div></div>
+<div class="ttc" id="aa01793_html"><div class="ttname"><a href="a01793.html">atcacert_def.h</a></div><div class="ttdoc">Declarations for certificates related to ECC CryptoAuthentication devices. These are the definitions ...</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_381c8d42bbdb26858cb443b28149b615.html">hal</a></li><li class="navelem"><a class="el" href="a01805.html">kit_protocol.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ac97eb41c075753f4733aae2239a389a.html">cryptauthlib-v3.4.0_</a></li><li class="navelem"><a class="el" href="dir_cff6911667c1a559ef1c32fb411fa0d0.html">lib</a></li><li class="navelem"><a class="el" href="dir_9ba6923e882ec25e6b2d9c3d59f5aadf.html">atcacert</a></li><li class="navelem"><a class="el" href="a01805.html">atcacert_host_hw.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

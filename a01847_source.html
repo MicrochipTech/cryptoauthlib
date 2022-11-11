@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: cryptoki.h Source File</title>
+<title>CryptoAuthLib: calib_basic.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">3.4.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,122 +85,582 @@ $(document).ready(function(){initNavTree('a01847_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">cryptoki.h</div>  </div>
+<div class="title">calib_basic.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="a01847.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Copyright (c) 2017 SURFnet bv</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * All rights reserved.</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * Redistribution and use in source and binary forms, with or without</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> * modification, are permitted provided that the following conditions</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"> * are met:</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"> * 1. Redistributions of source code must retain the above copyright</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"> *    notice, this list of conditions and the following disclaimer.</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment"> * 2. Redistributions in binary form must reproduce the above copyright</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"> *    notice, this list of conditions and the following disclaimer in the</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment"> *    documentation and/or other materials provided with the distribution.</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"> * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS&#39;&#39; AND ANY EXPRESS OR</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"> * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment"> * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment"> * ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment"> * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"> * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"> * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment"> * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment"> * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment"> * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">/*****************************************************************************</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">   cryptoki.h</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">   Set the PKCS#11 macros.</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">*****************************************************************************/</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#ifndef _CRYPTOKI_H</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#define _CRYPTOKI_H</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">//#if defined(_WIN32) || defined(__GNUC__)</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">//#pragma pack(push, cryptoki, 1)</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">//#endif</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">// Generic helper definitions for shared library support</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#if defined _WIN32 || defined __CYGWIN__</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#define PKCS11_HELPER_DLL_IMPORT __declspec(dllimport)</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#define PKCS11_HELPER_DLL_EXPORT __declspec(dllexport)</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#define PKCS11_HELPER_DLL_LOCAL</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#if __GNUC__ &gt;= 4</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#define PKCS11_HELPER_DLL_IMPORT __attribute__ ((visibility(&quot;default&quot;)))</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#define PKCS11_HELPER_DLL_EXPORT __attribute__ ((visibility(&quot;default&quot;)))</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#define PKCS11_HELPER_DLL_LOCAL  __attribute__ ((visibility(&quot;hidden&quot;)))</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="a01847.html#ac37148adb3a42adffda5a54520bafc5d">   51</a></span>&#160;<span class="preprocessor">#define PKCS11_HELPER_DLL_IMPORT</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="a01847.html#a836496360d58ba4ce6f85b9bd9db55fa">   52</a></span>&#160;<span class="preprocessor">#define PKCS11_HELPER_DLL_EXPORT</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="a01847.html#ad44738f0fc9eac7e23aed5fd4de71e4d">   53</a></span>&#160;<span class="preprocessor">#define PKCS11_HELPER_DLL_LOCAL</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">// Now we use the generic helper definitions above to define PKCS11_API and PKCS11_LOCAL.</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">// PKCS11_API is used for the public API symbols. It either DLL imports or DLL exports (or does nothing for static build)</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">// PKCS11_LOCAL is used for non-api symbols.</span></div>
+<a href="a01847.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef _CALIB_H</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define _CALIB_H</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">/* Library Configuration */</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01859.html">calib_config_check.h</a>&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01856.html">calib_command.h</a>&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01874.html">calib_execution.h</a>&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a23283.html#gafbc037d57a4cc4fec6a2f291736170cb">calib_wakeup</a>(<a class="code" href="a23307.html">ATCADevice</a> device);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a23283.html#ga59750d83d93368b2944f57bb38bf4d1f">calib_idle</a>(<a class="code" href="a23307.html">ATCADevice</a> device);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a23283.html#gad26b70951a0da6d80fb98027faae7a1f">calib_sleep</a>(<a class="code" href="a23307.html">ATCADevice</a> device);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a23283.html#ga2167248c704fb8d6864760c066bec13b">_calib_exit</a>(<a class="code" href="a23307.html">ATCADevice</a> device);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a23283.html#gae51a67781e9e4618e669db1c999e6ec2">calib_get_addr</a>(uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t* addr);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a23283.html#ga023735b1c0b10e70832d9a957bc99ae3">calib_get_zone_size</a>(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, uint16_t slot, <span class="keywordtype">size_t</span>* size);</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="a23283.html#ga6c9404e7b3b4a42c67080b84610352ca">   27</a></span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a23283.html#ga6c9404e7b3b4a42c67080b84610352ca">calib_ecc204_get_addr</a>(uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t* addr);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">/* Helper Functions */</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="a23283.html#ga53d3cce5a7f1edfb8386c92d63d3cb5c">   30</a></span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a23283.html#ga53d3cce5a7f1edfb8386c92d63d3cb5c">calib_is_locked</a>(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, <span class="keywordtype">bool</span>* is_locked);</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="a23283.html#gaa99ca9ceda671a64614e9ecf4297c9d9">   31</a></span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a23283.html#gaa99ca9ceda671a64614e9ecf4297c9d9">calib_is_locked_ext</a>(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, <span class="keywordtype">bool</span>* is_locked);</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="a23283.html#gadfd40a59b7398ab8a963aa5869a00eab">   32</a></span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a23283.html#gadfd40a59b7398ab8a963aa5869a00eab">calib_is_slot_locked</a>(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t slot, <span class="keywordtype">bool</span>* is_locked);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a23283.html#ga81b111170b907f33eb925a30f675f7b2">calib_is_private</a>(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t slot, <span class="keywordtype">bool</span>* is_private);</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="a23283.html#ga48afea3ed790063508de2f9e5b1657fb">   34</a></span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a23283.html#ga48afea3ed790063508de2f9e5b1657fb">calib_ecc204_is_locked</a>(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, <span class="keywordtype">bool</span>* is_locked);</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="a23283.html#gab32dd75e53f13eff942ab94919d7dc14">   35</a></span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a23283.html#gab32dd75e53f13eff942ab94919d7dc14">calib_ecc204_is_data_locked</a>(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keywordtype">bool</span>* is_locked);</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="a23283.html#ga4c2e8a2404a791ac525acf9989d8bada">   36</a></span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a23283.html#ga4c2e8a2404a791ac525acf9989d8bada">calib_ecc204_is_config_locked</a>(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keywordtype">bool</span>* is_locked);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<a class="code" href="a23280.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a> <a class="code" href="a23283.html#ga00e2fc1d5b517b275066c31be0be2304">calib_get_devicetype</a>(uint8_t revision[4]);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">//AES command functions</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#if CALIB_AES_EN</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_aes(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t mode, uint16_t key_id, <span class="keyword">const</span> uint8_t* aes_in, uint8_t* aes_out);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_aes_encrypt(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, uint8_t key_block, <span class="keyword">const</span> uint8_t* plaintext, uint8_t* ciphertext);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_aes_decrypt(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, uint8_t key_block, <span class="keyword">const</span> uint8_t* ciphertext, uint8_t* plaintext);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#if CALIB_AES_GCM_EN</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_aes_gfm(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keyword">const</span> uint8_t* h, <span class="keyword">const</span> uint8_t* input, uint8_t* output);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">//CheckMAC command functions</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#if CALIB_CHECKMAC_EN</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_checkmac(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t mode, uint16_t key_id, <span class="keyword">const</span> uint8_t *challenge, <span class="keyword">const</span> uint8_t *response, <span class="keyword">const</span> uint8_t *other_data);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">// Counter command functions</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#if CALIB_COUNTER_EN</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_counter(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t mode, uint16_t counter_id, uint32_t* counter_value);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_counter_increment(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t counter_id, uint32_t* counter_value);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_counter_read(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t counter_id, uint32_t* counter_value);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#ifdef PKCS11_DLL_EXPORTS // defined if we are building the PKCS11 DLL (instead of using it)</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#define PKCS11_API PKCS11_HELPER_DLL_EXPORT</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#elif PKCS11_DLL          // defined if PKCS11 is compiled as a DLL</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#define PKCS11_API PKCS11_HELPER_DLL_IMPORT</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#else // PKCS11_DLL is not defined: this means PKCS11 is a static lib.</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="a01847.html#af7a984e00c3e5ad25e84e20064fdacf5">   66</a></span>&#160;<span class="preprocessor">#define PKCS11_API</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#endif // PKCS11_DLL</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="a01847.html#aa160340f6de98552412dd32ce4e4f245">   68</a></span>&#160;<span class="preprocessor">#define PKCS11_LOCAL PKCS11_HELPER_DLL_LOCAL</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment">// 1. CK_PTR: The indirection string for making a pointer to an</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">// object.</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment">// DeriveKey command functions</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#if CALIB_DERIVEKEY_EN</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_derivekey(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t mode, uint16_t key_id, <span class="keyword">const</span> uint8_t* mac);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">// ECDH command functions</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#if CALIB_ECDH_EN</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecdh_base(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t mode, uint16_t key_id, <span class="keyword">const</span> uint8_t* public_key, uint8_t* pms, uint8_t* out_nonce);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecdh(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, <span class="keyword">const</span> uint8_t* public_key, uint8_t* pms);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecdh_tempkey(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keyword">const</span> uint8_t* public_key, uint8_t* pms);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="a01847.html#a423401496b51f5c72a74e5502b47fd7d">   73</a></span>&#160;<span class="preprocessor">#define CK_PTR *</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">// 2. CK_DECLARE_FUNCTION(returnType, name): A macro which makes</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment">// an importable Cryptoki library function declaration out of a</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment">// return type and a function name.</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="a01847.html#a30315d302108bcfb354196f37b16a492">   79</a></span>&#160;<span class="preprocessor">#define CK_DECLARE_FUNCTION(returnType, name) returnType PKCS11_API name</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="comment">// 3. CK_DECLARE_FUNCTION_POINTER(returnType, name): A macro</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">// which makes a Cryptoki API function pointer declaration or</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="comment">// function pointer type declaration out of a return type and a</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="comment">// function name.</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="a01847.html#aad472a68fb8e3eb9ba40169f5180b3b7">   86</a></span>&#160;<span class="preprocessor">#define CK_DECLARE_FUNCTION_POINTER(returnType, name) returnType PKCS11_API(*name)</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#if CALIB_ECDH_ENC_EN</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#if defined(ATCA_USE_CONSTANT_HOST_NONCE)</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecdh_enc(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, <span class="keyword">const</span> uint8_t* public_key, uint8_t* pms, <span class="keyword">const</span> uint8_t* read_key, uint16_t read_key_id);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecdh_enc(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, <span class="keyword">const</span> uint8_t* public_key, uint8_t* pms, <span class="keyword">const</span> uint8_t* read_key, uint16_t read_key_id, <span class="keyword">const</span> uint8_t num_in[<a class="code" href="a01856.html#ad0c3da8203a3be6755e86cda96e00228">NONCE_NUMIN_SIZE</a>]);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* ATCA_USE_CONSTANT_HOST_NONCE */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecdh_ioenc(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, <span class="keyword">const</span> uint8_t* public_key, uint8_t* pms, <span class="keyword">const</span> uint8_t* io_key);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecdh_tempkey_ioenc(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keyword">const</span> uint8_t* public_key, uint8_t* pms, <span class="keyword">const</span> uint8_t* io_key);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* CALIB_ECDH_ENC_EN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="comment">// GenDig command functions</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">#if CALIB_GENDIG_EN</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_gendig(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, uint16_t key_id, <span class="keyword">const</span> uint8_t *other_data, uint8_t other_data_size);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">// 4. CK_CALLBACK_FUNCTION(returnType, name): A macro which makes</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="comment">// a function pointer type for an application callback out of</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">// a return type for the callback and a name for the callback.</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="a01847.html#a5235e6437759c93b8189b124c8c807cf">   92</a></span>&#160;<span class="preprocessor">#define CK_CALLBACK_FUNCTION(returnType, name) returnType(*name)</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">// 5. NULL_PTR: This macro is the value of a NULL pointer.</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">#ifndef NULL_PTR</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="a01847.html#a530f11a96e508d171d28564c8dc20942">   97</a></span>&#160;<span class="preprocessor">#define NULL_PTR 0</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01850.html">pkcs11.h</a>&quot;</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="comment">//#if defined(_WIN32) || defined(__GNUC__)</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment">//#pragma pack(pop, cryptoki)</span></div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="comment">//#endif</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="preprocessor">#endif // !_CRYPTOKI_H</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">// GenKey command functions</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#if CALIB_GENKEY_EN</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_genkey_base(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t mode, uint16_t key_id, <span class="keyword">const</span> uint8_t* other_data, uint8_t* public_key);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_genkey(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, uint8_t* public_key);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_get_pubkey(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, uint8_t* public_key);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">#if CALIB_GENKEY_MAC_EN</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_genkey_mac(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t* public_key, uint8_t* mac);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="comment">// HMAC command functions</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">#if CALIB_HMAC_EN</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_hmac(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t mode, uint16_t key_id, uint8_t* digest);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment">// Info command functions</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a23283.html#gabc7aff4f1707fbe0a05cf416955f43b0">calib_info_base</a>(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t mode, uint16_t param2, uint8_t* out_data);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a23283.html#ga132cfbb5c581c5cc5adf5350d4161966">calib_info</a>(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t* revision);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a23283.html#ga39e3e31e7573d3d73f4b757db7704cce">calib_info_privkey_valid</a>(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, uint8_t* is_valid);</div>
+<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="a23283.html#gacd82ed053319a63bbe06755632e377bc">  107</a></span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a23283.html#gacd82ed053319a63bbe06755632e377bc">calib_info_lock_status</a>(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t param2, uint8_t* is_locked);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor">#if CALIB_INFO_LATCH_EN</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_info_set_latch(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keywordtype">bool</span> state);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_info_get_latch(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keywordtype">bool</span>* state);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="comment">// KDF command functions</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor">#if CALIB_KDF_EN</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_kdf(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t mode, uint16_t key_id, <span class="keyword">const</span> uint32_t details, <span class="keyword">const</span> uint8_t* message, uint8_t* out_data, uint8_t* out_nonce);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="comment">// Lock command functions</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor">#if CALIB_LOCK_EN || CALIB_LOCK_ECC204_EN</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_lock(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t mode, uint16_t summary_crc);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="preprocessor">#if CALIB_LOCK_EN</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_lock_config_zone(<a class="code" href="a23307.html">ATCADevice</a> device);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_lock_config_zone_crc(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t summary_crc);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_lock_data_zone(<a class="code" href="a23307.html">ATCADevice</a> device);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_lock_data_zone_crc(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t summary_crc);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_lock_data_slot(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t slot);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="comment">// Lock ECC204 command functions</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="preprocessor">#if CALIB_LOCK_ECC204_EN</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecc204_lock_config_slot(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t slot, uint16_t summary_crc);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecc204_lock_config_zone(<a class="code" href="a23307.html">ATCADevice</a> device);</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecc204_lock_data_slot(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t slot);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecc204_lock_data_zone(<a class="code" href="a23307.html">ATCADevice</a> device);</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="comment">// MAC command functions</span></div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="preprocessor">#if CALIB_MAC_EN</span></div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_mac(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t mode, uint16_t key_id, <span class="keyword">const</span> uint8_t* challenge, uint8_t* digest);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160; </div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="comment">// Nonce command functions</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="preprocessor">#if CALIB_NONCE_EN</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_nonce_base(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t mode, uint16_t zero, <span class="keyword">const</span> uint8_t *num_in, uint8_t* rand_out);</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_nonce(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keyword">const</span> uint8_t *num_in);</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_nonce_load(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t target, <span class="keyword">const</span> uint8_t *num_in, uint16_t num_in_size);</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_nonce_rand(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keyword">const</span> uint8_t *num_in, uint8_t* rand_out);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_challenge(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keyword">const</span> uint8_t *num_in);</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_challenge_seed_update(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keyword">const</span> uint8_t *num_in, uint8_t* rand_out);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_nonce_gen_session_key(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t param2, uint8_t* num_in,</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;                                        uint8_t* rand_out);</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160; </div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="comment">// PrivWrite command functions</span></div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="preprocessor">#if CALIB_PRIVWRITE_EN</span></div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="preprocessor">#if defined(ATCA_USE_CONSTANT_HOST_NONCE)</span></div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_priv_write(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, <span class="keyword">const</span> uint8_t priv_key[36], uint16_t write_key_id, <span class="keyword">const</span> uint8_t write_key[32]);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_priv_write(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, <span class="keyword">const</span> uint8_t priv_key[36], uint16_t write_key_id, <span class="keyword">const</span> uint8_t write_key[32], <span class="keyword">const</span> uint8_t num_in[<a class="code" href="a01856.html#ad0c3da8203a3be6755e86cda96e00228">NONCE_NUMIN_SIZE</a>]);</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* CALIB_PRIVWRITE_EN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; </div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="comment">// Random command functions</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="preprocessor">#if CALIB_RANDOM_EN</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_random(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t* rand_out);</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="comment">// Read command functions</span></div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="preprocessor">#if CALIB_READ_EN</span></div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_read_zone(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint8_t *data, uint8_t len);</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_read_bytes_zone(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, uint16_t slot, <span class="keywordtype">size_t</span> offset, uint8_t *data, <span class="keywordtype">size_t</span> length);</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_read_bytes_zone_ext(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, uint16_t slot, <span class="keywordtype">size_t</span> offset, uint8_t *data, <span class="keywordtype">size_t</span> length);</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_read_serial_number(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t* serial_number);</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_read_serial_number_ext(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t* serial_number);</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;<span class="keywordtype">bool</span> calib_sha_compare_config(uint8_t* expected, uint8_t* other);</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="keywordtype">bool</span> calib_ecc_compare_config(uint8_t* expected, uint8_t* other);</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;<span class="keywordtype">bool</span> calib_ecc608_compare_config(uint8_t* expected, uint8_t* other);</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;<span class="comment">// ECC204 Read command functions</span></div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;<span class="preprocessor">#if CALIB_READ_ECC204_EN</span></div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecc204_read_zone(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, uint16_t slot, uint8_t block, <span class="keywordtype">size_t</span> offset,</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;                                   uint8_t* data, uint8_t len);</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecc204_read_bytes_zone(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, uint16_t slot,</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                                         <span class="keywordtype">size_t</span> block, uint8_t* data, <span class="keywordtype">size_t</span> length);</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecc204_read_serial_number(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t* serial_number);</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecc204_read_config_zone(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t* config_data);</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="keywordtype">bool</span> calib_ecc204_compare_config(uint8_t* expected, uint8_t* other);</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="preprocessor">#if CALIB_READ_EN || CALIB_READ_ECC204_EN</span></div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_read_config_zone(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t* config_data);</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_cmp_config_zone(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t* config_data, <span class="keywordtype">bool</span>* same_config);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_read_zone_ext(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint8_t *data, uint8_t len);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_read_pubkey(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t slot, uint8_t *public_key);</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_read_sig(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t slot, uint8_t *sig);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160; </div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="preprocessor">#if CALIB_READ_ENC_EN</span></div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="preprocessor">#if defined(ATCA_USE_CONSTANT_HOST_NONCE)</span></div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_read_enc(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, uint8_t block, uint8_t *data, <span class="keyword">const</span> uint8_t* enc_key, <span class="keyword">const</span> uint16_t enc_key_id);</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_read_enc(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, uint8_t block, uint8_t *data, <span class="keyword">const</span> uint8_t* enc_key, <span class="keyword">const</span> uint16_t enc_key_id, <span class="keyword">const</span> uint8_t num_in[<a class="code" href="a01856.html#ad0c3da8203a3be6755e86cda96e00228">NONCE_NUMIN_SIZE</a>]);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* CALIB_READ_ENC_EN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160; </div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="comment">// SecureBoot command functions</span></div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="preprocessor">#if CALIB_SECUREBOOT_EN</span></div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_secureboot(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t mode, uint16_t param2, <span class="keyword">const</span> uint8_t* digest, <span class="keyword">const</span> uint8_t* signature, uint8_t* mac);</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="preprocessor">#if CALIB_SECUREBOOT_MAC_EN</span></div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_secureboot_mac(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t mode, <span class="keyword">const</span> uint8_t* digest, <span class="keyword">const</span> uint8_t* signature, <span class="keyword">const</span> uint8_t* num_in, <span class="keyword">const</span> uint8_t* io_key, <span class="keywordtype">bool</span>* is_verified);</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160; </div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="comment">// SelfTest command functions</span></div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="preprocessor">#if CALIB_SELFTEST_EN</span></div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_selftest(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t mode, uint16_t param2, uint8_t* result);</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160; </div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="comment">// SHA command functions</span></div>
+<div class="line"><a name="l00220"></a><span class="lineno"><a class="line" href="a23383.html">  220</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="a23383.html">atca_sha256_ctx</a></div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;{</div>
+<div class="line"><a name="l00222"></a><span class="lineno"><a class="line" href="a23383.html#a8ee7e642376903508dd6b4df9eacc2de">  222</a></span>&#160;    uint32_t <a class="code" href="a23383.html#a8ee7e642376903508dd6b4df9eacc2de">total_msg_size</a>;                    </div>
+<div class="line"><a name="l00223"></a><span class="lineno"><a class="line" href="a23383.html#a9e3fb1e50a1c71b2337df296222d9553">  223</a></span>&#160;    uint32_t <a class="code" href="a23383.html#a9e3fb1e50a1c71b2337df296222d9553">block_size</a>;                        </div>
+<div class="line"><a name="l00224"></a><span class="lineno"><a class="line" href="a23383.html#a407f9109b29f2f3a4c9f7d1de450ad41">  224</a></span>&#160;    uint8_t  <a class="code" href="a23383.html#a407f9109b29f2f3a4c9f7d1de450ad41">block</a>[<a class="code" href="a01988.html#a85e0a506bd6fdae6ce32d5df3a48ac1c">ATCA_SHA256_BLOCK_SIZE</a> * 2]; </div>
+<div class="line"><a name="l00225"></a><span class="lineno"><a class="line" href="a23283.html#ga7dc326cdf6fbade0eee6081225a379de">  225</a></span>&#160;} <a class="code" href="a23283.html#ga7dc326cdf6fbade0eee6081225a379de">atca_sha256_ctx_t</a>;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160; </div>
+<div class="line"><a name="l00227"></a><span class="lineno"><a class="line" href="a23283.html#ga4c1f62e502c168be9261d2af921e78ba">  227</a></span>&#160;<span class="keyword">typedef</span> <a class="code" href="a23383.html">atca_sha256_ctx_t</a> <a class="code" href="a23283.html#ga4c1f62e502c168be9261d2af921e78ba">atca_hmac_sha256_ctx_t</a>;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160; </div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="preprocessor">#if CALIB_SHA_EN</span></div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_sha_base(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t mode, uint16_t length, <span class="keyword">const</span> uint8_t* data_in, uint8_t* data_out, uint16_t* data_out_size);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_sha_start(<a class="code" href="a23307.html">ATCADevice</a> device);</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_sha_update(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keyword">const</span> uint8_t* message);</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_sha_end(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t *digest, uint16_t length, <span class="keyword">const</span> uint8_t *message);</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_sha_read_context(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t* context, uint16_t* context_size);</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_sha_write_context(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keyword">const</span> uint8_t* context, uint16_t context_size);</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_sha(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t length, <span class="keyword">const</span> uint8_t *message, uint8_t *digest);</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_hw_sha2_256(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keyword">const</span> uint8_t * data, <span class="keywordtype">size_t</span> data_size, uint8_t* digest);</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_hw_sha2_256_init(<a class="code" href="a23307.html">ATCADevice</a> device, <a class="code" href="a23383.html">atca_sha256_ctx_t</a>* ctx);</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_hw_sha2_256_update(<a class="code" href="a23307.html">ATCADevice</a> device, <a class="code" href="a23383.html">atca_sha256_ctx_t</a>* ctx, <span class="keyword">const</span> uint8_t* data, <span class="keywordtype">size_t</span> data_size);</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_hw_sha2_256_finish(<a class="code" href="a23307.html">ATCADevice</a> device, <a class="code" href="a23383.html">atca_sha256_ctx_t</a>* ctx, uint8_t* digest);</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="preprocessor">#if CALIB_SHA_HMAC_EN</span></div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_sha_hmac_init(<a class="code" href="a23307.html">ATCADevice</a> device, <a class="code" href="a23383.html">atca_hmac_sha256_ctx_t</a>* ctx, uint16_t key_slot);</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_sha_hmac_update(<a class="code" href="a23307.html">ATCADevice</a> device, <a class="code" href="a23383.html">atca_hmac_sha256_ctx_t</a>* ctx, <span class="keyword">const</span> uint8_t* data, <span class="keywordtype">size_t</span> data_size);</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_sha_hmac_finish(<a class="code" href="a23307.html">ATCADevice</a> device, <a class="code" href="a23383.html">atca_hmac_sha256_ctx_t</a>* ctx, uint8_t* digest, uint8_t target);</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_sha_hmac(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keyword">const</span> uint8_t * data, <span class="keywordtype">size_t</span> data_size, uint16_t key_slot, uint8_t* digest, uint8_t target);</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160; </div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="comment">// Sign command functions</span></div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;<span class="preprocessor">#if CALIB_SIGN_EN</span></div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_sign_base(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t mode, uint16_t key_id, uint8_t *signature);</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_sign(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, <span class="keyword">const</span> uint8_t *msg, uint8_t *signature);</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_sign_ext(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, <span class="keyword">const</span> uint8_t *msg, uint8_t *signature);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="preprocessor">#if CALIB_SIGN_INTERNAL_EN</span></div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_sign_internal(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, <span class="keywordtype">bool</span> is_invalidate, <span class="keywordtype">bool</span> is_full_sn, uint8_t *signature);</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<span class="comment">// ECC204 Sign command functions</span></div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="preprocessor">#if CALIB_SIGN_ECC204_EN</span></div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecc204_sign(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, <span class="keyword">const</span> uint8_t* msg, uint8_t* signature);</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; </div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;<span class="comment">// UpdateExtra command functions</span></div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;<span class="preprocessor">#if CALIB_UPDATEEXTRA_EN</span></div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_updateextra(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t mode, uint16_t new_value);</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; </div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="comment">// Verify command functions</span></div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;<span class="preprocessor">#if CALIB_VERIFY_EXTERN_EN || CALIB_VERIFY_STORED_EN</span></div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_verify(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t mode, uint16_t key_id, <span class="keyword">const</span> uint8_t* signature, <span class="keyword">const</span> uint8_t* public_key, <span class="keyword">const</span> uint8_t* other_data, uint8_t* mac);</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160; </div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="preprocessor">#if CALIB_VERIFY_EXTERN_EN</span></div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_verify_extern(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keyword">const</span> uint8_t *message, <span class="keyword">const</span> uint8_t *signature, <span class="keyword">const</span> uint8_t *public_key, <span class="keywordtype">bool</span> *is_verified);</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;<span class="preprocessor">#if CALIB_VERIFY_MAC_EN</span></div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_verify_extern_mac(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keyword">const</span> uint8_t *message, <span class="keyword">const</span> uint8_t* signature, <span class="keyword">const</span> uint8_t* public_key, <span class="keyword">const</span> uint8_t* num_in, <span class="keyword">const</span> uint8_t* io_key, <span class="keywordtype">bool</span>* is_verified);</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160; </div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<span class="preprocessor">#if CALIB_VERIFY_STORED_EN</span></div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_verify_stored(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keyword">const</span> uint8_t *message, <span class="keyword">const</span> uint8_t *signature, uint16_t key_id, <span class="keywordtype">bool</span> *is_verified);</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_verify_stored_with_tempkey(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keyword">const</span> uint8_t* signature, uint16_t key_id, <span class="keywordtype">bool</span>* is_verified);</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;<span class="preprocessor">#if CALIB_VERIFY_MAC_EN</span></div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_verify_stored_mac(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keyword">const</span> uint8_t *message, <span class="keyword">const</span> uint8_t *signature, uint16_t key_id, <span class="keyword">const</span> uint8_t* num_in, <span class="keyword">const</span> uint8_t* io_key, <span class="keywordtype">bool</span>* is_verified);</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160; </div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;<span class="preprocessor">#if CALIB_VERIFY_VALIDATE_EN</span></div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_verify_validate(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, <span class="keyword">const</span> uint8_t *signature, <span class="keyword">const</span> uint8_t *other_data, <span class="keywordtype">bool</span> *is_verified);</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_verify_invalidate(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, <span class="keyword">const</span> uint8_t *signature, <span class="keyword">const</span> uint8_t *other_data, <span class="keywordtype">bool</span> *is_verified);</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;<span class="comment">// Write command functions</span></div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<span class="preprocessor">#if CALIB_WRITE_EN</span></div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_write(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, uint16_t address, <span class="keyword">const</span> uint8_t *value, <span class="keyword">const</span> uint8_t *mac);</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_write_ext(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, uint16_t address, <span class="keyword">const</span> uint8_t *value, <span class="keyword">const</span> uint8_t *mac);</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_write_zone(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, <span class="keyword">const</span> uint8_t *data, uint8_t len);</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_write_bytes_zone(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, uint16_t slot, <span class="keywordtype">size_t</span> offset_bytes, <span class="keyword">const</span> uint8_t *data, <span class="keywordtype">size_t</span> length);</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_write_bytes_zone_ext(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, uint16_t slot, <span class="keywordtype">size_t</span> offset_bytes, <span class="keyword">const</span> uint8_t *data, <span class="keywordtype">size_t</span> length);</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_write_config_zone(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keyword">const</span> uint8_t* config_data);</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_write_config_zone_ext(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keyword">const</span> uint8_t* config_data);</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_write_config_counter(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t counter_id, uint32_t counter_value);</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;<span class="preprocessor">#if CALIB_WRITE_EN || CALIB_WRITE_ECC204_EN</span></div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_write_zone_ext(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, <span class="keyword">const</span> uint8_t *data, uint8_t len);</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_write_pubkey(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t slot, <span class="keyword">const</span> uint8_t *public_key);</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160; </div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;<span class="preprocessor">#if CALIB_WRITE_ENC_EN</span></div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;<span class="preprocessor">#if defined(ATCA_USE_CONSTANT_HOST_NONCE)</span></div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_write_enc(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, uint8_t block, <span class="keyword">const</span> uint8_t *data, <span class="keyword">const</span> uint8_t* enc_key, <span class="keyword">const</span> uint16_t enc_key_id);</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_write_enc(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t key_id, uint8_t block, <span class="keyword">const</span> uint8_t *data, <span class="keyword">const</span> uint8_t* enc_key, <span class="keyword">const</span> uint16_t enc_key_id, <span class="keyword">const</span> uint8_t num_in[<a class="code" href="a01856.html#ad0c3da8203a3be6755e86cda96e00228">NONCE_NUMIN_SIZE</a>]);</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* CALIB_WRITE_ENC_EN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;<span class="comment">// ECC204 Write command functions</span></div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;<span class="preprocessor">#if CALIB_WRITE_ECC204_EN</span></div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecc204_write(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, uint16_t address, <span class="keyword">const</span> uint8_t *value,</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;                               <span class="keyword">const</span> uint8_t *mac);</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecc204_write_zone(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, uint16_t slot, uint8_t block,</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;                                    uint8_t offset, <span class="keyword">const</span> uint8_t *data, uint8_t len);</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecc204_write_config_zone(<a class="code" href="a23307.html">ATCADevice</a> device, <span class="keyword">const</span> uint8_t* config_data);</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecc204_write_bytes_zone(<a class="code" href="a23307.html">ATCADevice</a> device, uint8_t zone, uint16_t slot, <span class="keywordtype">size_t</span> block,</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;                                          <span class="keyword">const</span> uint8_t *data, <span class="keywordtype">size_t</span> length);</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* CALIB_WRITE_ECC204_EN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;<span class="preprocessor">#if CALIB_WRITE_ENC_ECC204_EN</span></div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;<a class="code" href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> calib_ecc204_write_enc(<a class="code" href="a23307.html">ATCADevice</a> device, uint16_t slot, uint8_t* data, uint8_t* transport_key,</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;                                   uint8_t key_id, uint8_t num_in[<a class="code" href="a01856.html#ad0c3da8203a3be6755e86cda96e00228">NONCE_NUMIN_SIZE</a>]);</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* CALIB_WRITE_ENC_ECC204_EN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160; </div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;<span class="comment">/* Map calib functions to atcab names for api compatibility without abstraction overhead */</span></div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;<span class="preprocessor">#if !ATCA_TA_SUPPORT &amp;&amp; !defined(ATCA_USE_ATCAB_FUNCTIONS)</span></div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160; </div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;<span class="preprocessor">#define atcab_wakeup()                          calib_wakeup(_gDevice)</span></div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;<span class="preprocessor">#define atcab_idle()                            calib_idle(_gDevice)</span></div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;<span class="preprocessor">#define atcab_sleep()                           calib_sleep(_gDevice)</span></div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;<span class="preprocessor">#define _atcab_exit(...)                         _calib_exit(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;<span class="preprocessor">#define atcab_get_zone_size(...)                calib_get_zone_size(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160; </div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160; </div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;<span class="comment">// AES command functions</span></div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;<span class="preprocessor">#define atcab_aes(...)                          calib_aes(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;<span class="preprocessor">#define atcab_aes_encrypt(...)                  calib_aes_encrypt(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;<span class="preprocessor">#define atcab_aes_encrypt_ext                   calib_aes_encrypt</span></div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;<span class="preprocessor">#define atcab_aes_decrypt(...)                  calib_aes_decrypt(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;<span class="preprocessor">#define atcab_aes_decrypt_ext                   calib_aes_decrypt</span></div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;<span class="preprocessor">#define atcab_aes_gfm(...)                      calib_aes_gfm(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160; </div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;<span class="preprocessor">#define atcab_aes_gcm_init(...)                 calib_aes_gcm_init(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;<span class="preprocessor">#define atcab_aes_gcm_init_rand(...)            calib_aes_gcm_init_rand(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;<span class="preprocessor">#define atcab_aes_gcm_aad_update(...)           calib_aes_gcm_aad_update(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;<span class="preprocessor">#define atcab_aes_gcm_encrypt_update(...)       calib_aes_gcm_encrypt_update(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;<span class="preprocessor">#define atcab_aes_gcm_encrypt_finish(...)       calib_aes_gcm_encrypt_finish(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;<span class="preprocessor">#define atcab_aes_gcm_decrypt_update(...)       calib_aes_gcm_decrypt_update(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;<span class="preprocessor">#define atcab_aes_gcm_decrypt_finish(...)       calib_aes_gcm_decrypt_finish(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160; </div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;<span class="comment">// CheckMAC command functions</span></div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;<span class="preprocessor">#define atcab_checkmac(...)                     calib_checkmac(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160; </div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;<span class="comment">// Counter command functions</span></div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;<span class="preprocessor">#define atcab_counter(...)                      calib_counter(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;<span class="preprocessor">#define atcab_counter_increment(...)            calib_counter_increment(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;<span class="preprocessor">#define atcab_counter_read(...)                 calib_counter_read(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160; </div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;<span class="comment">// DeriveKey command functions</span></div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;<span class="preprocessor">#define atcab_derivekey(...)                    calib_derivekey(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160; </div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;<span class="comment">// ECDH command functions</span></div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;<span class="preprocessor">#define atcab_ecdh_base(...)                    calib_ecdh_base(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;<span class="preprocessor">#define atcab_ecdh(...)                         calib_ecdh(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;<span class="preprocessor">#define atcab_ecdh_enc(...)                     calib_ecdh_enc(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;<span class="preprocessor">#define atcab_ecdh_ioenc(...)                   calib_ecdh_ioenc(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;<span class="preprocessor">#define atcab_ecdh_tempkey(...)                 calib_ecdh_tempkey(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;<span class="preprocessor">#define atcab_ecdh_tempkey_ioenc(...)           calib_ecdh_tempkey_ioenc(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160; </div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;<span class="comment">// GenDig command functions</span></div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;<span class="preprocessor">#define atcab_gendig(...)                       calib_gendig(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160; </div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;<span class="comment">// GenKey command functions</span></div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;<span class="preprocessor">#define atcab_genkey_base(...)                  calib_genkey_base(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;<span class="preprocessor">#define atcab_genkey(...)                       calib_genkey(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;<span class="preprocessor">#define atcab_get_pubkey(...)                   calib_get_pubkey(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;<span class="preprocessor">#define atcab_get_pubkey_ext                    calib_get_pubkey</span></div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160; </div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;<span class="comment">// HMAC command functions</span></div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;<span class="preprocessor">#define atcab_hmac(...)                         calib_hmac(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160; </div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;<span class="comment">// Info command functions</span></div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;<span class="preprocessor">#define atcab_info_base(...)                    calib_info_base(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;<span class="preprocessor">#define atcab_info(...)                         calib_info(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;<span class="preprocessor">#define atcab_info_get_latch(...)               calib_info_get_latch(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;<span class="preprocessor">#define atcab_info_set_latch(...)               calib_info_set_latch(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160; </div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;<span class="comment">// KDF command functions</span></div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;<span class="preprocessor">#define atcab_kdf(...)                          calib_kdf(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160; </div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;<span class="comment">// Lock command functions</span></div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;<span class="preprocessor">#if CALIB_ECC204_ONLY</span></div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;<span class="preprocessor">#define atcab_lock(...)                          (ATCA_UNIMPLEMENTED)</span></div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;<span class="preprocessor">#define atcab_lock_config_zone()                 calib_ecc204_lock_config_zone(_gDevice)</span></div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;<span class="preprocessor">#define atcab_lock_config_zone_crc(...)          (ATCA_UNIMPLEMENTED)</span></div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;<span class="preprocessor">#define atcab_lock_data_zone()                   calib_ecc204_lock_data_zone(_gDevice)</span></div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;<span class="preprocessor">#define atcab_lock_data_zone_crc(...)            (ATCA_UNIMPLEMENTED)</span></div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;<span class="preprocessor">#define atcab_lock_data_slot(...)                calib_ecc204_lock_data_slot(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;<span class="preprocessor">#define atcab_lock(...)                          calib_lock(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;<span class="preprocessor">#define atcab_lock_config_zone()                 calib_lock_config_zone(_gDevice)</span></div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;<span class="preprocessor">#define atcab_lock_config_zone_crc(...)          calib_lock_config_zone_crc(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;<span class="preprocessor">#define atcab_lock_data_zone()                   calib_lock_data_zone(_gDevice)</span></div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;<span class="preprocessor">#define atcab_lock_data_zone_crc(...)            calib_lock_data_zone_crc(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;<span class="preprocessor">#define atcab_lock_data_slot(...)                calib_lock_data_slot(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160; </div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;<span class="comment">// MAC command functions</span></div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;<span class="preprocessor">#define atcab_mac(...)                          calib_mac(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160; </div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;<span class="comment">// Nonce command functions</span></div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;<span class="preprocessor">#define atcab_nonce_base(...)                   calib_nonce_base(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;<span class="preprocessor">#define atcab_nonce(...)                        calib_nonce(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;<span class="preprocessor">#define atcab_nonce_load(...)                   calib_nonce_load(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;<span class="preprocessor">#define atcab_nonce_rand(...)                   calib_nonce_rand(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;<span class="preprocessor">#define atcab_challenge(...)                    calib_challenge(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;<span class="preprocessor">#define atcab_challenge_seed_update(...)        calib_challenge_seed_update(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160; </div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;<span class="comment">// PrivWrite command functions</span></div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;<span class="preprocessor">#define atcab_priv_write(...)                   calib_priv_write(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160; </div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160; </div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;<span class="comment">// Random command functions</span></div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;<span class="preprocessor">#define atcab_random(...)                       calib_random(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;<span class="preprocessor">#define atcab_random_ext                        calib_random</span></div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160; </div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;<span class="comment">// Read command functions</span></div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;<span class="preprocessor">#define atcab_is_slot_locked(...)               calib_is_slot_locked(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;<span class="preprocessor">#define atcab_is_private(...)                   calib_is_private(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;<span class="preprocessor">#define atcab_is_private_ext                    calib_is_private</span></div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;<span class="preprocessor">#if CALIB_ECC204_ONLY</span></div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;<span class="preprocessor">#define atcab_read_zone(...)                    calib_ecc204_read_zone(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;<span class="preprocessor">#define atcab_is_locked(...)                    calib_ecc204_is_locked(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;<span class="preprocessor">#define atcab_is_config_locked(...)             calib_ecc204_is_locked(_gDevice, ATCA_ZONE_CONFIG, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;<span class="preprocessor">#define atcab_is_data_locked(...)               calib_ecc204_is_locked(_gDevice, ATCA_ZONE_DATA, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;<span class="preprocessor">#define atcab_read_bytes_zone(...)              calib_ecc204_read_bytes_zone(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;<span class="preprocessor">#define atcab_read_bytes_zone_ext               calib_ecc204_read_bytes_zone</span></div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;<span class="preprocessor">#define atcab_read_serial_number(...)           calib_ecc204_read_serial_number(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;<span class="preprocessor">#define atcab_read_config_zone(...)             calib_ecc204_read_config_zone(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;<span class="preprocessor">#define atcab_read_zone(...)                    calib_read_zone_ext(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;<span class="preprocessor">#define atcab_is_locked(...)                    calib_is_locked_ext(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;<span class="preprocessor">#define atcab_is_config_locked(...)             calib_is_locked_ext(_gDevice, LOCK_ZONE_CONFIG, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;<span class="preprocessor">#define atcab_is_data_locked(...)               calib_is_locked_ext(_gDevice, LOCK_ZONE_DATA, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;<span class="preprocessor">#define atcab_read_bytes_zone(...)              calib_read_bytes_zone_ext(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;<span class="preprocessor">#define atcab_read_bytes_zone_ext               calib_read_bytes_zone_ext</span></div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;<span class="preprocessor">#define atcab_read_serial_number(...)           calib_read_serial_number_ext(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;<span class="preprocessor">#define atcab_read_config_zone(...)             calib_read_config_zone(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;<span class="preprocessor">#define atcab_cmp_config_zone(...)              calib_cmp_config_zone(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;<span class="preprocessor">#define atcab_read_pubkey(...)                  calib_read_pubkey(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;<span class="preprocessor">#define atcab_read_pubkey_ext                   calib_read_pubkey</span></div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;<span class="preprocessor">#define atcab_read_sig(...)                     calib_read_sig(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;<span class="preprocessor">#define atcab_read_enc(...)                     calib_read_enc(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160; </div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160; </div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;<span class="comment">// SecureBoot command functions</span></div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;<span class="preprocessor">#define atcab_secureboot(...)                   calib_secureboot(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;<span class="preprocessor">#define atcab_secureboot_mac(...)               calib_secureboot_mac(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160; </div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;<span class="comment">// SelfTest command functions</span></div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;<span class="preprocessor">#define atcab_selftest(...)                     calib_selftest(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160; </div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;<span class="comment">// SHA command functions</span></div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;<span class="preprocessor">#define atcab_sha_base(...)                     calib_sha_base(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;<span class="preprocessor">#define atcab_sha_start()                       calib_sha_start(_gDevice)</span></div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;<span class="preprocessor">#define atcab_sha_update(...)                   calib_sha_update(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;<span class="preprocessor">#define atcab_sha_end(...)                      calib_sha_end(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;<span class="preprocessor">#define atcab_sha_read_context(...)             calib_sha_read_context(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;<span class="preprocessor">#define atcab_sha_write_context(...)            calib_sha_write_context(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;<span class="preprocessor">#define atcab_sha(...)                          calib_sha(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;<span class="preprocessor">#define atcab_hw_sha2_256(...)                  calib_hw_sha2_256(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;<span class="preprocessor">#define atcab_hw_sha2_256_init(...)             calib_hw_sha2_256_init(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;<span class="preprocessor">#define atcab_hw_sha2_256_update(...)           calib_hw_sha2_256_update(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;<span class="preprocessor">#define atcab_hw_sha2_256_finish(...)           calib_hw_sha2_256_finish(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;<span class="preprocessor">#define atcab_sha_hmac_init(...)                calib_sha_hmac_init(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;<span class="preprocessor">#define atcab_sha_hmac_update(...)              calib_sha_hmac_update(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;<span class="preprocessor">#define atcab_sha_hmac_finish(...)              calib_sha_hmac_finish(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;<span class="preprocessor">#define atcab_sha_hmac(...)                     calib_sha_hmac(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;<span class="preprocessor">#define atcab_sha_hmac_ext                      calib_sha_hmac</span></div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;<span class="preprocessor">#define SHA_CONTEXT_MAX_SIZE                    (99)</span></div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160; </div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;<span class="comment">// Sign command functions</span></div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;<span class="preprocessor">#define atcab_sign_base(...)                    calib_sign_base(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;<span class="preprocessor">#if CALIB_ECC204_ONLY</span></div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;<span class="preprocessor">#define atcab_sign(...)                         calib_ecc204_sign(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;<span class="preprocessor">#define atcab_sign_ext                          calib_ecc204_sign</span></div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;<span class="preprocessor">#define atcab_sign(...)                         calib_sign_ext(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;<span class="preprocessor">#define atcab_sign_ext                          calib_sign_ext</span></div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160; </div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;<span class="preprocessor">#define atcab_sign_internal(...)                calib_sign_internal(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160; </div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;<span class="comment">// UpdateExtra command functions</span></div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;<span class="preprocessor">#define atcab_updateextra(...)                  calib_updateextra(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160; </div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;<span class="comment">// Verify command functions</span></div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;<span class="preprocessor">#define atcab_verify(...)                       calib_verify(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;<span class="preprocessor">#define atcab_verify_extern(...)                calib_verify_extern(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;<span class="preprocessor">#define atcab_verify_extern_ext                 calib_verify_extern</span></div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;<span class="preprocessor">#define atcab_verify_extern_mac(...)            calib_verify_extern_mac(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;<span class="preprocessor">#define atcab_verify_stored(...)                calib_verify_stored(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;<span class="preprocessor">#define atcab_verify_stored_ext                 calib_verify_stored</span></div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;<span class="preprocessor">#define atcab_verify_stored_with_tempkey(...)   calib_verify_stored_with_tempkey(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;<span class="preprocessor">#define atcab_verify_stored_mac(...)            calib_verify_stored_mac(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;<span class="preprocessor">#define atcab_verify_validate(...)              calib_verify_validate(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;<span class="preprocessor">#define atcab_verify_invalidate(...)            calib_verify_invalidate(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160; </div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;<span class="comment">// Write command functions</span></div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;<span class="preprocessor">#if CALIB_ECC204_ONLY</span></div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;<span class="preprocessor">#define atcab_write(...)                        calib_ecc204_write(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;<span class="preprocessor">#define atcab_write_zone(...)                   calib_ecc204_write_zone(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;<span class="preprocessor">#define atcab_write_bytes_zone(...)             calib_ecc204_write_bytes_zone(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;<span class="preprocessor">#define atcab_write_bytes_zone_ext              calib_ecc204_write_bytes_zone</span></div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;<span class="preprocessor">#define atcab_write_config_zone(...)            calib_ecc204_write_config_zone(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;<span class="preprocessor">#define atcab_write(...)                        calib_write_ext(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;<span class="preprocessor">#define atcab_write_zone(...)                   calib_write_zone_ext(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;<span class="preprocessor">#define atcab_write_bytes_zone(...)             calib_write_bytes_zone_ext(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;<span class="preprocessor">#define atcab_write_bytes_zone_ext              calib_write_bytes_zone_ext</span></div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;<span class="preprocessor">#define atcab_write_config_zone(...)            calib_write_config_zone_ext(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160; </div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;<span class="preprocessor">#define atcab_write_pubkey(...)                 calib_write_pubkey(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;<span class="preprocessor">#define atcab_write_enc(...)                    calib_write_enc(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;<span class="preprocessor">#define atcab_write_config_counter(...)         calib_write_config_counter(_gDevice, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160; </div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;}</div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160; </div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aa01850_html"><div class="ttname"><a href="a01850.html">pkcs11.h</a></div></div>
+<div class="ttc" id="aa23283_html_ga00e2fc1d5b517b275066c31be0be2304"><div class="ttname"><a href="a23283.html#ga00e2fc1d5b517b275066c31be0be2304">calib_get_devicetype</a></div><div class="ttdeci">ATCADeviceType calib_get_devicetype(uint8_t revision[4])</div><div class="ttdoc">Parse the revision field to get the device type.</div><div class="ttdef"><b>Definition:</b> calib_helpers.c:289</div></div>
+<div class="ttc" id="aa23283_html_ga132cfbb5c581c5cc5adf5350d4161966"><div class="ttname"><a href="a23283.html#ga132cfbb5c581c5cc5adf5350d4161966">calib_info</a></div><div class="ttdeci">ATCA_STATUS calib_info(ATCADevice device, uint8_t *revision)</div><div class="ttdoc">Use the Info command to get the device revision (DevRev).</div><div class="ttdef"><b>Definition:</b> calib_info.c:122</div></div>
+<div class="ttc" id="aa23283_html_ga48afea3ed790063508de2f9e5b1657fb"><div class="ttname"><a href="a23283.html#ga48afea3ed790063508de2f9e5b1657fb">calib_ecc204_is_locked</a></div><div class="ttdeci">ATCA_STATUS calib_ecc204_is_locked(ATCADevice device, uint8_t zone, bool *is_locked)</div></div>
+<div class="ttc" id="aa23383_html_a8ee7e642376903508dd6b4df9eacc2de"><div class="ttname"><a href="a23383.html#a8ee7e642376903508dd6b4df9eacc2de">atca_sha256_ctx::total_msg_size</a></div><div class="ttdeci">uint32_t total_msg_size</div><div class="ttdoc">Total number of message bytes processed.</div><div class="ttdef"><b>Definition:</b> calib_basic.h:222</div></div>
+<div class="ttc" id="aa23283_html_gad26b70951a0da6d80fb98027faae7a1f"><div class="ttname"><a href="a23283.html#gad26b70951a0da6d80fb98027faae7a1f">calib_sleep</a></div><div class="ttdeci">ATCA_STATUS calib_sleep(ATCADevice device)</div><div class="ttdoc">invoke sleep on the CryptoAuth device</div><div class="ttdef"><b>Definition:</b> calib_basic.c:172</div></div>
+<div class="ttc" id="aa01856_html_ad0c3da8203a3be6755e86cda96e00228"><div class="ttname"><a href="a01856.html#ad0c3da8203a3be6755e86cda96e00228">NONCE_NUMIN_SIZE</a></div><div class="ttdeci">#define NONCE_NUMIN_SIZE</div><div class="ttdoc">Nonce NumIn size for random modes.</div><div class="ttdef"><b>Definition:</b> calib_command.h:552</div></div>
+<div class="ttc" id="aa23307_html"><div class="ttname"><a href="a23307.html">atca_device</a></div><div class="ttdoc">atca_device is the C object backing ATCADevice. See the atca_device.h file for details on the ATCADev...</div><div class="ttdef"><b>Definition:</b> atca_device.h:148</div></div>
+<div class="ttc" id="aa23283_html_gaa99ca9ceda671a64614e9ecf4297c9d9"><div class="ttname"><a href="a23283.html#gaa99ca9ceda671a64614e9ecf4297c9d9">calib_is_locked_ext</a></div><div class="ttdeci">ATCA_STATUS calib_is_locked_ext(ATCADevice device, uint8_t zone, bool *is_locked)</div></div>
+<div class="ttc" id="aa23283_html_ga6c9404e7b3b4a42c67080b84610352ca"><div class="ttname"><a href="a23283.html#ga6c9404e7b3b4a42c67080b84610352ca">calib_ecc204_get_addr</a></div><div class="ttdeci">ATCA_STATUS calib_ecc204_get_addr(uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t *addr)</div></div>
+<div class="ttc" id="aa01874_html"><div class="ttname"><a href="a01874.html">calib_execution.h</a></div><div class="ttdoc">Defines an execution handler that executes a given command on a device and returns the results.</div></div>
+<div class="ttc" id="aa23283_html_ga4c1f62e502c168be9261d2af921e78ba"><div class="ttname"><a href="a23283.html#ga4c1f62e502c168be9261d2af921e78ba">atca_hmac_sha256_ctx_t</a></div><div class="ttdeci">atca_sha256_ctx_t atca_hmac_sha256_ctx_t</div><div class="ttdef"><b>Definition:</b> calib_basic.h:227</div></div>
+<div class="ttc" id="aa01859_html"><div class="ttname"><a href="a01859.html">calib_config_check.h</a></div><div class="ttdoc">Consistency checks for configuration options.</div></div>
+<div class="ttc" id="aa23283_html_ga81b111170b907f33eb925a30f675f7b2"><div class="ttname"><a href="a23283.html#ga81b111170b907f33eb925a30f675f7b2">calib_is_private</a></div><div class="ttdeci">ATCA_STATUS calib_is_private(ATCADevice device, uint16_t slot, bool *is_private)</div><div class="ttdoc">Executes Read command, which reads the configuration zone to see if the specified slot is locked.</div><div class="ttdef"><b>Definition:</b> calib_helpers.c:250</div></div>
+<div class="ttc" id="aa23283_html_ga7dc326cdf6fbade0eee6081225a379de"><div class="ttname"><a href="a23283.html#ga7dc326cdf6fbade0eee6081225a379de">atca_sha256_ctx_t</a></div><div class="ttdeci">struct atca_sha256_ctx atca_sha256_ctx_t</div></div>
+<div class="ttc" id="aa23283_html_ga59750d83d93368b2944f57bb38bf4d1f"><div class="ttname"><a href="a23283.html#ga59750d83d93368b2944f57bb38bf4d1f">calib_idle</a></div><div class="ttdeci">ATCA_STATUS calib_idle(ATCADevice device)</div><div class="ttdoc">idle the CryptoAuth device</div><div class="ttdef"><b>Definition:</b> calib_basic.c:141</div></div>
+<div class="ttc" id="aa01988_html_a85e0a506bd6fdae6ce32d5df3a48ac1c"><div class="ttname"><a href="a01988.html#a85e0a506bd6fdae6ce32d5df3a48ac1c">ATCA_SHA256_BLOCK_SIZE</a></div><div class="ttdeci">#define ATCA_SHA256_BLOCK_SIZE</div><div class="ttdef"><b>Definition:</b> cryptoauthlib.h:51</div></div>
+<div class="ttc" id="aa23383_html_a407f9109b29f2f3a4c9f7d1de450ad41"><div class="ttname"><a href="a23383.html#a407f9109b29f2f3a4c9f7d1de450ad41">atca_sha256_ctx::block</a></div><div class="ttdeci">uint8_t block[ATCA_SHA256_BLOCK_SIZE *2]</div><div class="ttdoc">Unprocessed message storage.</div><div class="ttdef"><b>Definition:</b> calib_basic.h:224</div></div>
+<div class="ttc" id="aa23283_html_ga4c2e8a2404a791ac525acf9989d8bada"><div class="ttname"><a href="a23283.html#ga4c2e8a2404a791ac525acf9989d8bada">calib_ecc204_is_config_locked</a></div><div class="ttdeci">ATCA_STATUS calib_ecc204_is_config_locked(ATCADevice device, bool *is_locked)</div></div>
+<div class="ttc" id="aa23283_html_ga023735b1c0b10e70832d9a957bc99ae3"><div class="ttname"><a href="a23283.html#ga023735b1c0b10e70832d9a957bc99ae3">calib_get_zone_size</a></div><div class="ttdeci">ATCA_STATUS calib_get_zone_size(ATCADevice device, uint8_t zone, uint16_t slot, size_t *size)</div><div class="ttdoc">Gets the size of the specified zone in bytes.</div><div class="ttdef"><b>Definition:</b> calib_basic.c:289</div></div>
+<div class="ttc" id="aa23283_html_gafbc037d57a4cc4fec6a2f291736170cb"><div class="ttname"><a href="a23283.html#gafbc037d57a4cc4fec6a2f291736170cb">calib_wakeup</a></div><div class="ttdeci">ATCA_STATUS calib_wakeup(ATCADevice device)</div><div class="ttdoc">wakeup the CryptoAuth device</div><div class="ttdef"><b>Definition:</b> calib_basic.c:109</div></div>
+<div class="ttc" id="aa23280_html_gafb234ccd6a80d09c0efbe336c2354267"><div class="ttname"><a href="a23280.html#gafb234ccd6a80d09c0efbe336c2354267">ATCADeviceType</a></div><div class="ttdeci">ATCADeviceType</div><div class="ttdoc">The supported Device type in Cryptoauthlib library.</div><div class="ttdef"><b>Definition:</b> atca_devtypes.h:42</div></div>
+<div class="ttc" id="aa23383_html"><div class="ttname"><a href="a23383.html">atca_sha256_ctx</a></div><div class="ttdef"><b>Definition:</b> calib_basic.h:221</div></div>
+<div class="ttc" id="aa01856_html"><div class="ttname"><a href="a01856.html">calib_command.h</a></div><div class="ttdoc">Microchip Crypto Auth device command object - this is a command builder only, it does not send the co...</div></div>
+<div class="ttc" id="aa23283_html_gae51a67781e9e4618e669db1c999e6ec2"><div class="ttname"><a href="a23283.html#gae51a67781e9e4618e669db1c999e6ec2">calib_get_addr</a></div><div class="ttdeci">ATCA_STATUS calib_get_addr(uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t *addr)</div><div class="ttdoc">Compute the address given the zone, slot, block, and offset.</div><div class="ttdef"><b>Definition:</b> calib_basic.c:211</div></div>
+<div class="ttc" id="aa23283_html_ga53d3cce5a7f1edfb8386c92d63d3cb5c"><div class="ttname"><a href="a23283.html#ga53d3cce5a7f1edfb8386c92d63d3cb5c">calib_is_locked</a></div><div class="ttdeci">ATCA_STATUS calib_is_locked(ATCADevice device, uint8_t zone, bool *is_locked)</div></div>
+<div class="ttc" id="aa23283_html_gadfd40a59b7398ab8a963aa5869a00eab"><div class="ttname"><a href="a23283.html#gadfd40a59b7398ab8a963aa5869a00eab">calib_is_slot_locked</a></div><div class="ttdeci">ATCA_STATUS calib_is_slot_locked(ATCADevice device, uint16_t slot, bool *is_locked)</div></div>
+<div class="ttc" id="aa23383_html_a9e3fb1e50a1c71b2337df296222d9553"><div class="ttname"><a href="a23383.html#a9e3fb1e50a1c71b2337df296222d9553">atca_sha256_ctx::block_size</a></div><div class="ttdeci">uint32_t block_size</div><div class="ttdoc">Number of bytes in current block.</div><div class="ttdef"><b>Definition:</b> calib_basic.h:223</div></div>
+<div class="ttc" id="aa01778_html_a22bd6643f31f1d75dc3e7ea939f468cd"><div class="ttname"><a href="a01778.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a></div><div class="ttdeci">ATCA_STATUS</div><div class="ttdef"><b>Definition:</b> atca_status.h:43</div></div>
+<div class="ttc" id="aa23283_html_ga39e3e31e7573d3d73f4b757db7704cce"><div class="ttname"><a href="a23283.html#ga39e3e31e7573d3d73f4b757db7704cce">calib_info_privkey_valid</a></div><div class="ttdeci">ATCA_STATUS calib_info_privkey_valid(ATCADevice device, uint16_t key_id, uint8_t *is_valid)</div><div class="ttdoc">Use Info command to check ECC Private key stored in key slot is valid or not.</div><div class="ttdef"><b>Definition:</b> calib_info.c:188</div></div>
+<div class="ttc" id="aa23283_html_gabc7aff4f1707fbe0a05cf416955f43b0"><div class="ttname"><a href="a23283.html#gabc7aff4f1707fbe0a05cf416955f43b0">calib_info_base</a></div><div class="ttdeci">ATCA_STATUS calib_info_base(ATCADevice device, uint8_t mode, uint16_t param2, uint8_t *out_data)</div><div class="ttdoc">Issues an Info command, which return internal device information and can control GPIO and the persist...</div><div class="ttdef"><b>Definition:</b> calib_info.c:51</div></div>
+<div class="ttc" id="aa23283_html_ga2167248c704fb8d6864760c066bec13b"><div class="ttname"><a href="a23283.html#ga2167248c704fb8d6864760c066bec13b">_calib_exit</a></div><div class="ttdeci">ATCA_STATUS _calib_exit(ATCADevice device)</div><div class="ttdoc">common cleanup code which idles the device after any operation</div><div class="ttdef"><b>Definition:</b> calib_basic.c:196</div></div>
+<div class="ttc" id="aa23283_html_gab32dd75e53f13eff942ab94919d7dc14"><div class="ttname"><a href="a23283.html#gab32dd75e53f13eff942ab94919d7dc14">calib_ecc204_is_data_locked</a></div><div class="ttdeci">ATCA_STATUS calib_ecc204_is_data_locked(ATCADevice device, bool *is_locked)</div></div>
+<div class="ttc" id="aa23283_html_gacd82ed053319a63bbe06755632e377bc"><div class="ttname"><a href="a23283.html#gacd82ed053319a63bbe06755632e377bc">calib_info_lock_status</a></div><div class="ttdeci">ATCA_STATUS calib_info_lock_status(ATCADevice device, uint16_t param2, uint8_t *is_locked)</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_2ecf364fc0c935f498a2ac4d9ead3473.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01847.html">cryptoki.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_8dc63a03da68b48fe24499eda36221e7.html">cryptauthlib-3.4.0_talib</a></li><li class="navelem"><a class="el" href="dir_309af5a16ec1b403c44bf5d5d5ea4cca.html">lib</a></li><li class="navelem"><a class="el" href="dir_897c2b35bc432e20a7ee798d2f6bd65b.html">calib</a></li><li class="navelem"><a class="el" href="a01847.html">calib_basic.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

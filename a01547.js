@@ -1,11 +1,11 @@
 var a01547 =
 [
-    [ "_calib_exit", "a05733.html#ga2167248c704fb8d6864760c066bec13b", null ],
-    [ "calib_ecc204_get_addr", "a05733.html#ga6c9404e7b3b4a42c67080b84610352ca", null ],
-    [ "calib_get_addr", "a05733.html#gae51a67781e9e4618e669db1c999e6ec2", null ],
-    [ "calib_get_zone_size", "a05733.html#ga023735b1c0b10e70832d9a957bc99ae3", null ],
-    [ "calib_idle", "a05733.html#ga59750d83d93368b2944f57bb38bf4d1f", null ],
-    [ "calib_sleep", "a05733.html#gad26b70951a0da6d80fb98027faae7a1f", null ],
-    [ "calib_wakeup", "a05733.html#gafbc037d57a4cc4fec6a2f291736170cb", null ],
-    [ "calib_wakeup_i2c", "a01547.html#a884790e08be94431e1fbe92bf6106e06", null ]
+    [ "pkcs11_signature_sign", "a08589.html#ga4641a3dd4da46f801565310f3784a41e", null ],
+    [ "pkcs11_signature_sign_continue", "a08589.html#ga9c471f7e2ca3330cf6d2fa70e12db38a", null ],
+    [ "pkcs11_signature_sign_finish", "a08589.html#gadb52d31f30bb8f6a66d1851ba0052dc7", null ],
+    [ "pkcs11_signature_sign_init", "a08589.html#ga742c35812a444a87e35150e2332be0c2", null ],
+    [ "pkcs11_signature_verify", "a08589.html#ga27b3652fb8a87f7f40fff10c63316b35", null ],
+    [ "pkcs11_signature_verify_continue", "a08589.html#gab735278cab8e184d682b4ed8b12dbb1b", null ],
+    [ "pkcs11_signature_verify_finish", "a08589.html#ga2aac39ede2b43021b63ed6bc7f3f20da", null ],
+    [ "pkcs11_signature_verify_init", "a08589.html#ga852f9badf3176a60bfb874fb5d118791", null ]
 ];

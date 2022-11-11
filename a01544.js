@@ -1,14 +1,11 @@
 var a01544 =
 [
-    [ "atca_aes_gcm_ctx", "a05828.html", "a05828" ],
-    [ "ATCA_AES_GCM_IV_STD_LENGTH", "a05728.html#gad4d0b05dd9b5d0987e24eef9674922ce", null ],
-    [ "atca_aes_gcm_ctx_t", "a05728.html#ga6105ecbb8ccbbbc50a0bca14d2d51718", null ],
-    [ "calib_aes_gcm_aad_update", "a05728.html#ga465c622e2dc00fa7d6b12e72b5e18163", null ],
-    [ "calib_aes_gcm_decrypt_finish", "a05728.html#ga503c84eaf2b95e3524477e366ad31fb7", null ],
-    [ "calib_aes_gcm_decrypt_update", "a05728.html#ga689c84bd0d7b914a551763d2e9bf8995", null ],
-    [ "calib_aes_gcm_encrypt_finish", "a05728.html#ga405cedf561a767000251a76088f2d63f", null ],
-    [ "calib_aes_gcm_encrypt_update", "a05728.html#ga5403947bb6b0caa35d77a555493a10d9", null ],
-    [ "calib_aes_gcm_init", "a05728.html#ga049b1d6c0e21e011a90c783fbc2932be", null ],
-    [ "calib_aes_gcm_init_rand", "a05728.html#ga6f2bb3db5006b0b7fd1f4c48a167f6af", null ],
-    [ "atca_basic_aes_gcm_version", "a05728.html#gaa5990c6c2a55759960d25a1f8ad1973d", null ]
+    [ "pkcs11_signature_sign", "a08589.html#ga4641a3dd4da46f801565310f3784a41e", null ],
+    [ "pkcs11_signature_sign_continue", "a08589.html#ga9c471f7e2ca3330cf6d2fa70e12db38a", null ],
+    [ "pkcs11_signature_sign_finish", "a08589.html#gadb52d31f30bb8f6a66d1851ba0052dc7", null ],
+    [ "pkcs11_signature_sign_init", "a08589.html#ga742c35812a444a87e35150e2332be0c2", null ],
+    [ "pkcs11_signature_verify", "a08589.html#ga27b3652fb8a87f7f40fff10c63316b35", null ],
+    [ "pkcs11_signature_verify_continue", "a08589.html#gab735278cab8e184d682b4ed8b12dbb1b", null ],
+    [ "pkcs11_signature_verify_finish", "a08589.html#ga2aac39ede2b43021b63ed6bc7f3f20da", null ],
+    [ "pkcs11_signature_verify_init", "a08589.html#ga852f9badf3176a60bfb874fb5d118791", null ]
 ];

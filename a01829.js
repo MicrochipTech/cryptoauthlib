@@ -1,9 +1,10 @@
 var a01829 =
 [
-    [ "atca_jwt_add_claim_numeric", "a05737.html#ga7073a7cfb7c77ad02923cdbb1226d2ad", null ],
-    [ "atca_jwt_add_claim_string", "a05737.html#ga3e6036b2c0e6dbc96a30f078e56cacff", null ],
-    [ "atca_jwt_check_payload_start", "a05737.html#ga167fe35631a0dd191293c6ad3a6485aa", null ],
-    [ "atca_jwt_finalize", "a05737.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b", null ],
-    [ "atca_jwt_init", "a05737.html#gad3ea09543f0569a5368130f4a3d7bce0", null ],
-    [ "atca_jwt_verify", "a05737.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b", null ]
+    [ "_calib_exit", "a25344.html#ga2167248c704fb8d6864760c066bec13b", null ],
+    [ "calib_get_addr", "a25344.html#gae51a67781e9e4618e669db1c999e6ec2", null ],
+    [ "calib_get_zone_size", "a25344.html#ga023735b1c0b10e70832d9a957bc99ae3", null ],
+    [ "calib_idle", "a25344.html#ga59750d83d93368b2944f57bb38bf4d1f", null ],
+    [ "calib_sleep", "a25344.html#gad26b70951a0da6d80fb98027faae7a1f", null ],
+    [ "calib_wakeup", "a25344.html#gafbc037d57a4cc4fec6a2f291736170cb", null ],
+    [ "calib_wakeup_i2c", "a01829.html#a884790e08be94431e1fbe92bf6106e06", null ]
 ];

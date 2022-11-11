@@ -1,13 +1,9 @@
 var a01535 =
 [
-    [ "PEM_CERT_BEGIN", "a01535.html#aefb573f85f8692759f6c82587a948d71", null ],
-    [ "PEM_CERT_END", "a01535.html#afbe03d95d1d6a651c01d1ef74daa4063", null ],
-    [ "PEM_CSR_BEGIN", "a01535.html#a006df03d5e86c2d586f02362ca66566e", null ],
-    [ "PEM_CSR_END", "a01535.html#ad7521d8913a097b0a910d00fdb664210", null ],
-    [ "atcacert_decode_pem", "a01535.html#a67998c5401898020391dc6f02b11d2bd", null ],
-    [ "atcacert_decode_pem_cert", "a01535.html#a47e68bdf906458409c7eff1aed0dff3a", null ],
-    [ "atcacert_decode_pem_csr", "a01535.html#afbccc09407aeb4d7b626b28da120211a", null ],
-    [ "atcacert_encode_pem", "a01535.html#abd464bace94353a8ff767e5a9bdc66ce", null ],
-    [ "atcacert_encode_pem_cert", "a01535.html#a5f893d8f40bc8126a3802ad435bba895", null ],
-    [ "atcacert_encode_pem_csr", "a01535.html#ab148948a885c6a7c9c95494e48e45cb1", null ]
+    [ "pkcs11_os_free", "a01535.html#a6dc4b364c3d11f22e08cc67adbcd70c6", null ],
+    [ "pkcs11_os_malloc", "a01535.html#add8754c49398ab1c3a26a581188e074c", null ],
+    [ "pkcs11_os_create_mutex", "a08589.html#gaf5f1c5e6c5bf8d91f2090ee4bbe20362", null ],
+    [ "pkcs11_os_destroy_mutex", "a08589.html#ga0b79ce15416271adde1bb832f6faa16b", null ],
+    [ "pkcs11_os_lock_mutex", "a08589.html#gae27d029f16c6710a0a168e1d1057a4e3", null ],
+    [ "pkcs11_os_unlock_mutex", "a08589.html#ga6f868fabdbf3e115a72e1d126e5356b5", null ]
 ];

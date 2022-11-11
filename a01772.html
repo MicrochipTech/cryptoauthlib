@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_spi_harmony.c File Reference</title>
+<title>CryptoAuthLib: atcacert.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.4.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,68 +85,78 @@ $(document).ready(function(){initNavTree('a01772.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">hal_spi_harmony.c File Reference</div>  </div>
+<div class="title">atcacert.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for SPI over Harmony PLIB.  
+<p>Declarations common to all atcacert code.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;string.h&gt;</code><br />
-<code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &quot;atca_config.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01694_source.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01703_source.html">atca_hal.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01466_source.html">atca_device.h</a>&quot;</code><br />
-<code>#include &quot;definitions.h&quot;</code><br />
-<code>#include &quot;talib/talib_defines.h&quot;</code><br />
-<code>#include &quot;talib/talib_fce.h&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga92cecc8e30a88dee1cbedd49141bc209"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga92cecc8e30a88dee1cbedd49141bc209">hal_spi_discover_buses</a> (int spi_buses[], int max_buses)</td></tr>
-<tr class="memdesc:ga92cecc8e30a88dee1cbedd49141bc209"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover spi buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge  <a href="a05735.html#ga92cecc8e30a88dee1cbedd49141bc209">More...</a><br /></td></tr>
-<tr class="separator:ga92cecc8e30a88dee1cbedd49141bc209"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6cf45c115bcb721e951e8792e0feb3f0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga6cf45c115bcb721e951e8792e0feb3f0">hal_spi_discover_devices</a> (int bus_num, <a class="el" href="a05760.html">ATCAIfaceCfg</a> cfg[], int *found)</td></tr>
-<tr class="memdesc:ga6cf45c115bcb721e951e8792e0feb3f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover any TA100 devices on a given logical bus number  <a href="a05735.html#ga6cf45c115bcb721e951e8792e0feb3f0">More...</a><br /></td></tr>
-<tr class="separator:ga6cf45c115bcb721e951e8792e0feb3f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga24b3ca4076a0e4093644d4f58cd80a69"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga24b3ca4076a0e4093644d4f58cd80a69">hal_spi_init</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, <a class="el" href="a05760.html">ATCAIfaceCfg</a> *cfg)</td></tr>
-<tr class="memdesc:ga24b3ca4076a0e4093644d4f58cd80a69"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize an SPI interface using given config  <a href="a05735.html#ga24b3ca4076a0e4093644d4f58cd80a69">More...</a><br /></td></tr>
-<tr class="separator:ga24b3ca4076a0e4093644d4f58cd80a69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeb831d9894ce11146bd00c79a98b7f0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#gaeb831d9894ce11146bd00c79a98b7f0f">hal_spi_post_init</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:gaeb831d9894ce11146bd00c79a98b7f0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SPI post init.  <a href="a05735.html#gaeb831d9894ce11146bd00c79a98b7f0f">More...</a><br /></td></tr>
-<tr class="separator:gaeb831d9894ce11146bd00c79a98b7f0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga237aa1d0ee551a61991b52dc7812ff64"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga237aa1d0ee551a61991b52dc7812ff64">hal_spi_select</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga237aa1d0ee551a61991b52dc7812ff64"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation to assert the device chip select.  <a href="a05735.html#ga237aa1d0ee551a61991b52dc7812ff64">More...</a><br /></td></tr>
-<tr class="separator:ga237aa1d0ee551a61991b52dc7812ff64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6bcb25e01ba6242973eedb32fa9dac2a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga6bcb25e01ba6242973eedb32fa9dac2a">hal_spi_deselect</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga6bcb25e01ba6242973eedb32fa9dac2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation to deassert the device chip select.  <a href="a05735.html#ga6bcb25e01ba6242973eedb32fa9dac2a">More...</a><br /></td></tr>
-<tr class="separator:ga6bcb25e01ba6242973eedb32fa9dac2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga16661176757d0ef155155b07267a44ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga16661176757d0ef155155b07267a44ed">hal_spi_send</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
-<tr class="memdesc:ga16661176757d0ef155155b07267a44ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SPI send over Harmony.  <a href="a05735.html#ga16661176757d0ef155155b07267a44ed">More...</a><br /></td></tr>
-<tr class="separator:ga16661176757d0ef155155b07267a44ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga410c24762579358a576a58610a877e63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga410c24762579358a576a58610a877e63">hal_spi_receive</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
-<tr class="memdesc:ga410c24762579358a576a58610a877e63"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SPI receive function for HARMONY SPI.  <a href="a05735.html#ga410c24762579358a576a58610a877e63">More...</a><br /></td></tr>
-<tr class="separator:ga410c24762579358a576a58610a877e63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac7f3951634faf0a7c16c234d471c3660"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#gac7f3951634faf0a7c16c234d471c3660">hal_spi_control</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t option, void *param, size_t paramlen)</td></tr>
-<tr class="memdesc:gac7f3951634faf0a7c16c234d471c3660"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform control operations for the kit protocol.  <a href="a05735.html#gac7f3951634faf0a7c16c234d471c3660">More...</a><br /></td></tr>
-<tr class="separator:gac7f3951634faf0a7c16c234d471c3660"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8c3f1c6c20d939c4ca976fdda6279359"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga8c3f1c6c20d939c4ca976fdda6279359">hal_spi_release</a> (void *hal_data)</td></tr>
-<tr class="memdesc:ga8c3f1c6c20d939c4ca976fdda6279359"><td class="mdescLeft">&#160;</td><td class="mdescRight">manages reference count on given bus and releases resource if no more refences exist  <a href="a05735.html#ga8c3f1c6c20d939c4ca976fdda6279359">More...</a><br /></td></tr>
-<tr class="separator:ga8c3f1c6c20d939c4ca976fdda6279359"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a01775_source.html">atcacert_check_config.h</a>&quot;</code><br />
+</div>
+<p><a href="a01772_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaa93f0eb578d23995850d61f7d61c55c1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#gaa93f0eb578d23995850d61f7d61c55c1">FALSE</a>&#160;&#160;&#160;(0)</td></tr>
+<tr class="separator:gaa93f0eb578d23995850d61f7d61c55c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa8cecfc5c5c054d2875c03e77b7be15d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#gaa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a>&#160;&#160;&#160;(1)</td></tr>
+<tr class="separator:gaa8cecfc5c5c054d2875c03e77b7be15d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7bd1ad830360fc8b988f855da6d0d5ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#ga7bd1ad830360fc8b988f855da6d0d5ba">ATCACERT_E_SUCCESS</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:ga7bd1ad830360fc8b988f855da6d0d5ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operation completed successfully.  <a href="a25343.html#ga7bd1ad830360fc8b988f855da6d0d5ba">More...</a><br /></td></tr>
+<tr class="separator:ga7bd1ad830360fc8b988f855da6d0d5ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga048a6bb9781dbbc402409a172f976f74"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#ga048a6bb9781dbbc402409a172f976f74">ATCACERT_E_ERROR</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:ga048a6bb9781dbbc402409a172f976f74"><td class="mdescLeft">&#160;</td><td class="mdescRight">General error.  <a href="a25343.html#ga048a6bb9781dbbc402409a172f976f74">More...</a><br /></td></tr>
+<tr class="separator:ga048a6bb9781dbbc402409a172f976f74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47509d283523ab1892fb8746d6f4e37d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#ga47509d283523ab1892fb8746d6f4e37d">ATCACERT_E_BAD_PARAMS</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memdesc:ga47509d283523ab1892fb8746d6f4e37d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalid/bad parameter passed to function.  <a href="a25343.html#ga47509d283523ab1892fb8746d6f4e37d">More...</a><br /></td></tr>
+<tr class="separator:ga47509d283523ab1892fb8746d6f4e37d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a2e774fc8b12c4045dea335a86afca6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#ga7a2e774fc8b12c4045dea335a86afca6">ATCACERT_E_BUFFER_TOO_SMALL</a>&#160;&#160;&#160;3</td></tr>
+<tr class="memdesc:ga7a2e774fc8b12c4045dea335a86afca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Supplied buffer for output is too small to hold the result.  <a href="a25343.html#ga7a2e774fc8b12c4045dea335a86afca6">More...</a><br /></td></tr>
+<tr class="separator:ga7a2e774fc8b12c4045dea335a86afca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaea155533fdd352d6602d3e2fc717930f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#gaea155533fdd352d6602d3e2fc717930f">ATCACERT_E_DECODING_ERROR</a>&#160;&#160;&#160;4</td></tr>
+<tr class="memdesc:gaea155533fdd352d6602d3e2fc717930f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data being decoded/parsed has an invalid format.  <a href="a25343.html#gaea155533fdd352d6602d3e2fc717930f">More...</a><br /></td></tr>
+<tr class="separator:gaea155533fdd352d6602d3e2fc717930f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaafd66d6744314225ead24b3901bd6372"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#gaafd66d6744314225ead24b3901bd6372">ATCACERT_E_INVALID_DATE</a>&#160;&#160;&#160;5</td></tr>
+<tr class="memdesc:gaafd66d6744314225ead24b3901bd6372"><td class="mdescLeft">&#160;</td><td class="mdescRight">Date is invalid.  <a href="a25343.html#gaafd66d6744314225ead24b3901bd6372">More...</a><br /></td></tr>
+<tr class="separator:gaafd66d6744314225ead24b3901bd6372"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b6db1523875a2b1453ef5e16989ecd4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#ga4b6db1523875a2b1453ef5e16989ecd4">ATCACERT_E_UNIMPLEMENTED</a>&#160;&#160;&#160;6</td></tr>
+<tr class="memdesc:ga4b6db1523875a2b1453ef5e16989ecd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function is unimplemented for the current configuration.  <a href="a25343.html#ga4b6db1523875a2b1453ef5e16989ecd4">More...</a><br /></td></tr>
+<tr class="separator:ga4b6db1523875a2b1453ef5e16989ecd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a7cb98e18ad338f2eaf6594acb67c32"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#ga5a7cb98e18ad338f2eaf6594acb67c32">ATCACERT_E_UNEXPECTED_ELEM_SIZE</a>&#160;&#160;&#160;7</td></tr>
+<tr class="memdesc:ga5a7cb98e18ad338f2eaf6594acb67c32"><td class="mdescLeft">&#160;</td><td class="mdescRight">A certificate element size was not what was expected.  <a href="a25343.html#ga5a7cb98e18ad338f2eaf6594acb67c32">More...</a><br /></td></tr>
+<tr class="separator:ga5a7cb98e18ad338f2eaf6594acb67c32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8e3e7c64650c92364bbac17f6a75474a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#ga8e3e7c64650c92364bbac17f6a75474a">ATCACERT_E_ELEM_MISSING</a>&#160;&#160;&#160;8</td></tr>
+<tr class="memdesc:ga8e3e7c64650c92364bbac17f6a75474a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The certificate element isn't defined for the certificate definition.  <a href="a25343.html#ga8e3e7c64650c92364bbac17f6a75474a">More...</a><br /></td></tr>
+<tr class="separator:ga8e3e7c64650c92364bbac17f6a75474a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga62604c78d688530173e203b02df180fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#ga62604c78d688530173e203b02df180fa">ATCACERT_E_ELEM_OUT_OF_BOUNDS</a>&#160;&#160;&#160;9</td></tr>
+<tr class="memdesc:ga62604c78d688530173e203b02df180fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Certificate element is out of bounds for the given certificate.  <a href="a25343.html#ga62604c78d688530173e203b02df180fa">More...</a><br /></td></tr>
+<tr class="separator:ga62604c78d688530173e203b02df180fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga822ee0620c8d2d12ff971b9b35f9f5cd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#ga822ee0620c8d2d12ff971b9b35f9f5cd">ATCACERT_E_BAD_CERT</a>&#160;&#160;&#160;10</td></tr>
+<tr class="memdesc:ga822ee0620c8d2d12ff971b9b35f9f5cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Certificate structure is bad in some way.  <a href="a25343.html#ga822ee0620c8d2d12ff971b9b35f9f5cd">More...</a><br /></td></tr>
+<tr class="separator:ga822ee0620c8d2d12ff971b9b35f9f5cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga01010ef58d52a05292f6a70ff3d53ce8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#ga01010ef58d52a05292f6a70ff3d53ce8">ATCACERT_E_WRONG_CERT_DEF</a>&#160;&#160;&#160;11</td></tr>
+<tr class="separator:ga01010ef58d52a05292f6a70ff3d53ce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae1da5e02cd9b4ee7b8617d7bce0a5b5d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#gae1da5e02cd9b4ee7b8617d7bce0a5b5d">ATCACERT_E_VERIFY_FAILED</a>&#160;&#160;&#160;12</td></tr>
+<tr class="memdesc:gae1da5e02cd9b4ee7b8617d7bce0a5b5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Certificate or challenge/response verification failed.  <a href="a25343.html#gae1da5e02cd9b4ee7b8617d7bce0a5b5d">More...</a><br /></td></tr>
+<tr class="separator:gae1da5e02cd9b4ee7b8617d7bce0a5b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2396e500bd36c2316a1a6e13e3117958"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a25343.html#ga2396e500bd36c2316a1a6e13e3117958">ATCACERT_E_INVALID_TRANSFORM</a>&#160;&#160;&#160;13</td></tr>
+<tr class="memdesc:ga2396e500bd36c2316a1a6e13e3117958"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalid transform passed to function.  <a href="a25343.html#ga2396e500bd36c2316a1a6e13e3117958">More...</a><br /></td></tr>
+<tr class="separator:ga2396e500bd36c2316a1a6e13e3117958"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for SPI over Harmony PLIB. </p>
-<p>This code is structured in two parts. Part 1 is the connection of the ATCA HAL API to the physical SPI implementation. Part 2 is the Harmony SPI primitives to set up the interface.</p>
-<p>Prerequisite: add SERCOM SPI Master Interrupt support to application in Mplab Harmony 3</p>
+<div class="textblock"><p>Declarations common to all atcacert code. </p>
+<p>These are common definitions used by all the atcacert code.</p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_381c8d42bbdb26858cb443b28149b615.html">hal</a></li><li class="navelem"><a class="el" href="a01772.html">hal_spi_harmony.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ac97eb41c075753f4733aae2239a389a.html">cryptauthlib-v3.4.0_</a></li><li class="navelem"><a class="el" href="dir_cff6911667c1a559ef1c32fb411fa0d0.html">lib</a></li><li class="navelem"><a class="el" href="dir_9ba6923e882ec25e6b2d9c3d59f5aadf.html">atcacert</a></li><li class="navelem"><a class="el" href="a01772.html">atcacert.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

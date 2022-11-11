@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_os.h File Reference</title>
+<title>CryptoAuthLib: atca_crypto_hw_aes_ccm.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.4.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -84,78 +84,25 @@ $(document).ready(function(){initNavTree('a01931.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">pkcs11_os.h File Reference</div>  </div>
+<div class="title">atca_crypto_hw_aes_ccm.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Library Operating System Abstraction.  
+<p>CryptoAuthLib Basic API methods for AES CCM mode.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01847_source.html">cryptoki.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a01694_source.html">cryptoauthlib.h</a>&quot;</code><br />
-</div>
-<p><a href="a01931_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:add8754c49398ab1c3a26a581188e074c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01931.html#add8754c49398ab1c3a26a581188e074c">pkcs11_os_malloc</a>&#160;&#160;&#160;<a class="el" href="a05735.html#gafa879f6b0c834e42325fff42d2087b84">hal_malloc</a></td></tr>
-<tr class="separator:add8754c49398ab1c3a26a581188e074c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6dc4b364c3d11f22e08cc67adbcd70c6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01931.html#a6dc4b364c3d11f22e08cc67adbcd70c6">pkcs11_os_free</a>&#160;&#160;&#160;<a class="el" href="a05735.html#gafa6d47ddbfd92184e624c55bf69328e0">hal_free</a></td></tr>
-<tr class="separator:a6dc4b364c3d11f22e08cc67adbcd70c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gaf5f1c5e6c5bf8d91f2090ee4bbe20362"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#gaf5f1c5e6c5bf8d91f2090ee4bbe20362">pkcs11_os_create_mutex</a> (<a class="el" href="a01967.html#ae0b1b81b8173ec1695352ff3c44f1254">CK_VOID_PTR_PTR</a> ppMutex)</td></tr>
-<tr class="memdesc:gaf5f1c5e6c5bf8d91f2090ee4bbe20362"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application callback for creating a mutex object.  <a href="a05739.html#gaf5f1c5e6c5bf8d91f2090ee4bbe20362">More...</a><br /></td></tr>
-<tr class="separator:gaf5f1c5e6c5bf8d91f2090ee4bbe20362"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0b79ce15416271adde1bb832f6faa16b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#ga0b79ce15416271adde1bb832f6faa16b">pkcs11_os_destroy_mutex</a> (<a class="el" href="a01967.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pMutex)</td></tr>
-<tr class="separator:ga0b79ce15416271adde1bb832f6faa16b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae27d029f16c6710a0a168e1d1057a4e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#gae27d029f16c6710a0a168e1d1057a4e3">pkcs11_os_lock_mutex</a> (<a class="el" href="a01967.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pMutex)</td></tr>
-<tr class="separator:gae27d029f16c6710a0a168e1d1057a4e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6f868fabdbf3e115a72e1d126e5356b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05739.html#ga6f868fabdbf3e115a72e1d126e5356b5">pkcs11_os_unlock_mutex</a> (<a class="el" href="a01967.html#ace49359127edfc5665608140005b9a96">CK_VOID_PTR</a> pMutex)</td></tr>
-<tr class="separator:ga6f868fabdbf3e115a72e1d126e5356b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Library Operating System Abstraction. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a6dc4b364c3d11f22e08cc67adbcd70c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6dc4b364c3d11f22e08cc67adbcd70c6">&#9670;&nbsp;</a></span>pkcs11_os_free</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define pkcs11_os_free&#160;&#160;&#160;<a class="el" href="a05735.html#gafa6d47ddbfd92184e624c55bf69328e0">hal_free</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="add8754c49398ab1c3a26a581188e074c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#add8754c49398ab1c3a26a581188e074c">&#9670;&nbsp;</a></span>pkcs11_os_malloc</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define pkcs11_os_malloc&#160;&#160;&#160;<a class="el" href="a05735.html#gafa879f6b0c834e42325fff42d2087b84">hal_malloc</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><code>#include &quot;<a class="el" href="a01976_source.html">cryptoauthlib.h</a>&quot;</code><br />
+</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for AES CCM mode. </p>
+<p>The AES command supports 128-bit AES encryption or decryption of small messages or data packets in ECB mode. CCM mode provides security and authenticity to the message being processed.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC608A. Refer to device datasheet for full details.</dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_2ecf364fc0c935f498a2ac4d9ead3473.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01931.html">pkcs11_os.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ac97eb41c075753f4733aae2239a389a.html">cryptauthlib-v3.4.0_</a></li><li class="navelem"><a class="el" href="dir_cff6911667c1a559ef1c32fb411fa0d0.html">lib</a></li><li class="navelem"><a class="el" href="dir_ef2a0a3263ad5769e221708fc528cd97.html">crypto</a></li><li class="navelem"><a class="el" href="a01931.html">atca_crypto_hw_aes_ccm.c</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

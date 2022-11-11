@@ -1,10 +1,13 @@
 var a01514 =
 [
-    [ "atcacert_der_adjust_length", "a05732.html#ga165018175f52421ea26fb33ccf335108", null ],
-    [ "atcacert_der_dec_ecdsa_sig_value", "a05732.html#gac3f22b75f15e8508f35d99b95d955842", null ],
-    [ "atcacert_der_dec_integer", "a05732.html#ga3b095e11adc55a61e3cfb2957d0c6c77", null ],
-    [ "atcacert_der_dec_length", "a05732.html#gaeee4091e249b8fc202d5126a8374eeb1", null ],
-    [ "atcacert_der_enc_ecdsa_sig_value", "a05732.html#ga3583ada6da51d31cfe819894e8a9deeb", null ],
-    [ "atcacert_der_enc_integer", "a05732.html#gaf156257cda87df879f54c07e80bc0e8d", null ],
-    [ "atcacert_der_enc_length", "a05732.html#gaafc9ef8e0164226481b670fde0223e13", null ]
+    [ "pkcs11_key_derive", "a08589.html#ga8ace04a2049a5d7e527558da10e68dcd", null ],
+    [ "pkcs11_key_generate", "a08589.html#gae2748ca15b76254a518b28bf3dccb63f", null ],
+    [ "pkcs11_key_generate_pair", "a08589.html#gaac5c7d6ae9b8262fb705083302efd90a", null ],
+    [ "pkcs11_key_write", "a08589.html#gaf3fdce991fe05099aa8552912e26dee7", null ],
+    [ "pkcs11_key_private_attributes", "a08589.html#ga40d8e67ef0fae7bdc2dca013ad8410aa", null ],
+    [ "pkcs11_key_private_attributes_count", "a08589.html#gaf358031996abf87fc21bc259e1e90644", null ],
+    [ "pkcs11_key_public_attributes", "a08589.html#gadf3e8d1e6b01d9fe85f54c9478d8d215", null ],
+    [ "pkcs11_key_public_attributes_count", "a08589.html#gadc78586c61388b3756395f0098fa4505", null ],
+    [ "pkcs11_key_secret_attributes", "a08589.html#ga6ef03269a32699359d90901cc84954f3", null ],
+    [ "pkcs11_key_secret_attributes_count", "a08589.html#ga55a0ac12b2ed4daefadaf3fa94edf78e", null ]
 ];

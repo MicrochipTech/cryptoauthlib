@@ -1,16 +1,13 @@
 var a01817 =
 [
-    [ "MAX_SWI_BUSES", "a05735.html#gaf9d9d027ce20f528edea144203141714", null ],
-    [ "RECEIVE_MODE", "a05735.html#gab45577245cf4a8ead70e2d56965f2df3", null ],
-    [ "RX_DELAY", "a05735.html#gac55a27e4c3eae59bb1687eb7e8d1fe4b", null ],
-    [ "TRANSMIT_MODE", "a05735.html#ga4b85133b317e72410ea0762d637d3460", null ],
-    [ "TX_DELAY", "a05735.html#ga3f3816567a2f513dd0e1f9eb17992fb2", null ],
-    [ "ATCASWIMaster_t", "a05735.html#ga626ead73d3ae1cc2ed09d5fa509f80ff", null ],
-    [ "swi_uart_deinit", "a05735.html#ga0b1aad3936bf003686d8db7fa2be5132", null ],
-    [ "swi_uart_discover_buses", "a05735.html#gad640b598d581ee7c8a4c804bee602906", null ],
-    [ "swi_uart_init", "a05735.html#ga003b63648f1a5f9eba274760559688f2", null ],
-    [ "swi_uart_mode", "a05735.html#gacc2a96c86ce4c07249b81bc6a7eb2e41", null ],
-    [ "swi_uart_receive_byte", "a05735.html#ga93f3dab17c14f71641ca970998ede823", null ],
-    [ "swi_uart_send_byte", "a05735.html#ga4a4d491006d9683d67838963706ac9c1", null ],
-    [ "swi_uart_setbaud", "a05735.html#gaba296f70baf68b768d6c4bb9cf7ba67d", null ]
+    [ "PEM_CERT_BEGIN", "a01817.html#aefb573f85f8692759f6c82587a948d71", null ],
+    [ "PEM_CERT_END", "a01817.html#afbe03d95d1d6a651c01d1ef74daa4063", null ],
+    [ "PEM_CSR_BEGIN", "a01817.html#a006df03d5e86c2d586f02362ca66566e", null ],
+    [ "PEM_CSR_END", "a01817.html#ad7521d8913a097b0a910d00fdb664210", null ],
+    [ "atcacert_decode_pem", "a01817.html#a67998c5401898020391dc6f02b11d2bd", null ],
+    [ "atcacert_decode_pem_cert", "a01817.html#a47e68bdf906458409c7eff1aed0dff3a", null ],
+    [ "atcacert_decode_pem_csr", "a01817.html#afbccc09407aeb4d7b626b28da120211a", null ],
+    [ "atcacert_encode_pem", "a01817.html#abd464bace94353a8ff767e5a9bdc66ce", null ],
+    [ "atcacert_encode_pem_cert", "a01817.html#a5f893d8f40bc8126a3802ad435bba895", null ],
+    [ "atcacert_encode_pem_csr", "a01817.html#ab148948a885c6a7c9c95494e48e45cb1", null ]
 ];

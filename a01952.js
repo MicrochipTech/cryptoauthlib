@@ -1,12 +1,7 @@
 var a01952 =
 [
-    [ "ATCA_SERIAL_NUM_SIZE", "a01952.html#ab112a8a280ac5ad6e11b5fe2cc0be0a0", null ],
-    [ "pkcs11_token_convert_pin_to_key", "a05739.html#ga9e4aef0d030b3b8d4a0f77a1fec4ed3d", null ],
-    [ "pkcs11_token_get_access_type", "a05739.html#ga6f92db83ad7904096b24c6b25774f4b7", null ],
-    [ "pkcs11_token_get_info", "a05739.html#ga7bf2fea766cab4645fe615661bcf0db9", null ],
-    [ "pkcs11_token_get_storage", "a05739.html#gabf87951ca453a2eaff25df22bc136a57", null ],
-    [ "pkcs11_token_get_writable", "a05739.html#ga5521260e489c703aea4f15912f52ad31", null ],
-    [ "pkcs11_token_init", "a05739.html#ga7e207adf2d26c1d6ea64f7c60252bf45", null ],
-    [ "pkcs11_token_random", "a05739.html#gaf4c0c6a2d12d879308f2d42cc61ef401", null ],
-    [ "pkcs11_token_set_pin", "a05739.html#ga75272ae3120c6d9fc42862ac8b52da17", null ]
+    [ "atcac_sw_sha1", "a25345.html#ga65fdb8b2a2da178fd417232bf9f0ea48", null ],
+    [ "atcac_sw_sha1_finish", "a25345.html#ga3124f25e05eb4300557d5794a7a88e61", null ],
+    [ "atcac_sw_sha1_init", "a25345.html#gabed03bcc1228768534ef4ee49df0ad09", null ],
+    [ "atcac_sw_sha1_update", "a25345.html#ga65ff558306a88e0fbe2fc82bbe6a9c03", null ]
 ];

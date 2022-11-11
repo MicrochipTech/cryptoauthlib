@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_swi_bitbang_harmony.c File Reference</title>
+<title>CryptoAuthLib: atcacert_check_config.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.4.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,59 +85,127 @@ $(document).ready(function(){initNavTree('a01775.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">hal_swi_bitbang_harmony.c File Reference</div>  </div>
+<div class="title">atcacert_check_config.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for SWI bit banging.  
+<p>Configuration check and defaults for the atcacert module.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a01694_source.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;atca_config.h&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga53864a301dac6efbdbdc3931aa79e23e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga53864a301dac6efbdbdc3931aa79e23e">hal_swi_discover_buses</a> (int swi_buses[], int max_buses)</td></tr>
-<tr class="memdesc:ga53864a301dac6efbdbdc3931aa79e23e"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover swi buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application.This function is currently not supported. of the a-priori knowledge  <a href="a05735.html#ga53864a301dac6efbdbdc3931aa79e23e">More...</a><br /></td></tr>
-<tr class="separator:ga53864a301dac6efbdbdc3931aa79e23e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga354e6fa757688b73e6fb5293bb835def"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga354e6fa757688b73e6fb5293bb835def">hal_swi_discover_devices</a> (int bus_num, <a class="el" href="a05760.html">ATCAIfaceCfg</a> cfg[], int *found)</td></tr>
-<tr class="memdesc:ga354e6fa757688b73e6fb5293bb835def"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover any CryptoAuth devices on a given logical bus number.This function is curently not supported.  <a href="a05735.html#ga354e6fa757688b73e6fb5293bb835def">More...</a><br /></td></tr>
-<tr class="separator:ga354e6fa757688b73e6fb5293bb835def"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf406053c1a3f2a86bdc887f2ff4b663d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#gaf406053c1a3f2a86bdc887f2ff4b663d">hal_swi_init</a> (void *hal, <a class="el" href="a05760.html">ATCAIfaceCfg</a> *cfg)</td></tr>
-<tr class="memdesc:gaf406053c1a3f2a86bdc887f2ff4b663d"><td class="mdescLeft">&#160;</td><td class="mdescRight">hal_swi_init manages requests to initialize a physical interface. It manages use counts so when an interface has released the physical layer, it will disable the interface for some other use. You can have multiple ATCAIFace instances using the same bus, and you can have multiple ATCAIFace instances on multiple swi buses, so hal_swi_init manages these things and ATCAIFace is abstracted from the physical details.  <a href="a05735.html#gaf406053c1a3f2a86bdc887f2ff4b663d">More...</a><br /></td></tr>
-<tr class="separator:gaf406053c1a3f2a86bdc887f2ff4b663d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9186e5235979216330ae580290872c77"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga9186e5235979216330ae580290872c77">hal_swi_post_init</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga9186e5235979216330ae580290872c77"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI post init.  <a href="a05735.html#ga9186e5235979216330ae580290872c77">More...</a><br /></td></tr>
-<tr class="separator:ga9186e5235979216330ae580290872c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9df4dbd666a87efe49578842e53ad91e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga9df4dbd666a87efe49578842e53ad91e">hal_swi_send</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
-<tr class="memdesc:ga9df4dbd666a87efe49578842e53ad91e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send byte(s) via SWI.  <a href="a05735.html#ga9df4dbd666a87efe49578842e53ad91e">More...</a><br /></td></tr>
-<tr class="separator:ga9df4dbd666a87efe49578842e53ad91e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga159bdf9c24e429d54800da1eb1c21058"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga159bdf9c24e429d54800da1eb1c21058">hal_swi_receive</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
-<tr class="memdesc:ga159bdf9c24e429d54800da1eb1c21058"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive byte(s) via SWI.  <a href="a05735.html#ga159bdf9c24e429d54800da1eb1c21058">More...</a><br /></td></tr>
-<tr class="separator:ga159bdf9c24e429d54800da1eb1c21058"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafc428980ec95e37eee94813db229fe70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#gafc428980ec95e37eee94813db229fe70">hal_swi_wake</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:gafc428980ec95e37eee94813db229fe70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send Wake flag via SWI.  <a href="a05735.html#gafc428980ec95e37eee94813db229fe70">More...</a><br /></td></tr>
-<tr class="separator:gafc428980ec95e37eee94813db229fe70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga618291172976da96c4f02dc9200c845c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga618291172976da96c4f02dc9200c845c">hal_swi_idle</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga618291172976da96c4f02dc9200c845c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send Idle flag via SWI.  <a href="a05735.html#ga618291172976da96c4f02dc9200c845c">More...</a><br /></td></tr>
-<tr class="separator:ga618291172976da96c4f02dc9200c845c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga252e365a30f2583dae8a8eac073a9f53"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga252e365a30f2583dae8a8eac073a9f53">hal_swi_sleep</a> (<a class="el" href="a05731.html#ga75c11126f3fe81df3d6c27f5bb393303">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga252e365a30f2583dae8a8eac073a9f53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send Sleep flag via SWI.  <a href="a05735.html#ga252e365a30f2583dae8a8eac073a9f53">More...</a><br /></td></tr>
-<tr class="separator:ga252e365a30f2583dae8a8eac073a9f53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga196dbc62546b39ac3e556a0f7f6b7132"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a05735.html#ga196dbc62546b39ac3e556a0f7f6b7132">hal_swi_release</a> (void *hal_data)</td></tr>
-<tr class="memdesc:ga196dbc62546b39ac3e556a0f7f6b7132"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manages reference count on given bus and releases resource if no more reference(s) exist.  <a href="a05735.html#ga196dbc62546b39ac3e556a0f7f6b7132">More...</a><br /></td></tr>
-<tr class="separator:ga196dbc62546b39ac3e556a0f7f6b7132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><code>#include &quot;<a class="el" href="a01844_source.html">calib/calib_config_check.h</a>&quot;</code><br />
+</div>
+<p><a href="a01775_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a2894900773b25424610b3d4441802fad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01775.html#a2894900773b25424610b3d4441802fad">ATCACERT_HW_CHALLENGE_EN</a>&#160;&#160;&#160;<a class="el" href="a01844.html#ab1577de8ff3b82385448390b9c26a60f">CALIB_RANDOM_EN</a></td></tr>
+<tr class="separator:a2894900773b25424610b3d4441802fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af247eb22827965004abb8b3b8aed35f1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01775.html#af247eb22827965004abb8b3b8aed35f1">ATCACERT_HW_VERIFY_EN</a>&#160;&#160;&#160;<a class="el" href="a01844.html#a1dbba98417d51367f0c125ae11e1b78d">CALIB_VERIFY_EXTERN_EN</a></td></tr>
+<tr class="separator:af247eb22827965004abb8b3b8aed35f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4f6e00c9f67ccad2783628a6fe7e7af"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01775.html#ab4f6e00c9f67ccad2783628a6fe7e7af">ATCACERT_DATEFMT_ISO_EN</a>&#160;&#160;&#160;<a class="el" href="a01730.html#adf8ded95b0a2e24134fa5eed072bd8db">DEFAULT_ENABLED</a></td></tr>
+<tr class="separator:ab4f6e00c9f67ccad2783628a6fe7e7af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e59ca45591de8524a95a45705269682"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01775.html#a2e59ca45591de8524a95a45705269682">ATCACERT_DATEFMT_UTC_EN</a>&#160;&#160;&#160;<a class="el" href="a01730.html#adf8ded95b0a2e24134fa5eed072bd8db">DEFAULT_ENABLED</a></td></tr>
+<tr class="separator:a2e59ca45591de8524a95a45705269682"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a7f452650c0f0659fe3ca21b3e2863b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01775.html#a8a7f452650c0f0659fe3ca21b3e2863b">ATCACERT_DATEFMT_POSIX_EN</a>&#160;&#160;&#160;<a class="el" href="a01730.html#adf8ded95b0a2e24134fa5eed072bd8db">DEFAULT_ENABLED</a></td></tr>
+<tr class="separator:a8a7f452650c0f0659fe3ca21b3e2863b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96e7eaed048b2ecf32a4d6b9623f8b4e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01775.html#a96e7eaed048b2ecf32a4d6b9623f8b4e">ATCACERT_DATEFMT_GEN_EN</a>&#160;&#160;&#160;<a class="el" href="a01730.html#adf8ded95b0a2e24134fa5eed072bd8db">DEFAULT_ENABLED</a></td></tr>
+<tr class="separator:a96e7eaed048b2ecf32a4d6b9623f8b4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for SWI bit banging. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+<div class="textblock"><p>Configuration check and defaults for the atcacert module. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2022 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a96e7eaed048b2ecf32a4d6b9623f8b4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96e7eaed048b2ecf32a4d6b9623f8b4e">&#9670;&nbsp;</a></span>ATCACERT_DATEFMT_GEN_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCACERT_DATEFMT_GEN_EN&#160;&#160;&#160;<a class="el" href="a01730.html#adf8ded95b0a2e24134fa5eed072bd8db">DEFAULT_ENABLED</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab4f6e00c9f67ccad2783628a6fe7e7af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4f6e00c9f67ccad2783628a6fe7e7af">&#9670;&nbsp;</a></span>ATCACERT_DATEFMT_ISO_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCACERT_DATEFMT_ISO_EN&#160;&#160;&#160;<a class="el" href="a01730.html#adf8ded95b0a2e24134fa5eed072bd8db">DEFAULT_ENABLED</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8a7f452650c0f0659fe3ca21b3e2863b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a7f452650c0f0659fe3ca21b3e2863b">&#9670;&nbsp;</a></span>ATCACERT_DATEFMT_POSIX_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCACERT_DATEFMT_POSIX_EN&#160;&#160;&#160;<a class="el" href="a01730.html#adf8ded95b0a2e24134fa5eed072bd8db">DEFAULT_ENABLED</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2e59ca45591de8524a95a45705269682"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e59ca45591de8524a95a45705269682">&#9670;&nbsp;</a></span>ATCACERT_DATEFMT_UTC_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCACERT_DATEFMT_UTC_EN&#160;&#160;&#160;<a class="el" href="a01730.html#adf8ded95b0a2e24134fa5eed072bd8db">DEFAULT_ENABLED</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2894900773b25424610b3d4441802fad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2894900773b25424610b3d4441802fad">&#9670;&nbsp;</a></span>ATCACERT_HW_CHALLENGE_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCACERT_HW_CHALLENGE_EN&#160;&#160;&#160;<a class="el" href="a01844.html#ab1577de8ff3b82385448390b9c26a60f">CALIB_RANDOM_EN</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af247eb22827965004abb8b3b8aed35f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af247eb22827965004abb8b3b8aed35f1">&#9670;&nbsp;</a></span>ATCACERT_HW_VERIFY_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCACERT_HW_VERIFY_EN&#160;&#160;&#160;<a class="el" href="a01844.html#a1dbba98417d51367f0c125ae11e1b78d">CALIB_VERIFY_EXTERN_EN</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_381c8d42bbdb26858cb443b28149b615.html">hal</a></li><li class="navelem"><a class="el" href="a01775.html">hal_swi_bitbang_harmony.c</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ac97eb41c075753f4733aae2239a389a.html">cryptauthlib-v3.4.0_</a></li><li class="navelem"><a class="el" href="dir_cff6911667c1a559ef1c32fb411fa0d0.html">lib</a></li><li class="navelem"><a class="el" href="dir_9ba6923e882ec25e6b2d9c3d59f5aadf.html">atcacert</a></li><li class="navelem"><a class="el" href="a01775.html">atcacert_check_config.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>

@@ -1,9 +1,7 @@
 var a01532 =
 [
-    [ "atcacert_decode_pem", "a01532.html#a67998c5401898020391dc6f02b11d2bd", null ],
-    [ "atcacert_decode_pem_cert", "a01532.html#a47e68bdf906458409c7eff1aed0dff3a", null ],
-    [ "atcacert_decode_pem_csr", "a01532.html#afbccc09407aeb4d7b626b28da120211a", null ],
-    [ "atcacert_encode_pem", "a01532.html#abd464bace94353a8ff767e5a9bdc66ce", null ],
-    [ "atcacert_encode_pem_cert", "a01532.html#a5f893d8f40bc8126a3802ad435bba895", null ],
-    [ "atcacert_encode_pem_csr", "a01532.html#ab148948a885c6a7c9c95494e48e45cb1", null ]
+    [ "pkcs11_os_create_mutex", "a08589.html#gaf5f1c5e6c5bf8d91f2090ee4bbe20362", null ],
+    [ "pkcs11_os_destroy_mutex", "a08589.html#ga0b79ce15416271adde1bb832f6faa16b", null ],
+    [ "pkcs11_os_lock_mutex", "a08589.html#gae27d029f16c6710a0a168e1d1057a4e3", null ],
+    [ "pkcs11_os_unlock_mutex", "a08589.html#ga6f868fabdbf3e115a72e1d126e5356b5", null ]
 ];

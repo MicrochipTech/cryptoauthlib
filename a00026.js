@@ -1,7 +1,7 @@
 var a00026 =
 [
-    [ "_ascii_kit_host_context", "a06308.html", "a06308" ],
-    [ "_kit_host_map_entry", "a06312.html", "a06312" ],
+    [ "_ascii_kit_host_context", "a20260.html", "a20260" ],
+    [ "_kit_host_map_entry", "a20264.html", "a20264" ],
     [ "KIT_DATA_BEGIN_DELIMITER", "a00026.html#aabb437bfae6836a5b0bb3bd9f1884296", null ],
     [ "KIT_DATA_END_DELIMITER", "a00026.html#aad9b090e9f32d7480ee650d90f93051e", null ],
     [ "KIT_FIRMWARE_SIZE_MAX", "a00026.html#af181e384a69c3d0e4879fb82fd30be81", null ],

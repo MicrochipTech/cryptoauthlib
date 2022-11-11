@@ -1,9 +1,6 @@
 var a01826 =
 [
-    [ "atca_jwt_add_claim_numeric", "a05737.html#ga7073a7cfb7c77ad02923cdbb1226d2ad", null ],
-    [ "atca_jwt_add_claim_string", "a05737.html#ga3e6036b2c0e6dbc96a30f078e56cacff", null ],
-    [ "atca_jwt_check_payload_start", "a05737.html#ga167fe35631a0dd191293c6ad3a6485aa", null ],
-    [ "atca_jwt_finalize", "a05737.html#ga6d1bf5c8bf4fb49e1e80c19911157d4b", null ],
-    [ "atca_jwt_init", "a05737.html#gad3ea09543f0569a5368130f4a3d7bce0", null ],
-    [ "atca_jwt_verify", "a05737.html#ga0e2ca8c9bd4954e004cd10cdc29c9a9b", null ]
+    [ "atcacert_gen_challenge_sw", "a23282.html#gaa9829e5aa1ece3d3a933db9827d3e8f3", null ],
+    [ "atcacert_verify_cert_sw", "a23282.html#gab78271af8c3e2837810fcdae6e3f5e28", null ],
+    [ "atcacert_verify_response_sw", "a23282.html#ga9d5bf9ec84d28a0412377818805c32c4", null ]
 ];

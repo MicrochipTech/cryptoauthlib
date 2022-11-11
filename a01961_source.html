@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_util.h Source File</title>
+<title>CryptoAuthLib: crypto_config_check.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CryptoAuthLib
-   &#160;<span id="projectnumber">v3.3.2</span>
+   &#160;<span id="projectnumber">v3.4.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -85,41 +85,121 @@ $(document).ready(function(){initNavTree('a01961_source.html',''); initResizable
 
 <div class="header">
   <div class="headertitle">
-<div class="title">pkcs11_util.h</div>  </div>
+<div class="title">crypto_config_check.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="a01961.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef PKCS11_UTIL_H_</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define PKCS11_UTIL_H_</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef CRYPTO_CONFIG_CHECK_H</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define CRYPTO_CONFIG_CHECK_H</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;pkcs11_config.h&quot;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01847.html">cryptoki.h</a>&quot;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01694.html">cryptoauthlib.h</a>&quot;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="a01961.html#a599c24418585185172b26db696a67f78">   35</a></span>&#160;<span class="preprocessor">#define PKCS11_UTIL_ARRAY_SIZE(x)   sizeof(x) / sizeof(x[0])</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01730.html">atca_config_check.h</a>&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#if ATCA_CA_SUPPORT</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="a01844.html">calib/calib_config_check.h</a>&quot;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keywordtype">void</span> <a class="code" href="a05739.html#ga89b7e38b830e6c5348a1640040be5935">pkcs11_util_escape_string</a>(<a class="code" href="a01967.html#af25c3841a3f605e6414f4c9ef5592ed9">CK_UTF8CHAR_PTR</a> buf, <a class="code" href="a01967.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a> buf_len);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<a class="code" href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a> <a class="code" href="a05739.html#ga747cebf2d5a1cb09e0a6e8db0a7584b6">pkcs11_util_convert_rv</a>(<a class="code" href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a> <a class="code" href="a01715.html#ab58253322bcadfefd7ab8c3ec0fb65fb">status</a>);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keywordtype">int</span> <a class="code" href="a05739.html#ga4c491559c7692bafa75e520931aa53a5">pkcs11_util_memset</a>(<span class="keywordtype">void</span> *dest, <span class="keywordtype">size_t</span> destsz, <span class="keywordtype">int</span> ch, <span class="keywordtype">size_t</span> count);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PKCS11_UTIL_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#if ATCA_TA_SUPPORT</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &quot;talib/talib_config_check.h&quot;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#ifndef ATCAB_AES_EXTRAS_EN</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="a01961.html#a28cb83338bbbc858be983299cede3ba9">   47</a></span>&#160;<span class="preprocessor">#define ATCAB_AES_EXTRAS_EN         (CALIB_AES_EN || TALIB_AES_EN)</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#ifndef ATCAB_AES_RANDOM_IV_EN</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="a01961.html#a3f435fe441705a8a5c6dd68786a0656d">   51</a></span>&#160;<span class="preprocessor">#define ATCAB_AES_RANDOM_IV_EN      (ATCA_HOSTLIB_EN || CALIB_RANDOM_EN || TALIB_RANDOM_EN)</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#ifndef ATCAB_AES_UPDATE_EN</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="a01961.html#af273e717452d3e5295d20197b4615ed0">   58</a></span>&#160;<span class="preprocessor">#define ATCAB_AES_UPDATE_EN         ATCAB_AES_EXTRAS_EN</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment">                      /****** ATCA_CRYPTO_HW_AES_CBC ******/</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#ifndef ATCAB_AES_CBC_ENCRYPT_EN</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="a01961.html#ac2eb887016e59054e626341175577669">   73</a></span>&#160;<span class="preprocessor">#define ATCAB_AES_CBC_ENCRYPT_EN     ATCAB_AES_EXTRAS_EN</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#ifndef ATCAB_AES_CBC_DECRYPT_EN</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="a01961.html#a23ae19deaff29f2796c4981962ca9b55">   86</a></span>&#160;<span class="preprocessor">#define ATCAB_AES_CBC_DECRYPT_EN    ATCAB_AES_EXTRAS_EN</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#ifndef ATCAB_AES_CBC_UPDATE_EN</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="a01961.html#ac4a36841e01ab35f12b0a802ea20bf4c">   90</a></span>&#160;<span class="preprocessor">#define ATCAB_AES_CBC_UPDATE_EN     ATCAB_AES_UPDATE_EN</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment">                      /****** ATCA_CRYPTO_HW_AES_CBCMAC ******/</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="preprocessor">#ifndef ATCAB_AES_CBCMAC_EN</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno"><a class="line" href="a01961.html#a1996786ea061102926ef0ba52a510bfd">  111</a></span>&#160;<span class="preprocessor">#define ATCAB_AES_CBCMAC_EN         ATCAB_AES_CBC_ENCRYPT_EN</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment">                      /****** ATCA_CRYPTO_HW_AES_CTR ******/</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor">#ifndef ATCAB_AES_CTR_EN</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno"><a class="line" href="a01961.html#a6569901e92e84b0b448794f8a89d1d9e">  124</a></span>&#160;<span class="preprocessor">#define ATCAB_AES_CTR_EN            ATCAB_AES_EXTRAS_EN</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="preprocessor">#ifndef ATCAB_AES_CTR_RAND_IV_EN</span></div>
+<div class="line"><a name="l00138"></a><span class="lineno"><a class="line" href="a01961.html#a6bc2ac5d33ff89c89ddb1b53a0e021dd">  138</a></span>&#160;<span class="preprocessor">#define ATCAB_AES_CTR_RAND_IV_EN    (ATCAB_AES_CTR_EN &amp;&amp; ATCAB_AES_RANDOM_IV_EN)</span></div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="comment">                      /****** ATCA_CRYPTO_HW_AES_CCM ******/</span></div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="preprocessor">#ifndef ATCAB_AES_CCM_EN</span></div>
+<div class="line"><a name="l00152"></a><span class="lineno"><a class="line" href="a01961.html#ae638244ab3ba72e50b974f763e2abc42">  152</a></span>&#160;<span class="preprocessor">#define ATCAB_AES_CCM_EN            (ATCAB_AES_CBCMAC_EN &amp;&amp; ATCAB_AES_CTR_EN)</span></div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="preprocessor">#ifndef ATCAB_AES_CCM_RAND_IV_EN</span></div>
+<div class="line"><a name="l00168"></a><span class="lineno"><a class="line" href="a01961.html#a99a2fd6b9b3f2f9d244a581e135c9aca">  168</a></span>&#160;<span class="preprocessor">#define ATCAB_AES_CCM_INIT_IV_EN    (ATCAB_AES_CCM_EN &amp;&amp; ATCAB_AES_RANDOM_IV_EN)</span></div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; </div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="comment">                      /****** ATCA_CRYPTO_HW_AES_CMAC ******/</span></div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="preprocessor">#ifndef ATCAB_AES_CMAC_EN</span></div>
+<div class="line"><a name="l00189"></a><span class="lineno"><a class="line" href="a01961.html#a4fdcdb7a50f222b37132d67f182883b0">  189</a></span>&#160;<span class="preprocessor">#define ATCAB_AES_CMAC_EN                   ATCAB_AES_CBC_ENCRYPT_EN</span></div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160; </div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="preprocessor">#ifndef ATCA_CRYPTO_SHA1_EN</span></div>
+<div class="line"><a name="l00199"></a><span class="lineno"><a class="line" href="a01961.html#a2e5e1b4f8da8d151569d6ff0133b43ec">  199</a></span>&#160;<span class="preprocessor">#define ATCA_CRYPTO_SHA1_EN                 (ATCAC_SHA1_EN &amp;&amp; !ATCA_HOSTLIB_EN) </span></div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160; </div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;<span class="preprocessor">#ifndef ATCA_CRYPTO_SHA2_EN</span></div>
+<div class="line"><a name="l00209"></a><span class="lineno"><a class="line" href="a01961.html#aff63a86885856fcc093664f27af75f27">  209</a></span>&#160;<span class="preprocessor">#define ATCA_CRYPTO_SHA2_EN                 (ATCAC_SHA256_EN &amp;&amp; !ATCA_HOSTLIB_EN)</span></div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160; </div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<span class="preprocessor">#ifndef ATCA_CRYPTO_SHA2_HMAC_EN</span></div>
+<div class="line"><a name="l00221"></a><span class="lineno"><a class="line" href="a01961.html#a18071ade62f5d4b39e444ca87548e31e">  221</a></span>&#160;<span class="preprocessor">#define ATCA_CRYPTO_SHA2_HMAC_EN            (ATCAC_SHA256_HMAC_EN &amp;&amp; !ATCA_HOSTLIB_EN)</span></div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160; </div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="preprocessor">#ifndef ATCA_CRYPTO_SHA2_HMAC_CTR_EN</span></div>
+<div class="line"><a name="l00234"></a><span class="lineno"><a class="line" href="a01961.html#a5a3020c4884811361247f771da67b9a5">  234</a></span>&#160;<span class="preprocessor">#define ATCA_CRYPTO_SHA2_HMAC_CTR_EN        ATCAC_SHA256_HMAC_CTR_EN</span></div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160; </div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="comment">                      /****** ATCA_CRYPTO_PBKDF2 ******/</span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160; </div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="preprocessor">#ifndef ATCAC_PBKDF2_SHA256_EN</span></div>
+<div class="line"><a name="l00249"></a><span class="lineno"><a class="line" href="a01961.html#a6d2fa2e22a151bea100d7c7ee84dbe7f">  249</a></span>&#160;<span class="preprocessor">#define ATCAC_PBKDF2_SHA256_EN      ATCAC_SHA256_HMAC_EN</span></div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160; </div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="preprocessor">#ifndef ATCAB_PBKDF2_SHA256_EN</span></div>
+<div class="line"><a name="l00262"></a><span class="lineno"><a class="line" href="a01961.html#aa46ae7101b70ba482359edccca83f414">  262</a></span>&#160;<span class="preprocessor">#define ATCAB_PBKDF2_SHA256_EN      (CALIB_SHA_HMAC_EN || TALIB_SHA_HMAC_EN)</span></div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160; </div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;<span class="comment">                      /****** ATCA_CRYPTO_PKCS7_PADDING ******/</span></div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;<span class="preprocessor">#ifndef ATCAC_PKCS7_PAD_EN</span></div>
+<div class="line"><a name="l00267"></a><span class="lineno"><a class="line" href="a01961.html#a941a667df9d243d84585600fa2c24a7d">  267</a></span>&#160;<span class="preprocessor">#define ATCAC_PKCS7_PAD_EN          ATCAB_AES_EXTRAS_EN</span></div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160; </div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* CRYPTO_CONFIG_CHECK_H */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aa01715_html_ab58253322bcadfefd7ab8c3ec0fb65fb"><div class="ttname"><a href="a01715.html#ab58253322bcadfefd7ab8c3ec0fb65fb">status</a></div><div class="ttdeci">ATCA_STATUS status</div><div class="ttdef"><b>Definition:</b> hal_esp32_i2c.c:49</div></div>
-<div class="ttc" id="aa01694_html"><div class="ttname"><a href="a01694.html">cryptoauthlib.h</a></div><div class="ttdoc">Single aggregation point for all CryptoAuthLib header files.</div></div>
-<div class="ttc" id="aa05739_html_ga747cebf2d5a1cb09e0a6e8db0a7584b6"><div class="ttname"><a href="a05739.html#ga747cebf2d5a1cb09e0a6e8db0a7584b6">pkcs11_util_convert_rv</a></div><div class="ttdeci">CK_RV pkcs11_util_convert_rv(ATCA_STATUS status)</div><div class="ttdef"><b>Definition:</b> pkcs11_util.c:61</div></div>
-<div class="ttc" id="aa05739_html_ga89b7e38b830e6c5348a1640040be5935"><div class="ttname"><a href="a05739.html#ga89b7e38b830e6c5348a1640040be5935">pkcs11_util_escape_string</a></div><div class="ttdeci">void pkcs11_util_escape_string(CK_UTF8CHAR_PTR buf, CK_ULONG buf_len)</div><div class="ttdef"><b>Definition:</b> pkcs11_util.c:42</div></div>
-<div class="ttc" id="aa01967_html_a35181858a3b7a0a81f49d180d8f446ef"><div class="ttname"><a href="a01967.html#a35181858a3b7a0a81f49d180d8f446ef">CK_ULONG</a></div><div class="ttdeci">unsigned long int CK_ULONG</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:49</div></div>
-<div class="ttc" id="aa01967_html_af25c3841a3f605e6414f4c9ef5592ed9"><div class="ttname"><a href="a01967.html#af25c3841a3f605e6414f4c9ef5592ed9">CK_UTF8CHAR_PTR</a></div><div class="ttdeci">CK_UTF8CHAR CK_PTR CK_UTF8CHAR_PTR</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:65</div></div>
-<div class="ttc" id="aa01967_html_a33839c131011ca3849dc35c11f69c39d"><div class="ttname"><a href="a01967.html#a33839c131011ca3849dc35c11f69c39d">CK_RV</a></div><div class="ttdeci">CK_ULONG CK_RV</div><div class="ttdef"><b>Definition:</b> pkcs11t.h:1046</div></div>
-<div class="ttc" id="aa01847_html"><div class="ttname"><a href="a01847.html">cryptoki.h</a></div></div>
-<div class="ttc" id="aa05739_html_ga4c491559c7692bafa75e520931aa53a5"><div class="ttname"><a href="a05739.html#ga4c491559c7692bafa75e520931aa53a5">pkcs11_util_memset</a></div><div class="ttdeci">int pkcs11_util_memset(void *dest, size_t destsz, int ch, size_t count)</div><div class="ttdef"><b>Definition:</b> pkcs11_util.c:72</div></div>
-<div class="ttc" id="aa01484_html_a22bd6643f31f1d75dc3e7ea939f468cd"><div class="ttname"><a href="a01484.html#a22bd6643f31f1d75dc3e7ea939f468cd">ATCA_STATUS</a></div><div class="ttdeci">ATCA_STATUS</div><div class="ttdef"><b>Definition:</b> atca_status.h:43</div></div>
+<div class="ttc" id="aa01844_html"><div class="ttname"><a href="a01844.html">calib_config_check.h</a></div><div class="ttdoc">Consistency checks for configuration options.</div></div>
+<div class="ttc" id="aa01730_html"><div class="ttname"><a href="a01730.html">atca_config_check.h</a></div><div class="ttdoc">Consistency checks for configuration options.</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_a38e40175d0a695bd2f766ec5c8fa74d.html">cryptauthlib-v3.3.2_</a></li><li class="navelem"><a class="el" href="dir_049a3f232da22d7bc95b62454c7b1842.html">lib</a></li><li class="navelem"><a class="el" href="dir_2ecf364fc0c935f498a2ac4d9ead3473.html">pkcs11</a></li><li class="navelem"><a class="el" href="a01961.html">pkcs11_util.h</a></li>
+    <li class="navelem"><a class="el" href="dir_aa9f03ac313f820f3c4ddc4fdd25fbe6.html">dist-tools</a></li><li class="navelem"><a class="el" href="dir_ac97eb41c075753f4733aae2239a389a.html">cryptauthlib-v3.4.0_</a></li><li class="navelem"><a class="el" href="dir_cff6911667c1a559ef1c32fb411fa0d0.html">lib</a></li><li class="navelem"><a class="el" href="dir_ef2a0a3263ad5769e221708fc528cd97.html">crypto</a></li><li class="navelem"><a class="el" href="a01961.html">crypto_config_check.h</a></li>
     <li class="footer">Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>
