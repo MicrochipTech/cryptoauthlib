@@ -47,7 +47,7 @@
  * \defgroup pkcs11 Token Management (pkcs11_)
    @{ */
 
-#ifdef ATCA_ATECC508A_SUPPORT
+#if defined(ATCA_ATECC508A_SUPPORT) && PKCS11_TOKEN_INIT_SUPPORT
 #if !PKCS11_USE_STATIC_CONFIG
 /** Standard Configuration Structure for ATECC508A devices */
 static const uint8_t atecc508_config[] = {
@@ -65,7 +65,7 @@ extern const uint8_t atecc508_config[];
 #endif
 #endif
 
-#ifdef ATCA_ATECC608_SUPPORT
+#if defined(ATCA_ATECC608_SUPPORT) && PKCS11_TOKEN_INIT_SUPPORT
 #if !PKCS11_USE_STATIC_CONFIG
 /** Standard Configuration Structure for ATECC608 devices */
 static const uint8_t atecc608_config[] = {

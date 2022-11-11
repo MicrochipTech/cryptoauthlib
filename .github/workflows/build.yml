@@ -41,7 +41,7 @@ jobs:
         with:
           package-dir: python 
         env:
-          CIBW_SKIP: "cp27-* cp36-* *-musllinux* pp*-macosx* cp35-macosx_x86_64"
+          CIBW_SKIP: "cp27-* cp36-* cp37-* pp37-* *-musllinux* pp*-macosx*"
           CIBW_MANYLINUX_X86_64_IMAGE: "manylinux_2_28"
           CIBW_BEFORE_BUILD_LINUX: "yum update -y && yum install -y libusb-devel"
           CIBW_BUILD_VERBOSITY: 3

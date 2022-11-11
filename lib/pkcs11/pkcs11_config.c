@@ -555,6 +555,7 @@ static CK_RV pkcs11_config_parse_object(pkcs11_slot_ctx_ptr slot_ctx, char* cfgs
     return rv;
 }
 
+#if ATCA_TA_SUPPORT
 static CK_RV pkcs11_config_parse_handle(uint16_t * handle, char* cfgstr)
 {
     int argc = 4;
@@ -571,6 +572,7 @@ static CK_RV pkcs11_config_parse_handle(uint16_t * handle, char* cfgstr)
 
     return rv;
 }
+#endif
 
 static CK_RV pkcs11_config_parse_slot_file(pkcs11_slot_ctx_ptr slot_ctx, int argc, char * argv[])
 {
@@ -1011,7 +1013,7 @@ CK_RV pkcs11_config_load(pkcs11_slot_ctx_ptr slot_ctx)
         {
             /* Hardware Feature */
             pObject->slot = 0;
-            pObject->name = "counter";
+            memcpy(pObject->name, "counter", 8);
             pObject->class_id = CKO_HW_FEATURE;
             pObject->class_type = CKH_MONOTONIC_COUNTER;
             pObject->attributes = pkcs11_object_monotonic_attributes;

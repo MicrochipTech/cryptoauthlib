@@ -5435,7 +5435,6 @@ TEST(atcacert_cert_build, start_signer)
         .device_sn      = { 0x00,     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
     };
     atcacert_build_state_t build_state;
-    memset(&build_state, 0, sizeof(build_state));
 
     ret = atcacert_cert_build_start(
         &build_state,
@@ -5444,7 +5443,14 @@ TEST(atcacert_cert_build, start_signer)
         &cert_size,
         g_ca_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-    TEST_ASSERT_EQUAL_MEMORY(&build_state_ref, &build_state, sizeof(build_state));
+    
+    TEST_ASSERT_EQUAL(build_state_ref.cert_def, build_state.cert_def);
+    TEST_ASSERT_EQUAL(build_state_ref.cert, build_state.cert);
+    TEST_ASSERT_EQUAL(build_state_ref.cert_size, build_state.cert_size);
+    TEST_ASSERT_EQUAL(build_state_ref.max_cert_size, build_state.max_cert_size);
+    TEST_ASSERT_EQUAL(build_state_ref.is_device_sn, build_state.is_device_sn);
+    TEST_ASSERT_EQUAL_MEMORY(build_state_ref.device_sn, build_state.device_sn, sizeof(build_state.device_sn));
+
     TEST_ASSERT_EQUAL(sizeof(cert_ref), cert_size);
     TEST_ASSERT_EQUAL_MEMORY(cert_ref, cert, cert_size);
 }

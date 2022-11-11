@@ -86,7 +86,7 @@ ATCA_STATUS calib_sha_base(ATCADevice device, uint8_t mode, uint16_t length, con
     {
         //Build Command
         packet.param1 = mode;
-        packet.param2 = length;
+        packet.param2 = cmd_mode != SHA_MODE_ECC204_HMAC_START ? length: 0;
 
         if (cmd_mode != SHA_MODE_SHA256_PUBLIC && cmd_mode != SHA_MODE_HMAC_START &&
             cmd_mode != SHA_MODE_ECC204_HMAC_START)

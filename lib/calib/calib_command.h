@@ -326,6 +326,8 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define COUNTER_MODE_INCREMENT              ((uint8_t)0x01)         //!< Counter command mode for incrementing
 #define COUNTER_RSP_SIZE                    ATCA_RSP_SIZE_4         //!< Counter command response packet size
 #define COUNTER_SIZE                        ATCA_RSP_SIZE_MIN       //!< Counter size in binary
+
+#define ECC204_COUNTER_MAX_VALUE            ((uint16_t)10000)       //!< Counter maximum value of the counter for ECC204
 /** @} */
 
 /** \name Definitions for the DeriveKey Command

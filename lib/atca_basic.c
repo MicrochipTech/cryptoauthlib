@@ -4094,7 +4094,7 @@ ATCA_STATUS atcab_write_config_counter(uint16_t counter_id, uint32_t counter_val
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-        status = calib_write_config_counter(_gDevice, counter_id, counter_value);
+        status = calib_write_config_counter_ext(_gDevice, counter_id, counter_value);
 #endif
     }
     else if (atcab_is_ta_device(dev_type))

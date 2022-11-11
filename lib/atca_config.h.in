@@ -12,12 +12,6 @@
 #cmakedefine ATCA_HAL_SWI_UART
 #cmakedefine ATCA_HAL_1WIRE
 
-
-/** Define to enable compatibility with legacy HALs
-   (HALs with embedded device logic)*/
-#cmakedefine ATCA_HAL_LEGACY_API
-
-
 /* Included device support */
 #cmakedefine ATCA_ATSHA204A_SUPPORT
 #cmakedefine ATCA_ATSHA206A_SUPPORT
@@ -30,11 +24,19 @@
 /** Device Override - Library Assumes ATECC608B support in checks */
 #cmakedefine ATCA_ATECC608A_SUPPORT
 
+/** Define to enable compatibility with legacy HALs
+   (HALs with embedded device logic)*/
+#cmakedefine ATCA_HAL_LEGACY_API
 
+/** To use dynamically registered HALs without any of the provided
+implementations its necessary to specify a value here - using this
+in addition to specifying a provide hal may result in compilation
+problems - it will need to be the same as the number of the hal options
+selected plus however additional slots one would like */
+#cmakedefine ATCA_MAX_HAL_CACHE @ATCA_MAX_HAL_CACHE@
 
 /** Define if cryptoauthlib is to use the maximum execution time method */
 #cmakedefine ATCA_NO_POLL
-
 
 /* \brief How long to wait after an initial wake failure for the POST to
  *         complete.

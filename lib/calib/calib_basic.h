@@ -303,6 +303,7 @@ ATCA_STATUS calib_write_config_counter(ATCADevice device, uint16_t counter_id, u
 #endif
 #if CALIB_WRITE_EN || CALIB_WRITE_ECC204_EN
 ATCA_STATUS calib_write_zone_ext(ATCADevice device, uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, const uint8_t *data, uint8_t len);
+ATCA_STATUS calib_write_config_counter_ext(ATCADevice device, uint16_t counter_id, uint32_t counter_value);
 ATCA_STATUS calib_write_pubkey(ATCADevice device, uint16_t slot, const uint8_t *public_key);
 #endif
 
@@ -321,6 +322,7 @@ ATCA_STATUS calib_ecc204_write(ATCADevice device, uint8_t zone, uint16_t address
 ATCA_STATUS calib_ecc204_write_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint8_t block,
                                     uint8_t offset, const uint8_t *data, uint8_t len);
 ATCA_STATUS calib_ecc204_write_config_zone(ATCADevice device, const uint8_t* config_data);
+ATCA_STATUS calib_ecc204_write_config_counter(ATCADevice device, uint8_t counter_id, uint16_t counter_value);
 ATCA_STATUS calib_ecc204_write_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot, size_t block,
                                           const uint8_t *data, size_t length);
 #endif /* CALIB_WRITE_ECC204_EN */
@@ -521,17 +523,18 @@ ATCA_STATUS calib_ecc204_write_enc(ATCADevice device, uint16_t slot, uint8_t* da
 #define atcab_write_bytes_zone(...)             calib_ecc204_write_bytes_zone(_gDevice, __VA_ARGS__)
 #define atcab_write_bytes_zone_ext              calib_ecc204_write_bytes_zone
 #define atcab_write_config_zone(...)            calib_ecc204_write_config_zone(_gDevice, __VA_ARGS__)
+#define atcab_write_config_counter(...)         calib_ecc204_write_config_counter(_gDevice, __VA_ARGS__)
 #else
 #define atcab_write(...)                        calib_write_ext(_gDevice, __VA_ARGS__)
 #define atcab_write_zone(...)                   calib_write_zone_ext(_gDevice, __VA_ARGS__)
 #define atcab_write_bytes_zone(...)             calib_write_bytes_zone_ext(_gDevice, __VA_ARGS__)
 #define atcab_write_bytes_zone_ext              calib_write_bytes_zone_ext
 #define atcab_write_config_zone(...)            calib_write_config_zone_ext(_gDevice, __VA_ARGS__)
+#define atcab_write_config_counter(...)         calib_write_config_counter_ext(_gDevice, __VA_ARGS__)
 #endif
 
 #define atcab_write_pubkey(...)                 calib_write_pubkey(_gDevice, __VA_ARGS__)
 #define atcab_write_enc(...)                    calib_write_enc(_gDevice, __VA_ARGS__)
-#define atcab_write_config_counter(...)         calib_write_config_counter(_gDevice, __VA_ARGS__)
 #endif
 
 #ifdef __cplusplus

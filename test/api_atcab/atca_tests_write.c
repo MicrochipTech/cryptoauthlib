@@ -393,6 +393,23 @@ TEST(atca_cmd_basic_test, write_slot4_key)
 }
 #endif
 
+#if CALIB_WRITE_ECC204_EN
+TEST(atca_cmd_basic_test, write_ecc204_hmac_key)
+{
+    ATCA_STATUS status = ATCA_SUCCESS;
+    uint16_t key_id;
+
+    test_assert_config_is_locked();
+    test_assert_data_is_unlocked();
+
+    status = atca_test_config_get_id(TEST_TYPE_HMAC, &key_id);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    status = atcab_write_zone(ATCA_ZONE_DATA, key_id, 0, 0, g_slot4_key, 32);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+}
+#endif
+
 TEST(atca_cmd_basic_test, write_data_zone_blocks)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
@@ -435,8 +452,16 @@ TEST(atca_cmd_basic_test, write_data_zone_blocks)
     status = atcab_write_bytes_zone(ATCA_ZONE_DATA, slot, 4, write_data, sizeof(write_data));
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    status = atcab_read_bytes_zone(ATCA_ZONE_DATA, slot, 4, read_data, sizeof(read_data));
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    if (ECC204 != gCfg->devtype)
+    {
+        status = atcab_read_bytes_zone(ATCA_ZONE_DATA, slot, 4, read_data, sizeof(read_data));
+        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    }
+    else
+    {
+        status = atcab_read_bytes_zone(ATCA_ZONE_DATA, slot, 128, read_data, sizeof(read_data));
+        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    }
 
     TEST_ASSERT_EQUAL_MEMORY(write_data, read_data, sizeof(write_data));
 
@@ -679,6 +704,9 @@ t_test_case_info write_basic_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_basic_test, write_slot4_key),             DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC                     },
 #endif
     { REGISTER_TEST_CASE(atca_cmd_basic_test, write_data_zone_blocks),                               DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
+#if CALIB_WRITE_ECC204_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_ecc204_hmac_key),       DEVICE_MASK(ECC204) },
+#endif
 #if TEST_ATCAB_WRITE_ENC_EN
     //{ REGISTER_TEST_CASE(atca_cmd_basic_test, write_bytes_zone_slot8),                               DEVICE_MASK_ECC                      },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, write_enc),                   DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC                      },
@@ -693,4 +721,3 @@ t_test_case_info write_basic_test_info[] =
     { (fp_test_case)NULL,                     (uint8_t)0 },                 /* Array Termination element*/
 };
 // *INDENT-ON*
-

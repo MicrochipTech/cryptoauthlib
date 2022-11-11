@@ -558,6 +558,20 @@ ATCA_STATUS calib_write_config_counter(ATCADevice device, uint16_t counter_id, u
 
     return status;
 }
+
+ATCA_STATUS calib_write_config_counter_ext(ATCADevice device, uint16_t counter_id, uint32_t counter_value)
+{
+#if CALIB_ECC204_EN
+    if(ECC204 == atcab_get_device_type_ext(device))
+    {
+        return calib_ecc204_write_config_counter(device, (uint8_t)counter_id, (uint16_t)counter_value);
+    }
+    else
+#endif
+    {
+        return calib_write_config_counter(device, counter_id, counter_value);
+    }
+}
 #endif /* CALIB_WRITE_EN */
 
 /** \brief Execute write command to write either 16 byte or 32 byte to one of the EEPROM zones
@@ -706,7 +720,53 @@ ATCA_STATUS calib_ecc204_write_config_zone(ATCADevice device, const uint8_t* con
 
     return status;
 }
-#endif /* CALIB_WRITE_EN */
+
+/** \brief Initialize monotonic counters in device with a specific value.
+ *
+ * The monotonic counters are stored in the configuration zone using a special
+ * format. This encodes a binary count value into the 16 byte encoded value
+ * required. Can only be set while the configuration subzone 2 is unlocked.
+ *
+ * \param[in]  device         Device context pointer
+ * \param[in]  counter_id     Counter_id should always be 0.
+ * \param[in]  counter_value  Counter value to set.
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS calib_ecc204_write_config_counter(ATCADevice device, uint8_t counter_id, uint16_t counter_value)
+{
+    uint16_t bin_a, bin_b;
+    uint64_t lin_a, lin_b;
+    uint8_t bytes[16];
+    ATCA_STATUS status = ATCA_GEN_FAIL;
+
+    if (counter_id != 0 || counter_value > ECC204_COUNTER_MAX_VALUE)
+    {
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid counter id or counter value received");
+    }
+
+    bin_a = (uint16_t)(counter_value / 96);
+    bin_b = (counter_value >= 48) ? ((uint16_t)((counter_value - 48) / 96)) : 0;
+    lin_a = 0xFFFFFFFFFFFF >> (counter_value % 96);
+    lin_b = 0xFFFFFFFFFFFF >> ((counter_value >= 48) ? (counter_value - 48) % 96 : 0);
+
+    bin_a = ATCA_UINT16_HOST_TO_BE(bin_a);
+    memcpy(&bytes[0], &bin_a, 2);
+
+    bin_b = ATCA_UINT16_HOST_TO_BE(bin_b);
+    memcpy(&bytes[2], &bin_b, 2);
+
+    lin_a = ATCA_UINT64_HOST_TO_BE(lin_a) >> 16;
+    memcpy(&bytes[4], &lin_a, 6);
+
+    lin_b = ATCA_UINT64_HOST_TO_BE(lin_b) >> 16;
+    memcpy(&bytes[10], &lin_b, 6);
+
+    status = calib_ecc204_write_zone(device, ATCA_ZONE_CONFIG, 2, 0, counter_id, bytes, sizeof(bytes));
+
+    return status;
+}
+#endif /* CALIB_WRITE_ECC204_EN */
 
 #if CALIB_WRITE_ENC_EN && defined(ATCA_ECC204_SUPPORT)
 /** \brief Executes write command, performs an encrypted write of a 32 byte block into given slot.

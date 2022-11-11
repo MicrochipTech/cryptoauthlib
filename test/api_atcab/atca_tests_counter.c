@@ -163,13 +163,25 @@ TEST(atca_cmd_basic_test, counter_write_test)
 {
 
     ATCA_STATUS status = ATCA_SUCCESS;
-    uint16_t counter_id = 1;
+    uint16_t counter_id;
     uint32_t counter_value_low = 0;
-    uint32_t counter_value_mid = COUNTER_MAX_VALUE / 2;
-    uint32_t counter_value_max = COUNTER_MAX_VALUE;
+    uint32_t counter_value_mid, counter_value_max;
     uint32_t counter_read_value;
 
     test_assert_config_is_unlocked();
+
+    if (ECC204 == gCfg->devtype)
+    {
+        counter_id = 0;
+        counter_value_mid = ECC204_COUNTER_MAX_VALUE / 2;
+        counter_value_max = ECC204_COUNTER_MAX_VALUE;
+    }
+    else
+    {
+        counter_id = 1;
+        counter_value_mid = COUNTER_MAX_VALUE / 2;
+        counter_value_max = COUNTER_MAX_VALUE;
+    }
 
     status = atcab_write_config_counter(counter_id, counter_value_low); //Write the counter_value_low to counter1 config zone
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
@@ -200,7 +212,7 @@ TEST(atca_cmd_basic_test, counter_write_test)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info counter_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_write_test), DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608)  },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_write_test), DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) | DEVICE_MASK(ECC204)  },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_test),       DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608)  },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_match),                               DEVICE_MASK(ATECC608)  },
     { (fp_test_case)NULL,                     (uint8_t)0 },        /* Array Termination element*/

@@ -1,6 +1,17 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.4.1 (11/11/2022)
+
+### Fixes
+  - test_atcacert_build_start_signer modified to verify the structure fields since the
+    structure is no longer packed
+  - Python ctypes_to_bytes routine to work for all python versions
+  - Pkcs11 signature rules to match section 5.2 of the specification
+  - Compilation error when PKCS11 monotonic counter is enabled
+  - Compiletion error when no HALs are specified during configuration
+  - Align ECC204 and cryptoauth counter APIs
+
 ## Release v3.4.0 (10/27/2022)
 
 ### New Features

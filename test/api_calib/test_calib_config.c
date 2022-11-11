@@ -115,6 +115,7 @@ static device_object_meta_t calib_config_ecc204_object_data[] =
     { TEST_TYPE_ECC_SIGN,   0,          NULL         },
     { TEST_TYPE_ECC_GENKEY, 0,          NULL         },
     { TEST_TYPE_DATA,       1,          NULL         },
+    { TEST_TYPE_HMAC,       3,          NULL         },
     { 0,                    0,          NULL         }
 };
 

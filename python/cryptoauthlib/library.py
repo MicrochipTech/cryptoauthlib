@@ -21,14 +21,11 @@ Cryptoauthlib Library Management
 # THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
 # THIS SOFTWARE.
 
-from fnmatch import fnmatch
 import os
-from pickle import OBJ
 import sys
 from ctypes import *
 from ctypes.util import find_library
 from typing import Callable, Sequence, Any
-from unittest.util import unorderable_list_difference
 from .exceptions import LibraryLoadError
 from .atcaenum import AtcaEnum
 
@@ -396,7 +393,7 @@ def _array_to_code(obj, name=None, parent = None, **kwargs):
 
     return append, prepend
 
-def _object_definition_code(obj, name = None, parent = None, parent_name=None, anon=None, type_info = None, check_names={}):
+def _object_definition_code(obj, name = None, parent = None, parent_name=None, anon=None, type_info = None, check_names={}, **kwargs):
     """
     Emits the first half of the assignment of this object
     """
@@ -493,7 +490,7 @@ def _obj_to_code(obj, name, parent=None, anon=None, parent_name=None, **kwargs):
         append += ',' if parent else ';'
         return append, ''
 
-def _pointer_to_code(obj, name = None, parent=None, parent_name=None, check_names={}, **kwargs):
+def _pointer_to_code(obj, name = None, parent=None, parent_name=None, check_names={}, skip_references=[], **kwargs):
     """
     Convert the pointer into a representative object by creating a definition in the prepend
     area
@@ -503,8 +500,9 @@ def _pointer_to_code(obj, name = None, parent=None, parent_name=None, check_name
     if obj:
         name = f'{parent_name}_{name}'
         name = check_names.get(name, name)
-        prepend, more = _obj_to_code(obj, name, parent=None, check_names=check_names, **kwargs)
-        prepend = more + prepend + '\n'
+        if name not in skip_references:
+            prepend, more = _obj_to_code(obj, name, parent=None, check_names=check_names, **kwargs)
+            prepend = more + prepend + '\n'
         append += f'&{name},'
     else:
         append += 'NULL,'
@@ -685,9 +683,12 @@ def ctypes_to_bytes(obj):
     """
     Convert a ctypes structure/array into bytes. This is for python2 compatibility
     """
-    buf = create_string_buffer(sizeof(obj))
-    memmove(buf, addressof(obj), sizeof(obj))
-    return buf.raw
+    if sys.version_info[0] < 3:
+        buf = create_string_buffer(sizeof(obj))
+        memmove(buf, addressof(obj), sizeof(obj))
+        return buf.raw
+    else:
+        return bytes(obj)
 
 
 def create_byte_buffer(init_or_size):
