@@ -1199,3 +1199,62 @@ int atca_mbedtls_cert_add(mbedtls_x509_crt * cert, const atcacert_def_t * cert_d
     return ret;
 }
 #endif
+
+int mbedtls_ecdsa_can_do(mbedtls_ecp_group_id gid) {
+    switch (gid) {
+#ifdef MBEDTLS_ECP_DP_SECP192R1_ENABLED
+        case MBEDTLS_ECP_DP_SECP192R1:
+            return 0;
+#endif
+#ifdef MBEDTLS_ECP_DP_SECP224R1_ENABLED
+        case MBEDTLS_ECP_DP_SECP224R1:
+            return 0;
+#endif
+#ifdef MBEDTLS_ECP_DP_SECP256R1_ENABLED
+        case MBEDTLS_ECP_DP_SECP256R1:
+            return 0;
+#endif
+#ifdef MBEDTLS_ECP_DP_SECP384R1_ENABLED
+        case MBEDTLS_ECP_DP_SECP384R1:
+            return 0;
+#endif
+#ifdef MBEDTLS_ECP_DP_SECP521R1_ENABLED
+        case MBEDTLS_ECP_DP_SECP521R1:
+            return 0;
+#endif
+#ifdef MBEDTLS_ECP_DP_SECP192K1_ENABLED
+        case MBEDTLS_ECP_DP_SECP192K1:
+            return 0;
+#endif
+#ifdef MBEDTLS_ECP_DP_SECP224K1_ENABLED
+        case MBEDTLS_ECP_DP_SECP224K1:
+            return 0;
+#endif
+#ifdef MBEDTLS_ECP_DP_SECP256K1_ENABLED
+        case MBEDTLS_ECP_DP_SECP256K1:
+            return 0;
+#endif
+#ifdef MBEDTLS_ECP_DP_BP256R1_ENABLED
+        case MBEDTLS_ECP_DP_BP256R1:
+            return 0;
+#endif
+#ifdef MBEDTLS_ECP_DP_BP384R1_ENABLED
+        case MBEDTLS_ECP_DP_BP384R1:
+            return 0;
+#endif
+#ifdef MBEDTLS_ECP_DP_BP512R1_ENABLED
+        case MBEDTLS_ECP_DP_BP512R1:
+            return 0;
+#endif
+#ifdef MBEDTLS_ECP_DP_CURVE25519_ENABLED
+        case MBEDTLS_ECP_DP_CURVE25519:
+            return 0;
+#endif
+#ifdef MBEDTLS_ECP_DP_CURVE448_ENABLED
+        case MBEDTLS_ECP_DP_CURVE448:
+            return 0;
+#endif
+        default:
+            return 1;
+    }
+}

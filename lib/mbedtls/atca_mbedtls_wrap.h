@@ -79,6 +79,8 @@ int atca_mbedtls_ecdh_slot_cb(void);
  */
 int atca_mbedtls_ecdh_ioprot_cb(uint8_t secret[32]);
 
+int mbedtls_ecdsa_can_do(mbedtls_ecp_group_id gid);
+
 #ifdef __cplusplus
 }
 #endif
