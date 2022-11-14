@@ -117,7 +117,7 @@ ATCA_STATUS calib_write_ext(ATCADevice device, uint8_t zone, uint16_t address, c
     else
 #endif
     {
-        return calib_write_ext(device, zone, address, value, mac);
+        return calib_write(device, zone, address, value, mac);
     }
 }
 
