@@ -468,6 +468,10 @@ ATCA_STATUS ifacecfg_set_address(
     ATCAKitType kitiface    /**< [in] Optional parameter to set the kit iface type */
 )
 {
+#if !defined(ATCA_HAL_KIT_UART) && !defined(ATCA_HAL_KIT_HID) && !defined(ATCA_HAL_KIT_BRIDGE)
+    (void)kitiface;
+#endif
+
     ATCA_STATUS status = ATCA_BAD_PARAM;
     if  (cfg)
     {

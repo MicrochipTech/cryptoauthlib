@@ -36,7 +36,7 @@
 
 /** Library Configuration File - All build attributes should be included in
     atca_config.h */
-#include "atca_config.h"
+#include "../../application/modules/crypto_lib/_build/atca_config.h"
 
 /* Configuration Macros to detect device classes */
 #if defined(ATCA_ATSHA204A_SUPPORT) || defined(ATCA_ATSHA206A_SUPPORT)
