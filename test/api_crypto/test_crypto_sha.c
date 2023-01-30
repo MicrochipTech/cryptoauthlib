@@ -154,7 +154,7 @@ static void hex_to_uint8(const char hex_str[2], uint8_t* num)
     }
 }
 
-static void hex_to_data(const char* hex_str, uint8_t* data, size_t data_size)
+void hex_to_data(const char* hex_str, uint8_t* data, size_t data_size)
 {
     size_t i = 0;
 
