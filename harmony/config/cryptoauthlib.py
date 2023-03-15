@@ -520,6 +520,13 @@ def instantiateComponent(calComponent):
     calCounterEnabledSymbol.setVisible(True)
     calCounterEnabledSymbol.setDefaultValue(True)
 
+    # DELETE
+    calDeleteEnabledSymbol = calComponent.createBooleanSymbol("cal_delete", deviceCommands)
+    calDeleteEnabledSymbol.setLabel("Support Delete?")
+    calDeleteEnabledSymbol.setDescription("Enable support for Delete Command")
+    calDeleteEnabledSymbol.setVisible(True)
+    calDeleteEnabledSymbol.setDefaultValue(False)
+
     # DERIVEKEY
     calDerivekeyEnabledSymbol = calComponent.createBooleanSymbol("cal_derivekey", deviceCommands)
     calDerivekeyEnabledSymbol.setLabel("Support Derivekey?")

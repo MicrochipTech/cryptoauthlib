@@ -237,6 +237,15 @@ TEST(atca_cmd_basic_test, verify_stored)
 }
 
 #if TEST_ATCAB_VERIFY_REQRANDOM_EN
+TEST_CONDITION(atca_cmd_basic_test, verify_stored_on_reqrandom_set)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return ((ATECC108A == dev_type) 
+            || (ATECC508A == dev_type)
+            || (ATECC608 == dev_type));
+}
+
 TEST(atca_cmd_basic_test, verify_stored_on_reqrandom_set)
 {
     ATCA_STATUS status;
@@ -528,9 +537,25 @@ static void test_basic_verify_validate(void)
     TEST_ASSERT_EQUAL(true, is_verified);
 }
 
+TEST_CONDITION(atca_cmd_basic_test, verify_validate)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return ((ATECC108A == dev_type) 
+            || (ATECC508A == dev_type)
+            || (ATECC608 == dev_type));
+}
+
 TEST(atca_cmd_basic_test, verify_validate)
 {
     test_basic_verify_validate();
+}
+
+TEST_CONDITION(atca_cmd_basic_test, verify_invalidate)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return ((ATECC508A == dev_type) || (ATECC608 == dev_type));
 }
 
 TEST(atca_cmd_basic_test, verify_invalidate)
@@ -675,25 +700,27 @@ TEST(atca_cmd_basic_test, verify_invalidate)
 t_test_case_info verify_basic_test_info[] =
 {
 #if TEST_ATCAB_VERIFY_EXTERN_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_extern_nist),     DEVICE_MASK_ATECC | DEVICE_MASK(TA100)  },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_extern),     DEVICE_MASK_ATECC | DEVICE_MASK(TA100)  },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_extern_nist),  atca_test_cond_p256_sign_verify  },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_extern),       atca_test_cond_p256_sign_verify  },
 #if TEST_ATCAB_VERIFY_MAC_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_extern_mac), DEVICE_MASK(ATECC608)                   },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_extern_mac),   atca_test_cond_ecc608 },
 #endif
 #endif /* TEST_ATCAB_VERIFY_EXTERN_EN */
 #if TEST_ATCAB_VERIFY_STORED_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_stored),     DEVICE_MASK_ATECC | DEVICE_MASK(TA100)  },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_stored),       atca_test_cond_p256_sign_verify  },
 #if TEST_ATCAB_VERIFY_REQRANDOM_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_stored_on_reqrandom_set),     DEVICE_MASK_ATECC },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_stored_on_reqrandom_set), REGISTER_TEST_CONDITION(atca_cmd_basic_test, verify_stored_on_reqrandom_set) },
 #endif
 #if TEST_ATCAB_VERIFY_MAC_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_stored_mac), DEVICE_MASK(ATECC608)                    },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_stored_mac),   atca_test_cond_ecc608 },
 #endif
 #endif /* TEST_ATCAB_VERIFY_STORED_EN */
 #if TEST_ATCAB_VERIFY_VALIDATE_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_validate),   DEVICE_MASK_ATECC                        },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_invalidate), DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_validate),     REGISTER_TEST_CONDITION(atca_cmd_basic_test, verify_validate) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_invalidate),   REGISTER_TEST_CONDITION(atca_cmd_basic_test, verify_invalidate) },
 #endif
-    { (fp_test_case)NULL,                     (uint8_t)0 },       /* Array Termination element*/
+
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },       
 };
 // *INDENT-ON*

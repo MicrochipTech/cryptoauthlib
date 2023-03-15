@@ -32,7 +32,7 @@
 #define ATCA_HAL_SWI
 #endif
 
-#if defined(ATCA_ECC204_SUPPORT) && (defined(ATCA_HAL_SWI_GPIO) || defined(ATCA_HAL_SWI_BB))
+#if (defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT)) && (defined(ATCA_HAL_SWI_GPIO) || defined(ATCA_HAL_SWI_BB))
 #define ATCA_HAL_1WIRE
 #endif
 
@@ -80,7 +80,7 @@ static ATCA_STATUS send_logic_bit(
 
     if (bit_value == ATCA_GPIO_LOGIC_BIT1)
     {
-        timings = (cfg->devtype == ECC204) ? logic1_1wire_timings : logic1_swi_timings;
+        timings = (atcab_is_ca2_device(cfg->devtype)) ? logic1_1wire_timings : logic1_swi_timings;
 
         (void)hal_swi_gpio_set_bit(iface, ATCA_GPIO_CLEAR);
         atca_delay_us(*timings++);
@@ -89,7 +89,7 @@ static ATCA_STATUS send_logic_bit(
     }
     else
     {
-        timings = (cfg->devtype == ECC204) ? logic0_1wire_timings : logic0_swi_timings;
+        timings = (atcab_is_ca2_device(cfg->devtype)) ? logic0_1wire_timings : logic0_swi_timings;
 
         (void)hal_swi_gpio_set_bit(iface, ATCA_GPIO_CLEAR);
         atca_delay_us(*timings++);
@@ -97,7 +97,7 @@ static ATCA_STATUS send_logic_bit(
         atca_delay_us(*timings++);
 
         #ifdef ATCA_HAL_SWI
-        if (cfg->devtype != ECC204)
+        if (!atcab_is_ca2_device(cfg->devtype))
         {
             (void)hal_swi_gpio_set_bit(iface, ATCA_GPIO_CLEAR);
             atca_delay_us(*timings++);
@@ -175,7 +175,7 @@ static ATCA_STATUS gpio_send_bytes(
     uint8_t bit_mask;
     uint8_t count;
 
-    protocol_type proto_type = (cfg->devtype == ECC204) ? ATCA_PROTOCOL_1WIRE : ATCA_PROTOCOL_SWI;
+    protocol_type proto_type = (atcab_is_ca2_device(cfg->devtype)) ? ATCA_PROTOCOL_1WIRE : ATCA_PROTOCOL_SWI;
 
     if (txdata == NULL)
     {
@@ -186,7 +186,7 @@ static ATCA_STATUS gpio_send_bytes(
     __disable_irq();
     for (count = 0; count < txlength; count++)
     {
-        bit_mask = (cfg->devtype == ECC204) ? ATCA_1WIRE_BIT_MASK : ATCA_SWI_BIT_MASK;
+        bit_mask = (atcab_is_ca2_device(cfg->devtype)) ? ATCA_1WIRE_BIT_MASK : ATCA_SWI_BIT_MASK;
         while (bit_mask > 0)
         {
             /* if the next bit transmitted is a logic '1' */
@@ -324,12 +324,12 @@ static ATCA_STATUS gpio_receive_bytes(
         return ATCA_BAD_PARAM;
     }
 
-    proto_type = (cfg->devtype == ECC204) ? ATCA_PROTOCOL_1WIRE : ATCA_PROTOCOL_SWI;
+    proto_type = (atcab_is_ca2_device(cfg->devtype)) ? ATCA_PROTOCOL_1WIRE : ATCA_PROTOCOL_SWI;
 
     __disable_irq();
     for (count = 0; count < rxlength; count++)
     {
-        bit_mask = (cfg->devtype == ECC204) ? ATCA_1WIRE_BIT_MASK : ATCA_SWI_BIT_MASK;
+        bit_mask = (atcab_is_ca2_device(cfg->devtype)) ? ATCA_1WIRE_BIT_MASK : ATCA_SWI_BIT_MASK;
         while (bit_mask >= 1)
         {
             #ifdef ATCA_HAL_1WIRE
@@ -507,7 +507,7 @@ ATCA_STATUS hal_swi_gpio_send(ATCAIface iface, uint8_t word_address, uint8_t *tx
         return status;
     }
 
-    if (cfg->devtype == ECC204)
+    if (atcab_is_ca2_device(cfg->devtype))
     {
         #ifdef ATCA_HAL_1WIRE
         if (ATCA_SUCCESS == (status = start_stop_cond_1wire(iface)))
@@ -553,7 +553,7 @@ ATCA_STATUS hal_swi_gpio_receive(ATCAIface iface, uint8_t word_address, uint8_t 
         return ATCA_BAD_PARAM;
     }
 
-    if (cfg->devtype == ECC204)
+    if (atcab_is_ca2_device(cfg->devtype))
     {
         #ifdef ATCA_HAL_1WIRE
         word_address = get_slave_addr_1wire(cfg->atcaswi.address, ATCA_GPIO_READ);
@@ -580,7 +580,7 @@ ATCA_STATUS hal_swi_gpio_receive(ATCAIface iface, uint8_t word_address, uint8_t 
     while ((retries-- > 0) && (status == ATCA_COMM_FAIL));
 
     #ifdef ATCA_HAL_1WIRE
-    if ((cfg->devtype == ECC204) && (*rxlength != ATCA_1WIRE_RESPONSE_LENGTH_SIZE))
+    if ((atcab_is_ca2_device(cfg->devtype)) && (*rxlength != ATCA_1WIRE_RESPONSE_LENGTH_SIZE))
     {
         (void)send_NACK_1wire(iface);
     }
@@ -600,7 +600,7 @@ static ATCA_STATUS hal_swi_gpio_idle(ATCAIface iface)
 
     if (cfg)
     {
-        if (cfg->devtype == ECC204)
+        if (atcab_is_ca2_device(cfg->devtype))
         {
             return ATCA_SUCCESS;
         }
@@ -624,7 +624,7 @@ static ATCA_STATUS hal_swi_gpio_sleep(ATCAIface iface)
 
     if (cfg)
     {
-        word_address = (cfg->devtype == ECC204) ? ATCA_1WIRE_SLEEP_WORD_ADDR : \
+        word_address = (atcab_is_ca2_device(cfg->devtype)) ? ATCA_1WIRE_SLEEP_WORD_ADDR : \
                        ATCA_SWI_SLEEP_WORD_ADDR;
 
         return hal_swi_gpio_send(iface, word_address, NULL, 0);
@@ -672,7 +672,7 @@ static ATCA_STATUS hal_swi_gpio_wake(ATCAIface iface)
         return ATCA_BAD_PARAM;
     }
 
-    if (cfg->devtype == ECC204)
+    if (atcab_is_ca2_device(cfg->devtype))
     {
         #ifdef ATCA_HAL_1WIRE
         status = check_wake_1wire(iface);

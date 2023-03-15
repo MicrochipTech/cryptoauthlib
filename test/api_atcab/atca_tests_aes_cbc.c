@@ -270,7 +270,8 @@ TEST(atca_cmd_basic_test, aes_cbc_encrypt_update_chunks)
 TEST(atca_cmd_basic_test, aes_cbc_decrypt_update_simple)
 {
     uint8_t plaintext[sizeof(g_plaintext)];
-    size_t length = sizeof(plaintext);
+    size_t length;
+    uint8_t * pPtr;
     atca_aes_cbc_ctx_t ctx;
     ATCA_STATUS status;
     uint16_t key_slot;
@@ -293,11 +294,16 @@ TEST(atca_cmd_basic_test, aes_cbc_decrypt_update_simple)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Encrypt the entire plaintext
-    status = atcab_aes_cbc_decrypt_update(&ctx, (uint8_t*)&g_ciphertext_cbc[0][0], sizeof(g_plaintext), plaintext, &length);
+    pPtr = plaintext;
+    length = sizeof(plaintext);
+    status = atcab_aes_cbc_decrypt_update(&ctx, (uint8_t*)&g_ciphertext_cbc[0][0], sizeof(g_plaintext), pPtr, &length);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
+    pPtr += length;
+    length = sizeof(plaintext) - length;
+
     // Finalize without padding
-    status = atcab_aes_cbc_decrypt_finish(&ctx, plaintext, &length, 0);
+    status = atcab_aes_cbc_decrypt_finish(&ctx, pPtr, &length, 0);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL_MEMORY(&g_plaintext, plaintext, sizeof(plaintext));
 }
@@ -347,7 +353,7 @@ TEST(atca_cmd_basic_test, aes_cbc_decrypt_update_chunks)
 
     // Finalize without padding
     length = sizeof(plaintext) - (pPtr - plaintext);
-    status = atcab_aes_cbc_decrypt_finish(&ctx, plaintext, &length, 0);
+    status = atcab_aes_cbc_decrypt_finish(&ctx, pPtr, &length, 0);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL_MEMORY(g_plaintext, plaintext, sizeof(plaintext));
 }
@@ -361,20 +367,20 @@ t_test_case_info aes_cbc_basic_test_info[] =
 {
 #if TEST_ATCAB_AES_CBC_EN
 #ifdef ATCA_ATECC608_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_block),            DEVICE_MASK(ATECC608) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_block),            DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_block),            atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_block),            atca_test_cond_ecc608 },
 #endif
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_block_simple),     DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_block_simple),     DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_block_simple),     atca_test_cond_ta100 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_block_simple),     atca_test_cond_ta100 },
 #ifdef TEST_ATCAB_AES_CBC_UPDATE_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_update_simple),     DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_update_chunks),     DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_update_simple),     DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_update_chunks),     DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_update_simple),    atca_test_cond_ta100 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_update_chunks),    atca_test_cond_ta100 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_update_simple),    atca_test_cond_ta100 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_update_chunks),    atca_test_cond_ta100 },
 
 #endif /* TEST_ATCAB_AES_CBC_UPDATE_EN */
 #endif /* TEST_ATCAB_AES_CBC_EN */
-    { (fp_test_case)NULL,                     (uint8_t)0 },             /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },             /* Array Termination element*/
 };
 
 // *INDENT-ON*

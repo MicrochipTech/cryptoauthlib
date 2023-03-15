@@ -69,8 +69,16 @@ class ATCADeviceType(AtcaEnum):
     ATECC608B = 3
     ATECC608  = 3
     ATSHA206A = 4
-    ECC204 = 5
-    ATCA_DEV_UNKNOWN = 0x20
+    TA100 = 0x10
+    ECC204 = 0x20
+    TA010 = 0x21
+    ECC206 = 0x22
+    RNG90 = 0x23
+    SHA104 = 0x24
+    SHA105 = 0x25
+    SHA106 = 0x26
+    ATCA_DEV_UNKNOWN = 0x7E
+    ATCA_DEV_INVALID = 0x7F
 
 
 # The following must match atca_iface.h exactly

@@ -105,6 +105,7 @@ typedef struct
 
 ATCA_STATUS atCheckMAC(ATCADeviceType device_type, ATCAPacket *packet);
 ATCA_STATUS atCounter(ATCADeviceType device_type, ATCAPacket *packet);
+ATCA_STATUS atDelete(ATCADeviceType device_type, ATCAPacket *packet);
 ATCA_STATUS atDeriveKey(ATCADeviceType device_type, ATCAPacket *packet, bool has_mac);
 ATCA_STATUS atECDH(ATCADeviceType device_type, ATCAPacket *packet);
 ATCA_STATUS atGenDig(ATCADeviceType device_type, ATCAPacket *packet, bool is_no_mac_key);
@@ -202,8 +203,8 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define ATCA_KEY_COUNT              (16)                               //!< number of keys
 #define ATCA_ECC_CONFIG_SIZE        (128)                              //!< size of configuration zone
 #define ATCA_SHA_CONFIG_SIZE        (88)                               //!< size of configuration zone
-#define ATCA_ECC204_CONFIG_SIZE     (64)                               //!< size of ECC204 configuration zone
-#define ATCA_ECC204_CONFIG_SLOT_SIZE (16)                              //!< size of ECC204 configuration slot size
+#define ATCA_CA2_CONFIG_SIZE        (64)                               //!< size of ECC204 configuration zone
+#define ATCA_CA2_CONFIG_SLOT_SIZE   (16)                               //!< size of ECC204 configuration slot size
 #define ATCA_OTP_SIZE               (64)                               //!< size of OTP zone
 #define ATCA_DATA_SIZE              (ATCA_KEY_COUNT * ATCA_KEY_SIZE)   //!< size of data zone
 #define ATCA_AES_GFM_SIZE            ATCA_BLOCK_SIZE                   //!< size of GFM data
@@ -327,7 +328,15 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define COUNTER_RSP_SIZE                    ATCA_RSP_SIZE_4         //!< Counter command response packet size
 #define COUNTER_SIZE                        ATCA_RSP_SIZE_MIN       //!< Counter size in binary
 
-#define ECC204_COUNTER_MAX_VALUE            ((uint16_t)10000)       //!< Counter maximum value of the counter for ECC204
+#define COUNTER_MAX_VALUE_CA2               ((uint16_t)10000)       //!< Counter maximum value of the counter for ECC204
+/** @} */
+
+/** \name Definitions for the Delete command
+   @{ */
+#define DELETE_COUNT                        (39)
+#define DELETE_MODE                         ((uint8_t)0x00)
+#define DELETE_MAC_SIZE                     (32)
+#define DELETE_NONCE_KEY_ID                 ((uint16_t)0x8000)
 /** @} */
 
 /** \name Definitions for the DeriveKey Command
@@ -419,7 +428,8 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define INFO_MODE_REVISION          ((uint8_t)0x00)     //!< Info mode Revision
 #define INFO_MODE_KEY_VALID         ((uint8_t)0x01)     //!< Info mode KeyValid
 #define INFO_MODE_STATE             ((uint8_t)0x02)     //!< Info mode State
-#define INFO_MODE_LOCK_STATUS       ((uint8_t)0x02)     //!< Info mode Lock status for ECC204 device
+#define INFO_MODE_LOCK_STATUS       ((uint8_t)0x02)     //!< Info mode Lock status for ECC204,TA010 devices
+#define INFO_MODE_CHIP_STATUS       ((uint8_t)0xC5)     //!< Info mode Chip status for ECC204,TA010 devices
 #define INFO_MODE_GPIO              ((uint8_t)0x03)     //!< Info mode GPIO
 #define INFO_MODE_VOL_KEY_PERMIT    ((uint8_t)0x04)     //!< Info mode GPIO
 #define INFO_MODE_MAX               ((uint8_t)0x03)     //!< Info mode maximum value
@@ -492,8 +502,8 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define LOCK_ZONE_CONFIG            ((uint8_t)0x00)     //!< Lock zone is Config
 #define LOCK_ZONE_DATA              ((uint8_t)0x01)     //!< Lock zone is OTP or Data
 #define LOCK_ZONE_DATA_SLOT         ((uint8_t)0x02)     //!< Lock slot of Data
-#define LOCK_ECC204_ZONE_DATA       ((uint8_t)0x00)     //!< Lock ECC204 Data zone by slot
-#define LOCK_ECC204_ZONE_CONFIG     ((uint8_t)0x01)     //!< Lock ECC204 configuration zone by slot
+#define LOCK_ZONE_CA2_DATA          ((uint8_t)0x00)     //!< Lock second gen Data zone by slot
+#define LOCK_ZONE_CA2_CONFIG        ((uint8_t)0x01)     //!< Lock second gen configuration zone by slot
 #define LOCK_ZONE_NO_CRC            ((uint8_t)0x80)     //!< Lock command: Ignore summary.
 #define LOCK_ZONE_MASK              (0xBF)              //!< Lock parameter 1 bits 6 are 0.
 #define ATCA_UNLOCKED               (0x55)              //!< Value indicating an unlocked zone
@@ -630,7 +640,7 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define SELFTEST_MODE_IDX                   ATCA_PARAM1_IDX          //!< SelfTest command index for mode
 #define SELFTEST_COUNT                      ATCA_CMD_SIZE_MIN        //!< SelfTest command packet size
 #define SELFTEST_MODE_RNG                   ((uint8_t)0x01)          //!< SelfTest mode RNG DRBG function
-#define SELFTEST_MODE_ECDSA_SIGN_VERIFY     ((uint8_t)0x02)          //!< SelfTest mode ECDSA verify function
+#define SELFTEST_MODE_ECDSA_SIGN_VERIFY     ((uint8_t)0x04)          //!< SelfTest mode ECDSA verify function
 #define SELFTEST_MODE_ECDH                  ((uint8_t)0x08)          //!< SelfTest mode ECDH function
 #define SELFTEST_MODE_AES                   ((uint8_t)0x10)          //!< SelfTest mode AES encrypt function
 #define SELFTEST_MODE_SHA                   ((uint8_t)0x20)          //!< SelfTest mode SHA function

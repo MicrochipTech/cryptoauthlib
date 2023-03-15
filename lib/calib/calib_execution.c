@@ -265,6 +265,8 @@ ATCA_STATUS calib_get_execution_time(uint8_t opcode, ATCADevice device)
         break;
 #endif
 
+    case TA010:
+        /* fallthrough */
     case ECC204:
         execution_times = device_execution_time_ecc204;
         no_of_commands = sizeof(device_execution_time_ecc204) / sizeof(device_execution_time_t);
@@ -369,7 +371,7 @@ ATCA_STATUS calib_execute_receive(ATCADevice device, uint8_t device_address, uin
             }
 
             // Skip word address send for ECC204 device
-            if (ECC204 != device->mIface.mIfaceCFG->devtype)
+            if (!atcab_is_ca2_device(device->mIface.mIfaceCFG->devtype))
             {
                 if (ATCA_SUCCESS != (status = atsend(&device->mIface, device_address, &word_address, sizeof(word_address))))
                 {
@@ -456,9 +458,8 @@ ATCA_STATUS calib_execute_command(ATCAPacket* packet, ATCADevice device)
         execution_or_wait_time = ATCA_POLLING_INIT_TIME_MSEC;
         max_delay_count = ATCA_POLLING_MAX_TIME_MSEC / ATCA_POLLING_FREQUENCY_TIME_MSEC;
 
-    #if defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT)
-        if ((ATCA_SWI_GPIO_IFACE == device->mIface.mIfaceCFG->iface_type) && ((ECC204 == device->mIface.mIfaceCFG->devtype) ||
-                (TA010 == device->mIface.mIfaceCFG->devtype)))
+    #if ATCA_CA2_SUPPORT
+        if ((ATCA_SWI_GPIO_IFACE == device->mIface.mIfaceCFG->iface_type) && (atcab_is_ca2_device(device->mIface.mIfaceCFG->devtype)))
         {
             if ((status = calib_get_execution_time(packet->opcode, device)) != ATCA_SUCCESS)
             {
@@ -489,10 +490,12 @@ ATCA_STATUS calib_execute_command(ATCAPacket* packet, ATCADevice device)
             {
                 packet->_reserved = CALIB_SWI_FLAG_CMD;
             }
-            else if ((ATCA_SWI_GPIO_IFACE == device->mIface.mIfaceCFG->iface_type) && (ECC204 == device->mIface.mIfaceCFG->devtype))
+    #if ATCA_CA2_SUPPORT
+            else if ((ATCA_SWI_GPIO_IFACE == device->mIface.mIfaceCFG->iface_type) && (atcab_is_ca2_device(device->mIface.mIfaceCFG->devtype)))
             {
                 packet->_reserved = 0x03;
             }
+    #endif
             if (ATCA_RX_NO_RESPONSE == (status = calib_execute_send(device, device_address, (uint8_t*)packet, packet->txsize + 1)))
             {
                 device->device_state = ATCA_DEVICE_STATE_UNKNOWN;
@@ -567,7 +570,7 @@ ATCA_STATUS calib_execute_command(ATCAPacket* packet, ATCADevice device)
     while (0);
 
     // Skip Idle for ECC204 device
-    if (ECC204 != device->mIface.mIfaceCFG->devtype)
+    if (!atcab_is_ca2_device(device->mIface.mIfaceCFG->devtype))
     {
         (void)calib_idle(device);
         device->device_state = ATCA_DEVICE_STATE_IDLE;

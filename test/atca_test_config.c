@@ -40,6 +40,7 @@ extern int select_508_custom(int argc, char* argv[]);
 extern int select_608_custom(int argc, char* argv[]);
 extern int select_ta100_custom(int argc, char* argv[]);
 extern int select_ecc204_custom(int argc, char* argv[]);
+extern int select_ta010_custom(int argc, char* argv[]);
 #endif
 
 #ifdef ATCA_HAL_KIT_BRIDGE
@@ -102,6 +103,79 @@ static void print_args(const char * f, int argc, char* argv[])
     printf("\n");
 }
 
+/** \brief Retrieves the currently configured device
+ * 
+*/
+ATCADeviceType atca_test_get_device_type(void)
+{
+    return (NULL != gCfg) ? gCfg->devtype : ATCA_DEV_UNKNOWN;
+}
+
+/** \brief Configured device is ECC608 */
+bool atca_test_cond_ecc608(void)
+{
+    return (ATECC608 == atca_test_get_device_type());
+}
+
+/** \brief Configured device is TA100 */
+bool atca_test_cond_ta100(void)
+{
+    return (TA100 == atca_test_get_device_type());
+}
+
+/** \brief Configured device supports all EC p256 operations
+ * 
+*/
+bool atca_test_cond_p256_all(void)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return ((ATECC108A == dev_type)
+            || (ATECC508A == dev_type)
+            || (ATECC608 == dev_type)
+            || (TA100 == dev_type));
+}
+
+/** \brief Configured device supports EC p256 sign operations
+ * 
+*/
+bool atca_test_cond_p256_sign(void)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return ((ATECC108A == dev_type)
+            || (ATECC508A == dev_type)
+            || (ATECC608 == dev_type)
+            || (ECC204 == dev_type)
+            || (TA010 == dev_type)
+            || (TA100 == dev_type));
+}
+
+/** \brief Configured device supports EC p256 sign & verify operations */
+bool atca_test_cond_p256_sign_verify(void)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return ((ATECC108A == dev_type)
+            || (ATECC508A == dev_type)
+            || (ATECC608 == dev_type)
+            || (TA100 == dev_type));
+}
+
+/** \brief Configured device supports AES128 ECB operations */
+bool atca_test_cond_aes128_ecb(void)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return ((ATECC608 == dev_type) || (TA100 == dev_type));
+}
+
+/** \brief Configured device is a second generation cryptoauth part */
+bool atca_test_cond_ca2(void)
+{
+    return atcab_is_ca2_device(atca_test_get_device_type());
+}
+
 /** \brief Sets the device the command or test suite will use
  *
  * \param[in]  ifacecfg    Platform iface config to use
@@ -147,7 +221,12 @@ static int select_custom(int argc, char* argv[])
             ret = select_ecc204_custom(argc, argv);
             break;
 #endif
-#ifdef ATCA_ECC204_SUPPORT
+#ifdef ATCA_TA010_SUPPORT
+        case TA010:
+            ret = select_ta010_custom(argc, argv);
+            break;
+#endif
+#ifdef ATCA_TA100_SUPPORT
         case TA100:
             ret = select_ta100_custom(argc, argv);
             break;

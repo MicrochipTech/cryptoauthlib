@@ -257,8 +257,15 @@ ATCA_STATUS atcab_aes_cbc_encrypt_finish(atca_aes_cbc_ctx_t* ctx, uint8_t* ciphe
 
     if (ATCA_SUCCESS == status && ctx->block_size)
     {
+        if (*ciphertext_len >= ATCA_AES128_BLOCK_SIZE)
+        {
         status = atcab_aes_cbc_encrypt_block(ctx, ctx->block, ciphertext);
         *ciphertext_len = ATCA_AES128_BLOCK_SIZE;
+    }
+    else
+    {
+            status = ATCA_SMALL_BUFFER;
+        }
     }
     else
     {
@@ -310,7 +317,7 @@ ATCA_STATUS atcab_aes_cbc_decrypt_update(atca_aes_cbc_ctx_t* ctx, const uint8_t*
             plaintext += ATCA_AES128_BLOCK_SIZE;
             *plaintext_len += ATCA_AES128_BLOCK_SIZE;
         }
-        if (ATCA_AES128_BLOCK_SIZE <= ciphertext_len)
+        if (ATCA_AES128_BLOCK_SIZE < ciphertext_len)
         {
             if (ATCA_SUCCESS != (status = atcab_aes_cbc_decrypt_block(ctx, ciphertext, plaintext)))
             {
@@ -321,8 +328,10 @@ ATCA_STATUS atcab_aes_cbc_decrypt_update(atca_aes_cbc_ctx_t* ctx, const uint8_t*
             ciphertext_len -= ATCA_AES128_BLOCK_SIZE;
             *plaintext_len += ATCA_AES128_BLOCK_SIZE;
         }
-        if (ciphertext_len && (ATCA_AES128_BLOCK_SIZE > ciphertext_len))
+
+        if (ciphertext_len && (ATCA_AES128_BLOCK_SIZE >= ciphertext_len))
         {
+            /* Saves the remainder which may be partial or a full block of data */
             memcpy(ctx->block, ciphertext, ciphertext_len);
             ctx->block_size = ciphertext_len;
             ciphertext_len -= ciphertext_len;
@@ -343,6 +352,8 @@ ATCA_STATUS atcab_aes_cbc_decrypt_finish(atca_aes_cbc_ctx_t* ctx, uint8_t* plain
 
     if (ATCA_AES128_BLOCK_SIZE == ctx->block_size)
     {
+        if (*plaintext_len >= ATCA_AES128_BLOCK_SIZE)
+        {
         status = atcab_aes_cbc_decrypt_block(ctx, ctx->block, plaintext);
         *plaintext_len = ATCA_AES128_BLOCK_SIZE;
 
@@ -351,9 +362,14 @@ ATCA_STATUS atcab_aes_cbc_decrypt_finish(atca_aes_cbc_ctx_t* ctx, uint8_t* plain
             status = atcac_pkcs7_unpad(plaintext, plaintext_len, ATCA_AES128_BLOCK_SIZE);
         }
     }
+        else
+        {
+            status = ATCA_SMALL_BUFFER;
+        }
+    }
     else if (ctx->block_size)
     {
-        return ATCA_TRACE(ATCA_GEN_FAIL, "Remaining ciphertext does not match the block size");
+        status = ATCA_TRACE(ATCA_GEN_FAIL, "Provided ciphertext is incomplete - the total length needs to be multiple of 16 bytes");
     }
 
     memset(ctx, 0, sizeof(atca_aes_cbc_ctx_t));

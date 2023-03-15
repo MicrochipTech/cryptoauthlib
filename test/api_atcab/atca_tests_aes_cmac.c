@@ -117,10 +117,10 @@ t_test_case_info aes_cmac_basic_test_info[] =
 {
 #if TEST_ATCAB_AES_CMAC_EN
 #ifdef ATCA_ATECC608_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cmac),                         DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cmac),         atca_test_cond_ecc608 },
 #endif
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cmac_simple),                  DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cmac_simple),  atca_test_cond_ta100 },
 #endif /* TEST_ATCAB_AES_CMAC_EN */
-    { (fp_test_case)NULL,                     (uint8_t)0 },             /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },             /* Array Termination element*/
 };
 // *INDENT-ON*

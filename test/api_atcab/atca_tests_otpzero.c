@@ -33,6 +33,15 @@
 
 #if TEST_ATCAB_OTP_EN
 
+TEST_CONDITION(atca_cmd_basic_test, otp_zero)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return ((ATSHA204A == dev_type) 
+            || (ATECC108A == dev_type)
+            || (ATECC508A == dev_type));
+}
+
 TEST(atca_cmd_basic_test, otp_zero)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
@@ -85,9 +94,9 @@ TEST(atca_cmd_basic_test, otp_zero)
 t_test_case_info otpzero_basic_test_info[] =
 {
 #if TEST_ATCAB_OTP_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, otp_zero), DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, otp_zero), REGISTER_TEST_CONDITION(atca_cmd_basic_test, otp_zero) },
 #endif
-    { (fp_test_case)NULL,                     (uint8_t)0 },/* Array Termination element*/
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
 };
 // *INDENT-ON*
-

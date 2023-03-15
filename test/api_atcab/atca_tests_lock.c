@@ -28,7 +28,7 @@
 #include "test_atcab.h"
 
 #ifndef TEST_ATCAB_LOCK_EN
-#define TEST_ATCAB_LOCK_EN          CALIB_LOCK_EN || TALIB_LOCK_EN
+#define TEST_ATCAB_LOCK_EN          CALIB_LOCK_EN || CALIB_LOCK_CA2_EN || TALIB_LOCK_EN
 #endif
 
 #if TEST_ATCAB_LOCK_EN
@@ -64,6 +64,7 @@ TEST(atca_cmd_basic_test, lock_data_zone)
     TEST_ASSERT_EQUAL(true, is_locked);
 }
 
+#if CALIB_LOCK_EN
 TEST(atca_cmd_basic_test, lock_data_slot)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
@@ -91,15 +92,18 @@ TEST(atca_cmd_basic_test, lock_data_slot)
 }
 #endif
 
+#endif
+
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info lock_basic_test_info[] =
 {
 #if TEST_ATCAB_LOCK_EN
     //{ REGISTER_TEST_CASE(atca_cmd_basic_test, lock_config_zone),	DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
     //{ REGISTER_TEST_CASE(atca_cmd_basic_test, lock_data_zone),	DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, lock_data_slot), DEVICE_MASK_ECC },
+#if CALIB_LOCK_EN
+    //{ REGISTER_TEST_CASE(atca_cmd_basic_test, lock_data_slot), DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
+#endif
 #endif
     { (fp_test_case)NULL,                     (uint8_t)0 },    /* Array Termination element*/
 };
 // *INDENT-ON*
-

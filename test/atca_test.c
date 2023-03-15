@@ -181,7 +181,6 @@ int run_test(int argc, char* argv[], void (*fptest)(void))
 void RunAllTests(t_test_case_info** tests_list)
 {
     t_test_case_info* sp_current_test;
-    uint32_t support_device_mask;
 
     /*Loop through all the commands test info*/
     while ((*tests_list != NULL) && !atca_test_unresponsive())
@@ -192,12 +191,9 @@ void RunAllTests(t_test_case_info** tests_list)
         /*Loop through till last test in the test info*/
         while (sp_current_test->fp_test != NULL)
         {
-            /*Get current device mask */
-            support_device_mask = (gCfg->devtype < ATCA_DEV_UNKNOWN) ? DEVICE_MASK(gCfg->devtype) : DEVICE_MASK_NONE;
+            bool run_test = (NULL != sp_current_test->fp_condition) ? sp_current_test->fp_condition() : true;
 
-            /*check if current test mask contains current device mask*/
-            if (!sp_current_test->support_device_mask || 
-                ((sp_current_test->support_device_mask & support_device_mask) == support_device_mask))
+            if(run_test)
             {
                 /*Execute current test case*/
                 sp_current_test->fp_test();
@@ -391,7 +387,9 @@ ATCA_STATUS atca_test_config_get_id(uint8_t test_type, uint16_t* handle)
             status = calib_config_get_slot_by_test(test_type, handle);
             break;
 #endif
-#ifdef ATCA_ECC204_SUPPORT
+#if defined(ATCA_TA010_SUPPORT) || defined(ATCA_ECC204_SUPPORT)
+        case TA010:
+            /* fallthrough */
         case ECC204:
             status = calib_config_get_ecc204_slot_by_test(test_type, handle);
             break;

@@ -43,7 +43,7 @@ TEST(atca_cmd_basic_test, genkey)
 
     test_assert_config_is_locked();
 
-    if (ECC204 == gCfg->devtype)
+    if (atcab_is_ca2_device(gCfg->devtype))
     {
         test_assert_data_is_unlocked();
     }
@@ -83,9 +83,8 @@ TEST(atca_cmd_basic_test, get_pubkey)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info genkey_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, genkey),     DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, get_pubkey), DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, genkey),     atca_test_cond_p256_sign },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, get_pubkey), atca_test_cond_p256_sign },
     { (fp_test_case)NULL,                     (uint8_t)0 },/* Array Termination element*/
 };
 // *INDENT-ON*
-

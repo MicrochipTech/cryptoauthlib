@@ -140,27 +140,48 @@ def get_device_name(revision):
     devices = {0x10: 'ATECC108A',
                0x50: 'ATECC508A',
                0x60: 'ATECC608',
-               0x20: 'ECC204',
+               0x20:  get_device_name_with_device_id(revision),
                0x00: 'ATSHA204A',
                0x02: 'ATSHA204A',
                0x40: 'ATSHA206A'}
     device_name = devices.get(revision[2], 'UNKNOWN')
     return device_name
 
+def get_device_name_with_device_id(revision):
+    """
+    Returns the device name based on the info byte array values returned by atcab_info for ECC204 family
+    """
+    devices = {0x00: 'ECC204',
+               0x5A: 'ECC204',
+               0x6A: 'TA010',
+               0x35: 'SHA104',
+               0x3B: 'SHA105'}
+    
+    device_name = devices.get(revision[1], 'UNKNOWN')
+    return device_name
 
 def get_device_type_id(name):
     """
     Returns the ATCADeviceType value based on the device name
     """
-    devices = {'ATSHA204A': 0,
+    devices = { 'ATSHA204A': 0,
                'ATECC108A': 1,
                'ATECC508A': 2,
                'ATECC608A': 3,
                'ATECC608B': 3,
                'ATECC608': 3,
-               'ATSAH206A': 4,
-               'ECC204': 5,
-               'UNKNOWN': 0x20}
+                'ATSHA206A': 4,
+                'TA100': 0x10,
+                'ECC204': 0x20,
+                'TA010': 0x21,
+                'ECC206': 0x22,
+                'RNG90': 0x23,
+                'SHA104': 0x24,
+                'SHA105': 0x25,
+                'SHA106': 0x26,
+                'UNKNOWN': 0x7E,
+                'INVALID': 0x7F,
+    }
     return devices.get(name.upper())
 
 

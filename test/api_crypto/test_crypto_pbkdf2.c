@@ -95,6 +95,13 @@ TEST_TEAR_DOWN(atcab_pbkdf2)
     UnityMalloc_EndTest();
 }
 
+TEST_CONDITION(atcab_pbkdf2, vectors)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return (dev_type == TA100 || dev_type == ATSHA204A || dev_type == ATECC608A);
+}
+
 TEST(atcab_pbkdf2, vectors)
 {
     ATCA_STATUS status;
@@ -118,13 +125,11 @@ TEST(atcab_pbkdf2, vectors)
 t_test_case_info atcac_pbkdf2_test_info[] =
 {
 #if TEST_ATCAC_PBKDF2_EN
-    { REGISTER_TEST_CASE(atcac_pbkdf2, vectors), DEVICE_MASK_NONE },
+    { REGISTER_TEST_CASE(atcac_pbkdf2, vectors), NULL },
 #endif
 #if TEST_ATCAB_PBKDF2_EN
-    { REGISTER_TEST_CASE(atcab_pbkdf2, vectors), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atcab_pbkdf2, vectors),  REGISTER_TEST_CONDITION(atcab_pbkdf2, vectors)},
 #endif
     /* Array Termination element*/
-    { (fp_test_case)NULL,                       (uint8_t)0 },
+    { (fp_test_case)NULL, NULL },
 };
-
-

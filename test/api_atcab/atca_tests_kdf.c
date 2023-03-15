@@ -416,13 +416,14 @@ TEST(atca_cmd_basic_test, kdf_hkdf_output_encrypted)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info kdf_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_prf_output),            DEVICE_MASK(ATECC608) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_prf_output_encrypted),  DEVICE_MASK(ATECC608) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_aes_output),            DEVICE_MASK(ATECC608) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_aes_output_encrypted),  DEVICE_MASK(ATECC608) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_hkdf_output),           DEVICE_MASK(ATECC608) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_hkdf_output_encrypted), DEVICE_MASK(ATECC608) },
-    { (fp_test_case)NULL,                     (uint8_t)0 },               /* Array Termination element*/
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_prf_output),            atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_prf_output_encrypted),  atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_aes_output),            atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_aes_output_encrypted),  atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_hkdf_output),           atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, kdf_hkdf_output_encrypted), atca_test_cond_ecc608 },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
 };
 // *INDENT-ON*
 #else

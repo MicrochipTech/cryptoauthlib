@@ -29,6 +29,15 @@
 
 #ifdef ATCA_ECC_SUPPORT
 
+TEST_CONDITION(atca_cmd_basic_test, priv_write)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return ((ATECC108A == dev_type) 
+            || (ATECC508A == dev_type)
+            || (ATECC608 == dev_type));
+}
+
 TEST(atca_cmd_basic_test, priv_write_unencrypted)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
@@ -101,10 +110,10 @@ TEST(atca_cmd_basic_test, priv_write_encrypted)
 t_test_case_info privwrite_basic_test_info[] =
 {
 #ifdef ATCA_ECC_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, priv_write_unencrypted), DEVICE_MASK_ATECC    },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, priv_write_encrypted),   DEVICE_MASK_ATECC    },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, priv_write_unencrypted), REGISTER_TEST_CONDITION(atca_cmd_basic_test, priv_write) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, priv_write_encrypted),   REGISTER_TEST_CONDITION(atca_cmd_basic_test, priv_write) },
 #endif
-    { (fp_test_case)NULL,                     (uint8_t)0 },            /* Array Termination element*/
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL},
 };
 // *INDENT-ON*
-

@@ -70,10 +70,11 @@ TEST(atca_cmd_basic_test, doubleinit)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info startup_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, version),    DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, init),       DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, doubleinit), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
-    { (fp_test_case)NULL,                     (uint8_t)0 },/* Array Termination element*/
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, version),    NULL },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, init),       NULL },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, doubleinit), NULL },
+    
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
 };
 // *INDENT-ON*
-

@@ -315,6 +315,19 @@
 #define ATCAH_GEN_SESSION_KEY (DEFAULT_ENABLED)
 #endif
 
+/** \def ATCAH_DELETE_MAC
+  * 
+  * Requires: ATCAH_DELETE_MAC
+  *           ATCAC_SW_SHA2_256
+  * 
+  * Supported API's: atcah_delete_mac
+  * 
+  * Enable ATCAH_DELETE_MAC to calculate the mac
+ **/
+#ifndef ATCAH_DELETE_MAC
+#define ATCAH_DELETE_MAC  (CALIB_DELETE_EN)
+#endif
+
 /* ATCA CRYPTO REQUIREMENTS  */
 
 #ifndef ATCAC_SW_SHA2_256

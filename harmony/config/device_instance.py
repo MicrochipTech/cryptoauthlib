@@ -23,8 +23,8 @@
 *****************************************************************************"""
 
 _DEFAULT_I2C_ADDRESS = {'ecc': 0xC0, 'sha': 0xC8, 'ecc204': 0x66, 'ta100': 0x2e}
-_SWI_DEVICES = ['ATSHA204A', 'ATSHA206A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'ECC204']
-_I2C_DEVICES = ['ATSHA204A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'TA100', 'ECC204']
+_SWI_DEVICES = ['ATSHA204A', 'ATSHA206A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'ECC204', 'TA010']
+_I2C_DEVICES = ['ATSHA204A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'TA100', 'ECC204', 'TA010']
 _SPI_DEVICES = ['TA100']
 
 caldevcfglist = []
@@ -183,7 +183,7 @@ def instantiateComponent(deviceComponent, index):
     deviceAddress = deviceComponent.createHexSymbol("I2C_ADDR", interfaceType)
     deviceAddress.setLabel("I2C Address")
 
-    if 'ECC204' in deviceID:
+    if (('ECC204' in deviceID) or ('TA010' in deviceID)):
         deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['ecc204'])
     elif 'ECC' in deviceID:
         deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['ecc'])

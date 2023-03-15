@@ -45,11 +45,12 @@ extern const uint8_t g_slot4_key[];
 #define CMD_PROCESSOR_MAX_ARGS  16
 
 typedef void (*fp_test_case)(void);
+typedef bool (*fp_test_condition)(void);
 
 typedef struct
 {
-    fp_test_case fp_test;
-    uint32_t     support_device_mask;
+    fp_test_case        fp_test;
+    fp_test_condition   fp_condition;
 }t_test_case_info;
 
 typedef int (*fp_menu_handler)(int argc, char* argv[]);
@@ -74,14 +75,10 @@ typedef struct
 #define MENU_ITEM(c,d, f)   {c, d, f}
 #endif
 
-#define DEVICE_MASK(device)                 ((uint8_t)1 << device)
-#define REGISTER_TEST_CASE(group, name)     TEST_ ## group ## _ ## name ## _run
+#define REGISTER_TEST_CASE(group, name)         TEST_ ## group ## _ ## name ## _run
+#define REGISTER_TEST_CONDITION(group, name)    TEST_ ## group ## _ ## name ## _cond
 
-#define DEVICE_MASK_SHA                     (DEVICE_MASK(ATSHA204A) | DEVICE_MASK(ATSHA206A))
-#define DEVICE_MASK_ATECC                   (DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608))
-#define DEVICE_MASK_ECC                     (DEVICE_MASK(ATECC108A) | DEVICE_MASK(ECC204) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608))
-#define DEVICE_MASK_NONE                    (0)
-#define DEVICE_MASK_ANY                     UINT32_MAX
+#define TEST_CONDITION(group, name)             bool TEST_##group##_##name##_cond(void)
 
 #if !defined(ATCA_ECC_SUPPORT) && !defined(DO_NOT_TEST_CERT)
 #define DO_NOT_TEST_CERT
@@ -129,8 +126,8 @@ extern const uint8_t test_ecc_configdata[ATCA_ECC_CONFIG_SIZE];
 #ifdef ATCA_ATSHA204A_SUPPORT
 extern const uint8_t sha204_default_config[ATCA_SHA_CONFIG_SIZE];
 #endif
-#ifdef ATCA_ECC204_SUPPORT
-extern const uint8_t test_ecc204_configdata[ATCA_ECC204_CONFIG_SIZE];
+#if defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT)
+extern const uint8_t test_ecc204_configdata[ATCA_CA2_CONFIG_SIZE];
 #endif
 #if ATCA_TA_SUPPORT
 extern const uint8_t test_ta100_configdata[TA_CONFIG_SIZE];
@@ -198,6 +195,14 @@ void RunPbkdf2Tests(void);
 /* Setup & Configuration */
 void atca_test_config_set_ifacecfg(ATCAIfaceCfg * ifacecfg);
 ATCA_STATUS atca_test_genkey(uint16_t key_id, uint8_t *public_key);
+ATCADeviceType atca_test_get_device_type(void);
+bool atca_test_cond_p256_all(void);
+bool atca_test_cond_p256_sign(void);
+bool atca_test_cond_p256_sign_verify(void);
+bool atca_test_cond_aes128_ecb(void);
+bool atca_test_cond_ecc608(void);
+bool atca_test_cond_ta100(void);
+bool atca_test_cond_ca2(void);
 
 /* Commands */
 int process_options(int argc, char* argv[]);

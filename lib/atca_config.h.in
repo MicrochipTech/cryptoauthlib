@@ -20,6 +20,7 @@
 #cmakedefine ATCA_ATECC608_SUPPORT
 #cmakedefine ATCA_TA100_SUPPORT
 #cmakedefine ATCA_ECC204_SUPPORT
+#cmakedefine ATCA_TA010_SUPPORT
 
 /** Device Override - Library Assumes ATECC608B support in checks */
 #cmakedefine ATCA_ATECC608A_SUPPORT
@@ -88,12 +89,18 @@ selected plus however additional slots one would like */
 /** Enable Strict ISO/C99 compliance */
 #cmakedefine ATCA_STRICT_C99
 
+/******************** Device Configuration Section *************************/
+
 /** TA100 Specific - Enable auth sessions that require AES (CMAC/GCM) from
    an external library */
 #cmakedefine ATCA_TA100_AES_AUTH_SUPPORT
 
 /** TA100 Specific - Enable support for the FCE APIs for the TA100 */
 #cmakedefine ATCA_TA100_FCE_SUPPORT
+
+/** Enable the delete command */
+#cmakedefine01 CALIB_DELETE_EN
+
 
 /******************** Platform Configuration Section ***********************/
 

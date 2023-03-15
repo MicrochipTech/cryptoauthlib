@@ -378,18 +378,18 @@ TEST(atca_cmd_basic_test, volatile_key_permit)
 t_test_case_info aes_basic_test_info[] =
 {
 #ifdef ATCA_ATECC608_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, volatile_key_permit),              DEVICE_MASK(ATECC608) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_gfm),                          DEVICE_MASK(ATECC608) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_encrypt_key_tempkey),          DEVICE_MASK(ATECC608) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_decrypt_key_tempkey),          DEVICE_MASK(ATECC608) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_encrypt_key_slot),             DEVICE_MASK(ATECC608) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_decrypt_key_slot),             DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, volatile_key_permit),              atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_gfm),                          atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_encrypt_key_tempkey),          atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_decrypt_key_tempkey),          atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_encrypt_key_slot),             atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_decrypt_key_slot),             atca_test_cond_ecc608 },
 #endif
 #if TEST_ATCAB_AES_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_encrypt_key_slot_simple),      DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_decrypt_key_slot_simple),      DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_encrypt_key_slot_simple),      atca_test_cond_ta100 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_decrypt_key_slot_simple),      atca_test_cond_ta100 },
 #endif
     /* Array Termination element*/
-    { (fp_test_case)NULL,                     (uint8_t)0 },
+    { (fp_test_case)NULL, NULL },
 };
 // *INDENT-ON*

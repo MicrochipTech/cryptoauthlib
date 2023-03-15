@@ -123,10 +123,10 @@ TEST(atcac_pkcs7, unpad_invalid)
 t_test_case_info atcac_pad_test_info[] =
 {
 #if TEST_ATCAC_PKCS7_EN
-    { REGISTER_TEST_CASE(atcac_pkcs7, pad_success), DEVICE_MASK_NONE },
-    { REGISTER_TEST_CASE(atcac_pkcs7, unpad_success), DEVICE_MASK_NONE },
-    { REGISTER_TEST_CASE(atcac_pkcs7, unpad_invalid), DEVICE_MASK_NONE },
+    { REGISTER_TEST_CASE(atcac_pkcs7, pad_success), NULL },
+    { REGISTER_TEST_CASE(atcac_pkcs7, unpad_success), NULL },
+    { REGISTER_TEST_CASE(atcac_pkcs7, unpad_invalid), NULL },
 #endif
     /* Array Termination element*/
-    { (fp_test_case)NULL,                       (uint8_t)0 },
+    { (fp_test_case)NULL, NULL },
 };

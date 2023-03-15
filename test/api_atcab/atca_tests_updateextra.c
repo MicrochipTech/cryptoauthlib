@@ -36,7 +36,7 @@ TEST(atca_cmd_basic_test, updateextra)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info updateextra_basic_test_info[] =
 {
-    { (fp_test_case)NULL, (uint8_t)0 }, /* Array Termination element*/
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
 };
 // *INDENT-ON*
-

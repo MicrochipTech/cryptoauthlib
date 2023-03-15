@@ -27,8 +27,6 @@
 #include <stdlib.h>
 #include "test_atcab.h"
 
-#define ATCA_TESTS_HELPER_DEVICES   ( DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) )
-
 static const uint8_t atca_tests_helper_base64_vector_in0[] = "We were henceforth to be hurled along, the playthings of the fierce elements of the deep.       \n";
 static const char atca_tests_helper_base64_vector_out0[] = "V2Ugd2VyZSBoZW5jZWZvcnRoIHRvIGJlIGh1cmxlZCBhbG9uZywgdGhlIHBsYXl0\r\n"
                                                            "aGluZ3Mgb2YgdGhlIGZpZXJjZSBlbGVtZW50cyBvZiB0aGUgZGVlcC4gICAgICAg\r\n"
@@ -621,43 +619,44 @@ TEST(atca_helper, hex2bin_small_buf)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info helper_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_helper, base64_encode),                      ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_to_dirty_buffer),      ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, base64_decode),                      ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, base64_decode_to_dirty_buffer),      ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, base64_encode),                      NULL },
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_to_dirty_buffer),      NULL },
+    { REGISTER_TEST_CASE(atca_helper, base64_decode),                      NULL },
+    { REGISTER_TEST_CASE(atca_helper, base64_decode_to_dirty_buffer),      NULL },
 
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode),               ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode_mod_3),         ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode_mod_3_minus_1), ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode_mod_3_minus_2), ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode_mod_3_minus_3), ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode),               NULL },
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode_mod_3),         NULL },
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode_mod_3_minus_1), NULL },
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode_mod_3_minus_2), NULL },
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_decode_mod_3_minus_3), NULL },
 
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_check_newline_32),     ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_check_newline_64),     ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_check_newline_96),     ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, base64_encode_check_newline_128),    ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_check_newline_32),     NULL },
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_check_newline_64),     NULL },
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_check_newline_96),     NULL },
+    { REGISTER_TEST_CASE(atca_helper, base64_encode_check_newline_128),    NULL },
 
-    { REGISTER_TEST_CASE(atca_helper, base64_url_encode),                  ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, base64_url_decode),                  ATCA_TESTS_HELPER_DEVICES},
+    { REGISTER_TEST_CASE(atca_helper, base64_url_encode),                  NULL },
+    { REGISTER_TEST_CASE(atca_helper, base64_url_decode),                  NULL },
 
-    { REGISTER_TEST_CASE(atca_helper, bin2hex_simple),                     ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, bin2hex_simple_no_null),             ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, bin2hex_one),                        ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, bin2hex_all),                        ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, bin2hex_in_place),                   ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, bin2hex_no_pretty),                  ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, bin2hex_small_buf),                  ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, hex2bin),                            ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, hex2bin_in_place),                   ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, hex2bin_incomplete),                 ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, hex2bin_small_buf),                  ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, transform_bin2hex_uppercase),        ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, transform_bin2hex_lowercase),        ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, transform_bin2hex_uppercase_space),  ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, transform_bin2hex_lowercase_space),  ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, transform_hex2bin),                  ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, transform_hex2bin_space),            ATCA_TESTS_HELPER_DEVICES},
-    { REGISTER_TEST_CASE(atca_helper, transform_reversal),                 ATCA_TESTS_HELPER_DEVICES},
-    { (fp_test_case)NULL,             (uint8_t)0 },                        /* Array Termination element*/
+    { REGISTER_TEST_CASE(atca_helper, bin2hex_simple),                     NULL },
+    { REGISTER_TEST_CASE(atca_helper, bin2hex_simple_no_null),             NULL },
+    { REGISTER_TEST_CASE(atca_helper, bin2hex_one),                        NULL },
+    { REGISTER_TEST_CASE(atca_helper, bin2hex_all),                        NULL },
+    { REGISTER_TEST_CASE(atca_helper, bin2hex_in_place),                   NULL },
+    { REGISTER_TEST_CASE(atca_helper, bin2hex_no_pretty),                  NULL },
+    { REGISTER_TEST_CASE(atca_helper, bin2hex_small_buf),                  NULL },
+    { REGISTER_TEST_CASE(atca_helper, hex2bin),                            NULL },
+    { REGISTER_TEST_CASE(atca_helper, hex2bin_in_place),                   NULL },
+    { REGISTER_TEST_CASE(atca_helper, hex2bin_incomplete),                 NULL },
+    { REGISTER_TEST_CASE(atca_helper, hex2bin_small_buf),                  NULL },
+    { REGISTER_TEST_CASE(atca_helper, transform_bin2hex_uppercase),        NULL },
+    { REGISTER_TEST_CASE(atca_helper, transform_bin2hex_lowercase),        NULL },
+    { REGISTER_TEST_CASE(atca_helper, transform_bin2hex_uppercase_space),  NULL },
+    { REGISTER_TEST_CASE(atca_helper, transform_bin2hex_lowercase_space),  NULL },
+    { REGISTER_TEST_CASE(atca_helper, transform_hex2bin),                  NULL },
+    { REGISTER_TEST_CASE(atca_helper, transform_hex2bin_space),            NULL },
+    { REGISTER_TEST_CASE(atca_helper, transform_reversal),                 NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
 };
 // *INDENT-ON*

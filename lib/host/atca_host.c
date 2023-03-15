@@ -1735,3 +1735,55 @@ ATCA_STATUS atcah_gen_session_key(struct atca_session_key_in_out *param)
 #endif /* ATCAH_GEN_SESSION_KEY */
 
 #endif
+
+/** \brief This function calculates host side mac with the parameters passed.
+ *    \param[in,out] param pointer to parameter structure
+ *   \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+#if ATCAH_DELETE_MAC
+ATCA_STATUS atcah_delete_mac(struct atca_delete_in_out *param)
+{
+    uint8_t temporary[ATCA_MSG_SIZE_DELETE_MAC];
+    uint8_t *p_temp;
+
+    if ((NULL == param->key) || (NULL == param->nonce) || (NULL == param->mac))
+    {
+        return ATCA_BAD_PARAM;
+    }
+
+    p_temp = temporary;
+
+    // (1) 32 bytes of key
+    memcpy(p_temp, param->key, ATCA_KEY_SIZE);
+    p_temp += ATCA_KEY_SIZE;
+
+    // (2) 0x13
+    *p_temp++ = ATCA_DELETE;
+
+    // (3) 0x00
+    *p_temp++ = 0x00;
+
+    // (4) 0x0000
+    *p_temp++ = param->key_id & 0xFF;
+    *p_temp++ = (param->key_id >> 8) & 0xFF;
+
+    // (5) 1 byte SN[8]
+    *p_temp++ = param->sn[8];
+
+    // (6) 2 bytes SN[0:1]
+    *p_temp++ = param->sn[0];
+    *p_temp++ = param->sn[1];
+
+    // (7) 25 zeros
+    memset(p_temp, 0, ATCA_DELETE_MAC_ZEROS_SIZE);
+    p_temp += ATCA_DELETE_MAC_ZEROS_SIZE;
+
+    // (8) 32 bytes nonce
+    memcpy(p_temp, param->nonce, 32);
+
+    // Calculate SHA256 to get MAC
+    atcac_sw_sha2_256(temporary, ATCA_MSG_SIZE_DELETE_MAC, param->mac);
+
+    return ATCA_SUCCESS;
+}
+#endif /* ATCAH_DELETE_MAC */

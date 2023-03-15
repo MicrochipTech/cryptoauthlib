@@ -121,7 +121,16 @@ TEST(atca_cmd_basic_test, sign_hw_verify)
 #endif
 
 #ifdef ATCA_ECC_SUPPORT
-TEST(atca_cmd_basic_test, sign_internal)
+TEST_CONDITION(atca_cmd_basic_test, sign_internal_ecc)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return ((ATECC108A == dev_type) 
+            || (ATECC508A == dev_type)
+            || (ATECC608 == dev_type));
+}
+
+TEST(atca_cmd_basic_test, sign_internal_ecc)
 {
     uint8_t internal_key_id = 4; // Which slot to sign digest of (via GenDig)
     uint16_t private_key_id = 0; // Slot with private key to do the signing
@@ -214,19 +223,21 @@ TEST(atca_cmd_basic_test, read_sig)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info sign_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sign),            DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sign),            atca_test_cond_p256_sign },
 #if ATCA_HOSTLIB_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sign_sw_verify),  DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sign_sw_verify),  atca_test_cond_p256_sign },
 #endif
 #if !ATCA_HOSTLIB_EN && (defined(ATCA_ECC_SUPPORT) || defined(ATCA_TA100_SUPPORT))
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sign_hw_verify),  DEVICE_MASK_ATECC | DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sign_hw_verify),  atca_test_cond_p256_sign_verify },
 #endif
 #ifdef ATCA_ECC_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sign_internal),   DEVICE_MASK_ATECC },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sign_internal_ecc), REGISTER_TEST_CONDITION(atca_cmd_basic_test, sign_internal_ecc) },
 #endif
 #if 0
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, read_sig),      DEVICE_MASK_ATECC | DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, read_sig),        atca_test_cond_p256_sign },
 #endif
-    { (fp_test_case)NULL,                     (uint8_t)0 },   /* Array Termination element*/
+
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
 };
 // *INDENT-OFN*

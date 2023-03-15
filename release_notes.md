@@ -1,6 +1,54 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.5.0 (03/14/2023)
+
+### New
+  - Add support for ECC204, TA010 and framework for future devices
+
+## Release v3.4.3 (12/23/2022)
+
+### New
+  - Add key load mode flags for FCE config command
+
+### Fixes
+  - WPC certificate reconstruction buffer length was too short
+  - ECC204 block Read/Write did not write remaining bytes if the provided buffer was
+    not padded to a 32 byte bounary
+  - TA100 lock CRC was being passed with the native endianness.
+  - ECC204 nonce command was missing the mode bit to emit a random number when called
+    with the intention of producing random bytes
+
+
+## Release v3.4.2 (12/04/2022)
+
+### Fixes
+  - PKCS11: Correct init/deinit failures from initialization mutex options. These
+    would manifest as a segmentation fault on deinit, unterminated authorization
+    sessions, or library already initialized return codes based on the configuration
+    and inititialization data.
+  - PKCS11: Added configuration option to always terminate authorization sessions on
+    library initialization to work around applications that may fail to call C_CloseSession
+    or C_Finalize before exiting.
+  - PKCS11: Fix failures in C_DigestInit resulting from failing to check the session
+    state before checking the requested digest mechanism type.
+  - PKCS11: Modify how the library returns public key information based on access levels
+    of the private key (generate from the private key if allowed, read from a linked public
+    key, and finally return data unavailable). For the vast majority of situtations this
+    prevents openssl & libp11 from crashing with segmentation faults if the user fails to
+    provide a pkcs11 URI with pin value specified. These segmentation faults were confirmed
+    to also exist with other PKCS11 libraries - the fundamental problem should be taken up 
+    with the maintainers of openssl, libp11, and pkcs11-provider (experimental OpenSSL 
+    3.0 PKCS11 support). 
+  - Modified CBC update/finish APIs (added as an experimental API in v3.4.0) to match
+    standard expectations of how the APIs would function. Updated algorithm tests
+    to reflect this usage.
+  - PKCS11: Updated encrypt/decrypt in cbc/cbcpad modes to use the updated algorithm
+    implementations
+  - talib full element read & write functions now account for the maximum packet size 
+    based on session state.
+
+
 ## Release v3.4.1 (11/11/2022)
 
 ### Fixes

@@ -202,11 +202,11 @@ TEST(atcac_pk, derive_ecdh_p256_nist)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info atcac_pk_test_info[] =
 {
-    { REGISTER_TEST_CASE(atcac_pk, verify_nist),                DEVICE_MASK_NONE },
-    { REGISTER_TEST_CASE(atcac_pk, init_public),                DEVICE_MASK_NONE },
-    { REGISTER_TEST_CASE(atcac_pk, sign_simple),                DEVICE_MASK_NONE },
-    { REGISTER_TEST_CASE(atcac_pk, derive_ecdh_p256_nist),      DEVICE_MASK_NONE },
-    { (fp_test_case)NULL,                     (uint8_t)0 },         /* Array Termination element*/
+    { REGISTER_TEST_CASE(atcac_pk, verify_nist),                NULL },
+    { REGISTER_TEST_CASE(atcac_pk, init_public),                NULL },
+    { REGISTER_TEST_CASE(atcac_pk, sign_simple),                NULL },
+    { REGISTER_TEST_CASE(atcac_pk, derive_ecdh_p256_nist),      NULL },
+    { (fp_test_case)NULL, NULL },         /* Array Termination element*/
 };
 // *INDENT-ON*
 
