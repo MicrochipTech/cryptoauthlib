@@ -68,17 +68,42 @@ TEST(atca_cmd_basic_test, selftest_all)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(0, result);
 }
+
+TEST_CONDITION(atca_cmd_basic_test, selftest_ecc204_ta010)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return ((ECC204 == dev_type) 
+            || (TA010 == dev_type));
+}
+
+TEST(atca_cmd_basic_test, selftest_ecc204_ta010)
+{
+    ATCA_STATUS status;
+    uint8_t result = 0;
+
+    status = atcab_selftest(SELFTEST_MODE_RNG, 0, &result);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(0x00, (result & 0x01));
+
+    status = atcab_selftest(SELFTEST_MODE_ECDSA_SIGN_VERIFY, 0, &result);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(0x00, (result & 0x02));
+
+    status = atcab_selftest(SELFTEST_MODE_SHA, 0, &result);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(0x00, (result & 0x20));
+}
 #endif
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info selftest_basic_test_info[] =
 {
 #if TEST_ATCAB_SELFTEST_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, selftest_individual), DEVICE_MASK(ATECC608) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, selftest_all),        DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, selftest_individual),     atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, selftest_all),            atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, selftest_ecc204_ta010),   REGISTER_TEST_CONDITION(atca_cmd_basic_test, selftest_ecc204_ta010) },
 #endif
-    { (fp_test_case)NULL,                     (uint8_t)0 },         /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },         /* Array Termination element*/
 };
 // *INDENT-ON*
-
-

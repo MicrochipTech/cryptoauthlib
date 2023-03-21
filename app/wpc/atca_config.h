@@ -96,6 +96,7 @@ extern atca_plib_i2c_api_t sercom2_plib_i2c_api;
 #define ATCAB_AES_EN                FEATURE_DISABLED
 #define ATCAB_AES_GCM_EN            FEATURE_DISABLED
 #define ATCAB_COUNTER_EN            FEATURE_DISABLED
+#define ATCAB_DELETE_EN             FEATURE_DISABLED
 #define ATCAB_DERIVEKEY_EN          FEATURE_DISABLED
 #define ATCAB_ECDH_EN               FEATURE_DISABLED
 #define ATCAB_ECDH_ENC_EN           FEATURE_DISABLED

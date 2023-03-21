@@ -231,6 +231,6 @@ if __name__ == '__main__':
         setup_requires=['setuptools>=38.6.0', 'wheel'],
         install_requires=['enum34;python_version<"3.4"'],
         ext_modules=_EXTENSIONS,
-        python_requires='>=3.4.*',
+        python_requires='>=3.8.0',
         zip_safe=False
     )

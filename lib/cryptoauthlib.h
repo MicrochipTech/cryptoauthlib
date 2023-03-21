@@ -62,9 +62,11 @@
 #define ATCA_ZONE_OTP                       ((uint8_t)0x01)
 #define ATCA_ZONE_DATA                      ((uint8_t)0x02)
 
-#if defined(ATCA_ECC204_SUPPORT)
-#define ATCA_ECC204_ZONE_DATA               ((uint8_t)0x00)
-#define ATCA_ECC204_ZONE_CONFIG             ((uint8_t)0x01)
+#if ATCA_CA2_SUPPORT
+#define ATCA_ZONE_CA2_DATA                  ((uint8_t)0x00)
+#define ATCA_ZONE_CA2_CONFIG                ((uint8_t)0x01)
+#define ATCA_ECC204_DEVICE_ID               ((uint8_t)0x5A)
+#define ATCA_TA010_DEVICE_ID                ((uint8_t)0x6A)
 #endif
 
 /** Place resulting digest both in Output buffer and TempKey */

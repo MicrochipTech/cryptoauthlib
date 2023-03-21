@@ -28,10 +28,11 @@
 #include "test_atcab.h"
 
 #ifndef TEST_ATCAB_READ_EN
-#define TEST_ATCAB_READ_EN      (CALIB_READ_EN || CALIB_READ_ECC204_EN || TALIB_READ_EN)
+#define TEST_ATCAB_READ_EN      (CALIB_READ_EN || CALIB_READ_CA2_EN || TALIB_READ_EN)
 #endif
 
 #if TEST_ATCAB_READ_EN
+
 
 #if CALIB_READ_EN
 TEST(atca_cmd_basic_test, read_zone)
@@ -129,6 +130,13 @@ TEST(atca_cmd_basic_test, read_config_zone)
 }
 
 #if CALIB_READ_EN
+TEST_CONDITION(atca_cmd_basic_test, read_otp_zone)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return (atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type));
+}
+
 TEST(atca_cmd_basic_test, read_otp_zone)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
@@ -159,20 +167,41 @@ TEST(atca_cmd_basic_test, read_data_zone)
     status = atcab_read_bytes_zone(ATCA_ZONE_DATA, slot, 0, read_data, sizeof(read_data));
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
+
+#if CALIB_READ_CA2_EN
+TEST_CONDITION(atca_cmd_basic_test, read_full_length)
+{
+    return atcab_is_ca2_device(atca_test_get_device_type());
+}
+
+TEST(atca_cmd_basic_test, read_full_length)
+{
+    ATCA_STATUS status = ATCA_SUCCESS;
+    uint8_t read_data[320];
+
+    test_assert_data_is_locked();
+
+    status = atcab_read_bytes_zone(ATCA_ZONE_DATA, 1, 0, read_data, sizeof(read_data));
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+}
+#endif
+
 #endif
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info read_basic_test_info[] =
 {
 #if TEST_ATCAB_READ_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, read_config_zone), DEVICE_MASK_SHA | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, read_data_zone),   DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, read_config_zone), NULL },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, read_data_zone),   NULL },
 #if CALIB_READ_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, read_zone),        DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, read_otp_zone),    DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, read_zone),        REGISTER_TEST_CONDITION(atca_cmd_basic_test, read_otp_zone) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, read_otp_zone),    REGISTER_TEST_CONDITION(atca_cmd_basic_test, read_otp_zone) },
+#endif
+#if CALIB_READ_CA2_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, read_full_length), REGISTER_TEST_CONDITION(atca_cmd_basic_test, read_full_length) },
 #endif
 #endif /* TEST_ATCAB_READ_EN */
     { (fp_test_case)NULL,                     (uint8_t)0 },      /* Array Termination element*/
 };
 // *INDENT-ON*
-

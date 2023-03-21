@@ -61,17 +61,6 @@ extern ATCAIfaceCfg cfg_atsha20xa_kitcdc_default;
 /** \brief default configuration for Kit protocol over a HID interface for SHA204 */
 extern ATCAIfaceCfg cfg_atsha20xa_kithid_default;
 
-
-/** \brief default configuration for an ECC204 device on the first logical I2C bus */
-extern ATCAIfaceCfg cfg_ecc204_i2c_default;
-
-/** \brief default configuration for an ECC204 device on the logical SWI over GPIO*/
-extern ATCAIfaceCfg cfg_ecc204_swi_default;
-
-/** \brief default configuration for Kit protocol over the device's async interface */
-extern ATCAIfaceCfg cfg_ecc204_kithid_default;
-
-
 #ifdef __cplusplus
 }
 #endif

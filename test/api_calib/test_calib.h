@@ -34,11 +34,16 @@
 extern "C" {
 #endif
 
-extern t_test_case_info calib_commands_info[];
-extern t_test_case_info calib_packet_info[];
-
 ATCA_STATUS calib_config_get_slot_by_test(uint8_t test_type, uint16_t* handle);
 ATCA_STATUS calib_config_get_ecc204_slot_by_test(uint8_t test_type, uint16_t* handle);
+
+/* Test Commands */
+int run_calib_tests(int argc, char* argv[]);
+
+/* Common test setup/teardown */
+extern const char* TEST_GROUP_calib;
+void TEST_calib_SETUP(void);
+void TEST_calib_TEAR_DOWN(void);
 
 #ifdef __cplusplus
 }

@@ -426,9 +426,14 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
             uint8_t auth_i_nonce[16];
             uint8_t auth_r_nonce[16];
 
+#if PKCS11_AUTH_TERMINATE_BEFORE_LOGIN
+	    ATCADevice device = atcab_get_device();
+	    device->session_key_id = TA_HANDLE_AUTH_SESSION;
+	    status  = talib_auth_terminate(device);
+#endif
             (void)atcac_sw_random(auth_r_nonce, sizeof(auth_r_nonce));
 
-            status = talib_auth_generate_nonce(_gDevice, 0x4100,
+            status = talib_auth_generate_nonce(atcab_get_device(), TA_HANDLE_AUTH_SESSION,
                                             TA_AUTH_GENERATE_OPT_NONCE_SRC_MASK | TA_AUTH_GENERATE_OPT_RANDOM_MASK, auth_i_nonce);
 
             if (CKR_OK == (rv = pkcs11_util_convert_rv(status)))
@@ -440,6 +445,7 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
 
             if (CKR_OK != rv)
             {
+	        PKCS11_DEBUG(" Login failed: Terminating auth session\r\n");
                 (void)talib_auth_terminate(atcab_get_device());
             }
         }

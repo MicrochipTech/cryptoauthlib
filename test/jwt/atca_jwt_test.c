@@ -27,7 +27,7 @@
 #include "jwt/atca_jwt.h"
 
 #ifndef TEST_JWT_SIGN_EN
-#define TEST_JWT_SIGN_EN    (CALIB_SIGN_ECC204_EN || CALIB_SIGN_EN || TALIB_SIGN_EN)
+#define TEST_JWT_SIGN_EN    (CALIB_SIGN_CA2_EN || CALIB_SIGN_EN || TALIB_SIGN_EN)
 #endif
 
 #ifndef TEST_JWT_VERIFY_EN
@@ -35,7 +35,6 @@
 #endif
 
 /* Configuration Options */
-#define ATCA_JWT_TEST_DEVICES  ( DEVICE_MASK(ATECC108A) | DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) )
 #define ATCA_JWT_TEST_SIGNING_KEY_ID    (0)
 
 /* Test Vectors */
@@ -366,31 +365,31 @@ TEST(atca_jwt_crypto, finalize)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info jwt_unit_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_period),                ATCA_JWT_TEST_DEVICES},
-    { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_brace),                 ATCA_JWT_TEST_DEVICES},
-    { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_other),                 ATCA_JWT_TEST_DEVICES},
-    { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_invalid_params),        ATCA_JWT_TEST_DEVICES},
+    { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_period),                NULL },
+    { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_brace),                 NULL },
+    { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_other),                 NULL },
+    { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_invalid_params),        NULL },
 
-    { REGISTER_TEST_CASE(atca_jwt,        init),                                      ATCA_JWT_TEST_DEVICES},
-    { REGISTER_TEST_CASE(atca_jwt,        init_invalid_params),                       ATCA_JWT_TEST_DEVICES},
-    { REGISTER_TEST_CASE(atca_jwt,        claim_add_string),                          ATCA_JWT_TEST_DEVICES},
-    { REGISTER_TEST_CASE(atca_jwt,        claim_add_string_invalid_params),           ATCA_JWT_TEST_DEVICES},
-    { REGISTER_TEST_CASE(atca_jwt,        claim_add_numeric),                         ATCA_JWT_TEST_DEVICES},
-    { REGISTER_TEST_CASE(atca_jwt,        claim_add_numeric_invalid_params),          ATCA_JWT_TEST_DEVICES},
+    { REGISTER_TEST_CASE(atca_jwt,        init),                                      NULL },
+    { REGISTER_TEST_CASE(atca_jwt,        init_invalid_params),                       NULL },
+    { REGISTER_TEST_CASE(atca_jwt,        claim_add_string),                          NULL },
+    { REGISTER_TEST_CASE(atca_jwt,        claim_add_string_invalid_params),           NULL },
+    { REGISTER_TEST_CASE(atca_jwt,        claim_add_numeric),                         NULL },
+    { REGISTER_TEST_CASE(atca_jwt,        claim_add_numeric_invalid_params),          NULL },
 
 #if TEST_JWT_VERIFY_EN
-    { REGISTER_TEST_CASE(atca_jwt,        verify_invalid_params),                     ATCA_JWT_TEST_DEVICES},
+    { REGISTER_TEST_CASE(atca_jwt,        verify_invalid_params),                     NULL },
 #endif
 #if TEST_JWT_SIGN_EN 
-    { REGISTER_TEST_CASE(atca_jwt,        finalize_invalid_params),                   ATCA_JWT_TEST_DEVICES},
+    { REGISTER_TEST_CASE(atca_jwt,        finalize_invalid_params),                   NULL },
 #endif
 
 #if TEST_JWT_VERIFY_EN
-    { REGISTER_TEST_CASE(atca_jwt_crypto, verify),                                    ATCA_JWT_TEST_DEVICES},
-    { REGISTER_TEST_CASE(atca_jwt_crypto, verify_invalid),                            ATCA_JWT_TEST_DEVICES},
+    { REGISTER_TEST_CASE(atca_jwt_crypto, verify),                                    atca_test_cond_p256_sign_verify },
+    { REGISTER_TEST_CASE(atca_jwt_crypto, verify_invalid),                            atca_test_cond_p256_sign_verify },
 #endif
 #if TEST_JWT_SIGN_EN
-    { REGISTER_TEST_CASE(atca_jwt_crypto, finalize),                                  ATCA_JWT_TEST_DEVICES},
+    { REGISTER_TEST_CASE(atca_jwt_crypto, finalize),                                  atca_test_cond_p256_sign_verify },
 #endif
     { (fp_test_case)NULL,                 (uint8_t)0 },                               /* Array Termination element*/
 };

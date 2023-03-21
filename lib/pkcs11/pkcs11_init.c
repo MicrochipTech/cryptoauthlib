@@ -385,7 +385,7 @@ CK_RV pkcs11_deinit(CK_VOID_PTR pReserved)
     }
 
     /* Lock the library */
-    if (CKR_OK == (rv == pkcs11_lock_context(lib_ctx)))
+    if (CKR_OK == (rv = pkcs11_lock_context(lib_ctx)))
     {
         if (CKR_OK == pkcs11_lock_device(lib_ctx))
         {
@@ -430,8 +430,10 @@ CK_RV pkcs11_deinit(CK_VOID_PTR pReserved)
         /* the library is now closing */
         (void)pkcs11_unlock_context(lib_ctx);
         
+	if (lib_ctx->lib_lock)
+        {
         /* Clean up the library lock */
-        if (lib_ctx->destroy_mutex(lib_ctx->lib_lock)) 
+            if(lib_ctx->destroy_mutex) 
         {
             (void)lib_ctx->destroy_mutex(lib_ctx->lib_lock);
         }
@@ -440,6 +442,7 @@ CK_RV pkcs11_deinit(CK_VOID_PTR pReserved)
             (void)pkcs11_os_destroy_mutex(lib_ctx->lib_lock);
         }
         lib_ctx->lib_lock = NULL;
+	}
 
         pkcs11_context.initialized = FALSE;
     }

@@ -70,6 +70,24 @@ ATCA_STATUS atCounter(ATCADeviceType device_type, ATCAPacket *packet)
 }
 #endif
 
+#if CALIB_DELETE_EN
+/** \brief ATCACommand Delete method
+ * \param[in] ca_cmd   instance
+ * \param[in] packet  pointer to the packet containing the command being built
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atDelete(ATCADeviceType device_type, ATCAPacket *packet)
+{
+    ((void)device_type);
+
+    // Set the opcode & parameters
+    packet->opcode = ATCA_DELETE;
+    packet->txsize = DELETE_COUNT;
+    atCalcCrc(packet);
+    return ATCA_SUCCESS;
+}
+#endif
+
 #if CALIB_DERIVEKEY_EN
 /** \brief ATCACommand DeriveKey method
  * \param[in] ca_cmd   instance
@@ -208,7 +226,7 @@ ATCA_STATUS atInfo(ATCADeviceType device_type, ATCAPacket *packet)
     return ATCA_SUCCESS;
 }
 
-#if CALIB_LOCK_EN || CALIB_LOCK_ECC204_EN
+#if CALIB_LOCK_EN || CALIB_LOCK_CA2_EN
 /** \brief ATCACommand Lock method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -268,7 +286,7 @@ ATCA_STATUS atNonce(ATCADeviceType device_type, ATCAPacket *packet)
 
     packet->opcode = ATCA_NONCE;
 
-    if ((calc_mode == NONCE_MODE_SEED_UPDATE || calc_mode == NONCE_MODE_NO_SEED_UPDATE))
+    if ((calc_mode == NONCE_MODE_SEED_UPDATE || calc_mode == NONCE_MODE_NO_SEED_UPDATE || calc_mode == NONCE_MODE_GEN_SESSION_KEY))
     {
         // Calculated nonce mode, 20 byte NumInm
         packet->txsize = NONCE_COUNT_SHORT;
@@ -348,7 +366,7 @@ ATCA_STATUS atRandom(ATCADeviceType device_type, ATCAPacket *packet)
 }
 #endif
 
-#if CALIB_READ_EN || CALIB_READ_ECC204_EN
+#if CALIB_READ_EN || CALIB_READ_CA2_EN
 /** \brief ATCACommand Read method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -447,7 +465,7 @@ ATCA_STATUS atSHA(ATCADeviceType device_type, ATCAPacket *packet, uint16_t write
 }
 #endif
 
-#if CALIB_SIGN_EN || CALIB_SIGN_ECC204_EN
+#if CALIB_SIGN_EN || CALIB_SIGN_CA2_EN
 /** \brief ATCACommand Sign method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -458,7 +476,7 @@ ATCA_STATUS atSign(ATCADeviceType device_type, ATCAPacket *packet)
     // Set the opcode & parameters
     packet->opcode = ATCA_SIGN;
     packet->txsize = SIGN_COUNT;
-    if (ECC204 == device_type)
+    if ((ECC204 == device_type) || (TA010 == device_type))
     {
         packet->txsize += ATCA_SHA_DIGEST_SIZE;
     }
@@ -527,7 +545,7 @@ ATCA_STATUS atVerify(ATCADeviceType device_type, ATCAPacket *packet)
 }
 #endif
 
-#if CALIB_WRITE_EN || CALIB_WRITE_ECC204_EN
+#if CALIB_WRITE_EN || CALIB_WRITE_CA2_EN
 /** \brief ATCACommand Write method
  * \param[in] ca_cmd   instance
  * \param[in] packet  pointer to the packet containing the command being built
@@ -540,14 +558,14 @@ ATCA_STATUS atWrite(ATCADeviceType device_type, ATCAPacket *packet, bool has_mac
     packet->opcode = ATCA_WRITE;
 
     packet->txsize = 7;
-    if (ECC204 == device_type)
+    if (atcab_is_ca2_device(device_type))
     {
-#ifdef ATCA_ECC204_SUPPORT
-        if (ATCA_ECC204_ZONE_CONFIG == packet->param1)
+#if ATCA_CA2_SUPPORT
+        if (ATCA_ZONE_CA2_CONFIG == packet->param1)
         {
             packet->txsize += 16;
         }
-        else if (ATCA_ECC204_ZONE_DATA == packet->param1)
+        else if (ATCA_ZONE_CA2_DATA == packet->param1)
         {
             packet->txsize += ATCA_BLOCK_SIZE;
         }
@@ -757,6 +775,8 @@ bool atIsECCFamily(ATCADeviceType device_type)
     case ATECC608:
         /* fallthrough */
     case ECC204:
+        /* fallthrough */
+    case TA010:
         return true;
         break;
     default:

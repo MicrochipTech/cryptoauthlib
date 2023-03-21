@@ -33,6 +33,13 @@
 
 #if TEST_ATCAB_MAC_EN
 
+TEST_CONDITION(atca_cmd_basic_test, mac)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return (atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type));
+}
+
 TEST(atca_cmd_basic_test, mac_key_challenge)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
@@ -336,12 +343,13 @@ TEST(atca_cmd_basic_test, checkmac)
 t_test_case_info mac_basic_test_info[] =
 {
 #if TEST_ATCAB_MAC_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, mac_key_challenge),     DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, mac_key_tempkey),       DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, mac_tempkey_challenge), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, mac_tempkey_tempkey),   DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, checkmac),              DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, mac_key_challenge),     REGISTER_TEST_CONDITION(atca_cmd_basic_test, mac) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, mac_key_tempkey),       REGISTER_TEST_CONDITION(atca_cmd_basic_test, mac) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, mac_tempkey_challenge), REGISTER_TEST_CONDITION(atca_cmd_basic_test, mac) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, mac_tempkey_tempkey),   REGISTER_TEST_CONDITION(atca_cmd_basic_test, mac) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, checkmac),              REGISTER_TEST_CONDITION(atca_cmd_basic_test, mac) },
 #endif
-    { (fp_test_case)NULL,                     (uint8_t)0 },           /* Array Termination element*/
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
 };
 // *INDENT-ON*

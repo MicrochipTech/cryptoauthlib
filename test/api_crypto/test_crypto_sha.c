@@ -612,23 +612,23 @@ TEST(atcac_sha, sha256_hmac_nist)
 t_test_case_info atcac_sha_test_info[] =
 {
 #if TEST_ATCAC_SHA1_EN
-    { REGISTER_TEST_CASE(atcac_sha, sha1_nist1),        DEVICE_MASK_NONE },
-    { REGISTER_TEST_CASE(atcac_sha, sha1_nist2),        DEVICE_MASK_NONE },
-    { REGISTER_TEST_CASE(atcac_sha, sha1_nist3),        DEVICE_MASK_NONE },
-    { REGISTER_TEST_CASE(atcac_sha, sha1_nist_short),   DEVICE_MASK_NONE },
-    { REGISTER_TEST_CASE(atcac_sha, sha1_nist_long),    DEVICE_MASK_NONE },
-    { REGISTER_TEST_CASE(atcac_sha, sha1_nist_monte),   DEVICE_MASK_NONE },
+    { REGISTER_TEST_CASE(atcac_sha, sha1_nist1),        NULL },
+    { REGISTER_TEST_CASE(atcac_sha, sha1_nist2),        NULL },
+    { REGISTER_TEST_CASE(atcac_sha, sha1_nist3),        NULL },
+    { REGISTER_TEST_CASE(atcac_sha, sha1_nist_short),   NULL },
+    { REGISTER_TEST_CASE(atcac_sha, sha1_nist_long),    NULL },
+    { REGISTER_TEST_CASE(atcac_sha, sha1_nist_monte),   NULL },
 #endif
 #if TEST_ATCAC_SHA256_EN
-    { REGISTER_TEST_CASE(atcac_sha, sha256_nist1),      DEVICE_MASK_NONE },
-    { REGISTER_TEST_CASE(atcac_sha, sha256_nist2),      DEVICE_MASK_NONE },
-    { REGISTER_TEST_CASE(atcac_sha, sha256_nist3),      DEVICE_MASK_NONE },
-    { REGISTER_TEST_CASE(atcac_sha, sha256_nist_short), DEVICE_MASK_NONE },
-    { REGISTER_TEST_CASE(atcac_sha, sha256_nist_long),  DEVICE_MASK_NONE },
-    { REGISTER_TEST_CASE(atcac_sha, sha256_nist_monte), DEVICE_MASK_NONE },
-    { REGISTER_TEST_CASE(atcac_sha, sha256_hmac),       DEVICE_MASK_NONE },
-    { REGISTER_TEST_CASE(atcac_sha, sha256_hmac_nist),  DEVICE_MASK_NONE },
+    { REGISTER_TEST_CASE(atcac_sha, sha256_nist1),      NULL },
+    { REGISTER_TEST_CASE(atcac_sha, sha256_nist2),      NULL },
+    { REGISTER_TEST_CASE(atcac_sha, sha256_nist3),      NULL },
+    { REGISTER_TEST_CASE(atcac_sha, sha256_nist_short), NULL },
+    { REGISTER_TEST_CASE(atcac_sha, sha256_nist_long),  NULL },
+    { REGISTER_TEST_CASE(atcac_sha, sha256_nist_monte), NULL },
+    { REGISTER_TEST_CASE(atcac_sha, sha256_hmac),       NULL },
+    { REGISTER_TEST_CASE(atcac_sha, sha256_hmac_nist),  NULL },
 #endif
-    { (fp_test_case)NULL,                     (uint8_t)0 },         /* Array Termination element*/
+    { NULL, NULL },         /* Array Termination element*/
 };
 // *INDENT-ON*

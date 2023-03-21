@@ -600,6 +600,9 @@ static const devtype_names_t devtype_names[] = {
 #ifdef ATCA_ECC204_SUPPORT
     { ECC204,           "ecc204" },
 #endif
+#ifdef ATCA_TA010_SUPPORT
+    { TA010,            "ta010" },
+#endif
 #ifdef ATCA_TA100_SUPPORT
     { TA100,            "ta100"  },
 #endif

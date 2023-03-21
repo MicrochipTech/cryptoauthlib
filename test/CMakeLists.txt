@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project (cryptoauth_test C)
 
 option (ATCA_TEST_LOCK_ENABLE "Enable device locking functions and tests" OFF)
+option (ATCA_TEST_DELETE_ENABLE "Enable device wiping functions and tests" OFF)
 
 file(GLOB TEST_ATCACERT_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "atcacert/*.c")
 file(GLOB TEST_JWT_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "jwt/*.c")
@@ -87,6 +88,10 @@ endif(ATCA_BUILD_SHARED_LIBS)
 if(ATCA_TEST_LOCK_ENABLE)
 target_compile_definitions(cryptoauth_test PUBLIC -DATCA_TEST_LOCK_ENABLE)
 endif(ATCA_TEST_LOCK_ENABLE)
+
+if(ATCA_TEST_DELETE_ENABLE)
+target_compile_definitions(cryptoauth_test PUBLIC -DATCA_TEST_DELETE_ENABLE)
+endif(ATCA_TEST_DELETE_ENABLE)
 
 set_property(TARGET cryptoauth_test PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "$(OutputPath)")
 

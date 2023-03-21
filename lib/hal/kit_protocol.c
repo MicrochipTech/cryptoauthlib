@@ -80,8 +80,18 @@ const char * kit_id_from_devtype(ATCADeviceType devtype)
         return "TA100";
     case ECC204:
         return "ECC204";
+    case ECC206:
+        return "ECC206";
     case TA010:
         return "TA010";
+    case SHA104:
+        return "SHA104";
+    case SHA105:
+        return "SHA105";
+    case SHA106:
+        return "SHA106";
+    case RNG90:
+        return "RNG90";
     default:
         return "unknown";
     }

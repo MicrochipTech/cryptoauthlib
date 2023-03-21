@@ -27,7 +27,20 @@
 #include <stdlib.h>
 #include "test_atcab.h"
 
+#ifndef TEST_ATCAB_COUNTER_EN
+#define TEST_ATCAB_COUNTER_EN         (CALIB_COUNTER_EN || TALIB_COUNTER_EN)
+#endif
+
+#if TEST_ATCAB_COUNTER_EN
+
 #ifdef ATCA_ECC_SUPPORT
+
+TEST_CONDITION(atca_cmd_basic_test, counter_test)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return ((ATECC508A == dev_type) || (ATECC608 == dev_type));
+}
 
 TEST(atca_cmd_basic_test, counter_test)
 {
@@ -154,6 +167,18 @@ TEST(atca_cmd_basic_test, counter_match)
     status = atcab_write_bytes_zone(ATCA_ZONE_DATA, 10, 0, counter_match_slot_data, sizeof(counter_match_slot_data)); //Writing the maximum value to the slot for the remaning test cases to execute
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
+#endif
+
+#if ATCA_CA_SUPPORT || ATCA_CA2_SUPPORT
+TEST_CONDITION(atca_cmd_basic_test, counter_write_test)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return ((ATECC508A == dev_type) 
+            || (ATECC608 == dev_type)
+            || (ECC204 == dev_type)
+            || (TA010 == dev_type));
+}
 
 /*
    Test the counter 1 for the different value range.
@@ -170,13 +195,15 @@ TEST(atca_cmd_basic_test, counter_write_test)
 
     test_assert_config_is_unlocked();
 
-    if (ECC204 == gCfg->devtype)
+#if ATCA_CA2_SUPPORT
+    if (atcab_is_ca2_device(gCfg->devtype))
     {
         counter_id = 0;
-        counter_value_mid = ECC204_COUNTER_MAX_VALUE / 2;
-        counter_value_max = ECC204_COUNTER_MAX_VALUE;
+        counter_value_mid = COUNTER_MAX_VALUE_CA2 / 2;
+        counter_value_max = COUNTER_MAX_VALUE_CA2;
     }
     else
+#endif
     {
         counter_id = 1;
         counter_value_mid = COUNTER_MAX_VALUE / 2;
@@ -208,19 +235,21 @@ TEST(atca_cmd_basic_test, counter_write_test)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
 }
+#endif
+#endif
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info counter_basic_test_info[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_write_test), DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) | DEVICE_MASK(ECC204)  },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_test),       DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608)  },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_match),                               DEVICE_MASK(ATECC608)  },
+#if TEST_ATCAB_COUNTER_EN
+#if ATCA_CA_SUPPORT || ATCA_CA2_SUPPORT
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_write_test), REGISTER_TEST_CONDITION(atca_cmd_basic_test, counter_write_test) },
+#endif
+#ifdef ATCA_ECC_SUPPORT
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_test),       REGISTER_TEST_CONDITION(atca_cmd_basic_test, counter_test) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_match),      atca_test_cond_ecc608 },
+#endif
+#endif
     { (fp_test_case)NULL,                     (uint8_t)0 },        /* Array Termination element*/
 };
 // *INDENT-ON*
-#else
-t_test_case_info counter_basic_test_info[] =
-{
-    { (fp_test_case)NULL, (uint8_t)0 },
-};
-#endif

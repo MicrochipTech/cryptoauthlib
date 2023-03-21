@@ -40,6 +40,16 @@
 static const uint8_t nist_hash_msg1[] = "abc";
 static const uint8_t nist_hash_msg2[] = "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq";
 
+TEST_CONDITION(atca_cmd_basic_test, sha)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return ((atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type))
+            || atcab_is_ca2_device(dev_type)
+            || (TA100 == dev_type)
+    );
+}
+
 TEST(atca_cmd_basic_test, sha)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
@@ -539,6 +549,18 @@ TEST(atca_cmd_basic_test, sha_context_simple)
 #endif /* TEST_ATCAB_SHA_EN */
 
 #if TEST_ATCAB_SHA_HMAC_EN
+TEST_CONDITION(atca_cmd_basic_test, sha_hmac)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return ((ATECC108A == dev_type) 
+            || (ATECC508A == dev_type)
+            || (ATECC608 == dev_type)
+            || (ECC204 == dev_type)
+            || (TA010 == dev_type)
+            || (TA100 == dev_type));
+}
+
 TEST(atca_cmd_basic_test, sha_hmac)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
@@ -619,29 +641,30 @@ TEST(atca_cmd_basic_test, sha_hmac_tempkey)
 t_test_case_info sha_basic_test_info[] =
 {
 #if TEST_ATCAB_SHA_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha),                 DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_long),            DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_short),           DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist1),      DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist2),      DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist_short), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha),                 REGISTER_TEST_CONDITION(atca_cmd_basic_test, sha) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_long),            REGISTER_TEST_CONDITION(atca_cmd_basic_test, sha) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_short),           REGISTER_TEST_CONDITION(atca_cmd_basic_test, sha) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist1),      REGISTER_TEST_CONDITION(atca_cmd_basic_test, sha) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist2),      REGISTER_TEST_CONDITION(atca_cmd_basic_test, sha) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist_short), REGISTER_TEST_CONDITION(atca_cmd_basic_test, sha) },
     //{ REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist_long),  DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
     //{ REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist_monte), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
 #if CALIB_SHA_CONTEXT_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_context),                 DEVICE_MASK(ATECC608)     },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_context),         atca_test_cond_ecc608 },
 #endif
 #if TALIB_SHA_CONTEXT_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_context_simple),      DEVICE_MASK(TA100)     },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_context_simple),  atca_test_cond_ta100 },
 #endif
 #endif /* TEST_ATCAB_SHA_EN */
 
 #if TEST_ATCAB_SHA_HMAC_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_hmac),                DEVICE_MASK_ECC | DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_hmac),            REGISTER_TEST_CONDITION(atca_cmd_basic_test, sha_hmac) },
 #ifdef ATCA_ATECC608_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_hmac_tempkey),        DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_hmac_tempkey),    atca_test_cond_ecc608 },
 #endif
 #endif /* TEST_ATCAB_SHA_HMAC_EN */
-    { (fp_test_case)NULL,                     (uint8_t)0 },         /* Array Termination element*/
+
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
 };
 // *INDENT-ON*
-

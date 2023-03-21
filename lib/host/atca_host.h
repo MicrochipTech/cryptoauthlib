@@ -81,12 +81,16 @@
 //! TransportKey{32} || 0x15{1} || 0x00{1} || KeyId{2} || SN8{1} || SN0_1{2} || 0{25} || Nonce{32}
 #define ATCA_MSG_SIZE_SESSION_KEY      (96)
 
+//! HmacKey{32} || 0x13{1} || 0x00{1} || 0x0000{2} || SN8{1} || SN0_1{2} || 0{25} || Nonce{32}
+#define ATCA_MSG_SIZE_DELETE_MAC       (96)
+
 //! KeyId{32} || OpCode{1} || Param1{1} || Param2{2}|| SN8{1} || SN0_1{2} || 0{21} || PlainText{36}
 #define ATCA_MSG_SIZE_PRIVWRITE_MAC    (96)
 
 #define ATCA_COMMAND_HEADER_SIZE       ( 4)
 #define ATCA_GENDIG_ZEROS_SIZE         (25)
 #define ATCA_WRITE_MAC_ZEROS_SIZE      (25)
+#define ATCA_DELETE_MAC_ZEROS_SIZE     (25)
 #define ATCA_PRIVWRITE_MAC_ZEROS_SIZE  (21)
 #define ATCA_PRIVWRITE_PLAIN_TEXT_SIZE (36)
 #define ATCA_DERIVE_KEY_ZEROS_SIZE     (25)
@@ -431,6 +435,17 @@ typedef struct atca_session_key_in_out
     uint8_t*       session_key;
 }atca_session_key_in_out_t;
 
+/** \brief Input/Output paramters for calculating the mac.Used with Delete command.
+ */
+typedef struct atca_delete_in_out
+{
+    uint16_t       key_id;
+    const uint8_t* sn;
+    uint8_t*       nonce;
+    const uint8_t* key;
+    uint8_t*       mac;
+}atca_delete_in_out_t;
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -458,6 +473,7 @@ ATCA_STATUS atcah_encode_counter_match(uint32_t counter, uint8_t * counter_match
 ATCA_STATUS atcah_io_decrypt(struct atca_io_decrypt_in_out *param);
 ATCA_STATUS atcah_ecc204_write_auth_mac(struct atca_write_mac_in_out *param);
 ATCA_STATUS atcah_gen_session_key(atca_session_key_in_out_t *param);
+ATCA_STATUS atcah_delete_mac(struct atca_delete_in_out *param);
 #ifdef __cplusplus
 }
 #endif

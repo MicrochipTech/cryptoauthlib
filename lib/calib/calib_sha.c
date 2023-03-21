@@ -406,7 +406,7 @@ ATCA_STATUS calib_sha_hmac_init(ATCADevice device, atca_hmac_sha256_ctx_t* ctx, 
 
     memset(ctx, 0, sizeof(*ctx));
 
-    if (ECC204 == device->mIface.mIfaceCFG->devtype)
+    if (atcab_is_ca2_device(device->mIface.mIfaceCFG->devtype))
     {
         mode = SHA_MODE_ECC204_HMAC_START;
     }
@@ -477,7 +477,7 @@ ATCA_STATUS calib_sha_hmac_update(ATCADevice device, atca_hmac_sha256_ctx_t* ctx
  *                     SHA_MODE_TARGET_MSGDIGBUF, or SHA_MODE_TARGET_OUT_ONLY.
  *                     For all other devices, SHA_MODE_TARGET_TEMPKEY is the
  *                     only option.
- *                     For ECC204, target is ignored (0x00)
+ *                     For ECC204,TA010 target is ignored (0x00)
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
@@ -495,7 +495,7 @@ ATCA_STATUS calib_sha_hmac_finish(ATCADevice device, atca_hmac_sha256_ctx_t *ctx
     {
         mode = SHA_MODE_608_HMAC_END;
     }
-    else if (ECC204 == device->mIface.mIfaceCFG->devtype)
+    else if (atcab_is_ca2_device(device->mIface.mIfaceCFG->devtype))
     {
         mode = SHA_MODE_ECC204_HMAC_END;
     }

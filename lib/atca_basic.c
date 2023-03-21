@@ -96,7 +96,7 @@ ATCA_STATUS atcab_init_ext(ATCADevice* device, ATCAIfaceCfg *cfg)
         }
 #endif
 
-#if defined(ATCA_ATECC608_SUPPORT) || defined(ATCA_ECC204_SUPPORT)
+#if defined(ATCA_ATECC608_SUPPORT) || ATCA_CA2_SUPPORT
         if (ATCA_SUCCESS == status)
         {
     #ifdef ATCA_ATECC608_SUPPORT
@@ -110,10 +110,10 @@ ATCA_STATUS atcab_init_ext(ATCADevice* device, ATCAIfaceCfg *cfg)
             }
     #endif
 
-    #ifdef ATCA_ECC204_SUPPORT
+    #if ATCA_CA2_SUPPORT
             /* To compatible with kitprotocol firmware on otherside */
             /* On kitprotocol firmware, during discovery time itself ECC204 would have woke up */
-            if ((ECC204 == cfg->devtype) && (ATCA_HID_IFACE == cfg->iface_type || ATCA_UART_IFACE == cfg->iface_type))
+            if (atcab_is_ca2_device(cfg->devtype) && (ATCA_HID_IFACE == cfg->iface_type || ATCA_UART_IFACE == cfg->iface_type))
             {
                 (*device)->device_state = ATCA_DEVICE_STATE_ACTIVE;
             }
@@ -256,6 +256,14 @@ bool atcab_is_ca_device(ATCADeviceType dev_type)
     return (dev_type < TA100) ? true : false;
 }
 
+/** \brief Check whether the device is cryptoauth device
+ *  \return True if device is cryptoauth device or False.
+ */
+bool atcab_is_ca2_device(ATCADeviceType dev_type)
+{
+    return ((dev_type & 0xF0) == 0x20) ? true : false;
+}
+
 /** \brief Check whether the device is Trust Anchor device
  *  \return True if device is Trust Anchor device or False.
  */
@@ -274,7 +282,7 @@ ATCA_STATUS atcab_wakeup(void)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_wakeup(_gDevice);
@@ -301,7 +309,7 @@ ATCA_STATUS atcab_idle(void)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_idle(_gDevice);
@@ -328,7 +336,7 @@ ATCA_STATUS atcab_sleep(void)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_sleep(_gDevice);
@@ -362,7 +370,7 @@ ATCA_STATUS atcab_get_zone_size(uint8_t zone, uint16_t slot, size_t* size)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_get_zone_size(_gDevice, zone, slot,  size);
@@ -398,7 +406,7 @@ ATCA_STATUS atcab_aes(uint8_t mode, uint16_t key_id, const uint8_t* aes_in, uint
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if defined(ATCA_ATECC608_SUPPORT)
         status = calib_aes(_gDevice, mode, key_id, aes_in, aes_out);
@@ -432,7 +440,7 @@ ATCA_STATUS atcab_aes_encrypt_ext(ATCADevice device, uint16_t key_id, uint8_t ke
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type_ext(device);
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if defined(ATCA_ATECC608_SUPPORT)
         status = calib_aes_encrypt(device, key_id, key_block, plaintext, ciphertext);
@@ -484,7 +492,7 @@ ATCA_STATUS atcab_aes_decrypt_ext(ATCADevice device, uint16_t key_id, uint8_t ke
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type_ext(device);
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if defined(ATCA_ATECC608_SUPPORT)
         status = calib_aes_decrypt(device, key_id, key_block, ciphertext, plaintext);
@@ -534,7 +542,7 @@ ATCA_STATUS atcab_aes_gfm(const uint8_t* h, const uint8_t* input, uint8_t* outpu
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if defined(ATCA_ATECC608_SUPPORT)
         status = calib_aes_gfm(_gDevice, h, input, output);
@@ -571,7 +579,7 @@ ATCA_STATUS atcab_aes_gcm_init(atca_aes_gcm_ctx_t* ctx, uint16_t key_id, uint8_t
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_aes_gcm_init(_gDevice, ctx, key_id, key_block, iv, iv_size);
@@ -614,7 +622,7 @@ ATCA_STATUS atcab_aes_gcm_init_rand(atca_aes_gcm_ctx_t* ctx, uint16_t key_id, ui
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_aes_gcm_init_rand(_gDevice, ctx, key_id, key_block, rand_size, free_field, free_field_size, iv);
@@ -650,7 +658,7 @@ ATCA_STATUS atcab_aes_gcm_aad_update(atca_aes_gcm_ctx_t* ctx, const uint8_t* aad
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_aes_gcm_aad_update(_gDevice, ctx, aad, aad_size);
@@ -683,7 +691,7 @@ ATCA_STATUS atcab_aes_gcm_encrypt_update(atca_aes_gcm_ctx_t* ctx, const uint8_t*
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_aes_gcm_encrypt_update(_gDevice, ctx, plaintext, plaintext_size, ciphertext);
@@ -713,7 +721,7 @@ ATCA_STATUS atcab_aes_gcm_encrypt_finish(atca_aes_gcm_ctx_t* ctx, uint8_t* tag, 
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_aes_gcm_encrypt_finish(_gDevice, ctx, tag, tag_size);
@@ -746,7 +754,7 @@ ATCA_STATUS atcab_aes_gcm_decrypt_update(atca_aes_gcm_ctx_t* ctx, const uint8_t*
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_aes_gcm_decrypt_update(_gDevice, ctx, ciphertext, ciphertext_size, plaintext);
@@ -777,7 +785,7 @@ ATCA_STATUS atcab_aes_gcm_decrypt_finish(atca_aes_gcm_ctx_t* ctx, const uint8_t*
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_aes_gcm_decrypt_finish(_gDevice, ctx, tag, tag_size, is_verified);
@@ -813,7 +821,7 @@ ATCA_STATUS atcab_checkmac(uint8_t mode, uint16_t key_id, const uint8_t* challen
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_checkmac(_gDevice, mode, key_id, challenge, response, other_data);
@@ -845,7 +853,7 @@ ATCA_STATUS atcab_counter(uint8_t mode, uint16_t counter_id, uint32_t* counter_v
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_counter(_gDevice, mode, counter_id, counter_value);
@@ -875,7 +883,7 @@ ATCA_STATUS atcab_counter_increment(uint16_t counter_id, uint32_t* counter_value
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_counter_increment(_gDevice, counter_id, counter_value);
@@ -904,7 +912,7 @@ ATCA_STATUS atcab_counter_read(uint16_t counter_id, uint32_t* counter_value)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_counter_read(_gDevice, counter_id, counter_value);
@@ -942,7 +950,7 @@ ATCA_STATUS atcab_derivekey(uint8_t mode, uint16_t key_id, const uint8_t* mac)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_derivekey(_gDevice, mode, key_id, mac);
@@ -980,7 +988,7 @@ ATCA_STATUS atcab_ecdh_base(uint8_t mode, uint16_t key_id, const uint8_t* public
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #ifdef ATCA_ECC_SUPPORT
         status = calib_ecdh_base(_gDevice, mode, key_id, public_key, pms, out_nonce);
@@ -1014,7 +1022,7 @@ ATCA_STATUS atcab_ecdh(uint16_t key_id, const uint8_t* public_key, uint8_t* pms)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #ifdef ATCA_ECC_SUPPORT
         status = calib_ecdh(_gDevice, key_id, public_key, pms);
@@ -1061,7 +1069,7 @@ ATCA_STATUS atcab_ecdh_enc(uint16_t key_id, const uint8_t* public_key, uint8_t* 
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #ifdef ATCA_ECC_SUPPORT
 #ifdef ATCA_USE_CONSTANT_HOST_NONCE
@@ -1100,7 +1108,7 @@ ATCA_STATUS atcab_ecdh_ioenc(uint16_t key_id, const uint8_t* public_key, uint8_t
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #ifdef ATCA_ATECC608_SUPPORT
         status = calib_ecdh_ioenc(_gDevice, key_id, public_key, pms, io_key);
@@ -1135,7 +1143,7 @@ ATCA_STATUS atcab_ecdh_tempkey(const uint8_t* public_key, uint8_t* pms)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #ifdef ATCA_ATECC608_SUPPORT
         status = calib_ecdh_tempkey(_gDevice, public_key, pms);
@@ -1171,7 +1179,7 @@ ATCA_STATUS atcab_ecdh_tempkey_ioenc(const uint8_t* public_key, uint8_t* pms, co
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #ifdef ATCA_ATECC608_SUPPORT
         status = calib_ecdh_tempkey_ioenc(_gDevice, public_key, pms, io_key);
@@ -1207,7 +1215,7 @@ ATCA_STATUS atcab_gendig(uint8_t zone, uint16_t key_id, const uint8_t* other_dat
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_gendig(_gDevice, zone, key_id, other_data, other_data_size);
@@ -1249,7 +1257,7 @@ ATCA_STATUS atcab_genkey_base(uint8_t mode, uint16_t key_id, const uint8_t* othe
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_genkey_base(_gDevice, mode, key_id, other_data, public_key);
@@ -1284,7 +1292,7 @@ ATCA_STATUS atcab_genkey(uint16_t key_id, uint8_t* public_key)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_genkey(_gDevice, key_id, public_key);
@@ -1319,7 +1327,7 @@ ATCA_STATUS atcab_get_pubkey_ext(ATCADevice device, uint16_t key_id, uint8_t* pu
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type_ext(device);
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_get_pubkey(device, key_id, public_key);
@@ -1374,7 +1382,7 @@ ATCA_STATUS atcab_hmac(uint8_t mode, uint16_t key_id, uint8_t* digest)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if defined(ATCA_ATSHA204A_SUPPORT) || defined(ATCA_ATECC108A_SUPPORT) || defined(ATCA_ATECC508A_SUPPORT)
         status = calib_hmac(_gDevice, mode, key_id, digest);
@@ -1411,7 +1419,7 @@ ATCA_STATUS atcab_info_base(uint8_t mode, uint16_t param2, uint8_t* out_data)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_info_base(_gDevice, mode, param2, out_data);
@@ -1437,7 +1445,7 @@ ATCA_STATUS atcab_info(uint8_t* revision)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_info(_gDevice, revision);
@@ -1448,6 +1456,61 @@ ATCA_STATUS atcab_info(uint8_t* revision)
 #if ATCA_TA_SUPPORT
         status = talib_info_compat(_gDevice, revision);
 #endif
+    }
+    else
+    {
+        status = ATCA_NOT_INITIALIZED;
+    }
+    return status;
+}
+
+/** \brief Use the Info command to get the lock status
+ *  \param[in]   param2     selects the zone and slot
+ *  \param[out]  is_locked  returns lock status here
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcab_info_lock_status(uint16_t param2, uint8_t *is_locked)
+{
+    ATCA_STATUS status = ATCA_UNIMPLEMENTED;
+    ATCADeviceType dev_type = atcab_get_device_type();
+
+    if (atcab_is_ca2_device(dev_type))
+    {
+#if ATCA_CA2_SUPPORT
+        status = calib_info_lock_status(_gDevice, param2, is_locked);
+#endif
+    }
+    else if (atcab_is_ta_device(dev_type))
+    {
+        status = ATCA_UNIMPLEMENTED;
+    }
+    else
+    {
+        status = ATCA_NOT_INITIALIZED;
+    }
+    return status;
+}
+
+/** \brief Use the Info command to get the chip status
+ *  \param[out]  chip status  returns chip status here
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcab_info_chip_status(uint8_t* chip_status)
+{
+    ATCA_STATUS status = ATCA_UNIMPLEMENTED;
+    ATCADeviceType dev_type = atcab_get_device_type();
+
+    if (atcab_is_ca2_device(dev_type))
+    {
+#if ATCA_CA2_SUPPORT
+        status = calib_info_chip_status(_gDevice, chip_status);
+#endif
+    }
+    else if (atcab_is_ta_device(dev_type))
+    {
+        status = ATCA_UNIMPLEMENTED;
     }
     else
     {
@@ -1470,7 +1533,7 @@ ATCA_STATUS atcab_info_set_latch(bool state)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_info_set_latch(_gDevice, state);
@@ -1499,7 +1562,7 @@ ATCA_STATUS atcab_info_get_latch(bool* state)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_info_get_latch(_gDevice, state);
@@ -1548,7 +1611,7 @@ ATCA_STATUS atcab_kdf(uint8_t mode, uint16_t key_id, const uint32_t details, con
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_kdf(_gDevice, mode, key_id, details, message, out_data, out_nonce);
@@ -1583,7 +1646,7 @@ ATCA_STATUS atcab_lock(uint8_t mode, uint16_t summary_crc)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_lock(_gDevice, mode, summary_crc);
@@ -1611,7 +1674,7 @@ ATCA_STATUS atcab_lock_config_zone(void)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_lock_config_zone(_gDevice);
@@ -1645,7 +1708,7 @@ ATCA_STATUS atcab_lock_config_zone_crc(uint16_t summary_crc)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_lock_config_zone_crc(_gDevice, summary_crc);
@@ -1676,7 +1739,7 @@ ATCA_STATUS atcab_lock_data_zone(void)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_lock_data_zone(_gDevice);
@@ -1710,7 +1773,7 @@ ATCA_STATUS atcab_lock_data_zone_crc(uint16_t summary_crc)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_lock_data_zone_crc(_gDevice, summary_crc);
@@ -1742,7 +1805,7 @@ ATCA_STATUS atcab_lock_data_slot(uint16_t slot)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_lock_data_slot(_gDevice, slot);
@@ -1783,7 +1846,7 @@ ATCA_STATUS atcab_mac(uint8_t mode, uint16_t key_id, const uint8_t* challenge, u
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_mac(_gDevice, mode, key_id, challenge, digest);
@@ -1827,7 +1890,7 @@ ATCA_STATUS atcab_nonce_base(uint8_t mode, uint16_t zero, const uint8_t* num_in,
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_nonce_base(_gDevice, mode, zero, num_in, rand_out);
@@ -1856,7 +1919,7 @@ ATCA_STATUS atcab_nonce(const uint8_t* num_in)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_nonce(_gDevice, num_in);
@@ -1895,7 +1958,7 @@ ATCA_STATUS atcab_nonce_load(uint8_t target, const uint8_t* num_in, uint16_t num
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_nonce_load(_gDevice, target, num_in, num_in_size);
@@ -1928,7 +1991,7 @@ ATCA_STATUS atcab_nonce_rand(const uint8_t* num_in, uint8_t* rand_out)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_nonce_rand(_gDevice, num_in, rand_out);
@@ -1957,7 +2020,7 @@ ATCA_STATUS atcab_challenge(const uint8_t* num_in)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_challenge(_gDevice, num_in);
@@ -1990,7 +2053,7 @@ ATCA_STATUS atcab_challenge_seed_update(const uint8_t* num_in, uint8_t* rand_out
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_challenge_seed_update(_gDevice, num_in, rand_out);
@@ -2034,7 +2097,7 @@ ATCA_STATUS atcab_priv_write(uint16_t key_id, const uint8_t priv_key[36], uint16
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #ifdef ATCA_ECC_SUPPORT
 #ifdef ATCA_USE_CONSTANT_HOST_NONCE
@@ -2072,7 +2135,7 @@ ATCA_STATUS atcab_random_ext(ATCADevice device, uint8_t* rand_out)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type_ext(device);
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_random(device, rand_out);
@@ -2129,7 +2192,7 @@ ATCA_STATUS atcab_read_zone(uint8_t zone, uint16_t slot, uint8_t block, uint8_t 
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_read_zone_ext(_gDevice, zone, slot, block, offset, data, len);
@@ -2161,7 +2224,7 @@ ATCA_STATUS atcab_is_locked(uint8_t zone, bool* is_locked)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_is_locked_ext(_gDevice, zone, is_locked);
@@ -2201,7 +2264,7 @@ ATCA_STATUS atcab_is_config_locked(bool* is_locked)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_is_locked_ext(_gDevice, LOCK_ZONE_CONFIG, is_locked);
@@ -2232,7 +2295,7 @@ ATCA_STATUS atcab_is_data_locked(bool* is_locked)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_is_locked_ext(_gDevice, LOCK_ZONE_DATA, is_locked);
@@ -2262,7 +2325,7 @@ ATCA_STATUS atcab_is_slot_locked(uint16_t slot, bool* is_locked)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_is_slot_locked(_gDevice, slot, is_locked);
@@ -2298,7 +2361,7 @@ ATCA_STATUS atcab_is_private_ext(ATCADevice device, uint16_t slot, bool* is_priv
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type_ext(device);
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_is_private(_gDevice, slot, is_private);
@@ -2330,7 +2393,7 @@ ATCA_STATUS atcab_read_bytes_zone_ext(ATCADevice device, uint8_t zone, uint16_t 
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type_ext(device);
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_read_bytes_zone_ext(device, zone, slot, offset, data, length);
@@ -2381,7 +2444,7 @@ ATCA_STATUS atcab_read_serial_number(uint8_t* serial_number)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_read_serial_number_ext(_gDevice, serial_number);
@@ -2422,7 +2485,7 @@ ATCA_STATUS atcab_read_pubkey_ext(ATCADevice device, uint16_t slot, uint8_t* pub
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type_ext(device);
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_read_pubkey(_gDevice, slot, public_key);
@@ -2510,7 +2573,7 @@ ATCA_STATUS atcab_read_config_zone(uint8_t* config_data)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_read_config_zone(_gDevice, config_data);
@@ -2548,7 +2611,7 @@ ATCA_STATUS atcab_cmp_config_zone(uint8_t* config_data, bool* same_config)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_cmp_config_zone(_gDevice, config_data, same_config);
@@ -2714,9 +2777,9 @@ ATCA_STATUS atcab_selftest(uint8_t mode, uint16_t param2, uint8_t* result)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#ifdef ATCA_ATECC608_SUPPORT
+#if defined(ATCA_ATECC608_SUPPORT) || ATCA_CA2_SUPPORT
         status = calib_selftest(_gDevice, mode, param2, result);
 #endif
     }
@@ -2762,7 +2825,7 @@ ATCA_STATUS atcab_sha_base(uint8_t mode, uint16_t length, const uint8_t* data_in
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_sha_base(_gDevice, mode, length, data_in, data_out, data_out_size);
@@ -2789,7 +2852,7 @@ ATCA_STATUS atcab_sha_start(void)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_sha_start(_gDevice);
@@ -2820,7 +2883,7 @@ ATCA_STATUS atcab_sha_update(const uint8_t* message)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_sha_update(_gDevice, message);
@@ -2854,7 +2917,7 @@ ATCA_STATUS atcab_sha_end(uint8_t* digest, uint16_t length, const uint8_t* messa
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_sha_end(_gDevice, digest, length, message);
@@ -2956,7 +3019,7 @@ ATCA_STATUS atcab_sha(uint16_t length, const uint8_t* message, uint8_t* digest)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_sha(_gDevice, length, message, digest);
@@ -2988,7 +3051,7 @@ ATCA_STATUS atcab_hw_sha2_256(const uint8_t* data, size_t data_size, uint8_t* di
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_hw_sha2_256(_gDevice, data, data_size, digest);
@@ -3019,7 +3082,7 @@ ATCA_STATUS atcab_hw_sha2_256_init(atca_sha256_ctx_t* ctx)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_hw_sha2_256_init(_gDevice, ctx);
@@ -3050,7 +3113,7 @@ ATCA_STATUS atcab_hw_sha2_256_update(atca_sha256_ctx_t* ctx, const uint8_t* data
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_hw_sha2_256_update(_gDevice, ctx, data, data_size);
@@ -3080,7 +3143,7 @@ ATCA_STATUS atcab_hw_sha2_256_finish(atca_sha256_ctx_t* ctx, uint8_t* digest)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_hw_sha2_256_finish(_gDevice, ctx, digest);
@@ -3111,7 +3174,7 @@ ATCA_STATUS atcab_sha_hmac_init(atca_hmac_sha256_ctx_t* ctx, uint16_t key_slot)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_sha_hmac_init(_gDevice, ctx, key_slot);
@@ -3142,7 +3205,7 @@ ATCA_STATUS atcab_sha_hmac_update(atca_hmac_sha256_ctx_t* ctx, const uint8_t* da
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_sha_hmac_update(_gDevice, ctx, data, data_size);
@@ -3176,7 +3239,7 @@ ATCA_STATUS atcab_sha_hmac_finish(atca_hmac_sha256_ctx_t* ctx, uint8_t* digest, 
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_sha_hmac_finish(_gDevice, ctx, digest, target);
@@ -3213,7 +3276,7 @@ ATCA_STATUS atcab_sha_hmac_ext(ATCADevice device, const uint8_t* data, size_t da
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type_ext(device);
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_sha_hmac(device, data, data_size, key_slot, digest, target);
@@ -3270,7 +3333,7 @@ ATCA_STATUS atcab_sign_base(uint8_t mode, uint16_t key_id, uint8_t* signature)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #ifdef ATCA_ECC_SUPPORT
         status = calib_sign_base(_gDevice, mode, key_id, signature);
@@ -3308,9 +3371,9 @@ ATCA_STATUS atcab_sign_ext(ATCADevice device, uint16_t key_id, const uint8_t* ms
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type_ext(device);
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_ECC_SUPPORT
+#if ATCA_ECC_SUPPORT || defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT)
         status = calib_sign_ext(device, key_id, msg, signature);
 #endif
     }
@@ -3846,7 +3909,7 @@ ATCA_STATUS atcab_write(uint8_t zone, uint16_t address, const uint8_t* value, co
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_write_ext(_gDevice, zone, address, value, mac);
@@ -3882,7 +3945,7 @@ ATCA_STATUS atcab_write_zone(uint8_t zone, uint16_t slot, uint8_t block, uint8_t
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_write_zone_ext(_gDevice, zone, slot, block, offset, data, len);
@@ -3906,7 +3969,7 @@ ATCA_STATUS atcab_write_bytes_zone_ext(ATCADevice device, uint8_t zone, uint16_t
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type_ext(device);
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_write_bytes_zone_ext(device, zone, slot, offset_bytes, data, length);
@@ -3966,7 +4029,7 @@ ATCA_STATUS atcab_write_pubkey(uint16_t slot, const uint8_t* public_key)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_write_pubkey(_gDevice, slot, public_key);
@@ -4005,7 +4068,7 @@ ATCA_STATUS atcab_write_config_zone(const uint8_t* config_data)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_write_config_zone_ext(_gDevice, config_data);
@@ -4091,7 +4154,7 @@ ATCA_STATUS atcab_write_config_counter(uint16_t counter_id, uint32_t counter_val
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
         status = calib_write_config_counter_ext(_gDevice, counter_id, counter_value);

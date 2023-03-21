@@ -178,11 +178,10 @@ TEST(atca_cmd_basic_test, sboot_digest_fullstore_encrypted)
 t_test_case_info sboot_basic_test_info[] =
 {
 #ifdef ATCA_ATECC608_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sboot_digest),                     DEVICE_MASK(ATECC608) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sboot_digest_full_encrypted),      DEVICE_MASK(ATECC608) },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sboot_digest_fullstore_encrypted), DEVICE_MASK(ATECC608) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sboot_digest),                     atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sboot_digest_full_encrypted),      atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sboot_digest_fullstore_encrypted), atca_test_cond_ecc608 },
 #endif
-    { (fp_test_case)NULL,                     (uint8_t)0 },                      /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },                      /* Array Termination element*/
 };
 // *INDENT-ON*
-

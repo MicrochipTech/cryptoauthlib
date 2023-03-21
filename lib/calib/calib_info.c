@@ -72,10 +72,10 @@ ATCA_STATUS calib_info_base(ATCADevice device, uint8_t mode, uint16_t param2, ui
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
-            // For ECC204, Lock status and Key valid modes return their status in first byte.
+            // For ECC204,TA010 Lock status and Key valid modes return their status in first byte.
             // So, need to consider 01 as valid response as it presents lock/keyvalid status.
             if (((INFO_MODE_LOCK_STATUS == mode) || (INFO_MODE_KEY_VALID == mode))
-                && (ECC204 == device->mIface.mIfaceCFG->devtype))
+                && (atcab_is_ca2_device(device->mIface.mIfaceCFG->devtype)))
             {
                 if (status == ATCA_CHECKMAC_VERIFY_FAILED)
                 {
@@ -94,7 +94,7 @@ ATCA_STATUS calib_info_base(ATCADevice device, uint8_t mode, uint16_t param2, ui
         if (response && out_data)
         {
             if (((INFO_MODE_LOCK_STATUS == mode) || (INFO_MODE_KEY_VALID == mode))
-                && (ECC204 == device->mIface.mIfaceCFG->devtype))
+                && (atcab_is_ca2_device(device->mIface.mIfaceCFG->devtype)))
             {
                 memcpy(out_data, &packet.data[ATCA_RSP_DATA_IDX], 1);
             }
@@ -180,7 +180,7 @@ ATCA_STATUS calib_info_set_latch(ATCADevice device, bool state)
  *
  *  \param[in]   device      Device context pointer
  *  \param[in]   key_id      ECC private key slot id
- *                           For ECC204, key_id is 0x00
+ *                           For ECC204,TA010 key_id is 0x00
  *  \param[out]  is_valid    return private key is valid or invalid
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
@@ -190,8 +190,8 @@ ATCA_STATUS calib_info_privkey_valid(ATCADevice device, uint16_t key_id, uint8_t
     return calib_info_base(device, INFO_MODE_KEY_VALID, key_id, is_valid);
 }
 
-#ifdef ATCA_ECC204_SUPPORT
-/** \brief Use Info command to ECC204 config/data zone lock status
+#if ATCA_CA2_SUPPORT
+/** \brief Use Info command to ECC204,TA010 config/data zone lock status
  *
  *  \param[in]   device      Device context pointer
  *  \param[in]   param2      selects the zone and slot
@@ -203,4 +203,16 @@ ATCA_STATUS calib_info_lock_status(ATCADevice device, uint16_t param2, uint8_t* 
 {
     return calib_info_base(device, INFO_MODE_LOCK_STATUS, param2, is_locked);
 }
-#endif   /* ATCA_ECC204_SUPPORT */
+
+/** \brief Use Info command to get ECC204,TA010 chip status
+ *
+ *  \param[in]   device      Device context pointer
+ *  \param[out]  chip_status return chip status here
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS calib_info_chip_status(ATCADevice device, uint8_t* chip_status)
+{
+    return calib_info_base(device, INFO_MODE_CHIP_STATUS, (uint16_t)0x00, chip_status);
+}
+#endif

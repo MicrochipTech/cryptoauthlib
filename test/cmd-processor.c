@@ -84,6 +84,9 @@ static t_menu_info mas_menu_info[] =
 #ifdef ATCA_ECC204_SUPPORT
     { "ecc204",    "Set Target Device to ECC204",                   select_device                        },
 #endif
+#ifdef ATCA_TA010_SUPPORT
+    { "ta010",     "Set Target Device to TA010",                    select_device                        },
+#endif
 #ifdef ATCA_ATECC508A_SUPPORT
     { "ecc508",      "Set Target Device to ATECC508A",              select_device                        },
 #endif
@@ -128,6 +131,9 @@ static t_menu_info mas_menu_info[] =
     { "crypto_int", "Run crypto library integration tests",         run_integration_tests               },
 #endif
     { "jwt",        "Run JWT support tests",                        run_jwt_tests                       },
+#if ATCA_CA_SUPPORT
+    { "calib",      "Run calib api tests",                          run_calib_tests                      },
+#endif
 #if ATCA_TA_SUPPORT
     { "config",    "Create testing handles in TA100 device",        talib_configure_device               },
     { "handles",   "Print info for stored handles in TA100 device", talib_config_print_handles           },

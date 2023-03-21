@@ -60,6 +60,7 @@ ATCADeviceType atcab_get_device_type(void);
 uint8_t atcab_get_device_address(ATCADevice device);
 
 bool atcab_is_ca_device(ATCADeviceType dev_type);
+bool atcab_is_ca2_device(ATCADeviceType dev_type);
 bool atcab_is_ta_device(ATCADeviceType dev_type);
 
 #define atcab_get_addr(...)                     calib_get_addr(__VA_ARGS__)
@@ -141,6 +142,8 @@ ATCA_STATUS atcab_hmac(uint8_t mode, uint16_t key_id, uint8_t* digest);
 // Info command functions
 ATCA_STATUS atcab_info_base(uint8_t mode, uint16_t param2, uint8_t* out_data);
 ATCA_STATUS atcab_info(uint8_t* revision);
+ATCA_STATUS atcab_info_lock_status(uint16_t param2, uint8_t *is_locked);
+ATCA_STATUS atcab_info_chip_status(uint8_t* chip_status);
 ATCA_STATUS atcab_info_set_latch(bool state);
 ATCA_STATUS atcab_info_get_latch(bool* state);
 
@@ -165,6 +168,7 @@ ATCA_STATUS atcab_nonce_load(uint8_t target, const uint8_t* num_in, uint16_t num
 ATCA_STATUS atcab_nonce_rand(const uint8_t* num_in, uint8_t* rand_out);
 ATCA_STATUS atcab_challenge(const uint8_t* num_in);
 ATCA_STATUS atcab_challenge_seed_update(const uint8_t* num_in, uint8_t* rand_out);
+ATCA_STATUS atcab_nonce_gen_session_key(uint16_t param2, const uint8_t* num_in, uint8_t* rand_out);
 
 // PrivWrite command functions
 #if defined(ATCA_USE_CONSTANT_HOST_NONCE)

@@ -29,6 +29,13 @@
 
 #ifdef ATCA_ECC_SUPPORT
 
+TEST_CONDITION(atca_cmd_basic_test, gendig_shared_nonce)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return ((ATECC508A == dev_type) || (ATECC608 == dev_type));
+}
+
 TEST(atca_cmd_basic_test, gendig_shared_nonce)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
@@ -266,6 +273,13 @@ TEST(atca_cmd_basic_test, gendig_counter)
     TEST_ASSERT_EQUAL_MEMORY(host_response, client_response, sizeof(host_response));
 }
 
+TEST_CONDITION(atca_cmd_basic_test, gendig_config_otp_data)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return (atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type));
+}
+
 TEST(atca_cmd_basic_test, gendig_config_otp_data)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
@@ -359,11 +373,12 @@ TEST(atca_cmd_basic_test, gendig_config_otp_data)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info gendig_basic_test_info[] =
 {
-        { REGISTER_TEST_CASE(atca_cmd_basic_test, gendig_config_otp_data),  DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC  },
-        { REGISTER_TEST_CASE(atca_cmd_basic_test, gendig_counter),          DEVICE_MASK(ATECC608) },
-        { REGISTER_TEST_CASE(atca_cmd_basic_test, gendig_keyconfig),        DEVICE_MASK(ATECC608) },
-        { REGISTER_TEST_CASE(atca_cmd_basic_test, gendig_shared_nonce),     DEVICE_MASK(ATECC508A) | DEVICE_MASK(ATECC608) },
-        { (fp_test_case)NULL,                     (uint8_t)0 }, /* Array Termination element*/
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, gendig_config_otp_data),  REGISTER_TEST_CONDITION(atca_cmd_basic_test, gendig_config_otp_data) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, gendig_counter),          atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, gendig_keyconfig),        atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, gendig_shared_nonce),     REGISTER_TEST_CONDITION(atca_cmd_basic_test, gendig_shared_nonce) },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL }, 
 };
 // *INDENT-ON*
 #else

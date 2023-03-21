@@ -160,7 +160,7 @@ int do_randoms(int argc, char* argv[])
     ((void)argc);
     ((void)argv);
 
-    if ((gCfg->devtype == ATSHA206A) || (ECC204 == gCfg->devtype))
+    if ((gCfg->devtype == ATSHA206A) || (atcab_is_ca2_device(gCfg->devtype)))
     {
         printf("Selected Device doesn't support random command\r\n");
     }

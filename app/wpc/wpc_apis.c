@@ -220,7 +220,7 @@ ATCA_STATUS wpc_msg_digests(
             if (ATCA_SUCCESS == wpccert_get_slot_info(&handle, NULL, slot))
             {
                 if (ATCA_SUCCESS != (status = atcab_read_bytes_zone_ext(device, ATCA_ZONE_DATA, handle, 0,
-                                                                    digest, ATCA_SHA256_DIGEST_SIZE+1)))
+                                                                    digest, ATCA_SHA256_DIGEST_SIZE)))
                 {
                     ATCA_TRACE(status, "atcab_read_bytes_zone execution failed");
                     return wpc_msg_error(response, resp_len, WPC_ERROR_UNSPECIFIED, 0);
@@ -419,7 +419,7 @@ ATCA_STATUS wpc_auth_signature(
 {
     ATCA_STATUS status;
 
-    uint8_t TBSAuth_data[53];
+    uint8_t TBSAuth_data[54];
     uint8_t tbs_digest[ATCA_SHA_DIGEST_SIZE];
     uint8_t *data = TBSAuth_data;
 

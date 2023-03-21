@@ -1,6 +1,6 @@
 /**
  * \file
- * \brief Unity tests for the cryptoauthlib Verify Command
+ * \brief calib info tests
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
@@ -25,9 +25,9 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "test_atcab.h"
+#include "test_calib.h"
 
-TEST(atca_cmd_basic_test, info)
+TEST(calib, info)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t revision[4];
@@ -48,7 +48,7 @@ TEST(atca_cmd_basic_test, info)
 }
 
 #if ATCA_CA2_SUPPORT
-TEST(atca_cmd_basic_test, info_lock_status)
+TEST(calib, info_lock_status)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t is_locked, slot = 1;
@@ -59,7 +59,7 @@ TEST(atca_cmd_basic_test, info_lock_status)
 
     // is_locked = 0x00 means unlocked
     // is_locked = 0x01 means locked
-    status = atcab_info_lock_status(param2, &is_locked);
+    status = calib_info_lock_status(atcab_get_device(), param2, &is_locked);
     TEST_ASSERT_SUCCESS(status);
 
     // lockstatus of Data zone
@@ -67,30 +67,32 @@ TEST(atca_cmd_basic_test, info_lock_status)
 
     // is_locked = 0x00 means unlocked
     // is_locked = 0x01 means locked
-    status = atcab_info_lock_status(param2, &is_locked);
+    status = calib_info_lock_status(atcab_get_device(), param2, &is_locked);
     TEST_ASSERT_SUCCESS(status);
 }
 
-TEST(atca_cmd_basic_test, info_chip_status)
+TEST(calib, info_chip_status)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t chip_status[4];
 
     // chip_status[0] = 0x00 means No Deletion 
     // chip_status[0] = 0xFF means Deletion has completed 
-    status = atcab_info_chip_status(chip_status);
+    status = calib_info_chip_status(atcab_get_device(), chip_status);
     TEST_ASSERT_SUCCESS(status);
 }
 #endif
 
 // *INDENT-OFF* - Preserve formatting
-t_test_case_info info_basic_test_info[] =
+t_test_case_info calib_info_tests[] =
 {
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, info), NULL },
+    { REGISTER_TEST_CASE(calib, info),              NULL},
 #if ATCA_CA2_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, info_lock_status), atca_test_cond_ca2 },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, info_chip_status), atca_test_cond_ca2 },
+    { REGISTER_TEST_CASE(calib, info_lock_status),  atca_test_cond_ca2},
+    { REGISTER_TEST_CASE(calib, info_chip_status),  atca_test_cond_ca2},
 #endif
-    { (fp_test_case)NULL,                     (uint8_t)0 },/* Array Termination element*/
+
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
 };
 // *INDENT-ON*

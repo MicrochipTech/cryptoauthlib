@@ -212,13 +212,14 @@ CK_RV pkcs11_encrypt(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulD
         case CKM_AES_CBC:
             {
                 size_t length = *pulEncryptedDataLen;
+                size_t final = 0;
                 if (ATCA_SUCCESS == (status = atcab_aes_cbc_encrypt_update(&pSession->active_mech_data.cbc, pData, ulDataLen, pEncryptedData, &length)))
                 {
                     pEncryptedData += length;
-                    length = *pulEncryptedDataLen - length;
-                    status = atcab_aes_cbc_encrypt_finish(&pSession->active_mech_data.cbc, pEncryptedData, &length, padding);
+                    final = *pulEncryptedDataLen - length;
+                    status = atcab_aes_cbc_encrypt_finish(&pSession->active_mech_data.cbc, pEncryptedData, &final, padding);
                 }
-                *pulEncryptedDataLen = length;
+                *pulEncryptedDataLen = length + final;
             }
             break;
         case CKM_AES_GCM:
@@ -623,13 +624,14 @@ CK_RV pkcs11_decrypt
         case CKM_AES_CBC:
             {
                 size_t length = *pulDataLen;
+                size_t final = 0;
                 if (ATCA_SUCCESS == (status = atcab_aes_cbc_decrypt_update(&pSession->active_mech_data.cbc, pEncryptedData, ulEncryptedDataLen, pData, &length)))
                 {
                     pData += length;
-                    length = *pulDataLen - length;
-                    status = atcab_aes_cbc_decrypt_finish(&pSession->active_mech_data.cbc, pData, &length, padding);
+                    final = *pulDataLen - length;
+                    status = atcab_aes_cbc_decrypt_finish(&pSession->active_mech_data.cbc, pData, &final, padding);
                 }
-                *pulDataLen = length;
+                *pulDataLen = length + final;
             }
             break;
         case CKM_AES_GCM:

@@ -138,28 +138,6 @@ ATCA_STATUS calib_read_serial_number(ATCADevice device, uint8_t* serial_number)
 
     return status;
 }
-
-/** \brief Executes Read command, which reads the 9 byte serial number of the
- *          device from the config zone.
- *
- *  \param[in]  device         Device context pointer
- *  \param[out] serial_number  9 byte serial number is returned here.
- *
- *  \return ATCA_SUCCESS on success, otherwise an error code.
- */
-ATCA_STATUS calib_read_serial_number_ext(ATCADevice device, uint8_t* serial_number)
-{
-#if CALIB_ECC204_EN
-    if (ECC204 == atcab_get_device_type_ext(device))
-    {
-        return calib_ecc204_read_serial_number(device, serial_number);
-    }
-    else
-#endif
-    {
-        return calib_read_serial_number(device, serial_number);
-    }
-}
 #endif
 
 #if CALIB_READ_ENC_EN
@@ -398,37 +376,6 @@ ATCA_STATUS calib_read_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot
     return status;
 }
 
-/** \brief Used to read an arbitrary number of bytes from any zone configured
- *          for clear reads.
- *
- * This function will issue the Read command as many times as is required to
- * read the requested data.
- *
- *  \param[in]  device  Device context pointer
- *  \param[in]  zone    Zone to read data from. Option are ATCA_ZONE_CONFIG(0),
- *                      ATCA_ZONE_OTP(1), or ATCA_ZONE_DATA(2).
- *  \param[in]  slot    Slot number to read from if zone is ATCA_ZONE_DATA(2).
- *                      Ignored for all other zones.
- *  \param[in]  offset  Byte offset within the zone to read from.
- *  \param[out] data    Read data is returned here.
- *  \param[in]  length  Number of bytes to read starting from the offset.
- *
- *  \return ATCA_SUCCESS on success, otherwise an error code.
- */
-ATCA_STATUS calib_read_bytes_zone_ext(ATCADevice device, uint8_t zone, uint16_t slot, size_t offset, uint8_t *data, size_t length)
-{
-#if CALIB_ECC204_EN
-    if (ECC204 == atcab_get_device_type_ext(device))
-    {
-        return calib_ecc204_read_bytes_zone(device, zone, slot, offset, data, length);
-    }
-    else
-#endif
-    {
-        return calib_read_bytes_zone(device, zone, slot, offset, data, length);
-    }
-}
-
 /** \brief Compares a specified configuration zone with the configuration zone
  *          currently on the SHA device.
  *
@@ -514,9 +461,58 @@ bool calib_ecc608_compare_config(
     return same;
 }
 
+/** \brief Executes Read command to read a 64 byte ECDSA P256 signature from a
+ *          slot configured for clear reads.
+ *
+ *  \param[in]  device  Device context pointer
+ *  \param[in]  slot    Slot number to read from. Only slots 8 to 15 are large
+ *                      enough for a signature.
+ *  \param[out] sig     Signature will be returned here (64 bytes). Format will be
+ *                      the 32 byte R and S big-endian integers concatenated.
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS calib_read_sig(ATCADevice device, uint16_t slot, uint8_t* sig)
+{
+    ATCA_STATUS status = ATCA_GEN_FAIL;
+
+    do
+    {
+        // Check the value of the slot
+        if (sig == NULL)
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
+        }
+
+        if (slot < 8 || slot > 15)
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid slot received");
+            break;
+        }
+
+        // Read the first block
+        if ((status = calib_read_zone_ext(device, ATCA_ZONE_DATA, slot, 0, 0, &sig[0], ATCA_BLOCK_SIZE)) != ATCA_SUCCESS)
+        {
+            ATCA_TRACE(status, "calib_read_zone - failed");
+            break;
+        }
+
+        // Read the second block
+        if ((status = calib_read_zone_ext(device, ATCA_ZONE_DATA, slot, 1, 0, &sig[ATCA_BLOCK_SIZE], ATCA_BLOCK_SIZE)) != ATCA_SUCCESS)
+        {
+            ATCA_TRACE(status, "calib_read_zone - failed");
+            break;
+        }
+    }
+    while (0);
+
+    return status;
+}
+
 #endif /* CALIB_READ_EN */
 
-#if CALIB_READ_ECC204_EN
+#if CALIB_READ_CA2_EN
 /** \brief Use Read command to reads words 16 bytes from one of the slots in the EEPROM Configuration
  *         zone or 32 bytes in Data zone.
  *
@@ -531,7 +527,7 @@ bool calib_ecc608_compare_config(
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code
  */
-ATCA_STATUS calib_ecc204_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint8_t block, size_t offset,
+ATCA_STATUS calib_ca2_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint8_t block, size_t offset,
                                    uint8_t* data, uint8_t len)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
@@ -541,14 +537,14 @@ ATCA_STATUS calib_ecc204_read_zone(ATCADevice device, uint8_t zone, uint16_t slo
 
     (void)offset;
 
-    read_zone = (zone == ATCA_ZONE_CONFIG) ? ATCA_ECC204_ZONE_CONFIG : ATCA_ECC204_ZONE_DATA;
+    read_zone = (zone == ATCA_ZONE_CONFIG) ? ATCA_ZONE_CA2_CONFIG : ATCA_ZONE_CA2_DATA;
 
 
     if ((NULL == device) || (NULL == data))
     {
         status = ATCA_TRACE(ATCA_BAD_PARAM, "Encountered Null pointer");
     }
-    else if (ATCA_ECC204_ZONE_DATA == read_zone)
+    else if (ATCA_ZONE_CA2_DATA == read_zone)
     {
         if (32 != len)
         {
@@ -559,7 +555,7 @@ ATCA_STATUS calib_ecc204_read_zone(ATCADevice device, uint8_t zone, uint16_t slo
             status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid slot number received");
         }
     }
-    else if (ATCA_ECC204_ZONE_CONFIG == read_zone)
+    else if (ATCA_ZONE_CA2_CONFIG == read_zone)
     {
         if (16 != len)
         {
@@ -569,7 +565,7 @@ ATCA_STATUS calib_ecc204_read_zone(ATCADevice device, uint8_t zone, uint16_t slo
 
     if (ATCA_SUCCESS == status)
     {
-        if (ATCA_SUCCESS != (status = calib_ecc204_get_addr(read_zone, slot, block, 0, &addr)))
+        if (ATCA_SUCCESS != (status = calib_ca2_get_addr(read_zone, slot, block, 0, &addr)))
         {
             ATCA_TRACE(status, "Address Encoding failed");
         }
@@ -605,19 +601,19 @@ ATCA_STATUS calib_ecc204_read_zone(ATCADevice device, uint8_t zone, uint16_t slo
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code
  */
-ATCA_STATUS calib_ecc204_read_config_zone(ATCADevice device, uint8_t* config_data)
+ATCA_STATUS calib_ca2_read_config_zone(ATCADevice device, uint8_t* config_data)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t slot = 0;
 
     while (slot <= 3)
     {
-        if (ATCA_SUCCESS != (status = calib_ecc204_read_zone(device, ATCA_ZONE_CONFIG,
+        if (ATCA_SUCCESS != (status = calib_ca2_read_zone(device, ATCA_ZONE_CONFIG,
                                                              slot, 0, 0,
-                                                             &config_data[ATCA_ECC204_CONFIG_SLOT_SIZE * slot],
-                                                             ATCA_ECC204_CONFIG_SLOT_SIZE)))
+                                                             &config_data[ATCA_CA2_CONFIG_SLOT_SIZE * slot],
+                                                             ATCA_CA2_CONFIG_SLOT_SIZE)))
         {
-            ATCA_TRACE(status, "calib_ecc204_read_zone - failed");
+            ATCA_TRACE(status, "calib_ca2_read_zone - failed");
             break;
         }
         slot += 1; // Increment slot to read next slot
@@ -633,14 +629,14 @@ ATCA_STATUS calib_ecc204_read_config_zone(ATCADevice device, uint8_t* config_dat
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code
  */
-ATCA_STATUS calib_ecc204_read_serial_number(ATCADevice device, uint8_t* serial_number)
+ATCA_STATUS calib_ca2_read_serial_number(ATCADevice device, uint8_t* serial_number)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
-    uint8_t read_buf[ATCA_ECC204_CONFIG_SLOT_SIZE];
+    uint8_t read_buf[ATCA_CA2_CONFIG_SLOT_SIZE];
 
 
-    status = calib_ecc204_read_zone(device, ATCA_ZONE_CONFIG, 0, 0, 0, read_buf,
-                                    ATCA_ECC204_CONFIG_SLOT_SIZE);
+    status = calib_ca2_read_zone(device, ATCA_ZONE_CONFIG, 0, 0, 0, read_buf,
+                                    ATCA_CA2_CONFIG_SLOT_SIZE);
 
     if (ATCA_SUCCESS == status)
     {
@@ -667,48 +663,76 @@ ATCA_STATUS calib_ecc204_read_serial_number(ATCADevice device, uint8_t* serial_n
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS calib_ecc204_read_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot,
+ATCA_STATUS calib_ca2_read_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot,
                                          size_t offset, uint8_t* data, size_t length)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
-    uint8_t block_size = (zone == ATCA_ZONE_CONFIG) ? ATCA_ECC204_CONFIG_SLOT_SIZE : ATCA_BLOCK_SIZE;
-    uint8_t no_of_blocks;
-    uint8_t data_idx = 0;
+    uint8_t data_set_size = (ATCA_ZONE_DATA == zone) ? ATCA_BLOCK_SIZE : ATCA_CA2_CONFIG_SLOT_SIZE;
     size_t cur_block = 0;
+    size_t data_idx = 0;
+    uint8_t read_buf[ATCA_BLOCK_SIZE];
+    size_t read_buf_idx = 0, copy_length = 0, read_offset = 0;
 
-    if ((NULL == device) || (NULL == data))
-    {
-        return ATCA_TRACE(ATCA_BAD_PARAM, "Encountered NULL pointer");
-    }
-    else if ((ATCA_ZONE_DATA == zone) && (((length > 64) && (2 == slot)) ||
-                                          ((length > 320) && (1 == slot)) || (3 == slot) || (0 == slot)))
-    {
-        return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid parameter received");
-    }
-    else if (ATCA_ZONE_CONFIG == zone)
-    {
-        return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid parameter received");
-    }
-    else if (0 == length)
+    if (0 == length)
     {
         return ATCA_SUCCESS;
     }
-
-    cur_block = offset / block_size;
-    no_of_blocks = (uint8_t)(length / block_size);
-    while (no_of_blocks--)
+    else if ((NULL == device) || (NULL == data))
     {
-        if (ATCA_SUCCESS != (status = calib_ecc204_read_zone(device, zone, slot, cur_block, 0,
-                                                             &data[block_size * data_idx],
-                                                             block_size)))
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Encountered NULL pointer");
+    }
+    else if ((ATCA_ZONE_DATA != zone) && (ATCA_ZONE_CONFIG != zone))
+    {
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid zone parameter received");
+    }
+    else if (ATCA_ZONE_DATA == zone)
+    {
+        if ((3 == slot) || (0 == slot) || (slot > 3))
         {
-            ATCA_TRACE(status, "calib_ecc204_read_zone failed");
+            return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid slot received");
+    }
+        else if (((slot == 1) && ((length + offset) > 320)) || ((slot == 2) && ((length + offset) > 64)))
+    {
+            return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid length received");
+        }
+    }
+    else
+    {
+        /* Is config zone */
+        if ((slot > 3) || (offset > 15) || ((length + offset) > 16))
+        {
+            return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid slot/length received");
+        }
+    }
+
+    cur_block = (ATCA_ZONE_DATA == zone) ? (offset / data_set_size) : 0;
+
+    do
+    {
+        if (ATCA_SUCCESS != (status = calib_ca2_read_zone(device, zone, slot, cur_block, 0,
+                                                             read_buf,
+                                                             data_set_size)))
+        {
+            ATCA_TRACE(status, "calib_ca2_read_zone failed");
             break;
         }
 
-        cur_block += 1;
-        data_idx += 1;   // increment data index
-    }
+        // Calculate where in the read buffer we need data from
+        read_offset = (ATCA_ZONE_DATA == zone) ? (cur_block * data_set_size) : 0;
+
+        // 0nly 0th block may contain offset
+        read_buf_idx = (data_idx == 0) ? (offset - read_offset) : 0;
+
+        // Calculate number of bytes to be copied
+        copy_length = (data_idx + data_set_size) <= length ? (data_set_size - read_buf_idx) : (length - data_idx);
+
+        // Check whether the copy_length exceeds data_set_size
+        copy_length = (read_buf_idx + copy_length) > data_set_size ? data_set_size - read_buf_idx : copy_length;
+
+        memcpy(&data[data_idx], &read_buf[read_buf_idx], copy_length);
+        cur_block = (ATCA_ZONE_DATA == zone) ? (cur_block + 1) : cur_block;   // increment block number for DATA zone
+        data_idx += copy_length;   // increment data index
+    } while (data_idx < length);
 
     return status;
 }
@@ -722,7 +746,7 @@ ATCA_STATUS calib_ecc204_read_bytes_zone(ATCADevice device, uint8_t zone, uint16
 
  * \return TRUE if the zones pass the comparison test otherwise FALSE
  */
-bool calib_ecc204_compare_config(
+bool calib_ca2_compare_config(
     uint8_t* expected,      /**< [in] Expected configuration zone */
     uint8_t* other          /**< [in] Read or Other buffer to compare */
     )
@@ -732,8 +756,8 @@ bool calib_ecc204_compare_config(
     if (expected && other)
     {
         // compare slot 1 and slot 3 data && skip first 16 bytes and counter value
-        if (!((memcmp(&expected[16], &other[16], ATCA_ECC204_CONFIG_SLOT_SIZE)) ||
-              (memcmp(&expected[48], &other[48], ATCA_ECC204_CONFIG_SLOT_SIZE))))
+        if (!((memcmp(&expected[16], &other[16], ATCA_CA2_CONFIG_SLOT_SIZE)) ||
+              (memcmp(&expected[48], &other[48], ATCA_CA2_CONFIG_SLOT_SIZE))))
         {
             same = true;
         }
@@ -742,7 +766,7 @@ bool calib_ecc204_compare_config(
 }
 #endif  /* CALIB_READ_EN  */
 
-#if CALIB_READ_EN || CALIB_READ_ECC204_EN
+#if CALIB_READ_EN || CALIB_READ_CA2_EN
 /** \brief Checks the device type and maps to the correct read operation
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
@@ -758,13 +782,13 @@ ATCA_STATUS calib_read_zone_ext(
     uint8_t    len          /**< [in]  Length of the data to be read. Must be either 4 or 32. */
     )
 {
-#if CALIB_ECC204_EN
+#if ATCA_CA2_SUPPORT
     ATCADeviceType devtype = atcab_get_device_type_ext(device);
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (ECC204 == devtype)
+    if (atcab_is_ca2_device(devtype))
     {
-        status = calib_ecc204_read_zone(device, zone, slot, block, offset, data, len);
+        status = calib_ca2_read_zone(device, zone, slot, block, offset, data, len);
     }
 #if CALIB_READ_EN
     else if (atcab_is_ca_device(devtype))
@@ -772,6 +796,10 @@ ATCA_STATUS calib_read_zone_ext(
         status = calib_read_zone(device, zone, slot, block, offset, data, len);
     }
 #endif /* CALIB_READ_EN */
+    else
+    {
+        status = ATCA_UNIMPLEMENTED;
+    }
     return status;
 #else
     return calib_read_zone(device, zone, slot, block, offset, data, len);
@@ -803,9 +831,11 @@ ATCA_STATUS calib_read_config_zone(ATCADevice device, uint8_t* config_data)
             status = calib_read_bytes_zone(device, ATCA_ZONE_CONFIG, 0, 0x00, config_data, ATCA_SHA_CONFIG_SIZE);
             break;
 #endif
-#if CALIB_ECC204_EN
+#if ATCA_CA2_SUPPORT
         case ECC204:
-            status = calib_ecc204_read_config_zone(device, config_data);
+        /* fallthrough */
+        case TA010:
+            status = calib_ca2_read_config_zone(device, config_data);
             break;
 #endif
         default:
@@ -872,64 +902,17 @@ ATCA_STATUS calib_cmp_config_zone(ATCADevice device, uint8_t* config_data, bool*
             *same_config = calib_ecc608_compare_config(config_data, device_config_data);
             break;
 #endif
-#if CALIB_ECC204_EN
+#if ATCA_CA2_SUPPORT
         case ECC204:
-            *same_config = calib_ecc204_compare_config(config_data, device_config_data);
+        /* fallthrough */
+        case TA010:
+            *same_config = calib_ca2_compare_config(config_data, device_config_data);
             break;
 #endif
         default:
 #if CALIB_ECC108_EN || CALIB_ECC508_EN
             *same_config = calib_ecc_compare_config(config_data, device_config_data);
 #endif
-            break;
-        }
-    }
-    while (0);
-
-    return status;
-}
-
-/** \brief Executes Read command to read a 64 byte ECDSA P256 signature from a
- *          slot configured for clear reads.
- *
- *  \param[in]  device  Device context pointer
- *  \param[in]  slot    Slot number to read from. Only slots 8 to 15 are large
- *                      enough for a signature.
- *  \param[out] sig     Signature will be returned here (64 bytes). Format will be
- *                      the 32 byte R and S big-endian integers concatenated.
- *
- *  \return ATCA_SUCCESS on success, otherwise an error code.
- */
-ATCA_STATUS calib_read_sig(ATCADevice device, uint16_t slot, uint8_t* sig)
-{
-    ATCA_STATUS status = ATCA_GEN_FAIL;
-
-    do
-    {
-        // Check the value of the slot
-        if (sig == NULL)
-        {
-            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
-            break;
-        }
-
-        if (slot < 8 || slot > 15)
-        {
-            status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid slot received");
-            break;
-        }
-
-        // Read the first block
-        if ((status = calib_read_zone_ext(device, ATCA_ZONE_DATA, slot, 0, 0, &sig[0], ATCA_BLOCK_SIZE)) != ATCA_SUCCESS)
-        {
-            ATCA_TRACE(status, "calib_read_zone - failed");
-            break;
-        }
-
-        // Read the second block
-        if ((status = calib_read_zone_ext(device, ATCA_ZONE_DATA, slot, 1, 0, &sig[ATCA_BLOCK_SIZE], ATCA_BLOCK_SIZE)) != ATCA_SUCCESS)
-        {
-            ATCA_TRACE(status, "calib_read_zone - failed");
             break;
         }
     }
@@ -1031,4 +1014,72 @@ ATCA_STATUS calib_read_pubkey(ATCADevice device, uint16_t slot, uint8_t *public_
 
     return status;
 }
+
+/** \brief Executes Read command, which reads the 9 byte serial number of the
+ *          device from the config zone.
+ *
+ *  \param[in]  device         Device context pointer
+ *  \param[out] serial_number  9 byte serial number is returned here.
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS calib_read_serial_number_ext(ATCADevice device, uint8_t* serial_number)
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+#if ATCA_CA2_SUPPORT
+    ATCADeviceType device_type = atcab_get_device_type_ext(device);
+    if (atcab_is_ca2_device(device_type))
+    {
+        status = calib_ca2_read_serial_number(device, serial_number);
+    }
+    else
+#endif
+    {
+#if CALIB_READ_EN
+        status = calib_read_serial_number(device, serial_number);
+#endif
+    }
+
+    return status;
+}
+
+/** \brief Used to read an arbitrary number of bytes from any zone configured
+ *          for clear reads.
+ *
+ * This function will issue the Read command as many times as is required to
+ * read the requested data.
+ *
+ *  \param[in]  device  Device context pointer
+ *  \param[in]  zone    Zone to read data from. Option are ATCA_ZONE_CONFIG(0),
+ *                      ATCA_ZONE_OTP(1), or ATCA_ZONE_DATA(2).
+ *  \param[in]  slot    Slot number to read from if zone is ATCA_ZONE_DATA(2).
+ *                      Ignored for all other zones.
+ *  \param[in]  offset  Byte offset within the zone to read from.
+ *  \param[out] data    Read data is returned here.
+ *  \param[in]  length  Number of bytes to read starting from the offset.
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS calib_read_bytes_zone_ext(ATCADevice device, uint8_t zone, uint16_t slot, size_t offset, uint8_t *data, size_t length)
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+#if ATCA_CA2_SUPPORT
+    ATCADeviceType device_type = atcab_get_device_type_ext(device);
+    if (atcab_is_ca2_device(device_type))
+    {
+        status = calib_ca2_read_bytes_zone(device, zone, slot, offset, data, length);
+    }
+    else
+#endif
+    {
+#if CALIB_READ_EN
+        status = calib_read_bytes_zone(device, zone, slot, offset, data, length);
+#endif
+    }
+
+    return status;
+}
+
 #endif

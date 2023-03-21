@@ -1,6 +1,6 @@
 /**
  * \file
- * \brief Unity tests for the cryptoauthlib Verify Command
+ * \brief Unity tests for the cryptoauthlib Delete Command
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
@@ -25,43 +25,49 @@
  * THIS SOFTWARE.
  */
 #include <stdlib.h>
-#include "test_atcab.h"
+#include "test_calib.h"
 
-#ifndef TEST_ATCAB_NONCE_EN
-#define TEST_ATCAB_NONCE_EN             CALIB_NONCE_EN
+#ifndef TEST_CALIB_DELETE_EN
+#define TEST_CALIB_DELETE_EN      (CALIB_DELETE_EN && ATCA_CA2_SUPPORT)
 #endif
 
-#if TEST_ATCAB_NONCE_EN
+#if defined(ATCA_TEST_DELETE_ENABLE) && TEST_CALIB_DELETE_EN
 
-TEST_CONDITION(atca_cmd_basic_test, challenge)
+TEST(calib, delete_test)
 {
-    ATCADeviceType dev_type = atca_test_get_device_type();
+    ATCA_STATUS status = ATCA_SUCCESS;
+    uint8_t chip_status[4];
+    uint8_t num_in[NONCE_NUMIN_SIZE] = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x10,
+                                         0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x20 };
 
-    return (atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type));
-}
+    // CSZ0 and CSZ1 should be locked
+    test_assert_config_is_locked();
 
-TEST(atca_cmd_basic_test, challenge)
-{
-    ATCA_STATUS status = ATCA_GEN_FAIL;
-    uint8_t random_number[32];
-
-#if CALIB_RANDOM_EN
-    status = atcab_random(random_number);
+    // Get chip_status
+    status = atcab_info_chip_status(chip_status);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    if (0x00 == chip_status[0])
+    {  
+        // Perform delete
+        status = calib_delete(atcab_get_device(), num_in, g_slot4_key);
+        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+        // Read chip_status to ensure delete is successful
+        status = atcab_info_chip_status(chip_status);
+        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+        TEST_ASSERT_EQUAL(0xFF, chip_status[0]);
+    }
+}
 #endif
-
-    status = atcab_nonce(random_number);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-}
-#endif /* TEST_ATCAB_NONCE_EN */
 
 // *INDENT-OFF* - Preserve formatting
-t_test_case_info nonce_basic_test_info[] =
+t_test_case_info calib_delete_tests[] =
 {
-#if TEST_ATCAB_NONCE_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, challenge), REGISTER_TEST_CONDITION(atca_cmd_basic_test, challenge) },
+#if defined(ATCA_TEST_DELETE_ENABLE) && TEST_CALIB_DELETE_EN
+    { REGISTER_TEST_CASE(calib, delete_test),   atca_test_cond_ca2 },
 #endif
-    { (fp_test_case)NULL,                     (uint8_t)0 },/* Array Termination element*/
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
 };
-
 // *INDENT-ON*

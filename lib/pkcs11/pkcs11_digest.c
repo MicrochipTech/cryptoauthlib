@@ -26,6 +26,12 @@ CK_RV pkcs11_digest_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism
         return CKR_ARGUMENTS_BAD;
     }
 
+    rv = pkcs11_session_check(&pSession, hSession);
+    if (rv)
+    {
+        return rv;
+    }
+
     if (CKM_SHA256 != pMechanism->mechanism)
     {
         return CKR_MECHANISM_INVALID;
@@ -35,11 +41,6 @@ CK_RV pkcs11_digest_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism
         return CKR_OPERATION_ACTIVE;
     }
 
-    rv = pkcs11_session_check(&pSession, hSession);
-    if (rv)
-    {
-        return rv;
-    }
 #if PKCS11_HARDWARE_SHA256
     return CKR_FUNCTION_NOT_SUPPORTED;
 #else

@@ -43,6 +43,11 @@
 #cmakedefine01 PKCS11_DEBUG_ENABLE
 #endif
 
+/** Enable PKCS#11 AUTH session terminate work around */
+#ifndef PKCS11_AUTH_TERMINATE_BEFORE_LOGIN
+#cmakedefine01 PKCS11_AUTH_TERMINATE_BEFORE_LOGIN
+#endif
+
 /** Use Static or Dynamic Allocation */
 #ifndef PKCS11_USE_STATIC_MEMORY
 #cmakedefine01 PKCS11_USE_STATIC_MEMORY

@@ -196,6 +196,13 @@
         <#lt>#define ATCAB_COUNTER_EN                   (FEATURE_ENABLED)
 </#if>
 
+/* Delete Command */
+<#if cal_delete == false>
+        <#lt>#define ATCAB_DELETE_EN                    (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAB_DELETE_EN                    (FEATURE_ENABLED)
+</#if>
+
 /* Derivekey Command */
 <#if cal_derivekey == false>
         <#lt>#define ATCAB_DERIVEKEY_EN                 (FEATURE_DISABLED)

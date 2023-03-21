@@ -89,7 +89,7 @@ TEST(atca_cmd_basic_test, aes_cbc_mac)
 t_test_case_info aes_cbcmac_basic_test_info[] =
 {
 #ifdef ATCA_ATECC608_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_mac), DEVICE_MASK(ATECC608A)             },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_mac), atca_test_cond_ecc608 },
 #endif
-    { (fp_test_case)NULL,                     (uint8_t)0 }, /* Array Termination element*/
+    { (fp_test_case)NULL, NULL }, /* Array Termination element*/
 };

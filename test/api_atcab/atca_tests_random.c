@@ -32,6 +32,15 @@
 #endif
 
 #if TEST_ATCAB_RANDOM_EN
+TEST_CONDITION(atca_cmd_basic_test, random)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return ((atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type))
+            || (TA100 == dev_type)
+    );
+}
+
 TEST(atca_cmd_basic_test, random)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
@@ -46,9 +55,8 @@ TEST(atca_cmd_basic_test, random)
 t_test_case_info random_basic_test_info[] =
 {
 #if TEST_ATCAB_RANDOM_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, random), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ATECC | DEVICE_MASK(TA100) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, random), REGISTER_TEST_CONDITION(atca_cmd_basic_test, random) },
 #endif
     { (fp_test_case)NULL,                     (uint8_t)0 },/* Array Termination element*/
 };
 // *INDENT-ON*
-

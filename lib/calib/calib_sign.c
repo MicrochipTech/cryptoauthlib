@@ -151,21 +151,39 @@ ATCA_STATUS calib_sign(ATCADevice device, uint16_t key_id, const uint8_t *msg, u
 
     return status;
 }
+#endif
 
+#if CALIB_SIGN_EN || CALIB_SIGN_CA2_EN
 ATCA_STATUS calib_sign_ext(ATCADevice device, uint16_t key_id, const uint8_t *msg, uint8_t *signature)
 {
-#if CALIB_ECC204_EN
-    if (ECC204 == atcab_get_device_type_ext(device))
-    {
-        return calib_ecc204_sign(device, key_id, msg, signature);
-    }
-    else
-#endif
-    {
-        return calib_sign(device, key_id, msg, signature);
-    }
-}
+    ATCADeviceType devtype = atcab_get_device_type_ext(device);
+    ATCA_STATUS status = ATCA_BAD_PARAM;
 
+    switch(devtype)
+    {
+#if CALIB_SIGN_EN
+        case ATECC108A:
+            /* fall-through */
+        case ATECC508A:
+            /* fall-through */
+        case ATECC608:
+            status = calib_sign(device, key_id, msg, signature);
+            break;
+#endif
+
+#if CALIB_SIGN_CA2_EN
+        case ECC204:
+        /* fallthrough */
+        case TA010:
+            status = calib_ca2_sign(device, key_id, msg, signature);
+            break;
+#endif
+        default:
+            status = ATCA_UNIMPLEMENTED;
+            break;
+    }
+    return status;
+}
 #endif
 
 #if CALIB_SIGN_INTERNAL_EN
@@ -216,7 +234,7 @@ ATCA_STATUS calib_sign_internal(ATCADevice device, uint16_t key_id, bool is_inva
 }
 #endif /* CALIB_SIGN_MODE_ENCODING */
 
-#if CALIB_SIGN_ECC204_EN
+#if CALIB_SIGN_CA2_EN
 /** \brief Execute sign command to sign the 32 bytes message digest using private key
  *         mentioned in slot.
  *
@@ -229,7 +247,7 @@ ATCA_STATUS calib_sign_internal(ATCADevice device, uint16_t key_id, bool is_inva
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code
  */
-ATCA_STATUS calib_ecc204_sign(ATCADevice device, uint16_t key_id, const uint8_t* msg, uint8_t* signature)
+ATCA_STATUS calib_ca2_sign(ATCADevice device, uint16_t key_id, const uint8_t* msg, uint8_t* signature)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     ATCAPacket packet;
@@ -251,7 +269,7 @@ ATCA_STATUS calib_ecc204_sign(ATCADevice device, uint16_t key_id, const uint8_t*
 
         if (ATCA_SUCCESS != (status = atca_execute_command(&packet, device)))
         {
-            ATCA_TRACE(status, "calib_ecc204_sign - execution failed");
+            ATCA_TRACE(status, "calib_ca2_sign - execution failed");
         }
     }
 
