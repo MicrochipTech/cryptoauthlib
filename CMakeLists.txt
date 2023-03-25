@@ -11,13 +11,15 @@ set(VERSION_PATCH 0)
 option(BUILD_TESTS "Create Test Application with library" OFF)
 
 if(UNIX)
-option(SETUP_INSTALLER "Setup installation and packaging as well" ON)
+    option(SETUP_INSTALLER "Setup installation and packaging as well" ON)
+    # Default install root which is normally /usr/local/
+    set(CMAKE_INSTALL_PREFIX "/" CACHE INTERNAL "")
+elseif(MINGW)
+    option(SETUP_INSTALLER "Setup installation and packaging as well" ON)
+    set(CMAKE_INSTALL_PREFIX "$ENV{MSYSTEM_PREFIX}" CACHE INTERNAL "")
 else()
-set(SETUP_INSTALLER OFF CACHE INTERNAL "Disabling installation on this platform")
+    set(SETUP_INSTALLER OFF CACHE INTERNAL "Disabling installation on this platform")
 endif()
-
-# Default install root which is normally /usr/local/
-set(CMAKE_INSTALL_PREFIX "/" CACHE INTERNAL "")
 
 # If including certificate definitions into the library then include them as ATCACERT_DEF_SRC
 #file(GLOB ATCACERT_DEF_SRC ABSOLUTE "app/*.c")

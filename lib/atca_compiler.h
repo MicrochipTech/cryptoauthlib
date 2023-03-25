@@ -208,7 +208,7 @@
 #endif
 
 #ifdef ATCA_BUILD_SHARED_LIBS
-#if defined(cryptoauth_EXPORTS) && defined(_WIN32) && !defined(_MINGW64__) && !defined(__MINGW32__)
+#if defined(cryptoauth_EXPORTS) && defined(_WIN32) && !defined(__MINGW64__) && !defined(__MINGW32__)
 #define ATCA_DLL    SHARED_LIB_EXPORT
 #else
 #define ATCA_DLL    SHARED_LIB_IMPORT
