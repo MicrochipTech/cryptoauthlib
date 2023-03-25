@@ -203,17 +203,7 @@ static void hex_to_uint8(const char hex_str[2], uint8_t* num)
         TEST_FAIL_MESSAGE("Not a hex digit.");
     }
 }
-// void hex_to_data(const char* hex_str, uint8_t* data, size_t data_size)
-// {
-//     size_t i = 0;
 
-//     TEST_ASSERT_EQUAL_MESSAGE(data_size * 2, strlen(hex_str) - 1, "Hex string unexpected length.");
-
-//     for (i = 0; i < data_size; i++)
-//     {
-//         hex_to_uint8(&hex_str[i * 2], &data[i]);
-//     }
-// }
 static int read_rsp_hex_value(FILE* file, const char* name, uint8_t* data, size_t data_size)
 {
     char line[16384];
