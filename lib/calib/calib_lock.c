@@ -105,7 +105,7 @@ ATCA_STATUS calib_lock_config_zone(ATCADevice device)
         status = calib_lock(device, LOCK_ZONE_NO_CRC | LOCK_ZONE_CONFIG, 0);
 #endif
     }
-    
+
     return status;
 }
 
@@ -176,7 +176,7 @@ ATCA_STATUS calib_lock_data_zone(ATCADevice device)
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS calib_lock_data_zone_crc(ATCADevice device, uint16_t summary_crc)
-{
+{  
 #if ATCA_CA2_SUPPORT
     ATCADeviceType device_type = atcab_get_device_type_ext(device);
     
@@ -261,7 +261,7 @@ ATCA_STATUS calib_ca2_lock_config_zone(ATCADevice device)
 
         if (ATCA_SUCCESS != (status = calib_lock(device, mode, 0)))
         {
-            // ECC204,TA010 returns execution error if slot is already locked.
+            // ECC204,TA010,SHA10x returns execution error if slot is already locked.
             // Consider already locked status as valid while locking the config zone.
             if (status == ATCA_EXECUTION_ERROR)
             {
@@ -310,7 +310,7 @@ ATCA_STATUS calib_ca2_lock_data_zone(ATCADevice device)
 
         if (ATCA_SUCCESS != (status = calib_lock(device, mode, 0)))
         {
-            // ECC204,TA010 returns execution error if slot is already locked.
+            // ECC204,TA010,SHA10x returns execution error if slot is already locked.
             // Consider already locked status as valid while locking the config zone.
             if (status == ATCA_EXECUTION_ERROR)
             {

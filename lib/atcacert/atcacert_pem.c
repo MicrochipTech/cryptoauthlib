@@ -32,6 +32,8 @@
 #include "atcacert_pem.h"
 #include "atca_helpers.h"
 
+#if ATCACERT_COMPCERT_EN
+
 int atcacert_encode_pem(const uint8_t* der,
                         size_t         der_size,
                         char*          pem,
@@ -195,3 +197,5 @@ int atcacert_decode_pem_csr(const char* pem_csr, size_t pem_csr_size, uint8_t* d
         PEM_CSR_BEGIN,
         PEM_CSR_END);
 }
+
+#endif

@@ -27,6 +27,11 @@
 #include <stdlib.h>
 #include "test_atcab.h"
 
+#ifndef TEST_ATCAB_GENKEY_EN
+#define TEST_ATCAB_GENKEY_EN          (CALIB_GENKEY_EN || TALIB_GENKEY_EN)
+#endif
+
+#if TEST_ATCAB_GENKEY_EN
 /** \brief this test assumes a specific configuration and locked config zone
  * test will generate a private key if data zone is unlocked and return a public key
  * test will generate a public key based on the private key if data zone is locked
@@ -79,12 +84,15 @@ TEST(atca_cmd_basic_test, get_pubkey)
     // pub key is random so can't check the full content anyway.
     TEST_ASSERT_NOT_EQUAL(0, memcmp(public_key, frag, 4));
 }
+#endif
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info genkey_basic_test_info[] =
 {
+#if TEST_ATCAB_GENKEY_EN
     { REGISTER_TEST_CASE(atca_cmd_basic_test, genkey),     atca_test_cond_p256_sign },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, get_pubkey), atca_test_cond_p256_sign },
+#endif
     { (fp_test_case)NULL,                     (uint8_t)0 },/* Array Termination element*/
 };
 // *INDENT-ON*

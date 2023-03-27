@@ -94,6 +94,28 @@ TEST(atca_cmd_basic_test, selftest_ecc204_ta010)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(0x00, (result & 0x20));
 }
+
+TEST_CONDITION(atca_cmd_basic_test, selftest_sha10x)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return ((SHA104 == dev_type) 
+            || (SHA105 == dev_type));
+}
+
+TEST(atca_cmd_basic_test, selftest_sha10x)
+{
+    ATCA_STATUS status;
+    uint8_t result = 0;
+
+    status = atcab_selftest(SELFTEST_MODE_RNG, 0, &result);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(0x00, (result & 0x01));
+
+    status = atcab_selftest(SELFTEST_MODE_SHA, 0, &result);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(0x00, (result & 0x20));
+}
 #endif
 
 // *INDENT-OFF* - Preserve formatting
@@ -103,6 +125,7 @@ t_test_case_info selftest_basic_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_basic_test, selftest_individual),     atca_test_cond_ecc608 },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, selftest_all),            atca_test_cond_ecc608 },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, selftest_ecc204_ta010),   REGISTER_TEST_CONDITION(atca_cmd_basic_test, selftest_ecc204_ta010) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, selftest_sha10x),         REGISTER_TEST_CONDITION(atca_cmd_basic_test, selftest_sha10x) },
 #endif
     { (fp_test_case)NULL, NULL },         /* Array Termination element*/
 };

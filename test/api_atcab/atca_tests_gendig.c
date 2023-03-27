@@ -27,8 +27,15 @@
 #include <stdlib.h>
 #include "test_atcab.h"
 
-#ifdef ATCA_ECC_SUPPORT
+#ifndef TEST_ATCAB_GENDIG_EN
+#define TEST_ATCAB_GENDIG_EN         (ATCAB_GENDIG_EN && CALIB_FULL_FEATURE)
+#endif
 
+#ifndef TEST_ATCAB_GENDIVKEY_EN
+#define TEST_ATCAB_GENDIVKEY_EN      (CALIB_GENDIVKEY_EN)
+#endif
+
+#if TEST_ATCAB_GENDIG_EN
 TEST_CONDITION(atca_cmd_basic_test, gendig_shared_nonce)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
@@ -369,22 +376,81 @@ TEST(atca_cmd_basic_test, gendig_config_otp_data)
         TEST_ASSERT_EQUAL_MEMORY(host_response, client_response, sizeof(host_response));
     }
 }
+#endif
+
+#if TEST_ATCAB_GENDIVKEY_EN
+TEST_CONDITION(atca_cmd_basic_test, gendivkey)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return (SHA105 == dev_type);
+}
+
+TEST(atca_cmd_basic_test, gendivkey)
+{
+    ATCA_STATUS status = ATCA_GEN_FAIL;
+    atca_temp_key_t temp_key;
+    uint8_t num_in[NONCE_NUMIN_SIZE];
+    atca_nonce_in_out_t nonce_params;
+    atca_diversified_key_in_out_t gen_div_params;
+    uint8_t other_data[ATCA_WORD_SIZE];
+    // Assuming SN of client device
+    uint8_t sn[ATCA_SERIAL_NUM_SIZE] = { 0x01, 0x23, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0xEE };
+
+    test_assert_config_is_locked();
+    test_assert_data_is_locked();
+
+    // Setup nonce command
+    memset(&temp_key, 0, sizeof(temp_key));
+    memset(num_in, 0, sizeof(num_in));
+    memset(&nonce_params, 0, sizeof(nonce_params));
+    nonce_params.mode = NONCE_MODE_PASSTHROUGH;
+    nonce_params.zero = 0;
+    nonce_params.num_in = num_in;
+    nonce_params.rand_out = NULL;
+    nonce_params.temp_key = &temp_key;
+
+    // Load fixed mode nonce into tempkey
+    status = atcab_nonce_base(nonce_params.mode, nonce_params.zero, nonce_params.num_in, NULL);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    status = atcah_nonce(&nonce_params);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    memset(other_data, 0x00, sizeof(other_data));
+
+    // Use GenDivkey to create an diversified key
+    memset(&gen_div_params, 0, sizeof(gen_div_params));
+
+    gen_div_params.parent_key = g_slot4_key;  // Ensure to write key into slot 3
+    gen_div_params.other_data = other_data;
+    gen_div_params.sn = sn;
+    gen_div_params.input_data = num_in;
+    gen_div_params.temp_key = &temp_key;
+
+    // Run GenDivKey command
+    status = atcab_gendivkey(other_data);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Update tempkey with diversified key
+    status = atcah_gendivkey(&gen_div_params);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+}
+#endif
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info gendig_basic_test_info[] =
 {
+#if TEST_ATCAB_GENDIG_EN
     { REGISTER_TEST_CASE(atca_cmd_basic_test, gendig_config_otp_data),  REGISTER_TEST_CONDITION(atca_cmd_basic_test, gendig_config_otp_data) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, gendig_counter),          atca_test_cond_ecc608 },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, gendig_keyconfig),        atca_test_cond_ecc608 },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, gendig_shared_nonce),     REGISTER_TEST_CONDITION(atca_cmd_basic_test, gendig_shared_nonce) },
+#endif
+#if TEST_ATCAB_GENDIVKEY_EN
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, gendivkey),               REGISTER_TEST_CONDITION(atca_cmd_basic_test, gendivkey) },
+#endif
     /* Array Termination element*/
     { (fp_test_case)NULL, NULL }, 
 };
 // *INDENT-ON*
-#else
-t_test_case_info gendig_basic_test_info[] =
-{
-    { (fp_test_case)NULL, (uint8_t)0 },
-};
-
-#endif

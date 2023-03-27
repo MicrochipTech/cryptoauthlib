@@ -28,6 +28,7 @@
 #include <string.h>
 #include "atcacert_date.h"
 
+#if ATCACERT_COMPCERT_EN
 
 const size_t ATCACERT_DATE_FORMAT_SIZES[ATCACERT_DATE_FORMAT_SIZES_COUNT] = {
     DATEFMT_ISO8601_SEP_SIZE,
@@ -1128,3 +1129,5 @@ int atcacert_date_dec_compcert(const uint8_t          enc_dates[3],
 
     return ATCACERT_E_SUCCESS;
 }
+
+#endif

@@ -87,6 +87,12 @@ static t_menu_info mas_menu_info[] =
 #ifdef ATCA_TA010_SUPPORT
     { "ta010",     "Set Target Device to TA010",                    select_device                        },
 #endif
+#ifdef ATCA_SHA104_SUPPORT
+    { "sha104",    "Set Target Device to SHA104",                   select_device                        },
+#endif
+#ifdef ATCA_SHA105_SUPPORT
+    { "sha105",    "Set Target Device to SHA105",                   select_device                        },
+#endif
 #ifdef ATCA_ATECC508A_SUPPORT
     { "ecc508",      "Set Target Device to ATECC508A",              select_device                        },
 #endif

@@ -129,6 +129,12 @@ extern const uint8_t sha204_default_config[ATCA_SHA_CONFIG_SIZE];
 #if defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT)
 extern const uint8_t test_ecc204_configdata[ATCA_CA2_CONFIG_SIZE];
 #endif
+#ifdef ATCA_SHA104_SUPPORT
+extern const uint8_t test_sha104_configdata[ATCA_CA2_CONFIG_SIZE];
+#endif
+#ifdef ATCA_SHA105_SUPPORT
+extern const uint8_t test_sha105_configdata[ATCA_CA2_CONFIG_SIZE];
+#endif
 #if ATCA_TA_SUPPORT
 extern const uint8_t test_ta100_configdata[TA_CONFIG_SIZE];
 #endif
@@ -194,7 +200,9 @@ void RunPbkdf2Tests(void);
 
 /* Setup & Configuration */
 void atca_test_config_set_ifacecfg(ATCAIfaceCfg * ifacecfg);
+#if defined(ATCA_ECC_SUPPORT) || defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT) || defined(ATCA_TA100_SUPPORT)
 ATCA_STATUS atca_test_genkey(uint16_t key_id, uint8_t *public_key);
+#endif
 ATCADeviceType atca_test_get_device_type(void);
 bool atca_test_cond_p256_all(void);
 bool atca_test_cond_p256_sign(void);

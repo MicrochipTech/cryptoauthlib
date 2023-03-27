@@ -72,7 +72,7 @@ ATCA_STATUS calib_info_base(ATCADevice device, uint8_t mode, uint16_t param2, ui
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
-            // For ECC204,TA010 Lock status and Key valid modes return their status in first byte.
+            // For ECC204,TA010,SHA10x Lock status and Key valid modes return their status in first byte.
             // So, need to consider 01 as valid response as it presents lock/keyvalid status.
             if (((INFO_MODE_LOCK_STATUS == mode) || (INFO_MODE_KEY_VALID == mode))
                 && (atcab_is_ca2_device(device->mIface.mIfaceCFG->devtype)))
@@ -204,7 +204,7 @@ ATCA_STATUS calib_info_lock_status(ATCADevice device, uint16_t param2, uint8_t* 
     return calib_info_base(device, INFO_MODE_LOCK_STATUS, param2, is_locked);
 }
 
-/** \brief Use Info command to get ECC204,TA010 chip status
+/** \brief Use Info command to get ECC204,TA010,SHA10x chip status
  *
  *  \param[in]   device      Device context pointer
  *  \param[out]  chip_status return chip status here

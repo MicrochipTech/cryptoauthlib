@@ -30,7 +30,7 @@
 #include "crypto/atca_crypto_sw_sha2.h"
 
 
-#if ATCACERT_HW_VERIFY_EN
+#if ATCACERT_HW_VERIFY_EN && ATCACERT_COMPCERT_EN
 int atcacert_verify_cert_hw(const atcacert_def_t* cert_def,
                             const uint8_t*        cert,
                             size_t                cert_size,

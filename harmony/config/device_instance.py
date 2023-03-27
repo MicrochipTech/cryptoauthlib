@@ -22,9 +22,9 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
-_DEFAULT_I2C_ADDRESS = {'ecc': 0xC0, 'sha': 0xC8, 'ecc204': 0x66, 'ta100': 0x2e}
-_SWI_DEVICES = ['ATSHA204A', 'ATSHA206A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'ECC204', 'TA010']
-_I2C_DEVICES = ['ATSHA204A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'TA100', 'ECC204', 'TA010']
+_DEFAULT_I2C_ADDRESS = {'ecc': 0xC0, 'sha': 0xC8, 'ecc204': 0x66, 'ta100': 0x2e, 'sha104': 0x62, 'sha105': 0x64}
+_SWI_DEVICES = ['ATSHA204A', 'ATSHA206A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'ECC204', 'TA010', 'SHA104']
+_I2C_DEVICES = ['ATSHA204A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'TA100', 'ECC204', 'TA010', 'SHA104', 'SHA105']
 _SPI_DEVICES = ['TA100']
 
 caldevcfglist = []
@@ -187,6 +187,10 @@ def instantiateComponent(deviceComponent, index):
         deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['ecc204'])
     elif 'ECC' in deviceID:
         deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['ecc'])
+    elif 'SHA104' in deviceID:
+        deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['sha104'])
+    elif 'SHA105' in deviceID:
+        deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['sha105'])
     elif 'SHA' in deviceID:
         deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['sha'])
     elif 'TA' in deviceID:

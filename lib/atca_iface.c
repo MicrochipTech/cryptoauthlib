@@ -603,6 +603,12 @@ static const devtype_names_t devtype_names[] = {
 #ifdef ATCA_TA010_SUPPORT
     { TA010,            "ta010" },
 #endif
+#ifdef ATCA_SHA104_SUPPORT
+    { SHA104,           "sha104" },
+#endif
+#ifdef ATCA_SHA105_SUPPORT
+    { SHA105,           "sha105" },
+#endif
 #ifdef ATCA_TA100_SUPPORT
     { TA100,            "ta100"  },
 #endif

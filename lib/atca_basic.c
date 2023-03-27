@@ -837,6 +837,38 @@ ATCA_STATUS atcab_checkmac(uint8_t mode, uint16_t key_id, const uint8_t* challen
     }
     return status;
 }
+
+/** \brief Compares a MAC response with input values.SHA105 device can generate optional mac
+ *         Output response mac mode only supports in SHA105 device
+ *	\param[in] mode        Controls which fields within the device are used in
+ *                         the message
+ *	\param[in] challenge   Challenge data (32 bytes)
+ *	\param[in] response    MAC response data (32 bytes)
+ *	\param[in] other_data  OtherData parameter (13 bytes)
+ *	\param[out] mac        MAC response (32 bytes)
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcab_checkmac_with_response_mac(uint8_t mode, const uint8_t* challenge, const uint8_t* response, const uint8_t* other_data, uint8_t *mac)
+{
+    ATCA_STATUS status = ATCA_UNIMPLEMENTED;
+    ATCADeviceType dev_type = atcab_get_device_type();
+
+    if (SHA105 == dev_type)
+    {
+#ifdef ATCA_SHA105_SUPPORT
+        status = calib_checkmac_with_response_mac(_gDevice, mode, challenge, response, other_data, mac);
+#endif
+    }
+    else if (atcab_is_ta_device(dev_type))
+    {
+        status = ATCA_UNIMPLEMENTED;
+    }
+    else
+    {
+        status = ATCA_NOT_INITIALIZED;
+    }
+    return status;
+}
 #endif /* ATCAB_CHECKMAC */
 
 /* Counter command */
@@ -1231,6 +1263,34 @@ ATCA_STATUS atcab_gendig(uint8_t zone, uint16_t key_id, const uint8_t* other_dat
     }
     return status;
 }
+
+/** \brief Issues a GenDivKey command to generate the equivalent diversified key as that programmed into the
+ *         client side device
+ *  \param[in] device           Device context pointer
+ *  \param[in] other_data       Must match data used when generating the diversified key in the client device
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcab_gendivkey(const uint8_t* other_data)
+{
+    ATCA_STATUS status = ATCA_UNIMPLEMENTED;
+    ATCADeviceType dev_type = atcab_get_device_type();
+
+    if (SHA105 == dev_type)
+    {
+#ifdef ATCA_SHA105_SUPPORT
+        status = calib_sha105_gendivkey(_gDevice, other_data);
+#endif
+    }
+    else if (atcab_is_ta_device(dev_type))
+    {
+        status = ATCA_UNIMPLEMENTED;
+    }
+    else
+    {
+        status = ATCA_NOT_INITIALIZED;
+    }
+    return status;
+}
 #endif /* ATCAB_GENDIG */
 
 /* GenKey command */
@@ -1493,7 +1553,7 @@ ATCA_STATUS atcab_info_lock_status(uint16_t param2, uint8_t *is_locked)
 }
 
 /** \brief Use the Info command to get the chip status
- *  \param[out]  chip status  returns chip status here
+ *  \param[out]  chip_status  returns chip status here
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */

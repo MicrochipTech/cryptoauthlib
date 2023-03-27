@@ -748,6 +748,10 @@ bool atIsSHAFamily(ATCADeviceType device_type)
 {
     switch (device_type)
     {
+    case SHA104:
+        /* fallthrough */
+    case SHA105:
+        /* fallthrough */
     case ATSHA204A:
         /* fallthrough */
     case ATSHA206A:

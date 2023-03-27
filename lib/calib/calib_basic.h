@@ -55,7 +55,9 @@ ATCA_STATUS calib_aes_gfm(ATCADevice device, const uint8_t* h, const uint8_t* in
 
 //CheckMAC command functions
 #if CALIB_CHECKMAC_EN
+ATCA_STATUS calib_checkmac_base(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t *challenge, const uint8_t *response, const uint8_t *other_data, uint8_t *resp_mac);
 ATCA_STATUS calib_checkmac(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t *challenge, const uint8_t *response, const uint8_t *other_data);
+ATCA_STATUS calib_checkmac_with_response_mac(ATCADevice device, uint8_t mode, const uint8_t *challenge, const uint8_t *response, const uint8_t *other_data, uint8_t *mac);
 #endif
 
 // Counter command functions
@@ -96,6 +98,11 @@ ATCA_STATUS calib_ecdh_tempkey_ioenc(ATCADevice device, const uint8_t* public_ke
 // GenDig command functions
 #if CALIB_GENDIG_EN
 ATCA_STATUS calib_gendig(ATCADevice device, uint8_t zone, uint16_t key_id, const uint8_t *other_data, uint8_t other_data_size);
+#endif
+
+// GenDivKey command functions
+#if CALIB_GENDIVKEY_EN
+ATCA_STATUS calib_sha105_gendivkey(ATCADevice device, const uint8_t *other_data);
 #endif
 
 // GenKey command functions
@@ -347,51 +354,6 @@ ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data,
                                    uint8_t key_id, uint8_t num_in[NONCE_NUMIN_SIZE]);
 #endif /* CALIB_WRITE_ENC_CA2_EN */
 
-// Lock command functions
-#if ATCAB_LOCK_EN
-
-#if CALIB_TA010_EN
-#define calib_ta010_lock_config_zone(...)       calib_ca2_lock_config_zone(__VA_ARGS__)
-#define calib_ta010_lock_data_zone(...)         calib_ca2_lock_data_zone(__VA_ARGS__)
-#define calib_ta010_lock_data_slot(...)         calib_ca2_lock_data_slot(__VA_ARGS__)
-#endif
-
-#endif
-
-// Read command functions
-#if ATCAB_READ_EN
-
-#if CALIB_TA010_EN
-#define calib_ta010_read_zone(...)              calib_ca2_read_zone(__VA_ARGS__)
-#define calib_ta010_is_locked(...)              calib_ca2_is_locked(__VA_ARGS__)
-#define calib_ta010_is_config_locked(...)       calib_ca2_is_config_locked(__VA_ARGS__)
-#define calib_ta010_is_data_locked(...)         calib_ca2_is_data_locked(__VA_ARGS__)
-#define calib_ta010_read_bytes_zone(...)        calib_ca2_read_bytes_zone(__VA_ARGS__)
-#define calib_ta010_read_serial_number(...)     calib_ca2_read_serial_number(__VA_ARGS__)
-#define calib_ta010_read_config_zone(...)       calib_ca2_read_config_zone(__VA_ARGS__)
-#define calib_ta010_compare_config(...)         calib_ca2_compare_config(__VA_ARGS__)
-#endif
-
-#endif
-
-// Write command functions
-#if ATCAB_WRITE_EN
-
-#if CALIB_TA010_EN
-#define calib_ta010_write(...)                  calib_ca2_write(__VA_ARGS__)
-#define calib_ta010_write_zone(...)             calib_ca2_write_zone(__VA_ARGS__)
-#define calib_ta010_write_bytes_zone(...)       calib_ca2_write_bytes_zone(__VA_ARGS__)
-#define calib_ta010_write_config_zone(...)      calib_ca2_write_config_zone(__VA_ARGS__)
-#define calib_ta010_write_config_counter(...)   calib_ca2_write_config_counter(__VA_ARGS__)
-#endif
-
-#endif
-
-// Sign command functions
-#if ATCAB_SIGN_EN && CALIB_TA010_EN
-#define calib_ta010_sign(...)                   calib_ca2_sign(__VA_ARGS__)
-#endif
-
 /* Map calib functions to atcab names for api compatibility without abstraction overhead */
 #if !ATCA_TA_SUPPORT && !defined(ATCA_USE_ATCAB_FUNCTIONS)
 
@@ -420,6 +382,7 @@ ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data,
 
 // CheckMAC command functions
 #define atcab_checkmac(...)                     calib_checkmac(_gDevice, __VA_ARGS__)
+#define atcab_checkmac_with_response_mac(...)   calib_checkmac_with_response_mac(_gDevice, __VA_ARGS__)
 
 // Counter command functions
 #define atcab_counter(...)                      calib_counter(_gDevice, __VA_ARGS__)
@@ -439,6 +402,9 @@ ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data,
 
 // GenDig command functions
 #define atcab_gendig(...)                       calib_gendig(_gDevice, __VA_ARGS__)
+
+// GenDivKey command functions
+#define atcab_gendivkey(...)                    calib_sha105_gendivkey(_gDevice, __VA_ARGS__)
 
 // GenKey command functions
 #define atcab_genkey_base(...)                  calib_genkey_base(_gDevice, __VA_ARGS__)
@@ -487,6 +453,7 @@ ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data,
 #define atcab_nonce_rand(...)                   calib_nonce_rand(_gDevice, __VA_ARGS__)
 #define atcab_challenge(...)                    calib_challenge(_gDevice, __VA_ARGS__)
 #define atcab_challenge_seed_update(...)        calib_challenge_seed_update(_gDevice, __VA_ARGS__)
+#define atcab_nonce_gen_session_key(...)        calib_nonce_gen_session_key(_gDevice, __VA_ARGS__)
 
 // PrivWrite command functions
 #define atcab_priv_write(...)                   calib_priv_write(_gDevice, __VA_ARGS__)
@@ -520,6 +487,7 @@ ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data,
 #define atcab_read_serial_number(...)           calib_read_serial_number_ext(_gDevice, __VA_ARGS__)
 #define atcab_read_config_zone(...)             calib_read_config_zone(_gDevice, __VA_ARGS__)
 #endif
+
 #define atcab_cmp_config_zone(...)              calib_cmp_config_zone(_gDevice, __VA_ARGS__)
 #define atcab_read_pubkey(...)                  calib_read_pubkey(_gDevice, __VA_ARGS__)
 #define atcab_read_pubkey_ext                   calib_read_pubkey

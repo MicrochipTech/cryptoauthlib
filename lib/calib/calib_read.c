@@ -690,9 +690,9 @@ ATCA_STATUS calib_ca2_read_bytes_zone(ATCADevice device, uint8_t zone, uint16_t 
         if ((3 == slot) || (0 == slot) || (slot > 3))
         {
             return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid slot received");
-    }
+        }
         else if (((slot == 1) && ((length + offset) > 320)) || ((slot == 2) && ((length + offset) > 64)))
-    {
+        {
             return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid length received");
         }
     }
@@ -835,6 +835,10 @@ ATCA_STATUS calib_read_config_zone(ATCADevice device, uint8_t* config_data)
         case ECC204:
         /* fallthrough */
         case TA010:
+        /* fallthrough */
+        case SHA104:
+        /* fallthrough */
+        case SHA105:
             status = calib_ca2_read_config_zone(device, config_data);
             break;
 #endif
@@ -906,6 +910,10 @@ ATCA_STATUS calib_cmp_config_zone(ATCADevice device, uint8_t* config_data, bool*
         case ECC204:
         /* fallthrough */
         case TA010:
+        /* fallthrough */
+        case SHA104:
+        /* fallthrough */
+        case SHA105:
             *same_config = calib_ca2_compare_config(config_data, device_config_data);
             break;
 #endif

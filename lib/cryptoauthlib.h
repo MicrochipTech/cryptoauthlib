@@ -67,6 +67,8 @@
 #define ATCA_ZONE_CA2_CONFIG                ((uint8_t)0x01)
 #define ATCA_ECC204_DEVICE_ID               ((uint8_t)0x5A)
 #define ATCA_TA010_DEVICE_ID                ((uint8_t)0x6A)
+#define ATCA_SHA104_DEVICE_ID               ((uint8_t)0x35)
+#define ATCA_SHA105_DEVICE_ID               ((uint8_t)0x3B)
 #endif
 
 /** Place resulting digest both in Output buffer and TempKey */

@@ -33,6 +33,8 @@
 #include <string.h>
 #include "atca_helpers.h"
 
+#if ATCACERT_COMPCERT_EN
+
 #define ATCACERT_MIN(x, y) ((x) < (y) ? (x) : (y))
 #define ATCACERT_MAX(x, y) ((x) >= (y) ? (x) : (y))
 
@@ -1776,3 +1778,5 @@ int atcacert_max_cert_size(const atcacert_def_t* cert_def,
 
     return ATCACERT_E_SUCCESS;
 }
+
+#endif

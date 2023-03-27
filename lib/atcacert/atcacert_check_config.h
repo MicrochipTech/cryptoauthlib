@@ -30,6 +30,9 @@
 /* The atcacert_ module is only set up to work with classic cryptoauth devices */
 #include "calib/calib_config_check.h"
 
+#ifndef ATCACERT_COMPCERT_EN
+#define ATCACERT_COMPCERT_EN                CALIB_ECC_SUPPORT
+#endif
 
 #ifndef ATCACERT_HW_CHALLENGE_EN
 #define ATCACERT_HW_CHALLENGE_EN            CALIB_RANDOM_EN

@@ -28,7 +28,7 @@
 #include "atcacert_host_sw.h"
 #include "crypto/atca_crypto_sw.h"
 
-#if ATCAC_VERIFY_EN
+#if ATCAC_VERIFY_EN && ATCACERT_COMPCERT_EN
 int atcacert_verify_cert_sw(const atcacert_def_t* cert_def,
                             const uint8_t*        cert,
                             size_t                cert_size,

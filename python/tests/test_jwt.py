@@ -72,9 +72,9 @@ def test_jwt_round_trip_ec_qa(test_jwt_init_live, slot, config):
 
     claims = {
         # The time that the token was issued at
-        'iat': datetime.datetime.utcnow(),
-        # The time the token expires.
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
+        'iat': int(time.time()),
+        # The time the token expires... 1 minute
+        'exp': int(time.time()+(60*60)),
         # A Dummy/Test Audience to verify against
         'aud': 'test_audience'
     }
@@ -112,9 +112,9 @@ def test_jwt_round_trip_hmac_qa(test_jwt_init_live, slot, config):
 
     claims = {
         # The time that the token was issued at
-        'iat': datetime.datetime.utcnow(),
-        # The time the token expires.
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
+        'iat': int(time.time()),
+        # The time the token expires... 1 minute
+        'exp': int(time.time()+(60*60)),
         # A Dummy/Test Audience to verify against
         'aud': 'test_audience'
     }

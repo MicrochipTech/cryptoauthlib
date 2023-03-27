@@ -21,6 +21,8 @@
 #cmakedefine ATCA_TA100_SUPPORT
 #cmakedefine ATCA_ECC204_SUPPORT
 #cmakedefine ATCA_TA010_SUPPORT
+#cmakedefine ATCA_SHA104_SUPPORT
+#cmakedefine ATCA_SHA105_SUPPORT
 
 /** Device Override - Library Assumes ATECC608B support in checks */
 #cmakedefine ATCA_ATECC608A_SUPPORT

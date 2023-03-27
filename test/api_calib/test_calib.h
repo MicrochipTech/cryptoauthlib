@@ -36,6 +36,7 @@ extern "C" {
 
 ATCA_STATUS calib_config_get_slot_by_test(uint8_t test_type, uint16_t* handle);
 ATCA_STATUS calib_config_get_ecc204_slot_by_test(uint8_t test_type, uint16_t* handle);
+ATCA_STATUS calib_config_get_sha10x_slot_by_test(uint8_t test_type, uint16_t* handle);
 
 /* Test Commands */
 int run_calib_tests(int argc, char* argv[]);
