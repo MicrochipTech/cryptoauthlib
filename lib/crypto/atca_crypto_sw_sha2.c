@@ -35,7 +35,7 @@
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
-int atcac_sw_sha2_256_init(atcac_sha2_256_ctx* ctx)
+ATCA_STATUS atcac_sw_sha2_256_init(atcac_sha2_256_ctx* ctx)
 {
     if (sizeof(sw_sha256_ctx) > sizeof(atcac_sha2_256_ctx))
     {
@@ -54,7 +54,7 @@ int atcac_sw_sha2_256_init(atcac_sha2_256_ctx* ctx)
     \return ATCA_SUCCESS
  */
 
-int atcac_sw_sha2_256_update(atcac_sha2_256_ctx* ctx, const uint8_t* data, size_t data_size)
+ATCA_STATUS atcac_sw_sha2_256_update(atcac_sha2_256_ctx* ctx, const uint8_t* data, size_t data_size)
 {
     sw_sha256_update((sw_sha256_ctx*)ctx, data, (uint32_t)data_size);
 
@@ -67,7 +67,7 @@ int atcac_sw_sha2_256_update(atcac_sha2_256_ctx* ctx, const uint8_t* data, size_
  * \return ATCA_SUCCESS
  */
 
-int atcac_sw_sha2_256_finish(atcac_sha2_256_ctx* ctx, uint8_t digest[ATCA_SHA2_256_DIGEST_SIZE])
+ATCA_STATUS atcac_sw_sha2_256_finish(atcac_sha2_256_ctx* ctx, uint8_t digest[ATCA_SHA2_256_DIGEST_SIZE])
 {
     sw_sha256_final((sw_sha256_ctx*)ctx, digest);
 
@@ -82,9 +82,9 @@ int atcac_sw_sha2_256_finish(atcac_sha2_256_ctx* ctx, uint8_t digest[ATCA_SHA2_2
  * \param[out] digest     result
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-int atcac_sw_sha2_256(const uint8_t* data, size_t data_size, uint8_t digest[ATCA_SHA2_256_DIGEST_SIZE])
+ATCA_STATUS atcac_sw_sha2_256(const uint8_t* data, size_t data_size, uint8_t digest[ATCA_SHA2_256_DIGEST_SIZE])
 {
-    int ret;
+    ATCA_STATUS ret;
     atcac_sha2_256_ctx ctx;
 
     ret = atcac_sw_sha2_256_init(&ctx);
@@ -100,12 +100,8 @@ int atcac_sw_sha2_256(const uint8_t* data, size_t data_size, uint8_t digest[ATCA
     }
 
     ret = atcac_sw_sha2_256_finish(&ctx, digest);
-    if (ret != ATCA_SUCCESS)
-    {
-        return ret;
-    }
 
-    return ATCA_SUCCESS;
+    return ret;
 }
 #endif /* ATCAC_SHA256_EN */
 
@@ -127,7 +123,7 @@ ATCA_STATUS atcac_sha256_hmac_init(
     {
         if (klen <= ATCA_SHA2_256_BLOCK_SIZE)
         {
-            memcpy(ctx->ipad, key, klen);
+            (void)memcpy(ctx->ipad, key, klen);
             status = ATCA_SUCCESS;
         }
         else
@@ -140,10 +136,10 @@ ATCA_STATUS atcac_sha256_hmac_init(
 
         if (ATCA_SUCCESS == status)
         {
-            int i;
+            unsigned int i;
             if (klen < ATCA_SHA2_256_BLOCK_SIZE)
             {
-                memset(&ctx->ipad[klen], 0, ATCA_SHA2_256_BLOCK_SIZE - klen);
+                (void)memset(&ctx->ipad[klen], 0, ATCA_SHA2_256_BLOCK_SIZE - klen);
             }
 
             for (i = 0; i < ATCA_SHA2_256_BLOCK_SIZE; i++)
@@ -218,7 +214,19 @@ ATCA_STATUS atcac_sha256_hmac_counter(
 {
     ATCA_STATUS ret = ATCA_GEN_FAIL;
 
-    if (ctx)
+#ifdef ATCA_KDF_HMAC_COUNTER_LEN_IN_BYTES
+    if (diglen > ATCA_SHA2_256_DIGEST_SIZE)
+    {
+        return ATCA_BAD_PARAM;
+    }
+#else
+    if (diglen > ATCA_SHA2_256_DIGEST_SIZE/8U)
+    {
+        return ATCA_BAD_PARAM;
+    }
+#endif
+
+    if (NULL != ctx)
     {
         uint32_t tmp = 1;
 
@@ -228,8 +236,11 @@ ATCA_STATUS atcac_sha256_hmac_counter(
         tmp = 0;
         (void)atcac_sha256_hmac_update(ctx, (uint8_t*)&tmp, 1);
         (void)atcac_sha256_hmac_update(ctx, data, data_len);
-
-        tmp = ATCA_UINT16_HOST_TO_BE(diglen);
+#ifdef ATCA_KDF_HMAC_COUNTER_LEN_IN_BYTES
+        tmp = ATCA_UINT16_HOST_TO_BE((uint16_t)(diglen & UINT16_MAX));
+#else
+        tmp = ATCA_UINT16_HOST_TO_BE((uint16_t)((diglen * 8u) & UINT16_MAX));
+#endif
         (void)atcac_sha256_hmac_update(ctx, (uint8_t*)&tmp, 2);
 
         ret = atcac_sha256_hmac_finish(ctx, digest, &diglen);

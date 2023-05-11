@@ -28,7 +28,7 @@
 #ifndef PKCS11_ENCRYPT_H_
 #define PKCS11_ENCRYPT_H_
 
-#include "pkcs11.h"
+#include "cryptoki.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -49,9 +49,9 @@ CK_RV pkcs11_decrypt(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedData, CK_
                      CK_BYTE_PTR pData, CK_ULONG_PTR pulDataLen);
 
 CK_RV pkcs11_decrypt_update(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedData, CK_ULONG ulEncryptedDataLen,
-                            CK_BYTE_PTR pData, CK_ULONG_PTR pDataLen);
+                            CK_BYTE_PTR pData, CK_ULONG_PTR pulDataLen);
 
-CK_RV pkcs11_decrypt_final(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG_PTR pDataLen);
+CK_RV pkcs11_decrypt_final(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG_PTR pulDataLen);
 
 
 #ifdef __cplusplus

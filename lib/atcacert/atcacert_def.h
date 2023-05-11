@@ -129,9 +129,6 @@ typedef enum atcacert_std_cert_element_e
 // Some of these structures may need to be byte-accurate
 #ifndef ATCA_NO_PRAGMA_PACK
 #pragma pack(push, 1)
-#define ATCA_PACKED
-#else
-#define ATCA_PACKED     __attribute__ ((packed))
 #endif
 
 /**
@@ -236,7 +233,7 @@ extern "C" {
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_get_device_locs(const atcacert_def_t*  cert_def,
+ATCA_STATUS atcacert_get_device_locs(const atcacert_def_t*  cert_def,
                              atcacert_device_loc_t* device_locs,
                              size_t*                device_locs_count,
                              size_t                 device_locs_max_count,
@@ -259,7 +256,7 @@ int atcacert_get_device_locs(const atcacert_def_t*  cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_cert_build_start(atcacert_build_state_t* build_state,
+ATCA_STATUS atcacert_cert_build_start(atcacert_build_state_t* build_state,
                               const atcacert_def_t*   cert_def,
                               uint8_t*                cert,
                               size_t*                 cert_size,
@@ -277,7 +274,7 @@ int atcacert_cert_build_start(atcacert_build_state_t* build_state,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_cert_build_process(atcacert_build_state_t*      build_state,
+ATCA_STATUS atcacert_cert_build_process(atcacert_build_state_t*      build_state,
                                 const atcacert_device_loc_t* device_loc,
                                 const uint8_t*               device_data);
 
@@ -293,7 +290,7 @@ int atcacert_cert_build_process(atcacert_build_state_t*      build_state,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_cert_build_finish(atcacert_build_state_t* build_state);
+ATCA_STATUS atcacert_cert_build_finish(atcacert_build_state_t* build_state);
 
 /**
  * \brief Gets the dynamic data that would be saved to the specified device location.  This
@@ -312,7 +309,7 @@ int atcacert_cert_build_finish(atcacert_build_state_t* build_state);
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_get_device_data(const atcacert_def_t*        cert_def,
+ATCA_STATUS atcacert_get_device_data(const atcacert_def_t*        cert_def,
                              const uint8_t*               cert,
                              size_t                       cert_size,
                              const atcacert_device_loc_t* device_loc,
@@ -328,7 +325,7 @@ int atcacert_get_device_data(const atcacert_def_t*        cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_set_subj_public_key(const atcacert_def_t* cert_def,
+ATCA_STATUS atcacert_set_subj_public_key(const atcacert_def_t* cert_def,
                                  uint8_t*              cert,
                                  size_t                cert_size,
                                  const uint8_t         subj_public_key[64]);
@@ -344,7 +341,7 @@ int atcacert_set_subj_public_key(const atcacert_def_t* cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_get_subj_public_key(const atcacert_def_t * cert_def,
+ATCA_STATUS atcacert_get_subj_public_key(const atcacert_def_t * cert_def,
                                  const uint8_t *        cert,
                                  size_t                 cert_size,
                                  uint8_t                subj_public_key[64]);
@@ -359,7 +356,7 @@ int atcacert_get_subj_public_key(const atcacert_def_t * cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_get_subj_key_id(const atcacert_def_t * cert_def,
+ATCA_STATUS atcacert_get_subj_key_id(const atcacert_def_t * cert_def,
                              const uint8_t *        cert,
                              size_t                 cert_size,
                              uint8_t                subj_key_id[20]);
@@ -376,7 +373,7 @@ int atcacert_get_subj_key_id(const atcacert_def_t * cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_set_signature(const atcacert_def_t* cert_def,
+ATCA_STATUS atcacert_set_signature(const atcacert_def_t* cert_def,
                            uint8_t*              cert,
                            size_t*               cert_size,
                            size_t                max_cert_size,
@@ -393,7 +390,7 @@ int atcacert_set_signature(const atcacert_def_t* cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_get_signature(const atcacert_def_t * cert_def,
+ATCA_STATUS atcacert_get_signature(const atcacert_def_t * cert_def,
                            const uint8_t *        cert,
                            size_t                 cert_size,
                            uint8_t                signature[64]);
@@ -409,7 +406,7 @@ int atcacert_get_signature(const atcacert_def_t * cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_set_issue_date(const atcacert_def_t*    cert_def,
+ATCA_STATUS atcacert_set_issue_date(const atcacert_def_t*    cert_def,
                             uint8_t*                 cert,
                             size_t                   cert_size,
                             const atcacert_tm_utc_t* timestamp);
@@ -425,7 +422,7 @@ int atcacert_set_issue_date(const atcacert_def_t*    cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_get_issue_date(const atcacert_def_t* cert_def,
+ATCA_STATUS atcacert_get_issue_date(const atcacert_def_t* cert_def,
                             const uint8_t*        cert,
                             size_t                cert_size,
                             atcacert_tm_utc_t*    timestamp);
@@ -441,7 +438,7 @@ int atcacert_get_issue_date(const atcacert_def_t* cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_set_expire_date(const atcacert_def_t*    cert_def,
+ATCA_STATUS atcacert_set_expire_date(const atcacert_def_t*    cert_def,
                              uint8_t*                 cert,
                              size_t                   cert_size,
                              const atcacert_tm_utc_t* timestamp);
@@ -457,7 +454,7 @@ int atcacert_set_expire_date(const atcacert_def_t*    cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_get_expire_date(const atcacert_def_t* cert_def,
+ATCA_STATUS atcacert_get_expire_date(const atcacert_def_t* cert_def,
                              const uint8_t*        cert,
                              size_t                cert_size,
                              atcacert_tm_utc_t*    timestamp);
@@ -472,7 +469,7 @@ int atcacert_get_expire_date(const atcacert_def_t* cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_set_signer_id(const atcacert_def_t* cert_def,
+ATCA_STATUS atcacert_set_signer_id(const atcacert_def_t* cert_def,
                            uint8_t*              cert,
                            size_t                cert_size,
                            const uint8_t         signer_id[2]);
@@ -487,7 +484,7 @@ int atcacert_set_signer_id(const atcacert_def_t* cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_get_signer_id(const atcacert_def_t * cert_def,
+ATCA_STATUS atcacert_get_signer_id(const atcacert_def_t * cert_def,
                            const uint8_t *        cert,
                            size_t                 cert_size,
                            uint8_t                signer_id[2]);
@@ -504,7 +501,7 @@ int atcacert_get_signer_id(const atcacert_def_t * cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_set_cert_sn(const atcacert_def_t* cert_def,
+ATCA_STATUS atcacert_set_cert_sn(const atcacert_def_t* cert_def,
                          uint8_t*              cert,
                          size_t*               cert_size,
                          size_t                max_cert_size,
@@ -528,7 +525,7 @@ int atcacert_set_cert_sn(const atcacert_def_t* cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_gen_cert_sn(const atcacert_def_t* cert_def,
+ATCA_STATUS atcacert_gen_cert_sn(const atcacert_def_t* cert_def,
                          uint8_t*              cert,
                          size_t                cert_size,
                          const uint8_t         device_sn[9]);
@@ -545,7 +542,7 @@ int atcacert_gen_cert_sn(const atcacert_def_t* cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_get_cert_sn(const atcacert_def_t* cert_def,
+ATCA_STATUS atcacert_get_cert_sn(const atcacert_def_t* cert_def,
                          const uint8_t*        cert,
                          size_t                cert_size,
                          uint8_t*              cert_sn,
@@ -563,7 +560,7 @@ int atcacert_get_cert_sn(const atcacert_def_t* cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_set_auth_key_id(const atcacert_def_t* cert_def,
+ATCA_STATUS atcacert_set_auth_key_id(const atcacert_def_t* cert_def,
                              uint8_t*              cert,
                              size_t                cert_size,
                              const uint8_t         auth_public_key[64]);
@@ -578,7 +575,7 @@ int atcacert_set_auth_key_id(const atcacert_def_t* cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_set_auth_key_id_raw(const atcacert_def_t* cert_def,
+ATCA_STATUS atcacert_set_auth_key_id_raw(const atcacert_def_t* cert_def,
                                  uint8_t*              cert,
                                  size_t                cert_size,
                                  const uint8_t*        auth_key_id);
@@ -593,7 +590,7 @@ int atcacert_set_auth_key_id_raw(const atcacert_def_t* cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_get_auth_key_id(const atcacert_def_t * cert_def,
+ATCA_STATUS atcacert_get_auth_key_id(const atcacert_def_t * cert_def,
                              const uint8_t *        cert,
                              size_t                 cert_size,
                              uint8_t                auth_key_id[20]);
@@ -613,7 +610,7 @@ int atcacert_get_auth_key_id(const atcacert_def_t * cert_def,
  * \return ATCACERT_E_SUCCESS on success. ATCACERT_E_WRONG_CERT_DEF if the template ID, chain ID, and/or SN source
  *         don't match between the cert_def and the compressed certificate.
  */
-int atcacert_set_comp_cert(const atcacert_def_t* cert_def,
+ATCA_STATUS atcacert_set_comp_cert(const atcacert_def_t* cert_def,
                            uint8_t*              cert,
                            size_t*               cert_size,
                            size_t                max_cert_size,
@@ -629,7 +626,7 @@ int atcacert_set_comp_cert(const atcacert_def_t* cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_get_comp_cert(const atcacert_def_t * cert_def,
+ATCA_STATUS atcacert_get_comp_cert(const atcacert_def_t * cert_def,
                            const uint8_t *        cert,
                            size_t                 cert_size,
                            uint8_t                comp_cert[72]);
@@ -645,7 +642,7 @@ int atcacert_get_comp_cert(const atcacert_def_t * cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_get_tbs(const atcacert_def_t* cert_def,
+ATCA_STATUS atcacert_get_tbs(const atcacert_def_t* cert_def,
                      const uint8_t*        cert,
                      size_t                cert_size,
                      const uint8_t**       tbs,
@@ -661,7 +658,7 @@ int atcacert_get_tbs(const atcacert_def_t* cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_get_tbs_digest(const atcacert_def_t * cert_def,
+ATCA_STATUS atcacert_get_tbs_digest(const atcacert_def_t * cert_def,
                             const uint8_t *        cert,
                             size_t                 cert_size,
                             uint8_t                tbs_digest[32]);
@@ -679,7 +676,7 @@ int atcacert_get_tbs_digest(const atcacert_def_t * cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_set_cert_element(const atcacert_def_t*      cert_def,
+ATCA_STATUS atcacert_set_cert_element(const atcacert_def_t*      cert_def,
                               const atcacert_cert_loc_t* cert_loc,
                               uint8_t*                   cert,
                               size_t                     cert_size,
@@ -699,7 +696,7 @@ int atcacert_set_cert_element(const atcacert_def_t*      cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_get_cert_element(const atcacert_def_t*      cert_def,
+ATCA_STATUS atcacert_get_cert_element(const atcacert_def_t*      cert_def,
                               const atcacert_cert_loc_t* cert_loc,
                               const uint8_t*             cert,
                               size_t                     cert_size,
@@ -723,7 +720,7 @@ int atcacert_get_cert_element(const atcacert_def_t*      cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_get_key_id(const uint8_t public_key[64], uint8_t key_id[20]);
+ATCA_STATUS atcacert_get_key_id(const uint8_t public_key[64], uint8_t key_id[20]);
 
 /**
  * \brief Merge a new device location into a list of device locations. If the new location overlaps
@@ -747,7 +744,7 @@ int atcacert_get_key_id(const uint8_t public_key[64], uint8_t key_id[20]);
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_merge_device_loc(atcacert_device_loc_t*       device_locs,
+ATCA_STATUS atcacert_merge_device_loc(atcacert_device_loc_t*       device_locs,
                               size_t*                      device_locs_count,
                               size_t                       device_locs_max_count,
                               const atcacert_device_loc_t* device_loc,
@@ -758,7 +755,7 @@ int atcacert_merge_device_loc(atcacert_device_loc_t*       device_locs,
  *  \param[in] device_loc2  Second device location o check.
  *  \return 0 (false) if they don't overlap, non-zero if the do overlap.
  */
-int atcacert_is_device_loc_overlap(const atcacert_device_loc_t* device_loc1,
+bool atcacert_is_device_loc_overlap(const atcacert_device_loc_t* device_loc1,
                                    const atcacert_device_loc_t* device_loc2);
 
 /**
@@ -798,7 +795,7 @@ void atcacert_public_key_remove_padding(const uint8_t padded_key[72], uint8_t ra
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_transform_data(atcacert_transform_t transform,
+ATCA_STATUS atcacert_transform_data(atcacert_transform_t transform,
                             const uint8_t*       data,
                             size_t               data_size,
                             uint8_t*             destination,
@@ -813,7 +810,7 @@ int atcacert_transform_data(atcacert_transform_t transform,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_max_cert_size(const atcacert_def_t* cert_def,
+ATCA_STATUS atcacert_max_cert_size(const atcacert_def_t* cert_def,
                            size_t*               max_cert_size);
 
 /** @} */

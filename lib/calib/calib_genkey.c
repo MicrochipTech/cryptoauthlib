@@ -68,20 +68,20 @@ ATCA_STATUS calib_genkey_base(ATCADevice device, uint8_t mode, uint16_t key_id, 
         // Build GenKey command
         packet.param1 = mode;
         packet.param2 = key_id;
-        if (other_data)
+        if (NULL != other_data)
         {
-            memcpy(packet.data, other_data, GENKEY_OTHER_DATA_SIZE);
+            (void)memcpy(packet.data, other_data, GENKEY_OTHER_DATA_SIZE);
         }
 
         if ((status = atGenKey(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "atGenKey - failed");
+            (void)ATCA_TRACE(status, "atGenKey - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "calib_genkey_base - execution failed");
+            (void)ATCA_TRACE(status, "calib_genkey_base - execution failed");
             break;
         }
 
@@ -89,7 +89,7 @@ ATCA_STATUS calib_genkey_base(ATCADevice device, uint8_t mode, uint16_t key_id, 
         {
             if (packet.data[ATCA_COUNT_IDX] == (ATCA_PUB_KEY_SIZE + ATCA_PACKET_OVERHEAD))
             {
-                memcpy(public_key, &packet.data[ATCA_RSP_DATA_IDX], ATCA_PUB_KEY_SIZE);
+                (void)memcpy(public_key, &packet.data[ATCA_RSP_DATA_IDX], ATCA_PUB_KEY_SIZE);
             }
             else
             {
@@ -97,7 +97,7 @@ ATCA_STATUS calib_genkey_base(ATCADevice device, uint8_t mode, uint16_t key_id, 
             }
         }
     }
-    while (0);
+    while (false);
 
     return status;
 }
@@ -158,7 +158,7 @@ ATCA_STATUS calib_genkey_mac(ATCADevice device, uint8_t* public_key, uint8_t* ma
     ATCAPacket packet;
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (device)
+    if (NULL != device)
     {
         packet.param1 = GENKEY_MODE_MAC;
         packet.param2 = (uint16_t)0x00;
@@ -173,13 +173,13 @@ ATCA_STATUS calib_genkey_mac(ATCADevice device, uint8_t* public_key, uint8_t* ma
         {
             if ((ATCA_PUB_KEY_SIZE + ATCA_PACKET_OVERHEAD + MAC_SIZE) == packet.data[ATCA_COUNT_IDX])
             {
-                if (public_key)
+                if (NULL != public_key)
                 {
-                    memcpy(public_key, &packet.data[ATCA_RSP_DATA_IDX], ATCA_PUB_KEY_SIZE);
+                    (void)memcpy(public_key, &packet.data[ATCA_RSP_DATA_IDX], ATCA_PUB_KEY_SIZE);
                 }
-                if (mac)
+                if (NULL != mac)
                 {
-                    memcpy(mac, &packet.data[ATCA_RSP_DATA_IDX + ATCA_PUB_KEY_SIZE], MAC_SIZE);
+                    (void)memcpy(mac, &packet.data[ATCA_RSP_DATA_IDX + ATCA_PUB_KEY_SIZE], MAC_SIZE);
                 }
             }
             else
@@ -190,13 +190,13 @@ ATCA_STATUS calib_genkey_mac(ATCADevice device, uint8_t* public_key, uint8_t* ma
         }
         else
         {
-            ATCA_TRACE(status, "calib_genkey_mac - failed");
+            (void)ATCA_TRACE(status, "calib_genkey_mac - failed");
         }
 
     }
     else
     {
-        ATCA_TRACE(status, "NULL pointer encountered");
+        (void)ATCA_TRACE(status, "NULL pointer encountered");
     }
 
     return status;

@@ -84,6 +84,10 @@ typedef struct
 #define DO_NOT_TEST_CERT
 #endif
 
+#ifndef DO_NOT_TEST_CERT
+#include "atcacert/atcacert_check_config.h"
+#endif
+
 #if ATCA_CA_SUPPORT
 #include "host/atca_host.h"
 #endif

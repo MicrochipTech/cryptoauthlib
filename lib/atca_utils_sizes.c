@@ -26,10 +26,15 @@
  */
 
 #include "cryptoauthlib.h"
-#include "atcacert/atcacert_check_config.h"
+
+#pragma coverity compliance block deviate "MISRA C-2012 Rule 20.12" "This macro is used as a template to generate hooks for python integration"
 
 #define SIZE_OF_API_T(x)  size_t x ## _size(void); size_t x ## _size(void) { return sizeof( x ); }
 #define SIZE_OF_API_S(x)  size_t x ## _size(void); size_t x ## _size(void) { return sizeof(struct x ); }
+
+#if ATCA_CA_SUPPORT || defined(ATCA_USE_ATCAB_FUNCTIONS)
+#include "atcacert/atcacert_check_config.h"
+#endif
 
 #if ATCACERT_COMPCERT_EN
 #include "atcacert/atcacert_date.h"
@@ -112,3 +117,5 @@ SIZE_OF_API_S(atca_iface)
 
 /* atca_status.h */
 SIZE_OF_API_T(ATCA_STATUS)
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 20.12"

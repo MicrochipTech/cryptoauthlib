@@ -44,17 +44,17 @@
 
 #ifdef ATCA_NO_HEAP
 static pkcs11_session_ctx pkcs11_session_cache[PKCS11_MAX_SESSIONS_ALLOWED];
-#elif UINTPTR_MAX == 0xffffffffffffffff
+#elif UINTPTR_MAX == 0xffffffffffffffffu
 static pkcs11_session_ctx_ptr pkcs11_session_cache[PKCS11_MAX_SESSIONS_ALLOWED];
 #endif
 
 static pkcs11_session_ctx_ptr pkcs11_allocate_session_context(void)
 {
-    pkcs11_session_ctx_ptr rv = NULL_PTR;
+    pkcs11_session_ctx_ptr rv = NULL;
 
 #ifdef ATCA_NO_HEAP
     CK_ULONG i;
-    for (i = 0; i < PKCS11_MAX_SESSIONS_ALLOWED; i++)
+    for (i = 0; i < (CK_ULONG)PKCS11_MAX_SESSIONS_ALLOWED; i++)
     {
 
         if (!pkcs11_session_cache[i].initialized)
@@ -63,11 +63,11 @@ static pkcs11_session_ctx_ptr pkcs11_allocate_session_context(void)
             break;
         }
     }
-#elif UINTPTR_MAX == 0xffffffffffffffff
+#elif UINTPTR_MAX == 0xffffffffffffffffu
     CK_ULONG i;
-    for (i = 0; i < PKCS11_MAX_SESSIONS_ALLOWED; i++)
+    for (i = 0; i < (CK_ULONG)PKCS11_MAX_SESSIONS_ALLOWED; i++)
     {
-        if (!pkcs11_session_cache[i])
+        if (NULL == pkcs11_session_cache[i])
         {
             /* Use dynamic memory assignement from OS abstraction layer */
             rv = pkcs11_os_malloc(sizeof(pkcs11_session_ctx));
@@ -82,12 +82,12 @@ static pkcs11_session_ctx_ptr pkcs11_allocate_session_context(void)
     return rv;
 }
 
-pkcs11_session_ctx_ptr pkcs11_get_session_context(CK_SESSION_HANDLE hSession)
+static pkcs11_session_ctx_ptr pkcs11_get_session_context(CK_SESSION_HANDLE hSession)
 {
-#if UINTPTR_MAX == 0xffffffffffffffff
-    pkcs11_session_ctx_ptr rv = NULL_PTR;
+#if UINTPTR_MAX == 0xffffffffffffffffu
+    pkcs11_session_ctx_ptr rv = NULL;
     CK_ULONG i;
-    for (i = 0; i < PKCS11_MAX_SESSIONS_ALLOWED; i++)
+    for (i = 0; i < (CK_ULONG)PKCS11_MAX_SESSIONS_ALLOWED; i++)
     {
 #ifdef ATCA_NO_HEAP
         if (hSession == pkcs11_session_cache[i].handle)
@@ -96,7 +96,7 @@ pkcs11_session_ctx_ptr pkcs11_get_session_context(CK_SESSION_HANDLE hSession)
             break;
         }
 #else
-        if (pkcs11_session_cache[i])
+        if (NULL != pkcs11_session_cache[i])
         {
             if (hSession == pkcs11_session_cache[i]->handle)
             {
@@ -116,13 +116,13 @@ static CK_RV pkcs11_session_free_session_context(pkcs11_session_ctx_ptr session_
 {
     CK_RV rv = CKR_ARGUMENTS_BAD;
 
-    if (session_ctx)
+    if (NULL != session_ctx)
     {
         (void)pkcs11_util_memset(session_ctx, sizeof(pkcs11_session_ctx), 0, sizeof(pkcs11_session_ctx));
 #ifndef ATCA_NO_HEAP
-#if UINTPTR_MAX == 0xffffffffffffffff
+#if UINTPTR_MAX == 0xffffffffffffffffu
         CK_ULONG i;
-        for (i = 0; i < PKCS11_MAX_SESSIONS_ALLOWED; i++)
+        for (i = 0; i < (CK_ULONG)PKCS11_MAX_SESSIONS_ALLOWED; i++)
         {
             if (session_ctx == pkcs11_session_cache[i])
             {
@@ -146,7 +146,7 @@ CK_RV pkcs11_session_check(pkcs11_session_ctx_ptr * pSession, CK_SESSION_HANDLE 
     pkcs11_session_ctx_ptr ctx = pkcs11_get_session_context(hSession);
     CK_RV rv = CKR_SESSION_HANDLE_INVALID;
 
-    if (ctx)
+    if (NULL != ctx)
     {
         if (ctx->initialized)
         {
@@ -158,11 +158,11 @@ CK_RV pkcs11_session_check(pkcs11_session_ctx_ptr * pSession, CK_SESSION_HANDLE 
         }
     }
 
-    if (pSession)
+    if (NULL != pSession)
     {
-        if (rv)
+        if (CKR_OK != rv)
         {
-            *pSession = NULL_PTR;
+            *pSession = NULL;
         }
         else
         {
@@ -184,21 +184,22 @@ CK_RV pkcs11_session_open(
     pkcs11_slot_ctx_ptr slot_ctx;
     pkcs11_session_ctx_ptr session_ctx;
 
-    ((void)notify);
     ((void)pApplication);
+    /* coverity[misra_c_2012_rule_11_1_violation:SUPPRESS] */
+    ((void)notify);
 
-    if (!lib_ctx || !lib_ctx->initialized)
+    if (NULL == lib_ctx || FALSE == lib_ctx->initialized)
     {
         return CKR_CRYPTOKI_NOT_INITIALIZED;
     }
 
-    if (!phSession)
+    if (NULL == phSession)
     {
         return CKR_ARGUMENTS_BAD;
     }
 
     /* See PKCS11 Sec 5.6 - Legacy reaons */
-    if (!(flags & CKF_SERIAL_SESSION))
+    if (CKF_SERIAL_SESSION != (flags & CKF_SERIAL_SESSION))
     {
         return CKR_SESSION_PARALLEL_NOT_SUPPORTED;
     }
@@ -206,7 +207,7 @@ CK_RV pkcs11_session_open(
     /* Retrieve the slot context - i.e. the attached device (ECC508A, SHA256, etc) */
     slot_ctx = pkcs11_slot_get_context(lib_ctx, slotID);
 
-    if (!slot_ctx)
+    if (NULL == slot_ctx)
     {
         return CKR_SLOT_ID_INVALID;
     }
@@ -226,7 +227,7 @@ CK_RV pkcs11_session_open(
     session_ctx = pkcs11_allocate_session_context();
 
     /* Check that a session was created */
-    if (!session_ctx)
+    if (NULL == session_ctx)
     {
         return CKR_HOST_MEMORY;
     }
@@ -237,6 +238,7 @@ CK_RV pkcs11_session_open(
     session_ctx->active_mech = CKM_VENDOR_DEFINED;
 
     /* Assign the session handle */
+    /* coverity[cert_int36_c_violation] A truncated pointer on 64 bit platforms should still be unique in a memory space */
     session_ctx->handle = (CK_SESSION_HANDLE)session_ctx;
 
     *phSession = session_ctx->handle;
@@ -250,12 +252,12 @@ CK_RV pkcs11_session_close(CK_SESSION_HANDLE hSession)
     pkcs11_session_ctx_ptr session_ctx = pkcs11_get_session_context(hSession);
     pkcs11_slot_ctx_ptr slot_ctx;
 
-    if (!lib_ctx || !lib_ctx->initialized)
+    if (NULL == lib_ctx || FALSE == lib_ctx->initialized)
     {
         return CKR_CRYPTOKI_NOT_INITIALIZED;
     }
 
-    if (!session_ctx)
+    if (NULL == session_ctx)
     {
         return CKR_SESSION_HANDLE_INVALID;
     }
@@ -268,7 +270,7 @@ CK_RV pkcs11_session_close(CK_SESSION_HANDLE hSession)
     /* Get the slot */
     slot_ctx = (pkcs11_slot_ctx_ptr)session_ctx->slot;
 
-    if (slot_ctx)
+    if (NULL != slot_ctx)
     {
         /* Do whatever we need to shutdown the session with the device */
     }
@@ -292,14 +294,14 @@ CK_RV pkcs11_session_closeall(CK_SLOT_ID slotID)
     pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
     pkcs11_slot_ctx_ptr slot_ctx;
 
-    if (!lib_ctx || !lib_ctx->initialized)
+    if (NULL == lib_ctx || FALSE == lib_ctx->initialized)
     {
         return CKR_CRYPTOKI_NOT_INITIALIZED;
     }
 
     slot_ctx = pkcs11_slot_get_context(lib_ctx, slotID);
 
-    if (!slot_ctx)
+    if (NULL == slot_ctx)
     {
         return CKR_SLOT_ID_INVALID;
     }
@@ -308,8 +310,8 @@ CK_RV pkcs11_session_closeall(CK_SLOT_ID slotID)
        we'd loop over the sessions and close them in order*/
 #ifdef ATCA_NO_HEAP
     {
-        int i;
-        for (i = 0; i < PKCS11_MAX_SESSIONS_ALLOWED; i++)
+        CK_ULONG i;
+        for (i = 0; i < (CK_ULONG)PKCS11_MAX_SESSIONS_ALLOWED; i++)
         {
             pkcs11_session_close(pkcs11_session_cache[i].handle);
         }
@@ -328,17 +330,17 @@ CK_RV pkcs11_session_get_info(CK_SESSION_HANDLE hSession, CK_SESSION_INFO_PTR pI
     pkcs11_session_ctx_ptr session_ctx = pkcs11_get_session_context(hSession);
     pkcs11_slot_ctx_ptr slot_ctx;
 
-    if (!lib_ctx || !lib_ctx->initialized)
+    if (NULL == lib_ctx || FALSE == lib_ctx->initialized)
     {
         return CKR_CRYPTOKI_NOT_INITIALIZED;
     }
 
-    if (!pInfo)
+    if (NULL == pInfo)
     {
         return CKR_ARGUMENTS_BAD;
     }
 
-    if (!session_ctx)
+    if (NULL == session_ctx)
     {
         return CKR_SESSION_HANDLE_INVALID;
     }
@@ -352,7 +354,7 @@ CK_RV pkcs11_session_get_info(CK_SESSION_HANDLE hSession, CK_SESSION_INFO_PTR pI
     pInfo->ulDeviceError = session_ctx->error;
 
     slot_ctx = session_ctx->slot;
-    if (slot_ctx)
+    if (NULL != slot_ctx)
     {
         pInfo->slotID = slot_ctx->slot_id;
     }
@@ -367,27 +369,23 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
     pkcs11_lib_ctx_ptr pLibCtx = pkcs11_get_context();
     pkcs11_session_ctx_ptr session_ctx = pkcs11_get_session_context(hSession);
     bool is_ca_device = atcab_is_ca_device(atcab_get_device_type());
-    uint16_t key_len = is_ca_device ? 32 : 16;
+    uint16_t key_len = (uint16_t)(is_ca_device ? 32 : 16);
     CK_RV rv;
 
     ((void)userType);
 
-#if ATCA_TA_SUPPORT
-    ATCA_STATUS status;
-#endif
-
-    if (!pLibCtx || !pLibCtx->initialized)
+    if (NULL == pLibCtx || FALSE == pLibCtx->initialized)
     {
         return CKR_CRYPTOKI_NOT_INITIALIZED;
     }
 
-    if (!pPin || !ulPinLen)
+    if (NULL == pPin || 0u == ulPinLen)
     {
         PKCS11_DEBUG("pin: %p, pin-len: %d\n", pPin, ulPinLen);
         return CKR_ARGUMENTS_BAD;
     }
 
-    if (!session_ctx)
+    if (NULL == session_ctx)
     {
         return CKR_SESSION_HANDLE_INVALID;
     }
@@ -405,7 +403,7 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
     if (CKR_OK == (rv = pkcs11_lock_both(pLibCtx)))
     {
 #ifndef PKCS11_PIN_KDF_ALWAYS
-        if (2 * key_len == ulPinLen)
+        if ((uint16_t)(2u * key_len) == ulPinLen)
         {
             rv = pkcs11_token_convert_pin_to_key(pPin, ulPinLen, NULL, 0, session_ctx->slot->read_key, key_len);
         }
@@ -421,21 +419,21 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
         }
 
 #if ATCA_TA_SUPPORT && ATCA_HOSTLIB_EN
+        ATCA_STATUS status;
         if (CKR_OK == rv && atcab_is_ta_device(atcab_get_device_type()))
         {
-            uint8_t auth_i_nonce[16];
-            uint8_t auth_r_nonce[16];
+            uint8_t auth_i_nonce[16] = {0};
+            uint8_t auth_r_nonce[16] = {0};
 
 #if PKCS11_AUTH_TERMINATE_BEFORE_LOGIN
 	    ATCADevice device = atcab_get_device();
 	    device->session_key_id = TA_HANDLE_AUTH_SESSION;
-	    status  = talib_auth_terminate(device);
+	    (void)talib_auth_terminate(device);
 #endif
             (void)atcac_sw_random(auth_r_nonce, sizeof(auth_r_nonce));
 
             status = talib_auth_generate_nonce(atcab_get_device(), TA_HANDLE_AUTH_SESSION,
                                             TA_AUTH_GENERATE_OPT_NONCE_SRC_MASK | TA_AUTH_GENERATE_OPT_RANDOM_MASK, auth_i_nonce);
-
             if (CKR_OK == (rv = pkcs11_util_convert_rv(status)))
             {
                 status = talib_auth_startup(atcab_get_device(), session_ctx->slot->user_pin_handle,
@@ -445,8 +443,8 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
 
             if (CKR_OK != rv)
             {
-	        PKCS11_DEBUG(" Login failed: Terminating auth session\r\n");
-                (void)talib_auth_terminate(atcab_get_device());
+	      PKCS11_DEBUG(" Login failed: Terminating auth session\r\n");
+	      (void)talib_auth_terminate(atcab_get_device());
             }
         }
 #endif
@@ -467,12 +465,12 @@ CK_RV pkcs11_session_logout(CK_SESSION_HANDLE hSession)
     pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
     pkcs11_session_ctx_ptr session_ctx = pkcs11_get_session_context(hSession);
 
-    if (!lib_ctx || !lib_ctx->initialized)
+    if (NULL == lib_ctx || FALSE == lib_ctx->initialized)
     {
         return CKR_CRYPTOKI_NOT_INITIALIZED;
     }
 
-    if (!session_ctx)
+    if (NULL == session_ctx)
     {
         return CKR_SESSION_HANDLE_INVALID;
     }
@@ -524,29 +522,31 @@ CK_RV pkcs11_session_authorize(pkcs11_session_ctx_ptr pSession, CK_VOID_PTR pObj
         return CKR_ARGUMENTS_BAD;
     }
 
-//    pConfig = (atecc508a_config_t *)obj_ptr->config;
-//
-//    if(!pConfig)
-//    {
-//        return CKR_GENERAL_ERROR;
-//    }
+#if 0
+      pConfig = (atecc508a_config_t *)obj_ptr->config;
+  
+      if(!pConfig)
+      {
+          return CKR_GENERAL_ERROR;
+      }
 
-//    if (ATCA_KEY_CONFIG_REQ_AUTH_MASK & pConfig->KeyConfig[obj_ptr->slot])
-//    {
-//        key_id = (pConfig->KeyConfig[obj_ptr->slot] &
-//                ATCA_KEY_CONFIG_AUTH_KEY_MASK) >> ATCA_KEY_CONFIG_AUTH_KEY_SHIFT;
-//    }
-//    else
-//    {
-//        /* No Authorization is required */
-//        return CKR_OK;
-//    }
+      if (ATCA_KEY_CONFIG_REQ_AUTH_MASK & pConfig->KeyConfig[obj_ptr->slot])
+      {
+          key_id = (pConfig->KeyConfig[obj_ptr->slot] &
+                  ATCA_KEY_CONFIG_AUTH_KEY_MASK) >> ATCA_KEY_CONFIG_AUTH_KEY_SHIFT;
+      }
+      else
+      {
+          /* No Authorization is required */
+          return CKR_OK;
+      }
+#endif
 
     /* Initialize the intermediate buffers */
-    memset(&temp_key, 0, sizeof(temp_key));
-    memset(&nonce_params, 0, sizeof(nonce_params));
-    memset(num_in, 0, sizeof(num_in));
-    memset(other_data, 0, sizeof(other_data));
+    (void)memset(&temp_key, 0, sizeof(temp_key));
+    (void)memset(&nonce_params, 0, sizeof(nonce_params));
+    (void)memset(num_in, 0, sizeof(num_in));
+    (void)memset(other_data, 0, sizeof(other_data));
 
     /* Read Device Serial Number */
     status = atcab_read_serial_number(sn);

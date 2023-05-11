@@ -65,6 +65,7 @@ typedef struct
 ATCA_STATUS calib_get_execution_time(uint8_t opcode, ATCADevice device);
 
 #ifndef ATCA_HAL_LEGACY_API
+ATCA_STATUS calib_execute_send(ATCADevice device, uint8_t device_address, uint8_t* txdata, uint16_t txlength);
 ATCA_STATUS calib_execute_receive(ATCADevice device, uint8_t device_address, uint8_t* rxdata, uint16_t* rxlength);
 #endif
 

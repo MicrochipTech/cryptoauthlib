@@ -40,6 +40,9 @@ extern "C" {
 #define TNGLORA_CERT_TEMPLATE_4_DEVICE_SIZE 552
 ATCA_DLL const atcacert_def_t g_tnglora_cert_def_4_device;
 
+extern SHARED_LIB_EXPORT const uint8_t g_tnglora_cert_template_4_device[];
+extern SHARED_LIB_EXPORT const atcacert_cert_element_t g_tnglora_cert_elements_4_device[];
+
 /** @} */
 
 #ifdef __cplusplus

@@ -33,6 +33,8 @@
 
 #if defined(__clang__)
 /* Clang/LLVM. ---------------------------------------------- */
+#pragma clang diagnostic ignored "-Wunknown-pragmas"
+
 #if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 #define ATCA_UINT16_HOST_TO_LE(x)  __builtin_bswap16(x)
 #define ATCA_UINT16_LE_TO_HOST(x)  __builtin_bswap16(x)
@@ -43,6 +45,7 @@
 #define ATCA_UINT32_BE_TO_HOST(x)  (x)
 #define ATCA_UINT64_HOST_TO_BE(x)  (x)
 #define ATCA_UINT64_BE_TO_HOST(x)  (x)
+#define ATCA_PLATFORM_BE
 #else
 #define ATCA_UINT16_HOST_TO_LE(x)  (x)
 #define ATCA_UINT16_LE_TO_HOST(x)  (x)
@@ -66,6 +69,7 @@
 #elif defined(__XC8) || defined(__XC16)
 /* Microchip XC8 and XC16 Compilers ------------------------- */
 #ifndef SIZE_MAX
+/* coverity[misra_c_2012_rule_21_1_violation:SUPPRESS] */
 #define SIZE_MAX 65535
 #endif
 
@@ -74,8 +78,8 @@
 #define ATCA_UINT32_HOST_TO_LE(x)  (x)
 #define ATCA_UINT16_HOST_TO_BE(x)  ((((x) & 0x00FF) << 8) | (((x) & 0xFF00) >> 8))
 #define ATCA_UINT16_BE_TO_HOST(x)  ((((x) & 0x00FF) << 8) | (((x) & 0xFF00) >> 8))
-#define ATCA_UINT32_HOST_TO_BE(x)  ((((x) & 0x000000FF) << 24) | (((x) & 0x0000FF00) << 8) | (((x) & 0x00FF0000) >> 8) | (((x) & 0xFF000000) >> 24))
-#define ATCA_UINT32_BE_TO_HOST(x)  ((((x) & 0x000000FF) << 24) | (((x) & 0x0000FF00) << 8) | (((x) & 0x00FF0000) >> 8) | (((x) & 0xFF000000) >> 24))
+#define ATCA_UINT32_HOST_TO_BE(x)  ((((x) & 0x000000FFU) << 24U) | (((x) & 0x0000FF00U) << 8U) | (((x) & 0x00FF0000U) >> 8U) | (((x) & 0xFF000000U) >> 24U))
+#define ATCA_UINT32_BE_TO_HOST(x)  ((((x) & 0x000000FFU) << 24U) | (((x) & 0x0000FF00U) << 8U) | (((x) & 0x00FF0000U) >> 8U) | (((x) & 0xFF000000U) >> 24U))
 #define ATCA_UINT64_HOST_TO_BE(x)  ((uint64_t)ATCA_UINT32_HOST_TO_BE((uint32_t)(x)) << 32 + (uint64_t)ATCA_UINT32_HOST_TO_BE((uint32_t)((x) >> 32)))
 #define ATCA_UINT64_BE_TO_HOST(x)  ((uint64_t)ATCA_UINT32_BE_TO_HOST((uint32_t)(x)) << 32 + (uint64_t)ATCA_UINT32_BE_TO_HOST((uint32_t)((x) >> 32)))
 #define SHARED_LIB_EXPORT
@@ -86,6 +90,8 @@
 
 #elif defined(__GNUC__) || defined(__GNUG__)
 /* GNU GCC/G++. --------------------------------------------- */
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+
 #if defined(__AVR32__)
 #define ATCA_UINT16_HOST_TO_LE(x)  __builtin_bswap_16(x)
 #define ATCA_UINT16_LE_TO_HOST(x)  __builtin_bswap_16(x)
@@ -97,6 +103,7 @@
 #define ATCA_UINT64_HOST_TO_BE(x)  (x)
 #define ATCA_UINT64_BE_TO_HOST(x)  (x)
 #define ATCA_NO_PRAGMA_PACK
+#define ATCA_PLATFORM_BE
 #elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 #define ATCA_UINT16_HOST_TO_LE(x)  __builtin_bswap16(x)
 #define ATCA_UINT16_LE_TO_HOST(x)  __builtin_bswap16(x)
@@ -107,6 +114,7 @@
 #define ATCA_UINT32_BE_TO_HOST(x)  (x)
 #define ATCA_UINT64_HOST_TO_BE(x)  (x)
 #define ATCA_UINT64_BE_TO_HOST(x)  (x)
+#define ATCA_PLATFORM_BE
 #else
 #define ATCA_UINT16_HOST_TO_BE(x)  __builtin_bswap16(x)
 #define ATCA_UINT16_BE_TO_HOST(x)  __builtin_bswap16(x)
@@ -136,6 +144,11 @@
 
 #elif defined(_MSC_VER)
 /* Microsoft Visual Studio. --------------------------------- */
+#pragma warning(disable:4068)   //Unknown pragma warning
+#pragma warning(disable:5045)   //Spectre mitigation informative
+#pragma warning(disable:4820)   //Stucture packing
+#pragma warning(disable:4061)   //Missing enumerations from switch statements
+
 // MSVC is usually always little-endian architecture
 #include <stdlib.h>
 #define ATCA_UINT16_HOST_TO_BE(x)  _byteswap_ushort(x)
@@ -147,6 +160,9 @@
 #define ATCA_UINT32_BE_TO_HOST(x)  _byteswap_ulong(x)
 #define ATCA_UINT64_HOST_TO_BE(x)  _byteswap_uint64(x)
 #define ATCA_UINT64_BE_TO_HOST(x)  _byteswap_uint64(x)
+/* coverity[cert_dcl37_c_violation:SUPPRESS]*/
+/* coverity[misra_c_2012_rule_21_1_violation:SUPPRESS]*/
+/* coverity[misra_c_2012_rule_21_2_violation:SUPPRESS]*/
 #define strtok_r                   strtok_s
 
 #define SHARED_LIB_EXPORT       __declspec(dllexport)
@@ -168,6 +184,7 @@
 #define ATCA_UINT32_BE_TO_HOST(x)  (x)
 #define ATCA_UINT64_HOST_TO_BE(x)  (x)
 #define ATCA_UINT64_BE_TO_HOST(x)  (x)
+#define ATCA_PLATFORM_BE
 #else
 #define ATCA_UINT16_HOST_TO_LE(x)  (x)
 #define ATCA_UINT16_LE_TO_HOST(x)  (x)
@@ -183,6 +200,8 @@
 
 #elif defined __ICCARM__
 /* IAR ARM ------------------------------------------- */
+#pragma diag_suppress=Pe161     //Unknown pragma warning
+
 #include <intrinsics.h>
 #if __LITTLE_ENDIAN__ == 0
 #define ATCA_UINT16_HOST_TO_LE(x)  __REV16(x)
@@ -192,6 +211,7 @@
 #define ATCA_UINT32_BE_TO_HOST(x)  (x)
 #define ATCA_UINT64_HOST_TO_BE(x)  (x)
 #define ATCA_UINT64_BE_TO_HOST(x)  (x)
+#define ATCA_PLATFORM_BE
 #else
 #define ATCA_UINT16_HOST_TO_LE(x)  (x)
 #define ATCA_UINT16_LE_TO_HOST(x)  (x)
@@ -207,9 +227,23 @@
 
 #endif
 
+#if defined(_MSC_VER) && (_MSC_VER <= 1700)
+// VS2012 and earlier don't support stdbool.h
+#ifndef __cplusplus
+/* coverity[misra_c_2012_rule_21_1_violation:SUPPRESS] */
+#define bool    unsigned char
+/* coverity[misra_c_2012_rule_21_1_violation:SUPPRESS] */
+#define false   0
+/* coverity[misra_c_2012_rule_21_1_violation:SUPPRESS] */
+#define true    1
+#endif
+#else
+#include <stdbool.h>
+#endif
+
 #ifdef ATCA_BUILD_SHARED_LIBS
 #if defined(cryptoauth_EXPORTS) && defined(_WIN32)
-#define ATCA_DLL    SHARED_LIB_EXPORT
+#define ATCA_DLL    extern SHARED_LIB_EXPORT
 #else
 #define ATCA_DLL    SHARED_LIB_IMPORT
 #endif
@@ -217,6 +251,12 @@
 #undef SHARED_LIB_EXPORT
 #define SHARED_LIB_EXPORT
 #define ATCA_DLL    extern
+#endif
+
+#ifndef ATCA_NO_PRAGMA_PACK
+#define ATCA_PACKED
+#else
+#define ATCA_PACKED     __attribute__ ((packed))
 #endif
 
 #endif /* ATCA_COMPILER_H_ */

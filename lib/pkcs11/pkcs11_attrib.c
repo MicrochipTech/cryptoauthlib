@@ -49,32 +49,32 @@
  * too small Note that any attribute whose value is an array of attributes is identifiable by virtue of the
  * attribute type having the CKF_ARRAY_ATTRIBUTE bit set.
  */
-CK_RV pkcs11_attrib_fill(CK_ATTRIBUTE_PTR pAttribute, const CK_VOID_PTR pData, const CK_ULONG ulSize)
+CK_RV pkcs11_attrib_fill(CK_ATTRIBUTE_PTR pAttribute, const void * pData, const CK_ULONG ulSize)
 {
-    if (!pAttribute)
+    if (NULL == pAttribute)
     {
         return CKR_ARGUMENTS_BAD;
     }
 
-    if (pAttribute->pValue)
+    if (NULL != pAttribute->pValue)
     {
         /* 1. If the specified attribute(i.e., the attribute specified by the type field) for the object cannot be revealed
            because the object is sensitive or unextractable, then the ulValueLen field in that triple is modified to
-           hold the value CK_UNAVAILABLE_INFORMATION. //if (!rv) rv = CKR_ATTRIBUTE_SENSITIVE; */
+           hold the value CK_UNAVAILABLE_INFORMATION. if (!rv) rv = CKR_ATTRIBUTE_SENSITIVE; */
 
         if (ulSize <= pAttribute->ulValueLen)
         {
             /* 4. Otherwise, if the length specified in ulValueLen is large enough to hold the value of the specified
                attribute for the object, then that attribute is copied into the buffer located at pValue */
-            if (pData)
+            if (NULL != pData)
             {
-                memcpy(pAttribute->pValue, pData, ulSize);
+                (void)memcpy(pAttribute->pValue, pData, ulSize);
             }
             else
             {
                 /* This case isn't covered by the PKCS11 specification as it always assumes that the internals of the
                    library should be rational about providing some data if an attribute is matched. */
-                memset(pAttribute->pValue, 0, pAttribute->ulValueLen);
+                (void)memset(pAttribute->pValue, 0, pAttribute->ulValueLen);
             }
         }
         else
@@ -95,24 +95,24 @@ CK_RV pkcs11_attrib_fill(CK_ATTRIBUTE_PTR pAttribute, const CK_VOID_PTR pData, c
  */
 CK_RV pkcs11_attrib_value(CK_ATTRIBUTE_PTR pAttribute, const CK_ULONG ulValue, const CK_ULONG ulSize)
 {
-    return pkcs11_attrib_fill(pAttribute, (const CK_VOID_PTR)&ulValue, ulSize);
+    return pkcs11_attrib_fill(pAttribute, &ulValue, ulSize);
 }
 
 static const CK_BBOOL cbFalse = CK_FALSE;
-CK_RV pkcs11_attrib_false(const CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+CK_RV pkcs11_attrib_false(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
 {
     ((void)pObject);
-    return pkcs11_attrib_fill(pAttribute, (const CK_VOID_PTR)&cbFalse, sizeof(cbFalse));
+    return pkcs11_attrib_fill(pAttribute, &cbFalse, (CK_ULONG)sizeof(cbFalse));
 }
 
 static const CK_BBOOL cbTrue = CK_TRUE;
-CK_RV pkcs11_attrib_true(const CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+CK_RV pkcs11_attrib_true(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
 {
     ((void)pObject);
-    return pkcs11_attrib_fill(pAttribute, (const CK_VOID_PTR)&cbTrue, sizeof(cbTrue));
+    return pkcs11_attrib_fill(pAttribute, &cbTrue, (CK_ULONG)sizeof(cbTrue));
 }
 
-CK_RV pkcs11_attrib_empty(const CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+CK_RV pkcs11_attrib_empty(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
 {
     ((void)pObject);
     return pkcs11_attrib_fill(pAttribute, NULL, 0);

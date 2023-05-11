@@ -53,7 +53,7 @@ ATCADevice newATCADevice(ATCAIfaceCfg *cfg)
         return NULL;
     }
 
-    memset(ca_dev, 0, sizeof(struct atca_device));
+    (void)memset(ca_dev, 0, sizeof(struct atca_device));
 
     status = initATCADevice(cfg, ca_dev);
     if (status != ATCA_SUCCESS)
@@ -76,7 +76,7 @@ void deleteATCADevice(ATCADevice *ca_dev)
         return;
     }
 
-    releaseATCADevice(*ca_dev);
+    (void)releaseATCADevice(*ca_dev);
 
     hal_free(*ca_dev);
     *ca_dev = NULL;

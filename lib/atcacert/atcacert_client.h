@@ -55,7 +55,7 @@ extern "C" {
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_read_device_loc(const atcacert_device_loc_t* device_loc,
+ATCA_STATUS atcacert_read_device_loc(const atcacert_device_loc_t* device_loc,
                              uint8_t*                     data);
 
 /**
@@ -80,7 +80,7 @@ int atcacert_read_device_loc(const atcacert_device_loc_t* device_loc,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_read_cert(const atcacert_def_t* cert_def,
+ATCA_STATUS atcacert_read_cert(const atcacert_def_t* cert_def,
                        const uint8_t         ca_public_key[64],
                        uint8_t*              cert,
                        size_t*               cert_size);
@@ -96,7 +96,7 @@ int atcacert_read_cert(const atcacert_def_t* cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_write_cert(const atcacert_def_t* cert_def,
+ATCA_STATUS atcacert_write_cert(const atcacert_def_t* cert_def,
                         const uint8_t*        cert,
                         size_t                cert_size);
 
@@ -111,7 +111,7 @@ int atcacert_write_cert(const atcacert_def_t* cert_def,
  *                         As output, the size of the CSR returned in cert in bytes.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-int atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, size_t* csr_size);
+ATCA_STATUS atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, size_t* csr_size);
 
 /**
  * \brief Creates a CSR specified by the CSR definition from the ATECC508A device.
@@ -124,7 +124,7 @@ int atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, size_t* csr
  *                         As output, the size of the CSR as PEM returned in cert in bytes.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-int atcacert_create_csr_pem(const atcacert_def_t* csr_def, char* csr, size_t* csr_size);
+ATCA_STATUS atcacert_create_csr_pem(const atcacert_def_t* csr_def, char* csr, size_t* csr_size);
 
 /**
  * \brief Calculates the response to a challenge sent from the host.
@@ -140,7 +140,7 @@ int atcacert_create_csr_pem(const atcacert_def_t* csr_def, char* csr, size_t* cs
  *
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-int atcacert_get_response(uint8_t       device_private_key_slot,
+ATCA_STATUS atcacert_get_response(uint8_t       device_private_key_slot,
                           const uint8_t challenge[32],
                           uint8_t       response[64]);
 
@@ -152,7 +152,7 @@ int atcacert_get_response(uint8_t       device_private_key_slot,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_read_subj_key_id(const atcacert_def_t * cert_def,
+ATCA_STATUS atcacert_read_subj_key_id(const atcacert_def_t * cert_def,
                               uint8_t                subj_key_id[20]);
 
 /** \brief Return the actual certificate size in bytes for a given
@@ -164,7 +164,7 @@ int atcacert_read_subj_key_id(const atcacert_def_t * cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_read_cert_size(const atcacert_def_t* cert_def,
+ATCA_STATUS atcacert_read_cert_size(const atcacert_def_t* cert_def,
                             size_t*               cert_size);
 
 /** @} */

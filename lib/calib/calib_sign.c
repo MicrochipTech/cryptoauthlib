@@ -65,30 +65,28 @@ ATCA_STATUS calib_sign_base(ATCADevice device, uint8_t mode, uint16_t key_id, ui
         packet.param2 = key_id;
         if ((status = atSign(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "atSign - failed");
+            (void)ATCA_TRACE(status, "atSign - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "calib_sign_base - execution failed");
+            (void)ATCA_TRACE(status, "calib_sign_base - execution failed");
             break;
         }
 
-        if (signature != NULL)
+        
+        if (packet.data[ATCA_COUNT_IDX] == (ATCA_SIG_SIZE + ATCA_PACKET_OVERHEAD))
         {
-            if (packet.data[ATCA_COUNT_IDX] == (ATCA_SIG_SIZE + ATCA_PACKET_OVERHEAD))
-            {
-                memcpy(signature, &packet.data[ATCA_RSP_DATA_IDX], ATCA_SIG_SIZE);
-            }
-            else
-            {
-                status = ATCA_RX_FAIL;
-            }
-
+            (void)memcpy(signature, &packet.data[ATCA_RSP_DATA_IDX], ATCA_SIG_SIZE);
         }
+        else
+        {
+            status = ATCA_RX_FAIL;
+        }
+
     }
-    while (0);
+    while (false);
 
     return status;
 }
@@ -121,7 +119,7 @@ ATCA_STATUS calib_sign(ATCADevice device, uint16_t key_id, const uint8_t *msg, u
         // Make sure RNG has updated its seed
         if ((status = calib_random(device, NULL)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "calib_random - failed");
+            (void)ATCA_TRACE(status, "calib_random - failed");
             break;
         }
 #endif
@@ -136,18 +134,18 @@ ATCA_STATUS calib_sign(ATCADevice device, uint16_t key_id, const uint8_t *msg, u
 #endif
         if ((status = calib_nonce_load(device, nonce_target, msg, 32)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "calib_nonce_load - failed");
+            (void)ATCA_TRACE(status, "calib_nonce_load - failed");
             break;
         }
 
         // Sign the message
         if ((status = calib_sign_base(device, SIGN_MODE_EXTERNAL | sign_source, key_id, signature)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "calib_sign_base - failed");
+            (void)ATCA_TRACE(status, "calib_sign_base - failed");
             break;
         }
     }
-    while (0);
+    while (false);
 
     return status;
 }
@@ -223,12 +221,12 @@ ATCA_STATUS calib_sign_internal(ATCADevice device, uint16_t key_id, bool is_inva
 
         if ((status = calib_sign_base(device, mode, key_id, signature)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "calib_sign_base - failed");
+            (void)ATCA_TRACE(status, "calib_sign_base - failed");
             break;
         }
 
     }
-    while (0);
+    while (false);
 
     return status;
 }
@@ -263,13 +261,13 @@ ATCA_STATUS calib_ca2_sign(ATCADevice device, uint16_t key_id, const uint8_t* ms
     if (ATCA_SUCCESS == status)
     {
         // copy message digest into i/o buffer
-        memcpy(packet.data, msg, ATCA_SHA256_DIGEST_SIZE);
+        (void)memcpy(packet.data, msg, ATCA_SHA256_DIGEST_SIZE);
 
         (void)atSign(atcab_get_device_type_ext(device), &packet);
 
         if (ATCA_SUCCESS != (status = atca_execute_command(&packet, device)))
         {
-            ATCA_TRACE(status, "calib_ca2_sign - execution failed");
+            (void)ATCA_TRACE(status, "calib_ca2_sign - execution failed");
         }
     }
 
@@ -279,7 +277,7 @@ ATCA_STATUS calib_ca2_sign(ATCADevice device, uint16_t key_id, const uint8_t* ms
         {
             if (packet.data[ATCA_COUNT_IDX] == (ATCA_SIG_SIZE + ATCA_PACKET_OVERHEAD))
             {
-                memcpy(signature, &packet.data[ATCA_RSP_DATA_IDX], ATCA_SIG_SIZE);
+                (void)memcpy(signature, &packet.data[ATCA_RSP_DATA_IDX], ATCA_SIG_SIZE);
             }
             else
             {

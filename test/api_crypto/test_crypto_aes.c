@@ -62,7 +62,7 @@ TEST(atcac_aes, aes128_gcm_nist)
     for (test_index = 0; test_index < GCM_TEST_VECTORS_COUNT; test_index++)
     {
         //////////////////////////////////////   Encryption /////////////////////////////////////////
-        status = atcac_aes_gcm_encrypt_start(&ctx, gcm_test_cases[test_index].key, 16, gcm_test_cases[test_index].iv, gcm_test_cases[test_index].iv_size);
+        status = atcac_aes_gcm_encrypt_start(&ctx, gcm_test_cases[test_index].key, 16, gcm_test_cases[test_index].iv, (uint8_t)gcm_test_cases[test_index].iv_size);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
 #ifdef ATCA_WOLFSSL
@@ -99,7 +99,7 @@ TEST(atcac_aes, aes128_gcm_nist)
         if (gcm_test_cases[test_index].aad_size == 0 || gcm_test_cases[test_index].text_size == 0)
         {
             //Initialize gcm ctx with IV
-            status = atcac_aes_gcm_encrypt_start(&ctx, gcm_test_cases[test_index].key, 16, gcm_test_cases[test_index].iv, gcm_test_cases[test_index].iv_size);
+            status = atcac_aes_gcm_encrypt_start(&ctx, gcm_test_cases[test_index].key, 16, gcm_test_cases[test_index].iv, (uint8_t)gcm_test_cases[test_index].iv_size);
             TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
             //Add aad to gcm
@@ -127,7 +127,7 @@ TEST(atcac_aes, aes128_gcm_nist)
 
         //////////////////////////////////////   Decryption /////////////////////////////////////////
         //Initialize gcm ctx with IV
-        status = atcac_aes_gcm_decrypt_start(&ctx, gcm_test_cases[test_index].key, 16, gcm_test_cases[test_index].iv, gcm_test_cases[test_index].iv_size);
+        status = atcac_aes_gcm_decrypt_start(&ctx, gcm_test_cases[test_index].key, 16, gcm_test_cases[test_index].iv,(uint8_t) gcm_test_cases[test_index].iv_size);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
 #ifdef ATCA_WOLFSSL
@@ -162,7 +162,7 @@ TEST(atcac_aes, aes128_gcm_nist)
         if (gcm_test_cases[test_index].aad_size == 0 || gcm_test_cases[test_index].text_size == 0)
         {
             //Initialize gcm ctx with IV
-            status = atcac_aes_gcm_decrypt_start(&ctx, gcm_test_cases[test_index].key, 16, gcm_test_cases[test_index].iv, gcm_test_cases[test_index].iv_size);
+            status = atcac_aes_gcm_decrypt_start(&ctx, gcm_test_cases[test_index].key, 16, gcm_test_cases[test_index].iv, (uint8_t)gcm_test_cases[test_index].iv_size);
             TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
             //Add aad to gcm

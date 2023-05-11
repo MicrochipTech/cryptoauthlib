@@ -69,26 +69,26 @@ ATCA_STATUS calib_hmac(ATCADevice device, uint8_t mode, uint16_t key_id, uint8_t
 
         if ((status = atHMAC(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "atHMAC - failed");
+            (void)ATCA_TRACE(status, "atHMAC - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "calib_hmac - failed");
+            (void)ATCA_TRACE(status, "calib_hmac - failed");
             break;
         }
 
-        if (packet.data[ATCA_COUNT_IDX] != HMAC_DIGEST_SIZE + 3)
+        if (packet.data[ATCA_COUNT_IDX] != HMAC_DIGEST_SIZE + 3u)
         {
             status = ATCA_TRACE(ATCA_RX_FAIL, "Unexpected response size"); // Unexpected response size
             break;
         }
 
-        memcpy(digest, &packet.data[ATCA_RSP_DATA_IDX], HMAC_DIGEST_SIZE);
+        (void)memcpy(digest, &packet.data[ATCA_RSP_DATA_IDX], HMAC_DIGEST_SIZE);
 
     }
-    while (0);
+    while (false);
 
     return status;
 }

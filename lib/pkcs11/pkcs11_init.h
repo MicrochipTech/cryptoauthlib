@@ -28,7 +28,7 @@
 #ifndef PKCS11_INIT_H_
 #define PKCS11_INIT_H_
 
-#include "cryptoki.h"
+#include "atca_compiler.h"
 #include "pkcs11_config.h"
 
 #ifdef __cplusplus
@@ -36,7 +36,7 @@ extern "C" {
 #endif
 
 /** Library Context */
-typedef struct _pkcs11_lib_ctx
+typedef struct pkcs11_lib_ctx_s
 {
     CK_BBOOL        initialized;
     CK_CREATEMUTEX  create_mutex;
@@ -57,7 +57,7 @@ typedef struct _pkcs11_lib_ctx
 }
 #endif
 
-CK_RV pkcs11_init(CK_C_INITIALIZE_ARGS_PTR pInitArgs);
+CK_RV pkcs11_init(CK_C_INITIALIZE_ARGS const * pInitArgs);
 CK_RV pkcs11_deinit(CK_VOID_PTR pReserved);
 CK_RV pkcs11_init_check(pkcs11_lib_ctx_ptr * ppContext, CK_BBOOL lock);
 

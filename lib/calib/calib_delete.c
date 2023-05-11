@@ -65,17 +65,17 @@ ATCA_STATUS calib_delete_base(ATCADevice device, uint8_t mode, uint16_t key_id, 
         packet.param1 = mode;
         packet.param2 = key_id;        
 
-        memcpy(&packet.data[0], mac, DELETE_MAC_SIZE);
+        (void)memcpy(&packet.data[0], mac, DELETE_MAC_SIZE);
 
         (void)atDelete(atcab_get_device_type_ext(device), &packet);
 
         if ((status = atca_execute_command( (void*)&packet, device)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "calib_delete - execution failed");
+            (void)ATCA_TRACE(status, "calib_delete - execution failed");
             break;
         }
     }
-    while (0);
+    while (false);
 
     return status;
 }
@@ -100,19 +100,19 @@ ATCA_STATUS calib_delete(ATCADevice device, uint8_t num_in[NONCE_NUMIN_SIZE], co
         // Read device serial number
         if (ATCA_SUCCESS != (status = atcab_read_serial_number(serial_number)))
         {
-            ATCA_TRACE(status, "Read serial number failed");
+            (void)ATCA_TRACE(status, "Read serial number failed");
             break;
         } 
 
         // Generate random
         if (ATCA_SUCCESS != (status = calib_nonce_gen_session_key(device, DELETE_NONCE_KEY_ID, num_in, rand_out)))
         {
-            ATCA_TRACE(status, "calib_nonce_gen_session_key - failed");
+            (void)ATCA_TRACE(status, "calib_nonce_gen_session_key - failed");
             break;
         }
 
         // Calculate host side mac for delete operation
-        memset(&delete_mac_params, 0, sizeof(delete_mac_params));
+        (void)memset(&delete_mac_params, 0, sizeof(delete_mac_params));
         delete_mac_params.key_id = (uint16_t)0x0000;
         delete_mac_params.sn = serial_number;
         delete_mac_params.key = key;
@@ -121,11 +121,11 @@ ATCA_STATUS calib_delete(ATCADevice device, uint8_t num_in[NONCE_NUMIN_SIZE], co
 
         if ((status = atcah_delete_mac(&delete_mac_params)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "Delete Mac failed");
+            (void)ATCA_TRACE(status, "Delete Mac failed");
             break;
         }
     } 
-    while (0);
+    while (false);
 
     return calib_delete_base(device, DELETE_MODE, (uint16_t)0x0000, mac);
 }

@@ -58,28 +58,28 @@ ATCA_STATUS sha206a_diversify_parent_key(uint8_t* parent_key, uint8_t* diversifi
             break;
         }
 
-        memcpy(p_temp, parent_key, ATCA_KEY_SIZE);
+        (void)memcpy(p_temp, parent_key, ATCA_KEY_SIZE);
         p_temp += ATCA_KEY_SIZE;
 
         *p_temp++ = ATCA_DERIVE_KEY;
         *p_temp++ = param1;
-        *p_temp++ = param2 & 0xFF;
-        *p_temp++ = (param2 >> 8) & 0xFF;
+        *p_temp++ = (uint8_t)(param2 & 0xFFu);
+        *p_temp++ = (uint8_t)((param2 >> 8) & 0xFFu);
         *p_temp++ = sn[8];
         *p_temp++ = sn[0];
         *p_temp++ = sn[1];
-        memset(p_temp, 0, 25);
+        (void)memset(p_temp, 0, 25);
         p_temp += 25;
-        memcpy(p_temp, sn, sizeof(sn));
+        (void)memcpy(p_temp, sn, sizeof(sn));
         p_temp += sizeof(sn);
-        memset(p_temp, 0, 23);
+        (void)memset(p_temp, 0, 23);
 
-        if ((status = atcac_sw_sha2_256(sha_data, sizeof(sha_data), diversified_key)) != ATCA_SUCCESS)
+        if ((status = (ATCA_STATUS)atcac_sw_sha2_256(sha_data, sizeof(sha_data), diversified_key)) != ATCA_SUCCESS)
         {
             break;
         }
     }
-    while (0);
+    while (false);
 
     return status;
 }
@@ -97,7 +97,7 @@ ATCA_STATUS sha206a_generate_derive_key(uint8_t* parent_key, uint8_t* derived_ke
     uint8_t* p_temp = sha_data;
     uint8_t sn[9];
 
-    if ((parent_key == NULL) || (derived_key == NULL) || (param1 == 0xFF))
+    if ((parent_key == NULL) || (derived_key == NULL) || (param1 == 0xFFu))
     {
         return ATCA_BAD_PARAM;
     }
@@ -114,23 +114,23 @@ ATCA_STATUS sha206a_generate_derive_key(uint8_t* parent_key, uint8_t* derived_ke
             break;
         }
 
-        memcpy(p_temp, parent_key, ATCA_KEY_SIZE);
+        (void)memcpy(p_temp, parent_key, ATCA_KEY_SIZE);
         p_temp += ATCA_KEY_SIZE;
         *p_temp++ = ATCA_DERIVE_KEY;
         *p_temp++ = param1;
-        *p_temp++ = param2 & 0xFF;
-        *p_temp++ = (param2 >> 8) & 0xFF;
+        *p_temp++ = (uint8_t)(param2 & 0xFFu);
+        *p_temp++ = (uint8_t)((param2 >> 8) & 0xFFu);
         *p_temp++ = sn[8];
         *p_temp++ = sn[0];
         *p_temp++ = sn[1];
-        memset(p_temp, 0, (25 + 32));
+        (void)memset(p_temp, 0, (25 + 32));
 
-        if ((status = atcac_sw_sha2_256(sha_data, sizeof(sha_data), derived_key)) != ATCA_SUCCESS)
+        if ((status = (ATCA_STATUS)atcac_sw_sha2_256(sha_data, sizeof(sha_data), derived_key)) != ATCA_SUCCESS)
         {
             break;
         }
     }
-    while (0);
+    while (false);
 
     return status;
 }
@@ -161,30 +161,30 @@ ATCA_STATUS sha206a_generate_challenge_response_pair(uint8_t* key, uint8_t* chal
             break;
         }
 
-        memcpy(p_temp, key, ATCA_KEY_SIZE);
+        (void)memcpy(p_temp, key, ATCA_KEY_SIZE);
         p_temp += ATCA_KEY_SIZE;
-        memcpy(p_temp, challenge, ATCA_KEY_SIZE);
+        (void)memcpy(p_temp, challenge, ATCA_KEY_SIZE);
         p_temp += ATCA_KEY_SIZE;
         *p_temp++ = ATCA_MAC;
         *p_temp++ = param1;
-        *p_temp++ = param2 & 0xFF;
-        *p_temp++ = (param2 >> 8) & 0xFF;
-        memset(p_temp, 0, (8 + 3));
+        *p_temp++ = (uint8_t)(param2 & 0xFFu);
+        *p_temp++ = (uint8_t)((param2 >> 8) & 0xFFu);
+        (void)memset(p_temp, 0, (8 + 3));
         p_temp += (8 + 3);
         *p_temp++ = sn[8];
-        memset(p_temp, 0, 4);
+        (void)memset(p_temp, 0, 4);
         p_temp += 4;
         *p_temp++ = sn[0];
         *p_temp++ = sn[1];
-        memset(p_temp, 0, 2);
+        (void)memset(p_temp, 0, 2);
 
-        if ((status = atcac_sw_sha2_256(sha_data, sizeof(sha_data), response)) != ATCA_SUCCESS)
+        if ((status = (ATCA_STATUS)atcac_sw_sha2_256(sha_data, sizeof(sha_data), response)) != ATCA_SUCCESS)
         {
             break;
         }
 
     }
-    while (0);
+    while (false);
 
     return status;
 }
@@ -224,18 +224,22 @@ ATCA_STATUS sha206a_authenticate(uint8_t* challenge, uint8_t* expected_response,
                 break;
             }
         }
+        else
+        {
+            /* do nothing */
+        }
 
         if ((status = atcab_mac(0x00, ATCA_SHA206A_SYMMETRIC_KEY_ID_SLOT, challenge, digest)) != ATCA_SUCCESS)
         {
             break;
         }
     }
-    while (0);
+    while (false);
 
-    *is_authenticated = false;
+    *is_authenticated = (uint8_t)false;
     if ((status == ATCA_SUCCESS) && (memcmp(digest, expected_response, ATCA_KEY_SIZE) == 0))
     {
-        *is_authenticated = true;
+        *is_authenticated = (uint8_t)true;
     }
 
     return status;
@@ -248,7 +252,7 @@ ATCA_STATUS sha206a_verify_device_consumption(uint8_t* is_consumed)
 {
     ATCA_STATUS status;
     uint8_t is_dk_valid;
-    uint8_t is_pk_valid = false;
+    uint8_t is_pk_valid = (uint8_t)false;
 
     if (is_consumed == NULL)
     {
@@ -263,7 +267,7 @@ ATCA_STATUS sha206a_verify_device_consumption(uint8_t* is_consumed)
             break;
         }
 
-        if (is_dk_valid)
+        if (is_dk_valid != 0u)
         {
             *is_consumed = 0;
         }
@@ -274,13 +278,13 @@ ATCA_STATUS sha206a_verify_device_consumption(uint8_t* is_consumed)
                 break;
             }
 
-            if (is_pk_valid)
+            if (is_pk_valid == (uint8_t)true)
             {
-                *is_consumed &= ~ATCA_SHA206A_PKEY_CONSUMPTION_MASK;
+                *is_consumed &= (uint8_t)(~ATCA_SHA206A_PKEY_CONSUMPTION_MASK);
             }
         }
     }
-    while (0);
+    while (false);
 
     return status;
 }
@@ -298,15 +302,15 @@ ATCA_STATUS sha206a_check_dk_useflag_validity(uint8_t* is_consumed)
         return ATCA_BAD_PARAM;
     }
 
-    *is_consumed = true;
+    *is_consumed = (uint8_t)true;
     if ((status = sha206a_get_dk_useflag_count(&dk_available_count)) != ATCA_SUCCESS)
     {
         return status;
     }
 
-    if (!dk_available_count)
+    if (dk_available_count == 0u)
     {
-        *is_consumed = false;
+        *is_consumed = (uint8_t)false;
     }
 
     return status;
@@ -325,15 +329,15 @@ ATCA_STATUS sha206a_check_pk_useflag_validity(uint8_t* is_consumed)
         return ATCA_BAD_PARAM;
     }
 
-    *is_consumed = true;
+    *is_consumed = (uint8_t)true;
     if ((status = sha206a_get_pk_useflag_count(&pk_available_count)) != ATCA_SUCCESS)
     {
         return status;
     }
 
-    if (!pk_available_count)
+    if (pk_available_count == 0u)
     {
-        *is_consumed = false;
+        *is_consumed = (uint8_t)false;
     }
 
     return status;
@@ -353,15 +357,15 @@ ATCA_STATUS sha206a_get_dk_useflag_count(uint8_t* dk_available_count)
         return ATCA_BAD_PARAM;
     }
 
-    *dk_available_count = 0;
+    *dk_available_count = 0u;
     if ((status = atcab_read_bytes_zone(ATCA_ZONE_CONFIG, 0, 64, read_buf, sizeof(read_buf))) != ATCA_SUCCESS)
     {
         return status;
     }
 
-    for (bit_count = 0; bit_count < 8; bit_count++)
+    for (bit_count = 0u; bit_count < 8u; bit_count++)
     {
-        if (!(read_buf[2] & 0x01))
+        if ((read_buf[2] & 0x01u) != 0x01u)
         {
             break;
         }
@@ -381,7 +385,7 @@ ATCA_STATUS sha206a_get_pk_useflag_count(uint8_t* pk_available_count)
 {
     ATCA_STATUS status;
     uint8_t read_buf[16];
-    uint8_t byte_count;
+    uint8_t byte_count = 16u;
     uint8_t bit_count;
 
     if (pk_available_count == NULL)
@@ -389,20 +393,20 @@ ATCA_STATUS sha206a_get_pk_useflag_count(uint8_t* pk_available_count)
         return ATCA_BAD_PARAM;
     }
 
-    *pk_available_count = 0;
+    *pk_available_count = 0u;
     if ((status = atcab_read_bytes_zone(ATCA_ZONE_CONFIG, 0, 68, read_buf, sizeof(read_buf))) != ATCA_SUCCESS)
     {
         return status;
     }
 
-    for (bit_count = 0, byte_count = 16; bit_count < sizeof(read_buf) * 8; bit_count++)
+    for (bit_count = 0u; bit_count < sizeof(read_buf) * 8u; bit_count++)
     {
-        if (bit_count % 8 == 0)
+        if (bit_count % 8u == 0u)
         {
             byte_count--;
         }
 
-        if (!(read_buf[byte_count] & 0x01))
+        if ((read_buf[byte_count] & 0x01u) != 0x01u)
         {
             break;
         }
@@ -428,7 +432,7 @@ ATCA_STATUS sha206a_get_dk_update_count(uint8_t* dk_update_count)
         return ATCA_BAD_PARAM;
     }
 
-    *dk_update_count = 0;
+    *dk_update_count = 0u;
     if ((status = atcab_read_bytes_zone(ATCA_ZONE_CONFIG, 0, 64, read_buf, sizeof(read_buf))) != ATCA_SUCCESS)
     {
         return status;
@@ -454,8 +458,8 @@ ATCA_STATUS sha206a_write_data_store(uint8_t slot, uint8_t* data, uint8_t block,
     ATCA_STATUS status;
     uint8_t zone = ATCA_ZONE_DATA;
 
-    if ((slot < SHA206A_DATA_STORE0) || (slot > SHA206A_DATA_STORE2) ||
-        (slot == SHA206A_DATA_STORE0 && lock_after_write == true) || (data == NULL))
+    if ((slot < (uint8_t)SHA206A_DATA_STORE0) || (slot > (uint8_t)SHA206A_DATA_STORE2) ||
+        (slot == (uint8_t)SHA206A_DATA_STORE0 && lock_after_write == true) || (data == NULL))
     {
         return ATCA_BAD_PARAM;
     }
@@ -481,7 +485,7 @@ ATCA_STATUS sha206a_read_data_store(uint8_t slot, uint8_t* data, uint8_t offset,
     ATCA_STATUS status;
     uint8_t zone = ATCA_ZONE_DATA;
 
-    if ((slot < SHA206A_DATA_STORE0) || (slot > SHA206A_DATA_STORE2) || (data == NULL))
+    if ((slot < (uint8_t)SHA206A_DATA_STORE0) || (slot > (uint8_t)SHA206A_DATA_STORE2) || (data == NULL))
     {
         return ATCA_BAD_PARAM;
     }
@@ -500,25 +504,25 @@ ATCA_STATUS sha206a_get_data_store_lock_status(uint8_t slot, uint8_t* is_locked)
     ATCA_STATUS status;
     uint8_t read_buf[4];
 
-    if ((is_locked == NULL) || (slot < SHA206A_DATA_STORE1) || (slot > SHA206A_DATA_STORE2))
+    if ((is_locked == NULL) || (slot < (uint8_t)SHA206A_DATA_STORE1) || (slot > (uint8_t)SHA206A_DATA_STORE2))
     {
         return ATCA_BAD_PARAM;
     }
 
-    *is_locked = true;
+    *is_locked = (uint8_t)true;
 
     if ((status = atcab_read_bytes_zone(ATCA_ZONE_CONFIG, 0, 4, &read_buf[0], sizeof(read_buf))) != ATCA_SUCCESS)
     {
         return status;
     }
 
-    if (slot == SHA206A_DATA_STORE1)
+    if (slot == (uint8_t)SHA206A_DATA_STORE1)
     {
-        *is_locked = ((read_buf[0] == 0x55) && (read_buf[1] == 0x55)) ? false : true;
+        *is_locked = (uint8_t)(((read_buf[0] == 0x55u) && (read_buf[1] == 0x55u)) ? (uint8_t)false : (uint8_t)true);
     }
     else
     {
-        *is_locked = ((read_buf[2] == 0x55) && (read_buf[3] == 0x55)) ? false : true;
+        *is_locked = ((read_buf[2] == 0x55u) && (read_buf[3] == 0x55u)) ? (uint8_t)false : (uint8_t)true;
     }
 
     return status;

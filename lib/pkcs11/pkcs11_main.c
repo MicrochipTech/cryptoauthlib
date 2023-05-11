@@ -1,7 +1,7 @@
 /**
  * \file
  * \brief PKCS11 Basic library redirects based on the 2.40 specification
- * http://docs.oasis-open.org/pkcs11/pkcs11-base/v2.40/os/pkcs11-base-v2.40-os.html
+ *  docs.oasis-open.org/pkcs11/pkcs11-base/v2.40/os/pkcs11-base-v2.40-os.html
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
@@ -166,7 +166,7 @@ CK_RV C_GetInfo(CK_INFO_PTR pInfo)
 CK_RV C_GetFunctionList(CK_FUNCTION_LIST_PTR_PTR ppFunctionList)
 {
 //    PKCS11_DEBUG("\r\n");
-    if (!ppFunctionList)
+    if (NULL == ppFunctionList)
     {
         return CKR_ARGUMENTS_BAD;
     }
@@ -264,12 +264,12 @@ CK_RV C_OpenSession
     CK_SLOT_ID            slotID,
     CK_FLAGS              flags,
     CK_VOID_PTR           pApplication,
-    CK_NOTIFY             notify,
+    CK_NOTIFY             Notify,
     CK_SESSION_HANDLE_PTR phSession
 )
 {
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(pkcs11_session_open(slotID, flags, pApplication, notify, phSession));
+    PKCS11_DEBUG_RETURN(pkcs11_session_open(slotID, flags, pApplication, Notify, phSession));
 }
 
 /**
@@ -460,11 +460,11 @@ CK_RV C_EncryptInit
 (
     CK_SESSION_HANDLE hSession,
     CK_MECHANISM_PTR  pMechanism,
-    CK_OBJECT_HANDLE  hObject
+    CK_OBJECT_HANDLE  hKey
 )
 {
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(pkcs11_encrypt_init(hSession, pMechanism, hObject));
+    PKCS11_DEBUG_RETURN(pkcs11_encrypt_init(hSession, pMechanism, hKey));
 }
 
 /**
@@ -489,32 +489,32 @@ CK_RV C_Encrypt
 CK_RV C_EncryptUpdate
 (
     CK_SESSION_HANDLE hSession,
-    CK_BYTE_PTR       pData,
-    CK_ULONG          ulDataLen,
-    CK_BYTE_PTR       pEncryptedData,
-    CK_ULONG_PTR      pulEncryptedDataLen
+    CK_BYTE_PTR       pPart,
+    CK_ULONG          ulPartLen,
+    CK_BYTE_PTR       pEncryptedPart,
+    CK_ULONG_PTR      pulEncryptedPartLen
 )
 {
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(pkcs11_encrypt_update(hSession, pData, ulDataLen, pEncryptedData, pulEncryptedDataLen));
+    PKCS11_DEBUG_RETURN(pkcs11_encrypt_update(hSession, pPart, ulPartLen, pEncryptedPart, pulEncryptedPartLen));
 }
 
 /**
  * \brief Finishes a multiple-part encryption operation
  */
-CK_RV C_EncryptFinal(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedData, CK_ULONG_PTR pulEncryptedDataLen)
+CK_RV C_EncryptFinal(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pLastEncryptedPart, CK_ULONG_PTR pulLastEncryptedPartLen)
 {
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(pkcs11_encrypt_final(hSession, pEncryptedData, pulEncryptedDataLen));
+    PKCS11_DEBUG_RETURN(pkcs11_encrypt_final(hSession, pLastEncryptedPart, pulLastEncryptedPartLen));
 }
 
 /**
  * \brief Initialize decryption using the specified object
  */
-CK_RV C_DecryptInit(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hObject)
+CK_RV C_DecryptInit(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey)
 {
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(pkcs11_decrypt_init(hSession, pMechanism, hObject));
+    PKCS11_DEBUG_RETURN(pkcs11_decrypt_init(hSession, pMechanism, hKey));
 }
 
 /**
@@ -539,23 +539,23 @@ CK_RV C_Decrypt
 CK_RV C_DecryptUpdate
 (
     CK_SESSION_HANDLE hSession,
-    CK_BYTE_PTR       pEncryptedData,
-    CK_ULONG          ulEncryptedDataLen,
-    CK_BYTE_PTR       pData,
-    CK_ULONG_PTR      pDataLen
+    CK_BYTE_PTR       pEncryptedPart,
+    CK_ULONG          ulEncryptedPartLen,
+    CK_BYTE_PTR       pPart,
+    CK_ULONG_PTR      pulPartLen
 )
 {
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(pkcs11_decrypt_update(hSession, pEncryptedData, ulEncryptedDataLen, pData, pDataLen));
+    PKCS11_DEBUG_RETURN(pkcs11_decrypt_update(hSession, pEncryptedPart, ulEncryptedPartLen, pPart, pulPartLen));
 }
 
 /**
  * \brief Finishes a multiple-part decryption operation
  */
-CK_RV C_DecryptFinal(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG_PTR pDataLen)
+CK_RV C_DecryptFinal(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pLastPart, CK_ULONG_PTR pulLastPartLen)
 {
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(pkcs11_decrypt_final(hSession, pData, pDataLen));
+    PKCS11_DEBUG_RETURN(pkcs11_decrypt_final(hSession, pLastPart, pulLastPartLen));
 }
 
 /**
@@ -588,10 +588,10 @@ CK_RV C_DigestUpdate(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulP
 /**
  * \brief Update a running digest operation by digesting a secret key with the specified handle
  */
-CK_RV C_DigestKey(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject)
+CK_RV C_DigestKey(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey)
 {
     ((void)hSession);
-    ((void)hObject);
+    ((void)hKey);
     PKCS11_DEBUG("\r\n");
     PKCS11_DEBUG_RETURN(CKR_FUNCTION_NOT_SUPPORTED);
 }
@@ -756,17 +756,17 @@ CK_RV C_DigestEncryptUpdate
 CK_RV C_DecryptDigestUpdate
 (
     CK_SESSION_HANDLE hSession,
+    CK_BYTE_PTR       pEncryptedPart,
+    CK_ULONG          ulEncryptedPartLen,
     CK_BYTE_PTR       pPart,
-    CK_ULONG          ulPartLen,
-    CK_BYTE_PTR       pDecryptedPart,
-    CK_ULONG_PTR      pulDecryptedPartLen
+    CK_ULONG_PTR      pulPartLen
 )
 {
     ((void)hSession);
+    ((void)pEncryptedPart);
+    ((void)ulEncryptedPartLen);
     ((void)pPart);
-    ((void)ulPartLen);
-    ((void)pDecryptedPart);
-    ((void)pulDecryptedPartLen);
+    ((void)pulPartLen);
     PKCS11_DEBUG("\r\n");
     PKCS11_DEBUG_RETURN(CKR_FUNCTION_NOT_SUPPORTED);
 }
@@ -869,7 +869,7 @@ CK_RV C_UnwrapKey
     CK_BYTE_PTR          pWrappedKey,
     CK_ULONG             ulWrappedKeyLen,
     CK_ATTRIBUTE_PTR     pTemplate,
-    CK_ULONG             ulCount,
+    CK_ULONG             ulAttributeCount,
     CK_OBJECT_HANDLE_PTR phKey
 )
 {
@@ -879,7 +879,7 @@ CK_RV C_UnwrapKey
     ((void)pWrappedKey);
     ((void)ulWrappedKeyLen);
     ((void)pTemplate);
-    ((void)ulCount);
+    ((void)ulAttributeCount);
     ((void)phKey);
     PKCS11_DEBUG("\r\n");
     PKCS11_DEBUG_RETURN(CKR_FUNCTION_NOT_SUPPORTED);
@@ -894,12 +894,12 @@ CK_RV C_DeriveKey
     CK_MECHANISM_PTR     pMechanism,
     CK_OBJECT_HANDLE     hBaseKey,
     CK_ATTRIBUTE_PTR     pTemplate,
-    CK_ULONG             ulCount,
+    CK_ULONG             ulAttributeCount,
     CK_OBJECT_HANDLE_PTR phKey
 )
 {
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(pkcs11_key_derive(hSession, pMechanism, hBaseKey, pTemplate, ulCount, phKey));
+    PKCS11_DEBUG_RETURN(pkcs11_key_derive(hSession, pMechanism, hBaseKey, pTemplate, ulAttributeCount, phKey));
 }
 
 /**
@@ -917,10 +917,10 @@ CK_RV C_SeedRandom(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSeed, CK_ULONG ulSee
 /**
  * \brief Generate the specified amount of random data
  */
-CK_RV C_GenerateRandom(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pRandomData, CK_ULONG ulRandomLen)
+CK_RV C_GenerateRandom(CK_SESSION_HANDLE hSession, CK_BYTE_PTR RandomData, CK_ULONG ulRandomLen)
 {
     PKCS11_DEBUG("\r\n");
-    PKCS11_DEBUG_RETURN(pkcs11_token_random(hSession, pRandomData, ulRandomLen));
+    PKCS11_DEBUG_RETURN(pkcs11_token_random(hSession, RandomData, ulRandomLen));
 }
 
 /**
@@ -946,11 +946,11 @@ CK_RV C_CancelFunction(CK_SESSION_HANDLE hSession)
 /**
  * \brief Wait for a slot event (token insertion, removal, etc) on the specified slot to occur
  */
-CK_RV C_WaitForSlotEvent(CK_FLAGS flags, CK_SLOT_ID_PTR pSlot, CK_VOID_PTR pReserved)
+CK_RV C_WaitForSlotEvent(CK_FLAGS flags, CK_SLOT_ID_PTR pSlot, CK_VOID_PTR pRserved)
 {
     ((void)flags);
     ((void)pSlot);
-    ((void)pReserved);
+    ((void)pRserved);
     PKCS11_DEBUG("\r\n");
     PKCS11_DEBUG_RETURN(CKR_FUNCTION_NOT_SUPPORTED);
 }

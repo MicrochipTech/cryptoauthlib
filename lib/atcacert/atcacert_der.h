@@ -33,6 +33,8 @@
 #include <stdint.h>
 #include "atcacert.h"
 
+#pragma coverity compliance block fp "MISRA C-2012 Rule 3.1"
+
 // Inform function naming when compiling in C++
 #ifdef __cplusplus
 extern "C" {
@@ -58,7 +60,7 @@ extern "C" {
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_der_enc_length(uint32_t length, uint8_t* der_length, size_t* der_length_size);
+ATCA_STATUS atcacert_der_enc_length(size_t length, uint8_t* der_length, size_t* der_length_size);
 
 /**
  * \brief Decode a DER format length.
@@ -72,9 +74,9 @@ int atcacert_der_enc_length(uint32_t length, uint8_t* der_length, size_t* der_le
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_der_dec_length(const uint8_t* der_length, size_t* der_length_size, uint32_t* length);
+ATCA_STATUS atcacert_der_dec_length(const uint8_t* der_length, size_t* der_length_size, size_t* length);
 
-int atcacert_der_adjust_length(uint8_t* der_length, size_t* der_length_size, int delta_length, uint32_t* new_length);
+ATCA_STATUS atcacert_der_adjust_length(uint8_t* der_length, size_t* der_length_size, int delta_length, size_t* new_length);
 
 /**
  * \brief Encode an ASN.1 integer in DER format, including tag and length fields.
@@ -91,11 +93,12 @@ int atcacert_der_adjust_length(uint8_t* der_length, size_t* der_length_size, int
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_der_enc_integer(const uint8_t* int_data,
+ATCA_STATUS atcacert_der_enc_integer(const uint8_t* int_data,
                              size_t         int_data_size,
                              uint8_t        is_unsigned,
                              uint8_t*       der_int,
                              size_t*        der_int_size);
+
 
 /**
  * \brief Decode an ASN.1 DER encoded integer.
@@ -113,7 +116,7 @@ int atcacert_der_enc_integer(const uint8_t* int_data,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_der_dec_integer(const uint8_t* der_int,
+ATCA_STATUS atcacert_der_dec_integer(const uint8_t* der_int,
                              size_t*        der_int_size,
                              uint8_t*       int_data,
                              size_t*        int_data_size);
@@ -134,7 +137,7 @@ int atcacert_der_dec_integer(const uint8_t* der_int,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_der_enc_ecdsa_sig_value(const uint8_t raw_sig[64],
+ATCA_STATUS atcacert_der_enc_ecdsa_sig_value(const uint8_t raw_sig[64],
                                      uint8_t*      der_sig,
                                      size_t*       der_sig_size);
 
@@ -153,7 +156,7 @@ int atcacert_der_enc_ecdsa_sig_value(const uint8_t raw_sig[64],
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_der_dec_ecdsa_sig_value(const uint8_t * der_sig,
+ATCA_STATUS atcacert_der_dec_ecdsa_sig_value(const uint8_t * der_sig,
                                      size_t *        der_sig_size,
                                      uint8_t         raw_sig[64]);
 
@@ -161,5 +164,7 @@ int atcacert_der_dec_ecdsa_sig_value(const uint8_t * der_sig,
 #ifdef __cplusplus
 }
 #endif
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 3.1"
 
 #endif

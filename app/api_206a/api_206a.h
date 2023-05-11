@@ -34,10 +34,10 @@ extern "C" {
 
 #include "atca_status.h"
 
-#define ATCA_SHA206A_ZONE_WRITE_LOCK        0x20
-#define ATCA_SHA206A_DKEY_CONSUMPTION_MASK  0x01
-#define ATCA_SHA206A_PKEY_CONSUMPTION_MASK  0x02
-#define ATCA_SHA206A_SYMMETRIC_KEY_ID_SLOT  0X07
+#define ATCA_SHA206A_ZONE_WRITE_LOCK        0x20u
+#define ATCA_SHA206A_DKEY_CONSUMPTION_MASK  0x01u
+#define ATCA_SHA206A_PKEY_CONSUMPTION_MASK  0x02u
+#define ATCA_SHA206A_SYMMETRIC_KEY_ID_SLOT  0X07u
 
 enum
 {
@@ -53,8 +53,8 @@ ATCA_STATUS sha206a_generate_challenge_response_pair(uint8_t* key, uint8_t* chal
 ATCA_STATUS sha206a_authenticate(uint8_t* challenge, uint8_t* expected_response, uint8_t* is_authenticated);
 ATCA_STATUS sha206a_verify_device_consumption(uint8_t* is_consumed);
 
-ATCA_STATUS sha206a_check_dk_useflag_validity(uint8_t* is_valid);
-ATCA_STATUS sha206a_check_pk_useflag_validity(uint8_t* is_valid);
+ATCA_STATUS sha206a_check_dk_useflag_validity(uint8_t* is_consumed);
+ATCA_STATUS sha206a_check_pk_useflag_validity(uint8_t* is_consumed);
 ATCA_STATUS sha206a_get_dk_useflag_count(uint8_t* dk_available_count);
 ATCA_STATUS sha206a_get_pk_useflag_count(uint8_t* pk_available_count);
 ATCA_STATUS sha206a_get_dk_update_count(uint8_t* dk_update_count);

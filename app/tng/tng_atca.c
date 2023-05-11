@@ -45,29 +45,30 @@ typedef struct
 static tng_cert_map_element g_tng_cert_def_map[] =
 {
 #ifdef ATCA_TNG_LEGACY_SUPPORT
-    { "wdNxAjae", &g_tngtls_cert_def_2_device                          },
-    { "Rsuy5YJh", &g_tngtls_cert_def_2_device                          },
-    { "BxZvm6q2", &g_tnglora_cert_def_2_device                         },
+    { "wdNxAjae", &g_tngtls_cert_def_2_device                  },
+    { "Rsuy5YJh", &g_tngtls_cert_def_2_device                  },
+    { "BxZvm6q2", &g_tnglora_cert_def_2_device                 },
 #endif
 #ifdef ATCA_TFLEX_SUPPORT
-    { "MKMwyhP1", &g_tflxtls_cert_def_4_device                         },
+    { "MKMwyhP1", &g_tflxtls_cert_def_4_device                 },
 #endif
 #ifdef ATCA_TNGTLS_SUPPORT
-    { "KQp2ZkD8", &g_tngtls_cert_def_3_device                          },
-    { "x6tjuZMy", &g_tngtls_cert_def_3_device                          },
+    { "KQp2ZkD8", &g_tngtls_cert_def_3_device                  },
+    { "x6tjuZMy", &g_tngtls_cert_def_3_device                  },
 #endif
 #ifdef ATCA_TNGLORA_SUPPORT
-    { "jsMu7iYO", &g_tnglora_cert_def_4_device                         },
-    { "09qJNxI3", &g_tnglora_cert_def_4_device                         },
+    { "jsMu7iYO", &g_tnglora_cert_def_4_device                 },
+    { "09qJNxI3", &g_tnglora_cert_def_4_device                 },
 #endif
-    { "",         NULL                                                 }
+    { "",         NULL                                         }
 };
 
 static const size_t g_tng_cert_def_cnt = sizeof(g_tng_cert_def_map) / sizeof(tng_cert_map_element) - 1;
 
 const atcacert_def_t* tng_map_get_device_cert_def(int index)
 {
-    if (index < (int)g_tng_cert_def_cnt)
+
+    if ((index > 0) && (index < (int)g_tng_cert_def_cnt))
     {
         return g_tng_cert_def_map[index].cert_def;
     }

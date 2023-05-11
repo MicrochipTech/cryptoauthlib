@@ -36,7 +36,7 @@
  * \defgroup pkcs11 Mechanisms (pkcs11_mech_)
    @{ */
 
-typedef struct _pcks11_mech_table_e
+typedef struct pcks11_mech_table_e
 {
     CK_MECHANISM_TYPE type;
     CK_MECHANISM_INFO info;
@@ -318,9 +318,9 @@ static pcks11_mech_table_e pkcs11_mech_list_ta100[] = {
 
 static CK_MECHANISM_INFO_PTR pkcs11_mech_find_info(pcks11_mech_table_ptr pMechanismInfoList, CK_ULONG count, CK_MECHANISM_TYPE type)
 {
-    CK_MECHANISM_INFO_PTR rv = NULL_PTR;
+    CK_MECHANISM_INFO_PTR rv = NULL;
 
-    if (pMechanismInfoList)
+    if (NULL != pMechanismInfoList)
     {
         CK_ULONG i;
         for (i = 0; i < count; i++)
@@ -337,7 +337,7 @@ static CK_MECHANISM_INFO_PTR pkcs11_mech_find_info(pcks11_mech_table_ptr pMechan
 
 static void pkcs11_mech_fill_list(CK_MECHANISM_TYPE_PTR pMechanismList, pcks11_mech_table_ptr pMechanismInfoList, CK_ULONG count)
 {
-    if (pMechanismList && pMechanismInfoList)
+    if (NULL != pMechanismList && NULL != pMechanismInfoList)
     {
         CK_ULONG i;
         for (i = 0; i < count; i++)
@@ -351,16 +351,16 @@ CK_RV pkcs11_mech_get_list(CK_SLOT_ID slotID, CK_MECHANISM_TYPE_PTR pMechanismLi
 {
     pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
     pkcs11_slot_ctx_ptr slot_ctx;
-    pcks11_mech_table_ptr mech_list_ptr = NULL_PTR;
+    pcks11_mech_table_ptr mech_list_ptr = NULL;
     CK_ULONG mech_cnt = 0;
 
-    if (!lib_ctx || !lib_ctx->initialized)
+    if ((NULL == lib_ctx) || (false == lib_ctx->initialized))
     {
         return CKR_CRYPTOKI_NOT_INITIALIZED;
     }
 
     /* Ref PKCS11 Sec 5.5 - C_GetMechanismList */
-    if (!pulCount)
+    if (NULL == pulCount)
     {
         return CKR_ARGUMENTS_BAD;
     }
@@ -368,7 +368,7 @@ CK_RV pkcs11_mech_get_list(CK_SLOT_ID slotID, CK_MECHANISM_TYPE_PTR pMechanismLi
     /* Retreive the slot context - i.e. the attached device (ECC508A, SHA256, etc) */
     slot_ctx = pkcs11_slot_get_context(lib_ctx, slotID);
 
-    if (!slot_ctx)
+    if (NULL == slot_ctx)
     {
         return CKR_SLOT_ID_INVALID;
     }
@@ -377,28 +377,30 @@ CK_RV pkcs11_mech_get_list(CK_SLOT_ID slotID, CK_MECHANISM_TYPE_PTR pMechanismLi
     {
 #ifdef ATCA_ATECC508A_SUPPORT
     case ATECC508A:
-        mech_cnt = TABLE_SIZE(pkcs11_mech_list_ecc508);
+        mech_cnt = (CK_ULONG)(TABLE_SIZE(pkcs11_mech_list_ecc508));
         mech_list_ptr = pkcs11_mech_list_ecc508;
         break;
 #endif
 #ifdef ATCA_ATECC608_SUPPORT
     case ATECC608:
-        mech_cnt = TABLE_SIZE(pkcs11_mech_list_ecc608);
+        mech_cnt = (CK_ULONG)(TABLE_SIZE(pkcs11_mech_list_ecc608));
         mech_list_ptr = pkcs11_mech_list_ecc608;
         break;
 #endif
 #ifdef ATCA_TA100_SUPPORT
     case TA100:
-        mech_cnt = TABLE_SIZE(pkcs11_mech_list_ta100);
+        mech_cnt = (CK_ULONG)(TABLE_SIZE(pkcs11_mech_list_ta100));
         mech_list_ptr = pkcs11_mech_list_ta100;
         break;
 #endif
     default:
+        mech_cnt = 0;
+        mech_list_ptr = NULL;
         break;
     }
 
     /* Ref PKCS11 Sec 5.5 - C_GetMechanismList Requirement #2 */
-    if (pMechanismList)
+    if (NULL != pMechanismList)
     {
         if (mech_cnt > *pulCount)
         {
@@ -420,15 +422,15 @@ CK_RV pkcs_mech_get_info(CK_SLOT_ID slotID, CK_MECHANISM_TYPE type, CK_MECHANISM
 {
     pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
     pkcs11_slot_ctx_ptr slot_ctx;
-    CK_MECHANISM_INFO_PTR mech_info_ptr = NULL_PTR;
+    CK_MECHANISM_INFO_PTR mech_info_ptr = NULL;
 
 
-    if (!lib_ctx || !lib_ctx->initialized)
+    if ((NULL == lib_ctx) || (false == lib_ctx->initialized))
     {
         return CKR_CRYPTOKI_NOT_INITIALIZED;
     }
 
-    if (!pInfo)
+    if (NULL == pInfo)
     {
         return CKR_ARGUMENTS_BAD;
     }
@@ -436,7 +438,7 @@ CK_RV pkcs_mech_get_info(CK_SLOT_ID slotID, CK_MECHANISM_TYPE type, CK_MECHANISM
     /* Retreive the slot context - i.e. the attached device (ECC508A, SHA256, etc) */
     slot_ctx = pkcs11_slot_get_context(lib_ctx, slotID);
 
-    if (!slot_ctx)
+    if (NULL == slot_ctx)
     {
         return CKR_SLOT_ID_INVALID;
     }
@@ -445,29 +447,30 @@ CK_RV pkcs_mech_get_info(CK_SLOT_ID slotID, CK_MECHANISM_TYPE type, CK_MECHANISM
     {
 #ifdef ATCA_ATECC508A_SUPPORT
     case ATECC508A:
-        mech_info_ptr = pkcs11_mech_find_info(pkcs11_mech_list_ecc508, TABLE_SIZE(pkcs11_mech_list_ecc508), type);
+        mech_info_ptr = pkcs11_mech_find_info(pkcs11_mech_list_ecc508, (CK_ULONG)(TABLE_SIZE(pkcs11_mech_list_ecc508)), type);
         break;
 #endif
 #ifdef ATCA_ATECC608_SUPPORT
     case ATECC608:
-        mech_info_ptr = pkcs11_mech_find_info(pkcs11_mech_list_ecc608, TABLE_SIZE(pkcs11_mech_list_ecc608), type);
+        mech_info_ptr = pkcs11_mech_find_info(pkcs11_mech_list_ecc608, (CK_ULONG)(TABLE_SIZE(pkcs11_mech_list_ecc608)), type);
         break;
 #endif
 #ifdef ATCA_TA100_SUPPORT
     case TA100:
-        mech_info_ptr = pkcs11_mech_find_info(pkcs11_mech_list_ta100, TABLE_SIZE(pkcs11_mech_list_ta100), type);
+        mech_info_ptr = pkcs11_mech_find_info(pkcs11_mech_list_ta100, (CK_ULONG)(TABLE_SIZE(pkcs11_mech_list_ta100)), type);
         break;
 #endif
     default:
+        mech_info_ptr = NULL;
         break;
     }
 
-    if (!mech_info_ptr)
+    if (NULL == mech_info_ptr)
     {
         return CKR_MECHANISM_INVALID;
     }
 
-    memcpy(pInfo, mech_info_ptr, sizeof(CK_MECHANISM_INFO));
+    (void)memcpy(pInfo, mech_info_ptr, sizeof(CK_MECHANISM_INFO));
 
     return CKR_OK;
 }

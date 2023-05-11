@@ -25,8 +25,8 @@
  * THIS SOFTWARE.
  */
 
-#ifndef _ATCA_LIB_H
-#define _ATCA_LIB_H
+#ifndef CRYPTOAUTHLIB_H
+#define CRYPTOAUTHLIB_H
 
 #include <stdio.h>
 #include <stdint.h>
@@ -44,19 +44,20 @@
 #include "atca_status.h"
 #include "atca_debug.h"
 #include "atca_iface.h"
+#include "atca_device.h"
 #include "atca_helpers.h"
 #include "hal/atca_hal.h"
 
 /* Common Cryptographic Definitions */
-#define ATCA_SHA256_BLOCK_SIZE              (64)
-#define ATCA_SHA256_DIGEST_SIZE             (32)
+#define ATCA_SHA256_BLOCK_SIZE              (64u)
+#define ATCA_SHA256_DIGEST_SIZE             (32u)
 
-#define ATCA_AES128_BLOCK_SIZE              (16)
+#define ATCA_AES128_BLOCK_SIZE              (16u)
 #define ATCA_AES128_KEY_SIZE                (16)
 
 #define ATCA_ECCP256_KEY_SIZE               (32)
 #define ATCA_ECCP256_PUBKEY_SIZE            (64)
-#define ATCA_ECCP256_SIG_SIZE               (64)
+#define ATCA_ECCP256_SIG_SIZE               (64u)
 
 #define ATCA_ZONE_CONFIG                    ((uint8_t)0x00)
 #define ATCA_ZONE_OTP                       ((uint8_t)0x01)
@@ -80,7 +81,6 @@
 
 #if ATCA_CA_SUPPORT || defined(ATCA_USE_ATCAB_FUNCTIONS)
 #include "atca_cfgs.h"
-#include "atca_device.h"
 #include "calib/calib_basic.h"
 #include "calib/calib_command.h"
 #include "calib/calib_aes_gcm.h"
@@ -103,4 +103,4 @@
     #define ATCA_TRACE(s, m)         atca_trace(s)
 #endif
 
-#endif
+#endif /* CRYPTOAUTHLIB_H */

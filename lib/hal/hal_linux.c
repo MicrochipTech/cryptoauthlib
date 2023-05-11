@@ -90,7 +90,7 @@ typedef struct
  * \param[IN/OUT] ppMutex location to receive ptr to mutex
  * \param[IN/OUT] name String used to identify the mutex
  */
-ATCA_STATUS hal_create_mutex(void ** ppMutex, char* pName)
+ATCA_STATUS hal_create_mutex(void ** ppMutex, const char* pName)
 {
     int fd;
     bool created = false;

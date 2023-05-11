@@ -39,6 +39,10 @@ extern "C" {
  */
 #define TNGTLS_CERT_TEMPLATE_3_DEVICE_SIZE 546
 ATCA_DLL const atcacert_def_t g_tngtls_cert_def_3_device;
+
+ATCA_DLL const uint8_t g_tngtls_cert_template_3_device[];
+ATCA_DLL const atcacert_cert_element_t g_tngtls_cert_elements_3_device[];
+
 /** @} */
 
 #ifdef __cplusplus

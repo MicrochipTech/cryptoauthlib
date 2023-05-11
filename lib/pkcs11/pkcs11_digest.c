@@ -15,19 +15,19 @@ CK_RV pkcs11_digest_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism
     pkcs11_session_ctx_ptr pSession;
     CK_RV rv;
 
-    rv = pkcs11_init_check(NULL_PTR, FALSE);
-    if (rv)
+    rv = pkcs11_init_check(NULL, FALSE);
+    if (CKR_OK != rv)
     {
         return rv;
     }
 
-    if (!pMechanism)
+    if (NULL == pMechanism)
     {
         return CKR_ARGUMENTS_BAD;
     }
 
     rv = pkcs11_session_check(&pSession, hSession);
-    if (rv)
+    if (CKR_OK != rv)
     {
         return rv;
     }
@@ -40,18 +40,22 @@ CK_RV pkcs11_digest_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism
     {
         return CKR_OPERATION_ACTIVE;
     }
+    else
+    {
+        /* do nothing */
+    }
 
-#if PKCS11_HARDWARE_SHA256
+#ifdef PKCS11_HARDWARE_SHA256
     return CKR_FUNCTION_NOT_SUPPORTED;
 #else
-    rv = atcac_sw_sha2_256_init(&pSession->active_mech_data.sha256);
+    rv = pkcs11_util_convert_rv(atcac_sw_sha2_256_init(&pSession->active_mech_data.sha256));
 
-    if (ATCA_SUCCESS == rv)
+    if (CKR_OK == rv)
     {
         pSession->active_mech = CKM_SHA256;
     }
 
-    return pkcs11_util_convert_rv(rv);
+    return rv;
 #endif
 }
 
@@ -63,18 +67,18 @@ CK_RV pkcs11_digest(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDa
     pkcs11_session_ctx_ptr pSession;
     CK_RV rv;
 
-    rv = pkcs11_init_check(NULL_PTR, FALSE);
-    if (rv)
+    rv = pkcs11_init_check(NULL, FALSE);
+    if (CKR_OK != rv)
     {
         return rv;
     }
 
-    if (!pData || !ulDataLen || !pulDigestLen)
+    if (NULL == pData || 0u == ulDataLen || NULL == pulDigestLen)
     {
         return CKR_ARGUMENTS_BAD;
     }
 
-    if (!pDigest)
+    if (NULL == pDigest)
     {
         *pulDigestLen = ATCA_SHA2_256_DIGEST_SIZE;
         return CKR_OK;
@@ -83,14 +87,18 @@ CK_RV pkcs11_digest(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDa
     {
         return CKR_BUFFER_TOO_SMALL;
     }
+    else
+    {
+        /* do nothing */
+    }
 
     rv = pkcs11_session_check(&pSession, hSession);
-    if (rv)
+    if (CKR_OK != rv)
     {
         return rv;
     }
 
-#if PKCS11_HARDWARE_SHA256
+#ifdef PKCS11_HARDWARE_SHA256
     ((void)hSession);
     ((void)pData);
     ((void)ulDataLen);
@@ -104,11 +112,11 @@ CK_RV pkcs11_digest(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDa
         return CKR_OPERATION_NOT_INITIALIZED;
     }
 
-    rv = atcac_sw_sha2_256(pData, ulDataLen, pDigest);
+    rv = pkcs11_util_convert_rv(atcac_sw_sha2_256(pData, ulDataLen, pDigest));
 
     pSession->active_mech = CKM_VENDOR_DEFINED;
 
-    return pkcs11_util_convert_rv(rv);
+    return rv;
 #endif
 }
 
@@ -120,24 +128,24 @@ CK_RV pkcs11_digest_update(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULO
     pkcs11_session_ctx_ptr pSession;
     CK_RV rv;
 
-    rv = pkcs11_init_check(NULL_PTR, FALSE);
-    if (rv)
+    rv = pkcs11_init_check(NULL, FALSE);
+    if (CKR_OK != rv)
     {
         return rv;
     }
 
-    if (!pPart || !ulPartLen)
+    if (NULL == pPart || 0u == ulPartLen)
     {
         return CKR_ARGUMENTS_BAD;
     }
 
     rv = pkcs11_session_check(&pSession, hSession);
-    if (rv)
+    if (CKR_OK != rv)
     {
         return rv;
     }
 
-#if PKCS11_HARDWARE_SHA256
+#ifdef PKCS11_HARDWARE_SHA256
     ((void)hSession);
     ((void)pPart);
     ((void)ulPartLen);
@@ -149,9 +157,9 @@ CK_RV pkcs11_digest_update(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULO
         return CKR_OPERATION_NOT_INITIALIZED;
     }
 
-    rv = atcac_sw_sha2_256_update(&pSession->active_mech_data.sha256, pPart, ulPartLen);
+    rv = pkcs11_util_convert_rv(atcac_sw_sha2_256_update(&pSession->active_mech_data.sha256, pPart, ulPartLen));
 
-    return pkcs11_util_convert_rv(rv);
+    return rv;
 #endif
 
 }
@@ -164,18 +172,18 @@ CK_RV pkcs11_digest_final(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pDigest, CK_UL
     pkcs11_session_ctx_ptr pSession;
     CK_RV rv;
 
-    rv = pkcs11_init_check(NULL_PTR, FALSE);
-    if (rv)
+    rv = pkcs11_init_check(NULL, FALSE);
+    if (CKR_OK != rv)
     {
         return rv;
     }
 
-    if (!pulDigestLen)
+    if (NULL == pulDigestLen)
     {
         return CKR_ARGUMENTS_BAD;
     }
 
-    if (!pDigest)
+    if (NULL == pDigest)
     {
         *pulDigestLen = ATCA_SHA2_256_DIGEST_SIZE;
         return CKR_OK;
@@ -184,14 +192,18 @@ CK_RV pkcs11_digest_final(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pDigest, CK_UL
     {
         return CKR_BUFFER_TOO_SMALL;
     }
+    else
+    {
+        /* do nothing */
+    }
 
     rv = pkcs11_session_check(&pSession, hSession);
-    if (rv)
+    if (CKR_OK != rv)
     {
         return rv;
     }
 
-#if PKCS11_HARDWARE_SHA256
+#ifdef PKCS11_HARDWARE_SHA256
     ((void)hSession);
     ((void)pDigest);
     ((void)pulDigestLen);
@@ -203,10 +215,10 @@ CK_RV pkcs11_digest_final(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pDigest, CK_UL
         return CKR_OPERATION_NOT_INITIALIZED;
     }
 
-    rv = atcac_sw_sha2_256_finish(&pSession->active_mech_data.sha256, pDigest);
+    rv = pkcs11_util_convert_rv(atcac_sw_sha2_256_finish(&pSession->active_mech_data.sha256, pDigest));
 
     pSession->active_mech = CKM_VENDOR_DEFINED;
 
-    return pkcs11_util_convert_rv(rv);
+    return rv;
 #endif
 }

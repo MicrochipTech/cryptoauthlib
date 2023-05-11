@@ -165,7 +165,7 @@
   *                  atcab_aes_ccm_init_rand        
  **/
 #ifndef ATCAB_AES_CCM_RAND_IV_EN
-#define ATCAB_AES_CCM_INIT_IV_EN    (ATCAB_AES_CCM_EN && ATCAB_AES_RANDOM_IV_EN)
+#define ATCAB_AES_CCM_RAND_IV_EN    (ATCAB_AES_CCM_EN && ATCAB_AES_RANDOM_IV_EN)
 #endif
 
                       /****** ATCA_CRYPTO_HW_AES_CMAC ******/

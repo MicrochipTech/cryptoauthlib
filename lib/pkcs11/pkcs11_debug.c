@@ -311,7 +311,7 @@ void pkcs11_debug_attributes(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)
             {
                 size_t buf_len = pTemplate->ulValueLen * 3 + 1;
                 char * buffer = pkcs11_os_malloc(buf_len);
-                memset(buffer, 0, buf_len);
+                (void)memset(buffer, 0, buf_len);
                 if (buffer)
                 {
                     (void)atcab_bin2hex_(pTemplate->pValue, pTemplate->pValue, buffer, &buf_len, false, true, true);

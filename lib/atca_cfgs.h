@@ -35,31 +35,45 @@
 extern "C" {
 #endif
 
-
+#if defined(ATCA_ECC_SUPPORT) && defined(ATCA_HAL_I2C)
 /** \brief default configuration for an ECCx08A device on the first logical I2C bus */
 extern ATCAIfaceCfg cfg_ateccx08a_i2c_default;
+#endif
 
+#if defined(ATCA_ECC_SUPPORT) && defined(ATCA_HAL_SWI)
 /** \brief default configuration for an ECCx08A device on the logical SWI bus over UART*/
 extern ATCAIfaceCfg cfg_ateccx08a_swi_default;
+#endif
 
+#if defined(ATCA_ECC_SUPPORT) && defined(ATCA_HAL_KIT_UART)
 /** \brief default configuration for Kit protocol over a CDC interface */
-extern ATCAIfaceCfg cfg_ateccx08a_kitcdc_default;
+extern ATCAIfaceCfg cfg_ateccx08_kituart_default;
+#endif
 
+#if defined(ATCA_ECC_SUPPORT) && defined(ATCA_HAL_KIT_HID)
 /** \brief default configuration for Kit protocol over a HID interface */
 extern ATCAIfaceCfg cfg_ateccx08a_kithid_default;
+#endif
 
-
+#if defined(ATCA_SHA_SUPPORT) && defined(ATCA_HAL_I2C)
 /** \brief default configuration for a SHA204A device on the first logical I2C bus */
 extern ATCAIfaceCfg cfg_atsha20xa_i2c_default;
+#endif
 
+#if defined(ATCA_SHA_SUPPORT) && defined(ATCA_HAL_SWI)
 /** \brief default configuration for an SHA20xA device on the logical SWI bus over UART*/
 extern ATCAIfaceCfg cfg_atsha20xa_swi_default;
+#endif
 
+#if defined(ATCA_SHA_SUPPORT) && defined(ATCA_HAL_KIT_UART)
 /** \brief default configuration for Kit protocol over a CDC interface */
-extern ATCAIfaceCfg cfg_atsha20xa_kitcdc_default;
+extern ATCAIfaceCfg cfg_atsha20xa_kituart_default;
+#endif
 
+#if defined(ATCA_SHA_SUPPORT) && defined(ATCA_HAL_KIT_HID)
 /** \brief default configuration for Kit protocol over a HID interface for SHA204 */
 extern ATCAIfaceCfg cfg_atsha20xa_kithid_default;
+#endif
 
 #ifdef __cplusplus
 }

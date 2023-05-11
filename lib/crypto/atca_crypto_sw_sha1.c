@@ -81,9 +81,9 @@ int atcac_sw_sha1_finish(atcac_sha1_ctx* ctx, uint8_t digest[ATCA_SHA1_DIGEST_SI
  * \param[out] digest     Digest is returned here (20 bytes)
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-int atcac_sw_sha1(const uint8_t* data, size_t data_size, uint8_t digest[ATCA_SHA1_DIGEST_SIZE])
+ATCA_STATUS atcac_sw_sha1(const uint8_t* data, size_t data_size, uint8_t digest[ATCA_SHA1_DIGEST_SIZE])
 {
-    int ret;
+    ATCA_STATUS ret;
     atcac_sha1_ctx ctx;
 
     ret = atcac_sw_sha1_init(&ctx);
@@ -99,11 +99,7 @@ int atcac_sw_sha1(const uint8_t* data, size_t data_size, uint8_t digest[ATCA_SHA
     }
 
     ret = atcac_sw_sha1_finish(&ctx, digest);
-    if (ret != ATCA_SUCCESS)
-    {
-        return ret;
-    }
 
-    return ATCA_SUCCESS;
+    return ret;
 }
 #endif /* ATCA_CRYPTO_SHA1_EN */

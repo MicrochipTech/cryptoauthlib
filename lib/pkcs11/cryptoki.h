@@ -30,8 +30,20 @@
    Set the PKCS#11 macros.
 *****************************************************************************/
 
-#ifndef _CRYPTOKI_H
-#define _CRYPTOKI_H
+#ifndef CRYPTOKI_H
+#define CRYPTOKI_H
+
+#include "atca_compiler.h"
+
+#pragma coverity compliance block(include) \
+(deviate "CERT DCL37-C" "PKCS11 headers are defined by the standard and may not be modified") \
+(deviate "MISRA C-2012 Rule 3.1" "PKCS11 headers are defined by the standard and may not be modified") \
+(deviate "MISRA C-2012 Rule 5.2" "PKCS11 headers are defined by the standard and may not be modified") \
+(deviate "MISRA C-2012 Rule 5.8" "PKCS11 headers are defined by the standard and may not be modified") \
+(deviate "MISRA C-2012 Rule 21.1" "PKCS11 headers are defined by the standard and may not be modified") \
+(deviate "MISRA C-2012 Rule 21.2" "PKCS11 headers are defined by the standard and may not be modified")
+
+#pragma warning(push, 0)
 
 //#if defined(_WIN32) || defined(__GNUC__)
 //#pragma pack(push, cryptoki, 1)
@@ -58,9 +70,12 @@
 // PKCS11_API is used for the public API symbols. It either DLL imports or DLL exports (or does nothing for static build)
 // PKCS11_LOCAL is used for non-api symbols.
 
+
+
+
 #ifdef PKCS11_DLL_EXPORTS // defined if we are building the PKCS11 DLL (instead of using it)
 #define PKCS11_API PKCS11_HELPER_DLL_EXPORT
-#elif PKCS11_DLL          // defined if PKCS11 is compiled as a DLL
+#elif defined(PKCS11_DLL)          // defined if PKCS11 is compiled as a DLL
 #define PKCS11_API PKCS11_HELPER_DLL_IMPORT
 #else // PKCS11_DLL is not defined: this means PKCS11 is a static lib.
 #define PKCS11_API
@@ -103,4 +118,13 @@
 //#pragma pack(pop, cryptoki)
 //#endif
 
-#endif // !_CRYPTOKI_H
+#pragma warning(pop)
+#pragma coverity compliance end_block(include) \
+"CERT DCL37-C" \
+"MISRA C-2012 Rule 3.1" \
+"MISRA C-2012 Rule 5.2" \
+"MISRA C-2012 Rule 5.8" \
+"MISRA C-2012 Rule 21.1" \
+"MISRA C-2012 Rule 21.2"
+
+#endif // !CRYPTOKI_H

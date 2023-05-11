@@ -235,7 +235,7 @@ void RunWPCTests(void)
 }
 
 #ifdef ATCA_NO_HEAP
-ATCA_DLL ATCADevice _gDevice;
+ATCA_DLL ATCADevice g_atcab_device_ptr;
 ATCA_DLL struct atca_device g_atcab_device;
 ATCA_DLL struct atca_command g_atcab_command;
 ATCA_DLL struct atca_iface g_atcab_iface;

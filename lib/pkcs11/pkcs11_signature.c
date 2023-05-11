@@ -71,8 +71,13 @@ static CK_RV pkcs11_signature_check_key(
         {
             rv = CKR_OK;
         }
+        else
+        {
+            /* do nothing */
+        }
         break;
     default:
+        rv = CKR_MECHANISM_INVALID;
         break;
     }
     return rv;
@@ -108,7 +113,7 @@ static CK_RV pkcs11_signature_check_params(
 {
     CK_RV rv = CKR_OK;
 
-    if (pSignature)
+    if (NULL != pSignature)
     {
         if (*pulSignatureLen < ulSignatureLen)
         {
@@ -135,25 +140,25 @@ CK_RV pkcs11_signature_sign_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pM
     pkcs11_object_ptr pObject;
     CK_RV rv;
 
-    rv = pkcs11_init_check(NULL_PTR, FALSE);
-    if (rv)
+    rv = pkcs11_init_check(NULL, FALSE);
+    if (CKR_OK != rv)
     {
         return rv;
     }
 
-    if (!pMechanism)
+    if (NULL == pMechanism)
     {
         return CKR_ARGUMENTS_BAD;
     }
 
     rv = pkcs11_session_check(&pSession, hSession);
-    if (rv)
+    if (CKR_OK != rv)
     {
         return rv;
     }
 
     rv = pkcs11_object_check(&pObject, hKey);
-    if (rv)
+    if (CKR_OK != rv)
     {
         return rv;
     }
@@ -191,30 +196,30 @@ CK_RV pkcs11_signature_sign(
     CK_RV rv;
 
     /* Check parameters */
-    if (!pData || !pulSignatureLen)
+    if (NULL == pData || NULL == pulSignatureLen)
     {
         return CKR_ARGUMENTS_BAD;
     }
 
-    if (!ulDataLen)
+    if (0u == ulDataLen)
     {
         return CKR_DATA_LEN_RANGE;
     }
 
     rv = pkcs11_init_check(&pLibCtx, FALSE);
-    if (rv)
+    if (CKR_OK != rv)
     {
         return rv;
     }
 
     rv = pkcs11_session_check(&pSession, hSession);
-    if (rv)
+    if (CKR_OK != rv)
     {
         return rv;
     }
 
     rv = pkcs11_object_check(&pKey, pSession->active_object);
-    if (rv)
+    if (CKR_OK != rv)
     {
         return rv;
     }
@@ -291,25 +296,25 @@ CK_RV pkcs11_signature_verify_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR 
     pkcs11_object_ptr pObject;
     CK_RV rv;
 
-    rv = pkcs11_init_check(NULL_PTR, FALSE);
-    if (rv)
+    rv = pkcs11_init_check(NULL, FALSE);
+    if (CKR_OK != rv)
     {
         return rv;
     }
 
-    if (!pMechanism)
+    if (NULL == pMechanism)
     {
         return CKR_ARGUMENTS_BAD;
     }
 
     rv = pkcs11_session_check(&pSession, hSession);
-    if (rv)
+    if (CKR_OK != rv)
     {
         return rv;
     }
 
     rv = pkcs11_object_check(&pObject, hKey);
-    if (rv)
+    if (CKR_OK != rv)
     {
         return rv;
     }
@@ -344,25 +349,25 @@ CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_
     bool verified = FALSE;
 
     rv = pkcs11_init_check(&pLibCtx, FALSE);
-    if (rv)
+    if (CKR_OK != rv)
     {
         return rv;
     }
 
     rv = pkcs11_session_check(&pSession, hSession);
-    if (rv)
+    if (CKR_OK != rv)
     {
         return rv;
     }
 
     rv = pkcs11_object_check(&pKey, pSession->active_object);
-    if (rv)
+    if (CKR_OK != rv)
     {
         return rv;
     }
 
     /* Check parameters */
-    if (!pData || !pSignature)
+    if (NULL == pData || NULL == pSignature)
     {
         return CKR_ARGUMENTS_BAD;
     }
@@ -379,7 +384,7 @@ CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_
         uint8_t buf[ATCA_SHA256_DIGEST_SIZE];
         
         /* Checking Data length */
-        if (!ulDataLen)
+        if (0u == ulDataLen)
         {
             return CKR_DATA_LEN_RANGE;
         }     
@@ -392,7 +397,7 @@ CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_
 
         if (ATCA_SUCCESS == (status = atcab_sha_hmac(pData, ulDataLen, pKey->slot, buf, SHA_MODE_TARGET_OUT_ONLY)))
         {
-            if (!memcmp(pSignature, buf, ATCA_SHA256_DIGEST_SIZE))
+            if (0 == memcmp(pSignature, buf, ATCA_SHA256_DIGEST_SIZE))
             {
                 verified = TRUE;
             }

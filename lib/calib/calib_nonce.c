@@ -61,7 +61,7 @@ ATCA_STATUS calib_nonce_base(ATCADevice device, uint8_t mode, uint16_t param2, c
 {
     ATCAPacket packet;
     ATCA_STATUS status = ATCA_GEN_FAIL;
-    uint8_t nonce_mode = mode & NONCE_MODE_MASK;
+    uint8_t length;
 
     do
     {
@@ -75,47 +75,30 @@ ATCA_STATUS calib_nonce_base(ATCADevice device, uint8_t mode, uint16_t param2, c
         packet.param1 = mode;
         packet.param2 = param2;
 
+        (void)calib_get_numin_size(mode, &length);
+
         // Copy the right amount of NumIn data
-        if ((nonce_mode == NONCE_MODE_SEED_UPDATE) || (nonce_mode == NONCE_MODE_NO_SEED_UPDATE)
-            || (NONCE_MODE_GEN_SESSION_KEY == nonce_mode))
-        {
-            memcpy(packet.data, num_in, NONCE_NUMIN_SIZE);
-        }
-        else if (nonce_mode == NONCE_MODE_PASSTHROUGH)
-        {
-            if ((mode & NONCE_MODE_INPUT_LEN_MASK) == NONCE_MODE_INPUT_LEN_64)
-            {
-                memcpy(packet.data, num_in, 64);
-            }
-            else
-            {
-                memcpy(packet.data, num_in, 32);
-            }
-        }
-        else
-        {
-            return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid nonce mode received");
-        }
+        (void)memcpy(packet.data, num_in, length);
 
         if ((status = atNonce(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "atNonce - failed");
+            (void)ATCA_TRACE(status, "atNonce - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "calib_nonce_base - execution failed");
+            (void)ATCA_TRACE(status, "calib_nonce_base - execution failed");
             break;
         }
 
-        if ((rand_out != NULL) && (packet.data[ATCA_COUNT_IDX] >= 35))
+        if ((rand_out != NULL) && (packet.data[ATCA_COUNT_IDX] >= 35u))
         {
-            memcpy(&rand_out[0], &packet.data[ATCA_RSP_DATA_IDX], 32);
+            (void)memcpy(&rand_out[0], &packet.data[ATCA_RSP_DATA_IDX], 32);
         }
 
     }
-    while (0);
+    while (false);
 
     return status;
 }
@@ -155,11 +138,11 @@ ATCA_STATUS calib_nonce_load(ATCADevice device, uint8_t target, const uint8_t *n
 {
     uint8_t mode = NONCE_MODE_PASSTHROUGH | (NONCE_MODE_TARGET_MASK & target);
 
-    if (num_in_size == 32)
+    if (num_in_size == 32u)
     {
         mode |= NONCE_MODE_INPUT_LEN_32;
     }
-    else if (num_in_size == 64)
+    else if (num_in_size == 64u)
     {
         mode |= NONCE_MODE_INPUT_LEN_64;
     }
@@ -232,5 +215,36 @@ ATCA_STATUS calib_nonce_gen_session_key(ATCADevice device, uint16_t param2, uint
                                         uint8_t* rand_out)
 {
     return calib_nonce_base(device, NONCE_MODE_GEN_SESSION_KEY, param2, num_in, rand_out);
+}
+
+/** \brief Get num_in size based on the nonce mode
+ *
+ *  \param[in] mode      Nonce mode
+ *  \param[out] length   Size of the input value 
+ *
+ *  \return ATCA_SUCCESS on success.
+ */
+ATCA_STATUS calib_get_numin_size(uint8_t mode, uint8_t* length)
+{
+    uint8_t nonce_mode = mode & NONCE_MODE_MASK;
+
+    if ((nonce_mode == NONCE_MODE_SEED_UPDATE) || (nonce_mode == NONCE_MODE_NO_SEED_UPDATE)
+        || (NONCE_MODE_GEN_SESSION_KEY == nonce_mode))
+    {
+        *length = NONCE_NUMIN_SIZE;
+    }
+    else
+    {
+        if ((mode & NONCE_MODE_INPUT_LEN_MASK) == NONCE_MODE_INPUT_LEN_64)
+        {
+            *length = 64;
+        }
+        else
+        {
+            *length = 32;
+        }
+    }
+
+    return ATCA_SUCCESS;
 }
 #endif /* CALIB_NONCE_EN */

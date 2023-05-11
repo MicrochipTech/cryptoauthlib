@@ -21,6 +21,7 @@ option(ATCA_NO_HEAP "Do not use dynamic (heap) allocation functions" OFF)
 option(ATCA_USE_ATCAB_FUNCTIONS "Build the atcab_ api functions rather than using macros" OFF)
 option(ATCA_ENABLE_DEPRECATED "Enable the use of older APIs that that been replaced" OFF)
 option(ATCA_STRICT_C99 "Enable strict C99 compliance for the libray" OFF)
+option(ATCA_KDF_HMAC_COUNTER_LEN_IN_BYTES "Enable atcac_sha256_hmac_counter Length in bytes" OFF)
 
 # Software Cryptographic backend for host crypto abstractions
 option(ATCA_MBEDTLS "Integrate with mbedtls" OFF)

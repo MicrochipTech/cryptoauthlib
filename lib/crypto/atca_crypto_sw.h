@@ -39,9 +39,9 @@
 extern "C" {
 #endif
 
-#define ATCA_SHA1_DIGEST_SIZE       (20)
-#define ATCA_SHA2_256_DIGEST_SIZE   (32)
-#define ATCA_SHA2_256_BLOCK_SIZE    (64)
+#define ATCA_SHA1_DIGEST_SIZE       (20U)
+#define ATCA_SHA2_256_DIGEST_SIZE   (32U)
+#define ATCA_SHA2_256_BLOCK_SIZE    (64U)
 
 #if defined(ATCA_MBEDTLS)
 #if !defined(MBEDTLS_CONFIG_FILE)
@@ -133,6 +133,21 @@ typedef struct
 } atcac_hmac_sha256_ctx;
 #endif
 
+ATCA_STATUS atcac_sw_sha1_init(atcac_sha1_ctx* ctx);
+ATCA_STATUS atcac_sw_sha1_update(atcac_sha1_ctx* ctx, const uint8_t* data, size_t data_size);
+ATCA_STATUS atcac_sw_sha1_finish(atcac_sha1_ctx* ctx, uint8_t digest[ATCA_SHA1_DIGEST_SIZE]);
+
+ATCA_STATUS atcac_sw_sha2_256_init(atcac_sha2_256_ctx* ctx);
+ATCA_STATUS atcac_sw_sha2_256_update(atcac_sha2_256_ctx* ctx, const uint8_t* data, size_t data_size);
+ATCA_STATUS atcac_sw_sha2_256_finish(atcac_sha2_256_ctx* ctx, uint8_t digest[ATCA_SHA2_256_DIGEST_SIZE]);
+
+ATCA_STATUS atcac_sha256_hmac_init(atcac_hmac_sha256_ctx* ctx, const uint8_t* key, const uint8_t key_len);
+ATCA_STATUS atcac_sha256_hmac_update(atcac_hmac_sha256_ctx* ctx, const uint8_t* data, size_t data_size);
+ATCA_STATUS atcac_sha256_hmac_finish(atcac_hmac_sha256_ctx* ctx, uint8_t* digest, size_t* digest_len);
+
+
+#pragma coverity compliance block fp "MISRA C-2012 Rule 8.6"
+
 #if defined(ATCA_MBEDTLS) || defined(ATCA_OPENSSL) || defined(ATCA_WOLFSSL)
 ATCA_STATUS atcac_aes_gcm_encrypt_start(atcac_aes_gcm_ctx* ctx, const uint8_t* key, const uint8_t key_len, const uint8_t* iv, const uint8_t iv_len);
 ATCA_STATUS atcac_aes_gcm_decrypt_start(atcac_aes_gcm_ctx* ctx, const uint8_t* key, const uint8_t key_len, const uint8_t* iv, const uint8_t iv_len);
@@ -148,6 +163,7 @@ ATCA_STATUS atcac_pk_public(atcac_pk_ctx* ctx, uint8_t* buf, size_t* buflen);
 ATCA_STATUS atcac_pk_sign(atcac_pk_ctx* ctx, const uint8_t* digest, size_t dig_len, uint8_t* signature, size_t* sig_len);
 ATCA_STATUS atcac_pk_verify(atcac_pk_ctx* ctx, const uint8_t* digest, size_t dig_len, const uint8_t* signature, size_t sig_len);
 ATCA_STATUS atcac_pk_derive(atcac_pk_ctx* private_ctx, atcac_pk_ctx* public_ctx, uint8_t* buf, size_t* buflen);
+
 #endif
 
 #if defined(ATCA_MBEDTLS) || defined(ATCA_OPENSSL)
@@ -169,12 +185,14 @@ ATCA_STATUS atcac_aes_gcm_decrypt(atcac_aes_gcm_ctx* ctx, const uint8_t* ciphert
 #endif
 
 #if ATCA_HOSTLIB_EN
-int atcac_sw_random(uint8_t* data, size_t data_size);
+ATCA_STATUS atcac_sw_random(uint8_t* data, size_t data_size);
 #endif
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
 
 ATCA_STATUS atcac_pbkdf2_sha256(const uint32_t iter, const uint8_t* password, const size_t password_len, const uint8_t* salt, const size_t salt_len, uint8_t* result, size_t result_len);
 
-ATCA_STATUS atcac_pkcs7_pad(uint8_t * buffer, size_t * buflen, const size_t datalen, uint8_t blocksize);
+ATCA_STATUS atcac_pkcs7_pad(uint8_t * buffer, size_t * buflen, const size_t datalen, const uint8_t blocksize);
 ATCA_STATUS atcac_pkcs7_unpad(uint8_t * buffer, size_t * buflen, const uint8_t blocksize);
 
 #ifdef __cplusplus

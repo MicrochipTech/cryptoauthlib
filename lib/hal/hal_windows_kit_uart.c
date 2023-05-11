@@ -53,11 +53,14 @@ static ATCA_STATUS hal_uart_open_file(ATCAIface iface)
     ATCAIfaceCfg* cfg = atgetifacecfg(iface);
     atca_uart_host_t* hal_data = atgetifacehaldat(iface);
 
-    if (hal_data && cfg)
+    if ((NULL != hal_data) && (NULL != cfg))
     {
         DCB dcbSerialParams = { 0 };
         COMMTIMEOUTS timeouts = { 0 };
 
+        /* coverity[misra_c_2012_rule_10_1_violation:SUPPRESS] Win32 API */
+        /* coverity[misra_c_2012_rule_10_4_violation:SUPPRESS] Win32 API */
+        /* coverity[misra_c_2012_rule_11_6_violation:SUPPRESS] Win32 API */
         hal_data->hSerial = CreateFileA(TEXT(hal_data->uart_file),
                                         GENERIC_READ | GENERIC_WRITE,
                                         0,
@@ -66,25 +69,27 @@ static ATCA_STATUS hal_uart_open_file(ATCAIface iface)
                                         FILE_ATTRIBUTE_NORMAL,
                                         NULL);
 
+        /* coverity[misra_c_2012_rule_11_6_violation:SUPPRESS] Win32 API */
+        /* coverity[cert_int36_c_violation:SUPPRESS] Win32 API */
         if (hal_data->hSerial == INVALID_HANDLE_VALUE)
         {
             return ATCA_COMM_FAIL;
         }
 
-        FlushFileBuffers(hal_data->hSerial);
+        (void)FlushFileBuffers(hal_data->hSerial);
 
-        SecureZeroMemory(&dcbSerialParams, sizeof(DCB));
-        dcbSerialParams.DCBlength = sizeof(DCB);
+        (void)SecureZeroMemory(&dcbSerialParams, sizeof(DCB));
+        dcbSerialParams.DCBlength = (DWORD)sizeof(DCB);
 
         if (!GetCommState(hal_data->hSerial, &dcbSerialParams))
         {
-            CloseHandle(hal_data->hSerial);
+            (void)CloseHandle(hal_data->hSerial);
             return ATCA_COMM_FAIL;
         }
 
 
         // Set com settings
-        switch (cfg->atcauart.parity)
+        switch (ATCA_IFACECFG_VALUE(cfg, atcauart.parity))
         {
         case 0:
             dcbSerialParams.Parity = EVENPARITY;
@@ -97,14 +102,14 @@ static ATCA_STATUS hal_uart_open_file(ATCAIface iface)
             break;
         }
 
-        dcbSerialParams.BaudRate = cfg->atcauart.baud;     //  baud rate
-        dcbSerialParams.ByteSize = cfg->atcauart.wordsize; //  data size, xmit and rcv
-        dcbSerialParams.StopBits = cfg->atcauart.stopbits; //  stop bit
+        dcbSerialParams.BaudRate = ATCA_IFACECFG_VALUE(cfg, atcauart.baud);     //  baud rate
+        dcbSerialParams.ByteSize = ATCA_IFACECFG_VALUE(cfg, atcauart.wordsize); //  data size, xmit and rcv
+        dcbSerialParams.StopBits = ATCA_IFACECFG_VALUE(cfg, atcauart.stopbits); //  stop bit
         dcbSerialParams.fDtrControl = DTR_CONTROL_ENABLE;
 
         if (!SetCommState(hal_data->hSerial, &dcbSerialParams))
         {
-            CloseHandle(hal_data->hSerial);
+            (void)CloseHandle(hal_data->hSerial);
             return ATCA_COMM_FAIL;
         }
 
@@ -116,7 +121,7 @@ static ATCA_STATUS hal_uart_open_file(ATCAIface iface)
 
         if (!SetCommTimeouts(hal_data->hSerial, &timeouts))
         {
-            CloseHandle(hal_data->hSerial);
+            (void)CloseHandle(hal_data->hSerial);
             return ATCA_COMM_FAIL;
         }
 
@@ -140,19 +145,21 @@ ATCA_STATUS hal_uart_init(ATCAIface iface, ATCAIfaceCfg *cfg)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (iface && cfg)
+    if ((NULL != iface) && (NULL != cfg))
     {
-        if (!iface->hal_data)
+        if (NULL == iface->hal_data)
         {
+            /* coverity[misra_c_2012_rule_21_3_violation] Appropriate usage in windows */
             atca_uart_host_t * hal_data = malloc(sizeof(atca_uart_host_t));
 
-            if (hal_data)
+            if (NULL != hal_data)
             {
-                memset(hal_data, 0, sizeof(atca_uart_host_t));
+                (void)memset(hal_data, 0, sizeof(atca_uart_host_t));
 
                 // Set COM port
-                (void)snprintf(hal_data->uart_file, sizeof(hal_data->uart_file) - 1,
-                               "\\\\.\\COM%d", (uint8_t)cfg->atcauart.port);
+                /* coverity[misra_c_2012_rule_21_6_violation] snprintf is approved for formated string writes to buffers */
+                (void)snprintf(hal_data->uart_file, sizeof(hal_data->uart_file) - 1U,
+                               "\\\\.\\COM%d", (uint8_t)ATCA_IFACECFG_VALUE(cfg,atcauart.port));
 
 
                 iface->hal_data = hal_data;
@@ -172,7 +179,7 @@ ATCA_STATUS hal_uart_init(ATCAIface iface, ATCAIfaceCfg *cfg)
         {
             atca_uart_host_t * hal_data = (atca_uart_host_t*)atgetifacehaldat(iface);
 
-            if (hal_data)
+            if (NULL != hal_data)
             {
                 hal_data->ref_ct++;
                 status = ATCA_SUCCESS;
@@ -207,13 +214,15 @@ ATCA_STATUS hal_uart_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata
     ATCA_STATUS status = ATCA_BAD_PARAM;
     DWORD bytes_written = 0;
 
-    if (iface && txdata && txlength)
+    if ((NULL != iface) && (NULL != txdata) && (0 < txlength))
     {
         atca_uart_host_t * hal_data = (atca_uart_host_t*)atgetifacehaldat(iface);
 
-        if (hal_data && (INVALID_HANDLE_VALUE != hal_data->hSerial))
+        /* coverity[misra_c_2012_rule_11_6_violation:SUPPRESS] Win32 API */
+        /* coverity[cert_int36_c_violation:SUPPRESS] Win32 API*/
+        if ((NULL != hal_data) && (INVALID_HANDLE_VALUE != hal_data->hSerial))
         {
-            if (!WriteFile(hal_data->hSerial, txdata, txlength, &bytes_written, NULL))
+            if (!WriteFile(hal_data->hSerial, txdata, (DWORD)txlength, &bytes_written, NULL))
             {
                 status = ATCA_COMM_FAIL;
             }
@@ -231,9 +240,11 @@ ATCA_STATUS hal_uart_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata
             }
         }
 
-        if (ATCA_SUCCESS != status)
+        if ((ATCA_SUCCESS != status) && (NULL != hal_data))
         {
-            CloseHandle(hal_data->hSerial);
+            (void)CloseHandle(hal_data->hSerial);
+            /* coverity[misra_c_2012_rule_11_6_violation:SUPPRESS] Win32 API */
+            /* coverity[cert_int36_c_violation:SUPPRESS] Win32 API */
             hal_data->hSerial = INVALID_HANDLE_VALUE;
         }
 
@@ -256,15 +267,17 @@ ATCA_STATUS hal_uart_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxd
     DWORD bytes_read = 0;
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (iface && rxdata && rxlength && *rxlength)
+    if ((NULL != iface) && (NULL != rxdata) && (NULL != rxlength) && (0U < *rxlength))
     {
         atca_uart_host_t * hal_data = (atca_uart_host_t*)atgetifacehaldat(iface);
 
-        if (hal_data && (INVALID_HANDLE_VALUE != hal_data->hSerial))
+        /* coverity[misra_c_2012_rule_11_6_violation:SUPPRESS] Win32 API*/
+        /* coverity[cert_int36_c_violation:SUPPRESS] Win32 API */
+        if ((NULL != hal_data) && (INVALID_HANDLE_VALUE != hal_data->hSerial))
         {
-            if (*rxlength > 1)
+            if (*rxlength > 1U)
             {
-                *rxlength = 1; // packetsize to read
+                *rxlength = 1U; // packetsize to read
             }
 
             if (!ReadFile(hal_data->hSerial, rxdata, *rxlength, &bytes_read, NULL))
@@ -279,7 +292,7 @@ ATCA_STATUS hal_uart_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxd
 
         if (status == ATCA_SUCCESS)
         {
-            if (bytes_read > 0)
+            if (bytes_read > 0U)
             {
                 *rxlength = (uint16_t)bytes_read;
             }
@@ -289,9 +302,11 @@ ATCA_STATUS hal_uart_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxd
             }
         }
 
-        if (ATCA_SUCCESS != status)
+        if ((ATCA_SUCCESS != status) && (NULL != hal_data))
         {
-            CloseHandle(hal_data->hSerial);
+            (void)CloseHandle(hal_data->hSerial);
+            /* coverity[misra_c_2012_rule_11_6_violation:SUPPRESS] Win32 API */
+            /* coverity[cert_int36_c_violation:SUPPRESS] Win32 API*/
             hal_data->hSerial = INVALID_HANDLE_VALUE;
         }
 
@@ -313,7 +328,7 @@ ATCA_STATUS hal_uart_control(ATCAIface iface, uint8_t option, void* param, size_
     (void)param;
     (void)paramlen;
 
-    if (iface && iface->mIfaceCFG)
+    if ((NULL != iface) && (NULL != iface->mIfaceCFG))
     {
         /* This HAL does not support any of the control functions */
         return ATCA_UNIMPLEMENTED;
@@ -330,9 +345,9 @@ ATCA_STATUS hal_uart_release(void *hal_data)
 {
     atca_uart_host_t *hal = (atca_uart_host_t*)hal_data;
 
-    if (hal)
+    if (NULL != hal)
     {
-        CloseHandle(hal->hSerial);
+        (void)CloseHandle(hal->hSerial);
         hal_free(hal);
     }
 

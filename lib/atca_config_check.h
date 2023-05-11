@@ -98,7 +98,7 @@
 
 #if ATCA_CHECK_PARAMS_EN
 /** Emits message and returns the status code when the condition is true */
-#define ATCA_CHECK_INVALID_MSG(c, s, m)     if (c) return ATCA_TRACE(s, m)
+#define ATCA_CHECK_INVALID_MSG(c, s, m)     if (c) { return ATCA_TRACE(s, m); }
 /* Continues when the condition is true - emits message if the condition is false */
 #define ATCA_CHECK_VALID_MSG(c, m)          if (!ATCA_TRACE(!(c), m))
 #else

@@ -37,9 +37,9 @@ extern "C" {
 
 /* Some mechanism require the context to be initialized first and it is done
    in a previous command than the target operation */
-typedef struct _pkcs11_session_mech_ctx
+typedef struct pkcs11_session_mech_ctx_s
 {
-#if PKCS11_HARDWARE_SHA256
+#ifdef PKCS11_HARDWARE_SHA256
     atca_hmac_sha256_ctx_t  hmac;
     atca_sha256_ctx_t       sha256;
 #else
@@ -64,7 +64,7 @@ typedef struct _pkcs11_session_mech_ctx
 } pkcs11_session_mech_ctx, *pkcs11_session_mech_ctx_ptr;
 
 /** Session Context */
-typedef struct _pkcs11_session_ctx
+typedef struct pkcs11_session_ctx_s
 {
     CK_BBOOL                initialized;
     pkcs11_slot_ctx_ptr     slot;
@@ -93,6 +93,5 @@ CK_RV pkcs11_session_closeall(CK_SLOT_ID slotID);
 
 CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen);
 CK_RV pkcs11_session_logout(CK_SESSION_HANDLE hSession);
-CK_RV pkcs11_session_authorize(pkcs11_session_ctx_ptr pSession, CK_VOID_PTR pObject);
 
 #endif /* PKCS11_SESSION_H_ */

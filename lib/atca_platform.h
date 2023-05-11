@@ -52,7 +52,7 @@ void    hal_free(void* ptr);
 #define lib_strcasestr  ATCA_PLATFORM_STRCASESTR
 #else
 #ifndef strcasestr
-char *lib_strcasestr(const char *haystack, const char *needle);
+const char *lib_strcasestr(const char *haystack, const char *needle);
 #else
 #define lib_strcasestr  strcasestr
 #endif

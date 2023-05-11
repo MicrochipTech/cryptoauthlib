@@ -33,38 +33,56 @@
 /* Device Specific Defaults */
 #ifdef ATCA_ATSHA204A_SUPPORT
 #define CALIB_SHA204_EN             DEFAULT_ENABLED
+#else
+#define CALIB_SHA204_EN             DEFAULT_DISABLED
 #endif
 
 #ifdef ATCA_ATSHA206A_SUPPORT
 #define CALIB_SHA206_EN             DEFAULT_ENABLED
+#else
+#define CALIB_SHA206_EN             DEFAULT_DISABLED
 #endif
 
 #ifdef ATCA_ATECC108A_SUPPORT
 #define CALIB_ECC108_EN             DEFAULT_ENABLED
+#else
+#define CALIB_ECC108_EN             DEFAULT_DISABLED
 #endif
 
 #ifdef ATCA_ATECC508A_SUPPORT
 #define CALIB_ECC508_EN             DEFAULT_ENABLED
+#else
+#define CALIB_ECC508_EN             DEFAULT_DISABLED
 #endif
 
 #ifdef ATCA_ATECC608_SUPPORT
 #define CALIB_ECC608_EN             DEFAULT_ENABLED
+#else
+#define CALIB_ECC608_EN             DEFAULT_DISABLED
 #endif
 
 #ifdef ATCA_ECC204_SUPPORT
 #define CALIB_ECC204_EN             DEFAULT_ENABLED
+#else
+#define CALIB_ECC204_EN             DEFAULT_DISABLED
 #endif
 
 #ifdef ATCA_TA010_SUPPORT
 #define CALIB_TA010_EN              DEFAULT_ENABLED
+#else
+#define CALIB_TA010_EN              DEFAULT_DISABLED
 #endif
 
 #ifdef ATCA_SHA104_SUPPORT
 #define CALIB_SHA104_EN             DEFAULT_ENABLED
+#else
+#define CALIB_SHA104_EN             DEFAULT_DISABLED
 #endif
 
 #ifdef ATCA_SHA105_SUPPORT
 #define CALIB_SHA105_EN             DEFAULT_ENABLED
+#else
+#define CALIB_SHA105_EN             DEFAULT_DISABLED
 #endif
 
 /* Helper macros */
@@ -586,7 +604,7 @@
   * Supported API's: calib_verify_extern_stored_mac, calib_verify_extern_mac, calib_verify_stored_mac
  **/
 #ifndef CALIB_VERIFY_MAC_EN
-#define CALIB_VERIFY_MAC_EN         (ATCAB_VERIFY_EXTERN_STORED_MAC_EN && CALIB_ECC608_EN)
+#define CALIB_VERIFY_MAC_EN         (ATCAB_VERIFY_MAC_EN && CALIB_ECC608_EN)
 #endif
 
 /** \def CALIB_VERIFY_EXTERN

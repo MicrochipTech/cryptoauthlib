@@ -1,6 +1,29 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.6.0 (04/04/2023)
+
+### New
+  - Compliance certified to CERT-C Level 2 & MISRA 2012. Compliance reports can be
+    requested from your FAE or account manager
+  - Added talib_handle helper functions to determine if a handle access type is allowed
+    in the given auth session
+
+### Fixes
+  - pkcs11 public key for private keys requiring the token to be logged in will make a 
+    best effort to return a value by detecting various storage methods.
+  - pkcs11 encrypt/decrypt update calls return the maximum possible bytes per the selected
+    algorithm.
+  - pkcs7 would return the wrong padding for `length % 16 == 0`
+  - hmac counter kdf method will default to digest length specified in bits
+
+### API Changes
+  - ATCA_STATUS enum is now an integer and all APIs return type ATCA_STATUS
+  - atcacert API return type is now `ATCA_STATUS` rather than `int`
+  - atcac_sw_sha... API return type is now `ATCA_STATUS` rather than `int`
+  - _atcab_exit has been removed (includes _calib_exit and _talib_exit)
+  - _gDevice has been renamed to g_atcab_device_ptr (one should be using `atcab_get_device()`)
+
 ## Release v3.5.1 (03/26/2023)
 
 ### New

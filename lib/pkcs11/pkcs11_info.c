@@ -31,6 +31,7 @@
 #include "pkcs11_slot.h"
 #include "pkcs11_session.h"
 #include "pkcs11_util.h"
+#include "pkcs11_info.h"
 
 #include <stdio.h>
 
@@ -48,12 +49,12 @@ CK_RV pkcs11_get_lib_info(CK_INFO_PTR pInfo)
 {
     pkcs11_lib_ctx_ptr ctx = pkcs11_get_context();
 
-    if (!ctx || !ctx->initialized)
+    if (NULL == ctx || false == ctx->initialized)
     {
         return CKR_CRYPTOKI_NOT_INITIALIZED;
     }
 
-    if (!pInfo)
+    if (NULL == pInfo)
     {
         return CKR_ARGUMENTS_BAD;
     }
@@ -70,12 +71,15 @@ CK_RV pkcs11_get_lib_info(CK_INFO_PTR pInfo)
     pInfo->libraryVersion.minor = ATCA_LIBRARY_VERSION_MINOR;
 
     /* Set up the identifier strings */
-    snprintf((char*)pInfo->manufacturerID, sizeof(pInfo->manufacturerID), pkcs11_lib_manufacturer_id);
-    snprintf((char*)pInfo->libraryDescription, sizeof(pInfo->libraryDescription), pkcs11_lib_description);
+
+    /* coverity[misra_c_2012_rule_21_6_violation] snprintf is approved for formated string writes to buffers */
+    (void)snprintf((char*)pInfo->manufacturerID, sizeof(pInfo->manufacturerID), pkcs11_lib_manufacturer_id);
+    /* coverity[misra_c_2012_rule_21_6_violation] snprintf is approved for formated string writes to buffers */
+    (void)snprintf((char*)pInfo->libraryDescription, sizeof(pInfo->libraryDescription), pkcs11_lib_description);
 
     /* Make sure strings are escaped properly */
-    pkcs11_util_escape_string(pInfo->manufacturerID, sizeof(pInfo->manufacturerID));
-    pkcs11_util_escape_string(pInfo->libraryDescription, sizeof(pInfo->libraryDescription));
+    pkcs11_util_escape_string(pInfo->manufacturerID, (CK_ULONG)sizeof(pInfo->manufacturerID));
+    pkcs11_util_escape_string(pInfo->libraryDescription, (CK_ULONG)sizeof(pInfo->libraryDescription));
 
     return CKR_OK;
 }

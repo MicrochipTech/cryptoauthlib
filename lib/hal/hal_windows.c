@@ -46,10 +46,12 @@ void hal_delay_us(uint32_t delay)
 {
     // divide by 1000 to convert us to ms
     // todo: use a timer with us accuracy
-    long ms = (long)(delay / 1.0e3 + 0.5);    // Miliseconds
+    /* coverity[cert_flp34_c_violation] Loss of precision is inconsequential for this calculation */
+    /* coverity[cert_flp36_c_violation] Loss of precision is inconsequential for this calculation */
+    uint32_t ms = (uint32_t) round(((float)delay / 1.0e3) + 0.5);    // Miliseconds
 
     // use Windows supplied delay
-    Sleep(delay);
+    Sleep(ms);
 }
 
 /** \brief This function delays for a number of tens of microseconds.
@@ -60,10 +62,12 @@ void hal_delay_10us(uint32_t delay)
 {
     // divide by 100 to convert 10's of us to ms
     // todo: use a timer with us accuracy
-    long ms = (long)(delay / 1.0e2 + 0.5);    // Miliseconds
+    /* coverity[cert_flp34_c_violation] Loss of precision is inconsequential for this calculation */
+    /* coverity[cert_flp36_c_violation] Loss of precision is inconsequential for this calculation */
+    uint32_t ms = (uint32_t) round(((float)delay / 1.0e2) + 0.5);    // Miliseconds
 
     // use Windows supplied delay
-    Sleep(delay);
+    Sleep(ms);
 }
 
 /** \brief This function delays for a number of milliseconds.
@@ -85,9 +89,9 @@ void hal_delay_ms(uint32_t delay)
  * \param[IN/OUT] ppMutex location to receive ptr to mutex
  * \param[IN] pName Name of the mutex for systems using named objects
  */
-ATCA_STATUS hal_create_mutex(void** ppMutex, char *pName)
+ATCA_STATUS hal_create_mutex(void** ppMutex,const char *pName)
 {
-    if (!ppMutex)
+    if (NULL == ppMutex)
     {
         return ATCA_BAD_PARAM;
     }
@@ -95,7 +99,7 @@ ATCA_STATUS hal_create_mutex(void** ppMutex, char *pName)
     /* To share a lock in a dll across processing the mutexes must be named */
     *ppMutex = CreateMutex(NULL, FALSE, pName);
 
-    if (!*ppMutex)
+    if (NULL == *ppMutex)
     {
         return ATCA_GEN_FAIL;
     }
@@ -109,12 +113,12 @@ ATCA_STATUS hal_create_mutex(void** ppMutex, char *pName)
  */
 ATCA_STATUS hal_destroy_mutex(void* pMutex)
 {
-    if (!pMutex)
+    if (NULL == pMutex)
     {
         return ATCA_BAD_PARAM;
     }
 
-    CloseHandle(pMutex);
+    (void)CloseHandle(pMutex);
 
     return ATCA_SUCCESS;
 }
@@ -128,17 +132,19 @@ ATCA_STATUS hal_lock_mutex(void* pMutex)
 {
     DWORD rv;
 
-    if (!pMutex)
+    if (NULL == pMutex)
     {
         return ATCA_BAD_PARAM;
     }
 
     rv = WaitForSingleObject((HANDLE)pMutex, INFINITE);
 
+    /* coverity[misra_c_2012_rule_10_4_violation:SUPPRESS] Win32 API */
     if (WAIT_OBJECT_0 == rv)
     {
         return ATCA_SUCCESS;
     }
+    /* coverity[misra_c_2012_rule_10_4_violation:SUPPRESS] Win32 API */
     else if (WAIT_ABANDONED_0 == rv)
     {
         /* Lock was obtained but its because another process terminated so the
@@ -159,7 +165,7 @@ ATCA_STATUS hal_unlock_mutex(void* pMutex)
 {
     ATCA_STATUS rv = ATCA_SUCCESS;
 
-    if (!pMutex)
+    if (NULL == pMutex)
     {
         return ATCA_BAD_PARAM;
     }

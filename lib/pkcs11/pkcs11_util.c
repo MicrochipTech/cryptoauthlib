@@ -41,14 +41,14 @@
  */
 void pkcs11_util_escape_string(CK_UTF8CHAR_PTR buf, CK_ULONG buf_len)
 {
-    if (buf && buf_len)
+    if (NULL != buf && 0u != buf_len)
     {
         CK_ULONG i;
         for (i = 0; i < buf_len; i++)
         {
-            if (0x20 > buf[i] || 0x7E < buf[i])
+            if (0x20u > buf[i] || 0x7Eu < buf[i])
             {
-                buf[i] = ' ';
+                buf[i] = (CK_CHAR)' ';
             }
         }
     }
@@ -60,10 +60,13 @@ void pkcs11_util_escape_string(CK_UTF8CHAR_PTR buf, CK_ULONG buf_len)
  */
 CK_RV pkcs11_util_convert_rv(ATCA_STATUS status)
 {
+    CK_RV rv;
+
     switch (status)
     {
     case ATCA_SUCCESS:
-        return CKR_OK;
+        rv = CKR_OK;
+        break;
     case ATCA_FUNC_FAIL:
         /* fallthrough */
     case ATCA_GEN_FAIL:
@@ -71,10 +74,14 @@ CK_RV pkcs11_util_convert_rv(ATCA_STATUS status)
     case ATCA_BAD_PARAM:
         /* fallthrough */
     case ATCA_NOT_INITIALIZED:
-        return CKR_FUNCTION_FAILED;
+        rv = CKR_FUNCTION_FAILED;
+        break;
     default:
-        return CKR_DEVICE_ERROR;
+        rv = CKR_DEVICE_ERROR;
+        break;
     }
+
+    return rv;
 }
 
 int pkcs11_util_memset(void *dest, size_t destsz, int ch, size_t count)
@@ -84,19 +91,26 @@ int pkcs11_util_memset(void *dest, size_t destsz, int ch, size_t count)
     {
         return -1;
     }
-    if (destsz > SIZE_MAX)
+    /* coverity[misra_c_2012_rule_14_3_violation] This matches the definition used by most systems */
+    if(destsz > SIZE_MAX)
     {
         return -1;
     }
+
     if (count > destsz)
     {
         return -1;
     }
 
     volatile unsigned char *p = dest;
-    while (destsz-- && count--)
+    while (destsz != 0u && count != 0u)
     {
-        *p++ = ch;
+        if (ch >= 0 && ch <= 255)
+        {
+            *p++ = (unsigned char)(ch);
+        }
+        destsz--;
+        count--;
     }
 
     return 0;

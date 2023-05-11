@@ -148,6 +148,6 @@ SHARED_LIB_EXPORT const atcacert_def_t g_tngtls_cert_def_1_signer = {
     .cert_elements       = g_tngtls_cert_elements_1_signer,
     .cert_elements_count = 1,
     .cert_template       = g_tngtls_cert_template_1_signer,
-    .cert_template_size  = sizeof(g_tngtls_cert_template_1_signer),
+    .cert_template_size  = (uint16_t)(sizeof(g_tngtls_cert_template_1_signer)),
     .ca_cert_def         = NULL
 };

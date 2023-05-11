@@ -100,6 +100,9 @@ selected plus however additional slots one would like */
 /** TA100 Specific - Enable support for the FCE APIs for the TA100 */
 #cmakedefine ATCA_TA100_FCE_SUPPORT
 
+/** TA100 Specific - Enable support for the KDF HMAC Host calculation input length in bytes for Rev before B6 */
+#cmakedefine ATCA_KDF_HMAC_COUNTER_LEN_IN_BYTES
+
 /** Enable the delete command */
 #cmakedefine01 CALIB_DELETE_EN
 

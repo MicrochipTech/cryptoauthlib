@@ -191,7 +191,7 @@ TEST(atca_helper, base64_encode)
     size_t out_len = strlen(out);
 
     atca_tests_helper_base64_encode(in, in_len, out, out_len,
-                                    atcab_b64rules_default, false);
+                                    atcab_b64rules_default(), false);
 }
 
 TEST(atca_helper, base64_encode_to_dirty_buffer)
@@ -202,7 +202,7 @@ TEST(atca_helper, base64_encode_to_dirty_buffer)
     size_t out_len = strlen(out);
 
     atca_tests_helper_base64_encode(in, in_len, out, out_len,
-                                    atcab_b64rules_default, true);
+                                    atcab_b64rules_default(), true);
 }
 
 TEST(atca_helper, base64_decode)
@@ -213,7 +213,7 @@ TEST(atca_helper, base64_decode)
     size_t out_len = sizeof(atca_tests_helper_base64_vector_in0) - 1;
 
     atca_tests_helper_base64_decode(in, in_len, out, out_len,
-                                    atcab_b64rules_default, false);
+                                    atcab_b64rules_default(), false);
 }
 
 TEST(atca_helper, base64_decode_to_dirty_buffer)
@@ -224,7 +224,7 @@ TEST(atca_helper, base64_decode_to_dirty_buffer)
     size_t out_len = sizeof(atca_tests_helper_base64_vector_in0) - 1;
 
     atca_tests_helper_base64_decode(in, in_len, out, out_len,
-                                    atcab_b64rules_default, true);
+                                    atcab_b64rules_default(), true);
 }
 
 TEST(atca_helper, base64_encode_decode)
@@ -275,7 +275,7 @@ TEST(atca_helper, base64_encode_check_newline_32)
     size_t out_len = 32;
 
     atca_tests_helper_base64_encode(in, in_len, out, out_len,
-                                    atcab_b64rules_default, true);
+                                    atcab_b64rules_default(), true);
 }
 
 TEST(atca_helper, base64_encode_check_newline_64)
@@ -286,7 +286,7 @@ TEST(atca_helper, base64_encode_check_newline_64)
     size_t out_len = 64;
 
     atca_tests_helper_base64_encode(in, in_len, out, out_len,
-                                    atcab_b64rules_default, true);
+                                    atcab_b64rules_default(), true);
 }
 
 TEST(atca_helper, base64_encode_check_newline_96)
@@ -297,7 +297,7 @@ TEST(atca_helper, base64_encode_check_newline_96)
     size_t out_len = 96 + 2;    /* 1x Newline added */
 
     atca_tests_helper_base64_encode(in, in_len, out, out_len,
-                                    atcab_b64rules_default, true);
+                                    atcab_b64rules_default(), true);
 }
 
 TEST(atca_helper, base64_encode_check_newline_128)
@@ -308,7 +308,7 @@ TEST(atca_helper, base64_encode_check_newline_128)
     size_t out_len = 128 + 2;   /* 1x Newline added */
 
     atca_tests_helper_base64_encode(in, in_len, out, out_len,
-                                    atcab_b64rules_default, true);
+                                    atcab_b64rules_default(), true);
 }
 
 TEST(atca_helper, base64_url_encode)
@@ -319,7 +319,7 @@ TEST(atca_helper, base64_url_encode)
     size_t out_len = strlen(atca_tests_helper_base64_vector_url1);
 
     atca_tests_helper_base64_encode(in, in_len, out, out_len,
-                                    atcab_b64rules_urlsafe, true);
+                                    atcab_b64rules_urlsafe(), true);
 }
 
 TEST(atca_helper, base64_url_decode)
@@ -330,7 +330,7 @@ TEST(atca_helper, base64_url_decode)
     size_t out_len = sizeof(atca_tests_helper_base64_vector_in1);
 
     atca_tests_helper_base64_decode(in, in_len, out, out_len,
-                                    atcab_b64rules_urlsafe, true);
+                                    atcab_b64rules_urlsafe(), true);
 }
 
 static const uint8_t g_bin2hex_bin[] = {
@@ -615,6 +615,69 @@ TEST(atca_helper, hex2bin_small_buf)
     status = atcab_hex2bin(g_bin2hex_hex, strlen(g_bin2hex_hex), bin, &bin_size);
     TEST_ASSERT_EQUAL(ATCA_SMALL_BUFFER, status);
 }
+
+TEST(atca_helper, atcab_pointer_delta_api)
+{
+    const char data[10] = { 0 };
+    size_t result;
+
+    result = atcab_pointer_delta(data, &data[8]);
+    TEST_ASSERT_EQUAL(8, result);
+
+    result = atcab_pointer_delta(&data[1], &data[2]);
+    TEST_ASSERT_EQUAL(1, result);
+}
+
+TEST(atca_helper, lib_toupper_api)
+{
+    char ch;
+
+    ch = lib_toupper('a');
+    TEST_ASSERT_EQUAL('A', ch);
+
+    ch = lib_toupper('z');
+    TEST_ASSERT_EQUAL('Z', ch);
+
+    ch = lib_toupper(':');
+    TEST_ASSERT_EQUAL(':', ch);
+
+    ch = lib_toupper('\r');
+    TEST_ASSERT_EQUAL('\r', ch);
+
+    ch = lib_toupper((char)-1);
+    TEST_ASSERT_EQUAL((char)-1, ch);
+}
+
+TEST(atca_helper, lib_tolower_api)
+{
+    char ch;
+
+    ch = lib_tolower('A');
+    TEST_ASSERT_EQUAL('a', ch);
+
+    ch = lib_tolower('Z');
+    TEST_ASSERT_EQUAL('z', ch);
+
+    ch = lib_tolower(';');
+    TEST_ASSERT_EQUAL(';', ch);
+
+    ch = lib_tolower('\n');
+    TEST_ASSERT_EQUAL('\n', ch);
+
+    ch = lib_tolower((char)-1);
+    TEST_ASSERT_EQUAL((char)-1, ch);
+}
+
+TEST(atca_helper, lib_strcasestr_api)
+{
+    const char* haystack = "oneTwoNEneNeEDleEthreefour";
+    const char* ptr;
+
+    ptr = lib_strcasestr(haystack, "needle");
+    TEST_ASSERT_NOT_NULL(ptr);
+    TEST_ASSERT_EQUAL(&haystack[10], ptr);
+}
+
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info helper_basic_test_info[] =

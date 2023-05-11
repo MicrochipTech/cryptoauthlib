@@ -42,6 +42,9 @@ extern "C" {
 #define TNGTLS_CERT_ELEMENTS_2_DEVICE_COUNT 2
 ATCA_DLL const atcacert_def_t g_tngtls_cert_def_2_device;
 
+extern SHARED_LIB_EXPORT const uint8_t g_tngtls_cert_template_2_device[];
+extern SHARED_LIB_EXPORT const atcacert_cert_element_t g_tngtls_cert_elements_2_device[];
+
 /** @} */
 
 #ifdef __cplusplus

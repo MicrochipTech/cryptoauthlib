@@ -37,7 +37,7 @@ extern "C" {
 #endif
 
 /** Slot Context */
-typedef struct _pkcs11_slot_ctx
+typedef struct pkcs11_slot_ctx_s
 {
     CK_BBOOL          initialized;
     CK_SLOT_ID        slot_id;

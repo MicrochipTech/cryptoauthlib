@@ -34,6 +34,12 @@
 #include <stdint.h>
 
 #include "atcacert_check_config.h"
+#include "atca_status.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 /** \defgroup atcacert_ Certificate manipulation methods (atcacert_)
  *
@@ -49,20 +55,52 @@
 #define TRUE (1)
 #endif
 
-#define ATCACERT_E_SUCCESS              0   //!< Operation completed successfully.
-#define ATCACERT_E_ERROR                1   //!< General error.
-#define ATCACERT_E_BAD_PARAMS           2   //!< Invalid/bad parameter passed to function.
-#define ATCACERT_E_BUFFER_TOO_SMALL     3   //!< Supplied buffer for output is too small to hold the result.
-#define ATCACERT_E_DECODING_ERROR       4   //!< Data being decoded/parsed has an invalid format.
-#define ATCACERT_E_INVALID_DATE         5   //!< Date is invalid.
-#define ATCACERT_E_UNIMPLEMENTED        6   //!< Function is unimplemented for the current configuration.
-#define ATCACERT_E_UNEXPECTED_ELEM_SIZE 7   //!< A certificate element size was not what was expected.
-#define ATCACERT_E_ELEM_MISSING         8   //!< The certificate element isn't defined for the certificate definition.
-#define ATCACERT_E_ELEM_OUT_OF_BOUNDS   9   //!< Certificate element is out of bounds for the given certificate.
-#define ATCACERT_E_BAD_CERT             10  //!< Certificate structure is bad in some way.
+/** Operation completed successfully. */
+#define ATCACERT_E_SUCCESS              ATCA_SUCCESS
+
+/** General error. */
+#define ATCACERT_E_ERROR                ATCA_GEN_FAIL
+
+/** Invalid/bad parameter passed to function. */
+#define ATCACERT_E_BAD_PARAMS           ATCA_BAD_PARAM
+
+/** Supplied buffer for output is too small to hold the result. */
+#define ATCACERT_E_BUFFER_TOO_SMALL     ATCA_SMALL_BUFFER
+
+/** Function is unimplemented for the current configuration. */
+#define ATCACERT_E_UNIMPLEMENTED        ATCA_UNIMPLEMENTED
+
+
+/** Data being decoded/parsed has an invalid format. */
+#define ATCACERT_E_DECODING_ERROR       4
+
+/** Date is invalid. */
+#define ATCACERT_E_INVALID_DATE         5
+
+/** A certificate element size was not what was expected. */
+#define ATCACERT_E_UNEXPECTED_ELEM_SIZE 7
+
+/** The certificate element isn't defined for the certificate definition. */
+#define ATCACERT_E_ELEM_MISSING         8
+
+/** Certificate element is out of bounds for the given certificate. */
+#define ATCACERT_E_ELEM_OUT_OF_BOUNDS   9
+
+/** Certificate structure is bad in some way. */
+#define ATCACERT_E_BAD_CERT             10
+
+/** */
 #define ATCACERT_E_WRONG_CERT_DEF       11
-#define ATCACERT_E_VERIFY_FAILED        12  //!< Certificate or challenge/response verification failed.
-#define ATCACERT_E_INVALID_TRANSFORM    13  //!< Invalid transform passed to function.
+
+/** Certificate or challenge/response verification failed. */
+#define ATCACERT_E_VERIFY_FAILED        12
+
+/** Invalid transform passed to function. */
+#define ATCACERT_E_INVALID_TRANSFORM    13
+
+#ifdef __cplusplus
+}
+#endif
 
 /** @} */
 #endif

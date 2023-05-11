@@ -57,8 +57,8 @@ typedef struct
 extern "C" {
 #endif
 
-ATCA_STATUS hal_iface_init(ATCAIfaceCfg *, ATCAHAL_t** hal, ATCAHAL_t** phy);
-ATCA_STATUS hal_iface_release(ATCAIfaceType, void* hal_data);
+ATCA_STATUS hal_iface_init(ATCAIfaceCfg *cfg, ATCAHAL_t** hal, ATCAHAL_t** phy);
+ATCA_STATUS hal_iface_release(ATCAIfaceType iface_type, void* hal_data);
 
 ATCA_STATUS hal_check_wake(const uint8_t* response, int response_size);
 
@@ -195,18 +195,22 @@ void atca_delay_us(uint32_t us);
 #endif
 
 /** \brief Timer API implemented at the HAL level */
+void hal_delay_ms(uint32_t delay);
+void hal_delay_us(uint32_t delay);
+void hal_delay_10us(uint32_t delay);
+
+#ifdef ATCA_USE_RTOS_TIMER
 void hal_rtos_delay_ms(uint32_t ms);
-void hal_delay_ms(uint32_t ms);
-void hal_delay_us(uint32_t us);
+#endif
 
 /** \brief Optional hal interfaces */
-ATCA_STATUS hal_create_mutex(void ** ppMutex, char* pName);
+ATCA_STATUS hal_create_mutex(void ** ppMutex,const char* pName);
 ATCA_STATUS hal_destroy_mutex(void * pMutex);
 ATCA_STATUS hal_lock_mutex(void * pMutex);
 ATCA_STATUS hal_unlock_mutex(void * pMutex);
 
 #if !defined(ATCA_NO_HEAP) && defined(ATCA_TESTS_ENABLED)
-void hal_test_set_memory_f(void* (*malloc_func)(size_t), void (*free_func)(void*));
+void hal_test_set_memory_f(void* (*malloc_func)(size_t size), void (*free_func)(void* ptr));
 #endif
 
 ATCA_STATUS hal_iface_register_hal(ATCAIfaceType iface_type, ATCAHAL_t *hal, ATCAHAL_t **old_hal, ATCAHAL_t* phy, ATCAHAL_t** old_phy);

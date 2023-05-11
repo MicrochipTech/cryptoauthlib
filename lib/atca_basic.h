@@ -45,7 +45,7 @@
 extern "C" {
 #endif
 
-ATCA_DLL ATCADevice _gDevice;
+ATCA_DLL ATCADevice g_atcab_device_ptr;
 
 // Basic global methods
 ATCA_STATUS atcab_version(char *ver_str);
@@ -77,7 +77,6 @@ ATCA_STATUS atcab_pbkdf2_sha256(const uint32_t iter, const uint16_t slot, const 
 #ifdef ATCA_USE_ATCAB_FUNCTIONS
 
 /* Basic global methods */
-ATCA_STATUS _atcab_exit(void);
 ATCA_STATUS atcab_wakeup(void);
 ATCA_STATUS atcab_idle(void);
 ATCA_STATUS atcab_sleep(void);

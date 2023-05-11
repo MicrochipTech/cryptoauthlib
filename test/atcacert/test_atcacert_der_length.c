@@ -269,7 +269,7 @@ TEST(atcacert_der_dec_length, good)
     for (i = 0; i < sizeof(tests) / sizeof(struct atcacert_der_dec_length__good_s); i++)
     {
         size_t der_length_size = sizeof(tests[i].der_length);
-        uint32_t length = 0;
+        size_t length = 0;
 
         ret = atcacert_der_dec_length(tests[i].der_length, &der_length_size, &length);
         TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
@@ -289,7 +289,7 @@ TEST(atcacert_der_dec_length, zero_size)
     int ret = 0;
     const uint8_t der_length[] = { 0x00 }; // Just needed for a valid pointer
     size_t der_length_size = 0;
-    uint32_t length = 0;
+    size_t length = 0;
 
     ret = atcacert_der_dec_length(der_length, &der_length_size, &length);
     TEST_ASSERT_EQUAL(ATCACERT_E_DECODING_ERROR, ret);
@@ -300,7 +300,7 @@ TEST(atcacert_der_dec_length, not_enough_data)
     int ret = 0;
     const uint8_t der_length[] = { 0x82, 0x01 }; // Encoding indicates more data than is supplied
     size_t der_length_size = sizeof(der_length);
-    uint32_t length = 0;
+    size_t length = 0;
 
     ret = atcacert_der_dec_length(der_length, &der_length_size, &length);
     TEST_ASSERT_EQUAL(ATCACERT_E_DECODING_ERROR, ret);
@@ -311,7 +311,7 @@ TEST(atcacert_der_dec_length, indefinite_form)
     int ret = 0;
     const uint8_t der_length[] = { 0x80, 0x01 }; // Indefinite form not supported
     size_t der_length_size = sizeof(der_length);
-    uint32_t length = 0;
+    size_t length = 0;
 
     ret = atcacert_der_dec_length(der_length, &der_length_size, &length);
     TEST_ASSERT_EQUAL(ATCACERT_E_DECODING_ERROR, ret);
@@ -322,7 +322,7 @@ TEST(atcacert_der_dec_length, too_large)
     int ret = 0;
     const uint8_t der_length[] = { 0x89, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09 }; // Too large for the return type (64 bit size_t)
     size_t der_length_size = sizeof(der_length);
-    uint32_t length = 0;
+    size_t length = 0;
 
     ret = atcacert_der_dec_length(der_length, &der_length_size, &length);
     TEST_ASSERT_EQUAL(ATCACERT_E_DECODING_ERROR, ret);
@@ -333,7 +333,7 @@ TEST(atcacert_der_dec_length, bad_params)
     int ret = 0;
     const uint8_t der_length[] = { 0x82, 0x01, 0x0 };
     size_t der_length_size = sizeof(der_length);
-    uint32_t length = 0;
+    size_t length = 0;
 
     der_length_size = sizeof(der_length);
     ret = atcacert_der_dec_length(NULL, &der_length_size, &length);
