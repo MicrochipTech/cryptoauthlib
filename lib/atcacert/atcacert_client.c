@@ -35,6 +35,8 @@
 #include "cryptoauthlib.h"
 #include "calib/calib_basic.h"
 
+#if ATCACERT_COMPCERT_EN
+
 #if ATCAB_WRITE_EN
 // Perform floor integer division (-1 / 2 == -1) instead of truncate towards zero (-1 / 2 == 0)
 static int floor_div(int a, int b)
@@ -446,3 +448,5 @@ int atcacert_read_cert_size(const atcacert_def_t* cert_def,
 
     return ret;
 }
+
+#endif

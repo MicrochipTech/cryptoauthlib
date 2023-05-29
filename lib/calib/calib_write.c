@@ -519,7 +519,7 @@ ATCA_STATUS calib_write_config_counter(ATCADevice device, uint16_t counter_id, u
 #endif /* CALIB_WRITE_EN */
 
 /** \brief Execute write command to write either 16 byte or 32 byte to one of the EEPROM zones
- *         on the ECC204, TA010 devices.
+ *         on the ECC204, TA010, SHA10x devices.
  *
  *  \param[in] device   Device context pointer
  *  \param[in] zone     Zone/Param1 for the write command.
@@ -586,7 +586,7 @@ ATCA_STATUS calib_ca2_write(ATCADevice device, uint8_t zone, uint16_t address, c
 }
 
 /** \brief Execute write command to write data into configuration zone or data zone
- *         This function only support ECC204,TA010 devices
+ *         This function only support ECC204,TA010,SHA10x devices
  *
  *  \param[in]    device      Device context pointer
  *  \param[in]    zone        Device zone to write (config=1, data=0)
@@ -632,7 +632,7 @@ ATCA_STATUS calib_ca2_write_zone(ATCADevice device, uint8_t zone, uint16_t slot,
     return status;
 }
 
-/** \brief Use write command to write configuration data into ECC204,TA010 config zone
+/** \brief Use write command to write configuration data into ECC204,TA010,SHA10x config zone
  *
  *  \param[in]  device       Device context pointer
  *  \param[in]  config_data  configuration data
@@ -830,7 +830,7 @@ ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data,
  * read the requested data.
  *
  *  \param[in]   device        Device context pointer
- *  \param[in]   zone          It accepts only ATCA_ZONE_DATA for ECC204,TA010 devices
+ *  \param[in]   zone          It accepts only ATCA_ZONE_DATA for ECC204,TA010,SHA10x devices
  *  \param[in]   slot          slot number to write to.
  *  \param[in]   block         offset bytes ignored
  *  \param[in]   data          data to be written

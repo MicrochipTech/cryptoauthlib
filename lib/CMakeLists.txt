@@ -45,6 +45,8 @@ option(ATCA_ATECC608_SUPPORT "Include support for ATECC608 device" ON)
 option(ATCA_TA100_SUPPORT "Include support for TA100 device" OFF)
 option(ATCA_ECC204_SUPPORT "Include support for ECC204 device" ON)
 option(ATCA_TA010_SUPPORT "Include support for TA010 device" ON)
+option(ATCA_SHA104_SUPPORT "Include support for SHA104 device" ON)
+option(ATCA_SHA105_SUPPORT "Include support for SHA105 device" ON)
 
 # RTOS Selection
 if (TARGET zephyr_interface)
@@ -110,7 +112,9 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${CRYPTO_SRC})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${HOST_SRC})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${JWT_SRC})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${PKCS11_SRC})
+if(ATCA_TNGTLS_SUPPORT OR ATCA_TNGLORA_SUPPORT OR ATCA_TFLEX_SUPPORT)
 source_group("App/Tng" FILES ${TNG_SRC})
+endif()
 source_group("App/Wpc" FILES ${WPC_SRC})
 endif()
 
@@ -211,7 +215,7 @@ endif(ATCA_OPENSSL)
 
 if (ATCA_ATSHA204A_SUPPORT OR ATCA_ATSHA206A_SUPPORT OR
     ATCA_ATECC108A_SUPPORT OR ATCA_ATECC508A_SUPPORT OR
-    ATCA_ATECC608_SUPPORT OR ATCA_ECC204_SUPPORT OR ATCA_TA010_SUPPORT)
+    ATCA_ATECC608_SUPPORT OR ATCA_ECC204_SUPPORT OR ATCA_TA010_SUPPORT OR ATCA_SHA104_SUPPORT OR ATCA_SHA105_SUPPORT)
 set(LIB_SRC ${LIB_SRC} ${CALIB_SRC} ${HOST_SRC})
 endif()
 
@@ -223,12 +227,15 @@ if (ATCA_TA100_SUPPORT)
 set(LIB_SRC ${LIB_SRC} ${TALIB_SRC})
 endif()
 
+if (ATCA_TNGTLS_SUPPORT OR ATCA_TNGLORA_SUPPORT OR ATCA_TFLEX_SUPPORT)
+set(LIB_SRC ${LIB_SRC} ${TNG_SRC})
+endif()
+
 # Add the basic sources to the library
 set(CRYPTOAUTH_SRC ${LIB_SRC}
                    ${ATCACERT_SRC}
                    ${CRYPTO_SRC}
                    ${JWT_SRC}
-                   ${TNG_SRC}
                    ${MBEDTLS_SRC}
                    ${WOLFSSL_SRC}
                    ${OPENSSL_SRC}

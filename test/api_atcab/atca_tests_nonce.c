@@ -45,10 +45,17 @@ TEST(atca_cmd_basic_test, challenge)
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t random_number[32];
 
-#if CALIB_RANDOM_EN
-    status = atcab_random(random_number);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-#endif
+    if ((SHA104 == gCfg->devtype) || (SHA105 == gCfg->devtype))
+    {
+        memset(random_number, 0, sizeof(random_number));
+    }
+    else
+    {   
+    #if CALIB_RANDOM_EN
+        status = atcab_random(random_number);
+        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    #endif
+    }
 
     status = atcab_nonce(random_number);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);

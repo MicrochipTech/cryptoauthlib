@@ -6,7 +6,7 @@
  * all bytes of each slot to 0xFF.The Configuration zone will be untouched, except for the
  * value of the Primary_Deleted byte.
  *
- * \note List of devices that support this command - ECC204, TA010, SHA104, SHA105.Refer to device datasheets for full details.
+ * \note List of devices that support this command - ECC204, TA010, SHA10x.Refer to device datasheets for full details.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *

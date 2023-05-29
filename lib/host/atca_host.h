@@ -67,6 +67,8 @@
 //! KeyId{32} || OpCode{1} || Param1{1} || Param2{2} || SN8{1} || SN0_1{2} || 0{25} || TempKey{32}
 #define ATCA_MSG_SIZE_GEN_DIG          (96)
 
+//! ParentKey{32} || OtherData{4} || SN8{1} || SN0_1{2} || 0{25} || InputData{32}
+#define ATCA_MSG_SIZE_DIVERSIFIED_KEY  (96)
 
 //! KeyId{32} || OpCode{1} || Param1{1} || Param2{2} || SN8{1} || SN0_1{2} || 0{25} || TempKey{32}
 #define ATCA_MSG_SIZE_DERIVE_KEY       (96)
@@ -81,16 +83,21 @@
 //! TransportKey{32} || 0x15{1} || 0x00{1} || KeyId{2} || SN8{1} || SN0_1{2} || 0{25} || Nonce{32}
 #define ATCA_MSG_SIZE_SESSION_KEY      (96)
 
-//! HmacKey{32} || 0x13{1} || 0x00{1} || 0x0000{2} || SN8{1} || SN0_1{2} || 0{25} || Nonce{32}
+//! Hmac/SecretKey{32} || 0x13{1} || 0x00{1} || 0x0000{2} || SN8{1} || SN0_1{2} || 0{25} || Nonce{32}
 #define ATCA_MSG_SIZE_DELETE_MAC       (96)
+
+//! SlotKey{32} || Opcode{1} || Param1{1} || Param2{2} || SN8{1} || SN0_1{2} || 0{25} || client_Resp{32} || checkmac_result{1}
+#define ATCA_MSG_SIZE_RESPONSE_MAC     (97)
 
 //! KeyId{32} || OpCode{1} || Param1{1} || Param2{2}|| SN8{1} || SN0_1{2} || 0{21} || PlainText{36}
 #define ATCA_MSG_SIZE_PRIVWRITE_MAC    (96)
 
 #define ATCA_COMMAND_HEADER_SIZE       ( 4)
 #define ATCA_GENDIG_ZEROS_SIZE         (25)
+#define ATCA_GENDIVKEY_ZEROS_SIZE      (25)
 #define ATCA_WRITE_MAC_ZEROS_SIZE      (25)
 #define ATCA_DELETE_MAC_ZEROS_SIZE     (25)
+#define ATCA_RESP_MAC_ZEROS_SIZE       (25)
 #define ATCA_PRIVWRITE_MAC_ZEROS_SIZE  (21)
 #define ATCA_PRIVWRITE_PLAIN_TEXT_SIZE (36)
 #define ATCA_DERIVE_KEY_ZEROS_SIZE     (25)
@@ -294,6 +301,19 @@ typedef struct atca_gen_dig_in_out
     struct atca_temp_key *temp_key;     //!< [inout] Current state of TempKey
 } atca_gen_dig_in_out_t;
 
+
+/**
+ *  \brief Input/output parameters for function atcah_gendivkey().
+ */
+typedef struct atca_diversified_key_in_out
+{
+    const uint8_t *       parent_key;
+    const uint8_t *       other_data;
+    const uint8_t *       sn;           //!< [in] Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though.
+    const uint8_t *       input_data;
+    struct atca_temp_key *temp_key;     //!< [inout] Current state of TempKey
+} atca_diversified_key_in_out_t;
+
 /**
  *  \brief Input/output parameters for function atcah_write_auth_mac() and atcah_privwrite_auth_mac().
  */
@@ -367,6 +387,19 @@ typedef struct atca_check_mac_in_out
     struct atca_temp_key *temp_key; //!< [in,out] Current state of TempKey. Required if mode[0] or mode[1] are 1.
 } atca_check_mac_in_out_t;
 
+/** \brief Input/Output parameters for calculating the output response mac in SHA105 device.
+ *         Used with the atcah_gen_output_resp_mac() function.
+ */
+typedef struct atca_resp_mac_in_out
+{
+    const uint8_t* slot_key;
+    uint8_t       mode;
+    uint16_t      key_id;
+    const uint8_t* sn;
+    uint8_t*      client_resp;
+    uint8_t       checkmac_result;
+    uint8_t*      mac_output;
+}atca_resp_mac_in_out_t;
 
 /** \struct atca_verify_in_out
  *  \brief Input/output parameters for function atcah_verify().
@@ -455,6 +488,7 @@ ATCA_STATUS atcah_mac(struct atca_mac_in_out *param);
 ATCA_STATUS atcah_check_mac(struct atca_check_mac_in_out *param);
 ATCA_STATUS atcah_hmac(struct atca_hmac_in_out *param);
 ATCA_STATUS atcah_gen_dig(struct atca_gen_dig_in_out *param);
+ATCA_STATUS atcah_gendivkey(struct atca_diversified_key_in_out *param);
 ATCA_STATUS atcah_gen_mac(struct atca_gen_dig_in_out *param);
 ATCA_STATUS atcah_write_auth_mac(struct atca_write_mac_in_out *param);
 ATCA_STATUS atcah_privwrite_auth_mac(struct atca_write_mac_in_out *param);
@@ -473,6 +507,7 @@ ATCA_STATUS atcah_encode_counter_match(uint32_t counter, uint8_t * counter_match
 ATCA_STATUS atcah_io_decrypt(struct atca_io_decrypt_in_out *param);
 ATCA_STATUS atcah_ecc204_write_auth_mac(struct atca_write_mac_in_out *param);
 ATCA_STATUS atcah_gen_session_key(atca_session_key_in_out_t *param);
+ATCA_STATUS atcah_gen_output_resp_mac(struct atca_resp_mac_in_out *param);
 ATCA_STATUS atcah_delete_mac(struct atca_delete_in_out *param);
 #ifdef __cplusplus
 }

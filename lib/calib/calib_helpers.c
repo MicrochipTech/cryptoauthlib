@@ -203,7 +203,7 @@ ATCA_STATUS calib_ca2_is_locked(ATCADevice device, uint8_t zone, bool* is_locked
     ATCA_STATUS status = ATCA_SUCCESS;
 
     if (ATCA_ZONE_CONFIG == zone)
-    {
+    {   
         status = calib_ca2_is_config_locked(device, is_locked);
     }
     else if (ATCA_ZONE_DATA == zone)
@@ -351,12 +351,18 @@ ATCADeviceType calib_get_devicetype_with_device_id(uint8_t device_id,uint8_t dev
             case ATCA_TA010_DEVICE_ID:
                 device_type = TA010;
                 break;
+            case ATCA_SHA104_DEVICE_ID:
+                device_type = SHA104;
+                break;
+            case ATCA_SHA105_DEVICE_ID:
+                device_type = SHA105;
+                break;
             default:
                 device_type = ATCA_DEV_UNKNOWN;
                 break;
         }
     }
-
+    
     return device_type;
 }
 #endif

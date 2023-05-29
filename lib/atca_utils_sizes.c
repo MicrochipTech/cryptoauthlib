@@ -26,11 +26,12 @@
  */
 
 #include "cryptoauthlib.h"
+#include "atcacert/atcacert_check_config.h"
 
 #define SIZE_OF_API_T(x)  size_t x ## _size(void); size_t x ## _size(void) { return sizeof( x ); }
 #define SIZE_OF_API_S(x)  size_t x ## _size(void); size_t x ## _size(void) { return sizeof(struct x ); }
 
-#if ATCA_CA_SUPPORT
+#if ATCACERT_COMPCERT_EN
 #include "atcacert/atcacert_date.h"
 #include "atcacert/atcacert_def.h"
 /* atcacert_date.h */

@@ -104,6 +104,7 @@ ATCA_STATUS atcab_aes_gcm_decrypt_finish(atca_aes_gcm_ctx_t* ctx, const uint8_t*
 
 /* CheckMAC command */
 ATCA_STATUS atcab_checkmac(uint8_t mode, uint16_t key_id, const uint8_t* challenge, const uint8_t* response, const uint8_t* other_data);
+ATCA_STATUS atcab_checkmac_with_response_mac(uint8_t mode, const uint8_t* challenge, const uint8_t* response, const uint8_t* other_data, uint8_t *mac);
 
 /* Counter command */
 ATCA_STATUS atcab_counter(uint8_t mode, uint16_t counter_id, uint32_t* counter_value);
@@ -129,6 +130,9 @@ ATCA_STATUS atcab_ecdh_tempkey_ioenc(const uint8_t* public_key, uint8_t* pms, co
 
 // GenDig command functions
 ATCA_STATUS atcab_gendig(uint8_t zone, uint16_t key_id, const uint8_t* other_data, uint8_t other_data_size);
+
+// GenDivKey command functions
+ATCA_STATUS atcab_gendivkey(const uint8_t* other_data);
 
 // GenKey command functions
 ATCA_STATUS atcab_genkey_base(uint8_t mode, uint16_t key_id, const uint8_t* other_data, uint8_t* public_key);
@@ -168,7 +172,6 @@ ATCA_STATUS atcab_nonce_load(uint8_t target, const uint8_t* num_in, uint16_t num
 ATCA_STATUS atcab_nonce_rand(const uint8_t* num_in, uint8_t* rand_out);
 ATCA_STATUS atcab_challenge(const uint8_t* num_in);
 ATCA_STATUS atcab_challenge_seed_update(const uint8_t* num_in, uint8_t* rand_out);
-ATCA_STATUS atcab_nonce_gen_session_key(uint16_t param2, const uint8_t* num_in, uint8_t* rand_out);
 
 // PrivWrite command functions
 #if defined(ATCA_USE_CONSTANT_HOST_NONCE)

@@ -179,12 +179,14 @@ ATCA_STATUS atca_jwt_finalize(
     }
 
     /* Create ECSDA signature of the digest and store it back in the buffer */
+#if CALIB_SIGN_EN || CALIB_SIGN_ECC204_EN || TALIB_SIGN_EN
     status = atcab_sign(key_id, (const uint8_t*)(jwt->buf + jwt->buflen - ATCA_SHA256_DIGEST_SIZE),
                         (uint8_t*)(jwt->buf + jwt->buflen - 64));
     if (ATCA_SUCCESS != status)
     {
         return status;
     }
+#endif
 
     /* Add the separator */
     jwt->buf[jwt->cur++] = '.';

@@ -405,7 +405,7 @@ TEST_CONDITION(atca_cmd_basic_test, write_hmac_key)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((ECC204 == dev_type) || (TA010 == dev_type));
+    return ((ECC204 == dev_type) || (TA010 == dev_type) || (SHA104 == dev_type) || (SHA105 == dev_type));
 }
 
 TEST(atca_cmd_basic_test, write_hmac_key)
@@ -420,6 +420,24 @@ TEST(atca_cmd_basic_test, write_hmac_key)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     status = atcab_write_zone(ATCA_ZONE_DATA, key_id, 0, 0, g_slot4_key, 32);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+}
+
+TEST_CONDITION(atca_cmd_basic_test, write_io_protection_key)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return (SHA105 == dev_type);
+}
+
+TEST(atca_cmd_basic_test, write_io_protection_key)
+{
+    ATCA_STATUS status = ATCA_SUCCESS;
+
+    test_assert_config_is_locked();
+    test_assert_data_is_unlocked();
+
+    status = atcab_write_zone(ATCA_ZONE_DATA, 0, 0, 0, g_slot4_key, 32);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
 #endif
@@ -447,7 +465,8 @@ TEST(atca_cmd_basic_test, write_data_zone_blocks)
     /* Note - This test assumes ECC slot sizes */
     if (atcab_is_ca2_device(gCfg->devtype))
     {
-        /* This test for the ECC204 needs to be run when the device data is unlocked */
+        /* This test for the ECC204 needs to be run when the device data is unlocked 
+           Config Subzone 0 and 1 should be locked */
         test_assert_config_is_locked();
         test_assert_data_is_unlocked();
     }
@@ -677,7 +696,16 @@ TEST(atca_cmd_basic_test, write_config_zone)
         status = atcab_write_config_zone(test_ecc204_configdata);
         break;
 #endif
-
+#ifdef ATCA_SHA104_SUPPORT
+    case SHA104:
+        status = atcab_write_config_zone(test_sha104_configdata);
+        break;
+#endif
+#ifdef ATCA_SHA105_SUPPORT
+    case SHA105:
+        status = atcab_write_config_zone(test_sha105_configdata);
+        break;
+#endif
 #if ATCA_TA_SUPPORT
     case TA100:
         status = atcab_write_config_zone(test_ta100_configdata);
@@ -756,6 +784,7 @@ t_test_case_info write_basic_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_basic_test, write_data_zone_blocks),      REGISTER_TEST_CONDITION(atca_cmd_basic_test, write_data_zone_blocks) },
 #if CALIB_WRITE_CA2_EN
     { REGISTER_TEST_CASE(atca_cmd_basic_test, write_hmac_key),              REGISTER_TEST_CONDITION(atca_cmd_basic_test, write_hmac_key) },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, write_io_protection_key),     REGISTER_TEST_CONDITION(atca_cmd_basic_test, write_io_protection_key)  },
 #endif
 #if TEST_ATCAB_WRITE_ENC_EN
     //{ REGISTER_TEST_CASE(atca_cmd_basic_test, write_bytes_zone_slot8),                               DEVICE_MASK_ECC                      },

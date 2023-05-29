@@ -208,6 +208,22 @@ static const device_execution_time_t device_execution_time_ecc204[] = {
     { ATCA_SIGN,         500},
     { ATCA_WRITE,        80}
 };
+
+/*Execution times for SHA10x supported commands...*/
+static const device_execution_time_t device_execution_time_sha10x[] = {
+    { ATCA_CHECKMAC,     100},
+    { ATCA_COUNTER,      20},
+    { ATCA_DELETE,       200},
+    { ATCA_GENDIG,       70},
+    { ATCA_INFO,         20},
+    { ATCA_LOCK,         80},
+    { ATCA_MAC,          120},
+    { ATCA_NONCE,        20},
+    { ATCA_READ,         40},
+    { ATCA_SELFTEST,     600},
+    { ATCA_SHA,          80},
+    { ATCA_WRITE,        80}
+};
 // *INDENT-ON*
 
 /** \brief return the typical execution time for the given command
@@ -270,6 +286,13 @@ ATCA_STATUS calib_get_execution_time(uint8_t opcode, ATCADevice device)
     case ECC204:
         execution_times = device_execution_time_ecc204;
         no_of_commands = sizeof(device_execution_time_ecc204) / sizeof(device_execution_time_t);
+        break;
+
+    case SHA104:
+        /* fallthrough */
+    case SHA105:
+        execution_times = device_execution_time_sha10x;
+        no_of_commands = sizeof(device_execution_time_sha10x) / sizeof(device_execution_time_t);
         break;
 
     default:

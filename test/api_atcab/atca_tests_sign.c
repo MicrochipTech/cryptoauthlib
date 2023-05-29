@@ -27,6 +27,12 @@
 #include <stdlib.h>
 #include "test_atcab.h"
 
+#ifndef TEST_ATCAB_SIGN_EN
+#define TEST_ATCAB_SIGN_EN         (CALIB_SIGN_EN || CALIB_SIGN_ECC204_EN || TALIB_SIGN_EN)
+#endif
+
+#if TEST_ATCAB_SIGN_EN
+
 TEST(atca_cmd_basic_test, sign)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
@@ -85,7 +91,6 @@ TEST(atca_cmd_basic_test, sign_sw_verify)
 }
 #endif
 
-#if defined(ATCA_ECC_SUPPORT) || defined(ATCA_TA100_SUPPORT)
 TEST(atca_cmd_basic_test, sign_hw_verify)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
@@ -118,7 +123,6 @@ TEST(atca_cmd_basic_test, sign_hw_verify)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(true, is_verified);
 }
-#endif
 
 #ifdef ATCA_ECC_SUPPORT
 TEST_CONDITION(atca_cmd_basic_test, sign_internal_ecc)
@@ -212,6 +216,7 @@ TEST(atca_cmd_basic_test, sign_internal_ecc)
     TEST_ASSERT_EQUAL(true, is_verified);
 }
 #endif
+#endif
 
 #if 0
 TEST(atca_cmd_basic_test, read_sig)
@@ -223,6 +228,7 @@ TEST(atca_cmd_basic_test, read_sig)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info sign_basic_test_info[] =
 {
+#if TEST_ATCAB_SIGN_EN
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sign),            atca_test_cond_p256_sign },
 #if ATCA_HOSTLIB_EN
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sign_sw_verify),  atca_test_cond_p256_sign },
@@ -235,6 +241,7 @@ t_test_case_info sign_basic_test_info[] =
 #endif
 #if 0
     { REGISTER_TEST_CASE(atca_cmd_basic_test, read_sig),        atca_test_cond_p256_sign },
+#endif
 #endif
 
     /* Array Termination element*/

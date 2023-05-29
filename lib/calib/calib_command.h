@@ -307,6 +307,7 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define CHECKMAC_MODE_SOURCE_FLAG_MATCH     ((uint8_t)0x04)     //!< CheckMAC mode bit   2: match TempKey.SourceFlag
 #define CHECKMAC_MODE_INCLUDE_OTP_64        ((uint8_t)0x20)     //!< CheckMAC mode bit   5: include first 64 OTP bits
 #define CHECKMAC_MODE_MASK                  ((uint8_t)0x27)     //!< CheckMAC mode bits 3, 4, 6, and 7 are 0.
+#define CHECKMAC_MODE_OUTPUT_MAC_RESPONSE   ((uint8_t)0x08)     //!< CheckMAC mode bit   3: Single byte boolean response + 32 bytes mac in SHA105 device
 #define CHECKMAC_CLIENT_CHALLENGE_SIZE      (32)                //!< CheckMAC size of client challenge
 #define CHECKMAC_CLIENT_RESPONSE_SIZE       (32)                //!< CheckMAC size of client response
 #define CHECKMAC_OTHER_DATA_SIZE            (13)                //!< CheckMAC size of "other data"
@@ -314,6 +315,8 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define CHECKMAC_CMD_MATCH                  (0)                 //!< CheckMAC return value when there is a match
 #define CHECKMAC_CMD_MISMATCH               (1)                 //!< CheckMAC return value when there is a mismatch
 #define CHECKMAC_RSP_SIZE                   ATCA_RSP_SIZE_MIN   //!< CheckMAC response packet size
+#define CHECKMAC_SINGLE_BYTE_BOOL_RESP      (1)
+#define CHECKMAC_SHA105_DEFAULT_KEYID       ((uint16_t)0x0003)
 /** @} */
 
 /** \name Definitions for the Counter command
@@ -386,6 +389,13 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define GENDIG_RSP_SIZE             ATCA_RSP_SIZE_MIN   //!< GenDig command response packet size
 /** @} */
 
+/** \name Definitions for the GenDivKey Command
+   @{ */
+#define GENDIVKEY_MODE              ((uint8_t)2)
+#define GENDIVKEY_OTHER_DATA_SIZE   ((uint8_t)4)
+#define GENDIVKEY_DEFAULT_KEYID     ((uint16_t)0x0003)
+/** @} */
+
 /** \name Definitions for the GenKey Command
    @{ */
 #define GENKEY_MODE_IDX             ATCA_PARAM1_IDX         //!< GenKey command index for mode
@@ -428,8 +438,8 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define INFO_MODE_REVISION          ((uint8_t)0x00)     //!< Info mode Revision
 #define INFO_MODE_KEY_VALID         ((uint8_t)0x01)     //!< Info mode KeyValid
 #define INFO_MODE_STATE             ((uint8_t)0x02)     //!< Info mode State
-#define INFO_MODE_LOCK_STATUS       ((uint8_t)0x02)     //!< Info mode Lock status for ECC204,TA010 devices
-#define INFO_MODE_CHIP_STATUS       ((uint8_t)0xC5)     //!< Info mode Chip status for ECC204,TA010 devices
+#define INFO_MODE_LOCK_STATUS       ((uint8_t)0x02)     //!< Info mode Lock status for ECC204,TA010,SHA10x devices
+#define INFO_MODE_CHIP_STATUS       ((uint8_t)0xC5)     //!< Info mode Chip status for ECC204,TA010,SHA10x devices
 #define INFO_MODE_GPIO              ((uint8_t)0x03)     //!< Info mode GPIO
 #define INFO_MODE_VOL_KEY_PERMIT    ((uint8_t)0x04)     //!< Info mode GPIO
 #define INFO_MODE_MAX               ((uint8_t)0x03)     //!< Info mode maximum value
@@ -531,6 +541,7 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define MAC_SIZE                        (32)                    //!< MAC size of response
 #define MAC_MODE_MASK                   ((uint8_t)0x77)         //!< MAC mode bits 3 and 7 are 0.
 #define MAC_RSP_SIZE                    ATCA_RSP_SIZE_32        //!< MAC command response packet size
+#define MAC_SHA104_DEFAULT_KEYID        ((uint16_t)0x0003)
 /** @} */
 
 /** \name Definitions for the Nonce Command

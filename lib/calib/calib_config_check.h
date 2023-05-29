@@ -59,12 +59,18 @@
 #define CALIB_TA010_EN              DEFAULT_ENABLED
 #endif
 
+#ifdef ATCA_SHA104_SUPPORT
+#define CALIB_SHA104_EN             DEFAULT_ENABLED
+#endif
+
+#ifdef ATCA_SHA105_SUPPORT
+#define CALIB_SHA105_EN             DEFAULT_ENABLED
+#endif
+
 /* Helper macros */
 #define CALIB_FULL_FEATURE          (CALIB_SHA204_EN || CALIB_ECC108_EN || CALIB_ECC508_EN || CALIB_ECC608_EN)
 #define CALIB_ECC_SUPPORT           (CALIB_ECC108_EN || CALIB_ECC508_EN || CALIB_ECC608_EN || CALIB_ECC204_EN || CALIB_TA010_EN)
-#define CALIB_CA2_SUPPORT           (CALIB_ECC204_EN || CALIB_TA010_EN)
-#define CALIB_ECC204_ONLY           (CALIB_ECC204_EN && !(CALIB_FULL_FEATURE || CALIB_SHA206_EN))
-#define CALIB_TA010_ONLY            (CALIB_TA010_EN && !(CALIB_FULL_FEATURE || CALIB_SHA206_EN))
+#define CALIB_CA2_SUPPORT           (CALIB_ECC204_EN || CALIB_TA010_EN || CALIB_SHA104_EN || CALIB_SHA105_EN)
 #define CALIB_SHA206_ONLY           (CALIB_SHA206_EN && !(CALIB_FULL_FEATURE || ATCA_CA2_SUPPORT))
 
                       /**** AES command ****/
@@ -113,7 +119,7 @@
   * Supported API's: calib_checkmac 
  **/
 #ifndef CALIB_CHECKMAC_EN
-#define CALIB_CHECKMAC_EN           (ATCAB_CHECKMAC_EN && CALIB_FULL_FEATURE)
+#define CALIB_CHECKMAC_EN           (ATCAB_CHECKMAC_EN && (CALIB_FULL_FEATURE || CALIB_SHA105_EN))
 #endif
 
                       /***** COUNTER command *****/
@@ -125,7 +131,7 @@
   * Supported API's: calib_counter
  **/
 #ifndef CALIB_COUNTER_EN
-#define CALIB_COUNTER_EN            (ATCAB_COUNTER_EN && CALIB_ECC_SUPPORT)
+#define CALIB_COUNTER_EN            (ATCAB_COUNTER_EN && (CALIB_ECC_SUPPORT || CALIB_SHA104_EN || CALIB_SHA105_EN))
 #endif
 
                       /***** DELETE command *****/
@@ -203,7 +209,20 @@
   * Supported API's: calib_gendig
  **/
 #ifndef CALIB_GENDIG_EN
-#define CALIB_GENDIG_EN             (ATCAB_GENDIG_EN && CALIB_FULL_FEATURE)
+#define CALIB_GENDIG_EN             (ATCAB_GENDIG_EN && (CALIB_FULL_FEATURE || CALIB_SHA105_EN))
+#endif
+
+                      /******  GENDIVKEY command  ******/
+
+/** \def CALIB_GENDIVKEY
+  *  
+  * Enable CALIB_GENDIVKEY to generate the equivalent diversified key as that programmed into thhe
+  * client side device
+  * 
+  * Supported API's: calib_sha105_gendivkey
+ **/
+#ifndef CALIB_GENDIVKEY_EN
+#define CALIB_GENDIVKEY_EN          (ATCAB_GENDIG_EN && CALIB_SHA105_EN)
 #endif
 
                       /******  GENKEY COMMAND  ******/
@@ -302,7 +321,7 @@
   * Supported API's: calib_mac
  **/
 #ifndef CALIB_MAC_EN
-#define CALIB_MAC_EN                (ATCAB_MAC_EN && (CALIB_FULL_FEATURE || CALIB_SHA206_EN))
+#define CALIB_MAC_EN                (ATCAB_MAC_EN && (CALIB_FULL_FEATURE || CALIB_SHA206_EN || CALIB_SHA104_EN))
 #endif
 
                       /****** NONCE command ******/

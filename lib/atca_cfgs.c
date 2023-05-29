@@ -277,4 +277,7 @@ ATCAIfaceCfg cfg_ta010_kithid_default = {
     }
 };
 #endif
+
+
+
 /** @} */

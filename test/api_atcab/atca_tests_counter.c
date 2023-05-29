@@ -177,7 +177,9 @@ TEST_CONDITION(atca_cmd_basic_test, counter_write_test)
     return ((ATECC508A == dev_type) 
             || (ATECC608 == dev_type)
             || (ECC204 == dev_type)
-            || (TA010 == dev_type));
+            || (TA010 == dev_type)
+            || (SHA104 == dev_type)
+            || (SHA105 == dev_type));
 }
 
 /*

@@ -29,6 +29,8 @@
 #include "atcacert_der.h"
 #include <string.h>
 
+#if ATCACERT_COMPCERT_EN
+
 int atcacert_der_enc_length(uint32_t length, uint8_t* der_length, size_t* der_length_size)
 {
     size_t der_length_size_calc = 0;
@@ -554,3 +556,5 @@ int atcacert_der_dec_ecdsa_sig_value(const uint8_t* der_sig,
 
     return ATCACERT_E_SUCCESS;
 }
+
+#endif

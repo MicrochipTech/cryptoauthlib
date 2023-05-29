@@ -394,6 +394,13 @@ ATCA_STATUS atca_test_config_get_id(uint8_t test_type, uint16_t* handle)
             status = calib_config_get_ecc204_slot_by_test(test_type, handle);
             break;
 #endif
+#if defined(ATCA_SHA104_SUPPORT) || defined(ATCA_SHA105_SUPPORT)
+        case SHA104:
+        /* fallthrough */
+        case SHA105:
+            status = calib_config_get_sha10x_slot_by_test(test_type, handle);
+            break;
+#endif
 #if ATCA_TA_SUPPORT
         case TA100:
             status = talib_config_get_handle_by_test(test_type, handle);
@@ -415,6 +422,7 @@ ATCA_STATUS atca_test_config_get_id(uint8_t test_type, uint16_t* handle)
 /* Helper function to execute genkey and retry if there are failures since there is
    a chance that the genkey will fail to produce a valid keypair and a retry is nearly
    always successful */
+#if defined(ATCA_ECC_SUPPORT) || defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT) || defined(ATCA_TA100_SUPPORT)
 ATCA_STATUS atca_test_genkey(uint16_t key_id, uint8_t *public_key)
 {
     int attempts = 2;
@@ -425,3 +433,4 @@ ATCA_STATUS atca_test_genkey(uint16_t key_id, uint8_t *public_key)
     } while (status && --attempts);
     return status;
 }
+#endif

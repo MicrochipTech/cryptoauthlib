@@ -79,6 +79,8 @@ Commands
 * ecc108 - Select ATECC108A
 * ecc204 - Select ECC204
 * ta010  - Select TA010
+* sha104 - Select SHA104
+* sha105 - Select SHA105
 * ecc508 - Select ATECC508A
 * ecc608 - Select ATECC608A/B
 * ta100  - Select TA100
@@ -133,6 +135,8 @@ macro is enabled:
 * ecc108
 * ecc204
 * ta010
+* sha104
+* sha105
 * ecc508
 * ecc608
 * ta100

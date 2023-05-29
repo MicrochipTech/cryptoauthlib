@@ -1,6 +1,11 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.5.1 (03/26/2023)
+
+### New
+  - Add support for SHA104, SHA105, & SHA106
+
 ## Release v3.5.0 (03/14/2023)
 
 ### New

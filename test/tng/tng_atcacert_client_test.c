@@ -31,6 +31,12 @@
 #include "app/tng/tngtls_cert_def_2_device.h"
 #include "atcacert/atcacert_def.h"
 
+#ifndef TEST_TNG_ATCACERT_EN
+#define TEST_TNG_ATCACERT_EN            ATCACERT_COMPCERT_EN
+#endif
+
+#if TEST_TNG_ATCACERT_EN
+
 TEST_GROUP(tng_atcacert_client);
 
 TEST_SETUP(tng_atcacert_client)
@@ -411,10 +417,12 @@ TEST(tng_atcacert_client, tng_atcacert_device_public_key_cert)
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(cert_public_key, public_key, sizeof(public_key));
 }
+#endif /* TEST_TNG_ATCACERT_EN */
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info tng_atcacert_client_unit_test_info[] =
 {
+#if TEST_TNG_ATCACERT_EN
     { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_root_public_key),            atca_test_cond_ecc608 },
     { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_root_cert),                  atca_test_cond_ecc608 },
     { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_max_signer_cert_size),       atca_test_cond_ecc608 },
@@ -426,7 +434,7 @@ t_test_case_info tng_atcacert_client_unit_test_info[] =
     { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_read_device_cert_signer),    atca_test_cond_ecc608 },
     { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_device_public_key_no_cert),  atca_test_cond_ecc608 },
     { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_device_public_key_cert),     atca_test_cond_ecc608 },
-
+#endif
     { (fp_test_case)NULL, NULL },
 };
 // *INDENT-ON*

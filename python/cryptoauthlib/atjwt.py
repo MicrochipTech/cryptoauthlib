@@ -26,6 +26,7 @@ JWT: Extension to the jwt module with hardware based security
 try:
     import hmac
     from jwt import PyJWT as Jwt
+    from jwt.api_jws import register_algorithm, unregister_algorithm
     from jwt.algorithms import ECAlgorithm, HMACAlgorithm
     from cryptography.hazmat.backends import default_backend
     from cryptography.hazmat.primitives import hashes
@@ -100,9 +101,13 @@ try:
         Extended PyJWT class from the pyjwt module
         """
         def __init__(self, slot=0, iface_cfg=None, options=None):
-            super(PyJWT, self).__init__(algorithms=[], options=options)
+            super(PyJWT, self).__init__(options=options)
             self.register_algorithm('ES256', HwEcAlgorithm(HwEcAlgorithm.SHA256, slot, iface_cfg))
             self.register_algorithm('HS256', HwHmacAlgorithm(HwHmacAlgorithm.SHA256, slot, iface_cfg))
+
+        def register_algorithm(self, alg_id, algorithm):
+            unregister_algorithm(alg_id)
+            register_algorithm(alg_id,algorithm)
 
     __all__ = ['PyJWT']
 

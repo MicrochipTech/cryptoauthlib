@@ -42,11 +42,16 @@ static const char atca_jwt_test_vector_header[] = "eyJhbGciOiJFUzI1NiIsInR5cCI6I
 static const char atca_jwt_test_vector_claim_string[] = ".{\"Test\":\"Value\"";
 static const char atca_jwt_test_vector_claim_numeric[] = ".{\"Test\":12345";
 
+#if TEST_JWT_SIGN_EN
 static const int atca_jwt_test_vector_payload_iat = 123456789;
 static const int atca_jwt_test_vector_payload_exp = 234567890;
 static const char atca_jwt_test_vector_payload_aud[] = "audience";
+#endif
+
+#if TEST_JWT_SIGN_EN || TEST_JWT_VERIFY_EN
 static const char atca_jwt_test_vector_payload[] =
     "eyJpYXQiOjEyMzQ1Njc4OSwiZXhwIjoyMzQ1Njc4OTAsImF1ZCI6ImF1ZGllbmNlIn0.";
+#endif
 
 #if TEST_JWT_VERIFY_EN
 static const uint8_t atca_jwt_test_vector_pubkey[ATCA_ECCP256_PUBKEY_SIZE] = {
@@ -270,7 +275,9 @@ TEST(atca_jwt, finalize_invalid_params)
 #endif
 
 /* These tests require an attached and configured device */
+#if TEST_JWT_SIGN_EN || TEST_JWT_VERIFY_EN
 TEST_GROUP(atca_jwt_crypto);
+#endif
 
 TEST_SETUP(atca_jwt_crypto)
 {

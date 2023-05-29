@@ -23,7 +23,7 @@
 
 import os
 
-_CALIB_SUPPORTED_DEVICES = ['ATECC108A', 'ATECC508A', 'ATECC608', 'ATSHA204A', 'ATSHA206A', 'ECC204', 'TA010']
+_CALIB_SUPPORTED_DEVICES = ['ATECC108A', 'ATECC508A', 'ATECC608', 'ATSHA204A', 'ATSHA206A', 'ECC204', 'TA010', 'SHA104', 'SHA105']
 _TALIB_SUPPORTED_DEVICES = ['TA100']
 
 def loadModule():
@@ -64,7 +64,8 @@ def loadModule():
         comp.addDependency("cryptoauthlib", "CA_LIB", True, False)
         if 'ATSHA206A' not in dev:
             comp.addMultiDependency('{}_DEP_PLIB_I2C'.format(dev.upper()), 'I2C', 'I2C', False)
-        comp.addMultiDependency('{}_DEP_PLIB_SWI'.format(dev.upper()), 'UART', 'SWI', False)
+        if 'SHA105' not in dev:
+            comp.addMultiDependency('{}_DEP_PLIB_SWI'.format(dev.upper()), 'UART', 'SWI', False)
 
     if os.path.exists(Module.getPath() + 'lib/talib/talib_basic.h'):
         for dev in _TALIB_SUPPORTED_DEVICES:

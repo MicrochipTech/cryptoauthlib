@@ -44,7 +44,7 @@
  *                          write.
  * \param[in]  param2       Param2, normally 0, but can be used to indicate a
  *                          nonce calculation mode (bit 15).
- *                          For ECC204,TA010, represent tarnsport key id greater than
+ *                          For ECC204,TA010,SHA10x represent tarnsport key id greater than
  *                          or equal to 0x8000
  * \param[in]  num_in       Input value to either be included in the nonce
  *                          calculation in random modes (20 bytes) or to be
@@ -219,7 +219,7 @@ ATCA_STATUS calib_challenge_seed_update(ATCADevice device, const uint8_t *num_in
 }
 
 /** \brief Use Nonce command to generate session key for use by a subsequent write command
- *         This Mode only supports in ECC204,TA010 devices.
+ *         This Mode only supports in ECC204,TA010,SHA10x devices.
  *  \param[in]  device    Device context pointer
  *  \param[in]  param2    Key id points to transport key
  *  \param[in]  num_in    Input value from host system
