@@ -35,7 +35,11 @@
 #include "pkcs11_os.h"
 #include "pkcs11_util.h"
 
+#if defined(_WIN32) || defined(__MINGW32__) || defined(__MINGW64__)
+#include <Windows.h>
+#else
 #include <dirent.h>
+#endif
 
 #if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
 CK_RV pkcs11_trust_load_objects(pkcs11_slot_ctx_ptr pSlot);
@@ -821,6 +825,197 @@ CK_RV pkcs11_config_remove_object(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_pt
 }
 
 /* Load configuration from the filesystem */
+#if defined(_WIN32) || defined(__MINGW32__) || defined(__MINGW64__)
+CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
+{
+    HANDLE d = NULL;
+    WIN32_FIND_DATA d_data;
+    BOOL next_d = 1;
+    FILE* fp;
+    char* buffer;
+    size_t buflen = 0;
+    char* argv[2 * (PKCS11_MAX_OBJECTS_ALLOWED + PKCS11_MAX_CONFIG_ALLOWED)];
+    int argc = 0;
+
+    pkcs11_lib_ctx_ptr pLibCtx = pkcs11_get_context();
+    CK_RV rv = CKR_OK;
+
+    /* Open the general library configuration */
+    fp = fopen(ATCA_LIBRARY_CONF, "rb");
+    if (fp)
+    {
+        buflen = pkcs11_config_load_file(fp, &buffer);
+        fclose(fp);
+        fp = NULL;
+
+        if (0 < buflen)
+        {
+            if (0 < (argc = pkcs11_config_parse_buffer(buffer, buflen, sizeof(argv) / sizeof(argv[0]), argv)))
+            {
+                if (strcmp("filestore", argv[0]) == 0)
+                {
+                    buflen = strlen(argv[1]);
+                    memcpy(pLibCtx->config_path, argv[1], buflen);
+
+                    if (pLibCtx->config_path[buflen - 1] != '/')
+                    {
+                        pLibCtx->config_path[buflen++] = '/';
+                    }
+                    pLibCtx->config_path[buflen] = '\0';
+                }
+            }
+            else
+            {
+                PKCS11_DEBUG("Failed to parse the configuration file: %s\n", ATCA_LIBRARY_CONF);
+            }
+            pkcs11_os_free(buffer);
+        }
+    }
+
+    PKCS11_DEBUG("Config path --> %s\n", pLibCtx->config_path);
+    char* query = pkcs11_os_malloc(buflen+1);
+    snprintf(query, buflen+1, "%s", pLibCtx->config_path);
+    query[buflen] = '*';
+    query[buflen+1] = '\0';
+    if (INVALID_HANDLE_VALUE != (d = FindFirstFileA(query, &d_data)))
+    {
+        while((CKR_OK == rv) && (0 != next_d))
+        {
+            if(FILE_ATTRIBUTE_NORMAL == d_data.dwFileAttributes || 
+                FILE_ATTRIBUTE_ARCHIVE == d_data.dwFileAttributes)
+            {
+                argc = sizeof(argv)/sizeof(argv[0]);
+                size_t fnlen = strlen((char*)pLibCtx->config_path) + strlen(d_data.cFileName) + 1;
+                char* filename = pkcs11_os_malloc(fnlen);
+
+                if (!filename)
+                {
+                    rv = CKR_HOST_MEMORY;
+                    PKCS11_DEBUG("Failed to allocated a filename buffer\n");
+                    break;
+                }
+                snprintf(filename, fnlen, "%s%s", pLibCtx->config_path, d_data.cFileName);
+                pkcs11_config_split_string(d_data.cFileName, '.', &argc, argv);
+
+                if (!strcmp(argv[argc-1], "conf"))
+                {
+                    CK_SLOT_ID slot_id = (CK_SLOT_ID)strtol(argv[0], NULL, 10 );
+
+                    PKCS11_DEBUG("Opening Configuration: %s\n", filename);
+                    fp = fopen(filename, "rb");
+                    pkcs11_os_free(filename);
+                    if (fp)
+                    {
+                        buflen = pkcs11_config_load_file(fp, &buffer);
+
+                        if (0 < buflen)
+                        {
+                            if (2 == argc)
+                            {
+                                if (!slot_ctx->label[0])
+                                {
+                                    slot_ctx->slot_id = slot_id;
+                                }
+                                else if (slot_ctx->slot_id == slot_id)
+                                {
+                                    PKCS11_DEBUG("Tried to reload the same configuration file for the same slot\n");
+                                    rv = CKR_GENERAL_ERROR;
+                                }
+                                else
+                                {
+                                    /* Move to the next context */
+                                    slot_ctx = pkcs11_slot_get_new_context(pLibCtx);
+                                    if(slot_ctx)
+                                    {
+                                        slot_ctx->slot_id = slot_id;
+                                    }
+                                    else
+                                    {
+                                        rv = CKR_GENERAL_ERROR;
+                                    }
+                                }
+
+                                if (CKR_OK == rv)
+                                {
+                                    if (0 < (argc = pkcs11_config_parse_buffer(buffer, buflen, sizeof(argv) / sizeof(argv[0]), argv)))
+                                    {
+                                        rv = pkcs11_config_parse_slot_file(slot_ctx, argc, argv);
+                                    }
+                                    else
+                                    {
+                                        rv = CKR_GENERAL_ERROR;
+                                        PKCS11_DEBUG("Failed to parse the slot configuration file\n");
+                                    }
+                                }
+#ifndef PKCS11_LABEL_IS_SERNUM
+                                if (CKR_OK == rv)
+                                {
+                                    /* If a label wasn't set - configure a default */
+                                    if (!slot_ctx->label[0])
+                                    {
+                                        snprintf((char*)slot_ctx->label, sizeof(slot_ctx->label) - 1, "%02XABC", (uint8_t)slot_ctx->slot_id);
+                                    }
+                                }
+#endif
+                            }
+                            else if (3 == argc)
+                            {
+                                uint16_t handle = (uint16_t)strtol(argv[1], NULL, 10);
+
+                                if (!slot_ctx->label[0] || (slot_ctx->slot_id != slot_id))
+                                {
+                                    rv = CKR_GENERAL_ERROR;
+                                    PKCS11_DEBUG("Trying to load an object configuration without a slot configuration file\n");
+                                }
+
+                                if (CKR_OK == rv)
+                                {
+                                    if (0 < (argc = pkcs11_config_parse_buffer(buffer, buflen, sizeof(argv) / sizeof(argv[0]), argv)))
+                                    {
+                                        rv = pkcs11_config_parse_object_file(slot_ctx, handle, argc, argv);
+                                    }
+                                    else
+                                    {
+                                        rv = CKR_GENERAL_ERROR;
+                                        PKCS11_DEBUG("Failed to parse the slot configuration file\n");
+                                    }
+                                }
+
+                                if (CKR_OK == rv)
+                                {
+                                #if ATCA_CA_SUPPORT
+                                    if(atcab_is_ca_device(slot_ctx->interface_config.devtype))
+                                    {
+                                        /* Remove the slot from the free list*/
+                                        slot_ctx->flags &= ~(1 << handle);
+                                    }
+                                #endif
+                                }
+                            }
+                            pkcs11_os_free(buffer);
+                        }
+                        fclose(fp);
+                    }
+                    else
+                    {
+                        rv = CKR_GENERAL_ERROR;
+                        PKCS11_DEBUG("Unable to open the configuration file\n");
+                    }
+                }
+            }
+            next_d = FindNextFileA(d, &d_data);
+        }
+    }
+    else
+    {
+        PKCS11_DEBUG("Handle returned INVALID_HANDLE_VALUE: %p\n", d);
+    }
+
+    if(d)
+        FindClose(d);
+    return rv;
+}
+#else
 CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
 {
     DIR * d;
@@ -1031,6 +1226,6 @@ CK_RV pkcs11_config_load(pkcs11_slot_ctx_ptr slot_ctx)
 
     return rv;
 }
-
+#endif
 
 /** @} */

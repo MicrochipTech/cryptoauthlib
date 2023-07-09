@@ -119,7 +119,7 @@
 #define ATCA_UINT64_BE_TO_HOST(x)  __builtin_bswap64(x)
 #endif
 
-#ifdef WIN32
+#if defined(WIN32) && !defined(__MINGW64__) && !defined(__MINGW32__)
 #define SHARED_LIB_EXPORT       __declspec(dllexport)
 #define SHARED_LIB_IMPORT       __declspec(dllimport)
 #else
@@ -208,7 +208,7 @@
 #endif
 
 #ifdef ATCA_BUILD_SHARED_LIBS
-#if defined(cryptoauth_EXPORTS) && defined(_WIN32)
+#if defined(cryptoauth_EXPORTS) && defined(_WIN32) && !defined(__MINGW64__) && !defined(__MINGW32__)
 #define ATCA_DLL    SHARED_LIB_EXPORT
 #else
 #define ATCA_DLL    SHARED_LIB_IMPORT

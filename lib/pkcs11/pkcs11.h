@@ -181,6 +181,9 @@ extern "C" {
  * #endif
  */
 
+#if defined(_WIN32) || defined(__MINGW32__) || defined(__MINGW64__)
+#pragma pack(push, cryptoki, 1)
+#endif
 
 /* All the various Cryptoki types and #define'd values are in the
  * file pkcs11t.h.
@@ -257,6 +260,10 @@ struct CK_FUNCTION_LIST
 
 
 #undef __PASTE
+
+#if defined(_WIN32) || defined(__MINGW32__) || defined(__MINGW64__)
+#pragma pack(pop, cryptoki)
+#endif
 
 #ifdef __cplusplus
 }
