@@ -65,7 +65,7 @@ void hal_delay_10us(uint32_t delay)
 /* ASF already has delay_ms - see delay.h */
 void hal_delay_ms(uint32_t delay)
 {
-    hal_delay_us(delay * 1000);
+    k_msleep(delay);
 }
 
 
