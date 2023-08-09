@@ -353,6 +353,10 @@ def instantiateComponent(calComponent):
     calDebugPrint.setLabel("Enable Debug Print?")
     calDebugPrint.setVisible(True)
 
+    calPreprocessorWarning = calComponent.createBooleanSymbol("CAL_ENABLE_PREPROCESSOR_WARNING", None)
+    calPreprocessorWarning.setLabel("Enable Preprocessor Warning?")
+    calPreprocessorWarning.setVisible(True)
+
     calEnablePolling = calComponent.createBooleanSymbol("CAL_ENABLE_POLLING", None)
     calEnablePolling.setLabel("Enable Polling for Response?")
     calEnablePolling.setDefaultValue(True)
@@ -369,6 +373,14 @@ def instantiateComponent(calComponent):
     calPollingTimeout = calComponent.createIntegerSymbol('CAL_POLL_TIMEOUT', None)
     calPollingTimeout.setLabel('Polling Timeout (ms)')
     calPollingTimeout.setDefaultValue(2500)
+
+    calEnablejwt = calComponent.createBooleanSymbol("CAL_ENABLE_JWT", None)
+    calEnablejwt.setLabel("Enable jwt functionality?")
+    calEnablejwt.setVisible(True)
+    
+    calMaxPacketSize = calComponent.createIntegerSymbol('CAL_MAX_PACKET_SIZE', None)
+    calMaxPacketSize.setLabel('Maximum packet size (bytes)')
+    calMaxPacketSize.setDefaultValue(1035)
 
     # Symmetric Cryptography Commands
     symmetricCommands = calComponent.createMenuSymbol("cal_symmetric_commands", None)
@@ -915,7 +927,6 @@ def instantiateComponent(calComponent):
     calTaEnableFce = calComponent.createBooleanSymbol('CAL_ENABLE_TA100_FCE', None)
     calTaEnableFce.setValue(False)
     calTaEnableFce.setVisible(True)
-
 
     ################# Templated files to be included #######################
 

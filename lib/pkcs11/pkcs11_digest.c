@@ -6,16 +6,16 @@
 #include "pkcs11_session.h"
 #include "pkcs11_util.h"
 
-
 /**
  * \brief Initializes a message-digesting operation using the specified mechanism in the specified session
  */
 CK_RV pkcs11_digest_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism)
 {
     pkcs11_session_ctx_ptr pSession;
+    pkcs11_lib_ctx_ptr pLibCtx;
     CK_RV rv;
 
-    rv = pkcs11_init_check(NULL, FALSE);
+    rv = pkcs11_init_check(&pLibCtx, FALSE);
     if (CKR_OK != rv)
     {
         return rv;
@@ -48,11 +48,15 @@ CK_RV pkcs11_digest_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism
 #ifdef PKCS11_HARDWARE_SHA256
     return CKR_FUNCTION_NOT_SUPPORTED;
 #else
-    rv = pkcs11_util_convert_rv(atcac_sw_sha2_256_init(&pSession->active_mech_data.sha256));
-
-    if (CKR_OK == rv)
+    if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
     {
-        pSession->active_mech = CKM_SHA256;
+        rv = pkcs11_util_convert_rv(atcac_sw_sha2_256_init(&pSession->active_mech_data.sha256));
+
+        if (CKR_OK == rv)
+        {
+            pSession->active_mech = CKM_SHA256;
+        }
+        (void)pkcs11_unlock_context(pLibCtx);
     }
 
     return rv;
@@ -65,9 +69,10 @@ CK_RV pkcs11_digest_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism
 CK_RV pkcs11_digest(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pDigest, CK_ULONG_PTR pulDigestLen)
 {
     pkcs11_session_ctx_ptr pSession;
+    pkcs11_lib_ctx_ptr pLibCtx;
     CK_RV rv;
 
-    rv = pkcs11_init_check(NULL, FALSE);
+    rv = pkcs11_init_check(&pLibCtx, FALSE);
     if (CKR_OK != rv)
     {
         return rv;
@@ -112,9 +117,12 @@ CK_RV pkcs11_digest(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDa
         return CKR_OPERATION_NOT_INITIALIZED;
     }
 
-    rv = pkcs11_util_convert_rv(atcac_sw_sha2_256(pData, ulDataLen, pDigest));
-
-    pSession->active_mech = CKM_VENDOR_DEFINED;
+    if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
+    {
+        rv = pkcs11_util_convert_rv(atcac_sw_sha2_256(pData, ulDataLen, pDigest));
+        pSession->active_mech = CKM_VENDOR_DEFINED;
+        (void)pkcs11_unlock_context(pLibCtx);
+    }
 
     return rv;
 #endif
@@ -126,9 +134,10 @@ CK_RV pkcs11_digest(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDa
 CK_RV pkcs11_digest_update(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen)
 {
     pkcs11_session_ctx_ptr pSession;
+    pkcs11_lib_ctx_ptr pLibCtx;
     CK_RV rv;
 
-    rv = pkcs11_init_check(NULL, FALSE);
+    rv = pkcs11_init_check(&pLibCtx, FALSE);
     if (CKR_OK != rv)
     {
         return rv;
@@ -157,11 +166,14 @@ CK_RV pkcs11_digest_update(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULO
         return CKR_OPERATION_NOT_INITIALIZED;
     }
 
-    rv = pkcs11_util_convert_rv(atcac_sw_sha2_256_update(&pSession->active_mech_data.sha256, pPart, ulPartLen));
+    if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
+    {
+        rv = pkcs11_util_convert_rv(atcac_sw_sha2_256_update(&pSession->active_mech_data.sha256, pPart, ulPartLen));
+        (void)pkcs11_unlock_context(pLibCtx);
+    }
 
     return rv;
 #endif
-
 }
 
 /**
@@ -170,9 +182,10 @@ CK_RV pkcs11_digest_update(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULO
 CK_RV pkcs11_digest_final(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pDigest, CK_ULONG_PTR pulDigestLen)
 {
     pkcs11_session_ctx_ptr pSession;
+    pkcs11_lib_ctx_ptr pLibCtx;
     CK_RV rv;
 
-    rv = pkcs11_init_check(NULL, FALSE);
+    rv = pkcs11_init_check(&pLibCtx, FALSE);
     if (CKR_OK != rv)
     {
         return rv;
@@ -215,9 +228,12 @@ CK_RV pkcs11_digest_final(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pDigest, CK_UL
         return CKR_OPERATION_NOT_INITIALIZED;
     }
 
-    rv = pkcs11_util_convert_rv(atcac_sw_sha2_256_finish(&pSession->active_mech_data.sha256, pDigest));
-
-    pSession->active_mech = CKM_VENDOR_DEFINED;
+    if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
+    {
+        rv = pkcs11_util_convert_rv(atcac_sw_sha2_256_finish(&pSession->active_mech_data.sha256, pDigest));
+        pSession->active_mech = CKM_VENDOR_DEFINED;
+        (void)pkcs11_unlock_context(pLibCtx);
+    }
 
     return rv;
 #endif

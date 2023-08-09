@@ -25,7 +25,7 @@
  * THIS SOFTWARE.
  */
 
-#include <cryptoauthlib.h>
+#include "cryptoauthlib.h"
 
 /** \defgroup device ATCADevice (atca_)
  * \brief ATCADevice object - composite of command and interface objects
@@ -60,7 +60,6 @@ ATCADevice newATCADevice(ATCAIfaceCfg *cfg)
     {
         hal_free(ca_dev);
         ca_dev = NULL;
-        return NULL;
     }
 
     return ca_dev;

@@ -35,6 +35,14 @@
 
 #include "cryptoauthlib.h"
 
+#if CALIB_AES_EN && (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + AES_DATA_SIZE))
+#error "AES command packet cannot be accommodated inside the maximum packet size provided"
+#endif
+
+#if CALIB_AES_EN && CALIB_AES_GCM_EN && (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + AES_DATA_SIZE + AES_DATA_SIZE))
+#error "AES GFM command packet cannot be accommodated inside the maximum packet size provided"
+#endif
+
 #if CALIB_AES_EN
 /** \brief Compute the AES-128 encrypt, decrypt, or GFM calculation.
  *
@@ -179,7 +187,8 @@ ATCA_STATUS calib_aes_gfm(ATCADevice device, const uint8_t* h, const uint8_t* in
             (void)memcpy(output, &packet.data[ATCA_RSP_DATA_IDX], AES_DATA_SIZE);
         }
 
-    } while (false);
+    }
+    while (false);
 
     return status;
 }

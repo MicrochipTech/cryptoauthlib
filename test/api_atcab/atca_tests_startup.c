@@ -73,7 +73,7 @@ t_test_case_info startup_basic_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_basic_test, version),    NULL },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, init),       NULL },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, doubleinit), NULL },
-    
+
     /* Array Termination element*/
     { (fp_test_case)NULL, NULL },
 };

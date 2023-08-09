@@ -89,6 +89,26 @@ ATCA_STATUS calib_verify(ATCADevice device, uint8_t mode, uint16_t key_id, const
             break;
         }
 
+        #if (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + ATCA_SIG_SIZE + ATCA_PUB_KEY_SIZE))
+        #if ATCA_PREPROCESSOR_WARNING
+        #warning "CA_MAX_PACKET_SIZE will not support External mode in verify command"
+        #endif
+        if (verify_mode == VERIFY_MODE_EXTERNAL)
+        {
+            status = ATCA_TRACE(ATCA_INVALID_SIZE, "External mode is not supported in verify command");
+        }
+        #endif
+
+        #if (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + ATCA_SIG_SIZE + VERIFY_OTHER_DATA_SIZE))
+        #if ATCA_PREPROCESSOR_WARNING
+        #warning "CA_MAX_PACKET_SIZE will not support validate/invalidate mode in verify command"
+        #endif
+        if ((verify_mode == VERIFY_MODE_VALIDATE) || (verify_mode == VERIFY_MODE_INVALIDATE))
+        {
+            status = ATCA_TRACE(ATCA_INVALID_SIZE, "Validate/Invalidate mode is not supported in verify command");
+        }
+        #endif
+
         // Build the verify command
         packet.param1 = mode;
         packet.param2 = key_id;
@@ -97,7 +117,7 @@ ATCA_STATUS calib_verify(ATCADevice device, uint8_t mode, uint16_t key_id, const
         {
             (void)memcpy(&packet.data[ATCA_SIG_SIZE], public_key, ATCA_PUB_KEY_SIZE);
         }
-        
+
         if ((verify_mode == VERIFY_MODE_VALIDATE) || (verify_mode == VERIFY_MODE_INVALIDATE))
         {
             (void)memcpy(&packet.data[ATCA_SIG_SIZE], other_data, VERIFY_OTHER_DATA_SIZE);
@@ -398,7 +418,7 @@ ATCA_STATUS calib_verify_stored(ATCADevice device, const uint8_t *message, const
 
 /** \brief Executes the Verify command, which verifies a signature (ECDSA
  *         verify operation) with a public key stored in the device.
- *         keyConfig.reqrandom bit should be set and the message to be signed 
+ *         keyConfig.reqrandom bit should be set and the message to be signed
  *         should be already loaded into TempKey for all devices.
  *
  * Please refer to TEST(atca_cmd_basic_test, verify_stored_on_reqrandom_set) in
@@ -436,7 +456,8 @@ ATCA_STATUS calib_verify_stored_with_tempkey(ATCADevice device, const uint8_t* s
         {
             status = ATCA_SUCCESS;  // Verify failed, but command succeeded
         }
-    } while (false);
+    }
+    while (false);
 
     return status;
 }

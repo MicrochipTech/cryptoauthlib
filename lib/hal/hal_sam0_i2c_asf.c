@@ -194,7 +194,7 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxda
 
     if ((NULL == cfg) || (NULL == rxlength) || (NULL == rxdata))
     {
-        return ATCA_TRACE(ATCA_INVALID_POINTER, "NULL pointer encountered");
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
     }
 
     plib = (i2c_sam0_instance_t*)cfg->cfg_data;

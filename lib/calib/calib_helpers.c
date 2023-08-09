@@ -120,6 +120,7 @@ ATCA_STATUS calib_is_locked(ATCADevice device, uint8_t zone, bool* is_locked)
 ATCA_STATUS calib_ca2_is_config_locked(ATCADevice device, bool* is_locked)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
+    uint8_t buffer[4] = { 0 };
     uint16_t param2;
     uint8_t slot = 0;
 
@@ -131,10 +132,14 @@ ATCA_STATUS calib_ca2_is_config_locked(ATCADevice device, bool* is_locked)
     while (slot <= 3u)
     {
         param2 = ATCA_ZONE_CA2_CONFIG | ((uint16_t)slot << 1);
-        if (ATCA_SUCCESS != (status = calib_info_lock_status(device, param2, (uint8_t*)is_locked)))
+        if (ATCA_SUCCESS != (status = calib_info_lock_status(device, param2, buffer)))
         {
             *is_locked = false;
             break;
+        }
+        else
+        {
+            *is_locked = (1U == buffer[0]);
         }
 
         if (*is_locked)
@@ -160,6 +165,7 @@ ATCA_STATUS calib_ca2_is_config_locked(ATCADevice device, bool* is_locked)
 ATCA_STATUS calib_ca2_is_data_locked(ATCADevice device, bool* is_locked)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
+    uint8_t buffer[4] = { 0 };
     uint16_t param2;
     uint8_t slot = 0;
 
@@ -171,10 +177,14 @@ ATCA_STATUS calib_ca2_is_data_locked(ATCADevice device, bool* is_locked)
     while (slot <= 3u)
     {
         param2 = ATCA_ZONE_CA2_DATA | ((uint16_t)slot << 1);
-        if (ATCA_SUCCESS != (status = calib_info_lock_status(device, param2, (uint8_t*)is_locked)))
+        if (ATCA_SUCCESS != (status = calib_info_lock_status(device, param2, buffer)))
         {
             *is_locked = false;
             break;
+        }
+        else
+        {
+            *is_locked = (1U == buffer[0]);
         }
 
         if (*is_locked)
@@ -203,7 +213,7 @@ ATCA_STATUS calib_ca2_is_locked(ATCADevice device, uint8_t zone, bool* is_locked
     ATCA_STATUS status = ATCA_SUCCESS;
 
     if (ATCA_ZONE_CONFIG == zone)
-    {   
+    {
         status = calib_ca2_is_config_locked(device, is_locked);
     }
     else if (ATCA_ZONE_DATA == zone)
@@ -282,7 +292,7 @@ ATCA_STATUS calib_is_private(ATCADevice device, uint16_t slot, bool* is_private)
 #endif
 #if ATCA_CA2_SUPPORT
         case ECC204:
-            /* fallthrough */
+        /* fallthrough */
         case TA010:
             *is_private = (0u == slot) ? true : false;
             break;
@@ -302,39 +312,40 @@ ATCA_STATUS calib_is_private(ATCADevice device, uint16_t slot, bool* is_private)
 ATCADeviceType calib_get_devicetype(uint8_t revision[4])
 {
     ATCADeviceType ret = ATCA_DEV_UNKNOWN;
-    switch(revision[2])
+
+    switch (revision[2])
     {
-        case 0x00:
-            /* fallthrough */
-        case 0x02:
-            ret = ATSHA204A;
-            break;
-        case 0x10: 
-            ret = ATECC108A;
-            break;
-        case 0x50:
-            ret = ATECC508A;
-            break;
-        case 0x60:
-            ret = ATECC608;
-            break;
-        case 0x20:
+    case 0x00:
+    /* fallthrough */
+    case 0x02:
+        ret = ATSHA204A;
+        break;
+    case 0x10:
+        ret = ATECC108A;
+        break;
+    case 0x50:
+        ret = ATECC508A;
+        break;
+    case 0x60:
+        ret = ATECC608;
+        break;
+    case 0x20:
     #if ATCA_CA2_SUPPORT
-            ret = calib_get_devicetype_with_device_id(revision[1], revision[3]);
+        ret = calib_get_devicetype_with_device_id(revision[1], revision[3]);
     #endif
-            break;
-        case 0x40:
-            ret = ATSHA206A;
-            break;
-        default:
-            ret = ATCA_DEV_UNKNOWN;
-            break;
+        break;
+    case 0x40:
+        ret = ATSHA206A;
+        break;
+    default:
+        ret = ATCA_DEV_UNKNOWN;
+        break;
     }
     return ret;
 }
 
 #if ATCA_CA2_SUPPORT
-ATCADeviceType calib_get_devicetype_with_device_id(uint8_t device_id,uint8_t device_revision)
+ATCADeviceType calib_get_devicetype_with_device_id(uint8_t device_id, uint8_t device_revision)
 {
     ATCADeviceType device_type;
 
@@ -344,26 +355,26 @@ ATCADeviceType calib_get_devicetype_with_device_id(uint8_t device_id,uint8_t dev
     }
     else
     {
-        switch(device_id)
+        switch (device_id)
         {
-            case ATCA_ECC204_DEVICE_ID:
-                device_type = ECC204;
-                break;
-            case ATCA_TA010_DEVICE_ID:
-                device_type = TA010;
-                break;
-            case ATCA_SHA104_DEVICE_ID:
-                device_type = SHA104;
-                break;
-            case ATCA_SHA105_DEVICE_ID:
-                device_type = SHA105;
-                break;
-            default:
-                device_type = ATCA_DEV_UNKNOWN;
-                break;
+        case ATCA_ECC204_DEVICE_ID:
+            device_type = ECC204;
+            break;
+        case ATCA_TA010_DEVICE_ID:
+            device_type = TA010;
+            break;
+        case ATCA_SHA104_DEVICE_ID:
+            device_type = SHA104;
+            break;
+        case ATCA_SHA105_DEVICE_ID:
+            device_type = SHA105;
+            break;
+        default:
+            device_type = ATCA_DEV_UNKNOWN;
+            break;
         }
     }
-    
+
     return device_type;
 }
 #endif

@@ -60,6 +60,17 @@ ATCA_STATUS calib_derivekey(ATCADevice device, uint8_t mode, uint16_t target_key
             break;
         }
 
+        #if (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + MAC_SIZE))
+        #if ATCA_PREPROCESSOR_WARNING
+        #warning "CA_MAX_PACKET_SIZE will not support optional mac with the derivekey command"
+        #endif
+        if (mac != NULL)
+        {
+            status = ATCA_TRACE(ATCA_INVALID_SIZE, "Unsupported parameter");
+            break;
+        }
+        #endif
+
         // build a deriveKey command (pass through mode)
         packet.param1 = mode;
         packet.param2 = target_key;

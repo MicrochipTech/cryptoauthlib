@@ -341,10 +341,10 @@ TEST(atca_cmd_basic_test, aes_ccm_auth_decrypt_partial)
 t_test_case_info aes_ccm_basic_test_info[] =
 {
 #ifdef ATCA_ATECC608_SUPPORT
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ccm_auth_encrypt),         atca_test_cond_ecc608 },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ccm_auth_encrypt_partial), atca_test_cond_ecc608 },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ccm_auth_decrypt),         atca_test_cond_ecc608 },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ccm_auth_decrypt_partial), atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ccm_auth_encrypt),         atca_test_cond_ecc608         },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ccm_auth_encrypt_partial), atca_test_cond_ecc608         },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ccm_auth_decrypt),         atca_test_cond_ecc608         },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ccm_auth_decrypt_partial), atca_test_cond_ecc608         },
 #endif
-    { (fp_test_case)NULL, NULL },                  /* Array Termination element*/
+    { (fp_test_case)NULL,                     NULL },                        /* Array Termination element*/
 };

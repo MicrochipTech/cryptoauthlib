@@ -114,6 +114,7 @@ static inline void hal_kit_header(ATCAIfaceCfg* cfg, uint8_t buffer[HAL_KIT_HEAD
 ATCA_STATUS hal_kit_init(ATCAIface iface, ATCAIfaceCfg* cfg)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
+
     (void)iface;
 
     /* Perform rationality checks on the configuration structure */
@@ -165,7 +166,7 @@ ATCA_STATUS hal_kit_send(ATCAIface iface, uint8_t word_address, uint8_t* txdata,
             packet[3] = word_address;
             if (atcab_is_ta_device(iface->mIfaceCFG->devtype))
             {
-                memcpy(&packet[4], &txdata[1], txlength-1);
+                memcpy(&packet[4], &txdata[1], txlength - 1);
             }
             else
             {

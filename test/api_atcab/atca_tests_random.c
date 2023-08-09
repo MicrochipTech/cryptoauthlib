@@ -36,9 +36,9 @@ TEST_CONDITION(atca_cmd_basic_test, random)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type))
-            || (TA100 == dev_type)
-    );
+    return (atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type))
+           || (TA100 == dev_type)
+    ;
 }
 
 TEST(atca_cmd_basic_test, random)

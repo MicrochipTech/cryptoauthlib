@@ -58,6 +58,11 @@ ATCA_STATUS calib_gendig(ATCADevice device, uint8_t zone, uint16_t key_id, const
         return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
+    if (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + other_data_size))
+    {
+        status = ATCA_TRACE(ATCA_INVALID_SIZE, "Invalid packet size received");
+    }
+
     do
     {
         // build gendig command
@@ -68,7 +73,7 @@ ATCA_STATUS calib_gendig(ATCADevice device, uint8_t zone, uint16_t key_id, const
         {
             (void)memcpy(&packet.data[0], &other_data[0], ATCA_BLOCK_SIZE);
         }
-        
+
         if (packet.param1 == GENDIG_ZONE_DATA && other_data_size >= ATCA_WORD_SIZE)
         {
             (void)memcpy(&packet.data[0], &other_data[0], ATCA_WORD_SIZE);

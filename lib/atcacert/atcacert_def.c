@@ -35,19 +35,21 @@
 
 #if ATCACERT_COMPCERT_EN
 
+#ifdef __COVERITY__
 #pragma coverity compliance block \
-(deviate "CERT INT30-C" "The module has been extensively tested to ensure behavior is correct") \
-(deviate "CERT INT31-C" "The module has been extensively tested to ensure behavior is correct") \
-(deviate "MISRA C-2012 Rule 10.4" "The module has been extensively tested to ensure behavior is correct")
+    (deviate "CERT INT30-C" "The module has been extensively tested to ensure behavior is correct") \
+    (deviate "CERT INT31-C" "The module has been extensively tested to ensure behavior is correct") \
+    (deviate "MISRA C-2012 Rule 10.4" "The module has been extensively tested to ensure behavior is correct")
+#endif
 
 #define ATCACERT_MIN(x, y) ((x) < (y) ? (x) : (y))
 #define ATCACERT_MAX(x, y) ((x) >= (y) ? (x) : (y))
 
 ATCA_STATUS atcacert_merge_device_loc(atcacert_device_loc_t*       device_locs,
-                              size_t*                      device_locs_count,
-                              size_t                       device_locs_max_count,
-                              const atcacert_device_loc_t* device_loc,
-                              size_t                       block_size)
+                                      size_t*                      device_locs_count,
+                                      size_t                       device_locs_max_count,
+                                      const atcacert_device_loc_t* device_loc,
+                                      size_t                       block_size)
 {
     size_t i = 0;
     size_t new_offset;
@@ -63,9 +65,9 @@ ATCA_STATUS atcacert_merge_device_loc(atcacert_device_loc_t*       device_locs,
         return ATCACERT_E_SUCCESS;                                                                      // New device location doesn't exist
 
     }
-    new_offset = (device_loc->offset / block_size) * block_size;                                        // Round down to block_size
+    new_offset = (device_loc->offset / block_size) * block_size;                                              // Round down to block_size
     new_end = (size_t)device_loc->offset + (size_t)device_loc->count;
-    new_end = ((new_end % block_size != 0u) ? new_end / block_size + 1u : new_end / block_size) * block_size;  // Round up to block size
+    new_end = ((new_end % block_size != 0u) ? new_end / block_size + 1u : new_end / block_size) * block_size; // Round up to block size
 
     // Try to merge with an existing device location
     for (i = 0; i < *device_locs_count; ++i)
@@ -129,10 +131,10 @@ ATCA_STATUS atcacert_merge_device_loc(atcacert_device_loc_t*       device_locs,
 }
 
 ATCA_STATUS atcacert_get_device_locs(const atcacert_def_t*  cert_def,
-                             atcacert_device_loc_t* device_locs,
-                             size_t*                device_locs_count,
-                             size_t                 device_locs_max_count,
-                             size_t                 block_size)
+                                     atcacert_device_loc_t* device_locs,
+                                     size_t*                device_locs_count,
+                                     size_t                 device_locs_max_count,
+                                     size_t                 block_size)
 {
     ATCA_STATUS ret = 0;
     size_t i;
@@ -203,8 +205,8 @@ ATCA_STATUS atcacert_get_device_locs(const atcacert_def_t*  cert_def,
         // Device SN is config zone bytes 0-3 and 8-12
         atcacert_device_loc_t device_sn_loc = {
             .zone       = DEVZONE_CONFIG,
-            .slot       = 0,             // Ignored
-            .is_genkey  = (uint8_t)FALSE,         // Ignored
+            .slot       = 0,              // Ignored
+            .is_genkey  = (uint8_t)FALSE, // Ignored
             .offset     = 0,
             .count      = 13
         };
@@ -280,10 +282,10 @@ static int get_effective_offset(const atcacert_def_t* cert_def, const uint8_t* c
 }
 
 ATCA_STATUS atcacert_cert_build_start(atcacert_build_state_t* build_state,
-                              const atcacert_def_t*   cert_def,
-                              uint8_t*                cert,
-                              size_t*                 cert_size,
-                              const uint8_t           ca_public_key[64])
+                                      const atcacert_def_t*   cert_def,
+                                      uint8_t*                cert,
+                                      size_t*                 cert_size,
+                                      const uint8_t           ca_public_key[64])
 {
     ATCA_STATUS ret = 0;
     size_t new_cert_length;
@@ -323,7 +325,10 @@ ATCA_STATUS atcacert_cert_build_start(atcacert_build_state_t* build_state,
         &old_cert_der_length_size,
         (int)*cert_size - (int)build_state->cert_def->cert_template_size,
         &new_cert_length);
-
+    if (ret != ATCACERT_E_SUCCESS)
+    {
+        return ret;
+    }
 
     if (ca_public_key != NULL)
     {
@@ -343,8 +348,8 @@ ATCA_STATUS atcacert_cert_build_start(atcacert_build_state_t* build_state,
 }
 
 ATCA_STATUS atcacert_cert_build_process(atcacert_build_state_t*      build_state,
-                                const atcacert_device_loc_t* device_loc,
-                                const uint8_t*               device_data)
+                                        const atcacert_device_loc_t* device_loc,
+                                        const uint8_t*               device_data)
 {
     ATCA_STATUS ret = 0;
     size_t i = 0;
@@ -543,7 +548,7 @@ ATCA_STATUS atcacert_cert_build_finish(atcacert_build_state_t* build_state)
 }
 
 bool atcacert_is_device_loc_overlap(const atcacert_device_loc_t* device_loc1,
-                                   const atcacert_device_loc_t* device_loc2)
+                                    const atcacert_device_loc_t* device_loc2)
 {
     if (device_loc1->zone != device_loc2->zone)
     {
@@ -559,7 +564,7 @@ bool atcacert_is_device_loc_overlap(const atcacert_device_loc_t* device_loc1,
 
     }
     return !( (device_loc1->offset + device_loc1->count <= device_loc2->offset)
-                || (device_loc1->offset >= device_loc2->offset + device_loc2->count) );
+              || (device_loc1->offset >= device_loc2->offset + device_loc2->count) );
 }
 
 static void atcacert_copy_device_loc_data(const atcacert_device_loc_t* device_loc_src,
@@ -574,10 +579,10 @@ static void atcacert_copy_device_loc_data(const atcacert_device_loc_t* device_lo
 }
 
 ATCA_STATUS atcacert_get_device_data(const atcacert_def_t*        cert_def,
-                             const uint8_t*               cert,
-                             size_t                       cert_size,
-                             const atcacert_device_loc_t* device_loc,
-                             uint8_t*                     device_data)
+                                     const uint8_t*               cert,
+                                     size_t                       cert_size,
+                                     const atcacert_device_loc_t* device_loc,
+                                     uint8_t*                     device_data)
 {
     ATCA_STATUS ret = 0;
     unsigned int i = 0u;
@@ -673,12 +678,12 @@ ATCA_STATUS atcacert_get_device_data(const atcacert_def_t*        cert_def,
 }
 
 ATCA_STATUS atcacert_set_subj_public_key(const atcacert_def_t* cert_def,
-                                 uint8_t*              cert,
-                                 size_t                cert_size,
-                                 const uint8_t         subj_public_key[64])
+                                         uint8_t*              cert,
+                                         size_t                cert_size,
+                                         const uint8_t         subj_public_key[64])
 {
     ATCA_STATUS ret = 0;
-    uint8_t key_id[20];
+    uint8_t key_id[20] = { 0 };
 
     if (cert_def == NULL || cert == NULL || subj_public_key == NULL)
     {
@@ -707,9 +712,9 @@ ATCA_STATUS atcacert_set_subj_public_key(const atcacert_def_t* cert_def,
 }
 
 ATCA_STATUS atcacert_get_subj_public_key(const atcacert_def_t* cert_def,
-                                 const uint8_t*        cert,
-                                 size_t                cert_size,
-                                 uint8_t               subj_public_key[64])
+                                         const uint8_t*        cert,
+                                         size_t                cert_size,
+                                         uint8_t               subj_public_key[64])
 {
     if (cert_def == NULL || cert == NULL || subj_public_key == NULL)
     {
@@ -720,9 +725,9 @@ ATCA_STATUS atcacert_get_subj_public_key(const atcacert_def_t* cert_def,
 }
 
 ATCA_STATUS atcacert_get_subj_key_id(const atcacert_def_t* cert_def,
-                             const uint8_t*        cert,
-                             size_t                cert_size,
-                             uint8_t               subj_key_id[20])
+                                     const uint8_t*        cert,
+                                     size_t                cert_size,
+                                     uint8_t               subj_key_id[20])
 {
     if (cert_def == NULL || cert == NULL || subj_key_id == NULL)
     {
@@ -733,10 +738,10 @@ ATCA_STATUS atcacert_get_subj_key_id(const atcacert_def_t* cert_def,
 }
 
 ATCA_STATUS atcacert_set_signature(const atcacert_def_t* cert_def,
-                           uint8_t*              cert,
-                           size_t*               cert_size,
-                           size_t                max_cert_size,
-                           const uint8_t         signature[64])
+                                   uint8_t*              cert,
+                                   size_t*               cert_size,
+                                   size_t                max_cert_size,
+                                   const uint8_t         signature[64])
 {
     ATCA_STATUS ret = 0;
     size_t sig_offset;
@@ -800,9 +805,9 @@ ATCA_STATUS atcacert_set_signature(const atcacert_def_t* cert_def,
 }
 
 ATCA_STATUS atcacert_get_signature(const atcacert_def_t* cert_def,
-                           const uint8_t*        cert,
-                           size_t                cert_size,
-                           uint8_t               signature[64])
+                                   const uint8_t*        cert,
+                                   size_t                cert_size,
+                                   uint8_t               signature[64])
 {
     size_t sig_offset;
     size_t der_sig_size = 0;
@@ -831,9 +836,9 @@ ATCA_STATUS atcacert_get_signature(const atcacert_def_t* cert_def,
 }
 
 ATCA_STATUS atcacert_set_issue_date(const atcacert_def_t*    cert_def,
-                            uint8_t*                 cert,
-                            size_t                   cert_size,
-                            const atcacert_tm_utc_t* timestamp)
+                                    uint8_t*                 cert,
+                                    size_t                   cert_size,
+                                    const atcacert_tm_utc_t* timestamp)
 {
     ATCA_STATUS ret = 0;
     uint8_t formatted_date[DATEFMT_MAX_SIZE];
@@ -865,13 +870,13 @@ ATCA_STATUS atcacert_set_issue_date(const atcacert_def_t*    cert_def,
 }
 
 ATCA_STATUS atcacert_get_issue_date(const atcacert_def_t* cert_def,
-                            const uint8_t*        cert,
-                            size_t                cert_size,
-                            atcacert_tm_utc_t*    timestamp)
+                                    const uint8_t*        cert,
+                                    size_t                cert_size,
+                                    atcacert_tm_utc_t*    timestamp)
 {
     ATCA_STATUS ret = 0;
     uint8_t formatted_date[DATEFMT_MAX_SIZE];
-    size_t formatted_date_size = sizeof(formatted_date);
+    size_t formatted_date_size;
 
     if (cert_def == NULL || cert == NULL || timestamp == NULL)
     {
@@ -905,9 +910,9 @@ ATCA_STATUS atcacert_get_issue_date(const atcacert_def_t* cert_def,
 }
 
 ATCA_STATUS atcacert_set_expire_date(const atcacert_def_t*    cert_def,
-                             uint8_t*                 cert,
-                             size_t                   cert_size,
-                             const atcacert_tm_utc_t* timestamp)
+                                     uint8_t*                 cert,
+                                     size_t                   cert_size,
+                                     const atcacert_tm_utc_t* timestamp)
 {
     ATCA_STATUS ret = 0;
     uint8_t formatted_date[DATEFMT_MAX_SIZE];
@@ -939,13 +944,13 @@ ATCA_STATUS atcacert_set_expire_date(const atcacert_def_t*    cert_def,
 }
 
 ATCA_STATUS atcacert_get_expire_date(const atcacert_def_t* cert_def,
-                             const uint8_t*        cert,
-                             size_t                cert_size,
-                             atcacert_tm_utc_t*    timestamp)
+                                     const uint8_t*        cert,
+                                     size_t                cert_size,
+                                     atcacert_tm_utc_t*    timestamp)
 {
     ATCA_STATUS ret = 0;
     uint8_t formatted_date[DATEFMT_MAX_SIZE];
-    size_t formatted_date_size = sizeof(formatted_date);
+    size_t formatted_date_size;
 
     if (cert_def == NULL || cert == NULL || timestamp == NULL)
     {
@@ -1002,9 +1007,9 @@ static void uint8_to_hex(uint8_t num, uint8_t* hex_str)
 }
 
 ATCA_STATUS atcacert_set_signer_id(const atcacert_def_t* cert_def,
-                           uint8_t*              cert,
-                           size_t                cert_size,
-                           const uint8_t         signer_id[2])
+                                   uint8_t*              cert,
+                                   size_t                cert_size,
+                                   const uint8_t         signer_id[2])
 {
     uint8_t hex_str[4];
 
@@ -1061,9 +1066,9 @@ static ATCA_STATUS hex_to_uint8(const uint8_t hex_str[2], uint8_t* num)
 }
 
 ATCA_STATUS atcacert_get_signer_id(const atcacert_def_t* cert_def,
-                           const uint8_t*        cert,
-                           size_t                cert_size,
-                           uint8_t               signer_id[2])
+                                   const uint8_t*        cert,
+                                   size_t                cert_size,
+                                   uint8_t               signer_id[2])
 {
     ATCA_STATUS ret = 0;
     uint8_t hex_str[4];
@@ -1095,11 +1100,11 @@ ATCA_STATUS atcacert_get_signer_id(const atcacert_def_t* cert_def,
 }
 
 ATCA_STATUS atcacert_set_cert_sn(const atcacert_def_t* cert_def,
-                         uint8_t*              cert,
-                         size_t*               cert_size,
-                         size_t                max_cert_size,
-                         const uint8_t*        cert_sn,
-                         size_t                cert_sn_size)
+                                 uint8_t*              cert,
+                                 size_t*               cert_size,
+                                 size_t                max_cert_size,
+                                 const uint8_t*        cert_sn,
+                                 size_t                cert_sn_size)
 {
     if (cert_def == NULL || cert == NULL || cert_size == NULL || cert_sn == NULL)
     {
@@ -1141,7 +1146,7 @@ ATCA_STATUS atcacert_set_cert_sn(const atcacert_def_t* cert_def,
                 return ATCACERT_E_ELEM_OUT_OF_BOUNDS;
             }
 
-            
+
             // Indicate how much buffer it has to work with
             cert_der_len = *cert_size - 1; // Right after first sequence tag; 1 for der_len_offset
 
@@ -1189,9 +1194,9 @@ ATCA_STATUS atcacert_set_cert_sn(const atcacert_def_t* cert_def,
 }
 
 ATCA_STATUS atcacert_gen_cert_sn(const atcacert_def_t* cert_def,
-                         uint8_t*              cert,
-                         size_t                cert_size,
-                         const uint8_t         device_sn[9])
+                                 uint8_t*              cert,
+                                 size_t                cert_size,
+                                 const uint8_t         device_sn[9])
 {
     ATCA_STATUS ret = ATCACERT_E_SUCCESS;
     size_t sn_size = 0;
@@ -1334,10 +1339,10 @@ ATCA_STATUS atcacert_gen_cert_sn(const atcacert_def_t* cert_def,
 }
 
 ATCA_STATUS atcacert_get_cert_sn(const atcacert_def_t* cert_def,
-                         const uint8_t*        cert,
-                         size_t                cert_size,
-                         uint8_t*              cert_sn,
-                         size_t*               cert_sn_size)
+                                 const uint8_t*        cert,
+                                 size_t                cert_size,
+                                 uint8_t*              cert_sn,
+                                 size_t*               cert_sn_size)
 {
     if (cert_def == NULL || cert == NULL || cert_sn == NULL || cert_sn_size == NULL)
     {
@@ -1356,12 +1361,12 @@ ATCA_STATUS atcacert_get_cert_sn(const atcacert_def_t* cert_def,
 }
 
 ATCA_STATUS atcacert_set_auth_key_id(const atcacert_def_t* cert_def,
-                             uint8_t*              cert,
-                             size_t                cert_size,
-                             const uint8_t         auth_public_key[64])
+                                     uint8_t*              cert,
+                                     size_t                cert_size,
+                                     const uint8_t         auth_public_key[64])
 {
     ATCA_STATUS ret = ATCACERT_E_SUCCESS;
-    uint8_t key_id[20];
+    uint8_t key_id[20] = { 0 };
 
     if (cert_def == NULL || cert == NULL || auth_public_key == NULL)
     {
@@ -1384,9 +1389,9 @@ ATCA_STATUS atcacert_set_auth_key_id(const atcacert_def_t* cert_def,
 }
 
 ATCA_STATUS atcacert_set_auth_key_id_raw(const atcacert_def_t* cert_def,
-                                 uint8_t*              cert,
-                                 size_t                cert_size,
-                                 const uint8_t*        auth_key_id)
+                                         uint8_t*              cert,
+                                         size_t                cert_size,
+                                         const uint8_t*        auth_key_id)
 {
     ATCA_STATUS ret = ATCACERT_E_SUCCESS;
 
@@ -1405,9 +1410,9 @@ ATCA_STATUS atcacert_set_auth_key_id_raw(const atcacert_def_t* cert_def,
 }
 
 ATCA_STATUS atcacert_get_auth_key_id(const atcacert_def_t* cert_def,
-                             const uint8_t*        cert,
-                             size_t                cert_size,
-                             uint8_t               auth_key_id[20])
+                                     const uint8_t*        cert,
+                                     size_t                cert_size,
+                                     uint8_t               auth_key_id[20])
 {
     if (cert_def == NULL || cert == NULL || auth_key_id == NULL)
     {
@@ -1418,10 +1423,10 @@ ATCA_STATUS atcacert_get_auth_key_id(const atcacert_def_t* cert_def,
 }
 
 ATCA_STATUS atcacert_set_comp_cert(const atcacert_def_t* cert_def,
-                           uint8_t*              cert,
-                           size_t*               cert_size,
-                           size_t                max_cert_size,
-                           const uint8_t         comp_cert[72])
+                                   uint8_t*              cert,
+                                   size_t*               cert_size,
+                                   size_t                max_cert_size,
+                                   const uint8_t         comp_cert[72])
 {
     ATCA_STATUS ret = 0;
     uint8_t enc_dates[3];
@@ -1496,9 +1501,9 @@ ATCA_STATUS atcacert_set_comp_cert(const atcacert_def_t* cert_def,
 }
 
 ATCA_STATUS atcacert_get_comp_cert(const atcacert_def_t* cert_def,
-                           const uint8_t*        cert,
-                           size_t                cert_size,
-                           uint8_t               comp_cert[72])
+                                   const uint8_t*        cert,
+                                   size_t                cert_size,
+                                   uint8_t               comp_cert[72])
 {
     ATCA_STATUS ret = ATCACERT_E_SUCCESS;
     atcacert_tm_utc_t issue_date;
@@ -1555,16 +1560,17 @@ ATCA_STATUS atcacert_get_comp_cert(const atcacert_def_t* cert_def,
         comp_cert[71] = 0u;
 
         ret = ATCACERT_E_SUCCESS;
-    } while (false);
+    }
+    while (false);
 
     return ret;
 }
 
 ATCA_STATUS atcacert_get_tbs(const atcacert_def_t* cert_def,
-                     const uint8_t*        cert,
-                     size_t                cert_size,
-                     const uint8_t**       tbs,
-                     size_t*               tbs_size)
+                             const uint8_t*        cert,
+                             size_t                cert_size,
+                             const uint8_t**       tbs,
+                             size_t*               tbs_size)
 {
     int eff_offset = 0;
 
@@ -1587,9 +1593,9 @@ ATCA_STATUS atcacert_get_tbs(const atcacert_def_t* cert_def,
 }
 
 ATCA_STATUS atcacert_get_tbs_digest(const atcacert_def_t* cert_def,
-                            const uint8_t*        cert,
-                            size_t                cert_size,
-                            uint8_t               tbs_digest[32])
+                                    const uint8_t*        cert,
+                                    size_t                cert_size,
+                                    uint8_t               tbs_digest[32])
 {
     ATCA_STATUS ret = ATCACERT_E_SUCCESS;
     const uint8_t* tbs = NULL;
@@ -1616,11 +1622,11 @@ ATCA_STATUS atcacert_get_tbs_digest(const atcacert_def_t* cert_def,
 }
 
 ATCA_STATUS atcacert_set_cert_element(const atcacert_def_t*      cert_def,
-                              const atcacert_cert_loc_t* cert_loc,
-                              uint8_t*                   cert,
-                              size_t                     cert_size,
-                              const uint8_t*             data,
-                              size_t                     data_size)
+                                      const atcacert_cert_loc_t* cert_loc,
+                                      uint8_t*                   cert,
+                                      size_t                     cert_size,
+                                      const uint8_t*             data,
+                                      size_t                     data_size)
 {
     int eff_offset = 0;
 
@@ -1661,11 +1667,11 @@ ATCA_STATUS atcacert_set_cert_element(const atcacert_def_t*      cert_def,
 }
 
 ATCA_STATUS atcacert_get_cert_element(const atcacert_def_t*      cert_def,
-                              const atcacert_cert_loc_t* cert_loc,
-                              const uint8_t*             cert,
-                              size_t                     cert_size,
-                              uint8_t*                   data,
-                              size_t                     data_size)
+                                      const atcacert_cert_loc_t* cert_loc,
+                                      const uint8_t*             cert,
+                                      size_t                     cert_size,
+                                      uint8_t*                   data,
+                                      size_t                     data_size)
 {
     int eff_offset = 0;
 
@@ -1726,10 +1732,10 @@ void atcacert_public_key_remove_padding(const uint8_t padded_key[72], uint8_t ra
 }
 
 ATCA_STATUS atcacert_transform_data(atcacert_transform_t transform,
-                            const uint8_t*       data,
-                            size_t               data_size,
-                            uint8_t*             destination,
-                            size_t*              destination_size)
+                                    const uint8_t*       data,
+                                    size_t               data_size,
+                                    uint8_t*             destination,
+                                    size_t*              destination_size)
 {
     ATCA_STATUS rv = ATCACERT_E_SUCCESS;
 
@@ -1787,7 +1793,7 @@ ATCA_STATUS atcacert_transform_data(atcacert_transform_t transform,
 }
 
 ATCA_STATUS atcacert_max_cert_size(const atcacert_def_t* cert_def,
-                           size_t*               max_cert_size)
+                                   size_t*               max_cert_size)
 {
     uint8_t template_sn_size;
 
@@ -1826,6 +1832,8 @@ ATCA_STATUS atcacert_max_cert_size(const atcacert_def_t* cert_def,
     return ATCACERT_E_SUCCESS;
 }
 
+#ifdef __COVERITY__
 #pragma coverity compliance end_block "CERT INT30-C" "CERT INT31-C" "MISRA C-2012 Rule 10.4"
+#endif
 
 #endif

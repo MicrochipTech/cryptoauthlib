@@ -130,11 +130,19 @@ def instantiateComponent(calPkcs11Component):
     calPkcs11MaxObjects = calPkcs11Component.createIntegerSymbol('CAL_PKCS11_MAX_OBJECTS', None)
     calPkcs11MaxObjects.setLabel('Maximum number of PKCS11 objects')
     calPkcs11MaxObjects.setDefaultValue(16)
+
+    calPkcs11MaxConfig = calPkcs11Component.createIntegerSymbol('CAL_PKCS11_MAX_CONFIG', None)
+    calPkcs11MaxConfig.setLabel('Maximum number of PKCS11 Config Options')
+    calPkcs11MaxConfig.setDefaultValue(7)
     
     calPkcs11MaxLabelSize = calPkcs11Component.createIntegerSymbol('CAL_PKCS11_MAX_LABEL_LENGTH', None)
     calPkcs11MaxLabelSize.setLabel('Maximum length of PKCS11 labels')
     calPkcs11MaxLabelSize.setDefaultValue(30)
 
+    calPkcs11MaxLabelSize = calPkcs11Component.createIntegerSymbol('CAL_PKCS11_PIN_PBKDF2_ITERATIONS', None)
+    calPkcs11MaxLabelSize.setLabel('Maximum iterations PBKDF2 will use for PIN KDF')
+    calPkcs11MaxLabelSize.setDefaultValue(2)
+    
     # Configuration header file 
     pkcs11ConfigFile = calPkcs11Component.createFileSymbol("CAL_LIB_PKCS11_CONFIG_DATA", None)
     pkcs11ConfigFile.setSourcePath("harmony/templates/pkcs11_config.h.ftl")

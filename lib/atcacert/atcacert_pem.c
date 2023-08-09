@@ -35,11 +35,11 @@
 #if ATCACERT_COMPCERT_EN
 
 ATCA_STATUS atcacert_encode_pem(const uint8_t* der,
-                        size_t         der_size,
-                        char*          pem,
-                        size_t*        pem_size,
-                        const char*    header,
-                        const char*    footer)
+                                size_t         der_size,
+                                char*          pem,
+                                size_t*        pem_size,
+                                const char*    header,
+                                const char*    footer)
 {
     ATCA_STATUS rv = ATCACERT_E_SUCCESS;
     size_t max_pem_size;
@@ -96,22 +96,23 @@ ATCA_STATUS atcacert_encode_pem(const uint8_t* der,
         pem[pem_index++] = (char)'\r';
         pem[pem_index++] = (char)'\n';
 
-        pem[pem_index] = 0; // Terminating null, not included in size
+        pem[pem_index] = (char)'\0'; // Terminating null, not included in size
 
         // Set output size
         *pem_size = pem_index;
 
-    } while (false);
+    }
+    while (false);
 
     return rv;
 }
 
 ATCA_STATUS atcacert_decode_pem(const char* pem,
-                        size_t      pem_size,
-                        uint8_t*    der,
-                        size_t*     der_size,
-                        const char* header,
-                        const char* footer)
+                                size_t      pem_size,
+                                uint8_t*    der,
+                                size_t*     der_size,
+                                const char* header,
+                                const char* footer)
 {
     ATCA_STATUS rv = ATCACERT_E_SUCCESS;
     const char* header_pos = NULL;
@@ -157,7 +158,8 @@ ATCA_STATUS atcacert_decode_pem(const char* pem,
         // Decode data
         rv = atcab_base64decode(data_pos, atcab_pointer_delta(data_pos, footer_pos), der, der_size);
 
-    } while (false);
+    }
+    while (false);
 
     return rv;
 }

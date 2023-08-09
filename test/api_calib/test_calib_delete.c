@@ -48,7 +48,7 @@ TEST(calib, delete_test)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     if (0x00 == chip_status[0])
-    {  
+    {
         // Perform delete
         status = calib_delete(atcab_get_device(), num_in, g_slot4_key);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);

@@ -32,10 +32,12 @@
 #include "kit_protocol.h"
 #include "atca_helpers.h"
 
+#ifdef __COVERITY__
 #pragma coverity compliance block \
-(deviate "MISRA C-2012 Rule 10.3" "Casting character constants to char type reduces readability") \
-(deviate "MISRA C-2012 Rule 10.4" "Casting character constants to char type reduces readability") \
-(deviate "MISRA C-2012 Rule 21.6" "Use is appropriate for this linux/windows only file")
+    (deviate "MISRA C-2012 Rule 10.3" "Casting character constants to char type reduces readability") \
+    (deviate "MISRA C-2012 Rule 10.4" "Casting character constants to char type reduces readability") \
+    (deviate "MISRA C-2012 Rule 21.6" "Use is appropriate for this linux/windows only file")
+#endif
 
 /** \defgroup hal_ Hardware abstraction layer (hal_)
  *
@@ -306,7 +308,7 @@ ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxsize)
 #endif
 
     bytes_to_read = *rxsize > 0 ? (size_t)*rxsize : 0U;
-    rxlen = (bytes_to_read > 0U) ? (uint16_t)bytes_to_read-- : 0U ;
+    rxlen = (bytes_to_read > 0U) ? (uint16_t)bytes_to_read-- : 0U;
 
     while (ATCA_SUCCESS == status && (NULL == location) && (0u < bytes_to_read))
     {
@@ -354,7 +356,7 @@ ATCA_STATUS kit_init(ATCAIface iface, ATCAIfaceCfg* cfg)
     int txlen;
     char rxbuf[KIT_RX_WRAP_SIZE + 4];
     int rxlen;
-    const char* device_match, *interface_match, *interface;
+    const char* device_match, *interface_match, *interfaceKit;
     char *dev_type, *dev_interface;
     char delim[] = " ";
     char *pToken; /* string token */
@@ -468,8 +470,8 @@ ATCA_STATUS kit_init(ATCAIface iface, ATCAIfaceCfg* cfg)
 
             if ((strncmp(device_match, dev_type, 4) == 0) && (dev_identity == 0u || dev_identity == address) && (strcmp(interface_match, dev_interface) == 0))
             {
-                interface = kit_interface(iface_type);
-                txlen = snprintf(txbuf, sizeof(txbuf) - 1u, kit_interface_select, device_match[0], interface);
+                interfaceKit = kit_interface(iface_type);
+                txlen = snprintf(txbuf, sizeof(txbuf) - 1u, kit_interface_select, device_match[0], interfaceKit);
                 txbuf[sizeof(txbuf) - 1u] = (char)'\0';
 
                 if (txlen < 0)
@@ -690,11 +692,11 @@ ATCA_STATUS kit_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, 
         }
 
         // Receive the response bytes
-        //! For large data(greater than 1020 bytes) 
+        //! For large data(greater than 1020 bytes)
         //! nkitbuf in Kit_phy_receive alligns to 64 byte due to USB HID
         //! so alligned with 64 multiples for buffer size
         //coverity[misra_c_2012_rule_10_8_violation] this has been tested and confirmed to be correct for USB HID communication
-        nkitbuf = (int)((((((*rxsize * 2u) + KIT_RX_WRAP_SIZE))/64u)+1u)*64u);
+        nkitbuf = (int)((((((*rxsize * 2u) + KIT_RX_WRAP_SIZE)) / 64u) + 1u) * 64u);
         pkitbuf = hal_malloc((size_t)nkitbuf);
         (void)memset(pkitbuf, 0, (size_t)nkitbuf);
 
@@ -877,7 +879,7 @@ ATCA_STATUS kit_sleep(ATCAIface iface)
  * \param[in]    target   Device type
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlen, char* pkitcmd, int* nkitcmd,const char* target)
+ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlen, char* pkitcmd, int* nkitcmd, const char* target)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     const char* ta_cmdpre = "t:send(";
@@ -961,7 +963,7 @@ ATCA_STATUS kit_parse_rsp(const char* pkitbuf, int nkitbuf, uint8_t* kitstatus, 
     {
         return ATCA_GEN_FAIL;
     }
-    
+
     asciiDataSize = atcab_pointer_delta(endDataPtr, &pkitbuf[dataId]);
     status = atcab_hex2bin(&pkitbuf[dataId], asciiDataSize, rxdata, &datasizeTemp);
     *datasize = (datasizeTemp > 0u) ? (int)datasizeTemp : 0;
@@ -980,12 +982,13 @@ ATCA_STATUS kit_parse_rsp(const char* pkitbuf, int nkitbuf, uint8_t* kitstatus, 
 ATCA_STATUS kit_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
+
     (void)param;
     (void)paramlen;
 
     if (NULL != iface && NULL != iface->mIfaceCFG)
     {
-        switch ((ATCA_HAL_CONTROL)option)
+        switch (option)
         {
         case ATCA_HAL_CONTROL_WAKE:
             status = kit_wake(iface);
@@ -1018,5 +1021,6 @@ ATCA_STATUS kit_release(void* hal_data)
 #endif
 
 /** @} */
-
+#ifdef __COVERITY__
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.3" "MISRA C-2012 Rule 10.4" "MISRA C-2012 Rule 21.6"
+#endif

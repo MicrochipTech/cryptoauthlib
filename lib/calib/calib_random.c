@@ -34,6 +34,11 @@
 #include "cryptoauthlib.h"
 
 #if CALIB_RANDOM_EN
+
+#if (CA_MAX_PACKET_SIZE < RANDOM_RSP_SIZE)
+#error "Random command packet cannot be accommodated inside the maximum packet size provided"
+#endif
+
 /** \brief Executes Random command, which generates a 32 byte random number
  *          from the CryptoAuth device.
  *

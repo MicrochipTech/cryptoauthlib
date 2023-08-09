@@ -57,7 +57,7 @@ ATCA_STATUS atcab_aes_ccm_init_ext(ATCADevice device, atca_aes_ccm_ctx_t* ctx, u
 {
     ATCA_STATUS status;
     uint8_t M, L;
-    size_t i,size_left;
+    size_t i, size_left;
     // First block B of 16 bytes consisting of flags, nonce and l(m).
     uint8_t B[ATCA_AES128_BLOCK_SIZE];
     uint8_t counter[ATCA_AES128_BLOCK_SIZE];
@@ -117,7 +117,7 @@ ATCA_STATUS atcab_aes_ccm_init_ext(ATCADevice device, atca_aes_ccm_ctx_t* ctx, u
     // Update length field in B0 block.
     i = 0;
     size_left = text_size;
-    while(i < ((size_t)L + 1u))
+    while (i < ((size_t)L + 1u))
     {
         B[15U - i] = (unsigned char)( size_left & 0xFFu );
         i++;
@@ -232,7 +232,7 @@ ATCA_STATUS atcab_aes_ccm_init_rand_ext(ATCADevice device, atca_aes_ccm_ctx_t* c
                                         size_t text_size, size_t tag_size)
 {
     ATCA_STATUS status;
-    uint8_t random_nonce[32];
+    uint8_t random_nonce[32] = { 0 };
 
     // Length/nonce field specifications according to rfc3610.
     if (iv_size < 7u || iv_size > 13u)

@@ -129,9 +129,9 @@ TEST_CONDITION(atca_cmd_basic_test, sign_internal_ecc)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((ATECC108A == dev_type) 
-            || (ATECC508A == dev_type)
-            || (ATECC608 == dev_type));
+    return (ATECC108A == dev_type)
+           || (ATECC508A == dev_type)
+           || (ATECC608 == dev_type);
 }
 
 TEST(atca_cmd_basic_test, sign_internal_ecc)

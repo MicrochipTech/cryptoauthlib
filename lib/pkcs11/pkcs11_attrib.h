@@ -28,14 +28,16 @@
 #ifndef PKCS11_ATTRIB_H_
 #define PKCS11_ATTRIB_H_
 
+#include "cryptoauthlib.h"
 #include "cryptoki.h"
+#include "pkcs11_session.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /** Populate an attribute based on the "object" */
-typedef CK_RV (*attrib_f)(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute);
+typedef CK_RV (*attrib_f)(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr pSession);
 
 typedef struct pkcs11_attrib_model_s
 {
@@ -50,9 +52,9 @@ typedef struct pkcs11_attrib_model_s
 CK_RV pkcs11_attrib_fill(CK_ATTRIBUTE_PTR pAttribute, const void * pData, const CK_ULONG ulSize);
 CK_RV pkcs11_attrib_value(CK_ATTRIBUTE_PTR pAttribute, const CK_ULONG ulValue, const CK_ULONG ulSize);
 
-CK_RV pkcs11_attrib_false(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute);
-CK_RV pkcs11_attrib_true(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute);
-CK_RV pkcs11_attrib_empty(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute);
+CK_RV pkcs11_attrib_false(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr pSession);
+CK_RV pkcs11_attrib_true(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr pSession);
+CK_RV pkcs11_attrib_empty(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr pSession);
 
 
 #endif /* PKCS11_ATTRIB_H_ */

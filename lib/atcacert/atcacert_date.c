@@ -41,9 +41,9 @@ const size_t ATCACERT_DATE_FORMAT_SIZES[ATCACERT_DATE_FORMAT_SIZES_COUNT] = {
 };
 
 ATCA_STATUS atcacert_date_enc(atcacert_date_format_t   format,
-                      const atcacert_tm_utc_t* timestamp,
-                      uint8_t*                 formatted_date,
-                      size_t*                  formatted_date_size)
+                              const atcacert_tm_utc_t* timestamp,
+                              uint8_t*                 formatted_date,
+                              size_t*                  formatted_date_size)
 {
     ATCA_STATUS rv;
 
@@ -76,7 +76,7 @@ ATCA_STATUS atcacert_date_enc(atcacert_date_format_t   format,
         break;
 #endif
 #if ATCACERT_DATEFMT_POSIX_EN
-    case DATEFMT_POSIX_UINT32_BE: 
+    case DATEFMT_POSIX_UINT32_BE:
         rv = atcacert_date_enc_posix_be(timestamp, formatted_date);
         break;
     case DATEFMT_POSIX_UINT32_LE:
@@ -97,9 +97,9 @@ ATCA_STATUS atcacert_date_enc(atcacert_date_format_t   format,
 }
 
 ATCA_STATUS atcacert_date_dec(atcacert_date_format_t format,
-                      const uint8_t*         formatted_date,
-                      size_t                 formatted_date_size,
-                      atcacert_tm_utc_t*     timestamp)
+                              const uint8_t*         formatted_date,
+                              size_t                 formatted_date_size,
+                              atcacert_tm_utc_t*     timestamp)
 {
     ATCA_STATUS rv;
 
@@ -252,7 +252,7 @@ static const uint8_t* str_to_uint(const uint8_t* str, int width, uint32_t* num)
     *num = 0;
     for (digit = 0; digit < width; digit++)
     {
-        if (*str < (uint8_t)'0' || *str >(uint8_t)'9')
+        if (*str < (uint8_t)'0' || *str > (uint8_t)'9')
         {
             return error_ret;  // Character is not a digit
         }
@@ -308,13 +308,13 @@ static const uint8_t* str_to_int(const uint8_t* str, int width, int* num)
             *num = (int)unum;
         }
     }
-    
+
     return ret;
 }
 
 #if ATCACERT_DATEFMT_ISO_EN
 ATCA_STATUS atcacert_date_enc_iso8601_sep(const atcacert_tm_utc_t* timestamp,
-                                  uint8_t                  formatted_date[DATEFMT_ISO8601_SEP_SIZE])
+                                          uint8_t                  formatted_date[DATEFMT_ISO8601_SEP_SIZE])
 {
     uint8_t* cur_pos = formatted_date;
     int year = 0;
@@ -378,7 +378,7 @@ ATCA_STATUS atcacert_date_enc_iso8601_sep(const atcacert_tm_utc_t* timestamp,
 }
 
 ATCA_STATUS atcacert_date_dec_iso8601_sep(const uint8_t      formatted_date[DATEFMT_ISO8601_SEP_SIZE],
-                                  atcacert_tm_utc_t* timestamp)
+                                          atcacert_tm_utc_t* timestamp)
 {
     const uint8_t* cur_pos = formatted_date;
     const uint8_t* new_pos = NULL;
@@ -470,7 +470,7 @@ ATCA_STATUS atcacert_date_dec_iso8601_sep(const uint8_t      formatted_date[DATE
 
 #if ATCACERT_DATEFMT_UTC_EN
 ATCA_STATUS atcacert_date_enc_rfc5280_utc(const atcacert_tm_utc_t* timestamp,
-                                  uint8_t                  formatted_date[DATEFMT_RFC5280_UTC_SIZE])
+                                          uint8_t                  formatted_date[DATEFMT_RFC5280_UTC_SIZE])
 {
     uint8_t* cur_pos = formatted_date;
     int year = 0;
@@ -532,7 +532,7 @@ ATCA_STATUS atcacert_date_enc_rfc5280_utc(const atcacert_tm_utc_t* timestamp,
 }
 
 ATCA_STATUS atcacert_date_dec_rfc5280_utc(const uint8_t      formatted_date[DATEFMT_RFC5280_UTC_SIZE],
-                                  atcacert_tm_utc_t* timestamp)
+                                          atcacert_tm_utc_t* timestamp)
 {
     const uint8_t* cur_pos = formatted_date;
     const uint8_t* new_pos = NULL;
@@ -607,7 +607,7 @@ ATCA_STATUS atcacert_date_dec_rfc5280_utc(const uint8_t      formatted_date[DATE
 
 #if ATCACERT_DATEFMT_GEN_EN
 ATCA_STATUS atcacert_date_enc_rfc5280_gen(const atcacert_tm_utc_t* timestamp,
-                                  uint8_t                  formatted_date[DATEFMT_RFC5280_GEN_SIZE])
+                                          uint8_t                  formatted_date[DATEFMT_RFC5280_GEN_SIZE])
 {
     uint8_t* cur_pos = formatted_date;
     int year = 0;
@@ -661,7 +661,7 @@ ATCA_STATUS atcacert_date_enc_rfc5280_gen(const atcacert_tm_utc_t* timestamp,
 }
 
 ATCA_STATUS atcacert_date_dec_rfc5280_gen(const uint8_t      formatted_date[DATEFMT_RFC5280_GEN_SIZE],
-                                  atcacert_tm_utc_t* timestamp)
+                                          atcacert_tm_utc_t* timestamp)
 {
     const uint8_t* cur_pos = formatted_date;
     const uint8_t* new_pos = NULL;
@@ -842,17 +842,18 @@ static ATCA_STATUS atcacert_posix_time_inc(uint32_t * posix_time, uint32_t secs)
 
 static bool atcacert_posix_year_is_valid(int year)
 {
-    return ((year >= 1970) && (year <= 2106));
+    return (year >= 1970) && (year <= 2106);
 }
 
 static bool atcacert_posix_month_is_valid(int month)
 {
-    return ((month >= 0) && (month < 12));
+    return (month >= 0) && (month < 12);
 }
 
 static bool atcacert_posix_day_is_valid(int year, int month, int day)
 {
     bool rv = false;
+
     if (atcacert_posix_year_is_valid(year) && atcacert_posix_month_is_valid(month))
     {
         rv = ((day >= 0) && (day < get_month_days(year, month)));
@@ -985,14 +986,15 @@ static ATCA_STATUS atcacert_date_enc_posix_uint32(const atcacert_tm_utc_t* timep
 
             rv = atcacert_posix_enc_second(posix_uint32, timeptr->tm_sec);
 
-        } while(false);
+        }
+        while (false);
     }
 
     return rv;
 }
 
 ATCA_STATUS atcacert_date_enc_posix_be(const atcacert_tm_utc_t* timestamp,
-                               uint8_t                  formatted_date[DATEFMT_POSIX_UINT32_BE_SIZE])
+                                       uint8_t                  formatted_date[DATEFMT_POSIX_UINT32_BE_SIZE])
 {
     uint32_t posix_uint32 = 0;
     ATCA_STATUS ret = 0;
@@ -1017,7 +1019,7 @@ ATCA_STATUS atcacert_date_enc_posix_be(const atcacert_tm_utc_t* timestamp,
 }
 
 static ATCA_STATUS atcacert_date_dec_posix_uint32(uint32_t           posix_uint32,
-                                          atcacert_tm_utc_t* timestamp)
+                                                  atcacert_tm_utc_t* timestamp)
 {
 //#ifdef WIN32
 //	time_t posix_time = (time_t)posix_uint32;
@@ -1047,7 +1049,7 @@ static ATCA_STATUS atcacert_date_dec_posix_uint32(uint32_t           posix_uint3
 }
 
 ATCA_STATUS atcacert_date_dec_posix_be(const uint8_t      formatted_date[DATEFMT_POSIX_UINT32_BE_SIZE],
-                               atcacert_tm_utc_t* timestamp)
+                                       atcacert_tm_utc_t* timestamp)
 {
     uint32_t posix_uint32 = 0;
 
@@ -1062,11 +1064,11 @@ ATCA_STATUS atcacert_date_dec_posix_be(const uint8_t      formatted_date[DATEFMT
         ((uint32_t)formatted_date[2] << 8) |
         ((uint32_t)formatted_date[3]);
 
-    return atcacert_date_dec_posix_uint32(posix_uint32, timestamp);
+    return atcacert_date_dec_posix_uint32(posix_uint32 & UINT32_MAX, timestamp);
 }
 
 ATCA_STATUS atcacert_date_enc_posix_le(const atcacert_tm_utc_t* timestamp,
-                               uint8_t                  formatted_date[DATEFMT_POSIX_UINT32_LE_SIZE])
+                                       uint8_t                  formatted_date[DATEFMT_POSIX_UINT32_LE_SIZE])
 {
     uint32_t posix_uint32 = 0;
     ATCA_STATUS ret = 0;
@@ -1091,7 +1093,7 @@ ATCA_STATUS atcacert_date_enc_posix_le(const atcacert_tm_utc_t* timestamp,
 }
 
 ATCA_STATUS atcacert_date_dec_posix_le(const uint8_t      formatted_date[DATEFMT_POSIX_UINT32_LE_SIZE],
-                               atcacert_tm_utc_t* timestamp)
+                                       atcacert_tm_utc_t* timestamp)
 {
     uint32_t posix_uint32 = 0;
 
@@ -1106,14 +1108,16 @@ ATCA_STATUS atcacert_date_dec_posix_le(const uint8_t      formatted_date[DATEFMT
         ((uint32_t)formatted_date[1] << 8) |
         ((uint32_t)formatted_date[0]);
 
-    return atcacert_date_dec_posix_uint32(posix_uint32, timestamp);
+    return atcacert_date_dec_posix_uint32(posix_uint32 & UINT32_MAX, timestamp);
 }
 #endif
 
+#ifdef __COVERITY__
 #pragma coverity compliance block deviate "CERT INT31-C" "Custom integer encoding scheme with documented limitations"
+#endif
 ATCA_STATUS atcacert_date_enc_compcert(const atcacert_tm_utc_t* issue_date,
-                               uint8_t                  expire_years,
-                               uint8_t                  enc_dates[3])
+                                       uint8_t                  expire_years,
+                                       uint8_t                  enc_dates[3])
 {
     /*
      * Issue and expire dates are compressed/encoded as below
@@ -1166,13 +1170,15 @@ ATCA_STATUS atcacert_date_enc_compcert(const atcacert_tm_utc_t* issue_date,
 
     return ATCACERT_E_SUCCESS;
 }
+#ifdef __COVERITY__
 #pragma coverity compliance end_block "CERT INT31-C"
 
 #pragma coverity compliance block deviate "MISRA C-2012 Rule 10.8" "Custom integer encoding scheme with documented limitations"
+#endif
 ATCA_STATUS atcacert_date_dec_compcert(const uint8_t          enc_dates[3],
-                               atcacert_date_format_t expire_date_format,
-                               atcacert_tm_utc_t*     issue_date,
-                               atcacert_tm_utc_t*     expire_date)
+                                       atcacert_date_format_t expire_date_format,
+                                       atcacert_tm_utc_t*     issue_date,
+                                       atcacert_tm_utc_t*     expire_date)
 {
     ATCA_STATUS ret = ATCACERT_E_SUCCESS;
     uint8_t expire_years = 0;
@@ -1225,6 +1231,8 @@ ATCA_STATUS atcacert_date_dec_compcert(const uint8_t          enc_dates[3],
 
     return ATCACERT_E_SUCCESS;
 }
+#ifdef __COVERITY__
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.8"
+#endif
 
 #endif

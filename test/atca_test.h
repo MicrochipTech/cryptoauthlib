@@ -34,13 +34,13 @@
 
 extern bool g_test_abort;
 extern ATCA_STATUS g_last_status;
-#define TEST_ASSERT_SUCCESS(x)          TEST_ASSERT_EQUAL(ATCA_SUCCESS, g_last_status=x)
-#define TEST_ASSERT_SUCCESS_MSG(x,m)    TEST_ASSERT_EQUAL_MESSAGE(ATCA_SUCCESS, g_last_status=x, m)
+#define TEST_ASSERT_SUCCESS(x)          TEST_ASSERT_EQUAL(ATCA_SUCCESS, g_last_status = x)
+#define TEST_ASSERT_SUCCESS_MSG(x, m)    TEST_ASSERT_EQUAL_MESSAGE(ATCA_SUCCESS, g_last_status = x, m)
 
 extern ATCAIfaceCfg *gCfg;
 extern const uint8_t g_slot4_key[];
 
-#define AES_CONFIG_ENABLE_BIT_MASK   (uint8_t)0x01
+#define AES_CONFIG_ENABLE_BIT_MASK          (uint8_t)0x01
 
 #define CMD_PROCESSOR_MAX_ARGS  16
 
@@ -49,8 +49,8 @@ typedef bool (*fp_test_condition)(void);
 
 typedef struct
 {
-    fp_test_case        fp_test;
-    fp_test_condition   fp_condition;
+    fp_test_case      fp_test;
+    fp_test_condition fp_condition;
 }t_test_case_info;
 
 typedef int (*fp_menu_handler)(int argc, char* argv[]);
@@ -60,7 +60,7 @@ typedef struct
     const char*     menu_cmd;
     fp_menu_handler fp_handler;
 } t_menu_info_simple;
-#define MENU_ITEM_SIMPLE(c,f)   {c, f}
+#define MENU_ITEM_SIMPLE(c, f)   { c, f }
 
 #ifdef ATCA_TEST_SIMPLE_MENU
 typedef t_menu_info_simple t_menu_info
@@ -72,13 +72,13 @@ typedef struct
     const char*     menu_cmd_description;
     fp_menu_handler fp_handler;
 } t_menu_info;
-#define MENU_ITEM(c,d, f)   {c, d, f}
+#define MENU_ITEM(c, d, f)   { c, d, f }
 #endif
 
 #define REGISTER_TEST_CASE(group, name)         TEST_ ## group ## _ ## name ## _run
 #define REGISTER_TEST_CONDITION(group, name)    TEST_ ## group ## _ ## name ## _cond
 
-#define TEST_CONDITION(group, name)             bool TEST_##group##_##name##_cond(void)
+#define TEST_CONDITION(group, name)             bool TEST_ ## group ## _ ## name ## _cond(void)
 
 #if !defined(ATCA_ECC_SUPPORT) && !defined(DO_NOT_TEST_CERT)
 #define DO_NOT_TEST_CERT
@@ -97,10 +97,10 @@ typedef struct
 #endif
 
 #ifdef ATCA_HAL_KIT_SUPPORT
-extern ATCA_STATUS hal_kit_bridge_connect(ATCAIfaceCfg * cfg);
+    extern ATCA_STATUS hal_kit_bridge_connect(ATCAIfaceCfg * cfg);
 #endif
 
-extern bool g_atca_test_quiet_mode;
+    extern bool g_atca_test_quiet_mode;
 
 /* Cryptoauthlib Test Api */
 void RunAllTests(t_test_case_info** tests_list);

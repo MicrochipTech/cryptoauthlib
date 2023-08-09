@@ -42,7 +42,7 @@ ATCA_STATUS calib_is_private(ATCADevice device, uint16_t slot, bool* is_private)
 #endif
 
 #if ATCA_CA2_SUPPORT
-ATCADeviceType calib_get_devicetype_with_device_id(uint8_t device_id,uint8_t device_revision);
+ATCADeviceType calib_get_devicetype_with_device_id(uint8_t device_id, uint8_t device_revision);
 #endif
 
 //AES command functions
@@ -202,9 +202,9 @@ ATCA_STATUS calib_read_sig(ATCADevice device, uint16_t slot, uint8_t *sig);
 // CA2 Read command functions
 #if CALIB_READ_CA2_EN
 ATCA_STATUS calib_ca2_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint8_t block, size_t offset,
-                                   uint8_t* data, uint8_t len);
+                                uint8_t* data, uint8_t len);
 ATCA_STATUS calib_ca2_read_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot,
-                                         size_t offset, uint8_t* data, size_t length);
+                                      size_t offset, uint8_t* data, size_t length);
 ATCA_STATUS calib_ca2_read_serial_number(ATCADevice device, uint8_t* serial_number);
 ATCA_STATUS calib_ca2_read_config_zone(ATCADevice device, uint8_t* config_data);
 bool calib_ca2_compare_config(uint8_t* expected, uint8_t* other);
@@ -344,17 +344,17 @@ ATCA_STATUS calib_write_enc(ATCADevice device, uint16_t key_id, uint8_t block, c
 // CA2 Write command functions
 #if CALIB_WRITE_CA2_EN
 ATCA_STATUS calib_ca2_write(ATCADevice device, uint8_t zone, uint16_t address, const uint8_t *value,
-                               const uint8_t *mac);
+                            const uint8_t *mac);
 ATCA_STATUS calib_ca2_write_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint8_t block,
-                                    uint8_t offset, const uint8_t *data, uint8_t len);
+                                 uint8_t offset, const uint8_t *data, uint8_t len);
 ATCA_STATUS calib_ca2_write_config_zone(ATCADevice device, const uint8_t* config_data);
 ATCA_STATUS calib_ca2_write_config_counter(ATCADevice device, uint8_t counter_id, uint16_t counter_value);
 ATCA_STATUS calib_ca2_write_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot, size_t block,
-                                          const uint8_t *data, size_t length);
+                                       const uint8_t *data, size_t length);
 #endif /* CALIB_WRITE_CA2_EN */
 #if CALIB_WRITE_ENC_EN && ATCA_CA2_SUPPORT
 ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data, uint8_t* transport_key,
-                                   uint8_t transport_key_id, uint8_t num_in[NONCE_NUMIN_SIZE]);
+                                uint8_t transport_key_id, uint8_t num_in[NONCE_NUMIN_SIZE]);
 #endif /* CALIB_WRITE_ENC_EN && ATCA_CA2_SUPPORT */
 
 /* Map calib functions to atcab names for api compatibility without abstraction overhead */
@@ -364,6 +364,7 @@ ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data,
 #define atcab_idle()                            calib_idle(g_atcab_device_ptr)
 #define atcab_sleep()                           calib_sleep(g_atcab_device_ptr)
 #define atcab_get_zone_size(...)                calib_get_zone_size(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_get_zone_size_ext                 calib_get_zone_size
 
 
 // AES command functions
@@ -375,12 +376,18 @@ ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data,
 #define atcab_aes_gfm(...)                      calib_aes_gfm(g_atcab_device_ptr, __VA_ARGS__)
 
 #define atcab_aes_gcm_init(...)                 calib_aes_gcm_init(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_aes_gcm_init_ext                  calib_aes_gcm_init
 #define atcab_aes_gcm_init_rand(...)            calib_aes_gcm_init_rand(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_aes_gcm_aad_update(...)           calib_aes_gcm_aad_update(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_aes_gcm_aad_update_ext            calib_aes_gcm_aad_update
 #define atcab_aes_gcm_encrypt_update(...)       calib_aes_gcm_encrypt_update(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_aes_gcm_encrypt_update_ext        calib_aes_gcm_encrypt_update
 #define atcab_aes_gcm_encrypt_finish(...)       calib_aes_gcm_encrypt_finish(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_aes_gcm_encrypt_finish_ext        calib_aes_gcm_encrypt_finish
 #define atcab_aes_gcm_decrypt_update(...)       calib_aes_gcm_decrypt_update(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_aes_gcm_decrypt_update_ext        calib_aes_gcm_decrypt_update
 #define atcab_aes_gcm_decrypt_finish(...)       calib_aes_gcm_decrypt_finish(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_aes_gcm_decrypt_finish_ext        calib_aes_gcm_decrypt_finish
 
 // CheckMAC command functions
 #define atcab_checkmac(...)                     calib_checkmac(g_atcab_device_ptr, __VA_ARGS__)
@@ -393,6 +400,7 @@ ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data,
 
 // DeriveKey command functions
 #define atcab_derivekey(...)                    calib_derivekey(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_derivekey_ext                     calib_derivekey
 
 // ECDH command functions
 #define atcab_ecdh_base(...)                    calib_ecdh_base(g_atcab_device_ptr, __VA_ARGS__)
@@ -411,6 +419,7 @@ ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data,
 // GenKey command functions
 #define atcab_genkey_base(...)                  calib_genkey_base(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_genkey(...)                       calib_genkey(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_genkey_ext                        calib_genkey
 #define atcab_get_pubkey(...)                   calib_get_pubkey(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_get_pubkey_ext                    calib_get_pubkey
 
@@ -420,6 +429,7 @@ ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data,
 // Info command functions
 #define atcab_info_base(...)                    calib_info_base(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_info(...)                         calib_info(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_info_ext                          calib_info
 #define atcab_info_get_latch(...)               calib_info_get_latch(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_info_set_latch(...)               calib_info_set_latch(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_info_lock_status(...)             calib_info_lock_status(g_atcab_device_ptr, __VA_ARGS__)
@@ -439,8 +449,10 @@ ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data,
 #else
 #define atcab_lock(...)                          calib_lock(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_lock_config_zone()                 calib_lock_config_zone(g_atcab_device_ptr)
+#define atcab_lock_config_zone_ext(device)       calib_lock_config_zone(device)
 #define atcab_lock_config_zone_crc(...)          calib_lock_config_zone_crc(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_lock_data_zone()                   calib_lock_data_zone(g_atcab_device_ptr)
+#define atcab_lock_data_zone_ext(device)         calib_lock_data_zone(device)
 #define atcab_lock_data_zone_crc(...)            calib_lock_data_zone_crc(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_lock_data_slot(...)                calib_lock_data_slot(g_atcab_device_ptr, __VA_ARGS__)
 #endif
@@ -453,6 +465,7 @@ ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data,
 #define atcab_nonce(...)                        calib_nonce(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_nonce_load(...)                   calib_nonce_load(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_nonce_rand(...)                   calib_nonce_rand(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_nonce_rand_ext                    calib_nonce_rand
 #define atcab_challenge(...)                    calib_challenge(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_challenge_seed_update(...)        calib_challenge_seed_update(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_nonce_gen_session_key(...)        calib_nonce_gen_session_key(g_atcab_device_ptr, __VA_ARGS__)
@@ -467,6 +480,7 @@ ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data,
 
 // Read command functions
 #define atcab_is_slot_locked(...)               calib_is_slot_locked(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_is_slot_locked_ext                calib_is_slot_locked
 #define atcab_is_private(...)                   calib_is_private(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_is_private_ext                    calib_is_private
 
@@ -475,19 +489,26 @@ ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data,
 #define atcab_is_locked(...)                    calib_ca2_is_locked(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_is_config_locked(...)             calib_ca2_is_locked(g_atcab_device_ptr, ATCA_ZONE_CONFIG, __VA_ARGS__)
 #define atcab_is_data_locked(...)               calib_ca2_is_locked(g_atcab_device_ptr, ATCA_ZONE_DATA, __VA_ARGS__)
+#define atcab_is_data_locked_ext                calib_ca2_is_locked
 #define atcab_read_bytes_zone(...)              calib_ca2_read_bytes_zone(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_read_bytes_zone_ext               calib_ca2_read_bytes_zone
 #define atcab_read_serial_number(...)           calib_ca2_read_serial_number(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_read_serial_number_ext            calib_ca2_read_serial_number
 #define atcab_read_config_zone(...)             calib_ca2_read_config_zone(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_read_config_zone_ext              calib_ca2_read_config_zone
 #else
 #define atcab_read_zone(...)                    calib_read_zone_ext(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_is_locked(...)                    calib_is_locked_ext(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_is_config_locked(...)             calib_is_locked_ext(g_atcab_device_ptr, LOCK_ZONE_CONFIG, __VA_ARGS__)
+#define atcab_is_config_locked_ext(device, ...) calib_is_locked_ext(device, LOCK_ZONE_CONFIG, __VA_ARGS__)
 #define atcab_is_data_locked(...)               calib_is_locked_ext(g_atcab_device_ptr, LOCK_ZONE_DATA, __VA_ARGS__)
+#define atcab_is_data_locked_ext(device, ...)   calib_is_locked_ext(device, LOCK_ZONE_DATA, __VA_ARGS__)
 #define atcab_read_bytes_zone(...)              calib_read_bytes_zone_ext(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_read_bytes_zone_ext               calib_read_bytes_zone_ext
 #define atcab_read_serial_number(...)           calib_read_serial_number_ext(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_read_serial_number_ext            calib_read_serial_number_ext
 #define atcab_read_config_zone(...)             calib_read_config_zone(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_read_config_zone_ext              calib_read_config_zone
 #endif
 
 #define atcab_cmp_config_zone(...)              calib_cmp_config_zone(g_atcab_device_ptr, __VA_ARGS__)
@@ -561,13 +582,16 @@ ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data,
 #else
 #define atcab_write(...)                        calib_write_ext(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_write_zone(...)                   calib_write_zone_ext(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_write_zone_ext                    calib_write_zone_ext
 #define atcab_write_bytes_zone(...)             calib_write_bytes_zone_ext(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_write_bytes_zone_ext              calib_write_bytes_zone_ext
 #define atcab_write_config_zone(...)            calib_write_config_zone_ext(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_write_config_zone_ext(device, ...) calib_write_config_zone_ext(device, __VA_ARGS__)
 #define atcab_write_config_counter(...)         calib_write_config_counter_ext(g_atcab_device_ptr, __VA_ARGS__)
 #endif
 
 #define atcab_write_pubkey(...)                 calib_write_pubkey(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_write_pubkey_ext                  calib_write_pubkey
 #define atcab_write_enc(...)                    calib_write_enc(g_atcab_device_ptr, __VA_ARGS__)
 #endif
 

@@ -69,6 +69,7 @@ ATCA_STATUS calib_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint
         // Check the input parameters
         ATCA_CHECK_INVALID_MSG(((NULL == device) || (NULL == data)), ATCA_BAD_PARAM, "NULL pointer received");
         ATCA_CHECK_INVALID_MSG((len != 4u && len != 32u), ATCA_BAD_PARAM, "NULL pointer received");
+        ATCA_CHECK_INVALID_MSG((CA_MAX_PACKET_SIZE < (ATCA_PACKET_OVERHEAD + len)), ATCA_INVALID_SIZE, "Invalid size received");
 
         // The get address function checks the remaining variables
         if ((status = calib_get_addr(zone, slot, block, offset, &addr)) != ATCA_SUCCESS)
@@ -530,7 +531,7 @@ ATCA_STATUS calib_read_sig(ATCADevice device, uint16_t slot, uint8_t* sig)
  *  \return ATCA_SUCCESS on success, otherwise an error code
  */
 ATCA_STATUS calib_ca2_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint8_t block, size_t offset,
-                                   uint8_t* data, uint8_t len)
+                                uint8_t* data, uint8_t len)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     ATCAPacket packet;
@@ -564,7 +565,11 @@ ATCA_STATUS calib_ca2_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, 
             status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid parameter received");
         }
     }
-    
+    if (CA_MAX_PACKET_SIZE < (ATCA_PACKET_OVERHEAD + len))
+    {
+        status = ATCA_TRACE(ATCA_INVALID_SIZE, "Invalid packet size received");
+    }
+
     if (ATCA_SUCCESS == status)
     {
         if (ATCA_SUCCESS != (status = calib_ca2_get_addr(read_zone, slot, block, 0, &addr)))
@@ -611,9 +616,9 @@ ATCA_STATUS calib_ca2_read_config_zone(ATCADevice device, uint8_t* config_data)
     while (slot <= 3u)
     {
         if (ATCA_SUCCESS != (status = calib_ca2_read_zone(device, ATCA_ZONE_CONFIG,
-                                                             slot, 0, 0,
-                                                             &config_data[ATCA_CA2_CONFIG_SLOT_SIZE * slot],
-                                                             ATCA_CA2_CONFIG_SLOT_SIZE)))
+                                                          slot, 0, 0,
+                                                          &config_data[ATCA_CA2_CONFIG_SLOT_SIZE * slot],
+                                                          ATCA_CA2_CONFIG_SLOT_SIZE)))
         {
             (void)ATCA_TRACE(status, "calib_ca2_read_zone - failed");
             break;
@@ -638,7 +643,7 @@ ATCA_STATUS calib_ca2_read_serial_number(ATCADevice device, uint8_t* serial_numb
 
 
     status = calib_ca2_read_zone(device, ATCA_ZONE_CONFIG, 0, 0, 0, read_buf,
-                                    ATCA_CA2_CONFIG_SLOT_SIZE);
+                                 ATCA_CA2_CONFIG_SLOT_SIZE);
 
     if (ATCA_SUCCESS == status)
     {
@@ -666,7 +671,7 @@ ATCA_STATUS calib_ca2_read_serial_number(ATCADevice device, uint8_t* serial_numb
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS calib_ca2_read_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot,
-                                         size_t offset, uint8_t* data, size_t length)
+                                      size_t offset, uint8_t* data, size_t length)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t data_set_size = (ATCA_ZONE_DATA == zone) ? ATCA_BLOCK_SIZE : ATCA_CA2_CONFIG_SLOT_SIZE;
@@ -712,8 +717,8 @@ ATCA_STATUS calib_ca2_read_bytes_zone(ATCADevice device, uint8_t zone, uint16_t 
     while (data_idx < length)
     {
         if (ATCA_SUCCESS != (status = calib_ca2_read_zone(device, zone, slot, (uint8_t)(cur_block & UINT8_MAX), 0,
-                                                             read_buf,
-                                                             data_set_size)))
+                                                          read_buf,
+                                                          data_set_size)))
         {
             (void)ATCA_TRACE(status, "calib_ca2_read_zone failed");
             break;
@@ -732,8 +737,8 @@ ATCA_STATUS calib_ca2_read_bytes_zone(ATCADevice device, uint8_t zone, uint16_t 
         copy_length = (read_buf_idx + copy_length) > data_set_size ? data_set_size - read_buf_idx : copy_length;
 
         (void)memcpy(&data[data_idx], &read_buf[read_buf_idx], copy_length);
-        cur_block = (ATCA_ZONE_DATA == zone) ? (cur_block + 1u) : cur_block;   // increment block number for DATA zone
-        data_idx += copy_length;   // increment data index
+        cur_block = (ATCA_ZONE_DATA == zone) ? (cur_block + 1u) : cur_block; // increment block number for DATA zone
+        data_idx += copy_length;                                             // increment data index
     }
 
     return status;

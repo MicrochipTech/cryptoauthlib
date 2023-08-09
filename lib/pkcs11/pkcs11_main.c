@@ -530,6 +530,7 @@ CK_RV C_Decrypt
 )
 {
     PKCS11_DEBUG("\r\n");
+    /* coverity[cert_arr30_c_violation]  ulEncryptedDataLen value is validated before use*/
     PKCS11_DEBUG_RETURN(pkcs11_decrypt(hSession, pEncryptedData, ulEncryptedDataLen, pData, pulDataLen));
 }
 

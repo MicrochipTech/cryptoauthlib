@@ -56,16 +56,16 @@ TEST(atcac_pkcs7, pad_success)
 
     for (i = 0; i < pkcs7_pad_test_vectors_count; i++, pVector++)
     {
-        length1 = sizeof(buffer)/2;
-        status = atcab_hex2bin(pVector->in, strlen(pVector->in), &buffer[sizeof(buffer)/2], &length1);
+        length1 = sizeof(buffer) / 2;
+        status = atcab_hex2bin(pVector->in, strlen(pVector->in), &buffer[sizeof(buffer) / 2], &length1);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-        length2 = sizeof(buffer)/2;
-        status = atcac_pkcs7_pad(&buffer[sizeof(buffer)/2], &length2, length1, pVector->blocksize);
+        length2 = sizeof(buffer) / 2;
+        status = atcac_pkcs7_pad(&buffer[sizeof(buffer) / 2], &length2, length1, pVector->blocksize);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
         length1 = sizeof(buffer);
-        status = atcab_bin2hex_(&buffer[sizeof(buffer)/2], length2, (char*)buffer, &length1, false, false, true);
+        status = atcab_bin2hex_(&buffer[sizeof(buffer) / 2], length2, (char*)buffer, &length1, false, false, true);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
         TEST_ASSERT_EQUAL_MEMORY(pVector->out, buffer, length1);
@@ -83,15 +83,15 @@ TEST(atcac_pkcs7, unpad_success)
 
     for (i = 0; i < pkcs7_pad_test_vectors_count; i++, pVector++)
     {
-        length1 = sizeof(buffer)/2;
-        status = atcab_hex2bin(pVector->out, strlen(pVector->out), &buffer[sizeof(buffer)/2], &length1);
+        length1 = sizeof(buffer) / 2;
+        status = atcab_hex2bin(pVector->out, strlen(pVector->out), &buffer[sizeof(buffer) / 2], &length1);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-        status = atcac_pkcs7_unpad(&buffer[sizeof(buffer)/2], &length1, pVector->blocksize);
+        status = atcac_pkcs7_unpad(&buffer[sizeof(buffer) / 2], &length1, pVector->blocksize);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
         length2 = sizeof(buffer);
-        status = atcab_bin2hex_(&buffer[sizeof(buffer)/2], length1, (char*)buffer, &length2, false, false, true);
+        status = atcab_bin2hex_(&buffer[sizeof(buffer) / 2], length1, (char*)buffer, &length2, false, false, true);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
         TEST_ASSERT_EQUAL_MEMORY(pVector->in, buffer, length2);
@@ -123,10 +123,10 @@ TEST(atcac_pkcs7, unpad_invalid)
 t_test_case_info atcac_pad_test_info[] =
 {
 #if TEST_ATCAC_PKCS7_EN
-    { REGISTER_TEST_CASE(atcac_pkcs7, pad_success), NULL },
+    { REGISTER_TEST_CASE(atcac_pkcs7, pad_success),   NULL },
     { REGISTER_TEST_CASE(atcac_pkcs7, unpad_success), NULL },
     { REGISTER_TEST_CASE(atcac_pkcs7, unpad_invalid), NULL },
 #endif
     /* Array Termination element*/
-    { (fp_test_case)NULL, NULL },
+    { (fp_test_case)NULL,             NULL },
 };

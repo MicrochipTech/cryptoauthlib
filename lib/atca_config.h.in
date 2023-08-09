@@ -55,6 +55,12 @@ selected plus however additional slots one would like */
 /** Enable debug messages */
 #cmakedefine ATCA_PRINTF
 
+/** Enable preprocessor warning messages */
+#cmakedefine01 ATCA_PREPROCESSOR_WARNING
+
+/** Enable jwt functionality */
+#cmakedefine ATCA_JWT_EN
+
 /** Enable to build in test hooks */
 #cmakedefine ATCA_TESTS_ENABLED
 
@@ -106,6 +112,12 @@ selected plus however additional slots one would like */
 /** Enable the delete command */
 #cmakedefine01 CALIB_DELETE_EN
 
+/******************** Packet Size Configuration Section *************************/
+
+/** Provide Maximum packet size for the command to be sent and received */
+#ifndef MAX_PACKET_SIZE
+#define MAX_PACKET_SIZE         (@MAX_PACKET_SIZE@U)
+#endif
 
 /******************** Platform Configuration Section ***********************/
 

@@ -45,6 +45,11 @@
  */
 ATCA_STATUS atcac_sw_random(uint8_t* data, size_t data_size)
 {
+    if (((size_t)INT_MAX) < data_size)
+    {
+        return ATCA_GEN_FAIL;
+    }
+
     if (1 == RAND_bytes(data, (int)data_size))
     {
         return ATCA_SUCCESS;
@@ -67,7 +72,7 @@ ATCA_STATUS atcac_aes_gcm_aad_update(
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (NULL != ctx)
+    if ((NULL != ctx) && ((size_t)INT_MAX > aad_len))
     {
         int outlen = 0;
         status = (1 == EVP_CipherUpdate((EVP_CIPHER_CTX*)ctx->ptr, NULL, &outlen, aad, (int)aad_len)) ? ATCA_SUCCESS : ATCA_GEN_FAIL;
@@ -136,13 +141,20 @@ ATCA_STATUS atcac_aes_gcm_encrypt_update(
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (NULL != ctx && NULL != ct_len)
+    if ((NULL != ctx) && (NULL != ct_len) && ((size_t)INT_MAX > *ct_len) && ((size_t)INT_MAX > pt_len))
     {
         int outlen = (int)*ct_len;
         if (1 == EVP_EncryptUpdate((EVP_CIPHER_CTX*)ctx->ptr, ciphertext, &outlen, plaintext, (int)pt_len))
         {
-            *ct_len = (size_t)outlen;
-            status = ATCA_SUCCESS;
+            if (0 <= outlen)
+            {
+                *ct_len = (size_t)outlen;
+                status = ATCA_SUCCESS;
+            }
+            else
+            {
+                status = ATCA_GEN_FAIL;
+            }
         }
         else
         {
@@ -164,7 +176,7 @@ ATCA_STATUS atcac_aes_gcm_encrypt_finish(
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (NULL != ctx)
+    if ((NULL != ctx) && (NULL != tag) && ((size_t)INT_MAX > tag_len))
     {
         int outlen = 0;
         int ret = EVP_EncryptFinal_ex((EVP_CIPHER_CTX*)ctx->ptr, NULL, &outlen);
@@ -245,13 +257,20 @@ ATCA_STATUS atcac_aes_gcm_decrypt_update(
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (NULL != ctx && NULL != pt_len)
+    if ((NULL != ctx) && (NULL != pt_len) && ((size_t)INT_MAX > *pt_len) && ((size_t)INT_MAX > ct_len))
     {
         int outlen = (int)*pt_len;
         if (1 == EVP_DecryptUpdate((EVP_CIPHER_CTX*)ctx->ptr, plaintext, &outlen, ciphertext, (int)ct_len))
         {
-            *pt_len = (size_t)outlen;
-            status = ATCA_SUCCESS;
+            if (0 <= outlen)
+            {
+                *pt_len = (size_t)outlen;
+                status = ATCA_SUCCESS;
+            }
+            else
+            {
+                status = ATCA_GEN_FAIL;
+            }
         }
         else
         {
@@ -274,8 +293,11 @@ ATCA_STATUS atcac_aes_gcm_decrypt_finish(
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (NULL != ctx && NULL != is_verified)
+    if ((NULL != ctx) && (NULL != is_verified) && (NULL != tag) && ((size_t)INT_MAX > tag_len))
     {
+        /* coverity[cert_exp40_c_violation] Correct usage of OpenSSL 1.1 API */
+        /* coverity[cert_str30_c_violation:FALSE] tag is a byte buffer not a string */
+        /* coverity[misra_c_2012_rule_11_8_violation] Correct usage of OpenSSL 1.1 API */
         int ret = EVP_CIPHER_CTX_ctrl((EVP_CIPHER_CTX*)ctx->ptr, EVP_CTRL_AEAD_SET_TAG, (int)tag_len, (void*)tag);
 
         if (1 == ret)
@@ -355,7 +377,7 @@ static ATCA_STATUS atca_openssl_md_finish(atca_evp_ctx* ctx, uint8_t * digest, u
     {
         status = (1 == EVP_DigestFinal_ex((EVP_MD_CTX*)ctx->ptr, digest, outlen)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
 
-        EVP_MD_CTX_free(ctx->ptr);
+        EVP_MD_CTX_free((EVP_MD_CTX*)ctx->ptr);
         ctx->ptr = NULL;
     }
     return status;
@@ -369,7 +391,7 @@ ATCA_STATUS atcac_sw_sha1_init(
     atcac_sha1_ctx* ctx         /**< [in] pointer to a hash context */
     )
 {
-    return (atca_openssl_md_init(ctx, EVP_sha1()));
+    return atca_openssl_md_init(ctx, EVP_sha1());
 }
 
 /** \brief Add data to a SHA1 hash.
@@ -382,7 +404,7 @@ ATCA_STATUS atcac_sw_sha1_update(
     size_t          data_size   /**< [in] input data length */
     )
 {
-    return (atca_openssl_md_update(ctx, data, data_size));
+    return atca_openssl_md_update(ctx, data, data_size);
 }
 
 /** \brief Complete the SHA1 hash in software and return the digest.
@@ -396,7 +418,7 @@ ATCA_STATUS atcac_sw_sha1_finish(
 {
     unsigned int outlen = ATCA_SHA1_DIGEST_SIZE;
 
-    return (atca_openssl_md_finish(ctx, digest, &outlen));
+    return atca_openssl_md_finish(ctx, digest, &outlen);
 }
 
 /** \brief Initialize context for performing SHA256 hash in software.
@@ -407,7 +429,7 @@ ATCA_STATUS atcac_sw_sha2_256_init(
     atcac_sha2_256_ctx* ctx                 /**< [in] pointer to a hash context */
     )
 {
-    return (atca_openssl_md_init(ctx, EVP_sha256()));
+    return atca_openssl_md_init(ctx, EVP_sha256());
 }
 
 /** \brief Add data to a SHA256 hash.
@@ -420,7 +442,7 @@ ATCA_STATUS atcac_sw_sha2_256_update(
     size_t              data_size           /**< [in] input data length */
     )
 {
-    return (atca_openssl_md_update(ctx, data, data_size));
+    return atca_openssl_md_update(ctx, data, data_size);
 }
 
 /** \brief Complete the SHA256 hash in software and return the digest.
@@ -434,7 +456,7 @@ ATCA_STATUS atcac_sw_sha2_256_finish(
 {
     unsigned int outlen = ATCA_SHA2_256_DIGEST_SIZE;
 
-    return (atca_openssl_md_finish(ctx, digest, &outlen));
+    return atca_openssl_md_finish(ctx, digest, &outlen);
 }
 
 /** \brief Initialize context for performing CMAC in software.
@@ -516,11 +538,14 @@ ATCA_STATUS atcac_aes_cmac_finish(
  */
 ATCA_STATUS atcac_sha256_hmac_init(
     atcac_hmac_sha256_ctx* ctx,                 /**< [in] pointer to a sha256-hmac context */
+    atcac_sha2_256_ctx*    sha256_ctx,          /**< [in] pointer to a sha256 context */
     const uint8_t*         key,                 /**< [in] key value to use */
     const uint8_t          key_len              /**< [in] length of the key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    (void)sha256_ctx;
 
     if (NULL != ctx)
     {
@@ -580,18 +605,18 @@ ATCA_STATUS atcac_sha256_hmac_finish(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_init(
-    atcac_pk_ctx*   ctx,                        /**< [in] pointer to a pk context */
-    const uint8_t*  buf,                        /**< [in] buffer containing a pem encoded key */
-    size_t          buflen,                     /**< [in] length of the input buffer */
-    uint8_t         key_type,
-    bool            pubkey                      /**< [in] buffer is a public key */
+    atcac_pk_ctx*  ctx,                         /**< [in] pointer to a pk context */
+    const uint8_t* buf,                         /**< [in] buffer containing a pem encoded key */
+    size_t         buflen,                      /**< [in] length of the input buffer */
+    uint8_t        key_type,
+    bool           pubkey                       /**< [in] buffer is a public key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
     ((void)key_type);
 
-    if (NULL != ctx)
+    if ((NULL != ctx) && (NULL != buf) && ((size_t)INT_MAX > buflen))
     {
         ctx->ptr = EVP_PKEY_new();
 
@@ -624,7 +649,7 @@ ATCA_STATUS atcac_pk_init(
                     BN_free(d);
                 }
 
-                if(1 == ret)
+                if (1 == ret)
                 {
                     ret = EC_KEY_set_public_key(ec_key, ec_point);
                 }
@@ -669,8 +694,10 @@ ATCA_STATUS atcac_pk_init_pem(
 
     if (NULL != ctx)
     {
-        if (buflen <= INT_MAX)
+        if (buflen <= (size_t)INT_MAX)
         {
+            /* coverity[cert_exp40_c_violation] Correct usage of OpenSSL 1.1 API */
+            /* coverity[misra_c_2012_rule_11_8_violation] Correct usage of OpenSSL 1.1 API */
             BIO* bio = BIO_new_mem_buf((void*)buf, (int)buflen);
             if (pubkey)
             {
@@ -725,7 +752,7 @@ ATCA_STATUS atcac_pk_public(
         int ret = -1;
         if (EVP_PKEY_EC == EVP_PKEY_id((EVP_PKEY*)ctx->ptr))
         {
-            EC_KEY * ec_key = EVP_PKEY_get0_EC_KEY((EVP_PKEY*)ctx->ptr);
+            const EC_KEY * ec_key = EVP_PKEY_get0_EC_KEY((EVP_PKEY*)ctx->ptr);
             if (NULL != ec_key)
             {
                 BIGNUM * x = BN_new();
@@ -761,11 +788,13 @@ ATCA_STATUS atcac_pk_sign(
     ATCA_STATUS status = ATCA_BAD_PARAM;
     int ret = 0;
 
-    if (NULL != ctx && NULL != ctx->ptr)
+    if ((NULL != ctx) && (NULL != ctx->ptr) && (ATCA_SHA2_256_DIGEST_SIZE == dig_len))
     {
         if (EVP_PKEY_EC == EVP_PKEY_id((EVP_PKEY*)ctx->ptr))
         {
-            ECDSA_SIG* ec_sig = ECDSA_do_sign(digest, (int)dig_len, EVP_PKEY_get0_EC_KEY((EVP_PKEY*)ctx->ptr));
+            /* coverity[cert_exp40_c_violation] Correct usage of OpenSSL 1.1 API */
+            /* coverity[misra_c_2012_rule_11_8_violation] Correct usage of OpenSSL 1.1 API */
+            ECDSA_SIG* ec_sig = ECDSA_do_sign(digest, (int)dig_len, (EC_KEY*)EVP_PKEY_get0_EC_KEY((EVP_PKEY*)ctx->ptr));
 
             if (NULL != ec_sig)
             {
@@ -818,17 +847,17 @@ ATCA_STATUS atcac_pk_sign(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_verify(
-    atcac_pk_ctx*   ctx,
-    const uint8_t*  digest,
-    size_t          dig_len,
-    const uint8_t*  signature,
-    size_t          sig_len
+    atcac_pk_ctx*  ctx,
+    const uint8_t* digest,
+    size_t         dig_len,
+    const uint8_t* signature,
+    size_t         sig_len
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
     int ret = 0;
 
-    if (NULL != ctx && NULL != ctx->ptr)
+    if ((NULL != ctx) && (NULL != ctx->ptr) && (ATCA_SHA2_256_DIGEST_SIZE == dig_len))
     {
         ret = -1;
         if (EVP_PKEY_EC == EVP_PKEY_id((EVP_PKEY*)ctx->ptr))
@@ -839,7 +868,9 @@ ATCA_STATUS atcac_pk_verify(
 
             (void)ECDSA_SIG_set0(ec_sig, r, s);
 
-            ret = ECDSA_do_verify(digest, (int)dig_len, ec_sig, EVP_PKEY_get0_EC_KEY((EVP_PKEY*)ctx->ptr));
+            /* coverity[cert_exp40_c_violation] Correct usage of OpenSSL 1.1 API */
+            /* coverity[misra_c_2012_rule_11_8_violation] Correct usage of OpenSSL 1.1 API */
+            ret = ECDSA_do_verify(digest, (int)dig_len, ec_sig, (EC_KEY*)EVP_PKEY_get0_EC_KEY((EVP_PKEY*)ctx->ptr));
             ECDSA_SIG_free(ec_sig);
         }
         else

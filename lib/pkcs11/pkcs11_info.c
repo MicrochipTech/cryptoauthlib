@@ -72,9 +72,9 @@ CK_RV pkcs11_get_lib_info(CK_INFO_PTR pInfo)
 
     /* Set up the identifier strings */
 
-    /* coverity[misra_c_2012_rule_21_6_violation] snprintf is approved for formated string writes to buffers */
+    /* coverity[misra_c_2012_rule_21_6_violation] snprintf is approved for formatted string writes to buffers */
     (void)snprintf((char*)pInfo->manufacturerID, sizeof(pInfo->manufacturerID), pkcs11_lib_manufacturer_id);
-    /* coverity[misra_c_2012_rule_21_6_violation] snprintf is approved for formated string writes to buffers */
+    /* coverity[misra_c_2012_rule_21_6_violation] snprintf is approved for formatted string writes to buffers */
     (void)snprintf((char*)pInfo->libraryDescription, sizeof(pInfo->libraryDescription), pkcs11_lib_description);
 
     /* Make sure strings are escaped properly */

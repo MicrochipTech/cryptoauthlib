@@ -8,9 +8,9 @@
 
 typedef struct
 {
-    const char *    in;
-    const char *    out;
-    uint8_t         blocksize;
+    const char * in;
+    const char * out;
+    uint8_t      blocksize;
 } pkcs7_pad_test_vector;
 
 extern const pkcs7_pad_test_vector pkcs7_pad_test_vectors[];

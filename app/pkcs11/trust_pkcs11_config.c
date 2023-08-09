@@ -35,34 +35,34 @@
 #include "tng_root_cert.h"
 
 
-const char pkcs11_trust_device_label[] = "device";
-const char pkcs11_trust_signer_label[] = "signer";
-const char pkcs11_trust_root_label[] = "root";
+static const char pkcs11_trust_device_label[] = "device";
+static const char pkcs11_trust_signer_label[] = "signer";
+static const char pkcs11_trust_root_label[] = "root";
 
 
 /* Per PKCS11 ECDSA private keys must have a matching public key. It is
    consider best practice for these keys to have the same label and the
    library will create the matching public key object whenever a private
    key is specified in the configuration or is created with the genkey
-   mechanism. However in a static configuration it is possible to 
+   mechanism. However in a static configuration it is possible to
    circumvent this alignment by defining PKCS11_TNG_NONMATCHING_LABELS */
 #ifdef PKCS11_TNG_NONMATCHING_LABELS
-const char pkcs11_trust_device_private_key_label[] = "device private";
-const char pkcs11_trust_device_public_key_label[] = "device public";
+static const char pkcs11_trust_device_private_key_label[] = "device private";
+static const char pkcs11_trust_device_public_key_label[] = "device public";
 #else
-const char pkcs11_trust_device_private_key_label[] = "device";
-const char pkcs11_trust_device_public_key_label[] = "device";    
+static const char pkcs11_trust_device_private_key_label[] = "device";
+static const char pkcs11_trust_device_public_key_label[] = "device";
 #endif
 
 /* Helper function to assign the proper fields to an certificate object from a cert def */
-CK_RV pkcs11_trust_config_cert(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pLabel)
+static CK_RV pkcs11_trust_config_cert(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pLabel)
 {
     CK_RV rv = CKR_OK;
 
     (void)pLibCtx;
     (void)pSlot;
 
-    if (!pObject || !pLabel)
+    if ((NULL == pObject) || (NULL == pLabel))
     {
         return CKR_ARGUMENTS_BAD;
     }
@@ -72,29 +72,30 @@ CK_RV pkcs11_trust_config_cert(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr p
         return CKR_ARGUMENTS_BAD;
     }
 
-    if (!strncmp(pkcs11_trust_device_label, (char*)pLabel->pValue, pLabel->ulValueLen))
+    if (0 == strncmp(pkcs11_trust_device_label, (char*)pLabel->pValue, pLabel->ulValueLen))
     {
         /* Slot 10 - Device Cert for Slot 0*/
-        pkcs11_config_init_cert(pObject, pLabel->pValue, pLabel->ulValueLen);
+        (void)pkcs11_config_init_cert(pObject, (char*)pLabel->pValue, pLabel->ulValueLen);
         pObject->slot = 10;
         pObject->flags |= PKCS11_OBJECT_FLAG_TRUST_TYPE;
         pObject->class_type = CK_CERTIFICATE_CATEGORY_TOKEN_USER;
 
     }
-    else if (!strncmp(pkcs11_trust_signer_label, (char*)pLabel->pValue, pLabel->ulValueLen))
+    else if (0 == strncmp(pkcs11_trust_signer_label, (char*)pLabel->pValue, pLabel->ulValueLen))
     {
         /* Slot 12 - Signer Cert for Slot 10 */
-        pkcs11_config_init_cert(pObject, pLabel->pValue, pLabel->ulValueLen);
+        (void)pkcs11_config_init_cert(pObject, (char*)pLabel->pValue, pLabel->ulValueLen);
         pObject->slot = 12;
         pObject->flags |= PKCS11_OBJECT_FLAG_TRUST_TYPE;
         pObject->class_type = CK_CERTIFICATE_CATEGORY_AUTHORITY;
     }
-    else if (!strncmp(pkcs11_trust_root_label, (char*)pLabel->pValue, pLabel->ulValueLen))
+    else if (0 == strncmp(pkcs11_trust_root_label, (char*)pLabel->pValue, pLabel->ulValueLen))
     {
         /* Slot 12 - Signer Cert for Slot 10 */
-        pkcs11_config_init_cert(pObject, pLabel->pValue, pLabel->ulValueLen);
+        (void)pkcs11_config_init_cert(pObject, (char*)pLabel->pValue, pLabel->ulValueLen);
         pObject->slot = 0xFFFF;
         pObject->flags |= PKCS11_OBJECT_FLAG_TRUST_TYPE;
+        /* coverity[cert_str30_c_violation] Implementation treats input attributes as constants */
         pObject->data = (CK_VOID_PTR)&g_cryptoauth_root_ca_002_cert;
         pObject->size = (CK_ULONG)g_cryptoauth_root_ca_002_cert_size;
         pObject->class_type = CK_CERTIFICATE_CATEGORY_AUTHORITY;
@@ -115,14 +116,15 @@ CK_RV pkcs11_trust_config_cert(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr p
     return rv;
 }
 
+#if PKCS11_USE_STATIC_CONFIG
 /* Helper function to assign the proper fields to a key object */
-CK_RV pkcs11_trust_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pLabel)
+static CK_RV pkcs11_trust_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pLabel)
 {
     CK_RV rv = CKR_OK;
 
     (void)pLibCtx;
 
-    if (!pObject || !pLabel || !pSlot)
+    if ((NULL == pObject) || (NULL == pLabel) || (NULL == pSlot))
     {
         return CKR_ARGUMENTS_BAD;
     }
@@ -132,18 +134,18 @@ CK_RV pkcs11_trust_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pS
         return CKR_ARGUMENTS_BAD;
     }
 
-    if (!strncmp(pkcs11_trust_device_private_key_label, (char*)pLabel->pValue, pLabel->ulValueLen))
+    if (0 == strncmp(pkcs11_trust_device_private_key_label, (char*)pLabel->pValue, pLabel->ulValueLen))
     {
         /* slot 0 - Device Private Key */
-        pkcs11_config_init_private(pObject, pLabel->pValue, pLabel->ulValueLen);
+        (void)pkcs11_config_init_private(pObject, pLabel->pValue, pLabel->ulValueLen);
         pObject->slot = 0;
         pObject->flags |= PKCS11_OBJECT_FLAG_TRUST_TYPE;
         pObject->config = &pSlot->cfg_zone;
     }
-    else if (!strncmp(pkcs11_trust_device_public_key_label, (char*)pLabel->pValue, pLabel->ulValueLen))
+    else if (0 == strncmp(pkcs11_trust_device_public_key_label, (char*)pLabel->pValue, pLabel->ulValueLen))
     {
         /* slot 0 - Device Public Key */
-        pkcs11_config_init_public(pObject, pLabel->pValue, pLabel->ulValueLen);
+        (void)pkcs11_config_init_public(pObject, pLabel->pValue, pLabel->ulValueLen);
         pObject->slot = 0;
         pObject->flags |= PKCS11_OBJECT_FLAG_TRUST_TYPE;
         pObject->config = &pSlot->cfg_zone;
@@ -155,6 +157,7 @@ CK_RV pkcs11_trust_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pS
 
     return rv;
 }
+#endif
 
 CK_RV pkcs11_trust_load_objects(pkcs11_slot_ctx_ptr pSlot)
 {
@@ -162,13 +165,18 @@ CK_RV pkcs11_trust_load_objects(pkcs11_slot_ctx_ptr pSlot)
     CK_RV rv = CKR_OK;
     CK_ATTRIBUTE xLabel;
 
+    if (NULL == pSlot)
+    {
+        rv = CKR_ARGUMENTS_BAD;
+    }
+
     if (CKR_OK == rv)
     {
         rv = pkcs11_object_alloc(pSlot->slot_id, &pObject);
-        if (pObject)
+        if (NULL != pObject)
         {
             /* Slot 0 - Device Private Key */
-            pkcs11_config_init_private(pObject, (char*)pkcs11_trust_device_private_key_label, strlen(pkcs11_trust_device_private_key_label));
+            (void)pkcs11_config_init_private(pObject, pkcs11_trust_device_private_key_label, strlen(pkcs11_trust_device_private_key_label));
             pObject->slot = 0;
             pObject->flags |= PKCS11_OBJECT_FLAG_TRUST_TYPE;
             pObject->config = &pSlot->cfg_zone;
@@ -178,10 +186,10 @@ CK_RV pkcs11_trust_load_objects(pkcs11_slot_ctx_ptr pSlot)
     if (CKR_OK == rv)
     {
         rv = pkcs11_object_alloc(pSlot->slot_id, &pObject);
-        if (pObject)
+        if (NULL != pObject)
         {
             /* Slot 0 - Device Public Key */
-            pkcs11_config_init_public(pObject, (char*)pkcs11_trust_device_public_key_label, strlen(pkcs11_trust_device_public_key_label));
+            (void)pkcs11_config_init_public(pObject, pkcs11_trust_device_public_key_label, strlen(pkcs11_trust_device_public_key_label));
             pObject->slot = 0;
             pObject->flags |= PKCS11_OBJECT_FLAG_TRUST_TYPE;
             pObject->config = &pSlot->cfg_zone;
@@ -191,26 +199,32 @@ CK_RV pkcs11_trust_load_objects(pkcs11_slot_ctx_ptr pSlot)
     if (CKR_OK == rv)
     {
         rv = pkcs11_object_alloc(pSlot->slot_id, &pObject);
-        if (pObject)
+        if (NULL != pObject)
         {
             /* Device Certificate */
+            /* coverity[cert_exp40_c_violation] Implementation treats input attributes as constants */
+            /* coverity[cert_str30_c_violation] Implementation treats input attributes as constants */
+            /* coverity[misra_c_2012_rule_11_8_violation] Implementation treats input attributes as constants */
             xLabel.pValue = (CK_VOID_PTR)pkcs11_trust_device_label;
-            xLabel.ulValueLen = (CK_ULONG)strlen(xLabel.pValue);
+            xLabel.ulValueLen = (CK_ULONG)strlen(pkcs11_trust_device_label);
             xLabel.type = CKA_LABEL;
-            pkcs11_trust_config_cert(NULL, pSlot, pObject, &xLabel);
+            (void)pkcs11_trust_config_cert(NULL, pSlot, pObject, &xLabel);
         }
     }
 
     if (CKR_OK == rv)
     {
         rv = pkcs11_object_alloc(pSlot->slot_id, &pObject);
-        if (pObject)
+        if (NULL != pObject)
         {
             /* Signer Certificate */
+            /* coverity[cert_exp40_c_violation] Implementation treats input attributes as constants */
+            /* coverity[cert_str30_c_violation] Implementation treats input attributes as constants */
+            /* coverity[misra_c_2012_rule_11_8_violation] Implementation treats input attributes as constants */
             xLabel.pValue = (CK_VOID_PTR)pkcs11_trust_signer_label;
-            xLabel.ulValueLen = (CK_ULONG)strlen(xLabel.pValue);
+            xLabel.ulValueLen = (CK_ULONG)strlen(pkcs11_trust_signer_label);
             xLabel.type = CKA_LABEL;
-            pkcs11_trust_config_cert(NULL, pSlot, pObject, &xLabel);
+            (void)pkcs11_trust_config_cert(NULL, pSlot, pObject, &xLabel);
         }
     }
 

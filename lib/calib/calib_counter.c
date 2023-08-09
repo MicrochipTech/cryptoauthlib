@@ -35,6 +35,11 @@
 #include "cryptoauthlib.h"
 
 #if CALIB_COUNTER_EN
+
+#if (CA_MAX_PACKET_SIZE < ATCA_CMD_SIZE_MIN)
+#error "Counter command packet cannot be accommodated inside the maximum packet size provided"
+#endif
+
 /** \brief Compute the Counter functions
  *  \param[in]  device         Device context pointer
  *  \param[in]  mode           the mode used for the counter

@@ -30,9 +30,9 @@
 
 #if ATCAC_VERIFY_EN && ATCACERT_COMPCERT_EN
 ATCA_STATUS atcacert_verify_cert_sw(const atcacert_def_t* cert_def,
-                            const uint8_t*        cert,
-                            size_t                cert_size,
-                            const uint8_t         ca_public_key[64])
+                                    const uint8_t*        cert,
+                                    size_t                cert_size,
+                                    const uint8_t         ca_public_key[64])
 {
     ATCA_STATUS ret = 0;
     uint8_t tbs_digest[32];
@@ -87,8 +87,8 @@ ATCA_STATUS atcacert_gen_challenge_sw(uint8_t challenge[32])
 
 #if ATCAC_VERIFY_EN
 ATCA_STATUS atcacert_verify_response_sw(const uint8_t device_public_key[64],
-                                const uint8_t challenge[32],
-                                const uint8_t response[64])
+                                        const uint8_t challenge[32],
+                                        const uint8_t response[64])
 {
     atcac_pk_ctx pkey_ctx;
     ATCA_STATUS ret = ATCACERT_E_BAD_PARAMS;

@@ -50,9 +50,9 @@ ATCA_STATUS calib_wakeup_i2c(ATCADevice device)
 
         do
         {
-            if (100000UL < ATCA_IFACECFG_VALUE(iface->mIfaceCFG, atcai2c.baud))
+            if (100000u < ATCA_IFACECFG_VALUE(iface->mIfaceCFG, atcai2c.baud))
             {
-                temp = 100000UL;
+                temp = 100000u;
                 status = atcontrol(iface, (uint8_t)ATCA_HAL_CHANGE_BAUD, &temp, sizeof(temp));
                 if (ATCA_UNIMPLEMENTED == status)
                 {
@@ -88,7 +88,7 @@ ATCA_STATUS calib_wakeup_i2c(ATCADevice device)
                 status = atreceive(iface, address, (uint8_t*)&wake, &rxlen);
             }
 
-            if ((ATCA_SUCCESS == status) && (100000UL < ATCA_IFACECFG_I2C_BAUD(iface->mIfaceCFG)))
+            if ((ATCA_SUCCESS == status) && (100000u < ATCA_IFACECFG_I2C_BAUD(iface->mIfaceCFG)))
             {
                 temp = ATCA_IFACECFG_I2C_BAUD(iface->mIfaceCFG);
                 status = atcontrol(iface, (uint8_t)ATCA_HAL_CHANGE_BAUD, &temp, sizeof(temp));

@@ -31,7 +31,26 @@
 #ifndef ATCA_COMPILER_H_
 #define ATCA_COMPILER_H_
 
-#if defined(__clang__)
+#if defined(__XC8) || defined(__XC16)
+/* Microchip XC8 and XC16 Compilers ------------------------- */
+#ifndef SIZE_MAX
+/* coverity[misra_c_2012_rule_21_1_violation:SUPPRESS] */
+#define SIZE_MAX 65535
+#endif
+
+#define ATCA_UINT16_HOST_TO_LE(x)  (x)
+#define ATCA_UINT16_LE_TO_HOST(x)  (x)
+#define ATCA_UINT32_HOST_TO_LE(x)  (x)
+#define ATCA_UINT16_HOST_TO_BE(x)  ((((x) & 0x00FF) << 8) | (((x) & 0xFF00) >> 8))
+#define ATCA_UINT16_BE_TO_HOST(x)  ((((x) & 0x00FF) << 8) | (((x) & 0xFF00) >> 8))
+#define ATCA_UINT32_HOST_TO_BE(x)  ((((x) & 0x000000FFU) << 24U) | (((x) & 0x0000FF00U) << 8U) | (((x) & 0x00FF0000U) >> 8U) | (((x) & 0xFF000000U) >> 24U))
+#define ATCA_UINT32_BE_TO_HOST(x)  ((((x) & 0x000000FFU) << 24U) | (((x) & 0x0000FF00U) << 8U) | (((x) & 0x00FF0000U) >> 8U) | (((x) & 0xFF000000U) >> 24U))
+#define ATCA_UINT64_HOST_TO_BE(x)  ((uint64_t)ATCA_UINT32_HOST_TO_BE((uint32_t)(x)) << 32 + (uint64_t)ATCA_UINT32_HOST_TO_BE((uint32_t)((x) >> 32)))
+#define ATCA_UINT64_BE_TO_HOST(x)  ((uint64_t)ATCA_UINT32_BE_TO_HOST((uint32_t)(x)) << 32 + (uint64_t)ATCA_UINT32_BE_TO_HOST((uint32_t)((x) >> 32)))
+#define SHARED_LIB_EXPORT
+#define SHARED_LIB_IMPORT       extern
+
+#elif defined(__clang__)
 /* Clang/LLVM. ---------------------------------------------- */
 #pragma clang diagnostic ignored "-Wunknown-pragmas"
 
@@ -66,32 +85,11 @@
 #define SHARED_LIB_IMPORT       extern
 #endif
 
-#elif defined(__XC8) || defined(__XC16)
-/* Microchip XC8 and XC16 Compilers ------------------------- */
-#ifndef SIZE_MAX
-/* coverity[misra_c_2012_rule_21_1_violation:SUPPRESS] */
-#define SIZE_MAX 65535
-#endif
-
-#define ATCA_UINT16_HOST_TO_LE(x)  (x)
-#define ATCA_UINT16_LE_TO_HOST(x)  (x)
-#define ATCA_UINT32_HOST_TO_LE(x)  (x)
-#define ATCA_UINT16_HOST_TO_BE(x)  ((((x) & 0x00FF) << 8) | (((x) & 0xFF00) >> 8))
-#define ATCA_UINT16_BE_TO_HOST(x)  ((((x) & 0x00FF) << 8) | (((x) & 0xFF00) >> 8))
-#define ATCA_UINT32_HOST_TO_BE(x)  ((((x) & 0x000000FFU) << 24U) | (((x) & 0x0000FF00U) << 8U) | (((x) & 0x00FF0000U) >> 8U) | (((x) & 0xFF000000U) >> 24U))
-#define ATCA_UINT32_BE_TO_HOST(x)  ((((x) & 0x000000FFU) << 24U) | (((x) & 0x0000FF00U) << 8U) | (((x) & 0x00FF0000U) >> 8U) | (((x) & 0xFF000000U) >> 24U))
-#define ATCA_UINT64_HOST_TO_BE(x)  ((uint64_t)ATCA_UINT32_HOST_TO_BE((uint32_t)(x)) << 32 + (uint64_t)ATCA_UINT32_HOST_TO_BE((uint32_t)((x) >> 32)))
-#define ATCA_UINT64_BE_TO_HOST(x)  ((uint64_t)ATCA_UINT32_BE_TO_HOST((uint32_t)(x)) << 32 + (uint64_t)ATCA_UINT32_BE_TO_HOST((uint32_t)((x) >> 32)))
-#define SHARED_LIB_EXPORT
-#define SHARED_LIB_IMPORT       extern
-
 //#elif defined(__ICC) || defined(__INTEL_COMPILER)
 /* Intel ICC/ICPC. ------------------------------------------ */
 
 #elif defined(__GNUC__) || defined(__GNUG__)
 /* GNU GCC/G++. --------------------------------------------- */
-#pragma GCC diagnostic ignored "-Wunknown-pragmas"
-
 #if defined(__AVR32__)
 #define ATCA_UINT16_HOST_TO_LE(x)  __builtin_bswap_16(x)
 #define ATCA_UINT16_LE_TO_HOST(x)  __builtin_bswap_16(x)
@@ -144,7 +142,6 @@
 
 #elif defined(_MSC_VER)
 /* Microsoft Visual Studio. --------------------------------- */
-#pragma warning(disable:4068)   //Unknown pragma warning
 #pragma warning(disable:5045)   //Spectre mitigation informative
 #pragma warning(disable:4820)   //Stucture packing
 #pragma warning(disable:4061)   //Missing enumerations from switch statements

@@ -68,6 +68,8 @@ struct atca_device
 
     uint16_t options;                   /**< Nested command details parameter */
 
+    bool write_xfer_req;                /**< Set for Write_transfer operation */
+    bool read_xfer_req;                 /**< Set for Read_transfer operation */
 };
 
 typedef struct atca_device * ATCADevice;

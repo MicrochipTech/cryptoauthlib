@@ -15,6 +15,7 @@ option(ATCA_HAL_SWI_UART "Include the SWI using UART Driver")
 
 # Library Options
 option(ATCA_PRINTF "Enable Debug print statements in library")
+option(ATCA_JWT_EN "Enable jwt functionality")
 option(ATCA_PKCS11 "Build PKCS11 Library")
 option(ATCA_BUILD_SHARED_LIBS "Build CryptoAuthLib as shared library" ON)
 option(ATCA_NO_HEAP "Do not use dynamic (heap) allocation functions" OFF)
@@ -49,10 +50,20 @@ option(ATCA_TA010_SUPPORT "Include support for TA010 device" ON)
 option(ATCA_SHA104_SUPPORT "Include support for SHA104 device" ON)
 option(ATCA_SHA105_SUPPORT "Include support for SHA105 device" ON)
 
+# Preprocessor Warning option
+if (NOT MSVC)
+option(ATCA_PREPROCESSOR_WARNING "Enable preprocessor warning statements in library" OFF)
+else()
+SET(ATCA_PREPROCESSOR_WARNING OFF CACHE BOOL "Force the option to OFF since visual studio compiler does not support corresponding preprocessor directive" FORCE)
+endif()
+
 # RTOS Selection
 if (TARGET zephyr_interface)
 SET(ATCA_ZEPHYR_SUPPORT ON CACHE INTERNAL "Include zephyr hal drivers")
 endif()
+
+# Set maximum packet size that is allowed in bytes
+SET(MAX_PACKET_SIZE 1035 CACHE STRING "Dafault packet size allowed in bytes")
 
 # TA100 Dependent Configuration options
 cmake_dependent_option(ATCA_TA100_AES_AUTH_SUPPORT "Include Encrypted (GCM) and CMAC Auth session support" ON "ATCA_TA100_SUPPORT" OFF)
@@ -343,9 +354,13 @@ set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${MBEDTLS_SRC})
 endif()
 
 if(ATCA_PKCS11)
-include(cmake/pkcs11.cmake)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${PKCS11_SRC})
-set(ATCA_LIBRARY_CONF ${DEFAULT_CONF_PATH}/${DEFAULT_CONF_FILE_NAME} CACHE STRING "" FORCE)
+    if(LINUX OR ATCA_ZEPHYR_SUPPORT)
+        include(cmake/pkcs11.cmake)
+        set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${PKCS11_SRC})
+        set(ATCA_LIBRARY_CONF ${DEFAULT_CONF_PATH}/${DEFAULT_CONF_FILE_NAME} CACHE STRING "" FORCE)
+    else()
+        message(FATAL_ERROR "PKCS11 Interface is only available for linux systems - if the target is linux check cross-compilation configuration")
+    endif()
 endif()
 
 if(ATCA_BUILD_SHARED_LIBS)

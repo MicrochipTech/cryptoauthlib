@@ -134,7 +134,7 @@ TEST_CONDITION(atca_cmd_basic_test, read_otp_zone)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return (atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type));
+    return atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type);
 }
 
 TEST(atca_cmd_basic_test, read_otp_zone)

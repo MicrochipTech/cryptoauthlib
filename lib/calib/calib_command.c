@@ -414,10 +414,10 @@ ATCA_STATUS atSecureBoot(ATCADeviceType device_type, ATCAPacket *packet)
         status = ATCA_BAD_PARAM;
         break;
     }
-    
-    if (ATCA_SUCCESS == status) 
-    { 
-        atCalcCrc(packet); 
+
+    if (ATCA_SUCCESS == status)
+    {
+        atCalcCrc(packet);
     }
 
     return status;
@@ -731,10 +731,11 @@ void atCalcCrc(ATCAPacket *packet)
 
     packet->param2 = ATCA_UINT16_HOST_TO_LE(packet->param2);
 
-    length = (uint8_t)((packet->txsize - ATCA_CRC_SIZE) & UINT8_MAX);
+    /* coverity[cert_int31_c_violation] txsize is properly set so length will not underflow */
+    length = (packet->txsize - (uint8_t)ATCA_CRC_SIZE) & UINT8_MAX;
 
     // calculate crc location
-    crc = &packet->data[length - (ATCA_CMD_SIZE_MIN - ATCA_CRC_SIZE)];
+    crc = &packet->data[length - ((uint8_t)ATCA_CMD_SIZE_MIN - (uint8_t)ATCA_CRC_SIZE)];
 
     // stuff CRC into packet
     atCRC(length, &(packet->txsize), crc);
@@ -751,7 +752,7 @@ ATCA_STATUS atCheckCrc(const uint8_t *response)
     uint8_t crc[ATCA_CRC_SIZE];
     uint8_t count = response[ATCA_COUNT_IDX];
 
-    count -= ATCA_CRC_SIZE;
+    count -= (uint8_t)ATCA_CRC_SIZE;
     atCRC(count, response, crc);
 
     return (crc[0] == response[count] && crc[1] == response[count + 1u]) ? ATCA_SUCCESS : ATCA_RX_CRC_ERROR;
@@ -770,11 +771,11 @@ bool atIsSHAFamily(ATCADeviceType device_type)
     switch (device_type)
     {
     case SHA104:
-        /* fallthrough */
+    /* fallthrough */
     case SHA105:
-        /* fallthrough */
+    /* fallthrough */
     case ATSHA204A:
-        /* fallthrough */
+    /* fallthrough */
     case ATSHA206A:
         is_sha_family = true;
         break;
@@ -798,13 +799,13 @@ bool atIsECCFamily(ATCADeviceType device_type)
     switch (device_type)
     {
     case ATECC108A:
-        /* fallthrough */
+    /* fallthrough */
     case ATECC508A:
-        /* fallthrough */
+    /* fallthrough */
     case ATECC608:
-        /* fallthrough */
+    /* fallthrough */
     case ECC204:
-        /* fallthrough */
+    /* fallthrough */
     case TA010:
         is_ecc_family = true;
         break;

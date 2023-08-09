@@ -38,6 +38,11 @@
 #include "host/atca_host.h"
 
 #if CALIB_ECDH_EN
+
+#if (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + ATCA_PUB_KEY_SIZE))
+#error "ECDH command packet cannot be accommodated inside the maximum packet size provided"
+#endif
+
 /** \brief Base function for generating premaster secret key using ECDH.
  *  \param[in]  device      Device context pointer
  *  \param[in]  mode        Mode to be used for ECDH computation

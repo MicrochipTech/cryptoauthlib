@@ -25,8 +25,7 @@
  * THIS SOFTWARE.
  */
 
-#include "atca_config.h"
-#include "atca_status.h"
+#include "cryptoauthlib.h"
 #include "crypto/atca_crypto_sw.h"
 
 #ifdef ATCA_WOLFSSL
@@ -35,21 +34,30 @@
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
-int atcac_sw_random(uint8_t* data, size_t data_size)
+ATCA_STATUS atcac_sw_random(uint8_t* data, size_t data_size)
 {
+    ATCA_STATUS status = ATCA_BAD_PARAM;
     RNG rng;
-    int ret = wc_InitRng(&rng);
 
-    if (ret != 0)
+    if (0 == wc_InitRng(&rng))
     {
-        return ATCA_GEN_FAIL;
+        if (UINT32_MAX <= data_size)
+        {
+            if (0 == wc_RNG_GenerateBlock(&rng, data, (word32)data_size))
+            {
+                status = ATCA_SUCCESS;
+            }
+            else
+            {
+                status =  ATCA_GEN_FAIL;
+            }
+        }
     }
-    ret = wc_RNG_GenerateBlock(&rng, data, data_size);
-    if (ret != 0)
+    else
     {
-        return ATCA_GEN_FAIL;
+        status =  ATCA_GEN_FAIL;
     }
-    return ATCA_SUCCESS;
+    return status;
 }
 
 /** \brief Initialize an AES-GCM context
@@ -289,11 +297,14 @@ ATCA_STATUS atcac_aes_cmac_finish(
  */
 ATCA_STATUS atcac_sha256_hmac_init(
     atcac_hmac_sha256_ctx* ctx,                 /**< [in] pointer to a sha256-hmac context */
+    atcac_sha2_256_ctx*    sha256_ctx,          /**< [in] pointer to a sha256 context */
     const uint8_t*         key,                 /**< [in] key value to use */
     const uint8_t          key_len              /**< [in] length of the key */
     )
 {
     int ret = wc_HmacInit(ctx, NULL, 0);
+
+    (void)sha256_ctx;
 
     if (!ret)
     {
@@ -340,11 +351,11 @@ ATCA_STATUS atcac_sha256_hmac_finish(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_init(
-    atcac_pk_ctx*   ctx,                          /**< [in] pointer to a pk context */
-    const uint8_t*  buf,                          /**< [in] buffer containing a pem encoded key */
-    size_t          buflen,                       /**< [in] length of the input buffer */
-    uint8_t         key_type,
-    bool            pubkey                        /**< [in] buffer is a public key */
+    atcac_pk_ctx*  ctx,                           /**< [in] pointer to a pk context */
+    const uint8_t* buf,                           /**< [in] buffer containing a pem encoded key */
+    size_t         buflen,                        /**< [in] length of the input buffer */
+    uint8_t        key_type,
+    bool           pubkey                         /**< [in] buffer is a public key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -417,7 +428,7 @@ ATCA_STATUS atcac_pk_init_pem(
             type = ECC_PUBLICKEY_TYPE;
         }
 
-        ret = PemToDer((unsigned char*)buf, (long)buflen, type, &der, NULL, NULL, &ecckey);
+        ret = PemToDer((const unsigned char*)buf, (long)buflen, type, &der, NULL, NULL, &ecckey);
 
         if ((ret >= 0) && (der != NULL))
         {
@@ -514,14 +525,14 @@ ATCA_STATUS atcac_pk_sign(
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (ctx && ctx->ptr && signature && digest && sig_len)
+    if ((NULL != ctx) && (NULL != ctx->ptr) && (NULL != signature) && (NULL != digest) && (NULL != sig_len))
     {
         WC_RNG rng;
         int ret = wc_InitRng(&rng);
 
         if (!ret)
         {
-            if (!wc_ecc_check_key((ecc_key*)ctx->ptr))
+            if ((0 == wc_ecc_check_key((ecc_key*)ctx->ptr)) && (ATCA_SHA256_DIGEST_SIZE == dig_len))
             {
                 uint8_t sig[72];
                 word32 siglen = sizeof(sig);
@@ -556,29 +567,30 @@ ATCA_STATUS atcac_pk_sign(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_verify(
-    atcac_pk_ctx*   ctx,
-    const uint8_t*  digest,
-    size_t          dig_len,
-    const uint8_t*  signature,
-    size_t          sig_len
+    atcac_pk_ctx*  ctx,
+    const uint8_t* digest,
+    size_t         dig_len,
+    const uint8_t* signature,
+    size_t         sig_len
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (ctx && ctx->ptr && signature && digest)
+    if ((NULL != ctx) && (NULL != ctx->ptr) && (NULL != signature) && (NULL != digest)
+        && (ATCA_SHA256_DIGEST_SIZE == dig_len))
     {
         int ret = -1;
         int res = 0;
-        if (!wc_ecc_check_key((ecc_key*)ctx->ptr))
+        if (0 == wc_ecc_check_key((ecc_key*)ctx->ptr) && ATCA_ECCP256_SIG_SIZE == sig_len)
         {
             uint8_t sig[72];
-            sig_len = sizeof(sig);
+            word32 len = sizeof(sig);
 
-            ret = wc_ecc_rs_raw_to_sig(signature, 32, &signature[32], 32, (byte*)sig, (word32*)&sig_len);
+            ret = wc_ecc_rs_raw_to_sig(signature, 32, &signature[32], 32, (byte*)sig, &len);
 
             if (!ret)
             {
-                ret = wc_ecc_verify_hash((byte*)sig, (word32)sig_len, (byte*)digest, (word32)dig_len, &res, (ecc_key*)ctx->ptr);
+                ret = wc_ecc_verify_hash((byte*)sig, len, (byte*)digest, (word32)dig_len, &res, (ecc_key*)ctx->ptr);
             }
         }
         else

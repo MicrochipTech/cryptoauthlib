@@ -35,6 +35,7 @@
 #include <stdint.h>
 #include "atcacert_def.h"
 
+
 // Inform function naming when compiling in C++
 #ifdef __cplusplus
 extern "C" {
@@ -56,7 +57,19 @@ extern "C" {
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_read_device_loc(const atcacert_device_loc_t* device_loc,
-                             uint8_t*                     data);
+                                     uint8_t*                     data);
+
+/** \brief Read the data from a device location.
+ *
+ * \param[in]  device      Device context
+ * \param[in]  device_loc  Device location to read data from.
+ * \param[out] data        Data read is returned here.
+ *
+ * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcacert_read_device_loc_ext(ATCADevice                   device,
+                                         const atcacert_device_loc_t* device_loc,
+                                         uint8_t*                     data);
 
 /**
  * \brief Reads the certificate specified by the certificate definition from the
@@ -81,9 +94,38 @@ ATCA_STATUS atcacert_read_device_loc(const atcacert_device_loc_t* device_loc,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_read_cert(const atcacert_def_t* cert_def,
-                       const uint8_t         ca_public_key[64],
-                       uint8_t*              cert,
-                       size_t*               cert_size);
+                               const uint8_t         ca_public_key[64],
+                               uint8_t*              cert,
+                               size_t*               cert_size);
+
+/**
+ * \brief Reads the certificate specified by the certificate definition from the
+ *        ATECC508A device.
+ *
+ * This process involves reading the dynamic cert data from the device and combining it
+ * with the template found in the certificate definition.
+ *
+ * \param[in]    device         Device context
+ * \param[in]    cert_def       Certificate definition describing where to find the dynamic
+ *                              certificate information on the device and how to incorporate it
+ *                              into the template.
+ * \param[in]    ca_public_key  The ECC P256 public key of the certificate authority that signed
+ *                              this certificate. Formatted as the 32 byte X and Y integers
+ *                              concatenated together (64 bytes total). Set to NULL if the
+ *                              authority key id is not needed, set properly in the cert_def
+ *                              template, or stored on the device as specifed in the
+ *                              cert_def cert_elements.
+ * \param[out]   cert           Buffer to received the certificate.
+ * \param[in,out] cert_size      As input, the size of the cert buffer in bytes.
+ *                              As output, the size of the certificate returned in cert in bytes.
+ *
+ * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcacert_read_cert_ext(ATCADevice            device,
+                                   const atcacert_def_t* cert_def,
+                                   const uint8_t         ca_public_key[64],
+                                   uint8_t*              cert,
+                                   size_t*               cert_size);
 
 /**
  * \brief Take a full certificate and write it to the ATECC508A device according to the
@@ -93,12 +135,31 @@ ATCA_STATUS atcacert_read_cert(const atcacert_def_t* cert_def,
  *                       information is and how to store it on the device.
  * \param[in] cert       Full certificate to be stored.
  * \param[in] cert_size  Size of the full certificate in bytes.
+ * \param[in] device     Device context
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_write_cert(const atcacert_def_t* cert_def,
-                        const uint8_t*        cert,
-                        size_t                cert_size);
+                                const uint8_t*        cert,
+                                size_t                cert_size);
+
+/**
+ * \brief Take a full certificate and write it to the ATECC508A device according to the
+ *        certificate definition.
+ *
+ * \param[in] device     Device context
+ * \param[in] cert_def   Certificate definition describing where the dynamic certificate
+ *                       information is and how to store it on the device.
+ * \param[in] cert       Full certificate to be stored.
+ * \param[in] cert_size  Size of the full certificate in bytes.
+ * \param[in] device     Device context
+ *
+ * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcacert_write_cert_ext(ATCADevice            device,
+                                    const atcacert_def_t* cert_def,
+                                    const uint8_t*        cert,
+                                    size_t                cert_size);
 
 /**
  * \brief Creates a CSR specified by the CSR definition from the ATECC508A device.
@@ -141,8 +202,8 @@ ATCA_STATUS atcacert_create_csr_pem(const atcacert_def_t* csr_def, char* csr, si
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_get_response(uint8_t       device_private_key_slot,
-                          const uint8_t challenge[32],
-                          uint8_t       response[64]);
+                                  const uint8_t challenge[32],
+                                  uint8_t       response[64]);
 
 /**
  * \brief Reads the subject key ID based on a certificate definition.
@@ -153,7 +214,20 @@ ATCA_STATUS atcacert_get_response(uint8_t       device_private_key_slot,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_read_subj_key_id(const atcacert_def_t * cert_def,
-                              uint8_t                subj_key_id[20]);
+                                      uint8_t                subj_key_id[20]);
+
+/**
+ * \brief Reads the subject key ID based on a certificate definition.
+ *
+ * \param[in]  device       Device context
+ * \param[in]  cert_def     Certificate definition
+ * \param[out] subj_key_id  Subject key ID is returned in this buffer. 20 bytes.
+ *
+ * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcacert_read_subj_key_id_ext(ATCADevice             device,
+                                          const atcacert_def_t * cert_def,
+                                          uint8_t                subj_key_id[20]);
 
 /** \brief Return the actual certificate size in bytes for a given
  *         cert def. Certificate can be variable size, so this gives the
@@ -165,7 +239,21 @@ ATCA_STATUS atcacert_read_subj_key_id(const atcacert_def_t * cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_read_cert_size(const atcacert_def_t* cert_def,
-                            size_t*               cert_size);
+                                    size_t*               cert_size);
+
+/** \brief Return the actual certificate size in bytes for a given
+ *         cert def. Certificate can be variable size, so this gives the
+ *         absolute buffer size when reading the certificates.
+ *
+ * \param[in]  device         Device context
+ * \param[in]  cert_def       Certificate definition to find a max size for.
+ * \param[out] cert_size      Certificate size will be returned here in bytes.
+ *
+ * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcacert_read_cert_size_ext(ATCADevice            device,
+                                        const atcacert_def_t* cert_def,
+                                        size_t*               cert_size);
 
 /** @} */
 #ifdef __cplusplus

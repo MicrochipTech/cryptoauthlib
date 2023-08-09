@@ -165,11 +165,11 @@ def get_device_type_id(name):
     Returns the ATCADeviceType value based on the device name
     """
     devices = { 'ATSHA204A': 0,
-               'ATECC108A': 1,
-               'ATECC508A': 2,
-               'ATECC608A': 3,
-               'ATECC608B': 3,
-               'ATECC608': 3,
+                'ATECC108A': 1,
+                'ATECC508A': 2,
+                'ATECC608A': 3,
+                'ATECC608B': 3,
+                'ATECC608': 3,
                 'ATSHA206A': 4,
                 'TA100': 0x10,
                 'ECC204': 0x20,

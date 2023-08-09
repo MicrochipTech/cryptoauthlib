@@ -152,8 +152,8 @@ typedef int ATCA_STATUS;
 #define ATCA_NOT_INITIALIZED        (-3)
 
 
-#define ATCA_STATUS_AUTH_BIT						0x40u
-#define ATCA_STATUS_AUTH_BIT_COMPLEMENT				~(ATCA_STATUS_AUTH_BIT & 0xffu)
+#define ATCA_STATUS_AUTH_BIT                        0x40u
+#define ATCA_STATUS_AUTH_BIT_COMPLEMENT             ~(ATCA_STATUS_AUTH_BIT & 0xffu)
 
 #ifdef __cplusplus
 }

@@ -31,8 +31,12 @@
 #include "jwt/atca_jwt.h"
 #include <stdio.h>
 
+#ifdef ATCA_JWT
+
+#ifdef __COVERITY__
 #pragma coverity compliance block \
-(deviate "MISRA C-2012 Rule 10.4" "Casting character constants to char type reduces readability")
+    (deviate "MISRA C-2012 Rule 10.4" "Casting character constants to char type reduces readability")
+#endif
 
 /** \brief The only supported JWT format for this library */
 static const char g_jwt_header[] = "{\"alg\":\"ES256\",\"typ\":\"JWT\"}";
@@ -205,7 +209,7 @@ ATCA_STATUS atca_jwt_finalize(
     /* Encode the signature and store it in the buffer */
     tSize = (size_t)jwt->buflen - (size_t)jwt->cur;
     status = atcab_base64encode_((const uint8_t*)(jwt->buf + jwt->buflen - ATCA_ECCP256_SIG_SIZE), ATCA_ECCP256_SIG_SIZE,
-                        &jwt->buf[jwt->cur], &tSize, atcab_b64rules_urlsafe());
+                                 &jwt->buf[jwt->cur], &tSize, atcab_b64rules_urlsafe());
     if (ATCA_SUCCESS != status)
     {
         return status;
@@ -245,7 +249,7 @@ ATCA_STATUS atca_jwt_add_claim_string(
 
         remaining = (int32_t)jwt->buflen - (int32_t)jwt->cur;
         /* coverity[cert_int31_c_violation:FALSE] remaining can never be negative */
-        /* coverity[misra_c_2012_rule_21_6_violation] snprintf is approved for formated string writes to buffers */
+        /* coverity[misra_c_2012_rule_21_6_violation] snprintf is approved for formatted string writes to buffers */
         written = snprintf(&jwt->buf[jwt->cur], (size_t)remaining, "\"%s\":\"%s\"", claim, value);
         if (0 < written && written < remaining)
         {
@@ -283,7 +287,7 @@ ATCA_STATUS atca_jwt_add_claim_numeric(
 
         remaining = (int32_t)jwt->buflen - (int32_t)jwt->cur;
         /* coverity[cert_int31_c_violation:FALSE] remaining is never negative */
-        /* coverity[misra_c_2012_rule_21_6_violation] snprintf is approved for formated string writes to buffers */
+        /* coverity[misra_c_2012_rule_21_6_violation] snprintf is approved for formatted string writes to buffers */
         written = snprintf(&jwt->buf[jwt->cur], (size_t)remaining, "\"%s\":%ld", claim, (long)value);
         if (0 < written && written < remaining)
         {
@@ -364,16 +368,16 @@ ATCA_STATUS atca_jwt_verify(
         atcac_pk_ctx pkey_ctx;
 
         /* Initialize the key using the provided X,Y cordinantes */
-        if(ATCA_SUCCESS != (status = atcac_pk_init(&pkey_ctx, pubkey, 
-                                                   sizeof(pubkey), 0, true)))
+        if (ATCA_SUCCESS != (status = atcac_pk_init(&pkey_ctx, pubkey,
+                                                    sizeof(pubkey), 0, true)))
         {
             break;
         }
 
         /* Perform the verification */
-        if(ATCA_SUCCESS == (status = atcac_pk_verify(&pkey_ctx, digest, 
-                                                     sizeof(digest), 
-                                                     signature, sizeof(signature))))
+        if (ATCA_SUCCESS == (status = atcac_pk_verify(&pkey_ctx, digest,
+                                                      sizeof(digest),
+                                                      signature, sizeof(signature))))
         {
             verified = true;
         }
@@ -393,4 +397,8 @@ ATCA_STATUS atca_jwt_verify(
 }
 #endif
 
+#ifdef __COVERITY__
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+#endif
+
+#endif

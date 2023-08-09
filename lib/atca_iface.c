@@ -61,7 +61,10 @@ ATCA_STATUS initATCAIface(ATCAIfaceCfg *cfg, ATCAIface ca_iface)
     return ATCA_SUCCESS;
 }
 
-#ifndef ATCA_NO_HEAP
+#if !defined(ATCA_NO_HEAP) && defined(ENABLE_NEWATCAIFACE)
+#if ATCA_PREPROCESSOR_WARNING
+#warning "NewATCAIface function is deprecated"
+#endif
 /** \brief Constructor for ATCAIface objects
  * \param[in] cfg  Logical configuration for the interface
  * \return New interface instance on success. NULL on failure.
@@ -77,7 +80,6 @@ ATCAIface newATCAIface(ATCAIfaceCfg *cfg)
     {
         hal_free(ca_iface);
         ca_iface = NULL;
-        return NULL;
     }
 
     return ca_iface;
@@ -96,6 +98,13 @@ ATCA_STATUS atinit(ATCAIface ca_iface)
 
     if (NULL != ca_iface)
     {
+#ifdef __XC8
+        ATCAHAL_t atca_hal, atca_phy;
+        // Mapping function pointers to point temporary locations
+        ca_iface->hal = &atca_hal;
+        ca_iface->phy = &atca_phy;
+#endif
+
         status = ATCA_TRACE(hal_iface_init(ca_iface->mIfaceCFG, &ca_iface->hal, &ca_iface->phy), "Failed to configure HAL");
 
         /* Initialize the physical interface if one is required for the hal */
@@ -103,9 +112,16 @@ ATCA_STATUS atinit(ATCAIface ca_iface)
         {
             if ((NULL != ca_iface->phy->halinit) && (NULL != ca_iface->phy->halpostinit))
             {
-                if (ATCA_SUCCESS == (status = ATCA_TRACE(ca_iface->phy->halinit(ca_iface, ca_iface->mIfaceCFG), "phyinit")))
+                if (ATCA_SUCCESS != (status = ca_iface->phy->halinit(ca_iface, ca_iface->mIfaceCFG)))
                 {
-                    status = ATCA_TRACE(ca_iface->phy->halpostinit(ca_iface), "phypostinit");
+                    status = ATCA_TRACE(ATCA_BAD_PARAM, "phyinit");
+                }
+                else
+                {
+                    if (ATCA_SUCCESS != (status = ca_iface->phy->halpostinit(ca_iface)))
+                    {
+                        status = ATCA_TRACE(ATCA_BAD_PARAM, "phypostinit");
+                    }
                 }
             }
             else
@@ -119,9 +135,16 @@ ATCA_STATUS atinit(ATCAIface ca_iface)
         {
             if ((NULL != ca_iface->hal->halinit) && (NULL != ca_iface->hal->halpostinit))
             {
-                if (ATCA_SUCCESS == (status = ATCA_TRACE(ca_iface->hal->halinit(ca_iface, ca_iface->mIfaceCFG), "halinit")))
+                if (ATCA_SUCCESS != (status = ca_iface->hal->halinit(ca_iface, ca_iface->mIfaceCFG)))
                 {
-                    status = ATCA_TRACE(ca_iface->hal->halpostinit(ca_iface), "halpostinit");
+                    status = ATCA_TRACE(ATCA_BAD_PARAM, "halinit");
+                }
+                else
+                {
+                    if (ATCA_SUCCESS != (status = ca_iface->hal->halpostinit(ca_iface)))
+                    {
+                        status = ATCA_TRACE(ATCA_BAD_PARAM, "halpostinit");
+                    }
                 }
             }
             else
@@ -412,51 +435,52 @@ uint16_t atca_iface_get_wake_delay(ATCAIface ca_iface)
 uint8_t ifacecfg_get_address(ATCAIfaceCfg * cfg)
 {
     uint8_t addr = 0xFFu;
-    if  (NULL != cfg)
+
+    if (NULL != cfg)
     {
-        switch(cfg->iface_type)
+        switch (cfg->iface_type)
         {
 #ifdef ATCA_HAL_I2C
-            case ATCA_I2C_IFACE:
+        case ATCA_I2C_IFACE:
 #ifdef ATCA_ENABLE_DEPRECATED
-                addr = ATCA_IFACECFG_VALUE(cfg, atcai2c.slave_address);
+            addr = ATCA_IFACECFG_VALUE(cfg, atcai2c.slave_address);
 #else
-                addr = ATCA_IFACECFG_VALUE(cfg, atcai2c.address);
+            addr = ATCA_IFACECFG_VALUE(cfg, atcai2c.address);
 #endif
-                break;
+            break;
 #endif
 #ifdef ATCA_HAL_SWI_UART
-            case ATCA_SWI_IFACE:
+        case ATCA_SWI_IFACE:
 #ifdef __linux__
-                addr = ATCA_IFACECFG_VALUE(cfg, atcauart.dev_identity);
+            addr = ATCA_IFACECFG_VALUE(cfg, atcauart.dev_identity);
 #else
-                addr = ATCA_IFACECFG_VALUE(cfg, atcaswi.address);
+            addr = ATCA_IFACECFG_VALUE(cfg, atcaswi.address);
 #endif
-                break;
+            break;
 #endif
 #ifdef ATCA_HAL_KIT_UART
-            case ATCA_UART_IFACE:
-                addr = ATCA_IFACECFG_VALUE(cfg, atcauart.dev_identity);
-                break;
+        case ATCA_UART_IFACE:
+            addr = ATCA_IFACECFG_VALUE(cfg, atcauart.dev_identity);
+            break;
 #endif
 #ifdef ATCA_HAL_KIT_HID
-            case ATCA_HID_IFACE:
-                addr = ATCA_IFACECFG_VALUE(cfg, atcahid.dev_identity);
-                break;
+        case ATCA_HID_IFACE:
+            addr = ATCA_IFACECFG_VALUE(cfg, atcahid.dev_identity);
+            break;
 #endif
 #ifdef ATCA_HAL_KIT_BRIDGE
-            case ATCA_KIT_IFACE:
-                addr = ATCA_IFACECFG_VALUE(cfg, atcakit.dev_identity);
-                break;
+        case ATCA_KIT_IFACE:
+            addr = ATCA_IFACECFG_VALUE(cfg, atcakit.dev_identity);
+            break;
 #endif
 #if defined(ATCA_HAL_SWI_GPIO) || defined(ATCA_HAL_SWI_BB)
-            case ATCA_SWI_GPIO_IFACE:
-                addr = ATCA_IFACECFG_VALUE(cfg, atcaswi.address);
-                break;
+        case ATCA_SWI_GPIO_IFACE:
+            addr = ATCA_IFACECFG_VALUE(cfg, atcaswi.address);
+            break;
 #endif
-            default:
-                /* addr already defaulted */
-                break;
+        default:
+            /* addr already defaulted */
+            break;
         }
     }
     return addr;
@@ -465,70 +489,71 @@ uint8_t ifacecfg_get_address(ATCAIfaceCfg * cfg)
 /** \brief Change the address of the selected device */
 ATCA_STATUS ifacecfg_set_address(
     ATCAIfaceCfg * cfg,     /**< [in] Interface configuration structure to update */
-    uint8_t address,        /**< [in] Desired address */
-    ATCAKitType kitiface    /**< [in] Optional parameter to set the kit iface type */
-)
+    uint8_t        address, /**< [in] Desired address */
+    ATCAKitType    kitiface /**< [in] Optional parameter to set the kit iface type */
+    )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
-    if  (NULL != cfg)
+
+    if (NULL != cfg)
     {
         status = ATCA_SUCCESS;
-        switch(cfg->iface_type)
+        switch (cfg->iface_type)
         {
 #ifdef ATCA_HAL_I2C
-            case ATCA_I2C_IFACE:
+        case ATCA_I2C_IFACE:
 #ifdef ATCA_ENABLE_DEPRECATED
-                ATCA_IFACECFG_VALUE(cfg, atcai2c.slave_address) = address;
+            ATCA_IFACECFG_VALUE(cfg, atcai2c.slave_address) = address;
 #else
-                ATCA_IFACECFG_VALUE(cfg, atcai2c.address) = address;
+            ATCA_IFACECFG_VALUE(cfg, atcai2c.address) = address;
 #endif
-                break;
+            break;
 #endif
 #ifdef ATCA_HAL_SWI_UART
-            case ATCA_SWI_IFACE:
+        case ATCA_SWI_IFACE:
 #ifdef __linux__
-                ATCA_IFACECFG_VALUE(cfg, atcauart.dev_interface) = ATCA_KIT_AUTO_IFACE;
-                ATCA_IFACECFG_VALUE(cfg, atcauart.dev_identity) = address;
+            ATCA_IFACECFG_VALUE(cfg, atcauart.dev_interface) = ATCA_KIT_AUTO_IFACE;
+            ATCA_IFACECFG_VALUE(cfg, atcauart.dev_identity) = address;
 #else
-                ATCA_IFACECFG_VALUE(cfg, atcaswi.address) = address;
+            ATCA_IFACECFG_VALUE(cfg, atcaswi.address) = address;
 #endif
-                break;
+            break;
 #endif
 #ifdef ATCA_HAL_KIT_UART
-            case ATCA_UART_IFACE:
-                if(ATCA_KIT_UNKNOWN_IFACE != kitiface)
-                {
-                    ATCA_IFACECFG_VALUE(cfg, atcauart.dev_interface) = kitiface;
-                }
-                ATCA_IFACECFG_VALUE(cfg, atcauart.dev_identity) = address;
-                break;
+        case ATCA_UART_IFACE:
+            if (ATCA_KIT_UNKNOWN_IFACE != kitiface)
+            {
+                ATCA_IFACECFG_VALUE(cfg, atcauart.dev_interface) = kitiface;
+            }
+            ATCA_IFACECFG_VALUE(cfg, atcauart.dev_identity) = address;
+            break;
 #endif
 #ifdef ATCA_HAL_KIT_HID
-            case ATCA_HID_IFACE:
-                if(ATCA_KIT_UNKNOWN_IFACE != kitiface)
-                {
-                    ATCA_IFACECFG_VALUE(cfg, atcahid.dev_interface) = kitiface;
-                }
-                ATCA_IFACECFG_VALUE(cfg, atcahid.dev_identity) = address;
-                break;
+        case ATCA_HID_IFACE:
+            if (ATCA_KIT_UNKNOWN_IFACE != kitiface)
+            {
+                ATCA_IFACECFG_VALUE(cfg, atcahid.dev_interface) = kitiface;
+            }
+            ATCA_IFACECFG_VALUE(cfg, atcahid.dev_identity) = address;
+            break;
 #endif
 #ifdef ATCA_HAL_KIT_BRIDGE
-            case ATCA_KIT_IFACE:
-                if(ATCA_KIT_UNKNOWN_IFACE != kitiface)
-                {
-                    ATCA_IFACECFG_VALUE(cfg, atcakit.dev_interface) = kitiface;
-                }
-                ATCA_IFACECFG_VALUE(cfg, atcakit.dev_identity) = address;
-                break;
+        case ATCA_KIT_IFACE:
+            if (ATCA_KIT_UNKNOWN_IFACE != kitiface)
+            {
+                ATCA_IFACECFG_VALUE(cfg, atcakit.dev_interface) = kitiface;
+            }
+            ATCA_IFACECFG_VALUE(cfg, atcakit.dev_identity) = address;
+            break;
 #endif
 #if defined(ATCA_HAL_SWI_GPIO) || defined(ATCA_HAL_SWI_BB)
-            case ATCA_SWI_GPIO_IFACE:
-                ATCA_IFACECFG_VALUE(cfg, atcaswi.address) = address;
-                break;
+        case ATCA_SWI_GPIO_IFACE:
+            ATCA_IFACECFG_VALUE(cfg, atcaswi.address) = address;
+            break;
 #endif
-            default:
-                status = ATCA_BAD_PARAM;
-                break;
+        default:
+            status = ATCA_BAD_PARAM;
+            break;
         }
     }
     return status;
@@ -577,54 +602,56 @@ void deleteATCAIface(ATCAIface *ca_iface)
 }
 #endif
 
-typedef struct {
-    ATCADeviceType  devtype;
-    const char *    name;
+typedef struct
+{
+    ATCADeviceType devtype;
+    const char *   name;
 } devtype_names_t;
 
 static const devtype_names_t devtype_names[] = {
 #ifdef ATCA_ATSHA204A_SUPPORT
-    { ATSHA204A,        "sha204" },
+    { ATSHA204A,        "sha204"            },
 #endif
 #ifdef ATCA_ATECC108A_SUPPORT
-    { ATECC108A,        "ecc108" },
+    { ATECC108A,        "ecc108"            },
 #endif
 #ifdef ATCA_ATECC508A_SUPPORT
-    { ATECC508A,        "ecc508" },
+    { ATECC508A,        "ecc508"            },
 #endif
 #ifdef ATCA_ATECC608_SUPPORT
-    { ATECC608,         "ecc608" },
+    { ATECC608,         "ecc608"            },
 #endif
 #ifdef ATCA_ATSHA206A_SUPPORT
-    { ATSHA206A,        "sha206" },
+    { ATSHA206A,        "sha206"            },
 #endif
 #ifdef ATCA_ECC204_SUPPORT
-    { ECC204,           "ecc204" },
+    { ECC204,           "ecc204"            },
 #endif
 #ifdef ATCA_TA010_SUPPORT
-    { TA010,            "ta010" },
+    { TA010,            "ta010"             },
 #endif
 #ifdef ATCA_SHA104_SUPPORT
-    { SHA104,           "sha104" },
+    { SHA104,           "sha104"            },
 #endif
 #ifdef ATCA_SHA105_SUPPORT
-    { SHA105,           "sha105" },
+    { SHA105,           "sha105"            },
 #endif
 #ifdef ATCA_TA100_SUPPORT
-    { TA100,            "ta100"  },
+    { TA100,            "ta100"             },
 #endif
-    { ATCA_DEV_UNKNOWN, "unknown"}
+    { ATCA_DEV_UNKNOWN, "unknown"           }
 };
 
 /** \brief Get the ATCADeviceType for a string that looks like a part number */
 ATCADeviceType iface_get_device_type_by_name(const char * name)
 {
     ATCADeviceType devtype = ATCA_DEV_UNKNOWN;
+
     if (NULL != name)
     {
         const devtype_names_t * entry;
 
-        for( entry=devtype_names; entry->devtype != ATCA_DEV_UNKNOWN; entry++)
+        for (entry = devtype_names; entry->devtype != ATCA_DEV_UNKNOWN; entry++)
         {
             if (NULL != lib_strcasestr(name, entry->name))
             {

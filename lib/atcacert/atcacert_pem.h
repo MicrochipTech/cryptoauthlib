@@ -51,11 +51,11 @@ extern "C" {
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_encode_pem(const uint8_t* der,
-                        size_t         der_size,
-                        char*          pem,
-                        size_t*        pem_size,
-                        const char*    header,
-                        const char*    footer);
+                                size_t         der_size,
+                                char*          pem,
+                                size_t*        pem_size,
+                                const char*    header,
+                                const char*    footer);
 
 /**
  * \brief Decode PEM data into DER format.
@@ -69,11 +69,11 @@ ATCA_STATUS atcacert_encode_pem(const uint8_t* der,
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_decode_pem(const char* pem,
-                        size_t      pem_size,
-                        uint8_t*    der,
-                        size_t*     der_size,
-                        const char* header,
-                        const char* footer);
+                                size_t      pem_size,
+                                uint8_t*    der,
+                                size_t*     der_size,
+                                const char* header,
+                                const char* footer);
 
 /**
  * \brief Encode a DER certificate in PEM format.

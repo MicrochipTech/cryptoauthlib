@@ -136,7 +136,9 @@ static t_menu_info mas_menu_info[] =
 #if defined(ATCA_MBEDTLS)
     { "crypto_int", "Run crypto library integration tests",         run_integration_tests               },
 #endif
+#if defined(ATCA_JWT_EN)
     { "jwt",        "Run JWT support tests",                        run_jwt_tests                       },
+#endif
 #if ATCA_CA_SUPPORT
     { "calib",      "Run calib api tests",                          run_calib_tests                      },
 #endif
@@ -215,15 +217,15 @@ static int run_cmd(t_menu_info* menu_item, int argc, char* argv[])
     printf("\n");
     if (argc && argv)
     {
-        if(0 <= (ret = process_options(argc - 1, &argv[1])))
+        if (0 <= (ret = process_options(argc - 1, &argv[1])))
         {
-            for( ;menu_item->menu_cmd; menu_item++)
+            for (; menu_item->menu_cmd; menu_item++)
             {
                 if (0 == strcmp(menu_item->menu_cmd, argv[0]))
                 {
                     if (menu_item->fp_handler)
                     {
-                        ret = menu_item->fp_handler(ret+1, argv);
+                        ret = menu_item->fp_handler(ret + 1, argv);
                     }
                     break;
                 }

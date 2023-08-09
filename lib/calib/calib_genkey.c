@@ -34,6 +34,10 @@
 
 #include "cryptoauthlib.h"
 
+#if (CA_MAX_PACKET_SIZE < (ATCA_PUB_KEY_SIZE + ATCA_PACKET_OVERHEAD))
+#error "CA_MAX_PACKET_SIZE cannot hold response packet with public key"
+#endif
+
 #if CALIB_GENKEY_EN
 /** \brief Issues GenKey command, which can generate a private key, compute a
  *          public key, nd/or compute a digest of a public key.
@@ -160,6 +164,10 @@ ATCA_STATUS calib_genkey_mac(ATCADevice device, uint8_t* public_key, uint8_t* ma
 
     if (NULL != device)
     {
+        #if (CA_MAX_PACKET_SIZE < (ATCA_PUB_KEY_SIZE + ATCA_PACKET_OVERHEAD + MAC_SIZE))
+        #error "CA_MAX_PACKET_SIZE cannot hold response packet with public key and mac"
+        #endif
+
         packet.param1 = GENKEY_MODE_MAC;
         packet.param2 = (uint16_t)0x00;
 

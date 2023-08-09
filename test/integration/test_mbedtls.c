@@ -226,11 +226,11 @@ TEST(mbedtls_ecdsa, sign_stored_key)
 
 t_test_case_info mbedtls_ecdsa_test_info[] =
 {
-    { REGISTER_TEST_CASE(mbedtls_ecdsa, verify_nist),            atca_test_cond_p256_sign_verify },
-    { REGISTER_TEST_CASE(mbedtls_ecdsa, verify_nist_stored_key), atca_test_cond_p256_sign_verify },
-    { REGISTER_TEST_CASE(mbedtls_ecdsa, sign_stored_key),        atca_test_cond_p256_sign_verify },
+    { REGISTER_TEST_CASE(mbedtls_ecdsa, verify_nist),            atca_test_cond_p256_sign_verify            },
+    { REGISTER_TEST_CASE(mbedtls_ecdsa, verify_nist_stored_key), atca_test_cond_p256_sign_verify            },
+    { REGISTER_TEST_CASE(mbedtls_ecdsa, sign_stored_key),        atca_test_cond_p256_sign_verify            },
     /* Array Termination element*/
-    { (fp_test_case)NULL, NULL },
+    { (fp_test_case)NULL,               NULL },
 };
 
 #endif

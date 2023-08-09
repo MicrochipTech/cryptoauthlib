@@ -31,17 +31,19 @@
 
 #if ATCACERT_COMPCERT_EN
 
+#ifdef __COVERITY__
 #pragma coverity compliance block \
-(deviate "CERT INT30-C" "The module has been extensively tested to ensure behavior is correct") \
-(deviate "CERT INT31-C" "The module has been extensively tested to ensure behavior is correct") \
-(deviate "MISRA C-2012 Rule 10.4" "The module has been extensively tested to ensure behavior is correct") \
-(deviate:1 "MISRA C-2012 Rule 10.8" "The module has been extensively tested to ensure behavior is correct")
+    (deviate "CERT INT30-C" "The module has been extensively tested to ensure behavior is correct") \
+    (deviate "CERT INT31-C" "The module has been extensively tested to ensure behavior is correct") \
+    (deviate "MISRA C-2012 Rule 10.4" "The module has been extensively tested to ensure behavior is correct") \
+    (deviate:1 "MISRA C-2012 Rule 10.8" "The module has been extensively tested to ensure behavior is correct")
+#endif
 
 ATCA_STATUS atcacert_der_enc_length(size_t length, uint8_t* der_length, size_t* der_length_size)
 {
     size_t der_length_size_calc = 0;
     uint8_t* len_bytes = (uint8_t*)&length;
-    int8_t l_exp = (int8_t)sizeof(length) - 1;
+    size_t l_exp = (int8_t)sizeof(length) - 1;
 
     if (der_length_size == NULL)
     {
@@ -52,7 +54,6 @@ ATCA_STATUS atcacert_der_enc_length(size_t length, uint8_t* der_length, size_t* 
     {
         // The length can take the short form with only one byte
         der_length_size_calc = 1;
-        l_exp = 0;
     }
     else
     {
@@ -206,10 +207,10 @@ ATCA_STATUS atcacert_der_adjust_length(uint8_t* der_length, size_t* der_length_s
 }
 
 ATCA_STATUS atcacert_der_enc_integer(const uint8_t* int_data,
-                             size_t         int_data_size,
-                             uint8_t        is_unsigned,
-                             uint8_t*       der_int,
-                             size_t*        der_int_size)
+                                     size_t         int_data_size,
+                                     uint8_t        is_unsigned,
+                                     uint8_t*       der_int,
+                                     size_t*        der_int_size)
 {
     uint8_t der_length[5];
     size_t der_length_size = sizeof(der_length);
@@ -260,10 +261,10 @@ ATCA_STATUS atcacert_der_enc_integer(const uint8_t* int_data,
 
     }
     der_int[0] = 0x02u;                                                                  // Integer tag
-    (void)memcpy(&der_int[1], der_length, der_length_size);                                   // Integer length
+    (void)memcpy(&der_int[1], der_length, der_length_size);                              // Integer length
     if (0u != pad)
     {
-        der_int[der_length_size + 1u] = 0u;                                               // Unsigned integer value requires padding byte so it's not interpreted as negative
+        der_int[der_length_size + 1u] = 0u;                                                    // Unsigned integer value requires padding byte so it's not interpreted as negative
     }
     (void)memcpy(&der_int[der_length_size + 1u + pad], &int_data[trim], int_data_size - trim); // Integer value
 
@@ -271,9 +272,9 @@ ATCA_STATUS atcacert_der_enc_integer(const uint8_t* int_data,
 }
 
 ATCA_STATUS atcacert_der_dec_integer(const uint8_t* der_int,
-                             size_t*        der_int_size,
-                             uint8_t*       int_data,
-                             size_t*        int_data_size)
+                                     size_t*        der_int_size,
+                                     uint8_t*       int_data,
+                                     size_t*        int_data_size)
 {
     ATCA_STATUS ret = 0;
     size_t der_length_size = 0u;
@@ -332,8 +333,8 @@ ATCA_STATUS atcacert_der_dec_integer(const uint8_t* der_int,
 }
 
 ATCA_STATUS atcacert_der_enc_ecdsa_sig_value(const uint8_t raw_sig[64],
-                                     uint8_t*      der_sig,
-                                     size_t*       der_sig_size)
+                                             uint8_t*      der_sig,
+                                             size_t*       der_sig_size)
 {
     ATCA_STATUS ret = 0;
     size_t r_size = 0u;
@@ -374,12 +375,12 @@ ATCA_STATUS atcacert_der_enc_ecdsa_sig_value(const uint8_t raw_sig[64],
 
     }
     der_sig[0] = 0x03;                              // signatureValue bit string tag
-    der_sig[1] = (uint8_t)(der_sig_size_calc - 2u);  // signatureValue bit string length
+    der_sig[1] = (uint8_t)(der_sig_size_calc - 2u); // signatureValue bit string length
     der_sig[2] = 0x00;                              // signatureValue bit string spare bits
 
     // signatureValue bit string value is the DER encoding of ECDSA-Sig-Value
     der_sig[3] = 0x30;                              // sequence tag
-    der_sig[4] = (uint8_t)(der_sig_size_calc - 5u);  // sequence length
+    der_sig[4] = (uint8_t)(der_sig_size_calc - 5u); // sequence length
 
     // Add R integer
     ret = atcacert_der_enc_integer(&raw_sig[0], 32u, (uint8_t)TRUE, &der_sig[5], &r_size);
@@ -399,8 +400,8 @@ ATCA_STATUS atcacert_der_enc_ecdsa_sig_value(const uint8_t raw_sig[64],
 }
 
 ATCA_STATUS atcacert_der_dec_ecdsa_sig_value(const uint8_t* der_sig,
-                                     size_t*        der_sig_size,
-                                     uint8_t        raw_sig[64])
+                                             size_t*        der_sig_size,
+                                             uint8_t        raw_sig[64])
 {
     ATCA_STATUS ret = 0;
     size_t curr_idx = 0u;
@@ -580,6 +581,8 @@ ATCA_STATUS atcacert_der_dec_ecdsa_sig_value(const uint8_t* der_sig,
     return ATCACERT_E_SUCCESS;
 }
 
+#ifdef __COVERITY__
 #pragma coverity compliance end_block "CERT INT30-C" "CERT INT31-C" "MISRA C-2012 Rule 10.4" "MISRA C-2012 Rule 10.8"
+#endif
 
 #endif

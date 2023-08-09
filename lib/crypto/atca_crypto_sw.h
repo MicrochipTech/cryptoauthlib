@@ -44,6 +44,20 @@ extern "C" {
 #define ATCA_SHA2_256_BLOCK_SIZE    (64U)
 
 #if defined(ATCA_MBEDTLS)
+#ifdef __COVERITY__
+#pragma coverity compliance block(include) \
+    (fp "CERT INT30-C" "Ignoring violations from third party libraries") \
+    (fp "CERT INT31-C" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 3.1" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 5.1" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 8.2" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 10.4" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 11.9" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 14.4" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 15.6" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 21.1" "Ignoring violations from third party libraries")
+#endif
+
 #if !defined(MBEDTLS_CONFIG_FILE)
 #include "mbedtls/config.h"
 #else
@@ -64,6 +78,20 @@ typedef mbedtls_md_context_t atcac_sha1_ctx;
 typedef mbedtls_md_context_t atcac_sha2_256_ctx;
 typedef mbedtls_pk_context atcac_pk_ctx;
 
+#ifdef __COVERITY__
+#pragma coverity compliance end_block(include) \
+    "CERT INT30-C" \
+    "CERT INT31-C" \
+    "MISRA C-2012 Rule 3.1" \
+    "MISRA C-2012 Rule 5.1" \
+    "MISRA C-2012 Rule 8.2" \
+    "MISRA C-2012 Rule 10.4" \
+    "MISRA C-2012 Rule 11.9" \
+    "MISRA C-2012 Rule 14.4" \
+    "MISRA C-2012 Rule 15.6" \
+    "MISRA C-2012 Rule 21.1"
+#endif
+
 #elif defined(ATCA_OPENSSL)
 typedef struct
 {
@@ -76,6 +104,18 @@ typedef atca_evp_ctx atcac_aes_cmac_ctx;
 typedef atca_evp_ctx atcac_hmac_sha256_ctx;
 typedef atca_evp_ctx atcac_pk_ctx;
 #elif defined(ATCA_WOLFSSL)
+#ifdef __COVERITY__
+#pragma coverity compliance block(include) \
+    (fp "CERT DCL37-C" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Directive 4.10" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 3.1" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 7.3" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 8.2" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 20.13" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 21.1" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 21.2" "Ignoring violations from third party libraries")
+#endif
+
 #include "wolfssl/wolfcrypt/types.h"
 #ifndef WOLFSSL_CMAC
 #define WOLFSSL_CMAC
@@ -114,6 +154,18 @@ typedef atca_wc_ctx atcac_pk_ctx;
 /* Some configurations end up with a circular definition the above have to be defined before include ecc.h (since ecc.h can call cryptoauthlib functions) */
 #include "wolfssl/wolfcrypt/ecc.h"
 
+#ifdef __COVERITY__
+#pragma coverity compliance end_block(include) \
+    "CERT DCL37-C" \
+    "MISRA C-2012 Directive 4.10" \
+    "MISRA C-2012 Rule 3.1" \
+    "MISRA C-2012 Rule 7.3" \
+    "MISRA C-2012 Rule 8.2" \
+    "MISRA C-2012 Rule 20.13" \
+    "MISRA C-2012 Rule 21.1" \
+    "MISRA C-2012 Rule 21.2"
+#endif
+
 #else
 typedef struct
 {
@@ -127,9 +179,9 @@ typedef struct
 
 typedef struct
 {
-    atcac_sha2_256_ctx sha256_ctx;
-    uint8_t            ipad[ATCA_SHA2_256_BLOCK_SIZE];
-    uint8_t            opad[ATCA_SHA2_256_BLOCK_SIZE];
+    atcac_sha2_256_ctx* sha256_ctx;
+    uint8_t             ipad[ATCA_SHA2_256_BLOCK_SIZE];
+    uint8_t             opad[ATCA_SHA2_256_BLOCK_SIZE];
 } atcac_hmac_sha256_ctx;
 #endif
 
@@ -141,12 +193,9 @@ ATCA_STATUS atcac_sw_sha2_256_init(atcac_sha2_256_ctx* ctx);
 ATCA_STATUS atcac_sw_sha2_256_update(atcac_sha2_256_ctx* ctx, const uint8_t* data, size_t data_size);
 ATCA_STATUS atcac_sw_sha2_256_finish(atcac_sha2_256_ctx* ctx, uint8_t digest[ATCA_SHA2_256_DIGEST_SIZE]);
 
-ATCA_STATUS atcac_sha256_hmac_init(atcac_hmac_sha256_ctx* ctx, const uint8_t* key, const uint8_t key_len);
+ATCA_STATUS atcac_sha256_hmac_init(atcac_hmac_sha256_ctx* ctx, atcac_sha2_256_ctx* sha256_ctx, const uint8_t* key, const uint8_t key_len);
 ATCA_STATUS atcac_sha256_hmac_update(atcac_hmac_sha256_ctx* ctx, const uint8_t* data, size_t data_size);
 ATCA_STATUS atcac_sha256_hmac_finish(atcac_hmac_sha256_ctx* ctx, uint8_t* digest, size_t* digest_len);
-
-
-#pragma coverity compliance block fp "MISRA C-2012 Rule 8.6"
 
 #if defined(ATCA_MBEDTLS) || defined(ATCA_OPENSSL) || defined(ATCA_WOLFSSL)
 ATCA_STATUS atcac_aes_gcm_encrypt_start(atcac_aes_gcm_ctx* ctx, const uint8_t* key, const uint8_t key_len, const uint8_t* iv, const uint8_t iv_len);
@@ -187,8 +236,6 @@ ATCA_STATUS atcac_aes_gcm_decrypt(atcac_aes_gcm_ctx* ctx, const uint8_t* ciphert
 #if ATCA_HOSTLIB_EN
 ATCA_STATUS atcac_sw_random(uint8_t* data, size_t data_size);
 #endif
-
-#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
 
 ATCA_STATUS atcac_pbkdf2_sha256(const uint32_t iter, const uint8_t* password, const size_t password_len, const uint8_t* salt, const size_t salt_len, uint8_t* result, size_t result_len);
 

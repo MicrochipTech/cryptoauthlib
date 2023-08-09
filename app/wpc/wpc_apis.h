@@ -88,17 +88,17 @@ extern const uint8_t g_root_ca_digest[];
 
 #if WPC_MSG_PR_EN
 ATCA_STATUS wpc_msg_get_digests(uint8_t *const message, uint16_t *const msg_len, const uint8_t slot_mask);
-ATCA_STATUS wpc_msg_get_certificate(uint8_t *const message, uint16_t *const msg_len, 
+ATCA_STATUS wpc_msg_get_certificate(uint8_t *const message, uint16_t *const msg_len,
                                     const uint8_t slot, const uint16_t offset, const uint16_t length);
 ATCA_STATUS wpc_msg_challenge(ATCADevice device, uint8_t *const message, uint16_t *const msg_len, const uint8_t slot);
 #endif
 
 #if WPC_MSG_PT_EN
-ATCA_STATUS wpc_msg_digests(ATCADevice device, uint8_t *const response, 
+ATCA_STATUS wpc_msg_digests(ATCADevice device, uint8_t *const response,
                             uint16_t *const resp_len, const uint8_t *request);
 ATCA_STATUS wpc_msg_certificate(ATCADevice device, uint8_t *const response, uint16_t *const resp_len,
                                 const uint8_t *request, uint8_t *buffer, const uint16_t buf_len);
-ATCA_STATUS wpc_msg_challenge_auth(ATCADevice device, uint8_t *const response, 
+ATCA_STATUS wpc_msg_challenge_auth(ATCADevice device, uint8_t *const response,
                                    uint16_t *const resp_len, const uint8_t *request);
 ATCA_STATUS wpc_msg_error(uint8_t *const response, uint16_t *const resp_len, const uint8_t error_code,
                           const uint8_t error_data);

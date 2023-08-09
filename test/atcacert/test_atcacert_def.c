@@ -5443,7 +5443,7 @@ TEST(atcacert_cert_build, start_signer)
         &cert_size,
         g_ca_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-    
+
     TEST_ASSERT_EQUAL(build_state_ref.cert_def, build_state.cert_def);
     TEST_ASSERT_EQUAL(build_state_ref.cert, build_state.cert);
     TEST_ASSERT_EQUAL(build_state_ref.cert_size, build_state.cert_size);

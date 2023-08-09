@@ -35,6 +35,11 @@
 #include "cryptoauthlib.h"
 
 #if CALIB_SIGN_EN
+
+#if (CA_MAX_PACKET_SIZE < (ATCA_SIG_SIZE + ATCA_PACKET_OVERHEAD))
+#error "Sign response packet cannot be accommodated inside the maximum packet size provided"
+#endif
+
 /** \brief Executes the Sign command, which generates a signature using the
  *          ECDSA algorithm.
  *
@@ -75,7 +80,7 @@ ATCA_STATUS calib_sign_base(ATCADevice device, uint8_t mode, uint16_t key_id, ui
             break;
         }
 
-        
+
         if (packet.data[ATCA_COUNT_IDX] == (ATCA_SIG_SIZE + ATCA_PACKET_OVERHEAD))
         {
             (void)memcpy(signature, &packet.data[ATCA_RSP_DATA_IDX], ATCA_SIG_SIZE);
@@ -157,28 +162,28 @@ ATCA_STATUS calib_sign_ext(ATCADevice device, uint16_t key_id, const uint8_t *ms
     ATCADeviceType devtype = atcab_get_device_type_ext(device);
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    switch(devtype)
+    switch (devtype)
     {
 #if CALIB_SIGN_EN
-        case ATECC108A:
-            /* fall-through */
-        case ATECC508A:
-            /* fall-through */
-        case ATECC608:
-            status = calib_sign(device, key_id, msg, signature);
-            break;
+    case ATECC108A:
+    /* fall-through */
+    case ATECC508A:
+    /* fall-through */
+    case ATECC608:
+        status = calib_sign(device, key_id, msg, signature);
+        break;
 #endif
 
 #if CALIB_SIGN_CA2_EN
-        case ECC204:
-        /* fallthrough */
-        case TA010:
-            status = calib_ca2_sign(device, key_id, msg, signature);
-            break;
+    case ECC204:
+    /* fallthrough */
+    case TA010:
+        status = calib_ca2_sign(device, key_id, msg, signature);
+        break;
 #endif
-        default:
-            status = ATCA_UNIMPLEMENTED;
-            break;
+    default:
+        status = ATCA_UNIMPLEMENTED;
+        break;
     }
     return status;
 }

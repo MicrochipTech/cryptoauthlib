@@ -149,10 +149,11 @@ t_test_case_info* wpc_tests[] =
 
 /** \brief Runs a test suite or individual test - the function is expected to call
  * unity test operations
-*/
+ */
 int run_test(int argc, char* argv[], void (*fptest)(void))
 {
     int ret;
+
     if (CMD_PROCESSOR_MAX_ARGS > argc)
     {
         argv[argc++] = "-v";
@@ -167,11 +168,11 @@ int run_test(int argc, char* argv[], void (*fptest)(void))
     /* Launch the unity test framework */
     ret = UnityMain(argc, (const char**)argv, fptest);
 
-    if(!ret && !Unity.NumberOfTests)
+    if (!ret && !Unity.NumberOfTests)
     {
         /* The assumption is that tests were supposed to have been run so if
-        non were executed the assumption is there is a configuration problem.
-        If a test suite has no tests for a given configuration don't run it */
+           non were executed the assumption is there is a configuration problem.
+           If a test suite has no tests for a given configuration don't run it */
         printf("No tests were run for this configuration\n");
         ret = -1;
     }
@@ -193,13 +194,13 @@ void RunAllTests(t_test_case_info** tests_list)
         {
             bool run_test = (NULL != sp_current_test->fp_condition) ? sp_current_test->fp_condition() : true;
 
-            if(run_test)
+            if (run_test)
             {
                 /*Execute current test case*/
                 sp_current_test->fp_test();
             }
 
-            if(atca_test_unresponsive())
+            if (atca_test_unresponsive())
             {
                 /* Early return on communication failures */
                 break;
@@ -243,12 +244,12 @@ ATCA_DLL struct atca_iface g_atcab_iface;
 
 bool atca_test_unresponsive(void)
 {
-    return (g_test_abort || (ATCA_COMM_FAIL == g_last_status) || (ATCA_WAKE_FAILED == g_last_status));
+    return g_test_abort || (ATCA_COMM_FAIL == g_last_status) || (ATCA_WAKE_FAILED == g_last_status);
 }
 
 bool atca_test_already_exiting(void)
 {
-    return (Unity.CurrentTestFailed || Unity.CurrentTestIgnored);
+    return Unity.CurrentTestFailed || Unity.CurrentTestIgnored;
 }
 
 void atca_test_assert_config_is_unlocked(UNITY_LINE_TYPE from_line)
@@ -389,7 +390,7 @@ ATCA_STATUS atca_test_config_get_id(uint8_t test_type, uint16_t* handle)
 #endif
 #if defined(ATCA_TA010_SUPPORT) || defined(ATCA_ECC204_SUPPORT)
         case TA010:
-            /* fallthrough */
+        /* fallthrough */
         case ECC204:
             status = calib_config_get_ecc204_slot_by_test(test_type, handle);
             break;
@@ -427,10 +428,12 @@ ATCA_STATUS atca_test_genkey(uint16_t key_id, uint8_t *public_key)
 {
     int attempts = 2;
     ATCA_STATUS status;
+
     do
     {
         status = atcab_genkey(key_id, public_key);
-    } while (status && --attempts);
+    }
+    while (status && --attempts);
     return status;
 }
 #endif

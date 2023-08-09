@@ -234,10 +234,10 @@ extern "C" {
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_get_device_locs(const atcacert_def_t*  cert_def,
-                             atcacert_device_loc_t* device_locs,
-                             size_t*                device_locs_count,
-                             size_t                 device_locs_max_count,
-                             size_t                 block_size);
+                                     atcacert_device_loc_t* device_locs,
+                                     size_t*                device_locs_count,
+                                     size_t                 device_locs_max_count,
+                                     size_t                 block_size);
 
 /**
  * \brief Starts the certificate rebuilding process.
@@ -257,10 +257,10 @@ ATCA_STATUS atcacert_get_device_locs(const atcacert_def_t*  cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_cert_build_start(atcacert_build_state_t* build_state,
-                              const atcacert_def_t*   cert_def,
-                              uint8_t*                cert,
-                              size_t*                 cert_size,
-                              const uint8_t           ca_public_key[64]);
+                                      const atcacert_def_t*   cert_def,
+                                      uint8_t*                cert,
+                                      size_t*                 cert_size,
+                                      const uint8_t           ca_public_key[64]);
 
 /**
  * \brief Process information read from the ATECC device. If it contains information for the
@@ -275,8 +275,8 @@ ATCA_STATUS atcacert_cert_build_start(atcacert_build_state_t* build_state,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_cert_build_process(atcacert_build_state_t*      build_state,
-                                const atcacert_device_loc_t* device_loc,
-                                const uint8_t*               device_data);
+                                        const atcacert_device_loc_t* device_loc,
+                                        const uint8_t*               device_data);
 
 /**
  * \brief Completes any final certificate processing required after all data from the device has
@@ -310,10 +310,10 @@ ATCA_STATUS atcacert_cert_build_finish(atcacert_build_state_t* build_state);
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_get_device_data(const atcacert_def_t*        cert_def,
-                             const uint8_t*               cert,
-                             size_t                       cert_size,
-                             const atcacert_device_loc_t* device_loc,
-                             uint8_t*                     device_data);
+                                     const uint8_t*               cert,
+                                     size_t                       cert_size,
+                                     const atcacert_device_loc_t* device_loc,
+                                     uint8_t*                     device_data);
 
 /**
  * \brief Sets the subject public key and subject key ID in a certificate.
@@ -326,9 +326,9 @@ ATCA_STATUS atcacert_get_device_data(const atcacert_def_t*        cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_set_subj_public_key(const atcacert_def_t* cert_def,
-                                 uint8_t*              cert,
-                                 size_t                cert_size,
-                                 const uint8_t         subj_public_key[64]);
+                                         uint8_t*              cert,
+                                         size_t                cert_size,
+                                         const uint8_t         subj_public_key[64]);
 
 /**
  * \brief Gets the subject public key from a certificate.
@@ -342,9 +342,9 @@ ATCA_STATUS atcacert_set_subj_public_key(const atcacert_def_t* cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_get_subj_public_key(const atcacert_def_t * cert_def,
-                                 const uint8_t *        cert,
-                                 size_t                 cert_size,
-                                 uint8_t                subj_public_key[64]);
+                                         const uint8_t *        cert,
+                                         size_t                 cert_size,
+                                         uint8_t                subj_public_key[64]);
 
 /**
  * \brief Gets the subject key ID from a certificate.
@@ -357,9 +357,9 @@ ATCA_STATUS atcacert_get_subj_public_key(const atcacert_def_t * cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_get_subj_key_id(const atcacert_def_t * cert_def,
-                             const uint8_t *        cert,
-                             size_t                 cert_size,
-                             uint8_t                subj_key_id[20]);
+                                     const uint8_t *        cert,
+                                     size_t                 cert_size,
+                                     uint8_t                subj_key_id[20]);
 
 /**
  * \brief Sets the signature in a certificate. This may alter the size of the X.509 certificates.
@@ -374,10 +374,10 @@ ATCA_STATUS atcacert_get_subj_key_id(const atcacert_def_t * cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_set_signature(const atcacert_def_t* cert_def,
-                           uint8_t*              cert,
-                           size_t*               cert_size,
-                           size_t                max_cert_size,
-                           const uint8_t         signature[64]);
+                                   uint8_t*              cert,
+                                   size_t*               cert_size,
+                                   size_t                max_cert_size,
+                                   const uint8_t         signature[64]);
 
 /**
  * \brief Gets the signature from a certificate.
@@ -391,9 +391,9 @@ ATCA_STATUS atcacert_set_signature(const atcacert_def_t* cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_get_signature(const atcacert_def_t * cert_def,
-                           const uint8_t *        cert,
-                           size_t                 cert_size,
-                           uint8_t                signature[64]);
+                                   const uint8_t *        cert,
+                                   size_t                 cert_size,
+                                   uint8_t                signature[64]);
 
 /**
  * \brief Sets the issue date (notBefore) in a certificate. Will be formatted according to the date
@@ -407,9 +407,9 @@ ATCA_STATUS atcacert_get_signature(const atcacert_def_t * cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_set_issue_date(const atcacert_def_t*    cert_def,
-                            uint8_t*                 cert,
-                            size_t                   cert_size,
-                            const atcacert_tm_utc_t* timestamp);
+                                    uint8_t*                 cert,
+                                    size_t                   cert_size,
+                                    const atcacert_tm_utc_t* timestamp);
 
 /**
  * \brief Gets the issue date from a certificate. Will be parsed according to the date format
@@ -423,9 +423,9 @@ ATCA_STATUS atcacert_set_issue_date(const atcacert_def_t*    cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_get_issue_date(const atcacert_def_t* cert_def,
-                            const uint8_t*        cert,
-                            size_t                cert_size,
-                            atcacert_tm_utc_t*    timestamp);
+                                    const uint8_t*        cert,
+                                    size_t                cert_size,
+                                    atcacert_tm_utc_t*    timestamp);
 
 /**
  * \brief Sets the expire date (notAfter) in a certificate. Will be formatted according to the date
@@ -439,9 +439,9 @@ ATCA_STATUS atcacert_get_issue_date(const atcacert_def_t* cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_set_expire_date(const atcacert_def_t*    cert_def,
-                             uint8_t*                 cert,
-                             size_t                   cert_size,
-                             const atcacert_tm_utc_t* timestamp);
+                                     uint8_t*                 cert,
+                                     size_t                   cert_size,
+                                     const atcacert_tm_utc_t* timestamp);
 
 /**
  * \brief Gets the expire date from a certificate. Will be parsed according to the date format
@@ -455,9 +455,9 @@ ATCA_STATUS atcacert_set_expire_date(const atcacert_def_t*    cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_get_expire_date(const atcacert_def_t* cert_def,
-                             const uint8_t*        cert,
-                             size_t                cert_size,
-                             atcacert_tm_utc_t*    timestamp);
+                                     const uint8_t*        cert,
+                                     size_t                cert_size,
+                                     atcacert_tm_utc_t*    timestamp);
 
 /**
  * \brief Sets the signer ID in a certificate. Will be formatted as 4 upper-case hex digits.
@@ -470,9 +470,9 @@ ATCA_STATUS atcacert_get_expire_date(const atcacert_def_t* cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_set_signer_id(const atcacert_def_t* cert_def,
-                           uint8_t*              cert,
-                           size_t                cert_size,
-                           const uint8_t         signer_id[2]);
+                                   uint8_t*              cert,
+                                   size_t                cert_size,
+                                   const uint8_t         signer_id[2]);
 
 /**
  * \brief Gets the signer ID from a certificate. Will be parsed as 4 upper-case hex digits.
@@ -485,9 +485,9 @@ ATCA_STATUS atcacert_set_signer_id(const atcacert_def_t* cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_get_signer_id(const atcacert_def_t * cert_def,
-                           const uint8_t *        cert,
-                           size_t                 cert_size,
-                           uint8_t                signer_id[2]);
+                                   const uint8_t *        cert,
+                                   size_t                 cert_size,
+                                   uint8_t                signer_id[2]);
 
 /**
  * \brief Sets the certificate serial number in a certificate.
@@ -502,11 +502,11 @@ ATCA_STATUS atcacert_get_signer_id(const atcacert_def_t * cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_set_cert_sn(const atcacert_def_t* cert_def,
-                         uint8_t*              cert,
-                         size_t*               cert_size,
-                         size_t                max_cert_size,
-                         const uint8_t*        cert_sn,
-                         size_t                cert_sn_size);
+                                 uint8_t*              cert,
+                                 size_t*               cert_size,
+                                 size_t                max_cert_size,
+                                 const uint8_t*        cert_sn,
+                                 size_t                cert_sn_size);
 
 /**
  * \brief Sets the certificate serial number by generating it from other information in the
@@ -526,9 +526,9 @@ ATCA_STATUS atcacert_set_cert_sn(const atcacert_def_t* cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_gen_cert_sn(const atcacert_def_t* cert_def,
-                         uint8_t*              cert,
-                         size_t                cert_size,
-                         const uint8_t         device_sn[9]);
+                                 uint8_t*              cert,
+                                 size_t                cert_size,
+                                 const uint8_t         device_sn[9]);
 
 /**
  * \brief Gets the certificate serial number from a certificate.
@@ -543,10 +543,10 @@ ATCA_STATUS atcacert_gen_cert_sn(const atcacert_def_t* cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_get_cert_sn(const atcacert_def_t* cert_def,
-                         const uint8_t*        cert,
-                         size_t                cert_size,
-                         uint8_t*              cert_sn,
-                         size_t*               cert_sn_size);
+                                 const uint8_t*        cert,
+                                 size_t                cert_size,
+                                 uint8_t*              cert_sn,
+                                 size_t*               cert_sn_size);
 
 /**
  * \brief Sets the authority key ID in a certificate. Note that this takes the actual public key
@@ -561,9 +561,9 @@ ATCA_STATUS atcacert_get_cert_sn(const atcacert_def_t* cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_set_auth_key_id(const atcacert_def_t* cert_def,
-                             uint8_t*              cert,
-                             size_t                cert_size,
-                             const uint8_t         auth_public_key[64]);
+                                     uint8_t*              cert,
+                                     size_t                cert_size,
+                                     const uint8_t         auth_public_key[64]);
 
 /**
  * \brief Sets the authority key ID in a certificate.
@@ -576,9 +576,9 @@ ATCA_STATUS atcacert_set_auth_key_id(const atcacert_def_t* cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_set_auth_key_id_raw(const atcacert_def_t* cert_def,
-                                 uint8_t*              cert,
-                                 size_t                cert_size,
-                                 const uint8_t*        auth_key_id);
+                                         uint8_t*              cert,
+                                         size_t                cert_size,
+                                         const uint8_t*        auth_key_id);
 
 /**
  * \brief Gets the authority key ID from a certificate.
@@ -591,9 +591,9 @@ ATCA_STATUS atcacert_set_auth_key_id_raw(const atcacert_def_t* cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_get_auth_key_id(const atcacert_def_t * cert_def,
-                             const uint8_t *        cert,
-                             size_t                 cert_size,
-                             uint8_t                auth_key_id[20]);
+                                     const uint8_t *        cert,
+                                     size_t                 cert_size,
+                                     uint8_t                auth_key_id[20]);
 
 /**
  * \brief Sets the signature, issue date, expire date, and signer ID found in the compressed
@@ -611,10 +611,10 @@ ATCA_STATUS atcacert_get_auth_key_id(const atcacert_def_t * cert_def,
  *         don't match between the cert_def and the compressed certificate.
  */
 ATCA_STATUS atcacert_set_comp_cert(const atcacert_def_t* cert_def,
-                           uint8_t*              cert,
-                           size_t*               cert_size,
-                           size_t                max_cert_size,
-                           const uint8_t         comp_cert[72]);
+                                   uint8_t*              cert,
+                                   size_t*               cert_size,
+                                   size_t                max_cert_size,
+                                   const uint8_t         comp_cert[72]);
 
 /**
  * \brief Generate the compressed certificate for the given certificate.
@@ -627,9 +627,9 @@ ATCA_STATUS atcacert_set_comp_cert(const atcacert_def_t* cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_get_comp_cert(const atcacert_def_t * cert_def,
-                           const uint8_t *        cert,
-                           size_t                 cert_size,
-                           uint8_t                comp_cert[72]);
+                                   const uint8_t *        cert,
+                                   size_t                 cert_size,
+                                   uint8_t                comp_cert[72]);
 
 /**
  * \brief Get a pointer to the TBS data in a certificate.
@@ -643,10 +643,10 @@ ATCA_STATUS atcacert_get_comp_cert(const atcacert_def_t * cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_get_tbs(const atcacert_def_t* cert_def,
-                     const uint8_t*        cert,
-                     size_t                cert_size,
-                     const uint8_t**       tbs,
-                     size_t*               tbs_size);
+                             const uint8_t*        cert,
+                             size_t                cert_size,
+                             const uint8_t**       tbs,
+                             size_t*               tbs_size);
 
 /**
  * \brief Get the SHA256 digest of certificate's TBS data.
@@ -659,9 +659,9 @@ ATCA_STATUS atcacert_get_tbs(const atcacert_def_t* cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_get_tbs_digest(const atcacert_def_t * cert_def,
-                            const uint8_t *        cert,
-                            size_t                 cert_size,
-                            uint8_t                tbs_digest[32]);
+                                    const uint8_t *        cert,
+                                    size_t                 cert_size,
+                                    uint8_t                tbs_digest[32]);
 
 /**
  * \brief Sets an element in a certificate. The data_size must match the size in cert_loc.
@@ -677,11 +677,11 @@ ATCA_STATUS atcacert_get_tbs_digest(const atcacert_def_t * cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_set_cert_element(const atcacert_def_t*      cert_def,
-                              const atcacert_cert_loc_t* cert_loc,
-                              uint8_t*                   cert,
-                              size_t                     cert_size,
-                              const uint8_t*             data,
-                              size_t                     data_size);
+                                      const atcacert_cert_loc_t* cert_loc,
+                                      uint8_t*                   cert,
+                                      size_t                     cert_size,
+                                      const uint8_t*             data,
+                                      size_t                     data_size);
 
 /**
  * \brief Gets an element from a certificate.
@@ -697,11 +697,11 @@ ATCA_STATUS atcacert_set_cert_element(const atcacert_def_t*      cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_get_cert_element(const atcacert_def_t*      cert_def,
-                              const atcacert_cert_loc_t* cert_loc,
-                              const uint8_t*             cert,
-                              size_t                     cert_size,
-                              uint8_t*                   data,
-                              size_t                     data_size);
+                                      const atcacert_cert_loc_t* cert_loc,
+                                      const uint8_t*             cert,
+                                      size_t                     cert_size,
+                                      uint8_t*                   data,
+                                      size_t                     data_size);
 
 
 // Below are utility functions for dealing with various bits for data conversion and wrangling
@@ -745,10 +745,10 @@ ATCA_STATUS atcacert_get_key_id(const uint8_t public_key[64], uint8_t key_id[20]
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_merge_device_loc(atcacert_device_loc_t*       device_locs,
-                              size_t*                      device_locs_count,
-                              size_t                       device_locs_max_count,
-                              const atcacert_device_loc_t* device_loc,
-                              size_t                       block_size);
+                                      size_t*                      device_locs_count,
+                                      size_t                       device_locs_max_count,
+                                      const atcacert_device_loc_t* device_loc,
+                                      size_t                       block_size);
 
 /** \brief Determines if the two device locations overlap.
  *  \param[in] device_loc1  First device location to check.
@@ -756,7 +756,7 @@ ATCA_STATUS atcacert_merge_device_loc(atcacert_device_loc_t*       device_locs,
  *  \return 0 (false) if they don't overlap, non-zero if the do overlap.
  */
 bool atcacert_is_device_loc_overlap(const atcacert_device_loc_t* device_loc1,
-                                   const atcacert_device_loc_t* device_loc2);
+                                    const atcacert_device_loc_t* device_loc2);
 
 /**
  * \brief Takes a raw P256 ECC public key and converts it to the padded version used by ATECC
@@ -796,10 +796,10 @@ void atcacert_public_key_remove_padding(const uint8_t padded_key[72], uint8_t ra
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_transform_data(atcacert_transform_t transform,
-                            const uint8_t*       data,
-                            size_t               data_size,
-                            uint8_t*             destination,
-                            size_t*              destination_size);
+                                    const uint8_t*       data,
+                                    size_t               data_size,
+                                    uint8_t*             destination,
+                                    size_t*              destination_size);
 
 /** \brief Return the maximum possible certificate size in bytes for a given
  *         cert def. Certificate can be variable size, so this gives an
@@ -811,7 +811,7 @@ ATCA_STATUS atcacert_transform_data(atcacert_transform_t transform,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_max_cert_size(const atcacert_def_t* cert_def,
-                           size_t*               max_cert_size);
+                                   size_t*               max_cert_size);
 
 /** @} */
 #ifdef __cplusplus

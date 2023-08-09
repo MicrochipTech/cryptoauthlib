@@ -82,11 +82,13 @@ ATCA_STATUS calib_sha_base(ATCADevice device, uint8_t mode, uint16_t length, con
 
     ATCA_CHECK_INVALID_MSG(((NULL != data_out) && (NULL == data_out_size)), ATCA_BAD_PARAM, "NULL pointer received");
 
+    ATCA_CHECK_INVALID_MSG((cmd_mode != SHA_MODE_HMAC_START && cmd_mode != SHA_MODE_SHA256_PUBLIC) && (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + length)), ATCA_INVALID_SIZE, "Invalid size received");
+
     do
     {
         //Build Command
         packet.param1 = mode;
-        packet.param2 = cmd_mode != SHA_MODE_ECC204_HMAC_START ? length: 0u;
+        packet.param2 = cmd_mode != SHA_MODE_ECC204_HMAC_START ? length : 0u;
 
         if (cmd_mode != SHA_MODE_SHA256_PUBLIC && cmd_mode != SHA_MODE_HMAC_START && length != 0u)
         {

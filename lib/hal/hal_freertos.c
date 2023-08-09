@@ -89,7 +89,7 @@ void hal_rtos_delay_ms(uint32_t delay)
 }
 #endif
 
-ATCA_STATUS hal_create_mutex(void ** ppMutex, char* pName)
+ATCA_STATUS hal_create_mutex(void ** ppMutex, const char* pName)
 {
     (void)pName;
 
@@ -153,6 +153,5 @@ ATCA_STATUS hal_unlock_mutex(void * pMutex)
         return ATCA_SUCCESS;
     }
 }
-
 
 /** @} */

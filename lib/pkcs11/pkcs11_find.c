@@ -39,9 +39,9 @@
  * \defgroup pkcs11 Find (pkcs11_find_)
    @{ */
 
-//#ifdef ATCA_NO_HEAP
+// #ifdef ATCA_NO_HEAP
 static CK_BYTE pkcs11_find_template_cache[PKCS11_SEARCH_CACHE_SIZE];
-//#endif
+// #endif
 
 /**
  * \brief Copy an array of CK_ATTRIBUTE structures
@@ -65,9 +65,12 @@ static CK_RV pkcs11_find_copy_template(CK_BYTE_PTR pBuffer, CK_ULONG ulBufSize, 
     {
         if (NULL != pTemplate[i].pValue && 0u != pTemplate[i].ulValueLen)
         {
-            if (UINT32_MAX - bytes_required >= pTemplate[i].ulValueLen)
+            if (bytes_required <= UINT32_MAX)
             {
-                bytes_required += pTemplate[i].ulValueLen;
+                if (UINT32_MAX - bytes_required >= pTemplate[i].ulValueLen)
+                {
+                    bytes_required += pTemplate[i].ulValueLen;
+                }
             }
 
             /* Check for overflow */
@@ -116,10 +119,10 @@ static CK_RV pkcs11_find_copy_template(CK_BYTE_PTR pBuffer, CK_ULONG ulBufSize, 
     return CKR_OK;
 }
 
-static const pkcs11_attrib_model * pkcs11_find_attrib(const pkcs11_attrib_model * pAttributeList, const CK_ULONG ulCount, const CK_ATTRIBUTE_PTR pTemplate)
+static const pkcs11_attrib_model *pkcs11_find_attrib(const pkcs11_attrib_model *pAttributeList, const CK_ULONG ulCount, const CK_ATTRIBUTE_PTR pTemplate)
 {
     CK_ULONG i;
-    const pkcs11_attrib_model * pAttribute = NULL;
+    const pkcs11_attrib_model *pAttribute = NULL;
 
     if (NULL != pAttributeList && 0u != ulCount && NULL != pTemplate)
     {
@@ -136,14 +139,14 @@ static const pkcs11_attrib_model * pkcs11_find_attrib(const pkcs11_attrib_model 
     return NULL;
 }
 
-static const pkcs11_attrib_model * pkcs11_find_attrib_match(pkcs11_object_ptr pObject, const pkcs11_attrib_model * pAttributeList, const CK_ULONG ulCount, const CK_ATTRIBUTE_PTR pTemplate)
+static const pkcs11_attrib_model *pkcs11_find_attrib_match(pkcs11_object_ptr pObject, const pkcs11_attrib_model *pAttributeList, const CK_ULONG ulCount, const CK_ATTRIBUTE_PTR pTemplate, pkcs11_session_ctx_ptr pSession)
 {
     CK_BBOOL found = FALSE;
-    const pkcs11_attrib_model * pAttribute = NULL;
+    const pkcs11_attrib_model *pAttribute = NULL;
 
     pAttribute = pkcs11_find_attrib(pAttributeList, ulCount, pTemplate);
 
-    if (NULL != pAttribute && NULL != pObject)
+    if (NULL != pAttribute && NULL != pObject && NULL != pSession)
     {
         CK_BBOOL must_full_match = FALSE;
 
@@ -170,9 +173,9 @@ static const pkcs11_attrib_model * pkcs11_find_attrib_match(pkcs11_object_ptr pO
 #endif
 
             /* Get the attribute */
-            if (CKR_OK == pAttribute->func(pObject, &temp))
+            if (CKR_OK == pAttribute->func(pObject, &temp, pSession))
             {
-                if ((temp.ulValueLen == pTemplate->ulValueLen))
+                if ((temp.ulValueLen == pTemplate->ulValueLen) && (NULL != temp.pValue))
                 {
                     /* coverity[misra_c_2012_rule_21_16_violation:FALSE] CK_VOID_PTR is a pointer type */
                     if (0 == memcmp(temp.pValue, pTemplate->pValue, pTemplate->ulValueLen))
@@ -206,7 +209,7 @@ static const pkcs11_attrib_model * pkcs11_find_attrib_match(pkcs11_object_ptr pO
     return NULL;
 }
 
-static CK_OBJECT_HANDLE pkcs11_find_handle(const CK_SLOT_ID slotid, const CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ULONG_PTR index)
+static CK_OBJECT_HANDLE pkcs11_find_handle(const CK_SLOT_ID slotid, const CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ULONG_PTR index, pkcs11_session_ctx_ptr pSession)
 {
     CK_ULONG i;
     CK_ULONG j;
@@ -223,7 +226,7 @@ static CK_OBJECT_HANDLE pkcs11_find_handle(const CK_SLOT_ID slotid, const CK_ATT
             {
                 /* See if a match failed */
                 if (NULL == pkcs11_find_attrib_match(pObject, pObject->attributes,
-                                              pObject->count, &pTemplate[j]))
+                                                     pObject->count, &pTemplate[j], pSession))
                 {
                     break;
                 }
@@ -291,7 +294,7 @@ CK_RV pkcs11_find_init(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pTemplate, C
 
     if (CKR_OK == (rv = (pkcs11_lock_both(pLibCtx))))
     {
-        if (pkcs11_find_handle(pSession->slot->slot_id, pTemplate, ulCount, &index) != 0u)
+        if (pkcs11_find_handle(pSession->slot->slot_id, pTemplate, ulCount, &index, pSession) != 0u)
         {
             if (ulCount != 0u)
             {
@@ -311,7 +314,7 @@ CK_RV pkcs11_find_init(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pTemplate, C
                 pSession->object_index = index;
                 pSession->object_count = 1;
                 index++;
-                while (pkcs11_find_handle(pSession->slot->slot_id, pSession->attrib_list, ulCount, &index) != 0u)
+                while (pkcs11_find_handle(pSession->slot->slot_id, pSession->attrib_list, ulCount, &index, pSession) != 0u)
                 {
                     pSession->object_count++;
                     index++;
@@ -350,14 +353,19 @@ CK_RV pkcs11_find_continue(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE_PTR phOb
 
     *pulObjectCount = (pSession->object_count < ulMaxObjectCount) ? pSession->object_count : ulMaxObjectCount;
 
-    if (CKR_OK == (rv = (pkcs11_lock_both(pLibCtx))))
+    if (CKR_OK == (rv = (pkcs11_lock_context(pLibCtx))))
     {
         i = 0;
 
-        while(i < *pulObjectCount)
+        while (i < *pulObjectCount)
         {
-            phObject[i] = pkcs11_find_handle(pSession->slot->slot_id, pSession->attrib_list,
-                                                pSession->attrib_count, &pSession->object_index);
+            if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
+            {
+                phObject[i] = pkcs11_find_handle(pSession->slot->slot_id, pSession->attrib_list,
+                                                 pSession->attrib_count, &pSession->object_index, pSession);
+                (void)pkcs11_unlock_device(pLibCtx);
+            }
+
             if (phObject[i] == 0u)
             {
                 pSession->object_count = 0;
@@ -374,7 +382,7 @@ CK_RV pkcs11_find_continue(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE_PTR phOb
 
             i++;
         }
-        (void)pkcs11_unlock_both(pLibCtx);
+        (void)pkcs11_unlock_context(pLibCtx);
     }
 
     return rv;
@@ -439,8 +447,8 @@ CK_RV pkcs11_find_get_attribute(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hOb
 
     for (i = 0; i < ulCount; i++)
     {
-        const pkcs11_attrib_model * pAttribute = pkcs11_find_attrib(pObject->attributes,
-                                                                pObject->count, &pTemplate[i]);
+        const pkcs11_attrib_model *pAttribute = pkcs11_find_attrib(pObject->attributes,
+                                                                   pObject->count, &pTemplate[i]);
 
         if (NULL == pAttribute)
         {
@@ -459,7 +467,7 @@ CK_RV pkcs11_find_get_attribute(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hOb
             if (CKR_OK == pkcs11_lock_both(pLibCtx))
             {
                 /* Attribute function found so try to execute it */
-                CK_RV temp = pAttribute->func(pObject, &pTemplate[i]);
+                CK_RV temp = pAttribute->func(pObject, &pTemplate[i], pSession);
                 if (CKR_OK == rv)
                 {
                     rv = temp;

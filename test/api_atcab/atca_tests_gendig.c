@@ -40,7 +40,7 @@ TEST_CONDITION(atca_cmd_basic_test, gendig_shared_nonce)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((ATECC508A == dev_type) || (ATECC608 == dev_type));
+    return (ATECC508A == dev_type) || (ATECC608 == dev_type);
 }
 
 TEST(atca_cmd_basic_test, gendig_shared_nonce)
@@ -284,7 +284,7 @@ TEST_CONDITION(atca_cmd_basic_test, gendig_config_otp_data)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return (atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type));
+    return atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type);
 }
 
 TEST(atca_cmd_basic_test, gendig_config_otp_data)
@@ -383,7 +383,7 @@ TEST_CONDITION(atca_cmd_basic_test, gendivkey)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return (SHA105 == dev_type);
+    return SHA105 == dev_type;
 }
 
 TEST(atca_cmd_basic_test, gendivkey)
@@ -451,6 +451,6 @@ t_test_case_info gendig_basic_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_basic_test, gendivkey),               REGISTER_TEST_CONDITION(atca_cmd_basic_test, gendivkey) },
 #endif
     /* Array Termination element*/
-    { (fp_test_case)NULL, NULL }, 
+    { (fp_test_case)NULL, NULL },
 };
 // *INDENT-ON*

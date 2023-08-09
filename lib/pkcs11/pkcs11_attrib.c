@@ -28,6 +28,7 @@
 #include "pkcs11_config.h"
 #include "pkcs11_attrib.h"
 #include "cryptoauthlib.h"
+#include "pkcs11_session.h"
 
 /**
  * \defgroup pkcs11 Attributes (pkcs11_attrib_)
@@ -99,22 +100,25 @@ CK_RV pkcs11_attrib_value(CK_ATTRIBUTE_PTR pAttribute, const CK_ULONG ulValue, c
 }
 
 static const CK_BBOOL cbFalse = CK_FALSE;
-CK_RV pkcs11_attrib_false(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+CK_RV pkcs11_attrib_false(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr pSession)
 {
     ((void)pObject);
+    ((void)pSession);
     return pkcs11_attrib_fill(pAttribute, &cbFalse, (CK_ULONG)sizeof(cbFalse));
 }
 
 static const CK_BBOOL cbTrue = CK_TRUE;
-CK_RV pkcs11_attrib_true(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+CK_RV pkcs11_attrib_true(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr pSession)
 {
     ((void)pObject);
+    ((void)pSession);
     return pkcs11_attrib_fill(pAttribute, &cbTrue, (CK_ULONG)sizeof(cbTrue));
 }
 
-CK_RV pkcs11_attrib_empty(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+CK_RV pkcs11_attrib_empty(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr pSession)
 {
     ((void)pObject);
+    ((void)pSession);
     return pkcs11_attrib_fill(pAttribute, NULL, 0);
 }
 

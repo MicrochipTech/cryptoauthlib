@@ -72,6 +72,11 @@ ATCA_STATUS calib_mac(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
             {
                 return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             }
+
+            #if (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + MAC_CHALLENGE_SIZE))
+            #error "CA_MAX_PACKET_SIZE cannot accomodate mac command with challenge"
+            #endif
+
             (void)memcpy(&packet.data[0], challenge, 32);  // a 32-byte challenge
         }
 

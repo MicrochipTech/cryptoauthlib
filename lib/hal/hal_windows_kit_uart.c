@@ -157,9 +157,9 @@ ATCA_STATUS hal_uart_init(ATCAIface iface, ATCAIfaceCfg *cfg)
                 (void)memset(hal_data, 0, sizeof(atca_uart_host_t));
 
                 // Set COM port
-                /* coverity[misra_c_2012_rule_21_6_violation] snprintf is approved for formated string writes to buffers */
+                /* coverity[misra_c_2012_rule_21_6_violation] snprintf is approved for formatted string writes to buffers */
                 (void)snprintf(hal_data->uart_file, sizeof(hal_data->uart_file) - 1U,
-                               "\\\\.\\COM%d", (uint8_t)ATCA_IFACECFG_VALUE(cfg,atcauart.port));
+                               "\\\\.\\COM%d", (uint8_t)ATCA_IFACECFG_VALUE(cfg, atcauart.port));
 
 
                 iface->hal_data = hal_data;

@@ -508,6 +508,7 @@ TEST(atcac_sha, sha256_hmac)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t hmac[ATCA_SHA256_DIGEST_SIZE];
+    atcac_sha2_256_ctx sha256_ctx;
     size_t hmac_size;
     uint8_t data_input[] = {
         0x6f, 0xb3, 0xec, 0x66, 0xf9, 0xeb, 0x07, 0x0a,
@@ -535,7 +536,7 @@ TEST(atcac_sha, sha256_hmac)
     };
     atcac_hmac_sha256_ctx ctx;
 
-    status = atcac_sha256_hmac_init(&ctx, hmac_key, sizeof(hmac_key));
+    status = atcac_sha256_hmac_init(&ctx, &sha256_ctx, hmac_key, sizeof(hmac_key));
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     status = atcac_sha256_hmac_update(&ctx, data_input, sizeof(data_input));
@@ -564,6 +565,7 @@ TEST(atcac_sha, sha256_hmac_nist)
     int klen = 0;
     int tlen = 0;
     atcac_hmac_sha256_ctx hmac_ctx;
+    atcac_sha2_256_ctx sha256_ctx;
 
     rsp_file = fopen("hmac_test_vectors/HMAC_sha256.rsp", "r");
     TEST_ASSERT_NOT_NULL_MESSAGE(rsp_file, "Failed to open file");
@@ -591,7 +593,7 @@ TEST(atcac_sha, sha256_hmac_nist)
         ret = read_rsp_hex_value(rsp_file, "Mac = ", hmac_ref, tlen);
         TEST_ASSERT_EQUAL(ret, ATCA_SUCCESS);
 
-        ret = atcac_sha256_hmac_init(&hmac_ctx, key, klen);
+        ret = atcac_sha256_hmac_init(&hmac_ctx, &sha256_ctx, key, klen);
         TEST_ASSERT_EQUAL(ret, ATCA_SUCCESS);
 
         ret = atcac_sha256_hmac_update(&hmac_ctx, msg, sizeof(msg));

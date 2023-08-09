@@ -490,11 +490,14 @@ ATCA_STATUS atcac_aes_cmac_finish(
  */
 ATCA_STATUS atcac_sha256_hmac_init(
     atcac_hmac_sha256_ctx* ctx,                 /**< [in] pointer to a sha256-hmac context */
+    atcac_sha2_256_ctx*    sha256_ctx,          /**< [in] pointer to a sha256 context */
     const uint8_t*         key,                 /**< [in] key value to use */
     const uint8_t          key_len              /**< [in] length of the key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    (void)sha256_ctx;
 
     if (ctx)
     {
@@ -562,11 +565,11 @@ ATCA_STATUS atcac_sha256_hmac_finish(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_init(
-    atcac_pk_ctx*   ctx,                    /**< [in] pointer to a pk context */
-    const uint8_t*  buf,                    /**< [in] buffer containing a pem encoded key */
-    size_t          buflen,                 /**< [in] length of the input buffer */
-    uint8_t         key_type,
-    bool            pubkey                  /**< [in] buffer is a public key */
+    atcac_pk_ctx*  ctx,                     /**< [in] pointer to a pk context */
+    const uint8_t* buf,                     /**< [in] buffer containing a pem encoded key */
+    size_t         buflen,                  /**< [in] length of the input buffer */
+    uint8_t        key_type,
+    bool           pubkey                   /**< [in] buffer is a public key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -623,10 +626,10 @@ ATCA_STATUS atcac_pk_init(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_init_pem(
-    atcac_pk_ctx*   ctx,                    /**< [in] pointer to a pk context */
-    const uint8_t*  buf,                    /**< [in] buffer containing a pem encoded key */
-    size_t          buflen,                 /**< [in] length of the input buffer */
-    bool            pubkey                  /**< [in] buffer is a public key */
+    atcac_pk_ctx*  ctx,                     /**< [in] pointer to a pk context */
+    const uint8_t* buf,                     /**< [in] buffer containing a pem encoded key */
+    size_t         buflen,                  /**< [in] length of the input buffer */
+    bool           pubkey                   /**< [in] buffer is a public key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -706,11 +709,11 @@ ATCA_STATUS atcac_pk_public(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_sign(
-    atcac_pk_ctx*   ctx,
-    const uint8_t*  digest,
-    size_t          dig_len,
-    uint8_t*        signature,
-    size_t*         sig_len
+    atcac_pk_ctx*  ctx,
+    const uint8_t* digest,
+    size_t         dig_len,
+    uint8_t*       signature,
+    size_t*        sig_len
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -765,11 +768,11 @@ ATCA_STATUS atcac_pk_sign(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_verify(
-    atcac_pk_ctx*   ctx,
-    const uint8_t*  digest,
-    size_t          dig_len,
-    const uint8_t*  signature,
-    size_t          sig_len
+    atcac_pk_ctx*  ctx,
+    const uint8_t* digest,
+    size_t         dig_len,
+    const uint8_t* signature,
+    size_t         sig_len
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;

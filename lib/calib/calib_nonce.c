@@ -77,6 +77,12 @@ ATCA_STATUS calib_nonce_base(ATCADevice device, uint8_t mode, uint16_t param2, c
 
         (void)calib_get_numin_size(mode, &length);
 
+        if (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + length))
+        {
+            status = ATCA_TRACE(ATCA_INVALID_SIZE, "Invalid packet size received");
+            break;
+        }
+
         // Copy the right amount of NumIn data
         (void)memcpy(packet.data, num_in, length);
 
@@ -220,7 +226,7 @@ ATCA_STATUS calib_nonce_gen_session_key(ATCADevice device, uint16_t param2, uint
 /** \brief Get num_in size based on the nonce mode
  *
  *  \param[in] mode      Nonce mode
- *  \param[out] length   Size of the input value 
+ *  \param[out] length   Size of the input value
  *
  *  \return ATCA_SUCCESS on success.
  */

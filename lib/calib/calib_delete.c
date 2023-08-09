@@ -2,7 +2,7 @@
  * \file
  * \brief CryptoAuthLib Basic API methods for Delete command.
  *
- * The Delete command, when executed, will clear all of the Data zone slots and set 
+ * The Delete command, when executed, will clear all of the Data zone slots and set
  * all bytes of each slot to 0xFF.The Configuration zone will be untouched, except for the
  * value of the Primary_Deleted byte.
  *
@@ -36,12 +36,17 @@
 #include "host/atca_host.h"
 
 #if CALIB_DELETE_EN
-/** \brief Clears all Data zone slots and all the bytes of each slot is set to 0xFF.The 
+
+#if (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + DELETE_MAC_SIZE))
+#error "Delete command packet cannot be accommodated inside the maximum packet size provided"
+#endif
+
+/** \brief Clears all Data zone slots and all the bytes of each slot is set to 0xFF.The
  *  Configuration zone will be untouched, except for the value of the Primary_Deleted byte.
  *
- *  Note: After the Delete command is run, the device will no longer be functional. Only the 
+ *  Note: After the Delete command is run, the device will no longer be functional. Only the
  *  Info command can be run successfully
- * 
+ *
  *  \param[in] device      Device context pointer
  *	\param[in] mode        Mode must be 0x00
  *	\param[in] key_id      Key id must be 0x0000
@@ -52,7 +57,7 @@ ATCA_STATUS calib_delete_base(ATCADevice device, uint8_t mode, uint16_t key_id, 
 {
     ATCAPacket packet;
     ATCA_STATUS status = ATCA_GEN_FAIL;
-    
+
     // Verify the inputs
     if ((device == NULL) || (mac == NULL))
     {
@@ -63,7 +68,7 @@ ATCA_STATUS calib_delete_base(ATCADevice device, uint8_t mode, uint16_t key_id, 
     {
         // build Delete command
         packet.param1 = mode;
-        packet.param2 = key_id;        
+        packet.param2 = key_id;
 
         (void)memcpy(&packet.data[0], mac, DELETE_MAC_SIZE);
 
@@ -81,7 +86,7 @@ ATCA_STATUS calib_delete_base(ATCADevice device, uint8_t mode, uint16_t key_id, 
 }
 
 /** \brief Runs Nonce Command, calculates mac and performs delete operation
- * 
+ *
  *  \param[in] device      Device context pointer
  *	\param[in] num_in      Input value from the system
  *  \param[in] key         Key input (HMAC/Secret Key)
@@ -91,7 +96,7 @@ ATCA_STATUS calib_delete(ATCADevice device, uint8_t num_in[NONCE_NUMIN_SIZE], co
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t serial_number[ATCA_SERIAL_NUM_SIZE] = { 0 };
-    uint8_t rand_out[RANDOM_NUM_SIZE] = { 0 };  
+    uint8_t rand_out[RANDOM_NUM_SIZE] = { 0 };
     atca_delete_in_out_t delete_mac_params;
     uint8_t mac[DELETE_MAC_SIZE] = { 0 };
 
@@ -102,7 +107,7 @@ ATCA_STATUS calib_delete(ATCADevice device, uint8_t num_in[NONCE_NUMIN_SIZE], co
         {
             (void)ATCA_TRACE(status, "Read serial number failed");
             break;
-        } 
+        }
 
         // Generate random
         if (ATCA_SUCCESS != (status = calib_nonce_gen_session_key(device, DELETE_NONCE_KEY_ID, num_in, rand_out)))
@@ -124,7 +129,7 @@ ATCA_STATUS calib_delete(ATCADevice device, uint8_t num_in[NONCE_NUMIN_SIZE], co
             (void)ATCA_TRACE(status, "Delete Mac failed");
             break;
         }
-    } 
+    }
     while (false);
 
     return calib_delete_base(device, DELETE_MODE, (uint16_t)0x0000, mac);

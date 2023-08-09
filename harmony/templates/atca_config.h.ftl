@@ -35,6 +35,11 @@
 #define ATCA_TA100_FCE_SUPPORT
 </#if>
 
+/** Provide Maximum packet size for the command to be sent and received */
+#ifndef MAX_PACKET_SIZE
+#define MAX_PACKET_SIZE     (${CAL_MAX_PACKET_SIZE}U)
+#endif
+
 <#if !CAL_ENABLE_POLLING>
 /** Define if cryptoauthlib is to use the maximum execution time method */
 #ifndef ATCA_NO_POLL
@@ -460,6 +465,16 @@
 #define ATCA_PRINTF
 #endif
 </#if>
+
+<#if CAL_ENABLE_JWT>
+#ifndef ATCA_JWT_EN
+#define ATCA_JWT_EN
+#endif
+</#if>
+
+#ifndef ATCA_PREPROCESSOR_WARNING
+#define ATCA_PREPROCESSOR_WARNING     ${CAL_ENABLE_PREPROCESSOR_WARNING?c}
+#endif
 
 /* Define generic interfaces to the processor libraries */
 <#assign is_atca_plib_i2c_exists = "False">

@@ -63,6 +63,16 @@ ATCA_STATUS calib_secureboot(ATCADevice device, uint8_t mode, uint16_t param2, c
         return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
+    #if (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + SECUREBOOT_DIGEST_SIZE + SECUREBOOT_SIGNATURE_SIZE))
+    #if ATCA_PREPROCESSOR_WARNING
+    #warning "CA_MAX_PACKET_SIZE will not support full or fullcopy mode in secureboot command"
+    #endif
+    if (NULL != signature)
+    {
+        status = ATCA_TRACE(ATCA_INVALID_SIZE, "Unsupported parameter");
+    }
+    #endif
+
     do
     {
         packet.param1 = mode;

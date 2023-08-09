@@ -34,6 +34,11 @@
 #include "cryptoauthlib.h"
 
 #if CALIB_SELFTEST_EN
+
+#if (CA_MAX_PACKET_SIZE < ATCA_CMD_SIZE_MIN)
+#error "Selftest command packet cannot be accommodated inside the maximum packet size provided"
+#endif
+
 /** \brief Executes the SelfTest command, which performs a test of one or more
  *          of the cryptographic engines within the ATECC608 chip.
  *

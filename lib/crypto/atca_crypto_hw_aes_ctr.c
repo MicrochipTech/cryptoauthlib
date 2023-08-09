@@ -138,7 +138,7 @@ ATCA_STATUS atcab_aes_ctr_init_rand_ext(ATCADevice device, atca_aes_ctr_ctx_t* c
     nonce_size = ATCA_AES128_BLOCK_SIZE - ctx->counter_size;
     if (nonce_size != 0u)
     {
-        uint8_t random_nonce[32];
+        uint8_t random_nonce[32] = { 0 };
 #if ATCA_HOSTLIB_EN
         if (ATCA_SUCCESS != (status = (ATCA_STATUS)atcac_sw_random(random_nonce, 32)))
         {

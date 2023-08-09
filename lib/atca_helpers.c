@@ -79,10 +79,12 @@ static void uint8_to_hex(uint8_t num, char* hex_str)
 
     if (nibble < 10u)
     {
+        /* coverity[misra_c_2012_rule_10_3_violation:FALSE] */
         *(hex_str++) = (int8_t)'0' + (int8_t)nibble;
     }
     else
     {
+        /* coverity[misra_c_2012_rule_10_3_violation:FALSE] */
         *(hex_str++) = (int8_t)'A' + ((int8_t)nibble - 10);
     }
     nibble = num & 0x0Fu;
@@ -243,7 +245,7 @@ ATCA_STATUS atcab_bin2hex_(const uint8_t* bin, size_t bin_size, char* hex, size_
     {
         // Since we have room add NULL as a convenience, but don't add to the
         // output size.
-        hex[cur_hex_size] = 0;
+        hex[cur_hex_size] = (char)'\0';
     }
 
     return ATCA_SUCCESS;
@@ -253,7 +255,7 @@ inline static uint8_t hex_digit_to_num(uint8_t c)
 {
     if (c >= (uint8_t)'0' && c <= (uint8_t)'9')
     {
-        return (c - (uint8_t)'0');
+        return c - (uint8_t)'0';
     }
     if (c >= (uint8_t)'a' && c <= (uint8_t)'f')
     {
@@ -322,10 +324,10 @@ ATCA_STATUS atcab_hex2bin_(const char* hex, size_t hex_size, uint8_t* bin, size_
  */
 ATCA_STATUS atcab_hex2bin(
     const char* ascii_hex,      /**< [in] Input buffer to convert*/
-    size_t ascii_hex_len,       /**< [in] Length of buffer to convert */
-    uint8_t* binary,            /**< [out] Buffer that receives binary */
-    size_t* bin_len             /**< [in,out] As input, the size of the bin buffer. As output, the size of the bin data. */
-)
+    size_t      ascii_hex_len,  /**< [in] Length of buffer to convert */
+    uint8_t*    binary,         /**< [out] Buffer that receives binary */
+    size_t*     bin_len         /**< [in,out] As input, the size of the bin buffer. As output, the size of the bin data. */
+    )
 {
     return atcab_hex2bin_(ascii_hex, ascii_hex_len, binary, bin_len, false);
 }
@@ -843,7 +845,7 @@ ATCA_STATUS atcab_base64encode_(
         }
 
         // Strip any trailing nulls
-        while (b64_idx > 1u && encoded[b64_idx - 1u] == 0)
+        while (b64_idx > 1u && encoded[b64_idx - 1u] == (char)('\0'))
         {
             b64_idx--;
         }
@@ -893,7 +895,7 @@ ATCA_STATUS atcab_base64decode(const char* encoded, size_t encoded_len, uint8_t*
 }
 
 /** \brief Helper function to calculate the number of bytes between two pointers.
-*/
+ */
 size_t atcab_pointer_delta(const void* start, const void* end)
 {
     if (start < end)
@@ -928,7 +930,7 @@ int atcab_memset_s(void* dest, size_t destsz, int ch, size_t count)
 
     volatile unsigned char* p = dest;
     /* coverity[misra_c_2012_rule_14_2_violation] Tracking parallel counters to mimic the defined API */
-    for ( ; (0u < destsz) && (0u < count) ; destsz--, count--)
+    for (; (0u < destsz) && (0u < count); destsz--, count--)
     {
         *p++ = (uint8_t)ch;
     }
@@ -942,6 +944,7 @@ char lib_toupper(char c)
 {
     if (((int8_t)'a' <= (int8_t)c) && ((int8_t)'z' >= (int8_t)c))
     {
+        /* coverity[misra_c_2012_rule_10_3_violation:FALSE] */
         return (int8_t)c - (int8_t)'a' + (int8_t)'A';
     }
     else
@@ -955,6 +958,7 @@ char lib_tolower(char c)
 {
     if (((int8_t)'A' <= (int8_t)c) && ((int8_t)'Z' >= (int8_t)c))
     {
+        /* coverity[misra_c_2012_rule_10_3_violation:FALSE] */
         return (int8_t)c - (int8_t)'A' + (int8_t)'a';
     }
     else
@@ -979,17 +983,17 @@ const char * lib_strcasestr(const char *haystack, const char *needle)
         return h;
     }
 
-    while(((int8_t)'\0' != (int8_t)*h) && ((int8_t)'\0' != (int8_t)*n))
+    while (((int8_t)'\0' != (int8_t)*h) && ((int8_t)'\0' != (int8_t)*n))
     {
         if ((*h != *n) && (*h != lib_toupper(*n)))
         {
-            if(NULL != m)
+            if (NULL != m)
             {
                 /* Restart Matching */
                 m = NULL;
                 n = needle;
             }
-            else 
+            else
             {
                 /* Continue stepping through the haystack */
                 h++;
@@ -1008,8 +1012,6 @@ const char * lib_strcasestr(const char *haystack, const char *needle)
     }
 
     /* if we reached the end of the needle then it was found */
-    return (((int8_t)'\0' == (int8_t)*n) ? m : NULL);
+    return ((int8_t)'\0' == (int8_t)*n) ? m : NULL;
 }
 #endif
-
-

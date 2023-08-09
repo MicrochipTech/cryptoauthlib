@@ -44,10 +44,10 @@ TEST_CONDITION(atca_cmd_basic_test, sha)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type))
-            || atcab_is_ca2_device(dev_type)
-            || (TA100 == dev_type)
-    );
+    return (atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type))
+           || atcab_is_ca2_device(dev_type)
+           || (TA100 == dev_type)
+    ;
 }
 
 TEST(atca_cmd_basic_test, sha)
@@ -553,12 +553,12 @@ TEST_CONDITION(atca_cmd_basic_test, sha_hmac)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((ATECC108A == dev_type) 
-            || (ATECC508A == dev_type)
-            || (ATECC608 == dev_type)
-            || (ECC204 == dev_type)
-            || (TA010 == dev_type)
-            || (TA100 == dev_type));
+    return (ATECC108A == dev_type)
+           || (ATECC508A == dev_type)
+           || (ATECC608 == dev_type)
+           || (ECC204 == dev_type)
+           || (TA010 == dev_type)
+           || (TA100 == dev_type);
 }
 
 TEST(atca_cmd_basic_test, sha_hmac)

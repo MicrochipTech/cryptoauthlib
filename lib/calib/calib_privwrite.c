@@ -38,6 +38,10 @@
 
 #include "host/atca_host.h"
 
+#if (CA_MAX_PACKET_SIZE < PRIVWRITE_COUNT)
+#error "PrivWrite command packet cannot be accommodated inside the maximum packet size provided"
+#endif
+
 /** \brief Executes PrivWrite command, to write externally generated ECC
  *          private keys into the device.
  *
@@ -87,8 +91,8 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
             // build an PrivWrite command
             packet.param1 = 0x00;                           // Mode is unencrypted write
             packet.param2 = key_id;                         // Key ID
-            (void)memcpy(&packet.data[0], priv_key, 36);          // Private key
-            (void)memset(&packet.data[36], 0, 32);                // MAC (ignored for unencrypted write)
+            (void)memcpy(&packet.data[0], priv_key, 36);    // Private key
+            (void)memset(&packet.data[36], 0, 32);          // MAC (ignored for unencrypted write)
         }
         else
         {

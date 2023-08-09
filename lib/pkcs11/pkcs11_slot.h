@@ -36,10 +36,14 @@
 extern "C" {
 #endif
 
+#define SLOT_STATE_UNINITIALIZED    (0U)
+#define SLOT_STATE_CONFIGURED       (1U)
+#define SLOT_STATE_READY            (2U)
+
 /** Slot Context */
 typedef struct pkcs11_slot_ctx_s
 {
-    CK_BBOOL          initialized;
+    CK_BYTE           slot_state;
     CK_SLOT_ID        slot_id;
     ATCADevice        device_ctx;
     ATCAIfaceCfg      interface_config;
@@ -48,8 +52,8 @@ typedef struct pkcs11_slot_ctx_s
     atecc608_config_t cfg_zone;
 #endif
 #if ((defined(ATCA_HAL_KIT_BRIDGE) && defined(PKCS11_TESTING_ENABLE)) || \
-        (defined(__linux__) && (defined(ATCA_HAL_SWI_UART) || defined(ATCA_HAL_KIT_UART))))
-    uint8_t           devpath[24];
+    (defined(__linux__) && (defined(ATCA_HAL_SWI_UART) || defined(ATCA_HAL_KIT_UART))))
+    uint8_t devpath[24];
 #endif
     CK_FLAGS flags;
     uint16_t user_pin_handle;
@@ -68,11 +72,15 @@ typedef struct pkcs11_slot_ctx_s
 CK_RV pkcs11_slot_init(CK_SLOT_ID slotID);
 CK_RV pkcs11_slot_config(CK_SLOT_ID slotID);
 CK_VOID_PTR pkcs11_slot_initslots(CK_ULONG pulCount);
+CK_RV pkcs11_slot_deinitslots(pkcs11_lib_ctx_ptr lib_ctx);
 pkcs11_slot_ctx_ptr pkcs11_slot_get_context(pkcs11_lib_ctx_ptr lib_ctx, CK_SLOT_ID slotID);
 pkcs11_slot_ctx_ptr pkcs11_slot_get_new_context(pkcs11_lib_ctx_ptr lib_ctx);
 
-
 CK_RV pkcs11_slot_get_list(CK_BBOOL tokenPresent, CK_SLOT_ID_PTR pSlotList, CK_ULONG_PTR pulCount);
 CK_RV pkcs11_slot_get_info(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo);
+
+#if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
+extern CK_RV pkcs11_trust_load_objects(pkcs11_slot_ctx_ptr pSlot);
+#endif
 
 #endif /* PKCS11_SLOT_H_ */

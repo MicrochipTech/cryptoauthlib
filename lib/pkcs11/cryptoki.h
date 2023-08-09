@@ -35,15 +35,11 @@
 
 #include "atca_compiler.h"
 
-#pragma coverity compliance block(include) \
-(deviate "CERT DCL37-C" "PKCS11 headers are defined by the standard and may not be modified") \
-(deviate "MISRA C-2012 Rule 3.1" "PKCS11 headers are defined by the standard and may not be modified") \
-(deviate "MISRA C-2012 Rule 5.2" "PKCS11 headers are defined by the standard and may not be modified") \
-(deviate "MISRA C-2012 Rule 5.8" "PKCS11 headers are defined by the standard and may not be modified") \
-(deviate "MISRA C-2012 Rule 21.1" "PKCS11 headers are defined by the standard and may not be modified") \
-(deviate "MISRA C-2012 Rule 21.2" "PKCS11 headers are defined by the standard and may not be modified")
 
+
+#ifdef _MSC_VER
 #pragma warning(push, 0)
+#endif
 
 //#if defined(_WIN32) || defined(__GNUC__)
 //#pragma pack(push, cryptoki, 1)
@@ -75,7 +71,7 @@
 
 #ifdef PKCS11_DLL_EXPORTS // defined if we are building the PKCS11 DLL (instead of using it)
 #define PKCS11_API PKCS11_HELPER_DLL_EXPORT
-#elif defined(PKCS11_DLL)          // defined if PKCS11 is compiled as a DLL
+#elif defined(PKCS11_DLL) // defined if PKCS11 is compiled as a DLL
 #define PKCS11_API PKCS11_HELPER_DLL_IMPORT
 #else // PKCS11_DLL is not defined: this means PKCS11 is a static lib.
 #define PKCS11_API
@@ -112,19 +108,35 @@
 #define NULL_PTR 0
 #endif
 
+#ifdef __COVERITY__
+#pragma coverity compliance block(include) \
+    (deviate "CERT DCL37-C" "PKCS11 headers are defined by the standard and may not be modified") \
+    (deviate "MISRA C-2012 Rule 3.1" "PKCS11 headers are defined by the standard and may not be modified") \
+    (deviate "MISRA C-2012 Rule 5.2" "PKCS11 headers are defined by the standard and may not be modified") \
+    (deviate "MISRA C-2012 Rule 5.8" "PKCS11 headers are defined by the standard and may not be modified") \
+    (deviate "MISRA C-2012 Rule 21.1" "PKCS11 headers are defined by the standard and may not be modified") \
+    (deviate "MISRA C-2012 Rule 21.2" "PKCS11 headers are defined by the standard and may not be modified")
+#endif
+
 #include "pkcs11.h"
+
+#ifdef __COVERITY__
+#pragma coverity compliance end_block(include) \
+    "CERT DCL37-C" \
+    "MISRA C-2012 Rule 3.1" \
+    "MISRA C-2012 Rule 5.2" \
+    "MISRA C-2012 Rule 5.8" \
+    "MISRA C-2012 Rule 21.1" \
+    "MISRA C-2012 Rule 21.2"
+#endif
+
 
 //#if defined(_WIN32) || defined(__GNUC__)
 //#pragma pack(pop, cryptoki)
 //#endif
 
+#ifdef _MSC_VER
 #pragma warning(pop)
-#pragma coverity compliance end_block(include) \
-"CERT DCL37-C" \
-"MISRA C-2012 Rule 3.1" \
-"MISRA C-2012 Rule 5.2" \
-"MISRA C-2012 Rule 5.8" \
-"MISRA C-2012 Rule 21.1" \
-"MISRA C-2012 Rule 21.2"
+#endif
 
 #endif // !CRYPTOKI_H

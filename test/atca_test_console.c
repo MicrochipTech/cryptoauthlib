@@ -157,6 +157,7 @@ int lock_data(int argc, char* argv[])
 int do_randoms(int argc, char* argv[])
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
+
     ((void)argc);
     ((void)argv);
 

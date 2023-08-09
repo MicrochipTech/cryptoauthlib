@@ -43,6 +43,16 @@
 #define PKCS11_DEBUG_ENABLE             ${CAL_PKCS11_ENABLE_DEBUG_PRINT?then(1,0)}
 #endif
 
+/** Enable PKCS#11 AUTH session terminate work around */
+#ifndef PKCS11_AUTH_TERMINATE_BEFORE_LOGIN
+#define PKCS11_AUTH_TERMINATE_BEFORE_LOGIN          0
+#endif
+
+/** Use Static or Dynamic Allocation */
+#ifndef PKCS11_USE_STATIC_MEMORY
+#define PKCS11_USE_STATIC_MEMORY        defined(ATCA_NO_HEAP)
+#endif
+
 <#if CAL_PKCS11_AWS_FREERTOS>
 #define PKCS11_LABEL_IS_SERNUM          1
 </#if>
@@ -69,10 +79,35 @@
 #define PKCS11_MAX_OBJECTS_ALLOWED      ${CAL_PKCS11_MAX_OBJECTS}
 #endif
 
+/** Maximum Config options - device, interface, label, freeslots, user_pin_handle, so_pin_handle, object */
+#ifndef PKCS11_MAX_CONFIG_ALLOWED
+#define PKCS11_MAX_CONFIG_ALLOWED       ${CAL_PKCS11_MAX_CONFIG}
+#endif
+
 /** Maximum label size in characters */
 #ifndef PKCS11_MAX_LABEL_SIZE
 #define PKCS11_MAX_LABEL_SIZE           ${CAL_PKCS11_MAX_LABEL_LENGTH}
 #endif
+
+/** Enables some additional test functionality for pkcs11 */
+#ifndef PKCS11_TESTING_ENABLE
+#define PKCS11_TESTING_ENABLE            0
+#endif
+
+/** Define to always convert PIN using KDF */
+#ifndef PKCS11_PIN_KDF_ALWAYS
+#define PKCS11_PIN_KDF_ALWAYS            0
+#endif
+
+/** Define to use PBKDF2 for PIN KDF */
+#ifndef PKCS11_PIN_PBKDF2_EN
+#define PKCS11_PIN_PBKDF2_EN             0
+#endif
+
+/** Define how many iterations PBKDF2 will use for PIN KDF */
+#if defined(PKCS11_PIN_PBKDF2_EN) && !defined(PKCS11_PIN_PBKDF2_ITERATIONS)
+#define PKCS11_PIN_PBKDF2_ITERATIONS    ${CAL_PKCS11_PIN_PBKDF2_ITERATIONS}
+#endif  
 
 /****************************************************************************/
 /* The following configuration options are for fine tuning of the library   */
@@ -103,26 +138,36 @@
 #define PKCS11_MONOTONIC_ENABLE         0
 #endif
 
+/** Automatically generate CKA_ID values based on standards */
+#ifndef PKCS11_AUTO_ID_ENABLE
+#define PKCS11_AUTO_ID_ENABLE           1
+#endif
+
 
 #include "pkcs11/cryptoki.h"
 #include <stddef.h>
-typedef struct _pkcs11_slot_ctx *pkcs11_slot_ctx_ptr;
-typedef struct _pkcs11_lib_ctx  *pkcs11_lib_ctx_ptr;
-typedef struct _pkcs11_object   *pkcs11_object_ptr;
+typedef struct pkcs11_slot_ctx_s *pkcs11_slot_ctx_ptr;
+typedef struct pkcs11_lib_ctx_s  *pkcs11_lib_ctx_ptr;
+typedef struct pkcs11_object_s   *pkcs11_object_ptr;
+
+#define MAX_CONF_FILE_NAME_SIZE			15
+#define MAX_CONF_FILES              	(PKCS11_MAX_SLOTS_ALLOWED * PKCS11_MAX_OBJECTS_ALLOWED)
 
 #if PKCS11_USE_STATIC_CONFIG
 CK_RV pkcs11_config_interface(pkcs11_slot_ctx_ptr pSlot);
 #endif
-CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr pSlot);
+void pkcs11_config_split_string(char* s, char splitter, int * argc, char* argv[]);
+CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx);
 CK_RV pkcs11_config_load(pkcs11_slot_ctx_ptr slot_ctx);
-CK_RV pkcs11_config_cert(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pcLabel);
-CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pcLabel);
+CK_RV pkcs11_config_cert(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pLabel);
+CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pLabel);
 #if !PKCS11_USE_STATIC_CONFIG
 CK_RV pkcs11_config_remove_object(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject);
 #endif
 
-void pkcs11_config_init_private(pkcs11_object_ptr pObject, char * label, size_t len);
-void pkcs11_config_init_public(pkcs11_object_ptr pObject, char * label, size_t len);
-void pkcs11_config_init_cert(pkcs11_object_ptr pObject, char * label, size_t len);
+void pkcs11_config_init_private(pkcs11_object_ptr pObject, const char * label, size_t len);
+void pkcs11_config_init_public(pkcs11_object_ptr pObject, const char * label, size_t len);
+void pkcs11_config_init_cert(pkcs11_object_ptr pObject, const char * label, size_t len);
+void pkcs11_config_init_secret(pkcs11_object_ptr pObject, const char* label, size_t len, size_t keylen);
 
 #endif /* PKCS11_CONFIG_H_ */

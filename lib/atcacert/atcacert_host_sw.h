@@ -62,9 +62,9 @@ extern "C" {
  * \return ATCA_UNIMPLEMENTED , as the function is currently not implemented.
  */
 ATCA_STATUS atcacert_verify_cert_sw(const atcacert_def_t* cert_def,
-                            const uint8_t*        cert,
-                            size_t                cert_size,
-                            const uint8_t         ca_public_key[64]);
+                                    const uint8_t*        cert,
+                                    size_t                cert_size,
+                                    const uint8_t         ca_public_key[64]);
 
 
 
@@ -95,8 +95,8 @@ ATCA_STATUS atcacert_gen_challenge_sw(uint8_t challenge[32]);
  * \return ATCA_UNIMPLEMENTED , as the function is currently not implemented.
  */
 ATCA_STATUS atcacert_verify_response_sw(const uint8_t device_public_key[64],
-                                const uint8_t challenge[32],
-                                const uint8_t response[64]);
+                                        const uint8_t challenge[32],
+                                        const uint8_t response[64]);
 
 /** @} */
 #ifdef __cplusplus

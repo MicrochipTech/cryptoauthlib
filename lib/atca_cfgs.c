@@ -160,8 +160,8 @@ ATCAIfaceCfg cfg_atsha20xa_kituart_default = {
 #if defined(ATCA_SHA_SUPPORT) && defined(ATCA_HAL_KIT_HID)
 /** \brief default configuration for Kit protocol over the device's async interface */
 ATCAIfaceCfg cfg_atsha20xa_kithid_default = {
-    .iface_type            = ATCA_HID_IFACE,
-    .devtype               = ATSHA204A,
+    .iface_type                = ATCA_HID_IFACE,
+    .devtype                   = ATSHA204A,
     {
         .atcahid.dev_interface = ATCA_KIT_AUTO_IFACE,
         .atcahid.dev_identity  = 0,

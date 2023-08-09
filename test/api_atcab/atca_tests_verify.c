@@ -53,10 +53,12 @@
 
 void print_buffer(uint8_t *buf, int len)
 {
-    for (int i=0; i<len; i++, buf++)
+    for (int i = 0; i < len; i++, buf++)
     {
         if (i && !(i % 16))
+        {
             printf("\n");
+        }
         printf("%02x", *buf);
     }
     printf("\n");
@@ -241,9 +243,9 @@ TEST_CONDITION(atca_cmd_basic_test, verify_stored_on_reqrandom_set)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((ATECC108A == dev_type) 
-            || (ATECC508A == dev_type)
-            || (ATECC608 == dev_type));
+    return (ATECC108A == dev_type)
+           || (ATECC508A == dev_type)
+           || (ATECC608 == dev_type);
 }
 
 TEST(atca_cmd_basic_test, verify_stored_on_reqrandom_set)
@@ -266,11 +268,11 @@ TEST(atca_cmd_basic_test, verify_stored_on_reqrandom_set)
 #if defined(ATCA_MBEDTLS) || defined(ATCA_OPENSSL) || defined(ATCA_WOLFSSL)
     atcac_pk_ctx sign_ctx;
     uint8_t private_key_pem[] =
-    "-----BEGIN EC PRIVATE KEY-----\n"
-    "MHcCAQEEICFZhAyzqkUgyheo51bhg3mcp+qwfl+koE+Mhs/sRyzBoAoGCCqGSM49\n"
-    "AwEHoUQDQgAExAE2yqujppBzD0hIpdqdXmMgtlXT90QqllaQYWEVBjdf+LmY5DCf\n"
-    "Mx8PXEVxhbDmgo6HHbz0S4VaZjShBLMaPw==\n"
-    "-----END EC PRIVATE KEY-----\n";
+        "-----BEGIN EC PRIVATE KEY-----\n"
+        "MHcCAQEEICFZhAyzqkUgyheo51bhg3mcp+qwfl+koE+Mhs/sRyzBoAoGCCqGSM49\n"
+        "AwEHoUQDQgAExAE2yqujppBzD0hIpdqdXmMgtlXT90QqllaQYWEVBjdf+LmY5DCf\n"
+        "Mx8PXEVxhbDmgo6HHbz0S4VaZjShBLMaPw==\n"
+        "-----END EC PRIVATE KEY-----\n";
     size_t sig_size = sizeof(signature);
     size_t pubkey_len = sizeof(public_key);
 
@@ -300,7 +302,7 @@ TEST(atca_cmd_basic_test, verify_stored_on_reqrandom_set)
     status = atcab_random(message);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    // Send the random nonce command 
+    // Send the random nonce command
     status = atcab_nonce_rand(message, rand_out);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -541,9 +543,9 @@ TEST_CONDITION(atca_cmd_basic_test, verify_validate)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((ATECC108A == dev_type) 
-            || (ATECC508A == dev_type)
-            || (ATECC608 == dev_type));
+    return (ATECC108A == dev_type)
+           || (ATECC508A == dev_type)
+           || (ATECC608 == dev_type);
 }
 
 TEST(atca_cmd_basic_test, verify_validate)
@@ -555,7 +557,7 @@ TEST_CONDITION(atca_cmd_basic_test, verify_invalidate)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((ATECC508A == dev_type) || (ATECC608 == dev_type));
+    return (ATECC508A == dev_type) || (ATECC608 == dev_type);
 }
 
 TEST(atca_cmd_basic_test, verify_invalidate)
@@ -721,6 +723,6 @@ t_test_case_info verify_basic_test_info[] =
 #endif
 
     /* Array Termination element*/
-    { (fp_test_case)NULL, NULL },       
+    { (fp_test_case)NULL, NULL },
 };
 // *INDENT-ON*

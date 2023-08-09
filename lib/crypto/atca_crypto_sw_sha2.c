@@ -112,6 +112,7 @@ ATCA_STATUS atcac_sw_sha2_256(const uint8_t* data, size_t data_size, uint8_t dig
  */
 ATCA_STATUS atcac_sha256_hmac_init(
     atcac_hmac_sha256_ctx* ctx,                 /**< [in] pointer to a sha256-hmac context */
+    atcac_sha2_256_ctx*    sha256_ctx,          /**< [in] pointer to a sha256 context */
     const uint8_t*         key,                 /**< [in] key value to use */
     const uint8_t          key_len              /**< [in] length of the key */
     )
@@ -119,8 +120,9 @@ ATCA_STATUS atcac_sha256_hmac_init(
     ATCA_STATUS status = ATCA_BAD_PARAM;
     size_t klen = key_len;
 
-    if (ctx && key && key_len)
+    if ((NULL != ctx) && (NULL != sha256_ctx) && (NULL != key) && (0u != key_len))
     {
+        ctx->sha256_ctx = sha256_ctx;
         if (klen <= ATCA_SHA2_256_BLOCK_SIZE)
         {
             (void)memcpy(ctx->ipad, key, klen);
@@ -128,9 +130,9 @@ ATCA_STATUS atcac_sha256_hmac_init(
         }
         else
         {
-            (void)atcac_sw_sha2_256_init(&ctx->sha256_ctx);
-            (void)atcac_sw_sha2_256_update(&ctx->sha256_ctx, key, klen);
-            status = (ATCA_STATUS)atcac_sw_sha2_256_finish(&ctx->sha256_ctx, ctx->ipad);
+            (void)atcac_sw_sha2_256_init(ctx->sha256_ctx);
+            (void)atcac_sw_sha2_256_update(ctx->sha256_ctx, key, klen);
+            status = (ATCA_STATUS)atcac_sw_sha2_256_finish(ctx->sha256_ctx, ctx->ipad);
             klen = ATCA_SHA2_256_DIGEST_SIZE;
         }
 
@@ -148,8 +150,8 @@ ATCA_STATUS atcac_sha256_hmac_init(
                 ctx->ipad[i] ^= 0x36;
             }
 
-            (void)atcac_sw_sha2_256_init(&ctx->sha256_ctx);
-            status = (ATCA_STATUS)atcac_sw_sha2_256_update(&ctx->sha256_ctx, ctx->ipad, ATCA_SHA2_256_BLOCK_SIZE);
+            (void)atcac_sw_sha2_256_init(ctx->sha256_ctx);
+            status = (ATCA_STATUS)atcac_sw_sha2_256_update(ctx->sha256_ctx, ctx->ipad, ATCA_SHA2_256_BLOCK_SIZE);
         }
 
     }
@@ -167,7 +169,7 @@ ATCA_STATUS atcac_sha256_hmac_update(
     size_t                 data_size            /**< [in] length of input data */
     )
 {
-    return (ATCA_STATUS)atcac_sw_sha2_256_update(&ctx->sha256_ctx, data, data_size);
+    return (ATCA_STATUS)atcac_sw_sha2_256_update(ctx->sha256_ctx, data, data_size);
 }
 
 /** \brief Finish HMAC calculation and clear the HMAC context
@@ -182,18 +184,18 @@ ATCA_STATUS atcac_sha256_hmac_finish(
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (ctx && digest_len && *digest_len >= ATCA_SHA2_256_DIGEST_SIZE )
+    if ((NULL != ctx) && (NULL != ctx->sha256_ctx) && (NULL != digest_len) && (*digest_len >= ATCA_SHA2_256_DIGEST_SIZE))
     {
         uint8_t temp_dig[ATCA_SHA2_256_DIGEST_SIZE];
 
-        status = (ATCA_STATUS)atcac_sw_sha2_256_finish(&ctx->sha256_ctx, temp_dig);
+        status = (ATCA_STATUS)atcac_sw_sha2_256_finish(ctx->sha256_ctx, temp_dig);
 
         if (ATCA_SUCCESS == status)
         {
-            (void)atcac_sw_sha2_256_init(&ctx->sha256_ctx);
-            (void)atcac_sw_sha2_256_update(&ctx->sha256_ctx, ctx->opad, ATCA_SHA2_256_BLOCK_SIZE);
-            (void)atcac_sw_sha2_256_update(&ctx->sha256_ctx, temp_dig, ATCA_SHA2_256_DIGEST_SIZE);
-            status = (ATCA_STATUS)atcac_sw_sha2_256_finish(&ctx->sha256_ctx, digest);
+            (void)atcac_sw_sha2_256_init(ctx->sha256_ctx);
+            (void)atcac_sw_sha2_256_update(ctx->sha256_ctx, ctx->opad, ATCA_SHA2_256_BLOCK_SIZE);
+            (void)atcac_sw_sha2_256_update(ctx->sha256_ctx, temp_dig, ATCA_SHA2_256_DIGEST_SIZE);
+            status = (ATCA_STATUS)atcac_sw_sha2_256_finish(ctx->sha256_ctx, digest);
         }
     }
     return status;
@@ -203,28 +205,21 @@ ATCA_STATUS atcac_sha256_hmac_finish(
 #if ATCA_CRYPTO_SHA2_HMAC_CTR_EN
 /** \brief Implements SHA256 HMAC-Counter per  NIST SP 800-108 used for KDF like operations */
 ATCA_STATUS atcac_sha256_hmac_counter(
-    atcac_hmac_sha256_ctx* ctx,
-    uint8_t *              label,
-    size_t                 label_len,
-    uint8_t *              data,
-    size_t                 data_len,
-    uint8_t *              digest,
-    size_t                 diglen
+    atcac_hmac_sha256_ctx* ctx,                 /**< [in] pointer to a sha256-hmac context */
+    uint8_t *              label,               /**< [in] kdf label string */
+    size_t                 label_len,           /**< [in] kdf label string length in bytes (does not include a terminating null) */
+    uint8_t *              data,                /**< [in] Additional mix-in data */
+    size_t                 data_len,            /**< [in] data length in bytes */
+    uint8_t *              digest,              /**< [out] resulting digest/key */
+    size_t                 diglen               /**< [out] desired length of the result (in bytes). May not exceed SHA256 digest length */
     )
 {
     ATCA_STATUS ret = ATCA_GEN_FAIL;
 
-#ifdef ATCA_KDF_HMAC_COUNTER_LEN_IN_BYTES
     if (diglen > ATCA_SHA2_256_DIGEST_SIZE)
     {
         return ATCA_BAD_PARAM;
     }
-#else
-    if (diglen > ATCA_SHA2_256_DIGEST_SIZE/8U)
-    {
-        return ATCA_BAD_PARAM;
-    }
-#endif
 
     if (NULL != ctx)
     {

@@ -393,12 +393,12 @@ typedef struct atca_check_mac_in_out
 typedef struct atca_resp_mac_in_out
 {
     const uint8_t* slot_key;
-    uint8_t       mode;
-    uint16_t      key_id;
+    uint8_t        mode;
+    uint16_t       key_id;
     const uint8_t* sn;
-    uint8_t*      client_resp;
-    uint8_t       checkmac_result;
-    uint8_t*      mac_output;
+    uint8_t*       client_resp;
+    uint8_t        checkmac_result;
+    uint8_t*       mac_output;
 }atca_resp_mac_in_out_t;
 
 /** \struct atca_verify_in_out

@@ -68,11 +68,11 @@ CK_RV pkcs11_util_convert_rv(ATCA_STATUS status)
         rv = CKR_OK;
         break;
     case ATCA_FUNC_FAIL:
-        /* fallthrough */
+    /* fallthrough */
     case ATCA_GEN_FAIL:
-        /* fallthrough */
+    /* fallthrough */
     case ATCA_BAD_PARAM:
-        /* fallthrough */
+    /* fallthrough */
     case ATCA_NOT_INITIALIZED:
         rv = CKR_FUNCTION_FAILED;
         break;
@@ -92,7 +92,7 @@ int pkcs11_util_memset(void *dest, size_t destsz, int ch, size_t count)
         return -1;
     }
     /* coverity[misra_c_2012_rule_14_3_violation] This matches the definition used by most systems */
-    if(destsz > SIZE_MAX)
+    if (destsz > SIZE_MAX)
     {
         return -1;
     }

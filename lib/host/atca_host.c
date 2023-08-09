@@ -251,7 +251,7 @@ ATCA_STATUS atcah_nonce(struct atca_nonce_in_out *param)
 ATCA_STATUS atcah_io_decrypt(struct atca_io_decrypt_in_out *param)
 {
     atcac_sha2_256_ctx ctx;
-    uint8_t key[ATCA_KEY_SIZE];
+    uint8_t key[ATCA_KEY_SIZE] = { 0 };
     size_t block = 0;
     uint32_t i;
 
@@ -358,10 +358,10 @@ ATCA_STATUS atcah_verify_mac(atca_verify_mac_in_out_t *param)
     (void)atcac_sw_sha2_256_update(&ctx, param->signature, 64);          // Signature
 
     // Add Verify input parameters
-    input_params[0] = ATCA_VERIFY;                   // Verify Opcode
-    input_params[1] = param->mode;                   // Verify Mode (Param1)
-    input_params[2] = (uint8_t)((param->key_id >> 0u) & 0xFFu);     // Verify Param2 (LSB)
-    input_params[3] = (uint8_t)((param->key_id >> 8u) & 0xFFu);     // Verify Param2 (MSB)
+    input_params[0] = ATCA_VERIFY;                              // Verify Opcode
+    input_params[1] = param->mode;                              // Verify Mode (Param1)
+    input_params[2] = (uint8_t)((param->key_id >> 0u) & 0xFFu); // Verify Param2 (LSB)
+    input_params[3] = (uint8_t)((param->key_id >> 8u) & 0xFFu); // Verify Param2 (MSB)
 
     (void)atcac_sw_sha2_256_update(&ctx, input_params, sizeof(input_params));
 
@@ -447,10 +447,10 @@ ATCA_STATUS atcah_secureboot_mac(atca_secureboot_mac_in_out_t *param)
     }
 
     // Add SecureBoot input parameters
-    input_params[0] = ATCA_SECUREBOOT;               // SecureBoot Opcode
-    input_params[1] = param->mode;                   // SecureBoot Mode (Param1)
-    input_params[2] = (uint8_t)((param->param2 >> 0u) & 0xFFu);  // SecureBoot Param2 (LSB) 
-    input_params[3] = (uint8_t)((param->param2 >> 8u) & 0xFFu);  // SecureBoot Param2 (MSB) 
+    input_params[0] = ATCA_SECUREBOOT;                          // SecureBoot Opcode
+    input_params[1] = param->mode;                              // SecureBoot Mode (Param1)
+    input_params[2] = (uint8_t)((param->param2 >> 0u) & 0xFFu); // SecureBoot Param2 (LSB)
+    input_params[3] = (uint8_t)((param->param2 >> 8u) & 0xFFu); // SecureBoot Param2 (MSB)
     (void)atcac_sw_sha2_256_update(&ctx, input_params, sizeof(input_params));
 
     (void)atcac_sw_sha2_256_finish(&ctx, param->mac);
@@ -487,8 +487,8 @@ ATCA_STATUS atcah_mac(struct atca_mac_in_out *param)
         || ((MAC_MODE_BLOCK1_TEMPKEY != (param->mode & MAC_MODE_BLOCK1_TEMPKEY)) && (NULL == param->key))
         || ((MAC_MODE_BLOCK2_TEMPKEY != (param->mode & MAC_MODE_BLOCK2_TEMPKEY)) && (NULL == param->challenge))
         || ((MAC_MODE_USE_TEMPKEY_MASK == (param->mode & MAC_MODE_USE_TEMPKEY_MASK)) && (NULL == param->temp_key))
-        || (((MAC_MODE_INCLUDE_OTP_64 == (param->mode & MAC_MODE_INCLUDE_OTP_64)) 
-            || (MAC_MODE_INCLUDE_OTP_88 == (param->mode & MAC_MODE_INCLUDE_OTP_88))) && (NULL == param->otp))
+        || (((MAC_MODE_INCLUDE_OTP_64 == (param->mode & MAC_MODE_INCLUDE_OTP_64))
+             || (MAC_MODE_INCLUDE_OTP_88 == (param->mode & MAC_MODE_INCLUDE_OTP_88))) && (NULL == param->otp))
         || ((MAC_MODE_INCLUDE_SN == (param->mode & MAC_MODE_INCLUDE_SN)) && (NULL == param->sn))
         )
     {
@@ -501,7 +501,7 @@ ATCA_STATUS atcah_mac(struct atca_mac_in_out *param)
         if ((MAC_MODE_SOURCE_FLAG_MATCH != (param->mode & MAC_MODE_SOURCE_FLAG_MATCH)) != (1u != param->temp_key->source_flag))
         {
             return ATCA_EXECUTION_ERROR;
-        }  
+        }
     }
     else
     {
@@ -511,7 +511,7 @@ ATCA_STATUS atcah_mac(struct atca_mac_in_out *param)
             && ((param->temp_key->no_mac_flag != 0u) || (param->temp_key->valid != 1u)
             // If either mode parameter bit 0 or bit 1 are set, mode parameter bit 2 must match temp_key.source_flag.
             // LHS and RHS expression to be evaluated to TRUE / FALSE first before comparison (!=).
-            || ((MAC_MODE_SOURCE_FLAG_MATCH != (param->mode & MAC_MODE_SOURCE_FLAG_MATCH)) != (1u != param->temp_key->source_flag)))
+                || ((MAC_MODE_SOURCE_FLAG_MATCH != (param->mode & MAC_MODE_SOURCE_FLAG_MATCH)) != (1u != param->temp_key->source_flag)))
             )
         {
             // Invalidate TempKey, then return
@@ -576,8 +576,8 @@ ATCA_STATUS atcah_check_mac(struct atca_check_mac_in_out *param)
     }
 
     if (
-         (CHECKMAC_MODE_BLOCK1_TEMPKEY == (param->mode & CHECKMAC_MODE_BLOCK1_TEMPKEY)) ||
-         (CHECKMAC_MODE_BLOCK2_TEMPKEY == (param->mode & CHECKMAC_MODE_BLOCK2_TEMPKEY))
+        (CHECKMAC_MODE_BLOCK1_TEMPKEY == (param->mode & CHECKMAC_MODE_BLOCK1_TEMPKEY)) ||
+        (CHECKMAC_MODE_BLOCK2_TEMPKEY == (param->mode & CHECKMAC_MODE_BLOCK2_TEMPKEY))
         )
     {
         is_temp_key_req = true;  // Message uses TempKey
@@ -606,7 +606,7 @@ ATCA_STATUS atcah_check_mac(struct atca_check_mac_in_out *param)
         return ATCA_BAD_PARAM;
     }
 
-    if ( (CHECKMAC_MODE_BLOCK1_TEMPKEY == (param->mode & CHECKMAC_MODE_BLOCK1_TEMPKEY)) || 
+    if ( (CHECKMAC_MODE_BLOCK1_TEMPKEY == (param->mode & CHECKMAC_MODE_BLOCK1_TEMPKEY)) ||
          (CHECKMAC_MODE_BLOCK2_TEMPKEY == (param->mode & CHECKMAC_MODE_BLOCK2_TEMPKEY)) )
     {
         // This will use TempKey in message, check validity
@@ -742,8 +742,8 @@ ATCA_STATUS atcah_hmac(struct atca_hmac_in_out *param)
     // Check parameters
     if ((NULL == param->response) || (NULL == param->key) || (NULL == param->temp_key)
         || ((param->mode & ~HMAC_MODE_MASK) > 0u)
-        || (((MAC_MODE_INCLUDE_OTP_64 == (param->mode & MAC_MODE_INCLUDE_OTP_64)) 
-            || (MAC_MODE_INCLUDE_OTP_88 == (param->mode & MAC_MODE_INCLUDE_OTP_88))) && (NULL == param->otp))
+        || (((MAC_MODE_INCLUDE_OTP_64 == (param->mode & MAC_MODE_INCLUDE_OTP_64))
+             || (MAC_MODE_INCLUDE_OTP_88 == (param->mode & MAC_MODE_INCLUDE_OTP_88))) && (NULL == param->otp))
         || (NULL == param->sn)
         )
     {
@@ -957,11 +957,11 @@ ATCA_STATUS atcah_gen_dig(struct atca_gen_dig_in_out *param)
         *p_temp++ = (uint8_t)(param->slot_conf >> 8u);
 
         *p_temp++ = (uint8_t)(param->key_conf & 0xFFu);
-        *p_temp++ = (uint8_t)(param->key_conf >> 8u);   // (7) 2 bytes of key config
+        *p_temp++ = (uint8_t)(param->key_conf >> 8u);  // (7) 2 bytes of key config
 
         *p_temp++ = param->slot_locked;                // (7) 1 byte of slot locked
 
-        (void)memset(p_temp, 0x00, 19);                      // (7) 19 bytes of zero
+        (void)memset(p_temp, 0x00, 19);                // (7) 19 bytes of zero
         p_temp += 19;
 
     }
@@ -1227,7 +1227,7 @@ ATCA_STATUS atcah_privwrite_auth_mac(struct atca_write_mac_in_out *param)
     uint8_t mac_input[ATCA_MSG_SIZE_PRIVWRITE_MAC];
     uint8_t i = 0;
     uint8_t *p_temp = NULL;
-    uint8_t session_key2[32];
+    uint8_t session_key2[32] = { 0 };
 
     // Check parameters
     if ((NULL == param->input_data) || (NULL == param->temp_key))
@@ -1660,14 +1660,14 @@ ATCA_STATUS atcah_sign_internal_msg(ATCADeviceType device_type, struct atca_sign
 
     (void)memset(msg, 0, sizeof(msg));
     (void)memcpy(&msg[0], param->temp_key->value, 32);
-    msg[32] = ATCA_SIGN;                          // Sign OpCode
-    msg[33] = param->mode;                        // Sign Mode
+    msg[32] = ATCA_SIGN;                                     // Sign OpCode
+    msg[33] = param->mode;                                   // Sign Mode
 
-    msg[34] = (uint8_t)((param->key_id >> 0u) & 0xFFu); // Sign KeyID
+    msg[34] = (uint8_t)((param->key_id >> 0u) & 0xFFu);      // Sign KeyID
     msg[35] = (uint8_t)((param->key_id >> 8u) & 0xFFu);
-    msg[36] = (uint8_t)((param->slot_config >> 0u) & 0xFFu);    // SlotConfig[TempKeyFlags.keyId]
+    msg[36] = (uint8_t)((param->slot_config >> 0u) & 0xFFu); // SlotConfig[TempKeyFlags.keyId]
     msg[37] = (uint8_t)((param->slot_config >> 8u) & 0xFFu);
-    msg[38] = (uint8_t)((param->key_config >> 0u) & 0xFFu); // KeyConfig[TempKeyFlags.keyId]
+    msg[38] = (uint8_t)((param->key_config >> 0u) & 0xFFu);  // KeyConfig[TempKeyFlags.keyId]
     msg[39] = (uint8_t)((param->key_config >> 8u) & 0xFFu);
 
     //TempKeyFlags (b0-3: keyId, b4: sourceFlag, b5: GenDigData, b6: GenKeyData, b7: NoMacFlag)
@@ -1898,7 +1898,7 @@ ATCA_STATUS atcah_delete_mac(struct atca_delete_in_out *param)
     p_temp = temporary;
 
     // (1) 32 bytes of key
-    memcpy(p_temp, param->key, ATCA_KEY_SIZE);
+    (void)memcpy(p_temp, param->key, ATCA_KEY_SIZE);
     p_temp += ATCA_KEY_SIZE;
 
     // (2) 0x13
@@ -1908,8 +1908,8 @@ ATCA_STATUS atcah_delete_mac(struct atca_delete_in_out *param)
     *p_temp++ = 0x00;
 
     // (4) 0x0000
-    *p_temp++ = param->key_id & 0xFF;
-    *p_temp++ = (param->key_id >> 8) & 0xFF;
+    *p_temp++ = (uint8_t)(param->key_id & 0xFFu);
+    *p_temp++ = (uint8_t)((param->key_id >> 8) & 0xFFu);
 
     // (5) 1 byte SN[8]
     *p_temp++ = param->sn[8];
@@ -1919,14 +1919,14 @@ ATCA_STATUS atcah_delete_mac(struct atca_delete_in_out *param)
     *p_temp++ = param->sn[1];
 
     // (7) 25 zeros
-    memset(p_temp, 0, ATCA_DELETE_MAC_ZEROS_SIZE);
+    (void)memset(p_temp, 0, ATCA_DELETE_MAC_ZEROS_SIZE);
     p_temp += ATCA_DELETE_MAC_ZEROS_SIZE;
 
     // (8) 32 bytes nonce
-    memcpy(p_temp, param->nonce, 32);
+    (void)memcpy(p_temp, param->nonce, 32);
 
     // Calculate SHA256 to get MAC
-    atcac_sw_sha2_256(temporary, ATCA_MSG_SIZE_DELETE_MAC, param->mac);
+    (void)atcac_sw_sha2_256(temporary, ATCA_MSG_SIZE_DELETE_MAC, param->mac);
 
     return ATCA_SUCCESS;
 }

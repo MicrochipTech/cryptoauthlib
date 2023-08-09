@@ -86,6 +86,22 @@ ATCA_STATUS calib_kdf(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
         packet.data[2] = (uint8_t)((details & 0x00FF0000u) >> 16u);
         packet.data[3] = (uint8_t)((details & 0xFF000000u) >> 24u);
 
+        #if (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + KDF_DETAILS_SIZE + AES_DATA_SIZE))
+        #if ATCA_PREPROCESSOR_WARNING
+        #warning "CA_MAX_PACKET_SIZE will not support KDF mode AES algorithm"
+        #endif
+        if ((mode & KDF_MODE_ALG_MASK) == KDF_MODE_ALG_AES)
+        {
+            status = ATCA_TRACE(ATCA_INVALID_SIZE, "KDF mode AES algorithm is not supported");
+        }
+        #endif
+
+        if (((mode & KDF_MODE_ALG_MASK) != KDF_MODE_ALG_AES) && (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + KDF_DETAILS_SIZE + (packet.data[3] & 0xFFu))))
+        {
+            status = ATCA_TRACE(ATCA_INVALID_SIZE, "Invalid packet size received");
+            break;
+        }
+
         // Add input message
         if ((mode & KDF_MODE_ALG_MASK) == KDF_MODE_ALG_AES)
         {
@@ -124,12 +140,22 @@ ATCA_STATUS calib_kdf(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
         // Return OutData if possible
         if (out_data != NULL && packet.data[ATCA_COUNT_IDX] >= (ATCA_PACKET_OVERHEAD + out_data_size))
         {
+            if (CA_MAX_PACKET_SIZE < (ATCA_PACKET_OVERHEAD + out_data_size))
+            {
+                (void)ATCA_TRACE(ATCA_INVALID_SIZE, "Invalid packet size received");
+                break;
+            }
             (void)memcpy(out_data, &packet.data[ATCA_RSP_DATA_IDX], out_data_size);
         }
 
         // return OutNonce if possible
         if (out_nonce != NULL && packet.data[ATCA_COUNT_IDX] >= (ATCA_PACKET_OVERHEAD + out_data_size + 32u))
         {
+            if (CA_MAX_PACKET_SIZE < (ATCA_PACKET_OVERHEAD + out_data_size + 32u))
+            {
+                (void)ATCA_TRACE(ATCA_INVALID_SIZE, "Invalid packet size received");
+                break;
+            }
             (void)memcpy(out_nonce, &packet.data[ATCA_RSP_DATA_IDX + out_data_size], 32);
         }
     }

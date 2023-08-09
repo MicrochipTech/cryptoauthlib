@@ -36,6 +36,11 @@
 #include "cryptoauthlib.h"
 
 #if CALIB_LOCK_EN || CALIB_LOCK_CA2_EN
+
+#if (CA_MAX_PACKET_SIZE < ATCA_CMD_SIZE_MIN)
+#error "Lock command packet cannot be accommodated inside the maximum packet size provided"
+#endif
+
 /** \brief The Lock command prevents future modifications of the Configuration
  *         and/or Data and OTP zones. If the device is so configured, then
  *         this command can be used to lock individual data slots. This
@@ -125,7 +130,7 @@ ATCA_STATUS calib_lock_config_zone_crc(ATCADevice device, uint16_t summary_crc)
 #if ATCA_CA2_SUPPORT
     ATCADeviceType device_type = atcab_get_device_type_ext(device);
 
-    if(atcab_is_ca2_device(device_type))
+    if (atcab_is_ca2_device(device_type))
     {
         return ATCA_UNIMPLEMENTED;
     }
@@ -176,10 +181,10 @@ ATCA_STATUS calib_lock_data_zone(ATCADevice device)
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS calib_lock_data_zone_crc(ATCADevice device, uint16_t summary_crc)
-{  
+{
 #if ATCA_CA2_SUPPORT
     ATCADeviceType device_type = atcab_get_device_type_ext(device);
-    
+
     if (atcab_is_ca2_device(device_type))
     {
         return ATCA_UNIMPLEMENTED;

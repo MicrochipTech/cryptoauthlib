@@ -35,6 +35,11 @@
 #include "cryptoauthlib.h"
 
 #if CALIB_UPDATEEXTRA_EN
+
+#if (CA_MAX_PACKET_SIZE < ATCA_CMD_SIZE_MIN)
+#error "UpdateExtra command packet cannot be accommodated inside the maximum packet size provided"
+#endif
+
 /** \brief Executes UpdateExtra command to update the values of the two
  *          extra bytes within the Configuration zone (bytes 84 and 85).
  *

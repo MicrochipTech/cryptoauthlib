@@ -50,6 +50,7 @@ TEST(atcac_aes, aes128_gcm_nist)
     uint8_t test_index;
     uint8_t ciphertext[GCM_TEST_VECTORS_DATA_SIZE_MAX];
     uint8_t plaintext[GCM_TEST_VECTORS_DATA_SIZE_MAX];
+
 #ifndef ATCA_WOLFSSL
     size_t ct_size;
     size_t pt_size;
@@ -127,7 +128,7 @@ TEST(atcac_aes, aes128_gcm_nist)
 
         //////////////////////////////////////   Decryption /////////////////////////////////////////
         //Initialize gcm ctx with IV
-        status = atcac_aes_gcm_decrypt_start(&ctx, gcm_test_cases[test_index].key, 16, gcm_test_cases[test_index].iv,(uint8_t) gcm_test_cases[test_index].iv_size);
+        status = atcac_aes_gcm_decrypt_start(&ctx, gcm_test_cases[test_index].key, 16, gcm_test_cases[test_index].iv, (uint8_t)gcm_test_cases[test_index].iv_size);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
 #ifdef ATCA_WOLFSSL

@@ -48,23 +48,7 @@ void hal_delay_us(uint32_t delay)
     // todo: use a timer with us accuracy
     /* coverity[cert_flp34_c_violation] Loss of precision is inconsequential for this calculation */
     /* coverity[cert_flp36_c_violation] Loss of precision is inconsequential for this calculation */
-    uint32_t ms = (uint32_t) round(((float)delay / 1.0e3) + 0.5);    // Miliseconds
-
-    // use Windows supplied delay
-    Sleep(ms);
-}
-
-/** \brief This function delays for a number of tens of microseconds.
- *
- * \param[in] delay number of 0.01 milliseconds to delay
- */
-void hal_delay_10us(uint32_t delay)
-{
-    // divide by 100 to convert 10's of us to ms
-    // todo: use a timer with us accuracy
-    /* coverity[cert_flp34_c_violation] Loss of precision is inconsequential for this calculation */
-    /* coverity[cert_flp36_c_violation] Loss of precision is inconsequential for this calculation */
-    uint32_t ms = (uint32_t) round(((float)delay / 1.0e2) + 0.5);    // Miliseconds
+    uint32_t ms = (uint32_t)round(((float)delay / 1.0e3) + 0.5);     // Miliseconds
 
     // use Windows supplied delay
     Sleep(ms);
@@ -89,7 +73,7 @@ void hal_delay_ms(uint32_t delay)
  * \param[IN/OUT] ppMutex location to receive ptr to mutex
  * \param[IN] pName Name of the mutex for systems using named objects
  */
-ATCA_STATUS hal_create_mutex(void** ppMutex,const char *pName)
+ATCA_STATUS hal_create_mutex(void** ppMutex, const char *pName)
 {
     if (NULL == ppMutex)
     {
@@ -176,6 +160,13 @@ ATCA_STATUS hal_unlock_mutex(void* pMutex)
     }
 
     return rv;
+}
+
+/** \brief Check if the pid exists in the system
+ */
+ATCA_STATUS hal_check_pid(hal_pid_t pid)
+{
+    return ATCA_UNIMPLEMENTED;
 }
 
 #endif

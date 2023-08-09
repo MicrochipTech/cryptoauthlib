@@ -1,6 +1,23 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.6.1 (07/14/2023)
+
+### New
+  - Added support for PIC18 memory model with a MAX_PACKET_SIZE setting. 
+  - PKCS11 Improvement to support context reservation automatically for operations that
+    span multiple pkcs11 calls such as login/logout, encrypt/decrypt, etc. This prevents
+    concurrent processes from interupting init-update-finish operations in PKCS11
+  - Added support for data element transfers between trust anchor devices
+
+### Fixes
+  - PKCS11: resolved issues with configuration directory parsing to ensure configurations
+    parse in the correct order and any extraneous files get properly rejected.
+  - PKCS11: improved public key loading logic for trust anchor handles to use the most
+    appropriate mechanism based on handle configuration.
+  - Fixed minimal kit host implementation in support bridging to SPI by using select and
+    deselect control commands
+
 ## Release v3.6.0 (04/04/2023)
 
 ### New

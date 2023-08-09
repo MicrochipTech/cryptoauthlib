@@ -282,14 +282,14 @@ ATCA_STATUS calib_get_execution_time(uint8_t opcode, ATCADevice device)
 #endif
 
     case TA010:
-        /* fallthrough */
+    /* fallthrough */
     case ECC204:
         execution_times = device_execution_time_ecc204;
         no_of_commands = (uint8_t)(sizeof(device_execution_time_ecc204) / sizeof(device_execution_time_t));
         break;
 
     case SHA104:
-        /* fallthrough */
+    /* fallthrough */
     case SHA105:
         execution_times = device_execution_time_sha10x;
         no_of_commands = (uint8_t)(sizeof(device_execution_time_sha10x) / sizeof(device_execution_time_t));
@@ -582,6 +582,7 @@ ATCA_STATUS calib_execute_command(ATCAPacket* packet, ATCADevice device)
             break;
         }
 
+        /* coverity[misra_c_2012_directive_4_14_violation:FALSE] Packet data is handled properly */
         if ((status = atCheckCrc(packet->data)) != ATCA_SUCCESS)
         {
             break;

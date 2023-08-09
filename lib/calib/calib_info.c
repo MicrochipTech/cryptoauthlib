@@ -38,6 +38,10 @@
 
 #include "cryptoauthlib.h"
 
+#if (CA_MAX_PACKET_SIZE < ATCA_CMD_SIZE_MIN)
+#error "Info command packet cannot be accommodated inside the maximum packet size provided"
+#endif
+
 /** \brief Issues an Info command, which return internal device information and
  *          can control GPIO and the persistent latch.
  *

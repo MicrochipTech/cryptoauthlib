@@ -41,7 +41,7 @@ TEST_CONDITION(atca_cmd_basic_test, mac_key_challenge)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type)) || (SHA104 == dev_type));
+    return (atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type)) || (SHA104 == dev_type);
 }
 
 TEST(atca_cmd_basic_test, mac_key_challenge)
@@ -98,7 +98,7 @@ TEST_CONDITION(atca_cmd_basic_test, mac_key_tempkey)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return (atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type));
+    return atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type);
 }
 
 TEST(atca_cmd_basic_test, mac_key_tempkey)
@@ -290,7 +290,7 @@ TEST_CONDITION(atca_cmd_basic_test, checkmac)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return (atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type));
+    return atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type);
 }
 
 TEST(atca_cmd_basic_test, checkmac)
@@ -381,7 +381,7 @@ TEST_CONDITION(atca_cmd_basic_test, checkmac_sha105)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return (SHA105 == dev_type);
+    return SHA105 == dev_type;
 }
 
 TEST(atca_cmd_basic_test, checkmac_sha105_without_resp_mac)
@@ -395,7 +395,7 @@ TEST(atca_cmd_basic_test, checkmac_sha105_without_resp_mac)
     atca_check_mac_in_out_t checkmac_params;
     uint16_t key_id;
     // Assuming SN of Client device
-    uint8_t sn[ATCA_SERIAL_NUM_SIZE] = {0x01, 0x23, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0xEE};
+    uint8_t sn[ATCA_SERIAL_NUM_SIZE] = { 0x01, 0x23, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0xEE };
 
     // CSZ0 and CSZ1 should be locked
     test_assert_config_is_locked();
@@ -465,11 +465,11 @@ TEST(atca_cmd_basic_test, checkmac_sha105_nonce)
     uint8_t other_data[CHECKMAC_OTHER_DATA_SIZE];
     uint16_t key_id;
     // Assuming SN of Client device
-    uint8_t sn[ATCA_SERIAL_NUM_SIZE] = {0x01, 0x23, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0xEE};
-    
+    uint8_t sn[ATCA_SERIAL_NUM_SIZE] = { 0x01, 0x23, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0xEE };
+
     test_assert_config_is_locked();
     test_assert_data_is_locked();
-    
+
     // Read SN
     status = atcab_read_serial_number(sn);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
@@ -537,7 +537,7 @@ TEST(atca_cmd_basic_test, checkmac_sha105_with_resp_mac)
     uint8_t mac[MAC_SIZE];
     uint8_t resp_mac[MAC_SIZE];
     // Assuming SN of Client device
-    uint8_t sn[ATCA_SERIAL_NUM_SIZE] = {0x01, 0x23, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0xEE};
+    uint8_t sn[ATCA_SERIAL_NUM_SIZE] = { 0x01, 0x23, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0xEE };
 
     // I/O protection key should be written into Data Zone 0 and locked
     test_assert_data_is_locked();

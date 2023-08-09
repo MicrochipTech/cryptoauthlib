@@ -27,6 +27,7 @@
 
 #include "cryptoauthlib.h"
 
+#ifdef ATCA_PRINTF
 static FILE * g_trace_fp;
 
 void atca_trace_config(FILE* fp)
@@ -34,12 +35,6 @@ void atca_trace_config(FILE* fp)
     g_trace_fp = fp;
 }
 
-ATCA_STATUS atca_trace(ATCA_STATUS status)
-{
-    return status;
-}
-
-#ifdef ATCA_PRINTF
 ATCA_STATUS atca_trace_msg(ATCA_STATUS status, const char * msg)
 {
     if (ATCA_SUCCESS != status)
@@ -50,3 +45,8 @@ ATCA_STATUS atca_trace_msg(ATCA_STATUS status, const char * msg)
     return status;
 }
 #endif
+
+ATCA_STATUS atca_trace(ATCA_STATUS status)
+{
+    return status;
+}

@@ -27,7 +27,9 @@
 
 #include "cryptoauthlib.h"
 
+#ifdef __COVERITY__
 #pragma coverity compliance block deviate "MISRA C-2012 Rule 20.12" "This macro is used as a template to generate hooks for python integration"
+#endif
 
 #define SIZE_OF_API_T(x)  size_t x ## _size(void); size_t x ## _size(void) { return sizeof( x ); }
 #define SIZE_OF_API_S(x)  size_t x ## _size(void); size_t x ## _size(void) { return sizeof(struct x ); }
@@ -118,4 +120,6 @@ SIZE_OF_API_S(atca_iface)
 /* atca_status.h */
 SIZE_OF_API_T(ATCA_STATUS)
 
+#ifdef __COVERITY__
 #pragma coverity compliance end_block "MISRA C-2012 Rule 20.12"
+#endif

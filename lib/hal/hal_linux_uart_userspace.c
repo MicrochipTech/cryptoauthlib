@@ -40,46 +40,67 @@ typedef struct atca_uart_host_s
     int  ref_ct;
 } atca_uart_host_t;
 
+#ifdef __COVERITY__
+#pragma coverity compliance block \
+    (deviate "MISRA C-2012 Rule 21.6" "Standard library functions are required for file system access in linux & windows")
+#endif
+
 /**
  * \brief Convert an numerical value for baud rate into the posix/linux values
  * \return baudrate macro value
  */
 static speed_t hal_uart_convert_baudrate(uint32_t baudrate)
 {
+    speed_t rv;
+
     switch (baudrate)
     {
     case 0:
-        return B0;
+        rv = B0;
+        break;
     case 4800:
-        return B4800;
+        rv = B4800;
+        break;
     case 9600:
-        return B9600;
+        rv = B9600;
+        break;
     case 115200:
-        return B115200;
+        rv = B115200;
+        break;
     case 230400:
-        return B230400;
+        rv = B230400;
+        break;
     default:
-        return B115200;
+        rv = B115200;
+        break;
     }
+    return rv;
 }
 
 /**
  * \brief Convert integer wordsize into posix/linux flags
  * \return flag value
  */
-static inline tcflag_t hal_uart_convert_wordsize(uint8_t wordsize)
+static tcflag_t hal_uart_convert_wordsize(uint8_t wordsize)
 {
+    tcflag_t flags;
+
     switch (wordsize)
     {
     case 5:
-        return CS5;
+        flags = CS5;
+        break;
     case 6:
-        return CS6;
+        flags = CS6;
+        break;
     case 7:
-        return CS7;
+        flags = CS7;
+        break;
     default:
-        return CS8;
+        flags = CS8;
+        break;
     }
+    return flags;
 }
 
 /**
@@ -93,21 +114,21 @@ static ATCA_STATUS hal_uart_set_baudrate(ATCAIface iface, uint32_t baudrate)
 {
     atca_uart_host_t * hal_data = (atca_uart_host_t*)atgetifacehaldat(iface);
 
-    if (hal_data && hal_data->fd_uart)
+    if ((NULL != hal_data) && (0 < hal_data->fd_uart))
     {
         struct termios tty;
         speed_t rate;
 
         /* Get existing device attributes */
-        tcgetattr(hal_data->fd_uart, &tty);
+        (void)tcgetattr(hal_data->fd_uart, &tty);
 
         rate = hal_uart_convert_baudrate(baudrate);
 
-        cfsetispeed(&tty, rate);
-        cfsetospeed(&tty, rate);
+        (void)cfsetispeed(&tty, rate);
+        (void)cfsetospeed(&tty, rate);
 
         /* Update settings */
-        tcsetattr(hal_data->fd_uart, TCSANOW, &tty);
+        (void)tcsetattr(hal_data->fd_uart, TCSANOW, &tty);
     }
     return ATCA_SUCCESS;
 }
@@ -121,8 +142,15 @@ static ATCA_STATUS hal_uart_open_file(atca_uart_host_t * hal_data, ATCAIfaceCfg 
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (hal_data)
+    if (NULL != hal_data)
     {
+#ifdef __COVERITY__
+#pragma coverity compliance block \
+        (fp:7 "CERT INT31-C" "Macro usage is correct per POSIX specification") \
+        (fp:13 "MISRA C-2012 Rule 10.1" "Macro usage is correct per POSIX specification" ) \
+        (fp:13 "MISRA C-2012 Rule 10.4" "Macro usage is correct per POSIX specification" ) \
+        (deviate:1 "CERT FIO32-C" "It is the system owner's responsibility ensure configuration provides a valid uart compatible device")
+#endif
         hal_data->fd_uart = open(hal_data->uart_file, O_RDWR | O_NOCTTY);
 
         if (0 < hal_data->fd_uart)
@@ -132,7 +160,7 @@ static ATCA_STATUS hal_uart_open_file(atca_uart_host_t * hal_data, ATCAIfaceCfg 
             int flags;
 
             /* Get existing device attributes */
-            tcgetattr(hal_data->fd_uart, &tty);
+            (void)tcgetattr(hal_data->fd_uart, &tty);
 
             /* Raw Mode (non-canonical, no echo, etc) */
             tty.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
@@ -148,8 +176,8 @@ static ATCA_STATUS hal_uart_open_file(atca_uart_host_t * hal_data, ATCAIfaceCfg 
 
             /* Convert baudrate to posix/linux format */
             rate = hal_uart_convert_baudrate(ATCA_IFACECFG_VALUE(cfg, atcauart.baud));
-            cfsetispeed(&tty, rate);
-            cfsetospeed(&tty, rate);
+            (void)cfsetispeed(&tty, rate);
+            (void)cfsetospeed(&tty, rate);
 
             /* set number of stopbits */
             if (1 < ATCA_IFACECFG_VALUE(cfg, atcauart.stopbits))
@@ -185,18 +213,26 @@ static ATCA_STATUS hal_uart_open_file(atca_uart_host_t * hal_data, ATCAIfaceCfg 
             }
 
             /* Configure the port with the configured settings immediately */
-            if (tcsetattr(hal_data->fd_uart, TCSANOW, &tty))
+            if (0 != tcsetattr(hal_data->fd_uart, TCSANOW, &tty))
             {
-                close(hal_data->fd_uart);
+                (void)close(hal_data->fd_uart);
                 return ATCA_COMM_FAIL;
             }
 
             flags = TIOCM_DTR;
             if (-1 == ioctl(hal_data->fd_uart, TIOCMBIS, &flags))
             {
-                close(hal_data->fd_uart);
+                (void)close(hal_data->fd_uart);
                 return ATCA_COMM_FAIL;
             }
+
+#ifdef __COVERITY__
+#pragma coverity compliance end_block \
+            "CERT INT31-C" \
+            "MISRA C-2012 Rule 10.1" \
+            "MISRA C-2012 Rule 10.4" \
+            "CERT FIO32-C"
+#endif
 
             status = ATCA_SUCCESS;
         }
@@ -218,52 +254,72 @@ static ATCA_STATUS hal_uart_open_file(atca_uart_host_t * hal_data, ATCAIfaceCfg 
  *  \param[in] cfg pointer to HAL specific configuration data that is used to initialize this HAL
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
-
 ATCA_STATUS hal_uart_init(ATCAIface iface, ATCAIfaceCfg *cfg)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (iface && cfg)
+    if ((NULL != iface) && (NULL != cfg))
     {
-        if (!iface->hal_data)
+        if (NULL == iface->hal_data)
         {
-            atca_uart_host_t * hal_data = malloc(sizeof(atca_uart_host_t));
-            memset(hal_data, 0, sizeof(atca_uart_host_t));
+            /* First Access so initialize the hal data structure */
 
-            if (hal_data)
+#ifdef __COVERITY__
+#pragma coverity compliance block \
+            (fp:1 "CERT FIO42-C" "Context is maintained through iface->hal_data so the handle is not leaked") \
+            (fp:1 "MISRA C-2012 Rule 22.1" "Context is maintained through iface->hal_data so the handle is not leaked" ) \
+            (deviate:1 "MISRA C-2012 Directive 4.12" "Required for the linux environment" ) \
+            (deviate:2 "MISRA C-2012 Rule 21.3" "Required for the linux environment" ) \
+            (deviate:2 "MISRA C-2012 Rule 21.6" "snprintf is approved for formatted string writes to buffers" )
+#endif
+            if (NULL != (iface->hal_data = malloc(sizeof(atca_uart_host_t))))
             {
-                if (cfg->cfg_data)
+                atca_uart_host_t * hal_data = (atca_uart_host_t*)iface->hal_data;
+                (void)memset(iface->hal_data, 0, sizeof(atca_uart_host_t));
+
+                if (NULL != cfg->cfg_data)
                 {
-                    (void)snprintf(hal_data->uart_file, sizeof(hal_data->uart_file) - 1,
+                    (void)snprintf(hal_data->uart_file, sizeof(hal_data->uart_file) - 1U,
                                    "%s", (char*)cfg->cfg_data);
                 }
                 else
                 {
-                    (void)snprintf(hal_data->uart_file, sizeof(hal_data->uart_file) - 1,
+                    (void)snprintf(hal_data->uart_file, sizeof(hal_data->uart_file) - 1U,
                                    "/dev/ttyS%d", (uint8_t)ATCA_IFACECFG_VALUE(cfg, atcauart.port));
                 }
 
-                iface->hal_data = hal_data;
-
                 if (ATCA_SUCCESS == (status = hal_uart_open_file(hal_data, cfg)))
                 {
+                    /* Driver is configured - increment the ref count for usage */
                     hal_data->ref_ct = 1;
+                }
+                else
+                {
+                    free(iface->hal_data);
+                    iface->hal_data = NULL;
                 }
             }
             else
             {
                 status = ATCA_ALLOC_FAILURE;
             }
+
+#ifdef __COVERITY__
+#pragma coverity compliance end_block \
+            "CERT FIO42-C" \
+            "MISRA C-2012 Rule 22.1" \
+            "MISRA C-2012 Directive 4.12" \
+            "MISRA C-2012 Rule 21.3" \
+            "MISRA C-2012 Rule 21.6"
+#endif
+
         }
         else
         {
-            atca_uart_host_t * hal_data = (atca_uart_host_t*)atgetifacehaldat(iface);
-
-            if (hal_data)
-            {
-                hal_data->ref_ct++;
-                status = ATCA_SUCCESS;
-            }
+            /* Repeated access so increment the access count */
+            atca_uart_host_t * hal_data = (atca_uart_host_t*)iface->hal_data;
+            hal_data->ref_ct++;
+            status = ATCA_SUCCESS;
         }
 
     }
@@ -293,13 +349,13 @@ ATCA_STATUS hal_uart_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata
     (void)word_address;
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (iface && txdata && txlength)
+    if ((NULL != iface) && (NULL != txdata) && (0 < txlength))
     {
         atca_uart_host_t * hal_data = (atca_uart_host_t*)atgetifacehaldat(iface);
 
-        if (hal_data && (hal_data->fd_uart > 0))
+        if ((NULL != hal_data) && (0 < hal_data->fd_uart))
         {
-            if (write(hal_data->fd_uart, txdata, txlength) != txlength)
+            if (write(hal_data->fd_uart, txdata, (size_t)txlength) != txlength)
             {
                 status = ATCA_COMM_FAIL;
             }
@@ -307,12 +363,12 @@ ATCA_STATUS hal_uart_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata
             {
                 status = ATCA_SUCCESS;
             }
-        }
 
-        if (ATCA_SUCCESS != status)
-        {
-            close(hal_data->fd_uart);
-            hal_data->fd_uart = -1;
+            if (ATCA_SUCCESS != status)
+            {
+                (void)close(hal_data->fd_uart);
+                hal_data->fd_uart = -1;
+            }
         }
     }
 
@@ -332,18 +388,18 @@ ATCA_STATUS hal_uart_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxd
     (void)word_address;
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (iface && rxdata && rxlength && *rxlength)
+    if ((NULL != iface) && (NULL != rxdata) && (NULL != rxlength) && (0U < *rxlength))
     {
         atca_uart_host_t * hal_data = (atca_uart_host_t*)atgetifacehaldat(iface);
 
-        if (hal_data && (hal_data->fd_uart > 0))
+        if ((NULL != hal_data) && (0 < hal_data->fd_uart))
         {
-            if (*rxlength > 1)
+            if (1U < *rxlength)
             {
-                *rxlength = 1; // packetsize to read
+                *rxlength = 1U; // packetsize to read
             }
 
-            if (read(hal_data->fd_uart, rxdata, *rxlength) !=  *rxlength)
+            if (read(hal_data->fd_uart, rxdata, (size_t)*rxlength) !=  (int)*rxlength)
             {
                 status = ATCA_COMM_FAIL;
             }
@@ -351,14 +407,13 @@ ATCA_STATUS hal_uart_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxd
             {
                 status = ATCA_SUCCESS;
             }
-        }
 
-        if (ATCA_SUCCESS != status)
-        {
-            close(hal_data->fd_uart);
-            hal_data->fd_uart = -1;
+            if (ATCA_SUCCESS != status)
+            {
+                (void)close(hal_data->fd_uart);
+                hal_data->fd_uart = -1;
+            }
         }
-
     }
 
     return status;
@@ -376,25 +431,30 @@ ATCA_STATUS hal_uart_control(ATCAIface iface, uint8_t option, void* param, size_
     (void)option;
     (void)param;
     (void)paramlen;
+    ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (iface && iface->mIfaceCFG)
+    if ((NULL != iface) && (NULL != iface->mIfaceCFG))
     {
         switch (option)
         {
         case ATCA_HAL_CHANGE_BAUD:
-            return hal_uart_set_baudrate(iface, *(uint32_t*)param);
+            status = hal_uart_set_baudrate(iface, *(uint32_t*)param);
+            break;
         case ATCA_HAL_FLUSH_BUFFER:
             /* Using non-canonical mode so there should be no buffering */
-            return ATCA_SUCCESS;
+            status = ATCA_SUCCESS;
+            break;
         case ATCA_HAL_CONTROL_SELECT:
         /* fallthrough */
         case ATCA_HAL_CONTROL_DESELECT:
-            return ATCA_SUCCESS;
+            status = ATCA_SUCCESS;
+            break;
         default:
-            return ATCA_UNIMPLEMENTED;
+            status = ATCA_UNIMPLEMENTED;
+            break;
         }
     }
-    return ATCA_BAD_PARAM;
+    return status;
 }
 
 /** \brief manages reference count on given bus and releases resource if no more refences exist
@@ -404,13 +464,17 @@ ATCA_STATUS hal_uart_control(ATCAIface iface, uint8_t option, void* param, size_
  */
 ATCA_STATUS hal_uart_release(void *hal_data)
 {
-    atca_uart_host_t *hal = (atca_uart_host_t*)hal_data;
-
-    if (hal)
+    if (NULL != hal_data)
     {
-        close(hal->fd_uart);
+        atca_uart_host_t *hal = (atca_uart_host_t*)hal_data;
+        (void)close(hal->fd_uart);
+        /* coverity[misra_c_2012_rule_21_3_violation] Intentional as it is required for the linux environment */
         free(hal);
     }
 
     return ATCA_SUCCESS;
 }
+
+#ifdef __COVERITY__
+#pragma coverity compliance end_block "MISRA C-2012 Rule 21.6"
+#endif

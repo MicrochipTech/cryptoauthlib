@@ -43,10 +43,10 @@ typedef struct atca_aes_cbc_ctx
     uint8_t    key_block;                          //!< Index of the 16-byte block to use within the key location for the actual key.
     uint8_t    ciphertext[ATCA_AES128_BLOCK_SIZE]; //!< Ciphertext from last operation.
 #ifdef ATCAB_AES_CBC_UPDATE_EN
-    uint8_t    block_size;                         //!< Number of bytes in unprocessed block.
-    uint8_t    block[ATCA_AES128_BLOCK_SIZE];      //!< Unprocessed message storage.
+    uint8_t block_size;                            //!< Number of bytes in unprocessed block.
+    uint8_t block[ATCA_AES128_BLOCK_SIZE];         //!< Unprocessed message storage.
 #endif
-    uint8_t    padding;                            //!< Is padding expected
+    uint8_t padding;                               //!< Is padding expected
 } atca_aes_cbc_ctx_t;
 
 ATCA_STATUS atcab_aes_cbc_init_ext(ATCADevice device, atca_aes_cbc_ctx_t* ctx, uint16_t key_id, uint8_t key_block, const uint8_t* iv, const uint8_t padding);

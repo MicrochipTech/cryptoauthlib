@@ -17,7 +17,7 @@
      WPC_CHAIN_HANDLE_<slot_id>
      WPC_CHAIN_ROOT_DIGEST_<slot_id>
 
-*/
+ */
 
 /* Enable the Power Transmitter APIs */
 #ifndef WPC_MSG_PT_EN

@@ -37,12 +37,14 @@
 extern "C" {
 #endif
 
+#ifdef __COVERITY__
 #pragma coverity compliance block deviate "CERT DCL37-C" "ECC part defines will not conflict with errno.h codes"
+#endif
 
 typedef uint8_t ATCADeviceType;
 
 /** \brief The supported Device type in Cryptoauthlib library */
-    
+
 #define ATSHA204A           (0U)
 #define ATECC108A           (1U)
 #define ATECC508A           (2U)
@@ -62,7 +64,9 @@ typedef uint8_t ATCADeviceType;
 #define ATCA_DEV_UNKNOWN    (0x7EU)
 #define ATCA_DEV_INVALID    (0x7FU)
 
+#ifdef __COVERITY__
 #pragma coverity compliance end_block "CERT DCL37-C"
+#endif
 
 #ifdef __cplusplus
 }
