@@ -359,9 +359,13 @@ CK_RV pkcs11_init(CK_C_INITIALIZE_ARGS_PTR pInitArgs)
         if (CKR_OK == rv)
         {
             lib_ctx->initialized = TRUE;
+            rv = pkcs11_unlock_both(lib_ctx);
         }
-
-        rv = pkcs11_unlock_both(lib_ctx);
+        else
+        {
+            /* Unlock the device, but preserve rv value from previous calls */
+            pkcs11_unlock_both(lib_ctx);
+        }
     }
 
     return rv;
