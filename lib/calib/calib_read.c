@@ -330,7 +330,7 @@ ATCA_STATUS calib_read_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot
             // Read next chunk of data
             if (ATCA_SUCCESS != (status = calib_read_zone(device, zone, slot, (uint8_t)cur_block, (uint8_t)cur_offset, read_buf, read_size)))
             {
-                ATCA_TRACE(status, "calib_read_zone - falied");
+                ATCA_TRACE(status, "calib_read_zone - failed");
                 break;
             }
 
