@@ -5,48 +5,48 @@ include(CMakeDependentOption)
 include(CheckSymbolExists)
 
 # HAL Selection
-option(ATCA_HAL_KIT_HID "Include the HID HAL Driver")
-option(ATCA_HAL_KIT_BRIDGE "General purpose kit protocol (Packet and Stream)")
-option(ATCA_HAL_I2C "Include the I2C Hal Driver - Linux & MCU only")
-option(ATCA_HAL_SPI "Include the SPI HAL Driver - Linux & MCU only")
-option(ATCA_HAL_CUSTOM "Include support for Custom/Plug-in Hal Driver")
-option(ATCA_HAL_KIT_UART "Include the UART HAL Driver")
-option(ATCA_HAL_SWI_UART "Include the SWI using UART Driver")
+option(ATCA_HAL_I2C "Include the I2C Hal Driver - Linux & MCU only" ON)
+option(ATCA_HAL_KIT_HID "Include the HID HAL Driver" OFF)
+option(ATCA_HAL_KIT_BRIDGE "General purpose kit protocol (Packet and Stream)" OFF)
+option(ATCA_HAL_SPI "Include the SPI HAL Driver - Linux & MCU only" OFF)
+option(ATCA_HAL_CUSTOM "Include support for Custom/Plug-in Hal Driver" OFF)
+option(ATCA_HAL_KIT_UART "Include the UART HAL Driver" OFF)
+option(ATCA_HAL_SWI_UART "Include the SWI using UART Driver" OFF)
 
 # Library Options
-option(ATCA_PRINTF "Enable Debug print statements in library")
-option(ATCA_PKCS11 "Build PKCS11 Library")
+option(ATCA_PRINTF "Enable Debug print statements in library" ON)
+option(ATCA_PKCS11 "Build PKCS11 Library" ON)
 option(ATCA_BUILD_SHARED_LIBS "Build CryptoAuthLib as shared library" ON)
+option(ATCA_USE_ATCAB_FUNCTIONS "Build the atcab_ api functions rather than using macros" ON)
 option(ATCA_NO_HEAP "Do not use dynamic (heap) allocation functions" OFF)
-option(ATCA_USE_ATCAB_FUNCTIONS "Build the atcab_ api functions rather than using macros" OFF)
 option(ATCA_ENABLE_DEPRECATED "Enable the use of older APIs that that been replaced" OFF)
 option(ATCA_STRICT_C99 "Enable strict C99 compliance for the libray" OFF)
 
 # Software Cryptographic backend for host crypto abstractions
+option(ATCA_OPENSSL "Integration with OpenSSL" ON)
 option(ATCA_MBEDTLS "Integrate with mbedtls" OFF)
 option(ATCA_WOLFSSL "Integrate with WolfSSL" OFF)
-option(ATCA_OPENSSL "Integration with OpenSSL" OFF)
 
 # Trust Platform Options
-option(ATCA_TNGTLS_SUPPORT "Include Trust & Go TLS Certificates")
-option(ATCA_TNGLORA_SUPPORT "Include Trust & Go LORA Certificates")
-option(ATCA_TFLEX_SUPPORT "Include Trust Flex Certificates")
-option(ATCA_TNG_LEGACY_SUPPORT "Include previous version of Trust & Go Certificates")
+option(ATCA_TFLEX_SUPPORT "Include Trust Flex Certificates" ON)
+option(ATCA_TNGTLS_SUPPORT "Include Trust & Go TLS Certificates" OFF)
+option(ATCA_TNGLORA_SUPPORT "Include Trust & Go LORA Certificates" OFF)
+option(ATCA_TNG_LEGACY_SUPPORT "Include previous version of Trust & Go Certificates" OFF)
 
 # WPC Options
-option(ATCA_WPC_SUPPORT "Include WPC Certificates")
+option(ATCA_WPC_SUPPORT "Include WPC Certificates" OFF)
 
 # Device enablement
-option(ATCA_ATSHA204A_SUPPORT "Include support for ATSHA204A device" ON)
-option(ATCA_ATSHA206A_SUPPORT "Include support for ATSHA206A device" ON)
-option(ATCA_ATECC108A_SUPPORT "Include support for ATECC108A device" ON)
-option(ATCA_ATECC508A_SUPPORT "Include support for ATECC508A device" ON)
 option(ATCA_ATECC608_SUPPORT "Include support for ATECC608 device" ON)
+option(ATCA_ATSHA204A_SUPPORT "Include support for ATSHA204A device" OFF)
+option(ATCA_ATSHA206A_SUPPORT "Include support for ATSHA206A device" OFF)
+option(ATCA_ATECC108A_SUPPORT "Include support for ATECC108A device" OFF)
+option(ATCA_ATECC508A_SUPPORT "Include support for ATECC508A device" OFF)
 option(ATCA_TA100_SUPPORT "Include support for TA100 device" OFF)
-option(ATCA_ECC204_SUPPORT "Include support for ECC204 device" ON)
-option(ATCA_TA010_SUPPORT "Include support for TA010 device" ON)
-option(ATCA_SHA104_SUPPORT "Include support for SHA104 device" ON)
-option(ATCA_SHA105_SUPPORT "Include support for SHA105 device" ON)
+option(ATCA_ECC204_SUPPORT "Include support for ECC204 device" OFF)
+option(ATCA_TA010_SUPPORT "Include support for TA010 device" OFF)
+option(ATCA_SHA104_SUPPORT "Include support for SHA104 device" OFF)
+option(ATCA_SHA105_SUPPORT "Include support for SHA105 device" OFF)
 
 # RTOS Selection
 if (TARGET zephyr_interface)
