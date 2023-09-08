@@ -107,6 +107,7 @@ void RunAllTests(t_test_case_info** tests_list);
 int run_test(int argc, char* argv[], void (*fptest)(void));
 void run_all_talib_tests(void);
 
+extern t_test_case_info buffer_test_info[];
 extern t_test_case_info helper_basic_test_info[];
 extern t_test_case_info otpzero_basic_test_info[];
 
@@ -140,7 +141,7 @@ extern const uint8_t test_sha104_configdata[ATCA_CA2_CONFIG_SIZE];
 extern const uint8_t test_sha105_configdata[ATCA_CA2_CONFIG_SIZE];
 #endif
 #if ATCA_TA_SUPPORT
-extern const uint8_t test_ta100_configdata[TA_CONFIG_SIZE];
+extern const uint8_t test_ta10x_configdata[TA_CONFIG_SIZE];
 #endif
 
 bool atca_test_already_exiting(void);
@@ -150,6 +151,7 @@ void atca_test_assert_config_is_unlocked(UNITY_LINE_TYPE from_line);
 void atca_test_assert_config_is_locked(UNITY_LINE_TYPE from_line);
 void atca_test_assert_data_is_unlocked(UNITY_LINE_TYPE from_line);
 void atca_test_assert_data_is_locked(UNITY_LINE_TYPE from_line);
+void atca_test_assert_random_buffer(UNITY_LINE_TYPE from_line, uint8_t * buf, size_t buflen);
 void atca_test_assert_aes_enabled(UNITY_LINE_TYPE from_line);
 #if ATCA_TA_SUPPORT
 void atca_test_assert_ta_sboot_enabled(UNITY_LINE_TYPE from_line, uint8_t mode);
@@ -165,6 +167,7 @@ void atca_test_assert_ta_sboot_preboot_enabled(UNITY_LINE_TYPE from_line);
 #define test_assert_config_is_locked()          atca_test_assert_config_is_locked(__LINE__)
 #define test_assert_data_is_unlocked()          atca_test_assert_data_is_unlocked(__LINE__)
 #define test_assert_data_is_locked()            atca_test_assert_data_is_locked(__LINE__)
+#define test_assert_random_buffer(buf, len)     atca_test_assert_random_buffer(__LINE__, buf, len)
 
 #define check_config_aes_enable()               atca_test_assert_aes_enabled(__LINE__)
 #define check_config_ta_sboot_enable(mode)      atca_test_assert_ta_sboot_enabled(__LINE__, mode)
@@ -204,7 +207,7 @@ void RunPbkdf2Tests(void);
 
 /* Setup & Configuration */
 void atca_test_config_set_ifacecfg(ATCAIfaceCfg * ifacecfg);
-#if defined(ATCA_ECC_SUPPORT) || defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT) || defined(ATCA_TA100_SUPPORT)
+#if defined(ATCA_ECC_SUPPORT) || defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT) || ATCA_TA_SUPPORT
 ATCA_STATUS atca_test_genkey(uint16_t key_id, uint8_t *public_key);
 #endif
 ATCADeviceType atca_test_get_device_type(void);
@@ -249,7 +252,7 @@ int run_wpc_tests(int argc, char* argv[]);
 
 ATCA_STATUS check_clock_divider(int argc, char* argv[]);
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__linux__)
 void hex_to_data(const char* hex_str, uint8_t* data, size_t data_size);
 #endif
 

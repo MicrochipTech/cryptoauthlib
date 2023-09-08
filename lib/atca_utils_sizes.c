@@ -26,6 +26,7 @@
  */
 
 #include "cryptoauthlib.h"
+#include "cal_internal.h"
 
 #ifdef __COVERITY__
 #pragma coverity compliance block deviate "MISRA C-2012 Rule 20.12" "This macro is used as a template to generate hooks for python integration"
@@ -119,6 +120,37 @@ SIZE_OF_API_S(atca_iface)
 
 /* atca_status.h */
 SIZE_OF_API_T(ATCA_STATUS)
+
+/* atca_crypto_sw.h */
+#if ATCAC_SHA1_EN || ATCA_CRYPTO_SHA1_EN
+SIZE_OF_API_S(atcac_sha1_ctx)
+SIZE_OF_API_T(atcac_sha1_ctx_t)
+#endif
+
+#if ATCAC_SHA256_EN || ATCA_CRYPTO_SHA2_EN
+SIZE_OF_API_S(atcac_sha2_256_ctx)
+SIZE_OF_API_T(atcac_sha2_256_ctx_t)
+#endif
+
+#if ATCAC_SHA256_HMAC_EN || ATCA_CRYPTO_SHA2_HMAC_EN
+SIZE_OF_API_S(atcac_hmac_ctx)
+SIZE_OF_API_T(atcac_hmac_ctx_t)
+#endif
+
+#if ATCAC_AES_CMAC_EN
+SIZE_OF_API_S(atcac_aes_cmac_ctx)
+SIZE_OF_API_T(atcac_aes_cmac_ctx_t)
+#endif
+
+#if ATCAC_AES_GCM_EN
+SIZE_OF_API_S(atcac_aes_gcm_ctx)
+SIZE_OF_API_T(atcac_aes_gcm_ctx_t)
+#endif
+
+#if ATCAC_PKEY_EN
+SIZE_OF_API_S(atcac_pk_ctx)
+SIZE_OF_API_T(atcac_pk_ctx_t)
+#endif
 
 #ifdef __COVERITY__
 #pragma coverity compliance end_block "MISRA C-2012 Rule 20.12"

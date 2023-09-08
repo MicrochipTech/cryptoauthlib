@@ -713,6 +713,8 @@
 
 /* Check host side configuration for missing components */
 
+#include "crypto/crypto_sw_config_check.h"
+
 /* Check for any commands that require a sha implementation */
 #if !ATCA_HOSTLIB_EN && !ATCAC_SHA256_EN
 

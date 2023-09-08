@@ -987,7 +987,7 @@ CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, p
         {
             /* coverity[cert_fio32_c_violation] files are created in pLibCtx->config_path which has already been validated as a proper device*/
             /* coverity[misra_c_2012_rule_10_1_violation] Macro usage is valid per POSIX specification*/
-            int fd = open(filename, O_CREAT | O_EXCL | O_WRONLY);
+            int fd = open(filename, O_CREAT | O_EXCL | O_WRONLY, 0755);
             if (-1 != fd)
             {
                 fp = fdopen(fd, "wb");

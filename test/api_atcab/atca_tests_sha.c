@@ -46,7 +46,7 @@ TEST_CONDITION(atca_cmd_basic_test, sha)
 
     return (atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type))
            || atcab_is_ca2_device(dev_type)
-           || (TA100 == dev_type)
+           || atcab_is_ta_device(dev_type)
     ;
 }
 
@@ -164,7 +164,8 @@ TEST(atca_cmd_basic_test, sha2_256_nist2)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL_MEMORY(digest_ref, digest, sizeof(digest_ref));
 }
-#ifdef _WIN32
+
+#if defined(_WIN32) || defined(__linux__)
 static void hex_to_uint8(const char hex_str[2], uint8_t* num)
 {
     *num = 0;
@@ -227,6 +228,14 @@ static int read_rsp_hex_value(FILE* file, const char* name, uint8_t* data, size_
         {
             continue;
         }
+        else
+        {
+            size_t ln = strlen(line);
+            if (ln > 0 && line[ln - 2] == '\r')
+            {
+                line[ln - 1] = 0;
+            }
+        }
 
         if (memcmp(line, name, name_size) == 0)
         {
@@ -278,13 +287,9 @@ static int read_rsp_int_value(FILE* file, const char* name, int* value)
 
     return ATCA_SUCCESS;
 }
-#endif
+
 static void test_basic_hw_sha2_256_nist_simple(const char* filename)
 {
-#ifndef _WIN32
-    ((void)filename);
-    TEST_IGNORE_MESSAGE("Test only available under windows.");
-#else
     FILE* rsp_file = NULL;
     uint8_t md_ref[ATCA_SHA2_256_DIGEST_SIZE];
     uint8_t md[sizeof(md_ref)];
@@ -299,7 +304,7 @@ static void test_basic_hw_sha2_256_nist_simple(const char* filename)
     do
     {
         status = read_rsp_int_value(rsp_file, "Len = ", &len_bits);
-        if (status != ATCA_SUCCESS)
+        if ((status != ATCA_SUCCESS) || (TA100 == gCfg->devtype && len_bits == 0u))
         {
             continue;
         }
@@ -323,7 +328,6 @@ static void test_basic_hw_sha2_256_nist_simple(const char* filename)
     }
     while (status == ATCA_SUCCESS);
     TEST_ASSERT_MESSAGE(count > 0, "No long tests found in file.");
-    #endif
 }
 
 TEST(atca_cmd_basic_test, sha2_256_nist_short)
@@ -338,9 +342,6 @@ TEST(atca_cmd_basic_test, sha2_256_nist_long)
 
 TEST(atca_cmd_basic_test, sha2_256_nist_monte)
 {
-    #ifndef _WIN32
-    TEST_IGNORE_MESSAGE("Test only available under windows.");
-    #else
     FILE* rsp_file = NULL;
     uint8_t seed[ATCA_SHA2_256_DIGEST_SIZE];
     uint8_t md[4][sizeof(seed)];
@@ -373,8 +374,8 @@ TEST(atca_cmd_basic_test, sha2_256_nist_monte)
         TEST_ASSERT_EQUAL_MEMORY(md_ref, &md[2], sizeof(md_ref));
         memcpy(seed, &md[2], sizeof(seed));
     }
-    #endif
 }
+#endif
 
 #if CALIB_SHA_CONTEXT_EN
 TEST(atca_cmd_basic_test, sha_context)
@@ -558,7 +559,7 @@ TEST_CONDITION(atca_cmd_basic_test, sha_hmac)
            || (ATECC608 == dev_type)
            || (ECC204 == dev_type)
            || (TA010 == dev_type)
-           || (TA100 == dev_type);
+           || atcab_is_ta_device(dev_type);
 }
 
 TEST(atca_cmd_basic_test, sha_hmac)
@@ -646,9 +647,11 @@ t_test_case_info sha_basic_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_short),           REGISTER_TEST_CONDITION(atca_cmd_basic_test, sha) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist1),      REGISTER_TEST_CONDITION(atca_cmd_basic_test, sha) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist2),      REGISTER_TEST_CONDITION(atca_cmd_basic_test, sha) },
+#if defined(_WIN32) || defined(__linux__)
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist_short), REGISTER_TEST_CONDITION(atca_cmd_basic_test, sha) },
     //{ REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist_long),  DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
     //{ REGISTER_TEST_CASE(atca_cmd_basic_test, sha2_256_nist_monte), DEVICE_MASK(ATSHA204A) | DEVICE_MASK_ECC                      },
+#endif
 #if CALIB_SHA_CONTEXT_EN
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_context),         atca_test_cond_ecc608 },
 #endif

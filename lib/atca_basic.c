@@ -274,7 +274,7 @@ bool atcab_is_ca2_device(ATCADeviceType dev_type)
  */
 bool atcab_is_ta_device(ATCADeviceType dev_type)
 {
-    return (dev_type == TA100) ? true : false;
+    return ((dev_type & 0xF0U) == 0x10U) ? true : false;
 }
 
 #ifdef ATCA_USE_ATCAB_FUNCTIONS
@@ -3208,7 +3208,7 @@ ATCA_STATUS atcab_sha_start(void)
     else if (atcab_is_ta_device(dev_type))
     {
 #if ATCA_TA_SUPPORT
-        status = talib_sha_start(g_atcab_device_ptr);
+        status = talib_sha_base_compat(g_atcab_device_ptr, TA_SHA_MODE_START, 0U, NULL, NULL, NULL);
 #endif
     }
     else
@@ -3239,7 +3239,7 @@ ATCA_STATUS atcab_sha_update(const uint8_t* message)
     else if (atcab_is_ta_device(dev_type))
     {
 #if ATCA_TA_SUPPORT
-        status = talib_sha_update_compat(g_atcab_device_ptr, message);
+        status = talib_sha_base_compat(g_atcab_device_ptr, TA_SHA_MODE_UPDATE, 64U, message, NULL, NULL);
 #endif
     }
     else
@@ -3273,7 +3273,7 @@ ATCA_STATUS atcab_sha_end(uint8_t* digest, uint16_t length, const uint8_t* messa
     else if (atcab_is_ta_device(dev_type))
     {
 #if ATCA_TA_SUPPORT
-        status = talib_sha_end_compat(g_atcab_device_ptr, digest, length, message);
+        status = talib_sha_base_compat(g_atcab_device_ptr, TA_SHA_MODE_END, length, message, digest, NULL);
 #endif
     }
     else
@@ -3309,7 +3309,15 @@ ATCA_STATUS atcab_sha_read_context(uint8_t* context, uint16_t* context_size)
     else if (atcab_is_ta_device(dev_type))
     {
 #if ATCA_TA_SUPPORT
-        status = talib_sha_read_context(g_atcab_device_ptr, context, context_size);
+        if (NULL != context_size)
+        {
+            cal_buffer ctx_buf = CAL_BUF_INIT(*context_size, context);
+            status = talib_sha_read_context(g_atcab_device_ptr, TA_HANDLE_SHA_CONTEXT0, &ctx_buf);
+        }
+        else
+        {
+            status = ATCA_BAD_PARAM;
+        }
 #endif
     }
     else
@@ -3341,7 +3349,8 @@ ATCA_STATUS atcab_sha_write_context(const uint8_t* context, uint16_t context_siz
     else if (atcab_is_ta_device(dev_type))
     {
 #if ATCA_TA_SUPPORT
-        status = talib_sha_write_context(g_atcab_device_ptr, context, context_size);
+        cal_buffer ctx_buf = CAL_BUF_INIT(context_size, context);
+        status = talib_sha_write_context(g_atcab_device_ptr, TA_HANDLE_SHA_CONTEXT0, &ctx_buf);
 #endif
     }
     else
@@ -3375,7 +3384,7 @@ ATCA_STATUS atcab_sha(uint16_t length, const uint8_t* message, uint8_t* digest)
     else if (atcab_is_ta_device(dev_type))
     {
 #if ATCA_TA_SUPPORT
-        status = talib_sha(g_atcab_device_ptr, length, message, digest);
+        status = talib_sha_compat(g_atcab_device_ptr, length, message, digest);
 #endif
     }
     else
@@ -3409,7 +3418,7 @@ ATCA_STATUS atcab_hw_sha2_256(const uint8_t* data, size_t data_size, uint8_t* di
 #if ATCA_TA_SUPPORT
         if (UINT16_MAX >= data_size)
         {
-            status = talib_sha(g_atcab_device_ptr, (uint16_t)data_size, data, digest);
+            status = talib_sha_compat(g_atcab_device_ptr, (uint16_t)data_size, data, digest);
         }
         else
         {
@@ -3444,7 +3453,9 @@ ATCA_STATUS atcab_hw_sha2_256_init(atca_sha256_ctx_t* ctx)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-        status = ATCA_UNIMPLEMENTED;
+#if ATCA_TA_SUPPORT
+        status = talib_sha_base_compat(g_atcab_device_ptr, TA_SHA_MODE_START, 0U, NULL, NULL, NULL);
+#endif
     }
     else
     {
@@ -3475,7 +3486,10 @@ ATCA_STATUS atcab_hw_sha2_256_update(atca_sha256_ctx_t* ctx, const uint8_t* data
     }
     else if (atcab_is_ta_device(dev_type))
     {
-        status = ATCA_UNIMPLEMENTED;
+#if ATCA_TA_SUPPORT
+        /* coverity[cert_int31_c_violation] data_size < UINT16_MAX is a known documented limitation of the API */
+        status = talib_sha_base_compat(g_atcab_device_ptr, TA_SHA_MODE_UPDATE, (uint16_t)data_size, data, NULL, NULL);
+#endif
     }
     else
     {
@@ -3505,7 +3519,9 @@ ATCA_STATUS atcab_hw_sha2_256_finish(atca_sha256_ctx_t* ctx, uint8_t* digest)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-        status = ATCA_UNIMPLEMENTED;
+#if ATCA_TA_SUPPORT
+        status = talib_sha_base_compat(g_atcab_device_ptr, TA_SHA_MODE_END, 0U, NULL, digest, NULL);
+#endif
     }
     else
     {

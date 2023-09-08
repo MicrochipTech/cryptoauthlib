@@ -1,0 +1,51 @@
+# Device support checks
+
+if(ATCA_ATSHA204A_SUPPORT)
+message(STATUS "Adding ATSHA204A Device Support")
+set(SHA204_ENABLED ON PARENT_SCOPE)
+endif()
+
+if(ATCA_ATSHA206A_SUPPORT)
+message(STATUS "Adding ATSHA206A Device Support")
+set(SHA206_ENABLED ON PARENT_SCOPE)
+endif()
+
+if(ATCA_ATECC108A_SUPPORT)
+message(STATUS "Adding ATECC108A Device Support")
+set(ECC108_ENABLED ON PARENT_SCOPE)
+endif()
+
+if(ATCA_ATECC508A_SUPPORT)
+message(STATUS "Adding ATECC508A Device Support")
+set(ECC508_ENABLED ON PARENT_SCOPE)
+endif()
+
+if(ATCA_ATECC608_SUPPORT)
+message(STATUS "Adding ATECC608 Device Support")
+set(ECC608_ENABLED ON PARENT_SCOPE)
+endif()
+
+if(ATCA_ECC204_SUPPORT)
+message(STATUS "Adding ECC204 Device Support")
+set(ECC204_ENABLED ON PARENT_SCOPE)
+endif()
+
+if(ATCA_TA010_SUPPORT)
+message(STATUS "Adding TA010 Device Support")
+set(TA010_ENABLED ON PARENT_SCOPE)
+endif()
+
+if(ATCA_SHA104_SUPPORT)
+message(STATUS "Adding SHA104 Device Support")
+set(SHA104_ENABLED ON PARENT_SCOPE)
+endif()
+
+if(ATCA_SHA106_SUPPORT)
+message(STATUS "Adding SHA106 Device Support")
+set(SHA106_ENABLED ON PARENT_SCOPE)
+endif()
+
+if(ATCA_SHA105_SUPPORT)
+message(STATUS "Adding SHA105 Device Support")
+set(SHA105_ENABLED ON PARENT_SCOPE)
+endif()

@@ -34,7 +34,7 @@
  */
 #include "cryptoauthlib.h"
 
-#include "crypto_config_check.h"
+#include "crypto_hw_config_check.h"
 
 #if ATCAB_AES_CBCMAC_EN
 /** \brief Initialize context for AES CBC-MAC operation.

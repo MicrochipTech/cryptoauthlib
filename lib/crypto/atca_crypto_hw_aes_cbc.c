@@ -6,7 +6,7 @@
  * messages or data packets in ECB mode.
  *
  * \note List of devices that support this command - ATECC608A, ATECC608B,
- *       & TA100. Refer to device datasheet for full details.
+ *       & TA10x. Refer to device datasheet for full details.
  *
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.

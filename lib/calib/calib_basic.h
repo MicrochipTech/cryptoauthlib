@@ -354,7 +354,7 @@ ATCA_STATUS calib_ca2_write_bytes_zone(ATCADevice device, uint8_t zone, uint16_t
 #endif /* CALIB_WRITE_CA2_EN */
 #if CALIB_WRITE_ENC_EN && ATCA_CA2_SUPPORT
 ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data, uint8_t* transport_key,
-                                uint8_t transport_key_id, uint8_t num_in[NONCE_NUMIN_SIZE]);
+                                uint16_t transport_key_id, uint8_t num_in[NONCE_NUMIN_SIZE]);
 #endif /* CALIB_WRITE_ENC_EN && ATCA_CA2_SUPPORT */
 
 /* Map calib functions to atcab names for api compatibility without abstraction overhead */

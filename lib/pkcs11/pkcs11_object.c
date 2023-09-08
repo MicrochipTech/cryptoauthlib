@@ -672,7 +672,7 @@ CK_RV pkcs11_object_deinit(pkcs11_lib_ctx_ptr pContext)
 ATCA_STATUS pkcs11_object_load_handle_info(ATCADevice device, pkcs11_lib_ctx_ptr pContext)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
-    uint8_t handle_info[TA_HANDLE_INFO_SIZE];
+    ta_handle_info handle_info;
     bool bHandleinfosuccess = false;
 
     ((void)pContext);
@@ -685,11 +685,9 @@ ATCA_STATUS pkcs11_object_load_handle_info(ATCADevice device, pkcs11_lib_ctx_ptr
             if (pObj->slot > 15u)
             {
                 pObj->flags |= PKCS11_OBJECT_FLAG_TA_TYPE;
-                /* Getting device context using atcab_get_device() instead of device context from slot context : Intentional*/
-                if (ATCA_SUCCESS == talib_info_get_handle_info(device, pObj->slot, handle_info))
+                if (ATCA_SUCCESS == talib_info_get_handle_info(device, pObj->slot, &handle_info))
                 {
-                    /* coverity[misra_c_2012_rule_11_3_violation] Appropriate usage of the handle_info buffer */
-                    (void)memcpy(&pObj->handle_info, (ta_element_attributes_t*)handle_info, sizeof(ta_element_attributes_t));
+                    (void)memcpy(&pObj->handle_info, &handle_info.attributes, sizeof(ta_element_attributes_t));
                     bHandleinfosuccess = true;
                 }
                 else

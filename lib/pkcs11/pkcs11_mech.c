@@ -224,7 +224,7 @@ static pcks11_mech_table_e pkcs11_mech_list_ecc608[] = {
 };
 #endif
 
-#ifdef ATCA_TA100_SUPPORT
+#if ATCA_TA_SUPPORT
 /* CK_MECHANISM_TYPE, MinKeySize, MaxKeySize, Flags */
 static pcks11_mech_table_e pkcs11_mech_list_ta100[] = {
     //CKM_DH_PKCS_KEY_PAIR_GEN,
@@ -387,7 +387,7 @@ CK_RV pkcs11_mech_get_list(CK_SLOT_ID slotID, CK_MECHANISM_TYPE_PTR pMechanismLi
         mech_list_ptr = pkcs11_mech_list_ecc608;
         break;
 #endif
-#ifdef ATCA_TA100_SUPPORT
+#if ATCA_TA_SUPPORT
     case TA100:
         mech_cnt = (CK_ULONG)(TABLE_SIZE(pkcs11_mech_list_ta100));
         mech_list_ptr = pkcs11_mech_list_ta100;
@@ -455,7 +455,7 @@ CK_RV pkcs_mech_get_info(CK_SLOT_ID slotID, CK_MECHANISM_TYPE type, CK_MECHANISM
         mech_info_ptr = pkcs11_mech_find_info(pkcs11_mech_list_ecc608, (CK_ULONG)(TABLE_SIZE(pkcs11_mech_list_ecc608)), type);
         break;
 #endif
-#ifdef ATCA_TA100_SUPPORT
+#if ATCA_TA_SUPPORT
     case TA100:
         mech_info_ptr = pkcs11_mech_find_info(pkcs11_mech_list_ta100, (CK_ULONG)(TABLE_SIZE(pkcs11_mech_list_ta100)), type);
         break;

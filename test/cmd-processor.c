@@ -147,7 +147,9 @@ static t_menu_info mas_menu_info[] =
     { "handles",   "Print info for stored handles in TA100 device", talib_config_print_handles           },
     { "clear",     "Delete Handles",                                talib_config_clear_handles           },
     { "talib",     "Run talib tests",                               run_talib_tests                      },
+#ifdef TALIB_FCE_SUPPORT
     { "fce",       "Run FCE test",                                  talib_fce_cmd                        },
+#endif
     { "power",     "Change device power state",                     talib_power_cmd                      },
 #endif
 #if defined(_WIN32) || defined(__linux__) || defined(__APPLE__)

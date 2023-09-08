@@ -472,12 +472,10 @@
     "restype": "ctypes.c_uint8",
     "argtypes": [
       "ctypes.c_void_p",
-      "ctypes.c_uint16",
-      "ctypes.c_uint16",
-      "ctypes.c_char*16",
-      "ctypes.c_char*16"
+      "ctypes.c_void_p",
+      "ctypes.c_void_p"
     ],
-    "docstring": "TA API - Calculate the session key for the authenticated session. ",
+    "docstring": null,
     "parameters": []
   },
   "talib_auth_create_hmac": {
@@ -500,7 +498,7 @@
       "ctypes.c_uint16",
       "ctypes.c_char*16"
     ],
-    "docstring": "TA API - Exchange nonces between host and device. ",
+    "docstring": null,
     "parameters": []
   },
   "talib_auth_startup": {
@@ -510,22 +508,20 @@
       "ctypes.c_uint16",
       "ctypes.c_uint8",
       "ctypes.c_uint16",
-      "ctypes.c_uint8",
-      "ctypes.c_char*32",
+      "ctypes.c_void_p",
       "ctypes.c_char*16",
       "ctypes.c_char*16"
     ],
-    "docstring": "TA API - Initiate an authorization session. ",
+    "docstring": null,
     "parameters": []
   },
   "talib_auth_execute_nested": {
     "restype": "ctypes.c_uint8",
     "argtypes": [
       "ctypes.c_void_p",
-      "ctypes.c_void_p",
-      "ctypes.c_uint16"
+      "ctypes.c_void_p"
     ],
-    "docstring": "TA API - Executes a nested command. ",
+    "docstring": null,
     "parameters": []
   },
   "talib_auth_terminate": {
@@ -533,7 +529,7 @@
     "argtypes": [
       "ctypes.c_void_p"
     ],
-    "docstring": "TA API - Terminate an authorization session. ",
+    "docstring": null,
     "parameters": []
   },
   "talib_counter": {
@@ -655,7 +651,7 @@
       "ctypes.POINTER(ta_element_attributes_t)",
       "ctypes.POINTER(ctypes.c_uint16)"
     ],
-    "docstring": "TA API - Executes Create command to create elements on TA100 shared data memory. The handle is created by vega and handle value is copied into output buffer. This function wont create handle for ephemeral or HMAC symmetric key. This cannot create Secure_boot special handles. ",
+    "docstring": "TA API - Executes Create command to create elements on TA100 shared data memory. The handle is created by internally and handle value is copied into output buffer. This function wont create handle for ephemeral or HMAC symmetric key. This cannot create Secure_boot special handles. ",
     "parameters": [
       [
         "device",
@@ -730,7 +726,7 @@
       "ctypes.POINTER(ta_element_attributes_t)",
       "ctypes.POINTER(ctypes.c_uint16)"
     ],
-    "docstring": "TA API - Executes Create command to create HMAC symmetric elements on shared data. The handle is created by vega and handle value is copied into output buffer. This cannot create Secure_boot special handles. ",
+    "docstring": "TA API - Executes Create command to create HMAC symmetric elements on shared data. The handle is created by the device and handle value is copied into output buffer. This cannot create Secure_boot special handles. ",
     "parameters": [
       [
         "device",
@@ -746,7 +742,7 @@
       ],
       [
         "handle_out",
-        "handle created by vega"
+        "handle created by the device"
       ]
     ]
   },
@@ -868,7 +864,7 @@
       "ctypes.c_char_p",
       "ctypes.c_uint16"
     ],
-    "docstring": "TA API - Executes devupdate command to Update one block of the nonvolatile operating code within the Vega device. ",
+    "docstring": "TA API - Executes devupdate command to Update one block of the nonvolatile operating code within the trust anchor device. ",
     "parameters": [
       [
         "device",
@@ -893,7 +889,7 @@
     "argtypes": [
       "ctypes.c_void_p",
       "ctypes.c_uint16",
-      "ctypes.c_int16"
+      "ctypes.c_uint16"
     ],
     "docstring": "TA API - Initialize the Devupdate context stucture. ",
     "parameters": [
@@ -918,7 +914,7 @@
       "ctypes.c_void_p",
       "ctypes.c_char_p"
     ],
-    "docstring": "TA API - Executes devupdate command to Update the first block (image) of the nonvolatile operating code within the Vega device. ",
+    "docstring": "TA API - Executes devupdate command to Update the first block (image) of the nonvolatile operating code within the trust anchor device. ",
     "parameters": [
       [
         "device",
@@ -942,7 +938,7 @@
       "ctypes.c_char_p",
       "ctypes.POINTER(ctypes.c_uint16)"
     ],
-    "docstring": "TA API - Executes devupdate command to Update the subsequent block (image) of the nonvolatile operating code within the Vega device. ",
+    "docstring": "TA API - Executes devupdate command to Update the subsequent block (image) of the nonvolatile operating code within the trust anchor device. ",
     "parameters": [
       [
         "device",
@@ -968,7 +964,7 @@
       "ctypes.c_void_p",
       "ctypes.c_char_p"
     ],
-    "docstring": "TA API - Executes devupdate command to Update the complete image of the nonvolatile operating code within the Vega device. ",
+    "docstring": "TA API - Executes devupdate command to Update the complete image of the nonvolatile operating code within the trust anchor device. ",
     "parameters": [
       [
         "image",
@@ -1475,7 +1471,7 @@
     "argtypes": [
       "ctypes.c_void_p",
       "ctypes.c_uint32",
-      "ctypes.c_char*(9)"
+      "ctypes.POINTER(ta_handle_info)"
     ],
     "docstring": "TA API - Issues an Info command to return attributes & status of a handle. ",
     "parameters": [
@@ -2967,26 +2963,20 @@
       ]
     ]
   },
-  "talib_manage_cert": {
+  "talib_cert_extract": {
     "restype": "ctypes.c_uint8",
     "argtypes": [
       "ctypes.c_void_p",
-      "ctypes.c_uint8",
       "ctypes.c_uint16",
       "ctypes.c_uint16",
       "ctypes.c_uint16",
-      "ctypes.c_char_p",
-      "ctypes.c_uint16"
+      "ctypes.c_void_p"
     ],
-    "docstring": "TA API - Executes ManageCert command to parse and verify x.509 certs or manage an input certificate revocation list. ",
+    "docstring": "TA API - Executes manage_cert api to extract x.509 certs from IO buffer or shared memory and store extracted certificate to shared element. ",
     "parameters": [
       [
         "device",
         "Device object that holds the device related informations "
-      ],
-      [
-        "mode",
-        "mode parameter for ManageCert command "
       ],
       [
         "parent_handle",
@@ -3001,25 +2991,20 @@
         "Handle pointing to Full certificate or CRL. Only supports IO buffer or shared memory, but not Volatile register. CRL must point to IO buffer. "
       ],
       [
-        "in_cert",
-        "Incoming certificate or CRL when source handle pointing to IO buffer. Maximum size is 1020. Should be NULL if source_handle points to internal memory "
-      ],
-      [
-        "length",
-        "Length of the incoming certificate or CRL. Applicable only when in_cert exists on the IO buffer"
+        "cert",
+        "Incoming buffer containing certificate or CRL when source handle pointing to IO buffer. Maximum size is 1020. If the certificate buffer is present then it will take priority over the source_handle parameter. Should be NULL if source_handle points to internal memory "
       ]
     ]
   },
-  "talib_store_extracted_cert_io": {
+  "talib_cert_verify": {
     "restype": "ctypes.c_uint8",
     "argtypes": [
       "ctypes.c_void_p",
       "ctypes.c_uint16",
       "ctypes.c_uint16",
-      "ctypes.c_char_p",
-      "ctypes.c_uint16"
+      "ctypes.c_void_p"
     ],
-    "docstring": "TA API - Executes ManageCert command to verify x.509 incoming cert and store extracted certificate to shared element. ",
+    "docstring": "TA API - Executes manage_cert api to verify x.509 incoming cert and returns verification status. ",
     "parameters": [
       [
         "device",
@@ -3031,94 +3016,15 @@
       ],
       [
         "target_handle",
-        "Handle to write verified certificate. After successful verification, extracted elements are written to this handle. "
-      ],
-      [
-        "in_cert",
-        "Incoming certificate to verify and extract "
-      ],
-      [
-        "cert_length",
-        "Length of the incoming certificate"
-      ]
-    ]
-  },
-  "talib_store_extracted_cert": {
-    "restype": "ctypes.c_uint8",
-    "argtypes": [
-      "ctypes.c_void_p",
-      "ctypes.c_uint16",
-      "ctypes.c_uint16",
-      "ctypes.c_uint16"
-    ],
-    "docstring": "TA API - Executes ManageCert command to verify x.509 stored cert and store extracted certificate to shared element. ",
-    "parameters": [
-      [
-        "device",
-        "Device object that holds the device related informations "
-      ],
-      [
-        "parent_handle",
-        "Verifying certificate handle. This can be in Shared or Volatile "
-      ],
-      [
-        "target_handle",
-        "Handle to write verified certificate. After successful verification, extracted elements are written to this handle. "
+        "Handle to write verified certificate or CRL element. After successful verification, extracted element is written to this handle. A value of 0xFFFF, skips write to handle but returns verification status "
       ],
       [
         "source_handle",
-        "Handle pointing to Full certificate only supports shared memory"
-      ]
-    ]
-  },
-  "talib_verify_cert_io": {
-    "restype": "ctypes.c_uint8",
-    "argtypes": [
-      "ctypes.c_void_p",
-      "ctypes.c_uint16",
-      "ctypes.c_char_p",
-      "ctypes.c_uint16"
-    ],
-    "docstring": "TA API - Executes ManageCert command to verify x.509 incoming cert and returns verification status. ",
-    "parameters": [
-      [
-        "device",
-        "Device object that holds the device related informations "
+        "Handle pointing to Full certificate or CRL. Only supports IO buffer or shared memory, but not Volatile register. CRL must point to IO buffer. "
       ],
       [
-        "parent_handle",
-        "Verifying certificate handle. This can be in Shared or Volatile "
-      ],
-      [
-        "in_cert",
-        "Incoming certificate to verify and extract "
-      ],
-      [
-        "cert_length",
-        "Length of the incoming certificate"
-      ]
-    ]
-  },
-  "talib_verify_cert": {
-    "restype": "ctypes.c_uint8",
-    "argtypes": [
-      "ctypes.c_void_p",
-      "ctypes.c_uint16",
-      "ctypes.c_uint16"
-    ],
-    "docstring": "TA API - Executes ManageCert command to verify x.509 stored cert and returns verification status. ",
-    "parameters": [
-      [
-        "device",
-        "Device object that holds the device related informations "
-      ],
-      [
-        "parent_handle",
-        "Verifying certificate handle. This can be in Shared or Volatile "
-      ],
-      [
-        "source_handle",
-        "Handle pointing to Full certificate only supports shared memory"
+        "cert",
+        "Incoming buffer containing certificate or CRL when source handle pointing to IO buffer. Maximum size is 1020. If the certificate buffer is present then it will take priority over the source_handle parameter. Should be NULL if source_handle points to internal memory "
       ]
     ]
   },
@@ -3170,29 +3076,11 @@
     "restype": "ctypes.c_uint8",
     "argtypes": [
       "ctypes.c_void_p",
-      "ctypes.c_char*16",
-      "ctypes.c_char_p",
-      "ctypes.c_uint32"
+      "ctypes.c_void_p",
+      "ctypes.c_void_p"
     ],
-    "docstring": "TA API - Executes Random command and returns requested number of random bytes. ",
-    "parameters": [
-      [
-        "device",
-        "Device context pointer "
-      ],
-      [
-        "stir_data",
-        "Extra data to be stirred into the random number calculation. Should be 16 bytes "
-      ],
-      [
-        "rand_out",
-        "Requested number of random bytes are returned here "
-      ],
-      [
-        "rand_length",
-        "Contains number of random bytes to read"
-      ]
-    ]
+    "docstring": null,
+    "parameters": []
   },
   "talib_random_compat": {
     "restype": "ctypes.c_uint8",
@@ -3200,17 +3088,8 @@
       "ctypes.c_void_p",
       "ctypes.c_char*32"
     ],
-    "docstring": "Compatibility mode which generates a 32 byte random number from the TA100 device. ",
-    "parameters": [
-      [
-        "device",
-        "Device context pointer "
-      ],
-      [
-        "rand_out",
-        "32 bytes of random data is returned here."
-      ]
-    ]
+    "docstring": null,
+    "parameters": []
   },
   "talib_read": {
     "restype": "ctypes.c_uint8",
@@ -3454,7 +3333,7 @@
       "ctypes.c_char_p",
       "ctypes.c_char_p"
     ],
-    "docstring": "Executes Read command to transfer key to another vega device. ",
+    "docstring": "Executes Read command to transfer key to another trust anchor device. ",
     "parameters": [
       [
         "device",
@@ -3944,7 +3823,7 @@
       "ctypes.c_char_p",
       "ctypes.c_size_t"
     ],
-    "docstring": "TA API - Execute Secureboot command in partial config mode to update the code Pass a full SHA256 (64 byte) block of code to the Vega device as part of the overall code load/upgrade procedure. This phase is run repeatedly till the final full or partial block has been sent. ",
+    "docstring": "TA API - Execute Secureboot command in partial config mode to update the code Pass a full SHA256 (64 byte) block of code to the trust anchor device as part of the overall code load/upgrade procedure. This phase is run repeatedly till the final full or partial block has been sent. ",
     "parameters": [
       [
         "device",
@@ -3970,7 +3849,7 @@
       "ctypes.c_void_p",
       "ctypes.c_char_p"
     ],
-    "docstring": "TA API - Execute Secureboot command in partial config mode to update the initial code Pass a full SHA256 (64 byte) block of code to the Vega device as part of the overall code load/upgrade procedure. This phase is run repeatedly till before the final full or partial block has been sent. ",
+    "docstring": "TA API - Execute Secureboot command in partial config mode to update the initial code Pass a full SHA256 (64 byte) block of code to the trust anchor device as part of the overall code load/upgrade procedure. This phase is run repeatedly till before the final full or partial block has been sent. ",
     "parameters": [
       [
         "device",
@@ -4045,7 +3924,7 @@
       "ctypes.POINTER(ctypes.c_uint32)",
       "ctypes.POINTER(ctypes.c_uint32)"
     ],
-    "docstring": "TA API - Execute secureboot command in partial config mode of address phase This pahse retrieve address min/max bounds from the Vega device. ",
+    "docstring": "TA API - Execute secureboot command in partial config mode of address phase This phase retrieve address min/max bounds from the trust anchor device. ",
     "parameters": [
       [
         "device",
@@ -4766,7 +4645,7 @@
       "ctypes.c_uint16",
       "ctypes.POINTER(ctypes.c_bool)"
     ],
-    "docstring": "TA API - Executes the Verify command, to Verify a signature using given the message and a public key. The message and public key can either be stored within Vega or passed on the command line. ",
+    "docstring": "TA API - Executes the Verify command, to Verify a signature using given the message and a public key. The message and public key can either be stored within trust anchor device or passed on the command line. ",
     "parameters": [
       [
         "device",
@@ -5739,7 +5618,8 @@
   "talib_sharekey_sequence_execute": {
     "restype": "ctypes.c_uint8",
     "argtypes": [
-      "ctypes.c_void_p"
+      "ctypes.c_void_p",
+      "ctypes.c_char_p"
     ],
     "docstring": "TA API - To execute share key sequence steps. ",
     "parameters": [
@@ -5761,5 +5641,437 @@
         "Share key sequence object that holds the share key related informations"
       ]
     ]
+  },
+  "atcab_get_device_address": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p"
+    ],
+    "docstring": "Get the current device address based on the configured device and interface. ",
+    "parameters": []
+  },
+  "talib_get_max_data_size": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.POINTER(ctypes.c_size_t)"
+    ],
+    "docstring": "Gets the maximum length of data that can be written into the packet for the given session. ",
+    "parameters": [
+      [
+        "device",
+        "Device context pointer "
+      ],
+      [
+        "size",
+        "Max data size allowed in the current session"
+      ]
+    ]
+  },
+  "talib_auth_reset_on_device": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_uint16"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_auth_reset_on_host": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_is_private": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_uint16",
+      "ctypes.POINTER(ctypes.c_bool)"
+    ],
+    "docstring": "Check if a slot is a private key. ",
+    "parameters": [
+      [
+        "device",
+        "Device context pointer "
+      ],
+      [
+        "handle",
+        "Handle to query "
+      ],
+      [
+        "is_private",
+        "return true if private"
+      ]
+    ]
+  },
+  "talib_random_internal": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_void_p",
+      "ctypes.c_void_p",
+      "ctypes.POINTER(ctypes.c_size_t)"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_handle_can_use": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_uint16",
+      "ctypes.POINTER(ta_element_attributes_t)",
+      "ctypes.POINTER(ctypes.c_bool)"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_handle_can_read": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_uint16",
+      "ctypes.POINTER(ta_element_attributes_t)",
+      "ctypes.POINTER(ctypes.c_bool)"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_handle_can_write": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_uint16",
+      "ctypes.POINTER(ta_element_attributes_t)",
+      "ctypes.POINTER(ctypes.c_bool)"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_fce_init": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_uint8",
+      "ctypes.c_uint32",
+      "ctypes.POINTER(ctypes.c_uint32)"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_fce_execute": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_void_p"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_fce_sha_start": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_fce_sha_update": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_char_p",
+      "ctypes.c_size_t",
+      "ctypes.c_bool"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_fce_sha_finish": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_char_p"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_fce_sha": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_char_p",
+      "ctypes.c_size_t",
+      "ctypes.c_char_p"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_fce_hmac_start": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_uint8",
+      "ctypes.c_uint16",
+      "ctypes.c_uint8",
+      "ctypes.POINTER(ctypes.c_uint32)"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_fce_hmac_update": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_char_p",
+      "ctypes.c_size_t",
+      "ctypes.c_bool"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_fce_hmac_finish": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_char_p"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_fce_hmac": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_uint8",
+      "ctypes.c_uint16",
+      "ctypes.c_uint8",
+      "ctypes.POINTER(ctypes.c_uint32)",
+      "ctypes.c_char_p",
+      "ctypes.c_size_t",
+      "ctypes.c_char_p"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_fce_cmac_start": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_uint8",
+      "ctypes.c_uint16",
+      "ctypes.c_uint8",
+      "ctypes.POINTER(ctypes.c_uint32)"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_fce_cmac_update": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_char_p",
+      "ctypes.c_size_t",
+      "ctypes.c_bool"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_fce_cmac_finish": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_char_p"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_fce_cmac": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_uint8",
+      "ctypes.c_uint16",
+      "ctypes.c_uint8",
+      "ctypes.POINTER(ctypes.c_uint32)",
+      "ctypes.c_char_p",
+      "ctypes.c_size_t",
+      "ctypes.c_char_p"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_auth_get_context": {
+    "restype": "ctypes.c_void_p",
+    "argtypes": [
+      "ctypes.c_void_p"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_auth_get_max_data_size": {
+    "restype": "ctypes.c_size_t",
+    "argtypes": [
+      "ctypes.c_void_p"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_auth_verify_mac": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_char_p",
+      "ctypes.c_char_p",
+      "ctypes.c_size_t"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_auth_packet_init": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.POINTER(ctypes.c_void_p)",
+      "ctypes.c_void_p",
+      "ctypes.c_void_p",
+      "ctypes.c_bool"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_kdf_init": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.POINTER(ctypes.c_void_p)",
+      "ctypes.c_uint8",
+      "ctypes.c_uint16",
+      "ctypes.c_uint16"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_kdf_execute": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_void_p",
+      "ctypes.c_void_p"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_kdf_sha_format": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_void_p",
+      "ctypes.c_void_p",
+      "ctypes.c_uint16"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_kdf_hmac_format": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_void_p",
+      "ctypes.c_void_p",
+      "ctypes.c_uint16"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_kdf_hkdf_format": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_void_p",
+      "ctypes.c_void_p",
+      "ctypes.c_uint16"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_kdf_prf_format": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_void_p",
+      "ctypes.c_uint16"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_cert_extract_internal": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_uint16",
+      "ctypes.c_uint16",
+      "ctypes.c_uint16",
+      "ctypes.c_void_p",
+      "ctypes.POINTER(ctypes.c_size_t)"
+    ],
+    "docstring": "TA API - Executes ManageCert command to parse and verify x.509 certs or manage an input certificate revocation list. ",
+    "parameters": [
+      [
+        "device",
+        "Device object that holds the device related informations "
+      ],
+      [
+        "parent_handle",
+        "Verifying certificate handle. This can be in Shared or Volatile "
+      ],
+      [
+        "target_handle",
+        "Handle to write verified certificate or CRL element. After successful verification, extracted element is written to this handle. A value of 0xFFFF, skips write to handle but returns verification status "
+      ],
+      [
+        "source_handle",
+        "Handle pointing to Full certificate or CRL. Only supports IO buffer or shared memory, but not Volatile register. CRL must point to IO buffer. "
+      ],
+      [
+        "cert",
+        "Incoming buffer containing certificate or CRL when source handle pointing to IO buffer. Maximum size is 1020. If the certificate buffer is present then it will take priority over the source_handle parameter. Should be NULL if source_handle points to internal memory "
+      ]
+    ]
+  },
+  "talib_read_init": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.POINTER(ctypes.c_void_p)",
+      "ctypes.c_uint8",
+      "ctypes.c_uint16",
+      "ctypes.c_uint16"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_read_execute": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_void_p",
+      "ctypes.c_void_p",
+      "ctypes.POINTER(ctypes.c_size_t)"
+    ],
+    "docstring": null,
+    "parameters": []
+  },
+  "talib_read_partial_internal": {
+    "restype": "ctypes.c_uint8",
+    "argtypes": [
+      "ctypes.c_void_p",
+      "ctypes.c_uint16",
+      "ctypes.POINTER(ctypes.c_size_t)",
+      "ctypes.c_void_p",
+      "ctypes.c_bool"
+    ],
+    "docstring": null,
+    "parameters": []
   }
 }

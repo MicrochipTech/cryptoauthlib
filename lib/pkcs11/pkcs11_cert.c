@@ -143,17 +143,17 @@ static CK_RV pkcs11_cert_load_ca(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pAt
 #if ATCA_TA_SUPPORT
 static CK_RV pkcs11_cert_load_ta(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pAttribute, ATCADevice device)
 {
-    uint8_t handle_info[TA_HANDLE_INFO_SIZE];
-    ATCA_STATUS status = talib_info_get_handle_info(device, pObject->slot, handle_info);
+    ta_handle_info handle_info;
+    ATCA_STATUS status = talib_info_get_handle_info(device, pObject->slot, &handle_info);
 
     if (ATCA_SUCCESS == status)
     {
-        /* coverity[misra_c_2012_rule_11_3_violation] Appropriate usage of the handle_info buffer */
-        uint16_t cert_size = ((ta_element_attributes_t*)handle_info)->property;
+        uint16_t cert_size = handle_info.attributes.property;
 
         if ((NULL != pAttribute->pValue) && (pAttribute->ulValueLen >= cert_size))
         {
-            status = talib_read_element(device, pObject->slot, &cert_size, (uint8_t*)pAttribute->pValue);
+            cal_buffer sAttribute = CAL_BUF_INIT(cert_size, pAttribute->pValue);
+            status = talib_read_element(device, pObject->slot, &sAttribute);
             pAttribute->ulValueLen = cert_size;
         }
         else
@@ -438,62 +438,62 @@ static CK_RV pkcs11_cert_get_id(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute
  */
 const pkcs11_attrib_model pkcs11_cert_x509public_attributes[] = {
     /** Object Class - CK_OBJECT_CLASS */
-    { CKA_CLASS,                      pkcs11_object_get_class                                                                                                                                                                                                                                                   },
+    { CKA_CLASS,                      pkcs11_object_get_class                                                                                                                                                                                                                                                                           },
     /** CK_TRUE if object is a token object; CK_FALSE if object is a session object. Default is CK_FALSE. */
-    { CKA_TOKEN,                      pkcs11_attrib_true                                                                                                                                                                                                                                                        },
+    { CKA_TOKEN,                      pkcs11_attrib_true                                                                                                                                                                                                                                                                                },
     /** CK_TRUE if object is a private object; CK_FALSE if object is a public object. */
-    { CKA_PRIVATE,                    pkcs11_token_get_access_type                                                                                                                                                                                                                                              },
+    { CKA_PRIVATE,                    pkcs11_token_get_access_type                                                                                                                                                                                                                                                                      },
     /** CK_TRUE if object can be modified. Default is CK_TRUE. */
-    { CKA_MODIFIABLE,                 pkcs11_token_get_writable                                                                                                                                                                                                                                                 },
+    { CKA_MODIFIABLE,                 pkcs11_token_get_writable                                                                                                                                                                                                                                                                         },
     /** Description of the object(default empty). */
-    { CKA_LABEL,                      pkcs11_object_get_name                                                                                                                                                                                                                                                    },
+    { CKA_LABEL,                      pkcs11_object_get_name                                                                                                                                                                                                                                                                            },
     /** CK_TRUE if object can be copied using C_CopyObject.Defaults to CK_TRUE. */
-    { CKA_COPYABLE,                   pkcs11_attrib_false                                                                                                                                                                                                                                                       },
+    { CKA_COPYABLE,                   pkcs11_attrib_false                                                                                                                                                                                                                                                                               },
     /** CK_TRUE if the object can be destroyed using C_DestroyObject. Default is CK_TRUE. */
-    { CKA_DESTROYABLE,                pkcs11_object_get_destroyable                                                                                                                                                                                                                                             },
+    { CKA_DESTROYABLE,                pkcs11_object_get_destroyable                                                                                                                                                                                                                                                                     },
     /** Type of certificate */
-    { CKA_CERTIFICATE_TYPE,           pkcs11_cert_get_type                                                                                                                                                                                                                                                      },
+    { CKA_CERTIFICATE_TYPE,           pkcs11_cert_get_type                                                                                                                                                                                                                                                                              },
     /** The certificate can be trusted for the application that it was created. */
-    { CKA_TRUSTED,                    pkcs11_cert_get_trusted_flag                                                                                                                                                                                                                                              },
+    { CKA_TRUSTED,                    pkcs11_cert_get_trusted_flag                                                                                                                                                                                                                                                                      },
     /** Default CK_CERTIFICATE_CATEGORY_UNSPECIFIED) */
-    { CKA_CERTIFICATE_CATEGORY,       pkcs11_object_get_type                                                                                                                                                                                                                                                    },
+    { CKA_CERTIFICATE_CATEGORY,       pkcs11_object_get_type                                                                                                                                                                                                                                                                            },
     /** Checksum */
-    { CKA_CHECK_VALUE,                NULL_PTR                                                                                                                                                                                                                                                                  },
+    { CKA_CHECK_VALUE,                NULL_PTR                                                                                                                                                                                                                                                                                          },
     /** Start date for the certificate (default empty) */
-    { CKA_START_DATE,                 pkcs11_attrib_empty                                                                                                                                                                                                                                                       },
+    { CKA_START_DATE,                 pkcs11_attrib_empty                                                                                                                                                                                                                                                                               },
     /** End date for the certificate (default empty) */
-    { CKA_END_DATE,                   pkcs11_attrib_empty                                                                                                                                                                                                                                                       },
+    { CKA_END_DATE,                   pkcs11_attrib_empty                                                                                                                                                                                                                                                                               },
     /** ALL: DER-encoding of the SubjectPublicKeyInfo for the public key
        contained in this certificate (default empty)
        SubjectPublicKeyInfo ::= SEQUENCE {
        algorithm AlgorithmIdentifier,
        subjectPublicKey BIT_STRING } */
-    { CKA_PUBLIC_KEY_INFO,            pkcs11_attrib_empty                                                                                                                                                                                                                                                       },
+    { CKA_PUBLIC_KEY_INFO,            pkcs11_attrib_empty                                                                                                                                                                                                                                                                               },
     /** DER-encoded Certificate subject name */
-    { CKA_SUBJECT,                    pkcs11_cert_get_subject                                                                                                                                                                                                                                                   },
+    { CKA_SUBJECT,                    pkcs11_cert_get_subject                                                                                                                                                                                                                                                                           },
     /** Key identifier for public/private key pair (default empty) */
-    { CKA_ID,                         pkcs11_cert_get_id                                                                                                                                                                                                                                                        },
+    { CKA_ID,                         pkcs11_cert_get_id                                                                                                                                                                                                                                                                                },
     /** DER-encoded Certificate issuer name (default empty)*/
-    { CKA_ISSUER,                     pkcs11_attrib_empty                                                                                                                                                                                                                                                       },
+    { CKA_ISSUER,                     pkcs11_attrib_empty                                                                                                                                                                                                                                                                               },
     /** DER-encoding of the certificate serial number (default empty) */
-    { CKA_SERIAL_NUMBER,              pkcs11_attrib_empty                                                                                                                                                                                                                                                       },
+    { CKA_SERIAL_NUMBER,              pkcs11_attrib_empty                                                                                                                                                                                                                                                                               },
     /** BER-encoded Complete Certificate */
-    { CKA_VALUE,                      pkcs11_cert_get_encoded                                                                                                                                                                                                                                                   },
+    { CKA_VALUE,                      pkcs11_cert_get_encoded                                                                                                                                                                                                                                                                           },
     /** If not empty this attribute gives the URL where the complete
        certificate can be obtained (default empty) */
-    { CKA_URL,                        pkcs11_attrib_empty                                                                                                                                                                                                                                                       },
+    { CKA_URL,                        pkcs11_attrib_empty                                                                                                                                                                                                                                                                               },
     /** Hash of the subject public key (default empty). Hash algorithm is
        defined by CKA_NAME_HASH_ALGORITHM */
-    { CKA_HASH_OF_SUBJECT_PUBLIC_KEY, pkcs11_cert_get_subject_key_id                                                                                                                                                                                                                                            },
+    { CKA_HASH_OF_SUBJECT_PUBLIC_KEY, pkcs11_cert_get_subject_key_id                                                                                                                                                                                                                                                                    },
     /** Hash of the issuer public key (default empty). Hash algorithm is
        defined by CKA_NAME_HASH_ALGORITHM */
-    { CKA_HASH_OF_ISSUER_PUBLIC_KEY,  pkcs11_cert_get_authority_key_id                                                                                                                                                                                                                                          },
+    { CKA_HASH_OF_ISSUER_PUBLIC_KEY,  pkcs11_cert_get_authority_key_id                                                                                                                                                                                                                                                                  },
     /** Java MIDP security domain. (default CK_SECURITY_DOMAIN_UNSPECIFIED) */
-    { CKA_JAVA_MIDP_SECURITY_DOMAIN,  NULL_PTR                                                                                                                                                                                                                                                                  },
+    { CKA_JAVA_MIDP_SECURITY_DOMAIN,  NULL_PTR                                                                                                                                                                                                                                                                                          },
     /** Defines the mechanism used to calculate CKA_HASH_OF_SUBJECT_PUBLIC_KEY
        and CKA_HASH_OF_ISSUER_PUBLIC_KEY. If the attribute is not present then
        the type defaults to SHA-1. */
-    { CKA_NAME_HASH_ALGORITHM,        pkcs11_attrib_empty                                                                                                                                                                                                                                                       },
+    { CKA_NAME_HASH_ALGORITHM,        pkcs11_attrib_empty                                                                                                                                                                                                                                                                               },
 };
 
 /* coverity[misra_c_2012_rule_5_1_violation:FALSE] C99 limit is 63 characters */
@@ -504,56 +504,56 @@ const CK_ULONG pkcs11_cert_x509public_attributes_count = (CK_ULONG)(PKCS11_UTIL_
  */
 const pkcs11_attrib_model pkcs11_cert_wtlspublic_attributes[] = {
     /** Object Class - CK_OBJECT_CLASS */
-    { CKA_CLASS,                      pkcs11_object_get_class                                                                                                                                                                                                                   },
+    { CKA_CLASS,                      pkcs11_object_get_class                                                                                                                                                                                                                                          },
     /** CK_TRUE if object is a token object; CK_FALSE if object is a session object. Default is CK_FALSE. */
-    { CKA_TOKEN,                      pkcs11_attrib_true                                                                                                                                                                                                                        },
+    { CKA_TOKEN,                      pkcs11_attrib_true                                                                                                                                                                                                                                               },
     /** CK_TRUE if object is a private object; CK_FALSE if object is a public object. */
-    { CKA_PRIVATE,                    pkcs11_token_get_access_type                                                                                                                                                                                                              },
+    { CKA_PRIVATE,                    pkcs11_token_get_access_type                                                                                                                                                                                                                                     },
     /** CK_TRUE if object can be modified. Default is CK_TRUE. */
-    { CKA_MODIFIABLE,                 NULL_PTR                                                                                                                                                                                                                                  },
+    { CKA_MODIFIABLE,                 NULL_PTR                                                                                                                                                                                                                                                         },
     /** Description of the object(default empty). */
-    { CKA_LABEL,                      pkcs11_object_get_name                                                                                                                                                                                                                    },
+    { CKA_LABEL,                      pkcs11_object_get_name                                                                                                                                                                                                                                           },
     /** CK_TRUE if object can be copied using C_CopyObject.Defaults to CK_TRUE. */
-    { CKA_COPYABLE,                   pkcs11_attrib_false                                                                                                                                                                                                                       },
+    { CKA_COPYABLE,                   pkcs11_attrib_false                                                                                                                                                                                                                                              },
     /** CK_TRUE if the object can be destroyed using C_DestroyObject. Default is CK_TRUE. */
-    { CKA_DESTROYABLE,                pkcs11_object_get_destroyable                                                                                                                                                                                                             },
+    { CKA_DESTROYABLE,                pkcs11_object_get_destroyable                                                                                                                                                                                                                                    },
     /** Type of certificate */
-    { CKA_CERTIFICATE_TYPE,           pkcs11_cert_get_type                                                                                                                                                                                                                      },
+    { CKA_CERTIFICATE_TYPE,           pkcs11_cert_get_type                                                                                                                                                                                                                                             },
     /** The certificate can be trusted for the application that it was created. */
-    { CKA_TRUSTED,                    NULL_PTR                                                                                                                                                                                                                                  },
+    { CKA_TRUSTED,                    NULL_PTR                                                                                                                                                                                                                                                         },
     /** Default CK_CERTIFICATE_CATEGORY_UNSPECIFIED) */
-    { CKA_CERTIFICATE_CATEGORY,       pkcs11_object_get_type                                                                                                                                                                                                                    },
+    { CKA_CERTIFICATE_CATEGORY,       pkcs11_object_get_type                                                                                                                                                                                                                                           },
     /** Checksum */
-    { CKA_CHECK_VALUE,                NULL_PTR                                                                                                                                                                                                                                  },
+    { CKA_CHECK_VALUE,                NULL_PTR                                                                                                                                                                                                                                                         },
     /** Start date for the certificate (default empty) */
-    { CKA_START_DATE,                 pkcs11_attrib_empty                                                                                                                                                                                                                       },
+    { CKA_START_DATE,                 pkcs11_attrib_empty                                                                                                                                                                                                                                              },
     /** End date for the certificate (default empty) */
-    { CKA_END_DATE,                   pkcs11_attrib_empty                                                                                                                                                                                                                       },
+    { CKA_END_DATE,                   pkcs11_attrib_empty                                                                                                                                                                                                                                              },
     /** ALL: DER-encoding of the SubjectPublicKeyInfo for the public key
        contained in this certificate (default empty)
        SubjectPublicKeyInfo ::= SEQUENCE {
        algorithm AlgorithmIdentifier,
        subjectPublicKey BIT_STRING } */
-    { CKA_PUBLIC_KEY_INFO,            pkcs11_attrib_empty                                                                                                                                                                                                                       },
+    { CKA_PUBLIC_KEY_INFO,            pkcs11_attrib_empty                                                                                                                                                                                                                                              },
     /** WTLS-encoded Certificate subject name */
-    { CKA_SUBJECT,                    pkcs11_attrib_empty                                                                                                                                                                                                                       },
+    { CKA_SUBJECT,                    pkcs11_attrib_empty                                                                                                                                                                                                                                              },
     /** WTLS-encoded Certificate issuer name (default empty)*/
-    { CKA_ISSUER,                     pkcs11_attrib_empty                                                                                                                                                                                                                       },
+    { CKA_ISSUER,                     pkcs11_attrib_empty                                                                                                                                                                                                                                              },
     /** WTLS-encoded Complete Certificate */
-    { CKA_VALUE,                      pkcs11_cert_get_encoded                                                                                                                                                                                                                   },
+    { CKA_VALUE,                      pkcs11_cert_get_encoded                                                                                                                                                                                                                                          },
     /** If not empty this attribute gives the URL where the complete
        certificate can be obtained (default empty) */
-    { CKA_URL,                        pkcs11_attrib_empty                                                                                                                                                                                                                       },
+    { CKA_URL,                        pkcs11_attrib_empty                                                                                                                                                                                                                                              },
     /** Hash of the subject public key (default empty). Hash algorithm is
        defined by CKA_NAME_HASH_ALGORITHM */
-    { CKA_HASH_OF_SUBJECT_PUBLIC_KEY, pkcs11_cert_get_subject_key_id                                                                                                                                                                                                            },
+    { CKA_HASH_OF_SUBJECT_PUBLIC_KEY, pkcs11_cert_get_subject_key_id                                                                                                                                                                                                                                   },
     /** Hash of the issuer public key (default empty). Hash algorithm is
        defined by CKA_NAME_HASH_ALGORITHM */
-    { CKA_HASH_OF_ISSUER_PUBLIC_KEY,  pkcs11_attrib_empty                                                                                                                                                                                                                       },
+    { CKA_HASH_OF_ISSUER_PUBLIC_KEY,  pkcs11_attrib_empty                                                                                                                                                                                                                                              },
     /** Defines the mechanism used to calculate CKA_HASH_OF_SUBJECT_PUBLIC_KEY
        and CKA_HASH_OF_ISSUER_PUBLIC_KEY. If the attribute is not present then
        the type defaults to SHA-1. */
-    { CKA_NAME_HASH_ALGORITHM,        pkcs11_attrib_empty                                                                                                                                                                                                                       },
+    { CKA_NAME_HASH_ALGORITHM,        pkcs11_attrib_empty                                                                                                                                                                                                                                              },
 };
 
 /* coverity[misra_c_2012_rule_5_1_violation:FALSE] C99 limit is 63 characters */
@@ -564,56 +564,56 @@ const CK_ULONG pkcs11_cert_wtlspublic_attributes_count = (CK_ULONG)(PKCS11_UTIL_
  */
 const pkcs11_attrib_model pkcs11_cert_x509_attributes[] = {
     /** Object Class - CK_OBJECT_CLASS */
-    { CKA_CLASS,                pkcs11_object_get_class                                                                                                                                                   },
+    { CKA_CLASS,                pkcs11_object_get_class                                                                                                                                                                  },
     /** CK_TRUE if object is a token object; CK_FALSE if object is a session object. Default is CK_FALSE. */
-    { CKA_TOKEN,                pkcs11_attrib_true                                                                                                                                                        },
+    { CKA_TOKEN,                pkcs11_attrib_true                                                                                                                                                                       },
     /** CK_TRUE if object is a private object; CK_FALSE if object is a public object. */
-    { CKA_PRIVATE,              pkcs11_token_get_access_type                                                                                                                                              },
+    { CKA_PRIVATE,              pkcs11_token_get_access_type                                                                                                                                                             },
     /** CK_TRUE if object can be modified. Default is CK_TRUE. */
-    { CKA_MODIFIABLE,           NULL_PTR                                                                                                                                                                  },
+    { CKA_MODIFIABLE,           NULL_PTR                                                                                                                                                                                 },
     /** Description of the object(default empty). */
-    { CKA_LABEL,                pkcs11_object_get_name                                                                                                                                                    },
+    { CKA_LABEL,                pkcs11_object_get_name                                                                                                                                                                   },
     /** CK_TRUE if object can be copied using C_CopyObject.Defaults to CK_TRUE. */
-    { CKA_COPYABLE,             pkcs11_attrib_false                                                                                                                                                       },
+    { CKA_COPYABLE,             pkcs11_attrib_false                                                                                                                                                                      },
     /** CK_TRUE if the object can be destroyed using C_DestroyObject. Default is CK_TRUE. */
-    { CKA_DESTROYABLE,          pkcs11_object_get_destroyable                                                                                                                                             },
+    { CKA_DESTROYABLE,          pkcs11_object_get_destroyable                                                                                                                                                            },
     /** Type of certificate */
-    { CKA_CERTIFICATE_TYPE,     pkcs11_cert_get_type                                                                                                                                                      },
+    { CKA_CERTIFICATE_TYPE,     pkcs11_cert_get_type                                                                                                                                                                     },
     /** The certificate can be trusted for the application that it was created. */
-    { CKA_TRUSTED,              NULL_PTR                                                                                                                                                                  },
+    { CKA_TRUSTED,              NULL_PTR                                                                                                                                                                                 },
     /** Default CK_CERTIFICATE_CATEGORY_UNSPECIFIED) */
-    { CKA_CERTIFICATE_CATEGORY, pkcs11_object_get_type                                                                                                                                                    },
+    { CKA_CERTIFICATE_CATEGORY, pkcs11_object_get_type                                                                                                                                                                   },
     /** Checksum */
-    { CKA_CHECK_VALUE,          NULL_PTR                                                                                                                                                                  },
+    { CKA_CHECK_VALUE,          NULL_PTR                                                                                                                                                                                 },
     /** Start date for the certificate (default empty) */
-    { CKA_START_DATE,           pkcs11_attrib_empty                                                                                                                                                       },
+    { CKA_START_DATE,           pkcs11_attrib_empty                                                                                                                                                                      },
     /** End date for the certificate (default empty) */
-    { CKA_END_DATE,             pkcs11_attrib_empty                                                                                                                                                       },
+    { CKA_END_DATE,             pkcs11_attrib_empty                                                                                                                                                                      },
     /** ALL: DER-encoding of the SubjectPublicKeyInfo for the public key
        contained in this certificate (default empty)
        SubjectPublicKeyInfo ::= SEQUENCE {
        algorithm AlgorithmIdentifier,
        subjectPublicKey BIT_STRING } */
-    { CKA_PUBLIC_KEY_INFO,      pkcs11_attrib_empty                                                                                                                                                       },
+    { CKA_PUBLIC_KEY_INFO,      pkcs11_attrib_empty                                                                                                                                                                      },
     /** X509: DER-encoding of the attribute certificate's subject field. This
        is distinct from the CKA_SUBJECT attribute contained in CKC_X_509
        certificates because the ASN.1 syntax and encoding are different. */
-    { CKA_OWNER,                pkcs11_attrib_empty                                                                                                                                                       },
+    { CKA_OWNER,                pkcs11_attrib_empty                                                                                                                                                                      },
     /** X509: DER-encoding of the attribute certificate's issuer field. This
        is distinct from the CKA_ISSUER attribute contained in CKC_X_509
        certificates because the ASN.1 syntax and encoding are different.
        (default empty) */
-    { CKA_AC_ISSUER,            pkcs11_attrib_empty                                                                                                                                                       },
+    { CKA_AC_ISSUER,            pkcs11_attrib_empty                                                                                                                                                                      },
     /** DER-encoding of the certificate serial number (default empty) */
-    { CKA_SERIAL_NUMBER,        pkcs11_attrib_empty                                                                                                                                                       },
+    { CKA_SERIAL_NUMBER,        pkcs11_attrib_empty                                                                                                                                                                      },
     /** X509: BER-encoding of a sequence of object identifier values corresponding
        to the attribute types contained in the certificate. When present, this
        field offers an opportunity for applications to search for a particular
        attribute certificate without fetching and parsing the certificate itself.
        (default empty) */
-    { CKA_ATTR_TYPES,           pkcs11_attrib_empty                                                                                                                                                       },
+    { CKA_ATTR_TYPES,           pkcs11_attrib_empty                                                                                                                                                                      },
     /** BER-encoded Complete Certificate */
-    { CKA_VALUE,                pkcs11_cert_get_encoded                                                                                                                                                   },
+    { CKA_VALUE,                pkcs11_cert_get_encoded                                                                                                                                                                  },
 };
 
 const CK_ULONG pkcs11_cert_x509_attributes_count = (CK_ULONG)(PKCS11_UTIL_ARRAY_SIZE(pkcs11_cert_x509_attributes));
@@ -640,20 +640,20 @@ CK_RV pkcs11_cert_x509_write(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, p
     {
 #if ATCA_TA_SUPPORT
         ATCADevice device = pSession->slot->device_ctx;
-        uint8_t handle_info[TA_HANDLE_INFO_SIZE];
-        status = talib_info_get_handle_info(device, obj_ptr->slot, handle_info);
+        ta_handle_info handle_info;
+        status = talib_info_get_handle_info(device, obj_ptr->slot, &handle_info);
 
         if ((ATCA_STATUS)TA_HANDLE_EXIST_ERROR == status)
         {
             /* Create a new handle */
-            /* coverity[misra_c_2012_rule_11_3_violation] Appropriate usage of the handle_info buffer */
-            (void)talib_handle_init_data((ta_element_attributes_t*)handle_info, (uint16_t)(pAttribute->ulValueLen & UINT16_MAX));
-            status = talib_create_element_with_handle(device, obj_ptr->slot, (ta_element_attributes_t*)handle_info);
+            (void)talib_handle_init_data(&handle_info.attributes, (uint16_t)(pAttribute->ulValueLen & UINT16_MAX));
+            status = talib_create_element_with_handle(device, obj_ptr->slot, &handle_info.attributes);
         }
 
         if (ATCA_SUCCESS == status)
         {
-            status = talib_write_element(device, obj_ptr->slot, (uint16_t)pAttribute->ulValueLen, (uint8_t*)pAttribute->pValue);
+            cal_buffer sAttribute = CAL_BUF_INIT(pAttribute->ulValueLen, pAttribute->pValue);
+            status = talib_write_element(device, obj_ptr->slot, &sAttribute);
         }
 #else
         status = ATCA_NO_DEVICES;

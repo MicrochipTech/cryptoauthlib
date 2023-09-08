@@ -72,7 +72,7 @@ void hal_delay_ms(uint32_t delay)
 
 #ifndef ATCA_USE_RTOS_TIMER
 
-#if ATCA_USE_SHARED_MUTEX
+#ifdef ATCA_USE_SHARED_MUTEX
 
 #include <pthread.h>
 #include <sys/mman.h>

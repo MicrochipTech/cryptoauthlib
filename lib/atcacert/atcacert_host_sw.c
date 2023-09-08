@@ -27,6 +27,7 @@
 
 #include "atcacert_host_sw.h"
 #include "crypto/atca_crypto_sw.h"
+#include "cal_internal.h"
 
 #if ATCAC_VERIFY_EN && ATCACERT_COMPCERT_EN
 ATCA_STATUS atcacert_verify_cert_sw(const atcacert_def_t* cert_def,
@@ -37,7 +38,7 @@ ATCA_STATUS atcacert_verify_cert_sw(const atcacert_def_t* cert_def,
     ATCA_STATUS ret = 0;
     uint8_t tbs_digest[32];
     uint8_t signature[64];
-    atcac_pk_ctx pkey_ctx;
+    atcac_pk_ctx_t pkey_ctx;
 
     if (cert_def == NULL || ca_public_key == NULL || cert == NULL)
     {
@@ -90,7 +91,7 @@ ATCA_STATUS atcacert_verify_response_sw(const uint8_t device_public_key[64],
                                         const uint8_t challenge[32],
                                         const uint8_t response[64])
 {
-    atcac_pk_ctx pkey_ctx;
+    atcac_pk_ctx_t pkey_ctx;
     ATCA_STATUS ret = ATCACERT_E_BAD_PARAMS;
 
     if (device_public_key == NULL || challenge == NULL || response == NULL)

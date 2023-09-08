@@ -78,14 +78,14 @@ provider. These instructions are for commonly available Linux systems with packa
 * Get the latest version of cryptoauthlib with PKCS11 support 
 
     ```bash
-    $ git clone --single-branch -b pkcs11 https://github.com/MicrochipTech/cryptoauthlib
+    $ git clone https://github.com/MicrochipTech/cryptoauthlib
     ```
 
 * Rerun the build configuration tools:
 
     ```bash
     $ cd cryptoauthlib
-    $ cmake .
+    $ cmake -DATCA_PKCS11=ON .
     ```
 
 * Build the library:
@@ -344,4 +344,3 @@ $ p11tool --provider=/usr/lib/libcryptoauth.so
              f1:02:21:00:87:ea:7e:78:20:b5:c0:a2:5b:6d:71:2c:0c:da:
              6e:bf:00:e2:61:f2:7c:82:10:d6:87:d8:06:0f:10:3b:d8:d9
     ```
-

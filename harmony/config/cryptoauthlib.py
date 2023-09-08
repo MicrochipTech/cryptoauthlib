@@ -221,11 +221,13 @@ def onAttachmentConnected(source, target):
     if srcConnectionID == 'CAL_LIB_CAP' and 'CRYPTOAUTHLIB' not in targetComponentID and '_' in targetComponentID:
         calDeviceList = srcComponent.getSymbolByID('CAL_DEVICE_LIST_ENTRIES')
         add_value_to_list(calDeviceList, targetComponentID.split('_')[0])
-        if 'TA100' in targetComponentID:
+        if ('TA10' in targetComponentID):
             _ta_dev_cnt += 1
             updateFileEnable(srcComponent, _TA_PATHS, True)
+            calTaConfig = srcComponent.getSymbolByID('TALIB_CONFIG_DATA')
+            calTaConfig.setEnabled(True)
             if check_if_file_exists(srcComponent, 'talib_fce'):
-                calTaEnableFce = srcComponent.getSymbolByID('CAL_ENABLE_TA100_FCE')
+                calTaEnableFce = srcComponent.getSymbolByID('CAL_ENABLE_TA10x_FCE')
                 calTaEnableFce.setValue(True)
         else:
             _ca_dev_cnt += 1
@@ -247,7 +249,7 @@ def onAttachmentConnected(source, target):
         WolfCrypto = srcComponent.getSymbolByID('CAL_FILE_SRC_WOLFSSL_WRAPPER')
         WolfCrypto.setEnabled(True)
 
-        calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA100_AES_AUTH')
+        calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA10x_AES_AUTH')
         calTaEnableAesAuth.setValue(True)
 
     excludeFiles(srcComponent, _EXCL_FILES)
@@ -265,13 +267,15 @@ def onAttachmentDisconnected(source, target):
     if srcConnectionID == 'CAL_LIB_CAP' and '_' in targetComponentID:
         calDeviceList = srcComponent.getSymbolByID('CAL_DEVICE_LIST_ENTRIES')
         del_value_from_list(calDeviceList, targetComponentID.split('_')[0])
-        if 'TA100' in targetComponentID:
+        if ('TA10' in targetComponentID):
             _ta_dev_cnt -= 1
             if 0 == _ta_dev_cnt:
                 updateFileEnable(srcComponent, _TA_PATHS, False)
-                calTaEnableFce = srcComponent.getSymbolByID('CAL_ENABLE_TA100_FCE')
+                calTaEnableFce = srcComponent.getSymbolByID('CAL_ENABLE_TA10x_FCE')
                 calTaEnableFce.setValue(False)
-                calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA100_AES_AUTH')
+                calTaConfig = srcComponent.getSymbolByID('TALIB_CONFIG_DATA')
+                calTaConfig.setEnabled(False)
+                calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA10x_AES_AUTH')
                 calTaEnableAesAuth.setValue(False)
         else:
             _ca_dev_cnt -= 1
@@ -295,7 +299,7 @@ def onAttachmentDisconnected(source, target):
         WolfCrypto = srcComponent.getSymbolByID('CAL_FILE_SRC_WOLFSSL_WRAPPER')
         WolfCrypto.setEnabled(False)
 
-        calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA100_AES_AUTH')
+        calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA10x_AES_AUTH')
         calTaEnableAesAuth.setValue(False)
 
 
@@ -380,7 +384,7 @@ def instantiateComponent(calComponent):
     
     calMaxPacketSize = calComponent.createIntegerSymbol('CAL_MAX_PACKET_SIZE', None)
     calMaxPacketSize.setLabel('Maximum packet size (bytes)')
-    calMaxPacketSize.setDefaultValue(1035)
+    calMaxPacketSize.setDefaultValue(1072)
 
     # Symmetric Cryptography Commands
     symmetricCommands = calComponent.createMenuSymbol("cal_symmetric_commands", None)
@@ -920,11 +924,11 @@ def instantiateComponent(calComponent):
     calDevCfgList.setTarget('cryptoauthlib.CAL_DEV_CFG_LIST')
 
     # Add device specific options
-    calTaEnableAesAuth = calComponent.createBooleanSymbol('CAL_ENABLE_TA100_AES_AUTH', None)
+    calTaEnableAesAuth = calComponent.createBooleanSymbol('CAL_ENABLE_TA10x_AES_AUTH', None)
     calTaEnableAesAuth.setValue(False)
     calTaEnableAesAuth.setVisible(True)
 
-    calTaEnableFce = calComponent.createBooleanSymbol('CAL_ENABLE_TA100_FCE', None)
+    calTaEnableFce = calComponent.createBooleanSymbol('CAL_ENABLE_TA10x_FCE', None)
     calTaEnableFce.setValue(False)
     calTaEnableFce.setVisible(True)
 
@@ -963,6 +967,17 @@ def instantiateComponent(calComponent):
     calLibConfigFile.setMarkup(True)
     calLibConfigFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
 
+    # Conditionally add talib configuration header
+    talibConfigFile = calComponent.createFileSymbol("TALIB_CONFIG_DATA", None)
+    talibConfigFile.setSourcePath("harmony/templates/talib_config.h.ftl")
+    talibConfigFile.setOutputName("talib_config.h")
+    talibConfigFile.setDestPath("library/cryptoauthlib")
+    talibConfigFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/")
+    talibConfigFile.setType("HEADER")
+    talibConfigFile.setOverwrite(True)
+    talibConfigFile.setMarkup(True)
+    talibConfigFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
+    talibConfigFile.setEnabled(False)
 
     # This selects and configures the proper processor specific delay implementation as one
     # does not exist as driver source in harmony

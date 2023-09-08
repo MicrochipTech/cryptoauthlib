@@ -27,6 +27,9 @@
  */
 
 /* mbedTLS boilerplate includes */
+#include "atca_config_check.h"
+
+#ifdef ATCA_MBEDTLS
 
 #if !defined(MBEDTLS_CONFIG_FILE)
 #include "mbedtls/config.h"
@@ -71,22 +74,21 @@ int atcac_sw_random(uint8_t* data, size_t data_size)
     return mbedtls_ctr_drbg_random(mbedtls_entropy_func, data, data_size);
 }
 
-
 /** \brief Update the GCM context with additional authentication data (AAD)
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_gcm_aad_update(
-    atcac_aes_gcm_ctx* ctx,     /**< [in] AES-GCM Context */
-    const uint8_t*     aad,     /**< [in] Additional Authentication Data */
-    const size_t       aad_len  /**< [in] Length of AAD */
+    struct atcac_aes_gcm_ctx* ctx,    /**< [in] AES-GCM Context */
+    const uint8_t*            aad,    /**< [in] Additional Authentication Data */
+    const size_t              aad_len /**< [in] Length of AAD */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
     if (ctx)
     {
-        int ret = mbedtls_cipher_update_ad(ctx, aad, aad_len);
+        int ret = mbedtls_cipher_update_ad((mbedtls_cipher_context_t*)ctx, aad, aad_len);
         status = (!ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
     }
     return status;
@@ -97,11 +99,11 @@ ATCA_STATUS atcac_aes_gcm_aad_update(
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_gcm_encrypt_start(
-    atcac_aes_gcm_ctx* ctx,     /**< [in] AES-GCM Context */
-    const uint8_t*     key,     /**< [in] AES Key */
-    const uint8_t      key_len, /**< [in] Length of the AES key - should be 16 or 32*/
-    const uint8_t*     iv,      /**< [in] Initialization vector input */
-    const uint8_t      iv_len   /**< [in] Length of the initialization vector */
+    struct atcac_aes_gcm_ctx* ctx,     /**< [in] AES-GCM Context */
+    const uint8_t*            key,     /**< [in] AES Key */
+    const uint8_t             key_len, /**< [in] Length of the AES key - should be 16 or 32*/
+    const uint8_t*            iv,      /**< [in] Initialization vector input */
+    const uint8_t             iv_len   /**< [in] Length of the initialization vector */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -109,23 +111,23 @@ ATCA_STATUS atcac_aes_gcm_encrypt_start(
     if (ctx)
     {
         int ret;
-        mbedtls_cipher_init(ctx);
+        mbedtls_cipher_init((mbedtls_cipher_context_t*)ctx);
 
-        ret = mbedtls_cipher_setup(ctx, mbedtls_cipher_info_from_type(MBEDTLS_CIPHER_AES_128_GCM));
+        ret = mbedtls_cipher_setup((mbedtls_cipher_context_t*)ctx, mbedtls_cipher_info_from_values(MBEDTLS_CIPHER_ID_AES, key_len * 8, MBEDTLS_MODE_GCM));
 
         if (!ret)
         {
-            ret = mbedtls_cipher_setkey(ctx, key, key_len * 8, MBEDTLS_ENCRYPT);
+            ret = mbedtls_cipher_setkey((mbedtls_cipher_context_t*)ctx, key, key_len * 8, MBEDTLS_ENCRYPT);
         }
 
         if (!ret)
         {
-            ret = mbedtls_cipher_set_iv(ctx, iv, iv_len);
+            ret = mbedtls_cipher_set_iv((mbedtls_cipher_context_t*)ctx, iv, iv_len);
         }
 
         if (!ret)
         {
-            ret = mbedtls_cipher_reset(ctx);
+            ret = mbedtls_cipher_reset((mbedtls_cipher_context_t*)ctx);
         }
 
         status = (!ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
@@ -139,18 +141,18 @@ ATCA_STATUS atcac_aes_gcm_encrypt_start(
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_gcm_encrypt_update(
-    atcac_aes_gcm_ctx* ctx,        /**< [in] AES-GCM Context */
-    const uint8_t*     plaintext,  /**< [in] Input buffer to encrypt */
-    const size_t       pt_len,     /**< [in] Length of the input */
-    uint8_t*           ciphertext, /**< [out] Output buffer */
-    size_t*            ct_len      /**< [inout] Length of the ciphertext buffer */
+    struct atcac_aes_gcm_ctx* ctx,        /**< [in] AES-GCM Context */
+    const uint8_t*            plaintext,  /**< [in] Input buffer to encrypt */
+    const size_t              pt_len,     /**< [in] Length of the input */
+    uint8_t*                  ciphertext, /**< [out] Output buffer */
+    size_t*                   ct_len      /**< [inout] Length of the ciphertext buffer */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
     if (ctx)
     {
-        int ret = mbedtls_cipher_update(ctx, plaintext, pt_len, ciphertext, ct_len);
+        int ret = mbedtls_cipher_update((mbedtls_cipher_context_t*)ctx, plaintext, pt_len, ciphertext, ct_len);
         status = (!ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
     }
 
@@ -162,18 +164,18 @@ ATCA_STATUS atcac_aes_gcm_encrypt_update(
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_gcm_encrypt_finish(
-    atcac_aes_gcm_ctx* ctx,     /**< [in] AES-GCM Context */
-    uint8_t*           tag,     /**< [out] GCM Tag Result */
-    size_t             tag_len  /**< [in] Length of the GCM tag */
+    struct atcac_aes_gcm_ctx* ctx,    /**< [in] AES-GCM Context */
+    uint8_t*                  tag,    /**< [out] GCM Tag Result */
+    size_t                    tag_len /**< [in] Length of the GCM tag */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
     if (ctx)
     {
-        int ret = mbedtls_cipher_write_tag(ctx, tag, tag_len);
+        int ret = mbedtls_cipher_write_tag((mbedtls_cipher_context_t*)ctx, tag, tag_len);
 
-        mbedtls_cipher_free(ctx);
+        mbedtls_cipher_free((mbedtls_cipher_context_t*)ctx);
 
         status = (!ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
     }
@@ -185,11 +187,11 @@ ATCA_STATUS atcac_aes_gcm_encrypt_finish(
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_gcm_decrypt_start(
-    atcac_aes_gcm_ctx* ctx,     /**< [in] AES-GCM Context */
-    const uint8_t*     key,     /**< [in] AES Key */
-    const uint8_t      key_len, /**< [in] Length of the AES key - should be 16 or 32*/
-    const uint8_t*     iv,      /**< [in] Initialization vector input */
-    const uint8_t      iv_len   /**< [in] Length of the initialization vector */
+    struct atcac_aes_gcm_ctx* ctx,     /**< [in] AES-GCM Context */
+    const uint8_t*            key,     /**< [in] AES Key */
+    const uint8_t             key_len, /**< [in] Length of the AES key - should be 16 or 32*/
+    const uint8_t*            iv,      /**< [in] Initialization vector input */
+    const uint8_t             iv_len   /**< [in] Length of the initialization vector */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -197,23 +199,23 @@ ATCA_STATUS atcac_aes_gcm_decrypt_start(
     if (ctx)
     {
         int ret;
-        mbedtls_cipher_init(ctx);
+        mbedtls_cipher_init((mbedtls_cipher_context_t*)ctx);
 
-        ret = mbedtls_cipher_setup(ctx, mbedtls_cipher_info_from_values(MBEDTLS_CIPHER_ID_AES, key_len * 8, MBEDTLS_MODE_GCM));
+        ret = mbedtls_cipher_setup((mbedtls_cipher_context_t*)ctx, mbedtls_cipher_info_from_values(MBEDTLS_CIPHER_ID_AES, key_len * 8, MBEDTLS_MODE_GCM));
 
         if (!ret)
         {
-            ret = mbedtls_cipher_setkey(ctx, key, key_len * 8, MBEDTLS_DECRYPT);
+            ret = mbedtls_cipher_setkey((mbedtls_cipher_context_t*)ctx, key, key_len * 8, MBEDTLS_DECRYPT);
         }
 
         if (!ret)
         {
-            ret = mbedtls_cipher_set_iv(ctx, iv, iv_len);
+            ret = mbedtls_cipher_set_iv((mbedtls_cipher_context_t*)ctx, iv, iv_len);
         }
 
         if (!ret)
         {
-            ret = mbedtls_cipher_reset(ctx);
+            ret = mbedtls_cipher_reset((mbedtls_cipher_context_t*)ctx);
         }
 
         status = (!ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
@@ -227,18 +229,18 @@ ATCA_STATUS atcac_aes_gcm_decrypt_start(
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_gcm_decrypt_update(
-    atcac_aes_gcm_ctx* ctx,        /**< [in] AES-GCM Context */
-    const uint8_t*     ciphertext, /**< [in] Ciphertext to decrypt */
-    const size_t       ct_len,     /**< [in] Length of the ciphertext */
-    uint8_t*           plaintext,  /**< [out] Resulting decrypted plaintext */
-    size_t*            pt_len      /**< [inout] Length of the plaintext buffer */
+    struct atcac_aes_gcm_ctx* ctx,        /**< [in] AES-GCM Context */
+    const uint8_t*            ciphertext, /**< [in] Ciphertext to decrypt */
+    const size_t              ct_len,     /**< [in] Length of the ciphertext */
+    uint8_t*                  plaintext,  /**< [out] Resulting decrypted plaintext */
+    size_t*                   pt_len      /**< [inout] Length of the plaintext buffer */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
     if (ctx)
     {
-        int ret = mbedtls_cipher_update(ctx, ciphertext, ct_len, plaintext, pt_len);
+        int ret = mbedtls_cipher_update((mbedtls_cipher_context_t*)ctx, ciphertext, ct_len, plaintext, pt_len);
         status = (!ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
     }
 
@@ -250,10 +252,10 @@ ATCA_STATUS atcac_aes_gcm_decrypt_update(
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_gcm_decrypt_finish(
-    atcac_aes_gcm_ctx* ctx,        /**< [in] AES-GCM Context */
-    const uint8_t*     tag,        /**< [in] GCM Tag to Verify */
-    size_t             tag_len,    /**< [in] Length of the GCM tag */
-    bool*              is_verified /**< [out] Tag verified as matching */
+    struct atcac_aes_gcm_ctx* ctx,        /**< [in] AES-GCM Context */
+    const uint8_t*            tag,        /**< [in] GCM Tag to Verify */
+    size_t                    tag_len,    /**< [in] Length of the GCM tag */
+    bool*                     is_verified /**< [out] Tag verified as matching */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -263,14 +265,14 @@ ATCA_STATUS atcac_aes_gcm_decrypt_finish(
         int ret;
         *is_verified = false;
 
-        ret = mbedtls_cipher_check_tag(ctx, tag, tag_len);
+        ret = mbedtls_cipher_check_tag((mbedtls_cipher_context_t*)ctx, tag, tag_len);
 
         if (!ret)
         {
             *is_verified = true;
         }
 
-        mbedtls_cipher_free(ctx);
+        mbedtls_cipher_free((mbedtls_cipher_context_t*)ctx);
 
         status = (!ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
     }
@@ -343,10 +345,10 @@ static ATCA_STATUS _atca_mbedtls_md_finish(mbedtls_md_context_t* ctx, uint8_t* d
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 int atcac_sw_sha1_init(
-    atcac_sha1_ctx* ctx         /**< [in] pointer to a hash context */
+    struct atcac_sha1_ctx* ctx  /**< [in] pointer to a hash context */
     )
 {
-    return _atca_mbedtls_md_init(ctx, mbedtls_md_info_from_type(MBEDTLS_MD_SHA1));
+    return _atca_mbedtls_md_init((mbedtls_md_context_t*)ctx, mbedtls_md_info_from_type(MBEDTLS_MD_SHA1));
 }
 
 /** \brief Add data to a SHA1 hash.
@@ -354,12 +356,12 @@ int atcac_sw_sha1_init(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 int atcac_sw_sha1_update(
-    atcac_sha1_ctx* ctx,        /**< [in] pointer to a hash context */
-    const uint8_t*  data,       /**< [in] input data buffer */
-    size_t          data_size   /**< [in] input data length */
+    struct atcac_sha1_ctx* ctx,      /**< [in] pointer to a hash context */
+    const uint8_t*         data,     /**< [in] input data buffer */
+    size_t                 data_size /**< [in] input data length */
     )
 {
-    return _atca_mbedtls_md_update(ctx, data, data_size);
+    return _atca_mbedtls_md_update((mbedtls_md_context_t*)ctx, data, data_size);
 }
 
 /** \brief Complete the SHA1 hash in software and return the digest.
@@ -367,11 +369,11 @@ int atcac_sw_sha1_update(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 int atcac_sw_sha1_finish(
-    atcac_sha1_ctx* ctx,                          /**< [in] pointer to a hash context */
-    uint8_t         digest[ATCA_SHA1_DIGEST_SIZE] /**< [out] output buffer (20 bytes) */
+    struct atcac_sha1_ctx* ctx,                          /**< [in] pointer to a hash context */
+    uint8_t                digest[ATCA_SHA1_DIGEST_SIZE] /**< [out] output buffer (20 bytes) */
     )
 {
-    return _atca_mbedtls_md_finish(ctx, digest, NULL);
+    return _atca_mbedtls_md_finish((mbedtls_md_context_t*)ctx, digest, NULL);
 }
 
 /** \brief Initialize context for performing SHA256 hash in software.
@@ -379,10 +381,10 @@ int atcac_sw_sha1_finish(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 int atcac_sw_sha2_256_init(
-    atcac_sha2_256_ctx* ctx                 /**< [in] pointer to a hash context */
+    struct atcac_sha2_256_ctx* ctx  /**< [in] pointer to a hash context */
     )
 {
-    return _atca_mbedtls_md_init(ctx, mbedtls_md_info_from_type(MBEDTLS_MD_SHA256));
+    return _atca_mbedtls_md_init((mbedtls_md_context_t*)ctx, mbedtls_md_info_from_type(MBEDTLS_MD_SHA256));
 }
 
 /** \brief Add data to a SHA256 hash.
@@ -390,12 +392,12 @@ int atcac_sw_sha2_256_init(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 int atcac_sw_sha2_256_update(
-    atcac_sha2_256_ctx* ctx,                /**< [in] pointer to a hash context */
-    const uint8_t*      data,               /**< [in] input data buffer */
-    size_t              data_size           /**< [in] input data length */
+    struct atcac_sha2_256_ctx* ctx,         /**< [in] pointer to a hash context */
+    const uint8_t*             data,        /**< [in] input data buffer */
+    size_t                     data_size    /**< [in] input data length */
     )
 {
-    return _atca_mbedtls_md_update(ctx, data, data_size);
+    return _atca_mbedtls_md_update((mbedtls_md_context_t*)ctx, data, data_size);
 }
 
 /** \brief Complete the SHA256 hash in software and return the digest.
@@ -403,11 +405,11 @@ int atcac_sw_sha2_256_update(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 int atcac_sw_sha2_256_finish(
-    atcac_sha2_256_ctx* ctx,                              /**< [in] pointer to a hash context */
-    uint8_t             digest[ATCA_SHA2_256_DIGEST_SIZE] /**< [out] output buffer (32 bytes) */
+    struct atcac_sha2_256_ctx* ctx,                              /**< [in] pointer to a hash context */
+    uint8_t                    digest[ATCA_SHA2_256_DIGEST_SIZE] /**< [out] output buffer (32 bytes) */
     )
 {
-    return _atca_mbedtls_md_finish(ctx, digest, NULL);
+    return _atca_mbedtls_md_finish((mbedtls_md_context_t*)ctx, digest, NULL);
 }
 
 /** \brief Initialize context for performing CMAC in software.
@@ -415,9 +417,9 @@ int atcac_sw_sha2_256_finish(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_cmac_init(
-    atcac_aes_cmac_ctx* ctx,                    /**< [in] pointer to a aes-cmac context */
-    const uint8_t*      key,                    /**< [in] key value to use */
-    const uint8_t       key_len                 /**< [in] length of the key */
+    struct atcac_aes_cmac_ctx* ctx,             /**< [in] pointer to a aes-cmac context */
+    const uint8_t*             key,             /**< [in] key value to use */
+    const uint8_t              key_len          /**< [in] length of the key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -425,13 +427,13 @@ ATCA_STATUS atcac_aes_cmac_init(
     if (ctx)
     {
         int ret = 0;
-        mbedtls_cipher_init(ctx);
+        mbedtls_cipher_init((mbedtls_cipher_context_t*)ctx);
 
-        ret = mbedtls_cipher_setup(ctx, mbedtls_cipher_info_from_type(MBEDTLS_CIPHER_AES_128_ECB));
+        ret = mbedtls_cipher_setup((mbedtls_cipher_context_t*)ctx, mbedtls_cipher_info_from_type(MBEDTLS_CIPHER_AES_128_ECB));
 
         if (!ret)
         {
-            ret = mbedtls_cipher_cmac_starts(ctx, key, (size_t)key_len * 8);
+            ret = mbedtls_cipher_cmac_starts((mbedtls_cipher_context_t*)ctx, key, (size_t)key_len * 8);
         }
 
         status = (!ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
@@ -445,16 +447,16 @@ ATCA_STATUS atcac_aes_cmac_init(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_cmac_update(
-    atcac_aes_cmac_ctx* ctx,                /**< [in] pointer to a aes-cmac context */
-    const uint8_t*      data,               /**< [in] input data */
-    const size_t        data_size           /**< [in] length of input data */
+    struct atcac_aes_cmac_ctx* ctx,         /**< [in] pointer to a aes-cmac context */
+    const uint8_t*             data,        /**< [in] input data */
+    const size_t               data_size    /**< [in] length of input data */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
     if (ctx)
     {
-        status = (!mbedtls_cipher_cmac_update(ctx, data, data_size)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+        status = (!mbedtls_cipher_cmac_update((mbedtls_cipher_context_t*)ctx, data, data_size)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
     }
     return status;
 }
@@ -464,9 +466,9 @@ ATCA_STATUS atcac_aes_cmac_update(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_cmac_finish(
-    atcac_aes_cmac_ctx* ctx,           /**< [in] pointer to a aes-cmac context */
-    uint8_t*            cmac,          /**< [out] cmac value */
-    size_t*             cmac_size      /**< [inout] length of cmac */
+    struct atcac_aes_cmac_ctx* ctx,      /**< [in] pointer to a aes-cmac context */
+    uint8_t*                   cmac,     /**< [out] cmac value */
+    size_t*                    cmac_size /**< [inout] length of cmac */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -475,9 +477,9 @@ ATCA_STATUS atcac_aes_cmac_finish(
 
     if (ctx)
     {
-        int ret = mbedtls_cipher_cmac_finish(ctx, cmac);
+        int ret = mbedtls_cipher_cmac_finish((mbedtls_cipher_context_t*)ctx, cmac);
 
-        mbedtls_cipher_free(ctx);
+        mbedtls_cipher_free((mbedtls_cipher_context_t*)ctx);
 
         status = (!ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
     }
@@ -489,26 +491,26 @@ ATCA_STATUS atcac_aes_cmac_finish(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_sha256_hmac_init(
-    atcac_hmac_sha256_ctx* ctx,                 /**< [in] pointer to a sha256-hmac context */
-    atcac_sha2_256_ctx*    sha256_ctx,          /**< [in] pointer to a sha256 context */
-    const uint8_t*         key,                 /**< [in] key value to use */
-    const uint8_t          key_len              /**< [in] length of the key */
+    struct atcac_hmac_ctx*     ctx,        /**< [in] pointer to a sha256-hmac context */
+    struct atcac_sha2_256_ctx* sha256_ctx, /**< [in] pointer to a sha256 context */
+    const uint8_t*             key,        /**< [in] key value to use */
+    const uint8_t              key_len     /**< [in] length of the key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    (void)sha256_ctx;
-
-    if (ctx)
+    if ((NULL != ctx) && (NULL != sha256_ctx))
     {
         int ret;
-        mbedtls_md_init(ctx);
+        ctx->mctx = (mbedtls_md_context_t*)sha256_ctx;
 
-        ret = mbedtls_md_setup(ctx, mbedtls_md_info_from_type(MBEDTLS_MD_SHA256), true);
+        mbedtls_md_init(ctx->mctx);
+
+        ret = mbedtls_md_setup(ctx->mctx, mbedtls_md_info_from_type(MBEDTLS_MD_SHA256), true);
 
         if (!ret)
         {
-            ret = mbedtls_md_hmac_starts(ctx, key, key_len);
+            ret = mbedtls_md_hmac_starts(ctx->mctx, key, key_len);
         }
 
         status = (!ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
@@ -521,16 +523,16 @@ ATCA_STATUS atcac_sha256_hmac_init(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_sha256_hmac_update(
-    atcac_hmac_sha256_ctx* ctx,                 /**< [in] pointer to a sha256-hmac context */
-    const uint8_t*         data,                /**< [in] input data */
-    size_t                 data_size            /**< [in] length of input data */
+    struct atcac_hmac_ctx* ctx,          /**< [in] pointer to a sha256-hmac context */
+    const uint8_t*         data,         /**< [in] input data */
+    size_t                 data_size     /**< [in] length of input data */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
     if (ctx)
     {
-        status = (!mbedtls_md_hmac_update(ctx, data, data_size)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+        status = (!mbedtls_md_hmac_update(ctx->mctx, data, data_size)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
     }
     return status;
 }
@@ -540,9 +542,9 @@ ATCA_STATUS atcac_sha256_hmac_update(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_sha256_hmac_finish(
-    atcac_hmac_sha256_ctx* ctx,                /**< [in] pointer to a sha256-hmac context */
-    uint8_t*               digest,             /**< [out] hmac value */
-    size_t*                digest_len          /**< [inout] length of hmac */
+    struct atcac_hmac_ctx* ctx,         /**< [in] pointer to a sha256-hmac context */
+    uint8_t*               digest,      /**< [out] hmac value */
+    size_t*                digest_len   /**< [inout] length of hmac */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -551,9 +553,9 @@ ATCA_STATUS atcac_sha256_hmac_finish(
 
     if (ctx)
     {
-        int ret = mbedtls_md_hmac_finish(ctx, digest);
+        int ret = mbedtls_md_hmac_finish(ctx->mctx, digest);
 
-        mbedtls_md_free(ctx);
+        mbedtls_md_free(ctx->mctx);
 
         status = (!ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
     }
@@ -565,11 +567,11 @@ ATCA_STATUS atcac_sha256_hmac_finish(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_init(
-    atcac_pk_ctx*  ctx,                     /**< [in] pointer to a pk context */
-    const uint8_t* buf,                     /**< [in] buffer containing a pem encoded key */
-    size_t         buflen,                  /**< [in] length of the input buffer */
-    uint8_t        key_type,
-    bool           pubkey                   /**< [in] buffer is a public key */
+    struct atcac_pk_ctx* ctx,               /**< [in] pointer to a pk context */
+    const uint8_t*       buf,               /**< [in] buffer containing a pem encoded key */
+    size_t               buflen,            /**< [in] length of the input buffer */
+    uint8_t              key_type,
+    bool                 pubkey             /**< [in] buffer is a public key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -582,12 +584,12 @@ ATCA_STATUS atcac_pk_init(
         uint8_t temp = 1;
         mbedtls_ecp_keypair* ecp = NULL;
 
-        mbedtls_pk_init(ctx);
-        ret = mbedtls_pk_setup(ctx, mbedtls_pk_info_from_type(MBEDTLS_PK_ECKEY));
+        mbedtls_pk_init((mbedtls_pk_context*)ctx);
+        ret = mbedtls_pk_setup((mbedtls_pk_context*)ctx, mbedtls_pk_info_from_type(MBEDTLS_PK_ECKEY));
 
         if (!ret)
         {
-            ecp = mbedtls_pk_ec(*ctx);
+            ecp = mbedtls_pk_ec(ctx->mctx);
             ret = mbedtls_ecp_group_load(&ecp->grp, MBEDTLS_ECP_DP_SECP256R1);
         }
 
@@ -626,10 +628,10 @@ ATCA_STATUS atcac_pk_init(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_init_pem(
-    atcac_pk_ctx*  ctx,                     /**< [in] pointer to a pk context */
-    const uint8_t* buf,                     /**< [in] buffer containing a pem encoded key */
-    size_t         buflen,                  /**< [in] length of the input buffer */
-    bool           pubkey                   /**< [in] buffer is a public key */
+    struct atcac_pk_ctx* ctx,               /**< [in] pointer to a pk context */
+    const uint8_t*       buf,               /**< [in] buffer containing a pem encoded key */
+    size_t               buflen,            /**< [in] length of the input buffer */
+    bool                 pubkey             /**< [in] buffer is a public key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -637,15 +639,15 @@ ATCA_STATUS atcac_pk_init_pem(
     if (ctx)
     {
         int ret;
-        mbedtls_pk_init(ctx);
+        mbedtls_pk_init((mbedtls_pk_context*)ctx);
 
         if (pubkey)
         {
-            ret = mbedtls_pk_parse_public_key(ctx, buf, buflen);
+            ret = mbedtls_pk_parse_public_key((mbedtls_pk_context*)ctx, buf, buflen);
         }
         else
         {
-            ret = mbedtls_pk_parse_key(ctx, buf, buflen, NULL, 0);
+            ret = mbedtls_pk_parse_key((mbedtls_pk_context*)ctx, buf, buflen, NULL, 0);
         }
         status = (!ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
     }
@@ -657,14 +659,14 @@ ATCA_STATUS atcac_pk_init_pem(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_free(
-    atcac_pk_ctx* ctx                           /**< [in] pointer to a pk context */
+    struct atcac_pk_ctx* ctx /**< [in] pointer to a pk context */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
     if (ctx)
     {
-        mbedtls_pk_init(ctx);
+        mbedtls_pk_init((mbedtls_pk_context*)ctx);
         status = ATCA_SUCCESS;
     }
     return status;
@@ -675,9 +677,9 @@ ATCA_STATUS atcac_pk_free(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_public(
-    atcac_pk_ctx* ctx,
-    uint8_t*      buf,
-    size_t*       buflen
+    struct atcac_pk_ctx* ctx,
+    uint8_t*             buf,
+    size_t*              buflen
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -685,14 +687,14 @@ ATCA_STATUS atcac_pk_public(
     if (ctx)
     {
         int ret = -1;
-        switch (mbedtls_pk_get_type(ctx))
+        switch (mbedtls_pk_get_type((mbedtls_pk_context*)ctx))
         {
         case MBEDTLS_PK_ECKEY:
         /* fallthrough */
         case MBEDTLS_PK_ECDSA:
         {
-            (void)mbedtls_mpi_write_binary(&mbedtls_pk_ec(*ctx)->Q.X, buf, 32);
-            ret = mbedtls_mpi_write_binary(&mbedtls_pk_ec(*ctx)->Q.Y, &buf[32], 32);
+            (void)mbedtls_mpi_write_binary(&mbedtls_pk_ec(ctx->mctx)->Q.X, buf, 32);
+            ret = mbedtls_mpi_write_binary(&mbedtls_pk_ec(ctx->mctx)->Q.Y, &buf[32], 32);
             *buflen = 64;
             break;
         }
@@ -709,11 +711,11 @@ ATCA_STATUS atcac_pk_public(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_sign(
-    atcac_pk_ctx*  ctx,
-    const uint8_t* digest,
-    size_t         dig_len,
-    uint8_t*       signature,
-    size_t*        sig_len
+    struct atcac_pk_ctx* ctx,
+    const uint8_t*       digest,
+    size_t               dig_len,
+    uint8_t*             signature,
+    size_t*              sig_len
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -721,7 +723,7 @@ ATCA_STATUS atcac_pk_sign(
     if (ctx)
     {
         int ret = -1;
-        switch (mbedtls_pk_get_type(ctx))
+        switch (mbedtls_pk_get_type((mbedtls_pk_context*)ctx))
         {
         case MBEDTLS_PK_ECKEY:
         /* fallthrough */
@@ -734,7 +736,8 @@ ATCA_STATUS atcac_pk_sign(
             mbedtls_mpi_init(&s);
 
             //ret = mbedtls_ecdsa_sign(&mbedtls_pk_ec(*ctx)->grp, &r, &s, &mbedtls_pk_ec(*ctx)->d, digest, dig_len, NULL, NULL);
-            ret = mbedtls_ecdsa_sign_det(&mbedtls_pk_ec(*ctx)->grp, &r, &s, &mbedtls_pk_ec(*ctx)->d, digest, dig_len, MBEDTLS_MD_SHA256);
+            ret = mbedtls_ecdsa_sign_det(&mbedtls_pk_ec(ctx->mctx)->grp, &r, &s,
+                                         &mbedtls_pk_ec(ctx->mctx)->d, digest, dig_len, MBEDTLS_MD_SHA256);
 
             if (!ret)
             {
@@ -753,7 +756,7 @@ ATCA_STATUS atcac_pk_sign(
             break;
         }
         case MBEDTLS_PK_RSA:
-            ret = mbedtls_pk_sign(ctx, MBEDTLS_MD_SHA256, digest, dig_len, signature, sig_len, NULL, NULL);
+            ret = mbedtls_pk_sign((mbedtls_pk_context*)ctx, MBEDTLS_MD_SHA256, digest, dig_len, signature, sig_len, NULL, NULL);
             break;
         default:
             break;
@@ -768,11 +771,11 @@ ATCA_STATUS atcac_pk_sign(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_verify(
-    atcac_pk_ctx*  ctx,
-    const uint8_t* digest,
-    size_t         dig_len,
-    const uint8_t* signature,
-    size_t         sig_len
+    struct atcac_pk_ctx* ctx,
+    const uint8_t*       digest,
+    size_t               dig_len,
+    const uint8_t*       signature,
+    size_t               sig_len
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -780,7 +783,7 @@ ATCA_STATUS atcac_pk_verify(
     if (ctx)
     {
         int ret = -1;
-        switch (mbedtls_pk_get_type(ctx))
+        switch (mbedtls_pk_get_type((mbedtls_pk_context*)ctx))
         {
         case MBEDTLS_PK_ECKEY:
         /* fallthrough */
@@ -795,14 +798,14 @@ ATCA_STATUS atcac_pk_verify(
             mbedtls_mpi_read_binary(&r, signature, sig_len / 2);
             mbedtls_mpi_read_binary(&s, &signature[sig_len / 2], sig_len / 2);
 
-            ret = mbedtls_ecdsa_verify(&mbedtls_pk_ec(*ctx)->grp, digest, dig_len, &mbedtls_pk_ec(*ctx)->Q, &r, &s);
+            ret = mbedtls_ecdsa_verify(&mbedtls_pk_ec(ctx->mctx)->grp, digest, dig_len, &mbedtls_pk_ec(ctx->mctx)->Q, &r, &s);
 
             mbedtls_mpi_free(&r);
             mbedtls_mpi_free(&s);
             break;
         }
         case MBEDTLS_PK_RSA:
-            ret = mbedtls_pk_verify(ctx, MBEDTLS_MD_SHA256, digest, dig_len, signature, sig_len);
+            ret = mbedtls_pk_verify((mbedtls_pk_context*)ctx, MBEDTLS_MD_SHA256, digest, dig_len, signature, sig_len);
             break;
         default:
             break;
@@ -817,19 +820,19 @@ ATCA_STATUS atcac_pk_verify(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_derive(
-    atcac_pk_ctx* private_ctx,
-    atcac_pk_ctx* public_ctx,
-    uint8_t*      buf,
-    size_t*       buflen
+    struct atcac_pk_ctx* private_ctx,
+    struct atcac_pk_ctx* public_ctx,
+    uint8_t*             buf,
+    size_t*              buflen
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
     if (private_ctx && public_ctx)
     {
-        mbedtls_pk_type_t keytype = mbedtls_pk_get_type(private_ctx);
+        mbedtls_pk_type_t keytype = mbedtls_pk_get_type((mbedtls_pk_context*)private_ctx);
 
-        if (mbedtls_pk_get_type(public_ctx) == keytype)
+        if (mbedtls_pk_get_type((mbedtls_pk_context*)public_ctx) == keytype)
         {
             int ret = -1;
             switch (keytype)
@@ -842,7 +845,9 @@ ATCA_STATUS atcac_pk_derive(
 
                 mbedtls_mpi_init(&result);
 
-                ret = mbedtls_ecdh_compute_shared(&mbedtls_pk_ec(*private_ctx)->grp, &result, &mbedtls_pk_ec(*public_ctx)->Q, &mbedtls_pk_ec(*private_ctx)->d, NULL, NULL);
+                ret = mbedtls_ecdh_compute_shared(&mbedtls_pk_ec(private_ctx->mctx)->grp, &result,
+                                                  &mbedtls_pk_ec(public_ctx->mctx)->Q,
+                                                  &mbedtls_pk_ec(private_ctx->mctx)->d, NULL, NULL);
 
                 mbedtls_mpi_write_binary(&result, buf, *buflen);
                 mbedtls_mpi_free(&result);
@@ -1202,3 +1207,67 @@ int atca_mbedtls_cert_add(mbedtls_x509_crt * cert, const atcacert_def_t * cert_d
     return ret;
 }
 #endif
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+struct atcac_sha1_ctx * atcac_sha1_ctx_new(void)
+{
+    return (struct atcac_sha1_ctx*)hal_malloc(sizeof(atcac_sha1_ctx_t));
+}
+
+struct atcac_sha2_256_ctx * atcac_sha256_ctx_new(void)
+{
+    return (struct atcac_sha2_256_ctx*)hal_malloc(sizeof(atcac_sha2_256_ctx_t));
+}
+
+struct atcac_hmac_ctx * atcac_hmac_ctx_new(void)
+{
+    return (struct atcac_hmac_ctx*)hal_malloc(sizeof(atcac_hmac_ctx_t));
+}
+
+struct atcac_aes_gcm_ctx * atcac_aes_gcm_ctx_new(void)
+{
+    return (struct atcac_aes_gcm_ctx*)hal_malloc(sizeof(atcac_aes_gcm_ctx_t));
+}
+
+struct atcac_aes_cmac_ctx * atcac_aes_cmac_ctx_new(void)
+{
+    return (struct atcac_aes_cmac_ctx*)hal_malloc(sizeof(atcac_aes_cmac_ctx_t));
+}
+
+struct atcac_pk_ctx * atcac_pk_ctx_new(void)
+{
+    return (struct atcac_pk_ctx*)hal_malloc(sizeof(atcac_pk_ctx_t));
+}
+
+void atcac_sha1_ctx_free(struct atcac_sha1_ctx * ctx)
+{
+    hal_free(ctx);
+}
+
+void atcac_sha256_ctx_free(struct atcac_sha2_256_ctx * ctx)
+{
+    hal_free(ctx);
+}
+
+void atcac_hmac_ctx_free(struct atcac_hmac_ctx * ctx)
+{
+    hal_free(ctx);
+}
+
+void atcac_aes_gcm_ctx_free(struct atcac_aes_gcm_ctx * ctx)
+{
+    hal_free(ctx);
+}
+
+void atcac_aes_cmac_ctx_free(struct atcac_aes_cmac_ctx * ctx)
+{
+    hal_free(ctx);
+}
+
+void atcac_pk_ctx_free(struct atcac_pk_ctx * ctx)
+{
+    hal_free(ctx);
+}
+#endif
+
+#endif /* ATCA_MBEDTLS */

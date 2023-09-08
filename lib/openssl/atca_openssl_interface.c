@@ -24,9 +24,7 @@
  * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
  * THIS SOFTWARE.
  */
-
-#include "atca_config.h"
-#include "atca_status.h"
+#include "cryptoauthlib.h"
 #include "crypto/atca_crypto_sw.h"
 
 #ifdef ATCA_OPENSSL
@@ -38,6 +36,11 @@
 #include <openssl/hmac.h>
 #include <openssl/pem.h>
 #include <openssl/rand.h>
+
+typedef struct
+{
+    void* ptr;
+} atca_evp_ctx;
 
 /** \brief Return Random Bytes
  *
@@ -65,9 +68,9 @@ ATCA_STATUS atcac_sw_random(uint8_t* data, size_t data_size)
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_gcm_aad_update(
-    atcac_aes_gcm_ctx* ctx,     /**< [in] AES-GCM Context */
-    const uint8_t*     aad,     /**< [in] Additional Authentication Data */
-    const size_t       aad_len  /**< [in] Length of AAD */
+    struct atcac_aes_gcm_ctx* ctx,    /**< [in] AES-GCM Context */
+    const uint8_t*            aad,    /**< [in] Additional Authentication Data */
+    const size_t              aad_len /**< [in] Length of AAD */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -85,11 +88,11 @@ ATCA_STATUS atcac_aes_gcm_aad_update(
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_gcm_encrypt_start(
-    atcac_aes_gcm_ctx* ctx,     /**< [in] AES-GCM Context */
-    const uint8_t*     key,     /**< [in] AES Key */
-    const uint8_t      key_len, /**< [in] Length of the AES key - should be 16 or 32*/
-    const uint8_t*     iv,      /**< [in] Initialization vector input */
-    const uint8_t      iv_len   /**< [in] Length of the initialization vector */
+    struct atcac_aes_gcm_ctx* ctx,     /**< [in] AES-GCM Context */
+    const uint8_t*            key,     /**< [in] AES Key */
+    const uint8_t             key_len, /**< [in] Length of the AES key - should be 16 or 32*/
+    const uint8_t*            iv,      /**< [in] Initialization vector input */
+    const uint8_t             iv_len   /**< [in] Length of the initialization vector */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -103,6 +106,10 @@ ATCA_STATUS atcac_aes_gcm_encrypt_start(
         if (16u == key_len)
         {
             ret = EVP_EncryptInit_ex((EVP_CIPHER_CTX*)ctx->ptr, EVP_aes_128_gcm(), NULL, NULL, NULL);
+        }
+        else if (32U == key_len)
+        {
+            ret = EVP_EncryptInit_ex((EVP_CIPHER_CTX*)ctx->ptr, EVP_aes_256_gcm(), NULL, NULL, NULL);
         }
         else
         {
@@ -132,11 +139,11 @@ ATCA_STATUS atcac_aes_gcm_encrypt_start(
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_gcm_encrypt_update(
-    atcac_aes_gcm_ctx* ctx,        /**< [in] AES-GCM Context */
-    const uint8_t *    plaintext,  /**< [in] Input buffer to encrypt */
-    const size_t       pt_len,     /**< [in] Length of the input */
-    uint8_t *          ciphertext, /**< [out] Output buffer */
-    size_t *           ct_len      /**< [inout] Length of the ciphertext buffer */
+    struct atcac_aes_gcm_ctx* ctx,        /**< [in] AES-GCM Context */
+    const uint8_t *           plaintext,  /**< [in] Input buffer to encrypt */
+    const size_t              pt_len,     /**< [in] Length of the input */
+    uint8_t *                 ciphertext, /**< [out] Output buffer */
+    size_t *                  ct_len      /**< [inout] Length of the ciphertext buffer */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -169,9 +176,9 @@ ATCA_STATUS atcac_aes_gcm_encrypt_update(
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_gcm_encrypt_finish(
-    atcac_aes_gcm_ctx* ctx,     /**< [in] AES-GCM Context */
-    uint8_t*           tag,     /**< [out] GCM Tag Result */
-    size_t             tag_len  /**< [in] Length of the GCM tag */
+    struct atcac_aes_gcm_ctx* ctx,    /**< [in] AES-GCM Context */
+    uint8_t*                  tag,    /**< [out] GCM Tag Result */
+    size_t                    tag_len /**< [in] Length of the GCM tag */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -201,11 +208,11 @@ ATCA_STATUS atcac_aes_gcm_encrypt_finish(
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_gcm_decrypt_start(
-    atcac_aes_gcm_ctx* ctx,     /**< [in] AES-GCM Context */
-    const uint8_t*     key,     /**< [in] AES Key */
-    const uint8_t      key_len, /**< [in] Length of the AES key - should be 16 or 32*/
-    const uint8_t*     iv,      /**< [in] Initialization vector input */
-    const uint8_t      iv_len   /**< [in] Length of the initialization vector */
+    struct atcac_aes_gcm_ctx* ctx,     /**< [in] AES-GCM Context */
+    const uint8_t*            key,     /**< [in] AES Key */
+    const uint8_t             key_len, /**< [in] Length of the AES key - should be 16 or 32*/
+    const uint8_t*            iv,      /**< [in] Initialization vector input */
+    const uint8_t             iv_len   /**< [in] Length of the initialization vector */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -219,6 +226,10 @@ ATCA_STATUS atcac_aes_gcm_decrypt_start(
         if (16u == key_len)
         {
             ret = EVP_DecryptInit_ex((EVP_CIPHER_CTX*)ctx->ptr, EVP_aes_128_gcm(), NULL, NULL, NULL);
+        }
+        else if (32u == key_len)
+        {
+            ret = EVP_DecryptInit_ex((EVP_CIPHER_CTX*)ctx->ptr, EVP_aes_256_gcm(), NULL, NULL, NULL);
         }
         else
         {
@@ -248,11 +259,11 @@ ATCA_STATUS atcac_aes_gcm_decrypt_start(
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_gcm_decrypt_update(
-    atcac_aes_gcm_ctx* ctx,        /**< [in] AES-GCM Context */
-    const uint8_t*     ciphertext, /**< [in] Ciphertext to decrypt */
-    const size_t       ct_len,     /**< [in] Length of the ciphertext */
-    uint8_t*           plaintext,  /**< [out] Resulting decrypted plaintext */
-    size_t*            pt_len      /**< [inout] Length of the plaintext buffer */
+    struct atcac_aes_gcm_ctx* ctx,        /**< [in] AES-GCM Context */
+    const uint8_t*            ciphertext, /**< [in] Ciphertext to decrypt */
+    const size_t              ct_len,     /**< [in] Length of the ciphertext */
+    uint8_t*                  plaintext,  /**< [out] Resulting decrypted plaintext */
+    size_t*                   pt_len      /**< [inout] Length of the plaintext buffer */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -285,10 +296,10 @@ ATCA_STATUS atcac_aes_gcm_decrypt_update(
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_gcm_decrypt_finish(
-    atcac_aes_gcm_ctx* ctx,        /**< [in] AES-GCM Context */
-    const uint8_t*     tag,        /**< [in] GCM Tag to Verify */
-    size_t             tag_len,    /**< [in] Length of the GCM tag */
-    bool*              is_verified /**< [out] Tag verified as matching */
+    struct atcac_aes_gcm_ctx* ctx,        /**< [in] AES-GCM Context */
+    const uint8_t*            tag,        /**< [in] GCM Tag to Verify */
+    size_t                    tag_len,    /**< [in] Length of the GCM tag */
+    bool*                     is_verified /**< [out] Tag verified as matching */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -388,10 +399,10 @@ static ATCA_STATUS atca_openssl_md_finish(atca_evp_ctx* ctx, uint8_t * digest, u
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_sw_sha1_init(
-    atcac_sha1_ctx* ctx         /**< [in] pointer to a hash context */
+    struct atcac_sha1_ctx* ctx         /**< [in] pointer to a hash context */
     )
 {
-    return atca_openssl_md_init(ctx, EVP_sha1());
+    return atca_openssl_md_init((atca_evp_ctx*)ctx, EVP_sha1());
 }
 
 /** \brief Add data to a SHA1 hash.
@@ -399,12 +410,12 @@ ATCA_STATUS atcac_sw_sha1_init(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_sw_sha1_update(
-    atcac_sha1_ctx* ctx,        /**< [in] pointer to a hash context */
-    const uint8_t*  data,       /**< [in] input data buffer */
-    size_t          data_size   /**< [in] input data length */
+    struct atcac_sha1_ctx* ctx,      /**< [in] pointer to a hash context */
+    const uint8_t*         data,     /**< [in] input data buffer */
+    size_t                 data_size /**< [in] input data length */
     )
 {
-    return atca_openssl_md_update(ctx, data, data_size);
+    return atca_openssl_md_update((atca_evp_ctx*)ctx, data, data_size);
 }
 
 /** \brief Complete the SHA1 hash in software and return the digest.
@@ -412,13 +423,13 @@ ATCA_STATUS atcac_sw_sha1_update(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_sw_sha1_finish(
-    atcac_sha1_ctx* ctx,                          /**< [in] pointer to a hash context */
-    uint8_t         digest[ATCA_SHA1_DIGEST_SIZE] /**< [out] output buffer (20 bytes) */
+    struct atcac_sha1_ctx* ctx,                          /**< [in] pointer to a hash context */
+    uint8_t                digest[ATCA_SHA1_DIGEST_SIZE] /**< [out] output buffer (20 bytes) */
     )
 {
     unsigned int outlen = ATCA_SHA1_DIGEST_SIZE;
 
-    return atca_openssl_md_finish(ctx, digest, &outlen);
+    return atca_openssl_md_finish((atca_evp_ctx*)ctx, digest, &outlen);
 }
 
 /** \brief Initialize context for performing SHA256 hash in software.
@@ -426,10 +437,10 @@ ATCA_STATUS atcac_sw_sha1_finish(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_sw_sha2_256_init(
-    atcac_sha2_256_ctx* ctx                 /**< [in] pointer to a hash context */
+    struct atcac_sha2_256_ctx* ctx  /**< [in] pointer to a hash context */
     )
 {
-    return atca_openssl_md_init(ctx, EVP_sha256());
+    return atca_openssl_md_init((atca_evp_ctx*)ctx, EVP_sha256());
 }
 
 /** \brief Add data to a SHA256 hash.
@@ -437,12 +448,12 @@ ATCA_STATUS atcac_sw_sha2_256_init(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_sw_sha2_256_update(
-    atcac_sha2_256_ctx* ctx,                /**< [in] pointer to a hash context */
-    const uint8_t*      data,               /**< [in] input data buffer */
-    size_t              data_size           /**< [in] input data length */
+    struct atcac_sha2_256_ctx* ctx,      /**< [in] pointer to a hash context */
+    const uint8_t*             data,     /**< [in] input data buffer */
+    size_t                     data_size /**< [in] input data length */
     )
 {
-    return atca_openssl_md_update(ctx, data, data_size);
+    return atca_openssl_md_update((atca_evp_ctx*)ctx, data, data_size);
 }
 
 /** \brief Complete the SHA256 hash in software and return the digest.
@@ -450,13 +461,13 @@ ATCA_STATUS atcac_sw_sha2_256_update(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_sw_sha2_256_finish(
-    atcac_sha2_256_ctx* ctx,                              /**< [in] pointer to a hash context */
-    uint8_t             digest[ATCA_SHA2_256_DIGEST_SIZE] /**< [out] output buffer (32 bytes) */
+    struct atcac_sha2_256_ctx* ctx,                              /**< [in] pointer to a hash context */
+    uint8_t                    digest[ATCA_SHA2_256_DIGEST_SIZE] /**< [out] output buffer (32 bytes) */
     )
 {
     unsigned int outlen = ATCA_SHA2_256_DIGEST_SIZE;
 
-    return atca_openssl_md_finish(ctx, digest, &outlen);
+    return atca_openssl_md_finish((atca_evp_ctx*)ctx, digest, &outlen);
 }
 
 /** \brief Initialize context for performing CMAC in software.
@@ -464,9 +475,9 @@ ATCA_STATUS atcac_sw_sha2_256_finish(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_cmac_init(
-    atcac_aes_cmac_ctx* ctx,                    /**< [in] pointer to a aes-cmac context */
-    const uint8_t*      key,                    /**< [in] key value to use */
-    const uint8_t       key_len                 /**< [in] length of the key */
+    struct atcac_aes_cmac_ctx* ctx,    /**< [in] pointer to a aes-cmac context */
+    const uint8_t*             key,    /**< [in] key value to use */
+    const uint8_t              key_len /**< [in] length of the key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -495,9 +506,9 @@ ATCA_STATUS atcac_aes_cmac_init(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_cmac_update(
-    atcac_aes_cmac_ctx* ctx,                /**< [in] pointer to a aes-cmac context */
-    const uint8_t*      data,               /**< [in] input data */
-    const size_t        data_size           /**< [in] length of input data */
+    struct atcac_aes_cmac_ctx* ctx,      /**< [in] pointer to a aes-cmac context */
+    const uint8_t*             data,     /**< [in] input data */
+    const size_t               data_size /**< [in] length of input data */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -514,9 +525,9 @@ ATCA_STATUS atcac_aes_cmac_update(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_cmac_finish(
-    atcac_aes_cmac_ctx* ctx,            /**< [in] pointer to a aes-cmac context */
-    uint8_t*            cmac,           /**< [out] cmac value */
-    size_t *            cmac_size       /**< [inout] length of cmac */
+    struct atcac_aes_cmac_ctx* ctx,      /**< [in] pointer to a aes-cmac context */
+    uint8_t*                   cmac,     /**< [out] cmac value */
+    size_t *                   cmac_size /**< [inout] length of cmac */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -537,10 +548,10 @@ ATCA_STATUS atcac_aes_cmac_finish(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_sha256_hmac_init(
-    atcac_hmac_sha256_ctx* ctx,                 /**< [in] pointer to a sha256-hmac context */
-    atcac_sha2_256_ctx*    sha256_ctx,          /**< [in] pointer to a sha256 context */
-    const uint8_t*         key,                 /**< [in] key value to use */
-    const uint8_t          key_len              /**< [in] length of the key */
+    struct atcac_hmac_ctx*     ctx,         /**< [in] pointer to a sha256-hmac context */
+    struct atcac_sha2_256_ctx* sha256_ctx,  /**< [in] pointer to a sha256 context */
+    const uint8_t*             key,         /**< [in] key value to use */
+    const uint8_t              key_len      /**< [in] length of the key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -561,9 +572,9 @@ ATCA_STATUS atcac_sha256_hmac_init(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_sha256_hmac_update(
-    atcac_hmac_sha256_ctx* ctx,                 /**< [in] pointer to a sha256-hmac context */
-    const uint8_t*         data,                /**< [in] input data */
-    size_t                 data_size            /**< [in] length of input data */
+    struct atcac_hmac_ctx* ctx,         /**< [in] pointer to a sha256-hmac context */
+    const uint8_t*         data,        /**< [in] input data */
+    size_t                 data_size    /**< [in] length of input data */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -580,7 +591,7 @@ ATCA_STATUS atcac_sha256_hmac_update(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_sha256_hmac_finish(
-    atcac_hmac_sha256_ctx* ctx,                 /**< [in] pointer to a sha256-hmac context */
+    struct atcac_hmac_ctx* ctx,                 /**< [in] pointer to a sha256-hmac context */
     uint8_t*               digest,              /**< [out] hmac value */
     size_t *               digest_len           /**< [inout] length of hmac */
     )
@@ -605,11 +616,11 @@ ATCA_STATUS atcac_sha256_hmac_finish(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_init(
-    atcac_pk_ctx*  ctx,                         /**< [in] pointer to a pk context */
-    const uint8_t* buf,                         /**< [in] buffer containing a pem encoded key */
-    size_t         buflen,                      /**< [in] length of the input buffer */
-    uint8_t        key_type,
-    bool           pubkey                       /**< [in] buffer is a public key */
+    struct atcac_pk_ctx* ctx,                   /**< [in] pointer to a pk context */
+    const uint8_t*       buf,                   /**< [in] buffer containing a pem encoded key */
+    size_t               buflen,                /**< [in] length of the input buffer */
+    uint8_t              key_type,
+    bool                 pubkey                 /**< [in] buffer is a public key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -684,10 +695,10 @@ ATCA_STATUS atcac_pk_init(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_init_pem(
-    atcac_pk_ctx*   ctx,                        /**< [in] pointer to a pk context */
-    const uint8_t * buf,                        /**< [in] buffer containing a pem encoded key */
-    size_t          buflen,                     /**< [in] length of the input buffer */
-    bool            pubkey                      /**< [in] buffer is a public key */
+    struct atcac_pk_ctx* ctx,                   /**< [in] pointer to a pk context */
+    const uint8_t *      buf,                   /**< [in] buffer containing a pem encoded key */
+    size_t               buflen,                /**< [in] length of the input buffer */
+    bool                 pubkey                 /**< [in] buffer is a public key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -719,7 +730,7 @@ ATCA_STATUS atcac_pk_init_pem(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_free(
-    atcac_pk_ctx* ctx                           /**< [in] pointer to a pk context */
+    struct atcac_pk_ctx* ctx    /**< [in] pointer to a pk context */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -740,9 +751,9 @@ ATCA_STATUS atcac_pk_free(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_public(
-    atcac_pk_ctx* ctx,
-    uint8_t*      buf,
-    size_t*       buflen
+    struct atcac_pk_ctx* ctx,
+    uint8_t*             buf,
+    size_t*              buflen
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -778,11 +789,11 @@ ATCA_STATUS atcac_pk_public(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_sign(
-    atcac_pk_ctx*   ctx,
-    const uint8_t * digest,
-    size_t          dig_len,
-    uint8_t*        signature,
-    size_t*         sig_len
+    struct atcac_pk_ctx* ctx,
+    const uint8_t *      digest,
+    size_t               dig_len,
+    uint8_t*             signature,
+    size_t*              sig_len
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -847,11 +858,11 @@ ATCA_STATUS atcac_pk_sign(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_verify(
-    atcac_pk_ctx*  ctx,
-    const uint8_t* digest,
-    size_t         dig_len,
-    const uint8_t* signature,
-    size_t         sig_len
+    struct atcac_pk_ctx* ctx,
+    const uint8_t*       digest,
+    size_t               dig_len,
+    const uint8_t*       signature,
+    size_t               sig_len
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -913,10 +924,10 @@ ATCA_STATUS atcac_pk_verify(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_derive(
-    atcac_pk_ctx* private_ctx,
-    atcac_pk_ctx* public_ctx,
-    uint8_t*      buf,
-    size_t*       buflen
+    struct atcac_pk_ctx* private_ctx,
+    struct atcac_pk_ctx* public_ctx,
+    uint8_t*             buf,
+    size_t*              buflen
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -949,5 +960,67 @@ ATCA_STATUS atcac_pk_derive(
 
     return status;
 }
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+struct atcac_sha1_ctx * atcac_sha1_ctx_new(void)
+{
+    return (struct atcac_sha1_ctx*)hal_malloc(sizeof(atcac_sha1_ctx_t));
+}
+
+struct atcac_sha2_256_ctx * atcac_sha256_ctx_new(void)
+{
+    return (struct atcac_sha2_256_ctx*)hal_malloc(sizeof(atcac_sha2_256_ctx_t));
+}
+
+struct atcac_hmac_ctx * atcac_hmac_ctx_new(void)
+{
+    return (struct atcac_hmac_ctx*)hal_malloc(sizeof(atcac_hmac_ctx_t));
+}
+
+struct atcac_aes_gcm_ctx * atcac_aes_gcm_ctx_new(void)
+{
+    return (struct atcac_aes_gcm_ctx*)hal_malloc(sizeof(atcac_aes_gcm_ctx_t));
+}
+
+struct atcac_aes_cmac_ctx * atcac_aes_cmac_ctx_new(void)
+{
+    return (struct atcac_aes_cmac_ctx*)hal_malloc(sizeof(atcac_aes_cmac_ctx_t));
+}
+
+struct atcac_pk_ctx * atcac_pk_ctx_new(void)
+{
+    return (struct atcac_pk_ctx*)hal_malloc(sizeof(atcac_pk_ctx_t));
+}
+
+void atcac_sha1_ctx_free(struct atcac_sha1_ctx * ctx)
+{
+    hal_free(ctx);
+}
+
+void atcac_sha256_ctx_free(struct atcac_sha2_256_ctx * ctx)
+{
+    hal_free(ctx);
+}
+
+void atcac_hmac_ctx_free(struct atcac_hmac_ctx * ctx)
+{
+    hal_free(ctx);
+}
+
+void atcac_aes_gcm_ctx_free(struct atcac_aes_gcm_ctx * ctx)
+{
+    hal_free(ctx);
+}
+
+void atcac_aes_cmac_ctx_free(struct atcac_aes_cmac_ctx * ctx)
+{
+    hal_free(ctx);
+}
+
+void atcac_pk_ctx_free(struct atcac_pk_ctx * ctx)
+{
+    hal_free(ctx);
+}
+#endif
 
 #endif /* ATCA_OPENSSL */

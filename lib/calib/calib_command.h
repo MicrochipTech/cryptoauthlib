@@ -36,6 +36,7 @@
 #define CALIB_COMMAND_H
 
 #include <stddef.h>
+#include "calib_config_check.h"
 #ifdef __cplusplus
 extern "C" {
 #endif

@@ -123,7 +123,7 @@ bool atca_test_cond_ecc608(void)
 /** \brief Configured device is TA100 */
 bool atca_test_cond_ta100(void)
 {
-    return TA100 == atca_test_get_device_type();
+    return atcab_is_ta_device(atca_test_get_device_type());
 }
 
 /** \brief Configured device supports all EC p256 operations
@@ -136,7 +136,7 @@ bool atca_test_cond_p256_all(void)
     return (ATECC108A == dev_type)
            || (ATECC508A == dev_type)
            || (ATECC608 == dev_type)
-           || (TA100 == dev_type);
+           || atcab_is_ta_device(dev_type);
 }
 
 /** \brief Configured device supports EC p256 sign operations
@@ -151,7 +151,7 @@ bool atca_test_cond_p256_sign(void)
            || (ATECC608 == dev_type)
            || (ECC204 == dev_type)
            || (TA010 == dev_type)
-           || (TA100 == dev_type);
+           || atcab_is_ta_device(dev_type);
 }
 
 /** \brief Configured device supports EC p256 sign & verify operations */
@@ -162,7 +162,7 @@ bool atca_test_cond_p256_sign_verify(void)
     return (ATECC108A == dev_type)
            || (ATECC508A == dev_type)
            || (ATECC608 == dev_type)
-           || (TA100 == dev_type);
+           || atcab_is_ta_device(dev_type);
 }
 
 /** \brief Configured device supports AES128 ECB operations */
@@ -170,7 +170,7 @@ bool atca_test_cond_aes128_ecb(void)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return (ATECC608 == dev_type) || (TA100 == dev_type);
+    return (ATECC608 == dev_type) || atcab_is_ta_device(dev_type);
 }
 
 /** \brief Configured device is a second generation cryptoauth part */

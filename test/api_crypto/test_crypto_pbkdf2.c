@@ -99,7 +99,7 @@ TEST_CONDITION(atcab_pbkdf2, vectors)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return dev_type == TA100 || dev_type == ATSHA204A || dev_type == ATECC608A;
+    return atcab_is_ta_device(dev_type) || dev_type == ATSHA204A || dev_type == ATECC608A;
 }
 
 TEST(atcab_pbkdf2, vectors)

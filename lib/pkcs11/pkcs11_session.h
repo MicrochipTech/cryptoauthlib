@@ -30,6 +30,7 @@
 
 #include "cryptoki.h"
 #include "pkcs11_config.h"
+#include "cal_internal.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -43,8 +44,8 @@ typedef struct pkcs11_session_mech_ctx_s
     atca_hmac_sha256_ctx_t hmac;
     atca_sha256_ctx_t      sha256;
 #else
-    atcac_hmac_sha256_ctx hmac;
-    atcac_sha2_256_ctx    sha256;
+    atcac_hmac_ctx_t     hmac;
+    atcac_sha2_256_ctx_t sha256;
 #endif
     atca_aes_cmac_ctx_t cmac;
     atca_aes_cbc_ctx_t  cbc;
@@ -55,7 +56,7 @@ typedef struct pkcs11_session_mech_ctx_s
         CK_BYTE            tag_len;
     } gcm;
 #endif
-#ifdef ATCA_TA100_SUPPORT
+#if ATCA_TA_SUPPORT
     struct
     {
         uint8_t iv[TA_AES_GCM_IV_LENGTH];

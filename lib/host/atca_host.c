@@ -27,6 +27,7 @@
 
 #include "atca_host.h"
 #include "crypto/atca_crypto_sw_sha2.h"
+#include "cal_internal.h"
 
 #if ATCA_CA_SUPPORT
 
@@ -250,7 +251,7 @@ ATCA_STATUS atcah_nonce(struct atca_nonce_in_out *param)
 #if ATCAH_IO_DECRYPT
 ATCA_STATUS atcah_io_decrypt(struct atca_io_decrypt_in_out *param)
 {
-    atcac_sha2_256_ctx ctx;
+    atcac_sha2_256_ctx_t ctx;
     uint8_t key[ATCA_KEY_SIZE] = { 0 };
     size_t block = 0;
     uint32_t i;
@@ -294,7 +295,7 @@ ATCA_STATUS atcah_verify_mac(atca_verify_mac_in_out_t *param)
 {
     uint8_t verify_mode = (param->mode & VERIFY_MODE_MASK);
     uint8_t verify_source = (param->mode & VERIFY_MODE_SOURCE_MASK);
-    atcac_sha2_256_ctx ctx;
+    atcac_sha2_256_ctx_t ctx;
     uint8_t message[32];
     const uint8_t* nonce = NULL;
     uint8_t input_params[4];
@@ -382,7 +383,7 @@ ATCA_STATUS atcah_verify_mac(atca_verify_mac_in_out_t *param)
 #if ATCAH_SECUREBOOT_ENC
 ATCA_STATUS atcah_secureboot_enc(atca_secureboot_enc_in_out_t* param)
 {
-    atcac_sha2_256_ctx ctx;
+    atcac_sha2_256_ctx_t ctx;
     size_t i;
 
     // Check parameters
@@ -420,7 +421,7 @@ ATCA_STATUS atcah_secureboot_enc(atca_secureboot_enc_in_out_t* param)
 #if ATCAH_SECUREBOOT_MAC
 ATCA_STATUS atcah_secureboot_mac(atca_secureboot_mac_in_out_t *param)
 {
-    atcac_sha2_256_ctx ctx;
+    atcac_sha2_256_ctx_t ctx;
     uint8_t input_params[4];
 
     if (param->hashed_key == NULL || param->digest == NULL || param->mac == NULL)

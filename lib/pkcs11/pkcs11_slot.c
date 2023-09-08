@@ -280,8 +280,7 @@ CK_RV pkcs11_slot_init(CK_SLOT_ID slotID)
                 slot_ctx->device_ctx = NULL;
                 status = atcab_init_ext(&slot_ctx->device_ctx, ifacecfg);
             }
-        }
-        while (retries-- != 0 && status != ATCA_SUCCESS);
+        } while (retries-- != 0 && status != ATCA_SUCCESS);
 
 #ifdef ATCA_HAL_I2C
         if (ATCA_SUCCESS != status)
@@ -299,19 +298,17 @@ CK_RV pkcs11_slot_init(CK_SLOT_ID slotID)
                     slot_ctx->device_ctx = NULL;
                     status = atcab_init_ext(&slot_ctx->device_ctx, ifacecfg);
                     retries--;
-                }
-                while ((retries != 0) && (ATCA_SUCCESS != status));
+                } while ((retries != 0) && (ATCA_SUCCESS != status));
             }
         }
 #endif
 
 #if defined(PKCS11_508_SUPPORT) && defined(PKCS11_608_SUPPORT)
         /* If both are supported check the device to verify */
-        if ((ATCA_SUCCESS == status) && if (atcab_is_ca_device(ifacecfg->devtype))
-                )
-                {
-                    status = pkcs11_slot_check_device_type(ifacecfg, slot_ctx->device_ctx);
-                }
+        if ((ATCA_SUCCESS == status) && atcab_is_ca_device(ifacecfg->devtype))
+        {
+            status = pkcs11_slot_check_device_type(ifacecfg, slot_ctx->device_ctx);
+        }
 #endif
 
         if (ATCA_SUCCESS == status)

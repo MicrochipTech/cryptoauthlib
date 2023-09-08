@@ -98,7 +98,7 @@ static const char * pkcs11_token_device(ATCADeviceType dev_type, uint8_t info[4]
             rv = "ATECC508A";
             break;
         case 0x60:
-            if (0x02u < info[1])
+            if (0x02u < info[3])
             {
                 rv = "ATECC608B";
             }
@@ -407,10 +407,10 @@ CK_RV pkcs11_token_get_writable(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute
                         }
                         else
                         {
-                            uint8_t user_pin_info[TA_HANDLE_INFO_SIZE];
-                            if (ATCA_SUCCESS == talib_info_get_handle_info(pSession->slot->device_ctx, obj_ptr->slot, user_pin_info))
+                            ta_handle_info user_pin_info;
+                            if (ATCA_SUCCESS == talib_info_get_handle_info(pSession->slot->device_ctx, obj_ptr->slot, &user_pin_info))
                             {
-                                if (obj_ptr->handle_info.write_key == (user_pin_info[1] & obj_ptr->handle_info.write_key))
+                                if (obj_ptr->handle_info.write_key == ((uint8_t)user_pin_info.attributes.property & obj_ptr->handle_info.write_key))
                                 {
                                     rv = pkcs11_attrib_true(pObject, pAttribute, NULL);
                                 }
@@ -699,7 +699,7 @@ CK_RV pkcs11_token_convert_pin_to_key(
 #ifdef PKCS11_PIN_PBKDF2_EN
         status = atcac_pbkdf2_sha256(PKCS11_PIN_PBKDF2_ITERATIONS, pPin, ulPinLen, pSalt, ulSaltLen, pKey, ulKeyLen);
 #else
-        atcac_sha2_256_ctx ctx;
+        atcac_sha2_256_ctx_t ctx;
         status = (ATCA_STATUS)atcac_sw_sha2_256_init(&ctx);
 
         if (ATCA_SUCCESS == status)
@@ -728,7 +728,7 @@ CK_RV pkcs11_token_set_pin(CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pOldPin,
     pkcs11_session_ctx_ptr pSession;
     pkcs11_lib_ctx_ptr pLibCtx;
     uint16_t pin_slot;
-    uint8_t buf[32];
+    uint8_t buf[32] = { 0 };
     CK_RV rv;
     bool is_ca_device = false;
     uint16_t key_len = 0;

@@ -44,7 +44,7 @@
 #endif
 
 #ifndef TEST_ATCAB_VERIFY_REQRANDOM_EN
-#define TEST_ATCAB_VERIFY_REQRANDOM_EN      defined(ATCA_ATECC608_SUPPORT) || defined(ATCA_MBEDTLS) || defined(ATCA_OPENSSL) || defined(ATCA_WOLFSSL)
+#define TEST_ATCAB_VERIFY_REQRANDOM_EN      CALIB_ECC108_EN || CALIB_ECC508_EN || CALIB_ECC608_EN || ATCA_HOSTLIB_EN
 #endif
 
 #include "vectors/ecdsa_nist_vectors.h"
@@ -266,7 +266,7 @@ TEST(atca_cmd_basic_test, verify_stored_on_reqrandom_set)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
 #if defined(ATCA_MBEDTLS) || defined(ATCA_OPENSSL) || defined(ATCA_WOLFSSL)
-    atcac_pk_ctx sign_ctx;
+    atcac_pk_ctx_t sign_ctx;
     uint8_t private_key_pem[] =
         "-----BEGIN EC PRIVATE KEY-----\n"
         "MHcCAQEEICFZhAyzqkUgyheo51bhg3mcp+qwfl+koE+Mhs/sRyzBoAoGCCqGSM49\n"
@@ -331,12 +331,6 @@ TEST(atca_cmd_basic_test, verify_stored_on_reqrandom_set)
     status = atcab_verify_stored_with_tempkey(signature, public_key_id, &is_verified);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT(is_verified);
-
-    // Verify with bad message, should fail
-    message[0]++;
-    status = atcab_verify_stored_with_tempkey(signature, public_key_id, &is_verified);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT(!is_verified);
 }
 #endif /* TEST_ATCAB_VERIFY_REQRANDOM_EN */
 

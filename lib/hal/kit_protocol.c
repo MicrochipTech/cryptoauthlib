@@ -528,7 +528,7 @@ ATCA_STATUS kit_post_init(ATCAIface iface)
 }
 
 /** \brief The function send word address byte of atreceive to kit protocol to receive
- *         response from device. This function call takes place only when target device is TA100.
+ *         response from device. This function call takes place only when target device is TA10x.
  * \param[in]     iface         instance
  * \param[in]     word_address  device transaction type
  * \param[in,out] rxsize        ptr to expected number of receive bytes to request
@@ -552,7 +552,7 @@ static ATCA_STATUS kit_ta_send_to_receive(ATCAIface iface, uint8_t word_address,
 }
 
 /** \brief The function receive a response for send command from kit protocol whether success or not.
- *         This function call takes place only when target device is TA100.
+ *         This function call takes place only when target device is TA10x.
  * \param[in]    iface   instance
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
@@ -641,7 +641,7 @@ ATCA_STATUS kit_send(ATCAIface iface, uint8_t word_address, uint8_t* txdata, int
         }
 
         // Receive the reply to send "00()\n"
-        if (strncmp(target, "TA100", 3) == 0)
+        if (strncmp(target, "TA10x", 3) == 0)
         {
             status = kit_ta_receive_send_rsp(iface);
         }
@@ -682,7 +682,7 @@ ATCA_STATUS kit_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, 
         }
 
         target = kit_id_from_devtype(iface->mIfaceCFG->devtype);
-        if (strncmp(target, "TA100", 3) == 0)
+        if (strncmp(target, "TA10x", 3) == 0)
         {
             // Send word address byte to kit protocol to receive a response from device
             if (ATCA_SUCCESS != (status = kit_ta_send_to_receive(iface, word_address, rxsize)))
@@ -884,7 +884,7 @@ ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlen, char* pkitcmd, int* n
     ATCA_STATUS status = ATCA_SUCCESS;
     const char* ta_cmdpre = "t:send(";
     const char* ca_cmdpre = "d:t(";
-    const char* cmdpre = (strncmp(target, "TA100", 3) != 0) ? ca_cmdpre : ta_cmdpre;
+    const char* cmdpre = (strncmp(target, "TA10x", 3) != 0) ? ca_cmdpre : ta_cmdpre;
     char cmdpost[] = ")\n";
     size_t cpylen = 0U;
     size_t cpyindex = 0U;

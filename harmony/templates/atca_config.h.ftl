@@ -15,24 +15,12 @@
 </#list>
 </#if>
 
-
 <#assign devices = CAL_DEVICE_LIST?word_list>
 <#if devices?size != 0>
 /** Include Device Support Options */
 <#list devices as device_type>
 #define ATCA_${device_type}_SUPPORT
 </#list>
-</#if>
-
-<#if CAL_ENABLE_TA100_AES_AUTH>
-/** TA100 Specific - Enable auth sessions that require AES (CMAC/GCM) from
-   an external library */
-#define ATCA_TA100_AES_AUTH_SUPPORT
-</#if>
-
-<#if CAL_ENABLE_TA100_FCE>
-/** TA100 Specific - Enable support for the FCE APIs for the TA100 */
-#define ATCA_TA100_FCE_SUPPORT
 </#if>
 
 /** Provide Maximum packet size for the command to be sent and received */

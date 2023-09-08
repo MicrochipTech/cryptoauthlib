@@ -122,9 +122,9 @@ Commands
 Options
 -------------------------------------------------------------------------------
 
-### -i (Device)
+### -d (Device)
 
-Usage: `-i <device_type>`
+Usage: `-d <device_type>`
 
 Selects the device type - per the device list that you would otherwise see when
 invoking `help` from the menu. Possible options if the corresponding `ATCA_<device>_SUPPORT`

@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 #define GCM_TEST_VECTORS_DATA_SIZE_MAX      100
-#define GCM_TEST_VECTORS_COUNT              13
+#define GCM_TEST_VECTORS_COUNT              14
 
 #ifndef AES_DATA_SIZE
 #define AES_DATA_SIZE                       16

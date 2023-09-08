@@ -556,8 +556,9 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
                                                    TA_AUTH_GENERATE_OPT_NONCE_SRC_MASK | TA_AUTH_GENERATE_OPT_RANDOM_MASK, auth_i_nonce);
                 if (CKR_OK == (rv = pkcs11_util_convert_rv(status)))
                 {
+                    cal_buffer key = CAL_BUF_INIT(16U, session_ctx->slot->read_key);
                     status = talib_auth_startup(session_ctx->slot->device_ctx, session_ctx->slot->user_pin_handle,
-                                                TA_AUTH_ALG_ID_GCM, 0x1FFF, 16, session_ctx->slot->read_key, auth_i_nonce, auth_r_nonce);
+                                                TA_AUTH_ALG_ID_GCM128, 0x1FFF, &key, auth_i_nonce, auth_r_nonce);
                     rv = pkcs11_util_convert_rv(status);
                 }
 

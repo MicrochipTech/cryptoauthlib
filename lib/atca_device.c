@@ -127,6 +127,13 @@ ATCA_STATUS releaseATCADevice(ATCADevice ca_dev)
         return ATCA_BAD_PARAM;
     }
 
+    if (NULL != ca_dev->session_cb)
+    {
+        ca_dev->session_cb(ca_dev->session_ctx);
+        ca_dev->session_ctx = NULL;
+        ca_dev->session_cb = NULL;
+    }
+
     return releaseATCAIface(&ca_dev->mIface);
 }
 

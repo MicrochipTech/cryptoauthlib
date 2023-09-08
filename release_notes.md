@@ -1,9 +1,30 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.7.0 (09/08/2023)
+
+### New Features
+  - Added unified buffer implementation to enable multipart buffer use with APIs that
+    support them.
+  - See [talib/CHANGES.md] for details on talib module changes
+
+### Fixes
+  - Made `atcac` structures referencing third party libraries opaque to the user so
+    installed header files are usable by applications without also including the third
+    party headers.
+
+### API Changes
+  - The software crypto structures are generally no longer typedef'd so they must be 
+    declared with the `struct` keyword. New typedefs were added by appending the 
+    suffix `_t` which allows for the same mechanism for declaring these structure in code
+    if building a standalone application (such as in embedded projects). If dynamically 
+    linking with the library and using a third party crypto library one will need to use 
+    the `_new` & `_free` APIs to allocate these structures for use with the `atcac` 
+    interfaces.
+
 ## Release v3.6.1 (07/14/2023)
 
-### New
+### New Features
   - Added support for PIC18 memory model with a MAX_PACKET_SIZE setting. 
   - PKCS11 Improvement to support context reservation automatically for operations that
     span multiple pkcs11 calls such as login/logout, encrypt/decrypt, etc. This prevents
@@ -20,7 +41,7 @@
 
 ## Release v3.6.0 (04/04/2023)
 
-### New
+### New Features
   - Compliance certified to CERT-C Level 2 & MISRA 2012. Compliance reports can be
     requested from your FAE or account manager
   - Added talib_handle helper functions to determine if a handle access type is allowed
@@ -43,17 +64,17 @@
 
 ## Release v3.5.1 (03/26/2023)
 
-### New
+### New Features
   - Add support for SHA104, SHA105, & SHA106
 
 ## Release v3.5.0 (03/14/2023)
 
-### New
+### New Features
   - Add support for ECC204, TA010 and framework for future devices
 
 ## Release v3.4.3 (12/23/2022)
 
-### New
+### New Features
   - Add key load mode flags for FCE config command
 
 ### Fixes

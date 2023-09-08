@@ -27,6 +27,7 @@
  */
 
 #include "cryptoauthlib.h"
+#include "cal_internal.h"
 
 #if ATCAC_PBKDF2_SHA256_EN
 /** \brief Calculate a PBKDF2 hash of a given password and salt
@@ -44,12 +45,12 @@ ATCA_STATUS atcac_pbkdf2_sha256(
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
-    atcac_hmac_sha256_ctx ctx;
+    atcac_hmac_ctx_t ctx;
     uint32_t i, j;
     uint32_t counter = 1;
     uint8_t temp1_digest[ATCA_SHA256_DIGEST_SIZE] = { 0 };
     uint8_t temp2_digest[ATCA_SHA256_DIGEST_SIZE] = { 0 };
-    atcac_sha2_256_ctx sha256_ctx;
+    atcac_sha2_256_ctx_t sha256_ctx;
 
     if ((0U >= result_len) || (result_len > UINT32_MAX))
     {

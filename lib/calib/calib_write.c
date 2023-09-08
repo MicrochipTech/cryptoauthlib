@@ -766,7 +766,7 @@ ATCA_STATUS calib_ca2_write_config_counter(ATCADevice device, uint8_t counter_id
  *  \return ATCA_SUCCESS on success, otherwise an error code
  */
 ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data, uint8_t* transport_key,
-                                uint8_t transport_key_id, uint8_t num_in[NONCE_NUMIN_SIZE])
+                                uint16_t transport_key_id, uint8_t num_in[NONCE_NUMIN_SIZE])
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     atca_nonce_in_out_t nonce_params;
@@ -804,7 +804,7 @@ ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data,
         // Random Nonce inputs
         (void)memset(&temp_key, 0, sizeof(temp_key));
         (void)memset(&nonce_params, 0, sizeof(nonce_params));
-        nonce_params.mode = NONCE_MODE_SEED_UPDATE;
+        nonce_params.mode = NONCE_MODE_GEN_SESSION_KEY;
         nonce_params.zero = transport_key_id;
         nonce_params.num_in = &num_in[0];
         nonce_params.rand_out = rand_out;

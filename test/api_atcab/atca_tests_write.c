@@ -451,7 +451,7 @@ TEST_CONDITION(atca_cmd_basic_test, write_data_zone_blocks)
            || (ATECC608A == dev_type)
            || (ECC204 == dev_type)
            || (TA010 == dev_type)
-           || (TA100 == dev_type)
+           || atcab_is_ta_device(dev_type)
     ;
 }
 
@@ -661,7 +661,7 @@ TEST_CONDITION(atca_cmd_basic_test, write_config_zone)
 
     return (atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type))
            || atcab_is_ca2_device(dev_type)
-           || (TA100 == dev_type)
+           || atcab_is_ta_device(dev_type)
     ;
 }
 
@@ -708,7 +708,7 @@ TEST(atca_cmd_basic_test, write_config_zone)
 #endif
 #if ATCA_TA_SUPPORT
     case TA100:
-        status = atcab_write_config_zone(test_ta100_configdata);
+        status = atcab_write_config_zone(test_ta10x_configdata);
         break;
 #endif
 
@@ -727,7 +727,7 @@ TEST_CONDITION(atca_cmd_basic_test, write_pubkey)
     return (ATECC108A == dev_type)
            || (ATECC508A == dev_type)
            || (ATECC608A == dev_type)
-           || (TA100 == dev_type)
+           || atcab_is_ta_device(dev_type)
     ;
 }
 

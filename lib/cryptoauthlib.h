@@ -43,6 +43,7 @@
 #include "atca_platform.h"
 #include "atca_status.h"
 #include "atca_debug.h"
+#include "cal_buffer.h"
 #include "atca_iface.h"
 #include "atca_device.h"
 #include "atca_helpers.h"
@@ -52,8 +53,17 @@
 #define ATCA_SHA256_BLOCK_SIZE              (64u)
 #define ATCA_SHA256_DIGEST_SIZE             (32u)
 
+#define ATCA_SHA384_BLOCK_SIZE              (128u)
+#define ATCA_SHA384_DIGEST_SIZE             (48u)
+
+#define ATCA_SHA512_BLOCK_SIZE              (128u)
+#define ATCA_SHA512_DIGEST_SIZE             (64u)
+
 #define ATCA_AES128_BLOCK_SIZE              (16u)
 #define ATCA_AES128_KEY_SIZE                (16)
+
+#define ATCA_AES256_BLOCK_SIZE              (16u)
+#define ATCA_AES256_KEY_SIZE                (32u)
 
 #define ATCA_ECCP256_KEY_SIZE               (32)
 #define ATCA_ECCP256_PUBKEY_SIZE            (64)

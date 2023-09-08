@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.1.0)
 project(cryptoauth C)
 
-include(CMakeDependentOption)
 include(CheckSymbolExists)
 
 # HAL Selection
@@ -22,7 +21,6 @@ option(ATCA_NO_HEAP "Do not use dynamic (heap) allocation functions" OFF)
 option(ATCA_USE_ATCAB_FUNCTIONS "Build the atcab_ api functions rather than using macros" OFF)
 option(ATCA_ENABLE_DEPRECATED "Enable the use of older APIs that that been replaced" OFF)
 option(ATCA_STRICT_C99 "Enable strict C99 compliance for the libray" OFF)
-option(ATCA_KDF_HMAC_COUNTER_LEN_IN_BYTES "Enable atcac_sha256_hmac_counter Length in bytes" OFF)
 
 # Software Cryptographic backend for host crypto abstractions
 option(ATCA_MBEDTLS "Integrate with mbedtls" OFF)
@@ -44,11 +42,13 @@ option(ATCA_ATSHA206A_SUPPORT "Include support for ATSHA206A device" ON)
 option(ATCA_ATECC108A_SUPPORT "Include support for ATECC108A device" ON)
 option(ATCA_ATECC508A_SUPPORT "Include support for ATECC508A device" ON)
 option(ATCA_ATECC608_SUPPORT "Include support for ATECC608 device" ON)
-option(ATCA_TA100_SUPPORT "Include support for TA100 device" OFF)
 option(ATCA_ECC204_SUPPORT "Include support for ECC204 device" ON)
 option(ATCA_TA010_SUPPORT "Include support for TA010 device" ON)
 option(ATCA_SHA104_SUPPORT "Include support for SHA104 device" ON)
 option(ATCA_SHA105_SUPPORT "Include support for SHA105 device" ON)
+
+# This does various device checks
+include(cmake/devices.cmake)
 
 # Preprocessor Warning option
 if (NOT MSVC)
@@ -63,21 +63,14 @@ SET(ATCA_ZEPHYR_SUPPORT ON CACHE INTERNAL "Include zephyr hal drivers")
 endif()
 
 # Set maximum packet size that is allowed in bytes
-SET(MAX_PACKET_SIZE 1035 CACHE STRING "Dafault packet size allowed in bytes")
+SET(MAX_PACKET_SIZE 1072 CACHE STRING "Dafault packet size allowed in bytes")
 
-# TA100 Dependent Configuration options
-cmake_dependent_option(ATCA_TA100_AES_AUTH_SUPPORT "Include Encrypted (GCM) and CMAC Auth session support" ON "ATCA_TA100_SUPPORT" OFF)
-cmake_dependent_option(ATCA_TA100_FCE_SUPPORT "Include FCE Support for the TA100" ON "ATCA_TA100_SUPPORT" OFF)
 
-# Check Options
+# Check Integration Options
 if (ATCA_MBEDTLS AND (ATCA_WOLFSSL OR ATCA_OPENSSL))
 message(FATAL_ERROR "Only one external SSL/TLS library can be supported")
 elseif (ATCA_WOLFSSL AND (ATCA_MBEDTLS OR ATCA_OPENSSL))
 message(FATAL_ERROR "Only one external SSL/TLS library can be supported")
-endif()
-
-if (ATCA_TA100_SUPPORT AND ATCA_TA100_AES_AUTH_SUPPORT AND NOT (ATCA_MBEDTLS OR ATCA_WOLFSSL OR ATCA_OPENSSL))
-message(FATAL_ERROR "Encrypted (GCM) and CMAC uthorization sessions with the TA100 require a linked crypto library")
 endif()
 
 # Check Platform Information
@@ -85,7 +78,6 @@ check_symbol_exists(malloc "stdlib.h" HAS_MALLOC)
 check_symbol_exists(free "stdlib.h" HAS_FREE)
 check_symbol_exists(strcasestr "string.h" HAS_STRCASESTR)
 check_symbol_exists(memset_s "string.h" HAS_MEMSET_S)
-
 
 set(BUILD_SHARED_LIBS ${ATCA_BUILD_SHARED_LIBS})
 
@@ -96,8 +88,6 @@ file(GLOB ATCACERT_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "atcacert/*.c")
 file(GLOB ATCACERT_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "atcacert/*.h")
 file(GLOB CALIB_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "calib/*.c")
 file(GLOB CALIB_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "calib/*.h")
-file(GLOB TALIB_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "talib/*.c")
-file(GLOB TALIB_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "talib/*.h")
 file(GLOB_RECURSE CRYPTO_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "crypto/*.c")
 file(GLOB CRYPTO_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "crypto/*.h")
 file(GLOB CRYPTO_HASHES_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "crypto/hashes/*.h")
@@ -119,7 +109,6 @@ endif()
 if(${CMAKE_VERSION} VERSION_GREATER "3.8.0")
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${ATCACERT_SRC})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${CALIB_SRC})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TALIB_SRC})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${CRYPTO_SRC})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${HOST_SRC})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${JWT_SRC})
@@ -130,99 +119,25 @@ endif()
 source_group("App/Wpc" FILES ${WPC_SRC})
 endif()
 
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/talib" AND IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/talib")
+    # Include supporting option checks first
+    include(talib/cmake/checks.cmake)
+endif()
+
 if (ATCA_MBEDTLS)
-if (NOT TARGET mbedtls)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../third_party/CMakeLists-mbedtls.txt.in ${CMAKE_BINARY_DIR}/${DEPENDENCY_DIR}/mbedtls_downloader/CMakeLists.txt)
-execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
-        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/${DEPENDENCY_DIR}/mbedtls_downloader/)
-execute_process(COMMAND ${CMAKE_COMMAND} --build .
-        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/${DEPENDENCY_DIR}/mbedtls_downloader/)
-
-file(GLOB MBEDTLS_LIB_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../third_party/mbedtls/library/*.c")
-
-add_library(mbedtls STATIC ${MBEDTLS_LIB_SRC})
-
-target_compile_definitions(mbedtls PUBLIC -DMBEDTLS_CMAC_C)
-if(NOT MSVC)
-target_compile_options(mbedtls PRIVATE -fPIC)
-endif()
-include_directories(mbedtls PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
-                                    ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/mbedtls/include)
-endif()
-
-file(GLOB MBEDTLS_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mbedtls/*.c")
-
-if(NOT MSVC)
-set_source_files_properties(mbedtls/atca_mbedtls_wrap.c PROPERTIES COMPILE_FLAGS -Wno-pedantic)
-endif()
-
-if(${CMAKE_VERSION} VERSION_GREATER "3.8.0")
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${MBEDTLS_SRC})
-endif()
-
-set(MBEDTLS_SRC ${MBEDTLS_SRC} "../third_party/atca_mbedtls_patch.c")
-
+    include(cmake/mbedtls.cmake)
 endif(ATCA_MBEDTLS)
 
 if (ATCA_WOLFSSL)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../third_party/CMakeLists-wolfssl.txt.in ${CMAKE_BINARY_DIR}/${DEPENDENCY_DIR}/wolfssl_downloader/CMakeLists.txt)
-execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
-        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/${DEPENDENCY_DIR}/wolfssl_downloader/)
-execute_process(COMMAND ${CMAKE_COMMAND} --build .
-        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/${DEPENDENCY_DIR}/wolfssl_downloader/)
-
-#file(GLOB WOLFSSL_LIB_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../third_party/wolfssl/wolfcrypt/src/*.c")
-
-set(WOLFSSL_LIB_SRC ../third_party/wolfssl/wolfcrypt/src/aes.c
-                    ../third_party/wolfssl/wolfcrypt/src/arc4.c
-                    ../third_party/wolfssl/wolfcrypt/src/asn.c
-                    ../third_party/wolfssl/wolfcrypt/src/cmac.c
-                    ../third_party/wolfssl/wolfcrypt/src/coding.c
-                    ../third_party/wolfssl/wolfcrypt/src/des3.c
-                    ../third_party/wolfssl/wolfcrypt/src/dsa.c
-                    ../third_party/wolfssl/wolfcrypt/src/ecc.c
-                    ../third_party/wolfssl/wolfcrypt/src/hash.c
-                    ../third_party/wolfssl/wolfcrypt/src/hmac.c
-                    ../third_party/wolfssl/wolfcrypt/src/integer.c
-                    ../third_party/wolfssl/wolfcrypt/src/memory.c
-                    ../third_party/wolfssl/wolfcrypt/src/pwdbased.c
-                    ../third_party/wolfssl/wolfcrypt/src/random.c
-                    ../third_party/wolfssl/wolfcrypt/src/rsa.c
-                    ../third_party/wolfssl/wolfcrypt/src/sha.c
-                    ../third_party/wolfssl/wolfcrypt/src/sha256.c
-                    ../third_party/wolfssl/wolfcrypt/src/tfm.c
-                    ../third_party/wolfssl/wolfcrypt/src/wc_encrypt.c
-                    ../third_party/wolfssl/wolfcrypt/src/wc_port.c
-                    ../third_party/wolfssl/wolfcrypt/src/wolfmath.c
-                    )
-
-
-add_library(wolfssl STATIC ${WOLFSSL_LIB_SRC})
-target_compile_definitions(wolfssl PRIVATE -DWOLFSSL_USER_SETTINGS)
-configure_file(../third_party/wolfssl_settings.h.in user_settings.h @ONLY)
-set(WOLFSSL_USER_SETTINGS TRUE)
-
-if(NOT MSVC)
-target_compile_options(wolfssl PRIVATE -fPIC)
-endif()
-
-include_directories(wolfssl PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
-                                    ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/wolfssl
-                                    ${CMAKE_CURRENT_BINARY_DIR})
-
-
-file(GLOB WOLFSSL_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "wolfssl/*.c")
-if(${CMAKE_VERSION} VERSION_GREATER "3.8.0")
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${WOLFSSL_SRC})
-endif()
+    include(cmake/wolfssl.cmake)
 endif(ATCA_WOLFSSL)
 
 if (ATCA_OPENSSL)
-file(GLOB OPENSSL_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "openssl/*.c")
-if(${CMAKE_VERSION} VERSION_GREATER "3.8.0")
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${OPENSSL_SRC})
-endif()
-find_package(OpenSSL REQUIRED)
+    find_package(OpenSSL REQUIRED)
+    file(GLOB OPENSSL_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "openssl/*.c")
+    if(${CMAKE_VERSION} VERSION_GREATER "3.8.0")
+        source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${OPENSSL_SRC})
+    endif()
 endif(ATCA_OPENSSL)
 
 if (ATCA_ATSHA204A_SUPPORT OR ATCA_ATSHA206A_SUPPORT OR
@@ -233,10 +148,6 @@ endif()
 
 if (ATCA_ATSHA206A_SUPPORT)
 set(LIB_SRC ${LIB_SRC} ${SHA206_API_SRC})
-endif()
-
-if (ATCA_TA100_SUPPORT)
-set(LIB_SRC ${LIB_SRC} ${TALIB_SRC})
 endif()
 
 if (ATCA_TNGTLS_SUPPORT OR ATCA_TNGLORA_SUPPORT OR ATCA_TFLEX_SUPPORT)
@@ -369,6 +280,9 @@ set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} atca_utils_sizes.c)
 endif(ATCA_BUILD_SHARED_LIBS)
 
 add_library(cryptoauth ${CRYPTOAUTH_SRC} ${ATCACERT_DEF_SRC})
+if (ATCA_TA_SUPPORT)
+add_subdirectory(talib)
+endif()
 
 set_property(TARGET cryptoauth PROPERTY C_STANDARD 99)
 
@@ -395,7 +309,13 @@ endif(BUILD_TESTS)
 configure_file(atca_config.h.in atca_config.h @ONLY)
 set(LIB_INC ${LIB_INC} ${CMAKE_CURRENT_BINARY_DIR}/atca_config.h)
 
-include_directories(cryptoauth PUBLIC ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ../app/tng ../third_party ../third_party/hidapi/hidapi ${USB_INCLUDE_DIR})
+include_directories(cryptoauth PUBLIC ${CMAKE_CURRENT_BINARY_DIR} 
+                                      ${CMAKE_CURRENT_SOURCE_DIR}
+                                      ${CMAKE_BINARY_DIR}/downloaded
+                                      ../app/tng
+                                      ../third_party 
+                                      ../third_party/hidapi/hidapi 
+                                      ${USB_INCLUDE_DIR})
 
 if(ATCA_MBEDTLS)
 target_link_libraries(cryptoauth mbedtls)
@@ -469,15 +389,20 @@ install(FILES ${LIB_INC} DESTINATION ${DEFAULT_INC_PATH} COMPONENT Development)
 install(FILES ${HAL_INC} DESTINATION ${DEFAULT_INC_PATH}/hal COMPONENT Development)
 install(FILES ${ATCACERT_INC} DESTINATION ${DEFAULT_INC_PATH}/atcacert COMPONENT Development)
 install(FILES ${CALIB_INC} DESTINATION ${DEFAULT_INC_PATH}/calib COMPONENT Development)
-install(FILES ${TALIB_INC} DESTINATION ${DEFAULT_INC_PATH}/talib COMPONENT Development)
 install(FILES ${CRYPTO_INC} DESTINATION ${DEFAULT_INC_PATH}/crypto COMPONENT Development)
 install(FILES ${CRYPTO_HASHES_INC} DESTINATION ${DEFAULT_INC_PATH}/crypto/hashes COMPONENT Development)
 install(FILES ${HOST_INC} DESTINATION ${DEFAULT_INC_PATH}/host COMPONENT Development)
 install(FILES ${JWT_INC} DESTINATION ${DEFAULT_INC_PATH}/jwt COMPONENT Development)
-if (ATCA_PKCS11)
-install(FILES ${PKCS11_INC} DESTINATION ${DEFAULT_INC_PATH}/pkcs11 COMPONENT Development)
-endif()
 install(FILES ${TNG_INC} DESTINATION ${DEFAULT_INC_PATH}/app/tng COMPONENT Development)
 install(FILES ${WPC_INC} DESTINATION ${DEFAULT_INC_PATH}/app/wpc COMPONENT Development)
 install(FILES ${SHA206_API_INC} DESTINATION ${DEFAULT_INC_PATH}/app/api_206a COMPONENT Development)
+if(ATCA_MBEDTLS)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls/atca_mbedtls_interface.h DESTINATION ${DEFAULT_INC_PATH}/mbedtls COMPONENT Development)
+endif(ATCA_MBEDTLS)
+if(ATCA_OPENSSL)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/openssl/atca_openssl_interface.h DESTINATION ${DEFAULT_INC_PATH}/openssl COMPONENT Development)
+endif(ATCA_OPENSSL)
+if(ATCA_WOLFSSL)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/wolfssl/atca_wolfssl_interface.h DESTINATION ${DEFAULT_INC_PATH}/wolfssl COMPONENT Development)
+endif(ATCA_WOLFSSL)
 endif(DEFAULT_INC_PATH)

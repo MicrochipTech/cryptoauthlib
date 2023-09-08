@@ -71,7 +71,7 @@ except:
 try:
     _VERSION = open('VERSION', 'r').read().strip()
 except FileNotFoundError:
-    with open('lib/atca_version.h', 'r') as f:
+    with open('lib/atca_version.h' if _sdist_build else '../lib/atca_version.h', 'r') as f:
         m = re.search(r'ATCA_LIBRARY_VERSION_DATE\s+\"([0-9]+)\"', f.read(), re.M)
         _VERSION = m.groups()[0]
 
@@ -132,18 +132,18 @@ class CryptoAuthCommandBuildExt(build_ext):
         else:
             build_args = []
 
-        cmake_args = ['-DATCA_HAL_CUSTOM=ON', '-DATCA_HAL_KIT_UART=ON',
+        cmake_args = ['-DATCA_HAL_KIT_BRIDGE=ON', '-DATCA_HAL_KIT_UART=ON',
                       '-DATCA_ATSHA206A_SUPPORT=ON',
                       '-DATCA_TNGTLS_SUPPORT=ON', '-DATCA_TFLEX_SUPPORT=ON',
                       '-DATCA_TNGLORA_SUPPORT=ON', '-DATCA_TNG_LEGACY_SUPPORT=ON',
                       '-DATCA_USE_ATCAB_FUNCTIONS=ON']
-                      
+
         if os.path.exists('../lib/talib' if not _sdist_build else 'lib/talib'):
             cmake_args += ['-DATCA_TA100_SUPPORT=ON']
             if sys.platform.startswith('linux'):
                 cmake_args += ['-DATCA_OPENSSL=ON']
             else:
-                cmake_args += ['-DATCA_TA100_AES_AUTH_SUPPORT=OFF']
+                cmake_args += ['-DTALIB_AES_AUTH_SUPPORT=OFF']
 
         if not nousb:
             cmake_args += ['-DATCA_HAL_KIT_HID=ON']

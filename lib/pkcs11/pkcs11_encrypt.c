@@ -123,7 +123,7 @@ CK_RV pkcs11_encrypt_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanis
                             rv = CKR_MECHANISM_INVALID;
 #endif
                         }
-#ifdef ATCA_TA100_SUPPORT
+#if ATCA_TA_SUPPORT
                         if (atcab_is_ta_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
                         {
                             if (pParams->ulIvLen > sizeof(pSession->active_mech_data.gcm_single.iv))
@@ -280,16 +280,20 @@ CK_RV pkcs11_encrypt(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulD
                 rv = CKR_GENERAL_ERROR;
 #endif
             }
-#ifdef ATCA_TA100_SUPPORT
-            if (atcab_is_ta_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
+#if ATCA_TA_SUPPORT
+            if (atcab_is_ta_device(atcab_get_device_type()))
             {
                 if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
                 {
-                    if (ATCA_SUCCESS == (status = talib_aes_gcm_keyload(pSession->slot->device_ctx, pKey->slot, 0)))
+                    if (ATCA_SUCCESS == (status = talib_aes128_gcm_keyload(pSession->slot->device_ctx, pKey->slot, 0)))
                     {
-                        if (ATCA_SUCCESS == (status = talib_aes_gcm_encrypt(pSession->slot->device_ctx, pSession->active_mech_data.gcm_single.aad,
-                                                                            pSession->active_mech_data.gcm_single.aad_len, pSession->active_mech_data.gcm_single.iv,
-                                                                            pData, (uint16_t)ulDataLen, pEncryptedData, &pEncryptedData[ulDataLen])))
+                        cal_buffer aad_buf = CAL_BUF_INIT(pSession->active_mech_data.gcm_single.aad_len, pSession->active_mech_data.gcm_single.aad);
+                        cal_buffer iv_buf = CAL_BUF_INIT(TA_AES_GCM_IV_LENGTH, pSession->active_mech_data.gcm_single.iv);
+                        cal_buffer data_buf = CAL_BUF_INIT(ulDataLen, pData);
+                        cal_buffer ciphertext_buf = CAL_BUF_INIT(*pulEncryptedDataLen, pEncryptedData);
+                        cal_buffer tag_buf = CAL_BUF_INIT(TA_AES_GCM_TAG_LENGTH, &pEncryptedData[ulDataLen]);
+                        if (ATCA_SUCCESS == (status = talib_aes_gcm_encrypt(pSession->slot->device_ctx, &aad_buf, &iv_buf,
+                                                                            &data_buf, &ciphertext_buf, &tag_buf)))
                         {
                             *pulEncryptedDataLen = ulDataLen + TA_AES_GCM_TAG_LENGTH;
                         }
@@ -404,8 +408,8 @@ CK_RV pkcs11_encrypt_update(
                 }
 #endif
             }
-#ifdef ATCA_TA100_SUPPORT
-            if (atcab_is_ta_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
+#if ATCA_TA_SUPPORT
+            if (atcab_is_ta_device(atcab_get_device_type()))
             {
                 rv = CKR_FUNCTION_NOT_SUPPORTED;
             }
@@ -494,8 +498,8 @@ CK_RV pkcs11_encrypt_final(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedDat
                 *pulEncryptedDataLen = pSession->active_mech_data.gcm.tag_len;
 #endif
             }
-#ifdef ATCA_TA100_SUPPORT
-            if (atcab_is_ta_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
+#if ATCA_TA_SUPPORT
+            if (atcab_is_ta_device(atcab_get_device_type()))
             {
                 rv = CKR_FUNCTION_NOT_SUPPORTED;
             }
@@ -598,8 +602,8 @@ CK_RV pkcs11_decrypt_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanis
                             rv = CKR_MECHANISM_INVALID;
 #endif
                         }
-#ifdef ATCA_TA100_SUPPORT
-                        if (atcab_is_ta_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
+#if ATCA_TA_SUPPORT
+                        if (atcab_is_ta_device(atcab_get_device_type()))
                         {
                             if (pParams->ulIvLen > sizeof(pSession->active_mech_data.gcm_single.iv))
                             {
@@ -764,17 +768,21 @@ CK_RV pkcs11_decrypt(
                 }
 #endif
             }
-#ifdef ATCA_TA100_SUPPORT
-            if (atcab_is_ta_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
+#if ATCA_TA_SUPPORT
+            if (atcab_is_ta_device(atcab_get_device_type()))
             {
                 if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
                 {
-                    if (ATCA_SUCCESS == (status = talib_aes_gcm_keyload(pSession->slot->device_ctx, pKey->slot, 0)))
+                    if (ATCA_SUCCESS == (status = talib_aes128_gcm_keyload(pSession->slot->device_ctx, pKey->slot, 0)))
                     {
                         *pulDataLen = ulEncryptedDataLen - TA_AES_GCM_TAG_LENGTH;
-                        if (ATCA_SUCCESS != (status = talib_aes_gcm_decrypt(pSession->slot->device_ctx, pSession->active_mech_data.gcm_single.aad,
-                                                                            pSession->active_mech_data.gcm_single.aad_len, pSession->active_mech_data.gcm_single.iv,
-                                                                            &pEncryptedData[*pulDataLen], pEncryptedData, (uint16_t)(*pulDataLen), pData)))
+                        cal_buffer aad_buf = CAL_BUF_INIT(pSession->active_mech_data.gcm_single.aad_len, pSession->active_mech_data.gcm_single.aad);
+                        cal_buffer iv_buf = CAL_BUF_INIT(TA_AES_GCM_IV_LENGTH, pSession->active_mech_data.gcm_single.iv);
+                        cal_buffer ciphertext_buf = CAL_BUF_INIT(*pulDataLen, pEncryptedData);
+                        cal_buffer data_buf = CAL_BUF_INIT(ulEncryptedDataLen, pData);
+                        cal_buffer tag_buf = CAL_BUF_INIT(TA_AES_GCM_TAG_LENGTH, &pEncryptedData[*pulDataLen]);
+                        if (ATCA_SUCCESS != (status = talib_aes_gcm_decrypt(pSession->slot->device_ctx, &aad_buf, &iv_buf, &tag_buf,
+                                                                            &ciphertext_buf, &data_buf)))
                         {
                             rv = CKR_ENCRYPTED_DATA_INVALID;
                         }
@@ -890,8 +898,8 @@ CK_RV pkcs11_decrypt_update(
                 }
 #endif
             }
-#ifdef ATCA_TA100_SUPPORT
-            if (atcab_is_ta_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
+#if ATCA_TA_SUPPORT
+            if (atcab_is_ta_device(atcab_get_device_type()))
             {
                 rv = CKR_FUNCTION_NOT_SUPPORTED;
             }
@@ -985,7 +993,7 @@ CK_RV pkcs11_decrypt_final(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULO
 
 #endif
             }
-#ifdef ATCA_TA100_SUPPORT
+#if ATCA_TA_SUPPORT
             if (atcab_is_ta_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
             {
                 rv = CKR_FUNCTION_NOT_SUPPORTED;

@@ -144,14 +144,20 @@ TEST(tng_atcacert_client, tng_atcacert_read_signer_cert)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
 #if ATCA_HOSTLIB_EN
-    atcac_pk_ctx pkey_ctx;
-    ret = atcac_pk_init(&pkey_ctx, ca_public_key, sizeof(ca_public_key), 0, true);
+    struct atcac_pk_ctx * pkey_ctx;
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    pkey_ctx = atcac_pk_ctx_new();
+#else
+    atcac_pk_ctx_t pkey_ctx_inst;
+    pkey_ctx = &pkey_ctx_inst;
+#endif
+    ret = atcac_pk_init(pkey_ctx, ca_public_key, sizeof(ca_public_key), 0, true);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
-    ret = atcac_pk_verify(&pkey_ctx, tbs_digest, sizeof(tbs_digest), signature, sizeof(signature));
+    ret = atcac_pk_verify(pkey_ctx, tbs_digest, sizeof(tbs_digest), signature, sizeof(signature));
 
     /* Make sure to free the key before testing the result of the verify */
-    atcac_pk_free(&pkey_ctx);
+    atcac_pk_free(pkey_ctx);
 
     /* Check verification result */
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
@@ -160,6 +166,13 @@ TEST(tng_atcacert_client, tng_atcacert_read_signer_cert)
     ret = atcab_verify_extern(tbs_digest, signature, ca_public_key, &is_verified);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     TEST_ASSERT(is_verified);
+#endif
+
+#if ATCA_HOSTLIB_EN && (defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP))
+    if (NULL != pkey_ctx)
+    {
+        atcac_pk_ctx_free(pkey_ctx);
+    }
 #endif
 }
 
@@ -269,14 +282,20 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_no_signer)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
 #if ATCA_HOSTLIB_EN
-    atcac_pk_ctx pkey_ctx;
-    ret = atcac_pk_init(&pkey_ctx, ca_public_key, sizeof(ca_public_key), 0, true);
+    struct atcac_pk_ctx * pkey_ctx;
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    pkey_ctx = atcac_pk_ctx_new();
+#else
+    atcac_pk_ctx_t pkey_ctx_inst;
+    pkey_ctx = &pkey_ctx_inst;
+#endif
+    ret = atcac_pk_init(pkey_ctx, ca_public_key, sizeof(ca_public_key), 0, true);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
-    ret = atcac_pk_verify(&pkey_ctx, tbs_digest, sizeof(tbs_digest), signature, sizeof(signature));
+    ret = atcac_pk_verify(pkey_ctx, tbs_digest, sizeof(tbs_digest), signature, sizeof(signature));
 
     /* Make sure to free the key before testing the result of the verify */
-    atcac_pk_free(&pkey_ctx);
+    atcac_pk_free(pkey_ctx);
 
     /* Check verification result */
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
@@ -285,6 +304,13 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_no_signer)
     ret = atcab_verify_extern(tbs_digest, signature, ca_public_key, &is_verified);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     TEST_ASSERT(is_verified);
+#endif
+
+#if ATCA_HOSTLIB_EN && (defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP))
+    if (NULL != pkey_ctx)
+    {
+        atcac_pk_ctx_free(pkey_ctx);
+    }
 #endif
 }
 
@@ -335,14 +361,20 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_signer)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
 #if ATCA_HOSTLIB_EN
-    atcac_pk_ctx pkey_ctx;
-    ret = atcac_pk_init(&pkey_ctx, ca_public_key, sizeof(ca_public_key), 0, true);
+    struct atcac_pk_ctx * pkey_ctx;
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    pkey_ctx = atcac_pk_ctx_new();
+#else
+    atcac_pk_ctx_t pkey_ctx_inst;
+    pkey_ctx = &pkey_ctx_inst;
+#endif
+    ret = atcac_pk_init(pkey_ctx, ca_public_key, sizeof(ca_public_key), 0, true);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
-    ret = atcac_pk_verify(&pkey_ctx, tbs_digest, sizeof(tbs_digest), signature, sizeof(signature));
+    ret = atcac_pk_verify(pkey_ctx, tbs_digest, sizeof(tbs_digest), signature, sizeof(signature));
 
     /* Make sure to free the key before testing the result of the verify */
-    atcac_pk_free(&pkey_ctx);
+    atcac_pk_free(pkey_ctx);
 
     /* Check verification result */
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
@@ -352,6 +384,13 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_signer)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     TEST_ASSERT(is_verified);
 #endif
+#if ATCA_HOSTLIB_EN && (defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP))
+    if (NULL != pkey_ctx)
+    {
+        atcac_pk_ctx_free(pkey_ctx);
+    }
+#endif
+
 }
 
 TEST(tng_atcacert_client, tng_atcacert_device_public_key_no_cert)

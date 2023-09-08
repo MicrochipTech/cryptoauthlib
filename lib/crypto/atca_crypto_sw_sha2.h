@@ -45,8 +45,13 @@ extern "C" {
 #endif
 
 ATCA_STATUS atcac_sw_sha2_256(const uint8_t * data, size_t data_size, uint8_t digest[ATCA_SHA2_256_DIGEST_SIZE]);
-ATCA_STATUS atcac_sha256_hmac_counter(atcac_hmac_sha256_ctx* ctx, uint8_t* label, size_t label_len,
-                                      uint8_t* data, size_t data_len, uint8_t* digest, size_t diglen);
+
+ATCA_STATUS atcac_sha256_hmac_ctr_iteration(struct atcac_hmac_ctx* ctx, uint8_t iteration, uint16_t length,
+                                            const uint8_t* label, size_t label_len, const uint8_t * data, size_t data_len,
+                                            uint8_t digest[ATCA_SHA2_256_DIGEST_SIZE]);
+
+ATCA_STATUS atcac_sha256_hmac_counter(uint8_t * key, size_t key_len, const uint8_t* label, size_t label_len,
+                                      const uint8_t* data, size_t data_len, uint8_t* digest, size_t diglen);
 
 #ifdef __cplusplus
 }

@@ -77,7 +77,7 @@ TEST(atca_cmd_basic_test, read_config_zone)
     ATCA_STATUS status = ATCA_SUCCESS;
     uint8_t config_data[ATCA_ECC_CONFIG_SIZE];
 
-    if (TA100 == gCfg->devtype)
+    if (atcab_is_ta_device(gCfg->devtype))
     {
         test_assert_data_is_locked();
     }

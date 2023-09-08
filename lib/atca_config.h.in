@@ -18,11 +18,13 @@
 #cmakedefine ATCA_ATECC108A_SUPPORT
 #cmakedefine ATCA_ATECC508A_SUPPORT
 #cmakedefine ATCA_ATECC608_SUPPORT
-#cmakedefine ATCA_TA100_SUPPORT
 #cmakedefine ATCA_ECC204_SUPPORT
 #cmakedefine ATCA_TA010_SUPPORT
 #cmakedefine ATCA_SHA104_SUPPORT
 #cmakedefine ATCA_SHA105_SUPPORT
+
+/* Linked device support library */
+#cmakedefine01 ATCA_TA_SUPPORT
 
 /** Device Override - Library Assumes ATECC608B support in checks */
 #cmakedefine ATCA_ATECC608A_SUPPORT
@@ -99,16 +101,6 @@ selected plus however additional slots one would like */
 
 /******************** Device Configuration Section *************************/
 
-/** TA100 Specific - Enable auth sessions that require AES (CMAC/GCM) from
-   an external library */
-#cmakedefine ATCA_TA100_AES_AUTH_SUPPORT
-
-/** TA100 Specific - Enable support for the FCE APIs for the TA100 */
-#cmakedefine ATCA_TA100_FCE_SUPPORT
-
-/** TA100 Specific - Enable support for the KDF HMAC Host calculation input length in bytes for Rev before B6 */
-#cmakedefine ATCA_KDF_HMAC_COUNTER_LEN_IN_BYTES
-
 /** Enable the delete command */
 #cmakedefine01 CALIB_DELETE_EN
 
@@ -118,6 +110,8 @@ selected plus however additional slots one would like */
 #ifndef MAX_PACKET_SIZE
 #define MAX_PACKET_SIZE         (@MAX_PACKET_SIZE@U)
 #endif
+
+#cmakedefine01 MULTIPART_BUF_EN
 
 /******************** Platform Configuration Section ***********************/
 

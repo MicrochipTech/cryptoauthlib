@@ -25,8 +25,81 @@
  * THIS SOFTWARE.
  */
 
-#ifndef _ATCA_MBEDTLS_WRAP_H_
-#define _ATCA_MBEDTLS_WRAP_H_
+#ifndef ATCA_MBEDTLS_WRAP_H
+#define ATCA_MBEDTLS_WRAP_H
+
+#ifdef __COVERITY__
+#pragma coverity compliance block(include) \
+    (fp "CERT INT30-C" "Ignoring violations from third party libraries") \
+    (fp "CERT INT31-C" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 3.1" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 5.1" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 8.2" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 10.4" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 11.9" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 14.4" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 15.6" "Ignoring violations from third party libraries") \
+    (fp "MISRA C-2012 Rule 21.1" "Ignoring violations from third party libraries")
+#endif
+
+#if !defined(MBEDTLS_CONFIG_FILE)
+#include "mbedtls/config.h"
+#else
+#include MBEDTLS_CONFIG_FILE
+#endif
+
+#ifndef MBEDTLS_CMAC_C
+#define MBEDTLS_CMAC_C
+#endif
+
+#include <mbedtls/cipher.h>
+#include <mbedtls/md.h>
+#include <mbedtls/pk.h>
+
+typedef struct atcac_sha1_ctx
+{
+    mbedtls_md_context_t mctx;
+} atcac_sha1_ctx_t;
+
+typedef struct atcac_sha2_256_ctx
+{
+    mbedtls_md_context_t mctx;
+} atcac_sha2_256_ctx_t;
+
+typedef struct atcac_hmac_ctx
+{
+    mbedtls_md_context_t* mctx;
+} atcac_hmac_ctx_t;
+
+typedef struct atcac_aes_gcm_ctx
+{
+    mbedtls_cipher_context_t mctx;
+} atcac_aes_gcm_ctx_t;
+
+typedef struct atcac_aes_cmac_ctx
+{
+    mbedtls_cipher_context_t mctx;
+} atcac_aes_cmac_ctx_t;
+
+typedef struct atcac_pk_ctx
+{
+    mbedtls_pk_context mctx;
+} atcac_pk_ctx_t;
+
+#ifdef __COVERITY__
+#pragma coverity compliance end_block(include) \
+    "CERT INT30-C" \
+    "CERT INT31-C" \
+    "MISRA C-2012 Rule 3.1" \
+    "MISRA C-2012 Rule 5.1" \
+    "MISRA C-2012 Rule 8.2" \
+    "MISRA C-2012 Rule 10.4" \
+    "MISRA C-2012 Rule 11.9" \
+    "MISRA C-2012 Rule 14.4" \
+    "MISRA C-2012 Rule 15.6" \
+    "MISRA C-2012 Rule 21.1"
+#endif
+
 
 /** \defgroup atca_mbedtls_ mbedTLS Wrapper methods (atca_mbedtls_)
  *
@@ -85,4 +158,4 @@ int atca_mbedtls_ecdh_ioprot_cb(uint8_t secret[32]);
 
 /** @} */
 
-#endif /* _ATCA_MBEDTLS_WRAP_H_ */
+#endif /* ATCA_MBEDTLS_WRAP_H */

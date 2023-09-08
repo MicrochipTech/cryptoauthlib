@@ -110,7 +110,7 @@ ATCA_STATUS hal_swi_gpio_release(void *hal_data);
 ATCA_STATUS hal_swi_gpio_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen);
 #endif
 
-#if defined(ATCA_HAL_GPIO) || defined(ATCA_HAL_BB)
+#if defined(ATCA_HAL_SWI_GPIO) || defined(ATCA_HAL_SWI_BB)
 ATCA_STATUS hal_gpio_init(ATCAIface iface, ATCAIfaceCfg *cfg);
 ATCA_STATUS hal_gpio_post_init(ATCAIface iface);
 ATCA_STATUS hal_gpio_send(ATCAIface iface, uint8_t word_address, uint8_t* pin_state, int unused_param);
@@ -224,7 +224,7 @@ void hal_rtos_delay_ms(uint32_t ms);
 #endif
 
 #if defined(__linux__) || defined(__APPLE__)
-    #if ATCA_USE_SHARED_MUTEX
+    #ifdef ATCA_USE_SHARED_MUTEX
         #include <pthread.h>
 /** \brief Structure for holding a mutex in shared memory on linux */
 typedef struct

@@ -94,7 +94,7 @@ static ATCAHAL_t hal_spi = {
 };
 #endif
 
-#if defined(ATCA_HAL_GPIO) || defined(ATCA_HAL_BB)
+#if defined(ATCA_HAL_SWI_GPIO) || defined(ATCA_HAL_SWI_BB)
 static ATCAHAL_t hal_gpio = {
     hal_gpio_init,
     hal_gpio_post_init,

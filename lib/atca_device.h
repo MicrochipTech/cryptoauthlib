@@ -48,6 +48,9 @@ typedef enum
     ATCA_DEVICE_STATE_ACTIVE
 } ATCADeviceState;
 
+/** \brief Callback function to clean up the session context
+ */
+typedef void (*ctx_cb)(void* ctx);
 
 /** \brief atca_device is the C object backing ATCADevice.  See the atca_device.h file for
  * details on the ATCADevice methods
@@ -60,16 +63,9 @@ struct atca_device
     uint8_t  clock_divider;
     uint16_t execution_time_msec;
 
-    uint8_t  session_state;             /**< Secure Session State */
-    uint16_t session_counter;           /**< Secure Session Message Count */
-    uint16_t session_key_id;            /**< Key ID used for a secure sesison */
-    uint8_t* session_key;               /**< Session Key */
-    uint8_t  session_key_len;           /**< Length of key used for the session in bytes */
-
-    uint16_t options;                   /**< Nested command details parameter */
-
-    bool write_xfer_req;                /**< Set for Write_transfer operation */
-    bool read_xfer_req;                 /**< Set for Read_transfer operation */
+    /* Session Management */
+    void * session_ctx;
+    ctx_cb session_cb;
 };
 
 typedef struct atca_device * ATCADevice;

@@ -29,7 +29,7 @@
 #define ATCA_CRYPTO_HW_AES_H
 
 #include "cryptoauthlib.h"
-#include "crypto_config_check.h"
+#include "crypto_hw_config_check.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -136,6 +136,11 @@ ATCA_STATUS atcab_aes_ccm_encrypt_update(atca_aes_ccm_ctx_t* ctx, const uint8_t*
 ATCA_STATUS atcab_aes_ccm_decrypt_update(atca_aes_ccm_ctx_t* ctx, const uint8_t* ciphertext, uint32_t ciphertext_size, uint8_t* plaintext);
 ATCA_STATUS atcab_aes_ccm_encrypt_finish(atca_aes_ccm_ctx_t* ctx, uint8_t* tag, uint8_t* tag_size);
 ATCA_STATUS atcab_aes_ccm_decrypt_finish(atca_aes_ccm_ctx_t* ctx, const uint8_t* tag, bool* is_verified);
+#endif
+
+#if ATCAC_PKCS7_PAD_EN
+ATCA_STATUS atcac_pkcs7_pad(uint8_t * buffer, size_t * buflen, const size_t datalen, const uint8_t blocksize);
+ATCA_STATUS atcac_pkcs7_unpad(uint8_t * buffer, size_t * buflen, const uint8_t blocksize);
 #endif
 
 #ifdef __cplusplus
