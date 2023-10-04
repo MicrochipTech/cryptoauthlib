@@ -289,7 +289,7 @@ ATCA_STATUS hal_unlock_mutex(void *pMutex)
  * \param[in,out] ppMutex location to receive ptr to mutex
  * \param[in,out] pName String used to identify the mutex
  */
-ATCA_STATUS hal_create_mutex(void ** ppMutex, char* pName)
+ATCA_STATUS hal_create_mutex(void ** ppMutex, const char* pName)
 {
     sem_t * sem;
 
