@@ -93,7 +93,7 @@ ATCA_STATUS atcacert_der_enc_length(size_t length, uint8_t* der_length, size_t* 
         der_length[0] = 0x80u | (uint8_t)(der_length_size_calc - 1u);  // Set number of bytes octet with long-form flag
 
         // Encode length in big-endian format
-        for (l_exp = 1; l_exp <= (int)der_length_size_calc; l_exp++)
+        for (l_exp = 1; l_exp <= der_length_size_calc; l_exp++)
         {
 #ifdef ATCA_PLATFORM_BE
             der_length[exp] = len_bytes[sizeof(length) - *der_length_size + exp];
