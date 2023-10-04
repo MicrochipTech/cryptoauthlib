@@ -187,6 +187,7 @@ ATCA_STATUS hal_i2c_control(ATCAIface iface, uint8_t option, void* param, size_t
 
 ATCA_STATUS hal_i2c_release(void *hal_data)
 {
+    (void)hal_data;
     return ATCA_SUCCESS;
 }
 

@@ -493,6 +493,7 @@ ATCA_STATUS ifacecfg_set_address(
     ATCAKitType    kitiface /**< [in] Optional parameter to set the kit iface type */
     )
 {
+    (void)kitiface;
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
     if (NULL != cfg)

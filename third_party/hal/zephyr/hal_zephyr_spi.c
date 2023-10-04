@@ -222,6 +222,7 @@ ATCA_STATUS hal_spi_control(ATCAIface iface, uint8_t option, void* param, size_t
  */
 ATCA_STATUS hal_spi_release(void *hal_data)
 {
+    (void)hal_data;
     return ATCA_SUCCESS;
 }
 
