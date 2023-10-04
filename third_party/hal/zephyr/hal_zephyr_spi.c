@@ -4,9 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <zephyr.h>
-#include <kernel.h>
-#include <drivers/spi.h>
+#include <zephyr/kernel.h>
+#include <zephyr/drivers/spi.h>
 
 
 #include "hal/atca_hal.h"

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <drivers/i2c.h>
+#include <zephyr/drivers/i2c.h>
 
 #include "hal/atca_hal.h"
 
@@ -46,7 +46,7 @@ static ATCA_STATUS hal_zephyr_i2c_configure(
     const uint32_t          speed            /**< baud rate (typically 100000 or 400000) */
 )
 {
-    uint32_t i2c_cfg = I2C_MODE_MASTER | I2C_SPEED_SET(hal_zephyr_i2c_convert_speed(speed));
+    uint32_t i2c_cfg = I2C_MODE_CONTROLLER | I2C_SPEED_SET(hal_zephyr_i2c_convert_speed(speed));
 
     if (i2c_configure(zdev, i2c_cfg)) 
     {

@@ -6,8 +6,7 @@
 
 #include "hal/atca_hal.h"
 
-#include <zephyr.h>
-#include <kernel.h>
+#include <zephyr/kernel.h>
 
 
 #ifndef ATCA_MUTEX_TIMEOUT
