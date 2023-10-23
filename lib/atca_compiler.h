@@ -31,7 +31,7 @@
 #ifndef ATCA_COMPILER_H_
 #define ATCA_COMPILER_H_
 
-#if defined(__clang__)
+#if defined(__clang__) && !defined (__CC_ARM)
 /* Clang/LLVM. ---------------------------------------------- */
 #if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 #define ATCA_UINT16_HOST_TO_LE(x)  __builtin_bswap16(x)
@@ -134,7 +134,7 @@
 //#elif defined(__IBMC__) || defined(__IBMCPP__)
 /* IBM XL C/C++. -------------------------------------------- */
 
-#elif defined(_MSC_VER)
+#elif defined(_MSC_VER) && !defined (__CC_ARM)
 /* Microsoft Visual Studio. --------------------------------- */
 // MSVC is usually always little-endian architecture
 #include <stdlib.h>
@@ -170,6 +170,7 @@
 #define ATCA_UINT64_BE_TO_HOST(x)  (x)
 #else
 #define ATCA_UINT16_HOST_TO_LE(x)  (x)
+#define ATCA_UINT16_HOST_TO_BE(x)  ((x >> 8) | ((x & 0xFF) << 8))
 #define ATCA_UINT16_LE_TO_HOST(x)  (x)
 #define ATCA_UINT32_HOST_TO_LE(x)  (x)
 #define ATCA_UINT32_HOST_TO_BE(x)  __rev(x)

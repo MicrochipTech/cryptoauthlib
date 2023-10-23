@@ -84,7 +84,7 @@ typedef enum
 
 /* ATCAIfaceCfg is the configuration object for a device
  */
-
+#pragma anon_unions
 typedef struct
 {
 
