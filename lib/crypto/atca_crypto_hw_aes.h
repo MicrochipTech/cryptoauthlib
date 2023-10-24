@@ -29,7 +29,7 @@
 #define ATCA_CRYPTO_HW_AES_H
 
 #include "cryptoauthlib.h"
-#include "crypto_config_check.h"
+#include "crypto_hw_config_check.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -43,20 +43,21 @@ typedef struct atca_aes_cbc_ctx
     uint8_t    key_block;                          //!< Index of the 16-byte block to use within the key location for the actual key.
     uint8_t    ciphertext[ATCA_AES128_BLOCK_SIZE]; //!< Ciphertext from last operation.
 #ifdef ATCAB_AES_CBC_UPDATE_EN
-    uint8_t    block_size;                         //!< Number of bytes in unprocessed block.
-    uint8_t    block[ATCA_AES128_BLOCK_SIZE];      //!< Unprocessed message storage.
+    uint8_t block_size;                            //!< Number of bytes in unprocessed block.
+    uint8_t block[ATCA_AES128_BLOCK_SIZE];         //!< Unprocessed message storage.
 #endif
+    uint8_t padding;                               //!< Is padding expected
 } atca_aes_cbc_ctx_t;
 
-ATCA_STATUS atcab_aes_cbc_init_ext(ATCADevice device, atca_aes_cbc_ctx_t* ctx, uint16_t key_id, uint8_t key_block, const uint8_t* iv);
+ATCA_STATUS atcab_aes_cbc_init_ext(ATCADevice device, atca_aes_cbc_ctx_t* ctx, uint16_t key_id, uint8_t key_block, const uint8_t* iv, const uint8_t padding);
 ATCA_STATUS atcab_aes_cbc_init(atca_aes_cbc_ctx_t* ctx, uint16_t key_id, uint8_t key_block,   const uint8_t* iv);
 ATCA_STATUS atcab_aes_cbc_encrypt_block(atca_aes_cbc_ctx_t* ctx, const uint8_t* plaintext, uint8_t* ciphertext);
 ATCA_STATUS atcab_aes_cbc_decrypt_block(atca_aes_cbc_ctx_t* ctx, const uint8_t* ciphertext, uint8_t* plaintext);
 #ifdef ATCAB_AES_CBC_UPDATE_EN
 ATCA_STATUS atcab_aes_cbc_encrypt_update(atca_aes_cbc_ctx_t* ctx, uint8_t* plaintext, size_t plaintext_len, uint8_t* ciphertext, size_t * ciphertext_len);
-ATCA_STATUS atcab_aes_cbc_encrypt_finish(atca_aes_cbc_ctx_t* ctx, uint8_t* ciphertext, size_t * ciphertext_len, uint8_t padding);
+ATCA_STATUS atcab_aes_cbc_encrypt_finish(atca_aes_cbc_ctx_t* ctx, uint8_t* ciphertext, size_t * ciphertext_len);
 ATCA_STATUS atcab_aes_cbc_decrypt_update(atca_aes_cbc_ctx_t* ctx, const uint8_t* ciphertext, size_t ciphertext_len, uint8_t* plaintext, size_t * plaintext_len);
-ATCA_STATUS atcab_aes_cbc_decrypt_finish(atca_aes_cbc_ctx_t* ctx, uint8_t* plaintext, size_t * plaintext_len, uint8_t padding);
+ATCA_STATUS atcab_aes_cbc_decrypt_finish(atca_aes_cbc_ctx_t* ctx, uint8_t* plaintext, size_t * plaintext_len);
 #endif
 
 #endif
@@ -135,6 +136,11 @@ ATCA_STATUS atcab_aes_ccm_encrypt_update(atca_aes_ccm_ctx_t* ctx, const uint8_t*
 ATCA_STATUS atcab_aes_ccm_decrypt_update(atca_aes_ccm_ctx_t* ctx, const uint8_t* ciphertext, uint32_t ciphertext_size, uint8_t* plaintext);
 ATCA_STATUS atcab_aes_ccm_encrypt_finish(atca_aes_ccm_ctx_t* ctx, uint8_t* tag, uint8_t* tag_size);
 ATCA_STATUS atcab_aes_ccm_decrypt_finish(atca_aes_ccm_ctx_t* ctx, const uint8_t* tag, bool* is_verified);
+#endif
+
+#if ATCAC_PKCS7_PAD_EN
+ATCA_STATUS atcac_pkcs7_pad(uint8_t * buffer, size_t * buflen, const size_t datalen, const uint8_t blocksize);
+ATCA_STATUS atcac_pkcs7_unpad(uint8_t * buffer, size_t * buflen, const uint8_t blocksize);
 #endif
 
 #ifdef __cplusplus

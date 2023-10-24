@@ -38,6 +38,10 @@
 
 #include "host/atca_host.h"
 
+#if (CA_MAX_PACKET_SIZE < PRIVWRITE_COUNT)
+#error "PrivWrite command packet cannot be accommodated inside the maximum packet size provided"
+#endif
+
 /** \brief Executes PrivWrite command, to write externally generated ECC
  *          private keys into the device.
  *
@@ -74,7 +78,7 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
     uint8_t host_mac[MAC_SIZE] = { 0 };
     uint8_t other_data[4] = { 0 };
 
-    if ((device == NULL) || (priv_key == NULL) || (key_id > 15))
+    if ((device == NULL) || (priv_key == NULL) || (key_id > 15u))
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "Either NULL pointer or invalid slot received");
     }
@@ -87,30 +91,30 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
             // build an PrivWrite command
             packet.param1 = 0x00;                           // Mode is unencrypted write
             packet.param2 = key_id;                         // Key ID
-            memcpy(&packet.data[0], priv_key, 36);          // Private key
-            memset(&packet.data[36], 0, 32);                // MAC (ignored for unencrypted write)
+            (void)memcpy(&packet.data[0], priv_key, 36);    // Private key
+            (void)memset(&packet.data[36], 0, 32);          // MAC (ignored for unencrypted write)
         }
         else
         {
             // Read the device SN
             if ((status = calib_read_zone(device, ATCA_ZONE_CONFIG, 0, 0, 0, serial_num, 32)) != ATCA_SUCCESS)
             {
-                ATCA_TRACE(status, "calib_read_zone - failed");
+                (void)ATCA_TRACE(status, "calib_read_zone - failed");
                 break;
             }
             // Make the SN continuous by moving SN[4:8] right after SN[0:3]
-            memmove(&serial_num[4], &serial_num[8], 5);
+            (void)memmove(&serial_num[4], &serial_num[8], 5);
 
             // Send the random Nonce command
             if ((status = calib_nonce_rand(device, num_in, rand_out)) != ATCA_SUCCESS)
             {
-                ATCA_TRACE(status, "calib_nonce_rand - failed");
+                (void)ATCA_TRACE(status, "calib_nonce_rand - failed");
                 break;
             }
 
             // Calculate Tempkey
-            memset(&temp_key, 0, sizeof(temp_key));
-            memset(&nonce_params, 0, sizeof(nonce_params));
+            (void)memset(&temp_key, 0, sizeof(temp_key));
+            (void)memset(&nonce_params, 0, sizeof(nonce_params));
             nonce_params.mode = NONCE_MODE_SEED_UPDATE;
             nonce_params.zero = 0;
             nonce_params.num_in = &num_in[0];
@@ -118,27 +122,27 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
             nonce_params.temp_key = &temp_key;
             if ((status = atcah_nonce(&nonce_params)) != ATCA_SUCCESS)
             {
-                ATCA_TRACE(status, "atcah_nonce - failed");
+                (void)ATCA_TRACE(status, "atcah_nonce - failed");
                 break;
             }
 
             // Supply OtherData so GenDig behavior is the same for keys with SlotConfig.NoMac set
             other_data[0] = ATCA_GENDIG;
             other_data[1] = GENDIG_ZONE_DATA;
-            other_data[2] = (uint8_t)(write_key_id);
-            other_data[3] = (uint8_t)(write_key_id >> 8);
+            other_data[2] = (uint8_t)(write_key_id & 0xFFu);
+            other_data[3] = (uint8_t)(write_key_id >> 8u);
 
             // Send the GenDig command
-            if ((status = calib_gendig(device, GENDIG_ZONE_DATA, write_key_id, other_data, sizeof(other_data))) != ATCA_SUCCESS)
+            if ((status = calib_gendig(device, GENDIG_ZONE_DATA, write_key_id, other_data, (uint8_t)sizeof(other_data))) != ATCA_SUCCESS)
             {
-                ATCA_TRACE(status, "calib_gendig - failed");
+                (void)ATCA_TRACE(status, "calib_gendig - failed");
                 break;
             }
 
             // Calculate Tempkey
             // NoMac bit isn't being considered here on purpose to remove having to read SlotConfig.
             // OtherData is built to get the same result regardless of the NoMac bit.
-            memset(&gen_dig_param, 0, sizeof(gen_dig_param));
+            (void)memset(&gen_dig_param, 0, sizeof(gen_dig_param));
             gen_dig_param.zone = GENDIG_ZONE_DATA;
             gen_dig_param.sn = serial_num;
             gen_dig_param.key_id = write_key_id;
@@ -148,12 +152,12 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
             gen_dig_param.temp_key = &temp_key;
             if ((status = atcah_gen_dig(&gen_dig_param)) != ATCA_SUCCESS)
             {
-                ATCA_TRACE(status, "atcah_gen_dig - failed");
+                (void)ATCA_TRACE(status, "atcah_gen_dig - failed");
                 break;
             }
 
             // Calculate Auth MAC and cipher text
-            memset(&host_mac_param, 0, sizeof(host_mac_param));
+            (void)memset(&host_mac_param, 0, sizeof(host_mac_param));
             host_mac_param.zone = PRIVWRITE_MODE_ENCRYPT;
             host_mac_param.key_id = key_id;
             host_mac_param.sn = serial_num;
@@ -163,31 +167,31 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
             host_mac_param.temp_key = &temp_key;
             if ((status = atcah_privwrite_auth_mac(&host_mac_param)) != ATCA_SUCCESS)
             {
-                ATCA_TRACE(status, "atcah_privwrite_auth_mac - failed");
+                (void)ATCA_TRACE(status, "atcah_privwrite_auth_mac - failed");
                 break;
             }
 
             // build a write command for encrypted writes
             packet.param1 = PRIVWRITE_MODE_ENCRYPT;            // Mode is encrypted write
             packet.param2 = key_id;                            // Key ID
-            memcpy(&packet.data[0], cipher_text, sizeof(cipher_text));
-            memcpy(&packet.data[sizeof(cipher_text)], host_mac, sizeof(host_mac));
+            (void)memcpy(&packet.data[0], cipher_text, sizeof(cipher_text));
+            (void)memcpy(&packet.data[sizeof(cipher_text)], host_mac, sizeof(host_mac));
         }
 
         if ((status = atPrivWrite(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "atPrivWrite - failed");
+            (void)ATCA_TRACE(status, "atPrivWrite - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "calib_priv_write - execution failed");
+            (void)ATCA_TRACE(status, "calib_priv_write - execution failed");
             break;
         }
 
     }
-    while (0);
+    while (false);
 
     return status;
 }

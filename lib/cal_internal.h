@@ -1,7 +1,6 @@
 /**
  * \file
- *
- * \brief bool define for systems that don't have it
+ * \brief Internal CryptoAuthLib Interfaces
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
@@ -26,18 +25,24 @@
  * THIS SOFTWARE.
  */
 
-#ifndef _ATCA_BOOL_H
-#define _ATCA_BOOL_H
+#ifndef CAL_INTERNAL_H
+#define CAL_INTERNAL_H
 
-#if defined(_MSC_VER) && (_MSC_VER <= 1700)
-// VS2012 and earlier don't support stdbool.h
-    #ifndef __cplusplus
-        #define bool    unsigned char
-        #define false   0
-        #define true    1
-    #endif
-#else
-    #include <stdbool.h>
+#include "atca_config_check.h"
+#include "crypto/atca_crypto_sw.h"
+
+#ifdef __cplusplus
+extern "C" {
 #endif
 
+#if defined(ATCA_MBEDTLS)
+#include "mbedtls/atca_mbedtls_wrap.h"
+#elif defined(ATCA_WOLFSSL)
+#include "wolfssl/atca_wolfssl_internal.h"
 #endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* CAL_INTERNAL_H */

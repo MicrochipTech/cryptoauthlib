@@ -41,6 +41,9 @@ extern "C" {
 #define TNGTLS_CERT_TEMPLATE_1_SIGNER_SIZE 520
 ATCA_DLL const atcacert_def_t g_tngtls_cert_def_1_signer;
 
+extern SHARED_LIB_EXPORT const uint8_t g_tngtls_cert_template_1_signer[];
+extern SHARED_LIB_EXPORT const atcacert_cert_element_t g_tngtls_cert_elements_1_signer[];
+
 /** @} */
 
 #ifdef __cplusplus

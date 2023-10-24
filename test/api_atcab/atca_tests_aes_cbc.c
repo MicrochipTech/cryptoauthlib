@@ -187,7 +187,8 @@ TEST(atca_cmd_basic_test, aes_cbc_decrypt_block_simple)
 TEST(atca_cmd_basic_test, aes_cbc_encrypt_update_simple)
 {
     uint8_t ciphertext[sizeof(g_plaintext)];
-    size_t length = sizeof(ciphertext);
+    uint8_t * cPtr = ciphertext;
+    size_t length = sizeof(g_plaintext);
     atca_aes_cbc_ctx_t ctx;
     ATCA_STATUS status;
     uint16_t key_slot;
@@ -210,13 +211,17 @@ TEST(atca_cmd_basic_test, aes_cbc_encrypt_update_simple)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Encrypt the entire plaintext
-    status = atcab_aes_cbc_encrypt_update(&ctx, (uint8_t*)g_plaintext, sizeof(g_plaintext), ciphertext, &length);
+    status = atcab_aes_cbc_encrypt_update(&ctx, (uint8_t*)g_plaintext, sizeof(g_plaintext), cPtr, &length);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(sizeof(g_plaintext), length);
+    cPtr += length;
 
     // Finalize without padding
-    status = atcab_aes_cbc_encrypt_finish(&ctx, ciphertext, &length, 0);
+    length = sizeof(g_plaintext);
+    status = atcab_aes_cbc_encrypt_finish(&ctx, cPtr, &length);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT_EQUAL_MEMORY(&g_ciphertext_cbc[0][0], ciphertext, sizeof(ciphertext));
+    TEST_ASSERT_EQUAL(0, length);
+    TEST_ASSERT_EQUAL_MEMORY(&g_ciphertext_cbc[0][0], ciphertext, sizeof(g_plaintext));
 }
 
 TEST(atca_cmd_basic_test, aes_cbc_encrypt_update_chunks)
@@ -258,12 +263,15 @@ TEST(atca_cmd_basic_test, aes_cbc_encrypt_update_chunks)
 
     // Finish it up
     length = sizeof(g_plaintext) - (cPtr - ciphertext);
-    status = atcab_aes_cbc_encrypt_update(&ctx, (uint8_t*)&g_plaintext[32], sizeof(g_plaintext)-32, cPtr, &length);
+    status = atcab_aes_cbc_encrypt_update(&ctx, (uint8_t*)&g_plaintext[32], sizeof(g_plaintext) - 32, cPtr, &length);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    cPtr += length;
+    length = sizeof(g_plaintext);
 
     // Finalize without padding
-    status = atcab_aes_cbc_encrypt_finish(&ctx, ciphertext, &length, 0);
+    status = atcab_aes_cbc_encrypt_finish(&ctx, ciphertext, &length);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(0, length);
     TEST_ASSERT_EQUAL_MEMORY(&g_ciphertext_cbc[0][0], ciphertext, sizeof(ciphertext));
 }
 
@@ -298,13 +306,15 @@ TEST(atca_cmd_basic_test, aes_cbc_decrypt_update_simple)
     length = sizeof(plaintext);
     status = atcab_aes_cbc_decrypt_update(&ctx, (uint8_t*)&g_ciphertext_cbc[0][0], sizeof(g_plaintext), pPtr, &length);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(sizeof(g_plaintext), length);
 
     pPtr += length;
-    length = sizeof(plaintext) - length;
+    length = sizeof(plaintext);
 
     // Finalize without padding
-    status = atcab_aes_cbc_decrypt_finish(&ctx, pPtr, &length, 0);
+    status = atcab_aes_cbc_decrypt_finish(&ctx, pPtr, &length);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(0, length);
     TEST_ASSERT_EQUAL_MEMORY(&g_plaintext, plaintext, sizeof(plaintext));
 }
 
@@ -347,18 +357,110 @@ TEST(atca_cmd_basic_test, aes_cbc_decrypt_update_chunks)
 
     // Finish it up
     length = sizeof(plaintext) - (pPtr - plaintext);
-    status = atcab_aes_cbc_decrypt_update(&ctx, (uint8_t*)&g_ciphertext_cbc[0][32], sizeof(plaintext)-32, pPtr, &length);
+    status = atcab_aes_cbc_decrypt_update(&ctx, (uint8_t*)&g_ciphertext_cbc[0][32], sizeof(plaintext) - 32, pPtr, &length);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     pPtr += length;
 
+    // There should be no more remaining bytes
+    TEST_ASSERT_EQUAL(sizeof(plaintext), (pPtr - plaintext));
+
     // Finalize without padding
-    length = sizeof(plaintext) - (pPtr - plaintext);
-    status = atcab_aes_cbc_decrypt_finish(&ctx, pPtr, &length, 0);
+    length = sizeof(plaintext);
+    status = atcab_aes_cbc_decrypt_finish(&ctx, pPtr, &length);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(0, length);
     TEST_ASSERT_EQUAL_MEMORY(g_plaintext, plaintext, sizeof(plaintext));
 }
-#endif
 
+
+TEST(atca_cmd_basic_test, aes_cbc_padding_simple)
+{
+    uint8_t ciphertext[sizeof(g_plaintext) + ATCA_AES128_BLOCK_SIZE];
+    uint8_t plaintext[sizeof(g_plaintext) + ATCA_AES128_BLOCK_SIZE];
+    size_t length = sizeof(ciphertext);
+    size_t exp_len = sizeof(g_plaintext) + (ATCA_AES128_BLOCK_SIZE - sizeof(g_plaintext) % 16);
+    size_t res_len;
+    atca_aes_cbc_ctx_t ctx;
+    ATCA_STATUS status;
+    uint16_t key_slot;
+
+    // Skip test if data zone isn't locked
+    test_assert_data_is_locked();
+
+    // Skip test if AES is not enabled
+    check_config_aes_enable();
+
+    status = atca_test_config_get_id(TEST_TYPE_AES, &key_slot);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Load AES keys into slot
+    status = atcab_write_bytes_zone(ATCA_ZONE_DATA, key_slot, 0, g_aes_keys[0], 16);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Init CBC mode context using key in slot
+    status = atcab_aes_cbc_init_ext(atcab_get_device(), &ctx, key_slot, 0, g_iv, 1);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Encrypt the entire plaintext
+    status = atcab_aes_cbc_encrypt_update(&ctx, (uint8_t*)g_plaintext, sizeof(g_plaintext), ciphertext, &length);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    res_len = length;
+    TEST_ASSERT_EQUAL(sizeof(g_plaintext), res_len);
+
+    // Finalize with padding
+    length = sizeof(ciphertext) - length;
+    status = atcab_aes_cbc_encrypt_finish(&ctx, &ciphertext[res_len], &length);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL_MEMORY(&g_ciphertext_cbc[0][0], ciphertext, sizeof(g_plaintext));
+    res_len += length;
+    TEST_ASSERT_EQUAL(exp_len, res_len);
+
+    // Init CBC mode context using key in slot
+    status = atcab_aes_cbc_init_ext(atcab_get_device(), &ctx, key_slot, 0, g_iv, 0);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Decrypt the entire plaintext
+    length = sizeof(plaintext);
+    status = atcab_aes_cbc_decrypt_update(&ctx, ciphertext, exp_len, plaintext, &length);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    res_len = length;
+
+    // Finalize without padding
+    length = sizeof(plaintext) - length;
+    status = atcab_aes_cbc_decrypt_finish(&ctx, &plaintext[res_len], &length);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(0, length);
+    res_len += length;
+    TEST_ASSERT_EQUAL_MEMORY(&g_plaintext, plaintext, sizeof(g_plaintext));
+
+    // Check Padding
+    unsigned int i;
+    for (i = 0; i < ATCA_AES128_BLOCK_SIZE; i++)
+    {
+        TEST_ASSERT_EQUAL((ATCA_AES128_BLOCK_SIZE - sizeof(g_plaintext) % 16), plaintext[sizeof(g_plaintext) + i]);
+    }
+
+    // Init CBC mode context using key in slot
+    status = atcab_aes_cbc_init_ext(atcab_get_device(), &ctx, key_slot, 0, g_iv, 1);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    // Decrypt the entire plaintext
+    length = sizeof(plaintext);
+    status = atcab_aes_cbc_decrypt_update(&ctx, ciphertext, exp_len, plaintext, &length);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(sizeof(g_plaintext), length);
+    res_len = length;
+
+    // Finalize without padding
+    length = sizeof(plaintext) - length;
+    status = atcab_aes_cbc_decrypt_finish(&ctx, &plaintext[res_len], &length);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(0, length);
+    res_len += length;
+    TEST_ASSERT_EQUAL(sizeof(g_plaintext), res_len);
+    TEST_ASSERT_EQUAL_MEMORY(&g_plaintext, plaintext, sizeof(g_plaintext));
+}
+#endif
 
 #endif /* TEST_ATCAB_AES_CBC_EN */
 
@@ -377,7 +479,7 @@ t_test_case_info aes_cbc_basic_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_update_chunks),    atca_test_cond_ta100 },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_update_simple),    atca_test_cond_ta100 },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_update_chunks),    atca_test_cond_ta100 },
-
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_padding_simple),           atca_test_cond_ta100 },
 #endif /* TEST_ATCAB_AES_CBC_UPDATE_EN */
 #endif /* TEST_ATCAB_AES_CBC_EN */
     { (fp_test_case)NULL, NULL },             /* Array Termination element*/

@@ -36,6 +36,7 @@
 #define CALIB_COMMAND_H
 
 #include <stddef.h>
+#include "calib_config_check.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -77,21 +78,17 @@ typedef struct
 {
 
     // used for transmit/send
-    uint8_t _reserved;  // used by HAL layer as needed (I/O tokens, Word address values)
+    uint8_t reserved;   // used by HAL layer as needed (I/O tokens, Word address values)
 
     //--- start of packet i/o frame----
     uint8_t  txsize;
     uint8_t  opcode;
-    uint8_t  param1;    // often same as mode
+    uint8_t  param1;                       // often same as mode
     uint16_t param2;
-    uint8_t  data[192]; // includes 2-byte CRC.  data size is determined by largest possible data section of any
-                        // command + crc (see: x08 verify data1 + data2 + data3 + data4)
-                        // this is an explicit design trade-off (space) resulting in simplicity in use
-                        // and implementation
-    //--- end of packet i/o frame
-
+    uint8_t  data[CA_MAX_PACKET_SIZE - 6]; // CA_MAX_PACKET_SIZE must accomodate data + 6bytes + crc(2bytes)
+                                           // 6 bytes(1 byte reserved, 1 byte txsize, 1 byte opcode, 1 byte param1, 2 byte param2)
     // used for receive
-    uint8_t execTime;       // execution time of command by opcode
+    uint8_t execTime;                      // execution time of command by opcode
 
     // structure should be packed since it will be transmitted over the wire
     // this method varies by compiler.  As new compilers are supported, add their structure packing method here
@@ -102,32 +99,101 @@ typedef struct
 #pragma pack( pop, ATCAPacket)
 #endif
 
-
+#if CALIB_CHECKMAC_EN
 ATCA_STATUS atCheckMAC(ATCADeviceType device_type, ATCAPacket *packet);
+#endif
+
+#if CALIB_COUNTER_EN
 ATCA_STATUS atCounter(ATCADeviceType device_type, ATCAPacket *packet);
+#endif
+
+#if CALIB_DELETE_EN
 ATCA_STATUS atDelete(ATCADeviceType device_type, ATCAPacket *packet);
+#endif
+
+#if CALIB_DERIVEKEY_EN
 ATCA_STATUS atDeriveKey(ATCADeviceType device_type, ATCAPacket *packet, bool has_mac);
+#endif
+
+#if CALIB_ECDH_EN
 ATCA_STATUS atECDH(ATCADeviceType device_type, ATCAPacket *packet);
+#endif
+
+#if CALIB_GENDIG_EN
 ATCA_STATUS atGenDig(ATCADeviceType device_type, ATCAPacket *packet, bool is_no_mac_key);
+#endif
+
+#if CALIB_GENKEY_EN
 ATCA_STATUS atGenKey(ATCADeviceType device_type, ATCAPacket *packet);
+#endif
+
+#if CALIB_HMAC_EN
 ATCA_STATUS atHMAC(ATCADeviceType device_type, ATCAPacket *packet);
+#endif
+
 ATCA_STATUS atInfo(ATCADeviceType device_type, ATCAPacket *packet);
+
+#if CALIB_LOCK_EN || CALIB_LOCK_CA2_EN
 ATCA_STATUS atLock(ATCADeviceType device_type, ATCAPacket *packet);
+#endif
+
+#if CALIB_MAC_EN
 ATCA_STATUS atMAC(ATCADeviceType device_type, ATCAPacket *packet);
+#endif
+
+#if CALIB_NONCE_EN
 ATCA_STATUS atNonce(ATCADeviceType device_type, ATCAPacket *packet);
+#endif
+
 ATCA_STATUS atPause(ATCADeviceType device_type, ATCAPacket *packet);
+
+#if CALIB_PRIVWRITE_EN
 ATCA_STATUS atPrivWrite(ATCADeviceType device_type, ATCAPacket *packet);
+#endif
+
+#if CALIB_RANDOM_EN
 ATCA_STATUS atRandom(ATCADeviceType device_type, ATCAPacket *packet);
+#endif
+
+#if CALIB_READ_EN || CALIB_READ_CA2_EN
 ATCA_STATUS atRead(ATCADeviceType device_type, ATCAPacket *packet);
+#endif
+
+#if CALIB_SECUREBOOT_EN
 ATCA_STATUS atSecureBoot(ATCADeviceType device_type, ATCAPacket *packet);
+#endif
+
+#if CALIB_SHA_EN
 ATCA_STATUS atSHA(ATCADeviceType device_type, ATCAPacket *packet, uint16_t write_context_size);
+#endif
+
+#if CALIB_SIGN_EN || CALIB_SIGN_CA2_EN
 ATCA_STATUS atSign(ATCADeviceType device_type, ATCAPacket *packet);
+#endif
+
+#if CALIB_UPDATEEXTRA_EN
 ATCA_STATUS atUpdateExtra(ATCADeviceType device_type, ATCAPacket *packet);
+#endif
+
+#if CALIB_VERIFY_EN
 ATCA_STATUS atVerify(ATCADeviceType device_type, ATCAPacket *packet);
+#endif
+
+#if CALIB_WRITE_EN || CALIB_WRITE_CA2_EN
 ATCA_STATUS atWrite(ATCADeviceType device_type, ATCAPacket *packet, bool has_mac);
+#endif
+
+#if CALIB_AES_EN
 ATCA_STATUS atAES(ATCADeviceType device_type, ATCAPacket *packet);
+#endif
+
+#if CALIB_SELFTEST_EN
 ATCA_STATUS atSelfTest(ATCADeviceType device_type, ATCAPacket *packet);
+#endif
+
+#if CALIB_KDF_EN
 ATCA_STATUS atKDF(ATCADeviceType device_type, ATCAPacket *packet);
+#endif
 
 bool atIsSHAFamily(ATCADeviceType device_type);
 bool atIsECCFamily(ATCADeviceType device_type);
@@ -136,14 +202,14 @@ ATCA_STATUS isATCAError(uint8_t *data);
 
 // command helpers
 void atCRC(size_t length, const uint8_t *data, uint8_t *crc_le);
-void atCalcCrc(ATCAPacket *pkt);
+void atCalcCrc(ATCAPacket *packet);
 ATCA_STATUS atCheckCrc(const uint8_t *response);
 
 
 /* command definitions */
 
 //! minimum number of bytes in command (from count byte to second CRC byte)
-#define ATCA_CMD_SIZE_MIN       ((uint8_t)7)
+#define ATCA_CMD_SIZE_MIN       (7u)
 //! maximum size of command packet (Verify)
 #define ATCA_CMD_SIZE_MAX       ((uint8_t)4 * 36 + 7)
 //! status byte for success
@@ -195,21 +261,21 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 
 /** \name Definitions of Data and Packet Sizes
    @{ */
-#define ATCA_BLOCK_SIZE             (32)                               //!< size of a block
-#define ATCA_WORD_SIZE              (4)                                //!< size of a word
-#define ATCA_PUB_KEY_PAD            (4)                                //!< size of the public key pad
-#define ATCA_SERIAL_NUM_SIZE        (9)                                //!< number of bytes in the device serial number
+#define ATCA_BLOCK_SIZE             (32u)                              //!< size of a block
+#define ATCA_WORD_SIZE              (4u)                               //!< size of a word
+#define ATCA_PUB_KEY_PAD            (4u)                               //!< size of the public key pad
+#define ATCA_SERIAL_NUM_SIZE        (9u)                               //!< number of bytes in the device serial number
 #define ATCA_RSP_SIZE_VAL           ((uint8_t)7)                       //!< size of response packet containing four bytes of data
-#define ATCA_KEY_COUNT              (16)                               //!< number of keys
-#define ATCA_ECC_CONFIG_SIZE        (128)                              //!< size of configuration zone
-#define ATCA_SHA_CONFIG_SIZE        (88)                               //!< size of configuration zone
-#define ATCA_CA2_CONFIG_SIZE        (64)                               //!< size of ECC204 configuration zone
-#define ATCA_CA2_CONFIG_SLOT_SIZE   (16)                               //!< size of ECC204 configuration slot size
-#define ATCA_OTP_SIZE               (64)                               //!< size of OTP zone
+#define ATCA_KEY_COUNT              (16u)                              //!< number of keys
+#define ATCA_ECC_CONFIG_SIZE        (128u)                             //!< size of configuration zone
+#define ATCA_SHA_CONFIG_SIZE        (88u)                              //!< size of configuration zone
+#define ATCA_CA2_CONFIG_SIZE        (64u)                              //!< size of ECC204 configuration zone
+#define ATCA_CA2_CONFIG_SLOT_SIZE   (16u)                              //!< size of ECC204 configuration slot size
+#define ATCA_OTP_SIZE               (64u)                              //!< size of OTP zone
 #define ATCA_DATA_SIZE              (ATCA_KEY_COUNT * ATCA_KEY_SIZE)   //!< size of data zone
 #define ATCA_AES_GFM_SIZE            ATCA_BLOCK_SIZE                   //!< size of GFM data
 
-#define ATCA_CHIPMODE_OFFSET           (19)                            //!< ChipMode byte offset within the configuration zone
+#define ATCA_CHIPMODE_OFFSET           (19u)                           //!< ChipMode byte offset within the configuration zone
 #define ATCA_CHIPMODE_I2C_ADDRESS_FLAG ((uint8_t)0x01)                 //!< ChipMode I2C Address in UserExtraAdd flag
 #define ATCA_CHIPMODE_TTL_ENABLE_FLAG  ((uint8_t)0x02)                 //!< ChipMode TTLenable flag
 #define ATCA_CHIPMODE_WATCHDOG_MASK    ((uint8_t)0x04)                 //!< ChipMode watchdog duration mask
@@ -220,25 +286,25 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define ATCA_CHIPMODE_CLOCK_DIV_M1     ((uint8_t)0x28)                 //!< ChipMode clock divider M1
 #define ATCA_CHIPMODE_CLOCK_DIV_M2     ((uint8_t)0x68)                 //!< ChipMode clock divider M2
 
-#define ATCA_COUNT_SIZE             ((uint8_t)1)                       //!< Number of bytes in the command packet Count
-#define ATCA_CRC_SIZE               ((uint8_t)2)                       //!< Number of bytes in the command packet CRC
+#define ATCA_COUNT_SIZE             (1u)                               //!< Number of bytes in the command packet Count
+#define ATCA_CRC_SIZE               (2u)                               //!< Number of bytes in the command packet CRC
 #define ATCA_PACKET_OVERHEAD        (ATCA_COUNT_SIZE + ATCA_CRC_SIZE)  //!< Number of bytes in the command packet
 
-#define ATCA_PUB_KEY_SIZE           (64)                               //!< size of a p256 public key
-#define ATCA_PRIV_KEY_SIZE          (32)                               //!< size of a p256 private key
-#define ATCA_SIG_SIZE               (64)                               //!< size of a p256 signature
-#define ATCA_KEY_SIZE               (32)                               //!< size of a symmetric SHA key
-#define RSA2048_KEY_SIZE            (256)                              //!< size of a RSA private key
+#define ATCA_PUB_KEY_SIZE           (64u)                              //!< size of a p256 public key
+#define ATCA_PRIV_KEY_SIZE          (32u)                              //!< size of a p256 private key
+#define ATCA_SIG_SIZE               (64u)                              //!< size of a p256 signature
+#define ATCA_KEY_SIZE               (32u)                              //!< size of a symmetric SHA key
+#define RSA2048_KEY_SIZE            (256u)                             //!< size of a RSA private key
 
 #define ATCA_RSP_SIZE_MIN           ((uint8_t)4)                       //!< minimum number of bytes in response
 #define ATCA_RSP_SIZE_4             ((uint8_t)7)                       //!< size of response packet containing 4 bytes data
 #define ATCA_RSP_SIZE_72            ((uint8_t)75)                      //!< size of response packet containing 64 bytes data
 #define ATCA_RSP_SIZE_64            ((uint8_t)67)                      //!< size of response packet containing 64 bytes data
-#define ATCA_RSP_SIZE_32            ((uint8_t)35)                      //!< size of response packet containing 32 bytes data
+#define ATCA_RSP_SIZE_32            (35u)                              //!< size of response packet containing 32 bytes data
 #define ATCA_RSP_SIZE_16            ((uint8_t)19)                      //!< size of response packet containing 16 bytes data
 #define ATCA_RSP_SIZE_MAX           ((uint8_t)75)                      //!< maximum size of response packet (GenKey and Verify command)
 
-#define OUTNONCE_SIZE               (32)                               //!< Size of the OutNonce response expected from several commands
+#define OUTNONCE_SIZE               (32u)                              //!< Size of the OutNonce response expected from several commands
 
 /** \name Definitions for Command Parameter Ranges
    @{ */
@@ -253,7 +319,7 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define ATCA_PARAM1_IDX             (2)     //!< command packet index for first parameter
 #define ATCA_PARAM2_IDX             (3)     //!< command packet index for second parameter
 #define ATCA_DATA_IDX               (5)     //!< command packet index for data load
-#define ATCA_RSP_DATA_IDX           (1)     //!< buffer index of data in response
+#define ATCA_RSP_DATA_IDX           (1u)    //!< buffer index of data in response
 /** @} */
 
 /** \name Definitions for Zone and Address Parameters
@@ -261,10 +327,10 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define ATCA_ZONE_MASK                  ((uint8_t)0x03)         //!< Zone mask
 #define ATCA_ZONE_ENCRYPTED             ((uint8_t)0x40)         //!< Zone bit 6 set: Write is encrypted with an unlocked data zone.
 #define ATCA_ZONE_READWRITE_32          ((uint8_t)0x80)         //!< Zone bit 7 set: Access 32 bytes, otherwise 4 bytes.
-#define ATCA_ADDRESS_MASK_CONFIG        (0x001F)                //!< Address bits 5 to 7 are 0 for Configuration zone.
-#define ATCA_ADDRESS_MASK_OTP           (0x000F)                //!< Address bits 4 to 7 are 0 for OTP zone.
-#define ATCA_ADDRESS_MASK               (0x007F)                //!< Address bit 7 to 15 are always 0.
-#define ATCA_TEMPKEY_KEYID              (0xFFFF)                //!< KeyID when referencing TempKey
+#define ATCA_ADDRESS_MASK_CONFIG        ((uint16_t)0x001F)      //!< Address bits 5 to 7 are 0 for Configuration zone.
+#define ATCA_ADDRESS_MASK_OTP           ((uint16_t)0x000F)      //!< Address bits 4 to 7 are 0 for OTP zone.
+#define ATCA_ADDRESS_MASK               ((uint16_t)0x007F)      //!< Address bit 7 to 15 are always 0.
+#define ATCA_TEMPKEY_KEYID              ((uint16_t)0xFFFF)      //!< KeyID when referencing TempKey
 /** @} */
 
 /** \name Definitions for Key types
@@ -281,15 +347,15 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define AES_MODE_IDX                ATCA_PARAM1_IDX         //!< AES command index for mode
 #define AES_KEYID_IDX               ATCA_PARAM2_IDX         //!< AES command index for key id
 #define AES_INPUT_IDX               ATCA_DATA_IDX           //!< AES command index for input data
-#define AES_COUNT                   (23)                    //!< AES command packet size
+#define AES_COUNT                   (23u)                   //!< AES command packet size
 #define AES_MODE_MASK               ((uint8_t)0xC7)         //!< AES mode bits 3 to 5 are 0
 #define AES_MODE_KEY_BLOCK_MASK     ((uint8_t)0xC0)         //!< AES mode mask for key block field
 #define AES_MODE_OP_MASK            ((uint8_t)0x07)         //!< AES mode operation mask
 #define AES_MODE_ENCRYPT            ((uint8_t)0x00)         //!< AES mode: Encrypt
 #define AES_MODE_DECRYPT            ((uint8_t)0x01)         //!< AES mode: Decrypt
 #define AES_MODE_GFM                ((uint8_t)0x03)         //!< AES mode: GFM calculation
-#define AES_MODE_KEY_BLOCK_POS      (6)                     //!< Bit shift for key block in mode
-#define AES_DATA_SIZE               (16)                    //!< size of AES encrypt/decrypt data
+#define AES_MODE_KEY_BLOCK_POS      (6u)                    //!< Bit shift for key block in mode
+#define AES_DATA_SIZE               (16u)                   //!< size of AES encrypt/decrypt data
 #define AES_RSP_SIZE                ATCA_RSP_SIZE_16        //!< AES command response packet size
 /** @} */
 
@@ -298,9 +364,9 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define CHECKMAC_MODE_IDX                   ATCA_PARAM1_IDX     //!< CheckMAC command index for mode
 #define CHECKMAC_KEYID_IDX                  ATCA_PARAM2_IDX     //!< CheckMAC command index for key identifier
 #define CHECKMAC_CLIENT_CHALLENGE_IDX       ATCA_DATA_IDX       //!< CheckMAC command index for client challenge
-#define CHECKMAC_CLIENT_RESPONSE_IDX        (37)                //!< CheckMAC command index for client response
-#define CHECKMAC_DATA_IDX                   (69)                //!< CheckMAC command index for other data
-#define CHECKMAC_COUNT                      (84)                //!< CheckMAC command packet size
+#define CHECKMAC_CLIENT_RESPONSE_IDX        (37u)               //!< CheckMAC command index for client response
+#define CHECKMAC_DATA_IDX                   (69u)               //!< CheckMAC command index for other data
+#define CHECKMAC_COUNT                      (84u)               //!< CheckMAC command packet size
 #define CHECKMAC_MODE_CHALLENGE             ((uint8_t)0x00)     //!< CheckMAC mode	   0: first SHA block from key id
 #define CHECKMAC_MODE_BLOCK2_TEMPKEY        ((uint8_t)0x01)     //!< CheckMAC mode bit   0: second SHA block from TempKey
 #define CHECKMAC_MODE_BLOCK1_TEMPKEY        ((uint8_t)0x02)     //!< CheckMAC mode bit   1: first SHA block from TempKey
@@ -308,14 +374,14 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define CHECKMAC_MODE_INCLUDE_OTP_64        ((uint8_t)0x20)     //!< CheckMAC mode bit   5: include first 64 OTP bits
 #define CHECKMAC_MODE_MASK                  ((uint8_t)0x27)     //!< CheckMAC mode bits 3, 4, 6, and 7 are 0.
 #define CHECKMAC_MODE_OUTPUT_MAC_RESPONSE   ((uint8_t)0x08)     //!< CheckMAC mode bit   3: Single byte boolean response + 32 bytes mac in SHA105 device
-#define CHECKMAC_CLIENT_CHALLENGE_SIZE      (32)                //!< CheckMAC size of client challenge
-#define CHECKMAC_CLIENT_RESPONSE_SIZE       (32)                //!< CheckMAC size of client response
-#define CHECKMAC_OTHER_DATA_SIZE            (13)                //!< CheckMAC size of "other data"
-#define CHECKMAC_CLIENT_COMMAND_SIZE        (4)                 //!< CheckMAC size of client command header size inside "other data"
-#define CHECKMAC_CMD_MATCH                  (0)                 //!< CheckMAC return value when there is a match
-#define CHECKMAC_CMD_MISMATCH               (1)                 //!< CheckMAC return value when there is a mismatch
+#define CHECKMAC_CLIENT_CHALLENGE_SIZE      (32u)               //!< CheckMAC size of client challenge
+#define CHECKMAC_CLIENT_RESPONSE_SIZE       (32u)               //!< CheckMAC size of client response
+#define CHECKMAC_OTHER_DATA_SIZE            (13u)               //!< CheckMAC size of "other data"
+#define CHECKMAC_CLIENT_COMMAND_SIZE        (4u)                //!< CheckMAC size of client command header size inside "other data"
+#define CHECKMAC_CMD_MATCH                  (0u)                //!< CheckMAC return value when there is a match
+#define CHECKMAC_CMD_MISMATCH               (1u)                //!< CheckMAC return value when there is a mismatch
 #define CHECKMAC_RSP_SIZE                   ATCA_RSP_SIZE_MIN   //!< CheckMAC response packet size
-#define CHECKMAC_SINGLE_BYTE_BOOL_RESP      (1)
+#define CHECKMAC_SINGLE_BYTE_BOOL_RESP      (1u)
 #define CHECKMAC_SHA105_DEFAULT_KEYID       ((uint16_t)0x0003)
 /** @} */
 
@@ -336,9 +402,9 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 
 /** \name Definitions for the Delete command
    @{ */
-#define DELETE_COUNT                        (39)
+#define DELETE_COUNT                        (39u)
 #define DELETE_MODE                         ((uint8_t)0x00)
-#define DELETE_MAC_SIZE                     (32)
+#define DELETE_MAC_SIZE                     (32u)
 #define DELETE_NONCE_KEY_ID                 ((uint16_t)0x8000)
 /** @} */
 
@@ -349,14 +415,19 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define DERIVE_KEY_MAC_IDX              ATCA_DATA_IDX       //!< DeriveKey command index for optional MAC
 #define DERIVE_KEY_COUNT_SMALL          ATCA_CMD_SIZE_MIN   //!< DeriveKey command packet size without MAC
 #define DERIVE_KEY_MODE                 ((uint8_t)0x04)     //!< DeriveKey command mode set to 4 as in datasheet
-#define DERIVE_KEY_COUNT_LARGE          (39)                //!< DeriveKey command packet size with MAC
+#define DERIVE_KEY_COUNT_LARGE          (39u)               //!< DeriveKey command packet size with MAC
 #define DERIVE_KEY_RANDOM_FLAG          ((uint8_t)4)        //!< DeriveKey 1. parameter; has to match TempKey.SourceFlag
-#define DERIVE_KEY_MAC_SIZE             (32)                //!< DeriveKey MAC size
+#define DERIVE_KEY_MAC_SIZE             (32u)               //!< DeriveKey MAC size
 #define DERIVE_KEY_RSP_SIZE             ATCA_RSP_SIZE_MIN   //!< DeriveKey response packet size
 /** @} */
 
 /** \name Definitions for the ECDH Command
    @{ */
+
+#ifdef __COVERITY__
+#pragma coverity compliance block deviate "CERT DCL37-C" "ECDH defines will not conflict with errno.h codes"
+#endif
+
 #define ECDH_PREFIX_MODE                    ((uint8_t)0x00)
 #define ECDH_COUNT                          (ATCA_CMD_SIZE_MIN + ATCA_PUB_KEY_SIZE)
 #define ECDH_MODE_SOURCE_MASK               ((uint8_t)0x01)
@@ -372,21 +443,27 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define ECDH_MODE_COPY_OUTPUT_BUFFER        ((uint8_t)0x0C)
 #define ECDH_KEY_SIZE                       ATCA_BLOCK_SIZE     //!< ECDH output data size
 #define ECDH_RSP_SIZE                       ATCA_RSP_SIZE_64    //!< ECDH command packet size
+
+#ifdef __COVERITY__
+#pragma coverity compliance end_block "CERT DCL37-C"
+#endif
+
 /** @} */
 
 /** \name Definitions for the GenDig Command
    @{ */
-#define GENDIG_ZONE_IDX             ATCA_PARAM1_IDX     //!< GenDig command index for zone
-#define GENDIG_KEYID_IDX            ATCA_PARAM2_IDX     //!< GenDig command index for key id
-#define GENDIG_DATA_IDX             ATCA_DATA_IDX       //!< GenDig command index for optional data
-#define GENDIG_COUNT                ATCA_CMD_SIZE_MIN   //!< GenDig command packet size without "other data"
-#define GENDIG_ZONE_CONFIG          ((uint8_t)0)        //!< GenDig zone id config. Use KeyID to specify any of the four 256-bit blocks of the Configuration zone.
-#define GENDIG_ZONE_OTP             ((uint8_t)1)        //!< GenDig zone id OTP. Use KeyID to specify either the first or second 256-bit block of the OTP zone.
-#define GENDIG_ZONE_DATA            ((uint8_t)2)        //!< GenDig zone id data. Use KeyID to specify a slot in the Data zone or a transport key in the hardware array.
-#define GENDIG_ZONE_SHARED_NONCE    ((uint8_t)3)        //!< GenDig zone id shared nonce. KeyID specifies the location of the input value in the message generation.
-#define GENDIG_ZONE_COUNTER         ((uint8_t)4)        //!< GenDig zone id counter. KeyID specifies the monotonic counter ID to be included in the message generation.
-#define GENDIG_ZONE_KEY_CONFIG      ((uint8_t)5)        //!< GenDig zone id key config. KeyID specifies the slot for which the configuration information is to be included in the message generation.
-#define GENDIG_RSP_SIZE             ATCA_RSP_SIZE_MIN   //!< GenDig command response packet size
+#define GENDIG_ZONE_IDX             ATCA_PARAM1_IDX    //!< GenDig command index for zone
+#define GENDIG_KEYID_IDX            ATCA_PARAM2_IDX    //!< GenDig command index for key id
+#define GENDIG_DATA_IDX             ATCA_DATA_IDX      //!< GenDig command index for optional data
+#define GENDIG_COUNT                ATCA_CMD_SIZE_MIN  //!< GenDig command packet size without "other data"
+#define GENDIG_ZONE_CONFIG          ((uint8_t)0)       //!< GenDig zone id config. Use KeyID to specify any of the four 256-bit blocks of the Configuration zone.
+#define GENDIG_ZONE_OTP             ((uint8_t)1)       //!< GenDig zone id OTP. Use KeyID to specify either the first or second 256-bit block of the OTP zone.
+#define GENDIG_ZONE_DATA            ((uint8_t)2)       //!< GenDig zone id data. Use KeyID to specify a slot in the Data zone or a transport key in the hardware array.
+#define GENDIG_ZONE_SHARED_NONCE    ((uint8_t)3)       //!< GenDig zone id shared nonce. KeyID specifies the location of the input value in the message generation.
+#define GENDIG_ZONE_COUNTER         ((uint8_t)4)       //!< GenDig zone id counter. KeyID specifies the monotonic counter ID to be included in the message generation.
+#define GENDIG_ZONE_KEY_CONFIG      ((uint8_t)5)       //!< GenDig zone id key config. KeyID specifies the slot for which the configuration information is to be included in the message generation.
+#define GENDIG_RSP_SIZE             ATCA_RSP_SIZE_MIN  //!< GenDig command response packet size
+#define GENDIG_USE_TEMPKEY_BIT      ((uint16_t)0x8000) //!< Use temp key for GenDig command if bit 15 is 1
 /** @} */
 
 /** \name Definitions for the GenDivKey Command
@@ -400,10 +477,10 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
    @{ */
 #define GENKEY_MODE_IDX             ATCA_PARAM1_IDX         //!< GenKey command index for mode
 #define GENKEY_KEYID_IDX            ATCA_PARAM2_IDX         //!< GenKey command index for key id
-#define GENKEY_DATA_IDX             (5)                     //!< GenKey command index for other data
+#define GENKEY_DATA_IDX             (5u)                    //!< GenKey command index for other data
 #define GENKEY_COUNT                ATCA_CMD_SIZE_MIN       //!< GenKey command packet size without "other data"
-#define GENKEY_COUNT_DATA           (10)                    //!< GenKey command packet size with "other data"
-#define GENKEY_OTHER_DATA_SIZE      (3)                     //!< GenKey size of "other data"
+#define GENKEY_COUNT_DATA           (10u)                   //!< GenKey command packet size with "other data"
+#define GENKEY_OTHER_DATA_SIZE      (3u)                    //!< GenKey size of "other data"
 #define GENKEY_MODE_MASK            ((uint8_t)0x1C)         //!< GenKey mode bits 0 to 1 and 5 to 7 are 0
 #define GENKEY_MODE_PRIVATE         ((uint8_t)0x04)         //!< GenKey mode: private key generation
 #define GENKEY_MODE_PUBLIC          ((uint8_t)0x00)         //!< GenKey mode: public key calculation
@@ -426,7 +503,7 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define HMAC_MODE_FLAG_OTP64        ((uint8_t)0x20)     //!< HMAC mode bit 5: Include the first 64 OTP bits (OTP[0] through OTP[7]) in the message.; otherwise, the corresponding message bits are set to zero. If Mode[4] is set, the value of this mode bit is ignored. Not applicable for ATECC508A.
 #define HMAC_MODE_FLAG_FULLSN       ((uint8_t)0x40)     //!< HMAC mode bit 6: If set, include the 48 bits SN[2:3] and SN[4:7] in the message.; otherwise, the corresponding message bits are set to zero.
 #define HMAC_MODE_MASK              ((uint8_t)0x74)     //!< HMAC mode bits 0, 1, 3, and 7 are 0.
-#define HMAC_DIGEST_SIZE            (32)                //!< HMAC size of digest response
+#define HMAC_DIGEST_SIZE            (32u)               //!< HMAC size of digest response
 #define HMAC_RSP_SIZE               ATCA_RSP_SIZE_32    //!< HMAC command response packet size
 /** @} */
 
@@ -458,7 +535,7 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define KDF_MODE_IDX                     ATCA_PARAM1_IDX           //!< KDF command index for mode
 #define KDF_KEYID_IDX                    ATCA_PARAM2_IDX           //!< KDF command index for key id
 #define KDF_DETAILS_IDX                  ATCA_DATA_IDX             //!< KDF command index for details
-#define KDF_DETAILS_SIZE                 4                         //!< KDF details (param3) size
+#define KDF_DETAILS_SIZE                 (4u)                      //!< KDF details (param3) size
 #define KDF_MESSAGE_IDX                  (ATCA_DATA_IDX + KDF_DETAILS_SIZE)
 
 #define KDF_MODE_SOURCE_MASK             ((uint8_t)0x03)           //!< KDF mode source key mask
@@ -515,9 +592,9 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define LOCK_ZONE_CA2_DATA          ((uint8_t)0x00)     //!< Lock second gen Data zone by slot
 #define LOCK_ZONE_CA2_CONFIG        ((uint8_t)0x01)     //!< Lock second gen configuration zone by slot
 #define LOCK_ZONE_NO_CRC            ((uint8_t)0x80)     //!< Lock command: Ignore summary.
-#define LOCK_ZONE_MASK              (0xBF)              //!< Lock parameter 1 bits 6 are 0.
-#define ATCA_UNLOCKED               (0x55)              //!< Value indicating an unlocked zone
-#define ATCA_LOCKED                 (0x00)              //!< Value indicating a locked zone
+#define LOCK_ZONE_MASK              ((uint8_t)0xBF)     //!< Lock parameter 1 bits 6 are 0.
+#define ATCA_UNLOCKED               ((uint8_t)0x55)     //!< Value indicating an unlocked zone
+#define ATCA_LOCKED                 ((uint8_t)0x00)     //!< Value indicating a locked zone
 #define LOCK_RSP_SIZE               ATCA_RSP_SIZE_MIN   //!< Lock command response packet size
 /** @} */
 
@@ -527,7 +604,7 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define MAC_KEYID_IDX                   ATCA_PARAM2_IDX         //!< MAC command index for key id
 #define MAC_CHALLENGE_IDX               ATCA_DATA_IDX           //!< MAC command index for optional challenge
 #define MAC_COUNT_SHORT                 ATCA_CMD_SIZE_MIN       //!< MAC command packet size without challenge
-#define MAC_COUNT_LONG                  (39)                    //!< MAC command packet size with challenge
+#define MAC_COUNT_LONG                  (39u)                   //!< MAC command packet size with challenge
 #define MAC_MODE_CHALLENGE              ((uint8_t)0x00)         //!< MAC mode       0: first SHA block from data slot
 #define MAC_MODE_BLOCK2_TEMPKEY         ((uint8_t)0x01)         //!< MAC mode bit   0: second SHA block from TempKey
 #define MAC_MODE_BLOCK1_TEMPKEY         ((uint8_t)0x02)         //!< MAC mode bit   1: first SHA block from TempKey
@@ -537,8 +614,8 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define MAC_MODE_INCLUDE_OTP_88         ((uint8_t)0x10)         //!< MAC mode bit   4: include first 88 OTP bits
 #define MAC_MODE_INCLUDE_OTP_64         ((uint8_t)0x20)         //!< MAC mode bit   5: include first 64 OTP bits
 #define MAC_MODE_INCLUDE_SN             ((uint8_t)0x40)         //!< MAC mode bit   6: include serial number
-#define MAC_CHALLENGE_SIZE              (32)                    //!< MAC size of challenge
-#define MAC_SIZE                        (32)                    //!< MAC size of response
+#define MAC_CHALLENGE_SIZE              (32u)                   //!< MAC size of challenge
+#define MAC_SIZE                        (32u)                   //!< MAC size of response
 #define MAC_MODE_MASK                   ((uint8_t)0x77)         //!< MAC mode bits 3 and 7 are 0.
 #define MAC_RSP_SIZE                    ATCA_RSP_SIZE_32        //!< MAC command response packet size
 #define MAC_SHA104_DEFAULT_KEYID        ((uint16_t)0x0003)
@@ -546,37 +623,37 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 
 /** \name Definitions for the Nonce Command
    @{ */
-#define NONCE_MODE_IDX                  ATCA_PARAM1_IDX          //!< Nonce command index for mode
-#define NONCE_PARAM2_IDX                ATCA_PARAM2_IDX          //!< Nonce command index for 2. parameter
-#define NONCE_INPUT_IDX                 ATCA_DATA_IDX            //!< Nonce command index for input data
-#define NONCE_COUNT_SHORT               (ATCA_CMD_SIZE_MIN + 20) //!< Nonce command packet size for 20 bytes of NumIn
-#define NONCE_COUNT_LONG                (ATCA_CMD_SIZE_MIN + 32) //!< Nonce command packet size for 32 bytes of NumIn
-#define NONCE_COUNT_LONG_64             (ATCA_CMD_SIZE_MIN + 64) //!< Nonce command packet size for 64 bytes of NumIn
-#define NONCE_MODE_MASK                 ((uint8_t)0x03)          //!< Nonce mode bits 2 to 7 are 0.
-#define NONCE_MODE_SEED_UPDATE          ((uint8_t)0x00)          //!< Nonce mode: update seed
-#define NONCE_MODE_NO_SEED_UPDATE       ((uint8_t)0x01)          //!< Nonce mode: do not update seed
-#define NONCE_MODE_INVALID              ((uint8_t)0x02)          //!< Nonce mode 2 is invalid.
-#define NONCE_MODE_PASSTHROUGH          ((uint8_t)0x03)          //!< Nonce mode: pass-through
-#define NONCE_MODE_GEN_SESSION_KEY      ((uint8_t)0x02)          //!< NOnce mode: Generate session key in ECC204 device
+#define NONCE_MODE_IDX                  ATCA_PARAM1_IDX           //!< Nonce command index for mode
+#define NONCE_PARAM2_IDX                ATCA_PARAM2_IDX           //!< Nonce command index for 2. parameter
+#define NONCE_INPUT_IDX                 ATCA_DATA_IDX             //!< Nonce command index for input data
+#define NONCE_COUNT_SHORT               (ATCA_CMD_SIZE_MIN + 20u) //!< Nonce command packet size for 20 bytes of NumIn
+#define NONCE_COUNT_LONG                (ATCA_CMD_SIZE_MIN + 32u) //!< Nonce command packet size for 32 bytes of NumIn
+#define NONCE_COUNT_LONG_64             (ATCA_CMD_SIZE_MIN + 64u) //!< Nonce command packet size for 64 bytes of NumIn
+#define NONCE_MODE_MASK                 ((uint8_t)0x03)           //!< Nonce mode bits 2 to 7 are 0.
+#define NONCE_MODE_SEED_UPDATE          ((uint8_t)0x00)           //!< Nonce mode: update seed
+#define NONCE_MODE_NO_SEED_UPDATE       ((uint8_t)0x01)           //!< Nonce mode: do not update seed
+#define NONCE_MODE_INVALID              ((uint8_t)0x02)           //!< Nonce mode 2 is invalid.
+#define NONCE_MODE_PASSTHROUGH          ((uint8_t)0x03)           //!< Nonce mode: pass-through
+#define NONCE_MODE_GEN_SESSION_KEY      ((uint8_t)0x02)           //!< NOnce mode: Generate session key in ECC204 device
 
-#define NONCE_MODE_INPUT_LEN_MASK       ((uint8_t)0x20)          //!< Nonce mode: input size mask
-#define NONCE_MODE_INPUT_LEN_32         ((uint8_t)0x00)          //!< Nonce mode: input size is 32 bytes
-#define NONCE_MODE_INPUT_LEN_64         ((uint8_t)0x20)          //!< Nonce mode: input size is 64 bytes
+#define NONCE_MODE_INPUT_LEN_MASK       ((uint8_t)0x20)           //!< Nonce mode: input size mask
+#define NONCE_MODE_INPUT_LEN_32         ((uint8_t)0x00)           //!< Nonce mode: input size is 32 bytes
+#define NONCE_MODE_INPUT_LEN_64         ((uint8_t)0x20)           //!< Nonce mode: input size is 64 bytes
 
-#define NONCE_MODE_TARGET_MASK          ((uint8_t)0xC0)          //!< Nonce mode: target mask
-#define NONCE_MODE_TARGET_TEMPKEY       ((uint8_t)0x00)          //!< Nonce mode: target is TempKey
-#define NONCE_MODE_TARGET_MSGDIGBUF     ((uint8_t)0x40)          //!< Nonce mode: target is Message Digest Buffer
-#define NONCE_MODE_TARGET_ALTKEYBUF     ((uint8_t)0x80)          //!< Nonce mode: target is Alternate Key Buffer
+#define NONCE_MODE_TARGET_MASK          ((uint8_t)0xC0)           //!< Nonce mode: target mask
+#define NONCE_MODE_TARGET_TEMPKEY       ((uint8_t)0x00)           //!< Nonce mode: target is TempKey
+#define NONCE_MODE_TARGET_MSGDIGBUF     ((uint8_t)0x40)           //!< Nonce mode: target is Message Digest Buffer
+#define NONCE_MODE_TARGET_ALTKEYBUF     ((uint8_t)0x80)           //!< Nonce mode: target is Alternate Key Buffer
 
-#define NONCE_ZERO_CALC_MASK            ((uint16_t)0x8000)       //!< Nonce zero (param2): calculation mode mask
-#define NONCE_ZERO_CALC_RANDOM          ((uint16_t)0x0000)       //!< Nonce zero (param2): calculation mode random, use RNG in calculation and return RNG output
-#define NONCE_ZERO_CALC_TEMPKEY         ((uint16_t)0x8000)       //!< Nonce zero (param2): calculation mode TempKey, use TempKey in calculation and return new TempKey value
+#define NONCE_ZERO_CALC_MASK            ((uint16_t)0x8000)        //!< Nonce zero (param2): calculation mode mask
+#define NONCE_ZERO_CALC_RANDOM          ((uint16_t)0x0000)        //!< Nonce zero (param2): calculation mode random, use RNG in calculation and return RNG output
+#define NONCE_ZERO_CALC_TEMPKEY         ((uint16_t)0x8000)        //!< Nonce zero (param2): calculation mode TempKey, use TempKey in calculation and return new TempKey value
 
-#define NONCE_NUMIN_SIZE                (20)                     //!< Nonce NumIn size for random modes
-#define NONCE_NUMIN_SIZE_PASSTHROUGH    (32)                     //!< Nonce NumIn size for 32-byte pass-through mode
+#define NONCE_NUMIN_SIZE                (20)                      //!< Nonce NumIn size for random modes
+#define NONCE_NUMIN_SIZE_PASSTHROUGH    (32)                      //!< Nonce NumIn size for 32-byte pass-through mode
 
-#define NONCE_RSP_SIZE_SHORT            ATCA_RSP_SIZE_MIN        //!< Nonce command response packet size with no output
-#define NONCE_RSP_SIZE_LONG             ATCA_RSP_SIZE_32         //!< Nonce command response packet size with output
+#define NONCE_RSP_SIZE_SHORT            ATCA_RSP_SIZE_MIN         //!< Nonce command response packet size with no output
+#define NONCE_RSP_SIZE_LONG             ATCA_RSP_SIZE_32          //!< Nonce command response packet size with output
 /** @} */
 
 /** \name Definitions for the Pause Command
@@ -623,11 +700,11 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 /** \name Definitions for the SecureBoot Command
    @{ */
 #define SECUREBOOT_MODE_IDX           ATCA_PARAM1_IDX                                                          //!< SecureBoot command index for mode
-#define SECUREBOOT_DIGEST_SIZE        (32)                                                                     //!< SecureBoot digest input size
-#define SECUREBOOT_SIGNATURE_SIZE     (64)                                                                     //!< SecureBoot signature input size
+#define SECUREBOOT_DIGEST_SIZE        (32u)                                                                    //!< SecureBoot digest input size
+#define SECUREBOOT_SIGNATURE_SIZE     (64u)                                                                    //!< SecureBoot signature input size
 #define SECUREBOOT_COUNT_DIG          (ATCA_CMD_SIZE_MIN + SECUREBOOT_DIGEST_SIZE)                             //!< SecureBoot command packet size for just a digest
 #define SECUREBOOT_COUNT_DIG_SIG      (ATCA_CMD_SIZE_MIN + SECUREBOOT_DIGEST_SIZE + SECUREBOOT_SIGNATURE_SIZE) //!< SecureBoot command packet size for a digest and signature
-#define SECUREBOOT_MAC_SIZE           (32)                                                                     //!< SecureBoot MAC output size
+#define SECUREBOOT_MAC_SIZE           (32u)                                                                    //!< SecureBoot MAC output size
 #define SECUREBOOT_RSP_SIZE_NO_MAC    ATCA_RSP_SIZE_MIN                                                        //!< SecureBoot response packet size for no MAC
 #define SECUREBOOT_RSP_SIZE_MAC       (ATCA_PACKET_OVERHEAD + SECUREBOOT_MAC_SIZE)                             //!< SecureBoot response packet size with MAC
 
@@ -663,7 +740,7 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
    @{ */
 #define SHA_COUNT_SHORT                     ATCA_CMD_SIZE_MIN
 #define SHA_COUNT_LONG                      ATCA_CMD_SIZE_MIN  //!< Just a starting size
-#define ATCA_SHA_DIGEST_SIZE                (32)
+#define ATCA_SHA_DIGEST_SIZE                (32u)
 #define SHA_DATA_MAX                        (64)
 
 #define SHA_MODE_MASK                       ((uint8_t)0x07)   //!< Mask the bit 0-2
@@ -729,7 +806,7 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define VERIFY_283_KEY_SIZE            ( 72)                //!< Verify key size for 283-bit key
 #define VERIFY_256_SIGNATURE_SIZE      ( 64)                //!< Verify signature size for 256-bit key
 #define VERIFY_283_SIGNATURE_SIZE      ( 72)                //!< Verify signature size for 283-bit key
-#define VERIFY_OTHER_DATA_SIZE         ( 19)                //!< Verify size of "other data"
+#define VERIFY_OTHER_DATA_SIZE         ( 19u)               //!< Verify size of "other data"
 #define VERIFY_MODE_MASK               ((uint8_t)0x07)      //!< Verify mode bits 3 to 7 are 0
 #define VERIFY_MODE_STORED             ((uint8_t)0x00)      //!< Verify mode: stored
 #define VERIFY_MODE_VALIDATE_EXTERNAL  ((uint8_t)0x01)      //!< Verify mode: validate external
@@ -754,7 +831,7 @@ ATCA_STATUS atCheckCrc(const uint8_t *response);
 #define WRITE_VALUE_IDX             ATCA_DATA_IDX       //!< Write command index for data
 #define WRITE_MAC_VS_IDX            ( 9)                //!< Write command index for MAC following short data
 #define WRITE_MAC_VL_IDX            (37)                //!< Write command index for MAC following long data
-#define WRITE_MAC_SIZE              (32)                //!< Write MAC size
+#define WRITE_MAC_SIZE              (32u)               //!< Write MAC size
 #define WRITE_ZONE_MASK             ((uint8_t)0xC3)     //!< Write zone bits 2 to 5 are 0.
 #define WRITE_ZONE_WITH_MAC         ((uint8_t)0x40)     //!< Write zone bit 6: write encrypted with MAC
 #define WRITE_ZONE_OTP              ((uint8_t)1)        //!< Write zone id OTP

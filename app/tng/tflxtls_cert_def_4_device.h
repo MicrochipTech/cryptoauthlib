@@ -37,7 +37,10 @@ extern "C" {
 /** \ingroup tng_
  * @{
  */
+extern const uint8_t g_tflxtls_cert_template_4_device[500];
 extern const atcacert_def_t g_tflxtls_cert_def_4_device;
+extern const atcacert_cert_element_t g_tflxtls_cert_elements_4_device[];
+
 /** @} */
 
 #ifdef __cplusplus

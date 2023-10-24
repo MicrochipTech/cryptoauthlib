@@ -36,6 +36,9 @@ CK_RV pkcs11_os_destroy_mutex(CK_VOID_PTR pMutex);
 CK_RV pkcs11_os_lock_mutex(CK_VOID_PTR pMutex);
 CK_RV pkcs11_os_unlock_mutex(CK_VOID_PTR pMutex);
 
+CK_RV pkcs11_os_alloc_shared_ctx(void ** ppShared, size_t size);
+CK_RV pkcs11_os_free_shared_ctx(void * pShared, size_t size);
+
 #define pkcs11_os_malloc    hal_malloc
 #define pkcs11_os_free      hal_free
 

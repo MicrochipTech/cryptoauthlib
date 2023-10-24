@@ -69,11 +69,13 @@
 #endif
 
 /* New Trust Anchor Devices */
+#ifndef ATCA_TA_SUPPORT
 #if defined(ATCA_TA100_SUPPORT)
 #define ATCA_TA_SUPPORT     DEFAULT_ENABLED
 #else
 #define ATCA_TA_SUPPORT     DEFAULT_DISABLED
 #endif
+#endif /* ATCA_TA_SUPPORT */
 
 /* Check for external crypto libraries for host side operations */
 #ifndef ATCA_HOSTLIB_EN
@@ -95,10 +97,9 @@
 #define ATCA_CHECK_PARAMS_EN    DEFAULT_ENABLED
 #endif
 
-
 #if ATCA_CHECK_PARAMS_EN
 /** Emits message and returns the status code when the condition is true */
-#define ATCA_CHECK_INVALID_MSG(c, s, m)     if (c) return ATCA_TRACE(s, m)
+#define ATCA_CHECK_INVALID_MSG(c, s, m)     if (c) { return ATCA_TRACE(s, m); }
 /* Continues when the condition is true - emits message if the condition is false */
 #define ATCA_CHECK_VALID_MSG(c, m)          if (!ATCA_TRACE(!(c), m))
 #else
@@ -109,7 +110,12 @@
 #define ATCA_CHECK_INVALID(c, s)    ATCA_CHECK_INVALID_MSG(c, s, "")
 #define ATCA_CHECK_VALID(c)         ATCA_CHECK_VALID_MSG(c, "")
 
-
+/** \def MULTIPART_BUF_EN
+ * Enables multipart buffer handling (generally for small memory model platforms)
+ */
+#ifndef MULTIPART_BUF_EN
+#define MULTIPART_BUF_EN        (DEFAULT_DISABLED)
+#endif
 
 /**** AES command ****/
 
@@ -647,91 +653,6 @@
  **/
 #ifndef ATCAB_WRITE_ENC_EN
 #define ATCAB_WRITE_ENC_EN                  ATCAB_WRITE_EN
-#endif
-
-/* Host side Cryptographic functionality required by the library */
-
-/** \def ATCAC_SHA1_EN
- *
- * Enable ATCAC_SHA1_EN to enable sha1 host side api
- *
- * Supported API's: atcab_write
- **/
-#ifndef ATCAC_SHA1_EN
-#define ATCAC_SHA1_EN                       (DEFAULT_ENABLED)
-#endif
-
-/** \def ATCAC_SHA256_EN
- *
- * Enable ATCAC_SHA256_EN to enable sha256 host side api
- *
- * Supported API's: atcab_write
- **/
-#ifndef ATCAC_SHA256_EN
-#define ATCAC_SHA256_EN                     (DEFAULT_ENABLED)
-#endif
-
-/** \def ATCAC_SHA256_HMAC
- *
- * Requires: ATCAC_SHA256_HMAC
- *           ATCAC_SW_SHA2_256
- *
- * Enable ATCAC_SHA256_HMAC to initialize context for performing HMAC (sha256) in software
- *
- * Supported API's: atcac_sha256_hmac_init, atcac_sha256_hmac_update, atcac_sha256_hmac_finish
- **/
-#ifndef ATCAC_SHA256_HMAC_EN
-#define ATCAC_SHA256_HMAC_EN                ATCAC_SHA256_EN
-#endif
-
-/** \def ATCAC_SHA256_HMAC_COUNTER
- *
- * Requires: ATCAC_SHA256_HMAC_COUNTER
- *           ATCAC_SHA256_HMAC
- *           ATCAC_SW_SHA2_256
- *
- * Enable ATCAC_SHA256_HMAC_COUNTER to implement SHA256 HMAC-Counter per NIST SP 800-108 used for
- * KDF like operations
- *
- * Supported API's: atcac_sha256_hmac_counter
- **/
-#ifndef ATCAC_SHA256_HMAC_CTR_EN
-#define ATCAC_SHA256_HMAC_CTR_EN            ATCAC_SHA256_HMAC_EN
-#endif
-
-/** \def ATCAC_RANDOM_EN
- *
- * Requires: ATCA_HOSTLIB_EN
- *
- * Enable ATCAC_RANDOM_EN get random numbers from the host's
- * implementation - generally assumed to come from the host's
- * cryptographic library or peripheral driver
- *
- */
-#ifndef ATCAC_RANDOM_EN
-#define ATCAC_RANDOM_EN                     ATCA_HOSTLIB_EN
-#endif
-
-/** \def ATCAC_VERIFY_EN
- *
- * Requires: ATCA_HOSTLIB_EN
- *
- * Enable ATCAC_VERIFY_EN to use the host's verify functions. Generally assumed
- * to come from the host's cryptographic library or peripheral driver.
- */
-#ifndef ATCAC_VERIFY_EN
-#define ATCAC_VERIFY_EN                     ATCA_HOSTLIB_EN
-#endif
-
-/** \def ATCAC_SIGN_EN
- *
- * Requires: ATCA_HOSTLIB_EN
- *
- * Enable ATCAC_SIGN_EN to use the host's sign functions. Generally assumed
- * to come from the host's cryptographic library or peripheral driver.
- */
-#ifndef ATCAC_SIGN_EN
-#define ATCAC_SIGN_EN                       ATCA_HOSTLIB_EN
 #endif
 
 #endif /* ATCA_CONFIG_CHECK_H */

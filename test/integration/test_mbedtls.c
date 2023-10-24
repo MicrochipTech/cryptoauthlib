@@ -27,6 +27,7 @@
  */
 
 #include "atca_test.h"
+#include "cal_internal.h"
 
 #if defined(ATCA_MBEDTLS) && defined(MBEDTLS_ECDSA_C)
 #include "third_party/atca_mbedtls_patch.h"
@@ -67,7 +68,7 @@ TEST(mbedtls_ecdsa, verify_nist)
     uint8_t pubkey[64];
     uint8_t signature[74];
     uint8_t digest[32];
-    atcac_pk_ctx pkey_ctx;
+    atcac_pk_ctx_t pkey_ctx;
     int status;
     size_t i;
     mbedtls_mpi r;
@@ -106,7 +107,7 @@ TEST(mbedtls_ecdsa, verify_nist)
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
         /* Perform the verification */
-        status = mbedtls_pk_verify(&pkey_ctx, MBEDTLS_MD_SHA256, digest, sizeof(digest), signature, sig_len);
+        status = mbedtls_pk_verify((mbedtls_pk_context*)&pkey_ctx, MBEDTLS_MD_SHA256, digest, sizeof(digest), signature, sig_len);
 
         /* Make sure to free the key before testing the result of the verify */
         atcac_pk_free(&pkey_ctx);
@@ -130,7 +131,7 @@ TEST(mbedtls_ecdsa, verify_nist_stored_key)
     uint8_t pubkey[64];
     uint8_t signature[74];
     uint8_t digest[32];
-    atcac_pk_ctx pkey_ctx;
+    mbedtls_pk_context pkey_ctx;
     ATCA_STATUS status;
     mbedtls_mpi r;
     mbedtls_mpi s;
@@ -179,7 +180,7 @@ TEST(mbedtls_ecdsa, verify_nist_stored_key)
         status = mbedtls_pk_verify(&pkey_ctx, MBEDTLS_MD_SHA256, digest, sizeof(digest), signature, sig_len);
 
         /* Make sure to free the key before testing the result of the verify */
-        atcac_pk_free(&pkey_ctx);
+        mbedtls_pk_free(&pkey_ctx);
 
         /* Check verification result against the expected success/failure */
         if (ecdsa_p256_test_vectors[i].Result)
@@ -199,7 +200,7 @@ TEST(mbedtls_ecdsa, verify_nist_stored_key)
 TEST(mbedtls_ecdsa, sign_stored_key)
 {
     int status;
-    atcac_pk_ctx pkey_ctx;
+    atcac_pk_ctx_t pkey_ctx;
     uint8_t digest[32];
     uint8_t signature[74] = { 0 };
     size_t sig_len = sizeof(signature);
@@ -208,14 +209,14 @@ TEST(mbedtls_ecdsa, sign_stored_key)
     status = atca_test_config_get_id(TEST_TYPE_ECC_SIGN, &key_slot);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    status = atca_mbedtls_pk_init(&pkey_ctx, key_slot);
+    status = atca_mbedtls_pk_init((mbedtls_pk_context*)&pkey_ctx, key_slot);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    status = mbedtls_pk_sign(&pkey_ctx, MBEDTLS_MD_SHA256, digest, sizeof(digest), signature, &sig_len, NULL, NULL);
+    status = mbedtls_pk_sign((mbedtls_pk_context*)&pkey_ctx, MBEDTLS_MD_SHA256, digest, sizeof(digest), signature, &sig_len, NULL, NULL);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     /* Perform the verification */
-    status = mbedtls_pk_verify(&pkey_ctx, MBEDTLS_MD_SHA256, digest, sizeof(digest), signature, sig_len);
+    status = mbedtls_pk_verify((mbedtls_pk_context*)&pkey_ctx, MBEDTLS_MD_SHA256, digest, sizeof(digest), signature, sig_len);
 
     /* Make sure to free the key before testing the result of the verify */
     atcac_pk_free(&pkey_ctx);
@@ -226,11 +227,11 @@ TEST(mbedtls_ecdsa, sign_stored_key)
 
 t_test_case_info mbedtls_ecdsa_test_info[] =
 {
-    { REGISTER_TEST_CASE(mbedtls_ecdsa, verify_nist),            atca_test_cond_p256_sign_verify },
-    { REGISTER_TEST_CASE(mbedtls_ecdsa, verify_nist_stored_key), atca_test_cond_p256_sign_verify },
-    { REGISTER_TEST_CASE(mbedtls_ecdsa, sign_stored_key),        atca_test_cond_p256_sign_verify },
+    { REGISTER_TEST_CASE(mbedtls_ecdsa, verify_nist),            atca_test_cond_p256_sign_verify                                  },
+    { REGISTER_TEST_CASE(mbedtls_ecdsa, verify_nist_stored_key), atca_test_cond_p256_sign_verify                                  },
+    { REGISTER_TEST_CASE(mbedtls_ecdsa, sign_stored_key),        atca_test_cond_p256_sign_verify                                  },
     /* Array Termination element*/
-    { (fp_test_case)NULL, NULL },
+    { (fp_test_case)NULL,               NULL },
 };
 
 #endif

@@ -35,6 +35,14 @@
 
 #include "cryptoauthlib.h"
 
+#if CALIB_AES_EN && (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + AES_DATA_SIZE))
+#error "AES command packet cannot be accommodated inside the maximum packet size provided"
+#endif
+
+#if CALIB_AES_EN && CALIB_AES_GCM_EN && (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + AES_DATA_SIZE + AES_DATA_SIZE))
+#error "AES GFM command packet cannot be accommodated inside the maximum packet size provided"
+#endif
+
 #if CALIB_AES_EN
 /** \brief Compute the AES-128 encrypt, decrypt, or GFM calculation.
  *
@@ -63,35 +71,29 @@ ATCA_STATUS calib_aes(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
         // build a AES command
         packet.param1 = mode;
         packet.param2 = key_id;
-        if (AES_MODE_GFM == (mode & AES_MODE_GFM))
-        {
-            memcpy(packet.data, aes_in, ATCA_AES_GFM_SIZE);
-        }
-        else
-        {
-            memcpy(packet.data, aes_in, AES_DATA_SIZE);
-        }
+
+        (void)memcpy(packet.data, aes_in, AES_DATA_SIZE);
 
         if ((status = atAES(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "atAES - failed");
+            (void)ATCA_TRACE(status, "atAES - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "calib_aes - execution failed");
+            (void)ATCA_TRACE(status, "calib_aes - execution failed");
             break;
         }
 
-        if (aes_out && packet.data[ATCA_COUNT_IDX] >= (3 + AES_DATA_SIZE))
+        if ((NULL != aes_out) && (packet.data[ATCA_COUNT_IDX] >= (3u + AES_DATA_SIZE)))
         {
             // The AES command return a 16 byte data.
-            memcpy(aes_out, &packet.data[ATCA_RSP_DATA_IDX], AES_DATA_SIZE);
+            (void)memcpy(aes_out, &packet.data[ATCA_RSP_DATA_IDX], AES_DATA_SIZE);
         }
 
     }
-    while (0);
+    while (false);
 
     return status;
 }
@@ -112,7 +114,7 @@ ATCA_STATUS calib_aes_encrypt(ATCADevice device, uint16_t key_id, uint8_t key_bl
 {
     uint8_t mode;
 
-    mode = AES_MODE_ENCRYPT | (AES_MODE_KEY_BLOCK_MASK & (key_block << AES_MODE_KEY_BLOCK_POS));
+    mode = AES_MODE_ENCRYPT | (AES_MODE_KEY_BLOCK_MASK & (uint8_t)(key_block << AES_MODE_KEY_BLOCK_POS));
     return calib_aes(device, mode, key_id, plaintext, ciphertext);
 }
 
@@ -132,7 +134,7 @@ ATCA_STATUS calib_aes_decrypt(ATCADevice device, uint16_t key_id, uint8_t key_bl
 {
     uint8_t mode;
 
-    mode = AES_MODE_DECRYPT | (AES_MODE_KEY_BLOCK_MASK & (key_block << AES_MODE_KEY_BLOCK_POS));
+    mode = AES_MODE_DECRYPT | (AES_MODE_KEY_BLOCK_MASK & (uint8_t)(key_block << AES_MODE_KEY_BLOCK_POS));
     return calib_aes(device, mode, key_id, ciphertext, plaintext);
 }
 #endif
@@ -149,11 +151,45 @@ ATCA_STATUS calib_aes_decrypt(ATCADevice device, uint16_t key_id, uint8_t key_bl
  */
 ATCA_STATUS calib_aes_gfm(ATCADevice device, const uint8_t* h, const uint8_t* input, uint8_t* output)
 {
-    uint8_t aes_in[AES_DATA_SIZE * 2];
+    ATCAPacket packet;
+    ATCA_STATUS status = ATCA_GEN_FAIL;
 
-    memcpy(aes_in, h, AES_DATA_SIZE);
-    memcpy(aes_in + AES_DATA_SIZE, input, AES_DATA_SIZE);
-    // KeyID is ignored for GFM mode
-    return calib_aes(device, AES_MODE_GFM, 0x0000, aes_in, output);
+    do
+    {
+        if ((NULL == device) || (NULL == input) || (NULL == output))
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
+        }
+
+        // build a AES-GFM command
+        packet.param1 = AES_MODE_GFM;
+
+        // KeyID is ignored for GFM mode
+        packet.param2 = 0x0000;
+
+        (void)memcpy(packet.data, h, AES_DATA_SIZE);
+        (void)memcpy(packet.data + AES_DATA_SIZE, input, AES_DATA_SIZE);
+
+        if (ATCA_SUCCESS != (status = ATCA_TRACE(atAES(atcab_get_device_type_ext(device), &packet), "atAES - failed")))
+        {
+            break;
+        }
+
+        if (ATCA_SUCCESS != (status = ATCA_TRACE(atca_execute_command(&packet, device), "execution failed")))
+        {
+            break;
+        }
+
+        if (packet.data[ATCA_COUNT_IDX] >= (3u + AES_DATA_SIZE))
+        {
+            // The AES command return a 16 byte data.
+            (void)memcpy(output, &packet.data[ATCA_RSP_DATA_IDX], AES_DATA_SIZE);
+        }
+
+    }
+    while (false);
+
+    return status;
 }
 #endif   /* CALIB_AES_MODE_ENCODING  */

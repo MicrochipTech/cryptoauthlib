@@ -45,8 +45,8 @@
 #define KIT_TX_WRAP_SIZE    (10)
 
 // The number of bytes to wrap a response in kit protocol.  sizeof("<KIT_MSG_SIZE>00()\n<null>")
-#define KIT_MSG_SIZE        (32)
-#define KIT_RX_WRAP_SIZE    (KIT_MSG_SIZE + 6)
+#define KIT_MSG_SIZE        (32u)
+#define KIT_RX_WRAP_SIZE    (KIT_MSG_SIZE + 6u)
 
 #ifdef __cplusplus
 extern "C" {
@@ -59,13 +59,15 @@ ATCA_STATUS kit_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, 
 ATCA_STATUS kit_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen);
 ATCA_STATUS kit_release(void* hal_data);
 
-ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlength, char* pkitbuf, int* nkitbuf,const char* target);
-ATCA_STATUS kit_parse_rsp(const char* pkitbuf, int nkitbuf, uint8_t* kitstatus, uint8_t* rxdata, int* nrxdata);
+ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlen, char* pkitcmd, int* nkitcmd, const char* target);
+ATCA_STATUS kit_parse_rsp(const char* pkitbuf, int nkitbuf, uint8_t* kitstatus, uint8_t* rxdata, int* datasize);
 
 ATCA_STATUS kit_wake(ATCAIface iface);
 ATCA_STATUS kit_idle(ATCAIface iface);
 ATCA_STATUS kit_sleep(ATCAIface iface);
 
+ATCA_STATUS kit_phy_send(ATCAIface iface, uint8_t* txdata, int txlength);
+ATCA_STATUS kit_phy_receive(ATCAIface iface, uint8_t* rxdata, int* rxsize);
 
 const char* kit_id_from_devtype(ATCADeviceType devtype);
 const char* kit_interface_from_kittype(ATCAKitType kittype);

@@ -43,7 +43,7 @@
 /** \defgroup hal_ Hardware abstraction layer (hal_)
  *
  * \brief
- * These methods define the hardware abstraction layer for communicating with a TA100 device
+ * These methods define the hardware abstraction layer for communicating with a TA10x device
  *
    @{ */
 
@@ -68,8 +68,8 @@ ATCA_STATUS hal_spi_discover_buses(int spi_buses[], int max_buses)
     return ATCA_SUCCESS;
 }
 
-/** \brief discover any TA100 devices on a given logical bus number
- * \param[in]  bus_num  logical bus number on which to look for TA100 devices
+/** \brief discover any TA10x devices on a given logical bus number
+ * \param[in]  bus_num  logical bus number on which to look for TA10x devices
  * \param[out] cfg     pointer to head of an array of interface config structures which get filled in by this method
  * \param[out] found   number of devices found on this bus
  * \return ATCA_SUCCESS
@@ -250,12 +250,12 @@ ATCA_STATUS hal_spi_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxda
 
     if ((NULL == cfg) || (NULL == rxlength) || (NULL == rxdata))
     {
-        return ATCA_TRACE(ATCA_INVALID_POINTER, "NULL pointer encountered");
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
     }
 
     if (NULL == (plib = (atca_plib_spi_api_t*)cfg->cfg_data))
     {
-        return ATCA_TRACE(ATCA_INVALID_POINTER, "NULL pointer encountered");
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
     }
 
     /* read status register/length bytes to know number of bytes to read */

@@ -41,7 +41,7 @@ int tng_atcacert_max_device_cert_size(size_t* max_cert_size)
     do
     {
         cert_def = tng_map_get_device_cert_def(index++);
-        if (cert_def)
+        if (NULL != cert_def)
         {
             ret = atcacert_max_cert_size(cert_def, &cert_size);
             if (cert_size > *max_cert_size)
@@ -50,7 +50,7 @@ int tng_atcacert_max_device_cert_size(size_t* max_cert_size)
             }
         }
     }
-    while (cert_def && !ret);
+    while ((NULL != cert_def) && (ret != ATCACERT_E_SUCCESS));
 
     return ret;
 }
@@ -88,7 +88,7 @@ int tng_atcacert_read_device_cert(uint8_t* cert, size_t* cert_size, const uint8_
         {
             return ret;
         }
-        if (cert_def->ca_cert_def->public_key_dev_loc.count == 72)
+        if (cert_def->ca_cert_def->public_key_dev_loc.count == 72u)
         {
             // Public key is formatted with padding bytes in front of the X and Y components
             atcacert_public_key_remove_padding(ca_public_key, ca_public_key);
@@ -111,7 +111,7 @@ int tng_atcacert_device_public_key(uint8_t* public_key, uint8_t* cert)
         return ATCACERT_E_BAD_PARAMS;
     }
 
-    ret = tng_get_device_cert_def(&cert_def);
+    ret = (int)tng_get_device_cert_def(&cert_def);
     if (ret != ATCA_SUCCESS)
     {
         return ret;
@@ -122,14 +122,14 @@ int tng_atcacert_device_public_key(uint8_t* public_key, uint8_t* cert)
     {
         return ret;
     }
-    if (cert_def->public_key_dev_loc.count == 72)
+    if (cert_def->public_key_dev_loc.count == 72u)
     {
         // Public key is formatted with padding bytes in front of the X and Y components
         atcacert_public_key_remove_padding(raw_public_key, public_key);
     }
     else
     {
-        memcpy(public_key, raw_public_key, 64);
+        (void)memcpy(public_key, raw_public_key, 64);
     }
 
     return ATCACERT_E_SUCCESS;
@@ -182,7 +182,7 @@ int tng_atcacert_signer_public_key(uint8_t* public_key, uint8_t* cert)
     }
     else
     {
-        ret = tng_get_device_cert_def(&cert_def);
+        ret = (int)tng_get_device_cert_def(&cert_def);
         if (ATCA_SUCCESS == ret)
         {
             cert_def = cert_def->ca_cert_def;
@@ -190,14 +190,14 @@ int tng_atcacert_signer_public_key(uint8_t* public_key, uint8_t* cert)
             ret = atcacert_read_device_loc(&cert_def->public_key_dev_loc, raw_public_key);
             if (ATCACERT_E_SUCCESS == ret)
             {
-                if (cert_def->public_key_dev_loc.count == 72)
+                if (cert_def->public_key_dev_loc.count == 72u)
                 {
                     // Public key is formatted with padding bytes in front of the X and Y components
                     atcacert_public_key_remove_padding(raw_public_key, public_key);
                 }
                 else
                 {
-                    memcpy(public_key, raw_public_key, 64);
+                    (void)memcpy(public_key, raw_public_key, 64);
                 }
             }
         }
@@ -230,7 +230,7 @@ int tng_atcacert_root_cert(uint8_t* cert, size_t* cert_size)
         return ATCACERT_E_BUFFER_TOO_SMALL;
     }
 
-    memcpy(cert, g_cryptoauth_root_ca_002_cert, g_cryptoauth_root_ca_002_cert_size);
+    (void)memcpy(cert, g_cryptoauth_root_ca_002_cert, g_cryptoauth_root_ca_002_cert_size);
     *cert_size = g_cryptoauth_root_ca_002_cert_size;
 
     return ATCACERT_E_SUCCESS;
@@ -243,7 +243,7 @@ int tng_atcacert_root_public_key(uint8_t* public_key)
         return ATCACERT_E_BAD_PARAMS;
     }
 
-    memcpy(public_key, &g_cryptoauth_root_ca_002_cert[CRYPTOAUTH_ROOT_CA_002_PUBLIC_KEY_OFFSET], 64);
+    (void)memcpy(public_key, &g_cryptoauth_root_ca_002_cert[CRYPTOAUTH_ROOT_CA_002_PUBLIC_KEY_OFFSET], 64);
 
     return ATCACERT_E_SUCCESS;
 }

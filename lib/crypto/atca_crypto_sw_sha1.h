@@ -46,10 +46,7 @@
 extern "C" {
 #endif
 
-int atcac_sw_sha1_init(atcac_sha1_ctx* ctx);
-int atcac_sw_sha1_update(atcac_sha1_ctx* ctx, const uint8_t* data, size_t data_size);
-int atcac_sw_sha1_finish(atcac_sha1_ctx * ctx, uint8_t digest[ATCA_SHA1_DIGEST_SIZE]);
-int atcac_sw_sha1(const uint8_t * data, size_t data_size, uint8_t digest[ATCA_SHA1_DIGEST_SIZE]);
+ATCA_STATUS atcac_sw_sha1(const uint8_t * data, size_t data_size, uint8_t digest[ATCA_SHA1_DIGEST_SIZE]);
 
 #ifdef __cplusplus
 }

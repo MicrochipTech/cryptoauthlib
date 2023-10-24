@@ -50,12 +50,12 @@ extern "C" {
  * \param[in]    footer    Footer to place at the end of the PEM data.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-int atcacert_encode_pem(const uint8_t* der,
-                        size_t         der_size,
-                        char*          pem,
-                        size_t*        pem_size,
-                        const char*    header,
-                        const char*    footer);
+ATCA_STATUS atcacert_encode_pem(const uint8_t* der,
+                                size_t         der_size,
+                                char*          pem,
+                                size_t*        pem_size,
+                                const char*    header,
+                                const char*    footer);
 
 /**
  * \brief Decode PEM data into DER format.
@@ -68,12 +68,12 @@ int atcacert_encode_pem(const uint8_t* der,
  * \param[in]    footer    Footer to find the end of the PEM data.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-int atcacert_decode_pem(const char* pem,
-                        size_t      pem_size,
-                        uint8_t*    der,
-                        size_t*     der_size,
-                        const char* header,
-                        const char* footer);
+ATCA_STATUS atcacert_decode_pem(const char* pem,
+                                size_t      pem_size,
+                                uint8_t*    der,
+                                size_t*     der_size,
+                                const char* header,
+                                const char* footer);
 
 /**
  * \brief Encode a DER certificate in PEM format.
@@ -84,7 +84,7 @@ int atcacert_decode_pem(const char* pem,
  *                              As output, the size of the PEM certificate.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-int atcacert_encode_pem_cert(const uint8_t* der_cert, size_t der_cert_size, char* pem_cert, size_t* pem_cert_size);
+ATCA_STATUS atcacert_encode_pem_cert(const uint8_t* der_cert, size_t der_cert_size, char* pem_cert, size_t* pem_cert_size);
 
 /**
  * \brief Decode a PEM certificate into DER format.
@@ -95,7 +95,7 @@ int atcacert_encode_pem_cert(const uint8_t* der_cert, size_t der_cert_size, char
  *                              As output, the size of the DER certificate.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-int atcacert_decode_pem_cert(const char* pem_cert, size_t pem_cert_size, uint8_t* der_cert, size_t* der_cert_size);
+ATCA_STATUS atcacert_decode_pem_cert(const char* pem_cert, size_t pem_cert_size, uint8_t* der_cert, size_t* der_cert_size);
 
 /**
  * \brief Encode a DER CSR in PEM format.
@@ -106,7 +106,7 @@ int atcacert_decode_pem_cert(const char* pem_cert, size_t pem_cert_size, uint8_t
  *                             As output, the size of the PEM CSR.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-int atcacert_encode_pem_csr(const uint8_t* der_csr, size_t der_csr_size, char* pem_csr, size_t* pem_csr_size);
+ATCA_STATUS atcacert_encode_pem_csr(const uint8_t* der_csr, size_t der_csr_size, char* pem_csr, size_t* pem_csr_size);
 
 /**
  * \brief Extract the CSR certificate bytes from a PEM encoded CSR certificate
@@ -117,7 +117,7 @@ int atcacert_encode_pem_csr(const uint8_t* der_csr, size_t der_csr_size, char* p
  *                             As output, the size of the DER CSR.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-int atcacert_decode_pem_csr(const char* pem_csr, size_t pem_csr_size, uint8_t* der_csr, size_t* der_csr_size);
+ATCA_STATUS atcacert_decode_pem_csr(const char* pem_csr, size_t pem_csr_size, uint8_t* der_csr, size_t* der_csr_size);
 
 #ifdef __cplusplus
 }

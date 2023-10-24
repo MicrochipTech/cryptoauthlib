@@ -38,13 +38,16 @@
 extern "C" {
 #endif
 
-ATCA_STATUS atcab_printbin(uint8_t* binary, size_t bin_len, bool add_space);
 ATCA_STATUS atcab_bin2hex(const uint8_t* bin, size_t bin_size, char* hex, size_t* hex_size);
 ATCA_STATUS atcab_bin2hex_(const uint8_t* bin, size_t bin_size, char* hex, size_t* hex_size, bool is_pretty, bool is_space, bool is_upper);
 ATCA_STATUS atcab_hex2bin(const char* ascii_hex, size_t ascii_hex_len, uint8_t* binary, size_t* bin_len);
 ATCA_STATUS atcab_hex2bin_(const char* hex, size_t hex_size, uint8_t* bin, size_t* bin_size, bool is_space);
+
+#ifdef ATCA_PRINTF
+ATCA_STATUS atcab_printbin(uint8_t* binary, size_t bin_len, bool add_space);
 ATCA_STATUS atcab_printbin_sp(uint8_t* binary, size_t bin_len);
 ATCA_STATUS atcab_printbin_label(const char* label, uint8_t* binary, size_t bin_len);
+#endif
 
 
 ATCA_STATUS packHex(const char* ascii_hex, size_t ascii_hex_len, char* packed_hex, size_t* packed_len);
@@ -57,23 +60,27 @@ bool isHexDigit(char c);
 
 bool isBase64(char c, const uint8_t * rules);
 bool isBase64Digit(char c, const uint8_t * rules);
-uint8_t base64Index(char c, const uint8_t * rules);
-char base64Char(uint8_t id, const uint8_t * rules);
 
-ATCA_DLL uint8_t atcab_b64rules_default[4];
-ATCA_DLL uint8_t atcab_b64rules_mime[4];
-ATCA_DLL uint8_t atcab_b64rules_urlsafe[4];
+const uint8_t * atcab_b64rules_default(void);
+const uint8_t * atcab_b64rules_mime(void);
+const uint8_t * atcab_b64rules_urlsafe(void);
 
 ATCA_STATUS atcab_base64decode_(const char* encoded, size_t encoded_size, uint8_t* data, size_t* data_size, const uint8_t * rules);
-ATCA_STATUS atcab_base64decode(const char* encoded, size_t encoded_size, uint8_t* data, size_t* data_size);
+ATCA_STATUS atcab_base64encode(const uint8_t* byte_array, size_t array_len, char* encoded, size_t* encoded_len);
 
 ATCA_STATUS atcab_base64encode_(const uint8_t* data, size_t data_size, char* encoded, size_t* encoded_size, const uint8_t * rules);
-ATCA_STATUS atcab_base64encode(const uint8_t* data, size_t data_size, char* encoded, size_t* encoded_size);
+ATCA_STATUS atcab_base64decode(const char* encoded, size_t encoded_len, uint8_t* byte_array, size_t* array_len);
 
 
 ATCA_STATUS atcab_reversal(const uint8_t* bin, size_t bin_size, uint8_t* dest, size_t* dest_size);
 
 int atcab_memset_s(void* dest, size_t destsz, int ch, size_t count);
+
+size_t atcab_pointer_delta(const void* start, const void* end);
+
+char lib_toupper(char c);
+char lib_tolower(char c);
+
 
 #ifdef __cplusplus
 }

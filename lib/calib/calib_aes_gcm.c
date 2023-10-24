@@ -72,12 +72,12 @@ static ATCA_STATUS calib_aes_ghash(ATCADevice device, const uint8_t* h, const ui
     {
         RETURN(ATCA_BAD_PARAM, "Null pointer");
     }
-    if (data_size == 0)
+    if (data_size == 0u)
     {
         return ATCA_SUCCESS;
     }
 
-    while (data_size / AES_DATA_SIZE)
+    while ((data_size / AES_DATA_SIZE) != 0u)
     {
         for (xor_index = 0; xor_index < AES_DATA_SIZE; xor_index++)
         {
@@ -92,10 +92,10 @@ static ATCA_STATUS calib_aes_ghash(ATCADevice device, const uint8_t* h, const ui
         data_size -= AES_DATA_SIZE;
     }
 
-    if (data_size)
+    if (data_size != 0u)
     {
-        memcpy(pad_bytes, data, data_size);
-        memset(&pad_bytes[data_size], 0, sizeof(pad_bytes) - data_size);
+        (void)memcpy(pad_bytes, data, data_size);
+        (void)memset(&pad_bytes[data_size], 0, sizeof(pad_bytes) - data_size);
 
         for (xor_index = 0; xor_index < AES_DATA_SIZE; xor_index++)
         {
@@ -135,7 +135,7 @@ static ATCA_STATUS calib_aes_gcm_increment(uint8_t* cb, size_t counter_size)
     for (i = 0; i < counter_size; i++)
     {
         // Counter is right-aligned in buffer
-        if (++(cb[AES_DATA_SIZE - i - 1]) != 0)
+        if (++(cb[AES_DATA_SIZE - i - 1u]) != 0u)
         {
             break;
         }
@@ -143,7 +143,7 @@ static ATCA_STATUS calib_aes_gcm_increment(uint8_t* cb, size_t counter_size)
     if (i >= counter_size)
     {
         // Counter overflowed
-        memset(&cb[AES_DATA_SIZE - counter_size], 0, counter_size);
+        (void)memset(&cb[AES_DATA_SIZE - counter_size], 0, counter_size);
     }
 
     return ATCA_SUCCESS;
@@ -169,12 +169,12 @@ ATCA_STATUS calib_aes_gcm_init(ATCADevice device, atca_aes_gcm_ctx_t* ctx, uint1
     uint8_t ghash_data[AES_DATA_SIZE];
     uint32_t length;
 
-    if (ctx == NULL || iv == NULL || iv_size == 0)
+    if (ctx == NULL || iv == NULL || iv_size == 0u)
     {
         RETURN(ATCA_BAD_PARAM, "GCM init failed; Either null pointer or 0 iv_size");
     }
 
-    memset(ctx, 0, sizeof(*ctx));
+    (void)memset(ctx, 0, sizeof(*ctx));
 
     //Calculate H = CIPHK(0^128)
     if (ATCA_SUCCESS != (status = calib_aes_encrypt(device, key_id, key_block, ctx->h, ctx->h)))
@@ -186,8 +186,8 @@ ATCA_STATUS calib_aes_gcm_init(ATCADevice device, atca_aes_gcm_ctx_t* ctx, uint1
     if (iv_size == ATCA_AES_GCM_IV_STD_LENGTH)
     {
         //J0 = IV || 0^31 ||1.
-        memcpy(ctx->j0, iv, iv_size);
-        ctx->j0[AES_DATA_SIZE - 1] = 0x01;
+        (void)memcpy(ctx->j0, iv, iv_size);
+        ctx->j0[AES_DATA_SIZE - 1u] = 0x01u;
     }
     else
     {
@@ -197,9 +197,9 @@ ATCA_STATUS calib_aes_gcm_init(ATCADevice device, atca_aes_gcm_ctx_t* ctx, uint1
             RETURN(status, "GCM - J0 (IV) failed");
         }
 
-        memset(ghash_data, 0, AES_DATA_SIZE);
-        length = ATCA_UINT32_HOST_TO_BE((uint32_t)(iv_size * 8));
-        memcpy(&ghash_data[12], &length, sizeof(length));
+        (void)memset(ghash_data, 0, AES_DATA_SIZE);
+        length = ATCA_UINT32_HOST_TO_BE((uint32_t)((iv_size * 8u) & UINT32_MAX));
+        (void)memcpy(&ghash_data[12], (uint8_t*)&length, sizeof(length));
         if (ATCA_SUCCESS != (status = calib_aes_ghash(device, ctx->h, ghash_data, sizeof(ghash_data), ctx->j0)))
         {
             RETURN(status, "GCM - J0 (IV Size) failed");
@@ -208,7 +208,7 @@ ATCA_STATUS calib_aes_gcm_init(ATCADevice device, atca_aes_gcm_ctx_t* ctx, uint1
 
     ctx->key_id = key_id;
     ctx->key_block = key_block;
-    memcpy(ctx->cb, ctx->j0, AES_DATA_SIZE);
+    (void)memcpy(ctx->cb, ctx->j0, AES_DATA_SIZE);
 
     if (ATCA_SUCCESS != (status = calib_aes_gcm_increment(ctx->cb, 4)))
     {
@@ -243,24 +243,24 @@ ATCA_STATUS calib_aes_gcm_init_rand(ATCADevice device, atca_aes_gcm_ctx_t* ctx, 
                                     const uint8_t* free_field, size_t free_field_size, uint8_t* iv)
 {
     ATCA_STATUS status;
-    uint8_t random[RANDOM_NUM_SIZE];
+    uint8_t rand_out[RANDOM_NUM_SIZE];
 
-    if (ctx == NULL || iv == NULL || (free_field_size > 0 && free_field == NULL))
+    if (ctx == NULL || iv == NULL || (free_field_size > 0u && free_field == NULL))
     {
         RETURN(ATCA_BAD_PARAM, "Null pointer");
     }
     // 800-38D 8.2.2 specifies a minimum rand_field size of 12 bytes (96 bits)
-    if (rand_size < 12 || rand_size > RANDOM_NUM_SIZE)
+    if (rand_size < 12u || rand_size > RANDOM_NUM_SIZE)
     {
         RETURN(ATCA_BAD_PARAM, "Bad rand_size");
     }
 
-    if (ATCA_SUCCESS != (status = calib_random(device, random)))
+    if (ATCA_SUCCESS != (status = calib_random(device, rand_out)))
     {
         RETURN(status, "GCM init rand - Random Generation failed");
     }
-    memcpy(iv, random, rand_size);
-    memcpy(&iv[rand_size], free_field, free_field_size);
+    (void)memcpy(iv, rand_out, rand_size);
+    (void)memcpy(&iv[rand_size], free_field, free_field_size);
 
     if (ATCA_SUCCESS != (status = calib_aes_gcm_init(device, ctx, key_id, key_block, iv, rand_size + free_field_size)))
     {
@@ -288,16 +288,16 @@ ATCA_STATUS calib_aes_gcm_init_rand(ATCADevice device, atca_aes_gcm_ctx_t* ctx, 
 ATCA_STATUS calib_aes_gcm_aad_update(ATCADevice device, atca_aes_gcm_ctx_t* ctx, const uint8_t* aad, uint32_t aad_size)
 {
     ATCA_STATUS status;
-    uint32_t block_count;
+    size_t block_count;
     uint32_t rem_size;
     size_t copy_size;
 
-    if (ctx == NULL || (aad_size > 0 && aad == NULL))
+    if (ctx == NULL || (aad_size > 0u && aad == NULL))
     {
         RETURN(ATCA_BAD_PARAM, "Null pointer");
     }
 
-    if (aad_size == 0)
+    if (aad_size == 0u)
     {
         return ATCA_SUCCESS;
     }
@@ -306,7 +306,7 @@ ATCA_STATUS calib_aes_gcm_aad_update(ATCADevice device, atca_aes_gcm_ctx_t* ctx,
     copy_size = aad_size > rem_size ? (size_t)rem_size : (size_t)aad_size;
 
     // Copy data into current block
-    memcpy(&ctx->partial_aad[ctx->partial_aad_size], aad, copy_size);
+    (void)memcpy(&ctx->partial_aad[ctx->partial_aad_size], aad, copy_size);
 
     if (ctx->partial_aad_size + aad_size < AES_DATA_SIZE)
     {
@@ -322,17 +322,17 @@ ATCA_STATUS calib_aes_gcm_aad_update(ATCADevice device, atca_aes_gcm_ctx_t* ctx,
     }
 
     // Process any additional blocks
-    aad_size -= copy_size; // Adjust to the remaining aad bytes
-    block_count = aad_size / AES_DATA_SIZE;
+    aad_size -= (uint32_t)copy_size; // Adjust to the remaining aad bytes
+    block_count = (size_t)aad_size / AES_DATA_SIZE;
     if (ATCA_SUCCESS != (status = calib_aes_ghash(device, ctx->h, &aad[copy_size], block_count * AES_DATA_SIZE, ctx->y)))
     {
         RETURN(status, "GCM - S (AAD) failed");
     }
 
     // Save any remaining data
-    ctx->aad_size += (block_count + 1) * AES_DATA_SIZE;
+    ctx->aad_size += (uint32_t)((block_count + 1u) * AES_DATA_SIZE);
     ctx->partial_aad_size = aad_size % AES_DATA_SIZE;
-    memcpy(ctx->partial_aad, &aad[copy_size + block_count * AES_DATA_SIZE], (size_t)ctx->partial_aad_size);
+    (void)memcpy(ctx->partial_aad, &aad[copy_size + block_count * AES_DATA_SIZE], (size_t)ctx->partial_aad_size);
 
     return ATCA_SUCCESS;
 }
@@ -357,12 +357,12 @@ static ATCA_STATUS calib_aes_gcm_update(ATCADevice device, atca_aes_gcm_ctx_t* c
     uint32_t data_idx;
     uint32_t i;
 
-    if (ctx == NULL || (input_size > 0 && (input == NULL || output == NULL)))
+    if (ctx == NULL || (input_size > 0u && (input == NULL || output == NULL)))
     {
         RETURN(ATCA_BAD_PARAM, "Null pointer");
     }
 
-    if (ctx->partial_aad_size > 0)
+    if (ctx->partial_aad_size > 0u)
     {
         // We have a partial block of AAD that needs to be added
         if (ATCA_SUCCESS != (status = calib_aes_ghash(device, ctx->h, ctx->partial_aad, ctx->partial_aad_size, ctx->y)))
@@ -373,7 +373,7 @@ static ATCA_STATUS calib_aes_gcm_update(ATCADevice device, atca_aes_gcm_ctx_t* c
         ctx->partial_aad_size = 0;
     }
 
-    if (input_size == 0)
+    if (input_size == 0u)
     {
         // Nothing to do
         return ATCA_SUCCESS;
@@ -382,7 +382,7 @@ static ATCA_STATUS calib_aes_gcm_update(ATCADevice device, atca_aes_gcm_ctx_t* c
     data_idx = 0;
     while (data_idx < input_size)
     {
-        if (ctx->data_size % AES_DATA_SIZE == 0)
+        if (ctx->data_size % AES_DATA_SIZE == 0u)
         {
             // Need to calculate next encrypted counter block
             if (ATCA_SUCCESS != (status = calib_aes_encrypt(device, ctx->key_id, ctx->key_block, ctx->cb, ctx->enc_cb)))
@@ -398,15 +398,20 @@ static ATCA_STATUS calib_aes_gcm_update(ATCADevice device, atca_aes_gcm_ctx_t* c
         }
 
         // Process data with current encrypted counter block
-        for (i = ctx->data_size % AES_DATA_SIZE; i < AES_DATA_SIZE && data_idx < input_size; i++, data_idx++)
+        for (i = ctx->data_size % AES_DATA_SIZE; i < AES_DATA_SIZE; i++)
         {
-            output[data_idx] = input[data_idx] ^ ctx->enc_cb[i];
-            // Save the current ciphertext block depending on whether this is an encrypt or decrypt operation
-            ctx->ciphertext_block[i] = is_encrypt ? output[data_idx] : input[data_idx];
-            ctx->data_size += 1;
+            if (data_idx < input_size)
+            {
+                output[data_idx] = input[data_idx] ^ ctx->enc_cb[i];
+                // Save the current ciphertext block depending on whether this is an encrypt or decrypt operation
+                ctx->ciphertext_block[i] = is_encrypt ? output[data_idx] : input[data_idx];
+                ctx->data_size += 1u;
+            }
+
+            data_idx++;
         }
 
-        if (ctx->data_size % AES_DATA_SIZE == 0)
+        if (ctx->data_size % AES_DATA_SIZE == 0u)
         {
             // Calculate running hash with completed block
             if (ATCA_SUCCESS != (status = calib_aes_ghash(device, ctx->h, ctx->ciphertext_block, AES_DATA_SIZE, ctx->y)))
@@ -461,16 +466,16 @@ static ATCA_STATUS calib_aes_gcm_calc_auth_tag(ATCADevice device, atca_aes_gcm_c
         RETURN(ATCA_BAD_PARAM, "Null pointer");
     }
     // 800-38D 5.2.1.2 specifies these tags sizes
-    if (tag_size < 12 || tag_size > 16)
+    if (tag_size < 12u || tag_size > 16u)
     {
         RETURN(ATCA_BAD_PARAM, "Invalid tag size");
     }
 
-    memset(temp_data, 0, AES_DATA_SIZE);
-    length = ATCA_UINT64_HOST_TO_BE(((uint64_t)ctx->aad_size) * 8);
-    memcpy(&temp_data[0], &length, sizeof(length));
-    length = ATCA_UINT64_HOST_TO_BE(((uint64_t)ctx->data_size) * 8);
-    memcpy(&temp_data[8], &length, sizeof(length));
+    (void)memset(temp_data, 0, AES_DATA_SIZE);
+    length = ATCA_UINT64_HOST_TO_BE(((uint64_t)ctx->aad_size) * 8u);
+    (void)memcpy(&temp_data[0], (uint8_t*)&length, sizeof(length));
+    length = ATCA_UINT64_HOST_TO_BE(((uint64_t)ctx->data_size) * 8u);
+    (void)memcpy(&temp_data[8], (uint8_t*)&length, sizeof(length));
 
     //S = GHASH(H, [len(A)]64 || [len(C)]64))
     if (ATCA_SUCCESS != (status = calib_aes_ghash(device, ctx->h, temp_data, AES_DATA_SIZE, ctx->y)))
@@ -510,7 +515,7 @@ ATCA_STATUS calib_aes_gcm_encrypt_finish(ATCADevice device, atca_aes_gcm_ctx_t* 
         RETURN(ATCA_BAD_PARAM, "Null pointer");
     }
 
-    if (ctx->partial_aad_size > 0)
+    if (ctx->partial_aad_size > 0u)
     {
         // Incomplete AAD with no encrypted data, need to complete AAD hash
         if (ATCA_SUCCESS != (status = calib_aes_gcm_update(device, ctx, NULL, 0, NULL, true)))
@@ -521,7 +526,7 @@ ATCA_STATUS calib_aes_gcm_encrypt_finish(ATCADevice device, atca_aes_gcm_ctx_t* 
 
     // Update hash with any partial block of ciphertext
     //S = GHASH(H, C || 0^u)
-    if (ATCA_SUCCESS != (status = calib_aes_ghash(device, ctx->h, ctx->ciphertext_block, ctx->data_size % AES_DATA_SIZE, ctx->y)))
+    if (ATCA_SUCCESS != (status = calib_aes_ghash(device, ctx->h, ctx->ciphertext_block, (size_t)ctx->data_size % AES_DATA_SIZE, ctx->y)))
     {
         RETURN(status, "GCM - S (C - encrypt update) failed");
     }
@@ -572,7 +577,7 @@ ATCA_STATUS calib_aes_gcm_decrypt_finish(ATCADevice device, atca_aes_gcm_ctx_t* 
     }
     *is_verified = false;
 
-    if (ctx->partial_aad_size > 0)
+    if (ctx->partial_aad_size > 0u)
     {
         // Incomplete AAD with no decrypted data, need to complete AAD hash
         if (ATCA_SUCCESS != (status = calib_aes_gcm_update(device, ctx, NULL, 0, NULL, false)))
@@ -583,7 +588,7 @@ ATCA_STATUS calib_aes_gcm_decrypt_finish(ATCADevice device, atca_aes_gcm_ctx_t* 
 
     // Update hash with any partial block of ciphertext
     //S = GHASH(H, C || 0^u)
-    if (ATCA_SUCCESS != (status = calib_aes_ghash(device, ctx->h, ctx->ciphertext_block, ctx->data_size % AES_DATA_SIZE, ctx->y)))
+    if (ATCA_SUCCESS != (status = calib_aes_ghash(device, ctx->h, ctx->ciphertext_block, (size_t)ctx->data_size % AES_DATA_SIZE, ctx->y)))
     {
         RETURN(status, "GCM - S (C - encrypt update) failed");
     }

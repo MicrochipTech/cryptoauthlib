@@ -206,7 +206,7 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxda
 
     if ((NULL == cfg) || (NULL == rxlength) || (NULL == rxdata))
     {
-        return ATCA_TRACE(ATCA_INVALID_POINTER, "NULL pointer encountered");
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
     }
 
     plib = (i2c_start_instance_t*)cfg->cfg_data;
@@ -269,7 +269,7 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxda
         }
 
         /*Calculate bytes to read based on device response*/
-        if (cfg->devtype == TA100)
+        if (atcab_is_ta_device(cfg->devtype))
         {
             read_length = ((uint16_t)rxdata[0] * 256) + rxdata[1];
             min_resp_size += 1;

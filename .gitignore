@@ -12,6 +12,7 @@ tmp/
 local.properties
 .settings/
 .loadpath
+*.orig
 
 # Eclipse Core
 .project

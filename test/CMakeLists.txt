@@ -50,6 +50,9 @@ endif()
 add_executable(cryptoauth_test ${CRYPTOAUTH_TEST_SRC} ${UNITY_SRC})
 
 include_directories(cryptoauth_test ${CMAKE_CURRENT_SOURCE_DIR}
+                                    ${CMAKE_BINARY_DIR}/downloaded
+                                    ${CMAKE_BINARY_DIR}/downloaded/wolfssl
+                                    ${CMAKE_BINARY_DIR}/downloaded/mbedtls/include
                                     ${CMAKE_CURRENT_SOURCE_DIR}/../
                                     ${CMAKE_CURRENT_SOURCE_DIR}/api_atcab
                                     ${CMAKE_CURRENT_SOURCE_DIR}/api_calib
@@ -96,46 +99,21 @@ endif(ATCA_TEST_DELETE_ENABLE)
 set_property(TARGET cryptoauth_test PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "$(OutputPath)")
 
 add_custom_command(TARGET cryptoauth_test POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_CURRENT_SOURCE_DIR}/vectors/sha-byte-test-vectors/SHA1ShortMsg.rsp
-                $<TARGET_FILE_DIR:${PROJECT_NAME}>/sha-byte-test-vectors/SHA1ShortMsg.rsp )
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+                ${CMAKE_CURRENT_SOURCE_DIR}/vectors/sha-byte-test-vectors
+                $<TARGET_FILE_DIR:${PROJECT_NAME}>/sha-byte-test-vectors )
 
 add_custom_command(TARGET cryptoauth_test POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_CURRENT_SOURCE_DIR}/vectors/sha-byte-test-vectors/SHA1LongMsg.rsp
-                $<TARGET_FILE_DIR:${PROJECT_NAME}>/sha-byte-test-vectors/SHA1LongMsg.rsp )
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+                ${CMAKE_CURRENT_SOURCE_DIR}/vectors/aes_cmac_vectors
+                $<TARGET_FILE_DIR:${PROJECT_NAME}>/aes_cmac_vectors )
 
 add_custom_command(TARGET cryptoauth_test POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_CURRENT_SOURCE_DIR}/vectors/sha-byte-test-vectors/SHA1Monte.rsp
-                $<TARGET_FILE_DIR:${PROJECT_NAME}>/sha-byte-test-vectors/SHA1Monte.rsp )
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+                ${CMAKE_CURRENT_SOURCE_DIR}/vectors/aes_gcm_cavp_vectors
+                $<TARGET_FILE_DIR:${PROJECT_NAME}>/aes_gcm_cavp_vectors )
 
 add_custom_command(TARGET cryptoauth_test POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_CURRENT_SOURCE_DIR}/vectors/sha-byte-test-vectors/SHA256ShortMsg.rsp
-                $<TARGET_FILE_DIR:${PROJECT_NAME}>/sha-byte-test-vectors/SHA256ShortMsg.rsp )
-
-add_custom_command(TARGET cryptoauth_test POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_CURRENT_SOURCE_DIR}/vectors/sha-byte-test-vectors/SHA256LongMsg.rsp
-                $<TARGET_FILE_DIR:${PROJECT_NAME}>/sha-byte-test-vectors/SHA256LongMsg.rsp )
-
-add_custom_command(TARGET cryptoauth_test POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_CURRENT_SOURCE_DIR}/vectors/sha-byte-test-vectors/SHA256Monte.rsp
-                $<TARGET_FILE_DIR:${PROJECT_NAME}>/sha-byte-test-vectors/SHA256Monte.rsp )
-
-add_custom_command(TARGET cryptoauth_test POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_CURRENT_SOURCE_DIR}/vectors/aes_gcm_cavp_vectors/gcmEncryptExtIV128.req
-                $<TARGET_FILE_DIR:${PROJECT_NAME}>/aes_gcm_cavp_vectors/gcmEncryptExtIV128.req )
-
-add_custom_command(TARGET cryptoauth_test POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_CURRENT_SOURCE_DIR}/vectors/aes_gcm_cavp_vectors/gcmDecrypt128.req
-                $<TARGET_FILE_DIR:${PROJECT_NAME}>/aes_gcm_cavp_vectors/gcmDecrypt128.req )
-                
-add_custom_command(TARGET cryptoauth_test POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_CURRENT_SOURCE_DIR}/vectors/hmac_test_vectors/HMAC_sha256.rsp
-                $<TARGET_FILE_DIR:${PROJECT_NAME}>/hmac_test_vectors/HMAC_sha256.rsp )
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+                ${CMAKE_CURRENT_SOURCE_DIR}/vectors/hmac_test_vectors
+                $<TARGET_FILE_DIR:${PROJECT_NAME}>/hmac_test_vectors )

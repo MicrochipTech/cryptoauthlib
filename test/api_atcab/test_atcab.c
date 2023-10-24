@@ -112,15 +112,21 @@ TEST_TEAR_DOWN(atca_cmd_basic_test)
     bool test_failed = atca_test_already_exiting();
     bool comm_failed = atca_test_unresponsive();
 
-    if(comm_failed)
+    if (comm_failed)
     {
         /* Assume if there are comm failures there isn't a point trying to
-        continue to fail here */
+           continue to fail here */
         status = atcab_wakeup();
-        if (!test_failed) TEST_ASSERT_SUCCESS_MSG(status, ATCA_TEST_HELPER_FILE);
+        if (!test_failed)
+        {
+            TEST_ASSERT_SUCCESS_MSG(status, ATCA_TEST_HELPER_FILE);
+        }
 
         status = atcab_sleep();
-        if (!test_failed) TEST_ASSERT_SUCCESS_MSG(status, ATCA_TEST_HELPER_FILE);
+        if (!test_failed)
+        {
+            TEST_ASSERT_SUCCESS_MSG(status, ATCA_TEST_HELPER_FILE);
+        }
     }
 
     status = atcab_release();

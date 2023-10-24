@@ -43,35 +43,35 @@
  * \defgroup pkcs11 Key (pkcs11_key_)
    @{ */
 
-static CK_RV pkcs11_key_get_derivekey_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+static CK_RV pkcs11_key_get_derivekey_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr pSession)
 {
     pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
 
-    if (obj_ptr)
+    if (NULL != obj_ptr && NULL != pSession)
     {
-        if (atcab_is_ca_device(atcab_get_device_type()))
+        if (atcab_is_ca_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
         {
         #if ATCA_CA_SUPPORT
             atecc508a_config_t * pConfig = (atecc508a_config_t*)obj_ptr->config;
 
-            if (!pConfig)
+            if (NULL == pConfig)
             {
                 return CKR_GENERAL_ERROR;
             }
 
-            if (ATCA_SLOT_CONFIG_ECDH_MASK & pConfig->SlotConfig[obj_ptr->slot])
+            if (ATCA_SLOT_CONFIG_ECDH_MASK == (ATCA_SLOT_CONFIG_ECDH_MASK & pConfig->SlotConfig[obj_ptr->slot]))
             {
-                return pkcs11_attrib_true(NULL, pAttribute);
+                return pkcs11_attrib_true(NULL, pAttribute, NULL);
             }
             else
             {
-                return pkcs11_attrib_false(NULL, pAttribute);
+                return pkcs11_attrib_false(NULL, pAttribute, NULL);
             }
         #endif
         }
         else
         {
-            return pkcs11_attrib_false(NULL, pAttribute);
+            return pkcs11_attrib_false(NULL, pAttribute, NULL);
         }
     }
 
@@ -79,76 +79,112 @@ static CK_RV pkcs11_key_get_derivekey_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR
 }
 
 #if ATCA_TA_SUPPORT
-static ATCA_STATUS pkcs11_ta_get_pubkey(CK_VOID_PTR pObject,uint8_t* buffer)
+static ATCA_STATUS pkcs11_ta_get_pubkey(CK_VOID_PTR pObject, uint8_t buffer[ATCA_ECCP256_PUBKEY_SIZE], pkcs11_session_ctx_ptr session_ctx)
 {
-	pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
-	uint16_t publickey_slot = 0;
-	ATCA_STATUS status = ATCA_GEN_FAIL;
-	uint8_t pubkey_field_handle_info[TA_HANDLE_INFO_SIZE];
+    pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
+    pkcs11_slot_ctx_ptr slot_ctx;
+    CK_SLOT_ID owner_id;
+    uint16_t auth_handle;
+    uint16_t publickey_slot = 0;
+    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ta_handle_info pubkey_field_handle_info;
+    bool allowed = false;
 
-	ATCADevice device = atcab_get_device();
+    if (CKR_OK != pkcs11_object_get_owner(obj_ptr, &owner_id))
+    {
+        return ATCA_GEN_FAIL;
+    }
 
-	/* Get the pubkey slot value from property of handleinfo*/
-	publickey_slot = TA_PUB_KIEY_FIELD_HANDLE_MSB | (obj_ptr->handle_info.property & TA_PROPERTY_ATTRIBUTE_MASK);
+    if (NULL == (slot_ctx = pkcs11_slot_get_context(NULL, owner_id)))
+    {
+        return ATCA_GEN_FAIL;
+    }
 
-	/*If the Pub_Key field of the handleinfo references
-	  a valid public key or extracted cert
-	  read the public key from the referenced handle*/
-	if((ATCA_SUCCESS == (status = talib_info_get_handle_info(device,publickey_slot, pubkey_field_handle_info)))&&(((pubkey_field_handle_info[0] & TA_CLASS_MASK) == TA_CLASS_PUBLIC_KEY) ||((pubkey_field_handle_info[0] & TA_CLASS_MASK) == TA_CLASS_EXTRACTED_CERT)))  
-	{
-		status = atcab_read_pubkey(publickey_slot,buffer);
-		PKCS11_DEBUG("atcab_read_pubkey: %x\r\n", status);
-	}			
-	else if((obj_ptr->handle_info.permission & TA_PERM_USAGE_MASK) == TA_PERM_AUTH)
-	{
-		uint8_t isvalid = 0;
-		if(device->session_state != TA_AUTH_STATE_IDLE)
-		{
-			uint8_t auth_session_id = (device->session_key_id == TA_HANDLE_AUTH_SESSION) ? 0:1;
-			if( ATCA_SUCCESS == talib_is_auth_session_valid(device,auth_session_id,&isvalid))
-			{
-				if(isvalid == 1)
-				{
-					status = atcab_get_pubkey(obj_ptr->slot, buffer);
-					PKCS11_DEBUG("atcab_get_pubkey: %x\r\n", status);  
-				}
-			}
-		}
-	}
+    if (NULL == session_ctx || NULL == session_ctx->slot)
+    {
+        return ATCA_GEN_FAIL;
+    }
 
-	return status;
+    ATCADevice device = session_ctx->slot->device_ctx;
+
+    /* Get the handle that is expected to be used for logging in */
+    auth_handle = slot_ctx->user_pin_handle;
+
+    /* Get the pubkey slot value from property of handleinfo */
+    publickey_slot = TA_HANDLE_LINKED_SHARED_DATA | (obj_ptr->handle_info.property & TA_PROP_PUB_KEY_MASK);
+
+    status = talib_info_get_handle_info(device, publickey_slot, &pubkey_field_handle_info);
+
+    if (ATCA_SUCCESS == status)
+    {
+        /* If the Pub_Key field of the handleinfo references a valid public key, read the public key
+           from the referenced handle */
+        if ( ((pubkey_field_handle_info.attributes.element_CKA & TA_HANDLE_INFO_CLASS_MASK) == TA_CLASS_PUBLIC_KEY)
+             && ((pubkey_field_handle_info.attributes.property & TA_PROP_ROOT_MASK) != TA_PROP_ROOT_MASK))
+        {
+            (void)talib_handle_can_read(device, auth_handle, &pubkey_field_handle_info.attributes, &allowed);
+            if (allowed)
+            {
+                status = atcab_read_pubkey_ext(device, publickey_slot, buffer);
+            }
+            else
+            {
+                status = ATCA_GEN_FAIL;
+            }
+        }
+        else
+        {
+            status = TA_HANDLE_EXIST_ERROR;
+        }
+    }
+
+    /* Use the genkey feature to get the public key if handle does not exist or is not a valid public key */
+    if (TA_HANDLE_EXIST_ERROR == status)
+    {
+        (void)talib_handle_can_use(device, auth_handle, &obj_ptr->handle_info, &allowed);
+        if (allowed)
+        {
+            status = atcab_get_pubkey_ext(device, obj_ptr->slot, buffer);
+        }
+        else
+        {
+            status = ATCA_GEN_FAIL;
+        }
+    }
+
+    return status;
 }
 #endif
 
-static CK_RV pkcs11_key_get_local_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+static CK_RV pkcs11_key_get_local_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr session_ctx)
 {
     pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
 
-    if (obj_ptr)
+    if (NULL != obj_ptr && NULL != session_ctx)
     {
-        if (atcab_is_ca_device(atcab_get_device_type()))
+        if (atcab_is_ca_device(atcab_get_device_type_ext(session_ctx->slot->device_ctx)))
         {
         #if ATCA_CA_SUPPORT
             atecc508a_config_t * pConfig = (atecc508a_config_t*)obj_ptr->config;
 
-            if (!pConfig)
+            if (NULL == pConfig)
             {
                 return CKR_GENERAL_ERROR;
             }
 
-            if (ATCA_SLOT_CONFIG_WRITE_CONFIG(2) == (ATCA_SLOT_CONFIG_WRITE_CONFIG_MASK & pConfig->SlotConfig[obj_ptr->slot]))
+            if (ATCA_SLOT_CONFIG_WRITE_CONFIG(2u) == (ATCA_SLOT_CONFIG_WRITE_CONFIG_MASK & pConfig->SlotConfig[obj_ptr->slot]))
             {
-                return pkcs11_attrib_true(NULL, pAttribute);
+                return pkcs11_attrib_true(NULL, pAttribute, NULL);
             }
             else
             {
-                return pkcs11_attrib_false(NULL, pAttribute);
+                return pkcs11_attrib_false(NULL, pAttribute, NULL);
             }
         #endif
         }
         else
         {
-            return pkcs11_attrib_false(NULL, pAttribute);
+            return pkcs11_attrib_false(NULL, pAttribute, NULL);
         }
     }
 
@@ -196,75 +232,101 @@ static const CK_MECHANISM_TYPE pkcs11_key_608_secret_mech[] = {
 //    CKM_AES_CBC_ENCRYPT_DATA
 };
 
-static CK_RV pkcs11_key_get_allowed_mechanisms(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+#if ATCA_CA_SUPPORT
+static CK_RV pkcs11_key_fill_ca_mech(atecc508a_config_t* pConfig, uint16_t slot, CK_ATTRIBUTE_PTR pAttribute)
 {
-    pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
+    CK_RV rv = CKR_GENERAL_ERROR;
 
-    if (obj_ptr)
+    if (NULL != pConfig)
     {
-        if (atcab_is_ca_device(atcab_get_device_type()))
+        if (ATCA_KEY_CONFIG_KEY_TYPE(4u) == (ATCA_KEY_CONFIG_KEY_TYPE_MASK & pConfig->KeyConfig[slot]))
         {
-    #if ATCA_CA_SUPPORT
-            atecc508a_config_t * pConfig = (atecc508a_config_t*)obj_ptr->config;
-
-            if (!pConfig)
+            if (ATCA_KEY_CONFIG_PRIVATE_MASK == (ATCA_KEY_CONFIG_PRIVATE_MASK & pConfig->KeyConfig[slot]))
             {
-                return CKR_GENERAL_ERROR;
-            }
-
-            if (ATCA_KEY_CONFIG_KEY_TYPE(4) == (ATCA_KEY_CONFIG_KEY_TYPE_MASK & pConfig->KeyConfig[obj_ptr->slot]))
-            {
-                if (ATCA_KEY_CONFIG_PRIVATE_MASK & pConfig->KeyConfig[obj_ptr->slot])
-                {
-                    return pkcs11_attrib_fill(pAttribute, (CK_VOID_PTR)pkcs11_key_508_private_mech,
-                                            sizeof(pkcs11_key_508_private_mech));
-                }
-                else
-                {
-                    return pkcs11_attrib_fill(pAttribute, (CK_VOID_PTR)pkcs11_key_508_public_mech,
-                                            sizeof(pkcs11_key_508_public_mech));
-                }
+                rv = pkcs11_attrib_fill(pAttribute, pkcs11_key_508_private_mech,
+                                        (CK_ULONG)sizeof(pkcs11_key_508_private_mech));
             }
             else
             {
-                switch (((uint8_t*)&pConfig->RevNum)[2])
-                {
-                case 0x60:
-                    return pkcs11_attrib_fill(pAttribute, (CK_VOID_PTR)pkcs11_key_608_secret_mech,
-                                            sizeof(pkcs11_key_608_secret_mech));
-                    break;
-                case 0x50:
-                    return pkcs11_attrib_fill(pAttribute, (CK_VOID_PTR)pkcs11_key_508_secret_mech,
-                                            sizeof(pkcs11_key_508_secret_mech));
-                    break;
-                default:
-                    break;
-                }
-
+                rv = pkcs11_attrib_fill(pAttribute, pkcs11_key_508_public_mech,
+                                        (CK_ULONG)sizeof(pkcs11_key_508_public_mech));
             }
-    #endif
         }
         else
         {
-            if(CKO_PRIVATE_KEY == obj_ptr->class_id)
+            switch (((uint8_t*)&pConfig->RevNum)[2])
             {
-                return pkcs11_attrib_fill(pAttribute, (CK_VOID_PTR)pkcs11_key_508_private_mech,
-                                        sizeof(pkcs11_key_508_private_mech));
-            }
-            else if (CKO_PUBLIC_KEY == obj_ptr->class_id)
-            {
-                return pkcs11_attrib_fill(pAttribute, (CK_VOID_PTR)pkcs11_key_508_public_mech,
-                                        sizeof(pkcs11_key_508_public_mech));
-            }
-            else if (CKO_SECRET_KEY == obj_ptr->class_id)
-            {
-                return pkcs11_attrib_fill(pAttribute, (CK_VOID_PTR)pkcs11_key_608_secret_mech,
-                                            sizeof(pkcs11_key_608_secret_mech));
+            case 0x60:
+                rv = pkcs11_attrib_fill(pAttribute, pkcs11_key_608_secret_mech,
+                                        (CK_ULONG)sizeof(pkcs11_key_608_secret_mech));
+                break;
+            case 0x50:
+                rv = pkcs11_attrib_fill(pAttribute, pkcs11_key_508_secret_mech,
+                                        (CK_ULONG)sizeof(pkcs11_key_508_secret_mech));
+                break;
+            default:
+                /* Do nothing */
+                break;
             }
         }
     }
 
-    return CKR_ARGUMENTS_BAD;
+    return rv;
+}
+#endif
+
+#if ATCA_TA_SUPPORT
+static CK_RV pkcs11_key_fill_ta_mech(pkcs11_object_ptr obj_ptr, CK_ATTRIBUTE_PTR pAttribute)
+{
+    CK_RV rv = CKR_GENERAL_ERROR;
+
+    switch (obj_ptr->class_id)
+    {
+    case CKO_PRIVATE_KEY:
+        rv = pkcs11_attrib_fill(pAttribute, pkcs11_key_508_private_mech,
+                                (CK_ULONG)sizeof(pkcs11_key_508_private_mech));
+        break;
+    case CKO_PUBLIC_KEY:
+        rv = pkcs11_attrib_fill(pAttribute, pkcs11_key_508_public_mech,
+                                (CK_ULONG)sizeof(pkcs11_key_508_public_mech));
+        break;
+    case CKO_SECRET_KEY:
+        rv = pkcs11_attrib_fill(pAttribute, pkcs11_key_608_secret_mech,
+                                (CK_ULONG)sizeof(pkcs11_key_608_secret_mech));
+        break;
+    default:
+        /* Do nothing */
+        break;
+    }
+    return rv;
+}
+#endif
+
+
+static CK_RV pkcs11_key_get_allowed_mechanisms(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr session_ctx)
+{
+    pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
+
+    CK_RV rv = CKR_ARGUMENTS_BAD;
+
+    if (NULL != obj_ptr && NULL != session_ctx)
+    {
+        ATCADeviceType devtype = atcab_get_device_type_ext(session_ctx->slot->device_ctx);
+#if ATCA_CA_SUPPORT
+        if (atcab_is_ca_device(devtype))
+        {
+            rv = pkcs11_key_fill_ca_mech((atecc508a_config_t*)obj_ptr->config, obj_ptr->slot, pAttribute);
+        }
+#endif
+#if ATCA_TA_SUPPORT
+        if (atcab_is_ta_device(devtype))
+        {
+            rv = pkcs11_key_fill_ta_mech(obj_ptr, pAttribute);
+        }
+#endif
+    }
+
+    return rv;
 }
 
 /** ASN.1 Header for SECP256R1 public keys */
@@ -283,60 +345,64 @@ static const uint8_t ec_x962_asn1_header[] = {
 /**
  * \brief Extract a public key and convert it to the asn.1 format
  */
-static CK_RV pkcs11_key_get_public_key(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+static CK_RV pkcs11_key_get_public_key(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr session_ctx)
 {
     pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
     CK_RV rv = CKR_ARGUMENTS_BAD;
 
-    if (obj_ptr)
+    if (NULL != obj_ptr && NULL != session_ctx)
     {
         CK_BBOOL is_private = false;
 
-        if (CKR_OK == (rv = pkcs11_object_is_private(obj_ptr, &is_private)))
-	{
-		CK_UTF8CHAR ec_asn1_key[sizeof(ec_pubkey_asn1_header) + ATCA_ECCP256_PUBKEY_SIZE];
-		ATCA_STATUS status = ATCA_GEN_FAIL;
+        if (CKR_OK == (rv = pkcs11_object_is_private(obj_ptr, &is_private, session_ctx)))
+        {
+            CK_UTF8CHAR ec_asn1_key[sizeof(ec_pubkey_asn1_header) + ATCA_ECCP256_PUBKEY_SIZE];
+            ATCA_STATUS status = ATCA_GEN_FAIL;
 
-		memcpy(ec_asn1_key, ec_pubkey_asn1_header, sizeof(ec_pubkey_asn1_header));
+            (void)memcpy(ec_asn1_key, ec_pubkey_asn1_header, sizeof(ec_pubkey_asn1_header));
 
 
-		if (is_private)
-		{
-			ATCADeviceType dev_type = atcab_get_device_type();
+            if (is_private)
+            {
+                ATCADeviceType dev_type = atcab_get_device_type_ext(session_ctx->slot->device_ctx);
 
-			if (atcab_is_ca_device(dev_type))
-			{
+                if (atcab_is_ca_device(dev_type))
+                {
 #if ATCA_CA_SUPPORT
-				status = atcab_get_pubkey(obj_ptr->slot,&ec_asn1_key[sizeof(ec_pubkey_asn1_header)]);
-				PKCS11_DEBUG("atcab_get_pubkey: %x\r\n", status);
+                    status = atcab_get_pubkey_ext(session_ctx->slot->device_ctx, obj_ptr->slot, &ec_asn1_key[sizeof(ec_pubkey_asn1_header)]);
+                    PKCS11_DEBUG("atcab_get_pubkey: %x\r\n", status);
 #endif
-			}
-			else if (atcab_is_ta_device(dev_type))
-			{
+                }
+                else if (atcab_is_ta_device(dev_type))
+                {
 #if ATCA_TA_SUPPORT
-				status = pkcs11_ta_get_pubkey(pObject,&ec_asn1_key[sizeof(ec_pubkey_asn1_header)]);
+                    status = pkcs11_ta_get_pubkey(pObject, &ec_asn1_key[sizeof(ec_pubkey_asn1_header)], session_ctx);
 #endif
-			}
-		}
-		else
-		{
-			status = atcab_read_pubkey(obj_ptr->slot, &ec_asn1_key[sizeof(ec_pubkey_asn1_header)]);
-			PKCS11_DEBUG("atcab_read_pubkey: %x\r\n", status);
+                }
+                else
+                {
+                    /* do nothing */
+                }
+            }
+            else
+            {
+                status = atcab_read_pubkey_ext(session_ctx->slot->device_ctx, obj_ptr->slot, &ec_asn1_key[sizeof(ec_pubkey_asn1_header)]);
+                PKCS11_DEBUG("atcab_read_pubkey: %x\r\n", status);
 
-		}
+            }
 
-		if (ATCA_SUCCESS == status)
-		{
-			rv = pkcs11_attrib_fill(pAttribute, ec_asn1_key, sizeof(ec_asn1_key));
-		}
-		else
-		{
-			pkcs11_attrib_empty(pObject,pAttribute);
-			PKCS11_DEBUG("Couldnt generate public key\r\n", status);
-			rv = CKR_OK;
+            if (ATCA_SUCCESS == status)
+            {
+                rv = pkcs11_attrib_fill(pAttribute, ec_asn1_key, (CK_ULONG)sizeof(ec_asn1_key));
+            }
+            else
+            {
+                (void)pkcs11_attrib_empty(pObject, pAttribute, NULL);
+                PKCS11_DEBUG("Couldnt generate public key\r\n", status);
+                rv = CKR_OK;
 
-		}
-	}
+            }
+        }
     }
 
     return rv;
@@ -344,76 +410,91 @@ static CK_RV pkcs11_key_get_public_key(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAt
 
 static const uint8_t pkcs11_key_ec_params[] = { 0x06, 0x08, 0x2a, 0x86, 0x48, 0xce, 0x3d, 0x03, 0x01, 0x07 };
 
-static CK_RV pkcs11_key_get_ec_params(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+static CK_RV pkcs11_key_get_ec_params(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr psession)
 {
     ((void)pObject);
-    return pkcs11_attrib_fill(pAttribute, (CK_VOID_PTR)pkcs11_key_ec_params, sizeof(pkcs11_key_ec_params));
+    ((void)psession);
+
+    return pkcs11_attrib_fill(pAttribute, pkcs11_key_ec_params, (CK_ULONG)sizeof(pkcs11_key_ec_params));
 }
 
-static CK_RV pkcs11_key_get_ec_point(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+static CK_RV pkcs11_key_get_ec_point(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr psession)
 {
     pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
     CK_RV rv = CKR_ARGUMENTS_BAD;
 
-    if (obj_ptr)
+    if (NULL != obj_ptr && NULL != psession)
     {
         ATCA_STATUS status = ATCA_SUCCESS;
-        CK_UTF8CHAR ec_asn1_key[3 + ATCA_ECCP256_PUBKEY_SIZE] = { 0x04, 0x41, 0x04 };
+        CK_UTF8CHAR ec_asn1_key[3 + ATCA_ECCP256_PUBKEY_SIZE] = { 0x04, 0x41, 0x04, 0x0,  0x0,  0x0, 0x0, 0x0,
+                                                                  0x0,  0x0,  0x0,  0x0,  0x0,  0x0, 0x0, 0x0,
+                                                                  0x0,  0x0,  0x0,  0x0,  0x0,  0x0, 0x0, 0x0,
+                                                                  0x0,  0x0,  0x0,  0x0,  0x0,  0x0, 0x0, 0x0,
+                                                                  0x0,  0x0,  0x0,  0x0,  0x0,  0x0, 0x0, 0x0,
+                                                                  0x0,  0x0,  0x0,  0x0,  0x0,  0x0, 0x0, 0x0,
+                                                                  0x0,  0x0,  0x0,  0x0,  0x0,  0x0, 0x0, 0x0,
+                                                                  0x0,  0x0,  0x0,  0x0,  0x0,  0x0, 0x0, 0x0,
+                                                                  0x0,  0x0,  0x0 };
 
-        if (pAttribute->pValue)
+        if (NULL != pAttribute->pValue)
         {
             CK_BBOOL is_private;
 
-            if (CKR_OK == (rv = pkcs11_object_is_private(obj_ptr, &is_private)))
-	    {
-		    if (is_private)
-		    {
-			    ATCADeviceType dev_type = atcab_get_device_type();
+            if (CKR_OK == (rv = pkcs11_object_is_private(obj_ptr, &is_private, psession)))
+            {
+                if (is_private)
+                {
+                    ATCADeviceType dev_type = atcab_get_device_type_ext(psession->slot->device_ctx);
 
-			    if (atcab_is_ca_device(dev_type))
-			    {
+                    if (atcab_is_ca_device(dev_type))
+                    {
 #if ATCA_CA_SUPPORT
-				    status = atcab_get_pubkey(obj_ptr->slot, &ec_asn1_key[3]);
-				    PKCS11_DEBUG("atcab_get_pubkey: %x\r\n", status);
+                        status = atcab_get_pubkey_ext(psession->slot->device_ctx, obj_ptr->slot, &ec_asn1_key[3]);
+                        PKCS11_DEBUG("atcab_get_pubkey: %x\r\n", status);
 #endif
-			    }
-			    else if (atcab_is_ta_device(dev_type))
-			    {
+                    }
+                    else if (atcab_is_ta_device(dev_type))
+                    {
 #if ATCA_TA_SUPPORT
-				    status = pkcs11_ta_get_pubkey(pObject,&ec_asn1_key[3]);
+                        status = pkcs11_ta_get_pubkey(pObject, &ec_asn1_key[3], psession);
 #endif
-			    }
-		    }
-		    else
-		    {
-			    status = atcab_read_pubkey(obj_ptr->slot, &ec_asn1_key[3]);
-			    PKCS11_DEBUG("atcab_read_pubkey: %x\r\n", status);
+                    }
+                    else
+                    {
+                        /* do nothing */
+                    }
+                }
+                else
+                {
+                    status = atcab_read_pubkey_ext(psession->slot->device_ctx, obj_ptr->slot, &ec_asn1_key[3]);
+                    PKCS11_DEBUG("atcab_read_pubkey: %x\r\n", status);
 
-		    }
-	    }
+                }
+            }
         }
 
         if (ATCA_SUCCESS == status)
         {
-            rv = pkcs11_attrib_fill(pAttribute, ec_asn1_key, sizeof(ec_asn1_key));
+            rv = pkcs11_attrib_fill(pAttribute, ec_asn1_key, (CK_ULONG)sizeof(ec_asn1_key));
         }
         else
         {
-		pkcs11_attrib_empty(pObject,pAttribute);
-		PKCS11_DEBUG("Couldnt generate public key\r\n", status);
-		rv = CKR_OK;
+            (void)pkcs11_attrib_empty(pObject, pAttribute, NULL);
+            PKCS11_DEBUG("Couldnt generate public key\r\n", status);
+            rv = CKR_OK;
         }
     }
 
     return rv;
 }
 
-static CK_RV pkcs11_key_get_secret(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+static CK_RV pkcs11_key_get_secret(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr pSession)
 {
+    ((void)pSession);
 #if ATCA_CA_SUPPORT
     pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
 
-    if (obj_ptr)
+    if (NULL != obj_ptr)
     {
         return pkcs11_attrib_fill(pAttribute, (const CK_VOID_PTR)obj_ptr->data, obj_ptr->size);
     }
@@ -422,17 +503,18 @@ static CK_RV pkcs11_key_get_secret(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttrib
         return CKR_ARGUMENTS_BAD;
     }
 #else
-    return pkcs11_attrib_empty(pObject, pAttribute);
+    return pkcs11_attrib_empty(pObject, pAttribute, NULL);
 #endif
 }
 
-static CK_RV pkcs11_key_get_secret_length(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+static CK_RV pkcs11_key_get_secret_length(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr pSession)
 {
+    ((void)pSession);
     pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
 
-    if (obj_ptr)
+    if (NULL != obj_ptr)
     {
-        return pkcs11_attrib_fill(pAttribute, (const CK_VOID_PTR)obj_ptr->size, sizeof(CK_ULONG));
+        return pkcs11_attrib_fill(pAttribute, &obj_ptr->size, (CK_ULONG)sizeof(CK_ULONG));
     }
     else
     {
@@ -440,10 +522,11 @@ static CK_RV pkcs11_key_get_secret_length(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR 
     }
 }
 
-static CK_RV pkcs11_key_get_check_value(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+static CK_RV pkcs11_key_get_check_value(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr pSession)
 {
     ((void)pObject);
-    return pkcs11_attrib_empty(NULL, pAttribute);
+    ((void)pSession);
+    return pkcs11_attrib_empty(NULL, pAttribute, NULL);
 #if 0
     pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
 
@@ -466,14 +549,14 @@ static CK_RV pkcs11_key_get_check_value(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pA
 #endif
 }
 
-static CK_RV pkcs11_key_auth_required(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+static CK_RV pkcs11_key_auth_required(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr session_ctx)
 {
     pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
     CK_RV rv = CKR_ARGUMENTS_BAD;
 
-    if (obj_ptr)
+    if (NULL != obj_ptr && NULL != session_ctx)
     {
-        if (atcab_is_ca_device(atcab_get_device_type()))
+        if (atcab_is_ca_device(atcab_get_device_type_ext(session_ctx->slot->device_ctx)))
         {
 #if ATCA_CA_SUPPORT
             ((void)pAttribute);
@@ -484,11 +567,11 @@ static CK_RV pkcs11_key_auth_required(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAtt
 #if ATCA_TA_SUPPORT
             if (TA_PERM_ALWAYS != (obj_ptr->handle_info.permission & TA_PERM_USAGE_MASK) >> TA_PERM_USAGE_SHIFT)
             {
-                rv = pkcs11_attrib_true(pObject, pAttribute);
+                rv = pkcs11_attrib_true(pObject, pAttribute, NULL);
             }
             else
             {
-                rv = pkcs11_attrib_false(pObject, pAttribute);
+                rv = pkcs11_attrib_false(pObject, pAttribute, NULL);
             }
 #endif
         }
@@ -496,62 +579,67 @@ static CK_RV pkcs11_key_auth_required(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAtt
     return rv;
 }
 
-static CK_RV pkcs11_key_get_id(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
+static CK_RV pkcs11_key_get_id(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr session_ctx)
 {
     pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
     CK_RV rv = CKR_ARGUMENTS_BAD;
 
-    if (obj_ptr)
+    if (NULL != obj_ptr && NULL != session_ctx)
     {
 #if PKCS11_AUTO_ID_ENABLE
-        if (pAttribute->pValue)
+        if (NULL != pAttribute->pValue)
         {
             CK_BBOOL is_private;
 
-            if (CKR_OK == (rv = pkcs11_object_is_private(obj_ptr, &is_private)))
-	    {
-		    ATCA_STATUS status = ATCA_GEN_FAIL;
-		    uint8_t buffer[1 + ATCA_ECCP256_PUBKEY_SIZE] = {0x04};
+            if (CKR_OK == (rv = pkcs11_object_is_private(obj_ptr, &is_private, session_ctx)))
+            {
+                ATCA_STATUS status = ATCA_GEN_FAIL;
+                uint8_t buffer[1 + ATCA_ECCP256_PUBKEY_SIZE] = { 0x0 };
+                buffer[0] = 0x04;
 
-		    if (is_private)
-		    {
-			    ATCADeviceType dev_type = atcab_get_device_type();
-			    if (atcab_is_ca_device(dev_type))
-			    {
+                if (is_private)
+                {
+                    ATCADeviceType dev_type = atcab_get_device_type_ext(session_ctx->slot->device_ctx);
+                    if (atcab_is_ca_device(dev_type))
+                    {
 #if ATCA_CA_SUPPORT
-				    status = atcab_get_pubkey(obj_ptr->slot, &buffer[1]);
-				    PKCS11_DEBUG("atcab_get_pubkey: %x\r\n", status);
+                        status = atcab_get_pubkey_ext(session_ctx->slot->device_ctx, obj_ptr->slot, &buffer[1]);
+                        PKCS11_DEBUG("atcab_get_pubkey: %x\r\n", status);
 #endif
-			    }
-			    else if (atcab_is_ta_device(dev_type))
-			    {
+                    }
+                    else if (atcab_is_ta_device(dev_type))
+                    {
 #if ATCA_TA_SUPPORT
-				    status = pkcs11_ta_get_pubkey(pObject,&buffer[1]);
+                        status = pkcs11_ta_get_pubkey(pObject, &buffer[1], session_ctx);
 #endif
-			    }
-		    }
-		    else
-		    {
-			    status = atcab_read_pubkey(obj_ptr->slot, &buffer[1]);
-			    PKCS11_DEBUG("atcab_read_pubkey: %x\r\n", status);
-		    }
+                    }
+                    else
+                    {
+                        /* do nothing */
+                    }
+                }
+                else
+                {
+                    status = atcab_read_pubkey_ext(session_ctx->slot->device_ctx, obj_ptr->slot, &buffer[1]);
+                    PKCS11_DEBUG("atcab_read_pubkey: %x\r\n", status);
+                }
 
-		    if (ATCA_SUCCESS == status)
-		    {
-			    status = atcac_sw_sha1(buffer, sizeof(buffer), buffer);
-		    }
+                if (ATCA_SUCCESS == status)
+                {
+                    status = (ATCA_STATUS)atcac_sw_sha1(buffer, sizeof(buffer), buffer);
+                }
 
-		    if (ATCA_SUCCESS == status)
-		    {
-			    rv = pkcs11_attrib_fill(pAttribute, buffer, ATCA_SHA1_DIGEST_SIZE);
-		    }
-		    else
-		    {
-			    pkcs11_attrib_empty(pObject,pAttribute);
-			    PKCS11_DEBUG("Couldnt generate public key\r\n", status);
-			    rv = CKR_OK;
-		    }
-	    }
+                if (ATCA_SUCCESS == status)
+                {
+                    rv = pkcs11_attrib_fill(pAttribute, buffer, ATCA_SHA1_DIGEST_SIZE);
+                }
+                else
+                {
+                    (void)pkcs11_attrib_empty(pObject, pAttribute, NULL);
+                    PKCS11_DEBUG("Couldnt generate public key\r\n", status);
+                    rv = CKR_OK;
+                }
+            }
         }
         else
         {
@@ -570,77 +658,78 @@ static CK_RV pkcs11_key_get_id(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute)
  */
 const pkcs11_attrib_model pkcs11_key_public_attributes[] = {
     /** Object Class - CK_OBJECT_CLASS */
-    { CKA_CLASS,              pkcs11_object_get_class                                                                                                                                             },
+    { CKA_CLASS,              pkcs11_object_get_class                                                                                                                                                                                                           },
     /** CK_TRUE if object is a token object; CK_FALSE if object is a session object. Default is CK_FALSE. */
-    { CKA_TOKEN,              pkcs11_attrib_true                                                                                                                                                  },
+    { CKA_TOKEN,              pkcs11_attrib_true                                                                                                                                                                                                                },
     /** CK_TRUE if object is a private object; CK_FALSE if object is a public object. */
-    { CKA_PRIVATE,            pkcs11_attrib_false                                                                                                                                                 },
+    { CKA_PRIVATE,            pkcs11_attrib_false                                                                                                                                                                                                               },
     /** CK_TRUE if object can be modified. Default is CK_TRUE. */
-    { CKA_MODIFIABLE,         pkcs11_token_get_writable                                                                                                                                           },
+    { CKA_MODIFIABLE,         pkcs11_token_get_writable                                                                                                                                                                                                         },
     /** Description of the object(default empty). */
-    { CKA_LABEL,              pkcs11_object_get_name                                                                                                                                              },
+    { CKA_LABEL,              pkcs11_object_get_name                                                                                                                                                                                                            },
     /** CK_TRUE if object can be copied using C_CopyObject.Defaults to CK_TRUE. */
-    { CKA_COPYABLE,           pkcs11_attrib_false                                                                                                                                                 },
+    { CKA_COPYABLE,           pkcs11_attrib_false                                                                                                                                                                                                               },
     /** CK_TRUE if the object can be destroyed using C_DestroyObject. Default is CK_TRUE. */
-    { CKA_DESTROYABLE,        pkcs11_object_get_destroyable                                                                                                                                       },
+    { CKA_DESTROYABLE,        pkcs11_object_get_destroyable                                                                                                                                                                                                     },
     /** Type of key */
-    { CKA_KEY_TYPE,           pkcs11_object_get_type                                                                                                                                              },
+    { CKA_KEY_TYPE,           pkcs11_object_get_type                                                                                                                                                                                                            },
     /** Key identifier for key (default empty) */
-    { CKA_ID,                 pkcs11_key_get_id                                                                                                                                                                 },
+    { CKA_ID,                 pkcs11_key_get_id                                                                                                                                                                                                                 },
     /** Start date for the key (default empty) */
-    { CKA_START_DATE,         pkcs11_attrib_empty                                                                                                                                                 },
+    { CKA_START_DATE,         pkcs11_attrib_empty                                                                                                                                                                                                               },
     /** End date for the key (default empty) */
-    { CKA_END_DATE,           pkcs11_attrib_empty                                                                                                                                                 },
+    { CKA_END_DATE,           pkcs11_attrib_empty                                                                                                                                                                                                               },
     /** CK_TRUE if key supports key derivation (i.e., if other keys can be derived from this one (default CK_FALSE) */
-    { CKA_DERIVE,             pkcs11_key_get_derivekey_flag                                                                                                                                       },
+    { CKA_DERIVE,             pkcs11_key_get_derivekey_flag                                                                                                                                                                                                     },
     /** CK_TRUE only if key was either generated locally (i.e., on the token)
        with a C_GenerateKey or C_GenerateKeyPair call created with a C_CopyObject
        call as a copy of a key which had its CKA_LOCAL attribute set to CK_TRUE */
-    { CKA_LOCAL,              pkcs11_attrib_true                                                                                                                                                  },
+    { CKA_LOCAL,              pkcs11_attrib_true                                                                                                                                                                                                                },
     /** Identifier of the mechanism used to generate the key material. */
-    { CKA_KEY_GEN_MECHANISM,  NULL_PTR                                                                                                                                                            },
+    { CKA_KEY_GEN_MECHANISM,  NULL_PTR                                                                                                                                                                                                                          },
     /** A list of mechanisms allowed to be used with this key. The number of
        mechanisms in the array is the ulValueLen component of the attribute
        divided by the size of CK_MECHANISM_TYPE. */
-    { CKA_ALLOWED_MECHANISMS, pkcs11_key_get_allowed_mechanisms                                                                                                                                   },
+    { CKA_ALLOWED_MECHANISMS, pkcs11_key_get_allowed_mechanisms                                                                                                                                                                                                 },
     /** DER-encoding of the key subject name (default empty) */
-    { CKA_SUBJECT,            pkcs11_attrib_empty                                                                                                                                                 },
+    { CKA_SUBJECT,            pkcs11_attrib_empty                                                                                                                                                                                                               },
     /** CK_TRUE if key supports encryption */
-    { CKA_ENCRYPT,            NULL_PTR                                                                                                                                                            },
+    { CKA_ENCRYPT,            NULL_PTR                                                                                                                                                                                                                          },
     /** CK_TRUE if key supports verification where the signature is an appendix to the data */
-    { CKA_VERIFY,             pkcs11_attrib_true                                                                                                                                                  },
+    { CKA_VERIFY,             pkcs11_attrib_true                                                                                                                                                                                                                },
     /** CK_TRUE if key supports verification where the data is recovered from the signature */
-    { CKA_VERIFY_RECOVER,     NULL_PTR                                                                                                                                                            },
+    { CKA_VERIFY_RECOVER,     NULL_PTR                                                                                                                                                                                                                          },
     /** CK_TRUE if key supports wrapping (i.e., can be used to wrap other keys) */
-    { CKA_WRAP,               NULL_PTR                                                                                                                                                            },
+    { CKA_WRAP,               NULL_PTR                                                                                                                                                                                                                          },
     /** The key can be trusted for the application that it was created. The
         wrapping key can be used to wrap keys with CKA_WRAP_WITH_TRUSTED set
         to CK_TRUE. */
-    { CKA_TRUSTED,            NULL_PTR                                                                                                                                                            },
+    { CKA_TRUSTED,            NULL_PTR                                                                                                                                                                                                                          },
     /** For wrapping keys. The attribute template to match against any keys
         wrapped using this wrapping key. Keys that do not match cannot be
         wrapped. The number of attributes in the array is the ulValueLen
         component of the attribute divided by the size of CK_ATTRIBUTE. */
-    { CKA_WRAP_TEMPLATE,      NULL_PTR                                                                                                                                                            },
+    { CKA_WRAP_TEMPLATE,      NULL_PTR                                                                                                                                                                                                                          },
     /** DER-encoding of the SubjectPublicKeyInfo for this public key.
         (MAY be empty, DEFAULT derived from the underlying public key data)
         SubjectPublicKeyInfo ::= SEQUENCE {
             algorithm AlgorithmIdentifier,
             subjectPublicKey BIT_STRING } */
-    { CKA_PUBLIC_KEY_INFO,    pkcs11_key_get_public_key                                                                                                                                           },
+    { CKA_PUBLIC_KEY_INFO,    pkcs11_key_get_public_key                                                                                                                                                                                                         },
 
     /** DER - encoding of an ANSI X9.62 Parameters value
         Parameters ::= CHOICE {
             ecParameters ECParameters,
             namedCurve CURVES.&id({CurveNames}),
             implicitlyCA NULL } */
-    { CKA_EC_PARAMS,          pkcs11_key_get_ec_params                                                                                                                                            },
+    { CKA_EC_PARAMS,          pkcs11_key_get_ec_params                                                                                                                                                                                                          },
     /** DER - encoding of ANSI X9.62 ECPoint value Q */
-    { CKA_EC_POINT,           pkcs11_key_get_ec_point                                                                                                                                             },
+    { CKA_EC_POINT,           pkcs11_key_get_ec_point                                                                                                                                                                                                           },
 };
 
-const CK_ULONG pkcs11_key_public_attributes_count = PKCS11_UTIL_ARRAY_SIZE(pkcs11_key_public_attributes);
+const CK_ULONG pkcs11_key_public_attributes_count = (CK_ULONG)(PKCS11_UTIL_ARRAY_SIZE(pkcs11_key_public_attributes));
 
+#if 0
 /**
  * CKO_PUBLIC_KEY (Type: CKK_EC) - EC/ECDSA Public Key Object Model
  */
@@ -650,115 +739,117 @@ const pkcs11_attrib_model pkcs11_key_ec_public_attributes[] = {
             ecParameters ECParameters,
             namedCurve CURVES.&id({CurveNames}),
             implicitlyCA NULL } */
-    { CKA_EC_PARAMS, pkcs11_key_get_ec_params                           },
+    { CKA_EC_PARAMS, pkcs11_key_get_ec_params                              },
     /** DER - encoding of ANSI X9.62 ECPoint value Q */
-    { CKA_EC_POINT,  pkcs11_key_get_ec_point                            },
+    { CKA_EC_POINT,  pkcs11_key_get_ec_point                               },
 };
-
+#endif
 /**
  * CKO_PRIVATE_KEY - Private Key Object Base Model
  */
 const pkcs11_attrib_model pkcs11_key_private_attributes[] = {
     /** Object Class - CK_OBJECT_CLASS */
-    { CKA_CLASS,               pkcs11_object_get_class                                                                                                                                                                     },
+    { CKA_CLASS,               pkcs11_object_get_class                                                                                                                                                                                                                                       },
     /** CK_TRUE if object is a token object; CK_FALSE if object is a session object. Default is CK_FALSE. */
-    { CKA_TOKEN,               pkcs11_attrib_true                                                                                                                                                                          },
+    { CKA_TOKEN,               pkcs11_attrib_true                                                                                                                                                                                                                                            },
     /** CK_TRUE if object is a private object; CK_FALSE if object is a public object. */
-    { CKA_PRIVATE,             pkcs11_attrib_true                                                                                                                                                                          },
+    { CKA_PRIVATE,             pkcs11_attrib_true                                                                                                                                                                                                                                            },
     /** CK_TRUE if object can be modified. Default is CK_TRUE. */
-    { CKA_MODIFIABLE,          pkcs11_token_get_writable                                                                                                                                                                   },
+    { CKA_MODIFIABLE,          pkcs11_token_get_writable                                                                                                                                                                                                                                     },
     /** Description of the object(default empty). */
-    { CKA_LABEL,               pkcs11_object_get_name                                                                                                                                                                      },
+    { CKA_LABEL,               pkcs11_object_get_name                                                                                                                                                                                                                                        },
     /** CK_TRUE if object can be copied using C_CopyObject.Defaults to CK_TRUE. */
-    { CKA_COPYABLE,            pkcs11_attrib_false                                                                                                                                                                         },
+    { CKA_COPYABLE,            pkcs11_attrib_false                                                                                                                                                                                                                                           },
     /** CK_TRUE if the object can be destroyed using C_DestroyObject. Default is CK_TRUE. */
-    { CKA_DESTROYABLE,         pkcs11_object_get_destroyable                                                                                                                                                               },
+    { CKA_DESTROYABLE,         pkcs11_object_get_destroyable                                                                                                                                                                                                                                 },
     /** Type of key */
-    { CKA_KEY_TYPE,            pkcs11_object_get_type                                                                                                                                                                      },
+    { CKA_KEY_TYPE,            pkcs11_object_get_type                                                                                                                                                                                                                                        },
     /** Key identifier for key (default empty) */
-    { CKA_ID,                  pkcs11_key_get_id                                                                                                                                                                                          },
+    { CKA_ID,                  pkcs11_key_get_id                                                                                                                                                                                                                                             },
     /** Start date for the key (default empty) */
-    { CKA_START_DATE,          pkcs11_attrib_empty                                                                                                                                                                         },
+    { CKA_START_DATE,          pkcs11_attrib_empty                                                                                                                                                                                                                                           },
     /** End date for the key (default empty) */
-    { CKA_END_DATE,            pkcs11_attrib_empty                                                                                                                                                                         },
+    { CKA_END_DATE,            pkcs11_attrib_empty                                                                                                                                                                                                                                           },
     /** CK_TRUE if key supports key derivation (i.e., if other keys can be derived from this one (default CK_FALSE) */
-    { CKA_DERIVE,              pkcs11_key_get_derivekey_flag                                                                                                                                                               },
+    { CKA_DERIVE,              pkcs11_key_get_derivekey_flag                                                                                                                                                                                                                                 },
     /** CK_TRUE only if key was either generated locally (i.e., on the token)
        with a C_GenerateKey or C_GenerateKeyPair call created with a C_CopyObject
        call as a copy of a key which had its CKA_LOCAL attribute set to CK_TRUE */
-    { CKA_LOCAL,               pkcs11_key_get_local_flag                                                                                                                                                                   },
+    { CKA_LOCAL,               pkcs11_key_get_local_flag                                                                                                                                                                                                                                     },
     /** Identifier of the mechanism used to generate the key material. */
-    { CKA_KEY_GEN_MECHANISM,   NULL_PTR                                                                                                                                                                                    },
+    { CKA_KEY_GEN_MECHANISM,   NULL_PTR                                                                                                                                                                                                                                                      },
     /** A list of mechanisms allowed to be used with this key. The number of
        mechanisms in the array is the ulValueLen component of the attribute
        divided by the size of CK_MECHANISM_TYPE. */
-    { CKA_ALLOWED_MECHANISMS,  pkcs11_key_get_allowed_mechanisms                                                                                                                                                           },
+    { CKA_ALLOWED_MECHANISMS,  pkcs11_key_get_allowed_mechanisms                                                                                                                                                                                                                             },
     /** DER-encoding of the key subject name (default empty) */
-    { CKA_SUBJECT,             pkcs11_attrib_empty                                                                                                                                                                         },
+    { CKA_SUBJECT,             pkcs11_attrib_empty                                                                                                                                                                                                                                           },
     /** CK_TRUE if key is sensitive */
-    { CKA_SENSITIVE,           pkcs11_token_get_access_type                                                                                                                                                                },
+    { CKA_SENSITIVE,           pkcs11_token_get_access_type                                                                                                                                                                                                                                  },
     /** CK_TRUE if key supports decryption */
-    { CKA_DECRYPT,             NULL_PTR                                                                                                                                                                                    },
+    { CKA_DECRYPT,             NULL_PTR                                                                                                                                                                                                                                                      },
     /** CK_TRUE if key supports signatures where the signature is an appendix to the data */
-    { CKA_SIGN,                pkcs11_attrib_true                                                                                                                                                                          },
+    { CKA_SIGN,                pkcs11_attrib_true                                                                                                                                                                                                                                            },
     /** CK_TRUE if key supports signatures where the data can be recovered from the signature9 */
-    { CKA_SIGN_RECOVER,        NULL_PTR                                                                                                                                                                                    },
+    { CKA_SIGN_RECOVER,        NULL_PTR                                                                                                                                                                                                                                                      },
     /** CK_TRUE if key supports unwrapping (i.e., can be used to unwrap other keys)9 */
-    { CKA_UNWRAP,              NULL_PTR                                                                                                                                                                                                     },
+    { CKA_UNWRAP,              NULL_PTR                                                                                                                                                                                                                                                      },
     /** CK_TRUE if key is extractable and can be wrapped */
-    { CKA_EXTRACTABLE,         pkcs11_attrib_false                                                                                                                                                                                          },
+    { CKA_EXTRACTABLE,         pkcs11_attrib_false                                                                                                                                                                                                                                           },
     /** CK_TRUE if key has always had the CKA_SENSITIVE attribute set to CK_TRUE */
-    { CKA_ALWAYS_SENSITIVE,    pkcs11_token_get_access_type                                                                                                                                                                },
+    { CKA_ALWAYS_SENSITIVE,    pkcs11_token_get_access_type                                                                                                                                                                                                                                  },
     /** CK_TRUE if key has never had the CKA_EXTRACTABLE attribute set to CK_TRUE */
-    { CKA_NEVER_EXTRACTABLE,   pkcs11_token_get_access_type                                                                                                                                                                                 },
+    { CKA_NEVER_EXTRACTABLE,   pkcs11_token_get_access_type                                                                                                                                                                                                                                  },
     /** CK_TRUE if the key can only be wrapped with a wrapping key that has CKA_TRUSTED set to CK_TRUE. Default is CK_FALSE. */
-    { CKA_WRAP_WITH_TRUSTED,   NULL_PTR                                                                                                                                                                                    },
+    { CKA_WRAP_WITH_TRUSTED,   NULL_PTR                                                                                                                                                                                                                                                      },
     /** For wrapping keys. The attribute template to match against any keys
         wrapped using this wrapping key. Keys that do not match cannot be
         wrapped. The number of attributes in the array is the ulValueLen
         component of the attribute divided by the size of CK_ATTRIBUTE. */
-    { CKA_UNWRAP_TEMPLATE,     NULL_PTR                                                                                                                                                                                    },
+    { CKA_UNWRAP_TEMPLATE,     NULL_PTR                                                                                                                                                                                                                                                      },
     /** If CK_TRUE, the user has to  supply the PIN for each use (sign or decrypt) with the key. Default is CK_FALSE. */
-    { CKA_ALWAYS_AUTHENTICATE, pkcs11_key_auth_required                                                                                                                                                                    },
+    { CKA_ALWAYS_AUTHENTICATE, pkcs11_key_auth_required                                                                                                                                                                                                                                      },
     /** DER-encoding of the SubjectPublicKeyInfo for the associated public key
         (MAY be empty; DEFAULT derived from the underlying private key data;
         MAY be manually set for specific key types; if set; MUST be consistent
         with the underlying private key data)   */
-    { CKA_PUBLIC_KEY_INFO,     pkcs11_key_get_public_key                                                                                                                                                                   },
+    { CKA_PUBLIC_KEY_INFO,     pkcs11_key_get_public_key                                                                                                                                                                                                                                     },
     /** DER - encoding of an ANSI X9.62 Parameters value
         Parameters ::= CHOICE {
             ecParameters ECParameters,
             namedCurve CURVES.&id({CurveNames}),
             implicitlyCA NULL } */
-    { CKA_EC_PARAMS,           pkcs11_key_get_ec_params                                                                                                                                                                    },
+    { CKA_EC_PARAMS,           pkcs11_key_get_ec_params                                                                                                                                                                                                                                      },
     /** DER - encoding of ANSI X9.62 ECPoint value Q */
-    { CKA_EC_POINT,            pkcs11_key_get_ec_point                                                                                                                                                                     },
+    { CKA_EC_POINT,            pkcs11_key_get_ec_point                                                                                                                                                                                                                                       },
     /** The value of the private key should remain private.  A NULL function pointer is interpreted as a sensitive attribute. */
-    { CKA_VALUE,               NULL_PTR                                                                                                                                                                                    },
+    { CKA_VALUE,               NULL_PTR                                                                                                                                                                                                                                                      },
 };
 
-const CK_ULONG pkcs11_key_private_attributes_count = PKCS11_UTIL_ARRAY_SIZE(pkcs11_key_private_attributes);
+const CK_ULONG pkcs11_key_private_attributes_count = (CK_ULONG)(PKCS11_UTIL_ARRAY_SIZE(pkcs11_key_private_attributes));
 
+
+#if 0
 /**
  * CKO_PRIVATE_KEY (Type: CKK_RSA) - RSA Private Key Object Model
  */
 const pkcs11_attrib_model pkcs11_key_rsa_private_attributes[] = {
     /** Big integer Modulus n */
-    { CKA_MODULUS,          NULL_PTR                                                                                     },
+    { CKA_MODULUS,          NULL_PTR                                                                                                                },
     /** Big integer Public exponent e */
-    { CKA_PUBLIC_EXPONENT,  NULL_PTR                                                                                     },
+    { CKA_PUBLIC_EXPONENT,  NULL_PTR                                                                                                                },
     /** Big integer Private exponent d */
-    { CKA_PRIVATE_EXPONENT, NULL_PTR                                                                                     },
+    { CKA_PRIVATE_EXPONENT, NULL_PTR                                                                                                                },
     /** Big integer Prime p */
-    { CKA_PRIME_1,          NULL_PTR                                                                                     },
+    { CKA_PRIME_1,          NULL_PTR                                                                                                                },
     /** Big integer Prime q */
-    { CKA_PRIME_2,          NULL_PTR                                                                                     },
+    { CKA_PRIME_2,          NULL_PTR                                                                                                                },
     /** Big integer Private exponent d modulo p - 1 */
-    { CKA_EXPONENT_1,       NULL_PTR                                                                                     },
+    { CKA_EXPONENT_1,       NULL_PTR                                                                                                                },
     /** Big integer Private exponent d modulo q - 1 */
-    { CKA_EXPONENT_2,       NULL_PTR                                                                                     },
+    { CKA_EXPONENT_2,       NULL_PTR                                                                                                                },
     /** Big integer CRT coefficient q - 1 mod p */
-    { CKA_COEFFICIENT,      NULL_PTR                                                                                     },
+    { CKA_COEFFICIENT,      NULL_PTR                                                                                                                },
 };
 
 /**
@@ -770,96 +861,96 @@ const pkcs11_attrib_model pkcs11_key_ec_private_attributes[] = {
             ecParameters ECParameters,
             namedCurve CURVES.&id({CurveNames}),
             implicitlyCA NULL } */
-    { CKA_EC_PARAMS, pkcs11_key_get_ec_params                           },
+    { CKA_EC_PARAMS, pkcs11_key_get_ec_params                              },
     /** DER - encoding of ANSI X9.62 ECPoint value Q */
-    { CKA_EC_POINT,  pkcs11_key_get_ec_point                            },
+    { CKA_EC_POINT,  pkcs11_key_get_ec_point                               },
 };
-
+#endif
 
 /**
  * CKO_SECRET_KEY - Secret Key Object Base Model
  */
 const pkcs11_attrib_model pkcs11_key_secret_attributes[] = {
     /** Object Class - CK_OBJECT_CLASS */
-    { CKA_CLASS,              pkcs11_object_get_class                                                                                                                                             },
+    { CKA_CLASS,              pkcs11_object_get_class                                                                                                                                                                                                    },
     /** CK_TRUE if object is a token object; CK_FALSE if object is a session object. Default is CK_FALSE. */
-    { CKA_TOKEN,              pkcs11_token_get_storage                                                                                                                                            },
+    { CKA_TOKEN,              pkcs11_token_get_storage                                                                                                                                                                                                   },
     /** CK_TRUE if object is a private object; CK_FALSE if object is a public object. */
-    { CKA_PRIVATE,            pkcs11_token_get_access_type                                                                                                                                        },
+    { CKA_PRIVATE,            pkcs11_token_get_access_type                                                                                                                                                                                               },
     /** CK_TRUE if object can be modified. Default is CK_TRUE. */
-    { CKA_MODIFIABLE,         pkcs11_token_get_writable                                                                                                                                           },
+    { CKA_MODIFIABLE,         pkcs11_token_get_writable                                                                                                                                                                                                  },
     /** Description of the object(default empty). */
-    { CKA_LABEL,              pkcs11_object_get_name                                                                                                                                              },
+    { CKA_LABEL,              pkcs11_object_get_name                                                                                                                                                                                                     },
     /** CK_TRUE if object can be copied using C_CopyObject.Defaults to CK_TRUE. */
-    { CKA_COPYABLE,           pkcs11_attrib_false                                                                                                                                                 },
+    { CKA_COPYABLE,           pkcs11_attrib_false                                                                                                                                                                                                        },
     /** CK_TRUE if the object can be destroyed using C_DestroyObject. Default is CK_TRUE. */
-    { CKA_DESTROYABLE,        pkcs11_object_get_destroyable                                                                                                                                       },
+    { CKA_DESTROYABLE,        pkcs11_object_get_destroyable                                                                                                                                                                                              },
     /** Type of key */
-    { CKA_KEY_TYPE,           pkcs11_object_get_type                                                                                                                                              },
+    { CKA_KEY_TYPE,           pkcs11_object_get_type                                                                                                                                                                                                     },
     /** Key identifier for key (default empty) */
-    { CKA_ID,                 pkcs11_attrib_empty                                                                                                                                                 },
+    { CKA_ID,                 pkcs11_attrib_empty                                                                                                                                                                                                        },
     /** Start date for the key (default empty) */
-    { CKA_START_DATE,         pkcs11_attrib_empty                                                                                                                                                 },
+    { CKA_START_DATE,         pkcs11_attrib_empty                                                                                                                                                                                                        },
     /** End date for the key (default empty) */
-    { CKA_END_DATE,           pkcs11_attrib_empty                                                                                                                                                 },
+    { CKA_END_DATE,           pkcs11_attrib_empty                                                                                                                                                                                                        },
     /** CK_TRUE if key supports key derivation (i.e., if other keys can be derived from this one (default CK_FALSE) */
-    { CKA_DERIVE,             pkcs11_attrib_true                                                                                                                                                  },
+    { CKA_DERIVE,             pkcs11_attrib_true                                                                                                                                                                                                         },
     /** CK_TRUE only if key was either generated locally (i.e., on the token)
        with a C_GenerateKey or C_GenerateKeyPair call created with a C_CopyObject
        call as a copy of a key which had its CKA_LOCAL attribute set to CK_TRUE */
-    { CKA_LOCAL,              pkcs11_key_get_local_flag                                                                                                                                           },
+    { CKA_LOCAL,              pkcs11_key_get_local_flag                                                                                                                                                                                                  },
     /** Identifier of the mechanism used to generate the key material. */
-    { CKA_KEY_GEN_MECHANISM,  NULL_PTR                                                                                                                                                            },
+    { CKA_KEY_GEN_MECHANISM,  NULL_PTR                                                                                                                                                                                                                   },
     /** A list of mechanisms allowed to be used with this key. The number of
        mechanisms in the array is the ulValueLen component of the attribute
        divided by the size of CK_MECHANISM_TYPE. */
-    { CKA_ALLOWED_MECHANISMS, pkcs11_key_get_allowed_mechanisms                                                                                                                                   },
+    { CKA_ALLOWED_MECHANISMS, pkcs11_key_get_allowed_mechanisms                                                                                                                                                                                          },
     /** CK_TRUE if key is sensitive */
-    { CKA_SENSITIVE,          pkcs11_token_get_access_type                                                                                                                                        },
+    { CKA_SENSITIVE,          pkcs11_token_get_access_type                                                                                                                                                                                               },
     /** CK_TRUE if key supports encryption */
-    { CKA_ENCRYPT,            NULL_PTR                                                                                                                                                            },
+    { CKA_ENCRYPT,            NULL_PTR                                                                                                                                                                                                                   },
     /** CK_TRUE if key supports decryption */
-    { CKA_DECRYPT,            NULL_PTR                                                                                                                                                            },
+    { CKA_DECRYPT,            NULL_PTR                                                                                                                                                                                                                   },
     /** CK_TRUE if key supports signatures (i.e., authentication codes) where
         the signature is an appendix to the data */
-    { CKA_SIGN,               NULL_PTR                                                                                                                                                            },
+    { CKA_SIGN,               NULL_PTR                                                                                                                                                                                                                   },
     /** CK_TRUE if key supports verification (i.e., of authentication codes)
         where the signature is an appendix to the data */
-    { CKA_VERIFY,             NULL_PTR                                                                                                                                                            },
+    { CKA_VERIFY,             NULL_PTR                                                                                                                                                                                                                   },
     /** CK_TRUE if key supports wrapping (i.e., can be used to wrap other keys)  */
-    { CKA_WRAP,               NULL_PTR                                                                                                                                                            },
+    { CKA_WRAP,               NULL_PTR                                                                                                                                                                                                                   },
     /** CK_TRUE if key supports unwrapping (i.e., can be used to unwrap other keys) */
-    { CKA_UNWRAP,             NULL_PTR                                                                                                                                                            },
+    { CKA_UNWRAP,             NULL_PTR                                                                                                                                                                                                                   },
     /** CK_TRUE if key is extractable and can be wrapped */
-    { CKA_EXTRACTABLE,        pkcs11_attrib_false                                                                                                                                                                 },
+    { CKA_EXTRACTABLE,        pkcs11_attrib_false                                                                                                                                                                                                        },
     /** CK_TRUE if key has always had the CKA_SENSITIVE attribute set to CK_TRUE */
-    { CKA_ALWAYS_SENSITIVE,   pkcs11_token_get_access_type                                                                                                                                        },
+    { CKA_ALWAYS_SENSITIVE,   pkcs11_token_get_access_type                                                                                                                                                                                               },
     /** CK_TRUE if key has never had the CKA_EXTRACTABLE attribute set to CK_TRUE  */
-    { CKA_NEVER_EXTRACTABLE,  pkcs11_token_get_access_type                                                                                                                                                        },
+    { CKA_NEVER_EXTRACTABLE,  pkcs11_token_get_access_type                                                                                                                                                                                               },
     /** Key checksum */
-    { CKA_CHECK_VALUE,        pkcs11_key_get_check_value                                                                                                                                          },
+    { CKA_CHECK_VALUE,        pkcs11_key_get_check_value                                                                                                                                                                                                 },
     /** CK_TRUE if the key can only be wrapped with a wrapping key that has CKA_TRUSTED set to CK_TRUE. Default is CK_FALSE. */
-    { CKA_WRAP_WITH_TRUSTED,  NULL_PTR                                                                                                                                                            },
+    { CKA_WRAP_WITH_TRUSTED,  NULL_PTR                                                                                                                                                                                                                   },
     /**  The wrapping key can be used to wrap keys with CKA_WRAP_WITH_TRUSTED set to CK_TRUE. */
-    { CKA_TRUSTED,            NULL_PTR                                                                                                                                                            },
+    { CKA_TRUSTED,            NULL_PTR                                                                                                                                                                                                                   },
     /** For wrapping keys. The attribute template to match against any keys
         wrapped using this wrapping key. Keys that do not match cannot be
         wrapped. The number of attributes in the array is the ulValueLen
         component of the attribute divided by the size of CK_ATTRIBUTE */
-    { CKA_WRAP_TEMPLATE,      NULL_PTR                                                                                                                                                            },
+    { CKA_WRAP_TEMPLATE,      NULL_PTR                                                                                                                                                                                                                   },
     /** For wrapping keys. The attribute template to apply to any keys unwrapped
         using this wrapping key. Any user supplied template is applied after
         this template as if the object has already been created. The number of
         attributes in the array is the ulValueLen component of the attribute
         divided by the size of CK_ATTRIBUTE.  */
-    { CKA_UNWRAP_TEMPLATE,    NULL_PTR                                                                                                                                                            },
+    { CKA_UNWRAP_TEMPLATE,    NULL_PTR                                                                                                                                                                                                                   },
     /* Key value */
-    { CKA_VALUE,              pkcs11_key_get_secret                                                                                                                                               },
+    { CKA_VALUE,              pkcs11_key_get_secret                                                                                                                                                                                                      },
     /* Length in bytes of the key */
-    { CKA_VALUE_LEN,          pkcs11_key_get_secret_length                                                                                                                                        },
+    { CKA_VALUE_LEN,          pkcs11_key_get_secret_length                                                                                                                                                                                               },
 };
 
-const CK_ULONG pkcs11_key_secret_attributes_count = PKCS11_UTIL_ARRAY_SIZE(pkcs11_key_secret_attributes);
+const CK_ULONG pkcs11_key_secret_attributes_count = (CK_ULONG)(PKCS11_UTIL_ARRAY_SIZE(pkcs11_key_secret_attributes));
 
 
 static CK_RV pkcs11_key_privwrite_ca(CK_VOID_PTR pSession, pkcs11_object_ptr pObject, CK_VOID_PTR pValue, CK_ULONG ulValueLen)
@@ -867,32 +958,37 @@ static CK_RV pkcs11_key_privwrite_ca(CK_VOID_PTR pSession, pkcs11_object_ptr pOb
 
     CK_RV rv = CKR_ARGUMENTS_BAD;
 
-    if (pSession && pObject && pValue && ulValueLen)
+    if (NULL != pSession && NULL != pObject && NULL != pValue && 0u != ulValueLen)
     {
-        if (atcab_is_ca_device(atcab_get_device_type()))
+        pkcs11_session_ctx_ptr session_ctx = (pkcs11_session_ctx_ptr)pSession;
+        if (atcab_is_ca_device(atcab_get_device_type_ext(session_ctx->slot->device_ctx)))
         {
 #if ATCA_CA_SUPPORT
-        pkcs11_session_ctx_ptr session_ctx = (pkcs11_session_ctx_ptr)pSession;
-        uint8_t key_buf[36] = { 0, 0, 0, 0 };
-        uint8_t num_in[32] = { 0, 1, 2, 3 };
-        atecc508a_config_t* cfg_ptr = (atecc508a_config_t*)pObject->config;
+            uint8_t key_buf[36] = { 0 };
+            uint8_t num_in[32] = { 0, 1, 2, 3, 0, 0, 0, 0,
+                                   0, 0, 0, 0, 0, 0, 0, 0,
+                                   0, 0, 0, 0, 0, 0, 0, 0,
+                                   0, 0, 0, 0, 0, 0, 0, 0, };
 
-        uint16_t write_key_id = cfg_ptr->SlotConfig[pObject->slot];
-        write_key_id &= ATCA_SLOT_CONFIG_WRITE_KEY_MASK;
-        write_key_id >>= ATCA_SLOT_CONFIG_WRITE_KEY_SHIFT;
+            atecc508a_config_t* cfg_ptr = (atecc508a_config_t*)pObject->config;
 
-        memcpy(&key_buf[4], pValue, 32);
+            uint16_t write_key_id = cfg_ptr->SlotConfig[pObject->slot];
+            write_key_id &= ATCA_SLOT_CONFIG_WRITE_KEY_MASK;
+            write_key_id >>= ATCA_SLOT_CONFIG_WRITE_KEY_SHIFT;
 
-        /* Requires the io protection secret to be configured previously and for the
-            configuration to support this - should only be enabled for testing purposes.
-            Production devices should never have this feature enabled. */
-        rv = pkcs11_util_convert_rv(atcab_priv_write(pObject->slot, key_buf, write_key_id, session_ctx->slot->read_key, num_in));
+            (void)memcpy(&key_buf[4], pValue, 32);
+
+            /* Requires the io protection secret to be configured previously and for the
+                configuration to support this - should only be enabled for testing purposes.
+                Production devices should never have this feature enabled. */
+            rv = pkcs11_util_convert_rv(calib_priv_write(session_ctx->slot->device_ctx, pObject->slot, key_buf, write_key_id, session_ctx->slot->read_key, num_in));
 #endif
         }
         else
         {
 #if ATCA_TA_SUPPORT
-            rv = pkcs11_util_convert_rv(talib_write_element(atcab_get_device(), pObject->slot, ulValueLen, pValue));
+            cal_buffer sValue = CAL_BUF_INIT(ulValueLen, pValue);
+            rv = pkcs11_util_convert_rv(talib_write_element(session_ctx->slot->device_ctx, pObject->slot, &sValue));
 #endif
         }
     }
@@ -906,15 +1002,17 @@ CK_RV pkcs11_key_write(CK_VOID_PTR pSession, CK_VOID_PTR pObject, CK_ATTRIBUTE_P
     pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
     CK_RV rv = CKR_ARGUMENTS_BAD;
 
-    if (obj_ptr && pAttribute && pAttribute->pValue)
+    if ((NULL != obj_ptr) && (NULL != pAttribute) && (NULL != pAttribute->pValue) && (NULL != pSession))
     {
+        pkcs11_session_ctx_ptr session_ctx = (pkcs11_session_ctx_ptr)pSession;
         if (obj_ptr->class_id == CKO_PUBLIC_KEY && pAttribute->type == CKA_EC_POINT)
         {
-            if (!memcmp(ec_x962_asn1_header, pAttribute->pValue, sizeof(ec_x962_asn1_header)))
+            /* coverity[misra_c_2012_rule_21_16_violation:FALSE] inputs are of pointer type */
+            if (0 == memcmp(ec_x962_asn1_header, pAttribute->pValue, sizeof(ec_x962_asn1_header)))
             {
                 CK_BBOOL is_private;
 
-                if (CKR_OK == (rv = pkcs11_object_is_private(obj_ptr, &is_private)))
+                if (CKR_OK == (rv = pkcs11_object_is_private(obj_ptr, &is_private, session_ctx)))
                 {
                     if (is_private)
                     {
@@ -924,35 +1022,39 @@ CK_RV pkcs11_key_write(CK_VOID_PTR pSession, CK_VOID_PTR pObject, CK_ATTRIBUTE_P
                     else
                     {
                         /* Actually write the public key into the slot */
-                        rv = pkcs11_util_convert_rv(atcab_write_pubkey(obj_ptr->slot, &(((uint8_t*)pAttribute->pValue)[sizeof(ec_x962_asn1_header)])));
+                        rv = pkcs11_util_convert_rv(atcab_write_pubkey_ext(session_ctx->slot->device_ctx, obj_ptr->slot, &(((uint8_t*)pAttribute->pValue)[sizeof(ec_x962_asn1_header)])));
                     }
                 }
             }
         }
         else if (obj_ptr->class_id == CKO_PRIVATE_KEY && pAttribute->type == CKA_VALUE)
         {
-            if (atcab_is_ca_device(atcab_get_device_type()))
+            if (atcab_is_ca_device(atcab_get_device_type_ext(session_ctx->slot->device_ctx)))
             {
                 rv = pkcs11_key_privwrite_ca(pSession, obj_ptr, pAttribute->pValue, pAttribute->ulValueLen);
             }
         }
         else if (obj_ptr->class_id == CKO_SECRET_KEY && pAttribute->type == CKA_VALUE)
         {
-            if (atcab_is_ca_device(atcab_get_device_type()) && ((pAttribute->ulValueLen % 32) != 0))
+            if (atcab_is_ca_device(atcab_get_device_type_ext(session_ctx->slot->device_ctx)) && ((pAttribute->ulValueLen % 32u) != 0u))
             {
                 uint8_t buf[64] = { 0 };
-                uint16_t buflen = (pAttribute->ulValueLen / 32) ? 64 : 32;
-                if (pAttribute->ulValueLen > 64)
+                uint16_t buflen = (uint16_t)((0u != (pAttribute->ulValueLen / 32u)) ? 64u : 32u);
+                if (pAttribute->ulValueLen > 64u)
                 {
                     return CKR_ATTRIBUTE_VALUE_INVALID;
                 }
-                memcpy(buf, pAttribute->pValue, pAttribute->ulValueLen);
-                rv = pkcs11_util_convert_rv(atcab_write_bytes_zone(ATCA_ZONE_DATA, obj_ptr->slot, 0, buf, buflen));
+                (void)memcpy(buf, pAttribute->pValue, pAttribute->ulValueLen);
+                rv = pkcs11_util_convert_rv(atcab_write_bytes_zone_ext(session_ctx->slot->device_ctx, ATCA_ZONE_DATA, obj_ptr->slot, 0, buf, buflen));
             }
             else
             {
-                rv = pkcs11_util_convert_rv(atcab_write_bytes_zone(ATCA_ZONE_DATA, obj_ptr->slot, 0, pAttribute->pValue, pAttribute->ulValueLen));
+                rv = pkcs11_util_convert_rv(atcab_write_bytes_zone_ext(session_ctx->slot->device_ctx, ATCA_ZONE_DATA, obj_ptr->slot, 0, (uint8_t*)pAttribute->pValue, pAttribute->ulValueLen));
             }
+        }
+        else
+        {
+            /* do nothing */
         }
     }
 
@@ -977,18 +1079,18 @@ CK_RV pkcs11_key_generate
     ATCA_STATUS status = ATCA_SUCCESS;
 
     rv = pkcs11_init_check(&pLibCtx, FALSE);
-    if (rv)
+    if (CKR_OK != rv)
     {
         return rv;
     }
 
-    if (!pMechanism || !pTemplate || !ulCount || !phKey)
+    if (NULL == pMechanism || NULL == pTemplate || 0u == ulCount || NULL == phKey)
     {
         return CKR_ARGUMENTS_BAD;
     }
 
     rv = pkcs11_session_check(&pSession, hSession);
-    if (rv)
+    if (CKR_OK != rv)
     {
         return rv;
     }
@@ -1011,17 +1113,14 @@ CK_RV pkcs11_key_generate
         }
     }
 
-    if (!pName || pName->ulValueLen > PKCS11_MAX_LABEL_SIZE)
+    if (NULL == pName || pName->ulValueLen > (CK_ULONG)PKCS11_MAX_LABEL_SIZE)
     {
         return CKR_TEMPLATE_INCONSISTENT;
     }
 
     /* Must create two new objects - a public and private key */
 
-    if (CKR_OK == rv)
-    {
-        rv = pkcs11_object_alloc(pSession->slot->slot_id, &pKey);
-    }
+    rv = pkcs11_object_alloc(pSession->slot->slot_id, &pKey);
 
     if (CKR_OK == rv)
     {
@@ -1033,26 +1132,26 @@ CK_RV pkcs11_key_generate
     {
         if (CKR_OK == (rv = pkcs11_lock_both(pLibCtx)))
         {
-            if(atcab_is_ca_device(atcab_get_device_type()))
+            if (atcab_is_ca_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
             {
 #if ATCA_CA_SUPPORT
-                uint8_t buf[32];
+                uint8_t buf[32] = { 0 };
                 atecc508a_config_t * pConfig = (atecc508a_config_t*)pKey->config;
 
-                if (pConfig->KeyConfig[pKey->slot] & 0x0018)
+                if ((0x0010u == (pConfig->KeyConfig[pKey->slot] & 0x0018u)) || (0x0008u == (pConfig->KeyConfig[pKey->slot] & 0x0018u)))
                 {
-                    if (pConfig->SlotConfig[pKey->slot] & 0x2000)
+                    if (0x2000u == (pConfig->SlotConfig[pKey->slot] & 0x2000u))
                     {
-                        if (ATCA_SUCCESS == (status = atcab_nonce_rand(buf, NULL)))
+                        if (ATCA_SUCCESS == (status = atcab_nonce_rand_ext(pSession->slot->device_ctx, buf, NULL)))
                         {
-                            status = atcab_derivekey(0, pKey->slot, NULL);
+                            status = atcab_derivekey_ext(pSession->slot->device_ctx, 0, pKey->slot, NULL);
                         }
                     }
                     else
                     {
-                        if (ATCA_SUCCESS == (status = atcab_random(buf)))
+                        if (ATCA_SUCCESS == (status = atcab_random_ext(pSession->slot->device_ctx, buf)))
                         {
-                            status = atcab_write_bytes_zone(ATCA_ZONE_DATA, pKey->slot, 0, buf, 32);
+                            status = atcab_write_bytes_zone_ext(pSession->slot->device_ctx, ATCA_ZONE_DATA, pKey->slot, 0, buf, 32);
                         }
                     }
                 }
@@ -1061,7 +1160,7 @@ CK_RV pkcs11_key_generate
             else
             {
 #if ATCA_TA_SUPPORT
-                status = talib_genkey_symmetric_key(atcab_get_device(), pKey->slot);
+                status = talib_genkey_symmetric_key(pSession->slot->device_ctx, pKey->slot);
 #endif
             }
             (void)pkcs11_unlock_both(pLibCtx);
@@ -1078,13 +1177,13 @@ CK_RV pkcs11_key_generate
 
     if (CKR_OK == rv)
     {
-        pkcs11_object_get_handle(pKey, phKey);
+        (void)pkcs11_object_get_handle(pKey, phKey);
     }
     else
     {
-        if (pKey)
+        if (NULL != pKey)
         {
-            pkcs11_object_free(pKey);
+            (void)pkcs11_object_free(pKey);
         }
     }
 
@@ -1112,20 +1211,20 @@ CK_RV pkcs11_key_generate_pair
     CK_RV rv = CKR_OK;
 
     rv = pkcs11_init_check(&pLibCtx, FALSE);
-    if (rv)
+    if (CKR_OK != rv)
     {
         return rv;
     }
 
-    if (!pMechanism || !pPublicKeyTemplate || !ulPublicKeyAttributeCount ||
-        !pPrivateKeyTemplate || !ulPrivateKeyAttributeCount ||
-        !phPublicKey || !phPrivateKey)
+    if (NULL == pMechanism || NULL == pPublicKeyTemplate || 0u == ulPublicKeyAttributeCount ||
+        NULL == pPrivateKeyTemplate || 0u == ulPrivateKeyAttributeCount ||
+        NULL == phPublicKey || NULL == phPrivateKey)
     {
         return CKR_ARGUMENTS_BAD;
     }
 
     rv = pkcs11_session_check(&pSession, hSession);
-    if (rv)
+    if (CKR_OK != rv)
     {
         return rv;
     }
@@ -1147,17 +1246,14 @@ CK_RV pkcs11_key_generate_pair
         }
     }
 
-    if (!pName || pName->ulValueLen > PKCS11_MAX_LABEL_SIZE)
+    if (NULL == pName || pName->ulValueLen > (CK_ULONG)PKCS11_MAX_LABEL_SIZE)
     {
         return CKR_TEMPLATE_INCONSISTENT;
     }
 
     /* Must create two new objects - a public and private key */
 
-    if (CKR_OK == rv)
-    {
-        rv = pkcs11_object_alloc(pSession->slot->slot_id, &pPrivate);
-    }
+    rv = pkcs11_object_alloc(pSession->slot->slot_id, &pPrivate);
 
     if (CKR_OK == rv)
     {
@@ -1166,7 +1262,7 @@ CK_RV pkcs11_key_generate_pair
 
     if (CKR_OK == rv)
     {
-        if (!pPublic || !pPrivate)
+        if (NULL == pPublic || NULL == pPrivate)
         {
             rv = CKR_TEMPLATE_INCONSISTENT;
         }
@@ -1177,8 +1273,8 @@ CK_RV pkcs11_key_generate_pair
         pPrivate->class_id = CKO_PRIVATE_KEY;
 #if ATCA_TA_SUPPORT
         (void)talib_handle_init_private_key(&pPrivate->handle_info, TA_KEY_TYPE_ECCP256,
-                                           TA_ALG_MODE_ECC_ECDSA, TA_PROP_SIGN_INT_EXT_DIGEST,
-                                           TA_PROP_NO_KEY_AGREEMENT);
+                                            TA_ALG_MODE_ECC_ECDSA, TA_PROP_SIGN_INT_EXT_DIGEST,
+                                            TA_PROP_NO_KEY_AGREEMENT);
 #endif
 
         rv = pkcs11_config_key(pLibCtx, pSession->slot, pPrivate, pName);
@@ -1188,7 +1284,7 @@ CK_RV pkcs11_key_generate_pair
     {
         pPublic->slot = pPrivate->slot;
         pPublic->flags = pPrivate->flags;
-        memcpy(pPublic->name, pName->pValue, pName->ulValueLen);
+        (void)memcpy(pPublic->name, pName->pValue, pName->ulValueLen);
         pPublic->class_id = CKO_PUBLIC_KEY;
         pPublic->class_type = CKK_EC;
         pPublic->attributes = pkcs11_key_public_attributes;
@@ -1200,8 +1296,8 @@ CK_RV pkcs11_key_generate_pair
 
         if (CKR_OK == (rv = pkcs11_lock_both(pLibCtx)))
         {
-            rv = pkcs11_util_convert_rv(atcab_genkey(pPrivate->slot, NULL));
-            if (rv)
+            rv = pkcs11_util_convert_rv(atcab_genkey_ext(pSession->slot->device_ctx, pPrivate->slot, NULL));
+            if (CKR_OK != rv)
             {
 #if !PKCS11_USE_STATIC_CONFIG
                 (void)pkcs11_config_remove_object(pLibCtx, pSession->slot, pPrivate);
@@ -1213,18 +1309,18 @@ CK_RV pkcs11_key_generate_pair
 
     if (CKR_OK == rv)
     {
-        pkcs11_object_get_handle(pPrivate, phPrivateKey);
-        pkcs11_object_get_handle(pPublic, phPublicKey);
+        (void)pkcs11_object_get_handle(pPrivate, phPrivateKey);
+        (void)pkcs11_object_get_handle(pPublic, phPublicKey);
     }
     else
     {
-        if (pPrivate)
+        if (NULL != pPrivate)
         {
-            pkcs11_object_free(pPrivate);
+            (void)pkcs11_object_free(pPrivate);
         }
-        if (pPublic)
+        if (NULL != pPublic)
         {
-            pkcs11_object_free(pPublic);
+            (void)pkcs11_object_free(pPublic);
         }
     }
 
@@ -1254,7 +1350,7 @@ static CK_RV pkcs11_key_derive_ca(pkcs11_session_ctx_ptr pSession, pkcs11_object
 {
     CK_RV rv = CKR_ARGUMENTS_BAD;
 
-    if (pSession && pBaseKey && pSecretKey && pEcdhParameters)
+    if ((NULL != pSession) && (NULL != pBaseKey) && (NULL != pSecretKey) && (NULL != pEcdhParameters))
     {
         pSecretKey->attributes = pkcs11_key_secret_attributes;
         pSecretKey->count = pkcs11_key_secret_attributes_count;
@@ -1268,57 +1364,61 @@ static CK_RV pkcs11_key_derive_ca(pkcs11_session_ctx_ptr pSession, pkcs11_object
 #else
         pSecretKey->data = pkcs11_os_malloc(pSecretKey->size);
 #endif
-        if (!pSecretKey->data)
+        if (NULL == pSecretKey->data)
         {
             rv = CKR_HOST_MEMORY;
         }
         else
         {
             ATCA_STATUS status = ATCA_SUCCESS;
-            if(atcab_is_ca_device(atcab_get_device_type()))
+            if (atcab_is_ca_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
             {
-        #if ATCA_CA_SUPPORT
-                pkcs11_lib_ctx_ptr pLibCtx = pkcs11_get_context();
 
+            #if ATCA_CA_SUPPORT
+                pkcs11_lib_ctx_ptr pLibCtx = pkcs11_get_context();
                 pSecretKey->slot = ATCA_TEMPKEY_KEYID;
                 pSecretKey->config = &((pkcs11_slot_ctx_ptr)pSession->slot)->cfg_zone;
 
                 if (CKR_OK == (rv = pkcs11_lock_both(pLibCtx)))
                 {
                     /* Because of the number of ECDH options this function unfortunately has a complex bit of logic
-                    to walk through to select the proper ECDH command. Normally this would be left up to the user
-                    to chose */
+                       to walk through to select the proper ECDH command. Normally this would be left up to the user
+                       to chose */
 
                     if (ATCA_TEMPKEY_KEYID == pBaseKey->slot)
                     {
                         if (pSession->slot->logged_in)
                         {
-                            status = atcab_ecdh_tempkey_ioenc(&pEcdhParameters->pPublicData[1], pSecretKey->data, pSession->slot->read_key);
+                            status = calib_ecdh_tempkey_ioenc(pSession->slot->device_ctx, &pEcdhParameters->pPublicData[1], (uint8_t*)pSecretKey->data, pSession->slot->read_key);
                         }
                         else
                         {
-                            status = atcab_ecdh_tempkey(&pEcdhParameters->pPublicData[1], pSecretKey->data);
+                            status = calib_ecdh_tempkey(pSession->slot->device_ctx, &pEcdhParameters->pPublicData[1], (uint8_t*)pSecretKey->data);
                         }
                     }
-                    else if (16 > pBaseKey->slot)
+                    else if (16u > pBaseKey->slot)
                     {
-                        if (ATCA_SLOT_CONFIG_WRITE_ECDH_MASK & pSession->slot->cfg_zone.SlotConfig[pBaseKey->slot])
+                        if (ATCA_SLOT_CONFIG_WRITE_ECDH_MASK == (ATCA_SLOT_CONFIG_WRITE_ECDH_MASK & pSession->slot->cfg_zone.SlotConfig[pBaseKey->slot]))
                         {
-                            uint8_t num_in[32] = { 0, 1, 2, 3 };
-                            uint16_t read_key_id = (ATCA_SLOT_CONFIG_READKEY_MASK & pSession->slot->cfg_zone.SlotConfig[pBaseKey->slot | 0x01])
-                                                >> ATCA_SLOT_CONFIG_READKEY_SHIFT;
-                            status = atcab_ecdh_enc(pBaseKey->slot, &pEcdhParameters->pPublicData[1], pSecretKey->data,
+                            uint8_t num_in[32] = { 0, 1, 2, 3, 0, 0, 0, 0,
+                                                   0, 0, 0, 0, 0, 0, 0, 0,
+                                                   0, 0, 0, 0, 0, 0, 0, 0,
+                                                   0, 0, 0, 0, 0, 0, 0, 0 };
+
+                            uint16_t read_key_id = (ATCA_SLOT_CONFIG_READKEY_MASK & pSession->slot->cfg_zone.SlotConfig[pBaseKey->slot | 0x01u])
+                                                   >> ATCA_SLOT_CONFIG_READKEY_SHIFT;
+                            status = calib_ecdh_enc(pSession->slot->device_ctx, pBaseKey->slot, &pEcdhParameters->pPublicData[1], (uint8_t*)pSecretKey->data,
                                                     pSession->slot->read_key, read_key_id, num_in);
                         }
                         else if ((ATECC508A != pSession->slot->interface_config.devtype) &&
-                                (ATCA_CHIP_OPT_IO_PROT_EN_MASK & pSession->slot->cfg_zone.ChipOptions) &&
-                                pSession->slot->logged_in)
+                                 (ATCA_CHIP_OPT_IO_PROT_EN_MASK == (ATCA_CHIP_OPT_IO_PROT_EN_MASK & pSession->slot->cfg_zone.ChipOptions)) &&
+                                 pSession->slot->logged_in)
                         {
-                            status = atcab_ecdh_ioenc(pBaseKey->slot, &pEcdhParameters->pPublicData[1], pSecretKey->data, pSession->slot->read_key);
+                            status = calib_ecdh_ioenc(pSession->slot->device_ctx, pBaseKey->slot, &pEcdhParameters->pPublicData[1], (uint8_t*)pSecretKey->data, pSession->slot->read_key);
                         }
                         else
                         {
-                            status = atcab_ecdh(pBaseKey->slot, &pEcdhParameters->pPublicData[1], pSecretKey->data);
+                            status = calib_ecdh(pSession->slot->device_ctx, pBaseKey->slot, &pEcdhParameters->pPublicData[1], (uint8_t*)pSecretKey->data);
                         }
                     }
                     else
@@ -1326,15 +1426,15 @@ static CK_RV pkcs11_key_derive_ca(pkcs11_session_ctx_ptr pSession, pkcs11_object
                         status = ATCA_GEN_FAIL;
                     }
                     (void)pkcs11_unlock_both(pLibCtx);
-                    
+
                 }
-        #endif
+            #endif
             }
             else
             {
-    #if ATCA_TA_SUPPORT
-                status = atcab_ecdh(pBaseKey->slot, &pEcdhParameters->pPublicData[1], pSecretKey->data);
-    #endif
+        #if ATCA_TA_SUPPORT
+                status = talib_ecdh_compat(pSession->slot->device_ctx, pBaseKey->slot, &pEcdhParameters->pPublicData[1], (uint8_t*)pSecretKey->data);
+        #endif
             }
             rv = pkcs11_util_convert_rv(status);
         }
@@ -1362,13 +1462,13 @@ CK_RV pkcs11_key_derive
     CK_RV rv = CKR_OK;
 
     rv = pkcs11_init_check(&pLibCtx, FALSE);
-    if (rv)
+    if (CKR_OK != rv)
     {
         return rv;
     }
 
-    if (!hSession || !pMechanism || !hBaseKey ||
-        !pTemplate || !ulCount || !phKey)
+    if ((0u == hSession) || (NULL == pMechanism) || (0u == hBaseKey) ||
+        (NULL == pTemplate) || (0u == ulCount) || (NULL == phKey))
     {
         return CKR_ARGUMENTS_BAD;
     }
@@ -1378,14 +1478,14 @@ CK_RV pkcs11_key_derive
     if (CKM_ECDH1_DERIVE == pMechanism->mechanism || CKM_ECDH1_COFACTOR_DERIVE == pMechanism->mechanism)
     {
         if (sizeof(CK_ECDH1_DERIVE_PARAMS) != pMechanism->ulParameterLen ||
-            !pMechanism->pParameter)
+            (NULL == pMechanism->pParameter))
         {
             rv = CKR_ARGUMENTS_BAD;
         }
         else
         {
             pEcdhParameters = (CK_ECDH1_DERIVE_PARAMS_PTR)pMechanism->pParameter;
-            if (!pEcdhParameters->pPublicData)
+            if (NULL == pEcdhParameters->pPublicData)
             {
                 rv = CKR_ARGUMENTS_BAD;
             }
@@ -1411,46 +1511,61 @@ CK_RV pkcs11_key_derive
         rv = pkcs11_object_alloc(pSession->slot->slot_id, &pSecretKey);
     }
 
-    for (i = 0; (i < ulCount) && (CKR_OK == rv); i++)
+    for (i = 0; (i < ulCount); i++)
     {
-        if (CKA_LABEL == pTemplate[i].type)
+        if (CKR_OK == rv)
         {
-            if (pTemplate[i].pValue && pTemplate[i].ulValueLen > PKCS11_MAX_LABEL_SIZE)
+            if (CKA_LABEL == pTemplate[i].type)
             {
-                rv = CKR_TEMPLATE_INCONSISTENT;
+                if ((NULL != pTemplate[i].pValue) && (pTemplate[i].ulValueLen > (CK_ULONG)PKCS11_MAX_LABEL_SIZE))
+                {
+                    rv = CKR_TEMPLATE_INCONSISTENT;
+                }
+                else if ((NULL != pTemplate[i].pValue) && (0u != pTemplate[i].ulValueLen))
+                {
+                    (void)memcpy(pSecretKey->name, pTemplate[i].pValue, pTemplate[i].ulValueLen);
+                }
+                else
+                {
+                    /* do nothing */
+                }
             }
-            else if (pTemplate[i].pValue && pTemplate[i].ulValueLen)
+            else if (CKA_CLASS == pTemplate[i].type)
             {
-                memcpy(pSecretKey->name, pTemplate[i].pValue, pTemplate[i].ulValueLen);
+                if (sizeof(pSecretKey->class_id) != pTemplate[i].ulValueLen)
+                {
+                    rv = CKR_TEMPLATE_INCONSISTENT;
+                }
+                else
+                {
+                    (void)memcpy(&pSecretKey->class_id, pTemplate[i].pValue, sizeof(pSecretKey->class_id));
+                }
             }
-        }
-        else if (CKA_CLASS == pTemplate[i].type)
-        {
-            if (sizeof(pSecretKey->class_id) != pTemplate[i].ulValueLen)
+            else if (CKA_KEY_TYPE == pTemplate[i].type)
             {
-                rv = CKR_TEMPLATE_INCONSISTENT;
+                if (sizeof(pSecretKey->class_type) != pTemplate[i].ulValueLen)
+                {
+                    rv = CKR_TEMPLATE_INCONSISTENT;
+                }
+                else
+                {
+                    (void)memcpy(&pSecretKey->class_type, pTemplate[i].pValue, sizeof(pSecretKey->class_type));
+                }
             }
             else
             {
-                memcpy(&pSecretKey->class_id, pTemplate[i].pValue, sizeof(pSecretKey->class_id));
+                /* do nothing */
             }
         }
-        else if (CKA_KEY_TYPE == pTemplate[i].type)
+        else
         {
-            if (sizeof(pSecretKey->class_type) != pTemplate[i].ulValueLen)
-            {
-                rv = CKR_TEMPLATE_INCONSISTENT;
-            }
-            else
-            {
-                memcpy(&pSecretKey->class_type, pTemplate[i].pValue, sizeof(pSecretKey->class_type));
-            }
+            break;
         }
     }
 
     if (CKR_OK == rv)
     {
-        if (atcab_is_ca_device(atcab_get_device_type()))
+        if (atcab_is_ca_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
         {
             rv = pkcs11_key_derive_ca(pSession, pBaseKey, pSecretKey, pEcdhParameters);
         }
@@ -1458,11 +1573,15 @@ CK_RV pkcs11_key_derive
 
     if (CKR_OK == rv)
     {
-        pkcs11_object_get_handle(pSecretKey, phKey);
+        (void)pkcs11_object_get_handle(pSecretKey, phKey);
     }
-    else if (pSecretKey)
+    else if (NULL != pSecretKey)
     {
-        pkcs11_object_free(pSecretKey);
+        (void)pkcs11_object_free(pSecretKey);
+    }
+    else
+    {
+        /* do nothing */
     }
 
     return rv;

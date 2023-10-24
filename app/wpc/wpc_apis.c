@@ -36,7 +36,7 @@
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS wpc_msg_challenge(
-    ATCADevice device,          /**< [in] Device Context */
+    ATCADevice      device,     /**< [in] Device Context */
     uint8_t *const  message,    /**< [out] Message Buffer */
     uint16_t *const msg_len,    /**< [in/out] In: message buffer size, Out: message length */
     const uint8_t   slot        /**< [in] Slot number */
@@ -60,7 +60,7 @@ ATCA_STATUS wpc_msg_challenge(
     {
         status = ATCA_TRACE(atcab_random_ext(device, nonce), "atcab_random failed");
     }
-    
+
     if (ATCA_SUCCESS == status)
     {
         memcpy(&message[2], nonce, WPC_CHALLENGE_NONCE_LENGTH);
@@ -147,7 +147,7 @@ ATCA_STATUS wpc_msg_error(
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS wpc_msg_challenge_auth(
-    ATCADevice device,          /**< [in] Device Context */
+    ATCADevice      device,     /**< [in] Device Context */
     uint8_t  *const response,   /**< [out] Response Message */
     uint16_t *const resp_len,   /**< [in/out] In: response buffer size, Out: response length */
     const uint8_t * request     /**< [in] Request Message */
@@ -172,7 +172,7 @@ ATCA_STATUS wpc_msg_challenge_auth(
     }
 
     if (ATCA_SUCCESS != (status = atcab_read_bytes_zone_ext(device, ATCA_ZONE_DATA, handle, 0,
-                                                        chain_digest, sizeof(chain_digest))))
+                                                            chain_digest, sizeof(chain_digest))))
     {
         ATCA_TRACE(status, "atcab_read_bytes_zone execution is failed");
         return wpc_msg_error(response, resp_len, WPC_ERROR_UNSPECIFIED, 0);
@@ -195,7 +195,7 @@ ATCA_STATUS wpc_msg_challenge_auth(
 }
 
 ATCA_STATUS wpc_msg_digests(
-    ATCADevice device,          /**< [in] Device Context */
+    ATCADevice      device,     /**< [in] Device Context */
     uint8_t  *const response,   /**< [out] Response Message */
     uint16_t *const resp_len,   /**< [in/out] In: response buffer size, Out: response length */
     const uint8_t * request     /**< [in] Request Message */
@@ -220,7 +220,7 @@ ATCA_STATUS wpc_msg_digests(
             if (ATCA_SUCCESS == wpccert_get_slot_info(&handle, NULL, slot))
             {
                 if (ATCA_SUCCESS != (status = atcab_read_bytes_zone_ext(device, ATCA_ZONE_DATA, handle, 0,
-                                                                    digest, ATCA_SHA256_DIGEST_SIZE)))
+                                                                        digest, ATCA_SHA256_DIGEST_SIZE)))
                 {
                     ATCA_TRACE(status, "atcab_read_bytes_zone execution failed");
                     return wpc_msg_error(response, resp_len, WPC_ERROR_UNSPECIFIED, 0);
@@ -251,14 +251,14 @@ ATCA_STATUS wpc_msg_digests(
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS wpc_msg_certificate(
-    ATCADevice device,          /**< [in] Device Context */
+    ATCADevice      device,     /**< [in] Device Context */
     uint8_t *const  response,   /**< [out] WPC authentication challenge response from device */
     uint16_t *const resp_len,   /**< [in] response buffer size
                                    [out] data size on response */
     const uint8_t * request,    /**< [in] WPC authentication challenge request from host */
     uint8_t *       buffer,     /**< [in] Temporary buffer - large enough to hold a certificate */
     const uint16_t  buflen      /**< [in] Length of the temporary buffer */
-)
+    )
 {
     ATCA_STATUS status;
     size_t n_mc = 0;
@@ -409,12 +409,12 @@ ATCA_STATUS wpc_msg_certificate(
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS wpc_auth_signature(
-    ATCADevice device,          /**< [in] Device Context */
-    const uint8_t *chain_digest,        /**< [in] WPC Authentication Cert Chain digest*/
-    const uint16_t private_key_slot,    /**< [in] WPC Authentication private key slot*/
-    const uint8_t *request,             /**< [in] WPC authentication challenge request from host */
-    const uint8_t *other_data,          /**< [in] Challegen response b0, b1 and Digest LSB*/
-    uint8_t *const signature            /**< [out] Signature for WPC authentication TBS */
+    ATCADevice     device,           /**< [in] Device Context */
+    const uint8_t *chain_digest,     /**< [in] WPC Authentication Cert Chain digest*/
+    const uint16_t private_key_slot, /**< [in] WPC Authentication private key slot*/
+    const uint8_t *request,          /**< [in] WPC authentication challenge request from host */
+    const uint8_t *other_data,       /**< [in] Challegen response b0, b1 and Digest LSB*/
+    uint8_t *const signature         /**< [out] Signature for WPC authentication TBS */
     )
 {
     ATCA_STATUS status;

@@ -68,12 +68,12 @@ ATCA_STATUS hal_i2c_init(ATCAIface iface, ATCAIfaceCfg* cfg)
 {
     ATCA_STATUS ret = ATCA_BAD_PARAM;
 
-    if (!iface || !cfg)
+    if ((NULL == iface) || (NULL == cfg))
     {
         return ret;
     }
 
-    if (iface->hal_data)
+    if (NULL != iface->hal_data)
     {
         atca_i2c_host_t * hal_data = (atca_i2c_host_t*)iface->hal_data;
 
@@ -84,16 +84,17 @@ ATCA_STATUS hal_i2c_init(ATCAIface iface, ATCAIfaceCfg* cfg)
     }
     else
     {
-        atca_i2c_host_t * hal_data = malloc(sizeof(atca_i2c_host_t));
-        int bus = ATCA_IFACECFG_VALUE(cfg, atcai2c.bus); // 0-based logical bus number
-
-        if (hal_data)
+        /* coverity[misra_c_2012_directive_4_12_violation] Intentional as it is required for the linux environment */
+        /* coverity[misra_c_2012_rule_21_3_violation] Intentional as it is required for the linux environment */
+        if (NULL != (iface->hal_data = malloc(sizeof(atca_i2c_host_t))))
         {
-            hal_data->ref_ct = 1;  // buses are shared, this is the first instance
+            atca_i2c_host_t * hal_data = (atca_i2c_host_t*)iface->hal_data;
+            int bus = (int)ATCA_IFACECFG_VALUE(cfg, atcai2c.bus); // 0-based logical bus number
 
-            (void)snprintf(hal_data->i2c_file, sizeof(hal_data->i2c_file) - 1, "/dev/i2c-%d", bus);
+            hal_data->ref_ct = 1;                                 // buses are shared, this is the first instance
 
-            iface->hal_data = hal_data;
+            /* coverity[misra_c_2012_rule_21_6_violation] snprintf is approved for formatted string writes to buffers */
+            (void)snprintf(hal_data->i2c_file, sizeof(hal_data->i2c_file) - 1U, "/dev/i2c-%d", bus);
 
             ret = ATCA_SUCCESS;
         }
@@ -124,38 +125,41 @@ ATCA_STATUS hal_i2c_post_init(ATCAIface iface)
  * \param[in] txlength      number of bytes to send
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-
-ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t address, uint8_t *txdata, int txlength)
+ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength)
 {
     atca_i2c_host_t * hal_data = (atca_i2c_host_t*)atgetifacehaldat(iface);
     int f_i2c;  // I2C file descriptor
 
-    if (!hal_data)
+    if (NULL == hal_data)
     {
         return ATCA_NOT_INITIALIZED;
     }
 
     // Initiate I2C communication
+    /* coverity[cert_fio32_c_violation] It is the system owner's responsibility ensure configuration provides a valid i2c device */
     if ( (f_i2c = open(hal_data->i2c_file, O_RDWR)) < 0)
     {
         return ATCA_COMM_FAIL;
     }
 
     // Set Device Address
-    if (ioctl(f_i2c, I2C_SLAVE, address >> 1) < 0)
+    if (ioctl(f_i2c, I2C_SLAVE, word_address >> 1) < 0)
     {
-        close(f_i2c);
+        (void)close(f_i2c);
         return ATCA_COMM_FAIL;
     }
 
     // Send data
-    if (write(f_i2c, txdata, txlength) != txlength)
+    if ((NULL != txdata) && (0 < txlength))
     {
-        close(f_i2c);
-        return ATCA_COMM_FAIL;
+        if (write(f_i2c, txdata, (size_t)txlength) != txlength)
+        {
+            (void)close(f_i2c);
+            return ATCA_COMM_FAIL;
+        }
     }
 
-    close(f_i2c);
+    (void)close(f_i2c);
     return ATCA_SUCCESS;
 }
 
@@ -167,36 +171,40 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t address, uint8_t *txdata, int 
  *                              As output, the number of bytes received.
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t address, uint8_t *rxdata, uint16_t *rxlength)
+ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)
 {
     atca_i2c_host_t * hal_data = (atca_i2c_host_t*)atgetifacehaldat(iface);
     int f_i2c;  // I2C file descriptor
 
-    if (!hal_data)
+    if (NULL == hal_data)
     {
         return ATCA_NOT_INITIALIZED;
     }
 
     // Initiate I2C communication
+    /* coverity[cert_fio32_c_violation] It is the system owner's responsibility ensure configuration provides a valid i2c device */
     if ( (f_i2c = open(hal_data->i2c_file, O_RDWR)) < 0)
     {
         return ATCA_COMM_FAIL;
     }
 
     // Set Device Address
-    if (ioctl(f_i2c, I2C_SLAVE, address >> 1) < 0)
+    if (ioctl(f_i2c, I2C_SLAVE, word_address >> 1) < 0)
     {
-        close(f_i2c);
+        (void)close(f_i2c);
         return ATCA_COMM_FAIL;
     }
 
-    if (read(f_i2c, rxdata, *rxlength) != *rxlength)
+    if ((NULL != rxdata) && (NULL != rxlength))
     {
-        close(f_i2c);
-        return ATCA_COMM_FAIL;
+        if (read(f_i2c, rxdata, (size_t)*rxlength) != (int)*rxlength)
+        {
+            (void)close(f_i2c);
+            return ATCA_COMM_FAIL;
+        }
     }
 
-    close(f_i2c);
+    (void)close(f_i2c);
     return ATCA_SUCCESS;
 }
 
@@ -213,7 +221,7 @@ ATCA_STATUS hal_i2c_control(ATCAIface iface, uint8_t option, void* param, size_t
     (void)param;
     (void)paramlen;
 
-    if (iface && iface->mIfaceCFG)
+    if ((NULL != iface) && (NULL != iface->mIfaceCFG))
     {
         /* This HAL does not support any of the control functions */
         return ATCA_UNIMPLEMENTED;
@@ -225,15 +233,23 @@ ATCA_STATUS hal_i2c_control(ATCAIface iface, uint8_t option, void* param, size_t
  * \param[in] hal_data - opaque pointer to hal data structure - known only to the HAL implementation
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-
 ATCA_STATUS hal_i2c_release(void *hal_data)
 {
     atca_i2c_host_t *hal = (atca_i2c_host_t*)hal_data;
 
-    // if the use count for this bus has gone to 0 references, disable it.  protect against an unbracketed release
-    if (hal && --(hal->ref_ct) <= 0)
+    if (NULL != hal)
     {
-        free(hal);
+        // if the use count for this bus has gone to 0 references, disable it.  protect against an unbracketed release
+        if (0 < hal->ref_ct)
+        {
+            hal->ref_ct--;
+        }
+
+        if (0 == hal->ref_ct)
+        {
+            /* coverity[misra_c_2012_rule_21_3_violation] Intentional as it is required for the linux environment */
+            free(hal);
+        }
     }
 
     return ATCA_SUCCESS;

@@ -47,6 +47,6 @@ extern const CK_ULONG pkcs11_cert_wtlspublic_attributes_count;
 extern const pkcs11_attrib_model pkcs11_cert_x509_attributes[];
 extern const CK_ULONG pkcs11_cert_x509_attributes_count;
 
-CK_RV pkcs11_cert_x509_write(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute);
+CK_RV pkcs11_cert_x509_write(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr pSession);
 
 #endif /* PKCS11_CERT_H_ */

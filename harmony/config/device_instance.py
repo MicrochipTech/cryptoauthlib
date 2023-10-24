@@ -192,7 +192,7 @@ def instantiateComponent(deviceComponent, index):
     elif 'SHA105' in deviceID:
         deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['sha105'])
     elif 'SHA' in deviceID:
-        deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['sha'])
+        deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['sha'])  
     elif 'TA' in deviceID:
         deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['ta100'])
 

@@ -6,7 +6,7 @@
  * messages or data packets in ECB mode.
  *
  * \note List of devices that support this command - ATECC608A, ATECC608B,
- *       & TA100. Refer to device datasheet for full details.
+ *       & TA10x. Refer to device datasheet for full details.
  *
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -50,20 +50,23 @@
  *                       location for the actual key.
  * \param[in] iv         Initialization vector (16 bytes).
  *
+ * \param[in] padding    Type of padding used
+ *
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atcab_aes_cbc_init_ext(ATCADevice device, atca_aes_cbc_ctx_t* ctx, uint16_t key_id, uint8_t key_block, const uint8_t* iv)
+ATCA_STATUS atcab_aes_cbc_init_ext(ATCADevice device, atca_aes_cbc_ctx_t* ctx, uint16_t key_id, uint8_t key_block, const uint8_t* iv, const uint8_t padding)
 {
     if (ctx == NULL || iv == NULL)
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
-    memset(ctx, 0, sizeof(*ctx));
+    (void)memset(ctx, 0, sizeof(*ctx));
     ctx->device = device;
     ctx->key_id = key_id;
     ctx->key_block = key_block;
-    memcpy(ctx->ciphertext, iv, sizeof(ctx->ciphertext));
+    ctx->padding = padding;
+    (void)memcpy(ctx->ciphertext, iv, sizeof(ctx->ciphertext));
 
     return ATCA_SUCCESS;
 }
@@ -81,7 +84,7 @@ ATCA_STATUS atcab_aes_cbc_init_ext(ATCADevice device, atca_aes_cbc_ctx_t* ctx, u
  */
 ATCA_STATUS atcab_aes_cbc_init(atca_aes_cbc_ctx_t* ctx, uint16_t key_id, uint8_t key_block, const uint8_t* iv)
 {
-    return atcab_aes_cbc_init_ext(atcab_get_device(), ctx, key_id, key_block, iv);
+    return atcab_aes_cbc_init_ext(atcab_get_device(), ctx, key_id, key_block, iv, 0);
 }
 #endif /* ATCAB_AES_CBC_ENCRYPT || ATCAB_AES_CBC_DECRYPT */
 
@@ -99,7 +102,7 @@ ATCA_STATUS atcab_aes_cbc_init(atca_aes_cbc_ctx_t* ctx, uint16_t key_id, uint8_t
 ATCA_STATUS atcab_aes_cbc_encrypt_block(atca_aes_cbc_ctx_t* ctx, const uint8_t* plaintext, uint8_t* ciphertext)
 {
     uint8_t input[ATCA_AES128_BLOCK_SIZE];
-    int i;
+    uint8_t i;
     ATCA_STATUS status = ATCA_SUCCESS;
 
     if (ctx == NULL || plaintext == NULL || ciphertext == NULL)
@@ -120,7 +123,7 @@ ATCA_STATUS atcab_aes_cbc_encrypt_block(atca_aes_cbc_ctx_t* ctx, const uint8_t* 
     }
 
     // Save copy of ciphertext for next block operation
-    memcpy(ctx->ciphertext, ciphertext, ATCA_AES128_BLOCK_SIZE);
+    (void)memcpy(ctx->ciphertext, ciphertext, ATCA_AES128_BLOCK_SIZE);
 
     return status;
 }
@@ -140,7 +143,7 @@ ATCA_STATUS atcab_aes_cbc_encrypt_block(atca_aes_cbc_ctx_t* ctx, const uint8_t* 
 ATCA_STATUS atcab_aes_cbc_decrypt_block(atca_aes_cbc_ctx_t* ctx, const uint8_t* ciphertext, uint8_t* plaintext)
 {
     uint8_t output[ATCA_AES128_BLOCK_SIZE];
-    int i;
+    uint8_t i;
     ATCA_STATUS status = ATCA_SUCCESS;
 
     if (ctx == NULL || ciphertext == NULL || plaintext == NULL)
@@ -161,7 +164,7 @@ ATCA_STATUS atcab_aes_cbc_decrypt_block(atca_aes_cbc_ctx_t* ctx, const uint8_t* 
     }
 
     // Save copy of ciphertext for next block operation
-    memcpy(ctx->ciphertext, ciphertext, ATCA_AES128_BLOCK_SIZE);
+    (void)memcpy(ctx->ciphertext, ciphertext, ATCA_AES128_BLOCK_SIZE);
 
     return status;
 }
@@ -172,30 +175,34 @@ ATCA_STATUS atcab_aes_cbc_encrypt_update(atca_aes_cbc_ctx_t* ctx, uint8_t* plain
 {
     ATCA_STATUS status = ATCA_SUCCESS;
 
-    if (!ctx || !plaintext || !ciphertext || !ciphertext_len)
+    if (NULL == ctx || NULL == plaintext || NULL == ciphertext || NULL == ciphertext_len)
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
-    if ((ctx->block_size + plaintext_len) / ATCA_AES128_BLOCK_SIZE > *ciphertext_len)
+    if ((SIZE_MAX - ctx->block_size) >= plaintext_len)
     {
-        return ATCA_TRACE(ATCA_SMALL_BUFFER, "Output buffer is too small");
+        if ((ctx->block_size + plaintext_len) / ATCA_AES128_BLOCK_SIZE > *ciphertext_len)
+        {
+            return ATCA_TRACE(ATCA_SMALL_BUFFER, "Output buffer is too small");
+        }
     }
-    
+
+
     *ciphertext_len = 0;
 
     do
     {
-        if (ctx->block_size)
+        if (0u != ctx->block_size)
         {
-            size_t copy_size = ATCA_AES128_BLOCK_SIZE - ctx->block_size;
+            size_t copy_size = ((size_t)ATCA_AES128_BLOCK_SIZE - ctx->block_size);
             if (plaintext_len < copy_size)
             {
                 copy_size = plaintext_len;
             }
-            memcpy(&ctx->block[ctx->block_size], plaintext, copy_size);
+            (void)memcpy(&ctx->block[ctx->block_size], plaintext, copy_size);
             plaintext += copy_size;
-            ctx->block_size += copy_size;
+            ctx->block_size += (uint8_t)copy_size;
             plaintext_len -= copy_size;
         }
         if (ATCA_AES128_BLOCK_SIZE == ctx->block_size)
@@ -216,30 +223,32 @@ ATCA_STATUS atcab_aes_cbc_encrypt_update(atca_aes_cbc_ctx_t* ctx, uint8_t* plain
             }
             plaintext += ATCA_AES128_BLOCK_SIZE;
             ciphertext += ATCA_AES128_BLOCK_SIZE;
+            /* coverity[cert_int30_c_violation:FALSE] Impossible for ciphertext_len to wrap because it is bounded by plaintext_len */
             *ciphertext_len += ATCA_AES128_BLOCK_SIZE;
             plaintext_len -= ATCA_AES128_BLOCK_SIZE;
         }
-        if (plaintext_len && (ATCA_AES128_BLOCK_SIZE > plaintext_len))
+        if ((0u != plaintext_len) && (ATCA_AES128_BLOCK_SIZE > plaintext_len))
         {
-            memcpy(ctx->block, plaintext, plaintext_len);
-            ctx->block_size = plaintext_len;
-            plaintext_len -= plaintext_len;
+            (void)memcpy(ctx->block, plaintext, plaintext_len);
+            ctx->block_size = (uint8_t)plaintext_len;
+            plaintext_len = 0u;
         }
-    } while(plaintext_len);
+    }
+    while (0u != plaintext_len);
 
     return status;
 }
 
-ATCA_STATUS atcab_aes_cbc_encrypt_finish(atca_aes_cbc_ctx_t* ctx, uint8_t* ciphertext, size_t * ciphertext_len, uint8_t padding)
+ATCA_STATUS atcab_aes_cbc_encrypt_finish(atca_aes_cbc_ctx_t* ctx, uint8_t* ciphertext, size_t * ciphertext_len)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
 
-    if (!ctx || !ciphertext || !ciphertext_len)
+    if (NULL == ctx || NULL == ciphertext || NULL == ciphertext_len)
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
-    if (padding == 1)
+    if (ctx->padding == 1u)
     {
         /* Use PKCS7 padding */
         size_t buflen = ATCA_AES128_BLOCK_SIZE;
@@ -248,22 +257,22 @@ ATCA_STATUS atcab_aes_cbc_encrypt_finish(atca_aes_cbc_ctx_t* ctx, uint8_t* ciphe
     }
     else
     {
-        if (ctx->block_size)
+        if (0u != ctx->block_size)
         {
             /* Pad with zeros */
-            memset(ctx->block, 0, ATCA_AES128_BLOCK_SIZE - ctx->block_size);
+            (void)memset(ctx->block, 0, ((size_t)ATCA_AES128_BLOCK_SIZE - ctx->block_size));
         }
     }
 
-    if (ATCA_SUCCESS == status && ctx->block_size)
+    if (ATCA_SUCCESS == status && (0u != ctx->block_size))
     {
         if (*ciphertext_len >= ATCA_AES128_BLOCK_SIZE)
         {
-        status = atcab_aes_cbc_encrypt_block(ctx, ctx->block, ciphertext);
-        *ciphertext_len = ATCA_AES128_BLOCK_SIZE;
-    }
-    else
-    {
+            status = atcab_aes_cbc_encrypt_block(ctx, ctx->block, ciphertext);
+            *ciphertext_len = ATCA_AES128_BLOCK_SIZE;
+        }
+        else
+        {
             status = ATCA_SMALL_BUFFER;
         }
     }
@@ -272,7 +281,7 @@ ATCA_STATUS atcab_aes_cbc_encrypt_finish(atca_aes_cbc_ctx_t* ctx, uint8_t* ciphe
         *ciphertext_len = 0;
     }
 
-    memset(ctx, 0, sizeof(atca_aes_cbc_ctx_t));
+    (void)memset(ctx, 0, sizeof(atca_aes_cbc_ctx_t));
 
     return status;
 }
@@ -281,7 +290,7 @@ ATCA_STATUS atcab_aes_cbc_decrypt_update(atca_aes_cbc_ctx_t* ctx, const uint8_t*
 {
     ATCA_STATUS status = ATCA_SUCCESS;
 
-    if (!ctx || !ciphertext || !ciphertext_len || !plaintext || !plaintext_len)
+    if (NULL == ctx || NULL == ciphertext || 0u == ciphertext_len || NULL == plaintext || NULL == plaintext_len)
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
@@ -290,24 +299,24 @@ ATCA_STATUS atcab_aes_cbc_decrypt_update(atca_aes_cbc_ctx_t* ctx, const uint8_t*
     {
         return ATCA_TRACE(ATCA_SMALL_BUFFER, "Output buffer is too small");
     }
-    
+
     *plaintext_len = 0;
 
     do
     {
-        if (ctx->block_size && ctx->block_size < ATCA_AES128_BLOCK_SIZE)
+        if ((0u != ctx->block_size) && ctx->block_size < ATCA_AES128_BLOCK_SIZE)
         {
-            size_t copy_size = ATCA_AES128_BLOCK_SIZE - ctx->block_size;
+            size_t copy_size = ((size_t)ATCA_AES128_BLOCK_SIZE - ctx->block_size);
             if (ciphertext_len < copy_size)
             {
                 copy_size = ciphertext_len;
             }
-            memcpy(&ctx->block[ctx->block_size], ciphertext, copy_size);
+            (void)memcpy(&ctx->block[ctx->block_size], ciphertext, copy_size);
             ciphertext += copy_size;
-            ctx->block_size += copy_size;
+            ctx->block_size += (uint8_t)copy_size;
             ciphertext_len -= copy_size;
         }
-        if (ATCA_AES128_BLOCK_SIZE == ctx->block_size && ciphertext_len)
+        if (ATCA_AES128_BLOCK_SIZE == ctx->block_size && (0u != ciphertext_len))
         {
             if (ATCA_SUCCESS != (status = atcab_aes_cbc_decrypt_block(ctx, ctx->block, plaintext)))
             {
@@ -317,7 +326,8 @@ ATCA_STATUS atcab_aes_cbc_decrypt_update(atca_aes_cbc_ctx_t* ctx, const uint8_t*
             plaintext += ATCA_AES128_BLOCK_SIZE;
             *plaintext_len += ATCA_AES128_BLOCK_SIZE;
         }
-        if (ATCA_AES128_BLOCK_SIZE < ciphertext_len)
+        if ((ATCA_AES128_BLOCK_SIZE < ciphertext_len)
+            || ((ctx->padding == 0U) && (ATCA_AES128_BLOCK_SIZE == ciphertext_len)))
         {
             if (ATCA_SUCCESS != (status = atcab_aes_cbc_decrypt_block(ctx, ciphertext, plaintext)))
             {
@@ -326,26 +336,29 @@ ATCA_STATUS atcab_aes_cbc_decrypt_update(atca_aes_cbc_ctx_t* ctx, const uint8_t*
             plaintext += ATCA_AES128_BLOCK_SIZE;
             ciphertext += ATCA_AES128_BLOCK_SIZE;
             ciphertext_len -= ATCA_AES128_BLOCK_SIZE;
+            /* coverity[cert_int30_c_violation:FALSE] Impossible for plaintext_len to wrap because it is bounded by ciphertext_len */
             *plaintext_len += ATCA_AES128_BLOCK_SIZE;
         }
 
-        if (ciphertext_len && (ATCA_AES128_BLOCK_SIZE >= ciphertext_len))
+        if (((0u != ciphertext_len) && (ATCA_AES128_BLOCK_SIZE > ciphertext_len))
+            || ((ctx->padding == 1U) && (ATCA_AES128_BLOCK_SIZE == ciphertext_len)))
         {
             /* Saves the remainder which may be partial or a full block of data */
-            memcpy(ctx->block, ciphertext, ciphertext_len);
-            ctx->block_size = ciphertext_len;
-            ciphertext_len -= ciphertext_len;
+            (void)memcpy(ctx->block, ciphertext, ciphertext_len);
+            ctx->block_size = (uint8_t)ciphertext_len;
+            ciphertext_len = 0u;
         }
-    } while(ciphertext_len);
+    }
+    while (0u != ciphertext_len);
 
     return status;
 }
 
-ATCA_STATUS atcab_aes_cbc_decrypt_finish(atca_aes_cbc_ctx_t* ctx, uint8_t* plaintext, size_t * plaintext_len, uint8_t padding)
+ATCA_STATUS atcab_aes_cbc_decrypt_finish(atca_aes_cbc_ctx_t* ctx, uint8_t* plaintext, size_t * plaintext_len)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
 
-    if (!ctx || !plaintext || !plaintext_len)
+    if (NULL == ctx || NULL == plaintext || NULL == plaintext_len)
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
@@ -354,25 +367,29 @@ ATCA_STATUS atcab_aes_cbc_decrypt_finish(atca_aes_cbc_ctx_t* ctx, uint8_t* plain
     {
         if (*plaintext_len >= ATCA_AES128_BLOCK_SIZE)
         {
-        status = atcab_aes_cbc_decrypt_block(ctx, ctx->block, plaintext);
-        *plaintext_len = ATCA_AES128_BLOCK_SIZE;
+            status = atcab_aes_cbc_decrypt_block(ctx, ctx->block, plaintext);
+            *plaintext_len = ATCA_AES128_BLOCK_SIZE;
 
-        if ((ATCA_SUCCESS == status) && (padding == 1))
-        {
-            status = atcac_pkcs7_unpad(plaintext, plaintext_len, ATCA_AES128_BLOCK_SIZE);
+            if ((ATCA_SUCCESS == status) && (ctx->padding == 1u))
+            {
+                status = atcac_pkcs7_unpad(plaintext, plaintext_len, ATCA_AES128_BLOCK_SIZE);
+            }
         }
-    }
         else
         {
             status = ATCA_SMALL_BUFFER;
         }
     }
-    else if (ctx->block_size)
+    else if (0u != ctx->block_size)
     {
         status = ATCA_TRACE(ATCA_GEN_FAIL, "Provided ciphertext is incomplete - the total length needs to be multiple of 16 bytes");
     }
+    else
+    {
+        *plaintext_len = 0U;
+    }
 
-    memset(ctx, 0, sizeof(atca_aes_cbc_ctx_t));
+    (void)memset(ctx, 0, sizeof(atca_aes_cbc_ctx_t));
 
     return status;
 }

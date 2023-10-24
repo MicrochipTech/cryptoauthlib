@@ -62,12 +62,12 @@ ATCA_STATUS atcab_aes_ctr_init_ext(ATCADevice device, atca_aes_ctr_ctx_t* ctx, u
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "Either NULL pointer or invalid counter size received");
     }
-    memset(ctx, 0, sizeof(*ctx));
+    (void)memset(ctx, 0, sizeof(*ctx));
     ctx->device = device;
     ctx->key_id = key_id;
     ctx->key_block = key_block;
     ctx->counter_size = counter_size;
-    memcpy(ctx->cb, iv, ATCA_AES128_BLOCK_SIZE);
+    (void)memcpy(ctx->cb, iv, ATCA_AES128_BLOCK_SIZE);
 
     return ATCA_SUCCESS;
 }
@@ -128,7 +128,7 @@ ATCA_STATUS atcab_aes_ctr_init_rand_ext(ATCADevice device, atca_aes_ctr_ctx_t* c
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "Either NULL pointer or invalid counter size received");
     }
-    memset(ctx, 0, sizeof(*ctx));
+    (void)memset(ctx, 0, sizeof(*ctx));
     ctx->device = device;
     ctx->key_id = key_id;
     ctx->key_block = key_block;
@@ -136,11 +136,11 @@ ATCA_STATUS atcab_aes_ctr_init_rand_ext(ATCADevice device, atca_aes_ctr_ctx_t* c
 
     // Generate random nonce
     nonce_size = ATCA_AES128_BLOCK_SIZE - ctx->counter_size;
-    if (nonce_size != 0)
+    if (nonce_size != 0u)
     {
-        uint8_t random_nonce[32];
+        uint8_t random_nonce[32] = { 0 };
 #if ATCA_HOSTLIB_EN
-        if (ATCA_SUCCESS != (status = atcac_sw_random(random_nonce, 32)))
+        if (ATCA_SUCCESS != (status = (ATCA_STATUS)atcac_sw_random(random_nonce, 32)))
         {
             return status;
         }
@@ -152,9 +152,9 @@ ATCA_STATUS atcab_aes_ctr_init_rand_ext(ATCADevice device, atca_aes_ctr_ctx_t* c
 #else
         return ATCA_GEN_FAIL;
 #endif
-        memcpy(iv, random_nonce, nonce_size);
+        (void)memcpy(iv, random_nonce, nonce_size);
     }
-    memcpy(ctx->cb, iv, ATCA_AES128_BLOCK_SIZE);
+    (void)memcpy(ctx->cb, iv, ATCA_AES128_BLOCK_SIZE);
 
     return ATCA_SUCCESS;
 }
@@ -205,7 +205,7 @@ ATCA_STATUS atcab_aes_ctr_increment(atca_aes_ctr_ctx_t* ctx)
     for (i = 0; i < ctx->counter_size; i++)
     {
         // Counter is right-aligned in buffer
-        if (++(ctx->cb[ATCA_AES128_BLOCK_SIZE - i - 1]) != 0)
+        if (++(ctx->cb[ATCA_AES128_BLOCK_SIZE - i - 1u]) != 0u)
         {
             break;
         }
@@ -213,7 +213,7 @@ ATCA_STATUS atcab_aes_ctr_increment(atca_aes_ctr_ctx_t* ctx)
     if (i >= ctx->counter_size)
     {
         // Counter overflowed
-        memset(&ctx->cb[ATCA_AES128_BLOCK_SIZE - ctx->counter_size], 0, ctx->counter_size);
+        (void)memset(&ctx->cb[ATCA_AES128_BLOCK_SIZE - ctx->counter_size], 0, ctx->counter_size);
     }
 
     return ATCA_SUCCESS;

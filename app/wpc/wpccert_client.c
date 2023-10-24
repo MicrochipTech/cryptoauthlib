@@ -70,7 +70,7 @@ extern const uint8_t WPC_CHAIN_ROOT_DIGEST_3[];
 typedef struct wpc_slot_info_s
 {
 #if !WPC_STRICT_SLOT_INDEX_EN
-    uint8_t               id;
+    uint8_t id;
 #endif
     uint16_t              handle;
     const uint8_t*        root;
@@ -78,9 +78,9 @@ typedef struct wpc_slot_info_s
 } wpc_slot_info_t;
 
 #if !WPC_STRICT_SLOT_INDEX_EN
-#define WPC_INFO(n)                {n, WPC_CHAIN_DIGEST_HANDLE_##n, WPC_CHAIN_ROOT_DIGEST_##n, &WPC_CHAIN_CERT_DEF_##n }
+#define WPC_INFO(n)                { n, WPC_CHAIN_DIGEST_HANDLE_ ## n, WPC_CHAIN_ROOT_DIGEST_ ## n, &WPC_CHAIN_CERT_DEF_ ## n }
 #else
-#define WPC_INFO(n)                {WPC_CHAIN_DIGEST_HANDLE_##n, WPC_CHAIN_ROOT_DIGEST_##n, &WPC_CHAIN_CERT_DEF_##n }
+#define WPC_INFO(n)                { WPC_CHAIN_DIGEST_HANDLE_ ## n, WPC_CHAIN_ROOT_DIGEST_ ## n, &WPC_CHAIN_CERT_DEF_ ## n }
 #endif
 
 static const wpc_slot_info_t wpc_slot_info[] = {
@@ -124,7 +124,7 @@ ATCA_STATUS wpccert_get_slot_info(
     uint16_t *             handle, /**< [out] Digest handle */
     const atcacert_def_t** def,    /**< [out] Chain definition (device) */
     uint8_t                slot    /**< [in] Chain slot number */
-)
+    )
 {
 #if WPC_STRICT_SLOT_INDEX_EN
     ATCA_CHECK_INVALID_MSG(!(slot < wpc_slot_info_count), ATCA_BAD_PARAM, "Index out of range");
@@ -207,8 +207,8 @@ ATCA_STATUS wpccert_read_cert(
     memcpy(cert, cert_def->cert_template, *cert_size);
 
     // set comp_cert
-    if (ATCA_SUCCESS != (status = atcab_read_bytes_zone_ext(device, comp_cert_loc.zone, comp_cert_loc.slot, 
-                                                        comp_cert_loc.offset, buffer, comp_cert_loc.count)))
+    if (ATCA_SUCCESS != (status = atcab_read_bytes_zone_ext(device, comp_cert_loc.zone, comp_cert_loc.slot,
+                                                            comp_cert_loc.offset, buffer, comp_cert_loc.count)))
     {
         status = ATCA_TRACE(status, "read comp cert failed");
         return status;
@@ -223,7 +223,7 @@ ATCA_STATUS wpccert_read_cert(
 
     memcpy(enc_dates, &buffer[64], 3);
     if (ATCA_SUCCESS != (status = atcacert_date_dec_compcert(enc_dates, cert_def->expire_date_format,
-                                                            &issue_date, &expire_date)))
+                                                             &issue_date, &expire_date)))
     {
         status = ATCA_TRACE(status, "atcacert_date_dec_compcert failed");
         return status;
@@ -261,9 +261,9 @@ ATCA_STATUS wpccert_read_cert(
     for (uint8_t i = 0; i < cert_def->cert_elements_count; i++)
     {
         if (ATCA_SUCCESS != (status = atcab_read_bytes_zone_ext(device, cert_def->cert_elements[i].device_loc.zone,
-                                                            cert_def->cert_elements[i].device_loc.slot,
-                                                            cert_def->cert_elements[i].device_loc.offset, 
-                                                            buffer, cert_def->cert_elements[i].device_loc.count)))
+                                                                cert_def->cert_elements[i].device_loc.slot,
+                                                                cert_def->cert_elements[i].device_loc.offset,
+                                                                buffer, cert_def->cert_elements[i].device_loc.count)))
         {
             status = ATCA_TRACE(status, "read cert elements failed");
             return status;
@@ -368,10 +368,10 @@ ATCA_STATUS wpccert_write_cert(ATCADevice device, const atcacert_def_t* cert_def
     temp_buf[71] = 0;
 
     if (ATCA_SUCCESS != (status = atcab_write_bytes_zone_ext(device,
-                                                            comp_cert_loc.zone,
-                                                            comp_cert_loc.slot,
-                                                            comp_cert_loc.offset,
-                                                            temp_buf, comp_cert_loc.count)))
+                                                             comp_cert_loc.zone,
+                                                             comp_cert_loc.slot,
+                                                             comp_cert_loc.offset,
+                                                             temp_buf, comp_cert_loc.count)))
     {
         status = ATCA_TRACE(status, "compcert write failed");
         return status;
@@ -382,10 +382,10 @@ ATCA_STATUS wpccert_write_cert(ATCADevice device, const atcacert_def_t* cert_def
     {
         memcpy(temp_buf, &cert[cert_def->std_cert_elements[STDCERT_CERT_SN].offset], cert_sn_loc.count);
         if (ATCA_SUCCESS != (status = atcab_write_bytes_zone_ext(device,
-                                                                cert_sn_loc.zone,
-                                                                cert_sn_loc.slot,
-                                                                cert_sn_loc.offset,
-                                                                temp_buf, cert_sn_loc.count)))
+                                                                 cert_sn_loc.zone,
+                                                                 cert_sn_loc.slot,
+                                                                 cert_sn_loc.offset,
+                                                                 temp_buf, cert_sn_loc.count)))
         {
             status = ATCA_TRACE(status, "write cert serial number failed");
             return status;
@@ -412,10 +412,10 @@ ATCA_STATUS wpccert_write_cert(ATCADevice device, const atcacert_def_t* cert_def
         }
 
         if (ATCA_SUCCESS != (status = atcab_write_bytes_zone_ext(device,
-                                                                public_key_loc.zone,
-                                                                public_key_loc.slot,
-                                                                public_key_loc.offset,
-                                                                temp_buf, public_key_loc.count)))
+                                                                 public_key_loc.zone,
+                                                                 public_key_loc.slot,
+                                                                 public_key_loc.offset,
+                                                                 temp_buf, public_key_loc.count)))
         {
             status = ATCA_TRACE(status, "write subj public key failed");
             return status;
@@ -428,10 +428,10 @@ ATCA_STATUS wpccert_write_cert(ATCADevice device, const atcacert_def_t* cert_def
         memcpy(temp_buf, &cert[cert_def->cert_elements[i].cert_loc.offset], cert_def->cert_elements[i].cert_loc.count);
         comp_cert_loc = cert_def->cert_elements[i].device_loc;
         if (ATCA_SUCCESS != (status = atcab_write_bytes_zone_ext(device,
-                                                                comp_cert_loc.zone,
-                                                                comp_cert_loc.slot,
-                                                                comp_cert_loc.offset,
-                                                                temp_buf, comp_cert_loc.count)))
+                                                                 comp_cert_loc.zone,
+                                                                 comp_cert_loc.slot,
+                                                                 comp_cert_loc.offset,
+                                                                 temp_buf, comp_cert_loc.count)))
         {
             status = ATCA_TRACE(status, "write cert elements failed");
             return status;
@@ -446,6 +446,7 @@ ATCA_STATUS wpccert_read_pdu_cert(ATCADevice device, uint8_t* cert, size_t* cert
 {
     ATCA_STATUS status;
     const atcacert_def_t* chain;
+
     if (ATCA_SUCCESS == (status = wpccert_get_slot_info(NULL, &chain, slot)))
     {
         status = wpccert_read_cert(device, chain, cert, cert_size);
@@ -457,6 +458,7 @@ ATCA_STATUS wpccert_read_mfg_cert(ATCADevice device, uint8_t* cert, size_t* cert
 {
     ATCA_STATUS status;
     const atcacert_def_t* chain;
+
     if (ATCA_SUCCESS == (status = wpccert_get_slot_info(NULL, &chain, slot)))
     {
         status = wpccert_read_cert(device, chain->ca_cert_def, cert, cert_size);

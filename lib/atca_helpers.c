@@ -40,9 +40,24 @@
     1       -   63 Character
     2       -   Pad Character (none if 0)
     3       -   Maximum line length (no limit if 0) */
-uint8_t atcab_b64rules_default[4]   = { '+', '/', '=', 64 };
-uint8_t atcab_b64rules_mime[4]      = { '+', '/', '=', 76 };
-uint8_t atcab_b64rules_urlsafe[4]   = { '-', '_', 0, 0 };
+static const uint8_t atcab_b64rules_default_[4]   = { (uint8_t)'+',     (uint8_t)'/',   (uint8_t)'=',   64u };
+static const uint8_t atcab_b64rules_mime_[4]      = { (uint8_t)'+',     (uint8_t)'/',   (uint8_t)'=',   76u };
+static const uint8_t atcab_b64rules_urlsafe_[4]   = { (uint8_t)'-',     (uint8_t)'_',   0u,             0u };
+
+const uint8_t* atcab_b64rules_default(void)
+{
+    return atcab_b64rules_default_;
+}
+
+const uint8_t* atcab_b64rules_mime(void)
+{
+    return atcab_b64rules_mime_;
+}
+
+const uint8_t* atcab_b64rules_urlsafe(void)
+{
+    return atcab_b64rules_urlsafe_;
+}
 
 
 /** \brief Convert a binary buffer to a hex string for easy reading.
@@ -60,24 +75,26 @@ ATCA_STATUS atcab_bin2hex(const uint8_t* bin, size_t bin_size, char* hex, size_t
 
 static void uint8_to_hex(uint8_t num, char* hex_str)
 {
-    uint8_t nibble = (num >> 4) & 0x0F;
+    uint8_t nibble = (num >> 4u) & 0x0Fu;
 
-    if (nibble < 10)
+    if (nibble < 10u)
     {
-        *(hex_str++) = '0' + nibble;
+        /* coverity[misra_c_2012_rule_10_3_violation:FALSE] */
+        *(hex_str++) = (int8_t)'0' + (int8_t)nibble;
     }
     else
     {
-        *(hex_str++) = 'A' + (nibble - 10);
+        /* coverity[misra_c_2012_rule_10_3_violation:FALSE] */
+        *(hex_str++) = (int8_t)'A' + ((int8_t)nibble - 10);
     }
-    nibble = num & 0x0F;
-    if (nibble < 10)
+    nibble = num & 0x0Fu;
+    if (nibble < 10u)
     {
-        *(hex_str++) = '0' + nibble;
+        *(hex_str++) = (int8_t)'0' + (int8_t)nibble;
     }
     else
     {
-        *(hex_str++) = 'A' + (nibble - 10);
+        *(hex_str++) = (int8_t)'A' + ((int8_t)nibble - 10);
     }
 }
 
@@ -85,11 +102,12 @@ static void hex_to_lowercase(char *buffer, size_t length)
 {
     size_t index;
 
-    if ((buffer != NULL) && (length > 0))
+    if ((buffer != NULL) && (length > 0u))
     {
         for (index = 0; index < length; index++)
         {
-            buffer[index] = (uint8_t)(tolower(buffer[index]));
+            /* coverity[cert_int31_c_violation:FALSE] tolower may only return valid ascii values which by definition fit within a char type */
+            buffer[index] = lib_tolower(buffer[index]);
         }
     }
 }
@@ -99,11 +117,11 @@ static void hex_to_uppercase(char *buffer, size_t length)
 {
     size_t index;
 
-    if ((buffer != NULL) && (length > 0))
+    if ((buffer != NULL) && (length > 0u))
     {
-        for (index = 0; index < length; index++)
+        for (index = 0u; index < length; index++)
         {
-            buffer[index] = (uint8_t)(toupper(buffer[index]));
+            buffer[index] = lib_toupper(buffer[index]);
         }
     }
 }
@@ -131,11 +149,12 @@ ATCA_STATUS atcab_reversal(const uint8_t* bin, size_t bin_size, uint8_t* dest, s
         return ATCA_SMALL_BUFFER;
     }
 
-    last = bin_size - 1;
+    last = bin_size - 1u;
 
-    for (i = 0; i < bin_size; i++)
+    for (i = 0u; i < bin_size; i++)
     {
         dest[i] = bin[last];
+        /* coverity[cert_int30_c_violation] last wrapping is inconsequential for this algorithm */
         last--;
     }
     *dest_size = bin_size;
@@ -179,37 +198,37 @@ ATCA_STATUS atcab_bin2hex_(const uint8_t* bin, size_t bin_size, char* hex, size_
         {
             break;
         }
-        if (i != 0)
+        if (i != 0u)
         {
-            if (is_pretty && (i % 16 == 0))
+            if (is_pretty && (i % 16u == 0u))
             {
-                if (cur_hex_size + 2 > max_hex_size)
+                if (cur_hex_size + 2u > max_hex_size)
                 {
                     return ATCA_SMALL_BUFFER;
                 }
-                memcpy(&hex[cur_hex_size], "\r\n", 2);
-                cur_hex_size += 2;
+                hex[cur_hex_size++] = (char)'\r';
+                hex[cur_hex_size++] = (char)'\n';
             }
             else
             {
                 if (is_space)
                 {
-                    if (cur_hex_size + 1 > max_hex_size)
+                    if (cur_hex_size + 1u > max_hex_size)
                     {
                         return ATCA_SMALL_BUFFER;
                     }
-                    hex[cur_hex_size] = ' ';
-                    cur_hex_size += 1;
+                    hex[cur_hex_size] = (char)' ';
+                    cur_hex_size += 1u;
                 }
             }
         }
 
-        if (cur_hex_size + 2 > max_hex_size)
+        if (cur_hex_size + 2u > max_hex_size)
         {
             return ATCA_SMALL_BUFFER;
         }
         uint8_to_hex(bin[i], &hex[cur_hex_size]);
-        cur_hex_size += 2;
+        cur_hex_size += 2u;
     }
 
     if (is_upper)
@@ -226,27 +245,27 @@ ATCA_STATUS atcab_bin2hex_(const uint8_t* bin, size_t bin_size, char* hex, size_
     {
         // Since we have room add NULL as a convenience, but don't add to the
         // output size.
-        hex[cur_hex_size] = 0;
+        hex[cur_hex_size] = (char)'\0';
     }
 
     return ATCA_SUCCESS;
 }
 
-inline static uint8_t hex_digit_to_num(char c)
+inline static uint8_t hex_digit_to_num(uint8_t c)
 {
-    if (c >= '0' && c <= '9')
+    if (c >= (uint8_t)'0' && c <= (uint8_t)'9')
     {
-        return (uint8_t)(c - '0');
+        return c - (uint8_t)'0';
     }
-    if (c >= 'a' && c <= 'f')
+    if (c >= (uint8_t)'a' && c <= (uint8_t)'f')
     {
-        return (uint8_t)(c - 'a') + 10;
+        return (c - (uint8_t)'a') + 10u;
     }
-    if (c >= 'A' && c <= 'F')
+    if (c >= (uint8_t)'A' && c <= (uint8_t)'F')
     {
-        return (uint8_t)(c - 'A') + 10;
+        return (c - (uint8_t)'A') + 10u;
     }
-    return 16;
+    return 16u;
 }
 
 
@@ -260,9 +279,9 @@ ATCA_STATUS atcab_hex2bin_(const char* hex, size_t hex_size, uint8_t* bin, size_
     {
         if (!isHexDigit(hex[hex_index]))
         {
-            if (((hex_index + 1) % 3 == 0) && is_space)
+            if (((hex_index + 1u) % 3u == 0u) && is_space)
             {
-                if (hex[hex_index] != ' ')
+                if ((uint8_t)hex[hex_index] != (uint8_t)' ')
                 {
                     return ATCA_BAD_PARAM;
                 }
@@ -278,12 +297,13 @@ ATCA_STATUS atcab_hex2bin_(const char* hex, size_t hex_size, uint8_t* bin, size_
         if (is_upper_nibble)
         {
             // Upper nibble
-            bin[bin_index] = (uint8_t)(hex_digit_to_num(hex[hex_index]) << 4);
+            bin[bin_index] = (uint8_t)(hex_digit_to_num((uint8_t)hex[hex_index]) << 4);
         }
         else
         {
             // Lower nibble
-            bin[bin_index] += hex_digit_to_num(hex[hex_index]);
+            /* coverity[cert_int30_c_violation:FALSE] bin[bin_index] is known to be <= 240 and hex_digit_to_num may only return <=15 */
+            bin[bin_index] += hex_digit_to_num((uint8_t)hex[hex_index]);
             bin_index++;
         }
         is_upper_nibble = !is_upper_nibble;
@@ -299,16 +319,17 @@ ATCA_STATUS atcab_hex2bin_(const char* hex, size_t hex_size, uint8_t* bin, size_
 }
 
 /** \brief Function that converts a hex string to binary buffer
- *  \param[in]    hex       Input buffer to convert
- *  \param[in]    hex_size  Length of buffer to convert
- *  \param[out]   bin       Buffer that receives binary
- *  \param[in,out] bin_size  As input, the size of the bin buffer.
- *                          As output, the size of the bin data.
+ *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atcab_hex2bin(const char* hex, size_t hex_size, uint8_t* bin, size_t* bin_size)
+ATCA_STATUS atcab_hex2bin(
+    const char* ascii_hex,      /**< [in] Input buffer to convert*/
+    size_t      ascii_hex_len,  /**< [in] Length of buffer to convert */
+    uint8_t*    binary,         /**< [out] Buffer that receives binary */
+    size_t*     bin_len         /**< [in,out] As input, the size of the bin buffer. As output, the size of the bin data. */
+    )
 {
-    return atcab_hex2bin_(hex, hex_size, bin, bin_size, false);
+    return atcab_hex2bin_(ascii_hex, ascii_hex_len, binary, bin_len, false);
 }
 
 /**
@@ -318,7 +339,7 @@ ATCA_STATUS atcab_hex2bin(const char* hex, size_t hex_size, uint8_t* bin, size_t
  */
 bool isDigit(char c)
 {
-    return (c >= '0') && (c <= '9');
+    return ((int8_t)c >= (int8_t)'0') && ((int8_t)c <= (int8_t)'9');
 }
 
 /**
@@ -328,7 +349,7 @@ bool isDigit(char c)
  */
 bool isBlankSpace(char c)
 {
-    return (c == '\n') || (c == '\r') || (c == '\t') || (c == ' ');
+    return ((int8_t)c == (int8_t)'\n') || ((int8_t)c == (int8_t)'\r') || ((int8_t)c == (int8_t)'\t') || ((int8_t)c == (int8_t)' ');
 }
 
 /**
@@ -338,7 +359,7 @@ bool isBlankSpace(char c)
  */
 bool isAlpha(char c)
 {
-    return ((c >= 'A') && (c <= 'Z')) || ((c >= 'a') && (c <= 'z'));
+    return (((int8_t)c >= (int8_t)'A') && ((int8_t)c <= (int8_t)'Z')) || (((int8_t)c >= (int8_t)'a') && ((int8_t)c <= (int8_t)'z'));
 }
 
 /**
@@ -348,7 +369,7 @@ bool isAlpha(char c)
  */
 bool isHexAlpha(char c)
 {
-    return ((c >= 'A') && (c <= 'F')) || ((c >= 'a') && (c <= 'f'));
+    return (((int8_t)c >= (int8_t)'A') && ((int8_t)c <= (int8_t)'F')) || (((int8_t)c >= (int8_t)'a') && ((int8_t)c <= (int8_t)'f'));
 }
 
 /**
@@ -480,8 +501,8 @@ ATCA_STATUS atcab_printbin(uint8_t* binary, size_t bin_len, bool add_space)
 ///////////////////////////////////////////////////////////////////////////////
 // Base 64 Encode/Decode
 
-#define B64_IS_EQUAL   (uint8_t)64
-#define B64_IS_INVALID (uint8_t)0xFF
+#define B64_IS_EQUAL        (64u)
+#define B64_IS_INVALID      (-1)
 
 /**
  * \brief Returns true if this character is a valid base 64 character or if this is space (A character can be
@@ -503,7 +524,7 @@ bool isBase64(char c, const uint8_t * rules)
  */
 bool isBase64Digit(char c, const uint8_t * rules)
 {
-    return isDigit(c) || isAlpha(c) || c == rules[0] || c == rules[1] || c == rules[2];
+    return isDigit(c) || isAlpha(c) || (uint8_t)c == rules[0] || (uint8_t)c == rules[1] || (uint8_t)c == rules[2];
 }
 
 /**
@@ -512,33 +533,32 @@ bool isBase64Digit(char c, const uint8_t * rules)
  * \param[in] rules  base64 ruleset to use
  * \return the base 64 index of the given character
  */
-uint8_t base64Index(char c, const uint8_t * rules)
+static uint8_t base64Index(char c, const uint8_t * rules)
 {
-    if ((c >= 'A') && (c <= 'Z'))
+    if (((int8_t)c >= (int8_t)'A') && ((int8_t)c <= (int8_t)'Z'))
     {
-        return (uint8_t)(c - 'A');
+        return (uint8_t)c - (uint8_t)'A';
     }
-    if ((c >= 'a') && (c <= 'z'))
+    else if (((int8_t)c >= (int8_t)'a') && ((int8_t)c <= (int8_t)'z'))
     {
-        return (uint8_t)(26 + c - 'a');
+        return 26u + (uint8_t)c - (uint8_t)'a';
     }
-    if ((c >= '0') && (c <= '9'))
+    else if (((int8_t)c >= (int8_t)'0') && ((int8_t)c <= (int8_t)'9'))
     {
-        return (uint8_t)(52 + c - '0');
+        return 52u + (uint8_t)c - (uint8_t)'0';
     }
-    if (c == rules[0])
+    else if ((uint8_t)c == rules[0])
     {
-        return (uint8_t)62;
+        return 62u;
     }
-    if (c == rules[1])
+    else if ((uint8_t)c == rules[1])
     {
-        return (uint8_t)63;
+        return 63u;
     }
-    if (c == rules[2])
+    else
     {
         return B64_IS_EQUAL;
     }
-    return B64_IS_INVALID;
 }
 
 /**
@@ -547,34 +567,39 @@ uint8_t base64Index(char c, const uint8_t * rules)
  * \param[in] rules  base64 ruleset to use
  * \return the base 64 character of the given index
  */
-char base64Char(uint8_t id, const uint8_t * rules)
+static char base64Char(uint8_t id, const uint8_t * rules)
 {
-    if (id < 26)
+    int8_t rv;
+
+    if (id < 26u)
     {
-        return (char)('A' + id);
+        rv = ((int8_t)'A' + (int8_t)id);
     }
-    if ((id >= 26) && (id < 52))
+    else if (id < 52u)
     {
-        return (char)('a' + id - 26);
+        rv = ((int8_t)'a' + (int8_t)id - 26);
     }
-    if ((id >= 52) && (id < 62))
+    else if (id < 62u)
     {
-        return (char)('0' + id - 52);
+        rv = ((int8_t)'0' + (int8_t)id - 52);
     }
-    if (id == 62)
+    else if (id == 62u)
     {
-        return rules[0];
+        /* coverity[cert_int31_c_violation] Rule is expected to be a valid character */
+        rv = (int8_t)rules[0];
     }
-    if (id == 63)
+    else if (id == 63u)
     {
-        return rules[1];
+        /* coverity[cert_int31_c_violation] Rule is expected to be a valid character */
+        rv = (int8_t)rules[1];
+    }
+    else
+    {
+        /* coverity[cert_int31_c_violation] Rule is expected to be a valid character */
+        rv = (int8_t)rules[2];
     }
 
-    if (id == B64_IS_EQUAL)
-    {
-        return rules[2];
-    }
-    return B64_IS_INVALID;
+    return (char)rv;
 }
 
 static ATCA_STATUS atcab_base64decode_block(const uint8_t id[4], uint8_t* data, size_t* data_size, size_t data_max_size)
@@ -606,6 +631,7 @@ static ATCA_STATUS atcab_base64decode_block(const uint8_t id[4], uint8_t* data, 
         {
             new_bytes = 3;
         }
+        /* coverity[cert_int30_c_violation:FALSE] data_size range is computed by the caller so it may never exceed the type limits */
         if ((*data_size) + new_bytes > data_max_size)
         {
             status = ATCA_TRACE(ATCA_BAD_PARAM, "decoded buffer too small");
@@ -613,17 +639,17 @@ static ATCA_STATUS atcab_base64decode_block(const uint8_t id[4], uint8_t* data, 
         }
 
         // Decode into output buffer
-        data[(*data_size)++] = (uint8_t)((id[0] << 2) | (id[1] >> 4));
+        data[(*data_size)++] = ((uint8_t)(id[0] << 2u) | (uint8_t)(id[1] >> 4u));
         if (id[2] == B64_IS_EQUAL)
         {
             break;
         }
-        data[(*data_size)++] = (uint8_t)((id[1] << 4) | (id[2] >> 2));
+        data[(*data_size)++] = ((uint8_t)(id[1] << 4u) | (uint8_t)(id[2] >> 2u));
         if (id[3] == B64_IS_EQUAL)
         {
             break;
         }
-        data[(*data_size)++] = (uint8_t)((id[2] << 6) | id[3]);
+        data[(*data_size)++] = ((uint8_t)(id[2] << 6u) | (uint8_t)id[3]);
     }
     while (false);
 
@@ -693,11 +719,13 @@ ATCA_STATUS atcab_base64decode_(const char* encoded, size_t encoded_size, uint8_
                 is_done = (id[3] == B64_IS_EQUAL);
             }
         }
+
         if (status != ATCA_SUCCESS)
         {
             break;
         }
-        if (id_index)
+
+        if (0 < id_index)
         {
             if (id_index < 2)
             {
@@ -736,58 +764,70 @@ ATCA_STATUS atcab_base64encode_(
     do
     {
         // Check the input parameters
-        if (encoded == NULL || data == NULL || encoded_size == NULL || !rules)
+        if (encoded == NULL || data == NULL || encoded_size == NULL || rules == NULL)
         {
             status = ATCA_TRACE(ATCA_BAD_PARAM, "Null input parameter");
             break;
         }
 
         // Calculate output length for buffer size check
-        b64_len = (data_size / 3 + (data_size % 3 != 0)) * 4; // ceil(size/3)*4
-        if (rules[3])
+        b64_len = (data_size / 3u + ((data_size % 3u != 0u) ? 1u : 0u)) * 4u; // ceil(size/3)*4
+        if (0u < rules[3])
         {
             // We add newlines to the output
-            if (rules[3] % 4 != 0)
+            if (rules[3] % 4u != 0u)
             {
                 status = ATCA_TRACE(ATCA_BAD_PARAM, "newline rules[3] must be multiple of 4");
                 break;
             }
-            b64_len += (b64_len / rules[3]) * 2;
+            else
+            {
+                size_t nl_char_count = (b64_len / rules[3]) * 2u;
+                if ((SIZE_MAX - b64_len) < nl_char_count)
+                {
+                    status = ATCA_TRACE(ATCA_BAD_PARAM, "Input data_size is too great to be encoded using the provided rules");
+                    break;
+                }
+                else
+                {
+                    b64_len += nl_char_count;
+                }
+            }
         }
-        b64_len += 1; // terminating null
+        b64_len += 1u; // terminating null
         if (*encoded_size < b64_len)
         {
             status = ATCA_TRACE(ATCA_SMALL_BUFFER, "Length of encoded buffer too small");
             break;
         }
         // Initialize the return length to 0
-        *encoded_size = 0;
+        *encoded_size = 0u;
 
         // Loop through the byte array by 3 then map to 4 base 64 encoded characters
-        for (data_idx = 0; data_idx < data_size; data_idx += 3)
+        for (data_idx = 0u; data_idx < data_size; data_idx += 3u)
         {
             // Add \r\n every n bytes if specified
-            if (rules[3] && data_idx > 0 && (b64_idx - offset) % rules[3] == 0)
+            if ((0u < rules[3]) && (data_idx > 0u) && ((b64_idx - offset) % rules[3] == 0u))
             {
                 // as soon as we do this, we introduce an offset
-                encoded[b64_idx++] = '\r';
-                encoded[b64_idx++] = '\n';
-                offset += 2;
+                encoded[b64_idx++] = (char)'\r';
+                encoded[b64_idx++] = (char)'\n';
+                offset += 2u;
             }
 
-            id = (data[data_idx] & 0xFC) >> 2;
+            id = (data[data_idx] & 0xFCu) >> 2u;
             encoded[b64_idx++] = base64Char(id, rules);
-            id = (uint8_t)((data[data_idx] & 0x03) << 4);
-            if (data_idx + 1 < data_size)
+            id = (uint8_t)((data[data_idx] & 0x03u) << 4u);
+            if (data_idx + 1u < data_size)
             {
-                id |= (data[data_idx + 1] & 0xF0) >> 4;
+                id |= (data[data_idx + 1u] & 0xF0u) >> 4u;
                 encoded[b64_idx++] = base64Char(id, rules);
-                id = (uint8_t)((data[data_idx + 1] & 0x0F) << 2);
-                if (data_idx + 2 < data_size)
+                id = (uint8_t)((data[data_idx + 1u] & 0x0Fu) << 2u);
+                if (data_idx + 2u < data_size)
                 {
-                    id |= (data[data_idx + 2] & 0xC0) >> 6;
+                    id |= (data[data_idx + 2u] & 0xC0u) >> 6u;
                     encoded[b64_idx++] = base64Char(id, rules);
-                    id = data[data_idx + 2] & 0x3F;
+                    id = data[data_idx + 2u] & 0x3Fu;
                     encoded[b64_idx++] = base64Char(id, rules);
                 }
                 else
@@ -805,16 +845,16 @@ ATCA_STATUS atcab_base64encode_(
         }
 
         // Strip any trailing nulls
-        while (b64_idx > 1 && encoded[b64_idx - 1] == 0)
+        while (b64_idx > 1u && encoded[b64_idx - 1u] == (char)('\0'))
         {
             b64_idx--;
         }
 
         // Null terminate end
-        encoded[b64_idx++] = 0;
+        encoded[b64_idx++] = (char)'\0';
 
         // Set the final encoded length (excluding terminating null)
-        *encoded_size = b64_idx - 1;
+        *encoded_size = b64_idx - 1u;
     }
     while (false);
     return status;
@@ -835,7 +875,7 @@ ATCA_STATUS atcab_base64encode_(
  */
 ATCA_STATUS atcab_base64encode(const uint8_t* byte_array, size_t array_len, char* encoded, size_t* encoded_len)
 {
-    return atcab_base64encode_(byte_array, array_len, encoded, encoded_len, atcab_b64rules_default);
+    return atcab_base64encode_(byte_array, array_len, encoded, encoded_len, atcab_b64rules_default_);
 }
 
 /**
@@ -851,7 +891,22 @@ ATCA_STATUS atcab_base64encode(const uint8_t* byte_array, size_t array_len, char
  */
 ATCA_STATUS atcab_base64decode(const char* encoded, size_t encoded_len, uint8_t* byte_array, size_t* array_len)
 {
-    return atcab_base64decode_(encoded, encoded_len, byte_array, array_len, atcab_b64rules_default);
+    return atcab_base64decode_(encoded, encoded_len, byte_array, array_len, atcab_b64rules_default_);
+}
+
+/** \brief Helper function to calculate the number of bytes between two pointers.
+ */
+size_t atcab_pointer_delta(const void* start, const void* end)
+{
+    if (start < end)
+    {
+        /* coverity[misra_c_2012_rule_10_8_violation] */
+        return (size_t)((const uint8_t*)end - (const uint8_t*)start);
+    }
+    else
+    {
+        return (size_t)((const uint8_t*)start - (const uint8_t*)end);
+    }
 }
 
 #if !defined(ATCA_PLATFORM_MEMSET_S) && !defined(memset_s)
@@ -864,17 +919,18 @@ int atcab_memset_s(void* dest, size_t destsz, int ch, size_t count)
     {
         return -1;
     }
-    if (destsz > SIZE_MAX)
+    if (count > destsz)
     {
         return -1;
     }
-    if (count > destsz)
+    if (0 > ch || (int)UINT8_MAX < ch)
     {
         return -1;
     }
 
     volatile unsigned char* p = dest;
-    while (destsz-- && count--)
+    /* coverity[misra_c_2012_rule_14_2_violation] Tracking parallel counters to mimic the defined API */
+    for (; (0u < destsz) && (0u < count); destsz--, count--)
     {
         *p++ = (uint8_t)ch;
     }
@@ -883,32 +939,61 @@ int atcab_memset_s(void* dest, size_t destsz, int ch, size_t count)
 }
 #endif
 
+/** \brief Converts a character to uppercase */
+char lib_toupper(char c)
+{
+    if (((int8_t)'a' <= (int8_t)c) && ((int8_t)'z' >= (int8_t)c))
+    {
+        /* coverity[misra_c_2012_rule_10_3_violation:FALSE] */
+        return (int8_t)c - (int8_t)'a' + (int8_t)'A';
+    }
+    else
+    {
+        return c;
+    }
+}
+
+/** \brief Converts a character to lowercase */
+char lib_tolower(char c)
+{
+    if (((int8_t)'A' <= (int8_t)c) && ((int8_t)'Z' >= (int8_t)c))
+    {
+        /* coverity[misra_c_2012_rule_10_3_violation:FALSE] */
+        return (int8_t)c - (int8_t)'A' + (int8_t)'a';
+    }
+    else
+    {
+        return c;
+    }
+}
+
+
 #if !defined(ATCA_PLATFORM_STRCASESTR) && !defined(strcasecstr)
 /**
  * \brief Search for a substring in a case insenstive format
  */
-char * lib_strcasestr(const char *haystack, const char *needle)
+const char * lib_strcasestr(const char *haystack, const char *needle)
 {
     const char * h = haystack;
     const char * n = needle;
     const char * m = NULL;
 
-    if (!h || !n)
+    if (NULL == h || NULL == n)
     {
-        return (char*)h;
+        return h;
     }
 
-    while(*h && *n)
+    while (((int8_t)'\0' != (int8_t)*h) && ((int8_t)'\0' != (int8_t)*n))
     {
-        if (*h != *n && *h != toupper(*n))
+        if ((*h != *n) && (*h != lib_toupper(*n)))
         {
-            if(m)
+            if (NULL != m)
             {
                 /* Restart Matching */
                 m = NULL;
                 n = needle;
             }
-            else 
+            else
             {
                 /* Continue stepping through the haystack */
                 h++;
@@ -916,7 +1001,7 @@ char * lib_strcasestr(const char *haystack, const char *needle)
         }
         else
         {
-            if (!m)
+            if (NULL == m)
             {
                 /* Save the start of the match */
                 m = h;
@@ -927,6 +1012,6 @@ char * lib_strcasestr(const char *haystack, const char *needle)
     }
 
     /* if we reached the end of the needle then it was found */
-    return (char*)((!*n) ? m : NULL);
+    return ((int8_t)'\0' == (int8_t)*n) ? m : NULL;
 }
 #endif

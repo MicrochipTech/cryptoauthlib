@@ -27,6 +27,7 @@
 
 #include "test_crypto.h"
 #include "crypto/atca_crypto_sw.h"
+#include "vectors/vector_utils.h"
 
 #ifndef TEST_ATCAC_SHA1_EN
 #define TEST_ATCAC_SHA1_EN      ATCAC_SHA1_EN
@@ -52,6 +53,11 @@ TEST_SETUP(atcac_sha)
 
 TEST_TEAR_DOWN(atcac_sha)
 {
+#if defined(_WIN32) || defined(__linux__)
+    /* Make sure vectors get closed out */
+    close_vectors_file();
+#endif
+
     UnityMalloc_EndTest();
 }
 
@@ -96,158 +102,34 @@ TEST(atcac_sha, sha1_nist3)
     };
     uint8_t digest[ATCA_SHA1_DIGEST_SIZE];
     int ret;
-    atcac_sha1_ctx ctx;
+    struct atcac_sha1_ctx * ctx;
     uint32_t i;
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    ctx = atcac_sha1_ctx_new();
+    TEST_ASSERT_NOT_NULL(ctx);
+#else
+    atcac_sha1_ctx_t sha1_ctx;
+    ctx = &sha1_ctx;
+#endif
 
     TEST_ASSERT_EQUAL(ATCA_SHA1_DIGEST_SIZE, sizeof(digest_ref));
 
-    ret = atcac_sw_sha1_init(&ctx);
+    ret = atcac_sw_sha1_init(ctx);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     for (i = 0; i < 1000000; i++)
     {
-        ret = atcac_sw_sha1_update(&ctx, nist_hash_msg3, 1);
+        ret = atcac_sw_sha1_update(ctx, nist_hash_msg3, 1);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     }
-    ret = atcac_sw_sha1_finish(&ctx, digest);
+    ret = atcac_sw_sha1_finish(ctx, digest);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(digest_ref, digest, sizeof(digest_ref));
-}
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    atcac_sha1_ctx_free(ctx);
 #endif
-
-#if defined(_WIN32) || defined(__linux__)
-static void hex_to_uint8(const char hex_str[2], uint8_t* num)
-{
-    *num = 0;
-
-    if (hex_str[0] >= '0' && hex_str[0] <= '9')
-    {
-        *num += (hex_str[0] - '0') << 4;
-    }
-    else if (hex_str[0] >= 'A' && hex_str[0] <= 'F')
-    {
-        *num += (hex_str[0] - 'A' + 10) << 4;
-    }
-    else if (hex_str[0] >= 'a' && hex_str[0] <= 'f')
-    {
-        *num += (hex_str[0] - 'a' + 10) << 4;
-    }
-    else
-    {
-        TEST_FAIL_MESSAGE("Not a hex digit.");
-    }
-
-    if (hex_str[1] >= '0' && hex_str[1] <= '9')
-    {
-        *num += (hex_str[1] - '0');
-    }
-    else if (hex_str[1] >= 'A' && hex_str[1] <= 'F')
-    {
-        *num += (hex_str[1] - 'A' + 10);
-    }
-    else if (hex_str[1] >= 'a' && hex_str[1] <= 'f')
-    {
-        *num += (hex_str[1] - 'a' + 10);
-    }
-    else
-    {
-        TEST_FAIL_MESSAGE("Not a hex digit.");
-    }
 }
-
-static void hex_to_data(const char* hex_str, uint8_t* data, size_t data_size)
-{
-    size_t i = 0;
-
-    TEST_ASSERT_EQUAL_MESSAGE(data_size * 2, strlen(hex_str) - 1, "Hex string unexpected length.");
-
-    for (i = 0; i < data_size; i++)
-    {
-        hex_to_uint8(&hex_str[i * 2], &data[i]);
-    }
-}
-
-static int read_rsp_hex_value(FILE* file, const char* name, uint8_t* data, size_t data_size)
-{
-    char line[16384];
-    char* str = NULL;
-    size_t name_size = strlen(name);
-
-    do
-    {
-        str = fgets(line, sizeof(line), file);
-        if (str == NULL)
-        {
-            continue;
-        }
-        else
-        {
-            size_t ln = strlen(line);
-            if (ln > 0 && line[ln - 2] == '\r')
-            {
-                line[ln - 1] = 0;
-            }
-        }
-
-        if (memcmp(line, name, name_size) == 0)
-        {
-            str = &line[name_size];
-        }
-        else
-        {
-            str = NULL;
-        }
-    }
-    while (str == NULL && !feof(file));
-    if (str == NULL)
-    {
-        return ATCA_GEN_FAIL;
-    }
-    hex_to_data(str, data, data_size);
-
-    return ATCA_SUCCESS;
-}
-
-static int read_rsp_int_value(FILE* file, const char* name, int* value)
-{
-    char line[2048];
-    char* str = NULL;
-    size_t name_size = strlen(name);
-
-    do
-    {
-        str = fgets(line, sizeof(line), file);
-        if (str == NULL)
-        {
-            continue;
-        }
-        else
-        {
-            size_t ln = strlen(line);
-            if (ln > 0 && line[ln - 2] == '\r')
-            {
-                line[ln - 1] = 0;
-            }
-        }
-
-        if (memcmp(line, name, name_size) == 0)
-        {
-            str = &line[name_size];
-        }
-        else
-        {
-            str = NULL;
-        }
-    }
-    while (str == NULL && !feof(file));
-    if (str == NULL)
-    {
-        return ATCA_GEN_FAIL;
-    }
-    *value = atoi(str);
-
-    return ATCA_SUCCESS;
-}
-
 #endif
 
 #if TEST_ATCAC_SHA1_EN
@@ -270,7 +152,7 @@ static void test_atcac_sw_sha1_nist_simple(const char* filename)
 
     do
     {
-        ret = read_rsp_int_value(rsp_file, "Len = ", &len_bits);
+        ret = read_rsp_int_value(rsp_file, "Len = ", NULL, &len_bits);
         if (ret != ATCA_SUCCESS)
         {
             continue;
@@ -390,21 +272,33 @@ TEST(atcac_sha, sha256_nist3)
     };
     uint8_t digest[ATCA_SHA2_256_DIGEST_SIZE];
     int ret;
-    atcac_sha2_256_ctx ctx;
+    struct atcac_sha2_256_ctx* ctx;
     uint32_t i;
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    ctx = atcac_sha256_ctx_new();
+    TEST_ASSERT_NOT_NULL(ctx);
+#else
+    atcac_sha2_256_ctx_t sha256_ctx;
+    ctx = &sha256_ctx;
+#endif
 
     TEST_ASSERT_EQUAL(ATCA_SHA2_256_DIGEST_SIZE, sizeof(digest_ref));
 
-    ret = atcac_sw_sha2_256_init(&ctx);
+    ret = atcac_sw_sha2_256_init(ctx);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     for (i = 0; i < 1000000; i++)
     {
-        ret = atcac_sw_sha2_256_update(&ctx, nist_hash_msg3, 1);
+        ret = atcac_sw_sha2_256_update(ctx, nist_hash_msg3, 1);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     }
-    ret = atcac_sw_sha2_256_finish(&ctx, digest);
+    ret = atcac_sw_sha2_256_finish(ctx, digest);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(digest_ref, digest, sizeof(digest_ref));
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    atcac_sha256_ctx_free(ctx);
+#endif
 }
 
 static void test_atcac_sw_sha2_256_nist_simple(const char* filename)
@@ -426,7 +320,7 @@ static void test_atcac_sw_sha2_256_nist_simple(const char* filename)
 
     do
     {
-        ret = read_rsp_int_value(rsp_file, "Len = ", &len_bits);
+        ret = read_rsp_int_value(rsp_file, "Len = ", NULL, &len_bits);
         if (ret != ATCA_SUCCESS)
         {
             continue;
@@ -508,6 +402,7 @@ TEST(atcac_sha, sha256_hmac)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t hmac[ATCA_SHA256_DIGEST_SIZE];
+    struct atcac_sha2_256_ctx* sha256_ctx;
     size_t hmac_size;
     uint8_t data_input[] = {
         0x6f, 0xb3, 0xec, 0x66, 0xf9, 0xeb, 0x07, 0x0a,
@@ -533,19 +428,36 @@ TEST(atcac_sha, sha256_hmac)
         0x5d, 0x1b, 0x56, 0x9f, 0xe7, 0x05, 0xb6, 0x00,
         0x06, 0xfe, 0xec, 0x14, 0x5a, 0x0d, 0xb1, 0xe3
     };
-    atcac_hmac_sha256_ctx ctx;
+    struct atcac_hmac_ctx* ctx;
 
-    status = atcac_sha256_hmac_init(&ctx, hmac_key, sizeof(hmac_key));
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    sha256_ctx = atcac_sha256_ctx_new();
+    TEST_ASSERT_NOT_NULL(sha256_ctx);
+    ctx = atcac_hmac_ctx_new();
+    TEST_ASSERT_NOT_NULL(ctx);
+#else
+    atcac_sha2_256_ctx_t sha256_ctx_inst;
+    atcac_hmac_ctx_t hmac_ctx_inst;
+    sha256_ctx = &sha256_ctx_inst;
+    ctx = &hmac_ctx_inst;
+#endif
+
+    status = atcac_sha256_hmac_init(ctx, sha256_ctx, hmac_key, sizeof(hmac_key));
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    status = atcac_sha256_hmac_update(&ctx, data_input, sizeof(data_input));
+    status = atcac_sha256_hmac_update(ctx, data_input, sizeof(data_input));
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     hmac_size = sizeof(hmac);
-    status = atcac_sha256_hmac_finish(&ctx, hmac, &hmac_size);
+    status = atcac_sha256_hmac_finish(ctx, hmac, &hmac_size);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     TEST_ASSERT_EQUAL_MEMORY(hmac_ref, hmac, ATCA_SHA256_DIGEST_SIZE);
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    atcac_hmac_ctx_free(ctx);
+    atcac_sha256_ctx_free(sha256_ctx);
+#endif
 }
 
 TEST(atcac_sha, sha256_hmac_nist)
@@ -563,23 +475,36 @@ TEST(atcac_sha, sha256_hmac_nist)
     int count = 0;
     int klen = 0;
     int tlen = 0;
-    atcac_hmac_sha256_ctx hmac_ctx;
+    struct atcac_hmac_ctx* hmac_ctx;
+    struct atcac_sha2_256_ctx* sha256_ctx;
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    sha256_ctx = atcac_sha256_ctx_new();
+    TEST_ASSERT_NOT_NULL(sha256_ctx);
+    hmac_ctx = atcac_hmac_ctx_new();
+    TEST_ASSERT_NOT_NULL(hmac_ctx);
+#else
+    atcac_sha2_256_ctx_t sha256_ctx_inst;
+    atcac_hmac_ctx_t hmac_ctx_inst;
+    sha256_ctx = &sha256_ctx_inst;
+    hmac_ctx = &hmac_ctx_inst;
+#endif
 
     rsp_file = fopen("hmac_test_vectors/HMAC_sha256.rsp", "r");
     TEST_ASSERT_NOT_NULL_MESSAGE(rsp_file, "Failed to open file");
 
     do
     {
-        ret = read_rsp_int_value(rsp_file, "Count = ", &count);
+        ret = read_rsp_int_value(rsp_file, "Count = ", NULL, &count);
         if (ret)
         {
             break;
         }
 
-        ret = read_rsp_int_value(rsp_file, "Klen = ", &klen);
+        ret = read_rsp_int_value(rsp_file, "Klen = ", NULL, &klen);
         TEST_ASSERT_EQUAL(ret, ATCA_SUCCESS);
 
-        ret = read_rsp_int_value(rsp_file, "Tlen = ", &tlen);
+        ret = read_rsp_int_value(rsp_file, "Tlen = ", NULL, &tlen);
         TEST_ASSERT_EQUAL(ret, ATCA_SUCCESS);
 
         ret = read_rsp_hex_value(rsp_file, "Key = ", key, klen);
@@ -591,18 +516,23 @@ TEST(atcac_sha, sha256_hmac_nist)
         ret = read_rsp_hex_value(rsp_file, "Mac = ", hmac_ref, tlen);
         TEST_ASSERT_EQUAL(ret, ATCA_SUCCESS);
 
-        ret = atcac_sha256_hmac_init(&hmac_ctx, key, klen);
+        ret = atcac_sha256_hmac_init(hmac_ctx, sha256_ctx, key, klen);
         TEST_ASSERT_EQUAL(ret, ATCA_SUCCESS);
 
-        ret = atcac_sha256_hmac_update(&hmac_ctx, msg, sizeof(msg));
+        ret = atcac_sha256_hmac_update(hmac_ctx, msg, sizeof(msg));
         TEST_ASSERT_EQUAL(ret, ATCA_SUCCESS);
 
-        ret = atcac_sha256_hmac_finish(&hmac_ctx, hmac, &hmac_len);
+        ret = atcac_sha256_hmac_finish(hmac_ctx, hmac, &hmac_len);
 
         TEST_ASSERT_EQUAL(ret, ATCA_SUCCESS);
         TEST_ASSERT_EQUAL_MEMORY(hmac_ref, hmac, tlen);
     }
     while (ret == ATCA_SUCCESS);
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    atcac_hmac_ctx_free(hmac_ctx);
+    atcac_sha256_ctx_free(sha256_ctx);
+#endif
 
 #endif
 }

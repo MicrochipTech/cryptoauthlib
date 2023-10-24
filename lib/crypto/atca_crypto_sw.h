@@ -28,154 +28,154 @@
 #ifndef ATCA_CRYPTO_SW_H
 #define ATCA_CRYPTO_SW_H
 
-
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "crypto/crypto_config_check.h"
+#include "crypto/crypto_sw_config_check.h"
 #include "atca_status.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define ATCA_SHA1_DIGEST_SIZE       (20)
-#define ATCA_SHA2_256_DIGEST_SIZE   (32)
-#define ATCA_SHA2_256_BLOCK_SIZE    (64)
-
-#if defined(ATCA_MBEDTLS)
-#if !defined(MBEDTLS_CONFIG_FILE)
-#include "mbedtls/config.h"
-#else
-#include MBEDTLS_CONFIG_FILE
-#endif
-
-#ifndef MBEDTLS_CMAC_C
-#define MBEDTLS_CMAC_C
-#endif
-
-#include <mbedtls/cipher.h>
-#include <mbedtls/md.h>
-#include <mbedtls/pk.h>
-typedef mbedtls_cipher_context_t atcac_aes_cmac_ctx;
-typedef mbedtls_md_context_t atcac_hmac_sha256_ctx;
-typedef mbedtls_cipher_context_t atcac_aes_gcm_ctx;
-typedef mbedtls_md_context_t atcac_sha1_ctx;
-typedef mbedtls_md_context_t atcac_sha2_256_ctx;
-typedef mbedtls_pk_context atcac_pk_ctx;
-
-#elif defined(ATCA_OPENSSL)
-typedef struct
-{
-    void* ptr;
-} atca_evp_ctx;
-typedef atca_evp_ctx atcac_aes_gcm_ctx;
-typedef atca_evp_ctx atcac_sha1_ctx;
-typedef atca_evp_ctx atcac_sha2_256_ctx;
-typedef atca_evp_ctx atcac_aes_cmac_ctx;
-typedef atca_evp_ctx atcac_hmac_sha256_ctx;
-typedef atca_evp_ctx atcac_pk_ctx;
-#elif defined(ATCA_WOLFSSL)
-#include "wolfssl/wolfcrypt/types.h"
-#ifndef WOLFSSL_CMAC
-#define WOLFSSL_CMAC
-#endif
-#ifndef HAVE_AESGCM
-#define HAVE_AESGCM
-#endif
-#include "wolfssl/wolfcrypt/aes.h"
-#include "wolfssl/wolfcrypt/cmac.h"
-#include "wolfssl/wolfcrypt/hmac.h"
-#include "wolfssl/wolfcrypt/sha.h"
-#include "wolfssl/wolfcrypt/sha256.h"
-#include "wolfssl/wolfcrypt/error-crypt.h"
-#include "wolfssl/wolfcrypt/asn_public.h"
-#include "wolfssl/wolfcrypt/asn.h"
-#include "wolfssl/wolfcrypt/random.h"
-
-typedef struct
-{
-    Aes      aes;
-    uint8_t  iv[AES_BLOCK_SIZE];
-    uint16_t iv_len;
-} atcac_aes_gcm_ctx;
-
-typedef struct
-{
-    void* ptr;
-} atca_wc_ctx;
-
-typedef wc_Sha atcac_sha1_ctx;
-typedef wc_Sha256 atcac_sha2_256_ctx;
-typedef Cmac atcac_aes_cmac_ctx;
-typedef Hmac atcac_hmac_sha256_ctx;
-typedef atca_wc_ctx atcac_pk_ctx;
-
-/* Some configurations end up with a circular definition the above have to be defined before include ecc.h (since ecc.h can call cryptoauthlib functions) */
-#include "wolfssl/wolfcrypt/ecc.h"
-
-#else
-typedef struct
-{
-    uint32_t pad[32]; //!< Filler value to make sure the actual implementation has enough room to store its context. uint32_t is used to remove some alignment warnings.
-} atcac_sha1_ctx;
-
-typedef struct
-{
-    uint32_t pad[48]; //!< Filler value to make sure the actual implementation has enough room to store its context. uint32_t is used to remove some alignment warnings.
-} atcac_sha2_256_ctx;
-
-typedef struct
-{
-    atcac_sha2_256_ctx sha256_ctx;
-    uint8_t            ipad[ATCA_SHA2_256_BLOCK_SIZE];
-    uint8_t            opad[ATCA_SHA2_256_BLOCK_SIZE];
-} atcac_hmac_sha256_ctx;
-#endif
-
-#if defined(ATCA_MBEDTLS) || defined(ATCA_OPENSSL) || defined(ATCA_WOLFSSL)
-ATCA_STATUS atcac_aes_gcm_encrypt_start(atcac_aes_gcm_ctx* ctx, const uint8_t* key, const uint8_t key_len, const uint8_t* iv, const uint8_t iv_len);
-ATCA_STATUS atcac_aes_gcm_decrypt_start(atcac_aes_gcm_ctx* ctx, const uint8_t* key, const uint8_t key_len, const uint8_t* iv, const uint8_t iv_len);
-
-ATCA_STATUS atcac_aes_cmac_init(atcac_aes_cmac_ctx* ctx, const uint8_t* key, const uint8_t key_len);
-ATCA_STATUS atcac_aes_cmac_update(atcac_aes_cmac_ctx* ctx, const uint8_t* data, const size_t data_size);
-ATCA_STATUS atcac_aes_cmac_finish(atcac_aes_cmac_ctx* ctx, uint8_t* cmac, size_t* cmac_size);
-
-ATCA_STATUS atcac_pk_init(atcac_pk_ctx* ctx, const uint8_t* buf, size_t buflen, uint8_t key_type, bool pubkey);
-ATCA_STATUS atcac_pk_init_pem(atcac_pk_ctx* ctx, const uint8_t* buf, size_t buflen, bool pubkey);
-ATCA_STATUS atcac_pk_free(atcac_pk_ctx* ctx);
-ATCA_STATUS atcac_pk_public(atcac_pk_ctx* ctx, uint8_t* buf, size_t* buflen);
-ATCA_STATUS atcac_pk_sign(atcac_pk_ctx* ctx, const uint8_t* digest, size_t dig_len, uint8_t* signature, size_t* sig_len);
-ATCA_STATUS atcac_pk_verify(atcac_pk_ctx* ctx, const uint8_t* digest, size_t dig_len, const uint8_t* signature, size_t sig_len);
-ATCA_STATUS atcac_pk_derive(atcac_pk_ctx* private_ctx, atcac_pk_ctx* public_ctx, uint8_t* buf, size_t* buflen);
-#endif
-
-#if defined(ATCA_MBEDTLS) || defined(ATCA_OPENSSL)
-ATCA_STATUS atcac_aes_gcm_aad_update(atcac_aes_gcm_ctx* ctx, const uint8_t* aad, const size_t aad_len);
-
-ATCA_STATUS atcac_aes_gcm_encrypt_update(atcac_aes_gcm_ctx* ctx, const uint8_t* plaintext, const size_t pt_len, uint8_t* ciphertext, size_t* ct_len);
-ATCA_STATUS atcac_aes_gcm_encrypt_finish(atcac_aes_gcm_ctx* ctx, uint8_t* tag, size_t tag_len);
-
-ATCA_STATUS atcac_aes_gcm_decrypt_update(atcac_aes_gcm_ctx* ctx, const uint8_t* ciphertext, const size_t ct_len, uint8_t* plaintext, size_t* pt_len);
-ATCA_STATUS atcac_aes_gcm_decrypt_finish(atcac_aes_gcm_ctx* ctx, const uint8_t* tag, size_t tag_len, bool* is_verified);
-
-#elif defined(ATCA_WOLFSSL)
-ATCA_STATUS atcac_aes_gcm_encrypt(atcac_aes_gcm_ctx* ctx, const uint8_t* plaintext, const size_t pt_len, uint8_t* ciphertext, uint8_t* tag,
-                                  size_t tag_len, const uint8_t* aad, const size_t aad_len);
-
-
-ATCA_STATUS atcac_aes_gcm_decrypt(atcac_aes_gcm_ctx* ctx, const uint8_t* ciphertext, const size_t ct_len, uint8_t* plaintext, const uint8_t* tag,
-                                  size_t tag_len, const uint8_t* aad, const size_t aad_len, bool* is_verified);
-#endif
+#define ATCA_SHA1_DIGEST_SIZE       (20U)
+#define ATCA_SHA2_256_DIGEST_SIZE   (32U)
+#define ATCA_SHA2_256_BLOCK_SIZE    (64U)
 
 #if ATCA_HOSTLIB_EN
-int atcac_sw_random(uint8_t* data, size_t data_size);
+ATCA_STATUS atcac_sw_random(uint8_t* data, size_t data_size);
 #endif
 
-ATCA_STATUS atcac_pbkdf2_sha256(const uint32_t iter, const uint8_t* password, const size_t password_len, const uint8_t* salt, const size_t salt_len, uint8_t* result, size_t result_len);
+#if ATCAC_SHA1_EN || ATCA_CRYPTO_SHA1_EN
+#if ATCA_CRYPTO_SHA1_EN
+typedef struct atcac_sha1_ctx
+{
+    uint32_t pad[32];
+} atcac_sha1_ctx_t;
+#else
+struct atcac_sha1_ctx;
+#endif
 
-ATCA_STATUS atcac_pkcs7_pad(uint8_t * buffer, size_t * buflen, const size_t datalen, uint8_t blocksize);
-ATCA_STATUS atcac_pkcs7_unpad(uint8_t * buffer, size_t * buflen, const uint8_t blocksize);
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+struct atcac_sha1_ctx * atcac_sha1_ctx_new(void);
+void atcac_sha1_ctx_free(struct atcac_sha1_ctx * ctx);
+#endif
+
+ATCA_STATUS atcac_sw_sha1_init(struct atcac_sha1_ctx* ctx);
+ATCA_STATUS atcac_sw_sha1_update(struct atcac_sha1_ctx* ctx, const uint8_t* data, size_t data_size);
+ATCA_STATUS atcac_sw_sha1_finish(struct atcac_sha1_ctx* ctx, uint8_t digest[ATCA_SHA1_DIGEST_SIZE]);
+#endif /* ATCAC_SHA1_EN || ATCA_CRYPTO_SHA1_EN */
+
+
+#if ATCAC_SHA256_EN || ATCA_CRYPTO_SHA2_EN
+#if ATCA_CRYPTO_SHA2_EN
+typedef struct atcac_sha2_256_ctx
+{
+    uint32_t pad[48];
+} atcac_sha2_256_ctx_t;
+#else
+struct atcac_sha2_256_ctx;
+#endif
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+struct atcac_sha2_256_ctx * atcac_sha256_ctx_new(void);
+void atcac_sha256_ctx_free(struct atcac_sha2_256_ctx * ctx);
+#endif
+
+ATCA_STATUS atcac_sw_sha2_256_init(struct atcac_sha2_256_ctx* ctx);
+ATCA_STATUS atcac_sw_sha2_256_update(struct atcac_sha2_256_ctx* ctx, const uint8_t* data, size_t data_size);
+ATCA_STATUS atcac_sw_sha2_256_finish(struct atcac_sha2_256_ctx* ctx, uint8_t digest[ATCA_SHA2_256_DIGEST_SIZE]);
+#endif /* ATCAC_SHA256_EN || ATCA_CRYPTO_SHA2_EN */
+
+
+#if ATCAC_SHA256_HMAC_EN || ATCA_CRYPTO_SHA2_HMAC_EN
+#if ATCA_CRYPTO_SHA2_HMAC_EN
+typedef struct atcac_hmac_ctx
+{
+    atcac_sha2_256_ctx_t* sha256_ctx;
+    uint8_t               ipad[ATCA_SHA2_256_BLOCK_SIZE];
+    uint8_t               opad[ATCA_SHA2_256_BLOCK_SIZE];
+} atcac_hmac_ctx_t;
+#else
+struct atcac_hmac_ctx;
+#endif
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+struct atcac_hmac_ctx * atcac_hmac_ctx_new(void);
+void atcac_hmac_ctx_free(struct atcac_hmac_ctx * ctx);
+#endif
+
+ATCA_STATUS atcac_sha256_hmac_init(struct atcac_hmac_ctx* ctx, struct atcac_sha2_256_ctx* sha256_ctx,
+                                   const uint8_t* key, const uint8_t key_len);
+ATCA_STATUS atcac_sha256_hmac_update(struct atcac_hmac_ctx* ctx, const uint8_t* data, size_t data_size);
+ATCA_STATUS atcac_sha256_hmac_finish(struct atcac_hmac_ctx* ctx, uint8_t* digest, size_t* digest_len);
+#endif /* ATCAC_SHA256_HMAC_EN || ATCA_CRYPTO_SHA2_HMAC_EN */
+
+
+#if ATCAC_AES_CMAC_EN
+struct atcac_aes_cmac_ctx;
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+struct atcac_aes_cmac_ctx * atcac_aes_cmac_ctx_new(void);
+void atcac_aes_cmac_ctx_free(struct atcac_aes_cmac_ctx * ctx);
+#endif
+
+ATCA_STATUS atcac_aes_cmac_init(struct atcac_aes_cmac_ctx* ctx, const uint8_t* key, const uint8_t key_len);
+ATCA_STATUS atcac_aes_cmac_update(struct atcac_aes_cmac_ctx* ctx, const uint8_t* data, const size_t data_size);
+ATCA_STATUS atcac_aes_cmac_finish(struct atcac_aes_cmac_ctx* ctx, uint8_t* cmac, size_t* cmac_size);
+#endif /* ATCAC_AES_CMAC_EN */
+
+
+#if ATCAC_AES_GCM_EN
+struct atcac_aes_gcm_ctx;
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+struct atcac_aes_gcm_ctx * atcac_aes_gcm_ctx_new(void);
+void atcac_aes_gcm_ctx_free(struct atcac_aes_gcm_ctx * ctx);
+#endif
+
+ATCA_STATUS atcac_aes_gcm_encrypt_start(struct atcac_aes_gcm_ctx* ctx, const uint8_t* key, const uint8_t key_len,
+                                        const uint8_t* iv, const uint8_t iv_len);
+ATCA_STATUS atcac_aes_gcm_decrypt_start(struct atcac_aes_gcm_ctx* ctx, const uint8_t* key, const uint8_t key_len,
+                                        const uint8_t* iv, const uint8_t iv_len);
+ATCA_STATUS atcac_aes_gcm_encrypt(struct atcac_aes_gcm_ctx* ctx, const uint8_t* plaintext, const size_t pt_len,
+                                  uint8_t* ciphertext, uint8_t* tag, size_t tag_len, const uint8_t* aad,
+                                  const size_t aad_len);
+ATCA_STATUS atcac_aes_gcm_decrypt(struct atcac_aes_gcm_ctx* ctx, const uint8_t* ciphertext, const size_t ct_len,
+                                  uint8_t* plaintext, const uint8_t* tag, size_t tag_len, const uint8_t* aad,
+                                  const size_t aad_len, bool* is_verified);
+
+#if ATCAC_AES_GCM_UPDATE_EN
+ATCA_STATUS atcac_aes_gcm_aad_update(struct atcac_aes_gcm_ctx* ctx, const uint8_t* aad, const size_t aad_len);
+ATCA_STATUS atcac_aes_gcm_encrypt_update(struct atcac_aes_gcm_ctx* ctx, const uint8_t* plaintext, const size_t pt_len,
+                                         uint8_t* ciphertext, size_t* ct_len);
+ATCA_STATUS atcac_aes_gcm_encrypt_finish(struct atcac_aes_gcm_ctx* ctx, uint8_t* tag, size_t tag_len);
+ATCA_STATUS atcac_aes_gcm_decrypt_update(struct atcac_aes_gcm_ctx* ctx, const uint8_t* ciphertext, const size_t ct_len,
+                                         uint8_t* plaintext, size_t* pt_len);
+ATCA_STATUS atcac_aes_gcm_decrypt_finish(struct atcac_aes_gcm_ctx* ctx, const uint8_t* tag, size_t tag_len,
+                                         bool* is_verified);
+#endif /* ATCAC_AES_GCM_UPDATE_EN */
+
+#endif /* ATCAC_AES_GCM_EN */
+
+#if ATCAC_PKEY_EN
+struct atcac_pk_ctx;
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+struct atcac_pk_ctx * atcac_pk_ctx_new(void);
+void atcac_pk_ctx_free(struct atcac_pk_ctx * ctx);
+#endif
+
+ATCA_STATUS atcac_pk_init(struct atcac_pk_ctx* ctx, const uint8_t* buf, size_t buflen, uint8_t key_type, bool pubkey);
+ATCA_STATUS atcac_pk_init_pem(struct atcac_pk_ctx* ctx, const uint8_t* buf, size_t buflen, bool pubkey);
+ATCA_STATUS atcac_pk_free(struct atcac_pk_ctx* ctx);
+ATCA_STATUS atcac_pk_public(struct atcac_pk_ctx* ctx, uint8_t* buf, size_t* buflen);
+ATCA_STATUS atcac_pk_sign(struct atcac_pk_ctx* ctx, const uint8_t* digest, size_t dig_len, uint8_t* signature, size_t* sig_len);
+ATCA_STATUS atcac_pk_verify(struct atcac_pk_ctx* ctx, const uint8_t* digest, size_t dig_len, const uint8_t* signature, size_t sig_len);
+ATCA_STATUS atcac_pk_derive(struct atcac_pk_ctx* private_ctx, struct atcac_pk_ctx* public_ctx, uint8_t* buf, size_t* buflen);
+#endif /* ATCAC_PKEY_EN */
+
+#if ATCAC_PBKDF2_SHA256_EN
+ATCA_STATUS atcac_pbkdf2_sha256(const uint32_t iter, const uint8_t* password, const size_t password_len,
+                                const uint8_t* salt, const size_t salt_len, uint8_t* result, size_t result_len);
+#endif
 
 #ifdef __cplusplus
 }

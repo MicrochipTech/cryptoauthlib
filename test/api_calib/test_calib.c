@@ -47,7 +47,7 @@ static t_test_case_info* calib_test_list[] =
 
 void run_all_calib_tests(void)
 {
-   RunAllTests(calib_test_list);
+    RunAllTests(calib_test_list);
 }
 
 int run_calib_tests(int argc, char* argv[])

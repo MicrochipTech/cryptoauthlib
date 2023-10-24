@@ -6,7 +6,7 @@
  * messages or data packets in ECB mode.
  *
  * \note List of devices that support this command - ATECC608A, ATECC608B,
- *       & TA100. Refer to device datasheet for full details.
+ *       & TA10x. Refer to device datasheet for full details.
  *
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
@@ -63,9 +63,9 @@ ATCA_STATUS atcab_aes_cmac_init_ext(ATCADevice device, atca_aes_cmac_ctx_t* ctx,
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
-    memset(ctx, 0, sizeof(*ctx));
+    (void)memset(ctx, 0, sizeof(*ctx));
     // IV for CMAC CBC calculations is all zeros
-    return atcab_aes_cbc_init_ext(device, &ctx->cbc_ctx, key_id, key_block, g_aes_zero_block);
+    return atcab_aes_cbc_init_ext(device, &ctx->cbc_ctx, key_id, key_block, g_aes_zero_block, 0);
 }
 
 /** \brief Initialize a CMAC calculation using an AES-128 key in the device.
@@ -108,9 +108,9 @@ ATCA_STATUS atcab_aes_cmac_update(atca_aes_cmac_ctx_t* ctx, const uint8_t* data,
     rem_size = ATCA_AES128_BLOCK_SIZE - ctx->block_size;
     copy_size = data_size > rem_size ? (size_t)rem_size : (size_t)data_size;
 
-    memcpy(&ctx->block[ctx->block_size], data, copy_size);
+    (void)memcpy(&ctx->block[ctx->block_size], data, copy_size);
 
-    if (ctx->block_size + data_size < ATCA_AES128_BLOCK_SIZE + 1)
+    if (ctx->block_size + data_size < ATCA_AES128_BLOCK_SIZE + 1u)
     {
         // The last block of a CMAC operation is handled specially, so we don't
         // process a complete block unless we know there's data afterwards.
@@ -125,15 +125,15 @@ ATCA_STATUS atcab_aes_cmac_update(atca_aes_cmac_ctx_t* ctx, const uint8_t* data,
     }
 
     // Process any additional blocks
-    data_size -= copy_size; // Adjust to the remaining message bytes
+    data_size -= (uint32_t)copy_size; // Adjust to the remaining message bytes
     block_count = data_size / ATCA_AES128_BLOCK_SIZE;
-    if (block_count > 0 && data_size % ATCA_AES128_BLOCK_SIZE == 0)
+    if (block_count > 0u && data_size % ATCA_AES128_BLOCK_SIZE == 0u)
     {
         block_count--; // Don't process last block because it may need special handling
     }
     for (i = 0; i < block_count; i++)
     {
-        if (ATCA_SUCCESS != (status = atcab_aes_cbc_encrypt_block(&ctx->cbc_ctx, &data[copy_size + i * ATCA_AES128_BLOCK_SIZE], ciphertext)))
+        if (ATCA_SUCCESS != (status = atcab_aes_cbc_encrypt_block(&ctx->cbc_ctx, &data[copy_size + (size_t)i * ATCA_AES128_BLOCK_SIZE], ciphertext)))
         {
             return status;
         }
@@ -142,7 +142,7 @@ ATCA_STATUS atcab_aes_cmac_update(atca_aes_cmac_ctx_t* ctx, const uint8_t* data,
 
     // Save any remaining data
     ctx->block_size = data_size;
-    memcpy(ctx->block, &data[copy_size + block_count * ATCA_AES128_BLOCK_SIZE], (size_t)ctx->block_size);
+    (void)memcpy(ctx->block, &data[copy_size + (size_t)block_count * ATCA_AES128_BLOCK_SIZE], (size_t)ctx->block_size);
 
     return ATCA_SUCCESS;
 }
@@ -158,10 +158,11 @@ static void left_shift_one(uint8_t* data, size_t data_size)
 
     for (i = 0; i < data_size; i++)
     {
+        /* coverity[cert_int34_c_violation:FALSE] Overflow is handled in the subsequent step */
         data[i] = (uint8_t)(data[i] << 1);
-        if (i + 1 < data_size && data[i + 1] & 0x80)
+        if (i + 1u < data_size && (0x80u == (data[i + 1u] & 0x80u)))
         {
-            data[i] |= 0x01; // Next byte has a bit that needs to be shifted into this one
+            data[i] |= 0x01u; // Next byte has a bit that needs to be shifted into this one
         }
     }
 }
@@ -194,27 +195,27 @@ ATCA_STATUS atcab_aes_cmac_finish(atca_aes_cmac_ctx_t* ctx, uint8_t* cmac, uint3
     }
 
     // Calculate subkey 1
-    is_msb_one = (subkey[0] & 0x80);
+    is_msb_one = ((subkey[0] >> 7u) == 0x1u);
     left_shift_one(subkey, sizeof(subkey)); // L << 1
     if (is_msb_one)
     {
-        subkey[ATCA_AES128_BLOCK_SIZE - 1] ^= 0x87; // (L << 1) XOR R128
+        subkey[ATCA_AES128_BLOCK_SIZE - 1u] ^= 0x87u; // (L << 1) XOR R128
     }
 
     if (ctx->block_size != ATCA_AES128_BLOCK_SIZE)
     {
         // Data is not a complete block, we calculate subkey 2
-        is_msb_one = (subkey[0] & 0x80);
+        is_msb_one = ((subkey[0] >> 7u) == 0x1u);
         left_shift_one(subkey, sizeof(subkey)); // K1 << 1
         if (is_msb_one)
         {
-            subkey[ATCA_AES128_BLOCK_SIZE - 1] ^= 0x87; // (K1 << 1) XOR R128
+            subkey[ATCA_AES128_BLOCK_SIZE - 1u] ^= 0x87u; // (K1 << 1) XOR R128
         }
 
         // Pad out an incomplete block starting with a 1 bit, followed by zeros
         for (i = 0; i < ATCA_AES128_BLOCK_SIZE - ctx->block_size; i++)
         {
-            ctx->block[ctx->block_size + i] = (i == 0 ? 0x80 : 0x00);
+            ctx->block[ctx->block_size + i] = (uint8_t)(i == 0u ? 0x80u : 0x00u);
         }
     }
 
@@ -230,7 +231,7 @@ ATCA_STATUS atcab_aes_cmac_finish(atca_aes_cmac_ctx_t* ctx, uint8_t* cmac, uint3
         return status;
     }
 
-    memcpy(cmac, cmac_full, (size_t)cmac_size);
+    (void)memcpy(cmac, cmac_full, (size_t)cmac_size);
 
     return ATCA_SUCCESS;
 }

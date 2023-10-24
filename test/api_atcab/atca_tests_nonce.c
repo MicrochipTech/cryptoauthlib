@@ -37,7 +37,7 @@ TEST_CONDITION(atca_cmd_basic_test, challenge)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return (atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type));
+    return atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type);
 }
 
 TEST(atca_cmd_basic_test, challenge)
@@ -50,7 +50,7 @@ TEST(atca_cmd_basic_test, challenge)
         memset(random_number, 0, sizeof(random_number));
     }
     else
-    {   
+    {
     #if CALIB_RANDOM_EN
         status = atcab_random(random_number);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);

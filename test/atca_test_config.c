@@ -97,8 +97,9 @@ ATCAIfaceCfg* gCfg = &g_iface_config;
 static void print_args(const char * f, int argc, char* argv[])
 {
     int i;
+
     printf("Called from %s with %d args: ", f, argc);
-    for(i=0; i<argc; i++, argv++)
+    for (i = 0; i < argc; i++, argv++)
     {
         printf("%s ", *argv);
     }
@@ -106,8 +107,8 @@ static void print_args(const char * f, int argc, char* argv[])
 }
 
 /** \brief Retrieves the currently configured device
- * 
-*/
+ *
+ */
 ATCADeviceType atca_test_get_device_type(void)
 {
     return (NULL != gCfg) ? gCfg->devtype : ATCA_DEV_UNKNOWN;
@@ -116,41 +117,41 @@ ATCADeviceType atca_test_get_device_type(void)
 /** \brief Configured device is ECC608 */
 bool atca_test_cond_ecc608(void)
 {
-    return (ATECC608 == atca_test_get_device_type());
+    return ATECC608 == atca_test_get_device_type();
 }
 
 /** \brief Configured device is TA100 */
 bool atca_test_cond_ta100(void)
 {
-    return (TA100 == atca_test_get_device_type());
+    return atcab_is_ta_device(atca_test_get_device_type());
 }
 
 /** \brief Configured device supports all EC p256 operations
- * 
-*/
+ *
+ */
 bool atca_test_cond_p256_all(void)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((ATECC108A == dev_type)
-            || (ATECC508A == dev_type)
-            || (ATECC608 == dev_type)
-            || (TA100 == dev_type));
+    return (ATECC108A == dev_type)
+           || (ATECC508A == dev_type)
+           || (ATECC608 == dev_type)
+           || atcab_is_ta_device(dev_type);
 }
 
 /** \brief Configured device supports EC p256 sign operations
- * 
-*/
+ *
+ */
 bool atca_test_cond_p256_sign(void)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((ATECC108A == dev_type)
-            || (ATECC508A == dev_type)
-            || (ATECC608 == dev_type)
-            || (ECC204 == dev_type)
-            || (TA010 == dev_type)
-            || (TA100 == dev_type));
+    return (ATECC108A == dev_type)
+           || (ATECC508A == dev_type)
+           || (ATECC608 == dev_type)
+           || (ECC204 == dev_type)
+           || (TA010 == dev_type)
+           || atcab_is_ta_device(dev_type);
 }
 
 /** \brief Configured device supports EC p256 sign & verify operations */
@@ -158,10 +159,10 @@ bool atca_test_cond_p256_sign_verify(void)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((ATECC108A == dev_type)
-            || (ATECC508A == dev_type)
-            || (ATECC608 == dev_type)
-            || (TA100 == dev_type));
+    return (ATECC108A == dev_type)
+           || (ATECC508A == dev_type)
+           || (ATECC608 == dev_type)
+           || atcab_is_ta_device(dev_type);
 }
 
 /** \brief Configured device supports AES128 ECB operations */
@@ -169,7 +170,7 @@ bool atca_test_cond_aes128_ecb(void)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((ATECC608 == dev_type) || (TA100 == dev_type));
+    return (ATECC608 == dev_type) || atcab_is_ta_device(dev_type);
 }
 
 /** \brief Configured device is a second generation cryptoauth part */
@@ -191,61 +192,62 @@ void atca_test_config_set_ifacecfg(ATCAIfaceCfg * ifacecfg)
 static int select_custom(int argc, char* argv[])
 {
     int ret;
-    switch(gCfg->devtype)
+
+    switch (gCfg->devtype)
     {
 #ifdef ATCA_ATSHA204A_SUPPORT
-        case ATSHA204A:
-            ret = select_204_custom(argc, argv);
-            break;
+    case ATSHA204A:
+        ret = select_204_custom(argc, argv);
+        break;
 #endif
 #ifdef ATCA_ATECC108A_SUPPORT
-        case ATECC108A:
-            ret = select_108_custom(argc, argv);
-            break;
+    case ATECC108A:
+        ret = select_108_custom(argc, argv);
+        break;
 #endif
 #ifdef ATCA_ATECC508A_SUPPORT
-        case ATECC508A:
-            ret = select_508_custom(argc, argv);
-            break;
+    case ATECC508A:
+        ret = select_508_custom(argc, argv);
+        break;
 #endif
 #ifdef ATCA_ATECC608_SUPPORT
-        case ATECC608:
-            ret = select_608_custom(argc, argv);
-            break;
+    case ATECC608:
+        ret = select_608_custom(argc, argv);
+        break;
 #endif
 #ifdef ATCA_ATSHA206A_SUPPORT
-        case ATSHA206A:
-            ret = select_204_custom(argc, argv);
-            break;
+    case ATSHA206A:
+        ret = select_204_custom(argc, argv);
+        break;
 #endif
 #ifdef ATCA_ECC204_SUPPORT
-        case ECC204:
-            ret = select_ecc204_custom(argc, argv);
-            break;
+    case ECC204:
+        ret = select_ecc204_custom(argc, argv);
+        break;
 #endif
 #ifdef ATCA_TA010_SUPPORT
-        case TA010:
-            ret = select_ta010_custom(argc, argv);
-            break;
+    case TA010:
+        ret = select_ta010_custom(argc, argv);
+        break;
 #endif
 #ifdef ATCA_SHA104_SUPPORT
-        case SHA104:
-            ret = select_sha104_custom(argc, argv);
-            break;
+    case SHA104:
+        ret = select_sha104_custom(argc, argv);
+        break;
 #endif
 #ifdef ATCA_SHA105_SUPPORT
-        case SHA105:
-            ret = select_sha105_custom(argc, argv);
-            break;
+    case SHA105:
+        ret = select_sha105_custom(argc, argv);
+        break;
 #endif
 #ifdef ATCA_TA100_SUPPORT
-        case TA100:
-            ret = select_ta100_custom(argc, argv);
-            break;
+    case TA100:
+        ret = select_ta100_custom(argc, argv);
+        break;
 #endif
-        default:
-            ret = -1;
-            break;
+    default:
+        ret = -1;
+        break;
     }
     return ret;
 }
@@ -289,23 +291,24 @@ int select_device(int argc, char* argv[])
  */
 static int process_option(
     const t_menu_info_simple * list,    /**< [in] List of options */
-    int argc,                           /**< [in] Number of arguments in the arg list */
-    char* argv[]                        /**< [in] Argument list */
-)
+    int                        argc,    /**< [in] Number of arguments in the arg list */
+    char*                      argv[]   /**< [in] Argument list */
+    )
 {
     int ret = -1;
     const t_menu_info_simple * pList = list;
+
     if (pList)
     {
         if (argc)
         {
-            for (;pList->menu_cmd;pList++)
+            for (; pList->menu_cmd; pList++)
             {
                 if (!strcmp(pList->menu_cmd, argv[0]))
                 {
                     if (pList->fp_handler)
                     {
-                        if(0 < (ret = pList->fp_handler(argc-1, &argv[1])))
+                        if (0 < (ret = pList->fp_handler(argc - 1, &argv[1])))
                         {
                             ret = argc;
                         }
@@ -323,7 +326,7 @@ static int process_option(
 #ifdef ATCA_PRINTF
             /* */
             pList = list;
-            for (;pList->menu_cmd;pList++)
+            for (; pList->menu_cmd; pList++)
             {
 
             }
@@ -348,17 +351,18 @@ static int opt_device_type(int argc, char* argv[])
 static ATCAKitType opt_get_kit_iface_type(const char * kit_iface_type_name)
 {
     ATCAKitType ret = ATCA_KIT_AUTO_IFACE;
+
     if (kit_iface_type_name)
     {
-        if(lib_strcasestr(kit_iface_type_name, "i2c"))
+        if (lib_strcasestr(kit_iface_type_name, "i2c"))
         {
             ret = ATCA_KIT_I2C_IFACE;
         }
-        else if(lib_strcasestr(kit_iface_type_name, "spi"))
+        else if (lib_strcasestr(kit_iface_type_name, "spi"))
         {
             ret = ATCA_KIT_SPI_IFACE;
         }
-        else if(lib_strcasestr(kit_iface_type_name, "swi"))
+        else if (lib_strcasestr(kit_iface_type_name, "swi"))
         {
             ret = ATCA_KIT_SWI_IFACE;
         }
@@ -391,6 +395,7 @@ static int opt_iface_hid(int argc, char* argv[])
 static int opt_iface_i2c(int argc, char* argv[])
 {
     int ret = -1;
+
     gCfg->iface_type = ATCA_I2C_IFACE;
 
     if (argc)
@@ -445,9 +450,10 @@ static int opt_iface_swi(int argc, char* argv[])
 static int opt_iface_spi(int argc, char* argv[])
 {
     int ret = 0;
+
     gCfg->iface_type = ATCA_SPI_IFACE;
 
-    if(argc)
+    if (argc)
     {
         ATCA_IFACECFG_VALUE(gCfg, atcaspi.bus) = (uint8_t)strtol(argv[0], NULL, 16);
     }
@@ -499,7 +505,7 @@ static int opt_iface_uart(int argc, char* argv[])
             gCfg->cfg_data = opt_device_name;
         }
 #else
-    ATCA_IFACECFG_VALUE(gCfg, atcauart.port) = (uint8_t)strtol(argv[0], NULL, 10);
+        ATCA_IFACECFG_VALUE(gCfg, atcauart.port) = (uint8_t)strtol(argv[0], NULL, 10);
 #endif
         ret = 0;
     }
@@ -559,7 +565,7 @@ static int opt_iface_bridge(int argc, char* argv[])
     ATCA_IFACECFG_VALUE(gCfg, atcakit.dev_interface) = ATCA_KIT_AUTO_IFACE;
     ATCA_IFACECFG_VALUE(gCfg, atcakit.dev_identity) = 0;
 
-    if(ATCA_SUCCESS == hal_kit_bridge_connect(gCfg, argc, argv))
+    if (ATCA_SUCCESS == hal_kit_bridge_connect(gCfg, argc, argv))
     {
         ret = 0;
     }
@@ -571,24 +577,24 @@ static int opt_iface_bridge(int argc, char* argv[])
 /** List of support interface types */
 static t_menu_info_simple opt_iface_type_list[] = {
 #ifdef ATCA_HAL_KIT_HID
-    MENU_ITEM_SIMPLE("hid", opt_iface_hid),
+    MENU_ITEM_SIMPLE("hid",    opt_iface_hid),
 #endif
 #ifdef ATCA_HAL_I2C
-    MENU_ITEM_SIMPLE("i2c", opt_iface_i2c),
+    MENU_ITEM_SIMPLE("i2c",    opt_iface_i2c),
 #endif
 #if defined(ATCA_HAL_SWI_UART) || defined(ATCA_HAL_SWI_GPIO) || defined(ATCA_HAL_SWI_BB)
-    MENU_ITEM_SIMPLE("swi", opt_iface_swi),
+    MENU_ITEM_SIMPLE("swi",    opt_iface_swi),
 #endif
 #ifdef ATCA_HAL_SPI
-    MENU_ITEM_SIMPLE("spi", opt_iface_spi),
+    MENU_ITEM_SIMPLE("spi",    opt_iface_spi),
 #endif
 #ifdef ATCA_HAL_KIT_UART
-    MENU_ITEM_SIMPLE("uart", opt_iface_uart),
+    MENU_ITEM_SIMPLE("uart",   opt_iface_uart),
 #endif
 #ifdef ATCA_HAL_KIT_BRIDGE
     MENU_ITEM_SIMPLE("bridge", opt_iface_bridge),
 #endif
-    MENU_ITEM_SIMPLE(NULL, NULL)
+    MENU_ITEM_SIMPLE(NULL,     NULL)
 };
 
 #ifdef ATCA_TEST_MULTIPLE_INSTANCES
@@ -658,7 +664,7 @@ static int opt_address(int argc, char* argv[])
     uint8_t address = 0;
     ATCAKitType kit_type = ATCA_KIT_UNKNOWN_IFACE;
 
-    if(argc)
+    if (argc)
     {
         address = (uint8_t)strtol(argv[0], NULL, 16);
     }
@@ -667,9 +673,9 @@ static int opt_address(int argc, char* argv[])
         ret = -1;
     }
 
-    if( 1 < argc )
+    if (1 < argc)
     {
-        if(ifacetype_is_kit(gCfg->iface_type))
+        if (ifacetype_is_kit(gCfg->iface_type))
         {
             kit_type = opt_get_kit_iface_type(argv[1]);
         }
@@ -705,14 +711,18 @@ static const t_menu_info_simple cmd_options[] =
     MENU_ITEM_SIMPLE(NULL, NULL)
 };
 
-/** \brief Helper function to count parameters before another 
+/** \brief Helper function to count parameters before another
     argument is encountered */
 static inline int process_options_count_params(int argc, char* argv[])
 {
     int i = 1;
+
     if (argv)
     {
-        for(; i<argc && argv[i] && argv[i][0] != '-'; i++);
+        for (; i < argc && argv[i] && argv[i][0] != '-'; i++)
+        {
+            ;
+        }
     }
     return i;
 }
@@ -727,7 +737,7 @@ int process_options(int argc, char* argv[])
 {
     int ret = -1;
 
-    if(argc && argv)
+    if (argc && argv)
     {
         char** pargv = argv;
         do
@@ -735,12 +745,12 @@ int process_options(int argc, char* argv[])
             int opt_argc = process_options_count_params(argc, pargv);
             if (!strcmp("-p", *pargv))
             {
-                /* Special command at the end the parsing and passthrough 
+                /* Special command at the end the parsing and passthrough
                     arguments to the test framework */
                 int i;
                 pargv++;
                 --argc;
-                for(i=0; i < argc; i++)
+                for (i = 0; i < argc; i++)
                 {
                     argv[i] = pargv[i];
                 }
@@ -755,7 +765,7 @@ int process_options(int argc, char* argv[])
         }
         while (argc > 0 && ret >= 0 && *pargv);
     }
-    else if(!argc)
+    else if (!argc)
     {
         ret = 0;
     }

@@ -122,6 +122,7 @@ t_test_case_info* otpzero_tests[] =
 t_test_case_info* helper_tests[] =
 {
     helper_basic_test_info,
+    buffer_test_info,
     (t_test_case_info*)NULL, /* Array Termination element*/
 };
 
@@ -149,10 +150,11 @@ t_test_case_info* wpc_tests[] =
 
 /** \brief Runs a test suite or individual test - the function is expected to call
  * unity test operations
-*/
+ */
 int run_test(int argc, char* argv[], void (*fptest)(void))
 {
     int ret;
+
     if (CMD_PROCESSOR_MAX_ARGS > argc)
     {
         argv[argc++] = "-v";
@@ -167,11 +169,11 @@ int run_test(int argc, char* argv[], void (*fptest)(void))
     /* Launch the unity test framework */
     ret = UnityMain(argc, (const char**)argv, fptest);
 
-    if(!ret && !Unity.NumberOfTests)
+    if (!ret && !Unity.NumberOfTests)
     {
         /* The assumption is that tests were supposed to have been run so if
-        non were executed the assumption is there is a configuration problem.
-        If a test suite has no tests for a given configuration don't run it */
+           non were executed the assumption is there is a configuration problem.
+           If a test suite has no tests for a given configuration don't run it */
         printf("No tests were run for this configuration\n");
         ret = -1;
     }
@@ -193,13 +195,13 @@ void RunAllTests(t_test_case_info** tests_list)
         {
             bool run_test = (NULL != sp_current_test->fp_condition) ? sp_current_test->fp_condition() : true;
 
-            if(run_test)
+            if (run_test)
             {
                 /*Execute current test case*/
                 sp_current_test->fp_test();
             }
 
-            if(atca_test_unresponsive())
+            if (atca_test_unresponsive())
             {
                 /* Early return on communication failures */
                 break;
@@ -235,7 +237,7 @@ void RunWPCTests(void)
 }
 
 #ifdef ATCA_NO_HEAP
-ATCA_DLL ATCADevice _gDevice;
+ATCA_DLL ATCADevice g_atcab_device_ptr;
 ATCA_DLL struct atca_device g_atcab_device;
 ATCA_DLL struct atca_command g_atcab_command;
 ATCA_DLL struct atca_iface g_atcab_iface;
@@ -243,12 +245,12 @@ ATCA_DLL struct atca_iface g_atcab_iface;
 
 bool atca_test_unresponsive(void)
 {
-    return (g_test_abort || (ATCA_COMM_FAIL == g_last_status) || (ATCA_WAKE_FAILED == g_last_status));
+    return g_test_abort || (ATCA_COMM_FAIL == g_last_status) || (ATCA_WAKE_FAILED == g_last_status);
 }
 
 bool atca_test_already_exiting(void)
 {
-    return (Unity.CurrentTestFailed || Unity.CurrentTestIgnored);
+    return Unity.CurrentTestFailed || Unity.CurrentTestIgnored;
 }
 
 void atca_test_assert_config_is_unlocked(UNITY_LINE_TYPE from_line)
@@ -303,11 +305,54 @@ void atca_test_assert_data_is_locked(UNITY_LINE_TYPE from_line)
     }
 }
 
+/** \brief Check to ensure that not too many instances of the same value appear in the
+ * buffer to make sure something came through the API. This is not an actual randomness
+ * qualification test but should catch most invalid conditions such as buffer misalignment,
+ * failing to copy, etc.
+ */
+void atca_test_assert_random_buffer(UNITY_LINE_TYPE from_line, uint8_t * buf, size_t buflen)
+{
+    uint8_t hg[256];
+    size_t i;
+
+    (void)memset(hg, 0, sizeof(hg));
+
+    UNITY_TEST_ASSERT_NOT_NULL(buf, from_line, NULL);
+
+    for (i = 0; i < buflen; i++)
+    {
+        hg[buf[i]]++;
+    }
+
+#ifdef ATCA_PRINTF
+    size_t printed = 0;
+    printf("\n");
+    for (i = 0; i < sizeof(hg); i++)
+    {
+        if (0 < hg[i])
+        {
+            printf("%3d: %d, ", i, hg[i]);
+            printed++;
+            if (0 == printed % 8)
+            {
+                printf("\n");
+            }
+        }
+    }
+    printf("\n");
+#endif
+
+    for (i = 0; i < sizeof(hg); i++)
+    {
+        UNITY_TEST_ASSERT_SMALLER_OR_EQUAL_INT(buflen / 4 ? buflen / 4 : 1, hg[i], from_line,
+                                               "Buffer has a significant count of the same value");
+    }
+}
 
 //The Function checks the AES_ENABLE byte in configuration zone , if it is not set, it skips the test
 void atca_test_assert_aes_enabled(UNITY_LINE_TYPE from_line)
 {
-    if (TA100 != gCfg->devtype)
+    if (!atcab_is_ta_device(gCfg->devtype))
     {
         ATCA_STATUS status;
         uint8_t aes_enable;
@@ -327,15 +372,15 @@ void atca_test_assert_aes_enabled(UNITY_LINE_TYPE from_line)
 //The Function checks the Secureboot mode byte in configuration zone , if it is not set, it skips the test
 void atca_test_assert_ta_sboot_enabled(UNITY_LINE_TYPE from_line, uint8_t mode)
 {
-    if (TA100 == gCfg->devtype)
+    if (atcab_is_ta_device(gCfg->devtype))
     {
         ATCA_STATUS status;
         uint8_t check_config_sboot_enable[8];
         uint16_t config_size = sizeof(check_config_sboot_enable);
+        cal_buffer check_config_sboot_enable_buf = CAL_BUF_INIT(config_size, check_config_sboot_enable);
 
         // Bytes 32 of the config zone contains the Secure boot config bit
-        status = talib_read_partial_element(atcab_get_device(), TA_HANDLE_CONFIG_MEMORY, 32, &config_size,
-                                            &check_config_sboot_enable[0]);
+        status = talib_read_partial_element(atcab_get_device(), TA_HANDLE_CONFIG_MEMORY, 32, &check_config_sboot_enable_buf);
         UNITY_TEST_ASSERT_EQUAL_INT(ATCA_SUCCESS, status, from_line, NULL);
 
         if ((check_config_sboot_enable[0] & TA_SECUREBOOT_CONFIG_MODE_MASK) != mode)
@@ -348,15 +393,15 @@ void atca_test_assert_ta_sboot_enabled(UNITY_LINE_TYPE from_line, uint8_t mode)
 //The Function checks the Secureboot preboot mode byte in configuration zone , if it is not set, it skips the test
 void atca_test_assert_ta_sboot_preboot_enabled(UNITY_LINE_TYPE from_line)
 {
-    if (TA100 == gCfg->devtype)
+    if (atcab_is_ta_device(gCfg->devtype))
     {
         ATCA_STATUS status;
         uint8_t check_config_sboot_enable[8];
         uint16_t config_size = sizeof(check_config_sboot_enable);
+        cal_buffer check_config_sboot_enable_buf = CAL_BUF_INIT(config_size, check_config_sboot_enable);
 
         // Bytes 32 of the config zone contains the Secure boot config bit
-        status = talib_read_partial_element(atcab_get_device(), TA_HANDLE_CONFIG_MEMORY, 32, &config_size,
-                                            &check_config_sboot_enable[0]);
+        status = talib_read_partial_element(atcab_get_device(), TA_HANDLE_CONFIG_MEMORY, 32, &check_config_sboot_enable_buf);
         UNITY_TEST_ASSERT_EQUAL_INT(ATCA_SUCCESS, status, from_line, NULL);
 
         if ((check_config_sboot_enable[1] & TA_SECUREBOOT_CONFIG_PREBOOT_ENABLE_MASK)
@@ -389,7 +434,7 @@ ATCA_STATUS atca_test_config_get_id(uint8_t test_type, uint16_t* handle)
 #endif
 #if defined(ATCA_TA010_SUPPORT) || defined(ATCA_ECC204_SUPPORT)
         case TA010:
-            /* fallthrough */
+        /* fallthrough */
         case ECC204:
             status = calib_config_get_ecc204_slot_by_test(test_type, handle);
             break;
@@ -407,6 +452,7 @@ ATCA_STATUS atca_test_config_get_id(uint8_t test_type, uint16_t* handle)
             break;
 #endif
         default:
+            status = ATCA_UNIMPLEMENTED;
             break;
         }
     }
@@ -422,15 +468,17 @@ ATCA_STATUS atca_test_config_get_id(uint8_t test_type, uint16_t* handle)
 /* Helper function to execute genkey and retry if there are failures since there is
    a chance that the genkey will fail to produce a valid keypair and a retry is nearly
    always successful */
-#if defined(ATCA_ECC_SUPPORT) || defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT) || defined(ATCA_TA100_SUPPORT)
+#if defined(ATCA_ECC_SUPPORT) || defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT) || ATCA_TA_SUPPORT
 ATCA_STATUS atca_test_genkey(uint16_t key_id, uint8_t *public_key)
 {
     int attempts = 2;
     ATCA_STATUS status;
+
     do
     {
         status = atcab_genkey(key_id, public_key);
-    } while (status && --attempts);
+    }
+    while (status && --attempts);
     return status;
 }
 #endif

@@ -34,6 +34,8 @@
 
 #include "cryptoauthlib.h"
 
+#ifdef ATCA_JWT_EN
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -59,6 +61,8 @@ ATCA_STATUS atca_jwt_verify(const char* buf, uint16_t buflen, const uint8_t* pub
 /** @} */
 #ifdef __cplusplus
 }
+#endif
+
 #endif
 
 #endif /* ATCA_JWT_H_ */

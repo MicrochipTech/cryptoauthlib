@@ -152,7 +152,7 @@ void sw_sha256_init(sw_sha256_ctx* ctx)
     };
     int i;
 
-    memset(ctx, 0, sizeof(*ctx));
+    (void)memset(ctx, 0, sizeof(*ctx));
     for (i = 0; i < 8; i++)
     {
         ctx->hash[i] = hash_init[i];
@@ -174,7 +174,7 @@ void sw_sha256_update(sw_sha256_ctx* ctx, const uint8_t* msg, uint32_t msg_size)
     size_t copy_size = msg_size > rem_size ? (size_t)rem_size : (size_t)msg_size;
 
     // Copy data into current block
-    memcpy(&ctx->block[ctx->block_size], msg, copy_size);
+    (void)memcpy(&ctx->block[ctx->block_size], msg, copy_size);
 
     if (ctx->block_size + msg_size < SHA256_BLOCK_SIZE)
     {
@@ -194,7 +194,7 @@ void sw_sha256_update(sw_sha256_ctx* ctx, const uint8_t* msg, uint32_t msg_size)
     // Save any remaining data
     ctx->total_msg_size += (block_count + 1) * SHA256_BLOCK_SIZE;
     ctx->block_size = msg_size % SHA256_BLOCK_SIZE;
-    memcpy(ctx->block, &msg[copy_size + block_count * SHA256_BLOCK_SIZE], (size_t)ctx->block_size);
+    (void)memcpy(ctx->block, &msg[copy_size + block_count * SHA256_BLOCK_SIZE], (size_t)ctx->block_size);
 }
 
 
@@ -219,7 +219,7 @@ void sw_sha256_final(sw_sha256_ctx* ctx, uint8_t digest[SHA256_DIGEST_SIZE])
     ctx->block[ctx->block_size++] = 0x80;
 
     // Add padding zeros plus upper 4 bytes of total msg size in bits (only supporting 32bit message bit counts)
-    memset(&ctx->block[ctx->block_size], 0, (size_t)pad_zero_count + 4);
+    (void)memset(&ctx->block[ctx->block_size], 0, (size_t)pad_zero_count + 4);
     ctx->block_size += pad_zero_count + 4;
 
     // Add the total message size in bits to the end of the current block. Technically this is

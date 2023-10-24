@@ -39,7 +39,7 @@ extern "C" {
 
 #if CALIB_AES_GCM_EN
 
-#define ATCA_AES_GCM_IV_STD_LENGTH      12
+#define ATCA_AES_GCM_IV_STD_LENGTH      12u
 
 extern const char* atca_basic_aes_gcm_version;
 

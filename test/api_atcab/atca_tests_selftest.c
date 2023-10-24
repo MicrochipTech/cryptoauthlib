@@ -73,8 +73,8 @@ TEST_CONDITION(atca_cmd_basic_test, selftest_ecc204_ta010)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((ECC204 == dev_type) 
-            || (TA010 == dev_type));
+    return (ECC204 == dev_type)
+           || (TA010 == dev_type);
 }
 
 TEST(atca_cmd_basic_test, selftest_ecc204_ta010)
@@ -99,8 +99,8 @@ TEST_CONDITION(atca_cmd_basic_test, selftest_sha10x)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((SHA104 == dev_type) 
-            || (SHA105 == dev_type));
+    return (SHA104 == dev_type)
+           || (SHA105 == dev_type);
 }
 
 TEST(atca_cmd_basic_test, selftest_sha10x)

@@ -50,6 +50,7 @@ ATCA_STATUS calib_derivekey(ATCADevice device, uint8_t mode, uint16_t target_key
 {
     ATCAPacket packet;
     ATCA_STATUS status = ATCA_GEN_FAIL;
+    bool require_mac = false;
 
     do
     {
@@ -59,29 +60,45 @@ ATCA_STATUS calib_derivekey(ATCADevice device, uint8_t mode, uint16_t target_key
             break;
         }
 
+        #if (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + MAC_SIZE))
+        #if ATCA_PREPROCESSOR_WARNING
+        #warning "CA_MAX_PACKET_SIZE will not support optional mac with the derivekey command"
+        #endif
+        if (mac != NULL)
+        {
+            status = ATCA_TRACE(ATCA_INVALID_SIZE, "Unsupported parameter");
+            break;
+        }
+        #endif
+
         // build a deriveKey command (pass through mode)
         packet.param1 = mode;
         packet.param2 = target_key;
 
         if (mac != NULL)
         {
-            memcpy(packet.data, mac, MAC_SIZE);
+            (void)memcpy(packet.data, mac, MAC_SIZE);
         }
 
-        if ((status = atDeriveKey(atcab_get_device_type_ext(device), &packet, mac != NULL)) != ATCA_SUCCESS)
+        if (mac != NULL)
         {
-            ATCA_TRACE(status, "atDeriveKey - failed");
+            require_mac = true;
+        }
+
+        if ((status = atDeriveKey(atcab_get_device_type_ext(device), &packet, require_mac)) != ATCA_SUCCESS)
+        {
+            (void)ATCA_TRACE(status, "atDeriveKey - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "calib_derivekey - execution failed");
+            (void)ATCA_TRACE(status, "calib_derivekey - execution failed");
             break;
         }
 
     }
-    while (0);
+    while (false);
 
     return status;
 }

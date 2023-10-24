@@ -47,12 +47,29 @@ extern "C" {
 #include "atca_devtypes.h"
 #include "atca_status.h"
 
+
 #ifdef ATCA_STRICT_C99
-#define ATCA_IFACECFG_NAME(x)  x
-#define ATCA_IFACECFG_VALUE(c, v) c->cfg.v
+#define ATCA_IFACECFG_NAME(x)  (x)
+
+#ifdef ATCA_ENABLE_DEPRECATED
+#define ATCA_IFACECFG_I2C_ADDRESS(c)   (c)->cfg.atcai2c.slave_address
+#else
+#define ATCA_IFACECFG_I2C_ADDRESS(c)   (c)->cfg.atcai2c.address
+#endif
+
+#define ATCA_IFACECFG_I2C_BAUD(c)   (c)->cfg.atcai2c.baud
+#define ATCA_IFACECFG_VALUE(c, v)   (c)->cfg.v
 #else
 #define ATCA_IFACECFG_NAME(x)
-#define ATCA_IFACECFG_VALUE(c, v) c->v
+
+#ifdef ATCA_ENABLE_DEPRECATED
+#define ATCA_IFACECFG_I2C_ADDRESS(c)   (c)->atcai2c.slave_address
+#else
+#define ATCA_IFACECFG_I2C_ADDRESS(c)   (c)->atcai2c.address
+#endif
+
+#define ATCA_IFACECFG_I2C_BAUD(c)   (c)->atcai2c.baud
+#define ATCA_IFACECFG_VALUE(c, v)   (c)->v
 #endif
 
 typedef enum
@@ -190,9 +207,12 @@ typedef struct atca_iface
 } atca_iface_t;
 
 ATCA_STATUS initATCAIface(ATCAIfaceCfg *cfg, ATCAIface ca_iface);
-ATCAIface newATCAIface(ATCAIfaceCfg *cfg);
 ATCA_STATUS releaseATCAIface(ATCAIface ca_iface);
 void deleteATCAIface(ATCAIface *ca_iface);
+
+#if !defined(ATCA_NO_HEAP) && defined(ENABLE_NEWATCAIFACE)
+ATCAIface newATCAIface(ATCAIfaceCfg *cfg);
+#endif
 
 // IFace methods
 ATCA_STATUS atinit(ATCAIface ca_iface);

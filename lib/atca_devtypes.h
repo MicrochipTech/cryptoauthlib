@@ -25,9 +25,10 @@
  * THIS SOFTWARE.
  */
 
-
 #ifndef ATCA_DEVTYPES_H_
 #define ATCA_DEVTYPES_H_
+
+#include <stdint.h>
 
 /** \defgroup device ATCADevice (atca_)
    @{ */
@@ -36,30 +37,40 @@
 extern "C" {
 #endif
 
+#ifdef __COVERITY__
+#pragma coverity compliance block deviate "CERT DCL37-C" "ECC part defines will not conflict with errno.h codes"
+#endif
+
+typedef uint8_t ATCADeviceType;
+
 /** \brief The supported Device type in Cryptoauthlib library */
-typedef enum
-{
-    ATSHA204A   = 0,
-    ATECC108A   = 1,
-    ATECC508A   = 2,
-    ATECC608A   = 3,
-    ATECC608B   = 3,
-    ATECC608    = 3,
-    ATSHA206A   = 4,
-    TA100       = 0x10,
-    ECC204      = 0x20,
-    TA010       = 0x21,
-    ECC206      = 0x22,
-    RNG90       = 0x23,
-    SHA104      = 0x24,
-    SHA105      = 0x25,
-    SHA106      = 0x26,
-    ATCA_DEV_UNKNOWN = 0x7E,
-    ATCA_DEV_INVALID = 0x7F,
-} ATCADeviceType;
+
+#define ATSHA204A           (0U)
+#define ATECC108A           (1U)
+#define ATECC508A           (2U)
+#define ATECC608A           (3U)
+#define ATECC608B           (3U)
+#define ATECC608            (3U)
+#define ATSHA206A           (4U)
+#define TA100               (0x10U)
+#define ECC204              (0x20U)
+#define TA010               (0x21U)
+#define ECC206              (0x22U)
+#define RNG90               (0x23U)
+#define SHA104              (0x24U)
+#define SHA105              (0x25U)
+#define SHA106              (0x26U)
+
+#define ATCA_DEV_UNKNOWN    (0x7EU)
+#define ATCA_DEV_INVALID    (0x7FU)
+
+#ifdef __COVERITY__
+#pragma coverity compliance end_block "CERT DCL37-C"
+#endif
 
 #ifdef __cplusplus
 }
 #endif
+
 /** @} */
 #endif /* ATCA_DEVTYPES_H_ */

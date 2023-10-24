@@ -59,11 +59,11 @@ TEST(wpc_apis, wpc_get_digests_request_response)
     buflen = sizeof(request);
     ret = wpc_msg_get_digests(request, &buflen, 0x01);
     TEST_ASSERT_SUCCESS(ret);
-   
+
     displaylen = sizeof(displaystr);
     atcab_bin2hex(request, sizeof(request), displaystr, &displaylen);
     printf("Digests request: \r\n%s\r\n", displaystr);
-    
+
     buflen = sizeof(response);
     ret = wpc_msg_digests(device, response, &buflen, request);
     TEST_ASSERT_SUCCESS(ret);
@@ -101,24 +101,24 @@ TEST(wpc_apis, wpc_get_certificate_request_response)
 TEST(wpc_apis, wpc_challenge_request_response)
 {
     int ret;
-    uint8_t request[2+16];
-    uint8_t response[3+32+32];
+    uint8_t request[2 + 16];
+    uint8_t response[3 + 32 + 32];
     uint16_t buflen;
     char displaystr[256];
     size_t displaylen;
     ATCADevice device = atcab_get_device();
-    
+
     /* Read the public key from the device manually */
 
     /* Generate a challenge message */
     buflen = sizeof(request);
     ret = wpc_msg_challenge(device, request, &buflen, 0);
     TEST_ASSERT_SUCCESS(ret);
-   
+
     displaylen = sizeof(displaystr);
     atcab_bin2hex(request, sizeof(request), displaystr, &displaylen);
     printf("Challenge request: \r\n%s\r\n", displaystr);
-    
+
     buflen = sizeof(response);
     ret = wpc_msg_challenge_auth(device, response, &buflen, request);
     TEST_ASSERT_SUCCESS(ret);

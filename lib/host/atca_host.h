@@ -62,7 +62,7 @@
 || (OTP0_7 or 0){8} || (OTP8_10 or 0){3} || SN8{1} || (SN4_7 or 0){4} || SN0_1{2} || (SN2_3 or 0){2}
 */
 #define ATCA_MSG_SIZE_MAC              (88)
-#define ATCA_MSG_SIZE_HMAC             (88)
+#define ATCA_MSG_SIZE_HMAC             (88u)
 
 //! KeyId{32} || OpCode{1} || Param1{1} || Param2{2} || SN8{1} || SN0_1{2} || 0{25} || TempKey{32}
 #define ATCA_MSG_SIZE_GEN_DIG          (96)
@@ -101,8 +101,8 @@
 #define ATCA_PRIVWRITE_MAC_ZEROS_SIZE  (21)
 #define ATCA_PRIVWRITE_PLAIN_TEXT_SIZE (36)
 #define ATCA_DERIVE_KEY_ZEROS_SIZE     (25)
-#define ATCA_HMAC_BLOCK_SIZE           (64)
-#define ENCRYPTION_KEY_SIZE             (64)
+#define ATCA_HMAC_BLOCK_SIZE           (64u)
+#define ATCA_ENCRYPTION_KEY_SIZE       (64)
 
 /** @} */
 
@@ -393,12 +393,12 @@ typedef struct atca_check_mac_in_out
 typedef struct atca_resp_mac_in_out
 {
     const uint8_t* slot_key;
-    uint8_t       mode;
-    uint16_t      key_id;
+    uint8_t        mode;
+    uint16_t       key_id;
     const uint8_t* sn;
-    uint8_t*      client_resp;
-    uint8_t       checkmac_result;
-    uint8_t*      mac_output;
+    uint8_t*       client_resp;
+    uint8_t        checkmac_result;
+    uint8_t*       mac_output;
 }atca_resp_mac_in_out_t;
 
 /** \struct atca_verify_in_out
@@ -495,7 +495,7 @@ ATCA_STATUS atcah_privwrite_auth_mac(struct atca_write_mac_in_out *param);
 ATCA_STATUS atcah_derive_key(struct atca_derive_key_in_out *param);
 ATCA_STATUS atcah_derive_key_mac(struct atca_derive_key_mac_in_out *param);
 ATCA_STATUS atcah_decrypt(struct atca_decrypt_in_out *param);
-ATCA_STATUS atcah_sha256(int32_t len, const uint8_t *message, uint8_t *digest);
+ATCA_STATUS atcah_sha256(uint32_t len, const uint8_t *message, uint8_t *digest);
 uint8_t *atcah_include_data(struct atca_include_data_in_out *param);
 ATCA_STATUS atcah_gen_key_msg(struct atca_gen_key_in_out *param);
 ATCA_STATUS atcah_config_to_sign_internal(ATCADeviceType device_type, struct atca_sign_internal_in_out *param, const uint8_t* config);
@@ -503,12 +503,16 @@ ATCA_STATUS atcah_sign_internal_msg(ATCADeviceType device_type, struct atca_sign
 ATCA_STATUS atcah_verify_mac(atca_verify_mac_in_out_t *param);
 ATCA_STATUS atcah_secureboot_enc(atca_secureboot_enc_in_out_t* param);
 ATCA_STATUS atcah_secureboot_mac(atca_secureboot_mac_in_out_t *param);
-ATCA_STATUS atcah_encode_counter_match(uint32_t counter, uint8_t * counter_match);
+ATCA_STATUS atcah_encode_counter_match(uint32_t counter_value, uint8_t* counter_match_value);
 ATCA_STATUS atcah_io_decrypt(struct atca_io_decrypt_in_out *param);
 ATCA_STATUS atcah_ecc204_write_auth_mac(struct atca_write_mac_in_out *param);
 ATCA_STATUS atcah_gen_session_key(atca_session_key_in_out_t *param);
 ATCA_STATUS atcah_gen_output_resp_mac(struct atca_resp_mac_in_out *param);
+
+#if ATCAH_DELETE_MAC
 ATCA_STATUS atcah_delete_mac(struct atca_delete_in_out *param);
+#endif
+
 #ifdef __cplusplus
 }
 #endif

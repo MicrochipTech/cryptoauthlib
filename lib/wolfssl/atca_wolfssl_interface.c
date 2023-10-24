@@ -25,31 +25,40 @@
  * THIS SOFTWARE.
  */
 
-#include "atca_config.h"
-#include "atca_status.h"
-#include "crypto/atca_crypto_sw.h"
+#include "cryptoauthlib.h"
 
 #ifdef ATCA_WOLFSSL
+#include "crypto/atca_crypto_sw.h"
+#include "atca_wolfssl_internal.h"
 
 /** \brief Return Random Bytes
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
-int atcac_sw_random(uint8_t* data, size_t data_size)
+ATCA_STATUS atcac_sw_random(uint8_t* data, size_t data_size)
 {
+    ATCA_STATUS status = ATCA_BAD_PARAM;
     RNG rng;
-    int ret = wc_InitRng(&rng);
 
-    if (ret != 0)
+    if (0 == wc_InitRng(&rng))
     {
-        return ATCA_GEN_FAIL;
+        if (UINT32_MAX <= data_size)
+        {
+            if (0 == wc_RNG_GenerateBlock(&rng, data, (word32)data_size))
+            {
+                status = ATCA_SUCCESS;
+            }
+            else
+            {
+                status =  ATCA_GEN_FAIL;
+            }
+        }
     }
-    ret = wc_RNG_GenerateBlock(&rng, data, data_size);
-    if (ret != 0)
+    else
     {
-        return ATCA_GEN_FAIL;
+        status =  ATCA_GEN_FAIL;
     }
-    return ATCA_SUCCESS;
+    return status;
 }
 
 /** \brief Initialize an AES-GCM context
@@ -57,18 +66,18 @@ int atcac_sw_random(uint8_t* data, size_t data_size)
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_gcm_encrypt_start(
-    atcac_aes_gcm_ctx * ctx,     /**< [in] AES-GCM Context */
-    const uint8_t *     key,     /**< [in] AES Key */
-    const uint8_t       key_len, /**< [in] Length of the AES key - should be 16 or 32*/
-    const uint8_t *     iv,      /**< [in] Initialization vector input */
-    const uint8_t       iv_len   /**< [in] Length of the initialization vector */
+    struct atcac_aes_gcm_ctx * ctx,     /**< [in] AES-GCM Context */
+    const uint8_t *            key,     /**< [in] AES Key */
+    const uint8_t              key_len, /**< [in] Length of the AES key - should be 16 or 32*/
+    const uint8_t *            iv,      /**< [in] Initialization vector input */
+    const uint8_t              iv_len   /**< [in] Length of the initialization vector */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
     if (ctx)
     {
-        memset(ctx, 0, sizeof(atcac_aes_gcm_ctx));
+        memset(ctx, 0, sizeof(atcac_aes_gcm_ctx_t));
         ctx->iv_len = iv_len;
 
         if (iv)
@@ -83,14 +92,14 @@ ATCA_STATUS atcac_aes_gcm_encrypt_start(
 }
 
 ATCA_STATUS atcac_aes_gcm_encrypt(
-    atcac_aes_gcm_ctx* ctx,
-    const uint8_t*     plaintext,
-    const size_t       pt_len,
-    uint8_t*           ciphertext,
-    uint8_t*           tag,
-    size_t             tag_len,
-    const uint8_t*     aad,
-    const size_t       aad_len
+    struct atcac_aes_gcm_ctx* ctx,
+    const uint8_t*            plaintext,
+    const size_t              pt_len,
+    uint8_t*                  ciphertext,
+    uint8_t*                  tag,
+    size_t                    tag_len,
+    const uint8_t*            aad,
+    const size_t              aad_len
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -110,18 +119,18 @@ ATCA_STATUS atcac_aes_gcm_encrypt(
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_gcm_decrypt_start(
-    atcac_aes_gcm_ctx* ctx,     /**< [in] AES-GCM Context */
-    const uint8_t*     key,     /**< [in] AES Key */
-    const uint8_t      key_len, /**< [in] Length of the AES key - should be 16 or 32*/
-    const uint8_t*     iv,      /**< [in] Initialization vector input */
-    const uint8_t      iv_len   /**< [in] Length of the initialization vector */
+    struct atcac_aes_gcm_ctx* ctx,     /**< [in] AES-GCM Context */
+    const uint8_t*            key,     /**< [in] AES Key */
+    const uint8_t             key_len, /**< [in] Length of the AES key - should be 16 or 32*/
+    const uint8_t*            iv,      /**< [in] Initialization vector input */
+    const uint8_t             iv_len   /**< [in] Length of the initialization vector */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
     if (ctx)
     {
-        memset(ctx, 0, sizeof(atcac_aes_gcm_ctx));
+        memset(ctx, 0, sizeof(atcac_aes_gcm_ctx_t));
         ctx->iv_len = iv_len;
 
         if (iv)
@@ -136,15 +145,15 @@ ATCA_STATUS atcac_aes_gcm_decrypt_start(
 }
 
 ATCA_STATUS atcac_aes_gcm_decrypt(
-    atcac_aes_gcm_ctx* ctx,
-    const uint8_t*     ciphertext,
-    const size_t       ct_len,
-    uint8_t*           plaintext,
-    const uint8_t*     tag,
-    size_t             tag_len,
-    const uint8_t*     aad,
-    const size_t       aad_len,
-    bool*              is_verified
+    struct atcac_aes_gcm_ctx* ctx,
+    const uint8_t*            ciphertext,
+    const size_t              ct_len,
+    uint8_t*                  plaintext,
+    const uint8_t*            tag,
+    size_t                    tag_len,
+    const uint8_t*            aad,
+    const size_t              aad_len,
+    bool*                     is_verified
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -169,10 +178,10 @@ ATCA_STATUS atcac_aes_gcm_decrypt(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 int atcac_sw_sha1_init(
-    atcac_sha1_ctx* ctx         /**< [in] pointer to a hash context */
+    struct atcac_sha1_ctx* ctx         /**< [in] pointer to a hash context */
     )
 {
-    return (!wc_InitSha(ctx)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+    return (!wc_InitSha((wc_Sha*)ctx)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
 }
 
 /** \brief Add data to a SHA1 hash.
@@ -180,12 +189,12 @@ int atcac_sw_sha1_init(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 int atcac_sw_sha1_update(
-    atcac_sha1_ctx* ctx,        /**< [in] pointer to a hash context */
-    const uint8_t*  data,       /**< [in] input data buffer */
-    size_t          data_size   /**< [in] input data length */
+    struct atcac_sha1_ctx* ctx,      /**< [in] pointer to a hash context */
+    const uint8_t*         data,     /**< [in] input data buffer */
+    size_t                 data_size /**< [in] input data length */
     )
 {
-    return (!wc_ShaUpdate(ctx, data, data_size)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+    return (!wc_ShaUpdate((wc_Sha*)ctx, data, data_size)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
 }
 
 /** \brief Complete the SHA1 hash in software and return the digest.
@@ -193,11 +202,11 @@ int atcac_sw_sha1_update(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 int atcac_sw_sha1_finish(
-    atcac_sha1_ctx* ctx,                          /**< [in] pointer to a hash context */
-    uint8_t         digest[ATCA_SHA1_DIGEST_SIZE] /**< [out] output buffer (20 bytes) */
+    struct atcac_sha1_ctx* ctx,                          /**< [in] pointer to a hash context */
+    uint8_t                digest[ATCA_SHA1_DIGEST_SIZE] /**< [out] output buffer (20 bytes) */
     )
 {
-    return (!wc_ShaFinal(ctx, digest)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+    return (!wc_ShaFinal((wc_Sha*)ctx, digest)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
 }
 
 /** \brief Initialize context for performing SHA256 hash in software.
@@ -205,10 +214,10 @@ int atcac_sw_sha1_finish(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 int atcac_sw_sha2_256_init(
-    atcac_sha2_256_ctx* ctx                 /**< [in] pointer to a hash context */
+    struct atcac_sha2_256_ctx* ctx  /**< [in] pointer to a hash context */
     )
 {
-    return (!wc_InitSha256(ctx)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+    return (!wc_InitSha256((wc_Sha256*)ctx)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
 }
 
 /** \brief Add data to a SHA256 hash.
@@ -216,12 +225,12 @@ int atcac_sw_sha2_256_init(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 int atcac_sw_sha2_256_update(
-    atcac_sha2_256_ctx* ctx,                /**< [in] pointer to a hash context */
-    const uint8_t*      data,               /**< [in] input data buffer */
-    size_t              data_size           /**< [in] input data length */
+    struct atcac_sha2_256_ctx* ctx,      /**< [in] pointer to a hash context */
+    const uint8_t*             data,     /**< [in] input data buffer */
+    size_t                     data_size /**< [in] input data length */
     )
 {
-    return (!wc_Sha256Update(ctx, data, data_size)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+    return (!wc_Sha256Update((wc_Sha256*)ctx, data, data_size)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
 }
 
 /** \brief Complete the SHA256 hash in software and return the digest.
@@ -229,11 +238,11 @@ int atcac_sw_sha2_256_update(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 int atcac_sw_sha2_256_finish(
-    atcac_sha2_256_ctx* ctx,                              /**< [in] pointer to a hash context */
-    uint8_t             digest[ATCA_SHA2_256_DIGEST_SIZE] /**< [out] output buffer (32 bytes) */
+    struct atcac_sha2_256_ctx* ctx,                              /**< [in] pointer to a hash context */
+    uint8_t                    digest[ATCA_SHA2_256_DIGEST_SIZE] /**< [out] output buffer (32 bytes) */
     )
 {
-    return (!wc_Sha256Final(ctx, digest)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+    return (!wc_Sha256Final((wc_Sha256*)ctx, digest)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
 }
 
 /** \brief Initialize context for performing CMAC in software.
@@ -241,12 +250,12 @@ int atcac_sw_sha2_256_finish(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_cmac_init(
-    atcac_aes_cmac_ctx* ctx,                    /**< [in] pointer to a aes-cmac context */
-    const uint8_t*      key,                    /**< [in] key value to use */
-    const uint8_t       key_len                 /**< [in] length of the key */
+    struct atcac_aes_cmac_ctx* ctx,    /**< [in] pointer to a aes-cmac context */
+    const uint8_t*             key,    /**< [in] key value to use */
+    const uint8_t              key_len /**< [in] length of the key */
     )
 {
-    return (!wc_InitCmac(ctx, key, key_len, WC_CMAC_AES, NULL)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+    return (!wc_InitCmac((Cmac*)ctx, key, key_len, WC_CMAC_AES, NULL)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
 }
 
 /** \brief Update CMAC context with input data
@@ -254,12 +263,12 @@ ATCA_STATUS atcac_aes_cmac_init(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_cmac_update(
-    atcac_aes_cmac_ctx* ctx,                /**< [in] pointer to a aes-cmac context */
-    const uint8_t*      data,               /**< [in] input data */
-    const size_t        data_size           /**< [in] length of input data */
+    struct atcac_aes_cmac_ctx* ctx,      /**< [in] pointer to a aes-cmac context */
+    const uint8_t*             data,     /**< [in] input data */
+    const size_t               data_size /**< [in] length of input data */
     )
 {
-    return (!wc_CmacUpdate(ctx, data, data_size)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+    return (!wc_CmacUpdate((Cmac*)ctx, data, data_size)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
 }
 
 /** \brief Finish CMAC calculation and clear the CMAC context
@@ -267,9 +276,9 @@ ATCA_STATUS atcac_aes_cmac_update(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_aes_cmac_finish(
-    atcac_aes_cmac_ctx* ctx,            /**< [in] pointer to a aes-cmac context */
-    uint8_t*            cmac,           /**< [out] cmac value */
-    size_t*             cmac_size       /**< [inout] length of cmac */
+    struct atcac_aes_cmac_ctx* ctx,      /**< [in] pointer to a aes-cmac context */
+    uint8_t*                   cmac,     /**< [out] cmac value */
+    size_t*                    cmac_size /**< [inout] length of cmac */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -277,7 +286,7 @@ ATCA_STATUS atcac_aes_cmac_finish(
     if (cmac_size)
     {
         word32 out_len = *cmac_size;
-        status = (!wc_CmacFinal(ctx, cmac, &out_len)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+        status = (!wc_CmacFinal((Cmac*)ctx, cmac, &out_len)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
         *cmac_size = out_len;
     }
     return status;
@@ -288,16 +297,19 @@ ATCA_STATUS atcac_aes_cmac_finish(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_sha256_hmac_init(
-    atcac_hmac_sha256_ctx* ctx,                 /**< [in] pointer to a sha256-hmac context */
-    const uint8_t*         key,                 /**< [in] key value to use */
-    const uint8_t          key_len              /**< [in] length of the key */
+    struct atcac_hmac_ctx*     ctx,         /**< [in] pointer to a sha256-hmac context */
+    struct atcac_sha2_256_ctx* sha256_ctx,  /**< [in] pointer to a sha256 context */
+    const uint8_t*             key,         /**< [in] key value to use */
+    const uint8_t              key_len      /**< [in] length of the key */
     )
 {
-    int ret = wc_HmacInit(ctx, NULL, 0);
+    int ret = wc_HmacInit((Hmac*)ctx, NULL, 0);
+
+    (void)sha256_ctx;
 
     if (!ret)
     {
-        ret = wc_HmacSetKey(ctx, SHA256, key, key_len);
+        ret = wc_HmacSetKey((Hmac*)ctx, SHA256, key, key_len);
     }
 
     return (!ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
@@ -308,12 +320,12 @@ ATCA_STATUS atcac_sha256_hmac_init(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_sha256_hmac_update(
-    atcac_hmac_sha256_ctx* ctx,                 /**< [in] pointer to a sha256-hmac context */
+    struct atcac_hmac_ctx* ctx,                 /**< [in] pointer to a sha256-hmac context */
     const uint8_t*         data,                /**< [in] input data */
     size_t                 data_size            /**< [in] length of input data */
     )
 {
-    return (!wc_HmacUpdate(ctx, data, data_size)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+    return (!wc_HmacUpdate((Hmac*)ctx, data, data_size)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
 }
 
 /** \brief Finish HMAC calculation and clear the HMAC context
@@ -321,16 +333,16 @@ ATCA_STATUS atcac_sha256_hmac_update(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_sha256_hmac_finish(
-    atcac_hmac_sha256_ctx* ctx,                /**< [in] pointer to a sha256-hmac context */
+    struct atcac_hmac_ctx* ctx,                /**< [in] pointer to a sha256-hmac context */
     uint8_t*               digest,             /**< [out] hmac value */
     size_t*                digest_len          /**< [inout] length of hmac */
     )
 {
     ((void)digest_len);
 
-    int ret = wc_HmacFinal(ctx, digest);
+    int ret = wc_HmacFinal((Hmac*)ctx, digest);
 
-    wc_HmacFree(ctx);
+    wc_HmacFree((Hmac*)ctx);
 
     return (!ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
 }
@@ -340,11 +352,11 @@ ATCA_STATUS atcac_sha256_hmac_finish(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_init(
-    atcac_pk_ctx*   ctx,                          /**< [in] pointer to a pk context */
-    const uint8_t*  buf,                          /**< [in] buffer containing a pem encoded key */
-    size_t          buflen,                       /**< [in] length of the input buffer */
-    uint8_t         key_type,
-    bool            pubkey                        /**< [in] buffer is a public key */
+    struct atcac_pk_ctx* ctx,                     /**< [in] pointer to a pk context */
+    const uint8_t*       buf,                     /**< [in] buffer containing a pem encoded key */
+    size_t               buflen,                  /**< [in] length of the input buffer */
+    uint8_t              key_type,
+    bool                 pubkey                   /**< [in] buffer is a public key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -386,6 +398,10 @@ ATCA_STATUS atcac_pk_init(
                 }
             }
         }
+        if (ATCA_SUCCESS == status)
+        {
+            ctx->key_type = key_type;
+        }
     }
     return status;
 }
@@ -395,10 +411,10 @@ ATCA_STATUS atcac_pk_init(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_init_pem(
-    atcac_pk_ctx*   ctx,                          /**< [in] pointer to a pk context */
-    const uint8_t * buf,                          /**< [in] buffer containing a pem encoded key */
-    size_t          buflen,                       /**< [in] length of the input buffer */
-    bool            pubkey                        /**< [in] buffer is a public key */
+    struct atcac_pk_ctx* ctx,                     /**< [in] pointer to a pk context */
+    const uint8_t *      buf,                     /**< [in] buffer containing a pem encoded key */
+    size_t               buflen,                  /**< [in] length of the input buffer */
+    bool                 pubkey                   /**< [in] buffer is a public key */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -417,7 +433,7 @@ ATCA_STATUS atcac_pk_init_pem(
             type = ECC_PUBLICKEY_TYPE;
         }
 
-        ret = PemToDer((unsigned char*)buf, (long)buflen, type, &der, NULL, NULL, &ecckey);
+        ret = PemToDer((const unsigned char*)buf, (long)buflen, type, &der, NULL, NULL, &ecckey);
 
         if ((ret >= 0) && (der != NULL))
         {
@@ -439,6 +455,10 @@ ATCA_STATUS atcac_pk_init_pem(
                     }
                     status = (0 == ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
                 }
+                if (ATCA_SUCCESS == status)
+                {
+                    ctx->key_type = 0;
+                }
             }
         }
     }
@@ -450,9 +470,9 @@ ATCA_STATUS atcac_pk_init_pem(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_public(
-    atcac_pk_ctx* ctx,
-    uint8_t*      buf,
-    size_t*       buflen
+    struct atcac_pk_ctx* ctx,
+    uint8_t*             buf,
+    size_t*              buflen
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -466,7 +486,7 @@ ATCA_STATUS atcac_pk_public(
 
         int ret = -1;
 
-        if (!wc_ecc_check_key((ecc_key*)ctx->ptr))
+        if (0U == ctx->key_type)
         {
             word32 xlen = 32;
             word32 ylen = 32;
@@ -484,7 +504,7 @@ ATCA_STATUS atcac_pk_public(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_free(
-    atcac_pk_ctx* ctx                           /**< [in] pointer to a pk context */
+    struct atcac_pk_ctx* ctx    /**< [in] pointer to a pk context */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -505,36 +525,39 @@ ATCA_STATUS atcac_pk_free(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_sign(
-    atcac_pk_ctx*   ctx,
-    const uint8_t * digest,
-    size_t          dig_len,
-    uint8_t*        signature,
-    size_t*         sig_len
+    struct atcac_pk_ctx* ctx,
+    const uint8_t *      digest,
+    size_t               dig_len,
+    uint8_t*             signature,
+    size_t*              sig_len
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (ctx && ctx->ptr && signature && digest && sig_len)
+    if ((NULL != ctx) && (NULL != ctx->ptr) && (NULL != signature) && (NULL != digest) && (NULL != sig_len))
     {
         WC_RNG rng;
         int ret = wc_InitRng(&rng);
 
-        if (!ret)
+        if (0 == ret)
         {
-            if (!wc_ecc_check_key((ecc_key*)ctx->ptr))
+            if ((0 == ctx->key_type) && (ATCA_SHA256_DIGEST_SIZE == dig_len))
             {
                 uint8_t sig[72];
                 word32 siglen = sizeof(sig);
                 word32 rlen = 32;
                 word32 slen = 32;
 
+                memset(signature, 0, *sig_len);
+
                 ret = wc_ecc_sign_hash((byte*)digest, (word32)dig_len, (byte*)sig, &siglen, &rng, (ecc_key*)ctx->ptr);
-                if (!ret)
+
+                if (0 == ret)
                 {
                     ret = wc_ecc_sig_to_rs((byte*)sig, siglen, (byte*)signature, &rlen, (byte*)&signature[32], &slen);
                 }
 
-                if (!ret)
+                if (0 == ret)
                 {
                     *sig_len = 64;
                 }
@@ -556,29 +579,30 @@ ATCA_STATUS atcac_pk_sign(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_verify(
-    atcac_pk_ctx*   ctx,
-    const uint8_t*  digest,
-    size_t          dig_len,
-    const uint8_t*  signature,
-    size_t          sig_len
+    struct atcac_pk_ctx* ctx,
+    const uint8_t*       digest,
+    size_t               dig_len,
+    const uint8_t*       signature,
+    size_t               sig_len
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (ctx && ctx->ptr && signature && digest)
+    if ((NULL != ctx) && (NULL != ctx->ptr) && (NULL != signature) && (NULL != digest)
+        && (ATCA_SHA256_DIGEST_SIZE == dig_len))
     {
         int ret = -1;
         int res = 0;
-        if (!wc_ecc_check_key((ecc_key*)ctx->ptr))
+        if ((0 == ctx->key_type) && (ATCA_ECCP256_SIG_SIZE == sig_len))
         {
             uint8_t sig[72];
-            sig_len = sizeof(sig);
+            word32 len = sizeof(sig);
 
-            ret = wc_ecc_rs_raw_to_sig(signature, 32, &signature[32], 32, (byte*)sig, (word32*)&sig_len);
+            ret = wc_ecc_rs_raw_to_sig(signature, 32, &signature[32], 32, (byte*)sig, &len);
 
             if (!ret)
             {
-                ret = wc_ecc_verify_hash((byte*)sig, (word32)sig_len, (byte*)digest, (word32)dig_len, &res, (ecc_key*)ctx->ptr);
+                ret = wc_ecc_verify_hash((byte*)sig, len, (byte*)digest, (word32)dig_len, &res, (ecc_key*)ctx->ptr);
             }
         }
         else
@@ -606,10 +630,10 @@ ATCA_STATUS atcac_pk_verify(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcac_pk_derive(
-    atcac_pk_ctx* private_ctx,
-    atcac_pk_ctx* public_ctx,
-    uint8_t*      buf,
-    size_t*       buflen
+    struct atcac_pk_ctx* private_ctx,
+    struct atcac_pk_ctx* public_ctx,
+    uint8_t*             buf,
+    size_t*              buflen
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -618,7 +642,7 @@ ATCA_STATUS atcac_pk_derive(
     {
         int ret = -1;
 
-        if (!wc_ecc_check_key((ecc_key*)public_ctx->ptr))
+        if (0 == private_ctx->key_type)
         {
             ret = wc_ecc_shared_secret((ecc_key*)private_ctx->ptr, (ecc_key*)public_ctx->ptr, (byte*)buf, (word32*)buflen);
         }
@@ -627,5 +651,67 @@ ATCA_STATUS atcac_pk_derive(
 
     return status;
 }
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+struct atcac_sha1_ctx * atcac_sha1_ctx_new(void)
+{
+    return (struct atcac_sha1_ctx*)hal_malloc(sizeof(atcac_sha1_ctx_t));
+}
+
+struct atcac_sha2_256_ctx * atcac_sha256_ctx_new(void)
+{
+    return (struct atcac_sha2_256_ctx*)hal_malloc(sizeof(atcac_sha2_256_ctx_t));
+}
+
+struct atcac_hmac_ctx * atcac_hmac_ctx_new(void)
+{
+    return (struct atcac_hmac_ctx*)hal_malloc(sizeof(atcac_hmac_ctx_t));
+}
+
+struct atcac_aes_gcm_ctx * atcac_aes_gcm_ctx_new(void)
+{
+    return (struct atcac_aes_gcm_ctx*)hal_malloc(sizeof(atcac_aes_gcm_ctx_t));
+}
+
+struct atcac_aes_cmac_ctx * atcac_aes_cmac_ctx_new(void)
+{
+    return (struct atcac_aes_cmac_ctx*)hal_malloc(sizeof(atcac_aes_cmac_ctx_t));
+}
+
+struct atcac_pk_ctx * atcac_pk_ctx_new(void)
+{
+    return (struct atcac_pk_ctx*)hal_malloc(sizeof(atcac_pk_ctx_t));
+}
+
+void atcac_sha1_ctx_free(struct atcac_sha1_ctx * ctx)
+{
+    hal_free(ctx);
+}
+
+void atcac_sha256_ctx_free(struct atcac_sha2_256_ctx * ctx)
+{
+    hal_free(ctx);
+}
+
+void atcac_hmac_ctx_free(struct atcac_hmac_ctx * ctx)
+{
+    hal_free(ctx);
+}
+
+void atcac_aes_gcm_ctx_free(struct atcac_aes_gcm_ctx * ctx)
+{
+    hal_free(ctx);
+}
+
+void atcac_aes_cmac_ctx_free(struct atcac_aes_cmac_ctx * ctx)
+{
+    hal_free(ctx);
+}
+
+void atcac_pk_ctx_free(struct atcac_pk_ctx * ctx)
+{
+    hal_free(ctx);
+}
+#endif
 
 #endif /* ATCA_WOLFSSL */

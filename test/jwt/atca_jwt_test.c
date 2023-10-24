@@ -26,6 +26,8 @@
 #include "test_jwt.h"
 #include "jwt/atca_jwt.h"
 
+#ifdef ATCA_JWT_EN
+
 #ifndef TEST_JWT_SIGN_EN
 #define TEST_JWT_SIGN_EN    (CALIB_SIGN_CA2_EN || CALIB_SIGN_EN || TALIB_SIGN_EN)
 #endif
@@ -369,9 +371,12 @@ TEST(atca_jwt_crypto, finalize)
 }
 #endif /* TEST_JWT_SIGN_EN */
 
+#endif
+
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info jwt_unit_test_info[] =
 {
+#ifdef ATCA_JWT_EN
     { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_period),                NULL },
     { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_brace),                 NULL },
     { REGISTER_TEST_CASE(atca_jwt,        check_payload_start_other),                 NULL },
@@ -387,7 +392,7 @@ t_test_case_info jwt_unit_test_info[] =
 #if TEST_JWT_VERIFY_EN
     { REGISTER_TEST_CASE(atca_jwt,        verify_invalid_params),                     NULL },
 #endif
-#if TEST_JWT_SIGN_EN 
+#if TEST_JWT_SIGN_EN
     { REGISTER_TEST_CASE(atca_jwt,        finalize_invalid_params),                   NULL },
 #endif
 
@@ -398,11 +403,12 @@ t_test_case_info jwt_unit_test_info[] =
 #if TEST_JWT_SIGN_EN
     { REGISTER_TEST_CASE(atca_jwt_crypto, finalize),                                  atca_test_cond_p256_sign_verify },
 #endif
+#endif
     { (fp_test_case)NULL,                 (uint8_t)0 },                               /* Array Termination element*/
 };
 // *INDENT-ON*
 
-static t_test_case_info* jwt_tests[] = {
+static t_test_case_info * jwt_tests[] = {
     jwt_unit_test_info,
     /* Array Termination element*/
     (t_test_case_info*)NULL

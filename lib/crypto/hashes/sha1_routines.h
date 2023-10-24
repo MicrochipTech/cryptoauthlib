@@ -25,8 +25,10 @@
  * THIS SOFTWARE.
  */
 
-#ifndef __SHA1_ROUTINES_DOT_H__
-#define __SHA1_ROUTINES_DOT_H__
+#ifndef SHA1_ROUTINES_DOT_H__
+#define SHA1_ROUTINES_DOT_H__
+
+#include "atca_compiler.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,6 +41,12 @@
 
 #include <stdint.h>
 
+#ifdef __COVERITY__
+#pragma coverity compliance block \
+    (deviate "CERT DCL37-C" "Reserved identifiers do not conflict in this extensively tested implementation") \
+    (deviate "MISRA C-2012 Rule 21.1" "Reserved identifiers do not conflict in this extensively tested implementation") \
+    (deviate "MISRA C-2012 Rule 21.2" "Reserved identifiers do not conflict in this extensively tested implementation")
+#endif
 
 #ifndef U8
 #define U8 uint8_t
@@ -90,4 +98,8 @@ void CL_hash(U8 *msg, int msgBytes, U8 *dest);
 }
 #endif
 
-#endif // __SHA1_ROUTINES_DOT_H__
+#ifdef __COVERITY__
+#pragma coverity compliance end_block "CERT DCL37-C" "MISRA C-2012 Rule 21.1" "MISRA C-2012 Rule 21.2"
+#endif
+
+#endif // SHA1_ROUTINES_DOT_H__

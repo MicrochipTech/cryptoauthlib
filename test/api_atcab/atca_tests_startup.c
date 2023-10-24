@@ -41,7 +41,7 @@ TEST(atca_cmd_basic_test, version)
 
 TEST(atca_cmd_basic_test, init)
 {
-    TEST_ASSERT_NOT_EQUAL(NULL, _gDevice);
+    TEST_ASSERT_NOT_EQUAL(NULL, g_atcab_device_ptr);
 }
 
 
@@ -50,7 +50,7 @@ TEST(atca_cmd_basic_test, doubleinit)
     uint8_t rev[4];
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
-    TEST_ASSERT_NOT_EQUAL(NULL, _gDevice);
+    TEST_ASSERT_NOT_EQUAL(NULL, g_atcab_device_ptr);
 
     // Make sure communication works initially
     status = atcab_info(rev);
@@ -60,7 +60,7 @@ TEST(atca_cmd_basic_test, doubleinit)
     status = atcab_init(gCfg);
 
     TEST_ASSERT_SUCCESS(status);
-    TEST_ASSERT_NOT_EQUAL(NULL, _gDevice);
+    TEST_ASSERT_NOT_EQUAL(NULL, g_atcab_device_ptr);
 
     // Make sure communication still works
     status = atcab_info(rev);
@@ -73,7 +73,7 @@ t_test_case_info startup_basic_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_basic_test, version),    NULL },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, init),       NULL },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, doubleinit), NULL },
-    
+
     /* Array Termination element*/
     { (fp_test_case)NULL, NULL },
 };

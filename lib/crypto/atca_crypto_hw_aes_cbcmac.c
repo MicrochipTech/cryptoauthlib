@@ -34,7 +34,7 @@
  */
 #include "cryptoauthlib.h"
 
-#include "crypto_config_check.h"
+#include "crypto_hw_config_check.h"
 
 #if ATCAB_AES_CBCMAC_EN
 /** \brief Initialize context for AES CBC-MAC operation.
@@ -56,7 +56,7 @@ ATCA_STATUS atcab_aes_cbcmac_init_ext(ATCADevice device, atca_aes_cbcmac_ctx_t* 
 
     // Initializing the atca_aes_cbcmac_ctx_t structure, this will set the IV value to 0.
     // IV value must be set to zero for CBC-MAC calculation
-    memset(ctx, 0, sizeof(*ctx));
+    (void)memset(ctx, 0, sizeof(*ctx));
     ctx->cbc_ctx.device = device;
     ctx->cbc_ctx.key_id = key_id;
     ctx->cbc_ctx.key_block = key_block;
@@ -96,7 +96,7 @@ ATCA_STATUS atcab_aes_cbcmac_update(atca_aes_cbcmac_ctx_t* ctx, const uint8_t* d
     size_t i;
     uint8_t ciphertext[ATCA_AES128_BLOCK_SIZE];
 
-    if (data_size == 0)
+    if (data_size == 0u)
     {
         // Nothing to do
         return ATCA_SUCCESS;
@@ -108,7 +108,7 @@ ATCA_STATUS atcab_aes_cbcmac_update(atca_aes_cbcmac_ctx_t* ctx, const uint8_t* d
     }
 
     // Process full blocks of data with AES-CBC
-    for (i = 0; i < data_size / ATCA_AES128_BLOCK_SIZE; i++)
+    for (i = 0; i < ((size_t)data_size / ATCA_AES128_BLOCK_SIZE); i++)
     {
         status = atcab_aes_cbc_encrypt_block(&ctx->cbc_ctx, &data[i * ATCA_AES128_BLOCK_SIZE], ciphertext);
         if (status != ATCA_SUCCESS)
@@ -120,8 +120,8 @@ ATCA_STATUS atcab_aes_cbcmac_update(atca_aes_cbcmac_ctx_t* ctx, const uint8_t* d
     // Store incomplete block to context structure
     if ((i * ATCA_AES128_BLOCK_SIZE) < data_size)
     {
-        memcpy(ctx->block, &data[i * ATCA_AES128_BLOCK_SIZE], (size_t)(data_size - i * ATCA_AES128_BLOCK_SIZE));
-        ctx->block_size = (uint8_t)(data_size - i * ATCA_AES128_BLOCK_SIZE);
+        (void)memcpy(ctx->block, &data[i * ATCA_AES128_BLOCK_SIZE], (size_t)(data_size - i * ATCA_AES128_BLOCK_SIZE));
+        ctx->block_size = (uint8_t)((data_size - i * ATCA_AES128_BLOCK_SIZE) & 0xFFu);
     }
     else
     {
@@ -149,10 +149,10 @@ ATCA_STATUS atcab_aes_cbcmac_finish(atca_aes_cbcmac_ctx_t* ctx, uint8_t* mac, ui
     }
 
     // Check for incomplete data block
-    if (ctx->block_size == 0)
+    if (ctx->block_size == 0u)
     {
         // All processing is already done, copying the mac to result buffer
-        memcpy(mac, ctx->cbc_ctx.ciphertext, (size_t)mac_size);
+        (void)memcpy(mac, ctx->cbc_ctx.ciphertext, (size_t)mac_size);
     }
     else
     {

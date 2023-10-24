@@ -31,13 +31,13 @@
 
 
 #if ATCACERT_HW_VERIFY_EN && ATCACERT_COMPCERT_EN
-int atcacert_verify_cert_hw(const atcacert_def_t* cert_def,
-                            const uint8_t*        cert,
-                            size_t                cert_size,
-                            const uint8_t         ca_public_key[64])
+ATCA_STATUS atcacert_verify_cert_hw(const atcacert_def_t* cert_def,
+                                    const uint8_t*        cert,
+                                    size_t                cert_size,
+                                    const uint8_t         ca_public_key[64])
 {
-    int ret = 0;
-    uint8_t tbs_digest[32];
+    ATCA_STATUS ret = 0;
+    uint8_t tbs_digest[32] = { 0 };
     uint8_t signature[64];
     bool is_verified = false;
 
@@ -69,7 +69,7 @@ int atcacert_verify_cert_hw(const atcacert_def_t* cert_def,
 #endif
 
 #if ATCACERT_HW_CHALLENGE_EN
-int atcacert_gen_challenge_hw(uint8_t challenge[32])
+ATCA_STATUS atcacert_gen_challenge_hw(uint8_t challenge[32])
 {
     if (challenge == NULL)
     {
@@ -81,11 +81,11 @@ int atcacert_gen_challenge_hw(uint8_t challenge[32])
 #endif
 
 #if ATCACERT_HW_VERIFY_EN
-int atcacert_verify_response_hw(const uint8_t device_public_key[64],
-                                const uint8_t challenge[32],
-                                const uint8_t response[64])
+ATCA_STATUS atcacert_verify_response_hw(const uint8_t device_public_key[64],
+                                        const uint8_t challenge[32],
+                                        const uint8_t response[64])
 {
-    int ret = 0;
+    ATCA_STATUS ret = 0;
     bool is_verified = false;
 
     if (device_public_key == NULL || challenge == NULL || response == NULL)

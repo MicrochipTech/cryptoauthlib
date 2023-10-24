@@ -76,8 +76,8 @@ TEST(calib, info_chip_status)
     ATCA_STATUS status = ATCA_GEN_FAIL;
     uint8_t chip_status[4];
 
-    // chip_status[0] = 0x00 means No Deletion 
-    // chip_status[0] = 0xFF means Deletion has completed 
+    // chip_status[0] = 0x00 means No Deletion
+    // chip_status[0] = 0xFF means Deletion has completed
     status = calib_info_chip_status(atcab_get_device(), chip_status);
     TEST_ASSERT_SUCCESS(status);
 }

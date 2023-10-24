@@ -37,7 +37,7 @@ _CORE_PATHS = ['crypto/**/*', 'crypto/*', 'jwt/*', '*']
 _CA_PATHS = ['atcacert/*', 'calib/*', 'host/*']
 _TA_PATHS = ['talib/*']
 _SHA206_PATHS = ['api_206a/*']
-
+_EXCL_FILES = ['atca_utils_sizes.c']
 
 def CALSecFileUpdate(symbol, event):
     symObj = event['symbol']
@@ -191,6 +191,14 @@ def updateFileEnable(component, pattern, enable):
                 srcFile.setEnabled(enable)
 
 
+def excludeFiles(component, file_names):
+    global numFileCntr
+    for x in range(numFileCntr):
+        srcFile = component.getSymbolByID(fileSymbolName + str(x))
+        if srcFile and (srcFile.getOutputName() in file_names):
+            srcFile.setEnabled(False)
+
+
 def check_if_file_exists(component, pattern):
     global numFileCntr
     for x in range(numFileCntr):
@@ -213,11 +221,13 @@ def onAttachmentConnected(source, target):
     if srcConnectionID == 'CAL_LIB_CAP' and 'CRYPTOAUTHLIB' not in targetComponentID and '_' in targetComponentID:
         calDeviceList = srcComponent.getSymbolByID('CAL_DEVICE_LIST_ENTRIES')
         add_value_to_list(calDeviceList, targetComponentID.split('_')[0])
-        if 'TA100' in targetComponentID:
+        if ('TA10' in targetComponentID):
             _ta_dev_cnt += 1
             updateFileEnable(srcComponent, _TA_PATHS, True)
+            calTaConfig = srcComponent.getSymbolByID('TALIB_CONFIG_DATA')
+            calTaConfig.setEnabled(True)
             if check_if_file_exists(srcComponent, 'talib_fce'):
-                calTaEnableFce = srcComponent.getSymbolByID('CAL_ENABLE_TA100_FCE')
+                calTaEnableFce = srcComponent.getSymbolByID('CAL_ENABLE_TA10x_FCE')
                 calTaEnableFce.setValue(True)
         else:
             _ca_dev_cnt += 1
@@ -239,8 +249,11 @@ def onAttachmentConnected(source, target):
         WolfCrypto = srcComponent.getSymbolByID('CAL_FILE_SRC_WOLFSSL_WRAPPER')
         WolfCrypto.setEnabled(True)
 
-        calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA100_AES_AUTH')
+        calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA10x_AES_AUTH')
         calTaEnableAesAuth.setValue(True)
+
+    excludeFiles(srcComponent, _EXCL_FILES)
+
 
 
 def onAttachmentDisconnected(source, target):
@@ -254,13 +267,15 @@ def onAttachmentDisconnected(source, target):
     if srcConnectionID == 'CAL_LIB_CAP' and '_' in targetComponentID:
         calDeviceList = srcComponent.getSymbolByID('CAL_DEVICE_LIST_ENTRIES')
         del_value_from_list(calDeviceList, targetComponentID.split('_')[0])
-        if 'TA100' in targetComponentID:
+        if ('TA10' in targetComponentID):
             _ta_dev_cnt -= 1
             if 0 == _ta_dev_cnt:
                 updateFileEnable(srcComponent, _TA_PATHS, False)
-                calTaEnableFce = srcComponent.getSymbolByID('CAL_ENABLE_TA100_FCE')
+                calTaEnableFce = srcComponent.getSymbolByID('CAL_ENABLE_TA10x_FCE')
                 calTaEnableFce.setValue(False)
-                calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA100_AES_AUTH')
+                calTaConfig = srcComponent.getSymbolByID('TALIB_CONFIG_DATA')
+                calTaConfig.setEnabled(False)
+                calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA10x_AES_AUTH')
                 calTaEnableAesAuth.setValue(False)
         else:
             _ca_dev_cnt -= 1
@@ -284,7 +299,7 @@ def onAttachmentDisconnected(source, target):
         WolfCrypto = srcComponent.getSymbolByID('CAL_FILE_SRC_WOLFSSL_WRAPPER')
         WolfCrypto.setEnabled(False)
 
-        calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA100_AES_AUTH')
+        calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA10x_AES_AUTH')
         calTaEnableAesAuth.setValue(False)
 
 
@@ -342,6 +357,10 @@ def instantiateComponent(calComponent):
     calDebugPrint.setLabel("Enable Debug Print?")
     calDebugPrint.setVisible(True)
 
+    calPreprocessorWarning = calComponent.createBooleanSymbol("CAL_ENABLE_PREPROCESSOR_WARNING", None)
+    calPreprocessorWarning.setLabel("Enable Preprocessor Warning?")
+    calPreprocessorWarning.setVisible(True)
+
     calEnablePolling = calComponent.createBooleanSymbol("CAL_ENABLE_POLLING", None)
     calEnablePolling.setLabel("Enable Polling for Response?")
     calEnablePolling.setDefaultValue(True)
@@ -358,6 +377,14 @@ def instantiateComponent(calComponent):
     calPollingTimeout = calComponent.createIntegerSymbol('CAL_POLL_TIMEOUT', None)
     calPollingTimeout.setLabel('Polling Timeout (ms)')
     calPollingTimeout.setDefaultValue(2500)
+
+    calEnablejwt = calComponent.createBooleanSymbol("CAL_ENABLE_JWT", None)
+    calEnablejwt.setLabel("Enable jwt functionality?")
+    calEnablejwt.setVisible(True)
+    
+    calMaxPacketSize = calComponent.createIntegerSymbol('CAL_MAX_PACKET_SIZE', None)
+    calMaxPacketSize.setLabel('Maximum packet size (bytes)')
+    calMaxPacketSize.setDefaultValue(1072)
 
     # Symmetric Cryptography Commands
     symmetricCommands = calComponent.createMenuSymbol("cal_symmetric_commands", None)
@@ -425,7 +452,7 @@ def instantiateComponent(calComponent):
     calHmacEnabledSymbol.setLabel("Support HMAC?")
     calHmacEnabledSymbol.setDescription("Enable support for Hmac Command")
     calHmacEnabledSymbol.setVisible(True)
-    calHmacEnabledSymbol.setDefaultValue(True)  
+    calHmacEnabledSymbol.setDefaultValue(True)
 
     # Asymmetric Cryptography Commands
     asymmetricCommands = calComponent.createMenuSymbol("cal_asymmetric_commands", None)
@@ -471,7 +498,7 @@ def instantiateComponent(calComponent):
     calSignInternalEnabledSymbol.setDescription("Enable support for Sign Internal")
     calSignInternalEnabledSymbol.setVisible(True)
     calSignInternalEnabledSymbol.setDefaultValue(True)
-    calSignInternalEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_sign"]) 
+    calSignInternalEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_sign"])
 
     # VERIFY
     calVerifyEnabledSymbol = calComponent.createBooleanSymbol("cal_verify", asymmetricCommands)
@@ -485,21 +512,21 @@ def instantiateComponent(calComponent):
     calVerifyStoredEnabledSymbol.setDescription("Enable support for Verify Stored")
     calVerifyStoredEnabledSymbol.setVisible(True)
     calVerifyStoredEnabledSymbol.setDefaultValue(True)
-    calVerifyStoredEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_verify"]) 
+    calVerifyStoredEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_verify"])
 
     calVerifyExternEnabledSymbol = calComponent.createBooleanSymbol("cal_verify_extern", calVerifyEnabledSymbol)
     calVerifyExternEnabledSymbol.setLabel("Support Verify Extern?")
     calVerifyExternEnabledSymbol.setDescription("Enable support for Verify Extern")
     calVerifyExternEnabledSymbol.setVisible(True)
     calVerifyExternEnabledSymbol.setDefaultValue(True)
-    calVerifyExternEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_verify"]) 
+    calVerifyExternEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_verify"])
 
     calVerifyValidateEnabledSymbol = calComponent.createBooleanSymbol("cal_verify_validate", calVerifyEnabledSymbol)
     calVerifyValidateEnabledSymbol.setLabel("Support Verify Validate?")
     calVerifyValidateEnabledSymbol.setDescription("Enable support for Verify Validate")
     calVerifyValidateEnabledSymbol.setVisible(True)
     calVerifyValidateEnabledSymbol.setDefaultValue(True)
-    calVerifyValidateEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_verify"]) 
+    calVerifyValidateEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_verify"])
 
     calVerifyMacEnabledSymbol = calComponent.createBooleanSymbol("cal_verify_mac", calVerifyEnabledSymbol)
     calVerifyMacEnabledSymbol.setLabel("Support Verify Mac?")
@@ -532,7 +559,7 @@ def instantiateComponent(calComponent):
     calDerivekeyEnabledSymbol.setLabel("Support Derivekey?")
     calDerivekeyEnabledSymbol.setDescription("Enable support for Derivekey Command")
     calDerivekeyEnabledSymbol.setVisible(True)
-    calDerivekeyEnabledSymbol.setDefaultValue(True) 
+    calDerivekeyEnabledSymbol.setDefaultValue(True)
 
     # INFO
     calInfoEnabledSymbol = calComponent.createBooleanSymbol("cal_info", deviceCommands)
@@ -560,7 +587,7 @@ def instantiateComponent(calComponent):
     calPrivWriteEnabledSymbol.setLabel("Support PrivWrite?")
     calPrivWriteEnabledSymbol.setDescription("Enable support for PrivWrite Command")
     calPrivWriteEnabledSymbol.setVisible(True)
-    calPrivWriteEnabledSymbol.setDefaultValue(True) 
+    calPrivWriteEnabledSymbol.setDefaultValue(True)
 
     # RANDOM
     calRandomEnabledSymbol = calComponent.createBooleanSymbol("cal_random", deviceCommands)
@@ -588,7 +615,7 @@ def instantiateComponent(calComponent):
     calSecurebootEnabledSymbol.setLabel("Support Secureboot?")
     calSecurebootEnabledSymbol.setDescription("Enable support for Secureboot Command")
     calSecurebootEnabledSymbol.setVisible(True)
-    calSecurebootEnabledSymbol.setDefaultValue(True) 
+    calSecurebootEnabledSymbol.setDefaultValue(True)
 
     calSecurebootMacEnabledSymbol = calComponent.createBooleanSymbol("cal_secureboot_mac", calSecurebootEnabledSymbol)
     calSecurebootMacEnabledSymbol.setLabel("Support Secureboot MAC?")
@@ -623,7 +650,7 @@ def instantiateComponent(calComponent):
     calShaContextEnabledSymbol.setDescription("Enable support for SHA CONTEXT")
     calShaContextEnabledSymbol.setVisible(True)
     calShaContextEnabledSymbol.setDefaultValue(True)
-    calShaContextEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_sha"])     
+    calShaContextEnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_sha"])
 
     # UPDATEEXTRA
     calUpdateextraEnabledSymbol = calComponent.createBooleanSymbol("cal_updateextra", deviceCommands)
@@ -897,14 +924,13 @@ def instantiateComponent(calComponent):
     calDevCfgList.setTarget('cryptoauthlib.CAL_DEV_CFG_LIST')
 
     # Add device specific options
-    calTaEnableAesAuth = calComponent.createBooleanSymbol('CAL_ENABLE_TA100_AES_AUTH', None)
+    calTaEnableAesAuth = calComponent.createBooleanSymbol('CAL_ENABLE_TA10x_AES_AUTH', None)
     calTaEnableAesAuth.setValue(False)
     calTaEnableAesAuth.setVisible(True)
 
-    calTaEnableFce = calComponent.createBooleanSymbol('CAL_ENABLE_TA100_FCE', None)
+    calTaEnableFce = calComponent.createBooleanSymbol('CAL_ENABLE_TA10x_FCE', None)
     calTaEnableFce.setValue(False)
     calTaEnableFce.setVisible(True)
-
 
     ################# Templated files to be included #######################
 
@@ -941,6 +967,17 @@ def instantiateComponent(calComponent):
     calLibConfigFile.setMarkup(True)
     calLibConfigFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
 
+    # Conditionally add talib configuration header
+    talibConfigFile = calComponent.createFileSymbol("TALIB_CONFIG_DATA", None)
+    talibConfigFile.setSourcePath("harmony/templates/talib_config.h.ftl")
+    talibConfigFile.setOutputName("talib_config.h")
+    talibConfigFile.setDestPath("library/cryptoauthlib")
+    talibConfigFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/")
+    talibConfigFile.setType("HEADER")
+    talibConfigFile.setOverwrite(True)
+    talibConfigFile.setMarkup(True)
+    talibConfigFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
+    talibConfigFile.setEnabled(False)
 
     # This selects and configures the proper processor specific delay implementation as one
     # does not exist as driver source in harmony

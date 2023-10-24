@@ -57,11 +57,11 @@ ATCA_STATUS hal_kit_hid_init(ATCAIface iface, ATCAIfaceCfg* cfg)
 #ifdef KIT_DEBUG
     printf("Enumerate HID device(s)\n");
 #endif
-    hid_init();
+    (void)hid_init();
 
-    iface->hal_data = hid_open(ATCA_IFACECFG_VALUE(cfg, atcahid.vid), ATCA_IFACECFG_VALUE(cfg, atcahid.pid), NULL);
+    iface->hal_data = hid_open((uint16_t)(ATCA_IFACECFG_VALUE(cfg, atcahid.vid) & UINT16_MAX), (uint16_t)(ATCA_IFACECFG_VALUE(cfg, atcahid.pid) & UINT16_MAX), NULL);
 
-    return (iface->hal_data) ? ATCA_SUCCESS : ATCA_COMM_FAIL;
+    return (NULL != iface->hal_data) ? ATCA_SUCCESS : ATCA_COMM_FAIL;
 }
 
 /** \brief HAL implementation of Kit HID post init
@@ -85,7 +85,7 @@ ATCA_STATUS hal_kit_hid_send(ATCAIface iface, uint8_t word_address, uint8_t* txd
 {
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
     hid_device* pHid = (hid_device*)atgetifacehaldat(iface);
-    uint32_t bytes_written;
+    int bytes_written;
 
     ((void)word_address);
     ((void)txlength);
@@ -99,8 +99,12 @@ ATCA_STATUS hal_kit_hid_send(ATCAIface iface, uint8_t word_address, uint8_t* txd
     printf("HID layer: Write: %s", txdata);
 #endif
 
-    bytes_written = (uint32_t)hid_write(pHid, txdata, (size_t)ATCA_IFACECFG_VALUE(cfg, atcahid.packetsize) + 1);
-    if (bytes_written != ATCA_IFACECFG_VALUE(cfg, atcahid.packetsize) + 1)
+    if (0 > (bytes_written = hid_write(pHid, txdata, (size_t)ATCA_IFACECFG_VALUE(cfg, atcahid.packetsize) + 1u)))
+    {
+        return ATCA_TX_FAIL;
+    }
+
+    if ((uint32_t)bytes_written != ATCA_IFACECFG_VALUE(cfg, atcahid.packetsize) + 1u)
     {
         return ATCA_TX_FAIL;
     }
@@ -115,26 +119,26 @@ ATCA_STATUS hal_kit_hid_send(ATCAIface iface, uint8_t word_address, uint8_t* txd
  * \param[in,out] rxsize        ptr to expected number of receive bytes to request
  * \return ATCA_STATUS
  */
-ATCA_STATUS hal_kit_hid_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, uint16_t* rxsize)
+ATCA_STATUS hal_kit_hid_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, uint16_t* rxlength)
 {
     hid_device* pHid = (hid_device*)atgetifacehaldat(iface);
     int ret;
 
     ((void)word_address);
 
-    if ((rxdata == NULL) || (rxsize == NULL) || (pHid == NULL))
+    if ((rxdata == NULL) || (rxlength == NULL) || (pHid == NULL))
     {
         return ATCA_BAD_PARAM;
     }
 
-    ret = (uint16_t)hid_read(pHid, rxdata, (size_t)*rxsize);
+    ret = hid_read(pHid, rxdata, (size_t)*rxlength);
     if (ret < 0)
     {
         return ATCA_RX_FAIL;
     }
     else
     {
-        *rxsize = (uint16_t)ret;
+        *rxlength = (uint16_t)ret;
     }
 
 #ifdef KIT_DEBUG
@@ -157,7 +161,7 @@ ATCA_STATUS hal_kit_hid_control(ATCAIface iface, uint8_t option, void* param, si
     ((void)param);
     ((void)paramlen);
 
-    if (iface && iface->mIfaceCFG)
+    if ((NULL != iface) && (NULL != iface->mIfaceCFG))
     {
         return ATCA_UNIMPLEMENTED;
     }

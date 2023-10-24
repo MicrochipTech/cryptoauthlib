@@ -46,7 +46,7 @@ TEST_CONDITION(atca_cmd_basic_test, write)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return (atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type));
+    return atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type);
 }
 
 TEST(atca_cmd_basic_test, write_boundary_conditions)
@@ -405,7 +405,7 @@ TEST_CONDITION(atca_cmd_basic_test, write_hmac_key)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((ECC204 == dev_type) || (TA010 == dev_type) || (SHA104 == dev_type) || (SHA105 == dev_type));
+    return (ECC204 == dev_type) || (TA010 == dev_type) || (SHA104 == dev_type) || (SHA105 == dev_type);
 }
 
 TEST(atca_cmd_basic_test, write_hmac_key)
@@ -427,7 +427,7 @@ TEST_CONDITION(atca_cmd_basic_test, write_io_protection_key)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return (SHA105 == dev_type);
+    return SHA105 == dev_type;
 }
 
 TEST(atca_cmd_basic_test, write_io_protection_key)
@@ -446,13 +446,13 @@ TEST_CONDITION(atca_cmd_basic_test, write_data_zone_blocks)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((ATECC108A == dev_type)
-            || (ATECC508A == dev_type)
-            || (ATECC608A == dev_type)
-            || (ECC204 == dev_type)
-            || (TA010 == dev_type)
-            || (TA100 == dev_type)
-    );
+    return (ATECC108A == dev_type)
+           || (ATECC508A == dev_type)
+           || (ATECC608A == dev_type)
+           || (ECC204 == dev_type)
+           || (TA010 == dev_type)
+           || atcab_is_ta_device(dev_type)
+    ;
 }
 
 TEST(atca_cmd_basic_test, write_data_zone_blocks)
@@ -465,7 +465,7 @@ TEST(atca_cmd_basic_test, write_data_zone_blocks)
     /* Note - This test assumes ECC slot sizes */
     if (atcab_is_ca2_device(gCfg->devtype))
     {
-        /* This test for the ECC204 needs to be run when the device data is unlocked 
+        /* This test for the ECC204 needs to be run when the device data is unlocked
            Config Subzone 0 and 1 should be locked */
         test_assert_config_is_locked();
         test_assert_data_is_unlocked();
@@ -659,10 +659,10 @@ TEST_CONDITION(atca_cmd_basic_test, write_config_zone)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type))
-            || atcab_is_ca2_device(dev_type)
-            || (TA100 == dev_type)
-    );
+    return (atcab_is_ca_device(dev_type) && (ATSHA206A != dev_type))
+           || atcab_is_ca2_device(dev_type)
+           || atcab_is_ta_device(dev_type)
+    ;
 }
 
 TEST(atca_cmd_basic_test, write_config_zone)
@@ -708,7 +708,7 @@ TEST(atca_cmd_basic_test, write_config_zone)
 #endif
 #if ATCA_TA_SUPPORT
     case TA100:
-        status = atcab_write_config_zone(test_ta100_configdata);
+        status = atcab_write_config_zone(test_ta10x_configdata);
         break;
 #endif
 
@@ -724,11 +724,11 @@ TEST_CONDITION(atca_cmd_basic_test, write_pubkey)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return ((ATECC108A == dev_type)
-            || (ATECC508A == dev_type)
-            || (ATECC608A == dev_type)
-            || (TA100 == dev_type)
-    );
+    return (ATECC108A == dev_type)
+           || (ATECC508A == dev_type)
+           || (ATECC608A == dev_type)
+           || atcab_is_ta_device(dev_type)
+    ;
 }
 
 TEST(atca_cmd_basic_test, write_pubkey)

@@ -25,7 +25,7 @@
  * THIS SOFTWARE.
  */
 
-#include <cryptoauthlib.h>
+#include "cryptoauthlib.h"
 
 /** \defgroup device ATCADevice (atca_)
  * \brief ATCADevice object - composite of command and interface objects
@@ -53,14 +53,13 @@ ATCADevice newATCADevice(ATCAIfaceCfg *cfg)
         return NULL;
     }
 
-    memset(ca_dev, 0, sizeof(struct atca_device));
+    (void)memset(ca_dev, 0, sizeof(struct atca_device));
 
     status = initATCADevice(cfg, ca_dev);
     if (status != ATCA_SUCCESS)
     {
         hal_free(ca_dev);
         ca_dev = NULL;
-        return NULL;
     }
 
     return ca_dev;
@@ -76,7 +75,7 @@ void deleteATCADevice(ATCADevice *ca_dev)
         return;
     }
 
-    releaseATCADevice(*ca_dev);
+    (void)releaseATCADevice(*ca_dev);
 
     hal_free(*ca_dev);
     *ca_dev = NULL;
@@ -126,6 +125,13 @@ ATCA_STATUS releaseATCADevice(ATCADevice ca_dev)
     if (ca_dev == NULL)
     {
         return ATCA_BAD_PARAM;
+    }
+
+    if (NULL != ca_dev->session_cb)
+    {
+        ca_dev->session_cb(ca_dev->session_ctx);
+        ca_dev->session_ctx = NULL;
+        ca_dev->session_cb = NULL;
     }
 
     return releaseATCAIface(&ca_dev->mIface);

@@ -49,9 +49,18 @@ TEST(atcac_pk, verify_nist)
     uint8_t pubkey[64];
     uint8_t signature[64];
     uint8_t digest[32];
-    atcac_pk_ctx pkey_ctx;
     ATCA_STATUS status;
     size_t i;
+
+    struct atcac_pk_ctx * pkey_ctx;
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    pkey_ctx = atcac_pk_ctx_new();
+    TEST_ASSERT_NOT_NULL(pkey_ctx);
+#else
+    atcac_pk_ctx_t pkey_ctx_inst;
+    pkey_ctx = &pkey_ctx_inst;
+#endif
 
     /* Test verification using [P-256,SHA-256] vectors */
     for (i = 0; i < ecdsa_p256_test_vectors_count; i++)
@@ -69,14 +78,14 @@ TEST(atcac_pk, verify_nist)
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
         /* Initialize the key using the provided X,Y cordinantes */
-        status = atcac_pk_init(&pkey_ctx, pubkey, sizeof(pubkey), 0, true);
+        status = atcac_pk_init(pkey_ctx, pubkey, sizeof(pubkey), 0, true);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
         /* Perform the verification */
-        status = atcac_pk_verify(&pkey_ctx, digest, sizeof(digest), signature, sizeof(signature));
+        status = atcac_pk_verify(pkey_ctx, digest, sizeof(digest), signature, sizeof(signature));
 
         /* Make sure to free the key before testing the result of the verify */
-        atcac_pk_free(&pkey_ctx);
+        atcac_pk_free(pkey_ctx);
 
         /* Check verification result against the expected success/failure */
         if (ecdsa_p256_test_vectors[i].Result)
@@ -88,6 +97,10 @@ TEST(atcac_pk, verify_nist)
             TEST_ASSERT_NOT_EQUAL(ATCA_SUCCESS, status);
         }
     }
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    atcac_pk_ctx_free(pkey_ctx);
+#endif
 }
 
 static uint8_t private_key_pem[] =
@@ -112,28 +125,41 @@ static uint8_t public_key_bytes[64] = {
 
 TEST(atcac_pk, init_public)
 {
-    atcac_pk_ctx priv_ctx;
     uint8_t public_key[64];
     size_t public_key_size = 64;
     ATCA_STATUS status;
 
+    struct atcac_pk_ctx * pkey_ctx;
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    pkey_ctx = atcac_pk_ctx_new();
+    TEST_ASSERT_NOT_NULL(pkey_ctx);
+#else
+    atcac_pk_ctx_t pkey_ctx_inst;
+    pkey_ctx = &pkey_ctx_inst;
+#endif
+
     /* Test initialization of a private key with a pem encoded key (without password) */
-    status = atcac_pk_init_pem(&priv_ctx, private_key_pem, sizeof(private_key_pem), false);
+    status = atcac_pk_init_pem(pkey_ctx, private_key_pem, sizeof(private_key_pem), false);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    status = atcac_pk_public(&priv_ctx, public_key, &public_key_size);
+    status = atcac_pk_public(pkey_ctx, public_key, &public_key_size);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     TEST_ASSERT_EQUAL_MEMORY(public_key_bytes, public_key, 64);
 
-    status = atcac_pk_free(&priv_ctx);
+    status = atcac_pk_free(pkey_ctx);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    atcac_pk_ctx_free(pkey_ctx);
+#endif
 }
 
 TEST(atcac_pk, sign_simple)
 {
-    atcac_pk_ctx sign_ctx;
-    atcac_pk_ctx verify_ctx;
+    struct atcac_pk_ctx * sign_ctx;
+    struct atcac_pk_ctx * verify_ctx;
     uint8_t digest[32] = { 0x1A, 0x3A, 0xA5, 0x45, 0x04, 0x94, 0x53, 0xAF,
                            0xDF, 0x17, 0xE9, 0x89, 0xA4, 0x1F, 0xA0, 0x97,
                            0x94, 0xA5, 0x1B, 0xD5, 0xDB, 0x91, 0x36, 0x37,
@@ -142,39 +168,68 @@ TEST(atcac_pk, sign_simple)
     size_t sig_size = sizeof(signature);
     ATCA_STATUS status;
 
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    sign_ctx = atcac_pk_ctx_new();
+    TEST_ASSERT_NOT_NULL(sign_ctx);
+    verify_ctx = atcac_pk_ctx_new();
+    TEST_ASSERT_NOT_NULL(verify_ctx);
+#else
+    atcac_pk_ctx_t sign_ctx_inst;
+    atcac_pk_ctx_t verify_ctx_inst;
+    sign_ctx = &sign_ctx_inst;
+    verify_ctx = &verify_ctx_inst;
+#endif
+
     memset(signature, 0, sig_size);
 
     /* Test initialization of a private key with a pem encoded key (without password) */
-    status = atcac_pk_init_pem(&sign_ctx, private_key_pem, sizeof(private_key_pem), false);
+    status = atcac_pk_init_pem(sign_ctx, private_key_pem, sizeof(private_key_pem), false);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     /* Test signing with the private key */
-    status = atcac_pk_sign(&sign_ctx, digest, sizeof(digest), signature, &sig_size);
+    status = atcac_pk_sign(sign_ctx, digest, sizeof(digest), signature, &sig_size);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     /* Test initialization of a public key with a pem encoded key */
-    status = atcac_pk_init_pem(&verify_ctx, public_key_pem, sizeof(public_key_pem), true);
+    status = atcac_pk_init_pem(verify_ctx, public_key_pem, sizeof(public_key_pem), true);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     /* Test verification of the siguature */
-    status = atcac_pk_verify(&verify_ctx, digest, sizeof(digest), &signature[sig_size - 64], 64);
+    status = atcac_pk_verify(verify_ctx, digest, sizeof(digest), &signature[sig_size - 64], 64);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     signature[10] ^= signature[10];
 
     /* Test failure to validate a corrupted signature */
-    status = atcac_pk_verify(&verify_ctx, digest, sizeof(digest), &signature[sig_size - 64], 64);
+    status = atcac_pk_verify(verify_ctx, digest, sizeof(digest), &signature[sig_size - 64], 64);
     TEST_ASSERT_NOT_EQUAL(ATCA_SUCCESS, status);
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    atcac_pk_ctx_free(sign_ctx);
+    atcac_pk_ctx_free(verify_ctx);
+#endif
 }
 
 TEST(atcac_pk, derive_ecdh_p256_nist)
 {
     ATCA_STATUS status;
-    atcac_pk_ctx pri_ctx;
-    atcac_pk_ctx pub_ctx;
+    struct atcac_pk_ctx * pri_ctx;
+    struct atcac_pk_ctx * pub_ctx;
     uint8_t result[32];
     size_t result_size;
     size_t i;
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    pri_ctx = atcac_pk_ctx_new();
+    TEST_ASSERT_NOT_NULL(pri_ctx);
+    pub_ctx = atcac_pk_ctx_new();
+    TEST_ASSERT_NOT_NULL(pub_ctx);
+#else
+    atcac_pk_ctx_t pri_ctx_inst;
+    atcac_pk_ctx_t pub_ctx_inst;
+    pri_ctx = &pri_ctx_inst;
+    pub_ctx = &pub_ctx_inst;
+#endif
 
     /* Test verification using [P-256] vectors */
     for (i = 0; i < ecdh_p256_test_vectors_count; i++)
@@ -184,19 +239,24 @@ TEST(atcac_pk, derive_ecdh_p256_nist)
         memcpy(pubkey, ecdh_p256_test_vectors[i].QCAVSx, 32);
         memcpy(&pubkey[32], ecdh_p256_test_vectors[i].QCAVSy, 32);
 
-        (void)atcac_pk_init(&pub_ctx, pubkey, sizeof(pubkey), 0, true);
-        (void)atcac_pk_init(&pri_ctx, (uint8_t*)ecdh_p256_test_vectors[i].dIUT, 32, 0, false);
+        (void)atcac_pk_init(pub_ctx, pubkey, sizeof(pubkey), 0, true);
+        (void)atcac_pk_init(pri_ctx, (uint8_t*)ecdh_p256_test_vectors[i].dIUT, 32, 0, false);
 
         result_size = sizeof(result);
-        status = atcac_pk_derive(&pri_ctx, &pub_ctx, result, &result_size);
+        status = atcac_pk_derive(pri_ctx, pub_ctx, result, &result_size);
 
-        (void)atcac_pk_free(&pri_ctx);
-        (void)atcac_pk_free(&pub_ctx);
+        (void)atcac_pk_free(pri_ctx);
+        (void)atcac_pk_free(pub_ctx);
 
         /* Check Test Results */
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
         TEST_ASSERT_EQUAL_MEMORY(ecdh_p256_test_vectors[i].ZIUT, result, 32);
     }
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    atcac_pk_ctx_free(pri_ctx);
+    atcac_pk_ctx_free(pub_ctx);
+#endif
 }
 
 // *INDENT-OFF* - Preserve formatting

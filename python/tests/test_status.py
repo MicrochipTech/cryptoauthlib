@@ -18,7 +18,7 @@ def test_atcaenum_to_int(test_status_init):
 
 
 def test_atcaenum_from_int(test_status_init):
-    assert Status.ATCA_BAD_PARAM == Status(0xE2)
+    assert Status.ATCA_BAD_PARAM == Status(-30)
 
 
 def test_atcaenum_eq(test_status_init):

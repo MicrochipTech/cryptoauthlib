@@ -1,0 +1,123 @@
+/**
+ * \file
+ * \brief Vector Enablement Configurations
+ *
+ * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ *
+ * \page License
+ *
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ *
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT,
+ * SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE
+ * OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
+ * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE
+ * FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL
+ * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
+ * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
+ * THIS SOFTWARE.
+ */
+#ifndef VECTORS_CONFIG_CHECK_H
+#define VECTORS_CONFIG_CHECK_H
+
+/* Base Configuration Data */
+#include "atca_config_check.h"
+
+#if ATCA_CA_SUPPORT
+#include "calib/calib_config_check.h"
+#endif
+
+#if ATCA_TA_SUPPORT
+#include "api_talib/test_talib_vectors.h"
+#endif
+
+/* Vector Configurations */
+
+#ifndef TEST_VECTOR_EC_P224_EN
+#define TEST_VECTOR_EC_P224_EN      DEFAULT_DISABLED
+#endif
+
+#ifndef TEST_VECTOR_EC_P256_EN
+#define TEST_VECTOR_EC_P256_EN      (CALIB_ECC_SUPPORT || TALIB_EC_P256_EN)
+#endif
+
+#ifndef TEST_VECTOR_EC_P256K1_EN
+#define TEST_VECTOR_EC_P256K1_EN    DEFAULT_DISABLED
+#endif
+
+#ifndef TEST_VECTOR_EC_BP256_EN
+#define TEST_VECTOR_EC_BP256_EN     DEFAULT_DISABLED
+#endif
+
+#ifndef TEST_VECTOR_EC_P384_EN
+#define TEST_VECTOR_EC_P384_EN      DEFAULT_DISABLED
+#endif
+
+#ifndef TEST_VECTOR_EC_P521_EN
+#define TEST_VECTOR_EC_P521_EN      DEFAULT_DISABLED
+#endif
+
+#ifndef TEST_VECTOR_EC_25519_EN
+#define TEST_VECTOR_EC_25519_EN     DEFAULT_DISABLED
+#endif
+
+#ifndef TEST_VECTOR_ED_25519_EN
+#define TEST_VECTOR_ED_25519_EN     DEFAULT_DISABLED
+#endif
+
+#ifndef TEST_VECTOR_ED_25519CTX_EN
+#define TEST_VECTOR_ED_25519CTX_EN  DEFAULT_DISABLED
+#endif
+
+#ifndef TEST_VECTOR_ED_25519PH_EN
+#define TEST_VECTOR_ED_25519PH_EN   DEFAULT_DISABLED
+#endif
+
+#ifndef TEST_VECTOR_RSA_PSS_EN
+#define TEST_VECTOR_RSA_PSS_EN      DEFAULT_DISABLED
+#endif
+
+#ifndef TEST_VECTOR_RSA_1024_EN
+#define TEST_VECTOR_RSA_1024_EN     DEFAULT_DISABLED
+#endif
+
+#ifndef TEST_VECTOR_RSA_2048_EN
+#define TEST_VECTOR_RSA_2048_EN     DEFAULT_DISABLED
+#endif
+
+#ifndef TEST_VECTOR_RSA_3072_EN
+#define TEST_VECTOR_RSA_3072_EN     DEFAULT_DISABLED
+#endif
+
+#ifndef TEST_VECTOR_RSA_4096_EN
+#define TEST_VECTOR_RSA_4096_EN     DEFAULT_DISABLED
+#endif
+
+#ifndef TEST_VECTOR_AES_128_EN
+#define TEST_VECTOR_AES_128_EN      (CALIB_AES_EN || TALIB_AES_128_EN)
+#endif
+
+#ifndef TEST_VECTOR_AES_256_EN
+#define TEST_VECTOR_AES_256_EN      DEFAULT_DISABLED
+#endif
+
+#ifndef TEST_VECTOR_SHA2_256_EN
+#define TEST_VECTOR_SHA2_256_EN     DEFAULT_ENABLED
+#endif
+
+#ifndef TEST_VECTOR_SHA2_384_EN
+#define TEST_VECTOR_SHA2_384_EN     DEFAULT_DISABLED
+#endif
+
+#ifndef TEST_VECTOR_SHA2_512_EN
+#define TEST_VECTOR_SHA2_512_EN     DEFAULT_DISABLED
+#endif
+
+#endif /* VECTORS_CONFIG_CHECK_H */

@@ -27,6 +27,7 @@
  */
 
 #include "cryptoauthlib.h"
+#include "cal_internal.h"
 
 #if ATCAC_PBKDF2_SHA256_EN
 /** \brief Calculate a PBKDF2 hash of a given password and salt
@@ -44,18 +45,24 @@ ATCA_STATUS atcac_pbkdf2_sha256(
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
-    atcac_hmac_sha256_ctx ctx;
+    atcac_hmac_ctx_t ctx;
     uint32_t i, j;
     uint32_t counter = 1;
-    uint8_t temp1_digest[ATCA_SHA256_DIGEST_SIZE];
-    uint8_t temp2_digest[ATCA_SHA256_DIGEST_SIZE];
+    uint8_t temp1_digest[ATCA_SHA256_DIGEST_SIZE] = { 0 };
+    uint8_t temp2_digest[ATCA_SHA256_DIGEST_SIZE] = { 0 };
+    atcac_sha2_256_ctx_t sha256_ctx;
 
-    for (; 0 < result_len; counter++)
+    if ((0U >= result_len) || (result_len > UINT32_MAX))
+    {
+        return status;
+    }
+
+    do
     {
         size_t temp_size = ATCA_SHA256_DIGEST_SIZE;
         uint32_t temp_u32;
 
-        if (ATCA_SUCCESS != (status = atcac_sha256_hmac_init(&ctx, password, (uint8_t)password_len)))
+        if (ATCA_SUCCESS != (status = atcac_sha256_hmac_init(&ctx, &sha256_ctx, password, (uint8_t)(password_len & 0xFFu))))
         {
             break;
         }
@@ -76,11 +83,11 @@ ATCA_STATUS atcac_pbkdf2_sha256(
             break;
         }
 
-        memcpy(temp2_digest, temp1_digest, ATCA_SHA256_DIGEST_SIZE);
+        (void)memcpy(temp2_digest, temp1_digest, ATCA_SHA256_DIGEST_SIZE);
 
         for (i = 1; i < iter; i++)
         {
-            if (ATCA_SUCCESS != (status = atcac_sha256_hmac_init(&ctx, password, (uint8_t)password_len)))
+            if (ATCA_SUCCESS != (status = atcac_sha256_hmac_init(&ctx, &sha256_ctx, password, (uint8_t)password_len)))
             {
                 break;
             }
@@ -95,7 +102,7 @@ ATCA_STATUS atcac_pbkdf2_sha256(
                 break;
             }
 
-            for (j = 0; j < ATCA_SHA256_DIGEST_SIZE; j++)
+            for (j = 0u; j < ATCA_SHA256_DIGEST_SIZE; j++)
             {
                 temp1_digest[j] ^= temp2_digest[j];
             }
@@ -104,12 +111,16 @@ ATCA_STATUS atcac_pbkdf2_sha256(
         if (ATCA_SUCCESS == status)
         {
             size_t copy_len = (result_len < ATCA_SHA256_DIGEST_SIZE) ? result_len : ATCA_SHA256_DIGEST_SIZE;
-            memcpy(result, temp1_digest, copy_len);
+            (void)memcpy(result, temp1_digest, copy_len);
 
             result_len -= copy_len;
             result += copy_len;
         }
+
+        /* coverity[cert_int30_c_violation:FALSE] counter can't wrap as result_len is checked to be less than SIZE_MAX */
+        counter++;
     }
+    while (0u < result_len);
     return status;
 }
 #endif /* ATCAC_PBKDF2_SHA256 */
@@ -137,23 +148,28 @@ ATCA_STATUS atcab_pbkdf2_sha256_ext(
     uint8_t temp2_digest[ATCA_SHA256_DIGEST_SIZE];
     uint8_t message[ATCA_SHA256_BLOCK_SIZE];
 
-    for (; 0 < result_len; counter++)
+    if (0u >= result_len)
+    {
+        return status;
+    }
+
+    do
     {
         uint32_t temp_u32;
         size_t msg_len;
 
         temp_u32 = ATCA_UINT32_HOST_TO_BE(counter);
 
-        memcpy(message, salt, salt_len);
-        memcpy(&message[salt_len], &temp_u32, 4);
-        msg_len = salt_len + 4;
+        (void)memcpy(message, salt, salt_len);
+        (void)memcpy(&message[salt_len], (uint8_t*)&temp_u32, 4);
+        msg_len = salt_len + 4u;
 
         if (ATCA_SUCCESS != (status = ATCA_TRACE(atcab_sha_hmac_ext(device, message, msg_len, slot, temp1_digest, 0), "")))
         {
             break;
         }
 
-        memcpy(temp2_digest, temp1_digest, ATCA_SHA256_DIGEST_SIZE);
+        (void)memcpy(temp2_digest, temp1_digest, ATCA_SHA256_DIGEST_SIZE);
 
         for (i = 1; i < iter; i++)
         {
@@ -162,7 +178,7 @@ ATCA_STATUS atcab_pbkdf2_sha256_ext(
                 break;
             }
 
-            for (j = 0; j < ATCA_SHA256_DIGEST_SIZE; j++)
+            for (j = 0u; j < ATCA_SHA256_DIGEST_SIZE; j++)
             {
                 temp1_digest[j] ^= temp2_digest[j];
             }
@@ -171,12 +187,16 @@ ATCA_STATUS atcab_pbkdf2_sha256_ext(
         if (ATCA_SUCCESS == status)
         {
             size_t copy_len = (result_len < ATCA_SHA256_DIGEST_SIZE) ? result_len : ATCA_SHA256_DIGEST_SIZE;
-            memcpy(result, temp1_digest, copy_len);
+            (void)memcpy(result, temp1_digest, copy_len);
 
             result_len -= copy_len;
             result += copy_len;
         }
+
+        counter++;
     }
+    while (0u < result_len);
+
     return status;
 }
 

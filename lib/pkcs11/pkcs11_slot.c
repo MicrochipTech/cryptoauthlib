@@ -56,21 +56,22 @@ static pkcs11_slot_ctx pkcs11_slot_cache[PKCS11_MAX_SLOTS_ALLOWED];
  */
 pkcs11_slot_ctx_ptr pkcs11_slot_get_context(pkcs11_lib_ctx_ptr lib_ctx, CK_SLOT_ID slotID)
 {
-    if (!lib_ctx)
+    if (NULL == lib_ctx)
     {
         lib_ctx = pkcs11_get_context();
     }
 
-    if (lib_ctx && lib_ctx->slots)
+    if (NULL != lib_ctx && NULL != lib_ctx->slots)
     {
         pkcs11_slot_ctx_ptr rv = (pkcs11_slot_ctx_ptr)lib_ctx->slots;
-        CK_ULONG idx =0;
-        for (idx=0; idx<lib_ctx->slot_cnt; idx++, rv++)
+        CK_ULONG idx = 0;
+        for (idx = 0; idx < lib_ctx->slot_cnt; idx++)
         {
             if (rv->slot_id == slotID)
             {
                 return rv;
             }
+            rv++;
         }
     }
     return NULL;
@@ -78,21 +79,22 @@ pkcs11_slot_ctx_ptr pkcs11_slot_get_context(pkcs11_lib_ctx_ptr lib_ctx, CK_SLOT_
 
 pkcs11_slot_ctx_ptr pkcs11_slot_get_new_context(pkcs11_lib_ctx_ptr lib_ctx)
 {
-    if (!lib_ctx)
+    if (NULL == lib_ctx)
     {
         lib_ctx = pkcs11_get_context();
     }
 
-    if (lib_ctx && lib_ctx->slots)
+    if (NULL != lib_ctx && NULL != lib_ctx->slots)
     {
         pkcs11_slot_ctx_ptr rv = (pkcs11_slot_ctx_ptr)lib_ctx->slots;
-        CK_ULONG idx =0;
-        for (idx=0; idx<lib_ctx->slot_cnt; idx++, rv++)
+        CK_ULONG idx = 0;
+        for (idx = 0; idx < lib_ctx->slot_cnt; idx++)
         {
-            if (!rv->label[0])
+            if (SLOT_STATE_UNINITIALIZED == rv->slot_state)
             {
                 return rv;
             }
+            rv++;
         }
     }
     return NULL;
@@ -104,18 +106,62 @@ CK_VOID_PTR pkcs11_slot_initslots(CK_ULONG pulCount)
     int i;
     for (i = 0; i < PKCS11_MAX_SLOTS_ALLOWED; i++)
     {
-        memset(&pkcs11_slot_cache[i], 0, sizeof(pkcs11_slot_ctx));
+        (void)memset(&pkcs11_slot_cache[i], 0, sizeof(pkcs11_slot_ctx));
     }
 
     return &pkcs11_slot_cache;
 #else
-    pkcs11_slot_ctx_ptr slot_ctx_array = pkcs11_os_malloc(sizeof(pkcs11_slot_ctx) * pulCount);
-    if (slot_ctx_array)
+    pkcs11_slot_ctx_ptr slot_ctx_array = NULL;
+
+    if (pulCount <= (CK_ULONG)((SIZE_MAX / sizeof(pkcs11_slot_ctx)) & UINT32_MAX))
     {
-        memset(slot_ctx_array, 0, sizeof(pkcs11_slot_ctx) * pulCount);
+        slot_ctx_array = pkcs11_os_malloc(sizeof(pkcs11_slot_ctx) * pulCount);
+    }
+
+    if (NULL != slot_ctx_array)
+    {
+        (void)memset(slot_ctx_array, 0, sizeof(pkcs11_slot_ctx) * pulCount);
     }
     return slot_ctx_array;
 #endif
+}
+
+CK_RV pkcs11_slot_deinitslots(pkcs11_lib_ctx_ptr lib_ctx)
+{
+    CK_RV rv = CKR_ARGUMENTS_BAD;
+
+    if (NULL == lib_ctx)
+    {
+        lib_ctx = pkcs11_get_context();
+    }
+
+    if (NULL != lib_ctx->slots)
+    {
+#ifdef ATCA_NO_HEAP
+        int i;
+        for (i = 0; i < PKCS11_MAX_SLOTS_ALLOWED; i++)
+        {
+            (void)memset(&pkcs11_slot_cache[i], 0, sizeof(pkcs11_slot_ctx));
+        }
+#else
+        /* free device context*/
+        pkcs11_slot_ctx_ptr pslot_ctx = (pkcs11_slot_ctx_ptr)lib_ctx->slots;
+        CK_ULONG i = 0;
+        for (i = 0; i < lib_ctx->slot_cnt; i++)
+        {
+            if ((NULL != pslot_ctx) && (NULL != pslot_ctx->device_ctx))
+            {
+                pkcs11_os_free(pslot_ctx->device_ctx);
+            }
+            pslot_ctx++;
+        }
+
+        (void)memset(lib_ctx->slots, 0, sizeof(pkcs11_slot_ctx) * PKCS11_MAX_SLOTS_ALLOWED);
+        pkcs11_os_free(lib_ctx->slots);
+#endif
+        rv = CKR_OK;
+    }
+    return rv;
 }
 
 CK_RV pkcs11_slot_config(CK_SLOT_ID slotID)
@@ -124,14 +170,14 @@ CK_RV pkcs11_slot_config(CK_SLOT_ID slotID)
     pkcs11_slot_ctx_ptr slot_ctx;
     CK_RV rv;
 
-    if (!lib_ctx)
+    if (NULL == lib_ctx)
     {
         return CKR_CRYPTOKI_NOT_INITIALIZED;
     }
 
     slot_ctx = pkcs11_slot_get_context(lib_ctx, slotID);
 
-    if (!slot_ctx)
+    if (NULL == slot_ctx)
     {
         return CKR_SLOT_ID_INVALID;
     }
@@ -147,16 +193,15 @@ CK_RV pkcs11_slot_config(CK_SLOT_ID slotID)
 }
 
 #if defined(ATCA_HAL_KIT_BRIDGE) && defined(PKCS11_TESTING_ENABLE)
+/* coverity[misra_c_2012_rule_8_6_violation] never defined */
 extern ATCA_STATUS hal_kit_bridge_connect(ATCAIfaceCfg *, int, char **);
 #endif
 
-#if PKCS11_508_SUPPORT && PKCS11_608_SUPPORT
-static ATCA_STATUS pkcs11_slot_check_device_type(ATCAIfaceCfg * ifacecfg)
+#if defined(PKCS11_508_SUPPORT) && defined(PKCS11_608_SUPPORT)
+static ATCA_STATUS pkcs11_slot_check_device_type(ATCAIfaceCfg *ifacecfg, ATCADevice device)
 {
     uint8_t info[4] = { 0 };
-    ATCA_STATUS status = atcab_info(info);
-
-    printf("pkcs11_slot_check_device_type: %d\n", ifacecfg->devtype);
+    ATCA_STATUS status = atcab_info_ext(device, info);
 
     if (ATCA_SUCCESS == status)
     {
@@ -174,13 +219,11 @@ static ATCA_STATUS pkcs11_slot_check_device_type(ATCAIfaceCfg * ifacecfg)
         if (ifacecfg->devtype != devType)
         {
             ifacecfg->devtype = devType;
-            (void)atcab_release();
+            (void)atcab_release_ext(&device);
             atca_delay_ms(1);
-            status = atcab_init(ifacecfg);
+            status = atcab_init_ext(&device, ifacecfg);
         }
     }
-
-    printf("pkcs11_slot_check_device_type: %d\n", ifacecfg->devtype);
 
     return status;
 }
@@ -191,17 +234,17 @@ CK_RV pkcs11_slot_init(CK_SLOT_ID slotID)
 {
     pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
     pkcs11_slot_ctx_ptr slot_ctx;
-    ATCA_STATUS status = CKR_OK;
+    ATCA_STATUS status = (ATCA_STATUS)CKR_OK;
     int retries;
 
-    if (!lib_ctx)
+    if (NULL == lib_ctx)
     {
         return CKR_CRYPTOKI_NOT_INITIALIZED;
     }
 
     slot_ctx = pkcs11_slot_get_context(lib_ctx, slotID);
 
-    if (!slot_ctx)
+    if (NULL == slot_ctx)
     {
         return CKR_SLOT_ID_INVALID;
     }
@@ -213,9 +256,9 @@ CK_RV pkcs11_slot_init(CK_SLOT_ID slotID)
     }
 #endif
 
-    if (!slot_ctx->initialized)
+    if (SLOT_STATE_CONFIGURED == slot_ctx->slot_state)
     {
-        ATCAIfaceCfg * ifacecfg = &slot_ctx->interface_config;
+        ATCAIfaceCfg *ifacecfg = &slot_ctx->interface_config;
 
         retries = 2;
         do
@@ -224,49 +267,49 @@ CK_RV pkcs11_slot_init(CK_SLOT_ID slotID)
             if (ATCA_KIT_IFACE == ifacecfg->iface_type)
             {
                 int argc = 3;
-                char * argv[3];
+                char *argv[3];
                 pkcs11_config_split_string((char*)slot_ctx->devpath, ':', &argc, argv);
                 status = hal_kit_bridge_connect(ifacecfg, argc, argv);
             }
+            if (ATCA_SUCCESS == status)
 #endif
-
-            /* If a PKCS11 was killed an left the device in the idle state then
-               starting up again will require the device to go back to a known state
-               that is accomplished here by retrying the initalization */
-            if(ATCA_SUCCESS == status)
             {
-                status = atcab_init(ifacecfg);
+                /* If a PKCS11 was killed an left the device in the idle state then
+                   starting up again will require the device to go back to a known state
+                   that is accomplished here by retrying the initalization */
+                slot_ctx->device_ctx = NULL;
+                status = atcab_init_ext(&slot_ctx->device_ctx, ifacecfg);
             }
-        }
-        while (retries-- && status);
+        } while (retries-- != 0 && status != ATCA_SUCCESS);
 
-    #ifdef ATCA_HAL_I2C
+#ifdef ATCA_HAL_I2C
         if (ATCA_SUCCESS != status)
         {
-            if (0xC0 != ATCA_IFACECFG_VALUE(ifacecfg, atcai2c.address))
+            if (0xC0u != ATCA_IFACECFG_VALUE(ifacecfg, atcai2c.address))
             {
                 /* Try the default address */
                 ATCA_IFACECFG_VALUE(ifacecfg, atcai2c.address) = 0xC0;
-                atcab_release();
+                (void)atcab_release_ext(&slot_ctx->device_ctx);
                 atca_delay_ms(1);
                 retries = 2;
                 do
                 {
                     /* Same as the above */
-                    status = atcab_init(ifacecfg);
-                }
-                while (retries-- && status);
+                    slot_ctx->device_ctx = NULL;
+                    status = atcab_init_ext(&slot_ctx->device_ctx, ifacecfg);
+                    retries--;
+                } while ((retries != 0) && (ATCA_SUCCESS != status));
             }
         }
-    #endif
+#endif
 
-    #if PKCS11_508_SUPPORT && PKCS11_608_SUPPORT
+#if defined(PKCS11_508_SUPPORT) && defined(PKCS11_608_SUPPORT)
         /* If both are supported check the device to verify */
-        if (ATCA_SUCCESS == status)
+        if ((ATCA_SUCCESS == status) && atcab_is_ca_device(ifacecfg->devtype))
         {
-            status = pkcs11_slot_check_device_type(ifacecfg);
+            status = pkcs11_slot_check_device_type(ifacecfg, slot_ctx->device_ctx);
         }
-    #endif
+#endif
 
         if (ATCA_SUCCESS == status)
         {
@@ -275,7 +318,7 @@ CK_RV pkcs11_slot_init(CK_SLOT_ID slotID)
 #if ATCA_CA_SUPPORT
                 /* Only the classic cryptoauth devices require the configuration
                    to be loaded into memory */
-                status = atcab_read_config_zone((uint8_t*)&slot_ctx->cfg_zone);
+                status = atcab_read_config_zone_ext(slot_ctx->device_ctx, (uint8_t*)&slot_ctx->cfg_zone);
 #else
                 status = ATCA_GEN_FAIL;
 #endif
@@ -284,7 +327,7 @@ CK_RV pkcs11_slot_init(CK_SLOT_ID slotID)
             {
 #if ATCA_TA_SUPPORT
                 /* Iterate through all objects and attach handle info */
-                status = pkcs11_object_load_handle_info(lib_ctx);
+                status = pkcs11_object_load_handle_info(slot_ctx->device_ctx, lib_ctx);
 #else
                 status = ATCA_GEN_FAIL;
 #endif
@@ -294,7 +337,7 @@ CK_RV pkcs11_slot_init(CK_SLOT_ID slotID)
         if (ATCA_SUCCESS == status)
         {
             slot_ctx->slot_id = slotID;
-            slot_ctx->initialized = TRUE;
+            slot_ctx->slot_state = SLOT_STATE_READY;
         }
     }
 
@@ -306,11 +349,22 @@ static CK_ULONG pkcs11_slot_get_active_count(pkcs11_lib_ctx_ptr lib_ctx)
     CK_ULONG active_cnt = 0;
     CK_ULONG i;
 
-    for (i = 0; i < lib_ctx->slot_cnt; i++)
+    pkcs11_slot_ctx_ptr pslot = (pkcs11_slot_ctx_ptr)lib_ctx->slots;
+
+    if (NULL != pslot)
     {
-        if (((pkcs11_slot_ctx_ptr*)lib_ctx->slots)[i])
+        for (i = 0; i < lib_ctx->slot_cnt; i++)
         {
-            active_cnt++;
+            /* coverity[misra_c_2012_rule_14_3_violation] after increment pslot can be null */
+            if (NULL != pslot && (SLOT_STATE_UNINITIALIZED != pslot->slot_state))
+            {
+                if (active_cnt < UINT32_MAX)
+                {
+                    active_cnt++;
+                }
+            }
+
+            pslot++;
         }
     }
     return active_cnt;
@@ -321,18 +375,33 @@ static void pkcs11_slot_fill_list(pkcs11_lib_ctx_ptr lib_ctx, CK_BBOOL tokenPres
     CK_ULONG i;
     CK_ULONG j = 0;
 
-    for (i = 0; i < lib_ctx->slot_cnt; i++)
+    pkcs11_slot_ctx_ptr pslot = (pkcs11_slot_ctx_ptr)lib_ctx->slots;
+
+    if (NULL != pslot)
     {
-        if (tokenPresent)
+        for (i = 0; i < lib_ctx->slot_cnt; i++)
         {
-            if (((pkcs11_slot_ctx_ptr*)lib_ctx->slots)[i])
+            if (tokenPresent)
             {
-                pSlotList[j++] = i;
+                /* coverity[misra_c_2012_rule_14_3_violation] pslot can be NUll after increment */
+                if (NULL != pslot && (SLOT_STATE_UNINITIALIZED != pslot->slot_state))
+                {
+                    if (j < UINT32_MAX)
+                    {
+                        pSlotList[j++] = pslot->slot_id;
+                        PKCS11_DEBUG("Slot Id: %d \n", pslot->slot_id);
+                    }
+                }
             }
-        }
-        else
-        {
-            pSlotList[j++] = i;
+            else
+            {
+                /* coverity[misra_c_2012_rule_14_3_violation] pslot can be NUll after increment */
+                if (NULL != pslot)
+                {
+                    pSlotList[j++] = pslot->slot_id;
+                }
+            }
+            pslot++;
         }
     }
 }
@@ -342,13 +411,13 @@ CK_RV pkcs11_slot_get_list(CK_BBOOL tokenPresent, CK_SLOT_ID_PTR pSlotList, CK_U
     pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
     CK_ULONG slot_cnt = 0;
 
-    if (!lib_ctx || !lib_ctx->initialized)
+    if (NULL == lib_ctx || FALSE == lib_ctx->initialized)
     {
         return CKR_CRYPTOKI_NOT_INITIALIZED;
     }
 
     /* Ref PKCS11 Sec 5.5 - C_GetSlotList */
-    if (!pulCount)
+    if (NULL == pulCount)
     {
         return CKR_ARGUMENTS_BAD;
     }
@@ -364,7 +433,7 @@ CK_RV pkcs11_slot_get_list(CK_BBOOL tokenPresent, CK_SLOT_ID_PTR pSlotList, CK_U
     }
 
     /* Ref PKCS11 Sec 5.5 - C_GetSlotList Requirement #2 */
-    if (pSlotList)
+    if (NULL != pSlotList)
     {
         if (slot_cnt > *pulCount)
         {
@@ -390,35 +459,35 @@ CK_RV pkcs11_slot_get_info(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
     pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
     pkcs11_slot_ctx_ptr slot_ctx;
     ATCAIfaceCfg *if_cfg_ptr;
-    CK_UTF8CHAR buf[8];
+    CK_UTF8CHAR buf[8] = { 0 };
     CK_RV rv = CKR_OK;
 
-    if (!lib_ctx || !lib_ctx->initialized)
+    if (NULL == lib_ctx || FALSE == lib_ctx->initialized)
     {
         return CKR_CRYPTOKI_NOT_INITIALIZED;
     }
 
-    if (!pInfo)
+    if (NULL == pInfo)
     {
         return CKR_ARGUMENTS_BAD;
     }
 
     /* Initialize the input structure */
-    memset(pInfo, 0, sizeof(CK_SLOT_INFO));
+    (void)memset(pInfo, 0, sizeof(CK_SLOT_INFO));
 
     /* Retreive the slot context - i.e. the attached device (ECC508A, SHA256, etc) */
     slot_ctx = pkcs11_slot_get_context(lib_ctx, slotID);
 
-    if (!slot_ctx)
+    if (NULL == slot_ctx)
     {
         return CKR_SLOT_ID_INVALID;
     }
 
     /* Default version information */
-    pInfo->hardwareVersion.major = (CK_BYTE)CK_UNAVAILABLE_INFORMATION;
-    pInfo->hardwareVersion.minor = (CK_BYTE)CK_UNAVAILABLE_INFORMATION;
-    pInfo->firmwareVersion.major = (CK_BYTE)CK_UNAVAILABLE_INFORMATION;
-    pInfo->firmwareVersion.minor = (CK_BYTE)CK_UNAVAILABLE_INFORMATION;
+    pInfo->hardwareVersion.major = (CK_BYTE)(CK_UNAVAILABLE_INFORMATION & 0xFFu);
+    pInfo->hardwareVersion.minor = (CK_BYTE)(CK_UNAVAILABLE_INFORMATION & 0xFFu);
+    pInfo->firmwareVersion.major = (CK_BYTE)(CK_UNAVAILABLE_INFORMATION & 0xFFu);
+    pInfo->firmwareVersion.minor = (CK_BYTE)(CK_UNAVAILABLE_INFORMATION & 0xFFu);
 
     /* Get the reference to the slot configuration structure that was used */
     if_cfg_ptr = &slot_ctx->interface_config;
@@ -436,21 +505,25 @@ CK_RV pkcs11_slot_get_info(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
     if (ATCA_UART_IFACE == if_cfg_ptr->iface_type || ATCA_HID_IFACE == if_cfg_ptr->iface_type)
     {
         pInfo->flags |= CKF_REMOVABLE_DEVICE;
-        if (!slot_ctx->initialized)
+        if (SLOT_STATE_READY != slot_ctx->slot_state)
         {
             pInfo->flags &= ~CKF_TOKEN_PRESENT;
         }
     }
 
     /* Basic description of the expected interface based on the configuration */
-    snprintf((char*)pInfo->slotDescription, sizeof(pInfo->slotDescription), "%d_%d_%d", (int)slotID,
-             (int)if_cfg_ptr->devtype, (int)if_cfg_ptr->iface_type);
+    if (slotID <= (CK_ULONG)INT32_MAX)
+    {
+        /* coverity[misra_c_2012_rule_21_6_violation: FALSE] Standard library functions are required */
+        (void)snprintf((char*)pInfo->slotDescription, sizeof(pInfo->slotDescription), "%d_%d_%d", (int)slotID,
+                       (int)if_cfg_ptr->devtype, (int)if_cfg_ptr->iface_type);
+    }
 
-    if (slot_ctx->initialized)
+    if (SLOT_STATE_READY == slot_ctx->slot_state)
     {
         if (CKR_OK == (rv = pkcs11_lock_both(lib_ctx)))
         {
-            if (CKR_OK == (rv = pkcs11_util_convert_rv(atcab_info(buf))))
+            if (CKR_OK == (rv = pkcs11_util_convert_rv(atcab_info_ext(slot_ctx->device_ctx, buf))))
             {
                 /* SHA204 = 00 02 00 09, ECC508 = 00 00 50 00, AES132 = 0A 07*/
                 pInfo->hardwareVersion.major = 0;
@@ -461,11 +534,12 @@ CK_RV pkcs11_slot_get_info(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
     }
 
     /* Use the same manufacturer ID we use throughout */
-    snprintf((char*)pInfo->manufacturerID, sizeof(pInfo->manufacturerID), "%s", pkcs11_lib_manufacturer_id);
+    /* coverity[misra_c_2012_rule_21_6_violation] snprintf is approved for formatted string writes to buffers */
+    (void)snprintf((char*)pInfo->manufacturerID, sizeof(pInfo->manufacturerID), "%s", pkcs11_lib_manufacturer_id);
 
     /* Make sure strings are escaped properly */
-    pkcs11_util_escape_string(pInfo->manufacturerID, sizeof(pInfo->manufacturerID));
-    pkcs11_util_escape_string(pInfo->slotDescription, sizeof(pInfo->slotDescription));
+    pkcs11_util_escape_string(pInfo->manufacturerID, (CK_ULONG)sizeof(pInfo->manufacturerID));
+    pkcs11_util_escape_string(pInfo->slotDescription, (CK_ULONG)sizeof(pInfo->slotDescription));
 
     return rv;
 }

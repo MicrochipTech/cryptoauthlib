@@ -31,20 +31,20 @@
 #ifdef ATCAC_PKCS7_PAD_EN
 
 ATCA_STATUS atcac_pkcs7_pad(
-    uint8_t * buffer,       /**< [in/out] The buffer that will be padded */
-    size_t * buflen,        /**< [in/out] Input: the length of the buffer, Ouput: The padded length */
-    const size_t datalen,   /**< [in] Length of the input data */
+    uint8_t *     buffer,   /**< [in/out] The buffer that will be padded */
+    size_t *      buflen,   /**< [in/out] Input: the length of the buffer, Ouput: The padded length */
+    const size_t  datalen,  /**< [in] Length of the input data */
     const uint8_t blocksize /**< [in] The block size in bytes to pad to */
     )
 {
     size_t outlen;
     uint8_t padsym;
 
-    if (!buffer || !buflen)
+    if ((NULL == buffer) || (NULL == buflen))
     {
         return ATCA_BAD_PARAM;
     }
-    
+
     if (datalen < blocksize)
     {
         outlen = blocksize;
@@ -64,9 +64,9 @@ ATCA_STATUS atcac_pkcs7_pad(
 
     /* Determine what padding symbol to use - should never be 0 */
     padsym = (uint8_t)(outlen - datalen);
-    
+
     /* Fill the end of the buffer with the symbol */
-    memset(&buffer[datalen], padsym, padsym);
+    (void)memset(&buffer[datalen], (int)padsym, (size_t)padsym);
 
     *buflen = outlen;
 
@@ -74,8 +74,8 @@ ATCA_STATUS atcac_pkcs7_pad(
 }
 
 ATCA_STATUS atcac_pkcs7_unpad(
-    uint8_t * buffer,       /**< [in/out] The buffer that will be padded */
-    size_t * buflen,        /**< [in/out] Input: the length of the buffer, Ouput: The actual length */
+    uint8_t *     buffer,   /**< [in/out] The buffer that will be padded */
+    size_t *      buflen,   /**< [in/out] Input: the length of the buffer, Ouput: The actual length */
     const uint8_t blocksize /**< [in] The block size in bytes to pad to */
     )
 {
@@ -83,25 +83,25 @@ ATCA_STATUS atcac_pkcs7_unpad(
     size_t i;
     size_t outlen;
 
-    if (!buffer || !buflen || !*buflen)
+    if ((NULL == buffer) || (NULL == buflen) || (0u == *buflen))
     {
         return ATCA_BAD_PARAM;
     }
 
     /* There must at minimum one padding byte */
-    padsym = buffer[*buflen - 1];
+    padsym = buffer[*buflen - 1u];
 
     /* Padding bytes must be in the range 1..blocksize */
-    if (!padsym || padsym > blocksize)
+    if ((0u == padsym) || padsym > blocksize)
     {
         return ATCA_GEN_FAIL;
     }
 
     outlen = *buflen - padsym;
 
-    for (i=*buflen - 1; i >= outlen; i--)
+    for (i = *buflen; i > outlen; i--)
     {
-        if (buffer[i] != padsym)
+        if (buffer[i - 1U] != padsym)
         {
             /* Bad padding byte found */
             break;
@@ -109,11 +109,11 @@ ATCA_STATUS atcac_pkcs7_unpad(
         else
         {
             /* null it */
-            buffer[i] = 0;
+            buffer[i - 1U] = 0;
         }
     }
 
-    if (i == outlen - 1)
+    if (i == outlen)
     {
         *buflen = outlen;
         return ATCA_SUCCESS;

@@ -35,6 +35,11 @@
 #include "cryptoauthlib.h"
 
 #if CALIB_UPDATEEXTRA_EN
+
+#if (CA_MAX_PACKET_SIZE < ATCA_CMD_SIZE_MIN)
+#error "UpdateExtra command packet cannot be accommodated inside the maximum packet size provided"
+#endif
+
 /** \brief Executes UpdateExtra command to update the values of the two
  *          extra bytes within the Configuration zone (bytes 84 and 85).
  *
@@ -62,24 +67,24 @@ ATCA_STATUS calib_updateextra(ATCADevice device, uint8_t mode, uint16_t new_valu
         }
 
         // Build command
-        memset(&packet, 0, sizeof(packet));
+        (void)memset(&packet, 0, sizeof(packet));
         packet.param1 = mode;
         packet.param2 = new_value;
 
         if ((status = atUpdateExtra(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "atUpdateExtra - failed");
+            (void)ATCA_TRACE(status, "atUpdateExtra - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "calib_updateextra - execution failed");
+            (void)ATCA_TRACE(status, "calib_updateextra - execution failed");
             break;
         }
 
     }
-    while (0);
+    while (false);
 
     return status;
 }

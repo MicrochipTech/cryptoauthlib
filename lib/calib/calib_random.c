@@ -34,6 +34,11 @@
 #include "cryptoauthlib.h"
 
 #if CALIB_RANDOM_EN
+
+#if (CA_MAX_PACKET_SIZE < RANDOM_RSP_SIZE)
+#error "Random command packet cannot be accommodated inside the maximum packet size provided"
+#endif
+
 /** \brief Executes Random command, which generates a 32 byte random number
  *          from the CryptoAuth device.
  *
@@ -61,13 +66,13 @@ ATCA_STATUS calib_random(ATCADevice device, uint8_t *rand_out)
 
         if ((status = atRandom(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "atRandom - failed");
+            (void)ATCA_TRACE(status, "atRandom - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "calib_random - execution failed");
+            (void)ATCA_TRACE(status, "calib_random - execution failed");
             break;
         }
 
@@ -77,12 +82,12 @@ ATCA_STATUS calib_random(ATCADevice device, uint8_t *rand_out)
             break;
         }
 
-        if (rand_out)
+        if (NULL != rand_out)
         {
-            memcpy(rand_out, &packet.data[ATCA_RSP_DATA_IDX], RANDOM_NUM_SIZE);
+            (void)memcpy(rand_out, &packet.data[ATCA_RSP_DATA_IDX], RANDOM_NUM_SIZE);
         }
     }
-    while (0);
+    while (false);
 
 
     return status;

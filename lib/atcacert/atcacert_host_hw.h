@@ -60,10 +60,10 @@ extern "C" {
  *         verify. ATCA_EXECUTION_ERROR may occur when the public key is invalid and doesn't fall
  *         on the P256 curve.
  */
-int atcacert_verify_cert_hw(const atcacert_def_t* cert_def,
-                            const uint8_t*        cert,
-                            size_t                cert_size,
-                            const uint8_t         ca_public_key[64]);
+ATCA_STATUS atcacert_verify_cert_hw(const atcacert_def_t* cert_def,
+                                    const uint8_t*        cert,
+                                    size_t                cert_size,
+                                    const uint8_t         ca_public_key[64]);
 
 
 /**
@@ -74,7 +74,7 @@ int atcacert_verify_cert_hw(const atcacert_def_t* cert_def,
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-int atcacert_gen_challenge_hw(uint8_t challenge[32]);
+ATCA_STATUS atcacert_gen_challenge_hw(uint8_t challenge[32]);
 
 
 /**
@@ -94,9 +94,9 @@ int atcacert_gen_challenge_hw(uint8_t challenge[32]);
  *         verify. ATCA_EXECUTION_ERROR may occur when the public key is invalid and doesn't fall
  *         on the P256 curve.
  */
-int atcacert_verify_response_hw(const uint8_t device_public_key[64],
-                                const uint8_t challenge[32],
-                                const uint8_t response[64]);
+ATCA_STATUS atcacert_verify_response_hw(const uint8_t device_public_key[64],
+                                        const uint8_t challenge[32],
+                                        const uint8_t response[64]);
 
 /** @} */
 #ifdef __cplusplus

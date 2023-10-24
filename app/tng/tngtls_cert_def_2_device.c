@@ -172,8 +172,8 @@ SHARED_LIB_EXPORT const atcacert_def_t g_tngtls_cert_def_2_device = {
         }
     },
     .cert_elements       = g_tngtls_cert_elements_2_device,
-    .cert_elements_count = sizeof(g_tngtls_cert_elements_2_device) / sizeof(g_tngtls_cert_elements_2_device[0]),
+    .cert_elements_count = (uint8_t)(sizeof(g_tngtls_cert_elements_2_device) / sizeof(g_tngtls_cert_elements_2_device[0])),
     .cert_template       = g_tngtls_cert_template_2_device,
-    .cert_template_size  = sizeof(g_tngtls_cert_template_2_device),
+    .cert_template_size  = (uint16_t)(sizeof(g_tngtls_cert_template_2_device)),
     .ca_cert_def         = &g_tngtls_cert_def_1_signer
 };

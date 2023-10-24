@@ -225,7 +225,7 @@ TEST(atcacert_host_hw, atcacert_gen_challenge_hw)
     bool lockstate = false;
 
     /* The random command for unlocked cryptoauth devices returns
-    a fixed pattern that never changes */
+       a fixed pattern that never changes */
     ret = atcab_is_config_locked(&lockstate);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     if (!lockstate)

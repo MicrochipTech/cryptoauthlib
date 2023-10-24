@@ -38,6 +38,11 @@
 #include "host/atca_host.h"
 
 #if CALIB_ECDH_EN
+
+#if (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + ATCA_PUB_KEY_SIZE))
+#error "ECDH command packet cannot be accommodated inside the maximum packet size provided"
+#endif
+
 /** \brief Base function for generating premaster secret key using ECDH.
  *  \param[in]  device      Device context pointer
  *  \param[in]  mode        Mode to be used for ECDH computation
@@ -67,32 +72,32 @@ ATCA_STATUS calib_ecdh_base(ATCADevice device, uint8_t mode, uint16_t key_id, co
         // Build Command
         packet.param1 = mode;
         packet.param2 = key_id;
-        memcpy(packet.data, public_key, ATCA_PUB_KEY_SIZE);
+        (void)memcpy(packet.data, public_key, ATCA_PUB_KEY_SIZE);
 
         if ((status = atECDH(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "atECDH - failed");
+            (void)ATCA_TRACE(status, "atECDH - failed");
             break;
         }
 
         if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "calib_ecdh_base - execution failed");
+            (void)ATCA_TRACE(status, "calib_ecdh_base - execution failed");
             break;
         }
 
-        if (pms != NULL && packet.data[ATCA_COUNT_IDX] >= (3 + ATCA_KEY_SIZE))
+        if (pms != NULL && packet.data[ATCA_COUNT_IDX] >= (3u + ATCA_KEY_SIZE))
         {
-            memcpy(pms, &packet.data[ATCA_RSP_DATA_IDX], ATCA_KEY_SIZE);
+            (void)memcpy(pms, &packet.data[ATCA_RSP_DATA_IDX], ATCA_KEY_SIZE);
         }
 
-        if (out_nonce != NULL && packet.data[ATCA_COUNT_IDX] >= (3 + ATCA_KEY_SIZE * 2))
+        if (out_nonce != NULL && packet.data[ATCA_COUNT_IDX] >= (3u + ATCA_KEY_SIZE * 2u))
         {
-            memcpy(out_nonce, &packet.data[ATCA_RSP_DATA_IDX + ATCA_KEY_SIZE], ATCA_KEY_SIZE);
+            (void)memcpy(out_nonce, &packet.data[ATCA_RSP_DATA_IDX + ATCA_KEY_SIZE], ATCA_KEY_SIZE);
         }
 
     }
-    while (0);
+    while (false);
 
     return status;
 }
@@ -160,18 +165,18 @@ ATCA_STATUS calib_ecdh_enc(ATCADevice device, uint16_t key_id, const uint8_t* pu
         // Send the ECDH command with the public key provided
         if ((status = calib_ecdh(device, key_id, public_key, NULL)) != ATCA_SUCCESS)
         {
-            ATCA_TRACE(status, "ECDH Failed"); break;
+            (void)ATCA_TRACE(status, "ECDH Failed"); break;
         }
 #if defined(ATCA_USE_CONSTANT_HOST_NONCE)
         if ((status = calib_read_enc(device, key_id | 0x0001, 0, pms, read_key, read_key_id)) != ATCA_SUCCESS)
 #else
-        if ((status = calib_read_enc(device, key_id | 0x0001, 0, pms, read_key, read_key_id, num_in)) != ATCA_SUCCESS)
+        if ((status = calib_read_enc(device, key_id | 0x0001u, 0, pms, read_key, read_key_id, num_in)) != ATCA_SUCCESS)
 #endif
         {
-            ATCA_TRACE(status, "Encrypted read failed"); break;
+            (void)ATCA_TRACE(status, "Encrypted read failed"); break;
         }
     }
-    while (0);
+    while (false);
 
     return status;
 }
@@ -204,7 +209,7 @@ ATCA_STATUS calib_ecdh_ioenc(ATCADevice device, uint16_t key_id, const uint8_t* 
     }
 
     // Decrypt PMS
-    memset(&io_dec_params, 0, sizeof(io_dec_params));
+    (void)memset(&io_dec_params, 0, sizeof(io_dec_params));
     io_dec_params.io_key = io_key;
     io_dec_params.out_nonce = out_nonce;
     io_dec_params.data = pms;
@@ -269,7 +274,7 @@ ATCA_STATUS calib_ecdh_tempkey_ioenc(ATCADevice device, const uint8_t* public_ke
     }
 
     // Decrypt PMS
-    memset(&io_dec_params, 0, sizeof(io_dec_params));
+    (void)memset(&io_dec_params, 0, sizeof(io_dec_params));
     io_dec_params.io_key = io_key;
     io_dec_params.out_nonce = out_nonce;
     io_dec_params.data = pms;

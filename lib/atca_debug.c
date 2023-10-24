@@ -25,26 +25,28 @@
  * THIS SOFTWARE.
  */
 
-#include <cryptoauthlib.h>
+#include "cryptoauthlib.h"
 
-FILE * g_trace_fp;
+#ifdef ATCA_PRINTF
+static FILE * g_trace_fp;
 
 void atca_trace_config(FILE* fp)
 {
     g_trace_fp = fp;
 }
 
-ATCA_STATUS atca_trace(ATCA_STATUS status)
-{
-    return status;
-}
-
 ATCA_STATUS atca_trace_msg(ATCA_STATUS status, const char * msg)
 {
     if (ATCA_SUCCESS != status)
     {
-        fprintf(g_trace_fp ? g_trace_fp : stderr, msg, status);
-        fflush(g_trace_fp);
+        (void)fprintf(NULL != g_trace_fp ? g_trace_fp : stderr, msg, status);
+        (void)fflush(g_trace_fp);
     }
+    return status;
+}
+#endif
+
+ATCA_STATUS atca_trace(ATCA_STATUS status)
+{
     return status;
 }

@@ -157,6 +157,7 @@ int lock_data(int argc, char* argv[])
 int do_randoms(int argc, char* argv[])
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
+
     ((void)argc);
     ((void)argv);
 
@@ -466,8 +467,8 @@ int run_all_tests(int argc, char* argv[])
         return status;
     }
 
-#ifdef ATCA_TA100_SUPPORT
-    if (TA100 == gCfg->devtype)
+#if ATCA_TA_SUPPORT
+    if (atcab_is_ta_device(gCfg->devtype))
     {
         (void)talib_configure_device(0, NULL);
     }

@@ -151,11 +151,11 @@ ATCA_STATUS atGenDig(ATCADeviceType device_type, ATCAPacket *packet, bool is_no_
 
     if (packet->param1 == GENDIG_ZONE_SHARED_NONCE) // shared nonce mode
     {
-        packet->txsize = GENDIG_COUNT + 32;
+        packet->txsize = GENDIG_COUNT + 32u;
     }
     else if (is_no_mac_key)
     {
-        packet->txsize = GENDIG_COUNT + 4;  // noMac keys use 4 bytes of OtherData in calculation
+        packet->txsize = GENDIG_COUNT + 4u;  // noMac keys use 4 bytes of OtherData in calculation
     }
     else
     {
@@ -179,7 +179,7 @@ ATCA_STATUS atGenKey(ATCADeviceType device_type, ATCAPacket *packet)
     // Set the opcode & parameters
     packet->opcode = ATCA_GENKEY;
 
-    if (packet->param1 & GENKEY_MODE_PUBKEY_DIGEST)
+    if ((packet->param1 & GENKEY_MODE_PUBKEY_DIGEST) == GENKEY_MODE_PUBKEY_DIGEST)
     {
         packet->txsize = GENKEY_COUNT_DATA;
     }
@@ -257,7 +257,7 @@ ATCA_STATUS atMAC(ATCADeviceType device_type, ATCAPacket *packet)
     // Set the opcode & parameters
     // variable packet size
     packet->opcode = ATCA_MAC;
-    if (!(packet->param1 & MAC_MODE_BLOCK2_TEMPKEY))
+    if ((packet->param1 & MAC_MODE_BLOCK2_TEMPKEY) == 0u)
     {
         packet->txsize = MAC_COUNT_LONG;
     }
@@ -394,6 +394,7 @@ ATCA_STATUS atSecureBoot(ATCADeviceType device_type, ATCAPacket *packet)
 {
     ((void)device_type);
 
+    ATCA_STATUS status = ATCA_SUCCESS;
     packet->opcode = ATCA_SECUREBOOT;
     packet->txsize = ATCA_CMD_SIZE_MIN;
 
@@ -410,11 +411,16 @@ ATCA_STATUS atSecureBoot(ATCADeviceType device_type, ATCAPacket *packet)
         break;
 
     default:
-        return ATCA_TRACE(ATCA_BAD_PARAM, "atSecureBoot - failed; Invalid mode received");
+        status = ATCA_BAD_PARAM;
         break;
     }
-    atCalcCrc(packet);
-    return ATCA_SUCCESS;
+
+    if (ATCA_SUCCESS == status)
+    {
+        atCalcCrc(packet);
+    }
+
+    return status;
 }
 #endif
 
@@ -441,22 +447,22 @@ ATCA_STATUS atSHA(ATCADeviceType device_type, ATCAPacket *packet, uint16_t write
         break;
 
     case SHA_MODE_SHA256_UPDATE:                                           // UPDATE
-        packet->txsize = (uint8_t)(ATCA_CMD_SIZE_MIN + packet->param2);
+        packet->txsize = (uint8_t)((ATCA_CMD_SIZE_MIN + packet->param2) & UINT8_MAX);
         break;
 
     case SHA_MODE_SHA256_END:     // END
     case SHA_MODE_HMAC_END:
         // check the given packet for a size variable in param2.  If it is > 0, it should
         // be 0-63, incorporate that size into the packet
-        packet->txsize = (uint8_t)(ATCA_CMD_SIZE_MIN + packet->param2);
-        break;
-
-    case SHA_MODE_READ_CONTEXT:
-        packet->txsize = ATCA_CMD_SIZE_MIN;
+        packet->txsize = (uint8_t)((ATCA_CMD_SIZE_MIN + packet->param2) & UINT8_MAX);
         break;
 
     case SHA_MODE_WRITE_CONTEXT:
-        packet->txsize = (uint8_t)(ATCA_CMD_SIZE_MIN + write_context_size);
+        packet->txsize = (uint8_t)((ATCA_CMD_SIZE_MIN + write_context_size) & UINT8_MAX);
+        break;
+
+    default:
+        packet->txsize = ATCA_CMD_SIZE_MIN;
         break;
     }
 
@@ -513,6 +519,8 @@ ATCA_STATUS atVerify(ATCADeviceType device_type, ATCAPacket *packet)
 {
     ((void)device_type);
 
+    ATCA_STATUS status = ATCA_SUCCESS;
+
     // Set the opcode & parameters
     packet->opcode = ATCA_VERIFY;
 
@@ -537,11 +545,16 @@ ATCA_STATUS atVerify(ATCADeviceType device_type, ATCAPacket *packet)
         break;
 
     default:
-        return ATCA_TRACE(ATCA_BAD_PARAM, "atVerify - failed; Invalid mode received");
+        status = ATCA_BAD_PARAM;
+        break;
     }
 
-    atCalcCrc(packet);
-    return ATCA_SUCCESS;
+    if (ATCA_SUCCESS == status)
+    {
+        atCalcCrc(packet);
+    }
+
+    return status;
 }
 #endif
 
@@ -563,11 +576,15 @@ ATCA_STATUS atWrite(ATCADeviceType device_type, ATCAPacket *packet, bool has_mac
 #if ATCA_CA2_SUPPORT
         if (ATCA_ZONE_CA2_CONFIG == packet->param1)
         {
-            packet->txsize += 16;
+            packet->txsize += 16u;
         }
         else if (ATCA_ZONE_CA2_DATA == packet->param1)
         {
             packet->txsize += ATCA_BLOCK_SIZE;
+        }
+        else
+        {
+            return ATCA_BAD_PARAM;
         }
 #else
         return ATCA_UNIMPLEMENTED;
@@ -575,7 +592,7 @@ ATCA_STATUS atWrite(ATCADeviceType device_type, ATCAPacket *packet, bool has_mac
     }
     else
     {
-        if (packet->param1 & ATCA_ZONE_READWRITE_32)
+        if ((packet->param1 & ATCA_ZONE_READWRITE_32) == ATCA_ZONE_READWRITE_32)
         {
             packet->txsize += ATCA_BLOCK_SIZE;
         }
@@ -662,7 +679,7 @@ ATCA_STATUS atKDF(ATCADeviceType device_type, ATCAPacket *packet)
     else
     {
         // All other algorithms encode message size in the last byte of details
-        packet->txsize = ATCA_CMD_SIZE_MIN + KDF_DETAILS_SIZE + packet->data[3];
+        packet->txsize = (ATCA_CMD_SIZE_MIN + KDF_DETAILS_SIZE + packet->data[3]) & UINT8_MAX;
     }
     atCalcCrc(packet);
     return ATCA_SUCCESS;
@@ -687,10 +704,10 @@ void atCRC(size_t length, const uint8_t *data, uint8_t *crc_le)
 
     for (counter = 0; counter < length; counter++)
     {
-        for (shift_register = 0x01; shift_register > 0x00; shift_register <<= 1)
+        for (shift_register = 0x01; shift_register > 0x00u; shift_register <<= 1)
         {
-            data_bit = (data[counter] & shift_register) ? 1 : 0;
-            crc_bit = crc_register >> 15;
+            data_bit = ((data[counter] & shift_register) != 0u) ? 1u : 0u;
+            crc_bit = (uint8_t)(crc_register >> 15);
             crc_register <<= 1;
             if (data_bit != crc_bit)
             {
@@ -698,8 +715,8 @@ void atCRC(size_t length, const uint8_t *data, uint8_t *crc_le)
             }
         }
     }
-    crc_le[0] = (uint8_t)(crc_register & 0x00FF);
-    crc_le[1] = (uint8_t)(crc_register >> 8);
+    crc_le[0] = (uint8_t)(crc_register & 0x00FFu);
+    crc_le[1] = (uint8_t)(crc_register >> 8u);
 }
 
 
@@ -709,13 +726,16 @@ void atCRC(size_t length, const uint8_t *data, uint8_t *crc_le)
 
 void atCalcCrc(ATCAPacket *packet)
 {
-    uint8_t length, *crc;
+    uint8_t length;
+    uint8_t *crc;
 
     packet->param2 = ATCA_UINT16_HOST_TO_LE(packet->param2);
 
-    length = packet->txsize - ATCA_CRC_SIZE;
-    // computer pointer to CRC in the packet
-    crc = &(packet->txsize) + length;
+    /* coverity[cert_int31_c_violation] txsize is properly set so length will not underflow */
+    length = (packet->txsize - (uint8_t)ATCA_CRC_SIZE) & UINT8_MAX;
+
+    // calculate crc location
+    crc = &packet->data[length - ((uint8_t)ATCA_CMD_SIZE_MIN - (uint8_t)ATCA_CRC_SIZE)];
 
     // stuff CRC into packet
     atCRC(length, &(packet->txsize), crc);
@@ -732,10 +752,10 @@ ATCA_STATUS atCheckCrc(const uint8_t *response)
     uint8_t crc[ATCA_CRC_SIZE];
     uint8_t count = response[ATCA_COUNT_IDX];
 
-    count -= ATCA_CRC_SIZE;
+    count -= (uint8_t)ATCA_CRC_SIZE;
     atCRC(count, response, crc);
 
-    return (crc[0] == response[count] && crc[1] == response[count + 1]) ? ATCA_SUCCESS : ATCA_RX_CRC_ERROR;
+    return (crc[0] == response[count] && crc[1] == response[count + 1u]) ? ATCA_SUCCESS : ATCA_RX_CRC_ERROR;
 }
 
 
@@ -746,22 +766,26 @@ ATCA_STATUS atCheckCrc(const uint8_t *response)
 
 bool atIsSHAFamily(ATCADeviceType device_type)
 {
+    bool is_sha_family;
+
     switch (device_type)
     {
     case SHA104:
-        /* fallthrough */
+    /* fallthrough */
     case SHA105:
-        /* fallthrough */
+    /* fallthrough */
     case ATSHA204A:
-        /* fallthrough */
+    /* fallthrough */
     case ATSHA206A:
-        return true;
+        is_sha_family = true;
         break;
 
     default:
-        return false;
+        is_sha_family = false;
         break;
     }
+
+    return is_sha_family;
 }
 
 /** \brief determines if a given device type is an ECC device or a superset of a ECC device
@@ -770,23 +794,27 @@ bool atIsSHAFamily(ATCADeviceType device_type)
  */
 bool atIsECCFamily(ATCADeviceType device_type)
 {
+    bool is_ecc_family;
+
     switch (device_type)
     {
     case ATECC108A:
-        /* fallthrough */
+    /* fallthrough */
     case ATECC508A:
-        /* fallthrough */
+    /* fallthrough */
     case ATECC608:
-        /* fallthrough */
+    /* fallthrough */
     case ECC204:
-        /* fallthrough */
+    /* fallthrough */
     case TA010:
-        return true;
+        is_ecc_family = true;
         break;
     default:
-        return false;
+        is_ecc_family = false;
         break;
     }
+
+    return is_ecc_family;
 }
 
 /** \brief checks for basic error frame in data
@@ -796,42 +824,48 @@ bool atIsECCFamily(ATCADeviceType device_type)
 
 ATCA_STATUS isATCAError(uint8_t *data)
 {
-    if (data[0] == 0x04)        // error packets are always 4 bytes long
+    ATCA_STATUS status;
+
+    if (data[0] == 0x04u)        // error packets are always 4 bytes long
     {
         switch (data[1])
         {
         case 0x00: //No Error
-            return ATCA_SUCCESS;
+            status = ATCA_SUCCESS;
+            break;
         case 0x01: // checkmac or verify failed
-            return ATCA_CHECKMAC_VERIFY_FAILED;
+            status = ATCA_CHECKMAC_VERIFY_FAILED;
             break;
         case 0x03: // command received byte length, opcode or parameter was illegal
-            return ATCA_PARSE_ERROR;
+            status = ATCA_PARSE_ERROR;
             break;
         case 0x05: // computation error during ECC processing causing invalid results
-            return ATCA_STATUS_ECC;
+            status = ATCA_STATUS_ECC;
             break;
         case 0x07: // chip is in self test failure mode
-            return ATCA_STATUS_SELFTEST_ERROR;
+            status = ATCA_STATUS_SELFTEST_ERROR;
             break;
         case 0x08: //random number generator health test error
-            return ATCA_HEALTH_TEST_ERROR;
+            status = ATCA_HEALTH_TEST_ERROR;
+            break;
         case 0x0f: // chip can't execute the command
-            return ATCA_EXECUTION_ERROR;
+            status = ATCA_EXECUTION_ERROR;
             break;
         case 0x11: // chip was successfully woken up
-            return ATCA_WAKE_SUCCESS;
+            status = ATCA_WAKE_SUCCESS;
             break;
         case 0xff: // bad crc found (command not properly received by device) or other comm error
-            return ATCA_STATUS_CRC;
+            status = ATCA_STATUS_CRC;
             break;
         default:
-            return ATCA_GEN_FAIL;
+            status = ATCA_GEN_FAIL;
             break;
         }
     }
     else
     {
-        return ATCA_SUCCESS;
+        status = ATCA_SUCCESS;
     }
+
+    return status;
 }

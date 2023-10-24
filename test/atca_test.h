@@ -34,13 +34,13 @@
 
 extern bool g_test_abort;
 extern ATCA_STATUS g_last_status;
-#define TEST_ASSERT_SUCCESS(x)          TEST_ASSERT_EQUAL(ATCA_SUCCESS, g_last_status=x)
-#define TEST_ASSERT_SUCCESS_MSG(x,m)    TEST_ASSERT_EQUAL_MESSAGE(ATCA_SUCCESS, g_last_status=x, m)
+#define TEST_ASSERT_SUCCESS(x)          TEST_ASSERT_EQUAL(ATCA_SUCCESS, g_last_status = x)
+#define TEST_ASSERT_SUCCESS_MSG(x, m)    TEST_ASSERT_EQUAL_MESSAGE(ATCA_SUCCESS, g_last_status = x, m)
 
 extern ATCAIfaceCfg *gCfg;
 extern const uint8_t g_slot4_key[];
 
-#define AES_CONFIG_ENABLE_BIT_MASK   (uint8_t)0x01
+#define AES_CONFIG_ENABLE_BIT_MASK          (uint8_t)0x01
 
 #define CMD_PROCESSOR_MAX_ARGS  16
 
@@ -49,8 +49,8 @@ typedef bool (*fp_test_condition)(void);
 
 typedef struct
 {
-    fp_test_case        fp_test;
-    fp_test_condition   fp_condition;
+    fp_test_case      fp_test;
+    fp_test_condition fp_condition;
 }t_test_case_info;
 
 typedef int (*fp_menu_handler)(int argc, char* argv[]);
@@ -60,7 +60,7 @@ typedef struct
     const char*     menu_cmd;
     fp_menu_handler fp_handler;
 } t_menu_info_simple;
-#define MENU_ITEM_SIMPLE(c,f)   {c, f}
+#define MENU_ITEM_SIMPLE(c, f)   { c, f }
 
 #ifdef ATCA_TEST_SIMPLE_MENU
 typedef t_menu_info_simple t_menu_info
@@ -72,16 +72,20 @@ typedef struct
     const char*     menu_cmd_description;
     fp_menu_handler fp_handler;
 } t_menu_info;
-#define MENU_ITEM(c,d, f)   {c, d, f}
+#define MENU_ITEM(c, d, f)   { c, d, f }
 #endif
 
 #define REGISTER_TEST_CASE(group, name)         TEST_ ## group ## _ ## name ## _run
 #define REGISTER_TEST_CONDITION(group, name)    TEST_ ## group ## _ ## name ## _cond
 
-#define TEST_CONDITION(group, name)             bool TEST_##group##_##name##_cond(void)
+#define TEST_CONDITION(group, name)             bool TEST_ ## group ## _ ## name ## _cond(void)
 
 #if !defined(ATCA_ECC_SUPPORT) && !defined(DO_NOT_TEST_CERT)
 #define DO_NOT_TEST_CERT
+#endif
+
+#ifndef DO_NOT_TEST_CERT
+#include "atcacert/atcacert_check_config.h"
 #endif
 
 #if ATCA_CA_SUPPORT
@@ -93,16 +97,17 @@ typedef struct
 #endif
 
 #ifdef ATCA_HAL_KIT_SUPPORT
-extern ATCA_STATUS hal_kit_bridge_connect(ATCAIfaceCfg * cfg);
+    extern ATCA_STATUS hal_kit_bridge_connect(ATCAIfaceCfg * cfg);
 #endif
 
-extern bool g_atca_test_quiet_mode;
+    extern bool g_atca_test_quiet_mode;
 
 /* Cryptoauthlib Test Api */
 void RunAllTests(t_test_case_info** tests_list);
 int run_test(int argc, char* argv[], void (*fptest)(void));
 void run_all_talib_tests(void);
 
+extern t_test_case_info buffer_test_info[];
 extern t_test_case_info helper_basic_test_info[];
 extern t_test_case_info otpzero_basic_test_info[];
 
@@ -136,7 +141,7 @@ extern const uint8_t test_sha104_configdata[ATCA_CA2_CONFIG_SIZE];
 extern const uint8_t test_sha105_configdata[ATCA_CA2_CONFIG_SIZE];
 #endif
 #if ATCA_TA_SUPPORT
-extern const uint8_t test_ta100_configdata[TA_CONFIG_SIZE];
+extern const uint8_t test_ta10x_configdata[TA_CONFIG_SIZE];
 #endif
 
 bool atca_test_already_exiting(void);
@@ -146,6 +151,7 @@ void atca_test_assert_config_is_unlocked(UNITY_LINE_TYPE from_line);
 void atca_test_assert_config_is_locked(UNITY_LINE_TYPE from_line);
 void atca_test_assert_data_is_unlocked(UNITY_LINE_TYPE from_line);
 void atca_test_assert_data_is_locked(UNITY_LINE_TYPE from_line);
+void atca_test_assert_random_buffer(UNITY_LINE_TYPE from_line, uint8_t * buf, size_t buflen);
 void atca_test_assert_aes_enabled(UNITY_LINE_TYPE from_line);
 #if ATCA_TA_SUPPORT
 void atca_test_assert_ta_sboot_enabled(UNITY_LINE_TYPE from_line, uint8_t mode);
@@ -161,6 +167,7 @@ void atca_test_assert_ta_sboot_preboot_enabled(UNITY_LINE_TYPE from_line);
 #define test_assert_config_is_locked()          atca_test_assert_config_is_locked(__LINE__)
 #define test_assert_data_is_unlocked()          atca_test_assert_data_is_unlocked(__LINE__)
 #define test_assert_data_is_locked()            atca_test_assert_data_is_locked(__LINE__)
+#define test_assert_random_buffer(buf, len)     atca_test_assert_random_buffer(__LINE__, buf, len)
 
 #define check_config_aes_enable()               atca_test_assert_aes_enabled(__LINE__)
 #define check_config_ta_sboot_enable(mode)      atca_test_assert_ta_sboot_enabled(__LINE__, mode)
@@ -200,7 +207,7 @@ void RunPbkdf2Tests(void);
 
 /* Setup & Configuration */
 void atca_test_config_set_ifacecfg(ATCAIfaceCfg * ifacecfg);
-#if defined(ATCA_ECC_SUPPORT) || defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT) || defined(ATCA_TA100_SUPPORT)
+#if defined(ATCA_ECC_SUPPORT) || defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT) || ATCA_TA_SUPPORT
 ATCA_STATUS atca_test_genkey(uint16_t key_id, uint8_t *public_key);
 #endif
 ATCADeviceType atca_test_get_device_type(void);
@@ -245,7 +252,7 @@ int run_wpc_tests(int argc, char* argv[]);
 
 ATCA_STATUS check_clock_divider(int argc, char* argv[]);
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__linux__)
 void hex_to_data(const char* hex_str, uint8_t* data, size_t data_size);
 #endif
 
