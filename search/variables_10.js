@@ -1,18 +1,16 @@
 var searchData=
 [
-  ['rand_5fout_5245',['rand_out',['../a19716.html#ga75f7197e2840bcf9fe00722e739fdd9c',1,'atca_nonce_in_out']]],
-  ['randominfo_5246',['RandomInfo',['../a20120.html#a82305146a206e94b4f3d0ac948555f81',1,'CK_SSL3_MASTER_KEY_DERIVE_PARAMS::RandomInfo()'],['../a20128.html#a82305146a206e94b4f3d0ac948555f81',1,'CK_SSL3_KEY_MAT_PARAMS::RandomInfo()'],['../a20140.html#a36f44234ef19f65a90e293f6b20ba4e0',1,'CK_WTLS_MASTER_KEY_DERIVE_PARAMS::RandomInfo()'],['../a20152.html#a36f44234ef19f65a90e293f6b20ba4e0',1,'CK_WTLS_KEY_MAT_PARAMS::RandomInfo()'],['../a20232.html#a82305146a206e94b4f3d0ac948555f81',1,'CK_TLS12_MASTER_KEY_DERIVE_PARAMS::RandomInfo()'],['../a20236.html#a82305146a206e94b4f3d0ac948555f81',1,'CK_TLS12_KEY_MAT_PARAMS::RandomInfo()'],['../a20240.html#a82305146a206e94b4f3d0ac948555f81',1,'CK_TLS_KDF_PARAMS::RandomInfo()']]],
-  ['read_5247',['read',['../a20284.html#a381cd65d4c34e50e098ddd6e7daeb56e',1,'atca_plib_i2c_api']]],
-  ['read_5fkey_5248',['read_key',['../a19992.html#a578db367a160ec9c6c7169442b70aeac',1,'_pkcs11_slot_ctx']]],
-  ['recv_5249',['recv',['../a19836.html#abd87df082150b5b38382ec6e00c30a89',1,'atca_hal_kit_phy_t']]],
-  ['ref_5fct_5250',['ref_ct',['../a19840.html#ad72ba8c994f4d0e5ce354e17f7c427c0',1,'atcaI2Cmaster::ref_ct()'],['../a19848.html#ad72ba8c994f4d0e5ce354e17f7c427c0',1,'atca_i2c_host_s::ref_ct()'],['../a19856.html#ad72ba8c994f4d0e5ce354e17f7c427c0',1,'atca_uart_host_s::ref_ct()'],['../a19868.html#ad72ba8c994f4d0e5ce354e17f7c427c0',1,'atcaSWImaster::ref_ct()']]],
-  ['reserved_5251',['reserved',['../a20276.html#a01b0fa1db9552c97809fd700aaf9464c',1,'memory_parameters']]],
-  ['reserved0_5252',['Reserved0',['../a19724.html#ada09753b1ff3dcdffa68f2efb935e9a1',1,'_atsha204a_config::Reserved0()'],['../a19728.html#ada09753b1ff3dcdffa68f2efb935e9a1',1,'_atecc508a_config::Reserved0()']]],
-  ['reserved1_5253',['Reserved1',['../a19724.html#a604037992fe7e5fd08e1bcc684a1b12d',1,'_atsha204a_config::Reserved1()'],['../a19728.html#a604037992fe7e5fd08e1bcc684a1b12d',1,'_atecc508a_config::Reserved1()'],['../a19732.html#a604037992fe7e5fd08e1bcc684a1b12d',1,'_atecc608_config::Reserved1()']]],
-  ['reserved2_5254',['Reserved2',['../a19724.html#aad9cf2ef13b53ee603c033aed0c3b986',1,'_atsha204a_config::Reserved2()'],['../a19728.html#aad9cf2ef13b53ee603c033aed0c3b986',1,'_atecc508a_config::Reserved2()'],['../a19732.html#aad9cf2ef13b53ee603c033aed0c3b986',1,'_atecc608_config::Reserved2()']]],
-  ['reserved3_5255',['Reserved3',['../a19732.html#abf96eaa5441badc89fed6c388bb0ed1d',1,'_atecc608_config']]],
-  ['response_5256',['response',['../a19716.html#ga8ab7bcb35ce5bba05608c72da6b4a0d3',1,'atca_mac_in_out::response()'],['../a19716.html#ga8ab7bcb35ce5bba05608c72da6b4a0d3',1,'atca_hmac_in_out::response()']]],
-  ['revnum_5257',['RevNum',['../a19724.html#afe35ea9abbbe191bbda642c1f3f608d8',1,'_atsha204a_config::RevNum()'],['../a19728.html#afe35ea9abbbe191bbda642c1f3f608d8',1,'_atecc508a_config::RevNum()'],['../a19732.html#afe35ea9abbbe191bbda642c1f3f608d8',1,'_atecc608_config::RevNum()']]],
-  ['rfu_5258',['RFU',['../a19728.html#a6e8962066576d30537c46e886c52f195',1,'_atecc508a_config']]],
-  ['rx_5fretries_5259',['rx_retries',['../a19744.html#aa9ce255f8b9bff64fe261235f9e70c03',1,'ATCAIfaceCfg']]]
+  ['secure_5fboot_5fconfig_0',['secure_boot_config',['../a01680.html#a28771c8ed4754eabcb50649d753ee956',1,'atca_secureboot_mac_in_out']]],
+  ['send_1',['send',['../a01616.html#a36eca94789cf465a9cb13e9a1ad92121',1,'atca_hal_kit_phy_t']]],
+  ['signature_2',['signature',['../a01672.html#ad94d1c8d1635e597bd70823a207dc727',1,'atca_verify_mac::signature()'],['../a01680.html#acafb471d7cc7a71d613503760930d9f5',1,'atca_secureboot_mac_in_out::signature()'],['../a01411.html#gad2e0f0dbb511520e5d79bdb4ab649c22',1,'atca_verify_in_out::signature()']]],
+  ['slot_3',['slot',['../a01556.html#ac393a690cd7891565dc679e6ffa4b021',1,'atcacert_device_loc_s']]],
+  ['slot_5fcnt_4',['slot_cnt',['../a01808.html#a9054ff97888d7fc21d1006b94808c6d9',1,'pkcs11_lib_ctx_s']]],
+  ['slot_5fconf_5',['slot_conf',['../a01692.html#a2d5854b66b7bc7246fa718a5d485d3fb',1,'atca_gen_dig_in_out']]],
+  ['slot_5fconfig_6',['slot_config',['../a01732.html#a2d4bcfad9f46cf09e3fc2e2d5e67c154',1,'atca_sign_internal_in_out']]],
+  ['slot_5fkey_7',['slot_key',['../a01716.html#aad7093cf772d6e337b3c09af9cea92ac',1,'atca_check_mac_in_out']]],
+  ['slot_5flocked_8',['slot_locked',['../a01692.html#a787c86043a8c305bd23256248614a3f7',1,'atca_gen_dig_in_out']]],
+  ['slots_9',['slots',['../a01808.html#aa1679efb012be2954b3eaf1881128f8f',1,'pkcs11_lib_ctx_s']]],
+  ['sn_10',['sn',['../a01732.html#a374985826f0c1b5c6aa52370f9871841',1,'atca_sign_internal_in_out::sn()'],['../a01672.html#a5e63ccd727b87d022ed0eedc0446410f',1,'atca_verify_mac::sn()'],['../a01728.html#a17c83c0e810b2bf35b364f026e1cecb0',1,'atca_gen_key_in_out::sn()'],['../a01716.html#a26f951076270f2389044a69b30c86d74',1,'atca_check_mac_in_out::sn()'],['../a01708.html#aeb90e80a488f568c4a193c1fe851c5d4',1,'atca_derive_key_mac_in_out::sn()'],['../a01704.html#a0e321ea27e36c985abacf4510619c9f0',1,'atca_derive_key_in_out::sn()'],['../a01700.html#a2c43368d48a41123da5f69356b6f29f5',1,'atca_write_mac_in_out::sn()'],['../a01696.html#ab2ca3ae12be534d58e22bb68d6042ea3',1,'atca_diversified_key_in_out::sn()'],['../a01692.html#ad8ca9262cbe607d0c017e12285c3d951',1,'atca_gen_dig_in_out::sn()'],['../a01411.html#gaf0d7fe9a16cad1ba38c7daca4295823b',1,'atca_hmac_in_out::sn()'],['../a01411.html#gaba323f1307689412ea6cc1e54810edb9',1,'atca_mac_in_out::sn()'],['../a01411.html#ga46b121ddb13c417e4d65a3fc2f6c365b',1,'atca_include_data_in_out::sn()']]],
+  ['source_5fflag_11',['source_flag',['../a01656.html#abd69b6707bf73ae91675a6a0a250ca40',1,'atca_temp_key']]],
+  ['stored_5fvalue_12',['stored_value',['../a01692.html#a4f63b5946df323ef66910d4a0cdf2491',1,'atca_gen_dig_in_out']]]
 ];

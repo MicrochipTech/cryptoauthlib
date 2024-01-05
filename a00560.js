@@ -1,9 +1,7 @@
 var a00560 =
 [
-    [ "KIT_MAX_SCAN_COUNT", "a19715.html#ga8d90399e7f84850d1e8d4cd5e9f67fa8", null ],
-    [ "KIT_MAX_TX_BUF", "a19715.html#gadc1b033607e06cff7464dc0a49df2744", null ],
-    [ "kit_id_from_devtype", "a19715.html#ga554072f32204a0eb8d7b8c7931e43343", null ],
-    [ "kit_interface", "a19715.html#ga33fe33933fb59dde6e6fb8975da6c12d", null ],
-    [ "kit_interface_from_kittype", "a19715.html#ga31075898964b61f4877ba882477b71c3", null ],
-    [ "strnchr", "a19715.html#ga1473b18d902ce22c6b22d04ff5a7ef02", null ]
+    [ "hal_check_pid", "a01410.html#gae31246ac870409a3d694c240c6c3498a", null ],
+    [ "hal_create_mutex", "a01410.html#gaad9da28968a527ce51a2b081461d4cfe", null ],
+    [ "hal_delay_ms", "a01410.html#gadc23b8130e72a445f76c68d62e8c95c5", null ],
+    [ "hal_delay_us", "a01410.html#ga7e9019810ba5ab81b256282392cd5079", null ]
 ];

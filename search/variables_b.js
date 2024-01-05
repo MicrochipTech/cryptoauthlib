@@ -1,17 +1,10 @@
 var searchData=
 [
-  ['label_5107',['label',['../a19992.html#ac50b1b939f6468d681eaf86ee3197cb3',1,'_pkcs11_slot_ctx::label()'],['../a20008.html#afcbb066289e9ac53e4fa2f716928285b',1,'CK_TOKEN_INFO::label()']]],
-  ['lastkeyuse_5108',['LastKeyUse',['../a19724.html#a8fbbc38be4122319fb7eb0ac3ece5ee2',1,'_atsha204a_config::LastKeyUse()'],['../a19728.html#a8fbbc38be4122319fb7eb0ac3ece5ee2',1,'_atecc508a_config::LastKeyUse()']]],
-  ['law_5109',['LAW',['../a00734.html#abc133c1ea3fc580e817b33570b51bbee',1,'license.txt']]],
-  ['length_5110',['length',['../a20092.html#a77c49c75435001694bf7d0434c1605ca',1,'CK_DES_CBC_ENCRYPT_DATA_PARAMS::length()'],['../a20096.html#a77c49c75435001694bf7d0434c1605ca',1,'CK_AES_CBC_ENCRYPT_DATA_PARAMS::length()'],['../a20212.html#a77c49c75435001694bf7d0434c1605ca',1,'CK_CAMELLIA_CBC_ENCRYPT_DATA_PARAMS::length()'],['../a20216.html#a77c49c75435001694bf7d0434c1605ca',1,'CK_ARIA_CBC_ENCRYPT_DATA_PARAMS::length()'],['../a20256.html#a77c49c75435001694bf7d0434c1605ca',1,'CK_SEED_CBC_ENCRYPT_DATA_PARAMS::length()']]],
-  ['lib_5flock_5111',['lib_lock',['../a19964.html#a6b97f00ea5e16066282b45db78a701ad',1,'_pkcs11_lib_ctx']]],
-  ['lib_5flocked_5112',['lib_locked',['../a19964.html#a9bcb66d3727a5534009d6850a69e6d12',1,'_pkcs11_lib_ctx']]],
-  ['librarydescription_5113',['libraryDescription',['../a20000.html#a0b17d88b8ad1d503e4897da501c38f02',1,'CK_INFO']]],
-  ['libraryversion_5114',['libraryVersion',['../a20000.html#a291242e173ab56616e7f122434a779b0',1,'CK_INFO']]],
-  ['lock_5fmutex_5115',['lock_mutex',['../a19964.html#aa17f239b10354b3d4d510856eb8deff6',1,'_pkcs11_lib_ctx']]],
-  ['lockconfig_5116',['LockConfig',['../a19724.html#a6a46a34796a3900bf63b43596d3591d3',1,'_atsha204a_config::LockConfig()'],['../a19728.html#a6a46a34796a3900bf63b43596d3591d3',1,'_atecc508a_config::LockConfig()'],['../a19732.html#a6a46a34796a3900bf63b43596d3591d3',1,'_atecc608_config::LockConfig()']]],
-  ['lockmutex_5117',['LockMutex',['../a20032.html#ab2d841455965ecfc948621ba2f6c9573',1,'CK_C_INITIALIZE_ARGS']]],
-  ['lockvalue_5118',['LockValue',['../a19724.html#a77182d11191823c8c1a88aa09f011967',1,'_atsha204a_config::LockValue()'],['../a19728.html#a77182d11191823c8c1a88aa09f011967',1,'_atecc508a_config::LockValue()'],['../a19732.html#a77182d11191823c8c1a88aa09f011967',1,'_atecc608_config::LockValue()']]],
-  ['logged_5fin_5119',['logged_in',['../a19992.html#a2539b0d6a45d7cd1796cbfc7890b3540',1,'_pkcs11_slot_ctx']]],
-  ['loss_5120',['LOSS',['../a00734.html#ab473b496a1cb667e76fbea42893be86f',1,'license.txt']]]
+  ['mac_0',['mac',['../a01680.html#aeb4c9a28028bd625ac3650b39392cf07',1,'atca_secureboot_mac_in_out::mac()'],['../a01708.html#a0576f1886490bbb3656b420f5bb65e65',1,'atca_derive_key_mac_in_out::mac()'],['../a01672.html#afc99cd20d6193df126ae2b32b42f7546',1,'atca_verify_mac::mac()']]],
+  ['max_5fcert_5fsize_1',['max_cert_size',['../a01572.html#a6e1cb79d9215a84f1e74c989bd0c9987',1,'atcacert_build_state_s']]],
+  ['message_2',['message',['../a01732.html#a5649ccf733b2512db9917036a102fb14',1,'atca_sign_internal_in_out']]],
+  ['miface_3',['mIface',['../a01472.html#a725646466f0ea8e0982251189c15724a',1,'atca_device']]],
+  ['mifacecfg_4',['mIfaceCFG',['../a01548.html#a093b94b5d693f4e7a8facfc40f1443b0',1,'atca_iface']]],
+  ['mode_5',['mode',['../a01680.html#a2c6c43889156357aee27b3b09657ebd2',1,'atca_secureboot_mac_in_out::mode()'],['../a01732.html#a2145615f3148fb8a428657fa8020aad1',1,'atca_sign_internal_in_out::mode()'],['../a01728.html#afa39cec9e8d332618910a0f519b5b48d',1,'atca_gen_key_in_out::mode()'],['../a01716.html#a0619aaead2b82313d761804f40c24926',1,'atca_check_mac_in_out::mode()'],['../a01708.html#ae33f3603840fd0bb8ada551ff168ea58',1,'atca_derive_key_mac_in_out::mode()'],['../a01704.html#a81da1f6ee5cdd6f3270f68b4df7ee8d9',1,'atca_derive_key_in_out::mode()'],['../a01411.html#ga1616d5efe59851d97fed27b47923c786',1,'atca_hmac_in_out::mode()'],['../a01411.html#ga25187965ed87f828c98e4a20c93166e8',1,'atca_mac_in_out::mode()'],['../a01672.html#ac90559108804dc16ac1ac91a0212bff9',1,'atca_verify_mac::mode()'],['../a01411.html#gabaedd7126cc73449d73843ef3b8958c0',1,'atca_nonce_in_out::mode()']]],
+  ['msg_5fdig_5fbuf_6',['msg_dig_buf',['../a01672.html#acb0498448f486070d33e121ade525c64',1,'atca_verify_mac']]]
 ];

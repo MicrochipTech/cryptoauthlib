@@ -1,9 +1,9 @@
 var a00530 =
 [
-    [ "hal_swi_gpio_control", "a00530.html#aaf7a492cce7f9a5fe5b817aae347ba3d", null ],
-    [ "hal_swi_gpio_init", "a00530.html#a56876f187f5f50c3cc8728ee21f0962c", null ],
-    [ "hal_swi_gpio_post_init", "a00530.html#a1527badd7e7e5f4d1e60eada509b1319", null ],
-    [ "hal_swi_gpio_receive", "a00530.html#a3415a23c978f3421bc01d069d1ab9180", null ],
-    [ "hal_swi_gpio_release", "a00530.html#aae0cb0a585b3eb7535c70047bef1f7c6", null ],
-    [ "hal_swi_gpio_send", "a00530.html#aea9aba476b50f5d4ef082c24f0cb6b68", null ]
+    [ "hal_kit_hid_control", "a01410.html#gadcf53722678e48323751359a04734680", null ],
+    [ "hal_kit_hid_init", "a01410.html#ga025e8f78bfdef446732e3aafacebc857", null ],
+    [ "hal_kit_hid_post_init", "a01410.html#ga6f06bc1662b3d0361f6a241e1b5612f2", null ],
+    [ "hal_kit_hid_receive", "a01410.html#ga1c62358b9abc11bc2e52b34c3dd712e0", null ],
+    [ "hal_kit_hid_release", "a01410.html#ga8c7b9adb28b4bbdee8d5cd78ab16255f", null ],
+    [ "hal_kit_hid_send", "a01410.html#ga3fd44b390fe7558c882c97faa783c018", null ]
 ];

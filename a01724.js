@@ -1,5 +1,7 @@
 var a01724 =
 [
-    [ "ATCA_DLL", "a01724.html#a3c406311bad62403b4ba379576214108", null ],
-    [ "SHARED_LIB_EXPORT", "a01724.html#a19e63228967ce8a061f9f0d227dc6830", null ]
+    [ "curve_type", "a01411.html#gadf3470738c60dbe57b33fb1e6005f40e", null ],
+    [ "public_key", "a01411.html#gaf61f82fe19690b80bf370b295c58920b", null ],
+    [ "signature", "a01411.html#gad2e0f0dbb511520e5d79bdb4ab649c22", null ],
+    [ "temp_key", "a01411.html#ga4409850783c991d3b429ee78e67c9813", null ]
 ];

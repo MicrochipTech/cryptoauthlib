@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hal_20directory_20_2d_20purpose_7427',['HAL Directory - Purpose',['../a19715.html',1,'']]]
+  ['deprecated_20list_0',['Deprecated List',['../a01400.html',1,'']]]
 ];

@@ -1,20 +1,5 @@
 var searchData=
 [
-  ['mac_5121',['mac',['../a19888.html#aa5a9ad86915dfcef6db90b858690212a',1,'atca_verify_mac::mac()'],['../a19896.html#aa5a9ad86915dfcef6db90b858690212a',1,'atca_secureboot_mac_in_out::mac()'],['../a19920.html#aa5a9ad86915dfcef6db90b858690212a',1,'atca_derive_key_mac_in_out::mac()']]],
-  ['major_5122',['major',['../a19996.html#a96b314f49be835333e693c17b0a40f06',1,'CK_VERSION']]],
-  ['manufacturerid_5123',['manufacturerID',['../a20000.html#a734f9aeeb46b5b72f35f7624900a7efe',1,'CK_INFO::manufacturerID()'],['../a20004.html#a734f9aeeb46b5b72f35f7624900a7efe',1,'CK_SLOT_INFO::manufacturerID()'],['../a20008.html#a734f9aeeb46b5b72f35f7624900a7efe',1,'CK_TOKEN_INFO::manufacturerID()']]],
-  ['max_5fcert_5fsize_5124',['max_cert_size',['../a19808.html#abbc4bbcc72558a31f830df7df2df53b8',1,'atcacert_build_state_s']]],
-  ['mechanism_5125',['mechanism',['../a20024.html#a26092ac89d7f94e33a7d3c9b6abb3d6c',1,'CK_MECHANISM']]],
-  ['memory_5fparams_5126',['memory_params',['../a20272.html#a42beed23912c5ea5307c11701c6883ab',1,'secure_boot_parameters']]],
-  ['memory_5fsize_5127',['memory_size',['../a20276.html#afa720d7b457a80ef9f27d644a51ad157',1,'memory_parameters']]],
-  ['merchantability_5128',['MERCHANTABILITY',['../a00734.html#a760846db0db64bf1ec408f1cd844578c',1,'license.txt']]],
-  ['message_5129',['message',['../a19940.html#a35f4a3225daf3021decdc4ecea74fa46',1,'atca_sign_internal_in_out']]],
-  ['mgf_5130',['mgf',['../a20036.html#a74822dfb6d861a87cbe4ddaeedc769ef',1,'CK_RSA_PKCS_OAEP_PARAMS::mgf()'],['../a20040.html#a74822dfb6d861a87cbe4ddaeedc769ef',1,'CK_RSA_PKCS_PSS_PARAMS::mgf()']]],
-  ['miface_5131',['mIface',['../a19736.html#a90464eb29c939b580c0a219eeb7a3acb',1,'atca_device']]],
-  ['mifacecfg_5132',['mIfaceCFG',['../a19784.html#abdd7b8bd26139998d9da63a4fa562735',1,'atca_iface']]],
-  ['minor_5133',['minor',['../a19996.html#afec7f286f6d9e98425bff2fdd6443372',1,'CK_VERSION']]],
-  ['mode_5134',['mode',['../a19876.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_include_data_in_out::mode()'],['../a19716.html#ga1a6b6fb557d8d37d59700faf4e4c9167',1,'atca_nonce_in_out::mode()'],['../a19888.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_verify_mac::mode()'],['../a19896.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_secureboot_mac_in_out::mode()'],['../a19716.html#ga1a6b6fb557d8d37d59700faf4e4c9167',1,'atca_mac_in_out::mode()'],['../a19716.html#ga1a6b6fb557d8d37d59700faf4e4c9167',1,'atca_hmac_in_out::mode()'],['../a19916.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_derive_key_in_out::mode()'],['../a19920.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_derive_key_mac_in_out::mode()'],['../a19928.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_check_mac_in_out::mode()'],['../a19936.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_gen_key_in_out::mode()'],['../a19940.html#a37e90f5e3bd99fac2021fb3a326607d4',1,'atca_sign_internal_in_out::mode()']]],
-  ['model_5135',['model',['../a20008.html#ad4eef90d5ee128bd3a5d85e7f583c633',1,'CK_TOKEN_INFO']]],
-  ['month_5136',['month',['../a20020.html#a1f8387dcc52026c2edcd616562053164',1,'CK_DATE']]],
-  ['msg_5fdig_5fbuf_5137',['msg_dig_buf',['../a19888.html#abb42a6a187e06500b79b8bdbf097ef1c',1,'atca_verify_mac']]]
+  ['no_5fmac_5fflag_0',['no_mac_flag',['../a01656.html#ae381dabe56bdd77f48a8241050d16d82',1,'atca_temp_key']]],
+  ['num_5fin_1',['num_in',['../a01411.html#ga7627ba268edc51f4e185e956bd215496',1,'atca_nonce_in_out']]]
 ];

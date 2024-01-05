@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['io_5fprotection_5fkey_2eh_4031',['io_protection_key.h',['../a00047.html',1,'']]]
+  ['kit_5fprotocol_2ec_0',['kit_protocol.c',['../a00620.html',1,'']]],
+  ['kit_5fprotocol_2eh_1',['kit_protocol.h',['../a00623.html',1,'']]]
 ];

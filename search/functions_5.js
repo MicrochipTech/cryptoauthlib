@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ets_5fdelay_5fus_4593',['ets_delay_us',['../a00476.html#a7def86f0fbd90b451847d8534f21f5dc',1,'hal_esp32_timer.c']]]
+  ['from_5fdefinition_0',['from_definition',['../a02476.html#a3d679310ce9bf2878b4d01871e97c54e',1,'cryptoauthlib.library.AtcaUnion.from_definition()'],['../a02480.html#a7748c2f53682292dd1ea2cb03b8386f5',1,'cryptoauthlib.library.AtcaStructure.from_definition()']]]
 ];

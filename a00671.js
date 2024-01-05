@@ -1,13 +1,16 @@
 var a00671 =
 [
-    [ "pkcs11_key_derive", "a19719.html#ga8ace04a2049a5d7e527558da10e68dcd", null ],
-    [ "pkcs11_key_generate", "a19719.html#gae2748ca15b76254a518b28bf3dccb63f", null ],
-    [ "pkcs11_key_generate_pair", "a19719.html#gaac5c7d6ae9b8262fb705083302efd90a", null ],
-    [ "pkcs11_key_write", "a19719.html#gaf3fdce991fe05099aa8552912e26dee7", null ],
-    [ "pkcs11_key_private_attributes", "a19719.html#ga40d8e67ef0fae7bdc2dca013ad8410aa", null ],
-    [ "pkcs11_key_private_attributes_count", "a19719.html#gaf358031996abf87fc21bc259e1e90644", null ],
-    [ "pkcs11_key_public_attributes", "a19719.html#gadf3e8d1e6b01d9fe85f54c9478d8d215", null ],
-    [ "pkcs11_key_public_attributes_count", "a19719.html#gadc78586c61388b3756395f0098fa4505", null ],
-    [ "pkcs11_key_secret_attributes", "a19719.html#ga6ef03269a32699359d90901cc84954f3", null ],
-    [ "pkcs11_key_secret_attributes_count", "a19719.html#ga55a0ac12b2ed4daefadaf3fa94edf78e", null ]
+    [ "atcac_sha1_ctx", "a01748.html", null ],
+    [ "atcac_sha2_256_ctx", "a01752.html", null ],
+    [ "atcac_aes_cmac_ctx", "a01764.html", null ],
+    [ "atcac_hmac_ctx", "a01756.html", null ],
+    [ "atcac_pk_ctx", "a01768.html", null ],
+    [ "atcac_x509_ctx", "a01744.html", null ],
+    [ "ATCAC_AES_CMAC_EN", "a00671.html#ace0d6e503c0db5222207053a7c537103", null ],
+    [ "ATCAC_AES_GCM_EN", "a00671.html#a2cf377cd3579f3ba898ec2391835cfd5", null ],
+    [ "ATCAC_AES_GCM_UPDATE_EN", "a00671.html#ad91ab6602570c04fbbd883f10e878ba1", null ],
+    [ "ATCAC_PKEY_EN", "a00671.html#ae0b5716ff6baea028959764dc6d88e96", null ],
+    [ "ATCAC_SHA1_EN", "a00671.html#a8e3c7ddf3a16cbdcc42060cdee2d884e", null ],
+    [ "ATCAC_SHA256_EN", "a00671.html#a99dab792a5983a089fe816abc57bad25", null ],
+    [ "HOSTLIB_CERT_EN", "a00671.html#a82cc4e898685eda93b47e741e5b44137", null ]
 ];

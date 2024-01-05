@@ -1,7 +1,8 @@
 var a00245 =
 [
-    [ "ATCA_LIBRARY_VERSION_BUILD", "a00245.html#a78849ac2eed512d15a0b22ca781f83e8", null ],
-    [ "ATCA_LIBRARY_VERSION_DATE", "a00245.html#aceddbd0ae1c41554eb2f0fabc0a2dc0c", null ],
-    [ "ATCA_LIBRARY_VERSION_MAJOR", "a00245.html#ab4634f4de0131c8eee8f064dc3e9064b", null ],
-    [ "ATCA_LIBRARY_VERSION_MINOR", "a00245.html#a0ec591139c9e733853063ea898bac376", null ]
+    [ "atGetIFace", "a01405.html#ga3f98e29cffa06446fc91b329703606af", null ],
+    [ "deleteATCADevice", "a01405.html#gac087cf04cd5bd6ff2e026d89bfbf5e12", null ],
+    [ "initATCADevice", "a01405.html#ga8eec7f2190d1f9bda6684f5d2177db15", null ],
+    [ "newATCADevice", "a01405.html#gad5e12e12d3030e28d75164286df9e5e9", null ],
+    [ "releaseATCADevice", "a01405.html#gab729e6c838c0a247d4f226fb92492d96", null ]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mbedtls_20directory_20_2d_20purpose_7429',['mbedtls directory - Purpose',['../a19718.html',1,'']]]
+  ['ip_20protection_20with_20symmetric_20authentication_0',['IP Protection with Symmetric Authentication',['../a02790.html',1,'']]]
 ];

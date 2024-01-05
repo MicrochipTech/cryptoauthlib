@@ -1,15 +1,19 @@
 var searchData=
 [
-  ['baud_4911',['baud',['../a19744.html#ac6e5ec63505c02923d71f7409cdbf1d1',1,'ATCAIfaceCfg']]],
-  ['bbc_4912',['bBC',['../a20112.html#ab2faf620b1a87b8aff40aa7863ef23ae',1,'CK_KEY_WRAP_SET_OAEP_PARAMS']]],
-  ['bisexport_4913',['bIsExport',['../a20128.html#a1936b7fa59f514b8c916dd4b31e1f49d',1,'CK_SSL3_KEY_MAT_PARAMS::bIsExport()'],['../a20152.html#a1936b7fa59f514b8c916dd4b31e1f49d',1,'CK_WTLS_KEY_MAT_PARAMS::bIsExport()'],['../a20236.html#a1936b7fa59f514b8c916dd4b31e1f49d',1,'CK_TLS12_KEY_MAT_PARAMS::bIsExport()']]],
-  ['block_4914',['block',['../a19812.html#a407f9109b29f2f3a4c9f7d1de450ad41',1,'atca_sha256_ctx::block()'],['../a19828.html#a3eda0262ee911faf6be5f756aae6b799',1,'sw_sha256_ctx::block()']]],
-  ['block_5fsize_4915',['block_size',['../a19812.html#a9e3fb1e50a1c71b2337df296222d9553',1,'atca_sha256_ctx::block_size()'],['../a19828.html#a9e3fb1e50a1c71b2337df296222d9553',1,'sw_sha256_ctx::block_size()']]],
-  ['buf_4916',['buf',['../a19824.html#ad129019065c848df2daa8c524faf8102',1,'CL_HashContext::buf()'],['../a19948.html#a1fe855c208bc17a51a4d34fefdb2d5b1',1,'atca_jwt_t::buf()']]],
-  ['buffer_4917',['buffer',['../a20260.html#a1e76b19710c907b20b3a6bf68e3aca48',1,'_ascii_kit_host_context']]],
-  ['buflen_4918',['buflen',['../a19948.html#a892366b22e8ea42d95e49308022eef4d',1,'atca_jwt_t']]],
-  ['bus_4919',['bus',['../a19744.html#a5262d4a80e6a0b6dce6fd57d4656786d',1,'ATCAIfaceCfg']]],
-  ['bus_5findex_4920',['bus_index',['../a19840.html#af5c011e6c2e8d49675f7029e8ec2c0a6',1,'atcaI2Cmaster::bus_index()'],['../a19868.html#af5c011e6c2e8d49675f7029e8ec2c0a6',1,'atcaSWImaster::bus_index()']]],
-  ['bytecount_4921',['byteCount',['../a19824.html#aab2b8d46fc5660a5ab68496fe0d7d16b',1,'CL_HashContext']]],
-  ['bytecounthi_4922',['byteCountHi',['../a19824.html#a64c87717f7dbc11cbc3b189f59a04604',1,'CL_HashContext']]]
+  ['ca_5fcert_5fdef_0',['ca_cert_def',['../a01568.html#ae6dc350fb1a599dd6585c41e34a1e0e8',1,'atcacert_def_s']]],
+  ['cert_1',['cert',['../a01572.html#a850a129376d4a3dd4c9994d04a9edca7',1,'atcacert_build_state_s']]],
+  ['cert_5fdef_2',['cert_def',['../a01572.html#a5b6c72f114573cb07932b4c0e089150e',1,'atcacert_build_state_s']]],
+  ['cert_5floc_3',['cert_loc',['../a01564.html#a6a6584538d9ba2e8304e2c103d4501a5',1,'atcacert_cert_element_s']]],
+  ['cert_5fsize_4',['cert_size',['../a01572.html#af8600eedc4cac772aff7257ffcd4a1c0',1,'atcacert_build_state_s']]],
+  ['challenge_5',['challenge',['../a01411.html#gac4c2db1a307043c7677e76310911d944',1,'atca_mac_in_out']]],
+  ['class_5fid_6',['class_id',['../a01816.html#a41cd002dd69540506c5894ace65d323f',1,'pkcs11_object_s']]],
+  ['class_5ftype_7',['class_type',['../a01816.html#af1269e61c8cec31c2e85aa6c3bb4873a',1,'pkcs11_object_s']]],
+  ['client_5fchal_8',['client_chal',['../a01716.html#ac4f5b60a59fa29d78c720c2be434c5c3',1,'atca_check_mac_in_out']]],
+  ['client_5fresp_9',['client_resp',['../a01716.html#a4daaa0bccc92503ccc31eaed78eb7409',1,'atca_check_mac_in_out']]],
+  ['comp_5fcert_5fdev_5floc_10',['comp_cert_dev_loc',['../a01568.html#a56f1328d6aec74cd0eb92a30182065b1',1,'atcacert_def_s']]],
+  ['config_5fpath_11',['config_path',['../a01808.html#a8974dbe03027c73d7bed3159421c05f7',1,'pkcs11_lib_ctx_s']]],
+  ['count_12',['count',['../a01556.html#a24329906c1970b0510479835d52b70b5',1,'atcacert_device_loc_s::count()'],['../a01560.html#a2cf939ba243a6dc7c8da9a74040b83f3',1,'atcacert_cert_loc_s::count()'],['../a01816.html#ad28895cf4063a1d3eaa03a343ae7105b',1,'pkcs11_object_s::count()']]],
+  ['counter_13',['counter',['../a01692.html#adb6743838ca7d8bd3ad390b7608492ba',1,'atca_gen_dig_in_out']]],
+  ['crypto_5fdata_14',['crypto_data',['../a01411.html#ga3d18f12db79908a5a1e831367391aa1c',1,'atca_decrypt_in_out']]],
+  ['curve_5ftype_15',['curve_type',['../a01411.html#gadf3470738c60dbe57b33fb1e6005f40e',1,'atca_verify_in_out']]]
 ];

@@ -1,10 +1,8 @@
 var a00602 =
 [
-    [ "atca_mbedtls_eckey_t", "a19718.html#ga36d21431afe595eab1b7f7a2330ad727", null ],
-    [ "atca_mbedtls_cert_add", "a19718.html#ga1180b0ded84f7edb4b36d14730366a64", null ],
-    [ "atca_mbedtls_ecdh_ioprot_cb", "a19718.html#gaa35682dc98e33ce3d6fad1fc902cdff0", null ],
-    [ "atca_mbedtls_ecdh_slot_cb", "a19718.html#ga98d684683ccecd3d56bdf5dc27ae999c", null ],
-    [ "atca_mbedtls_ecdsa_sign", "a19718.html#ga1700b4ec23f9a83aecd005f67447c569", null ],
-    [ "atca_mbedtls_pk_init", "a19718.html#ga72da31831a3647e287543634e3f78aca", null ],
-    [ "atca_mbedtls_pk_init_ext", "a19718.html#gab235933e78ed89776fb62f67b48f0a11", null ]
+    [ "hal_uart_init", "a00602.html#afb6d836af248aed1afe715ae2f2f7c2b", null ],
+    [ "hal_uart_post_init", "a00602.html#a1c5f894db539ea5cb0d5ae0fa38449d7", null ],
+    [ "hal_uart_receive", "a00602.html#a1a0256b61c3579519f8cc6d6157bc126", null ],
+    [ "hal_uart_release", "a00602.html#a1e0c17bf7342c21ca69d066eefa1f1eb", null ],
+    [ "hal_uart_send", "a00602.html#aae0b332270c1e8df223b430d8e8ddbbc", null ]
 ];

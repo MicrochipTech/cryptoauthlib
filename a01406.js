@@ -1,9 +1,47 @@
 var a01406 =
 [
-    [ "KIT_MAX_SCAN_COUNT", "a08585.html#ga8d90399e7f84850d1e8d4cd5e9f67fa8", null ],
-    [ "KIT_MAX_TX_BUF", "a08585.html#gadc1b033607e06cff7464dc0a49df2744", null ],
-    [ "kit_id_from_devtype", "a08585.html#ga554072f32204a0eb8d7b8c7931e43343", null ],
-    [ "kit_interface", "a08585.html#ga33fe33933fb59dde6e6fb8975da6c12d", null ],
-    [ "kit_interface_from_kittype", "a08585.html#ga31075898964b61f4877ba882477b71c3", null ],
-    [ "strnchr", "a08585.html#ga1473b18d902ce22c6b22d04ff5a7ef02", null ]
+    [ "devtype_names_t", "a01476.html", null ],
+    [ "ATCAIfaceCfg", "a01480.html", [
+      [ "address", "a01480.html#a553439e2acc31fe3587a4c883e134b66", null ]
+    ] ],
+    [ "ATCAHAL_t", "a01544.html", null ],
+    [ "atca_iface", "a01548.html", [
+      [ "hal", "a01548.html#a7cee716c7c8c20d0d8aac6243baff819", null ],
+      [ "hal_data", "a01548.html#ab316c2d139b46380bc97be4d23428caa", null ],
+      [ "mIfaceCFG", "a01548.html#a093b94b5d693f4e7a8facfc40f1443b0", null ],
+      [ "phy", "a01548.html#a3ac7e576da4958d6c0488ec606d9cbff", null ]
+    ] ],
+    [ "atca_iface_t", "a01406.html#gaa9323be08c4d757019e9863d9a7fb6b1", null ],
+    [ "ATCAIfaceType", "a01406.html#gac7f674d4a0afb12d2f3c9c5e98cb1089", [
+      [ "ATCA_I2C_IFACE", "a01406.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a872efba3aa5b7890acfe0f1e0e453bcb", null ],
+      [ "ATCA_SWI_IFACE", "a01406.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a2ce2e46b7f4245ab3d750ea2805fdc26", null ],
+      [ "ATCA_UART_IFACE", "a01406.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a80ec8c070f1c711f2b16ad39d2a0486d", null ],
+      [ "ATCA_SPI_IFACE", "a01406.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a8d50943acfc67f797b9c8fbf565deeb7", null ],
+      [ "ATCA_HID_IFACE", "a01406.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a7da282c54282a02f5650c38a85d0dfb1", null ],
+      [ "ATCA_KIT_IFACE", "a01406.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a0c22b107512100a364378a0bbf6bdfb9", null ],
+      [ "ATCA_CUSTOM_IFACE", "a01406.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a1da1522f46e7dbd1a928ff130594561d", null ],
+      [ "ATCA_I2C_GPIO_IFACE", "a01406.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a1b4b0b9522bab920782f2d781c9e489e", null ],
+      [ "ATCA_SWI_GPIO_IFACE", "a01406.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089ab38797147196617d79ba041c899fdee2", null ],
+      [ "ATCA_SPI_GPIO_IFACE", "a01406.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a28c752d380cea80d9d35735979e623eb", null ]
+    ] ],
+    [ "atca_iface_get_retries", "a01406.html#ga349718dea5d5b558766a31b7dcd7e811", null ],
+    [ "atca_iface_get_wake_delay", "a01406.html#ga128f54833b5ed2105dae417333e1d651", null ],
+    [ "atca_iface_is_kit", "a01406.html#gacb09a6fa845efade7d47796bead14d2c", null ],
+    [ "atca_iface_is_swi", "a01406.html#gad2276d5ebd02613fbeda8ae15b679d1e", null ],
+    [ "atcontrol", "a01406.html#ga324cef45a35e02b387001afdc9092778", null ],
+    [ "atgetifacecfg", "a01406.html#gac88ba81abfd42df65c6c0c64414dfc6e", null ],
+    [ "atgetifacehaldat", "a01406.html#ga5e4163b8882d4eb42d4d5191c8731da0", null ],
+    [ "atidle", "a01406.html#gac794fffe040e6d47a34c756720f3cbea", null ],
+    [ "atinit", "a01406.html#ga386353e8700eec35e4548dfa29f13b8d", null ],
+    [ "atreceive", "a01406.html#ga01badea388343bdf5929c5c2be9f426b", null ],
+    [ "atsend", "a01406.html#gabd4f20b06efedede6bc4a836cfad8f38", null ],
+    [ "atsleep", "a01406.html#gac06336335e5f3191e3b1fc06d2830d96", null ],
+    [ "atwake", "a01406.html#ga32693c852341e1b946bab3cca5f71761", null ],
+    [ "deleteATCAIface", "a01406.html#gaf8074d759241d3edd6d8ead1d7322a98", null ],
+    [ "iface_get_device_type_by_name", "a01406.html#ga8e50f9bf69be0910880411e9a0d5bc24", null ],
+    [ "ifacecfg_get_address", "a01406.html#ga9efe98ee7fe9be95593c7177800efd8d", null ],
+    [ "ifacecfg_set_address", "a01406.html#ga4e975805352164dc3a8ff553b42c509f", null ],
+    [ "ifacetype_is_kit", "a01406.html#gaaff5268b9acbf16db03b425e6c54f97c", null ],
+    [ "initATCAIface", "a01406.html#ga3a31087729a7a2e9a624572f234809fc", null ],
+    [ "releaseATCAIface", "a01406.html#gab9ee16357a8e397a72eda7e9c8553fb3", null ]
 ];

@@ -1,5 +1,5 @@
 var a00680 =
 [
-    [ "pkcs11_mech_get_list", "a19719.html#ga9678c431b8d5479e53417b109b32c20f", null ],
-    [ "pkcs_mech_get_info", "a19719.html#gac66d133f84b945f9c26727ee9f7a7d57", null ]
+    [ "pkcs11_attrib_fill", "a01414.html#ga8b1206a513938768655cdd541ffee9b3", null ],
+    [ "pkcs11_attrib_value", "a01414.html#ga50e9c64b899d1b2f78c9634298225303", null ]
 ];

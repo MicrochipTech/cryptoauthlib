@@ -1,11 +1,13 @@
 var a00497 =
 [
-    [ "BRIDGE_PROTOCOL_VERSION", "a00497.html#aa96163f305712a56649b07eabd26f54c", null ],
-    [ "HAL_KIT_COMMAND_IDLE", "a00497.html#aa84bdf1185a8f8c533db37fe133032eb", null ],
-    [ "HAL_KIT_COMMAND_RECV", "a00497.html#abac189c960c7cca89e3485bf02049c0f", null ],
-    [ "HAL_KIT_COMMAND_SEND", "a00497.html#a75036e62d451235c7cc2adb90ca52a8f", null ],
-    [ "HAL_KIT_COMMAND_SLEEP", "a00497.html#ab2afbe27f481ffa1bb18156882b7e642", null ],
-    [ "HAL_KIT_COMMAND_WAKE", "a00497.html#ac885b1da63767551154f2fff4b27a037", null ],
-    [ "HAL_KIT_HEADER_LEN", "a00497.html#ab89624779173549815c9fe24de017c44", null ],
-    [ "hal_kit_attach_phy", "a19715.html#ga3f5bce4e9ee06a3b564052b2bd202c29", null ]
+    [ "ATCA_CRYPTO_SHA1_EN", "a00497.html#a2e5e1b4f8da8d151569d6ff0133b43ec", null ],
+    [ "ATCA_CRYPTO_SHA2_HMAC_CTR_EN", "a00497.html#a5a3020c4884811361247f771da67b9a5", null ],
+    [ "ATCA_CRYPTO_SHA2_HMAC_EN", "a00497.html#a18071ade62f5d4b39e444ca87548e31e", null ],
+    [ "ATCAB_PBKDF2_SHA256_EN", "a00497.html#aa46ae7101b70ba482359edccca83f414", null ],
+    [ "ATCAC_PBKDF2_SHA256_EN", "a00497.html#a6d2fa2e22a151bea100d7c7ee84dbe7f", null ],
+    [ "ATCAC_RANDOM_EN", "a00497.html#add878e0ecc6c87b683935f418f403c7e", null ],
+    [ "ATCAC_SHA1_EN", "a00497.html#a8e3c7ddf3a16cbdcc42060cdee2d884e", null ],
+    [ "ATCAC_SHA256_EN", "a00497.html#a99dab792a5983a089fe816abc57bad25", null ],
+    [ "ATCAC_SIGN_EN", "a00497.html#a094297d2dd0a7e2b4606fc37fc797fcd", null ],
+    [ "ATCAC_VERIFY_EN", "a00497.html#a7eeef6ad76dccb48d8b1741a9254af97", null ]
 ];

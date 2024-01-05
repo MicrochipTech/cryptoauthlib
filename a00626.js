@@ -1,13 +1,10 @@
 var a00626 =
 [
-    [ "pkcs11_config_cert", "a19719.html#ga7afb784fad2dd8b8b2befd6159e2a053", null ],
-    [ "pkcs11_config_init_cert", "a19719.html#ga1de4cccdfd83ce723eb050e09266a3ae", null ],
-    [ "pkcs11_config_init_private", "a19719.html#gab36c9d4f392c0eb613fb3833dd852495", null ],
-    [ "pkcs11_config_init_public", "a19719.html#gad8164c3b6e1c4287b665ce18c143bdd3", null ],
-    [ "pkcs11_config_init_secret", "a19719.html#gad555f5477b8ea4ed38abba20bc3ffa56", null ],
-    [ "pkcs11_config_key", "a19719.html#ga0e5ec966dd01f9eb6f1cc2f4b3085f9f", null ],
-    [ "pkcs11_config_load", "a19719.html#ga4804f397bd49dd23ec903e4249e22d9e", null ],
-    [ "pkcs11_config_load_objects", "a19719.html#gafbf88cd1298ee01568385688019ba80c", null ],
-    [ "pkcs11_config_remove_object", "a19719.html#ga02347d90fe77c323677712e685aa8c6a", null ],
-    [ "pkcs11_config_split_string", "a19719.html#gaf5c7ce7b708c44d5f1d07a40485a759b", null ]
+    [ "swi_uart_deinit", "a01410.html#ga0b1aad3936bf003686d8db7fa2be5132", null ],
+    [ "swi_uart_discover_buses", "a01410.html#gad640b598d581ee7c8a4c804bee602906", null ],
+    [ "swi_uart_init", "a01410.html#ga003b63648f1a5f9eba274760559688f2", null ],
+    [ "swi_uart_mode", "a01410.html#gacc2a96c86ce4c07249b81bc6a7eb2e41", null ],
+    [ "swi_uart_receive_byte", "a01410.html#ga93f3dab17c14f71641ca970998ede823", null ],
+    [ "swi_uart_send_byte", "a01410.html#ga4a4d491006d9683d67838963706ac9c1", null ],
+    [ "swi_uart_setbaud", "a01410.html#gaba296f70baf68b768d6c4bb9cf7ba67d", null ]
 ];

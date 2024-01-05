@@ -1,6 +1,5 @@
 var a00539 =
 [
-    [ "atca_delay_10us", "a19715.html#ga19891182689551cc3a88603135959351", null ],
-    [ "atca_delay_ms", "a19715.html#ga0544f36422b5e9a8890fb9c90fc5eb55", null ],
-    [ "atca_delay_us", "a19715.html#ga7598dfcd6dcac882836544d48356d02f", null ]
+    [ "hal_create_mutex", "a01410.html#gaad9da28968a527ce51a2b081461d4cfe", null ],
+    [ "hal_rtos_delay_ms", "a01410.html#gacb8b202e3e6d66c96262b1ad4126ff6a", null ]
 ];

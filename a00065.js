@@ -1,4 +1,6 @@
 var a00065 =
 [
-    [ "g_tflxtls_cert_def_4_device", "a19720.html#gaca5751036ff201454ef8714cd93c6e37", null ]
+    [ "tng_get_device_cert_def", "a01402.html#ga28c369c92f1a7c2f61512cde463b8ff5", null ],
+    [ "tng_get_device_pubkey", "a01402.html#ga6bdd6b8ace7a98b7efbc13f85ffaac1a", null ],
+    [ "tng_map_get_device_cert_def", "a01402.html#ga60599359d5331215ca7fdf6710f0dbb1", null ]
 ];

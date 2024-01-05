@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['newatcadevice_4712',['newATCADevice',['../a19710.html#gad5e12e12d3030e28d75164286df9e5e9',1,'atca_device.c']]],
-  ['newatcaiface_4713',['newATCAIface',['../a19711.html#ga6f28f18f0d00c5301939724325f6b6fc',1,'atca_iface.c']]]
+  ['lib_5fstrcasestr_0',['lib_strcasestr',['../a00254.html#a21594322838322aac744aaf655d77ec8',1,'lib_strcasestr(const char *haystack, const char *needle):&#160;atca_helpers.c'],['../a00266.html#a21594322838322aac744aaf655d77ec8',1,'lib_strcasestr(const char *haystack, const char *needle):&#160;atca_helpers.c']]],
+  ['lib_5ftolower_1',['lib_tolower',['../a00254.html#ada3308b30b1b1e40abb806dbc5476648',1,'lib_tolower(char c):&#160;atca_helpers.c'],['../a01403.html#gada3308b30b1b1e40abb806dbc5476648',1,'lib_tolower(char c):&#160;atca_helpers.c']]],
+  ['lib_5ftoupper_2',['lib_toupper',['../a00254.html#a13a4675d782c861977b653e3c2b354ba',1,'lib_toupper(char c):&#160;atca_helpers.c'],['../a01403.html#ga13a4675d782c861977b653e3c2b354ba',1,'lib_toupper(char c):&#160;atca_helpers.c']]],
+  ['load_5fcryptoauthlib_3',['load_cryptoauthlib',['../a01423.html#aa9a021d0bc0272e702a7de499b76683c',1,'cryptoauthlib::library']]]
 ];

@@ -1,10 +1,10 @@
 var a00554 =
 [
-    [ "hal_create_mutex", "a19715.html#gab289a3949663589ac6be71d72fb18278", null ],
-    [ "hal_delay_10us", "a19715.html#gaa7df07f9efb18d8cef1d9602372aca8c", null ],
-    [ "hal_delay_ms", "a19715.html#gadc23b8130e72a445f76c68d62e8c95c5", null ],
-    [ "hal_delay_us", "a19715.html#ga7e9019810ba5ab81b256282392cd5079", null ],
-    [ "hal_destroy_mutex", "a19715.html#ga4589d7b3e951f40b7928f1cf31f7ddf3", null ],
-    [ "hal_lock_mutex", "a19715.html#gad4cd02ff7ae4e75844eab4e84eb61994", null ],
-    [ "hal_unlock_mutex", "a19715.html#ga31fd8170a49623686543f6247b883bd1", null ]
+    [ "hal_kit_attach_phy", "a01410.html#ga3f5bce4e9ee06a3b564052b2bd202c29", null ],
+    [ "hal_kit_control", "a01410.html#ga56a9e080fb9055109778010912be08ba", null ],
+    [ "hal_kit_init", "a01410.html#ga4d01381c1a907ba56368a9313d0b65cb", null ],
+    [ "hal_kit_post_init", "a01410.html#ga7baebf1b0431d0670517d3788d63b111", null ],
+    [ "hal_kit_receive", "a01410.html#ga239b2412c8c0d45c2097a4fa06c9aa53", null ],
+    [ "hal_kit_release", "a01410.html#gafb063a58f6e3b087cf08fce5c66ee422", null ],
+    [ "hal_kit_send", "a01410.html#ga18817a4a7ab5958453eca414e28834ba", null ]
 ];
