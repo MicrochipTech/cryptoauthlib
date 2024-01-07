@@ -55,10 +55,11 @@
  *  \param[out] resp_mac   Output response mac (32 bytes) if mode[3] is set
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS calib_checkmac_base(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t *challenge, const uint8_t *response, const uint8_t *other_data, uint8_t *resp_mac)
+ATCA_STATUS calib_checkmac_base(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t *challenge, const uint8_t *response, const uint8_t *other_data,
+                                uint8_t *resp_mac)
 {
     ATCAPacket packet;
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
 
     // Verify the inputs
     if ((device == NULL) || (response == NULL) || (other_data == NULL) ||
@@ -70,6 +71,8 @@ ATCA_STATUS calib_checkmac_base(ATCADevice device, uint8_t mode, uint16_t key_id
 
     do
     {
+        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
+
         // build Check MAC command
         packet.param1 = mode;
         packet.param2 = key_id;
@@ -90,7 +93,7 @@ ATCA_STATUS calib_checkmac_base(ATCADevice device, uint8_t mode, uint16_t key_id
             break;
         }
 
-        if ((status = atca_execute_command( (void*)&packet, device)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command((void*)&packet, device)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "calib_checkmac_base - execution failed");
             break;
@@ -101,8 +104,7 @@ ATCA_STATUS calib_checkmac_base(ATCADevice device, uint8_t mode, uint16_t key_id
         {
             (void)memcpy(resp_mac, &packet.data[ATCA_RSP_DATA_IDX + CHECKMAC_SINGLE_BYTE_BOOL_RESP], MAC_SIZE);
         }
-    }
-    while (false);
+    } while (false);
 
     return status;
 }
@@ -136,7 +138,8 @@ ATCA_STATUS calib_checkmac(ATCADevice device, uint8_t mode, uint16_t key_id, con
  *	\param[out] mac        Mac output (32 bytes)
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS calib_checkmac_with_response_mac(ATCADevice device, uint8_t mode, const uint8_t *challenge, const uint8_t *response, const uint8_t *other_data, uint8_t *mac)
+ATCA_STATUS calib_checkmac_with_response_mac(ATCADevice device, uint8_t mode, const uint8_t *challenge, const uint8_t *response, const uint8_t *other_data,
+                                             uint8_t *mac)
 {
     return calib_checkmac_base(device, mode, CHECKMAC_SHA105_DEFAULT_KEYID, challenge, response, other_data, mac);
 }

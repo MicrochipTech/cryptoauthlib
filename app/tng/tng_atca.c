@@ -67,7 +67,7 @@ static const size_t g_tng_cert_def_cnt = sizeof(g_tng_cert_def_map) / sizeof(tng
 
 const atcacert_def_t* tng_map_get_device_cert_def(int index)
 {
-    if ((index > 0) && ((size_t)index < g_tng_cert_def_cnt))
+    if ((index >= 0) && ((size_t)index < g_tng_cert_def_cnt))
     {
         return g_tng_cert_def_map[index].cert_def;
     }

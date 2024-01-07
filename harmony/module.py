@@ -24,7 +24,7 @@
 import os
 
 _CALIB_SUPPORTED_DEVICES = ['ATECC108A', 'ATECC508A', 'ATECC608', 'ATSHA204A', 'ATSHA206A', 'ECC204', 'TA010', 'SHA104', 'SHA105']
-_TALIB_SUPPORTED_DEVICES = ['TA100']
+_TALIB_SUPPORTED_DEVICES = ['TA100', 'TA101']
 
 def loadModule():
     cryptoAuthLib = Module.CreateSharedComponent("cryptoauthlib", "Core", "/Libraries/Cryptoauthlib", "/harmony/config/cryptoauthlib.py")

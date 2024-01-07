@@ -21,6 +21,7 @@ option(ATCA_NO_HEAP "Do not use dynamic (heap) allocation functions" OFF)
 option(ATCA_USE_ATCAB_FUNCTIONS "Build the atcab_ api functions rather than using macros" OFF)
 option(ATCA_ENABLE_DEPRECATED "Enable the use of older APIs that that been replaced" OFF)
 option(ATCA_STRICT_C99 "Enable strict C99 compliance for the libray" OFF)
+option(MULTIPART_BUF_EN "Enable MultiPart Buffer" OFF)
 
 # Software Cryptographic backend for host crypto abstractions
 option(ATCA_MBEDTLS "Integrate with mbedtls" OFF)
@@ -61,10 +62,6 @@ endif()
 if (TARGET zephyr_interface)
 SET(ATCA_ZEPHYR_SUPPORT ON CACHE INTERNAL "Include zephyr hal drivers")
 endif()
-
-# Set maximum packet size that is allowed in bytes
-SET(MAX_PACKET_SIZE 1072 CACHE STRING "Dafault packet size allowed in bytes")
-
 
 # Check Integration Options
 if (ATCA_MBEDTLS AND (ATCA_WOLFSSL OR ATCA_OPENSSL))
@@ -309,12 +306,12 @@ endif(BUILD_TESTS)
 configure_file(atca_config.h.in atca_config.h @ONLY)
 set(LIB_INC ${LIB_INC} ${CMAKE_CURRENT_BINARY_DIR}/atca_config.h)
 
-include_directories(cryptoauth PUBLIC ${CMAKE_CURRENT_BINARY_DIR} 
+include_directories(cryptoauth PUBLIC ${CMAKE_CURRENT_BINARY_DIR}
                                       ${CMAKE_CURRENT_SOURCE_DIR}
                                       ${CMAKE_BINARY_DIR}/downloaded
                                       ../app/tng
-                                      ../third_party 
-                                      ../third_party/hidapi/hidapi 
+                                      ../third_party
+                                      ../third_party/hidapi/hidapi
                                       ${USB_INCLUDE_DIR})
 
 if(ATCA_MBEDTLS)

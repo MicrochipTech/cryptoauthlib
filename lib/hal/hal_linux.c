@@ -78,10 +78,10 @@ void hal_delay_ms(uint32_t delay)
 #include <sys/mman.h>
 
 ATCA_STATUS hal_alloc_shared(
-    void **     pShared,        /**< [in/out] Location to store the pointer to the allocated shared memory */
-    size_t      size,           /**< [in] Requested size of the block */
-    const char* pName,          /**< [in] Name of the shared memory block */
-    bool *      initialized     /**< [out] Returns initialized status (true if new and initialized to zero, false if existing) */
+    void **     pShared,    /**< [in/out] Location to store the pointer to the allocated shared memory */
+    size_t      size,       /**< [in] Requested size of the block */
+    const char* pName,      /**< [in] Name of the shared memory block */
+    bool *      initialized /**< [out] Returns initialized status (true if new and initialized to zero, false if existing) */
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
@@ -289,7 +289,7 @@ ATCA_STATUS hal_unlock_mutex(void *pMutex)
  * \param[in,out] ppMutex location to receive ptr to mutex
  * \param[in,out] pName String used to identify the mutex
  */
-ATCA_STATUS hal_create_mutex(void ** ppMutex, char* pName)
+ATCA_STATUS hal_create_mutex(void ** ppMutex, const char* pName)
 {
     sem_t * sem;
 

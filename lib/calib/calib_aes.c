@@ -58,7 +58,7 @@
 ATCA_STATUS calib_aes(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* aes_in, uint8_t* aes_out)
 {
     ATCAPacket packet;
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
 
     do
     {
@@ -67,6 +67,8 @@ ATCA_STATUS calib_aes(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
             status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             break;
         }
+
+        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
 
         // build a AES command
         packet.param1 = mode;
@@ -92,8 +94,7 @@ ATCA_STATUS calib_aes(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
             (void)memcpy(aes_out, &packet.data[ATCA_RSP_DATA_IDX], AES_DATA_SIZE);
         }
 
-    }
-    while (false);
+    } while (false);
 
     return status;
 }
@@ -152,7 +153,7 @@ ATCA_STATUS calib_aes_decrypt(ATCADevice device, uint16_t key_id, uint8_t key_bl
 ATCA_STATUS calib_aes_gfm(ATCADevice device, const uint8_t* h, const uint8_t* input, uint8_t* output)
 {
     ATCAPacket packet;
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
 
     do
     {
@@ -161,6 +162,8 @@ ATCA_STATUS calib_aes_gfm(ATCADevice device, const uint8_t* h, const uint8_t* in
             status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             break;
         }
+
+        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
 
         // build a AES-GFM command
         packet.param1 = AES_MODE_GFM;
@@ -187,8 +190,7 @@ ATCA_STATUS calib_aes_gfm(ATCADevice device, const uint8_t* h, const uint8_t* in
             (void)memcpy(output, &packet.data[ATCA_RSP_DATA_IDX], AES_DATA_SIZE);
         }
 
-    }
-    while (false);
+    } while (false);
 
     return status;
 }

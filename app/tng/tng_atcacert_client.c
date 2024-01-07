@@ -30,27 +30,41 @@
 #include "tng_atcacert_client.h"
 #include "tngtls_cert_def_1_signer.h"
 #include "tng_root_cert.h"
+#include <limits.h>
 
 int tng_atcacert_max_device_cert_size(size_t* max_cert_size)
 {
     int ret = ATCACERT_E_WRONG_CERT_DEF;
     int index = 0;
-    size_t cert_size;
+    size_t cert_size = 0;
     const atcacert_def_t* cert_def;
 
-    do
+    if (NULL != max_cert_size)
     {
-        cert_def = tng_map_get_device_cert_def(index++);
-        if (NULL != cert_def)
+        do
         {
-            ret = atcacert_max_cert_size(cert_def, &cert_size);
-            if (cert_size > *max_cert_size)
+            cert_def = tng_map_get_device_cert_def(index);
+
+            if (NULL != cert_def)
             {
-                *max_cert_size = cert_size;
+                ret = atcacert_max_cert_size(cert_def, &cert_size);
+                if (cert_size > *max_cert_size)
+                {
+                    *max_cert_size = cert_size;
+                }
+
+                if (index < INT_MAX)
+                {
+                    index++;
+                }
+                else
+                {
+                    ret = ATCACERT_E_WRONG_CERT_DEF;
+                    break;
+                }
             }
-        }
+        } while ((NULL != cert_def) && (ret == ATCACERT_E_SUCCESS));
     }
-    while ((NULL != cert_def) && (ret != ATCACERT_E_SUCCESS));
 
     return ret;
 }

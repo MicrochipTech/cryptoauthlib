@@ -71,7 +71,7 @@ typedef struct
 ATCA_STATUS calib_sha_base(ATCADevice device, uint8_t mode, uint16_t length, const uint8_t* message, uint8_t* data_out, uint16_t* data_out_size)
 {
     ATCAPacket packet;
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
     uint8_t cmd_mode = (mode & SHA_MODE_MASK);
 
     ATCA_CHECK_INVALID_MSG(NULL == device, ATCA_BAD_PARAM, "NULL pointer received");
@@ -82,10 +82,13 @@ ATCA_STATUS calib_sha_base(ATCADevice device, uint8_t mode, uint16_t length, con
 
     ATCA_CHECK_INVALID_MSG(((NULL != data_out) && (NULL == data_out_size)), ATCA_BAD_PARAM, "NULL pointer received");
 
-    ATCA_CHECK_INVALID_MSG((cmd_mode != SHA_MODE_HMAC_START && cmd_mode != SHA_MODE_SHA256_PUBLIC) && (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + length)), ATCA_INVALID_SIZE, "Invalid size received");
+    ATCA_CHECK_INVALID_MSG((cmd_mode != SHA_MODE_HMAC_START && cmd_mode != SHA_MODE_SHA256_PUBLIC) && (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + length)),
+                           ATCA_INVALID_SIZE, "Invalid size received");
 
     do
     {
+        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
+
         //Build Command
         packet.param1 = mode;
         packet.param2 = cmd_mode != SHA_MODE_ECC204_HMAC_START ? length : 0u;
@@ -117,8 +120,7 @@ ATCA_STATUS calib_sha_base(ATCADevice device, uint8_t mode, uint16_t length, con
             *data_out_size = ((uint16_t)packet.data[ATCA_COUNT_IDX] - ATCA_PACKET_OVERHEAD) & UINT16_MAX;
             (void)memcpy(data_out, &packet.data[ATCA_RSP_DATA_IDX], *data_out_size);
         }
-    }
-    while (false);
+    } while (false);
 
     return status;
 }
@@ -337,7 +339,8 @@ ATCA_STATUS calib_hw_sha2_256_finish(ATCADevice device, atca_sha256_ctx_t* ctx, 
         if (ctx->block_size > ATCA_SHA256_BLOCK_SIZE)
         {
             digest_size = 32;
-            if (ATCA_SUCCESS != (status = calib_sha_base(device, SHA_MODE_SHA256_UPDATE, ATCA_SHA256_BLOCK_SIZE, &ctx->block[ATCA_SHA256_BLOCK_SIZE], digest, &digest_size)))
+            if (ATCA_SUCCESS != (status = calib_sha_base(device, SHA_MODE_SHA256_UPDATE, ATCA_SHA256_BLOCK_SIZE, 
+                                                         &ctx->block[ATCA_SHA256_BLOCK_SIZE], digest, &digest_size)))
             {
                 return ATCA_TRACE(status, "calib_sha_base - failed");
             }
@@ -455,7 +458,8 @@ ATCA_STATUS calib_sha_hmac_update(ATCADevice device, atca_hmac_sha256_ctx_t* ctx
     block_count = (size_t)(data_size / ATCA_SHA256_BLOCK_SIZE);
     for (i = 0; i < block_count; i++)
     {
-        if (ATCA_SUCCESS != (status = calib_sha_base(device, SHA_MODE_HMAC_UPDATE, ATCA_SHA256_BLOCK_SIZE, &data[copy_size + i * ATCA_SHA256_BLOCK_SIZE], NULL, NULL)))
+        if (ATCA_SUCCESS != (status = calib_sha_base(device, SHA_MODE_HMAC_UPDATE, ATCA_SHA256_BLOCK_SIZE, 
+                                                     &data[copy_size + i * ATCA_SHA256_BLOCK_SIZE], NULL, NULL)))
         {
             return ATCA_TRACE(status, "calib_sha_base - failed");
         }

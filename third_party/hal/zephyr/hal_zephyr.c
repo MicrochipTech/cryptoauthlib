@@ -127,9 +127,8 @@ ATCA_STATUS hal_unlock_mutex(void * pMutex)
     }
 
     k_mutex_unlock((struct k_mutex*)pMutex);
-    
+
     return ATCA_SUCCESS;
 }
-
 
 /** @} */

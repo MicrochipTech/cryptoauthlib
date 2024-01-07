@@ -24,22 +24,22 @@
 #define I2C0_SCL_PIN                       17
 #define I2C1_SDA_PIN                       21
 #define I2C1_SCL_PIN                       22
-#define ACK_CHECK_EN                       0x1              /*!< I2C master will check ack from slave*/
-#define ACK_CHECK_DIS                      0x0              /*!< I2C master will not check ack from slave */
-#define ACK_VAL                            0x0              /*!< I2C ack value */
-#define NACK_VAL                           0x1              /*!< I2C nack value */
+#define ACK_CHECK_EN                       0x1  /*!< I2C master will check ack from slave*/
+#define ACK_CHECK_DIS                      0x0  /*!< I2C master will not check ack from slave */
+#define ACK_VAL                            0x0  /*!< I2C ack value */
+#define NACK_VAL                           0x1  /*!< I2C nack value */
 
 #ifndef LOG_LOCAL_LEVEL
 #define LOG_LOCAL_LEVEL                    ESP_LOG_INFO
 #endif
 
-#define MAX_I2C_BUSES 2  //ESP32 has 2 I2C bus
+#define MAX_I2C_BUSES 2 //ESP32 has 2 I2C bus
 
 typedef struct atcaI2Cmaster
 {
-    int id;
+    int          id;
     i2c_config_t conf;
-    int ref_ct;
+    int          ref_ct;
 } ATCAI2CMaster_t;
 
 ATCAI2CMaster_t i2c_hal_data[MAX_I2C_BUSES];
@@ -161,23 +161,36 @@ ATCA_STATUS hal_i2c_post_init(ATCAIface iface)
  * \param[in] txlength      number of bytes to send
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t address, uint8_t *txdata, int txlength)
+ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength)
 {
     ATCAIfaceCfg *cfg = iface->mIfaceCFG;
     esp_err_t rc;
+    uint8_t device_address = 0xFFu;
 
     if (!cfg)
     {
         return ATCA_BAD_PARAM;
     }
 
+#ifdef ATCA_ENABLE_DEPRECATED
+    device_address = ATCA_IFACECFG_VALUE(cfg, atcai2c.slave_address)
+#else
+    device_address = ATCA_IFACECFG_VALUE(cfg, atcai2c.address)
+#endif
+
+
     //ESP_LOGD(TAG, "txdata: %p , txlength: %d", txdata, txlength);
     //ESP_LOG_BUFFER_HEXDUMP(TAG, txdata, txlength, 3);
 
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
     (void)i2c_master_start(cmd);
-    (void)i2c_master_write_byte(cmd, address | I2C_MASTER_WRITE, ACK_CHECK_EN);
-    (void)i2c_master_write(cmd, txdata, txlength, ACK_CHECK_EN);
+    (void)i2c_master_write_byte(cmd, device_address | I2C_MASTER_WRITE, ACK_CHECK_EN);
+    (void)i2c_master_write_byte(cmd, word_address, ACK_CHECK_EN);
+
+    if (NULL != txdata && 0u < txlength)
+    {
+        (void)i2c_master_write(cmd, txdata, txlength, ACK_CHECK_EN);
+    }
     (void)i2c_master_stop(cmd);
     rc = i2c_master_cmd_begin(cfg->atcai2c.bus, cmd, 10);
     (void)i2c_cmd_link_delete(cmd);
@@ -206,10 +219,10 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t address, uint8_t *rxdata, u
     esp_err_t rc;
     i2c_cmd_handle_t cmd;
     ATCA_STATUS status = ATCA_COMM_FAIL;
- 
+
     if ((NULL == cfg) || (NULL == rxlength) || (NULL == rxdata))
     {
-        return ATCA_TRACE(ATCA_INVALID_POINTER, "NULL pointer encountered");
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
     }
 
     cmd = i2c_cmd_link_create();

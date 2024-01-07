@@ -85,7 +85,12 @@ typedef struct ATCA_PACKED
 extern const ecdsa_p384_test_vector ecdsa_p384_s256_test_vectors[];
 extern const size_t ecdsa_p384_s256_test_vectors_count;
 #endif
-#endif /* TEST_VECTOR_EC_P384_EN */
+
+#ifdef ATCA_TA101_SUPPORT
+extern const ecdsa_p384_test_vector ecdsa_p384_test_vectors[];
+extern const size_t ecdsa_p384_test_vectors_count;
+#endif
+#endif
 
 #if TEST_VECTOR_EC_P521_EN
 typedef struct ATCA_PACKED

@@ -60,7 +60,7 @@
 ATCA_STATUS calib_nonce_base(ATCADevice device, uint8_t mode, uint16_t param2, const uint8_t *num_in, uint8_t* rand_out)
 {
     ATCAPacket packet;
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
     uint8_t length;
 
     do
@@ -70,6 +70,8 @@ ATCA_STATUS calib_nonce_base(ATCADevice device, uint8_t mode, uint16_t param2, c
             status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             break;
         }
+
+        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
 
         // build a nonce command
         packet.param1 = mode;
@@ -103,8 +105,7 @@ ATCA_STATUS calib_nonce_base(ATCADevice device, uint8_t mode, uint16_t param2, c
             (void)memcpy(&rand_out[0], &packet.data[ATCA_RSP_DATA_IDX], 32);
         }
 
-    }
-    while (false);
+    } while (false);
 
     return status;
 }

@@ -314,17 +314,17 @@ void UnityConcludeFixtureTest(void)
         Unity.TestFailures++;
     }
     else if (UnityFixture.Verbose)
-        {
-            UnityPrint(" ");
-            UnityPrint(UnityStrPass);
+    {
+        UnityPrint(" ");
+        UnityPrint(UnityStrPass);
     }
 
     if (UnityFixture.Verbose)
     {
-            UNITY_EXEC_TIME_STOP();
-            UNITY_PRINT_EXEC_TIME();
-            UNITY_PRINT_EOL();
-        }
+        UNITY_EXEC_TIME_STOP();
+        UNITY_PRINT_EXEC_TIME();
+        UNITY_PRINT_EOL();
+    }
     else if (Unity.CurrentTestIgnored || Unity.CurrentTestFailed)
     {
         UNITY_PRINT_EOL();

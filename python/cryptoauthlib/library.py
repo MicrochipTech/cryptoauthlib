@@ -172,6 +172,7 @@ def get_device_type_id(name):
                 'ATECC608': 3,
                 'ATSHA206A': 4,
                 'TA100': 0x10,
+                'TA101': 0x11,
                 'ECC204': 0x20,
                 'TA010': 0x21,
                 'ECC206': 0x22,

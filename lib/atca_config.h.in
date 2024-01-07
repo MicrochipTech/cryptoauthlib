@@ -99,6 +99,9 @@ selected plus however additional slots one would like */
 /** Enable Strict ISO/C99 compliance */
 #cmakedefine ATCA_STRICT_C99
 
+/** Enable ATCACERT Module */
+#cmakedefine01 ATCACERT_EN
+
 /******************** Device Configuration Section *************************/
 
 /** Enable the delete command */
@@ -107,10 +110,9 @@ selected plus however additional slots one would like */
 /******************** Packet Size Configuration Section *************************/
 
 /** Provide Maximum packet size for the command to be sent and received */
-#ifndef MAX_PACKET_SIZE
-#define MAX_PACKET_SIZE         (@MAX_PACKET_SIZE@U)
-#endif
+#cmakedefine MAX_PACKET_SIZE      (@MAX_PACKET_SIZE@U)
 
+/** Enables multipart buffer handling (generally for small memory model platforms) */
 #cmakedefine01 MULTIPART_BUF_EN
 
 /******************** Platform Configuration Section ***********************/

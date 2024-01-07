@@ -238,7 +238,7 @@ TEST(atca_cmd_basic_test, verify_stored)
     TEST_ASSERT(!is_verified);
 }
 
-#if TEST_ATCAB_VERIFY_REQRANDOM_EN
+#if TEST_ATCAB_VERIFY_REQRANDOM_EN && ATCA_CA_SUPPORT
 TEST_CONDITION(atca_cmd_basic_test, verify_stored_on_reqrandom_set)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
@@ -247,6 +247,7 @@ TEST_CONDITION(atca_cmd_basic_test, verify_stored_on_reqrandom_set)
            || (ATECC508A == dev_type)
            || (ATECC608 == dev_type);
 }
+
 
 TEST(atca_cmd_basic_test, verify_stored_on_reqrandom_set)
 {
@@ -704,7 +705,7 @@ t_test_case_info verify_basic_test_info[] =
 #endif /* TEST_ATCAB_VERIFY_EXTERN_EN */
 #if TEST_ATCAB_VERIFY_STORED_EN
     { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_stored),       atca_test_cond_p256_sign_verify  },
-#if TEST_ATCAB_VERIFY_REQRANDOM_EN
+#if TEST_ATCAB_VERIFY_REQRANDOM_EN && ATCA_CA_SUPPORT
     { REGISTER_TEST_CASE(atca_cmd_basic_test, verify_stored_on_reqrandom_set), REGISTER_TEST_CONDITION(atca_cmd_basic_test, verify_stored_on_reqrandom_set) },
 #endif
 #if TEST_ATCAB_VERIFY_MAC_EN

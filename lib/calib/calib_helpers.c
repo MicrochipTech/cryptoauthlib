@@ -39,7 +39,7 @@
 #if CALIB_READ_EN
 ATCA_STATUS calib_is_slot_locked(ATCADevice device, uint16_t slot, bool* is_locked)
 {
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
     uint8_t data[ATCA_WORD_SIZE];
     uint16_t slot_locked;
 
@@ -60,8 +60,7 @@ ATCA_STATUS calib_is_slot_locked(ATCADevice device, uint16_t slot, bool* is_lock
 
         slot_locked = ((uint16_t)data[0]) | ((uint16_t)data[1] << 8);
         *is_locked = ((slot_locked & ((uint16_t)1u << slot)) == 0u);
-    }
-    while (false);
+    } while (false);
 
     return status;
 }
@@ -77,7 +76,7 @@ ATCA_STATUS calib_is_slot_locked(ATCADevice device, uint16_t slot, bool* is_lock
  */
 ATCA_STATUS calib_is_locked(ATCADevice device, uint8_t zone, bool* is_locked)
 {
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
     uint8_t data[ATCA_WORD_SIZE];
 
     do
@@ -102,8 +101,7 @@ ATCA_STATUS calib_is_locked(ATCADevice device, uint8_t zone, bool* is_locked)
         case LOCK_ZONE_DATA:   *is_locked = (data[2] != 0x55u); break;
         default: status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid zone received"); break;
         }
-    }
-    while (false);
+    } while (false);
 
     return status;
 }
@@ -283,7 +281,8 @@ ATCA_STATUS calib_is_private(ATCADevice device, uint16_t slot, bool* is_private)
         case ATECC608:
         {
             uint8_t key_config[2] = { 0 };
-            if (ATCA_SUCCESS == (status = calib_read_bytes_zone(device, ATCA_ZONE_CONFIG, 0, ATCA_KEY_CONFIG_OFFSET((size_t)slot), key_config, sizeof(key_config))))
+            if (ATCA_SUCCESS == (status = calib_read_bytes_zone(device, ATCA_ZONE_CONFIG, 0, ATCA_KEY_CONFIG_OFFSET((size_t)slot),
+                                                                key_config, sizeof(key_config))))
             {
                 *is_private = (1u == (key_config[0] & ATCA_KEY_CONFIG_PRIVATE_MASK)) ? true : false;
             }

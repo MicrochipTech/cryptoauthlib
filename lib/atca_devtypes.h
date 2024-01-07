@@ -53,6 +53,7 @@ typedef uint8_t ATCADeviceType;
 #define ATECC608            (3U)
 #define ATSHA206A           (4U)
 #define TA100               (0x10U)
+#define TA101               (0x11U)
 #define ECC204              (0x20U)
 #define TA010               (0x21U)
 #define ECC206              (0x22U)

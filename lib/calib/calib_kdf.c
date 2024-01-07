@@ -65,7 +65,7 @@
 ATCA_STATUS calib_kdf(ATCADevice device, uint8_t mode, uint16_t key_id, const uint32_t details, const uint8_t* message, uint8_t* out_data, uint8_t* out_nonce)
 {
     ATCAPacket packet;
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
     uint16_t out_data_size = 0;
 
     do
@@ -75,6 +75,8 @@ ATCA_STATUS calib_kdf(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
             status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             break;
         }
+
+        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
 
         // Build the KDF command
         packet.param1 = mode;
@@ -158,8 +160,7 @@ ATCA_STATUS calib_kdf(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
             }
             (void)memcpy(out_nonce, &packet.data[ATCA_RSP_DATA_IDX + out_data_size], 32);
         }
-    }
-    while (false);
+    } while (false);
 
     return status;
 }

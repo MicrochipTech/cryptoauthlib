@@ -131,6 +131,10 @@ def instantiateComponent(calPkcs11Component):
     calPkcs11MaxObjects.setLabel('Maximum number of PKCS11 objects')
     calPkcs11MaxObjects.setDefaultValue(16)
 
+    calPkcs11MaxCertsCache = calPkcs11Component.createIntegerSymbol('CAL_PKCS11_MAX_CERTS_CACHED', None)
+    calPkcs11MaxCertsCache.setLabel('Maximum number of certificates cached')
+    calPkcs11MaxCertsCache.setDefaultValue(5)
+
     calPkcs11MaxConfig = calPkcs11Component.createIntegerSymbol('CAL_PKCS11_MAX_CONFIG', None)
     calPkcs11MaxConfig.setLabel('Maximum number of PKCS11 Config Options')
     calPkcs11MaxConfig.setDefaultValue(7)

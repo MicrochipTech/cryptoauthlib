@@ -16,8 +16,6 @@
 
 #define HAVE_ALL_CURVES
 
-#define WOLFCRYPT_ONLY
-
 #define WOLFSSL_PEM_TO_DER
 
 #define WOLFSSL_VALIDATE_ECC_IMPORT
@@ -32,6 +30,23 @@
 
 #define NO_MD5
 
+#define KEEP_OUR_CERT 
+
+#define KEEP_PEER_CERT  
+
+#define NO_ERROR_STRINGS 
+
+#define NO_DH 
+
+#define WOLFSSL_USER_IO 
+
+#define OPENSSL_EXTRA_X509_SMALL
+
+#define OPENSSL_EXTRA
+
+#define WOLFSSL_NO_SOCK
+
+#define NO_PWDBASED
 
 #ifdef __cplusplus
     }   /* extern "C" */

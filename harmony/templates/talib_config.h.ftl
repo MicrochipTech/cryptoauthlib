@@ -2,7 +2,6 @@
 #ifndef TALIB_CONFIG_H
 #define TALIB_CONFIG_H
 
-
 /******************** Device Configuration Section *************************/
 
 <#if CAL_ENABLE_TA10x_AES_AUTH>

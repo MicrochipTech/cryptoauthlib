@@ -205,8 +205,16 @@ TEST(atcac_pk, sign_simple)
     TEST_ASSERT_NOT_EQUAL(ATCA_SUCCESS, status);
 
 #if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
-    atcac_pk_ctx_free(sign_ctx);
-    atcac_pk_ctx_free(verify_ctx);
+    if (NULL != sign_ctx)
+    {
+        atcac_pk_free(sign_ctx);
+        atcac_pk_ctx_free(sign_ctx);
+    }
+    if (NULL != verify_ctx)
+    {
+        atcac_pk_free(verify_ctx);
+        atcac_pk_ctx_free(verify_ctx);
+    }
 #endif
 }
 

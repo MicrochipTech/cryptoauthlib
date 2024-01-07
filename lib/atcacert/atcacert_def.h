@@ -45,6 +45,8 @@
 #include "atcacert.h"
 #include "atcacert_date.h"
 #include "atca_helpers.h"
+#include "crypto/atca_crypto_sw.h"
+#include "cal_buffer.h"
 
 #define ATCA_MAX_TRANSFORMS 2
 
@@ -62,8 +64,9 @@
  */
 typedef enum atcacert_cert_type_e
 {
-    CERTTYPE_X509,  //!< Standard X509 certificate
-    CERTTYPE_CUSTOM //!< Custom format
+    CERTTYPE_X509,              //!< Standard X509 certificate
+    CERTTYPE_CUSTOM,            //!< Custom format
+    CERTTYPE_X509_FULL_STORED   //!< Full Stored X509 Certificate
 } atcacert_cert_type_t;
 
 /**
@@ -91,6 +94,7 @@ typedef enum atcacert_device_zone_e
     DEVZONE_CONFIG = 0x00,  //!< Configuration zone.
     DEVZONE_OTP    = 0x01,  //!< One Time Programmable zone.
     DEVZONE_DATA   = 0x02,  //!< Data zone (slots).
+    DEVZONE_GENKEY = 0x03,  //!< Data zone - Generate Pubkey (slots).
     DEVZONE_NONE   = 0x07   //!< Special value used to indicate there is no device location.
 } atcacert_device_zone_t;
 
@@ -137,7 +141,7 @@ typedef enum atcacert_std_cert_element_e
 typedef struct ATCA_PACKED atcacert_device_loc_s
 {
     atcacert_device_zone_t zone;        //!< Zone in the device.
-    uint8_t                slot;        //!< Slot within the data zone. Only applies if zone is DEVZONE_DATA.
+    uint16_t               slot;        //!< Slot within the data zone. Only applies if zone is DEVZONE_DATA.
     uint8_t                is_genkey;   //!< If true, use GenKey command to get the contents instead of Read.
     uint16_t               offset;      //!< Byte offset in the zone.
     uint16_t               count;       //!< Byte count.
@@ -176,6 +180,8 @@ typedef struct ATCA_PACKED atcacert_cert_element_s
 typedef struct atcacert_def_s
 {
     atcacert_cert_type_t           type;                                    //!< Certificate type.
+    atcacert_device_loc_t          comp_cert_dev_loc;                       //!< Where on the device the compressed cert can be found.
+#if ATCACERT_COMPCERT_EN
     uint8_t                        template_id;                             //!< ID for the this certificate definition (4-bit value).
     uint8_t                        chain_id;                                //!< ID for the certificate chain this definition is a part of (4-bit value).
     uint8_t                        private_key_slot;                        //!< If this is a device certificate template, this is the device slot for the device private key.
@@ -186,13 +192,16 @@ typedef struct atcacert_def_s
     atcacert_cert_loc_t            tbs_cert_loc;                            //!< Location in the certificate for the TBS (to be signed) portion.
     uint8_t                        expire_years;                            //!< Number of years the certificate is valid for (5-bit value). 0 means no expiration.
     atcacert_device_loc_t          public_key_dev_loc;                      //!< Where on the device the public key can be found.
-    atcacert_device_loc_t          comp_cert_dev_loc;                       //!< Where on the device the compressed cert can be found.
     atcacert_cert_loc_t            std_cert_elements[STDCERT_NUM_ELEMENTS]; //!< Where in the certificate template the standard cert elements are inserted.
     const atcacert_cert_element_t* cert_elements;                           //!< Additional certificate elements outside of the standard certificate contents.
     uint8_t                        cert_elements_count;                     //!< Number of additional certificate elements in cert_elements.
     const uint8_t*                 cert_template;                           //!< Pointer to the actual certificate template data.
     uint16_t                       cert_template_size;                      //!< Size of the certificate template in cert_template in bytes.
+#endif
     const struct atcacert_def_s*   ca_cert_def;                             //!< Certificate definition of the CA certificate
+#if ATCACERT_INTEGRATION_EN
+    struct atcac_x509_ctx**        parsed;
+#endif
 } atcacert_def_t;
 
 /**
@@ -213,6 +222,8 @@ typedef struct atcacert_build_state_s
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#if ATCACERT_COMPCERT_EN
 
 /**
  * \brief Add all the device locations required to rebuild the specified certificate (cert_def) to
@@ -315,6 +326,25 @@ ATCA_STATUS atcacert_get_device_data(const atcacert_def_t*        cert_def,
                                      const atcacert_device_loc_t* device_loc,
                                      uint8_t*                     device_data);
 
+#endif /* ATCACERT_COMPCERT_EN */
+
+/**
+ * \brief Gets the subject name from a certificate.
+ *
+ * \param[in]  cert_def         Certificate definition for the certificate.
+ * \param[in]  cert             Certificate to get element from.
+ * \param[in]  cert_size        Size of the certificate (cert) in bytes.
+ * \param[out] subject          Subject name is returned in this buffer. 
+ *
+ * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcacert_get_subject(const atcacert_def_t* cert_def,
+                                 const uint8_t*        cert,
+                                 size_t                cert_size,
+                                 cal_buffer*           cert_subj_buf);
+
+
+#if ATCACERT_COMPCERT_EN
 /**
  * \brief Sets the subject public key and subject key ID in a certificate.
  *
@@ -329,6 +359,8 @@ ATCA_STATUS atcacert_set_subj_public_key(const atcacert_def_t* cert_def,
                                          uint8_t*              cert,
                                          size_t                cert_size,
                                          const uint8_t         subj_public_key[64]);
+
+#endif /* ATCACERT_COMPCERT_EN */
 
 /**
  * \brief Gets the subject public key from a certificate.
@@ -346,6 +378,7 @@ ATCA_STATUS atcacert_get_subj_public_key(const atcacert_def_t * cert_def,
                                          size_t                 cert_size,
                                          uint8_t                subj_public_key[64]);
 
+
 /**
  * \brief Gets the subject key ID from a certificate.
  *
@@ -361,6 +394,7 @@ ATCA_STATUS atcacert_get_subj_key_id(const atcacert_def_t * cert_def,
                                      size_t                 cert_size,
                                      uint8_t                subj_key_id[20]);
 
+#if ATCACERT_COMPCERT_EN
 /**
  * \brief Sets the signature in a certificate. This may alter the size of the X.509 certificates.
  *
@@ -411,6 +445,23 @@ ATCA_STATUS atcacert_set_issue_date(const atcacert_def_t*    cert_def,
                                     size_t                   cert_size,
                                     const atcacert_tm_utc_t* timestamp);
 
+#endif /* ATCACERT_COMPCERT_EN */
+
+/**
+ * \brief Gets the issuer name of a certificate.
+ *
+ * \param[in]  cert_def         Certificate definition for the certificate.
+ * \param[in]  cert             Certificate to get element from.
+ * \param[in]  cert_size        Size of the certificate (cert) in bytes.
+ * \param[out] cert_issuer      Certificate's issuer is returned in this buffer. 
+ *
+ * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcacert_get_issuer(const atcacert_def_t* cert_def,
+                                const uint8_t*        cert,
+                                size_t                cert_size,
+                                uint8_t               cert_issuer[128]);
+
 /**
  * \brief Gets the issue date from a certificate. Will be parsed according to the date format
  *        specified in the certificate definition.
@@ -427,6 +478,7 @@ ATCA_STATUS atcacert_get_issue_date(const atcacert_def_t* cert_def,
                                     size_t                cert_size,
                                     atcacert_tm_utc_t*    timestamp);
 
+#if ATCACERT_COMPCERT_EN
 /**
  * \brief Sets the expire date (notAfter) in a certificate. Will be formatted according to the date
  *        format specified in the certificate definition.
@@ -442,6 +494,7 @@ ATCA_STATUS atcacert_set_expire_date(const atcacert_def_t*    cert_def,
                                      uint8_t*                 cert,
                                      size_t                   cert_size,
                                      const atcacert_tm_utc_t* timestamp);
+#endif /* ATCACERT_COMPCERT_EN */
 
 /**
  * \brief Gets the expire date from a certificate. Will be parsed according to the date format
@@ -459,6 +512,7 @@ ATCA_STATUS atcacert_get_expire_date(const atcacert_def_t* cert_def,
                                      size_t                cert_size,
                                      atcacert_tm_utc_t*    timestamp);
 
+#if ATCACERT_COMPCERT_EN
 /**
  * \brief Sets the signer ID in a certificate. Will be formatted as 4 upper-case hex digits.
  *
@@ -529,6 +583,7 @@ ATCA_STATUS atcacert_gen_cert_sn(const atcacert_def_t* cert_def,
                                  uint8_t*              cert,
                                  size_t                cert_size,
                                  const uint8_t         device_sn[9]);
+#endif /* ATCACERT_COMPCERT_EN */
 
 /**
  * \brief Gets the certificate serial number from a certificate.
@@ -548,6 +603,7 @@ ATCA_STATUS atcacert_get_cert_sn(const atcacert_def_t* cert_def,
                                  uint8_t*              cert_sn,
                                  size_t*               cert_sn_size);
 
+#if ATCACERT_COMPCERT_EN
 /**
  * \brief Sets the authority key ID in a certificate. Note that this takes the actual public key
  *        creates a key ID from it.
@@ -579,6 +635,7 @@ ATCA_STATUS atcacert_set_auth_key_id_raw(const atcacert_def_t* cert_def,
                                          uint8_t*              cert,
                                          size_t                cert_size,
                                          const uint8_t*        auth_key_id);
+#endif /* ATCACERT_COMPCERT_EN */
 
 /**
  * \brief Gets the authority key ID from a certificate.
@@ -595,6 +652,7 @@ ATCA_STATUS atcacert_get_auth_key_id(const atcacert_def_t * cert_def,
                                      size_t                 cert_size,
                                      uint8_t                auth_key_id[20]);
 
+#if ATCACERT_COMPCERT_EN
 /**
  * \brief Sets the signature, issue date, expire date, and signer ID found in the compressed
  *        certificate. This also checks fields common between the cert_def and the compressed
@@ -702,7 +760,6 @@ ATCA_STATUS atcacert_get_cert_element(const atcacert_def_t*      cert_def,
                                       size_t                     cert_size,
                                       uint8_t*                   data,
                                       size_t                     data_size);
-
 
 // Below are utility functions for dealing with various bits for data conversion and wrangling
 
@@ -812,10 +869,25 @@ ATCA_STATUS atcacert_transform_data(atcacert_transform_t transform,
  */
 ATCA_STATUS atcacert_max_cert_size(const atcacert_def_t* cert_def,
                                    size_t*               max_cert_size);
+#endif /* ATCACERT_COMPCERT_EN */
 
+/** \brief
+ *
+ * \param[in]    cert_def       Certificate definition to find a max size for.
+ * \param[in]    cert           Certificate to get element from.
+ * \param[in]    cert_size      Size of the certificate (cert) in bytes.
+ * \param[in]    issue_tm_year  issue year.
+ * \param[out]   expire_years   expire years.
+ *
+ * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
+ */
+int atcacert_calc_expire_years( const atcacert_def_t* cert_def,
+                                const uint8_t*        cert,
+                                size_t                cert_size,
+                                int                   issue_tm_year,
+                                uint8_t*              expire_years);
 /** @} */
 #ifdef __cplusplus
 }
 #endif
-
-#endif
+#endif /* ATCACERT_DEF_H */

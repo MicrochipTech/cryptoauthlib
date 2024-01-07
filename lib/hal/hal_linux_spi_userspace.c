@@ -9,8 +9,8 @@
 
 typedef struct atca_spi_host_s
 {
-    char spi_file[20];
-    int  f_spi;
+    char    spi_file[20];
+    int     f_spi;
 } atca_spi_host_t;
 
 /** \brief Open and configure the SPI device
@@ -69,8 +69,7 @@ static ATCA_STATUS hal_spi_open_file(const char * dev_name, uint32_t speed, int 
 
             /* Configuration was fully successful */
             status = ATCA_SUCCESS;
-        }
-        while (false);
+        } while (false);
     }
 
     return status;
@@ -213,7 +212,6 @@ ATCA_STATUS hal_spi_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxda
     return status;
 }
 
-
 /** \brief HAL implementation of SPI send
  * \param[in] iface           instance
  * \param[in] word_address    transaction type
@@ -227,19 +225,17 @@ ATCA_STATUS hal_spi_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata,
     ATCA_STATUS status = ATCA_SUCCESS;
     atca_spi_host_t * hal_data = (atca_spi_host_t*)atgetifacehaldat(iface);
 
-    ((void)word_address);
-
-    if ((NULL != hal_data) && (NULL != txdata) && (0 < txlength))
+    if ((NULL != hal_data))
     {
         struct spi_ioc_transfer spi_xfer = { 0 };
-        spi_xfer.tx_buf = (unsigned long)txdata;
-        spi_xfer.len = (unsigned int)txlength;
+        spi_xfer.tx_buf = (unsigned long)&word_address;
+        spi_xfer.len = (unsigned int)sizeof(word_address);
         spi_xfer.cs_change = 1U;
 
         /* coverity[misra_c_2012_rule_10_1_violation] SPI_IOC_MESSAGE is defined by the Linux Specification and is used correctly here */
         /* coverity[misra_c_2012_rule_10_4_violation] SPI_IOC_MESSAGE is defined by the Linux Specification and is used correctly here */
         /* coverity[misra_c_2012_rule_12_2_violation] SPI_IOC_MESSAGE is defined by the Linux Specification and is used correctly here */
-        if (txlength == ioctl(hal_data->f_spi, SPI_IOC_MESSAGE(1), &spi_xfer))
+        if (1 == ioctl(hal_data->f_spi, SPI_IOC_MESSAGE(1), &spi_xfer))
         {
             status = ATCA_SUCCESS;
         }
@@ -247,11 +243,30 @@ ATCA_STATUS hal_spi_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata,
         {
             status = ATCA_COMM_FAIL;
         }
+
+        if ((ATCA_SUCCESS == status) && (NULL != txdata) && (0 < txlength))
+        {
+            struct spi_ioc_transfer spi_xfer_1 = { 0 };
+            spi_xfer_1.tx_buf = (unsigned long)txdata;
+            spi_xfer_1.len = (unsigned int)txlength;
+            spi_xfer_1.cs_change = 1U;
+
+            /* coverity[misra_c_2012_rule_10_1_violation] SPI_IOC_MESSAGE is defined by the Linux Specification and is used correctly here */
+            /* coverity[misra_c_2012_rule_10_4_violation] SPI_IOC_MESSAGE is defined by the Linux Specification and is used correctly here */
+            /* coverity[misra_c_2012_rule_12_2_violation] SPI_IOC_MESSAGE is defined by the Linux Specification and is used correctly here */
+            if (txlength == ioctl(hal_data->f_spi, SPI_IOC_MESSAGE(1), &spi_xfer_1))
+            {
+                status = ATCA_SUCCESS;
+            }
+            else
+            {
+                status = ATCA_COMM_FAIL;
+            }
+        }
     }
 
     return status;
 }
-
 
 /** \brief Perform control operations for the kit protocol
  * \param[in]     iface          Interface to interact with.

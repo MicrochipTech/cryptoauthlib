@@ -66,7 +66,7 @@
 #define ATCA_AES256_KEY_SIZE                (32u)
 
 #define ATCA_ECCP256_KEY_SIZE               (32)
-#define ATCA_ECCP256_PUBKEY_SIZE            (64)
+#define ATCA_ECCP256_PUBKEY_SIZE            (64u)
 #define ATCA_ECCP256_SIG_SIZE               (64u)
 
 #define ATCA_ZONE_CONFIG                    ((uint8_t)0x00)

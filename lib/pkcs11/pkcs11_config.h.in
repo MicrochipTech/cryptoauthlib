@@ -70,6 +70,11 @@
 #define PKCS11_MAX_SESSIONS_ALLOWED     (@PKCS11_MAX_SESSIONS_ALLOWED@U)
 #endif
 
+/** Maximum number of x509 certificates allowed to be cached for parsing */
+#ifndef PKCS11_MAX_CERTS_CACHED
+#define PKCS11_MAX_CERTS_CACHED         (@PKCS11_MAX_CERTS_CACHED@U)
+#endif
+
 /** Maximum number of cryptographic objects allowed to be cached */
 #ifndef PKCS11_MAX_OBJECTS_ALLOWED
 #define PKCS11_MAX_OBJECTS_ALLOWED      (@PKCS11_MAX_OBJECTS_ALLOWED@U)

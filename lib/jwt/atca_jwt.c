@@ -31,7 +31,7 @@
 #include "jwt/atca_jwt.h"
 #include <stdio.h>
 
-#ifdef ATCA_JWT
+#ifdef ATCA_JWT_EN
 
 #ifdef __COVERITY__
 #pragma coverity compliance block \
@@ -46,7 +46,7 @@ static const char g_jwt_header[] = "{\"alg\":\"ES256\",\"typ\":\"JWT\"}";
  * order to append a claim
  */
 void atca_jwt_check_payload_start(
-    atca_jwt_t* jwt     /**< [in] JWT Context to use */
+    atca_jwt_t* jwt /**< [in] JWT Context to use */
     )
 {
     /* Rationality checks: a) must be valid, b) buf must be valid, c) must not be at the start, d) must have room */
@@ -310,9 +310,9 @@ ATCA_STATUS atca_jwt_add_claim_numeric(
  * \brief Verifies the signature of a jwt using the provided public key
  */
 ATCA_STATUS atca_jwt_verify(
-    const char*    buf,      /**< [in] Buffer holding an encoded jwt */
-    uint16_t       buflen,   /**< [in] Length of the buffer/jwt */
-    const uint8_t* pubkey    /**< [in] Public key (raw byte format) */
+    const char*     buf,    /**< [in] Buffer holding an encoded jwt */
+    uint16_t        buflen, /**< [in] Length of the buffer/jwt */
+    const uint8_t*  pubkey  /**< [in] Public key (raw byte format) */
     )
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
@@ -390,8 +390,7 @@ ATCA_STATUS atca_jwt_verify(
         {
             status = ATCA_CHECKMAC_VERIFY_FAILED;
         }
-    }
-    while (false);
+    } while (false);
 
     return status;
 }

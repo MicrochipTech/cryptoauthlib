@@ -28,6 +28,8 @@
 #ifndef ATCA_MBEDTLS_WRAP_H
 #define ATCA_MBEDTLS_WRAP_H
 
+#ifdef ATCA_MBEDTLS
+
 #ifdef __COVERITY__
 #pragma coverity compliance block(include) \
     (fp "CERT INT30-C" "Ignoring violations from third party libraries") \
@@ -134,8 +136,8 @@ int atca_mbedtls_ecdsa_sign(const mbedtls_mpi* d, mbedtls_mpi* r, mbedtls_mpi* s
                             const unsigned char* buf, size_t buf_len);
 
 /* Wrapper Functions */
-int atca_mbedtls_pk_init_ext(ATCADevice device, struct mbedtls_pk_context * pkey, const uint16_t slotid);
-int atca_mbedtls_pk_init(struct mbedtls_pk_context * pkey, const uint16_t slotid);
+int atca_mbedtls_pk_init_ext(ATCADevice device, mbedtls_pk_context* pkey, const uint16_t slotid);
+int atca_mbedtls_pk_init(mbedtls_pk_context* pkey, const uint16_t slotid);
 int atca_mbedtls_cert_add(struct mbedtls_x509_crt * cert, const struct atcacert_def_s * cert_def);
 
 /* Application Callback definitions */
@@ -152,10 +154,16 @@ int atca_mbedtls_ecdh_slot_cb(void);
  */
 int atca_mbedtls_ecdh_ioprot_cb(uint8_t secret[32]);
 
+struct mbedtls_x509_crt* atcac_mbedtls_new(void);
+struct atcac_x509_ctx* atcac_x509_ctx_new(void);
+void atcac_x509_ctx_free(struct atcac_x509_ctx* ctx);
+
 #ifdef __cplusplus
 }
 #endif
 
 /** @} */
 
-#endif /* ATCA_MBEDTLS_WRAP_H */
+#endif /* ATCA_MBEDTLS */
+
+#endif /* _ATCA_MBEDTLS_WRAP_H_ */

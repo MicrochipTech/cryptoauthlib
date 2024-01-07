@@ -163,16 +163,20 @@ ATCA_STATUS hal_kit_send(ATCAIface iface, uint8_t word_address, uint8_t* txdata,
         if (packet)
         {
             hal_kit_header(iface->mIfaceCFG, packet, HAL_KIT_COMMAND_SEND);
-            packet[3] = word_address;
+
             if (atcab_is_ta_device(iface->mIfaceCFG->devtype))
             {
-                memcpy(&packet[4], &txdata[1], txlength - 1);
+                packet[3] = word_address;
             }
             else
             {
-                memcpy(&packet[4], txdata, txlength);
-                txlength++;
+                packet[3] = 0xFF;
             }
+
+            memcpy(&packet[4], txdata, txlength);
+
+            //! Add 1 byte to txlength for word address
+            txlength += 1u;
 
             status = hal_kit_phy_send(phy, packet, txlength + HAL_KIT_HEADER_LEN);
 

@@ -185,7 +185,10 @@ void atca_test_assert_ta_sboot_preboot_enabled(UNITY_LINE_TYPE from_line);
 #define TEST_TYPE_AUTH_CMAC         (9)
 #define TEST_TYPE_AUTH_GCM          (10)
 #define TEST_TYPE_ECC_ROOT_KEY      (11)
-#define TEST_TYPE_TEMPLATE_DATA     (12)
+#define TEST_TYPE_ECC_ROOTED25519_KEY (12)
+#define TEST_TYPE_ECC_ROOTRSA2K_KEY   (13)
+#define TEST_TYPE_TEMPLATE_DATA       (14)
+#define TEST_TYPE_CRL_KEY_SIGN        (15)
 
 typedef struct
 {

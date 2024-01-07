@@ -98,6 +98,7 @@ TEST(atca_cmd_basic_test, sign_sw_verify)
 #if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
     if (NULL != pkey)
     {
+        atcac_pk_free(pkey);
         atcac_pk_ctx_free(pkey);
     }
 #endif

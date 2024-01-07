@@ -34,6 +34,7 @@
 
 TEST_GROUP_RUNNER(atcacert_client)
 {
+#if ATCACERT_COMPCERT_EN
     // Load certificate data onto the device
     RUN_TEST_CASE(atcacert_client, init);
 
@@ -51,5 +52,17 @@ TEST_GROUP_RUNNER(atcacert_client)
 
     RUN_TEST_CASE(atcacert_client, atcacert_get_response);
     RUN_TEST_CASE(atcacert_client, atcacert_get_response_bad_params);
+#endif
+
+#if ATCACERT_INTEGRATION_EN 
+    RUN_TEST_CASE(atcacert_client, atcacert_get_subj);
+    RUN_TEST_CASE(atcacert_client, atcacert_get_subj_pbkey);
+    RUN_TEST_CASE(atcacert_client, atcacert_get_subj_pbkey_id);
+    RUN_TEST_CASE(atcacert_client, atcacert_get_issuer_test);
+    RUN_TEST_CASE(atcacert_client, atcacert_get_auth_key_id_test);
+    RUN_TEST_CASE(atcacert_client, atcacert_get_issue_date_test);
+    RUN_TEST_CASE(atcacert_client, atcacert_get_expiry_date);
+    RUN_TEST_CASE(atcacert_client, atcacert_get_serial_num);
+#endif
 }
 #endif

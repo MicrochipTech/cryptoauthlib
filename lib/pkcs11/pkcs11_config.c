@@ -334,6 +334,11 @@ static CK_RV pkcs11_config_parse_device(pkcs11_slot_ctx_ptr slot_ctx, char* cfgs
         slot_ctx->interface_config.devtype = TA100;
         rv = CKR_OK;
     }
+    else if (0 == strcmp(argv[0], "TA101"))
+    {
+        slot_ctx->interface_config.devtype = TA101;
+        rv = CKR_OK;
+    }
     else
     {
         PKCS11_DEBUG("Unrecognized device: %s", argv[0]);
@@ -744,9 +749,6 @@ static CK_RV pkcs11_config_parse_object(pkcs11_slot_ctx_ptr slot_ctx, char* cfgs
             pObject->attributes = pkcs11_cert_x509public_attributes;
             pObject->count = pkcs11_cert_x509public_attributes_count;
 
-            /* Load certificate data from the file system */
-//            pObject->size = g_cert_def_2_device.cert_template_size;
-//            pObject->data = &g_cert_def_2_device;
             pObject->flags = 0;
 #if ATCA_CA_SUPPORT
             pObject->config = &slot_ctx->cfg_zone;
@@ -888,9 +890,10 @@ CK_RV pkcs11_config_cert(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, 
 
 CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pLabel)
 {
-    FILE* fp;
     const char *objtype = "";
     char filename[200];
+    char child_config_data[200];
+    FILE* configfile = NULL;
     CK_RV rv = CKR_FUNCTION_FAILED;
     uint16_t handle = UINT16_MAX;
 
@@ -898,7 +901,6 @@ CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, p
     {
 #if ATCA_CA_SUPPORT
         uint8_t i = 0;
-
         /* Find a free slot that matches the object type */
         for (i = 0; i < 16u; i++)
         {
@@ -959,7 +961,6 @@ CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, p
             pObject->config = &pSlot->cfg_zone;
         }
 #endif
-
         if (CKO_PRIVATE_KEY == pObject->class_id)
         {
             pkcs11_config_init_private(pObject, (char*)pLabel->pValue, pLabel->ulValueLen);
@@ -980,24 +981,30 @@ CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, p
             /* Unsupported class_id */
         }
 
-        int ret = snprintf(filename, sizeof(filename), "%s%lu.%u.conf", pLibCtx->config_path,
+        int ret = 0x00;
+        if (atcab_is_ca_device(pSlot->interface_config.devtype))
+        {
+            ret = snprintf(filename, sizeof(filename), "%s%lu.%u.conf", pLibCtx->config_path,
                            pSlot->slot_id, pObject->slot);
+        }
+        else
+        {
+            ret = snprintf(filename, sizeof(filename), "%s%lu.%04x.conf", pLibCtx->config_path,
+                           pSlot->slot_id, pObject->slot);
+        }
 
         if (ret > 0 && ret < (int)sizeof(filename))
         {
             /* coverity[cert_fio32_c_violation] files are created in pLibCtx->config_path which has already been validated as a proper device*/
             /* coverity[misra_c_2012_rule_10_1_violation] Macro usage is valid per POSIX specification*/
-            int fd = open(filename, O_CREAT | O_EXCL | O_WRONLY, 0755);
-            if (-1 != fd)
+            configfile = fopen(filename, "w");
+            if (NULL != configfile)
             {
-                fp = fdopen(fd, "wb");
-                if (NULL != fp)
-                {
-                    (void)fprintf(fp, "type = %s\n", objtype);
-                    (void)fprintf(fp, "label = %s\n", pObject->name);
-                    (void)fclose(fp);
-                    rv = CKR_OK;
-                }
+                (void)snprintf(child_config_data, sizeof(child_config_data), "%s,%s,0x%04x", objtype, pObject->name, pObject->slot);
+
+                (void)fprintf(configfile, "type = %s\n", child_config_data);
+                (void)fclose(configfile);
+                rv = CKR_OK;
             }
         }
     }

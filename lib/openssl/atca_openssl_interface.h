@@ -82,7 +82,7 @@ extern "C" {
  * Indicates if this module is a provider of x509 certificate handling
  */
 #ifndef HOSTLIB_CERT_EN
-#define HOSTLIB_CERT_EN                     (DEFAULT_DISABLED)
+#define HOSTLIB_CERT_EN                     (DEFAULT_ENABLED)
 #endif
 
 #if ATCAC_AES_GCM_EN || ATCAC_AES_GCM_UPDATE_EN
@@ -116,6 +116,11 @@ typedef struct atcac_pk_ctx
 {
     void* ptr;
 } atcac_pk_ctx_t;
+
+typedef struct atcac_x509_ctx
+{
+    void* ptr;
+} atcac_x509_ctx_t;
 
 #ifdef __cplusplus
 }

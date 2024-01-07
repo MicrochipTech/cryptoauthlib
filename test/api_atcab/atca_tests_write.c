@@ -708,6 +708,8 @@ TEST(atca_cmd_basic_test, write_config_zone)
 #endif
 #if ATCA_TA_SUPPORT
     case TA100:
+    /* fallthrough */
+    case TA101:
         status = atcab_write_config_zone(test_ta10x_configdata);
         break;
 #endif

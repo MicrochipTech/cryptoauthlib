@@ -177,6 +177,25 @@ ATCA_STATUS atcac_pbkdf2_sha256(const uint32_t iter, const uint8_t* password, co
                                 const uint8_t* salt, const size_t salt_len, uint8_t* result, size_t result_len);
 #endif
 
+#if defined(HOSTLIB_CERT_EN)
+#if HOSTLIB_CERT_EN
+#include "cal_buffer.h"
+struct atcac_x509_ctx;
+
+ATCA_STATUS atcac_parse_der(struct atcac_x509_ctx ** cert, cal_buffer *der);
+ATCA_STATUS atcac_get_subject(const struct atcac_x509_ctx* cert, cal_buffer* cert_subject);
+ATCA_STATUS atcac_get_subj_public_key(const struct atcac_x509_ctx * cert, cal_buffer * subj_public_key);
+ATCA_STATUS atcac_get_subj_key_id(const struct atcac_x509_ctx * cert, cal_buffer * subj_public_key_id);
+ATCA_STATUS atcac_get_issue_date(const struct atcac_x509_ctx * cert, cal_buffer * not_before, uint8_t * fmt);
+ATCA_STATUS atcac_get_expire_date(const struct atcac_x509_ctx * cert, cal_buffer * not_after, uint8_t * fmt);
+ATCA_STATUS atcac_get_cert_sn(const struct atcac_x509_ctx * cert, cal_buffer * cert_sn);
+ATCA_STATUS atcac_get_issuer(const struct atcac_x509_ctx* cert, cal_buffer* issuer_buf);
+ATCA_STATUS atcac_get_auth_key_id(const struct atcac_x509_ctx * cert, cal_buffer * auth_key_id);
+void atcac_x509_free(void* cert);
+
+#endif /* HOSTLIB_CERT_EN */
+#endif /* defined(HOSTLIB_CERT_EN) */
+
 #ifdef __cplusplus
 }
 #endif

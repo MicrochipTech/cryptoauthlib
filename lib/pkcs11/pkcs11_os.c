@@ -74,7 +74,7 @@ CK_RV pkcs11_os_alloc_shared_ctx(void ** ppShared, size_t size)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
-#if defined(_WIN32) || defined(__linux__) || defined(__APPLE__)
+#if ((defined(__linux__) || defined(__APPLE__)) && defined(ATCA_USE_SHARED_MUTEX))
     bool initialized = false;
     if (ATCA_SUCCESS == (status = hal_alloc_shared(ppShared, size, "atpkcs11_3_6", &initialized)))
     {
@@ -106,7 +106,7 @@ CK_RV pkcs11_os_free_shared_ctx(void * pShared, size_t size)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
-#if defined(_WIN32) || defined(__linux__) || defined(__APPLE__)
+#if (defined(__linux__) && defined(ATCA_USE_SHARED_MUTEX)) || defined(__APPLE__)
     status = hal_free_shared(pShared, size);
 #elif defined(ATCA_NO_HEAP)
     ((void)pShared);

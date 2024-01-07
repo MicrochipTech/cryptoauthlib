@@ -245,6 +245,11 @@ static int select_custom(int argc, char* argv[])
         ret = select_ta100_custom(argc, argv);
         break;
 #endif
+#ifdef ATCA_TA101_SUPPORT
+    case TA101:
+        ret = select_ta101_custom(argc, argv);
+        break;
+#endif
     default:
         ret = -1;
         break;
@@ -406,10 +411,12 @@ static int opt_iface_i2c(int argc, char* argv[])
 
     if (1 < argc)
     {
+        ATCA_IFACECFG_VALUE(gCfg, atcai2c.baud) = (uint32_t)strtol(argv[1], NULL, 10);
+    }
+    else
+    {
 #ifdef __linux__
         ATCA_IFACECFG_VALUE(gCfg, atcai2c.baud) = 100000;
-#else
-        ATCA_IFACECFG_VALUE(gCfg, atcai2c.baud) = (uint32_t)strtol(argv[1], NULL, 10);
 #endif
     }
 

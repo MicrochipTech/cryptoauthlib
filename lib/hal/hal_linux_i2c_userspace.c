@@ -38,6 +38,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #include "atca_hal.h"
 
@@ -129,36 +130,63 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata,
 {
     atca_i2c_host_t * hal_data = (atca_i2c_host_t*)atgetifacehaldat(iface);
     int f_i2c;  // I2C file descriptor
+    uint8_t device_address = 0xFFu;
+    uint8_t* temp_buf = NULL;
 
     if (NULL == hal_data)
     {
         return ATCA_NOT_INITIALIZED;
     }
 
+#ifdef ATCA_ENABLE_DEPRECATED
+    device_address = ATCA_IFACECFG_VALUE(iface->mIfaceCFG, atcai2c.slave_address);
+#else
+    device_address = ATCA_IFACECFG_VALUE(iface->mIfaceCFG, atcai2c.address);
+#endif
+
+    //! Add 1 byte for word address
+    if (INT_MAX > txlength)
+    {
+        txlength += 1;
+    }
+
+    if (NULL == (temp_buf = hal_malloc((size_t)txlength)))
+    {
+        return ATCA_ALLOC_FAILURE;
+    }
+
+    temp_buf[0] = word_address;
+    if ((NULL != txdata) && (1 < txlength))
+    {
+        /* coverity[misra_c_2012_rule_10_8_violation] */
+        (void)memcpy(&temp_buf[1], txdata, (size_t)(txlength - 1));
+    }
+
     // Initiate I2C communication
     /* coverity[cert_fio32_c_violation] It is the system owner's responsibility ensure configuration provides a valid i2c device */
-    if ( (f_i2c = open(hal_data->i2c_file, O_RDWR)) < 0)
+    if ((f_i2c = open(hal_data->i2c_file, O_RDWR)) < 0)
     {
+        hal_free(temp_buf);
         return ATCA_COMM_FAIL;
     }
 
     // Set Device Address
-    if (ioctl(f_i2c, I2C_SLAVE, word_address >> 1) < 0)
+    if (ioctl(f_i2c, I2C_SLAVE, device_address >> 1) < 0)
     {
+        hal_free(temp_buf);
         (void)close(f_i2c);
         return ATCA_COMM_FAIL;
     }
 
     // Send data
-    if ((NULL != txdata) && (0 < txlength))
+    if (write(f_i2c, temp_buf, (size_t)txlength) != txlength)
     {
-        if (write(f_i2c, txdata, (size_t)txlength) != txlength)
-        {
-            (void)close(f_i2c);
-            return ATCA_COMM_FAIL;
-        }
+        hal_free(temp_buf);
+        (void)close(f_i2c);
+        return ATCA_COMM_FAIL;
     }
 
+    hal_free(temp_buf);
     (void)close(f_i2c);
     return ATCA_SUCCESS;
 }
@@ -183,7 +211,7 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxda
 
     // Initiate I2C communication
     /* coverity[cert_fio32_c_violation] It is the system owner's responsibility ensure configuration provides a valid i2c device */
-    if ( (f_i2c = open(hal_data->i2c_file, O_RDWR)) < 0)
+    if ((f_i2c = open(hal_data->i2c_file, O_RDWR)) < 0)
     {
         return ATCA_COMM_FAIL;
     }

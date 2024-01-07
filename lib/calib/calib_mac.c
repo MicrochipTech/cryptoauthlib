@@ -53,7 +53,7 @@
 ATCA_STATUS calib_mac(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* challenge, uint8_t* digest)
 {
     ATCAPacket packet;
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
 
     do
     {
@@ -62,6 +62,8 @@ ATCA_STATUS calib_mac(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
             status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             break;
         }
+
+        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
 
         // build mac command
         packet.param1 = mode;
@@ -94,8 +96,7 @@ ATCA_STATUS calib_mac(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
 
         (void)memcpy(digest, &packet.data[ATCA_RSP_DATA_IDX], MAC_SIZE);
 
-    }
-    while (false);
+    } while (false);
 
     return status;
 }

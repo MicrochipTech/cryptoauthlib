@@ -72,11 +72,12 @@ typedef struct atcacert_tm_utc_s
 /**
  * Date formats.
  */
-#define DATEFMT_ISO8601_SEP         0   //!< ISO8601 full date YYYY-MM-DDThh:mm:ssZ
-#define DATEFMT_RFC5280_UTC         1   //!< RFC 5280 (X.509) 4.1.2.5.1 UTCTime format YYMMDDhhmmssZ
-#define DATEFMT_POSIX_UINT32_BE     2   //!< POSIX (aka UNIX) date format. Seconds since Jan 1, 1970. 32 bit unsigned integer, big endian.
-#define DATEFMT_POSIX_UINT32_LE     3   //!< POSIX (aka UNIX) date format. Seconds since Jan 1, 1970. 32 bit unsigned integer, little endian.
-#define DATEFMT_RFC5280_GEN         4   //!< RFC 5280 (X.509) 4.1.2.5.2 GeneralizedTime format YYYYMMDDhhmmssZ
+#define DATEFMT_ISO8601_SEP         (0U)    //!< ISO8601 full date YYYY-MM-DDThh:mm:ssZ
+#define DATEFMT_RFC5280_UTC         (1U)    //!< RFC 5280 (X.509) 4.1.2.5.1 UTCTime format YYMMDDhhmmssZ
+#define DATEFMT_POSIX_UINT32_BE     (2U)    //!< POSIX (aka UNIX) date format. Seconds since Jan 1, 1970. 32 bit unsigned integer, big endian.
+#define DATEFMT_POSIX_UINT32_LE     (3U)    //!< POSIX (aka UNIX) date format. Seconds since Jan 1, 1970. 32 bit unsigned integer, little endian.
+#define DATEFMT_RFC5280_GEN         (4U)    //!< RFC 5280 (X.509) 4.1.2.5.2 GeneralizedTime format YYYYMMDDhhmmssZ
+#define DATEFMT_INVALID             (0xFFU)
 
 typedef uint8_t atcacert_date_format_t;
 
@@ -153,6 +154,13 @@ ATCA_STATUS atcacert_date_dec_compcert(const uint8_t          enc_dates[3],
                                        atcacert_date_format_t expire_date_format,
                                        atcacert_tm_utc_t*     issue_date,
                                        atcacert_tm_utc_t*     expire_date);
+
+/**
+ * \brief Convert the asn1 tag for the supported time formats into the local time format
+ *
+ * \return DATEFMT_RFC5280_UTC, DATEFMT_RFC5280_GEN, or DATEFMT_INVALID
+ */
+atcacert_date_format_t atcacert_date_from_asn1_tag(const uint8_t tag);
 
 /**
  * \brief Return the maximum date available for the given format.

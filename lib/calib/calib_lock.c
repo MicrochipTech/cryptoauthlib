@@ -56,7 +56,7 @@
 ATCA_STATUS calib_lock(ATCADevice device, uint8_t mode, uint16_t summary_crc)
 {
     ATCAPacket packet;
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
 
     if (device == NULL)
     {
@@ -82,8 +82,7 @@ ATCA_STATUS calib_lock(ATCADevice device, uint8_t mode, uint16_t summary_crc)
             break;
         }
 
-    }
-    while (false);
+    } while (false);
 
     return status;
 }
@@ -256,7 +255,7 @@ ATCA_STATUS calib_ca2_lock_config_slot(ATCADevice device, uint16_t slot, uint16_
  */
 ATCA_STATUS calib_ca2_lock_config_zone(ATCADevice device)
 {
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
     uint8_t slot = 0;
     uint8_t mode;
 
@@ -279,7 +278,7 @@ ATCA_STATUS calib_ca2_lock_config_zone(ATCADevice device)
             }
         }
 
-        slot += 1u;  //Increment slot
+        slot += 1u; //Increment slot
     }
 
     return status;
@@ -305,7 +304,7 @@ ATCA_STATUS calib_ca2_lock_data_slot(ATCADevice device, uint16_t slot)
  */
 ATCA_STATUS calib_ca2_lock_data_zone(ATCADevice device)
 {
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
     uint8_t slot = 0;
     uint8_t mode;
 
@@ -328,7 +327,7 @@ ATCA_STATUS calib_ca2_lock_data_zone(ATCADevice device)
             }
         }
 
-        slot += 1u;  //Increment slot
+        slot += 1u; //Increment slot
     }
 
     return status;

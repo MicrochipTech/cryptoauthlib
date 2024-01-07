@@ -58,6 +58,9 @@
 /* Library Integration Tests - Tests to ensure the library accesses device properly*/
 #include "integration/test_integration.h"
 
+/* Hal layer testing */
+#include "hal/test_hal.h"
+
 /* JWT Support */
 #include "jwt/test_jwt.h"
 
@@ -66,7 +69,6 @@ static int help(int argc, char* argv[]);
 #if defined(_WIN32) || defined(__linux__) || defined(__APPLE__)
 static int call_exit(int argc, char* argv[]);
 #endif
-
 
 // *INDENT-OFF*  - Preserve formatting
 static t_menu_info mas_menu_info[] =
@@ -102,11 +104,15 @@ static t_menu_info mas_menu_info[] =
 #ifdef ATCA_TA100_SUPPORT
     { "ta100",    "Set Target Device to TA100",                     select_device                        },
 #endif
+#ifdef ATCA_TA101_SUPPORT
+    { "ta101",    "Set Target Device to TA101",                     select_device                        },
+#endif
     { "info",     "Get the Chip Revision",                          info                                 },
     { "sernum",   "Get the Chip Serial Number",                     read_sernum                          },
     { "rand",     "Generate Some Random Numbers",                   do_randoms                           },
     { "readcfg",  "Read the Config Zone",                           read_config                          },
     { "lockstat", "Zone Lock Status",                               lock_status                          },
+    { "hal",      "Tests hal drivers functionality",                hal_tests                            },
 #ifdef ATCA_TEST_LOCK_ENABLE
     { "lockcfg",  "Lock the Config Zone",                           lock_config                          },
     { "lockdata", "Lock Data and OTP Zones",                        lock_data                            },

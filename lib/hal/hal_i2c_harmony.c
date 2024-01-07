@@ -142,11 +142,13 @@ ATCA_STATUS hal_i2c_post_init(ATCAIface iface)
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
-ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t address, uint8_t *txdata, int txlength)
+ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength)
 {
     ATCAIfaceCfg* cfg = atgetifacecfg(iface);
     atca_plib_i2c_api_t * plib;
     ATCA_STATUS status = ATCA_COMM_FAIL;
+    uint8_t device_address = 0xFFu;
+    uint8_t temp_buf[MAX_PACKET_SIZE] = { 0u };
 
     if (!cfg)
     {
@@ -159,13 +161,29 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t address, uint8_t *txdata, int 
         return ATCA_BAD_PARAM;
     }
 
+#ifdef ATCA_ENABLE_DEPRECATED
+    device_address = ATCA_IFACECFG_VALUE(cfg, atcai2c.slave_address);
+#else
+    device_address = ATCA_IFACECFG_VALUE(cfg, atcai2c.address);
+#endif
+
+    temp_buf[0] = word_address;
+
+    if (NULL != txdata)
+    {
+        memcpy(&temp_buf[1], txdata, txlength);
+    }
+
+    //! Add 1 byte for word address
+    txlength += 1u;
+
     /* Wait for the I2C bus to be ready */
     status = hal_i2c_wait(plib, cfg->atcai2c.baud, 30);
 
     if (ATCA_SUCCESS == status)
     {
         status = ATCA_COMM_FAIL;
-        if (plib->write(address >> 1, txdata, txlength) == true)
+        if (plib->write(device_address >> 1, temp_buf, txlength) == true)
         {
             /* Wait for the I2C transfer to complete */
             status = hal_i2c_wait(plib, cfg->atcai2c.baud, txlength);
@@ -180,7 +198,6 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t address, uint8_t *txdata, int 
             }
         }
     }
-
     return status;
 }
 

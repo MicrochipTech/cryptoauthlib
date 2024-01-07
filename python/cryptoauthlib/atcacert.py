@@ -77,6 +77,7 @@ class atcacert_device_zone_t(AtcaEnum):
     DEVZONE_CONFIG = 0x00   # Configuration zone.
     DEVZONE_OTP = 0x01      # One Time Programmable zone.
     DEVZONE_DATA = 0x02     # Data zone (slots).
+    DEVZONE_GENKEY = 0x03,  # Data zone - Generate Pubkey (slots).
     DEVZONE_NONE = 0x07     # Special value used to indicate there is no device location.
 
 
@@ -206,7 +207,7 @@ class atcacert_device_loc_t(AtcaStructure):
     _pack_ = 1
     _def_ = {
         'zone': (atcacert_device_zone_t,),  # Zone in the device.
-        'slot': (c_uint8,),  # Slot within the data zone. Only applies if zone is DEVZONE_DATA.
+        'slot': (c_uint16,),  # Slot within the data zone. Only applies if zone is DEVZONE_DATA.
         'is_genkey': (c_uint8,),  # If true, use GenKey command to get the contents instead of Read.
         'offset': (c_uint16,),  # Byte offset in the zone.
         'count': (c_uint16,)  # Byte count.
@@ -248,6 +249,8 @@ class atcacert_def_t(AtcaStructure):
 atcacert_def_t._def_ = {  # pylint: disable=protected-access
     # Certificate type.
     'type': (atcacert_cert_type_t,),
+    # Where on the device the compressed cert can be found.
+    'comp_cert_dev_loc': (atcacert_device_loc_t,),
     # ID for the this certificate definition (4-bit value).
     'template_id': (c_uint8,),
     # ID for the certificate chain this definition is a part of (4-bit value).
@@ -269,8 +272,6 @@ atcacert_def_t._def_ = {  # pylint: disable=protected-access
     'expire_years': (c_uint8,),
     # Where on the device the public key can be found.
     'public_key_dev_loc': (atcacert_device_loc_t,),
-    # Where on the device the compressed cert can be found.
-    'comp_cert_dev_loc': (atcacert_device_loc_t,),
     # Where in the certificate template the standard cert elements are inserted.
     'std_cert_elements': (atcacert_cert_loc_t, atcacert_std_cert_element_t),
     # Additional certificate elements outside of the standard certificate contents.

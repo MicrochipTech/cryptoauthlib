@@ -61,7 +61,7 @@
 ATCA_STATUS calib_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint8_t *data, uint8_t len)
 {
     ATCAPacket packet;
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
     uint16_t addr;
 
     do
@@ -84,6 +84,8 @@ ATCA_STATUS calib_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint
             zone = zone | ATCA_ZONE_READWRITE_32;
         }
 
+        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
+
         // build a read command
         packet.param1 = zone;
         packet.param2 = addr;
@@ -101,8 +103,7 @@ ATCA_STATUS calib_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint
         }
 
         (void)memcpy(data, &packet.data[1], len);
-    }
-    while (false);
+    } while (false);
 
     return status;
 }
@@ -117,7 +118,7 @@ ATCA_STATUS calib_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint
  */
 ATCA_STATUS calib_read_serial_number(ATCADevice device, uint8_t* serial_number)
 {
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
     uint8_t read_buf[ATCA_BLOCK_SIZE];
 
     if (NULL == serial_number)
@@ -134,8 +135,7 @@ ATCA_STATUS calib_read_serial_number(ATCADevice device, uint8_t* serial_number)
         }
         (void)memcpy(&serial_number[0], &read_buf[0], 4);
         (void)memcpy(&serial_number[4], &read_buf[8], 5);
-    }
-    while (false);
+    } while (false);
 
     return status;
 }
@@ -165,10 +165,11 @@ ATCA_STATUS calib_read_enc(ATCADevice device, uint16_t key_id, uint8_t block, ui
     const uint8_t num_in[NONCE_NUMIN_SIZE] = { 0 };
 
 #else
-ATCA_STATUS calib_read_enc(ATCADevice device, uint16_t key_id, uint8_t block, uint8_t *data, const uint8_t* enc_key, const uint16_t enc_key_id, const uint8_t num_in[NONCE_NUMIN_SIZE])
+ATCA_STATUS calib_read_enc(ATCADevice device, uint16_t key_id, uint8_t block, uint8_t *data, const uint8_t* enc_key, const uint16_t enc_key_id,
+                           const uint8_t num_in[NONCE_NUMIN_SIZE])
 {
 #endif
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
     uint8_t zone = ATCA_ZONE_DATA | ATCA_ZONE_READWRITE_32;
     atca_nonce_in_out_t nonce_params;
     atca_gen_dig_in_out_t gen_dig_param;
@@ -257,8 +258,7 @@ ATCA_STATUS calib_read_enc(ATCADevice device, uint16_t key_id, uint8_t block, ui
 
         status = ATCA_SUCCESS;
 
-    }
-    while (false);
+    } while (false);
 
 
     return status;
@@ -285,7 +285,7 @@ ATCA_STATUS calib_read_enc(ATCADevice device, uint16_t key_id, uint8_t block, ui
  */
 ATCA_STATUS calib_read_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot, size_t offset, uint8_t *data, size_t length)
 {
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
     size_t zone_size = 0;
     uint8_t read_buf[32];
     size_t data_idx = 0;
@@ -373,8 +373,7 @@ ATCA_STATUS calib_read_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot
         {
             break;
         }
-    }
-    while (false);
+    } while (false);
 
     return status;
 }
@@ -477,7 +476,7 @@ bool calib_ecc608_compare_config(
  */
 ATCA_STATUS calib_read_sig(ATCADevice device, uint16_t slot, uint8_t* sig)
 {
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
 
     do
     {
@@ -507,8 +506,7 @@ ATCA_STATUS calib_read_sig(ATCADevice device, uint16_t slot, uint8_t* sig)
             (void)ATCA_TRACE(status, "calib_read_zone - failed");
             break;
         }
-    }
-    while (false);
+    } while (false);
 
     return status;
 }
@@ -577,6 +575,8 @@ ATCA_STATUS calib_ca2_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, 
             (void)ATCA_TRACE(status, "Address Encoding failed");
         }
 
+        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
+
         if (ATCA_SUCCESS == status)
         {
             // Build packets
@@ -610,7 +610,7 @@ ATCA_STATUS calib_ca2_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, 
  */
 ATCA_STATUS calib_ca2_read_config_zone(ATCADevice device, uint8_t* config_data)
 {
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
     uint8_t slot = 0;
 
     while (slot <= 3u)
@@ -638,7 +638,7 @@ ATCA_STATUS calib_ca2_read_config_zone(ATCADevice device, uint8_t* config_data)
  */
 ATCA_STATUS calib_ca2_read_serial_number(ATCADevice device, uint8_t* serial_number)
 {
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
     uint8_t read_buf[ATCA_CA2_CONFIG_SLOT_SIZE];
 
 
@@ -673,7 +673,7 @@ ATCA_STATUS calib_ca2_read_serial_number(ATCADevice device, uint8_t* serial_numb
 ATCA_STATUS calib_ca2_read_bytes_zone(ATCADevice device, uint8_t zone, uint16_t slot,
                                       size_t offset, uint8_t* data, size_t length)
 {
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
     uint8_t data_set_size = (ATCA_ZONE_DATA == zone) ? ATCA_BLOCK_SIZE : ATCA_CA2_CONFIG_SLOT_SIZE;
     size_t cur_block = 0;
     size_t data_idx = 0;
@@ -778,20 +778,20 @@ bool calib_ca2_compare_config(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS calib_read_zone_ext(
-    ATCADevice device,      /**< [in]  Device context pointer */
-    uint8_t    zone,        /**< [in]  Zone to be read from device. Options are
-                                       ATCA_ZONE_CONFIG, ATCA_ZONE_OTP, or ATCA_ZONE_DATA.*/
-    uint16_t   slot,        /**< [in]  Slot number for data zone and ignored for other zones. */
-    uint8_t    block,       /**< [in]  32 byte block index within the zone. */
-    uint8_t    offset,      /**< [in]  4 byte work index within the block. Ignored for 32 byte
-                                       reads. */
-    uint8_t *  data,        /**< [out] Read data is returned here. */
-    uint8_t    len          /**< [in]  Length of the data to be read. Must be either 4 or 32. */
+    ATCADevice  device, /**< [in]  Device context pointer */
+    uint8_t     zone,   /**< [in]  Zone to be read from device. Options are
+                                   ATCA_ZONE_CONFIG, ATCA_ZONE_OTP, or ATCA_ZONE_DATA.*/
+    uint16_t    slot,   /**< [in]  Slot number for data zone and ignored for other zones. */
+    uint8_t     block,  /**< [in]  32 byte block index within the zone. */
+    uint8_t     offset, /**< [in]  4 byte work index within the block. Ignored for 32 byte
+                                   reads. */
+    uint8_t *   data,   /**< [out] Read data is returned here. */
+    uint8_t     len     /**< [in]  Length of the data to be read. Must be either 4 or 32. */
     )
 {
 #if ATCA_CA2_SUPPORT
     ATCADeviceType devtype = atcab_get_device_type_ext(device);
-    ATCA_STATUS status = ATCA_BAD_PARAM;
+    ATCA_STATUS status;
 
     if (atcab_is_ca2_device(devtype))
     {
@@ -846,6 +846,8 @@ ATCA_STATUS calib_read_config_zone(ATCADevice device, uint8_t* config_data)
         case SHA104:
         /* fallthrough */
         case SHA105:
+        /* fallthrough */
+        case SHA106:
             status = calib_ca2_read_config_zone(device, config_data);
             break;
 #endif
@@ -921,6 +923,8 @@ ATCA_STATUS calib_cmp_config_zone(ATCADevice device, uint8_t* config_data, bool*
         case SHA104:
         /* fallthrough */
         case SHA105:
+        /* fallthrough */
+        case SHA106:
             *same_config = calib_ca2_compare_config(config_data, device_config_data);
             break;
 #endif
@@ -930,8 +934,7 @@ ATCA_STATUS calib_cmp_config_zone(ATCADevice device, uint8_t* config_data, bool*
 #endif
             break;
         }
-    }
-    while (false);
+    } while (false);
 
     return status;
 }
@@ -953,7 +956,7 @@ ATCA_STATUS calib_cmp_config_zone(ATCADevice device, uint8_t* config_data, bool*
  */
 ATCA_STATUS calib_read_pubkey(ATCADevice device, uint16_t slot, uint8_t *public_key)
 {
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
     uint8_t read_buf[ATCA_BLOCK_SIZE];
     uint8_t block = 0;
     uint8_t offset = 0;
@@ -1024,8 +1027,7 @@ ATCA_STATUS calib_read_pubkey(ATCADevice device, uint16_t slot, uint8_t *public_
         read_index = 0;
         (void)memcpy(&public_key[cpy_index], &read_buf[read_index], cpy_size);
 
-    }
-    while (false);
+    } while (false);
 
     return status;
 }

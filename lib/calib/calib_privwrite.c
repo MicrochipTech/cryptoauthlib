@@ -63,11 +63,12 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
     uint8_t num_in[NONCE_NUMIN_SIZE] = { 0 };
 
 #else
-ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t priv_key[36], uint16_t write_key_id, const uint8_t write_key[32], const uint8_t num_in[NONCE_NUMIN_SIZE])
+ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t priv_key[36], uint16_t write_key_id, const uint8_t write_key[32],
+                             const uint8_t num_in[NONCE_NUMIN_SIZE])
 {
 #endif
     ATCAPacket packet;
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
     atca_nonce_in_out_t nonce_params;
     atca_gen_dig_in_out_t gen_dig_param;
     atca_write_mac_in_out_t host_mac_param;
@@ -85,6 +86,8 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
 
     do
     {
+        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
+
         if (write_key == NULL)
         {
             // Caller requested an unencrypted PrivWrite, which is only allowed when the data zone is unlocked
@@ -172,8 +175,8 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
             }
 
             // build a write command for encrypted writes
-            packet.param1 = PRIVWRITE_MODE_ENCRYPT;            // Mode is encrypted write
-            packet.param2 = key_id;                            // Key ID
+            packet.param1 = PRIVWRITE_MODE_ENCRYPT; // Mode is encrypted write
+            packet.param2 = key_id;                 // Key ID
             (void)memcpy(&packet.data[0], cipher_text, sizeof(cipher_text));
             (void)memcpy(&packet.data[sizeof(cipher_text)], host_mac, sizeof(host_mac));
         }
@@ -190,8 +193,7 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
             break;
         }
 
-    }
-    while (false);
+    } while (false);
 
     return status;
 }

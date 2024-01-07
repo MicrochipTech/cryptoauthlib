@@ -25,6 +25,7 @@
  * THIS SOFTWARE.
  */
 #include "cryptoauthlib.h"
+#include "atcacert/atcacert_def.h"
 
 #include "pkcs11_config.h"
 #include "pkcs11_debug.h"
@@ -34,6 +35,7 @@
 #include "pkcs11_session.h"
 #include "pkcs11_find.h"
 #include "pkcs11_util.h"
+#include "pkcs11_cert.h"
 
 /**
  * \defgroup pkcs11 Find (pkcs11_find_)
@@ -42,6 +44,7 @@
 // #ifdef ATCA_NO_HEAP
 static CK_BYTE pkcs11_find_template_cache[PKCS11_SEARCH_CACHE_SIZE];
 // #endif
+
 
 /**
  * \brief Copy an array of CK_ATTRIBUTE structures
@@ -139,7 +142,9 @@ static const pkcs11_attrib_model *pkcs11_find_attrib(const pkcs11_attrib_model *
     return NULL;
 }
 
-static const pkcs11_attrib_model *pkcs11_find_attrib_match(pkcs11_object_ptr pObject, const pkcs11_attrib_model *pAttributeList, const CK_ULONG ulCount, const CK_ATTRIBUTE_PTR pTemplate, pkcs11_session_ctx_ptr pSession)
+
+static const pkcs11_attrib_model *pkcs11_find_attrib_match(pkcs11_object_ptr pObject, const pkcs11_attrib_model *pAttributeList, const CK_ULONG ulCount,
+                                                           const CK_ATTRIBUTE_PTR pTemplate, pkcs11_session_ctx_ptr pSession)
 {
     CK_BBOOL found = FALSE;
     const pkcs11_attrib_model *pAttribute = NULL;
@@ -209,7 +214,8 @@ static const pkcs11_attrib_model *pkcs11_find_attrib_match(pkcs11_object_ptr pOb
     return NULL;
 }
 
-static CK_OBJECT_HANDLE pkcs11_find_handle(const CK_SLOT_ID slotid, const CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ULONG_PTR index, pkcs11_session_ctx_ptr pSession)
+static CK_OBJECT_HANDLE pkcs11_find_handle(const CK_SLOT_ID slotid, const CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ULONG_PTR index,
+                                           pkcs11_session_ctx_ptr pSession)
 {
     CK_ULONG i;
     CK_ULONG j;
@@ -261,6 +267,7 @@ static CK_OBJECT_HANDLE pkcs11_find_handle(const CK_SLOT_ID slotid, const CK_ATT
 
     return rv;
 }
+
 
 CK_RV pkcs11_find_init(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)
 {
@@ -412,6 +419,7 @@ CK_RV pkcs11_find_finish(CK_SESSION_HANDLE hSession)
     return CKR_OK;
 }
 
+
 CK_RV pkcs11_find_get_attribute(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)
 {
     pkcs11_lib_ctx_ptr pLibCtx;
@@ -450,6 +458,14 @@ CK_RV pkcs11_find_get_attribute(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hOb
         const pkcs11_attrib_model *pAttribute = pkcs11_find_attrib(pObject->attributes,
                                                                    pObject->count, &pTemplate[i]);
 
+        if (NULL != pAttribute)
+        {
+            if (CKR_OK != rv)
+            {
+                return rv;
+            }
+        }
+
         if (NULL == pAttribute)
         {
             /* 2. Otherwise, if the specified value for the object is invalid(the object does not possess such an
@@ -468,10 +484,7 @@ CK_RV pkcs11_find_get_attribute(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hOb
             {
                 /* Attribute function found so try to execute it */
                 CK_RV temp = pAttribute->func(pObject, &pTemplate[i], pSession);
-                if (CKR_OK == rv)
-                {
-                    rv = temp;
-                }
+                rv = temp;
                 (void)pkcs11_unlock_both(pLibCtx);
             }
             else if (CKR_OK == rv)
@@ -487,10 +500,7 @@ CK_RV pkcs11_find_get_attribute(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hOb
         {
             /* Assume if there is no function for the attribute we're keeping it private */
             pTemplate[i].ulValueLen = CK_UNAVAILABLE_INFORMATION;
-            if (CKR_OK == rv)
-            {
-                rv = CKR_ATTRIBUTE_SENSITIVE;
-            }
+            rv = CKR_ATTRIBUTE_SENSITIVE;
         }
     }
 

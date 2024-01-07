@@ -59,7 +59,7 @@
 ATCA_STATUS calib_genkey_base(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* other_data, uint8_t* public_key)
 {
     ATCAPacket packet;
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
 
     do
     {
@@ -68,6 +68,8 @@ ATCA_STATUS calib_genkey_base(ATCADevice device, uint8_t mode, uint16_t key_id, 
             status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             break;
         }
+
+        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
 
         // Build GenKey command
         packet.param1 = mode;
@@ -100,8 +102,7 @@ ATCA_STATUS calib_genkey_base(ATCADevice device, uint8_t mode, uint16_t key_id, 
                 status = ATCA_TRACE(ATCA_RX_FAIL, "Received response failure");
             }
         }
-    }
-    while (false);
+    } while (false);
 
     return status;
 }
@@ -167,6 +168,8 @@ ATCA_STATUS calib_genkey_mac(ATCADevice device, uint8_t* public_key, uint8_t* ma
         #if (CA_MAX_PACKET_SIZE < (ATCA_PUB_KEY_SIZE + ATCA_PACKET_OVERHEAD + MAC_SIZE))
         #error "CA_MAX_PACKET_SIZE cannot hold response packet with public key and mac"
         #endif
+
+        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
 
         packet.param1 = GENKEY_MODE_MAC;
         packet.param2 = (uint16_t)0x00;

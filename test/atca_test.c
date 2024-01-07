@@ -239,7 +239,6 @@ void RunWPCTests(void)
 #ifdef ATCA_NO_HEAP
 ATCA_DLL ATCADevice g_atcab_device_ptr;
 ATCA_DLL struct atca_device g_atcab_device;
-ATCA_DLL struct atca_command g_atcab_command;
 ATCA_DLL struct atca_iface g_atcab_iface;
 #endif
 
@@ -448,6 +447,8 @@ ATCA_STATUS atca_test_config_get_id(uint8_t test_type, uint16_t* handle)
 #endif
 #if ATCA_TA_SUPPORT
         case TA100:
+        /* fallthrough */
+        case TA101:
             status = talib_config_get_handle_by_test(test_type, handle);
             break;
 #endif

@@ -59,7 +59,7 @@
 ATCA_STATUS calib_ecdh_base(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* public_key, uint8_t* pms, uint8_t* out_nonce)
 {
     ATCAPacket packet;
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
 
     do
     {
@@ -68,6 +68,8 @@ ATCA_STATUS calib_ecdh_base(ATCADevice device, uint8_t mode, uint16_t key_id, co
             status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             break;
         }
+
+        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
 
         // Build Command
         packet.param1 = mode;
@@ -96,8 +98,7 @@ ATCA_STATUS calib_ecdh_base(ATCADevice device, uint8_t mode, uint16_t key_id, co
             (void)memcpy(out_nonce, &packet.data[ATCA_RSP_DATA_IDX + ATCA_KEY_SIZE], ATCA_KEY_SIZE);
         }
 
-    }
-    while (false);
+    } while (false);
 
     return status;
 }
@@ -148,7 +149,8 @@ ATCA_STATUS calib_ecdh(ATCADevice device, uint16_t key_id, const uint8_t* public
 #if defined(ATCA_USE_CONSTANT_HOST_NONCE)
 ATCA_STATUS calib_ecdh_enc(ATCADevice device, uint16_t key_id, const uint8_t* public_key, uint8_t* pms, const uint8_t* read_key, uint16_t read_key_id)
 #else
-ATCA_STATUS calib_ecdh_enc(ATCADevice device, uint16_t key_id, const uint8_t* public_key, uint8_t* pms, const uint8_t* read_key, uint16_t read_key_id, const uint8_t num_in[NONCE_NUMIN_SIZE])
+ATCA_STATUS calib_ecdh_enc(ATCADevice device, uint16_t key_id, const uint8_t* public_key, uint8_t* pms, const uint8_t* read_key, uint16_t read_key_id,
+                           const uint8_t num_in[NONCE_NUMIN_SIZE])
 #endif
 {
     ATCA_STATUS status = ATCA_SUCCESS;
@@ -175,8 +177,7 @@ ATCA_STATUS calib_ecdh_enc(ATCADevice device, uint16_t key_id, const uint8_t* pu
         {
             (void)ATCA_TRACE(status, "Encrypted read failed"); break;
         }
-    }
-    while (false);
+    } while (false);
 
     return status;
 }
@@ -200,7 +201,7 @@ ATCA_STATUS calib_ecdh_ioenc(ATCADevice device, uint16_t key_id, const uint8_t* 
     uint8_t mode = ECDH_MODE_SOURCE_EEPROM_SLOT | ECDH_MODE_OUTPUT_ENC | ECDH_MODE_COPY_OUTPUT_BUFFER;
     uint8_t out_nonce[ATCA_KEY_SIZE];
     atca_io_decrypt_in_out_t io_dec_params;
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
 
     // Perform ECDH operation requesting output buffer encryption
     if (ATCA_SUCCESS != (status = calib_ecdh_base(device, mode, key_id, public_key, pms, out_nonce)))
@@ -265,7 +266,7 @@ ATCA_STATUS calib_ecdh_tempkey_ioenc(ATCADevice device, const uint8_t* public_ke
     uint8_t mode = ECDH_MODE_SOURCE_TEMPKEY | ECDH_MODE_OUTPUT_ENC | ECDH_MODE_COPY_OUTPUT_BUFFER;
     uint8_t out_nonce[ATCA_KEY_SIZE];
     atca_io_decrypt_in_out_t io_dec_params;
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
 
     // Perform ECDH operation requesting output buffer encryption
     if (ATCA_SUCCESS != (status = calib_ecdh_base(device, mode, 0x0000, public_key, pms, out_nonce)))

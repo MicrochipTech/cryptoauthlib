@@ -41,19 +41,19 @@ extern "C" {
 typedef struct pkcs11_session_mech_ctx_s
 {
 #ifdef PKCS11_HARDWARE_SHA256
-    atca_hmac_sha256_ctx_t hmac;
-    atca_sha256_ctx_t      sha256;
+    atca_hmac_sha256_ctx_t  hmac;
+    atca_sha256_ctx_t       sha256;
 #else
-    atcac_hmac_ctx_t     hmac;
-    atcac_sha2_256_ctx_t sha256;
+    atcac_hmac_ctx_t        hmac;
+    atcac_sha2_256_ctx_t    sha256;
 #endif
     atca_aes_cmac_ctx_t cmac;
     atca_aes_cbc_ctx_t  cbc;
 #ifdef ATCA_ATECC608_SUPPORT
     struct
     {
-        atca_aes_gcm_ctx_t context;
-        CK_BYTE            tag_len;
+        atca_aes_gcm_ctx_t  context;
+        CK_BYTE             tag_len;
     } gcm;
 #endif
 #if ATCA_TA_SUPPORT
@@ -86,7 +86,7 @@ typedef struct pkcs11_session_ctx_s
 #ifdef __cplusplus
 }
 #endif
-//pkcs11_session_ctx_ptr pkcs11_get_session_context(CK_SESSION_HANDLE hSession);
+pkcs11_session_ctx_ptr pkcs11_get_session_context(CK_SESSION_HANDLE hSession);
 CK_RV pkcs11_session_check(pkcs11_session_ctx_ptr * pSession, CK_SESSION_HANDLE hSession);
 
 CK_RV pkcs11_session_get_info(CK_SESSION_HANDLE hSession, CK_SESSION_INFO_PTR pInfo);

@@ -16,6 +16,7 @@ option(PKCS11_AUTH_TERMINATE_BEFORE_LOGIN    "Enable auth terminate before c_log
 
 set(PKCS11_MAX_SLOTS_ALLOWED    1   CACHE STRING "Maximum number of slots allowed in the system")
 set(PKCS11_MAX_SESSIONS_ALLOWED 10  CACHE STRING "Maximum number of total sessions allowed in the system")
+set(PKCS11_MAX_CERTS_CACHED     5   CACHE STRING "Maximum number of x509 certificates allowed to be cached")
 set(PKCS11_MAX_OBJECTS_ALLOWED  16  CACHE STRING "Maximum number of cryptographic objects allowed to be cached")
 set(PKCS11_MAX_LABEL_SIZE       30  CACHE STRING "Maximum label size in characters")
 set(PKCS11_MAX_CONFIG_ALLOWED 7 CACHE STRING "Maximum depth to configuration options")

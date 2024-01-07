@@ -62,7 +62,7 @@ ATCACERT_DEF_DEVICE_CONFIG = {
         {'offset': 207, 'count': 64},
         {'offset': 351, 'count': 75},
         {'offset': 101, 'count': 13},
-        {'offset': 0, 'count': 0},
+        {'offset': 116, 'count': 15},
         {'offset': 93, 'count': 4},
         {'offset': 15, 'count': 16},
         {'offset': 319, 'count': 20},
@@ -174,9 +174,7 @@ def create_device_cert(cert_def):
 
     # Device cert must have minutes and seconds set to 0
     builder = builder.not_valid_before(datetime.now(tz=pytz.utc).replace(minute=0, second=0))
-
-    # Should be year 9999, but this doesn't work on windows
-    builder = builder.not_valid_after(datetime(3000, 12, 31, 23, 59, 59))
+    builder = builder.not_valid_after(datetime(9999, 12, 31, 23, 59, 59))
 
     builder = builder.subject_name(x509.Name([
         x509.NameAttribute(x509.oid.NameOID.ORGANIZATION_NAME, u'Example Inc'),

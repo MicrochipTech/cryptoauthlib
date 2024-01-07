@@ -59,7 +59,7 @@ ATCA_STATUS kit_receive(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, 
 ATCA_STATUS kit_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen);
 ATCA_STATUS kit_release(void* hal_data);
 
-ATCA_STATUS kit_wrap_cmd(const uint8_t* txdata, int txlen, char* pkitcmd, int* nkitcmd, const char* target);
+ATCA_STATUS kit_wrap_cmd(uint8_t word_address, const uint8_t* txdata, int txlen, char* pkitcmd, int* nkitcmd, const char* target);
 ATCA_STATUS kit_parse_rsp(const char* pkitbuf, int nkitbuf, uint8_t* kitstatus, uint8_t* rxdata, int* datasize);
 
 ATCA_STATUS kit_wake(ATCAIface iface);

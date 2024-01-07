@@ -147,35 +147,35 @@ static ATCAHAL_t hal_custom;
  */
 typedef struct
 {
-    uint8_t    iface_type;          /**<  */
-    ATCAHAL_t* hal;                 /**<  */
-    ATCAHAL_t* phy;                 /**< Physical interface for the specific HAL*/
+    uint8_t     iface_type; /**<  */
+    ATCAHAL_t*  hal;        /**<  */
+    ATCAHAL_t*  phy;        /**< Physical interface for the specific HAL*/
 } atca_hal_list_entry_t;
 
 
 static atca_hal_list_entry_t atca_registered_hal_list[ATCA_MAX_HAL_CACHE] = {
 #ifdef ATCA_HAL_I2C
-    { (uint8_t)ATCA_I2C_IFACE,      &hal_i2c,             NULL                                     },
+    { (uint8_t)ATCA_I2C_IFACE,      &hal_i2c,        NULL      },
 #endif
 #ifdef ATCA_HAL_SWI_UART
-    { (uint8_t)ATCA_SWI_IFACE,      &hal_swi_uart,        &hal_uart                                },
+    { (uint8_t)ATCA_SWI_IFACE,      &hal_swi_uart,   &hal_uart },
 #endif
 #ifdef ATCA_HAL_KIT_UART
-    { (uint8_t)ATCA_UART_IFACE,     &hal_kit_v1,          &hal_uart                                },
+    { (uint8_t)ATCA_UART_IFACE,     &hal_kit_v1,     &hal_uart },
 #elif defined(ATCA_HAL_UART)
-    { (uint8_t)ATCA_UART_IFACE,     &hal_uart,            NULL                                     },
+    { (uint8_t)ATCA_UART_IFACE,     &hal_uart,       NULL      },
 #endif
 #ifdef ATCA_HAL_SPI
-    { (uint8_t)ATCA_SPI_IFACE,      &hal_spi,             NULL                                     },
+    { (uint8_t)ATCA_SPI_IFACE,      &hal_spi,        NULL      },
 #endif
 #ifdef ATCA_HAL_KIT_HID
-    { (uint8_t)ATCA_HID_IFACE,      &hal_kit_v1,          &hal_hid                                 },
+    { (uint8_t)ATCA_HID_IFACE,      &hal_kit_v1,     &hal_hid  },
 #endif
 #ifdef ATCA_HAL_KIT_BRIDGE
-    { (uint8_t)ATCA_KIT_IFACE,      &hal_kit_bridge,      NULL                                     },
+    { (uint8_t)ATCA_KIT_IFACE,      &hal_kit_bridge, NULL      },
 #endif
 #if defined(ATCA_HAL_SWI_GPIO) || defined(ATCA_HAL_SWI_BB)
-    { (uint8_t)ATCA_SWI_GPIO_IFACE, &hal_swi_gpio,        &hal_gpio                                },
+    { (uint8_t)ATCA_SWI_GPIO_IFACE, &hal_swi_gpio,   &hal_gpio },
 #endif
 };
 
@@ -238,6 +238,7 @@ static ATCA_STATUS hal_iface_set_registered(ATCAIfaceType iface_type, ATCAHAL_t*
             }
             else
             {
+                /* coverity[misra_c_2012_rule_14_3_violation] */
                 if ((empty == atca_registered_hal_list_size) && (NULL == atca_registered_hal_list[i].hal) && (NULL == atca_registered_hal_list[i].phy))
                 {
                     empty = i;

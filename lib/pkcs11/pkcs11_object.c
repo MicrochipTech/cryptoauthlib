@@ -25,6 +25,7 @@
  * THIS SOFTWARE.
  */
 #include "cryptoauthlib.h"
+#include "atcacert/atcacert_def.h"
 
 #include "cryptoki.h"
 #include "pkcs11_config.h"
@@ -90,19 +91,19 @@ const CK_ULONG pkcs11_object_monotonic_attributes_count = (CK_ULONG)(PKCS11_UTIL
  */
 const pkcs11_attrib_model const pkcs11_object_storage_attributes[] = {
     /** Object Class - CK_OBJECT_CLASS */
-    { CKA_CLASS,       pkcs11_object_get_class                         },
+    { CKA_CLASS,       pkcs11_object_get_class    },
     /** CK_TRUE if object is a token object; CK_FALSE if object is a session object. Default is CK_FALSE. */
-    { CKA_TOKEN,       pkcs11_attrib_true                              },
+    { CKA_TOKEN,       pkcs11_attrib_true         },
     /** CK_TRUE if object is a private object; CK_FALSE if object is a public object. */
-    { CKA_PRIVATE,     pkcs11_key_get_access_type                      },
+    { CKA_PRIVATE,     pkcs11_key_get_access_type },
     /** CK_TRUE if object can be modified. Default is CK_TRUE. */
-    { CKA_MODIFIABLE,  NULL_PTR                                        },
+    { CKA_MODIFIABLE,  NULL_PTR                   },
     /** Description of the object(default empty). */
-    { CKA_LABEL,       pkcs11_object_get_name                          },
+    { CKA_LABEL,       pkcs11_object_get_name     },
     /** CK_TRUE if object can be copied using C_CopyObject.Defaults to CK_TRUE. */
-    { CKA_COPYABLE,    pkcs11_attrib_false                             },
+    { CKA_COPYABLE,    pkcs11_attrib_false        },
     /** CK_TRUE if the object can be destroyed using C_DestroyObject. Default is CK_TRUE. */
-    { CKA_DESTROYABLE, pkcs11_attrib_false                             },
+    { CKA_DESTROYABLE, pkcs11_attrib_false        },
 };
 
 /**
@@ -111,11 +112,11 @@ const pkcs11_attrib_model const pkcs11_object_storage_attributes[] = {
  */
 const pkcs11_attrib_model pkcs11_object_data_attributes[] = {
     /** Description of the application that manages the object(default empty) */
-    { CKA_APPLICATION, NULL_PTR                        },
+    { CKA_APPLICATION, NULL_PTR },
     /** DER - encoding of the object identifier indicating the data object type(default empty) */
-    { CKA_OBJECT_ID,   NULL_PTR                        },
+    { CKA_OBJECT_ID,   NULL_PTR },
     /** Value of the object(default empty) */
-    { CKA_VALUE,       NULL_PTR                        }
+    { CKA_VALUE,       NULL_PTR }
 
 };
 #endif
@@ -190,21 +191,22 @@ CK_RV pkcs11_object_free(pkcs11_object_ptr pObject)
 
     if (NULL != pObject)
     {
-#if ATCA_CA_SUPPORT
         if (NULL != pObject->data)
         {
-            if (PKCS11_OBJECT_FLAG_SENSITIVE == (pObject->flags & PKCS11_OBJECT_FLAG_SENSITIVE))
+            if (PKCS11_OBJECT_FLAG_CERT_CACHE == (pObject->flags & PKCS11_OBJECT_FLAG_CERT_CACHE))
+            {
+                (void)pkcs11_cert_clear_cache(pObject);
+                pObject->flags &= PKCS11_OBJECT_FLAG_CERT_CACHE_COMPLEMENT;
+            }
+            else if (PKCS11_OBJECT_FLAG_SENSITIVE == (pObject->flags & PKCS11_OBJECT_FLAG_SENSITIVE))
             {
                 (void)pkcs11_util_memset((CK_VOID_PTR)pObject->data, pObject->size, 0, pObject->size);
             }
-#ifndef ATCA_NO_HEAP
-            if ((NULL != pObject->data) && (PKCS11_OBJECT_FLAG_DYNAMIC == (pObject->flags & PKCS11_OBJECT_FLAG_DYNAMIC)))
+            else
             {
-                pkcs11_os_free(pObject->data);
+                /* Added for MISRA Violation */
             }
-#endif
         }
-#endif
 
         (void)pkcs11_util_memset(pObject, sizeof(pkcs11_object), 0, sizeof(pkcs11_object));
 

@@ -96,12 +96,10 @@
 #define DEFAULT_CA_MAX_PACKET_SIZE    (198u)
 
 /* Check the user provided maximum packet size and set to default if that exceeds the default configuration */
-#ifndef CA_MAX_PACKET_SIZE
-#if MAX_PACKET_SIZE > DEFAULT_CA_MAX_PACKET_SIZE
+#if !defined(MAX_PACKET_SIZE) || (MAX_PACKET_SIZE > DEFAULT_CA_MAX_PACKET_SIZE)
 #define CA_MAX_PACKET_SIZE            (DEFAULT_CA_MAX_PACKET_SIZE)
 #else
 #define CA_MAX_PACKET_SIZE            (MAX_PACKET_SIZE)
-#endif
 #endif
 
 /**** AES command ****/

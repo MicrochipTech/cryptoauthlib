@@ -30,7 +30,6 @@
 #include "atcacert_date.h"
 #include "atca_compiler.h"
 
-#if ATCACERT_COMPCERT_EN
 
 const size_t ATCACERT_DATE_FORMAT_SIZES[ATCACERT_DATE_FORMAT_SIZES_COUNT] = {
     DATEFMT_ISO8601_SEP_SIZE,
@@ -39,6 +38,35 @@ const size_t ATCACERT_DATE_FORMAT_SIZES[ATCACERT_DATE_FORMAT_SIZES_COUNT] = {
     DATEFMT_POSIX_UINT32_LE_SIZE,
     DATEFMT_RFC5280_GEN_SIZE
 };
+
+atcacert_date_format_t atcacert_date_from_asn1_tag(const uint8_t tag)
+{
+    atcacert_date_format_t fmt;
+
+#ifdef ATCA_MBEDTLS
+    fmt = DATEFMT_RFC5280_GEN; //Mbedtls follows always "YYYY-MM-DD HH:MM:SS."
+#else
+    switch (tag)
+    {
+#if ATCACERT_DATEFMT_UTC_EN
+    case 0x17:
+        fmt = DATEFMT_RFC5280_UTC;
+        break;
+#endif
+#if ATCACERT_DATEFMT_GEN_EN
+    case 0x18:
+        fmt = DATEFMT_RFC5280_GEN;
+        break;
+#endif
+    default:
+        fmt = DATEFMT_INVALID;
+        break;
+    }
+#endif
+
+    return fmt;
+}
+
 
 ATCA_STATUS atcacert_date_enc(atcacert_date_format_t   format,
                               const atcacert_tm_utc_t* timestamp,
@@ -426,7 +454,6 @@ ATCA_STATUS atcacert_date_dec_iso8601_sep(const uint8_t      formatted_date[DATE
     if (*(cur_pos++) != (uint8_t)'T')
     {
         return ATCACERT_E_DECODING_ERROR;  // Unexpected separator
-
     }
     new_pos = str_to_int(cur_pos, 2, &timestamp->tm_hour);
     if (new_pos == cur_pos)
@@ -438,7 +465,6 @@ ATCA_STATUS atcacert_date_dec_iso8601_sep(const uint8_t      formatted_date[DATE
     if (*(cur_pos++) != (uint8_t)':')
     {
         return ATCACERT_E_DECODING_ERROR;  // Unexpected separator
-
     }
     new_pos = str_to_int(cur_pos, 2, &timestamp->tm_min);
     if (new_pos == cur_pos)
@@ -986,8 +1012,7 @@ static ATCA_STATUS atcacert_date_enc_posix_uint32(const atcacert_tm_utc_t* timep
 
             rv = atcacert_posix_enc_second(posix_uint32, timeptr->tm_sec);
 
-        }
-        while (false);
+        } while (false);
     }
 
     return rv;
@@ -1197,7 +1222,8 @@ ATCA_STATUS atcacert_date_dec_compcert(const uint8_t          enc_dates[3],
      * Minutes and seconds are always zero.
      */
 
-    if (enc_dates == NULL || issue_date == NULL || expire_date == NULL || expire_date_format >= sizeof(ATCACERT_DATE_FORMAT_SIZES) / sizeof(ATCACERT_DATE_FORMAT_SIZES[0]))
+    if (enc_dates == NULL || issue_date == NULL || expire_date == NULL ||
+        expire_date_format >= sizeof(ATCACERT_DATE_FORMAT_SIZES) / sizeof(ATCACERT_DATE_FORMAT_SIZES[0]))
     {
         return ATCACERT_E_BAD_PARAMS;
     }
@@ -1233,6 +1259,4 @@ ATCA_STATUS atcacert_date_dec_compcert(const uint8_t          enc_dates[3],
 }
 #ifdef __COVERITY__
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.8"
-#endif
-
 #endif

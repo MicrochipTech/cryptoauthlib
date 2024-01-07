@@ -56,7 +56,7 @@
 ATCA_STATUS calib_sign_base(ATCADevice device, uint8_t mode, uint16_t key_id, uint8_t *signature)
 {
     ATCAPacket packet;
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
 
     if ((device == NULL) || (signature == NULL))
     {
@@ -65,6 +65,8 @@ ATCA_STATUS calib_sign_base(ATCADevice device, uint8_t mode, uint16_t key_id, ui
 
     do
     {
+        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
+
         // Build sign command
         packet.param1 = mode;
         packet.param2 = key_id;
@@ -90,8 +92,7 @@ ATCA_STATUS calib_sign_base(ATCADevice device, uint8_t mode, uint16_t key_id, ui
             status = ATCA_RX_FAIL;
         }
 
-    }
-    while (false);
+    } while (false);
 
     return status;
 }
@@ -114,7 +115,7 @@ ATCA_STATUS calib_sign_base(ATCADevice device, uint8_t mode, uint16_t key_id, ui
  */
 ATCA_STATUS calib_sign(ATCADevice device, uint16_t key_id, const uint8_t *msg, uint8_t *signature)
 {
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
     uint8_t nonce_target = NONCE_MODE_TARGET_TEMPKEY;
     uint8_t sign_source = SIGN_MODE_SOURCE_TEMPKEY;
 
@@ -149,8 +150,7 @@ ATCA_STATUS calib_sign(ATCADevice device, uint16_t key_id, const uint8_t *msg, u
             (void)ATCA_TRACE(status, "calib_sign_base - failed");
             break;
         }
-    }
-    while (false);
+    } while (false);
 
     return status;
 }
@@ -160,7 +160,7 @@ ATCA_STATUS calib_sign(ATCADevice device, uint16_t key_id, const uint8_t *msg, u
 ATCA_STATUS calib_sign_ext(ATCADevice device, uint16_t key_id, const uint8_t *msg, uint8_t *signature)
 {
     ATCADeviceType devtype = atcab_get_device_type_ext(device);
-    ATCA_STATUS status = ATCA_BAD_PARAM;
+    ATCA_STATUS status;
 
     switch (devtype)
     {
@@ -208,7 +208,7 @@ ATCA_STATUS calib_sign_ext(ATCADevice device, uint16_t key_id, const uint8_t *ms
  */
 ATCA_STATUS calib_sign_internal(ATCADevice device, uint16_t key_id, bool is_invalidate, bool is_full_sn, uint8_t *signature)
 {
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
     uint8_t mode = SIGN_MODE_INTERNAL;
 
     do
@@ -230,8 +230,7 @@ ATCA_STATUS calib_sign_internal(ATCADevice device, uint16_t key_id, bool is_inva
             break;
         }
 
-    }
-    while (false);
+    } while (false);
 
     return status;
 }
@@ -254,6 +253,8 @@ ATCA_STATUS calib_ca2_sign(ATCADevice device, uint16_t key_id, const uint8_t* ms
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     ATCAPacket packet;
+
+    (void)memset(&packet, 0x00, sizeof(ATCAPacket));
 
     packet.param1 = 0x00;
     packet.param2 = key_id;

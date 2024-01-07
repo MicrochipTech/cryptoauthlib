@@ -27,19 +27,31 @@
 #ifndef ATCACERT_CHECK_CONFIG_H
 #define ATCACERT_CHECK_CONFIG_H
 
-/* The atcacert_ module is only set up to work with classic cryptoauth devices */
-#include "calib/calib_config_check.h"
+#include "cryptoauthlib.h"
+#include "crypto/atca_crypto_sw.h"
+
+#ifndef HOSTLIB_CERT_EN
+#define HOSTLIB_CERT_EN                     DEFAULT_DISABLED
+#endif
+
+#ifndef ATCACERT_INTEGRATION_EN
+#define ATCACERT_INTEGRATION_EN             HOSTLIB_CERT_EN
+#endif
 
 #ifndef ATCACERT_COMPCERT_EN
+#if ATCA_CA_SUPPORT
 #define ATCACERT_COMPCERT_EN                CALIB_ECC_SUPPORT
+#else
+#define ATCACERT_COMPCERT_EN                DEFAULT_DISABLED
+#endif
 #endif
 
 #ifndef ATCACERT_HW_CHALLENGE_EN
-#define ATCACERT_HW_CHALLENGE_EN            CALIB_RANDOM_EN
+#define ATCACERT_HW_CHALLENGE_EN            (ATCAB_RANDOM_EN && (ATCA_ECC_SUPPORT || ATCA_TA_SUPPORT))
 #endif
 
 #ifndef ATCACERT_HW_VERIFY_EN
-#define ATCACERT_HW_VERIFY_EN               CALIB_VERIFY_EXTERN_EN
+#define ATCACERT_HW_VERIFY_EN               (ATCAB_VERIFY_EXTERN_EN && (ATCA_ECC_SUPPORT || ATCA_TA_SUPPORT))
 #endif
 
 #ifndef ATCACERT_DATEFMT_ISO_EN

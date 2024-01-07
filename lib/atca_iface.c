@@ -174,17 +174,6 @@ ATCA_STATUS atsend(ATCAIface ca_iface, uint8_t word_address, uint8_t *txdata, in
 
     if ((NULL != ca_iface->hal) && (NULL != ca_iface->hal->halsend))
     {
-#ifdef ATCA_HAL_I2C
-        if (ATCA_I2C_IFACE == ca_iface->mIfaceCFG->iface_type && 0xFFu == word_address)
-        {
-#ifdef ATCA_ENABLE_DEPRECATED
-            word_address = ATCA_IFACECFG_VALUE(ca_iface->mIfaceCFG, atcai2c.slave_address);
-#else
-            word_address = ATCA_IFACECFG_VALUE(ca_iface->mIfaceCFG, atcai2c.address);
-#endif
-        }
-#endif
-
         return ca_iface->hal->halsend(ca_iface, word_address, txdata, txlength);
     }
     else
@@ -604,42 +593,45 @@ void deleteATCAIface(ATCAIface *ca_iface)
 
 typedef struct
 {
-    ATCADeviceType devtype;
-    const char *   name;
+    ATCADeviceType  devtype;
+    const char *    name;
 } devtype_names_t;
 
 static const devtype_names_t devtype_names[] = {
 #ifdef ATCA_ATSHA204A_SUPPORT
-    { ATSHA204A,        "sha204"            },
+    { ATSHA204A,        "sha204"  },
 #endif
 #ifdef ATCA_ATECC108A_SUPPORT
-    { ATECC108A,        "ecc108"            },
+    { ATECC108A,        "ecc108"  },
 #endif
 #ifdef ATCA_ATECC508A_SUPPORT
-    { ATECC508A,        "ecc508"            },
+    { ATECC508A,        "ecc508"  },
 #endif
 #ifdef ATCA_ATECC608_SUPPORT
-    { ATECC608,         "ecc608"            },
+    { ATECC608,         "ecc608"  },
 #endif
 #ifdef ATCA_ATSHA206A_SUPPORT
-    { ATSHA206A,        "sha206"            },
+    { ATSHA206A,        "sha206"  },
 #endif
 #ifdef ATCA_ECC204_SUPPORT
-    { ECC204,           "ecc204"            },
+    { ECC204,           "ecc204"  },
 #endif
 #ifdef ATCA_TA010_SUPPORT
-    { TA010,            "ta010"             },
+    { TA010,            "ta010"   },
 #endif
 #ifdef ATCA_SHA104_SUPPORT
-    { SHA104,           "sha104"            },
+    { SHA104,           "sha104"  },
 #endif
 #ifdef ATCA_SHA105_SUPPORT
-    { SHA105,           "sha105"            },
+    { SHA105,           "sha105"  },
 #endif
 #ifdef ATCA_TA100_SUPPORT
-    { TA100,            "ta100"             },
+    { TA100,            "ta100"   },
 #endif
-    { ATCA_DEV_UNKNOWN, "unknown"           }
+#ifdef ATCA_TA101_SUPPORT
+    { TA101,            "ta101"   },
+#endif
+    { ATCA_DEV_UNKNOWN, "unknown" }
 };
 
 /** \brief Get the ATCADeviceType for a string that looks like a part number */

@@ -56,7 +56,7 @@
 ATCA_STATUS calib_secureboot(ATCADevice device, uint8_t mode, uint16_t param2, const uint8_t* digest, const uint8_t* signature, uint8_t* mac)
 {
     ATCAPacket packet;
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
 
     if ((device == NULL) || (digest == NULL))
     {
@@ -75,6 +75,8 @@ ATCA_STATUS calib_secureboot(ATCADevice device, uint8_t mode, uint16_t param2, c
 
     do
     {
+        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
+
         packet.param1 = mode;
         packet.param2 = param2;
 
@@ -102,8 +104,7 @@ ATCA_STATUS calib_secureboot(ATCADevice device, uint8_t mode, uint16_t param2, c
             (void)memcpy(mac, &packet.data[ATCA_RSP_DATA_IDX], SECUREBOOT_MAC_SIZE);
         }
 
-    }
-    while (false);
+    } while (false);
 
     return status;
 }
@@ -126,9 +127,10 @@ ATCA_STATUS calib_secureboot(ATCADevice device, uint8_t mode, uint16_t param2, c
  *
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS calib_secureboot_mac(ATCADevice device, uint8_t mode, const uint8_t* digest, const uint8_t* signature, const uint8_t* num_in, const uint8_t* io_key, bool* is_verified)
+ATCA_STATUS calib_secureboot_mac(ATCADevice device, uint8_t mode, const uint8_t* digest, const uint8_t* signature, const uint8_t* num_in, const uint8_t* io_key,
+                                 bool* is_verified)
 {
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
     atca_temp_key_t tempkey;
     atca_nonce_in_out_t nonce_params;
     atca_secureboot_enc_in_out_t sboot_enc_params;
@@ -226,8 +228,7 @@ ATCA_STATUS calib_secureboot_mac(ATCADevice device, uint8_t mode, const uint8_t*
         }
 
         *is_verified = (memcmp(host_mac, mac, SECUREBOOT_MAC_SIZE) == 0);
-    }
-    while (false);
+    } while (false);
 
     return status;
 }

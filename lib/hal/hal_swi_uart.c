@@ -107,26 +107,43 @@ static ATCA_STATUS hal_swi_uart_send_bit(ATCAIface iface, uint8_t data)
 
 ATCA_STATUS hal_swi_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength)
 {
-    (void)word_address;
     ATCA_STATUS status = ATCA_SUCCESS;
-    uint8_t i, bit_mask, bit_data;
+    uint8_t bit_mask, bit_data;
+    int i;
 
     (void)iface->phy->halcontrol(iface, ATCA_HAL_FLUSH_BUFFER, NULL, 0);
 
-    for (i = 0; i < txlength; i++)
+    //!Send word address
+    for (bit_mask = 1U; bit_mask > 0U; bit_mask <<= 1U)
     {
-        for (bit_mask = 1; bit_mask > 0; bit_mask <<= 1)
+        // Send one byte that represent one bit, 0x7F for one or 0x7D for zero
+        // The LSB (least significant bit) is sent first.
+        bit_data = ((bit_mask & word_address) != 0U) ? 0x7FU : 0x7DU;
+        status = hal_swi_uart_send_bit(iface, bit_data);
+        if (status != ATCA_SUCCESS)
         {
-            // Send one byte that represent one bit, 0x7F for one or 0x7D for zero
-            // The LSB (least significant bit) is sent first.
-            bit_data = (bit_mask & *txdata) ? 0x7F : 0x7D;
-            status = hal_swi_uart_send_bit(iface, bit_data);
-            if (status != ATCA_SUCCESS)
-            {
-                return ATCA_COMM_FAIL;
-            }
+            return ATCA_COMM_FAIL;
         }
-        txdata++;
+    }
+
+    if((NULL != txdata) && (0 < txlength))
+    {
+        //!Send data
+        for (i = 0; i < txlength; i++)
+        {
+            for (bit_mask = 1U; bit_mask > 0U; bit_mask <<= 1U)
+            {
+                // Send one byte that represent one bit, 0x7F for one or 0x7D for zero
+                // The LSB (least significant bit) is sent first.
+                bit_data = ((bit_mask & *txdata) != 0U) ? 0x7FU : 0x7DU;
+                status = hal_swi_uart_send_bit(iface, bit_data);
+                if (status != ATCA_SUCCESS)
+                {
+                return ATCA_COMM_FAIL;
+                }
+            }
+            txdata++;
+        }
     }
 
     return ATCA_SUCCESS;

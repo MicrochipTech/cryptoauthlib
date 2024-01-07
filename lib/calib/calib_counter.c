@@ -50,7 +50,7 @@
 ATCA_STATUS calib_counter(ATCADevice device, uint8_t mode, uint16_t counter_id, uint32_t *counter_value)
 {
     ATCAPacket packet;
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    ATCA_STATUS status;
 
     do
     {
@@ -59,6 +59,8 @@ ATCA_STATUS calib_counter(ATCADevice device, uint8_t mode, uint16_t counter_id, 
             status = ATCA_TRACE(ATCA_BAD_PARAM, "Either NULL pointer or invalid counter id received");
             break;
         }
+
+        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
 
         // build a Counter command
         packet.param1 = mode;
@@ -103,8 +105,7 @@ ATCA_STATUS calib_counter(ATCADevice device, uint8_t mode, uint16_t counter_id, 
             }
 
         }
-    }
-    while (false);
+    } while (false);
 
     return status;
 }

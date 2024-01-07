@@ -381,10 +381,14 @@ def instantiateComponent(calComponent):
     calEnablejwt = calComponent.createBooleanSymbol("CAL_ENABLE_JWT", None)
     calEnablejwt.setLabel("Enable jwt functionality?")
     calEnablejwt.setVisible(True)
-    
+
     calMaxPacketSize = calComponent.createIntegerSymbol('CAL_MAX_PACKET_SIZE', None)
     calMaxPacketSize.setLabel('Maximum packet size (bytes)')
-    calMaxPacketSize.setDefaultValue(1072)
+    calMaxPacketSize.setDefaultValue(1073)
+
+    calMultiPartBuffer = calComponent.createBooleanSymbol("CAL_ENABLE_MULTIPART_BUF", None)
+    calMultiPartBuffer.setLabel("Enable MultiPart Buffer")
+    calMultiPartBuffer.setVisible(True)
 
     # Symmetric Cryptography Commands
     symmetricCommands = calComponent.createMenuSymbol("cal_symmetric_commands", None)

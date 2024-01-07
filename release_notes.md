@@ -1,6 +1,29 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.7.1 (12/15/2023)
+
+### New Features
+  - PKCS11 module enhancements for x509 public key certificates
+    - Added more certificate attributes to x509 public key certificates.
+      These attributes include certificate start date, certificate end date, subject,
+      subject key, DER encoded certificate issuer name, DER encoded certificate
+      serial number and hash of the issuer public key.
+    - Added cache support to store these certificates into stack memory and utilize
+      it for parsing the above specified certificate attributes.
+  - See [talib/CHANGES.md] for details on talib module changes
+
+### Fixes
+  - Updated atcab_read_config_zone to support SHA106
+  - For Linux platforms, i2c baud rate is always set to 100 khz as the default configuration
+  - Resolved build errors when ATCA_USE_SHARED_MUTEX is disabled
+  - Resolved build error with ATCA_JWT_EN
+
+### API Changes
+  - Added atcacert_get_subject api to get the subject name from public x509 certificates
+  - Added atcacert_get_issuer api to get the issuer name from public x509 certificates
+  - Updated the atcacert_def_s structure to include x509 full certificates support
+
 ## Release v3.7.0 (09/08/2023)
 
 ### New Features
@@ -14,12 +37,12 @@
     party headers.
 
 ### API Changes
-  - The software crypto structures are generally no longer typedef'd so they must be 
-    declared with the `struct` keyword. New typedefs were added by appending the 
+  - The software crypto structures are generally no longer typedef'd so they must be
+    declared with the `struct` keyword. New typedefs were added by appending the
     suffix `_t` which allows for the same mechanism for declaring these structure in code
-    if building a standalone application (such as in embedded projects). If dynamically 
-    linking with the library and using a third party crypto library one will need to use 
-    the `_new` & `_free` APIs to allocate these structures for use with the `atcac` 
+    if building a standalone application (such as in embedded projects). If dynamically
+    linking with the library and using a third party crypto library one will need to use
+    the `_new` & `_free` APIs to allocate these structures for use with the `atcac`
     interfaces.
 
 ## Release v3.6.1 (07/14/2023)

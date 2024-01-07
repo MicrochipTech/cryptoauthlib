@@ -82,6 +82,8 @@ extern const CK_ULONG pkcs11_object_monotonic_attributes_count;
 #define PKCS11_OBJECT_FLAG_SENSITIVE        (0x08U)
 #define PKCS11_OBJECT_FLAG_TA_TYPE          (0x10U)
 #define PKCS11_OBJECT_FLAG_TRUST_TYPE       (0x20U)
+#define PKCS11_OBJECT_FLAG_CERT_CACHE       (0x40U)
+#define PKCS11_OBJECT_FLAG_CERT_CACHE_COMPLEMENT   ~(PKCS11_OBJECT_FLAG_CERT_CACHE & 0xffu)
 
 /* Object System Access */
 CK_RV pkcs11_object_alloc(CK_SLOT_ID slotId, pkcs11_object_ptr * ppObject);

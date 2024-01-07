@@ -196,6 +196,7 @@ ATCA_STATUS hal_spi_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata,
     ATCAIfaceCfg* cfg = atgetifacecfg(iface);
     atca_plib_spi_api_t * plib;
     ATCA_STATUS status = !ATCA_SUCCESS;
+    bool plibstatus = false;
 
     if (!cfg)
     {
@@ -214,22 +215,32 @@ ATCA_STATUS hal_spi_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata,
     do
     {
         /* Wait for the SPI bus to be ready */
-        if (ATCA_SUCCESS != (status = hal_spi_wait(plib, cfg->atcaspi.baud, 0)) )
+        if (ATCA_SUCCESS != (status = hal_spi_wait(plib, cfg->atcaspi.baud, 0)))
         {
             break;
         }
 
-        if (true == plib->write(txdata, txlength) )
+        if (true != (plibstatus =  plib->write(&word_address, sizeof(word_address))))
         {
+            status = ATCA_COMM_FAIL;
+            break;
+        }
+
+        /* Wait for the SPI transfer to complete */
+        status = hal_spi_wait(plib, cfg->atcaspi.baud, sizeof(word_address));
+
+        if (NULL != txdata && 0u < txlength)
+        {
+            if (true != (plibstatus = plib->write(txdata, txlength)))
+            {
+                status = ATCA_COMM_FAIL;
+                break;
+            }
+
             /* Wait for the SPI transfer to complete */
             status = hal_spi_wait(plib, cfg->atcaspi.baud, txlength);
         }
-        else
-        {
-            status = ATCA_COMM_FAIL;
-        }
-    }
-    while (0);
+    } while (0);
 
     return status;
 }
@@ -260,7 +271,7 @@ ATCA_STATUS hal_spi_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxda
 
     /* read status register/length bytes to know number of bytes to read */
     status = ATCA_COMM_FAIL;
-    if (true == plib->read(rxdata, *rxlength) )
+    if (true == plib->read(rxdata, *rxlength))
     {
         /* Wait for the SPI transfer to complete */
         status = hal_spi_wait(plib, cfg->atcaspi.baud, *rxlength);

@@ -40,6 +40,7 @@
 #include "pkcs11_object.h"
 #include "pkcs11_os.h"
 #include "pkcs11_util.h"
+#include "pkcs11_cert.h"
 
 /**
  * \defgroup pkcs11 Session Management (pkcs11_)
@@ -83,7 +84,7 @@ static pkcs11_session_ctx_ptr pkcs11_allocate_session_context(void)
     return rv;
 }
 
-static pkcs11_session_ctx_ptr pkcs11_get_session_context(CK_SESSION_HANDLE hSession)
+pkcs11_session_ctx_ptr pkcs11_get_session_context(CK_SESSION_HANDLE hSession)
 {
     pkcs11_session_ctx_ptr rv = NULL;
 
@@ -317,6 +318,7 @@ CK_RV pkcs11_session_open(
         session_ctx->slot = slot_ctx;
         session_ctx->initialized = TRUE;
         session_ctx->active_mech = CKM_VENDOR_DEFINED;
+        session_ctx->state = CKS_RO_PUBLIC_SESSION;
 
         /* Assign the session handle */
         /* coverity[cert_int36_c_violation] A truncated pointer on 64 bit platforms should still be unique in a memory space */
@@ -582,6 +584,7 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
     if (CKR_OK == rv)
     {
         session_ctx->slot->logged_in = TRUE;
+        session_ctx->state = CKS_RO_USER_FUNCTIONS;
     }
 
     return rv;
@@ -619,12 +622,14 @@ CK_RV pkcs11_session_logout(CK_SESSION_HANDLE hSession)
     }
 #endif
 
+    (void)pkcs11_cert_clear_cache_session(session_ctx);
     rv = pkcs11_release_resource(lib_ctx, session_ctx, PKCS11_AUTH_OP_0);
 
     /* Wipe the io protection secret regardless if the above operatios succeeded */
     (void)pkcs11_util_memset(session_ctx->slot->read_key, sizeof(session_ctx->slot->read_key), 0, sizeof(session_ctx->slot->read_key));
 
     session_ctx->slot->logged_in = FALSE;
+    session_ctx->state = CKS_RO_PUBLIC_SESSION;
 
     return rv;
 }
