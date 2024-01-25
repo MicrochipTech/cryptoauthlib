@@ -289,7 +289,7 @@
  * Supported API's: calib_hmac
  **/
 #ifndef CALIB_HMAC_EN
-#define CALIB_HMAC_EN               (ATCAB_HMAC_EN && (CALIB_SHA204_EN || CALIB_ECC108_EN || CALIB_ECC508))
+#define CALIB_HMAC_EN               (ATCAB_HMAC_EN && (CALIB_SHA204_EN || CALIB_ECC108_EN || CALIB_ECC508_EN))
 #endif
 
 /******* INFO COMMAND ********/

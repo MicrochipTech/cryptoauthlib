@@ -6,11 +6,14 @@ Introduction
 This library implements the APIs required to communicate with Microchip Security
 device. The family of devices supported currently are:
 
-- [ATSHA204A](http://www.microchip.com/ATSHA204A)
-- [ATECC108A](http://www.microchip.com/ATECC108A)
-- [ATECC508A](http://www.microchip.com/ATECC508A)
-- [ATECC608A](http://www.microchip.com/ATECC608A)
-- [ATECC608B](http://www.microchip.com/ATECC608B)
+|CryptoAuth                                      |CryptoAuth2                               ||
+|:----------------------------------------------:|:----------------------------------------:|:-------------------------------------:|
+|[ATECC608B](https://www.microchip.com/ATECC608B)|[ECC204](https://www.microchip.com/ECC204)
+|[ATECC608A](http://www.microchip.com/ATECC608A) |[ECC206](https://www.microchip.com/ECC206)|
+|[ATECC508A](http://www.microchip.com/ATECC508A) |[SHA104](https://www.microchip.com/SHA104)|
+|[ATECC108A](http://www.microchip.com/ATECC108A) |[SHA105](https://www.microchip.com/SHA105)|                                       |
+|[ATSHA204A](http://www.microchip.com/ATSHA204A) |[SHA106](https://www.microchip.com/SHA106)|                                       |
+|[ATSHA206A](https://www.microchip.com/ATSHA206A)|[RNG90](https://www.microchip.com/RNG90)  |                                       |
 
 The best place to start is with the [Microchip Trust Platform](https://www.microchip.com/design-centers/security-ics/trust-platform)
 
@@ -40,8 +43,8 @@ not be changeable.
 Examples
 -----------
 
-  - Watch [CryptoAuthLib Documents](http://www.microchip.com/design-centers/security-ics/cryptoauthentication/overview )
-    for new examples coming online.
+  - Install the [Trust Platform Design Suite](https://www.microchip.com/en-us/products/security/trust-platform ) to access Use Case examples 
+    for the different Security Solutions (ATECC608, SHA104/105, ECC204, TA010, TA100…)
   - Node Authentication Example Using Asymmetric PKI is a complete, all-in-one
     example demonstrating all the stages of crypto authentication starting from
     provisioning the Crypto Authentication device ATECC608/ATECC508A with keys

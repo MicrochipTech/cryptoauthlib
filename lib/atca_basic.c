@@ -4016,7 +4016,7 @@ ATCA_STATUS atcab_verify_extern_mac(const uint8_t* message, const uint8_t* signa
 
     if (atcab_is_ca_device(dev_type))
     {
-#ifdef ATCA_ECC_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
         status = calib_verify_extern_mac(g_atcab_device_ptr, message, signature, public_key, num_in, io_key, is_verified);
 #endif
     }
@@ -4163,7 +4163,7 @@ ATCA_STATUS atcab_verify_stored_mac(const uint8_t* message, const uint8_t* signa
 
     if (atcab_is_ca_device(dev_type))
     {
-#ifdef ATCA_ECC_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
         status = calib_verify_stored_mac(g_atcab_device_ptr, message, signature, key_id, num_in, io_key, is_verified);
 #endif
     }

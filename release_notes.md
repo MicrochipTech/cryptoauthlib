@@ -1,6 +1,19 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.7.2 (01/19/2023)
+
+### New Features
+  - See [talib/CHANGES.md] for details on talib module changes
+
+### Fixes
+  - Updated PKCS11 token info to list TA101 device details
+  - Fixed compilation errors when ECC508 device is enabled
+  - See [talib/CHANGES.md] for details on talib module fixes
+
+### API Changes
+  - Added sign and verfy API in talib module to support `1024 bytes ED25519 mode`
+
 ## Release v3.7.1 (12/15/2023)
 
 ### New Features

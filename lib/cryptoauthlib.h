@@ -73,6 +73,11 @@
 #define ATCA_ZONE_OTP                       ((uint8_t)0x01)
 #define ATCA_ZONE_DATA                      ((uint8_t)0x02)
 
+#define DEVICE_PRODUCT_ID_LOCATION  0
+#define DEVICE_IDENTIFIER_LOCATION  1
+#define DEVICE_PART_LOCATION        2
+#define DEVICE_REVISION_LOCATION    3
+
 #if ATCA_CA2_SUPPORT
 #define ATCA_ZONE_CA2_DATA                  ((uint8_t)0x00)
 #define ATCA_ZONE_CA2_CONFIG                ((uint8_t)0x01)

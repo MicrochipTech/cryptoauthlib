@@ -86,10 +86,10 @@ static const char * pkcs11_token_device(ATCADeviceType dev_type, uint8_t info[4]
 
     if (atcab_is_ca_device(dev_type))
     {
-        switch (info[2])
+        switch (info[DEVICE_PART_LOCATION])
         {
         case 0x00:
-            if (0x02u == info[1])
+            if (0x02u == info[DEVICE_IDENTIFIER_LOCATION])
             {
                 rv = "ATSHA204A";
             }
@@ -98,7 +98,7 @@ static const char * pkcs11_token_device(ATCADeviceType dev_type, uint8_t info[4]
             rv = "ATECC508A";
             break;
         case 0x60:
-            if (0x02u < info[3])
+            if (0x02u < info[DEVICE_REVISION_LOCATION])
             {
                 rv = "ATECC608B";
             }
@@ -115,7 +115,14 @@ static const char * pkcs11_token_device(ATCADeviceType dev_type, uint8_t info[4]
 
     if (atcab_is_ta_device(dev_type))
     {
-        rv = "TA100";
+        if(0x01u == info[DEVICE_PRODUCT_ID_LOCATION])
+        {
+            rv = "TA101";
+        }
+        else
+        {
+            rv = "TA100";
+        }
     }
 
     return rv;
