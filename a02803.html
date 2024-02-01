@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.2</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.3</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -101,27 +101,41 @@ $(document).ready(function(){initNavTree('a02803.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="autotoc_md61"></a>
-Release v3.7.2 (01/19/2023)</h1>
+Release v3.7.3 (01/31/2024)</h1>
 <h2><a class="anchor" id="autotoc_md62"></a>
+New Features</h2>
+<ul>
+<li>In PKCS11 module, added cache support to store <code>Key id</code> attribute of key type objects into stack memory and use it for subsequent accesses</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md63"></a>
+Fixes</h2>
+<ul>
+<li>Fixed calib_sha_hmac_finish api to set mode value correctly for ECC204, TA010 and ECC608 devices</li>
+<li>Fixed memory leak in MbedTLS configuration</li>
+<li>Fixed build errors when a project is generated with PKCS11 Component enabled in MPLAB Harmony Configurator (MHC)</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md64"></a>
+Release v3.7.2 (01/19/2024)</h1>
+<h2><a class="anchor" id="autotoc_md65"></a>
 New Features</h2>
 <ul>
 <li>See [talib/CHANGES.md] for details on talib module changes</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md63"></a>
+<h2><a class="anchor" id="autotoc_md66"></a>
 Fixes</h2>
 <ul>
 <li>Updated PKCS11 token info to list TA101 device details</li>
 <li>Fixed compilation errors when ECC508 device is enabled</li>
 <li>See [talib/CHANGES.md] for details on talib module fixes</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md64"></a>
+<h2><a class="anchor" id="autotoc_md67"></a>
 API Changes</h2>
 <ul>
 <li>Added sign and verfy API in talib module to support <code>1024 bytes ED25519 mode</code></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md65"></a>
+<h1><a class="anchor" id="autotoc_md68"></a>
 Release v3.7.1 (12/15/2023)</h1>
-<h2><a class="anchor" id="autotoc_md66"></a>
+<h2><a class="anchor" id="autotoc_md69"></a>
 New Features</h2>
 <ul>
 <li>PKCS11 module enhancements for x509 public key certificates<ul>
@@ -131,7 +145,7 @@ New Features</h2>
 </li>
 <li>See [talib/CHANGES.md] for details on talib module changes</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md67"></a>
+<h2><a class="anchor" id="autotoc_md70"></a>
 Fixes</h2>
 <ul>
 <li>Updated atcab_read_config_zone to support SHA106</li>
@@ -139,56 +153,56 @@ Fixes</h2>
 <li>Resolved build errors when ATCA_USE_SHARED_MUTEX is disabled</li>
 <li>Resolved build error with ATCA_JWT_EN</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md68"></a>
+<h2><a class="anchor" id="autotoc_md71"></a>
 API Changes</h2>
 <ul>
 <li>Added atcacert_get_subject api to get the subject name from public x509 certificates</li>
 <li>Added atcacert_get_issuer api to get the issuer name from public x509 certificates</li>
 <li>Updated the <a class="el" href="a01568.html">atcacert_def_s</a> structure to include x509 full certificates support</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md69"></a>
+<h1><a class="anchor" id="autotoc_md72"></a>
 Release v3.7.0 (09/08/2023)</h1>
-<h2><a class="anchor" id="autotoc_md70"></a>
+<h2><a class="anchor" id="autotoc_md73"></a>
 New Features</h2>
 <ul>
 <li>Added unified buffer implementation to enable multipart buffer use with APIs that support them.</li>
 <li>See [talib/CHANGES.md] for details on talib module changes</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md71"></a>
+<h2><a class="anchor" id="autotoc_md74"></a>
 Fixes</h2>
 <ul>
 <li>Made <code>atcac</code> structures referencing third party libraries opaque to the user so installed header files are usable by applications without also including the third party headers.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md72"></a>
+<h2><a class="anchor" id="autotoc_md75"></a>
 API Changes</h2>
 <ul>
 <li>The software crypto structures are generally no longer typedef'd so they must be declared with the <code>struct</code> keyword. New typedefs were added by appending the suffix <code>_t</code> which allows for the same mechanism for declaring these structure in code if building a standalone application (such as in embedded projects). If dynamically linking with the library and using a third party crypto library one will need to use the <code>_new</code> &amp; <code>_free</code> APIs to allocate these structures for use with the <code>atcac</code> interfaces.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md73"></a>
+<h1><a class="anchor" id="autotoc_md76"></a>
 Release v3.6.1 (07/14/2023)</h1>
-<h2><a class="anchor" id="autotoc_md74"></a>
+<h2><a class="anchor" id="autotoc_md77"></a>
 New Features</h2>
 <ul>
 <li>Added support for PIC18 memory model with a MAX_PACKET_SIZE setting.</li>
 <li>PKCS11 Improvement to support context reservation automatically for operations that span multiple pkcs11 calls such as login/logout, encrypt/decrypt, etc. This prevents concurrent processes from interupting init-update-finish operations in PKCS11</li>
 <li>Added support for data element transfers between trust anchor devices</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md75"></a>
+<h2><a class="anchor" id="autotoc_md78"></a>
 Fixes</h2>
 <ul>
 <li>PKCS11: resolved issues with configuration directory parsing to ensure configurations parse in the correct order and any extraneous files get properly rejected.</li>
 <li>PKCS11: improved public key loading logic for trust anchor handles to use the most appropriate mechanism based on handle configuration.</li>
 <li>Fixed minimal kit host implementation in support bridging to SPI by using select and deselect control commands</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md76"></a>
+<h1><a class="anchor" id="autotoc_md79"></a>
 Release v3.6.0 (04/04/2023)</h1>
-<h2><a class="anchor" id="autotoc_md77"></a>
+<h2><a class="anchor" id="autotoc_md80"></a>
 New Features</h2>
 <ul>
 <li>Compliance certified to CERT-C Level 2 &amp; MISRA 2012. Compliance reports can be requested from your FAE or account manager</li>
 <li>Added talib_handle helper functions to determine if a handle access type is allowed in the given auth session</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md78"></a>
+<h2><a class="anchor" id="autotoc_md81"></a>
 Fixes</h2>
 <ul>
 <li>pkcs11 public key for private keys requiring the token to be logged in will make a best effort to return a value by detecting various storage methods.</li>
@@ -196,7 +210,7 @@ Fixes</h2>
 <li>pkcs7 would return the wrong padding for <code>length % 16 == 0</code></li>
 <li>hmac counter kdf method will default to digest length specified in bits</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md79"></a>
+<h2><a class="anchor" id="autotoc_md82"></a>
 API Changes</h2>
 <ul>
 <li>ATCA_STATUS enum is now an integer and all APIs return type ATCA_STATUS</li>
@@ -205,28 +219,28 @@ API Changes</h2>
 <li>_atcab_exit has been removed (includes _calib_exit and _talib_exit)</li>
 <li>_gDevice has been renamed to g_atcab_device_ptr (one should be using <code><a class="el" href="a01403.html#ga4af82005556c549c30e1c4bd35d4f4e4" title="Get the global device object.">atcab_get_device()</a></code>)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md80"></a>
+<h1><a class="anchor" id="autotoc_md83"></a>
 Release v3.5.1 (03/26/2023)</h1>
-<h2><a class="anchor" id="autotoc_md81"></a>
+<h2><a class="anchor" id="autotoc_md84"></a>
 New Features</h2>
 <ul>
 <li>Add support for SHA104, SHA105, &amp; SHA106</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md82"></a>
+<h1><a class="anchor" id="autotoc_md85"></a>
 Release v3.5.0 (03/14/2023)</h1>
-<h2><a class="anchor" id="autotoc_md83"></a>
+<h2><a class="anchor" id="autotoc_md86"></a>
 New Features</h2>
 <ul>
 <li>Add support for ECC204, TA010 and framework for future devices</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md84"></a>
+<h1><a class="anchor" id="autotoc_md87"></a>
 Release v3.4.3 (12/23/2022)</h1>
-<h2><a class="anchor" id="autotoc_md85"></a>
+<h2><a class="anchor" id="autotoc_md88"></a>
 New Features</h2>
 <ul>
 <li>Add key load mode flags for FCE config command</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md86"></a>
+<h2><a class="anchor" id="autotoc_md89"></a>
 Fixes</h2>
 <ul>
 <li>WPC certificate reconstruction buffer length was too short</li>
@@ -234,9 +248,9 @@ Fixes</h2>
 <li>TA100 lock CRC was being passed with the native endianness.</li>
 <li>ECC204 nonce command was missing the mode bit to emit a random number when called with the intention of producing random bytes</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md87"></a>
+<h1><a class="anchor" id="autotoc_md90"></a>
 Release v3.4.2 (12/04/2022)</h1>
-<h2><a class="anchor" id="autotoc_md88"></a>
+<h2><a class="anchor" id="autotoc_md91"></a>
 Fixes</h2>
 <ul>
 <li>PKCS11: Correct init/deinit failures from initialization mutex options. These would manifest as a segmentation fault on deinit, unterminated authorization sessions, or library already initialized return codes based on the configuration and inititialization data.</li>
@@ -247,9 +261,9 @@ Fixes</h2>
 <li>PKCS11: Updated encrypt/decrypt in cbc/cbcpad modes to use the updated algorithm implementations</li>
 <li>talib full element read &amp; write functions now account for the maximum packet size based on session state.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md89"></a>
+<h1><a class="anchor" id="autotoc_md92"></a>
 Release v3.4.1 (11/11/2022)</h1>
-<h2><a class="anchor" id="autotoc_md90"></a>
+<h2><a class="anchor" id="autotoc_md93"></a>
 Fixes</h2>
 <ul>
 <li>test_atcacert_build_start_signer modified to verify the structure fields since the structure is no longer packed</li>
@@ -259,9 +273,9 @@ Fixes</h2>
 <li>Compiletion error when no HALs are specified during configuration</li>
 <li>Align ECC204 and cryptoauth counter APIs</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md91"></a>
+<h1><a class="anchor" id="autotoc_md94"></a>
 Release v3.4.0 (10/27/2022)</h1>
-<h2><a class="anchor" id="autotoc_md92"></a>
+<h2><a class="anchor" id="autotoc_md95"></a>
 New Features</h2>
 <ul>
 <li>Added framework for fine grain library configuration including configuration check header files <code>&lt;api&gt;_config_check.h</code> see <a class="el" href="a00236.html" title="Consistency checks for configuration options.">lib/atca_config_check.h</a> for the top level header</li>
@@ -270,7 +284,7 @@ New Features</h2>
 <li>Added PKCS7 padding algorithm for use with AES-CBC</li>
 <li>Expose PKCS11 configuration options to CMake configuration</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md93"></a>
+<h2><a class="anchor" id="autotoc_md96"></a>
 Fixes</h2>
 <ul>
 <li>Improve ECC204 apis to match cryptoauthlib apis and abstract the device differences</li>
@@ -281,9 +295,9 @@ Fixes</h2>
 <li>Improve ta100 auth session handling of long messages by reporting the message size exceeds the wrapped message limit earlier in the packet creation process</li>
 <li>Fixes and Improvements for PKCS11 interface based on compliance testing</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md94"></a>
+<h1><a class="anchor" id="autotoc_md97"></a>
 Release v3.3.3 (10/06/2021)</h1>
-<h2><a class="anchor" id="autotoc_md95"></a>
+<h2><a class="anchor" id="autotoc_md98"></a>
 New features</h2>
 <ul>
 <li>Added Zephyr support and zephyr driver api HALs for I2C &amp; SPI. Adding cryptoauthlib to a zephyr project CMakeLists.txt is now possible - use subdirectory(cryptoauthlib/lib). One can also include the repo in the west manifest</li>
@@ -291,7 +305,7 @@ New features</h2>
 <li>Added contributing guidelines and PR process documentation</li>
 <li>SWI bitbang driver for harmony - supports Atmel SWI and ECC204 protocols</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md96"></a>
+<h2><a class="anchor" id="autotoc_md99"></a>
 Fixes</h2>
 <ul>
 <li>Wolfssl build errors when generating MHC projects containing wolfssl</li>
@@ -301,9 +315,9 @@ Fixes</h2>
 <li>Several pkcs11 fixes - token_init deadlock, null num_in for private key writes, fsecret key length parsing, object_create failing, etc</li>
 <li>Null pointer access violation in atcab_release when using a native hal and double free in openssl implementation of atcac_pk_verify</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md97"></a>
+<h1><a class="anchor" id="autotoc_md100"></a>
 Release v3.3.2 (06/20/2021)</h1>
-<h2><a class="anchor" id="autotoc_md98"></a>
+<h2><a class="anchor" id="autotoc_md101"></a>
 New features</h2>
 <ul>
 <li>All memory allocations now go through the hal_ platform definitions. In harmony these are the OSAL_ fuctions which work with any of the supported RTOS'.</li>
@@ -311,7 +325,7 @@ New features</h2>
 <li>Kit protocol over UART has been added. This can be paired with the included hosting application</li>
 <li>Simple kit protocol hosting application has been added. It is available in app/kit_host and through Harmony 3. This is a preview release of the application.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md99"></a>
+<h2><a class="anchor" id="autotoc_md102"></a>
 Fixes</h2>
 <ul>
 <li>Enable ATSHA206A api in the python extension</li>
@@ -321,15 +335,15 @@ Fixes</h2>
 <li>Fix warnings generated by missing end of file newlines.</li>
 <li>Removed legacy (empty) START header references.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md100"></a>
+<h1><a class="anchor" id="autotoc_md103"></a>
 Release v3.3.1 (04/23/2021)</h1>
-<h2><a class="anchor" id="autotoc_md101"></a>
+<h2><a class="anchor" id="autotoc_md104"></a>
 New features</h2>
 <ul>
 <li>Core support for kit protocol over serial ports (i.e. tty/COM ports)</li>
 <li>PKCS11 support for TA100 auth sessions</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md102"></a>
+<h2><a class="anchor" id="autotoc_md105"></a>
 Fixes</h2>
 <ul>
 <li>Fix mbedtls integration combinations that would produce unexpected behavior. All variations of sign/verify _ALT now work as expected given a configured key (for example if a key is configured as a stored public and VERIFY_ALT is enabled then library will perform a stored key verify rather than an external public key load and verify)</li>
@@ -339,31 +353,31 @@ Fixes</h2>
 <li>Fix for I2C errors that could be created on the bus when there are devices on the bus that support general calls - this fix should also correct linux zero length kernel messages when enabled.</li>
 <li>Fix ESP32 HAL to work with the updated HAL structure.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md103"></a>
+<h1><a class="anchor" id="autotoc_md106"></a>
 Release v3.3.0 (01/22/2021)</h1>
-<h2><a class="anchor" id="autotoc_md104"></a>
+<h2><a class="anchor" id="autotoc_md107"></a>
 API Updates</h2>
 <ul>
 <li>HAL API has been signifiantly revised to improve portability. This update simplies the requirements of each HAL to only the physical transport mechanisms. Please see the hal porting and library upgrading notes: <a href="https://github.com/MicrochipTech/cryptoauthlib/wiki/Upgrading-to-v3.3">https://github.com/MicrochipTech/cryptoauthlib/wiki/Upgrading-to-v3.3</a></li>
 <li>Internal structures have been updated by removing obsolete elements and combining mandatory fields. This saves significant memory in both program and data regions.</li>
 <li>Inclusive language update: all remaining legacy language elements have been updated. Where this impacts the external API there is the option ATCA_ENABLE_DEPRECATED to use the previous names.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md105"></a>
+<h2><a class="anchor" id="autotoc_md108"></a>
 New features</h2>
 <ul>
 <li>ECC204 support has been added with one wire HAL support.</li>
 <li>ECC204, SHA206, one wire and single wire (uart and gpio) hals have been added to the Harmony 3 configurator.</li>
 <li>PKCS11 support for symmetric (AES &amp; HMAC) keys has been added and enabled for additional mechanisms such as HMAC signing and AES encrypt/decrypt</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md106"></a>
+<h2><a class="anchor" id="autotoc_md109"></a>
 Fixes</h2>
 <ul>
 <li>pkcs11_token_init had several conditions that were corrected</li>
 <li>fix to detect differences in i2c clock rate specifications between flexcom and sercom configurators in Harmony 3 and the emit the correct value for the cryptoauthlib interface config structure.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md107"></a>
+<h1><a class="anchor" id="autotoc_md110"></a>
 Release v3.2.5 (11/30/2020)</h1>
-<h2><a class="anchor" id="autotoc_md108"></a>
+<h2><a class="anchor" id="autotoc_md111"></a>
 New features</h2>
 <ul>
 <li>TA100 ShareKey API to drive the sharekey process (requires NDA, consult with your FAE or submit a request through your myMicrochip account)</li>
@@ -371,35 +385,35 @@ New features</h2>
 <li>XC8 &amp; XC16 compiler support</li>
 <li>AES CCM &amp; CBC-MAC upper layer API using AES-ECB primatives</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md109"></a>
+<h2><a class="anchor" id="autotoc_md112"></a>
 Fixes</h2>
 <ul>
 <li>TA100 AES-GCM auth session tx packet length when command data is included</li>
 <li>PKCS11 Pin length check rejecting valid pin lengths</li>
 <li>aes-gcm nist vector test failed with mbedtls crypto backend due to aad update not being executed when aad length was zero</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md110"></a>
+<h1><a class="anchor" id="autotoc_md113"></a>
 Release v3.2.4 (10/17/2020)</h1>
-<h2><a class="anchor" id="autotoc_md111"></a>
+<h2><a class="anchor" id="autotoc_md114"></a>
 New features</h2>
 <ul>
 <li>Additional TA100 command support (requires NDA, consult with your FAE or submit a request through your myMicrochip account)</li>
 <li>Library build and install on linux now also installs the headers that were used to build the library including all configuration files like atca_config.h - customer applications building against the library will need to add the include/cryptoauthlib to their include search paths</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md112"></a>
+<h2><a class="anchor" id="autotoc_md115"></a>
 Fixes</h2>
 <ul>
 <li>Fixed errors produced when -fno-common was used during build of the library by resolving the variable declaration and exporting macros (tested with static/dynamic linkage on linux &amp; windows platforms)</li>
 <li>Added a timeout during i2c plib commands in the Harmony3 hals to prevent system lockups from failed peripheral transfers that don't return errors.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md113"></a>
+<h1><a class="anchor" id="autotoc_md116"></a>
 Release v3.2.3 (09/12/2020)</h1>
-<h2><a class="anchor" id="autotoc_md114"></a>
+<h2><a class="anchor" id="autotoc_md117"></a>
 New features</h2>
 <ul>
 <li>Additional TA100 command support (requires NDA, consult with your FAE or submit a request through your myMicrochip account)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md115"></a>
+<h2><a class="anchor" id="autotoc_md118"></a>
 Fixes</h2>
 <ul>
 <li>Security patch for USB HALs. Removed deprecated HALs and removed enumeration from the hidapi HAL.</li>
@@ -407,23 +421,23 @@ Fixes</h2>
 <li>Fix SPI HAL generation errors for SAMG55 &amp; SAM71 (flexcom) devices</li>
 <li>Added a timeout for Harmony I2C calls to prevent infinite loops on peripheral failures. If a loop exists inside the peripheral library then it may still cause processor spins until a watchdog reset.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md116"></a>
+<h1><a class="anchor" id="autotoc_md119"></a>
 Release v3.2.2 (07/28/2020)</h1>
-<h2><a class="anchor" id="autotoc_md117"></a>
+<h2><a class="anchor" id="autotoc_md120"></a>
 New Features</h2>
 <ul>
 <li>ATECC608B support added</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md118"></a>
+<h2><a class="anchor" id="autotoc_md121"></a>
 Fixes</h2>
 <ul>
 <li>Consistent null pointer checks between calib &amp; talib apis. Tracing enabled for most all status changes</li>
 <li>Fix for pkcs11 ecdh with the legacy slot write mode and encrypted read to pull the read key id from the correct slot (private key slot | 0x01)</li>
 <li>call the proper api from atcab_init_ext so it works with device structures that are not the global instance</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md119"></a>
+<h1><a class="anchor" id="autotoc_md122"></a>
 Release v3.2.1 (06/29/2020)</h1>
-<h2><a class="anchor" id="autotoc_md120"></a>
+<h2><a class="anchor" id="autotoc_md123"></a>
 Fixes</h2>
 <ul>
 <li>PKCS11 configuration option to set token label to the device serial number</li>
@@ -431,9 +445,9 @@ Fixes</h2>
 <li>Add missing c++ wrapper macros to calib_basic.h</li>
 <li>Ensure atcab_init_ext calls atcab_release_ext rather than atcab_release</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md121"></a>
+<h1><a class="anchor" id="autotoc_md124"></a>
 Release v3.2.0 (06/10/2020)</h1>
-<h2><a class="anchor" id="autotoc_md122"></a>
+<h2><a class="anchor" id="autotoc_md125"></a>
 New features</h2>
 <ul>
 <li>TA100 device support (requires NDA, consult with your FAE or submit a request through your myMicrochip account)</li>
@@ -444,20 +458,20 @@ New features</h2>
 <li>Changes to atcacert ("compressed" certificate processing) to enable exact certificate size retrival which will help with some use cases that had issues with the max possible size answers.</li>
 <li>Consolidation of HALs into device families rather than exact processor model This should reduce the amount of effort required to port the library to a specific platform if the framework is one that is already known.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md123"></a>
+<h2><a class="anchor" id="autotoc_md126"></a>
 Known issues</h2>
 <ul>
 <li>Power modes/states for the TA100 are not automatically controlled by the library so the application has to manually change the power state when lower power modes are required. A command such as the info command will wake the TA100 from sleep but will produce an error. Try another command after the specified time to ensure communication is restored. This behavior is detailed in the datasheet.</li>
 <li>Several TA100 commands and features are planned for the next released of the library such as import/export, transfer, and devupdate.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md124"></a>
+<h1><a class="anchor" id="autotoc_md127"></a>
 Release v3.1.1 (03/06/2020)</h1>
 <ul>
 <li>Update Trust Flex certificates. Add compile time options to reduce code space by selectively including the trust certificates that are required</li>
 <li>Python updates: add sha206 apis. Fix atcab_kdf parameters</li>
 <li>Fix compiler warnings in test application files and sha206 api</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md125"></a>
+<h1><a class="anchor" id="autotoc_md128"></a>
 Release v3.1.0 (02/05/2020)</h1>
 <ul>
 <li>The library is now semantic versioned along with the legacy date versioning. Python will continue to be released with the date version. Version APIs have been updated.</li>
@@ -465,7 +479,7 @@ Release v3.1.0 (02/05/2020)</h1>
 <li>Harmony 3 support has been added. Update harmony configurator (and content loader) or manually clone crytoauthlib into your harmony directory.</li>
 <li>Additional Compiler support has been added for IAR-ARM and ARMCC</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md126"></a>
+<h1><a class="anchor" id="autotoc_md129"></a>
 Release 11/22/2019</h1>
 <ul>
 <li>Patches for CVE-2019-16128 &amp; CVE-2019-16129: Ensure reported packet length is valid for the packet being processed.</li>
@@ -473,39 +487,39 @@ Release 11/22/2019</h1>
 <li>Added Azure compatible TNGTLS and TNGLORA certificates. Use the TNG client API to retrieve the proper certificate based on the device.</li>
 <li>Misc Python updates (updated APIs for encrypted reads to match the C-API change) atcacert_cert_element_t now initializes properly</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md127"></a>
+<h1><a class="anchor" id="autotoc_md130"></a>
 Release 08/30/2019</h1>
 <ul>
 <li>Added big-endian architecture support</li>
 <li>Fixes to atcah_gen_dig() and atcah_nonce()</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md128"></a>
+<h1><a class="anchor" id="autotoc_md131"></a>
 Release 05/17/2019</h1>
 <ul>
 <li>Added support for TNG devices (cert transforms, new API)</li>
 <li>atcab_write_pub_key() now works when the data zone is unlocked</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md129"></a>
+<h1><a class="anchor" id="autotoc_md132"></a>
 Release 03/04/2019</h1>
 <ul>
 <li>mbed TLS wrapper added</li>
 <li>Minor bug fixes</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md130"></a>
+<h1><a class="anchor" id="autotoc_md133"></a>
 Release 01/25/2019</h1>
 <ul>
 <li>Python JWT support</li>
 <li>Python configuration structures added</li>
 <li>Restructure of secure boot app</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md131"></a>
+<h1><a class="anchor" id="autotoc_md134"></a>
 Release 01/04/2019</h1>
 <ul>
 <li>Added GCM functions</li>
 <li>Split AES modes into separate files</li>
 <li>Bug fix in SWI START driver</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md132"></a>
+<h1><a class="anchor" id="autotoc_md135"></a>
 Release 10/25/2018</h1>
 <ul>
 <li>Added basic certificate functions to the python wrapper.</li>
@@ -515,17 +529,17 @@ Release 10/25/2018</h1>
 <li>Python wrapper functions now return single values with AtcaReference.</li>
 <li>Added mutex support to HAL and better support for freeRTOS.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md133"></a>
+<h1><a class="anchor" id="autotoc_md136"></a>
 Release 08/17/2018</h1>
 <ul>
 <li>Better support for multiple kit protocol devices</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md134"></a>
+<h1><a class="anchor" id="autotoc_md137"></a>
 Release 07/25/2018</h1>
 <ul>
 <li>Clean up python wrapper</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md135"></a>
+<h1><a class="anchor" id="autotoc_md138"></a>
 Release 07/18/2018</h1>
 <ul>
 <li>Added ATCA_NO_HEAP define to remove use of malloc/free.</li>
@@ -533,7 +547,7 @@ Release 07/18/2018</h1>
 <li>Added wake retry to accomodate power on self test delay.</li>
 <li>Added ca_cert_def member to <a class="el" href="a01568.html">atcacert_def_s</a> so cert chains can be traversed as a linked list.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md136"></a>
+<h1><a class="anchor" id="autotoc_md139"></a>
 Release 03/29/2018</h1>
 <ul>
 <li>Added support for response polling by default, which will make commands return faster (define ATCA_NO_POLL to use old delay method).</li>
@@ -543,18 +557,18 @@ Release 03/29/2018</h1>
 <li>Fixed mode parameter issue in atcah_gen_key_msg().</li>
 <li>ATECC608A health test error code added.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md137"></a>
+<h1><a class="anchor" id="autotoc_md140"></a>
 Release 01/15/2018</h1>
 <ul>
 <li>Added AES-128 CBC implementation using AES command</li>
 <li>Added AES-128 CMAC implementation using AES command</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md138"></a>
+<h1><a class="anchor" id="autotoc_md141"></a>
 Release 11/22/2017</h1>
 <ul>
 <li>Added support for FLEXCOM6 on SAMG55 driver</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md139"></a>
+<h1><a class="anchor" id="autotoc_md142"></a>
 Release 11/17/2017</h1>
 <ul>
 <li>Added library support for the ATECC608A device</li>
@@ -566,7 +580,7 @@ Release 11/17/2017</h1>
 <li>Fixed <a class="el" href="a00254.html#aeeff0177acf29e6e7b134a14d7119d69" title="Encode data as base64 string with ruleset option.">atcab_base64encode_()</a> for the extra newline</li>
 <li>Updated <a class="el" href="a01403.html#ga51e3ae10f0596d473f646074650904e6" title="ECDH command with a private key in a slot and the premaster secret is read from the next slot.">atcab_ecdh_enc()</a> to work more consistently</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md140"></a>
+<h1><a class="anchor" id="autotoc_md143"></a>
 Release 07/01/2017</h1>
 <ul>
 <li>Removed assumption of SN[0:1]=0123, SN[8]=EE. SN now needs to be passed in for functions in atca_host and atca_basic functions will now read the config zone for the SN if needed.</li>
@@ -597,7 +611,7 @@ Release 07/01/2017</h1>
 <li>Updated atSHA() to work with all devices.</li>
 <li>Fixed atcacert_get_device_locs() when using stored sn.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md141"></a>
+<h1><a class="anchor" id="autotoc_md144"></a>
 Release 01/08/2016</h1>
 <ul>
 <li>New HAL implementations for<ul>
@@ -622,7 +636,7 @@ Release 01/08/2016</h1>
 <li>'uncrustify' source formatting</li>
 <li>published on GitHub</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md142"></a>
+<h1><a class="anchor" id="autotoc_md145"></a>
 Release 9/19/2015</h1>
 <ul>
 <li>Kit protocol over HID on Windows</li>

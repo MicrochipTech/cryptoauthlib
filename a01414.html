@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.2</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.3</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -176,12 +176,12 @@ CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_cert_load</b>
 <tr class="memitem:ga3d673b7d429238154436fc9576cee0a1"><td class="memItemLeft" align="right" valign="top"><a id="ga3d673b7d429238154436fc9576cee0a1" name="ga3d673b7d429238154436fc9576cee0a1"></a>
 CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_cert_x509_write</b> (CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, <a class="el" href="a01836.html">pkcs11_session_ctx_ptr</a> pSession)</td></tr>
 <tr class="separator:ga3d673b7d429238154436fc9576cee0a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga892adcd814d41fd54bd92aae87e037f0"><td class="memItemLeft" align="right" valign="top"><a id="ga892adcd814d41fd54bd92aae87e037f0" name="ga892adcd814d41fd54bd92aae87e037f0"></a>
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_cert_clear_cache_session</b> (<a class="el" href="a01836.html">pkcs11_session_ctx_ptr</a> session_ctx)</td></tr>
-<tr class="separator:ga892adcd814d41fd54bd92aae87e037f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc2c4462c3567fb325b57826ae761071"><td class="memItemLeft" align="right" valign="top"><a id="gadc2c4462c3567fb325b57826ae761071" name="gadc2c4462c3567fb325b57826ae761071"></a>
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_cert_clear_cache</b> (pkcs11_object_ptr pObject)</td></tr>
-<tr class="separator:gadc2c4462c3567fb325b57826ae761071"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaab381810e71304eb18e82ff7ad120d89"><td class="memItemLeft" align="right" valign="top"><a id="gaab381810e71304eb18e82ff7ad120d89" name="gaab381810e71304eb18e82ff7ad120d89"></a>
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_cert_clear_session_cache</b> (<a class="el" href="a01836.html">pkcs11_session_ctx_ptr</a> session_ctx)</td></tr>
+<tr class="separator:gaab381810e71304eb18e82ff7ad120d89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0ec5f49b41356f630b589cb41e4253e5"><td class="memItemLeft" align="right" valign="top"><a id="ga0ec5f49b41356f630b589cb41e4253e5" name="ga0ec5f49b41356f630b589cb41e4253e5"></a>
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_cert_clear_object_cache</b> (pkcs11_object_ptr pObject)</td></tr>
+<tr class="separator:ga0ec5f49b41356f630b589cb41e4253e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae044c57d1304413e40ee592cb8e35686"><td class="memItemLeft" align="right" valign="top"><a id="gae044c57d1304413e40ee592cb8e35686" name="gae044c57d1304413e40ee592cb8e35686"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_config_init_private</b> (pkcs11_object_ptr pObject, const char *label, size_t len)</td></tr>
 <tr class="separator:gae044c57d1304413e40ee592cb8e35686"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -297,6 +297,12 @@ CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_key_generate_
 <tr class="memitem:ga8ace04a2049a5d7e527558da10e68dcd"><td class="memItemLeft" align="right" valign="top"><a id="ga8ace04a2049a5d7e527558da10e68dcd" name="ga8ace04a2049a5d7e527558da10e68dcd"></a>
 CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_key_derive</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hBaseKey, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_OBJECT_HANDLE_PTR phKey)</td></tr>
 <tr class="separator:ga8ace04a2049a5d7e527558da10e68dcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7852e24edf669de4a4ccd76010128150"><td class="memItemLeft" align="right" valign="top"><a id="ga7852e24edf669de4a4ccd76010128150" name="ga7852e24edf669de4a4ccd76010128150"></a>
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_key_clear_session_cache</b> (<a class="el" href="a01836.html">pkcs11_session_ctx_ptr</a> session_ctx)</td></tr>
+<tr class="separator:ga7852e24edf669de4a4ccd76010128150"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga22e93204eaa9f9e8b585aab6ba87dc25"><td class="memItemLeft" align="right" valign="top"><a id="ga22e93204eaa9f9e8b585aab6ba87dc25" name="ga22e93204eaa9f9e8b585aab6ba87dc25"></a>
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_key_clear_object_cache</b> (pkcs11_object_ptr pObject)</td></tr>
+<tr class="separator:ga22e93204eaa9f9e8b585aab6ba87dc25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2e45ad4ce8c84712c646dddaa99544e3"><td class="memItemLeft" align="right" valign="top"><a id="ga2e45ad4ce8c84712c646dddaa99544e3" name="ga2e45ad4ce8c84712c646dddaa99544e3"></a>
 CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_Initialize</b> (CK_VOID_PTR pInitArgs)</td></tr>
 <tr class="memdesc:ga2e45ad4ce8c84712c646dddaa99544e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes Cryptoki library NOTES: If pInitArgs is a non-NULL_PTR is must dereference to a <a class="el" href="a01880.html">CK_C_INITIALIZE_ARGS</a> structure. <br /></td></tr>

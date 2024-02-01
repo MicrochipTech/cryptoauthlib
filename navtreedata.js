@@ -97,113 +97,117 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Microchip Cryptoauthlib Release Notes", "a02803.html", [
-      [ "Release v3.7.2 (01/19/2023)", "a02803.html#autotoc_md61", [
+      [ "Release v3.7.3 (01/31/2024)", "a02803.html#autotoc_md61", [
         [ "New Features", "a02803.html#autotoc_md62", null ],
-        [ "Fixes", "a02803.html#autotoc_md63", null ],
-        [ "API Changes", "a02803.html#autotoc_md64", null ]
+        [ "Fixes", "a02803.html#autotoc_md63", null ]
       ] ],
-      [ "Release v3.7.1 (12/15/2023)", "a02803.html#autotoc_md65", [
-        [ "New Features", "a02803.html#autotoc_md66", null ],
-        [ "Fixes", "a02803.html#autotoc_md67", null ],
-        [ "API Changes", "a02803.html#autotoc_md68", null ]
+      [ "Release v3.7.2 (01/19/2024)", "a02803.html#autotoc_md64", [
+        [ "New Features", "a02803.html#autotoc_md65", null ],
+        [ "Fixes", "a02803.html#autotoc_md66", null ],
+        [ "API Changes", "a02803.html#autotoc_md67", null ]
       ] ],
-      [ "Release v3.7.0 (09/08/2023)", "a02803.html#autotoc_md69", [
-        [ "New Features", "a02803.html#autotoc_md70", null ],
-        [ "Fixes", "a02803.html#autotoc_md71", null ],
-        [ "API Changes", "a02803.html#autotoc_md72", null ]
+      [ "Release v3.7.1 (12/15/2023)", "a02803.html#autotoc_md68", [
+        [ "New Features", "a02803.html#autotoc_md69", null ],
+        [ "Fixes", "a02803.html#autotoc_md70", null ],
+        [ "API Changes", "a02803.html#autotoc_md71", null ]
       ] ],
-      [ "Release v3.6.1 (07/14/2023)", "a02803.html#autotoc_md73", [
-        [ "New Features", "a02803.html#autotoc_md74", null ],
-        [ "Fixes", "a02803.html#autotoc_md75", null ]
+      [ "Release v3.7.0 (09/08/2023)", "a02803.html#autotoc_md72", [
+        [ "New Features", "a02803.html#autotoc_md73", null ],
+        [ "Fixes", "a02803.html#autotoc_md74", null ],
+        [ "API Changes", "a02803.html#autotoc_md75", null ]
       ] ],
-      [ "Release v3.6.0 (04/04/2023)", "a02803.html#autotoc_md76", [
+      [ "Release v3.6.1 (07/14/2023)", "a02803.html#autotoc_md76", [
         [ "New Features", "a02803.html#autotoc_md77", null ],
-        [ "Fixes", "a02803.html#autotoc_md78", null ],
-        [ "API Changes", "a02803.html#autotoc_md79", null ]
+        [ "Fixes", "a02803.html#autotoc_md78", null ]
       ] ],
-      [ "Release v3.5.1 (03/26/2023)", "a02803.html#autotoc_md80", [
-        [ "New Features", "a02803.html#autotoc_md81", null ]
+      [ "Release v3.6.0 (04/04/2023)", "a02803.html#autotoc_md79", [
+        [ "New Features", "a02803.html#autotoc_md80", null ],
+        [ "Fixes", "a02803.html#autotoc_md81", null ],
+        [ "API Changes", "a02803.html#autotoc_md82", null ]
       ] ],
-      [ "Release v3.5.0 (03/14/2023)", "a02803.html#autotoc_md82", [
-        [ "New Features", "a02803.html#autotoc_md83", null ]
+      [ "Release v3.5.1 (03/26/2023)", "a02803.html#autotoc_md83", [
+        [ "New Features", "a02803.html#autotoc_md84", null ]
       ] ],
-      [ "Release v3.4.3 (12/23/2022)", "a02803.html#autotoc_md84", [
-        [ "New Features", "a02803.html#autotoc_md85", null ],
-        [ "Fixes", "a02803.html#autotoc_md86", null ]
+      [ "Release v3.5.0 (03/14/2023)", "a02803.html#autotoc_md85", [
+        [ "New Features", "a02803.html#autotoc_md86", null ]
       ] ],
-      [ "Release v3.4.2 (12/04/2022)", "a02803.html#autotoc_md87", [
-        [ "Fixes", "a02803.html#autotoc_md88", null ]
+      [ "Release v3.4.3 (12/23/2022)", "a02803.html#autotoc_md87", [
+        [ "New Features", "a02803.html#autotoc_md88", null ],
+        [ "Fixes", "a02803.html#autotoc_md89", null ]
       ] ],
-      [ "Release v3.4.1 (11/11/2022)", "a02803.html#autotoc_md89", [
-        [ "Fixes", "a02803.html#autotoc_md90", null ]
+      [ "Release v3.4.2 (12/04/2022)", "a02803.html#autotoc_md90", [
+        [ "Fixes", "a02803.html#autotoc_md91", null ]
       ] ],
-      [ "Release v3.4.0 (10/27/2022)", "a02803.html#autotoc_md91", [
-        [ "New Features", "a02803.html#autotoc_md92", null ],
+      [ "Release v3.4.1 (11/11/2022)", "a02803.html#autotoc_md92", [
         [ "Fixes", "a02803.html#autotoc_md93", null ]
       ] ],
-      [ "Release v3.3.3 (10/06/2021)", "a02803.html#autotoc_md94", [
-        [ "New features", "a02803.html#autotoc_md95", null ],
+      [ "Release v3.4.0 (10/27/2022)", "a02803.html#autotoc_md94", [
+        [ "New Features", "a02803.html#autotoc_md95", null ],
         [ "Fixes", "a02803.html#autotoc_md96", null ]
       ] ],
-      [ "Release v3.3.2 (06/20/2021)", "a02803.html#autotoc_md97", [
+      [ "Release v3.3.3 (10/06/2021)", "a02803.html#autotoc_md97", [
         [ "New features", "a02803.html#autotoc_md98", null ],
         [ "Fixes", "a02803.html#autotoc_md99", null ]
       ] ],
-      [ "Release v3.3.1 (04/23/2021)", "a02803.html#autotoc_md100", [
+      [ "Release v3.3.2 (06/20/2021)", "a02803.html#autotoc_md100", [
         [ "New features", "a02803.html#autotoc_md101", null ],
         [ "Fixes", "a02803.html#autotoc_md102", null ]
       ] ],
-      [ "Release v3.3.0 (01/22/2021)", "a02803.html#autotoc_md103", [
-        [ "API Updates", "a02803.html#autotoc_md104", null ],
-        [ "New features", "a02803.html#autotoc_md105", null ],
-        [ "Fixes", "a02803.html#autotoc_md106", null ]
+      [ "Release v3.3.1 (04/23/2021)", "a02803.html#autotoc_md103", [
+        [ "New features", "a02803.html#autotoc_md104", null ],
+        [ "Fixes", "a02803.html#autotoc_md105", null ]
       ] ],
-      [ "Release v3.2.5 (11/30/2020)", "a02803.html#autotoc_md107", [
+      [ "Release v3.3.0 (01/22/2021)", "a02803.html#autotoc_md106", [
+        [ "API Updates", "a02803.html#autotoc_md107", null ],
         [ "New features", "a02803.html#autotoc_md108", null ],
         [ "Fixes", "a02803.html#autotoc_md109", null ]
       ] ],
-      [ "Release v3.2.4 (10/17/2020)", "a02803.html#autotoc_md110", [
+      [ "Release v3.2.5 (11/30/2020)", "a02803.html#autotoc_md110", [
         [ "New features", "a02803.html#autotoc_md111", null ],
         [ "Fixes", "a02803.html#autotoc_md112", null ]
       ] ],
-      [ "Release v3.2.3 (09/12/2020)", "a02803.html#autotoc_md113", [
+      [ "Release v3.2.4 (10/17/2020)", "a02803.html#autotoc_md113", [
         [ "New features", "a02803.html#autotoc_md114", null ],
         [ "Fixes", "a02803.html#autotoc_md115", null ]
       ] ],
-      [ "Release v3.2.2 (07/28/2020)", "a02803.html#autotoc_md116", [
-        [ "New Features", "a02803.html#autotoc_md117", null ],
+      [ "Release v3.2.3 (09/12/2020)", "a02803.html#autotoc_md116", [
+        [ "New features", "a02803.html#autotoc_md117", null ],
         [ "Fixes", "a02803.html#autotoc_md118", null ]
       ] ],
-      [ "Release v3.2.1 (06/29/2020)", "a02803.html#autotoc_md119", [
-        [ "Fixes", "a02803.html#autotoc_md120", null ]
+      [ "Release v3.2.2 (07/28/2020)", "a02803.html#autotoc_md119", [
+        [ "New Features", "a02803.html#autotoc_md120", null ],
+        [ "Fixes", "a02803.html#autotoc_md121", null ]
       ] ],
-      [ "Release v3.2.0 (06/10/2020)", "a02803.html#autotoc_md121", [
-        [ "New features", "a02803.html#autotoc_md122", null ],
-        [ "Known issues", "a02803.html#autotoc_md123", null ]
+      [ "Release v3.2.1 (06/29/2020)", "a02803.html#autotoc_md122", [
+        [ "Fixes", "a02803.html#autotoc_md123", null ]
       ] ],
-      [ "Release v3.1.1 (03/06/2020)", "a02803.html#autotoc_md124", null ],
-      [ "Release v3.1.0 (02/05/2020)", "a02803.html#autotoc_md125", null ],
-      [ "Release 11/22/2019", "a02803.html#autotoc_md126", null ],
-      [ "Release 08/30/2019", "a02803.html#autotoc_md127", null ],
-      [ "Release 05/17/2019", "a02803.html#autotoc_md128", null ],
-      [ "Release 03/04/2019", "a02803.html#autotoc_md129", null ],
-      [ "Release 01/25/2019", "a02803.html#autotoc_md130", null ],
-      [ "Release 01/04/2019", "a02803.html#autotoc_md131", null ],
-      [ "Release 10/25/2018", "a02803.html#autotoc_md132", null ],
-      [ "Release 08/17/2018", "a02803.html#autotoc_md133", null ],
-      [ "Release 07/25/2018", "a02803.html#autotoc_md134", null ],
-      [ "Release 07/18/2018", "a02803.html#autotoc_md135", null ],
-      [ "Release 03/29/2018", "a02803.html#autotoc_md136", null ],
-      [ "Release 01/15/2018", "a02803.html#autotoc_md137", null ],
-      [ "Release 11/22/2017", "a02803.html#autotoc_md138", null ],
-      [ "Release 11/17/2017", "a02803.html#autotoc_md139", null ],
-      [ "Release 07/01/2017", "a02803.html#autotoc_md140", null ],
-      [ "Release 01/08/2016", "a02803.html#autotoc_md141", null ],
-      [ "Release 9/19/2015", "a02803.html#autotoc_md142", null ]
+      [ "Release v3.2.0 (06/10/2020)", "a02803.html#autotoc_md124", [
+        [ "New features", "a02803.html#autotoc_md125", null ],
+        [ "Known issues", "a02803.html#autotoc_md126", null ]
+      ] ],
+      [ "Release v3.1.1 (03/06/2020)", "a02803.html#autotoc_md127", null ],
+      [ "Release v3.1.0 (02/05/2020)", "a02803.html#autotoc_md128", null ],
+      [ "Release 11/22/2019", "a02803.html#autotoc_md129", null ],
+      [ "Release 08/30/2019", "a02803.html#autotoc_md130", null ],
+      [ "Release 05/17/2019", "a02803.html#autotoc_md131", null ],
+      [ "Release 03/04/2019", "a02803.html#autotoc_md132", null ],
+      [ "Release 01/25/2019", "a02803.html#autotoc_md133", null ],
+      [ "Release 01/04/2019", "a02803.html#autotoc_md134", null ],
+      [ "Release 10/25/2018", "a02803.html#autotoc_md135", null ],
+      [ "Release 08/17/2018", "a02803.html#autotoc_md136", null ],
+      [ "Release 07/25/2018", "a02803.html#autotoc_md137", null ],
+      [ "Release 07/18/2018", "a02803.html#autotoc_md138", null ],
+      [ "Release 03/29/2018", "a02803.html#autotoc_md139", null ],
+      [ "Release 01/15/2018", "a02803.html#autotoc_md140", null ],
+      [ "Release 11/22/2017", "a02803.html#autotoc_md141", null ],
+      [ "Release 11/17/2017", "a02803.html#autotoc_md142", null ],
+      [ "Release 07/01/2017", "a02803.html#autotoc_md143", null ],
+      [ "Release 01/08/2016", "a02803.html#autotoc_md144", null ],
+      [ "Release 9/19/2015", "a02803.html#autotoc_md145", null ]
     ] ],
     [ "Security Policy", "a02804.html", [
-      [ "Supported Versions", "a02804.html#autotoc_md144", null ],
-      [ "Reporting a Vulnerability", "a02804.html#autotoc_md145", null ]
+      [ "Supported Versions", "a02804.html#autotoc_md147", null ],
+      [ "Reporting a Vulnerability", "a02804.html#autotoc_md148", null ]
     ] ],
     [ "Deprecated List", "a01400.html", null ],
     [ "Modules", "modules.html", "modules" ],
@@ -251,7 +255,7 @@ var NAVTREEINDEX =
 "a01423.html",
 "a01740.html",
 "a02380.html",
-"globals_e.html"
+"globals_defs_u.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
