@@ -773,13 +773,12 @@ ATCA_STATUS atcac_pk_free(
     struct atcac_pk_ctx* ctx /**< [in] pointer to a pk context */
     )
 {
-    ATCA_STATUS status = ATCA_BAD_PARAM;
+    ATCA_STATUS status = ATCA_SUCCESS;
 
     if (NULL != ctx)
     {
         void* tmp_ptr = ctx;
-        mbedtls_pk_init((mbedtls_pk_context*)tmp_ptr);
-        status = ATCA_SUCCESS;
+        mbedtls_pk_free((mbedtls_pk_context*)tmp_ptr);
     }
     return status;
 }

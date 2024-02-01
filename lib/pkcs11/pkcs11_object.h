@@ -83,6 +83,8 @@ extern const CK_ULONG pkcs11_object_monotonic_attributes_count;
 #define PKCS11_OBJECT_FLAG_TA_TYPE          (0x10U)
 #define PKCS11_OBJECT_FLAG_TRUST_TYPE       (0x20U)
 #define PKCS11_OBJECT_FLAG_CERT_CACHE       (0x40U)
+#define PKCS11_OBJECT_FLAG_KEY_CACHE        (0x80U)
+#define PKCS11_OBJECT_FLAG_KEY_CACHE_COMPLEMENT    ~(PKCS11_OBJECT_FLAG_KEY_CACHE & 0xffu)
 #define PKCS11_OBJECT_FLAG_CERT_CACHE_COMPLEMENT   ~(PKCS11_OBJECT_FLAG_CERT_CACHE & 0xffu)
 
 /* Object System Access */

@@ -3548,7 +3548,7 @@ ATCA_STATUS atcab_sha_hmac_init(atca_hmac_sha256_ctx_t* ctx, uint16_t key_slot)
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if CALIB_SHA_HMAC_EN
         status = calib_sha_hmac_init(g_atcab_device_ptr, ctx, key_slot);
@@ -3579,7 +3579,7 @@ ATCA_STATUS atcab_sha_hmac_update(atca_hmac_sha256_ctx_t* ctx, const uint8_t* da
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if CALIB_SHA_HMAC_EN
         status = calib_sha_hmac_update(g_atcab_device_ptr, ctx, data, data_size);
@@ -3613,7 +3613,7 @@ ATCA_STATUS atcab_sha_hmac_finish(atca_hmac_sha256_ctx_t* ctx, uint8_t* digest, 
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type();
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if CALIB_SHA_HMAC_EN
         status = calib_sha_hmac_finish(g_atcab_device_ptr, ctx, digest, target);
@@ -3650,7 +3650,7 @@ ATCA_STATUS atcab_sha_hmac_ext(ATCADevice device, const uint8_t* data, size_t da
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
     ATCADeviceType dev_type = atcab_get_device_type_ext(device);
 
-    if (atcab_is_ca_device(dev_type))
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
 #if CALIB_SHA_HMAC_EN
         status = calib_sha_hmac(device, data, data_size, key_slot, digest, target);

@@ -45,8 +45,8 @@ extern const CK_ULONG pkcs11_cert_x509_attributes_count;
 
 CK_RV pkcs11_cert_x509_write(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr pSession);
 CK_RV pkcs11_cert_load(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pAttribute, ATCADevice device);
-CK_RV pkcs11_cert_clear_cache_session(pkcs11_session_ctx_ptr session_ctx);
-CK_RV pkcs11_cert_clear_cache(pkcs11_object_ptr pObject);
+CK_RV pkcs11_cert_clear_session_cache(pkcs11_session_ctx_ptr session_ctx);
+CK_RV pkcs11_cert_clear_object_cache(pkcs11_object_ptr pObject);
 
 #ifdef __cplusplus
 }

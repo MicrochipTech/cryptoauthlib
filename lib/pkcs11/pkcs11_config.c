@@ -68,6 +68,7 @@ void pkcs11_config_init_private(pkcs11_object_ptr pObject, const char * label, s
     pObject->class_type = CKK_EC;
     pObject->attributes = pkcs11_key_private_attributes;
     pObject->count = pkcs11_key_private_attributes_count;
+    pObject->flags = PKCS11_OBJECT_FLAG_KEY_CACHE;
 #if ATCA_CA_SUPPORT
     pObject->data = NULL;
 #endif
@@ -86,6 +87,7 @@ void pkcs11_config_init_public(pkcs11_object_ptr pObject, const char * label, si
     pObject->class_type = CKK_EC;
     pObject->attributes = pkcs11_key_public_attributes;
     pObject->count = pkcs11_key_public_attributes_count;
+    pObject->flags = PKCS11_OBJECT_FLAG_KEY_CACHE;
 #if ATCA_CA_SUPPORT
     pObject->data = NULL;
 #endif
@@ -636,7 +638,6 @@ static CK_RV pkcs11_config_parse_object(pkcs11_slot_ctx_ptr slot_ctx, char* cfgs
         {
             pkcs11_config_init_private(pObject, argv[1], strlen(argv[1]));
             pObject->slot = slot;
-            pObject->flags = 0;
 #if ATCA_CA_SUPPORT
             pObject->config = &slot_ctx->cfg_zone;
 #endif
@@ -651,7 +652,6 @@ static CK_RV pkcs11_config_parse_object(pkcs11_slot_ctx_ptr slot_ctx, char* cfgs
         {
             pkcs11_config_init_public(pPubkey, argv[1], strlen(argv[1]));
             pPubkey->slot = slot;
-            pPubkey->flags = 0;
 #if ATCA_CA_SUPPORT
             pPubkey->config = &slot_ctx->cfg_zone;
 #endif
@@ -679,7 +679,6 @@ static CK_RV pkcs11_config_parse_object(pkcs11_slot_ctx_ptr slot_ctx, char* cfgs
                 pObject->slot = (uint16_t)l_tmp;
             }
 
-            pObject->flags = 0;
 #if ATCA_CA_SUPPORT
             pObject->config = &slot_ctx->cfg_zone;
 #endif

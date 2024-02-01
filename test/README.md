@@ -84,6 +84,7 @@ Commands
 * ecc508 - Select ATECC508A
 * ecc608 - Select ATECC608A/B
 * ta100  - Select TA100
+* ta101  - Select TA101
 
 ### Utilities
 * info - Read the device revision data
@@ -114,8 +115,8 @@ Commands
 * clkdivm1 - Sets the ECC608 clock divider to 0x05
 * clkdivm2 - Sets the ECC608 clock divider to 0x0D
 
-### TA100 Specific Commands
-* handles - Prints the ta100 handle information for all created handles
+### TA Specific Commands
+* handles - Prints the handle information for all created handles
 * talib - Run (talib_) API validation tests
 
 
@@ -140,6 +141,7 @@ macro is enabled:
 * ecc508
 * ecc608
 * ta100
+* ta101
 
 
 ### -i (Interface)

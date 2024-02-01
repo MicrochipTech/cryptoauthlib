@@ -35,7 +35,7 @@ calHalTracker = {}
 _HAL_FILES = ["atca_hal.c", "atca_hal.h"]
 _CORE_PATHS = ['crypto/**/*', 'crypto/*', 'jwt/*', '*']
 _CA_PATHS = ['atcacert/*', 'calib/*', 'host/*']
-_TA_PATHS = ['talib/*']
+_TA_PATHS = ['atcacert/*', 'talib/*']
 _SHA206_PATHS = ['api_206a/*']
 _EXCL_FILES = ['atca_utils_sizes.c']
 

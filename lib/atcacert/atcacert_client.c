@@ -33,7 +33,10 @@
 #include "atcacert_der.h"
 #include "atcacert_pem.h"
 #include "cryptoauthlib.h"
+
+#if ATCA_CA_SUPPORT
 #include "calib/calib_basic.h"
+#endif
 
 #if ATCACERT_COMPCERT_EN
 
@@ -146,10 +149,12 @@ ATCA_STATUS atcacert_read_cert_ext(ATCADevice            device,
                                    size_t*               cert_size)
 {
     ATCA_STATUS ret = ATCACERT_E_BAD_PARAMS;
+#if ATCACERT_COMPCERT_EN
     atcacert_device_loc_t device_locs[16];
     size_t device_locs_count = 0;
     size_t i = 0;
     atcacert_build_state_t build_state;
+#endif
 
     if (cert_def == NULL || cert_size == NULL)
     {
@@ -245,9 +250,11 @@ ATCA_STATUS atcacert_write_cert_ext(ATCADevice            device,
                                     size_t                cert_size)
 {
     ATCA_STATUS ret = 0;
+#if ATCACERT_COMPCERT_EN
     atcacert_device_loc_t device_locs[16];
     size_t device_locs_count = 0;
     size_t i = 0;
+#endif
 
     if (cert_def == NULL || cert == NULL)
     {
@@ -511,9 +518,11 @@ ATCA_STATUS atcacert_read_cert_size_ext(ATCADevice            device,
                                         const atcacert_def_t* cert_def,
                                         size_t*               cert_size)
 {
+    ATCA_STATUS ret = ATCACERT_E_SUCCESS;
+#if ATCACERT_COMPCERT_EN
     uint8_t buffer[75];
     size_t buflen = sizeof(buffer);
-    ATCA_STATUS ret = ATCACERT_E_SUCCESS;
+#endif
 
     if ((NULL == cert_def) || (NULL == cert_size))
     {

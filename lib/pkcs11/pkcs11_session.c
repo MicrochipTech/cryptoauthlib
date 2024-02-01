@@ -40,6 +40,7 @@
 #include "pkcs11_object.h"
 #include "pkcs11_os.h"
 #include "pkcs11_util.h"
+#include "pkcs11_key.h"
 #include "pkcs11_cert.h"
 
 /**
@@ -622,7 +623,8 @@ CK_RV pkcs11_session_logout(CK_SESSION_HANDLE hSession)
     }
 #endif
 
-    (void)pkcs11_cert_clear_cache_session(session_ctx);
+    (void)pkcs11_cert_clear_session_cache(session_ctx);
+    (void)pkcs11_key_clear_session_cache(session_ctx);
     rv = pkcs11_release_resource(lib_ctx, session_ctx, PKCS11_AUTH_OP_0);
 
     /* Wipe the io protection secret regardless if the above operatios succeeded */

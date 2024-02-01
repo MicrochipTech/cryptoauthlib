@@ -1,7 +1,20 @@
 
 # Microchip Cryptoauthlib Release Notes
 
-## Release v3.7.2 (01/19/2023)
+## Release v3.7.3 (01/31/2024)
+
+### New Features
+  - In PKCS11 module, added cache support to store `Key id` attribute of 
+    key type objects into stack memory and use it for subsequent accesses
+
+### Fixes
+  - Fixed calib_sha_hmac_finish api to set mode value correctly for 
+    ECC204, TA010 and ECC608 devices
+  - Fixed memory leak in MbedTLS configuration
+  - Fixed build errors when a project is generated with PKCS11 Component enabled in 
+    MPLAB Harmony Configurator (MHC)
+  
+## Release v3.7.2 (01/19/2024)
 
 ### New Features
   - See [talib/CHANGES.md] for details on talib module changes

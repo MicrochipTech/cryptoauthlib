@@ -69,6 +69,8 @@
 #define ATCA_ECCP256_PUBKEY_SIZE            (64u)
 #define ATCA_ECCP256_SIG_SIZE               (64u)
 
+#define ATCA_ECC_UNCOMPRESSED_TYPE          ((uint8_t)0x04)
+
 #define ATCA_ZONE_CONFIG                    ((uint8_t)0x00)
 #define ATCA_ZONE_OTP                       ((uint8_t)0x01)
 #define ATCA_ZONE_DATA                      ((uint8_t)0x02)

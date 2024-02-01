@@ -1131,6 +1131,7 @@ ATCA_STATUS atcacert_get_expire_date(const atcacert_def_t* cert_def,
     return status;
 }
 
+#if ATCACERT_COMPCERT_EN
 static void uint8_to_hex(uint8_t num, uint8_t* hex_str)
 {
     uint8_t nibble = (num >> 4) & 0x0Fu;
@@ -1154,7 +1155,6 @@ static void uint8_to_hex(uint8_t num, uint8_t* hex_str)
     }
 }
 
-#if ATCACERT_COMPCERT_EN
 ATCA_STATUS atcacert_set_signer_id(const atcacert_def_t* cert_def,
                                    uint8_t*              cert,
                                    size_t                cert_size,
@@ -1172,7 +1172,6 @@ ATCA_STATUS atcacert_set_signer_id(const atcacert_def_t* cert_def,
 
     return atcacert_set_cert_element(cert_def, &cert_def->std_cert_elements[STDCERT_SIGNER_ID], cert, cert_size, hex_str, 4);
 }
-#endif
 
 static ATCA_STATUS hex_to_uint8(const uint8_t hex_str[2], uint8_t* num)
 {
@@ -1215,7 +1214,6 @@ static ATCA_STATUS hex_to_uint8(const uint8_t hex_str[2], uint8_t* num)
     return ATCACERT_E_SUCCESS;
 }
 
-#if ATCACERT_COMPCERT_EN
 ATCA_STATUS atcacert_get_signer_id(const atcacert_def_t* cert_def,
                                    const uint8_t*        cert,
                                    size_t                cert_size,

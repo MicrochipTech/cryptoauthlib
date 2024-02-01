@@ -124,6 +124,10 @@
 #define ATCACERT_EN             (DEFAULT_ENABLED)
 #endif
 
+#ifndef ATCA_NO_HEAP
+#define ATCA_HEAP
+#endif 
+
 /**** AES command ****/
 
 /** \def ATCAB_AES

@@ -489,25 +489,30 @@ ATCA_STATUS calib_sha_hmac_update(ATCADevice device, atca_hmac_sha256_ctx_t* ctx
  */
 ATCA_STATUS calib_sha_hmac_finish(ATCADevice device, atca_hmac_sha256_ctx_t *ctx, uint8_t* digest, uint8_t target)
 {
-    uint8_t mode = SHA_MODE_HMAC_END;
+    uint8_t mode;
     uint16_t digest_size = 32;
+    ATCADeviceType dev_type = device->mIface.mIfaceCFG->devtype;
 
     if (device == NULL)
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
     }
 
-    if (ATECC608A == device->mIface.mIfaceCFG->devtype)
+    switch (dev_type)
     {
-        mode = SHA_MODE_608_HMAC_END;
-    }
-    if (atcab_is_ca2_device(device->mIface.mIfaceCFG->devtype))
-    {
-        mode = SHA_MODE_ECC204_HMAC_END;
-    }
-    if (target != SHA_MODE_TARGET_TEMPKEY)
-    {
-        return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid target received");
+        case ATECC608:
+            mode = SHA_MODE_608_HMAC_END;
+            break;
+#if ATCA_CA2_SUPPORT
+        case ECC204:
+        /* fallthrough */
+        case TA010:
+            mode = SHA_MODE_ECC204_HMAC_END;
+            break;
+#endif
+        default:
+            mode = SHA_MODE_HMAC_END;
+            break;
     }
 
     mode |= target;

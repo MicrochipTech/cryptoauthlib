@@ -106,7 +106,7 @@ CK_RV pkcs11_os_free_shared_ctx(void * pShared, size_t size)
 {
     ATCA_STATUS status = ATCA_GEN_FAIL;
 
-#if (defined(__linux__) && defined(ATCA_USE_SHARED_MUTEX)) || defined(__APPLE__)
+#if ((defined(__linux__) || defined(__APPLE__)) && defined(ATCA_USE_SHARED_MUTEX))
     status = hal_free_shared(pShared, size);
 #elif defined(ATCA_NO_HEAP)
     ((void)pShared);

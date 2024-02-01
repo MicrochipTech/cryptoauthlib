@@ -195,16 +195,17 @@ CK_RV pkcs11_object_free(pkcs11_object_ptr pObject)
         {
             if (PKCS11_OBJECT_FLAG_CERT_CACHE == (pObject->flags & PKCS11_OBJECT_FLAG_CERT_CACHE))
             {
-                (void)pkcs11_cert_clear_cache(pObject);
+                (void)pkcs11_cert_clear_object_cache(pObject);
                 pObject->flags &= PKCS11_OBJECT_FLAG_CERT_CACHE_COMPLEMENT;
             }
-            else if (PKCS11_OBJECT_FLAG_SENSITIVE == (pObject->flags & PKCS11_OBJECT_FLAG_SENSITIVE))
+            if (PKCS11_OBJECT_FLAG_KEY_CACHE == (pObject->flags & PKCS11_OBJECT_FLAG_KEY_CACHE))
+            {
+                (void)pkcs11_key_clear_object_cache(pObject);
+                pObject->flags &= PKCS11_OBJECT_FLAG_KEY_CACHE_COMPLEMENT;
+            }
+            if (PKCS11_OBJECT_FLAG_SENSITIVE == (pObject->flags & PKCS11_OBJECT_FLAG_SENSITIVE))
             {
                 (void)pkcs11_util_memset((CK_VOID_PTR)pObject->data, pObject->size, 0, pObject->size);
-            }
-            else
-            {
-                /* Added for MISRA Violation */
             }
         }
 

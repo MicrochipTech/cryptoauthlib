@@ -634,6 +634,45 @@ TEST(atca_cmd_basic_test, sha_hmac_tempkey)
 
     TEST_ASSERT_EQUAL_MEMORY(hmac_ref, hmac, ATCA_SHA256_DIGEST_SIZE);
 }
+
+TEST(atca_cmd_basic_test, sha_hmac_msg_dig_buf)
+{
+    ATCA_STATUS status = ATCA_GEN_FAIL;
+    uint8_t hmac[ATCA_SHA256_DIGEST_SIZE];
+    uint8_t data_input[] = {
+        0x6f, 0xb3, 0xec, 0x66, 0xf9, 0xeb, 0x07, 0x0a,
+        0x71, 0x9b, 0xeb, 0xbe, 0x70, 0x8b, 0x93, 0xa6,
+        0x5b, 0x20, 0x1b, 0x78, 0xe2, 0xd2, 0x6d, 0x8c,
+        0xcc, 0xdf, 0x1c, 0x33, 0xf7, 0x41, 0x90, 0x4a,
+        0x9a, 0xde, 0x64, 0x0f, 0xce, 0x00, 0x0c, 0x33,
+        0x4d, 0x04, 0xbb, 0x30, 0x79, 0x56, 0x83, 0xdc,
+        0xa0, 0x9d, 0xbf, 0x3e, 0x7e, 0x32, 0xae, 0xa1,
+        0x03, 0xd7, 0x60, 0xe8, 0x57, 0xa6, 0xd6, 0x21,
+        0x1c
+    };
+    const uint8_t hmac_ref[ATCA_SHA256_DIGEST_SIZE] = {
+        0x29, 0x7f, 0x22, 0xb8, 0xd2, 0x51, 0xb0, 0x63,
+        0xa7, 0xc0, 0x8d, 0xcf, 0x4d, 0xba, 0x0d, 0x1f,
+        0xb3, 0x5d, 0x32, 0xa3, 0xba, 0xab, 0x15, 0xac,
+        0xea, 0xf4, 0x39, 0x1c, 0x4a, 0xdb, 0x32, 0x77
+    };
+
+    uint16_t key_id;
+
+    status = atca_test_config_get_id(TEST_TYPE_HMAC, &key_id);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    test_assert_data_is_locked();
+
+    // Load key into message digest buffer
+    status = atcab_nonce_load(NONCE_MODE_TARGET_MSGDIGBUF, g_slot4_key, 32);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    //Calculating HMAC using the key in Message Digest Buffer
+    status = atcab_sha_hmac(data_input, sizeof(data_input), key_id, hmac, SHA_MODE_TARGET_MSGDIGBUF);
+
+    TEST_ASSERT_EQUAL_MEMORY(hmac_ref, hmac, ATCA_SHA256_DIGEST_SIZE);
+}
 #endif /* ATCA_ATECC608_SUPPORT */
 
 #endif /* TEST_ATCAB_SHA_HMAC_EN */
@@ -664,6 +703,7 @@ t_test_case_info sha_basic_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_hmac),            REGISTER_TEST_CONDITION(atca_cmd_basic_test, sha_hmac) },
 #ifdef ATCA_ATECC608_SUPPORT
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_hmac_tempkey),    atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_hmac_msg_dig_buf),atca_test_cond_ecc608 },
 #endif
 #endif /* TEST_ATCAB_SHA_HMAC_EN */
 

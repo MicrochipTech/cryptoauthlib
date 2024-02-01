@@ -1087,7 +1087,7 @@ CK_RV pkcs11_cert_x509_write(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, p
 }
 
 /* Called from auth session to clear the certificate */
-CK_RV pkcs11_cert_clear_cache_session(pkcs11_session_ctx_ptr session_ctx)
+CK_RV pkcs11_cert_clear_session_cache(pkcs11_session_ctx_ptr session_ctx)
 {
     CK_RV rv = CKR_GENERAL_ERROR;
 
@@ -1133,7 +1133,7 @@ CK_RV pkcs11_cert_clear_cache_session(pkcs11_session_ctx_ptr session_ctx)
 }
 
 /* Called to free certificate object */
-CK_RV pkcs11_cert_clear_cache(pkcs11_object_ptr pObject)
+CK_RV pkcs11_cert_clear_object_cache(pkcs11_object_ptr pObject)
 {
     CK_RV rv = CKR_GENERAL_ERROR;
 

@@ -75,6 +75,11 @@
 #define PKCS11_MAX_CERTS_CACHED         (@PKCS11_MAX_CERTS_CACHED@U)
 #endif
 
+/** Maximum number of Key ID's allowed to be cached */
+#ifndef PKCS11_MAX_KEYS_CACHED
+#define PKCS11_MAX_KEYS_CACHED          (@PKCS11_MAX_KEYS_CACHED@U)
+#endif
+
 /** Maximum number of cryptographic objects allowed to be cached */
 #ifndef PKCS11_MAX_OBJECTS_ALLOWED
 #define PKCS11_MAX_OBJECTS_ALLOWED      (@PKCS11_MAX_OBJECTS_ALLOWED@U)
