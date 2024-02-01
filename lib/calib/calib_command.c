@@ -704,7 +704,7 @@ void atCRC(size_t length, const uint8_t *data, uint8_t *crc_le)
 
     for (counter = 0; counter < length; counter++)
     {
-        for (shift_register = 0x01; shift_register > 0x00u; shift_register <<= 1)
+        for (shift_register = 0x01; shift_register > 0x00u && shift_register < 0xFF; shift_register <<= 1)
         {
             data_bit = ((data[counter] & shift_register) != 0u) ? 1u : 0u;
             crc_bit = (uint8_t)(crc_register >> 15);

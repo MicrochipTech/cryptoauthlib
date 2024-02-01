@@ -49,7 +49,8 @@
 #endif
 
 #ifndef U8
-#define U8 uint8_t
+// #define U8 uint8_t
+#define U8 uint16_t
 #endif
 
 #ifndef U16
