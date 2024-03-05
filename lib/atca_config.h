@@ -2,19 +2,19 @@
 #ifndef ATCA_CONFIG_H
 #define ATCA_CONFIG_H
 
+#include "Int8.h"
 #include "device.h"
 #include <stdint.h>
 #include <string.h>
 
-typedef uint16_t uint8_t;
-typedef int16_t int8_t;
 #define UINT8_MAX 0xFF
 #define ATCA_UINT16_HOST_TO_BE(x)  (x)
 #define ATCA_UINT32_HOST_TO_BE(x)  (x)
 #define ATCA_UINT64_HOST_TO_BE(x)  (x)
 #define ATCA_UINT16_HOST_TO_LE(x)  (((x >> 8) & 0xFF) | ((x << 8) & 0xFF))
-#define ATCA_UINT16_HOST_TO_LE(x)  (x)
 #define ATCA_UINT32_HOST_TO_LE(x)  (x)
+
+#define ATCA_UINT32_BE_TO_HOST(x)   (x)
 
 
 /* Included HALS */
@@ -33,7 +33,7 @@ typedef int16_t int8_t;
 /* Linked device support library */
 #define ATCA_TA_SUPPORT 0
 
-// #define ATCA_NO_PRAGMA_PACK
+#define ATCA_NO_PRAGMA_PACK
 
 /** Device Override - Library Assumes ATECC608B support in checks */
 /* #undef ATCA_ATECC608A_SUPPORT */
@@ -125,7 +125,7 @@ selected plus however additional slots one would like */
 /** Enables multipart buffer handling (generally for small memory model platforms) */
 #define MULTIPART_BUF_EN 0
 
-#define ATCA_NO_POLL
+//#define ATCA_NO_POLL
 
 /******************** Platform Configuration Section ***********************/
 

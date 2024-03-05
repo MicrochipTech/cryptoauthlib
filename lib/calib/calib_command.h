@@ -67,7 +67,8 @@ extern "C" {
 
 
 #ifdef ATCA_NO_PRAGMA_PACK
-typedef struct __attribute__ ((packed))
+typedef struct
+//typedef struct __attribute__ ((packed))
 #else
 #pragma pack( push, ATCAPacket, 2 )
 typedef struct

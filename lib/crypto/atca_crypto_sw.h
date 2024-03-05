@@ -71,7 +71,7 @@ ATCA_STATUS atcac_sw_sha1_finish(struct atcac_sha1_ctx* ctx, uint8_t digest[ATCA
 #if ATCA_CRYPTO_SHA2_EN
 typedef struct atcac_sha2_256_ctx
 {
-    uint32_t pad[48];
+    uint32_t pad[80];
 } atcac_sha2_256_ctx_t;
 #else
 struct atcac_sha2_256_ctx;
