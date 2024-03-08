@@ -2,6 +2,7 @@ var a00236 =
 [
     [ "ATCA_CHECK_INVALID_MSG", "a00236.html#a2593f45dcf42602b3c334dccb9c52395", null ],
     [ "ATCA_SHA_SUPPORT", "a00236.html#afe8da91949841c137ea573c327bff267", null ],
+    [ "ATCA_UNUSED_VAR_CHECK", "a00236.html#a987213394bc9a51f05c4a5f1b1de69f8", null ],
     [ "ATCA_USE_ATCAB_FUNCTIONS", "a00236.html#ab97062ef8dcf4e46b403d9c22aeb22c9", null ],
     [ "ATCAB_AES_GFM_EN", "a00236.html#a31c9145169cb4a4e3be509ad04a40b04", null ],
     [ "ATCAB_GENKEY_MAC_EN", "a00236.html#a85d4ccd2d66f9b2fd10c7a2e408c4737", null ],

@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.3</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -472,9 +472,8 @@ typedef struct ATCA_PACKED <a class="el" href="a01596.html">atecc608_config_s</a
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga884790e08be94431e1fbe92bf6106e06"><td class="memItemLeft" align="right" valign="top"><a id="ga884790e08be94431e1fbe92bf6106e06" name="ga884790e08be94431e1fbe92bf6106e06"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>calib_wakeup_i2c</b> (<a class="el" href="a01472.html">ATCADevice</a> device)</td></tr>
-<tr class="memdesc:ga884790e08be94431e1fbe92bf6106e06"><td class="mdescLeft">&#160;</td><td class="mdescRight">basic API methods are all prefixed with atcab_ (CryptoAuthLib Basic) the fundamental premise of the basic API is it is based on a single interface instance and that instance is global, so all basic API commands assume that one global device is the one to operate on. <br /></td></tr>
+<tr class="memitem:ga884790e08be94431e1fbe92bf6106e06"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01408.html#ga884790e08be94431e1fbe92bf6106e06">calib_wakeup_i2c</a> (<a class="el" href="a01472.html">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:ga884790e08be94431e1fbe92bf6106e06"><td class="mdescLeft">&#160;</td><td class="mdescRight">basic API methods are all prefixed with atcab_ (CryptoAuthLib Basic) the fundamental premise of the basic API is it is based on a single interface instance and that instance is global, so all basic API commands assume that one global device is the one to operate on.  <br /></td></tr>
 <tr class="separator:ga884790e08be94431e1fbe92bf6106e06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafbc037d57a4cc4fec6a2f291736170cb"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01408.html#gafbc037d57a4cc4fec6a2f291736170cb">calib_wakeup</a> (<a class="el" href="a01472.html">ATCADevice</a> device)</td></tr>
 <tr class="memdesc:gafbc037d57a4cc4fec6a2f291736170cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">wakeup the CryptoAuth device  <br /></td></tr>
@@ -1162,6 +1161,29 @@ ATCADeviceType&#160;</td><td class="memItemRight" valign="bottom"><b>calib_get_d
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="ga884790e08be94431e1fbe92bf6106e06" name="ga884790e08be94431e1fbe92bf6106e06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga884790e08be94431e1fbe92bf6106e06">&#9670;&#160;</a></span>calib_wakeup_i2c()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS calib_wakeup_i2c </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01472.html">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>basic API methods are all prefixed with atcab_ (CryptoAuthLib Basic) the fundamental premise of the basic API is it is based on a single interface instance and that instance is global, so all basic API commands assume that one global device is the one to operate on. </p>
+<p>Drive the SDA pin low for wake up Set i2c device addr as 0U to drive SDA low</p>
+<p>I2C general call should not interpreted as an addr write</p>
+<p>Set the i2c device address</p>
 
 </div>
 </div>
