@@ -43,8 +43,8 @@
 #define ATCA_UINT32_HOST_TO_LE(x)  (x)
 #define ATCA_UINT16_HOST_TO_BE(x)  ((((x) & 0x00FF) << 8) | (((x) & 0xFF00) >> 8))
 #define ATCA_UINT16_BE_TO_HOST(x)  ((((x) & 0x00FF) << 8) | (((x) & 0xFF00) >> 8))
-#define ATCA_UINT32_HOST_TO_BE(x)  ((((x) & 0x000000FFU) << 24U) | (((x) & 0x0000FF00U) << 8U) | (((x) & 0x00FF0000U) >> 8U) | (((x) & 0xFF000000U) >> 24U))
-#define ATCA_UINT32_BE_TO_HOST(x)  ((((x) & 0x000000FFU) << 24U) | (((x) & 0x0000FF00U) << 8U) | (((x) & 0x00FF0000U) >> 8U) | (((x) & 0xFF000000U) >> 24U))
+#define ATCA_UINT32_HOST_TO_BE(x)  ((((x) & 0x000000FFUL) << 24U) | (((x) & 0x0000FF00UL) << 8U) | (((x) & 0x00FF0000UL) >> 8U) | (((x) & 0xFF000000UL) >> 24U))
+#define ATCA_UINT32_BE_TO_HOST(x)  ((((x) & 0x000000FFUL) << 24U) | (((x) & 0x0000FF00UL) << 8U) | (((x) & 0x00FF0000UL) >> 8U) | (((x) & 0xFF000000UL) >> 24U))
 #define ATCA_UINT64_HOST_TO_BE(x)  ((uint64_t)ATCA_UINT32_HOST_TO_BE((uint32_t)(x)) << 32 + (uint64_t)ATCA_UINT32_HOST_TO_BE((uint32_t)((x) >> 32)))
 #define ATCA_UINT64_BE_TO_HOST(x)  ((uint64_t)ATCA_UINT32_BE_TO_HOST((uint32_t)(x)) << 32 + (uint64_t)ATCA_UINT32_BE_TO_HOST((uint32_t)((x) >> 32)))
 #define SHARED_LIB_EXPORT
@@ -197,7 +197,7 @@
 
 #elif defined __ICCARM__
 /* IAR ARM ------------------------------------------- */
-#pragma diag_suppress=Pe161     //Unknown pragma warning
+#pragma diag_suppress=Pe161 //Unknown pragma warning
 
 #include <intrinsics.h>
 #if __LITTLE_ENDIAN__ == 0
@@ -254,6 +254,15 @@
 #define ATCA_PACKED
 #else
 #define ATCA_PACKED     __attribute__ ((packed))
+#endif
+
+/** \def UNUSED_VAR
+ * Enables removal of compiler warning due to unused variables
+ */
+#ifdef ATCA_UNUSED_VAR_CHECK
+#define UNUSED_VAR(x)  ((void)(x))
+#else
+#define UNUSED_VAR(x)
 #endif
 
 #endif /* ATCA_COMPILER_H_ */

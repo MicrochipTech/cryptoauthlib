@@ -319,9 +319,9 @@ t_test_case_info aes_ctr_basic_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ctr_decrypt_block),            atca_test_cond_ecc608 },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ctr_increment),                atca_test_cond_ecc608 },
 #endif
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ctr_encrypt_block_simple),     atca_test_cond_ta100 },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ctr_decrypt_block_simple),     atca_test_cond_ta100 },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ctr_increment_simple),         atca_test_cond_ta100 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ctr_encrypt_block_simple),     atca_test_cond_ta    },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ctr_decrypt_block_simple),     atca_test_cond_ta    },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ctr_increment_simple),         atca_test_cond_ta    },
 #endif /* TEST_ATCAB_AES_CTR_EN */
     { (fp_test_case)NULL, NULL },             /* Array Termination element*/
 };

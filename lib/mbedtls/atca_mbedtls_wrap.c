@@ -1366,7 +1366,7 @@ ATCA_STATUS atcac_parse_der(struct atcac_x509_ctx** cert, cal_buffer* der)
         /* coverity[misra_c_2012_rule_11_3_violation:FALSE] The mbetls x509 struct pointer is made to point the atcac_x509_ctx void ptr*/
         /*The memory allocated will be traversed using the void ptr in atcac_x509_ctx and is the only member*/
         /* Our library uses structure of type atcac_x509_ctx to be mapped to third party specific certificate structre and this cannot be changed*/
-        *cert = xcert;
+        *cert = (struct atcac_x509_ctx*)xcert;
         status = ATCA_SUCCESS;
 #endif
     }
@@ -1555,6 +1555,8 @@ ATCA_STATUS atcac_get_issue_date(const struct atcac_x509_ctx* cert, cal_buffer* 
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
+    UNUSED_VAR(fmt);
+
     if (NULL != cert && NULL != not_before)
     {
         /* coverity[cert_exp40_c_violation:FALSE] mbedtls ssl api requires non const qualifier in lower apis*/
@@ -1573,6 +1575,8 @@ ATCA_STATUS atcac_get_issue_date(const struct atcac_x509_ctx* cert, cal_buffer* 
 ATCA_STATUS atcac_get_expire_date(const struct atcac_x509_ctx* cert, cal_buffer* not_after, uint8_t* fmt)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    UNUSED_VAR(fmt);
 
     if (NULL != cert && NULL != not_after)
     {

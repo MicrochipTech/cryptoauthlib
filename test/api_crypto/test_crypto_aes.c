@@ -51,13 +51,13 @@ TEST(atcac_aes, aes128_gcm_nist)
     uint8_t ciphertext[GCM_TEST_VECTORS_DATA_SIZE_MAX];
     uint8_t plaintext[GCM_TEST_VECTORS_DATA_SIZE_MAX];
 
-#ifndef ATCA_WOLFSSL
     size_t ct_size;
     size_t pt_size;
-#endif
+
     uint8_t tag[AES_DATA_SIZE];
     bool is_verified;
     struct atcac_aes_gcm_ctx * ctx;
+
 #if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
     ctx = atcac_aes_gcm_ctx_new();
 #else
@@ -73,14 +73,10 @@ TEST(atcac_aes, aes128_gcm_nist)
         }
 
         //////////////////////////////////////   Encryption /////////////////////////////////////////
-        status = atcac_aes_gcm_encrypt_start(ctx, gcm_test_cases[test_index].key, 16, gcm_test_cases[test_index].iv, (uint8_t)gcm_test_cases[test_index].iv_size);
+        status =
+            atcac_aes_gcm_encrypt_start(ctx, gcm_test_cases[test_index].key, 16, gcm_test_cases[test_index].iv, (uint8_t)gcm_test_cases[test_index].iv_size);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-#ifdef ATCA_WOLFSSL
-        status = atcac_aes_gcm_encrypt(ctx, gcm_test_cases[test_index].plaintext, gcm_test_cases[test_index].text_size, ciphertext,
-                                       tag, sizeof(tag), gcm_test_cases[test_index].aad, gcm_test_cases[test_index].aad_size);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-#else
         //Add aad to gcm
         status = atcac_aes_gcm_aad_update(ctx, gcm_test_cases[test_index].aad, gcm_test_cases[test_index].aad_size);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
@@ -89,28 +85,27 @@ TEST(atcac_aes, aes128_gcm_nist)
         ct_size = GCM_TEST_VECTORS_DATA_SIZE_MAX;
         status = atcac_aes_gcm_encrypt_update(ctx, gcm_test_cases[test_index].plaintext, gcm_test_cases[test_index].text_size, ciphertext, &ct_size);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-#endif
+
         //Verify ciphertext with expected data
         if (gcm_test_cases[test_index].text_size > 0)
         {
             TEST_ASSERT_EQUAL_MEMORY(gcm_test_cases[test_index].ciphertext, ciphertext, gcm_test_cases[test_index].text_size);
         }
 
-#ifndef ATCA_WOLFSSL
         //Calculate authentication tag
         status = atcac_aes_gcm_encrypt_finish(ctx, tag, sizeof(tag));
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-#endif
+
 
         //Verify calculated tag
         TEST_ASSERT_EQUAL_MEMORY(gcm_test_cases[test_index].tag, tag, sizeof(tag));
 
-#ifndef ATCA_WOLFSSL
         // Repeat, but skip unused calls
         if (gcm_test_cases[test_index].aad_size == 0 || gcm_test_cases[test_index].text_size == 0)
         {
             //Initialize gcm ctx with IV
-            status = atcac_aes_gcm_encrypt_start(ctx, gcm_test_cases[test_index].key, 16, gcm_test_cases[test_index].iv, (uint8_t)gcm_test_cases[test_index].iv_size);
+            status = atcac_aes_gcm_encrypt_start(ctx, gcm_test_cases[test_index].key, 16, gcm_test_cases[test_index].iv,
+                                                 (uint8_t)gcm_test_cases[test_index].iv_size);
             TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
             //Add aad to gcm
@@ -133,19 +128,12 @@ TEST(atcac_aes, aes128_gcm_nist)
             //Verify calculated tag
             TEST_ASSERT_EQUAL_MEMORY(gcm_test_cases[test_index].tag, tag, sizeof(tag));
         }
-#endif
-
 
         //////////////////////////////////////   Decryption /////////////////////////////////////////
         //Initialize gcm ctx with IV
-        status = atcac_aes_gcm_decrypt_start(ctx, gcm_test_cases[test_index].key, 16, gcm_test_cases[test_index].iv, (uint8_t)gcm_test_cases[test_index].iv_size);
+        status =
+            atcac_aes_gcm_decrypt_start(ctx, gcm_test_cases[test_index].key, 16, gcm_test_cases[test_index].iv, (uint8_t)gcm_test_cases[test_index].iv_size);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-#ifdef ATCA_WOLFSSL
-        status = atcac_aes_gcm_decrypt(ctx, gcm_test_cases[test_index].ciphertext, gcm_test_cases[test_index].text_size, plaintext, tag, sizeof(tag),
-                                       gcm_test_cases[test_index].aad, gcm_test_cases[test_index].aad_size, &is_verified);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-#else
 
         //Add aad to gcm
         status = atcac_aes_gcm_aad_update(ctx, gcm_test_cases[test_index].aad, gcm_test_cases[test_index].aad_size);
@@ -155,25 +143,24 @@ TEST(atcac_aes, aes128_gcm_nist)
         pt_size = GCM_TEST_VECTORS_DATA_SIZE_MAX;
         status = atcac_aes_gcm_decrypt_update(ctx, gcm_test_cases[test_index].ciphertext, gcm_test_cases[test_index].text_size, plaintext, &pt_size);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-#endif
+
         //Verify plaintext with expected data
         if (gcm_test_cases[test_index].text_size > 0)
         {
             TEST_ASSERT_EQUAL_MEMORY(plaintext, gcm_test_cases[test_index].plaintext, gcm_test_cases[test_index].text_size);
         }
 
-#ifndef ATCA_WOLFSSL
         status = atcac_aes_gcm_decrypt_finish(ctx, gcm_test_cases[test_index].tag, sizeof(tag), &is_verified);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-#endif
+
         TEST_ASSERT(is_verified);
 
-#ifndef ATCA_WOLFSSL
         // Repeat, but skip unused calls
         if (gcm_test_cases[test_index].aad_size == 0 || gcm_test_cases[test_index].text_size == 0)
         {
             //Initialize gcm ctx with IV
-            status = atcac_aes_gcm_decrypt_start(ctx, gcm_test_cases[test_index].key, 16, gcm_test_cases[test_index].iv, (uint8_t)gcm_test_cases[test_index].iv_size);
+            status = atcac_aes_gcm_decrypt_start(ctx, gcm_test_cases[test_index].key, 16, gcm_test_cases[test_index].iv,
+                                                 (uint8_t)gcm_test_cases[test_index].iv_size);
             TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
             //Add aad to gcm
@@ -195,7 +182,6 @@ TEST(atcac_aes, aes128_gcm_nist)
             TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
             TEST_ASSERT(is_verified);
         }
-#endif
     }
 
 #if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)

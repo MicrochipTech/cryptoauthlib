@@ -28,7 +28,7 @@
 
 #include "atca_crypto_sw.h"
 
-#if ATCAC_AES_GCM_EN && ATCAC_AES_GCM_UPDATE_EN
+#if ATCAC_AES_GCM_EN
 
 ATCA_STATUS atcac_aes_gcm_encrypt(
     struct atcac_aes_gcm_ctx* ctx,

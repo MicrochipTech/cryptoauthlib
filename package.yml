@@ -1,0 +1,12 @@
+package:
+  format-version: "1.0.0"
+  name: "cryptoauthlib"
+  type: "application"
+  status: "production"
+  required: true
+  version: "v3.7.4"
+
+  dependencies:
+    - name: "csp"
+      type: "package"
+      version: "v3.14.0"

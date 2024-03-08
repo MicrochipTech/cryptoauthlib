@@ -695,7 +695,7 @@ t_test_case_info sha_basic_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_context),         atca_test_cond_ecc608 },
 #endif
 #if TALIB_SHA_CONTEXT_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_context_simple),  atca_test_cond_ta100 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, sha_context_simple),  atca_test_cond_ta    },
 #endif
 #endif /* TEST_ATCAB_SHA_EN */
 

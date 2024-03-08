@@ -78,7 +78,7 @@ typedef struct cal_buffer_s
         _Pragma("coverity compliance deviate 'MISRA C-2012 Rule 10.8'") \
         _Pragma("coverity compliance deviate 'MISRA C-2012 Rule 11.8'") \
         (size_t)s, (uint8_t*)b }
-    #endif
+    #endif 
 #else
     #if MULTIPART_BUF_EN
     #define CAL_BUF_INIT(s, b)           { (size_t)(s), (uint8_t*)(b), NULL }
@@ -101,6 +101,7 @@ ATCA_STATUS cal_buf_set(cal_buffer * dst, size_t dst_offset, uint8_t value, size
 
 ATCA_STATUS cal_buf_set_used(cal_buffer * buf, size_t used);
 size_t      cal_buf_get_used(cal_buffer * buf);
+cal_buffer cal_buf_init_const_ptr(size_t len,const uint8_t* message);
 
 #ifdef ATCA_PRINTF
 void cal_buf_print(cal_buffer * buf);

@@ -435,13 +435,17 @@ TEST(atca_cmd_basic_test, aes_gcm_encrypt_cavp_vectors)
     uint8_t line[255];
     char *str, *name_value;
     uint8_t key[128], iv[128], pt[128], ct[128], aad[128];
-    size_t key_size, iv_size;
-    uint32_t text_size, aad_size;
+    size_t key_size = 0;
+    size_t iv_size = 0;
+    uint32_t text_size =0; 
+    uint32_t aad_size=0;
     uint16_t key_id = ATCA_TEMPKEY_KEYID;
     uint8_t aes_key_block = 0;
     uint8_t cal_tag[AES_DATA_SIZE];
     size_t i;
+#ifdef ATCA_PRINTF     
     uint16_t test_count = 0;
+#endif      
     atca_aes_gcm_ctx_t ctx;
 
     check_config_aes_enable();
@@ -458,13 +462,13 @@ TEST(atca_cmd_basic_test, aes_gcm_encrypt_cavp_vectors)
 
     do
     {
-        if (NULL == (str = fgets(line, sizeof(line), req_file)))
+        if (NULL == (str = fgets((char *)line, sizeof(line), req_file)))
         {
             continue;
         }
         else
         {
-            size_t ln = strlen(line);
+            size_t ln = strlen((const char *)line);
             if (ln > 0 && line[ln - 2] == '\r')
             {
                 line[ln - 1] = 0;
@@ -474,25 +478,25 @@ TEST(atca_cmd_basic_test, aes_gcm_encrypt_cavp_vectors)
         fputs(str, rsp_file);
         if (!memcmp(str, "Key = ", strlen("Key = ")))
         {
-            name_value = &line[strlen("Key = ")];
+            name_value = (char *)&line[strlen("Key = ")];
             key_size = strlen(name_value) / 2;
             hex_to_data(name_value, key, key_size);
         }
         else if (!memcmp(str, "IV = ", strlen("IV = ")))
         {
-            name_value = &line[strlen("IV = ")];
+            name_value = (char *)&line[strlen("IV = ")];
             iv_size = strlen(name_value) / 2;
             hex_to_data(name_value, iv, iv_size);
         }
         else if (!memcmp(str, "PT = ", strlen("PT = ")))
         {
-            name_value = &line[strlen("PT = ")];
+            name_value = (char *)&line[strlen("PT = ")];
             text_size = (uint32_t)strlen(name_value) / 2;
             hex_to_data(name_value, pt, text_size);
         }
         else if (!memcmp(str, "AAD = ", strlen("AAD = ")))
         {
-            name_value = &line[strlen("AAD = ")];
+            name_value = (char *)&line[strlen("AAD = ")];
             aad_size = (uint32_t)strlen(name_value) / 2;
             hex_to_data(name_value, aad, aad_size);
 
@@ -560,7 +564,9 @@ TEST(atca_cmd_basic_test, aes_gcm_decrypt_cavp_vectors)
     uint8_t aes_key_block = 0;
     size_t i;
     bool is_verified;
+#ifdef ATCA_PRINTF    
     uint16_t test_count = 0;
+#endif    
     atca_aes_gcm_ctx_t ctx;
 
     check_config_aes_enable();
@@ -577,13 +583,13 @@ TEST(atca_cmd_basic_test, aes_gcm_decrypt_cavp_vectors)
 
     do
     {
-        if (NULL == (str = fgets(line, sizeof(line), req_file)))
+        if (NULL == (str = fgets((char *)line, sizeof(line), req_file)))
         {
             continue;
         }
         else
         {
-            size_t ln = strlen(line);
+            size_t ln = strlen((char *)line);
             if (ln > 0 && line[ln - 2] == '\r')
             {
                 line[ln - 1] = 0;
@@ -593,31 +599,31 @@ TEST(atca_cmd_basic_test, aes_gcm_decrypt_cavp_vectors)
         fputs(str, rsp_file);
         if (!memcmp(str, "Key = ", strlen("Key = ")))
         {
-            name_value = &line[strlen("Key = ")];
+            name_value = (char *)&line[strlen("Key = ")];
             key_size = strlen(name_value) / 2;
             hex_to_data(name_value, key, key_size);
         }
         else if (!memcmp(str, "IV = ", strlen("IV = ")))
         {
-            name_value = &line[strlen("IV = ")];
+            name_value = (char *)&line[strlen("IV = ")];
             iv_size = strlen(name_value) / 2;
             hex_to_data(name_value, iv, iv_size);
         }
         else if (!memcmp(str, "CT = ", strlen("CT = ")))
         {
-            name_value = &line[strlen("CT = ")];
+            name_value = (char *)&line[strlen("CT = ")];
             text_size = (uint32_t)strlen(name_value) / 2;
             hex_to_data(name_value, ct, text_size);
         }
         else if (!memcmp(str, "AAD = ", strlen("AAD = ")))
         {
-            name_value = &line[strlen("AAD = ")];
+            name_value = (char *)&line[strlen("AAD = ")];
             aad_size = (uint32_t)strlen(name_value) / 2;
             hex_to_data(name_value, aad, aad_size);
         }
         else if (!memcmp(str, "Tag = ", strlen("Tag = ")))
         {
-            name_value = &line[strlen("Tag = ")];
+            name_value = (char *)&line[strlen("Tag = ")];
             tag_size = strlen(name_value) / 2;
             hex_to_data(name_value, tag, tag_size);
 

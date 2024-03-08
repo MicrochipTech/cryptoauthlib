@@ -119,7 +119,11 @@ CK_RV pkcs11_digest(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDa
 
     if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
     {
-        rv = pkcs11_util_convert_rv(atcac_sw_sha2_256(pData, ulDataLen, pDigest));
+        rv = pkcs11_util_convert_rv(atcac_sw_sha2_256_update(&pSession->active_mech_data.sha256, pData, ulDataLen));
+        if (CKR_OK == rv)
+        {
+            rv = pkcs11_util_convert_rv(atcac_sw_sha2_256_finish(&pSession->active_mech_data.sha256, pDigest));
+        }
         pSession->active_mech = CKM_VENDOR_DEFINED;
         (void)pkcs11_unlock_context(pLibCtx);
     }

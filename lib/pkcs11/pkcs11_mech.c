@@ -226,7 +226,7 @@ static pcks11_mech_table_e pkcs11_mech_list_ecc608[] = {
 
 #if ATCA_TA_SUPPORT
 /* CK_MECHANISM_TYPE, MinKeySize, MaxKeySize, Flags */
-static pcks11_mech_table_e pkcs11_mech_list_ta100[] = {
+static pcks11_mech_table_e pkcs11_mech_list_ta[] = {
     //CKM_DH_PKCS_KEY_PAIR_GEN,
     //CKM_DH_PKCS_DERIVE,
     { CKM_SHA256,                                                                                                { 256, 256, CKF_HW | CKF_DIGEST                                                              } },
@@ -373,30 +373,31 @@ CK_RV pkcs11_mech_get_list(CK_SLOT_ID slotID, CK_MECHANISM_TYPE_PTR pMechanismLi
         return CKR_SLOT_ID_INVALID;
     }
 
-    switch (slot_ctx->interface_config.devtype)
+    if (ATECC508A == slot_ctx->interface_config.devtype)
     {
 #ifdef ATCA_ATECC508A_SUPPORT
-    case ATECC508A:
         mech_cnt = (CK_ULONG)(TABLE_SIZE(pkcs11_mech_list_ecc508));
         mech_list_ptr = pkcs11_mech_list_ecc508;
-        break;
 #endif
+    }
+    else if (ATECC608 == slot_ctx->interface_config.devtype)
+    {
 #ifdef ATCA_ATECC608_SUPPORT
-    case ATECC608:
         mech_cnt = (CK_ULONG)(TABLE_SIZE(pkcs11_mech_list_ecc608));
         mech_list_ptr = pkcs11_mech_list_ecc608;
-        break;
 #endif
+    }
+    else if (atcab_is_ta_device(slot_ctx->interface_config.devtype))
+    {
 #if ATCA_TA_SUPPORT
-    case TA100:
-        mech_cnt = (CK_ULONG)(TABLE_SIZE(pkcs11_mech_list_ta100));
-        mech_list_ptr = pkcs11_mech_list_ta100;
-        break;
+        mech_cnt = (CK_ULONG)(TABLE_SIZE(pkcs11_mech_list_ta));
+        mech_list_ptr = pkcs11_mech_list_ta;
 #endif
-    default:
+    }
+    else
+    {
         mech_cnt = 0;
         mech_list_ptr = NULL;
-        break;
     }
 
     /* Ref PKCS11 Sec 5.5 - C_GetMechanismList Requirement #2 */
@@ -443,26 +444,27 @@ CK_RV pkcs_mech_get_info(CK_SLOT_ID slotID, CK_MECHANISM_TYPE type, CK_MECHANISM
         return CKR_SLOT_ID_INVALID;
     }
 
-    switch (slot_ctx->interface_config.devtype)
+    if (ATECC508A == slot_ctx->interface_config.devtype)
     {
 #ifdef ATCA_ATECC508A_SUPPORT
-    case ATECC508A:
         mech_info_ptr = pkcs11_mech_find_info(pkcs11_mech_list_ecc508, (CK_ULONG)(TABLE_SIZE(pkcs11_mech_list_ecc508)), type);
-        break;
 #endif
+    }
+    else if (ATECC608 == slot_ctx->interface_config.devtype)
+    {
 #ifdef ATCA_ATECC608_SUPPORT
-    case ATECC608:
         mech_info_ptr = pkcs11_mech_find_info(pkcs11_mech_list_ecc608, (CK_ULONG)(TABLE_SIZE(pkcs11_mech_list_ecc608)), type);
-        break;
 #endif
+    }
+    else if (atcab_is_ta_device(slot_ctx->interface_config.devtype))
+    {
 #if ATCA_TA_SUPPORT
-    case TA100:
-        mech_info_ptr = pkcs11_mech_find_info(pkcs11_mech_list_ta100, (CK_ULONG)(TABLE_SIZE(pkcs11_mech_list_ta100)), type);
-        break;
+        mech_info_ptr = pkcs11_mech_find_info(pkcs11_mech_list_ta, (CK_ULONG)(TABLE_SIZE(pkcs11_mech_list_ta)), type);
 #endif
-    default:
+    }
+    else
+    {
         mech_info_ptr = NULL;
-        break;
     }
 
     if (NULL == mech_info_ptr)

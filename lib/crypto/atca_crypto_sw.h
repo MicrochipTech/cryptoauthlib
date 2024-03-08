@@ -143,7 +143,6 @@ ATCA_STATUS atcac_aes_gcm_decrypt(struct atcac_aes_gcm_ctx* ctx, const uint8_t* 
                                   uint8_t* plaintext, const uint8_t* tag, size_t tag_len, const uint8_t* aad,
                                   const size_t aad_len, bool* is_verified);
 
-#if ATCAC_AES_GCM_UPDATE_EN
 ATCA_STATUS atcac_aes_gcm_aad_update(struct atcac_aes_gcm_ctx* ctx, const uint8_t* aad, const size_t aad_len);
 ATCA_STATUS atcac_aes_gcm_encrypt_update(struct atcac_aes_gcm_ctx* ctx, const uint8_t* plaintext, const size_t pt_len,
                                          uint8_t* ciphertext, size_t* ct_len);
@@ -152,7 +151,6 @@ ATCA_STATUS atcac_aes_gcm_decrypt_update(struct atcac_aes_gcm_ctx* ctx, const ui
                                          uint8_t* plaintext, size_t* pt_len);
 ATCA_STATUS atcac_aes_gcm_decrypt_finish(struct atcac_aes_gcm_ctx* ctx, const uint8_t* tag, size_t tag_len,
                                          bool* is_verified);
-#endif /* ATCAC_AES_GCM_UPDATE_EN */
 
 #endif /* ATCAC_AES_GCM_EN */
 

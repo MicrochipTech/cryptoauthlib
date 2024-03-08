@@ -19,12 +19,14 @@ set(WOLFSSL_LIB_SRC ${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/aes.c
                 ${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/hash.c
                 ${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/hmac.c
                 ${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/integer.c
+				${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/kdf.c
                 ${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/memory.c
                 ${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/pwdbased.c
                 ${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/random.c
                 ${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/rsa.c
                 ${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/sha.c
                 ${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/sha256.c
+				${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/sp_int.c
                 ${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/tfm.c
                 ${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/wc_encrypt.c
                 ${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/wc_port.c

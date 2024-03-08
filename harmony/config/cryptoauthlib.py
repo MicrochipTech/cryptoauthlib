@@ -38,6 +38,7 @@ _CA_PATHS = ['atcacert/*', 'calib/*', 'host/*']
 _TA_PATHS = ['atcacert/*', 'talib/*']
 _SHA206_PATHS = ['api_206a/*']
 _EXCL_FILES = ['atca_utils_sizes.c']
+_WOLFCRYPTO_FILES = ['wolfssl/*']
 
 def CALSecFileUpdate(symbol, event):
     symObj = event['symbol']
@@ -246,8 +247,7 @@ def onAttachmentConnected(source, target):
         calEnableWolfCrypto = srcComponent.getSymbolByID('CAL_ENABLE_WOLFCRYPTO')
         calEnableWolfCrypto.setValue(True)
 
-        WolfCrypto = srcComponent.getSymbolByID('CAL_FILE_SRC_WOLFSSL_WRAPPER')
-        WolfCrypto.setEnabled(True)
+        updateFileEnable(srcComponent, _WOLFCRYPTO_FILES, True)
 
         calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA10x_AES_AUTH')
         calTaEnableAesAuth.setValue(True)
@@ -296,8 +296,7 @@ def onAttachmentDisconnected(source, target):
         WolfCrypto = srcComponent.getSymbolByID('CAL_ENABLE_WOLFCRYPTO')
         WolfCrypto.setValue(False)
 
-        WolfCrypto = srcComponent.getSymbolByID('CAL_FILE_SRC_WOLFSSL_WRAPPER')
-        WolfCrypto.setEnabled(False)
+        updateFileEnable(srcComponent, _WOLFCRYPTO_FILES, False)
 
         calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA10x_AES_AUTH')
         calTaEnableAesAuth.setValue(False)
@@ -343,6 +342,10 @@ def instantiateComponent(calComponent):
     for search_path in _SHA206_PATHS:
         AddFilesDir(calComponent, 'app', search_path, 'library/cryptoauthlib/app',
             'config/{}/library/cryptoauthlib/app'.format(configName), enable=False)
+
+    for search_path in _WOLFCRYPTO_FILES:
+        AddFilesDir(calComponent, 'lib', search_path, 'library/cryptoauthlib',
+            'config/{}/library/cryptoauthlib'.format(configName), enable=False)
 
     # Add individual files
     for hal_file in _HAL_FILES:
@@ -843,15 +846,6 @@ def instantiateComponent(calComponent):
     calEnableWolfCrypto = calComponent.createBooleanSymbol('CAL_ENABLE_WOLFCRYPTO', None)
     calEnableWolfCrypto.setValue(False)
     calEnableWolfCrypto.setVisible(False)
-
-    calLibWolfSSLSrcFile = calComponent.createFileSymbol("CAL_FILE_SRC_WOLFSSL_WRAPPER", None)
-    calLibWolfSSLSrcFile.setSourcePath("lib/wolfssl/atca_wolfssl_interface.c")
-    calLibWolfSSLSrcFile.setOutputName("atca_wolfssl_interface.c")
-    calLibWolfSSLSrcFile.setDestPath("library/cryptoauthlib/wolfssl")
-    calLibWolfSSLSrcFile.setProjectPath("config/" + configName + "/library/cryptoauthlib/wolfssl/")
-    calLibWolfSSLSrcFile.setType('SOURCE')
-    calLibWolfSSLSrcFile.setEnabled(False)
-    calLibWolfSSLSrcFile.setDependencies(CALSecFileUpdate, ["CAL_NON_SECURE"])
 
     # Add HAL Drivers
     calLibI2cHalSrcFile = calComponent.createFileSymbol("CAL_FILE_SRC_HAL_I2C", None)

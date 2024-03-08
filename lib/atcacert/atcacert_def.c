@@ -734,6 +734,7 @@ ATCA_STATUS atcacert_get_subject(const atcacert_def_t* cert_def,
             status = (NULL != cert_def->parsed) ? atcac_get_subject(*cert_def->parsed, cert_subj_buf) : ATCACERT_E_ERROR;
         }
 #else
+        UNUSED_VAR(cert_subj_buf);
         status = ATCA_UNIMPLEMENTED;
 #endif
     }
@@ -746,6 +747,9 @@ ATCA_STATUS atcacert_get_subj_public_key(const atcacert_def_t* cert_def,
                                          uint8_t               subj_public_key[64])
 {
     ATCA_STATUS status = ATCACERT_E_BAD_PARAMS;
+
+    UNUSED_VAR(cert);
+    UNUSED_VAR(cert_size);
 
     if (NULL != cert_def && NULL != subj_public_key)
     {
@@ -777,6 +781,9 @@ ATCA_STATUS atcacert_get_subj_key_id(const atcacert_def_t* cert_def,
 {
     ATCA_STATUS status = ATCACERT_E_BAD_PARAMS;
 
+    UNUSED_VAR(cert);
+    UNUSED_VAR(cert_size);
+
     if (NULL != cert_def && NULL != subj_key_id)
     {
 #if ATCACERT_INTEGRATION_EN
@@ -806,6 +813,9 @@ ATCA_STATUS atcacert_get_issuer(const atcacert_def_t*   cert_def,
                                 uint8_t                 cert_issuer[128])
 {
     ATCA_STATUS status = ATCACERT_E_BAD_PARAMS;
+
+    UNUSED_VAR(cert);
+    UNUSED_VAR(cert_size);
 
     if (NULL != cert_def && NULL != cert_issuer)
     {
@@ -966,6 +976,9 @@ ATCA_STATUS atcacert_get_issue_date(const atcacert_def_t* cert_def,
     size_t formatted_date_size = 0;
     atcacert_date_format_t date_format = 0;
 
+    UNUSED_VAR(cert);
+    UNUSED_VAR(cert_size);
+
     do
     {
         if (cert_def == NULL || timestamp == NULL)
@@ -1071,6 +1084,9 @@ ATCA_STATUS atcacert_get_expire_date(const atcacert_def_t* cert_def,
     uint8_t formatted_date[DATEFMT_MAX_SIZE] = { 0x00 };
     size_t formatted_date_size = 0;
     atcacert_date_format_t date_format = 0;
+
+    UNUSED_VAR(cert);
+    UNUSED_VAR(cert_size);
 
     do
     {
@@ -1510,6 +1526,9 @@ ATCA_STATUS atcacert_get_cert_sn(const atcacert_def_t* cert_def,
 {
     ATCA_STATUS status = ATCACERT_E_BAD_PARAMS;
 
+    UNUSED_VAR(cert);
+    UNUSED_VAR(cert_size);
+
     if (NULL != cert_def && NULL != cert_sn && NULL != cert_sn_size)
     {
     #if ATCACERT_INTEGRATION_EN
@@ -1607,6 +1626,9 @@ ATCA_STATUS atcacert_get_auth_key_id(const atcacert_def_t* cert_def,
                                      uint8_t               auth_key_id[20])
 {
     ATCA_STATUS status = ATCACERT_E_BAD_PARAMS;
+
+    UNUSED_VAR(cert);
+    UNUSED_VAR(cert_size);
 
     if (NULL != cert_def && NULL != auth_key_id)
     {
@@ -1756,11 +1778,6 @@ ATCA_STATUS atcacert_get_comp_cert(const atcacert_def_t* cert_def,
         }
 
         if (ATCACERT_E_SUCCESS != (ret = atcacert_date_enc_compcert(&issue_date, expire_years, &comp_cert[64])))
-        {
-            break;
-        }
-
-        if (ATCACERT_E_SUCCESS != (ret = atcacert_date_enc_compcert(&issue_date, cert_def->expire_years, &comp_cert[64])))
         {
             break;
         }

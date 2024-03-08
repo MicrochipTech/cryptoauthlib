@@ -693,6 +693,20 @@ ATCA_STATUS cal_buf_set(cal_buffer * dst, size_t dst_offset, uint8_t value, size
     return status;
 }
 
+/** \brief Initialize a cal buffer with constant pointer
+ * Returns the initialized cal buffer
+ */
+cal_buffer cal_buf_init_const_ptr(size_t len,const uint8_t* message)
+{
+    void **ptr = NULL;
+    /* coverity[cert_str30_c_violation] Implementation treats input attributes as constants */
+    void *lptr = &(message); 
+    (ptr) = lptr; 
+
+    cal_buffer init_buf = CAL_BUF_INIT(len,*ptr);
+    return init_buf;
+}
+
 #ifdef ATCA_PRINTF
 void cal_buf_print(cal_buffer * buf)
 {

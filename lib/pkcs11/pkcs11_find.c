@@ -360,18 +360,14 @@ CK_RV pkcs11_find_continue(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE_PTR phOb
 
     *pulObjectCount = (pSession->object_count < ulMaxObjectCount) ? pSession->object_count : ulMaxObjectCount;
 
-    if (CKR_OK == (rv = (pkcs11_lock_context(pLibCtx))))
+    if (CKR_OK == (rv = (pkcs11_lock_both(pLibCtx))))
     {
         i = 0;
 
         while (i < *pulObjectCount)
         {
-            if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
-            {
-                phObject[i] = pkcs11_find_handle(pSession->slot->slot_id, pSession->attrib_list,
-                                                 pSession->attrib_count, &pSession->object_index, pSession);
-                (void)pkcs11_unlock_device(pLibCtx);
-            }
+            phObject[i] = pkcs11_find_handle(pSession->slot->slot_id, pSession->attrib_list,
+                                             pSession->attrib_count, &pSession->object_index, pSession);
 
             if (phObject[i] == 0u)
             {
@@ -389,7 +385,7 @@ CK_RV pkcs11_find_continue(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE_PTR phOb
 
             i++;
         }
-        (void)pkcs11_unlock_context(pLibCtx);
+        (void)pkcs11_unlock_both(pLibCtx);
     }
 
     return rv;

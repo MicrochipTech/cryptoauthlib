@@ -418,43 +418,36 @@ ATCA_STATUS atca_test_config_get_id(uint8_t test_type, uint16_t* handle)
 
     if (test_type && handle)
     {
-        switch (gCfg->devtype)
+        if (atcab_is_ca_device(gCfg->devtype))
         {
-#if ATCA_CA_SUPPORT
-        case ATSHA204A:
-        /* fallthrough */
-        case ATECC108A:
-        /* fallthrough */
-        case ATECC508A:
-        /* fallthrough */
-        case ATECC608:
+    #if ATCA_CA_SUPPORT
             status = calib_config_get_slot_by_test(test_type, handle);
-            break;
-#endif
-#if defined(ATCA_TA010_SUPPORT) || defined(ATCA_ECC204_SUPPORT)
-        case TA010:
-        /* fallthrough */
-        case ECC204:
-            status = calib_config_get_ecc204_slot_by_test(test_type, handle);
-            break;
-#endif
-#if defined(ATCA_SHA104_SUPPORT) || defined(ATCA_SHA105_SUPPORT)
-        case SHA104:
-        /* fallthrough */
-        case SHA105:
-            status = calib_config_get_sha10x_slot_by_test(test_type, handle);
-            break;
-#endif
-#if ATCA_TA_SUPPORT
-        case TA100:
-        /* fallthrough */
-        case TA101:
-            status = talib_config_get_handle_by_test(test_type, handle);
-            break;
-#endif
-        default:
+    #endif
+        }
+        else if (atcab_is_ca2_device(gCfg->devtype))
+        {
+            if (ECC204 == gCfg->devtype || TA010 == gCfg->devtype)
+            {
+    #if defined(ATCA_TA010_SUPPORT) || defined(ATCA_ECC204_SUPPORT)
+                status = calib_config_get_ecc204_slot_by_test(test_type, handle);
+    #endif
+            }
+            else
+            {
+    #if defined(ATCA_SHA104_SUPPORT) || defined(ATCA_SHA105_SUPPORT)
+                status = calib_config_get_sha10x_slot_by_test(test_type, handle);
+    #endif
+            }
+        }
+        else if (atcab_is_ta_device(gCfg->devtype))
+        {
+    #if ATCA_TA_SUPPORT
+             status = talib_config_get_handle_by_test(test_type, handle);
+    #endif
+        }
+        else
+        {
             status = ATCA_UNIMPLEMENTED;
-            break;
         }
     }
 

@@ -128,6 +128,13 @@
 #define ATCA_HEAP
 #endif 
 
+/** \def ATCA_UNUSED_VAR_CHECK
+ * Enables removal of compiler warning due to unused variables
+ */
+#ifndef ATCA_UNUSED_VAR_CHECK
+#define ATCA_UNUSED_VAR_CHECK   (DEFAULT_ENABLED)
+#endif
+
 /**** AES command ****/
 
 /** \def ATCAB_AES

@@ -60,7 +60,7 @@ const atcacert_def_t g_test_cert_def_1_signer = {
         .offset                 = 4,
         .count                  = 347
     },
-    .expire_years               = 20,
+    .expire_years               = 28,
     .public_key_dev_loc         = {
         .zone                   = DEVZONE_DATA,
         .slot                   = 11,

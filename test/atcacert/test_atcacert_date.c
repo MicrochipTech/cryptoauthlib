@@ -409,7 +409,7 @@ TEST(atcacert_date_enc_posix_uint32_be, good)
 {
     int ret = 0;
     uint8_t ts_str[DATEFMT_POSIX_UINT32_BE_SIZE];
-    const char ts_str_ref[sizeof(ts_str) + 1] = { 0x52, 0x7F, 0x4C, 0xF7 };
+    const uint8_t ts_str_ref[sizeof(ts_str) + 1] = { 0x52, 0x7F, 0x4C, 0xF7 };
     atcacert_tm_utc_t ts;
 
     set_tm(&ts, 2013, 11, 10, 9, 8, 7);
@@ -437,7 +437,7 @@ TEST(atcacert_date_enc_posix_uint32_be, large)
 {
     int ret = 0;
     uint8_t ts_str[DATEFMT_POSIX_UINT32_BE_SIZE];
-    const char ts_str_ref[sizeof(ts_str) + 1] = { 0xFE, 0xFD, 0xFC, 0xFB };
+    const uint8_t ts_str_ref[sizeof(ts_str) + 1] = { 0xFE, 0xFD, 0xFC, 0xFB };
     atcacert_tm_utc_t ts;
 
     set_tm(&ts, 2105, 7, 26, 13, 30, 35);
@@ -452,7 +452,7 @@ TEST(atcacert_date_enc_posix_uint32_be, max)
     int ret = 0;
     uint8_t ts_str[DATEFMT_POSIX_UINT32_BE_SIZE];
     atcacert_tm_utc_t ts;
-    const char ts_str_ref[sizeof(ts_str) + 1] = { 0xFF, 0xFF, 0xFF, 0xFE };
+    const uint8_t ts_str_ref[sizeof(ts_str) + 1] = { 0xFF, 0xFF, 0xFF, 0xFE };
 
     set_tm(&ts, 2106, 2, 7, 6, 28, 14);
 
@@ -518,7 +518,7 @@ TEST(atcacert_date_enc_posix_uint32_le, good)
 {
     int ret = 0;
     uint8_t ts_str[DATEFMT_POSIX_UINT32_LE_SIZE];
-    const char ts_str_ref[sizeof(ts_str) + 1] = { 0xF7, 0x4C, 0x7F, 0x52  };
+    const uint8_t ts_str_ref[sizeof(ts_str) + 1] = { 0xF7, 0x4C, 0x7F, 0x52  };
     atcacert_tm_utc_t ts;
 
     set_tm(&ts, 2013, 11, 10, 9, 8, 7);
@@ -546,7 +546,7 @@ TEST(atcacert_date_enc_posix_uint32_le, large)
 {
     int ret = 0;
     uint8_t ts_str[DATEFMT_POSIX_UINT32_LE_SIZE];
-    const char ts_str_ref[sizeof(ts_str) + 1] = { 0xFB, 0xFC, 0xFD, 0xFE };
+    const uint8_t ts_str_ref[sizeof(ts_str) + 1] = { 0xFB, 0xFC, 0xFD, 0xFE };
     atcacert_tm_utc_t ts;
 
     set_tm(&ts, 2105, 7, 26, 13, 30, 35);
@@ -561,7 +561,7 @@ TEST(atcacert_date_enc_posix_uint32_le, max)
     int ret = 0;
     uint8_t ts_str[DATEFMT_POSIX_UINT32_LE_SIZE];
     atcacert_tm_utc_t ts;
-    const char ts_str_ref[sizeof(ts_str) + 1] = { 0xFE, 0xFF, 0xFF, 0xFF };
+    const uint8_t ts_str_ref[sizeof(ts_str) + 1] = { 0xFE, 0xFF, 0xFF, 0xFF };
 
     set_tm(&ts, 2106, 2, 7, 6, 28, 14);
 
@@ -1005,7 +1005,7 @@ TEST(atcacert_date_enc, posix_uint32_be)
     int ret = 0;
     uint8_t ts_str[DATEFMT_POSIX_UINT32_BE_SIZE + 1];
     size_t ts_str_size = sizeof(ts_str);
-    const char ts_str_ref[sizeof(ts_str) - 1] = { 0x52, 0x7F, 0x4C, 0xF7 };
+    const uint8_t ts_str_ref[sizeof(ts_str) - 1] = { 0x52, 0x7F, 0x4C, 0xF7 };
     atcacert_tm_utc_t ts;
 
     set_tm(&ts, 2013, 11, 10, 9, 8, 7);
@@ -1027,7 +1027,7 @@ TEST(atcacert_date_enc, posix_uint32_le)
     int ret = 0;
     uint8_t ts_str[DATEFMT_POSIX_UINT32_LE_SIZE + 1];
     size_t ts_str_size = sizeof(ts_str);
-    const char ts_str_ref[sizeof(ts_str) - 1] = { 0xF7, 0x4C, 0x7F, 0x52 };
+    const uint8_t ts_str_ref[sizeof(ts_str) - 1] = { 0xF7, 0x4C, 0x7F, 0x52 };
     atcacert_tm_utc_t ts;
 
     set_tm(&ts, 2013, 11, 10, 9, 8, 7);
@@ -2005,7 +2005,7 @@ TEST(atcacert_date_dec, small_buf)
 TEST(atcacert_date_dec, bad_format)
 {
     int ret = 0;
-    const uint8_t ts_str[DATEFMT_RFC5280_GEN_SIZE + 1];
+    const uint8_t ts_str[DATEFMT_RFC5280_GEN_SIZE + 1] = {0};
     size_t ts_str_size = sizeof(ts_str);
     atcacert_tm_utc_t ts;
 

@@ -86,7 +86,7 @@ extern const ecdsa_p384_test_vector ecdsa_p384_s256_test_vectors[];
 extern const size_t ecdsa_p384_s256_test_vectors_count;
 #endif
 
-#ifdef ATCA_TA101_SUPPORT
+#if TEST_VECTOR_SHA2_384_EN
 extern const ecdsa_p384_test_vector ecdsa_p384_test_vectors[];
 extern const size_t ecdsa_p384_test_vectors_count;
 #endif

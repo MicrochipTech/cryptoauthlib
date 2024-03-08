@@ -66,7 +66,7 @@ Obtain library and configure using [Harmony 3](https://github.com/Microchip-MPLA
 |------------|------------------------------|-------------|-------------------------------------------------|
 |   I2C      | hal_i2c_harmony.c            | plib.h      |  For all Harmony 3 based projects               |
 |   SPI      | hal_spi_harmony.c            | plib.h      |                                                 |
-|   UART     | hal_uart_harmony.c           | plib.h      |                                                 }
+|   UART     | hal_uart_harmony.c           | plib.h      |                                                 |
 
 Microchip 8 & 16 bit products - AVR, PIC16/18, PIC24/DSPIC
 --------------------------------------------

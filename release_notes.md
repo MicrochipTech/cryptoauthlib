@@ -1,6 +1,24 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.7.4 (03/08/2024)
+
+### New Features
+  - Updated wolfSSL interface `atcac` wrapper APIs usage for AES GCM encrypt/decrypt
+    similar to MbedTLS and openSSL library wrapper APIs
+  - Added package.yml file to support MPLAB Harmony metadata package format
+
+### Fixes
+  - Fixed calib_wakeup_i2c API to follow specified i2c wakeup sequence for ECC608 devices
+  - PKCS11 layer fixes/updates
+    - Lock usage optimization in pkcs11_find_continue API
+    - pkcs11_digest API updates for SHA context memory allocation
+    - pkcs11_token_set_pin API updates to write data based on generated GCM key size
+  - Fixed atcacert_get_comp_cert API to remove a redundant atcacert_date_enc_compcert call
+  - Resolved build warnings/issues in Windows, Linux and 8-bit (XC8) platforms
+  - wolfSSL's atcac_pk_init_pem wrapper API updates to use wc_ PEM to DER functions
+  - Fixed broken links in README.md files
+
 ## Release v3.7.3 (01/31/2024)
 
 ### New Features

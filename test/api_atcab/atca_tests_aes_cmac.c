@@ -119,7 +119,7 @@ t_test_case_info aes_cmac_basic_test_info[] =
 #ifdef ATCA_ATECC608_SUPPORT
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cmac),         atca_test_cond_ecc608 },
 #endif
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cmac_simple),  atca_test_cond_ta100 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cmac_simple),  atca_test_cond_ta     },
 #endif /* TEST_ATCAB_AES_CMAC_EN */
     { (fp_test_case)NULL, NULL },             /* Array Termination element*/
 };

@@ -80,13 +80,6 @@
 #endif
 #endif /* ATCAC_AES_GCM_EN */
 
-/** \def ATCAC_AES_GCM_UPDATE_EN
- * Indicates if this module is a provider of an AES-GCM Update implementation
- */
-#ifndef ATCAC_AES_GCM_UPDATE_EN
-#define ATCAC_AES_GCM_UPDATE_EN             (DEFAULT_DISABLED)
-#endif
-
 /** \def ATCAC_PKEY_EN
  * Indicates if this module is a provider of a generic asymmetric cryptography
  * implementation */

@@ -198,4 +198,11 @@
 #define ATCAB_PBKDF2_SHA256_EN      (CALIB_SHA_HMAC_EN || TALIB_SHA_HMAC_EN)
 #endif
 
+/** \def ATCAC_AES_GCM_EN
+ * Indicates if this module is a provider of an AES-GCM implementation
+ */
+#ifndef ATCAC_AES_GCM_EN
+#define ATCAC_AES_GCM_EN                    (ATCA_HOSTLIB_EN)
+#endif /* ATCAC_AES_GCM_EN */
+
 #endif /* CRYPTO_CONFIG_CHECK_H */

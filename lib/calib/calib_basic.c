@@ -37,13 +37,14 @@
 ATCA_STATUS calib_wakeup_i2c(ATCADevice device)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
-    uint8_t second_byte = 0x01; // I2C general call should not interpreted as an addr write
+    uint8_t second_byte = 0U;
     ATCAIface iface = atGetIFace(device);
 
     if (NULL != iface)
     {
         int retries = atca_iface_get_retries(iface);
         uint8_t address = atcab_get_device_address(device);
+        ATCAKitType kit_type = ATCA_KIT_UNKNOWN_IFACE;
         uint32_t temp;
         uint32_t wake;
         uint16_t rxlen;
@@ -65,21 +66,21 @@ ATCA_STATUS calib_wakeup_i2c(ATCADevice device)
                 status = ATCA_SUCCESS;
             }
 
-    #if ATCA_CA2_SUPPORT
-            ATCADeviceType device_type = atcab_get_device_type_ext(device);
-
-            if (atcab_is_ca2_device(device_type))
+            if(atcab_is_ca_device(atcab_get_device_type_ext(device)))
             {
-                (void)atsend(iface, 0U, NULL, 0);
-            }
-            else
-            {
+                //! Drive the SDA pin low for wake up
+                //! Set i2c device addr as 0U to drive SDA low
+                (void)ifacecfg_set_address(iface->mIfaceCFG, 0U, kit_type);
 
-                (void)atsend(iface, second_byte, NULL, 0);
+                //! I2C general call should not interpreted as an addr write
+                second_byte = 1U;
             }
-    #else
+
             (void)atsend(iface, second_byte, NULL, 0);
-    #endif
+
+            //! Set the i2c device address
+            (void)ifacecfg_set_address(iface->mIfaceCFG, address, kit_type);
+
             atca_delay_us(atca_iface_get_wake_delay(iface));
 
             rxlen = (uint16_t)sizeof(wake);

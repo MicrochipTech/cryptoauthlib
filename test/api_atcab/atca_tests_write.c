@@ -298,8 +298,8 @@ TEST(atca_cmd_basic_test, write_otp_zone)
     uint8_t config_chunk[4];
     uint8_t new_otp[ATCA_OTP_SIZE];
     uint8_t read_otp[ATCA_OTP_SIZE];
-    int i;
-    int j;
+    size_t i;
+    size_t j;
 
     test_assert_config_is_locked();
     test_assert_data_is_locked();
@@ -310,7 +310,7 @@ TEST(atca_cmd_basic_test, write_otp_zone)
         //initialize some data to try to write into OTP
         for (i = 0; i < ATCA_OTP_SIZE; i++)
         {
-            new_otp[i] = i;
+            new_otp[i] = (uint8_t)i;
         }
 
         //try to write - this shouldn't succeed
@@ -333,21 +333,21 @@ TEST(atca_cmd_basic_test, write_otp_zone)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Make sure we still have some bits we can change to 0
-    for (i = 4; i < (int)sizeof(read_otp); i++)
+    for (i = 4; i < sizeof(read_otp); i++)
     {
         if (read_otp[i] != 0)
         {
             break;
         }
     }
-    if (i >= (int)sizeof(read_otp))
+    if (i >= sizeof(read_otp))
     {
         TEST_IGNORE_MESSAGE("OTP is already set to all zeros past byte 4, can't test.");
     }
 
     memcpy(new_otp, read_otp, sizeof(new_otp));
     // Flip the first 1 bit to a zero
-    for (i = 4; i < (int)sizeof(new_otp); i++)
+    for (i = 4; i < sizeof(new_otp); i++)
     {
         if (new_otp[i] != 0)
         {
@@ -671,53 +671,58 @@ TEST(atca_cmd_basic_test, write_config_zone)
 
     test_assert_config_is_unlocked();
 
-    switch (gCfg->devtype)
+    if (atcab_is_ca_device(gCfg->devtype))
     {
+        if (ATSHA204A == gCfg->devtype)
+        {
 #ifdef ATCA_ATSHA204A_SUPPORT
-    case ATSHA204A:
-        status = atcab_write_config_zone(sha204_default_config);
-        break;
+            status = atcab_write_config_zone(sha204_default_config);
 #endif
-
+        }
+        else if ((ATECC108A == gCfg->devtype) || (ATECC508A == gCfg->devtype))
+        {
 #if defined(ATCA_ATECC108A_SUPPORT) || defined(ATCA_ATECC508A_SUPPORT)
-    case ATECC108A:
-    case ATECC508A:
-        status = atcab_write_config_zone(test_ecc_configdata);
-        break;
+            status = atcab_write_config_zone(test_ecc_configdata);
 #endif
+        }
+        else
+        {
 #ifdef ATCA_ATECC608_SUPPORT
-    case ATECC608:
-        status = atcab_write_config_zone(test_ecc608_configdata);
-        break;
+            status = atcab_write_config_zone(test_ecc608_configdata);
 #endif
-#if defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT)
-    case ECC204:
-    case TA010:
-        status = atcab_write_config_zone(test_ecc204_configdata);
-        break;
-#endif
-#ifdef ATCA_SHA104_SUPPORT
-    case SHA104:
-        status = atcab_write_config_zone(test_sha104_configdata);
-        break;
-#endif
-#ifdef ATCA_SHA105_SUPPORT
-    case SHA105:
-        status = atcab_write_config_zone(test_sha105_configdata);
-        break;
-#endif
-#if ATCA_TA_SUPPORT
-    case TA100:
-    /* fallthrough */
-    case TA101:
-        status = atcab_write_config_zone(test_ta10x_configdata);
-        break;
-#endif
-
-    default:
-        break;
+        }
     }
-
+    else if (atcab_is_ca2_device(gCfg->devtype))
+    {
+        if ((ECC204 == gCfg->devtype) || (TA010 == gCfg->devtype))
+        {
+#if defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT)
+            status = atcab_write_config_zone(test_ecc204_configdata);
+#endif
+        }
+        else if (SHA104 == gCfg->devtype)
+        {
+#ifdef ATCA_SHA104_SUPPORT
+            status = atcab_write_config_zone(test_sha104_configdata);
+#endif
+        }
+        else
+        {
+#ifdef ATCA_SHA105_SUPPORT
+            status = atcab_write_config_zone(test_sha105_configdata);
+#endif
+        }
+    }
+    else if (atcab_is_ta_device(gCfg->devtype))
+    {
+#if ATCA_TA_SUPPORT
+        status = atcab_write_config_zone(test_ta10x_configdata);
+#endif
+    }
+    else
+    {
+        status = ATCA_NO_DEVICES;
+    }
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 }
 

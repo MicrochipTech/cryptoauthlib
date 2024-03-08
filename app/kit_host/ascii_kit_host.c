@@ -686,6 +686,8 @@ void kit_host_task(ascii_kit_host_context_t* ctx)
                 }
                 ctx->phy->send((void*)ctx->phy, ctx->buffer, txlen);
 
+                memset(ctx->buffer, '\0', sizeof(ctx->buffer));
+
                 ptr = ctx->buffer;
             }
         }

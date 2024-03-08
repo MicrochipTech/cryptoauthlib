@@ -121,7 +121,7 @@ bool atca_test_cond_ecc608(void)
 }
 
 /** \brief Configured device is TA100 */
-bool atca_test_cond_ta100(void)
+bool atca_test_cond_ta(void)
 {
     return atcab_is_ta_device(atca_test_get_device_type());
 }

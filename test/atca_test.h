@@ -219,7 +219,7 @@ bool atca_test_cond_p256_sign(void);
 bool atca_test_cond_p256_sign_verify(void);
 bool atca_test_cond_aes128_ecb(void);
 bool atca_test_cond_ecc608(void);
-bool atca_test_cond_ta100(void);
+bool atca_test_cond_ta(void);
 bool atca_test_cond_ca2(void);
 
 /* Commands */

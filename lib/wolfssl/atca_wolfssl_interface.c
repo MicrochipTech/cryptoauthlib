@@ -72,7 +72,37 @@ ATCA_STATUS atcac_sw_random(uint8_t* data, size_t data_size)
     return status;
 }
 
+/** \brief Update the GCM context with additional authentication data (AAD)
+ *
+ *  \param[in] ctx       AES-GCM Context
+ *  \param[in] aad       Additional Authentication Data
+ *  \param[in] aad_len   Length of AAD
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_aes_gcm_aad_update(
+    struct atcac_aes_gcm_ctx*   ctx,    /**< [in] AES-GCM Context */
+    const uint8_t*              aad,    /**< [in] Additional Authentication Data */
+    const size_t                aad_len /**< [in] Length of AAD */
+    )
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    if (NULL != ctx)
+    {
+        status = (0 == wc_AesGcmEncryptUpdate(&ctx->aes, NULL, NULL, 0U, aad, (word32)(aad_len & UINT32_MAX))) ? ATCA_SUCCESS : ATCA_GEN_FAIL;
+    }
+
+    return status;
+}
+
 /** \brief Initialize an AES-GCM context
+ *
+ *  \param[in] ctx       AES-GCM Context
+ *  \param[in] key       AES Key
+ *  \param[in] key_len   Length of the AES key - should be 16 or 32
+ *  \param[in] iv        Initialization vector input
+ *  \param[in] iv_len    Length of the initialization vector
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
@@ -89,43 +119,85 @@ ATCA_STATUS atcac_aes_gcm_encrypt_start(
     if (NULL != ctx)
     {
         (void)memset(ctx, 0, sizeof(atcac_aes_gcm_ctx_t));
-        ctx->iv_len = iv_len;
 
-        if (NULL != iv)
+        if (0 == wc_AesInit(&ctx->aes, NULL, INVALID_DEVID))
         {
-            (void)memcpy(ctx->iv, iv, ctx->iv_len);
+            status = (0 == wc_AesGcmEncryptInit(&ctx->aes, key, key_len, iv, iv_len)) ? ATCA_SUCCESS : ATCA_GEN_FAIL;
         }
-        status = (0 == wc_AesGcmSetKey(&ctx->aes, key, key_len)) ? ATCA_SUCCESS : ATCA_GEN_FAIL;
+
     }
 
     return status;
 }
 
-ATCA_STATUS atcac_aes_gcm_encrypt(
+/** \brief Encrypt a data using the initialized context
+ *
+ *  \param[in]  ctx          AES-GCM Context
+ *  \param[in]  plaintext    Data to be encrypted
+ *  \param[in]  pt_len       Plain text Length
+ *  \param[out] ciphertext   Encrypted data
+ *  \param[out] ct_len       Cipher text length
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_aes_gcm_encrypt_update(
     struct atcac_aes_gcm_ctx*   ctx,
     const uint8_t*              plaintext,
     const size_t                pt_len,
     uint8_t*                    ciphertext,
+    size_t*                     ct_len
+    )
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    if (NULL != ctx && NULL != ciphertext && NULL != ct_len)
+    {
+        if ((pt_len <= UINT32_MAX))
+        {
+            status = (0 == wc_AesGcmEncryptUpdate(&ctx->aes, ciphertext, plaintext, (word32)pt_len, NULL, 0U)) ? ATCA_SUCCESS : ATCA_GEN_FAIL;
+
+            if (ATCA_SUCCESS == status)
+            {
+                *ct_len = pt_len;
+            }
+        }
+    }
+    return status;
+}
+
+/** \brief Get the AES-GCM tag and free the context
+ *
+ *  \param[in]  ctx          AES-GCM Context
+ *  \param[out] tag          AES-GCM tag
+ *  \param[in]  tag_len      tag length
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_aes_gcm_encrypt_finish(
+    struct atcac_aes_gcm_ctx*   ctx,
     uint8_t*                    tag,
-    size_t                      tag_len,
-    const uint8_t*              aad,
-    const size_t                aad_len
+    size_t                      tag_len
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
     if (NULL != ctx)
     {
-        if ((pt_len <= UINT32_MAX) && (tag_len <= UINT32_MAX) && (aad_len <= UINT32_MAX))
+        if (tag_len <= UINT32_MAX)
         {
-            status = (0 == wc_AesGcmEncrypt(&ctx->aes, ciphertext, plaintext, (word32)pt_len, ctx->iv, ctx->iv_len, 
-                                            tag, (word32)tag_len, aad, (word32)aad_len)) ? ATCA_SUCCESS : ATCA_GEN_FAIL;
+            status = (0 == wc_AesGcmEncryptFinal(&ctx->aes, tag, (word32)tag_len)) ? ATCA_SUCCESS : ATCA_GEN_FAIL;
         }
     }
     return status;
 }
 
-/** \brief Initialize an AES-GCM context
+/** \brief Initialize an AES-GCM context for decryption
+ *
+ *  \param[in] ctx       AES-GCM Context
+ *  \param[in] key       AES Key
+ *  \param[in] key_len   Length of the AES key - should be 16 or 32
+ *  \param[in] iv        Initialization vector input
+ *  \param[in] iv_len    Length of the initialization vector
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
@@ -142,43 +214,76 @@ ATCA_STATUS atcac_aes_gcm_decrypt_start(
     if (NULL != ctx)
     {
         (void)memset(ctx, 0, sizeof(atcac_aes_gcm_ctx_t));
-        ctx->iv_len = iv_len;
 
-        if (NULL != iv)
+        if (0 == wc_AesInit(&ctx->aes, NULL, INVALID_DEVID))
         {
-            (void)memcpy(ctx->iv, iv, ctx->iv_len);
+            status = (0 == wc_AesGcmDecryptInit(&ctx->aes, key, key_len, iv, iv_len)) ? ATCA_SUCCESS : ATCA_GEN_FAIL;
         }
-
-        status = (0 == wc_AesGcmSetKey(&ctx->aes, key, key_len)) ? ATCA_SUCCESS : ATCA_GEN_FAIL;
     }
 
     return status;
 }
 
-ATCA_STATUS atcac_aes_gcm_decrypt(
+/** \brief Decrypt ciphertext using the initialized context
+ *
+ *  \param[in]  ctx          AES-GCM Context
+ *  \param[in]  ciphertext   Encrypted data
+ *  \param[in]  ct_len       Ciphertext length
+ *  \param[out] plaintext    Data to be encrypted
+ *  \param[out] pt_len       Plaintext Length
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_aes_gcm_decrypt_update(
     struct atcac_aes_gcm_ctx*   ctx,
     const uint8_t*              ciphertext,
     const size_t                ct_len,
     uint8_t*                    plaintext,
-    const uint8_t*              tag,
-    size_t                      tag_len,
-    const uint8_t*              aad,
-    const size_t                aad_len,
-    bool*                       is_verified
+    size_t*                     pt_len
     )
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (NULL != ctx && NULL != is_verified)
+    if (NULL != ctx && NULL != pt_len)
     {
-        if ((tag_len <= UINT32_MAX) && (aad_len <= UINT32_MAX) && (ct_len <= UINT32_MAX))
+        if (ct_len <= UINT32_MAX)
         {
-            status = (0 == wc_AesGcmDecrypt(&ctx->aes, plaintext, ciphertext, (word32)ct_len, ctx->iv, ctx->iv_len,
-                                            tag, (word32)tag_len, aad, (word32)aad_len)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+            status = (0 == wc_AesGcmDecryptUpdate(&ctx->aes, plaintext, ciphertext, (word32)ct_len, NULL, 0U)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+
+            if (ATCA_SUCCESS == status)
+            {
+                *pt_len = ct_len;
+            }
         }
+    }
+    return status;
+}
+
+/** \brief Compare the AES-GCM tag and free the context
+ *
+ *  \param[in]  ctx          AES-GCM Context
+ *  \param[out] tag          AES-GCM tag
+ *  \param[in]  tag_len      tag length
+ *  \param[out] is_verified  verification status
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_aes_gcm_decrypt_finish(
+    struct atcac_aes_gcm_ctx*   ctx,        /**< [in] AES-GCM Context */
+    const uint8_t*              tag,        /**< [in] GCM Tag to Verify */
+    size_t                      tag_len,    /**< [in] Length of the GCM tag */
+    bool*                       is_verified /**< [out] Tag verified as matching */
+    )
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    if ((NULL != ctx) && (NULL != is_verified) && (UINT32_MAX >= tag_len))
+    {
+        status = (0 == wc_AesGcmDecryptFinal(&ctx->aes, tag, (word32)tag_len)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
 
         if (ATCA_SUCCESS == status)
         {
+
             *is_verified = true;
         }
         else
@@ -506,23 +611,28 @@ ATCA_STATUS atcac_pk_init_pem(
 
     if (NULL != ctx && NULL != buf)
     {
-        int ecckey = 0;
-        /* coverity[misra_c_2012_rule_10_3_violation:FALSE] */
-        int type = ECC_PRIVATEKEY_TYPE;
         word32 inOutIdx = 0;
-        DerBuffer* der = NULL;
         status = ATCA_FUNC_FAIL;
-
-        if (pubkey)
-        {
-            type = ECC_PUBLICKEY_TYPE;
-        }
+        uint8_t derbuf[121] = { 0u };   //! ECC_SECP256R1 MAX DER size
+        size_t derbuflen = sizeof(derbuf);
+        int ret;
 
         if (buflen <= UINT32_MAX)
         {
-            int ret = PemToDer((const unsigned char*)buf, (long)buflen, type, &der, NULL, NULL, &ecckey);
-            if ((ret >= 0) && (der != NULL))
+            if (TRUE == pubkey)
             {
+                ret = wc_PubKeyPemToDer(buf, (int)buflen, derbuf, (int)derbuflen);
+            }
+            else
+            {
+                ret = wc_KeyPemToDer(buf, (int)buflen, derbuf, (int)derbuflen, NULL);
+            }
+
+            if ((ret >= 0))
+            {
+                //! Update Der len
+                derbuflen = (size_t)ret;
+
                 ctx->ptr = wc_ecc_key_new(NULL);
 
                 if (NULL != ctx->ptr)
@@ -533,11 +643,11 @@ ATCA_STATUS atcac_pk_init_pem(
                     {
                         if (pubkey)
                         {
-                            ret = wc_EccPublicKeyDecode(der->buffer, &inOutIdx, (ecc_key*)ctx->ptr, der->length);
+                            ret = wc_EccPublicKeyDecode(derbuf, &inOutIdx, (ecc_key*)ctx->ptr, (word32)derbuflen);
                         }
                         else
                         {
-                            ret = wc_EccPrivateKeyDecode(der->buffer, &inOutIdx, (ecc_key*)ctx->ptr, der->length);
+                            ret = wc_EccPrivateKeyDecode(derbuf, &inOutIdx, (ecc_key*)ctx->ptr, (word32)derbuflen);
                         }
                         status = (0 == ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
                     }
@@ -731,7 +841,7 @@ ATCA_STATUS atcac_pk_derive(
 
         if ((*buflen <= UINT32_MAX) && (0u == private_ctx->key_type))
         {
-            word32 temp_len = (word32)*buflen;
+            word32 temp_len = (word32) * buflen;
             ret = wc_ecc_shared_secret((ecc_key*)private_ctx->ptr, (ecc_key*)public_ctx->ptr, (byte*)buf, &temp_len);
             *buflen = temp_len;
         }
@@ -779,7 +889,7 @@ ATCA_STATUS atcac_parse_der(struct atcac_x509_ctx** cert, cal_buffer* der)
         const unsigned char* in = der->buf;
         if (der->len <= UINT32_MAX)
         {
-            void** tmp = cert;
+            void** tmp = (void**)cert;
             WOLFSSL_X509** x509 = (WOLFSSL_X509**)tmp;
             /* coverity[misra_c_2012_rule_11_3_violation:FALSE] */
             if (NULL != wolfSSL_d2i_X509((WOLFSSL_X509**)x509, &in, (int)der->len))
@@ -795,7 +905,7 @@ static WOLFSSL_X509* get_wssl_cert_from_atcac_ctx(const struct atcac_x509_ctx* c
 {
     /* coverity[cert_exp40_c_violation] wolf ssl api removes const qualifier which is out of scope */
     /* coverity[misra_c_2012_rule_11_8_violation:FALSE] */
-    WOLFSSL_X509* wssl_cert = (NULL != cert) ? &cert->ptr : NULL;
+    WOLFSSL_X509* wssl_cert = (NULL != cert) ? (WOLFSSL_X509*)(&cert->ptr) : NULL;
 
     return wssl_cert;
 }
@@ -853,7 +963,7 @@ ATCA_STATUS atcac_get_subj_public_key(const struct atcac_x509_ctx* cert, cal_buf
                         {
                             word32 xlen = (word32)pubKeyEcc.dp->size;
                             word32 ylen = (word32)pubKeyEcc.dp->size;
-                            if (0 == wc_ecc_export_public_raw(&pubKeyEcc, (byte*)subj_public_key->buf, &xlen, 
+                            if (0 == wc_ecc_export_public_raw(&pubKeyEcc, (byte*)subj_public_key->buf, &xlen,
                                                               (byte*)&subj_public_key->buf[pubKeyEcc.dp->size], &ylen))
                             {
                                 status = ATCA_SUCCESS;

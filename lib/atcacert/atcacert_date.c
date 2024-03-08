@@ -45,6 +45,7 @@ atcacert_date_format_t atcacert_date_from_asn1_tag(const uint8_t tag)
 
 #ifdef ATCA_MBEDTLS
     fmt = DATEFMT_RFC5280_GEN; //Mbedtls follows always "YYYY-MM-DD HH:MM:SS."
+    UNUSED_VAR(tag);
 #else
     switch (tag)
     {

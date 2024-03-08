@@ -156,6 +156,8 @@ ATCA_STATUS atcacert_read_cert_ext(ATCADevice            device,
     atcacert_build_state_t build_state;
 #endif
 
+    UNUSED_VAR(ca_public_key[0]);
+
     if (cert_def == NULL || cert_size == NULL)
     {
         return ATCACERT_E_BAD_PARAMS;

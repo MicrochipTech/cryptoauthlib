@@ -4,8 +4,8 @@ project(wolfssl-download NONE)
  
 include(ExternalProject)
 ExternalProject_Add(wolfssl
-	URL               "https://github.com/wolfSSL/wolfssl/archive/refs/tags/v4.8.1-stable.tar.gz"
-	URL_HASH          "SHA256=50db45f348f47e00c93dd244c24108220120cb3cc9d01434789229c32937c444"
+	URL               "https://github.com/wolfSSL/wolfssl/archive/refs/tags/v5.4.0-stable.tar.gz"
+	URL_HASH          "SHA256=dc36cc19dad197253e5c2ecaa490c7eef579ad448706e55d73d79396e814098b"
     SOURCE_DIR        "${CMAKE_BINARY_DIR}/downloaded/wolfssl"
     BINARY_DIR        ""
     CONFIGURE_COMMAND ""

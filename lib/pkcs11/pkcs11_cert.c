@@ -93,6 +93,8 @@ static CK_RV pkcs11_cert_load_cache(const pkcs11_session_ctx_ptr pSession, const
 {
     CK_RV rv = CKR_GENERAL_ERROR;
 
+    UNUSED_VAR(pSession);
+
     if ((pObject->class_id == CKO_CERTIFICATE) &&
         (pObject->class_type == CK_CERTIFICATE_CATEGORY_TOKEN_USER))
     {
@@ -119,7 +121,7 @@ static CK_RV pkcs11_cert_load_cache(const pkcs11_session_ctx_ptr pSession, const
                     cert_def->type = CERTTYPE_X509_FULL_STORED;
                     cert_def->comp_cert_dev_loc.zone = (atcacert_device_zone_t)ATCA_ZONE_DATA;
                     cert_def->comp_cert_dev_loc.slot = pObject->slot;
-                    cert_def->parsed = &pkcs11_cert_cache_list[i].pCert_parsed;
+                    cert_def->parsed = (struct atcac_x509_ctx**)(&pkcs11_cert_cache_list[i].pCert_parsed);
                     pObject->data = cert_def;
                     pObject->flags |= PKCS11_OBJECT_FLAG_CERT_CACHE;
 
@@ -1090,6 +1092,7 @@ CK_RV pkcs11_cert_x509_write(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, p
 CK_RV pkcs11_cert_clear_session_cache(pkcs11_session_ctx_ptr session_ctx)
 {
     CK_RV rv = CKR_GENERAL_ERROR;
+    UNUSED_VAR(session_ctx);
 
 #if !defined(ATCA_NO_HEAP) && (FEATURE_ENABLED == ATCACERT_INTEGRATION_EN)
     CK_ULONG i;
@@ -1136,6 +1139,7 @@ CK_RV pkcs11_cert_clear_session_cache(pkcs11_session_ctx_ptr session_ctx)
 CK_RV pkcs11_cert_clear_object_cache(pkcs11_object_ptr pObject)
 {
     CK_RV rv = CKR_GENERAL_ERROR;
+    UNUSED_VAR(pObject);
 
 #if !defined(ATCA_NO_HEAP) && (FEATURE_ENABLED == ATCACERT_INTEGRATION_EN)
     CK_ULONG i;

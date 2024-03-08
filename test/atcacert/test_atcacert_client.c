@@ -667,7 +667,6 @@ TEST(atcacert_client, atcacert_get_subj)
 #if ATCA_TA_SUPPORT
         ta_element_attributes_t data_attr;
         uint16_t signer_cert_handle = 0x8800;
-        cal_buffer signer_cert_buf = CAL_BUF_INIT(sizeof(g_test_ecc256_ca_cert), g_test_ecc256_ca_cert);
         status = talib_handle_init_data(&data_attr, sizeof(g_test_ecc256_ca_cert));
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -743,7 +742,6 @@ TEST(atcacert_client, atcacert_get_subj_pbkey)
         cert_sz = sizeof(g_test_ecc256_ca_cert);
         ta_element_attributes_t data_attr;
         uint16_t signer_cert_handle = 0x8800;
-        cal_buffer signer_cert_buf = CAL_BUF_INIT(sizeof(g_test_ecc256_ca_cert), g_test_ecc256_ca_cert);
         status = talib_handle_init_data(&data_attr, sizeof(g_test_ecc256_ca_cert));
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -820,7 +818,6 @@ TEST(atcacert_client, atcacert_get_subj_pbkey_id)
         cert_sz = sizeof(g_test_ecc256_ca_cert);
         ta_element_attributes_t data_attr;
         uint16_t signer_cert_handle = 0x8800;
-        cal_buffer signer_cert_buf = CAL_BUF_INIT(sizeof(g_test_ecc256_ca_cert), g_test_ecc256_ca_cert);
         status = talib_handle_init_data(&data_attr, sizeof(g_test_ecc256_ca_cert));
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -928,7 +925,6 @@ TEST(atcacert_client, atcacert_get_issue_date_test)
         memcpy(&issue_date_ref, &issue_date_ref_ta, sizeof(issue_date_ref_ta));
         ta_element_attributes_t data_attr;
         uint16_t signer_cert_handle = 0x8800;
-        cal_buffer signer_cert_buf = CAL_BUF_INIT(sizeof(g_test_ecc256_ca_cert), g_test_ecc256_ca_cert);
         status = talib_handle_init_data(&data_attr, sizeof(g_test_ecc256_ca_cert));
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
         cert_sz = sizeof(g_test_ecc256_ca_cert);
@@ -1035,7 +1031,6 @@ TEST(atcacert_client, atcacert_get_expiry_date)
         memcpy(&expiry_date_ref, &expiry_date_ref_ta, sizeof(expiry_date_ref_ta));
         ta_element_attributes_t data_attr;
         uint16_t signer_cert_handle = 0x8800;
-        cal_buffer signer_cert_buf = CAL_BUF_INIT(sizeof(g_test_ecc256_ca_cert), g_test_ecc256_ca_cert);
         status = talib_handle_init_data(&data_attr, sizeof(g_test_ecc256_ca_cert));
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -1116,7 +1111,6 @@ TEST(atcacert_client, atcacert_get_serial_num)
         cert_sz = sizeof(g_test_ecc256_ca_cert);
         ta_element_attributes_t data_attr;
         uint16_t signer_cert_handle = 0x8800;
-        cal_buffer signer_cert_buf = CAL_BUF_INIT(sizeof(g_test_ecc256_ca_cert), g_test_ecc256_ca_cert);
         status = talib_handle_init_data(&data_attr, sizeof(g_test_ecc256_ca_cert));
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -1195,7 +1189,6 @@ TEST(atcacert_client, atcacert_get_auth_key_id_test)
         cert_sz = sizeof(g_test_ecc256_ca_cert);
         ta_element_attributes_t data_attr;
         uint16_t signer_cert_handle = 0x8800;
-        cal_buffer signer_cert_buf = CAL_BUF_INIT(sizeof(g_test_ecc256_ca_cert), g_test_ecc256_ca_cert);
         status = talib_handle_init_data(&data_attr, sizeof(g_test_ecc256_ca_cert));
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
@@ -1269,7 +1262,6 @@ TEST(atcacert_client, atcacert_get_issuer_test)
         cert_sz = sizeof(g_test_ecc256_ca_cert);
         ta_element_attributes_t data_attr;
         uint16_t signer_cert_handle = 0x8800;
-        cal_buffer signer_cert_buf = CAL_BUF_INIT(sizeof(g_test_ecc256_ca_cert), g_test_ecc256_ca_cert);
         status = talib_handle_init_data(&data_attr, sizeof(g_test_ecc256_ca_cert));
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 

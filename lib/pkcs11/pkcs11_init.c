@@ -462,7 +462,7 @@ static CK_RV pkcs11_deinit_interface_check(ATCADevice device, ATCAIfaceType list
             while (ATCA_UNKNOWN_IFACE != list[i])
             {
                 /* coverity[misra_c_2012_rule_14_3_violation] Based on User input max slot varies */
-                if (i >= (PKCS11_MAX_SLOTS_ALLOWED - 1u))
+                if (i >= (CK_CHAR)(PKCS11_MAX_SLOTS_ALLOWED - 1u))
                 {
                     /* list max reached*/
                     rv = CKR_FUNCTION_FAILED;

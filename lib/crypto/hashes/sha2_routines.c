@@ -171,7 +171,12 @@ void sw_sha256_update(sw_sha256_ctx* ctx, const uint8_t* msg, uint32_t msg_size)
 {
     uint32_t block_count;
     uint32_t rem_size = SHA256_BLOCK_SIZE - ctx->block_size;
-    size_t copy_size = msg_size > rem_size ? (size_t)rem_size : (size_t)msg_size;
+    uint32_t copy_size = msg_size > rem_size ? rem_size : msg_size;
+
+    if (0u == msg_size || NULL == msg)
+    {
+        return;
+    }
 
     // Copy data into current block
     (void)memcpy(&ctx->block[ctx->block_size], msg, copy_size);

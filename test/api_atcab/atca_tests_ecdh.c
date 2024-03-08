@@ -284,7 +284,7 @@ t_test_case_info ecdh_basic_test_info[] =
 #if CALIB_ECDH_EN
     { REGISTER_TEST_CASE(atca_cmd_basic_test, ecdh),                REGISTER_TEST_CONDITION(atca_cmd_basic_test, ecdh) },
 #endif
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, ecdh_simple),         atca_test_cond_ta100 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, ecdh_simple),         atca_test_cond_ta    },
 #ifdef ATCA_ATECC608_SUPPORT
     { REGISTER_TEST_CASE(atca_cmd_basic_test, ecdh_protection_key), atca_test_cond_ecc608 },
 #endif

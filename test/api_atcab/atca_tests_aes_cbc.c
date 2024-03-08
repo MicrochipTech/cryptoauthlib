@@ -472,14 +472,14 @@ t_test_case_info aes_cbc_basic_test_info[] =
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_block),            atca_test_cond_ecc608 },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_block),            atca_test_cond_ecc608 },
 #endif
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_block_simple),     atca_test_cond_ta100 },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_block_simple),     atca_test_cond_ta100 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_block_simple),     atca_test_cond_ta    },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_block_simple),     atca_test_cond_ta    },
 #ifdef TEST_ATCAB_AES_CBC_UPDATE_EN
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_update_simple),    atca_test_cond_ta100 },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_update_chunks),    atca_test_cond_ta100 },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_update_simple),    atca_test_cond_ta100 },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_update_chunks),    atca_test_cond_ta100 },
-    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_padding_simple),           atca_test_cond_ta100 },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_update_simple),    atca_test_cond_ta    },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_encrypt_update_chunks),    atca_test_cond_ta    },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_update_simple),    atca_test_cond_ta    },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_decrypt_update_chunks),    atca_test_cond_ta    },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_cbc_padding_simple),           atca_test_cond_ta    },
 #endif /* TEST_ATCAB_AES_CBC_UPDATE_EN */
 #endif /* TEST_ATCAB_AES_CBC_EN */
     { (fp_test_case)NULL, NULL },             /* Array Termination element*/
