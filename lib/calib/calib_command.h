@@ -202,7 +202,7 @@ ATCA_STATUS isATCAError(uint8_t *data);
 
 
 // command helpers
-void atCRC(size_t length, const uint8_t *data, uint8_t *crc_le);
+void atCRC(size_t length, const uint8_t *data, uint8_t *crc_le, bool isTx);
 void atCalcCrc(ATCAPacket *packet);
 ATCA_STATUS atCheckCrc(const uint8_t *response);
 

@@ -34,6 +34,9 @@
 
 #include "cryptoauthlib.h"
 
+#define PARAM2_MSB_IDX  3
+#define PARAM2_LSB_IDX  4
+
 #if CALIB_CHECKMAC_EN
 /** \brief ATCACommand CheckMAC method
  * \param[in] ca_cmd   instance
@@ -694,7 +697,7 @@ ATCA_STATUS atKDF(ATCADeviceType device_type, ATCAPacket *packet)
  * \param[out] crc_le  Pointer to the place where the two-bytes of CRC will be
  *                     returned in little-endian byte order.
  */
-void atCRC(size_t length, const uint8_t *data, uint8_t *crc_le)
+void atCRC(size_t length, const uint8_t *data, uint8_t *crc_le, bool isTx)
 {
     size_t counter;
     uint16_t crc_register = 0;
@@ -704,9 +707,25 @@ void atCRC(size_t length, const uint8_t *data, uint8_t *crc_le)
 
     for (counter = 0; counter < length; counter++)
     {
+        uint8_t data_byte;
+        
+        if (isTx) {
+            if (counter < PARAM2_MSB_IDX) {
+                data_byte = data[counter];
+            } else if (PARAM2_MSB_IDX == counter) {
+                data_byte = data[counter] >> 8;
+            } else if (PARAM2_LSB_IDX == counter) {
+                data_byte = data[counter - 1] & 0xFF;
+            } else {
+                data_byte = data[counter - 1];
+            }
+        } else {
+            data_byte = data[counter];
+        }
+
         for (shift_register = 0x01; shift_register > 0x00u && shift_register < 0xFF; shift_register <<= 1)
         {
-            data_bit = ((data[counter] & shift_register) != 0u) ? 1u : 0u;
+            data_bit = ((data_byte & shift_register) != 0u) ? 1u : 0u;
             crc_bit = (uint8_t)(crc_register >> 15);
             crc_register <<= 1;
             if (data_bit != crc_bit)
@@ -738,7 +757,7 @@ void atCalcCrc(ATCAPacket *packet)
     crc = &packet->data[length - ((uint8_t)ATCA_CMD_SIZE_MIN - (uint8_t)ATCA_CRC_SIZE)];
 
     // stuff CRC into packet
-    atCRC(length, &(packet->txsize), crc);
+    atCRC(length, &(packet->txsize), crc, true);
 }
 
 
@@ -753,7 +772,7 @@ ATCA_STATUS atCheckCrc(const uint8_t *response)
     uint8_t count = response[ATCA_COUNT_IDX];
 
     count -= (uint8_t)ATCA_CRC_SIZE;
-    atCRC(count, response, crc);
+    atCRC(count, response, crc, false);
 
     return (crc[0] == response[count] && crc[1] == response[count + 1u]) ? ATCA_SUCCESS : ATCA_RX_CRC_ERROR;
 }

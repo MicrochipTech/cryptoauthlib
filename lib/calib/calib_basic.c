@@ -50,7 +50,7 @@ ATCA_STATUS calib_wakeup_i2c(ATCADevice device)
 
         do
         {
-            if (100000u < ATCA_IFACECFG_VALUE(iface->mIfaceCFG, atcai2c.baud))
+            if (100000u <= ATCA_IFACECFG_VALUE(iface->mIfaceCFG, atcai2c.baud))
             {
                 temp = 100000u;
                 status = atcontrol(iface, (uint8_t)ATCA_HAL_CHANGE_BAUD, &temp, sizeof(temp));
