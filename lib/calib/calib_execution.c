@@ -337,7 +337,7 @@ ATCA_STATUS calib_execute_send(ATCADevice device, uint8_t word_address, uint8_t*
         memcpy(&temp_buf[1], txdata, txlength);
     }
     txlength += 1U;
-    status = atsend(&device->mIface, 0xFF, (uint8_t*)txdata, (int)txlength);
+    status = atsend(&device->mIface, 0xFF, (uint8_t*)temp_buf, (int)txlength);
 #else
     if (atca_iface_is_kit(&device->mIface))
     {
