@@ -253,8 +253,7 @@
 #ifndef ATCA_NO_PRAGMA_PACK
 #define ATCA_PACKED
 #else
-#define ATCA_PACKED
-//#define ATCA_PACKED     __attribute__ ((packed))
+#define ATCA_PACKED     __attribute__ ((packed))
 #endif
 
 #endif /* ATCA_COMPILER_H_ */

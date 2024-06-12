@@ -139,10 +139,9 @@ static ATCAHAL_t hal_kit_bridge = {
 };
 #endif
 
-// TODO: This isnt used anywhere??
-//#ifdef ATCA_HAL_CUSTOM
-//static ATCAHAL_t hal_custom;
-//#endif
+#ifdef ATCA_HAL_CUSTOM
+static ATCAHAL_t hal_custom;
+#endif
 
 /** \brief Structure that holds the hal/phy maping for different interface types
  */
@@ -309,10 +308,10 @@ ATCA_STATUS hal_iface_init(ATCAIfaceCfg *cfg, ATCAHAL_t **hal, ATCAHAL_t **phy)
             *hal = hal_malloc(sizeof(ATCAHAL_t));
             if (NULL != *hal)
             {
-                (*hal)->halinit = (ATCA_STATUS (*)(ATCAIface, ATCAIfaceCfg *))cfg->atcacustom.halinit;
-                (*hal)->halpostinit = (ATCA_STATUS (*)(ATCAIface))cfg->atcacustom.halpostinit;
-                (*hal)->halreceive = (ATCA_STATUS (*)(ATCAIface, uint8_t, uint8_t *, uint16_t *))cfg->atcacustom.halreceive;
-                (*hal)->halsend = (ATCA_STATUS (*)(ATCAIface, uint8_t, uint8_t *, int))cfg->atcacustom.halsend;
+                (*hal)->halinit = cfg->atcacustom.halinit;
+                (*hal)->halpostinit = cfg->atcacustom.halpostinit;
+                (*hal)->halreceive = cfg->atcacustom.halreceive;
+                (*hal)->halsend = cfg->atcacustom.halsend;
                 (*hal)->halcontrol = hal_custom_control;
                 (*hal)->halrelease = cfg->atcacustom.halrelease;
                 status = ATCA_SUCCESS;

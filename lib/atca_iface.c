@@ -258,7 +258,7 @@ ATCA_STATUS atwake(ATCAIface ca_iface)
         {
             // The device might be performing a POST. Wait for it to complete
             // and try again.
-            atca_delay_us(1000 * ATCA_POST_DELAY_MSEC);
+            atca_delay_ms(ATCA_POST_DELAY_MSEC);
 
             status = ca_iface->hal->halcontrol(ca_iface, ATCA_HAL_CONTROL_WAKE, NULL, 0);
         }
@@ -288,7 +288,7 @@ ATCA_STATUS atidle(ATCAIface ca_iface)
     if ((NULL != ca_iface->hal) && (NULL != ca_iface->hal->halcontrol))
     {
         ATCA_STATUS status = ca_iface->hal->halcontrol(ca_iface, ATCA_HAL_CONTROL_IDLE, NULL, 0);
-        atca_delay_us(1000);
+        atca_delay_ms(1);
         return status;
     }
     else
@@ -314,7 +314,7 @@ ATCA_STATUS atsleep(ATCAIface ca_iface)
     if ((NULL != ca_iface->hal) && (NULL != ca_iface->hal->halcontrol))
     {
         ATCA_STATUS status = ca_iface->hal->halcontrol(ca_iface, ATCA_HAL_CONTROL_SLEEP, NULL, 0);
-        atca_delay_us(1000);
+        atca_delay_ms(1);
         return status;
     }
     else

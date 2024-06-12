@@ -39,7 +39,7 @@
 
 ATCA_STATUS atcac_sw_sha2_256_init(struct atcac_sha2_256_ctx* ctx)
 {
-    if (sizeof(sw_sha256_ctx) > sizeof(atcac_sha2_256_ctx_t))
+    if (sizeof(sw_sha256_ctx) > ATCA_WORD_SIZE_BYTES * sizeof(atcac_sha2_256_ctx_t))
     {
         // atcac_sha2_256_ctx_t isn't large enough for this implementation
         return ATCA_ASSERT_FAILURE;

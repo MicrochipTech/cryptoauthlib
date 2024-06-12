@@ -29,6 +29,7 @@
 #define SHA1_ROUTINES_DOT_H__
 
 #include "atca_compiler.h"
+#include "atca_config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -49,8 +50,7 @@
 #endif
 
 #ifndef U8
-// #define U8 uint8_t
-#define U8 uint16_t
+#define U8 uint8_t
 #endif
 
 #ifndef U16

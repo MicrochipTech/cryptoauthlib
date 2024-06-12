@@ -551,7 +551,7 @@ ATCA_STATUS calib_execute_command(ATCAPacket* packet, ATCADevice device)
         }
 
         // Delay for execution time or initial wait before polling
-        atca_delay_us(1000 * execution_or_wait_time);
+        atca_delay_ms(execution_or_wait_time);
 
         do
         {
@@ -566,7 +566,7 @@ ATCA_STATUS calib_execute_command(ATCAPacket* packet, ATCADevice device)
 
 #ifndef ATCA_NO_POLL
             // delay for polling frequency time
-            atca_delay_us(1000 * ATCA_POLLING_FREQUENCY_TIME_MSEC);
+            atca_delay_ms(ATCA_POLLING_FREQUENCY_TIME_MSEC);
 #endif
         }
         /* coverity[cert_int30_c_violation:FALSE]  No overflow possible */
