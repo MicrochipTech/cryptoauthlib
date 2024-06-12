@@ -28,6 +28,7 @@
 
 /* mbedTLS boilerplate includes */
 #include "atca_config_check.h"
+#include <mbedtls/version.h>
 
 #ifdef __COVERITY__
 #pragma coverity compliance block \
@@ -37,11 +38,24 @@
 
 #ifdef ATCA_MBEDTLS
 
+#if (MBEDTLS_VERSION_NUMBER < 0x03000000)
 #if !defined(MBEDTLS_CONFIG_FILE)
 #include "mbedtls/config.h"
 #else
 #include MBEDTLS_CONFIG_FILE
 #endif
+/* mbedtls 2.MBEDTLS_PRIVATE(X) backward compatibility */
+#define MBEDTLS_2X_COMPAT
+/**
+ * Mbedtls-3.0 forward compatibility
+ */
+#ifndef MBEDTLS_PRIVATE
+#define MBEDTLS_PRIVATE(member) member
+#endif
+#else /* (MBEDTLS_VERSION_NUMBER < 0x03000000) */
+#include "mbedtls/build_info.h"
+#endif /* !(MBEDTLS_VERSION_NUMBER < 0x03000000) */
+
 
 #if defined(MBEDTLS_PLATFORM_C)
 #include "mbedtls/platform.h"
@@ -700,31 +714,31 @@ ATCA_STATUS atcac_pk_init(
         if (0 == ret)
         {
             ecp = mbedtls_pk_ec(ctx->mctx);
-            ret = mbedtls_ecp_group_load(&ecp->grp, MBEDTLS_ECP_DP_SECP256R1);
+            ret = mbedtls_ecp_group_load(&ecp->MBEDTLS_PRIVATE(grp), MBEDTLS_ECP_DP_SECP256R1);
         }
 
         if (pubkey)
         {
             if (0 == ret)
             {
-                ret = mbedtls_mpi_read_binary(&(ecp->Q.X), buf, buflen / 2u);
+                ret = mbedtls_mpi_read_binary(&(ecp->MBEDTLS_PRIVATE(Q).MBEDTLS_PRIVATE(X)), buf, buflen / 2u);
             }
 
             if (0 == ret)
             {
-                ret = mbedtls_mpi_read_binary(&(ecp->Q.Y), &buf[buflen / 2u], buflen / 2u);
+                ret = mbedtls_mpi_read_binary(&(ecp->MBEDTLS_PRIVATE(Q).MBEDTLS_PRIVATE(Y)), &buf[buflen / 2u], buflen / 2u);
             }
 
             if (0 == ret)
             {
-                ret = mbedtls_mpi_read_binary(&(ecp->Q.Z), &temp, 1);
+                ret = mbedtls_mpi_read_binary(&(ecp->MBEDTLS_PRIVATE(Q).MBEDTLS_PRIVATE(Z)), &temp, 1);
             }
         }
         else
         {
             if (0 == ret)
             {
-                ret = mbedtls_mpi_read_binary(&(ecp->d), buf, buflen);
+                ret = mbedtls_mpi_read_binary(&(ecp->MBEDTLS_PRIVATE(d)), buf, buflen);
             }
         }
 
@@ -758,7 +772,11 @@ ATCA_STATUS atcac_pk_init_pem(
         }
         else
         {
+#ifdef MBEDTLS_2X_COMPAT
             ret = mbedtls_pk_parse_key((mbedtls_pk_context*)ctx, buf, buflen, NULL, 0);
+#else
+            ret = mbedtls_pk_parse_key((mbedtls_pk_context*)ctx, buf, buflen, NULL, 0, mbedtls_ctr_drbg_random, NULL);
+#endif
         }
         status = (0 == ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
     }
@@ -805,8 +823,8 @@ ATCA_STATUS atcac_pk_public(
         /* fallthrough */
         case MBEDTLS_PK_ECDSA:
         {
-            (void)mbedtls_mpi_write_binary(&mbedtls_pk_ec(ctx->mctx)->Q.X, buf, 32);
-            ret = mbedtls_mpi_write_binary(&mbedtls_pk_ec(ctx->mctx)->Q.Y, &buf[32], 32);
+            (void)mbedtls_mpi_write_binary(&mbedtls_pk_ec(ctx->mctx)->MBEDTLS_PRIVATE(Q).MBEDTLS_PRIVATE(X), buf, 32);
+            ret = mbedtls_mpi_write_binary(&mbedtls_pk_ec(ctx->mctx)->MBEDTLS_PRIVATE(Q).MBEDTLS_PRIVATE(Y), &buf[32], 32);
             *buflen = 64;
             break;
         }
@@ -848,9 +866,14 @@ ATCA_STATUS atcac_pk_sign(
             mbedtls_mpi_init(&r);
             mbedtls_mpi_init(&s);
 
-            //ret = mbedtls_ecdsa_sign(&mbedtls_pk_ec(*ctx)->grp, &r, &s, &mbedtls_pk_ec(*ctx)->d, digest, dig_len, NULL, NULL);
-            ret = mbedtls_ecdsa_sign_det(&mbedtls_pk_ec(ctx->mctx)->grp, &r, &s,
-                                         &mbedtls_pk_ec(ctx->mctx)->d, digest, dig_len, MBEDTLS_MD_SHA256);
+#ifdef MBEDTLS_2X_COMPAT
+            //ret = mbedtls_ecdsa_sign(&mbedtls_pk_ec(*ctx)->MBEDTLS_PRIVATE(grp), &r, &s, &mbedtls_pk_ec(*ctx)->MBEDTLS_PRIVATE(d), digest, dig_len, NULL, NULL);
+            ret = mbedtls_ecdsa_sign_det(&mbedtls_pk_ec(ctx->mctx)->MBEDTLS_PRIVATE(grp), &r, &s,
+                                         &mbedtls_pk_ec(ctx->mctx)->MBEDTLS_PRIVATE(d), digest, dig_len, MBEDTLS_MD_SHA256);
+#else
+            ret = mbedtls_ecdsa_sign_det_ext(&mbedtls_pk_ec(ctx->mctx)->MBEDTLS_PRIVATE(grp), &r, &s,
+                                             &mbedtls_pk_ec(ctx->mctx)->MBEDTLS_PRIVATE(d), digest, dig_len, MBEDTLS_MD_SHA256, mbedtls_ctr_drbg_random, NULL);
+#endif
 
             if (0 == ret)
             {
@@ -869,7 +892,11 @@ ATCA_STATUS atcac_pk_sign(
             break;
         }
         case MBEDTLS_PK_RSA:
+#ifdef MBEDTLS_2X_COMPAT
             ret = mbedtls_pk_sign((mbedtls_pk_context*)ctx, MBEDTLS_MD_SHA256, digest, dig_len, signature, sig_len, NULL, NULL);
+#else
+            ret = mbedtls_pk_sign((mbedtls_pk_context*)ctx, MBEDTLS_MD_SHA256, digest, dig_len, signature, *sig_len, sig_len, mbedtls_ctr_drbg_random, NULL);
+#endif
             break;
         default:
             /* Empty default case to satisfy MISRA */
@@ -913,7 +940,7 @@ ATCA_STATUS atcac_pk_verify(
             (void)mbedtls_mpi_read_binary(&r, signature, sig_len / 2u);
             (void)mbedtls_mpi_read_binary(&s, &signature[sig_len / 2u], sig_len / 2u);
 
-            ret = mbedtls_ecdsa_verify(&mbedtls_pk_ec(ctx->mctx)->grp, digest, dig_len, &mbedtls_pk_ec(ctx->mctx)->Q, &r, &s);
+            ret = mbedtls_ecdsa_verify(&mbedtls_pk_ec(ctx->mctx)->MBEDTLS_PRIVATE(grp), digest, dig_len, &mbedtls_pk_ec(ctx->mctx)->MBEDTLS_PRIVATE(Q), &r, &s);
 
             mbedtls_mpi_free(&r);
             mbedtls_mpi_free(&s);
@@ -962,9 +989,9 @@ ATCA_STATUS atcac_pk_derive(
 
                 mbedtls_mpi_init(&result);
 
-                ret = mbedtls_ecdh_compute_shared(&mbedtls_pk_ec(private_ctx->mctx)->grp, &result,
-                                                  &mbedtls_pk_ec(public_ctx->mctx)->Q,
-                                                  &mbedtls_pk_ec(private_ctx->mctx)->d, NULL, NULL);
+                ret = mbedtls_ecdh_compute_shared(&mbedtls_pk_ec(private_ctx->mctx)->MBEDTLS_PRIVATE(grp), &result,
+                                                  &mbedtls_pk_ec(public_ctx->mctx)->MBEDTLS_PRIVATE(Q),
+                                                  &mbedtls_pk_ec(private_ctx->mctx)->MBEDTLS_PRIVATE(d), NULL, NULL);
 
                 (void)mbedtls_mpi_write_binary(&result, buf, *buflen);
                 mbedtls_mpi_free(&result);
@@ -1025,7 +1052,7 @@ static int atca_mbedtls_eckey_verify(void *ctx, mbedtls_md_type_t md_alg,
         mbedtls_mpi_init(&r);
         mbedtls_mpi_init(&s);
 
-        ret = mbedtls_mpi_write_binary(&ecp->d, (unsigned char*)&key_info, sizeof(atca_mbedtls_eckey_t));
+        ret = mbedtls_mpi_write_binary(&ecp->MBEDTLS_PRIVATE(d), (unsigned char*)&key_info, sizeof(atca_mbedtls_eckey_t));
 
         if (0 == ret)
         {
@@ -1065,9 +1092,9 @@ static int atca_mbedtls_eckey_verify(void *ctx, mbedtls_md_type_t md_alg,
             //           if (0x01 & key_info.flags)
             {
                 uint8_t public_key[ATCA_ECCP256_PUBKEY_SIZE] = { 0x00 };
-                if (0 == (ret = mbedtls_mpi_write_binary(&ecp->Q.X, public_key, ATCA_ECCP256_PUBKEY_SIZE / 2u)))
+                if (0 == (ret = mbedtls_mpi_write_binary(&ecp->MBEDTLS_PRIVATE(Q).MBEDTLS_PRIVATE(X), public_key, ATCA_ECCP256_PUBKEY_SIZE / 2u)))
                 {
-                    if (0 == (ret = mbedtls_mpi_write_binary(&ecp->Q.Y, &public_key[ATCA_ECCP256_PUBKEY_SIZE / 2u], ATCA_ECCP256_PUBKEY_SIZE / 2u)))
+                    if (0 == (ret = mbedtls_mpi_write_binary(&ecp->MBEDTLS_PRIVATE(Q).MBEDTLS_PRIVATE(Y), &public_key[ATCA_ECCP256_PUBKEY_SIZE / 2u], ATCA_ECCP256_PUBKEY_SIZE / 2u)))
                     {
                         ret = atcab_verify_extern_ext(key_info.device, hash, signature, public_key, &is_verified);
                     }
@@ -1112,7 +1139,7 @@ static int atca_mbedtls_eckey_sign(void *ctx, mbedtls_md_type_t md_alg,
         mbedtls_mpi_init(&r);
         mbedtls_mpi_init(&s);
 
-        ret = atca_mbedtls_ecdsa_sign(&ecp->d, &r, &s, hash, hash_len);
+        ret = atca_mbedtls_ecdsa_sign(&ecp->MBEDTLS_PRIVATE(d), &r, &s, hash, hash_len);
 
         if (0 == ret)
         {
@@ -1207,7 +1234,7 @@ int atca_mbedtls_pk_init_ext(ATCADevice device, mbedtls_pk_context * pkey, const
         ecp = mbedtls_pk_ec(*pkey);
         if (NULL != ecp)
         {
-            ret = mbedtls_ecp_group_load(&ecp->grp, MBEDTLS_ECP_DP_SECP256R1);
+            ret = mbedtls_ecp_group_load(&ecp->MBEDTLS_PRIVATE(grp), MBEDTLS_ECP_DP_SECP256R1);
         }
     }
 
@@ -1232,12 +1259,12 @@ int atca_mbedtls_pk_init_ext(ATCADevice device, mbedtls_pk_context * pkey, const
     {
         if (0 == ret)
         {
-            ret = mbedtls_mpi_read_binary(&(ecp->Q.X), public_key, ATCA_ECCP256_SIG_SIZE / 2u);
+            ret = mbedtls_mpi_read_binary(&(ecp->MBEDTLS_PRIVATE(Q).MBEDTLS_PRIVATE(X)), public_key, ATCA_ECCP256_SIG_SIZE / 2u);
         }
 
         if (0 == ret)
         {
-            ret = mbedtls_mpi_read_binary(&(ecp->Q.Y), &public_key[ATCA_ECCP256_SIG_SIZE / 2u], ATCA_ECCP256_SIG_SIZE / 2u);
+            ret = mbedtls_mpi_read_binary(&(ecp->MBEDTLS_PRIVATE(Q).MBEDTLS_PRIVATE(Y)), &public_key[ATCA_ECCP256_SIG_SIZE / 2u], ATCA_ECCP256_SIG_SIZE / 2u);
         }
 
         if (0 == ret)
@@ -1249,21 +1276,21 @@ int atca_mbedtls_pk_init_ext(ATCADevice device, mbedtls_pk_context * pkey, const
                structure */
 
 #ifndef MBEDTLS_ECDSA_VERIFY_ALT
-            if (0 == (ret = mbedtls_mpi_read_binary(&(ecp->Q.Z), &temp, 1)))
+            if (0 == (ret = mbedtls_mpi_read_binary(&(ecp->MBEDTLS_PRIVATE(Q).MBEDTLS_PRIVATE(Z)), &temp, 1)))
             {
-                ret = mbedtls_mpi_read_binary(&ecp->d, (const unsigned char*)&key_info, sizeof(atca_mbedtls_eckey_t));
+                ret = mbedtls_mpi_read_binary(&ecp->MBEDTLS_PRIVATE(d), (const unsigned char*)&key_info, sizeof(atca_mbedtls_eckey_t));
             }
 #else
             if (is_private)
             {
-                if (0 == (ret = mbedtls_mpi_read_binary(&(ecp->Q.Z), &temp, 1)))
+                if (0 == (ret = mbedtls_mpi_read_binary(&(ecp->MBEDTLS_PRIVATE(Q).MBEDTLS_PRIVATE(Z)), &temp, 1)))
                 {
-                    ret = mbedtls_mpi_read_binary(&ecp->d, (const unsigned char*)&key_info, sizeof(atca_mbedtls_eckey_t));
+                    ret = mbedtls_mpi_read_binary(&ecp->MBEDTLS_PRIVATE(d), (const unsigned char*)&key_info, sizeof(atca_mbedtls_eckey_t));
                 }
             }
             else
             {
-                ret = mbedtls_mpi_read_binary(&ecp->Q.Z, (const unsigned char*)&key_info, sizeof(atca_mbedtls_eckey_t));
+                ret = mbedtls_mpi_read_binary(&ecp->MBEDTLS_PRIVATE(Q).MBEDTLS_PRIVATE(Z), (const unsigned char*)&key_info, sizeof(atca_mbedtls_eckey_t));
             }
 #endif
         }
@@ -1417,7 +1444,7 @@ ATCA_STATUS atcac_get_subj_public_key(const struct atcac_x509_ctx* cert, cal_buf
         }
 
         // Calculate the expected buffer length for both Qx and Qy
-        size_t expected_len = mbedtls_mpi_size(&ec->Q.X) + mbedtls_mpi_size(&ec->Q.Y);
+        size_t expected_len = mbedtls_mpi_size(&ec->MBEDTLS_PRIVATE(Q).MBEDTLS_PRIVATE(X)) + mbedtls_mpi_size(&ec->MBEDTLS_PRIVATE(Q).MBEDTLS_PRIVATE(Y));
 
         // Check if subj_public_key buffer is large enough
         if (subj_public_key->len < expected_len)
@@ -1427,15 +1454,15 @@ ATCA_STATUS atcac_get_subj_public_key(const struct atcac_x509_ctx* cert, cal_buf
 
         // Write the binary representation of Qx into the buffer
         size_t bytes_written = 0;
-        int ret = mbedtls_mpi_write_binary(&ec->Q.X, subj_public_key->buf, mbedtls_mpi_size(&ec->Q.X));
+        int ret = mbedtls_mpi_write_binary(&ec->MBEDTLS_PRIVATE(Q).MBEDTLS_PRIVATE(X), subj_public_key->buf, mbedtls_mpi_size(&ec->MBEDTLS_PRIVATE(Q).MBEDTLS_PRIVATE(X)));
         if (ret != 0)
         {
             return status;  // Error: writing Qx to buffer failed
         }
-        bytes_written += mbedtls_mpi_size(&ec->Q.X);
+        bytes_written += mbedtls_mpi_size(&ec->MBEDTLS_PRIVATE(Q).MBEDTLS_PRIVATE(X));
 
         // Write the binary representation of Qy into the buffer
-        ret = mbedtls_mpi_write_binary(&ec->Q.Y, subj_public_key->buf + bytes_written, mbedtls_mpi_size(&ec->Q.Y));
+        ret = mbedtls_mpi_write_binary(&ec->MBEDTLS_PRIVATE(Q).MBEDTLS_PRIVATE(Y), subj_public_key->buf + bytes_written, mbedtls_mpi_size(&ec->MBEDTLS_PRIVATE(Q).MBEDTLS_PRIVATE(Y)));
         if (ret != 0)
         {
             return status;  // Error: writing Qy to buffer failed
