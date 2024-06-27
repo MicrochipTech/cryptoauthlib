@@ -61,7 +61,7 @@ ATCA_STATUS initATCAIface(ATCAIfaceCfg *cfg, ATCAIface ca_iface)
     return ATCA_SUCCESS;
 }
 
-#if !defined(ATCA_NO_HEAP) && defined(ENABLE_NEWATCAIFACE)
+#if defined(ATCA_HEAP) && defined(ENABLE_NEWATCAIFACE)
 #if ATCA_PREPROCESSOR_WARNING
 #warning "NewATCAIface function is deprecated"
 #endif
@@ -566,7 +566,7 @@ ATCA_STATUS releaseATCAIface(ATCAIface ca_iface)
         }
         if (ATCA_CUSTOM_IFACE == ca_iface->mIfaceCFG->iface_type)
         {
-#ifndef ATCA_NO_HEAP
+#ifdef ATCA_HEAP
             hal_free(ca_iface->hal);
 #endif
             ca_iface->hal = NULL;
@@ -575,7 +575,7 @@ ATCA_STATUS releaseATCAIface(ATCAIface ca_iface)
     return status;
 }
 
-#ifndef ATCA_NO_HEAP
+#ifdef ATCA_HEAP
 /** \brief Instruct the HAL driver to release any resources associated with
  *         this interface, then delete the object.
  * \param[in] ca_iface  Device interface.

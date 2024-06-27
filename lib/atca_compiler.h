@@ -142,7 +142,10 @@
 
 #elif defined(_MSC_VER)
 /* Microsoft Visual Studio. --------------------------------- */
+#if _MSC_VER >= 1914
+// This warning was added in MSCV 2017 Update 7 (15.7.1)
 #pragma warning(disable:5045)   //Spectre mitigation informative
+#endif
 #pragma warning(disable:4820)   //Stucture packing
 #pragma warning(disable:4061)   //Missing enumerations from switch statements
 

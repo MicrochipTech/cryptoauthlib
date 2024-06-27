@@ -832,21 +832,148 @@ TEST(atcacert_date_enc_compcert, max)
     TEST_ASSERT_EQUAL_MEMORY(enc_dates_ref, enc_dates, sizeof(enc_dates));
 }
 
+TEST(atcacert_date_enc_compcert, min_ext_issue_year)
+{
+    // Test the smallest issue year that requires extended dates
+
+    int ret = 0;
+    atcacert_tm_utc_t issue_date;
+    uint8_t comp_cert[72] = { 0 };
+    uint8_t comp_cert_ref[sizeof(comp_cert)] = {
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x84, 0x01, 0x00, 0x00, 0x00, 0x01, 0x40
+    };
+    uint8_t expire_years = 1;
+
+    comp_cert[70] = 1;  // Set compressed certificate format version 1 to support extended dates
+    set_tm(&issue_date, 2032, 1, 1, 00, 00, 00);
+
+    ret = atcacert_date_enc_compcert_ext(&issue_date, expire_years, comp_cert);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL_MEMORY(comp_cert_ref, comp_cert, sizeof(comp_cert));
+}
+
+TEST(atcacert_date_enc_compcert, max_ext_issue_year)
+{
+    // Test the largest issue year that requires extended dates
+
+    int ret = 0;
+    atcacert_tm_utc_t issue_date;
+    uint8_t comp_cert[72] = { 0 };
+    uint8_t comp_cert_ref[sizeof(comp_cert)] = {
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0xF8, 0x84, 0x01, 0x00, 0x00, 0x00, 0x01, 0xC0
+    };
+    uint8_t expire_years = 1;
+
+    comp_cert[70] = 1;  // Set compressed certificate format version 1 to support extended dates
+    set_tm(&issue_date, 2127, 1, 1, 00, 00, 00);
+
+    ret = atcacert_date_enc_compcert_ext(&issue_date, expire_years, comp_cert);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL_MEMORY(comp_cert_ref, comp_cert, sizeof(comp_cert));
+}
+
+TEST(atcacert_date_enc_compcert, min_ext_expire_years)
+{
+    // Test the smallest expire years that requires extended dates
+
+    int ret = 0;
+    atcacert_tm_utc_t issue_date;
+    uint8_t comp_cert[72] = { 0 };
+    uint8_t comp_cert_ref[sizeof(comp_cert)] = {
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x84, 0x00, 0x00, 0x00, 0x00, 0x01, 0x10
+    };
+    uint8_t expire_years = 32;
+
+    comp_cert[70] = 1;  // Set compressed certificate format version 1 to support extended dates
+    set_tm(&issue_date, 2000, 1, 1, 00, 00, 00);
+
+    ret = atcacert_date_enc_compcert_ext(&issue_date, expire_years, comp_cert);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL_MEMORY(comp_cert_ref, comp_cert, sizeof(comp_cert));
+}
+
+TEST(atcacert_date_enc_compcert, max_ext_expire_years)
+{
+    // Test the largest expire years that requires extended dates
+
+    int ret = 0;
+    atcacert_tm_utc_t issue_date;
+    uint8_t comp_cert[72] = { 0 };
+    uint8_t comp_cert_ref[sizeof(comp_cert)] = {
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x84, 0x1F, 0x00, 0x00, 0x00, 0x01, 0x30
+    };
+    uint8_t expire_years = 127;
+
+    comp_cert[70] = 1;  // Set compressed certificate format version 1 to support extended dates
+    set_tm(&issue_date, 2000, 1, 1, 00, 00, 00);
+
+    ret = atcacert_date_enc_compcert_ext(&issue_date, expire_years, comp_cert);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL_MEMORY(comp_cert_ref, comp_cert, sizeof(comp_cert));
+}
+
+TEST(atcacert_date_enc_compcert, mixed_ext)
+{
+    // Test different patterns for extended issue year and expire years to make sure bit
+    // packing is working
+
+    int ret = 0;
+    atcacert_tm_utc_t issue_date;
+    uint8_t comp_cert[72] = { 0 };
+    uint8_t comp_cert_ref[sizeof(comp_cert)] = {
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x84, 0x00, 0x00, 0x00, 0x00, 0x01, 0x9F
+    };
+    uint8_t expire_years = 32;
+
+    comp_cert[70] = 1;  // Set compressed certificate format version 1 to support extended dates
+    comp_cert[71] = 0x0F; // Make sure the lower 4 bits aren't changed.
+    set_tm(&issue_date, 2064, 1, 1, 00, 00, 00);
+
+    ret = atcacert_date_enc_compcert_ext(&issue_date, expire_years, comp_cert);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL_MEMORY(comp_cert_ref, comp_cert, sizeof(comp_cert));
+}
+
 TEST(atcacert_date_enc_compcert, bad_year)
 {
     int ret = 0;
     atcacert_tm_utc_t issue_date;
-    uint8_t enc_dates[3];
+    uint8_t comp_cert[72] = { 0 };
     uint8_t expire_years = 0;
 
     expire_years = 28;
-    set_tm(&issue_date, 1900, 3, 7, 10, 0, 0);
-    ret = atcacert_date_enc_compcert(&issue_date, expire_years, enc_dates);
+    set_tm(&issue_date, 1999, 3, 7, 10, 0, 0);
+    ret = atcacert_date_enc_compcert(&issue_date, expire_years, &comp_cert[64]);
     TEST_ASSERT_EQUAL(ATCACERT_E_INVALID_DATE, ret);
 
     expire_years = 28;
     set_tm(&issue_date, 2032, 3, 7, 10, 0, 0);
-    ret = atcacert_date_enc_compcert(&issue_date, expire_years, enc_dates);
+    ret = atcacert_date_enc_compcert(&issue_date, expire_years, &comp_cert[64]);
+    TEST_ASSERT_EQUAL(ATCACERT_E_INVALID_DATE, ret);
+
+    comp_cert[70] = 1;  // Set compressed certificate format version 1 to support extended dates
+    set_tm(&issue_date, 2128, 3, 7, 10, 0, 0);
+    ret = atcacert_date_enc_compcert_ext(&issue_date, expire_years, comp_cert);
     TEST_ASSERT_EQUAL(ATCACERT_E_INVALID_DATE, ret);
 }
 
@@ -908,12 +1035,17 @@ TEST(atcacert_date_enc_compcert, bad_expire)
 {
     int ret = 0;
     atcacert_tm_utc_t issue_date;
-    uint8_t enc_dates[3];
+    uint8_t comp_cert[72] = { 0 };
     uint8_t expire_years = 0;
 
     expire_years = 32;
     set_tm(&issue_date, 2021, 3, 7, 10, 0, 0);
-    ret = atcacert_date_enc_compcert(&issue_date, expire_years, enc_dates);
+    ret = atcacert_date_enc_compcert(&issue_date, expire_years, &comp_cert[64]);
+    TEST_ASSERT_EQUAL(ATCACERT_E_INVALID_DATE, ret);
+
+    comp_cert[70] = 1;  // Set compressed certificate format version 1 to support extended dates
+    expire_years = 128;
+    ret = atcacert_date_enc_compcert_ext(&issue_date, expire_years, comp_cert);
     TEST_ASSERT_EQUAL(ATCACERT_E_INVALID_DATE, ret);
 }
 
@@ -1902,6 +2034,105 @@ TEST(atcacert_date_dec_compcert, bad_params)
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
 
+TEST(atcacert_date_dec_compcert, expiry_date_extended_gen)
+{
+    int ret = 0;
+    atcacert_tm_utc_t issue_date, issue_date_ref;
+    atcacert_tm_utc_t expire_date, expire_date_ref;
+
+    //Compressed format version with 1 has 4 bytes encoded date 
+    uint8_t comp_cert[72] = {0};
+
+    //Issue date = 2024
+    set_tm(&issue_date_ref,  2024,      3, 7, 10, 0, 0);
+    
+    //Expiry date with expiry year = 2056
+    set_tm(&expire_date_ref, 2024 + 32, 3, 7, 10, 0, 0);
+
+    uint8_t expire_years = 32; //Set no of expiry years > 31
+
+    comp_cert[70] = 1; //Set format version to 1 for extended expiry year encoding
+
+    //Get the encoded date format data from compressed certificate
+    ret = atcacert_date_enc_compcert_ext(&issue_date_ref, expire_years, comp_cert);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    //Encoded data for reference:{ 0xC1, 0x9D, 0x40, 0x10 };
+
+    //Decode the compressed certificate encoded date value 
+    ret = atcacert_date_dec_compcert_ext(comp_cert, DATEFMT_RFC5280_GEN, &issue_date, &expire_date);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    //Compare the decoded dates with actual time format
+    TEST_ASSERT_EQUAL_MEMORY(&issue_date_ref, &issue_date, sizeof(issue_date));
+    TEST_ASSERT_EQUAL_MEMORY(&expire_date_ref, &expire_date, sizeof(expire_date));
+}
+
+TEST(atcacert_date_dec_compcert, expiry_date_utc)
+{
+    int ret = 0;
+    atcacert_tm_utc_t issue_date, issue_date_ref;
+    atcacert_tm_utc_t expire_date, expire_date_ref;
+
+    //Compressed format version with 0 has 3 byte date encoding
+    uint8_t enc_dates[3] = {0};
+
+    //Issue date = 2024
+    set_tm(&issue_date_ref,  2024,      3, 7, 10, 0, 0);
+    
+    //Expiry date with expiry year = 2030
+    set_tm(&expire_date_ref, 2024 + 6, 3, 7, 10, 0, 0);
+
+    uint8_t expire_years = 6; //Set no of expiry years < 31
+
+    //Get the encoded date format data from compressed certificate
+    ret = atcacert_date_enc_compcert(&issue_date_ref, expire_years, enc_dates);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    //Encoded date data for reference: uint8_t enc_dates[4] = { 0xC1, 0x9D, 0x46 };
+
+    //Decode the compressed certificate encoded date value 
+    ret = atcacert_date_dec_compcert(enc_dates, DATEFMT_RFC5280_UTC, &issue_date, &expire_date);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    //Compare the decoded dates with actual time format
+    TEST_ASSERT_EQUAL_MEMORY(&issue_date_ref, &issue_date, sizeof(issue_date));
+    TEST_ASSERT_EQUAL_MEMORY(&expire_date_ref, &expire_date, sizeof(expire_date));
+}
+
+TEST(atcacert_date_dec_compcert, issue_date_extended_gen)
+{
+    int ret = 0;
+    atcacert_tm_utc_t issue_date, issue_date_ref;
+    atcacert_tm_utc_t expire_date, expire_date_ref;
+
+    //Compressed format version with 1 has 4 bytes encoded date 
+    uint8_t comp_cert[72] = {0};
+
+    //Issue date = 2050
+    set_tm(&issue_date_ref,  2050, 3, 7, 10, 0, 0);
+    
+    //Expiry date with expiry year = 2082
+    set_tm(&expire_date_ref, 2050 + 32, 3, 7, 10, 0, 0);
+
+    uint8_t expire_years = 32; //Set no of expiry years > 31
+
+    comp_cert[70] = 1; //Set format version to 1 for extended expiry year encoding
+
+    //Get the encoded date format data from compressed certificate
+    ret = atcacert_date_enc_compcert_ext(&issue_date_ref, expire_years, comp_cert);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    //Encoded data for reference: { 0x91, 0x9D, 0x40, 0x50 };
+
+    //Decode the compressed certificate encoded date value 
+    ret = atcacert_date_dec_compcert_ext(comp_cert, DATEFMT_RFC5280_GEN, &issue_date, &expire_date);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    //Compare the decoded dates with actual time format
+    TEST_ASSERT_EQUAL_MEMORY(&issue_date_ref, &issue_date, sizeof(issue_date));
+    TEST_ASSERT_EQUAL_MEMORY(&expire_date_ref, &expire_date, sizeof(expire_date));
+}
 
 
 

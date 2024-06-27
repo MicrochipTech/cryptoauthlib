@@ -105,15 +105,6 @@
 #define ATCA_ENCRYPTION_KEY_SIZE       (64)
 
 /** @} */
-
-/** \name Default Fixed Byte Values of Serial Number (SN[0:1] and SN[8])
-   @{ */
-#define ATCA_SN_0_DEF                (0x01)
-#define ATCA_SN_1_DEF                (0x23)
-#define ATCA_SN_8_DEF                (0xEE)
-/** @} */
-
-
 /** \name Definition for TempKey Mode
    @{ */
 //! mode mask for MAC command when using TempKey

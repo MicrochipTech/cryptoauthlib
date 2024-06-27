@@ -85,6 +85,7 @@ void RunAllCertDataTests(void)
     RUN_TEST_GROUP(atcacert_get_signer_id);
     RUN_TEST_GROUP(atcacert_set_cert_sn);
     RUN_TEST_GROUP(atcacert_gen_cert_sn);
+    RUN_TEST_GROUP(atcacert_generate_sn);
     RUN_TEST_GROUP(atcacert_get_cert_sn);
     RUN_TEST_GROUP(atcacert_set_auth_key_id);
     RUN_TEST_GROUP(atcacert_get_auth_key_id);
@@ -101,8 +102,14 @@ void RunAllCertDataTests(void)
 
 void RunAllCertIOTests(void)
 {
+#if ATCA_ECC_SUPPORT
     RUN_TEST_GROUP(atcacert_client);
     RUN_TEST_GROUP(atcacert_host_hw);
+#endif
+
+#if ATCA_CA2_CERT_SUPPORT
+    RUN_TEST_GROUP(atcacert_client_ca2);
+#endif
 }
 
 #endif

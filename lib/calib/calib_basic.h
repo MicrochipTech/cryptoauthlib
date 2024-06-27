@@ -498,6 +498,7 @@ ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data,
 #define atcab_read_config_zone_ext              calib_ca2_read_config_zone
 #else
 #define atcab_read_zone(...)                    calib_read_zone_ext(g_atcab_device_ptr, __VA_ARGS__)
+#define atcab_read_zone_ext(device, ...)        calib_read_zone_ext(device, __VA_ARGS__)
 #define atcab_is_locked(...)                    calib_is_locked_ext(g_atcab_device_ptr, __VA_ARGS__)
 #define atcab_is_config_locked(...)             calib_is_locked_ext(g_atcab_device_ptr, LOCK_ZONE_CONFIG, __VA_ARGS__)
 #define atcab_is_config_locked_ext(device, ...) calib_is_locked_ext(device, LOCK_ZONE_CONFIG, __VA_ARGS__)

@@ -268,7 +268,7 @@ TEST(atca_cmd_basic_test, verify_stored_on_reqrandom_set)
 
 #if defined(ATCA_MBEDTLS) || defined(ATCA_OPENSSL) || defined(ATCA_WOLFSSL)
     struct atcac_pk_ctx * sign_ctx;
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     sign_ctx = atcac_pk_ctx_new();
     TEST_ASSERT_NOT_NULL(sign_ctx);
 #else
@@ -344,7 +344,7 @@ TEST(atca_cmd_basic_test, verify_stored_on_reqrandom_set)
     status = atcac_pk_free(sign_ctx);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    #if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+    #if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
         atcac_pk_ctx_free(sign_ctx);
     #endif
 #endif

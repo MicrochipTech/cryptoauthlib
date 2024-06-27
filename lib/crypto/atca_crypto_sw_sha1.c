@@ -74,7 +74,7 @@ int atcac_sw_sha1_finish(struct atcac_sha1_ctx* ctx, uint8_t digest[ATCA_SHA1_DI
     return ATCA_SUCCESS;
 }
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
 struct atcac_sha1_ctx * atcac_sha1_ctx_new(void)
 {
     return (struct atcac_sha1_ctx*)hal_malloc(sizeof(atcac_sha1_ctx_t));

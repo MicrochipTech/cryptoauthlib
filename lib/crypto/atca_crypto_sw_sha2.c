@@ -77,7 +77,7 @@ ATCA_STATUS atcac_sw_sha2_256_finish(struct atcac_sha2_256_ctx* ctx, uint8_t dig
     return ATCA_SUCCESS;
 }
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
 struct atcac_sha2_256_ctx * atcac_sha256_ctx_new(void)
 {
     return (struct atcac_sha2_256_ctx*)hal_malloc(sizeof(atcac_sha2_256_ctx_t));
@@ -216,7 +216,7 @@ ATCA_STATUS atcac_sha256_hmac_finish(
     return status;
 }
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
 struct atcac_hmac_ctx * atcac_hmac_ctx_new(void)
 {
     return (struct atcac_hmac_ctx*)hal_malloc(sizeof(atcac_hmac_ctx_t));

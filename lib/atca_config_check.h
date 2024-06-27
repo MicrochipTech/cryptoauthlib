@@ -61,6 +61,13 @@
 #define ATCA_CA2_SUPPORT    DEFAULT_DISABLED
 #endif
 
+/* Support for cert feature in second generation of cryptoauth parts */
+#if defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT)
+#define ATCA_CA2_CERT_SUPPORT    DEFAULT_ENABLED
+#else
+#define ATCA_CA2_CERT_SUPPORT    DEFAULT_DISABLED
+#endif
+
 /* Classic Cryptoauth Devices */
 #if defined(ATCA_SHA_SUPPORT) || defined(ATCA_ECC_SUPPORT) || ATCA_CA2_SUPPORT
 #define ATCA_CA_SUPPORT     DEFAULT_ENABLED

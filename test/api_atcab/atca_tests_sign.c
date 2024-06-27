@@ -78,7 +78,7 @@ TEST(atca_cmd_basic_test, sign_sw_verify)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     /* Initialize a software public key context */
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     pkey = atcac_pk_ctx_new();
 #else
     atcac_pk_ctx_t pkey_ctx;
@@ -95,7 +95,7 @@ TEST(atca_cmd_basic_test, sign_sw_verify)
     status = atcac_pk_verify(pkey, msg, sizeof(msg), signature, sizeof(signature));
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     if (NULL != pkey)
     {
         atcac_pk_free(pkey);

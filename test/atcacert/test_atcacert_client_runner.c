@@ -37,7 +37,6 @@ TEST_GROUP_RUNNER(atcacert_client)
 #if ATCACERT_COMPCERT_EN
     // Load certificate data onto the device
     RUN_TEST_CASE(atcacert_client, init);
-
     RUN_TEST_CASE(atcacert_client, atcacert_read_device_loc_gen_key);
     RUN_TEST_CASE(atcacert_client, atcacert_read_device_loc_gen_key_partial);
     RUN_TEST_CASE(atcacert_client, atcacert_read_device_loc_data_partial);
@@ -47,14 +46,17 @@ TEST_GROUP_RUNNER(atcacert_client)
     RUN_TEST_CASE(atcacert_client, atcacert_read_subj_key_id);
     RUN_TEST_CASE(atcacert_client, atcacert_read_cert_small_buf);
     RUN_TEST_CASE(atcacert_client, atcacert_read_cert_bad_params);
+    RUN_TEST_CASE(atcacert_client, atcacert_get_response_bad_params);
+
+#if ATCA_ECC_SUPPORT
+    RUN_TEST_CASE(atcacert_client, atcacert_get_response);
     RUN_TEST_CASE(atcacert_client, atcacert_generate_device_csr);
     RUN_TEST_CASE(atcacert_client, atcacert_generate_device_csr_pem);
-
-    RUN_TEST_CASE(atcacert_client, atcacert_get_response);
-    RUN_TEST_CASE(atcacert_client, atcacert_get_response_bad_params);
 #endif
 
-#if ATCACERT_INTEGRATION_EN 
+#endif
+
+#if ATCACERT_INTEGRATION_EN
     RUN_TEST_CASE(atcacert_client, atcacert_get_subj);
     RUN_TEST_CASE(atcacert_client, atcacert_get_subj_pbkey);
     RUN_TEST_CASE(atcacert_client, atcacert_get_subj_pbkey_id);
@@ -63,6 +65,25 @@ TEST_GROUP_RUNNER(atcacert_client)
     RUN_TEST_CASE(atcacert_client, atcacert_get_issue_date_test);
     RUN_TEST_CASE(atcacert_client, atcacert_get_expiry_date);
     RUN_TEST_CASE(atcacert_client, atcacert_get_serial_num);
+#if ATCA_TA_SUPPORT
+    RUN_TEST_CASE(atcacert_client, atcacert_write_rsa_signed_cert);
+#endif
 #endif
 }
+
+#if ATCA_CA2_CERT_SUPPORT
+TEST_GROUP_RUNNER(atcacert_client_ca2)
+{
+    RUN_TEST_CASE(atcacert_client_ca2, init);
+    RUN_TEST_CASE(atcacert_client_ca2, atcacert_read_device_loc_pub_key);
+    RUN_TEST_CASE(atcacert_client_ca2, atcacert_read_device_loc_pub_key_partial);
+    RUN_TEST_CASE(atcacert_client_ca2, atcacert_read_device_loc_data_partial);
+    RUN_TEST_CASE(atcacert_client_ca2, atcacert_read_cert_signer);
+    RUN_TEST_CASE(atcacert_client_ca2, atcacert_read_cert_device);
+    RUN_TEST_CASE(atcacert_client_ca2, atcacert_read_subj_key_id);
+    RUN_TEST_CASE(atcacert_client_ca2, atcacert_read_cert_small_buf);
+    RUN_TEST_CASE(atcacert_client_ca2, atcacert_read_cert_bad_params);
+    RUN_TEST_CASE(atcacert_client_ca2, atcacert_get_response_bad_params);
+}
+#endif
 #endif

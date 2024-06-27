@@ -310,7 +310,7 @@ void pkcs11_debug_attributes(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)
             PKCS11_DEBUG_NOFILE("%s(%X):%d:%s\r\n", name, (unsigned int)pTemplate->type, (int)pTemplate->ulValueLen, (char*)pTemplate->pValue);
             break;
         default:
-#ifndef ATCA_NO_HEAP
+#ifdef ATCA_HEAP
         {
             size_t buf_len = pTemplate->ulValueLen * 3 + 1;
             char * buffer = pkcs11_os_malloc(buf_len);

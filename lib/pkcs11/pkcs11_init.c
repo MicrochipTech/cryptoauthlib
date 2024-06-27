@@ -39,7 +39,7 @@
 #include "cryptoauthlib.h"
 
 #ifdef CreateMutex
-#undef CreateMutex /* CreateMutex is defined to CreateMutexW in synchapi.h in Windows. */
+#undef CreateMutex  /* CreateMutex is defined to CreateMutexW in synchapi.h in Windows. */
 #endif
 
 /**
@@ -48,12 +48,12 @@
 
 /** Library intialization defaults if none were provided */
 static const CK_C_INITIALIZE_ARGS pkcs11_init_defaults = {
-    NULL_PTR,          /**< Callback to create a mutex */
-    NULL_PTR,          /**< Callback to destroy a mutex */
-    NULL_PTR,          /**< Callback to lock a mutex */
-    NULL_PTR,          /**< Callback to unlock a mutex */
-    CKF_OS_LOCKING_OK, /**< Initialization Flags  */
-    NULL_PTR,          /**< Reserved - Must be NULL */
+    NULL_PTR,           /**< Callback to create a mutex */
+    NULL_PTR,           /**< Callback to destroy a mutex */
+    NULL_PTR,           /**< Callback to lock a mutex */
+    NULL_PTR,           /**< Callback to unlock a mutex */
+    CKF_OS_LOCKING_OK,  /**< Initialization Flags  */
+    NULL_PTR,           /**< Reserved - Must be NULL */
 };
 
 /**
@@ -424,70 +424,12 @@ CK_RV pkcs11_init(CK_C_INITIALIZE_ARGS const *pInitArgs)
     return rv;
 }
 
-static CK_RV pkcs11_deinit_interface_check(ATCADevice device, ATCAIfaceType list[])
-{
-    CK_RV rv = CKR_OK;
-    CK_CHAR i = 0;
-    uint16_t minSlotCount = 1;
-
-    if (NULL == device || NULL == list)
-    {
-        rv = CKR_ARGUMENTS_BAD;
-    }
-
-    if (CKR_OK == rv)
-    {
-        /* check if current interface is already released
-            if yes return failure*/
-        while (i < (CK_ULONG)PKCS11_MAX_SLOTS_ALLOWED)
-        {
-            if (device->mIface.mIfaceCFG->iface_type == list[i])
-            {
-                rv = CKR_GENERAL_ERROR;
-                break;
-            }
-            i++;
-        }
-    }
-
-    /* Interface not yet released
-        Update the list and return success*/
-    if (CKR_OK == rv)
-    {
-        i = 0;
-        /* coverity[misra_c_2012_rule_14_3_violation] Max slot can be greater than 1*/
-        if (PKCS11_MAX_SLOTS_ALLOWED != minSlotCount)
-        {
-            /* coverity[misra_c_2012_rule_14_3_violation] For MAX_SLOT > 1 Execution will reach this statement  */
-            while (ATCA_UNKNOWN_IFACE != list[i])
-            {
-                /* coverity[misra_c_2012_rule_14_3_violation] Based on User input max slot varies */
-                if (i >= (CK_CHAR)(PKCS11_MAX_SLOTS_ALLOWED - 1u))
-                {
-                    /* list max reached*/
-                    rv = CKR_FUNCTION_FAILED;
-                    break;
-                }
-                i++;
-            }
-        }
-
-        if (CKR_OK == rv)
-        {
-            /* update the list with current interface*/
-            list[i] = device->mIface.mIfaceCFG->iface_type;
-        }
-    }
-
-    return rv;
-}
 /* Close the library */
 CK_RV pkcs11_deinit(CK_VOID_PTR pReserved)
 {
     CK_RV rv = CKR_OK;
     uint32_t ulSlot = 0;
     pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
-    ATCAIfaceType interfaceList[PKCS11_MAX_SLOTS_ALLOWED];
     CK_ULONG i = 0;
 
     if (NULL != pReserved)
@@ -530,11 +472,6 @@ CK_RV pkcs11_deinit(CK_VOID_PTR pReserved)
             /* Release the crypto devices */
             pkcs11_slot_ctx_ptr pslot_ctx_release = (pkcs11_slot_ctx_ptr)lib_ctx->slots;
 
-            for (i = 0; i < PKCS11_MAX_SLOTS_ALLOWED; i++)
-            {
-                interfaceList[i] = ATCA_UNKNOWN_IFACE;
-            }
-
             for (i = 0; i < lib_ctx->slot_cnt; i++)
             {
                 if ((NULL == pslot_ctx_release) || (NULL == pslot_ctx_release->device_ctx))
@@ -542,14 +479,10 @@ CK_RV pkcs11_deinit(CK_VOID_PTR pReserved)
                     break;
                 }
 
-                /* Release current interface only if not already released */
-                if (CKR_OK == pkcs11_deinit_interface_check(pslot_ctx_release->device_ctx, interfaceList))
-                {
-                    (void)releaseATCADevice(pslot_ctx_release->device_ctx);
-                    PKCS11_DEBUG("Release device_ctx  Interface:[%d] Device:[%d]\n", \
-                                 pslot_ctx_release->device_ctx->mIface.mIfaceCFG->iface_type, pslot_ctx_release->device_ctx->mIface.mIfaceCFG->devtype);
+                (void)releaseATCADevice(pslot_ctx_release->device_ctx);
+                PKCS11_DEBUG("Release device_ctx  Interface:[%d] Device:[%d]\n", \
+                             pslot_ctx_release->device_ctx->mIface.mIfaceCFG->iface_type, pslot_ctx_release->device_ctx->mIface.mIfaceCFG->devtype);
 
-                }
                 pslot_ctx_release++;
             }
 

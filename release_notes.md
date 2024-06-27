@@ -1,6 +1,32 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.7.5 (06/26/2024)
+
+### New Features
+  - In PKCS11 module, added ECCP384,ECCP521,ECCP224 elliptic curves support for 
+    ECC key operations, in addition to the existing ECCP256 support
+  - Enhanced certificate related tests to include coverage for ECC204 and TA010 devices
+  - Added a new ATCA_HEAP internal macro check in place of ATCA_NO_HEAP for dynamic memory usages  
+  - Added an additional test to validate AES-CBC encrypt/decrypt APIs using 
+    CAVP's AES multiblock message test (MMT) sample vectors
+  - See [talib/CHANGES.md] for details on talib module changes
+  
+### Fixes
+  - Fixed atcacert_get_comp_cert() API to support certificates with expiry dates beyond year 2031
+  - Fixed atcacert_read_cert() API to consider serial number as source while processing 
+    extracted certificates
+  - Fixed atcacert_write_cert() API to support X509 certificates with an odd byte length, 
+    without any additional padding
+  - Fixed calib_execute_send() to consider correct data buffer when ATCA_HAL_LEGACY_API is used
+  - PKCS11 layer fixes/updates
+    - Fixed certificate chain/key export failures in ECC608 Trust devices
+  	- Fixed memory leak during C_Finalize API call usage in a multi-slot configuration
+
+### API Changes
+  - Added atcacert_generate_sn() API in atcacert module to generate certificate serial number 
+    from a valid serial number source
+
 ## Release v3.7.4 (03/08/2024)
 
 ### New Features

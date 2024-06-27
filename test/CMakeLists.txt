@@ -120,3 +120,8 @@ add_custom_command(TARGET cryptoauth_test POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
                 ${CMAKE_CURRENT_SOURCE_DIR}/vectors/hmac_test_vectors
                 $<TARGET_FILE_DIR:${PROJECT_NAME}>/hmac_test_vectors )
+
+add_custom_command(TARGET cryptoauth_test POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+                ${CMAKE_CURRENT_SOURCE_DIR}/vectors/aesmmt_cbc_cavp_vectors
+                $<TARGET_FILE_DIR:${PROJECT_NAME}>/aesmmt_cbc_cavp_vectors )

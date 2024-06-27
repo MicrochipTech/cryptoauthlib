@@ -77,10 +77,11 @@ const atcacert_def_t* tng_map_get_device_cert_def(int index)
     }
 }
 
-ATCA_STATUS tng_get_device_cert_def(const atcacert_def_t **cert_def)
+ATCA_STATUS tng_get_device_cert_def_ext(ATCADevice device, const atcacert_def_t **cert_def)
 {
     ATCA_STATUS status;
-    char otpcode[32];
+    char otpcode[(ATCA_OTP_SIZE / 2u)];
+    uint8_t otp_rd_byte_max_sz = (ATCA_OTP_SIZE / 2u);
     uint8_t i;
 
     if (cert_def == NULL)
@@ -88,12 +89,12 @@ ATCA_STATUS tng_get_device_cert_def(const atcacert_def_t **cert_def)
         return ATCA_BAD_PARAM;
     }
 
-    status = atcab_read_zone(ATCA_ZONE_OTP, 0, 0, 0, (uint8_t*)otpcode, 32);
+    status = atcab_read_zone_ext(device, ATCA_ZONE_OTP, 0, 0, 0, (uint8_t*)otpcode, otp_rd_byte_max_sz);
     if (ATCA_SUCCESS == status)
     {
         for (i = 0; i < g_tng_cert_def_cnt; i++)
         {
-            if (0 == strncmp(g_tng_cert_def_map[i].otpcode, otpcode, 8))
+            if (0 == strncmp(g_tng_cert_def_map[i].otpcode, otpcode, ATCA_OTP_CODE_SIZE))
             {
                 *cert_def = g_tng_cert_def_map[i].cert_def;
                 break;
@@ -107,6 +108,11 @@ ATCA_STATUS tng_get_device_cert_def(const atcacert_def_t **cert_def)
     }
 
     return status;
+}
+
+ATCA_STATUS tng_get_device_cert_def(const atcacert_def_t **cert_def)
+{
+    return tng_get_device_cert_def_ext(atcab_get_device(), cert_def);
 }
 
 ATCA_STATUS tng_get_device_pubkey(uint8_t *public_key)

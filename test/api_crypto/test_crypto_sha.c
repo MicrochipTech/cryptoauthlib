@@ -105,7 +105,7 @@ TEST(atcac_sha, sha1_nist3)
     struct atcac_sha1_ctx * ctx;
     uint32_t i;
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     ctx = atcac_sha1_ctx_new();
     TEST_ASSERT_NOT_NULL(ctx);
 #else
@@ -126,7 +126,7 @@ TEST(atcac_sha, sha1_nist3)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(digest_ref, digest, sizeof(digest_ref));
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     atcac_sha1_ctx_free(ctx);
 #endif
 }
@@ -275,7 +275,7 @@ TEST(atcac_sha, sha256_nist3)
     struct atcac_sha2_256_ctx* ctx;
     uint32_t i;
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     ctx = atcac_sha256_ctx_new();
     TEST_ASSERT_NOT_NULL(ctx);
 #else
@@ -296,7 +296,7 @@ TEST(atcac_sha, sha256_nist3)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(digest_ref, digest, sizeof(digest_ref));
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     atcac_sha256_ctx_free(ctx);
 #endif
 }
@@ -430,7 +430,7 @@ TEST(atcac_sha, sha256_hmac)
     };
     struct atcac_hmac_ctx* ctx;
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     sha256_ctx = atcac_sha256_ctx_new();
     TEST_ASSERT_NOT_NULL(sha256_ctx);
     ctx = atcac_hmac_ctx_new();
@@ -454,7 +454,7 @@ TEST(atcac_sha, sha256_hmac)
 
     TEST_ASSERT_EQUAL_MEMORY(hmac_ref, hmac, ATCA_SHA256_DIGEST_SIZE);
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     atcac_hmac_ctx_free(ctx);
     atcac_sha256_ctx_free(sha256_ctx);
 #endif
@@ -478,7 +478,7 @@ TEST(atcac_sha, sha256_hmac_nist)
     struct atcac_hmac_ctx* hmac_ctx;
     struct atcac_sha2_256_ctx* sha256_ctx;
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     sha256_ctx = atcac_sha256_ctx_new();
     TEST_ASSERT_NOT_NULL(sha256_ctx);
     hmac_ctx = atcac_hmac_ctx_new();
@@ -529,7 +529,7 @@ TEST(atcac_sha, sha256_hmac_nist)
     }
     while (ret == ATCA_SUCCESS);
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     atcac_hmac_ctx_free(hmac_ctx);
     atcac_sha256_ctx_free(sha256_ctx);
 #endif

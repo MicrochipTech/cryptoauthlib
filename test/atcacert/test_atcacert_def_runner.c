@@ -170,6 +170,8 @@ TEST_GROUP_RUNNER(atcacert_gen_cert_sn)
     RUN_TEST_CASE(atcacert_gen_cert_sn, pub_key_hash);
     RUN_TEST_CASE(atcacert_gen_cert_sn, pub_key_hash_pos);
     RUN_TEST_CASE(atcacert_gen_cert_sn, pub_key_hash_raw);
+    RUN_TEST_CASE(atcacert_gen_cert_sn, pub_key_hash_ext_issue);
+    RUN_TEST_CASE(atcacert_gen_cert_sn, pub_key_hash_ext_expire);
     RUN_TEST_CASE(atcacert_gen_cert_sn, pub_key_hash_unexpected_size);
     RUN_TEST_CASE(atcacert_gen_cert_sn, pub_key_hash_bad_public_key);
     RUN_TEST_CASE(atcacert_gen_cert_sn, pub_key_hash_bad_issue_date);
@@ -177,9 +179,31 @@ TEST_GROUP_RUNNER(atcacert_gen_cert_sn)
     RUN_TEST_CASE(atcacert_gen_cert_sn, device_sn_hash);
     RUN_TEST_CASE(atcacert_gen_cert_sn, device_sn_hash_pos);
     RUN_TEST_CASE(atcacert_gen_cert_sn, device_sn_hash_raw);
+    RUN_TEST_CASE(atcacert_gen_cert_sn, device_sn_hash_ext_issue);
+    RUN_TEST_CASE(atcacert_gen_cert_sn, device_sn_hash_ext_expire);
     RUN_TEST_CASE(atcacert_gen_cert_sn, device_sn_hash_unexpected_size);
     RUN_TEST_CASE(atcacert_gen_cert_sn, device_sn_hash_bad_issue_date);
     RUN_TEST_CASE(atcacert_gen_cert_sn, device_sn_hash_bad_params);
+}
+
+TEST_GROUP_RUNNER(atcacert_generate_sn)
+{
+    RUN_TEST_CASE(atcacert_generate_sn, device_sn);
+    RUN_TEST_CASE(atcacert_generate_sn, device_sn_bad_params);
+    RUN_TEST_CASE(atcacert_generate_sn, signer_id);
+    RUN_TEST_CASE(atcacert_generate_sn, signer_id_bad_params);
+    RUN_TEST_CASE(atcacert_generate_sn, pub_key_hash);
+    RUN_TEST_CASE(atcacert_generate_sn, pub_key_hash_pos);
+    RUN_TEST_CASE(atcacert_generate_sn, pub_key_hash_raw);
+    RUN_TEST_CASE(atcacert_generate_sn, pub_key_hash_ext_issue);
+    RUN_TEST_CASE(atcacert_generate_sn, pub_key_hash_ext_expire);
+    RUN_TEST_CASE(atcacert_generate_sn, pub_key_hash_bad_params);
+    RUN_TEST_CASE(atcacert_generate_sn, device_sn_hash);
+    RUN_TEST_CASE(atcacert_generate_sn, device_sn_hash_pos);
+    RUN_TEST_CASE(atcacert_generate_sn, device_sn_hash_raw);
+    RUN_TEST_CASE(atcacert_generate_sn, device_sn_hash_ext_issue);
+    RUN_TEST_CASE(atcacert_generate_sn, device_sn_hash_ext_expire);
+    RUN_TEST_CASE(atcacert_generate_sn, device_sn_hash_bad_params);
 }
 
 TEST_GROUP_RUNNER(atcacert_get_cert_sn)
@@ -215,7 +239,18 @@ TEST_GROUP_RUNNER(atcacert_set_comp_cert)
 TEST_GROUP_RUNNER(atcacert_get_comp_cert)
 {
     RUN_TEST_CASE(atcacert_get_comp_cert, good);
+    RUN_TEST_CASE(atcacert_get_comp_cert, no_expire_loc);
+    RUN_TEST_CASE(atcacert_get_comp_cert, max_expire);
+    RUN_TEST_CASE(atcacert_get_comp_cert, no_dates);
+    RUN_TEST_CASE(atcacert_get_comp_cert, not_even);
+    RUN_TEST_CASE(atcacert_get_comp_cert, expire_before_issue);
+    RUN_TEST_CASE(atcacert_get_comp_cert, large_expire);
+    RUN_TEST_CASE(atcacert_get_comp_cert, diff_expire_years);
+    RUN_TEST_CASE(atcacert_get_comp_cert, public_key_only);
+    RUN_TEST_CASE(atcacert_get_comp_cert, ext_def_issue_date_signer_id);
     RUN_TEST_CASE(atcacert_get_comp_cert, bad_params);
+    RUN_TEST_CASE(atcacert_get_comp_cert, gen_comp_with_expiry_date_beyond_2049);
+    RUN_TEST_CASE(atcacert_get_comp_cert, gen_comp_with_issue_date_beyond_2031);
 }
 
 TEST_GROUP_RUNNER(atcacert_get_tbs)
@@ -302,6 +337,8 @@ TEST_GROUP_RUNNER(atcacert_cert_build)
     RUN_TEST_CASE(atcacert_cert_build, max_cert_size_x509_dynamic_sn_bad_size);
     RUN_TEST_CASE(atcacert_cert_build, max_cert_size_custom);
     RUN_TEST_CASE(atcacert_cert_build, max_cert_size_bad_params);
+
+    RUN_TEST_CASE(atcacert_cert_build, no_expire_loc);
 }
 
 TEST_GROUP_RUNNER(atcacert_is_device_loc_overlap)

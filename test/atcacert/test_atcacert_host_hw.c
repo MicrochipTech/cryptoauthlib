@@ -24,7 +24,7 @@
  * THIS SOFTWARE.
  */
 #include "atca_test.h"
-#ifndef DO_NOT_TEST_CERT
+#if defined(ATCA_ECC_SUPPORT) && !defined(DO_NOT_TEST_CERT)
 
 #include "atcacert/atcacert_host_hw.h"
 #include "atca_basic.h"
@@ -114,9 +114,16 @@ TEST_GROUP(atcacert_host_hw);
 
 TEST_SETUP(atcacert_host_hw)
 {
-    int ret = atcab_init(gCfg);
+    bool is_ca_device = false;
 
+    int ret = atcab_init(gCfg);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+
+    is_ca_device = atcab_is_ca_device(atcab_get_device_type());
+    if(false == is_ca_device)
+    {
+        TEST_IGNORE_MESSAGE("This Test group can be run on Ca devices only");
+    }
 }
 
 TEST_TEAR_DOWN(atcacert_host_hw)

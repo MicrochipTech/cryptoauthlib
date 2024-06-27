@@ -35,6 +35,8 @@
 extern "C" {
 #endif
 
+#define ATCA_OTP_CODE_SIZE              (8u)
+
 /** \defgroup tng_ TNG API (tng_)
  *
  * \brief These methods provide some convenience functions (mostly around
@@ -59,6 +61,17 @@ const atcacert_def_t* tng_map_get_device_cert_def(int index);
  */
 
 ATCA_STATUS tng_get_device_cert_def(const atcacert_def_t **cert_def);
+
+
+/** \brief Get the TNG device certificate definition.
+ *
+ * \param[in]  device     Pointer to the device context pointer
+ * \param[out] cert_def  TNG device certificate defnition is returned here.
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+
+ATCA_STATUS tng_get_device_cert_def_ext(ATCADevice device, const atcacert_def_t **cert_def);
 
 /** \brief Uses GenKey command to calculate the public key from the primary
  *         device public key.

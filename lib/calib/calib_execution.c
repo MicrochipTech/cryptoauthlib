@@ -330,14 +330,11 @@ ATCA_STATUS calib_execute_send(ATCADevice device, uint8_t word_address, uint8_t*
     }
 
 #ifdef ATCA_HAL_LEGACY_API
-    uint8_t temp_buf[CA_MAX_PACKET_SIZE + 1u] = { 0u }; //! One byte for byte for word address
+    uint8_t temp_buf[CA_MAX_PACKET_SIZE + 1u] = { 0u }; //! One byte for word address
     temp_buf[0] = word_address;
-    if (NULL != txdata)
-    {
-        memcpy(&temp_buf[1], txdata, txlength);
-    }
+    memcpy(&temp_buf[1], txdata, txlength);
     txlength += 1U;
-    status = atsend(&device->mIface, 0xFF, (uint8_t*)txdata, (int)txlength);
+    status = atsend(&device->mIface, 0xFF, (uint8_t*)temp_buf, (int)txlength);
 #else
     if (atca_iface_is_kit(&device->mIface))
     {

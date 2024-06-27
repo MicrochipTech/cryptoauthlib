@@ -72,7 +72,7 @@
 #include "atcacert/atcacert_def.h"
 #endif
 
-#if !defined(ATCA_NO_HEAP)
+#ifdef ATCA_HEAP
 struct atcac_sha1_ctx* atcac_sha1_ctx_new(void)
 {
     return (struct atcac_sha1_ctx*)hal_malloc(sizeof(atcac_sha1_ctx_t));
@@ -1282,7 +1282,7 @@ int atca_mbedtls_pk_init(mbedtls_pk_context * pkey, const uint16_t slotid)
 }
 
 #if (ATCA_CA_SUPPORT && ATCACERT_COMPCERT_EN)
-#if !defined(ATCA_NO_HEAP)
+#if defined(ATCA_HEAP)
 /** \brief Rebuild a certificate from an atcacert_def_t structure, and then add
  * it to an mbedtls cert chain.
  * \param[in,out] cert mbedtls cert chain. Must have already been initialized
@@ -1345,7 +1345,7 @@ ATCA_STATUS atcac_parse_der(struct atcac_x509_ctx** cert, cal_buffer* der)
 
     if (NULL != cert && NULL != der)
     {
-#if !defined(ATCA_NO_HEAP)
+#if defined(ATCA_HEAP)
         mbedtls_x509_crt* xcert = atcac_mbedtls_new();
 
         if (xcert == NULL)
@@ -1453,7 +1453,7 @@ ATCA_STATUS atcac_get_subj_key_id(const struct atcac_x509_ctx* cert, cal_buffer*
 
     if (NULL != cert && NULL != subj_public_key_id)
     {
-#if !defined(ATCA_NO_HEAP)
+#if defined(ATCA_HEAP)
         /* coverity[misra_c_2012_rule_21_3_violation:FALSE] Using mbedtls memory allocation api for initializing asn1 sequence object */
         // By design mbedtls prefers calloc as it not only allocates but also initializes the data
         mbedtls_asn1_sequence *extns = mbedtls_calloc(1, sizeof(mbedtls_asn1_sequence));
@@ -1639,7 +1639,7 @@ ATCA_STATUS atcac_get_auth_key_id(const struct atcac_x509_ctx* cert, cal_buffer*
 
     if (NULL != cert && NULL != auth_key_id)
     {
-#if !defined(ATCA_NO_HEAP)
+#if defined(ATCA_HEAP)
         /* coverity[misra_c_2012_rule_21_3_violation:FALSE] Using mbedtls memory allocation api for initializing asn1 sequence object */
         // By design mbedtls prefers calloc as it not only allocates but also initializes the data
         mbedtls_asn1_sequence *extns = mbedtls_calloc(1, sizeof(mbedtls_asn1_sequence));

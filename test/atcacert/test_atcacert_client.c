@@ -39,6 +39,9 @@
 #include "test_cert_def_2_device_csr.h"
 #include "test_cert_def_4_device.h"
 #include "test_cert_def_5_device.h"
+#include "test_cert_def_8_signer.h"
+#include "test_cert_def_9_device.h"
+#include "test_cert_def_10_device.h"
 
 #ifdef ATCA_MBEDTLS
     #include "mbedtls/certs.h"
@@ -56,6 +59,9 @@ size_t g_signer_cert_ref_size = 0;
 uint8_t g_device_cert_ref[512];
 size_t g_device_cert_ref_size = 0;
 
+//Flag to switch to atcacert_write_cert api or use the talib_write_cert api in the tests
+#define TALIB_API_WRITE_RSACERT FEATURE_ENABLED
+
 #if ATCACERT_COMPCERT_EN
 static void build_and_save_cert(
     const atcacert_def_t*    cert_def,
@@ -65,14 +71,17 @@ static void build_and_save_cert(
     const uint8_t            public_key[64],
     const uint8_t            signer_id[2],
     const atcacert_tm_utc_t* issue_date,
-    const uint8_t            config32[32],
+    const uint8_t *          config,
     uint8_t                  ca_slot)
 {
     int ret;
     atcacert_build_state_t build_state;
     uint8_t tbs_digest[32];
     uint8_t signature[64];
+    uint8_t comp_cert[72];
     size_t max_cert_size = *cert_size;
+    uint16_t config_count = atcab_is_ca2_device(atcab_get_device_type()) ? 16U : 32U;
+
     atcacert_tm_utc_t expire_date = {
         .tm_year    = issue_date->tm_year + cert_def->expire_years,
         .tm_mon     = issue_date->tm_mon,
@@ -81,11 +90,13 @@ static void build_and_save_cert(
         .tm_min     = 0,
         .tm_sec     = 0
     };
-    const atcacert_device_loc_t config32_dev_loc = {
+
+    const atcacert_device_loc_t config_dev_loc = {
         .zone   = DEVZONE_CONFIG,
         .offset = 0,
-        .count  = 32
+        .count  = config_count
     };
+
     atcacert_device_loc_t device_locs[4];
     size_t device_locs_count = 0;
     size_t i;
@@ -96,7 +107,7 @@ static void build_and_save_cert(
         TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     }
 
-    ret = atcacert_cert_build_start(&build_state, cert_def, cert, cert_size, ca_public_key);
+    ret = atcacert_cert_build_start(atcab_get_device(),&build_state, cert_def, cert, cert_size, ca_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     ret = atcacert_set_subj_public_key(build_state.cert_def, build_state.cert, *build_state.cert_size, public_key);
@@ -107,7 +118,13 @@ static void build_and_save_cert(
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     ret = atcacert_set_signer_id(build_state.cert_def, build_state.cert, *build_state.cert_size, signer_id);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-    ret = atcacert_cert_build_process(&build_state, &config32_dev_loc, config32);
+    ret = atcacert_get_comp_cert(build_state.cert_def, build_state.cert, *build_state.cert_size, comp_cert);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    ret = atcacert_cert_build_process(&build_state, &config_dev_loc, config);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    ret = atcacert_cert_build_process(&build_state, &cert_def->comp_cert_dev_loc, comp_cert);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     ret = atcacert_cert_build_finish(&build_state);
@@ -122,7 +139,7 @@ static void build_and_save_cert(
     ret = atcacert_set_signature(cert_def, cert, cert_size, max_cert_size, signature);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
-    ret = atcacert_get_device_locs(cert_def, device_locs, &device_locs_count, sizeof(device_locs) / sizeof(device_locs[0]), 32);
+    ret = atcacert_get_device_locs(atcab_get_device(),cert_def, device_locs, &device_locs_count, sizeof(device_locs) / sizeof(device_locs[0]), 32);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     for (i = 0; i < device_locs_count; i++)
@@ -163,9 +180,16 @@ TEST_SETUP(atcacert_client)
 {
     int ret = 0;
     bool lockstate = 0;
+    bool is_ca_device = false;
 
     ret = atcab_init(gCfg);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+
+    is_ca_device = atcab_is_ca_device(atcab_get_device_type());
+    if(false == is_ca_device)
+    {
+        TEST_IGNORE_MESSAGE("This Test group can be run on Ca devices only");
+    }
 
     ret = atcab_is_config_locked(&lockstate);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
@@ -197,6 +221,9 @@ TEST_TEAR_DOWN(atcacert_client)
 }
 
 #if ATCACERT_COMPCERT_EN
+//! #warning "For demonstration purposes, we're storing the Root private key and Signer private key inside a protected part of the device.
+//!           However, for production setup, these secure keys should not be kept in the device,
+//!           and the process to create a verification certificate should be performed off-chip."
 TEST(atcacert_client, init)
 {
     int ret = 0;
@@ -224,7 +251,6 @@ TEST(atcacert_client, init)
     uint8_t config32[32];
     char disp_str[1500];
     size_t disp_size = sizeof(disp_str);
-
 
     ret = atcab_read_zone(ATCA_ZONE_CONFIG, 0, 0, 0, config32, 32);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
@@ -289,6 +315,7 @@ TEST(atcacert_client, atcacert_read_device_loc_gen_key)
     int ret;
     uint8_t public_key[ATCA_ECCP256_PUBKEY_SIZE];
     uint8_t data[sizeof(public_key)];
+
     atcacert_device_loc_t device_loc = { DEVZONE_DATA, 0, TRUE, 0, 64 };
 
     ret = atcab_get_pubkey(device_loc.slot, public_key);
@@ -439,6 +466,38 @@ TEST(atcacert_client, atcacert_read_cert_bad_params)
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
 
+TEST(atcacert_client, atcacert_get_response_bad_params)
+{
+    int ret = 0;
+    uint8_t response[64];
+    const uint8_t challenge[32] = {
+        0x0c, 0xa6, 0x34, 0xc8, 0x37, 0x2f, 0x87, 0x99, 0x99, 0x7e, 0x9e, 0xe9, 0xd5, 0xbc, 0x72, 0x71,
+        0x84, 0xd1, 0x97, 0x0a, 0xea, 0xfe, 0xac, 0x60, 0x7e, 0xd1, 0x3e, 0x12, 0xb7, 0x32, 0x25, 0xf1
+    };
+
+    ret = atcacert_get_response(16, challenge, response);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_get_response(0, NULL, response);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_get_response(16, NULL, response);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_get_response(0, challenge, NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_get_response(16, challenge, NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_get_response(0, NULL, NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_get_response(16, NULL, NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+}
+
+#if (ATCA_ECC_SUPPORT)
 TEST(atcacert_client, atcacert_get_response)
 {
     int ret = 0;
@@ -470,37 +529,6 @@ TEST(atcacert_client, atcacert_get_response)
     ret = atcab_bin2hex(g_device_public_key, sizeof(g_device_public_key), disp_str, &disp_size);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
     printf("Public Key:\r\n%s\r\n", disp_str);
-}
-
-TEST(atcacert_client, atcacert_get_response_bad_params)
-{
-    int ret = 0;
-    uint8_t response[64];
-    const uint8_t challenge[32] = {
-        0x0c, 0xa6, 0x34, 0xc8, 0x37, 0x2f, 0x87, 0x99, 0x99, 0x7e, 0x9e, 0xe9, 0xd5, 0xbc, 0x72, 0x71,
-        0x84, 0xd1, 0x97, 0x0a, 0xea, 0xfe, 0xac, 0x60, 0x7e, 0xd1, 0x3e, 0x12, 0xb7, 0x32, 0x25, 0xf1
-    };
-
-    ret = atcacert_get_response(16, challenge, response);
-    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
-
-    ret = atcacert_get_response(0, NULL, response);
-    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
-
-    ret = atcacert_get_response(16, NULL, response);
-    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
-
-    ret = atcacert_get_response(0, challenge, NULL);
-    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
-
-    ret = atcacert_get_response(16, challenge, NULL);
-    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
-
-    ret = atcacert_get_response(0, NULL, NULL);
-    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
-
-    ret = atcacert_get_response(16, NULL, NULL);
-    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
 
 TEST(atcacert_client, atcacert_generate_device_csr)
@@ -592,6 +620,7 @@ TEST(atcacert_client, atcacert_generate_device_csr_pem)
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT(is_verified);
 }
+#endif
 #endif
 
 #if ATCACERT_INTEGRATION_EN
@@ -703,7 +732,7 @@ TEST(atcacert_client, atcacert_get_subj_pbkey)
     uint8_t ref_pubkey[64] = { 0x00 };
 
     if (atcab_is_ca_device(dev_type))
-    {   
+    {
 #if ATCA_CA_SUPPORT
         // Skip test if data zone is locked
         test_assert_data_is_unlocked();
@@ -734,7 +763,7 @@ TEST(atcacert_client, atcacert_get_subj_pbkey)
 #endif
     }
     else
-    {   
+    {
 #if ATCA_TA_SUPPORT
 
         uint8_t ref_pubkey_ta[64] = { 0x62, 0xB4, 0xC4, 0xF9, 0x4E, 0xD0, 0xDB, 0x36, 0xFE, 0xEC, 0x9A, 0x4E, 0xC8, 0x2A, 0x93, 0x96, 0x47, 0x1D, 0x01, 0x0A, 0xA9, 0x37, 0x91, 0x98, 0xB4, 0xBD, 0xDB, 0x7E, 0xEB, 0xD3, 0x32, 0x65, 0x88, 0xAA, 0xA5, 0x53, 0xC1, 0x61, 0x63, 0x92, 0xC9, 0xE4, 0x2D, 0xD1, 0x88, 0x56, 0x9F, 0x9A, 0xC2, 0x54, 0x85, 0x4A, 0xAA, 0xF4, 0xEC, 0xB8, 0x12, 0xBC, 0x66, 0x5D, 0x76, 0xE2, 0x22, 0xC8 };
@@ -780,7 +809,7 @@ TEST(atcacert_client, atcacert_get_subj_pbkey_id)
     size_t cert_sz = 0x00;
 
     if (atcab_is_ca_device(dev_type))
-    {   
+    {
 #if ATCA_CA_SUPPORT
         // Skip test if data zone is locked
         test_assert_data_is_unlocked();
@@ -811,7 +840,7 @@ TEST(atcacert_client, atcacert_get_subj_pbkey_id)
 
     }
     else
-    {   
+    {
 #if ATCA_TA_SUPPORT
         uint8_t ref_key_id_ta[20] = { 0x00, 0xD8, 0xDE, 0xEC, 0x59, 0x5C, 0xE6, 0x3E, 0x43, 0x44, 0x77, 0xEA, 0xDA, 0x57, 0xE4, 0xEB, 0x6C, 0x22, 0xD6, 0x15 };
         memcpy(ref_key_id, ref_key_id_ta, sizeof(ref_key_id_ta));
@@ -871,7 +900,7 @@ TEST(atcacert_client, atcacert_get_issue_date_test)
     ATCADeviceType dev_type = atca_test_get_device_type();
 
     if (atcab_is_ca_device(dev_type))
-    {   
+    {
 #if ATCA_CA_SUPPORT
         // Skip test if data zone is locked
         test_assert_data_is_unlocked();
@@ -912,7 +941,7 @@ TEST(atcacert_client, atcacert_get_issue_date_test)
 #endif
     }
     else
-    {   
+    {
 #if ATCA_TA_SUPPORT
         static const atcacert_tm_utc_t issue_date_ref_ta = {
             .tm_year = 122,
@@ -1072,7 +1101,7 @@ TEST(atcacert_client, atcacert_get_serial_num)
     ATCADeviceType dev_type = atca_test_get_device_type();
 
     if (atcab_is_ca_device(dev_type))
-    {   
+    {
 #if ATCA_CA_SUPPORT
         // Skip test if data zone is locked
         test_assert_data_is_unlocked();
@@ -1104,7 +1133,7 @@ TEST(atcacert_client, atcacert_get_serial_num)
 #endif
     }
     else
-    {   
+    {
 #if ATCA_TA_SUPPORT
         uint8_t ref_cert_sn_ta[32] = { 0x01 };
         memcpy(ref_cert_sn, ref_cert_sn_ta, sizeof(ref_cert_sn_ta));
@@ -1280,6 +1309,379 @@ TEST(atcacert_client, atcacert_get_issuer_test)
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 #endif
     }
+}
+
+/** \brief Execute write and read command to create handle for large certificate element on shared data memory of odd size
+ */
+#if ATCA_TA_SUPPORT
+
+TEST(atcacert_client, atcacert_write_rsa_signed_cert)
+{
+    ATCA_STATUS status;
+    ta_element_attributes_t attr_crt_handle_attr;
+
+    // Skip test if data zone isn't locked
+    test_assert_data_is_locked();
+
+    // Skip test if config zone isn't locked
+    test_assert_config_is_locked();
+
+    uint16_t cert_handle;
+    status = atca_test_config_get_id(TEST_TYPE_RSA3072_CERT, &cert_handle);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    uint16_t cert_size = (sizeof(g_test_cert_rsa3072)+1u);
+
+    uint8_t cert_rd[1431] = {0x00};
+    size_t cert_rd_sz = 0x00;
+
+//Flag to select which api to use for writing the certificate in the atcacert_write_rsa_signed_cert test
+#if TALIB_API_WRITE_RSACERT == FEATURE_ENABLED
+    cal_buffer cert_data_buf = CAL_BUF_INIT(sizeof(g_test_cert_rsa3072), g_test_cert_rsa3072);
+    status = talib_write_X509_cert(atcab_get_device(), cert_handle, &cert_data_buf);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    cal_buffer cert_rddata_buf = CAL_BUF_INIT(cert_rd_sz, NULL);
+    //Read cert get the length of the certificate stored; pass null output buffer
+    status = talib_read_X509_cert(atcab_get_device(), cert_handle, &cert_rddata_buf);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status); 
+    TEST_ASSERT_EQUAL(cert_rddata_buf.len, g_test_cert_def_10_device.cert_template_size);
+    //Read full certificate stored
+    cert_rddata_buf.buf = cert_rd;
+    status = talib_read_X509_cert(atcab_get_device(), cert_handle, &cert_rddata_buf);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status); 
+
+#else
+    status = atcacert_write_cert(&g_test_cert_def_10_device, g_test_cert_rsa3072, g_test_cert_def_10_device.cert_template_size);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    //Read cert get the length of the certificate stored; pass null output buffer
+    status = atcacert_read_cert(&g_test_cert_def_10_device, NULL, NULL, &cert_rd_sz);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status); 
+    TEST_ASSERT_EQUAL(cert_rd_sz, g_test_cert_def_10_device.cert_template_size);
+    //Read cert to check the asn1 parse der api works fine
+    status = atcacert_read_cert(&g_test_cert_def_10_device, NULL, cert_rd, &cert_rd_sz);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    TEST_ASSERT_EQUAL(cert_rd_sz, g_test_cert_def_10_device.cert_template_size);    
+#endif
+    TEST_ASSERT_EQUAL_MEMORY(&g_test_cert_rsa3072, cert_rd, g_test_cert_def_10_device.cert_template_size);
+    status = talib_delete_handle(atcab_get_device(), (uint32_t)cert_handle);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+}
+#endif
+
+#endif
+
+#if ATCA_CA2_CERT_SUPPORT
+TEST_GROUP(atcacert_client_ca2);
+
+TEST_SETUP(atcacert_client_ca2)
+{
+    int ret = 0;
+    bool lockstate = 0;
+    bool is_ca2_device = false;
+
+    ret = atcab_init(gCfg);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+
+    is_ca2_device = atcab_is_ca2_device(atcab_get_device_type());
+    if(false == is_ca2_device)
+    {
+        TEST_IGNORE_MESSAGE("This Test group can be run on Ecc204/ta010 devices only");
+    }
+
+    ret = atcab_is_config_locked(&lockstate);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+    if (!lockstate)
+    {
+        TEST_IGNORE_MESSAGE("Config zone must be locked for this test.");
+    }
+}
+
+TEST_TEAR_DOWN(atcacert_client_ca2)
+{
+    ATCA_STATUS status;
+
+    status = atcab_release();
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+}
+
+//! #warning "For demonstration purposes, we're storing the Root private key and Signer private key inside a protected part of the device.
+//!           However, for production setup, these secure keys should not be kept in the device,
+//!           and the process to create a verification certificate should be performed off-chip."
+TEST(atcacert_client_ca2, init)
+{
+    int ret = 0;
+    static const uint8_t signer_ca_private_key_slot = 0;
+    static const uint8_t signer_private_key_slot = 0;
+    uint8_t signer_id[2] = { 0xC4, 0x8B };
+    const atcacert_tm_utc_t signer_issue_date = {
+        .tm_year    = 2014 - 1900,
+        .tm_mon     = 8 - 1,
+        .tm_mday    = 2,
+        .tm_hour    = 20,
+        .tm_min     = 0,
+        .tm_sec     = 0
+    };
+    static const uint8_t device_private_key_slot = 0;
+    const atcacert_tm_utc_t device_issue_date = {
+        .tm_year    = 2015 - 1900,
+        .tm_mon     = 9 - 1,
+        .tm_mday    = 3,
+        .tm_hour    = 21,
+        .tm_min     = 0,
+        .tm_sec     = 0
+    };
+    uint8_t config[16];
+    char disp_str[1500];
+    size_t disp_size = sizeof(disp_str);
+
+    ret = atcab_read_zone(ATCA_ZONE_CONFIG, 0, 0, 0, config, 16);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+
+    //! Generate Device private key and Device public key
+    ret = atca_test_genkey(device_private_key_slot, g_device_public_key);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+    disp_size = sizeof(disp_str);
+    ret = atcab_bin2hex(g_device_public_key, ATCA_ECCP256_PUBKEY_SIZE, disp_str, &disp_size);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+    printf("Device Public Key:\r\n%s\r\n", disp_str);
+
+    ret = atcab_write_bytes_zone(ATCA_ZONE_DATA, 1, 8, g_device_public_key, ATCA_ECCP256_PUBKEY_SIZE);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+
+    //! Generate Signer private key and Signer public key
+    ret = atca_test_genkey(signer_private_key_slot, g_signer_public_key);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+    disp_size = sizeof(disp_str);
+    ret = atcab_bin2hex(g_signer_public_key, ATCA_ECCP256_PUBKEY_SIZE, disp_str, &disp_size);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+    printf("Signer Public Key:\r\n%s\r\n", disp_str);
+
+    ret = atcab_write_bytes_zone(ATCA_ZONE_DATA, 1, 6, g_signer_public_key, ATCA_ECCP256_PUBKEY_SIZE);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+
+    g_device_cert_ref_size = sizeof(g_device_cert_ref);
+    build_and_save_cert(
+        &g_test_cert_def_9_device,
+        g_device_cert_ref,
+        &g_device_cert_ref_size,
+        g_signer_public_key,
+        g_device_public_key,
+        signer_id,
+        &device_issue_date,
+        config,
+        signer_private_key_slot);
+    disp_size = sizeof(disp_str);
+    ret = atcab_bin2hex(g_device_cert_ref, g_device_cert_ref_size, disp_str, &disp_size);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+    printf("Device Certificate:\r\n%s\r\n", disp_str);
+
+    //! Generate Signer CA Private key and Signer CA public key
+    ret = atca_test_genkey(signer_ca_private_key_slot, g_signer_ca_public_key);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+    disp_size = sizeof(disp_str);
+    ret = atcab_bin2hex(g_signer_ca_public_key, ATCA_ECCP256_PUBKEY_SIZE, disp_str, &disp_size);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+    printf("Signer CA Public Key:\r\n%s\r\n", disp_str);
+
+    // Build signer cert
+    g_signer_cert_ref_size = sizeof(g_signer_cert_ref);
+    build_and_save_cert(
+        &g_test_cert_def_8_signer,
+        g_signer_cert_ref,
+        &g_signer_cert_ref_size,
+        g_signer_ca_public_key,
+        g_signer_public_key,
+        signer_id,
+        &signer_issue_date,
+        config,
+        signer_ca_private_key_slot);
+    disp_size = sizeof(disp_str);
+    ret = atcab_bin2hex(g_signer_cert_ref, g_signer_cert_ref_size, disp_str, &disp_size);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+    printf("Signer Certificate:\r\n%s\r\n", disp_str);
+    printf("\n");
+}
+
+TEST(atcacert_client_ca2, atcacert_read_device_loc_pub_key)
+{
+    int ret;
+    uint8_t public_key[ATCA_ECCP256_PUBKEY_SIZE];
+    uint8_t data[sizeof(public_key)];
+
+    atcacert_device_loc_t device_loc = { DEVZONE_DATA, 1, FALSE, 256, 64 };
+
+    ret = atcacert_read_device_loc(&device_loc, data);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+    TEST_ASSERT_EQUAL_MEMORY(&g_device_public_key[0], data, device_loc.count);
+}
+
+TEST(atcacert_client_ca2, atcacert_read_device_loc_pub_key_partial)
+{
+    int ret;
+    uint8_t public_key[ATCA_ECCP256_PUBKEY_SIZE];
+    uint8_t data[sizeof(public_key)];
+    atcacert_device_loc_t device_loc = { DEVZONE_DATA, 1, FALSE, 261, 55 };
+
+    ret = atcacert_read_device_loc(&device_loc, data);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+    TEST_ASSERT_EQUAL_MEMORY(&g_device_public_key[5], data, device_loc.count);
+}
+
+TEST(atcacert_client_ca2, atcacert_read_device_loc_data_partial)
+{
+    int ret;
+    uint8_t data_full[72];
+    uint8_t data[sizeof(data_full)];
+    atcacert_device_loc_t device_loc = { DEVZONE_DATA, 1, FALSE, 5, 55 };
+
+    ret = atcab_read_bytes_zone(device_loc.zone, device_loc.slot, 0, data_full, 72);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+
+    ret = atcacert_read_device_loc(&device_loc, data);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+    TEST_ASSERT_EQUAL_MEMORY(&data_full[device_loc.offset], data, device_loc.count);
+}
+
+TEST(atcacert_client_ca2, atcacert_read_cert_signer)
+{
+    int ret = 0;
+    uint8_t cert[512];
+    size_t cert_size = sizeof(cert);
+
+    ret = atcacert_read_cert(&g_test_cert_def_8_signer, g_signer_ca_public_key, cert, &cert_size);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL(g_signer_cert_ref_size, cert_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_signer_cert_ref, cert, cert_size);
+}
+
+TEST(atcacert_client_ca2, atcacert_read_cert_device)
+{
+    int ret = 0;
+    uint8_t cert[512];
+    size_t cert_size = sizeof(cert);
+
+    ret = atcacert_read_cert(&g_test_cert_def_9_device, g_signer_public_key, cert, &cert_size);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL(g_device_cert_ref_size, cert_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_device_cert_ref, cert, cert_size);
+}
+
+TEST(atcacert_client_ca2, atcacert_read_subj_key_id)
+{
+    int ret = 0;
+    uint8_t cert[512];
+    size_t cert_size = sizeof(cert);
+    uint8_t key_id_ref[20];
+    uint8_t key_id[20];
+
+    ret = atcacert_read_cert(&g_test_cert_def_8_signer, g_signer_ca_public_key, cert, &cert_size);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL(g_signer_cert_ref_size, cert_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_signer_cert_ref, cert, cert_size);
+
+    ret = atcacert_get_subj_key_id(&g_test_cert_def_8_signer, cert, cert_size, key_id_ref);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    ret = atcacert_read_subj_key_id(&g_test_cert_def_8_signer, key_id);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL_MEMORY(key_id_ref, key_id, sizeof(key_id));
+}
+
+TEST(atcacert_client_ca2, atcacert_read_cert_small_buf)
+{
+    int ret = 0;
+    uint8_t cert[512];
+    size_t cert_size = sizeof(cert);
+
+    // Getting the actual buffer size needed for the certificate
+    ret = atcacert_read_cert(&g_test_cert_def_9_device, g_signer_public_key, NULL, &cert_size);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    // Read the device certificate
+    ret = atcacert_read_cert(&g_test_cert_def_9_device, g_signer_public_key, cert, &cert_size);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL(g_device_cert_ref_size, cert_size);
+    TEST_ASSERT_EQUAL_MEMORY(g_device_cert_ref, cert, cert_size);
+
+    // Decrease the size of the buffer needed for device certificate
+    cert_size -= 1;
+    ret = atcacert_read_cert(&g_test_cert_def_9_device, g_signer_public_key, cert, &cert_size);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BUFFER_TOO_SMALL, ret);
+}
+
+TEST(atcacert_client_ca2, atcacert_read_cert_bad_params)
+{
+    int ret = 0;
+    uint8_t cert[128];
+    size_t cert_size = sizeof(cert);
+
+    ret = atcacert_read_cert(NULL, g_signer_public_key, cert, &cert_size);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_read_cert(NULL, NULL, cert, &cert_size);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_read_cert(NULL, g_signer_public_key, NULL, &cert_size);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_read_cert(NULL, NULL, NULL, &cert_size);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_read_cert(&g_test_cert_def_9_device, g_signer_public_key, cert, NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_read_cert(NULL, g_signer_public_key, cert, NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_read_cert(&g_test_cert_def_9_device, NULL, cert, NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_read_cert(NULL, NULL, cert, NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_read_cert(&g_test_cert_def_9_device, g_signer_public_key, NULL, NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_read_cert(NULL, g_signer_public_key, NULL, NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_read_cert(&g_test_cert_def_9_device, NULL, NULL, NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_read_cert(NULL, NULL, NULL, NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+}
+
+TEST(atcacert_client_ca2, atcacert_get_response_bad_params)
+{
+    int ret = 0;
+    uint8_t response[64];
+    const uint8_t challenge[32] = {
+        0x0c, 0xa6, 0x34, 0xc8, 0x37, 0x2f, 0x87, 0x99, 0x99, 0x7e, 0x9e, 0xe9, 0xd5, 0xbc, 0x72, 0x71,
+        0x84, 0xd1, 0x97, 0x0a, 0xea, 0xfe, 0xac, 0x60, 0x7e, 0xd1, 0x3e, 0x12, 0xb7, 0x32, 0x25, 0xf1
+    };
+
+    ret = atcacert_get_response(16, challenge, response);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_get_response(0, NULL, response);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_get_response(16, NULL, response);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_get_response(0, challenge, NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_get_response(16, challenge, NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_get_response(0, NULL, NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_get_response(16, NULL, NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
 #endif
 #endif

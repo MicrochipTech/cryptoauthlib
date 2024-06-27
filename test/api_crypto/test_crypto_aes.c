@@ -57,8 +57,7 @@ TEST(atcac_aes, aes128_gcm_nist)
     uint8_t tag[AES_DATA_SIZE];
     bool is_verified;
     struct atcac_aes_gcm_ctx * ctx;
-
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     ctx = atcac_aes_gcm_ctx_new();
 #else
     atcac_aes_gcm_ctx_t gcm_ctx;
@@ -184,7 +183,7 @@ TEST(atcac_aes, aes128_gcm_nist)
         }
     }
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     if (NULL != ctx)
     {
         atcac_aes_gcm_ctx_free(ctx);
@@ -202,7 +201,7 @@ TEST(atcac_aes, aes128_cmac_nist)
 
     struct atcac_aes_cmac_ctx * ctx;
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     ctx = atcac_aes_cmac_ctx_new();
 #else
     atcac_aes_cmac_ctx_t cmac_ctx;
@@ -225,7 +224,7 @@ TEST(atcac_aes, aes128_cmac_nist)
             TEST_ASSERT_EQUAL_MEMORY(g_cmacs[key_block][msg_index], cmac, sizeof(cmac));
         }
     }
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     if (NULL != ctx)
     {
         atcac_aes_cmac_ctx_free(ctx);

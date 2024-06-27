@@ -1183,7 +1183,7 @@ void atcac_x509_free(void* cert)
     }
 }
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
 struct atcac_sha1_ctx * atcac_sha1_ctx_new(void)
 {
     return (struct atcac_sha1_ctx*)hal_malloc(sizeof(atcac_sha1_ctx_t));

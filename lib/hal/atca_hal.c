@@ -399,7 +399,7 @@ uint8_t hal_is_command_word(uint8_t word_address)
 }
 
 
-#if !defined(ATCA_NO_HEAP) && defined(ATCA_TESTS_ENABLED) && defined(ATCA_PLATFORM_MALLOC)
+#if defined(ATCA_HEAP) && defined(ATCA_TESTS_ENABLED) && defined(ATCA_PLATFORM_MALLOC)
 /* coverity[misra_c_2012_rule_21_3_violation] Dynamic memory is disabled by defining ATCA_NO_HEAP */
 static void* (*g_hal_malloc_f)(size_t size) = ATCA_PLATFORM_MALLOC;
 /* coverity[misra_c_2012_rule_21_3_violation] Dynamic memory is disabled by defining ATCA_NO_HEAP */

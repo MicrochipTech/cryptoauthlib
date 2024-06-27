@@ -189,7 +189,7 @@ static const pkcs11_attrib_model *pkcs11_find_attrib_match(pkcs11_object_ptr pOb
                     }
                 }
             }
-#ifndef ATCA_NO_HEAP
+#ifdef ATCA_HEAP
             if (NULL != temp.pValue)
             {
                 pkcs11_os_free(temp.pValue);

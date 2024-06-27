@@ -210,7 +210,7 @@ ATCA_STATUS initATCAIface(ATCAIfaceCfg *cfg, ATCAIface ca_iface);
 ATCA_STATUS releaseATCAIface(ATCAIface ca_iface);
 void deleteATCAIface(ATCAIface *ca_iface);
 
-#if !defined(ATCA_NO_HEAP) && defined(ENABLE_NEWATCAIFACE)
+#if defined(ATCA_HEAP) && defined(ENABLE_NEWATCAIFACE)
 ATCAIface newATCAIface(ATCAIfaceCfg *cfg);
 #endif
 

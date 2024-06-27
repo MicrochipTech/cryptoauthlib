@@ -56,7 +56,7 @@ typedef struct atcac_sha1_ctx
 struct atcac_sha1_ctx;
 #endif
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
 struct atcac_sha1_ctx * atcac_sha1_ctx_new(void);
 void atcac_sha1_ctx_free(struct atcac_sha1_ctx * ctx);
 #endif
@@ -77,7 +77,7 @@ typedef struct atcac_sha2_256_ctx
 struct atcac_sha2_256_ctx;
 #endif
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
 struct atcac_sha2_256_ctx * atcac_sha256_ctx_new(void);
 void atcac_sha256_ctx_free(struct atcac_sha2_256_ctx * ctx);
 #endif
@@ -100,7 +100,7 @@ typedef struct atcac_hmac_ctx
 struct atcac_hmac_ctx;
 #endif
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
 struct atcac_hmac_ctx * atcac_hmac_ctx_new(void);
 void atcac_hmac_ctx_free(struct atcac_hmac_ctx * ctx);
 #endif
@@ -114,7 +114,7 @@ ATCA_STATUS atcac_sha256_hmac_finish(struct atcac_hmac_ctx* ctx, uint8_t* digest
 
 #if ATCAC_AES_CMAC_EN
 struct atcac_aes_cmac_ctx;
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
 struct atcac_aes_cmac_ctx * atcac_aes_cmac_ctx_new(void);
 void atcac_aes_cmac_ctx_free(struct atcac_aes_cmac_ctx * ctx);
 #endif
@@ -127,7 +127,7 @@ ATCA_STATUS atcac_aes_cmac_finish(struct atcac_aes_cmac_ctx* ctx, uint8_t* cmac,
 
 #if ATCAC_AES_GCM_EN
 struct atcac_aes_gcm_ctx;
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
 struct atcac_aes_gcm_ctx * atcac_aes_gcm_ctx_new(void);
 void atcac_aes_gcm_ctx_free(struct atcac_aes_gcm_ctx * ctx);
 #endif
@@ -156,7 +156,7 @@ ATCA_STATUS atcac_aes_gcm_decrypt_finish(struct atcac_aes_gcm_ctx* ctx, const ui
 
 #if ATCAC_PKEY_EN
 struct atcac_pk_ctx;
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
 struct atcac_pk_ctx * atcac_pk_ctx_new(void);
 void atcac_pk_ctx_free(struct atcac_pk_ctx * ctx);
 #endif

@@ -41,7 +41,7 @@
 #include "api_calib/test_calib.h"
 #endif
 
-#if ATCA_CA_SUPPORT && !defined(DO_NOT_TEST_CERT)
+#if ((ATCA_CA_SUPPORT) || (ATCA_CA2_CERT_SUPPORT)) && !defined(DO_NOT_TEST_CERT)
 #include "atcacert/test_atcacert.h"
 #endif
 

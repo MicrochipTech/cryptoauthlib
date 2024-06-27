@@ -124,7 +124,7 @@ static CK_RV pkcs11_session_free_session_context(pkcs11_session_ctx_ptr session_
     if (NULL != session_ctx)
     {
         (void)pkcs11_util_memset(session_ctx, sizeof(pkcs11_session_ctx), 0, sizeof(pkcs11_session_ctx));
-#ifndef ATCA_NO_HEAP
+#ifdef ATCA_HEAP
         CK_ULONG i;
         for (i = 0; i < (CK_ULONG)PKCS11_MAX_SESSIONS_ALLOWED; i++)
         {
@@ -253,13 +253,12 @@ CK_RV pkcs11_release_resource(pkcs11_lib_ctx_ptr pContext, pkcs11_session_ctx_pt
     return rv;
 }
 
-
 CK_RV pkcs11_session_open(
-    CK_SLOT_ID            slotID,
-    CK_FLAGS              flags,
-    CK_VOID_PTR           pApplication,
-    CK_NOTIFY             notify,
-    CK_SESSION_HANDLE_PTR phSession)
+    CK_SLOT_ID              slotID,
+    CK_FLAGS                flags,
+    CK_VOID_PTR             pApplication,
+    CK_NOTIFY               notify,
+    CK_SESSION_HANDLE_PTR   phSession)
 {
     pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
     pkcs11_slot_ctx_ptr slot_ctx;
@@ -479,6 +478,7 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
     pkcs11_session_ctx_ptr session_ctx = pkcs11_get_session_context(hSession);
     bool is_ca_device = false;
     uint16_t key_len = 0;
+    uint8_t auth_idx = 0;
     CK_RV rv;
 
     ((void)userType);
@@ -509,8 +509,21 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
         return CKR_USER_ALREADY_LOGGED_IN;
     }
 
-    if (CKR_OK != (rv = pkcs11_reserve_resource(pLibCtx, session_ctx, PKCS11_AUTH_OP_0)))
+    do
     {
+        //! Reserve the PKCS11_AUTH_OP_0 / PKCS11_AUTH_OP_1 based on availability
+        rv = pkcs11_reserve_resource(pLibCtx, session_ctx, (uint8_t)((PKCS11_AUTH_OP_0 + auth_idx) & UINT8_MAX));
+
+        if(CKR_OK != rv)
+        {
+            auth_idx++;
+        }
+    }while((CKR_OK != rv) && (MAX_AUTH_SESSIONS > auth_idx));
+
+    if(CKR_OK != rv)
+    {
+        //! Auth operation unavailable return error
+        PKCS11_DEBUG(" Login failed: Resource unavailable\r\n");
         return rv;
     }
 
@@ -547,16 +560,15 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
 
 #if PKCS11_AUTH_TERMINATE_BEFORE_LOGIN
             ATCADevice device = session_ctx->slot->device_ctx;
-            device->session_key_id = TA_HANDLE_AUTH_SESSION0;
             (void)talib_auth_terminate(device);
 #endif
             (void)atcac_sw_random(auth_r_nonce, sizeof(auth_r_nonce));
 
             if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
             {
-
-                status = talib_auth_generate_nonce(session_ctx->slot->device_ctx, TA_HANDLE_AUTH_SESSION0,
+                    status = talib_auth_generate_nonce(session_ctx->slot->device_ctx, (TA_HANDLE_AUTH_SESSION0 + auth_idx),
                                                    TA_AUTH_GENERATE_OPT_NONCE_SRC_MASK | TA_AUTH_GENERATE_OPT_RANDOM_MASK, auth_i_nonce);
+
                 if (CKR_OK == (rv = pkcs11_util_convert_rv(status)))
                 {
                     cal_buffer key = CAL_BUF_INIT(16U, session_ctx->slot->read_key);
@@ -579,7 +591,7 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
 
     if (CKR_OK != rv)
     {
-        (void)pkcs11_release_resource(pLibCtx, session_ctx, PKCS11_AUTH_OP_0);
+        (void)pkcs11_release_resource(pLibCtx, session_ctx, (uint8_t)((PKCS11_AUTH_OP_0 + auth_idx) & UINT8_MAX));
     }
 
     if (CKR_OK == rv)
@@ -596,6 +608,7 @@ CK_RV pkcs11_session_logout(CK_SESSION_HANDLE hSession)
     CK_RV rv = CKR_OK;
     pkcs11_lib_ctx_ptr lib_ctx = pkcs11_get_context();
     pkcs11_session_ctx_ptr session_ctx = pkcs11_get_session_context(hSession);
+    uint8_t auth_idx = 0;
 
     if (NULL == lib_ctx || FALSE == lib_ctx->initialized)
     {
@@ -625,7 +638,12 @@ CK_RV pkcs11_session_logout(CK_SESSION_HANDLE hSession)
 
     (void)pkcs11_cert_clear_session_cache(session_ctx);
     (void)pkcs11_key_clear_session_cache(session_ctx);
-    rv = pkcs11_release_resource(lib_ctx, session_ctx, PKCS11_AUTH_OP_0);
+
+    do
+    {
+        (void)pkcs11_release_resource(lib_ctx, session_ctx, (uint8_t)((PKCS11_AUTH_OP_0 + auth_idx) & UINT8_MAX));
+        auth_idx++;
+     }while(MAX_AUTH_SESSIONS > auth_idx);
 
     /* Wipe the io protection secret regardless if the above operatios succeeded */
     (void)pkcs11_util_memset(session_ctx->slot->read_key, sizeof(session_ctx->slot->read_key), 0, sizeof(session_ctx->slot->read_key));

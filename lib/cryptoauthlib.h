@@ -65,11 +65,16 @@
 #define ATCA_AES256_BLOCK_SIZE              (16u)
 #define ATCA_AES256_KEY_SIZE                (32u)
 
-#define ATCA_ECCP256_KEY_SIZE               (32)
+#define ATCA_ECCP256_MSG_SIZE               (32u)
+#define ATCA_KEY_TYPE_ECCP256               (0u)
+#define ATCA_ECCP256_KEY_SIZE               (32u)
 #define ATCA_ECCP256_PUBKEY_SIZE            (64u)
 #define ATCA_ECCP256_SIG_SIZE               (64u)
+#define ATCA_ECCP256_OID_SIZE               (10u)
+#define ATCA_ECCP256_ASN1_HDR_SIZE          (27u)
 
 #define ATCA_ECC_UNCOMPRESSED_TYPE          ((uint8_t)0x04)
+#define ATCA_ECC_UNCOMPRESSED_TYPE_OFFSET   (1u)
 
 #define ATCA_ZONE_CONFIG                    ((uint8_t)0x00)
 #define ATCA_ZONE_OTP                       ((uint8_t)0x01)

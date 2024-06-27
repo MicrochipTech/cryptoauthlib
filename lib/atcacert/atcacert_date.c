@@ -44,7 +44,7 @@ atcacert_date_format_t atcacert_date_from_asn1_tag(const uint8_t tag)
     atcacert_date_format_t fmt;
 
 #ifdef ATCA_MBEDTLS
-    fmt = DATEFMT_RFC5280_GEN; //Mbedtls follows always "YYYY-MM-DD HH:MM:SS."
+    fmt = DATEFMT_RFC5280_GEN;  //Mbedtls follows always "YYYY-MM-DD HH:MM:SS."
     UNUSED_VAR(tag);
 #else
     switch (tag)
@@ -69,10 +69,10 @@ atcacert_date_format_t atcacert_date_from_asn1_tag(const uint8_t tag)
 }
 
 
-ATCA_STATUS atcacert_date_enc(atcacert_date_format_t   format,
-                              const atcacert_tm_utc_t* timestamp,
-                              uint8_t*                 formatted_date,
-                              size_t*                  formatted_date_size)
+ATCA_STATUS atcacert_date_enc(atcacert_date_format_t    format,
+                              const atcacert_tm_utc_t*  timestamp,
+                              uint8_t*                  formatted_date,
+                              size_t*                   formatted_date_size)
 {
     ATCA_STATUS rv;
 
@@ -125,10 +125,10 @@ ATCA_STATUS atcacert_date_enc(atcacert_date_format_t   format,
     return rv;
 }
 
-ATCA_STATUS atcacert_date_dec(atcacert_date_format_t format,
-                              const uint8_t*         formatted_date,
-                              size_t                 formatted_date_size,
-                              atcacert_tm_utc_t*     timestamp)
+ATCA_STATUS atcacert_date_dec(atcacert_date_format_t    format,
+                              const uint8_t*            formatted_date,
+                              size_t                    formatted_date_size,
+                              atcacert_tm_utc_t*        timestamp)
 {
     ATCA_STATUS rv;
 
@@ -139,7 +139,7 @@ ATCA_STATUS atcacert_date_dec(atcacert_date_format_t format,
 
     if (formatted_date_size < ATCACERT_DATE_FORMAT_SIZES[format])
     {
-        return ATCACERT_E_DECODING_ERROR;  // Not enough data to parse this date format
+        return ATCACERT_E_DECODING_ERROR;   // Not enough data to parse this date format
 
     }
     switch (format)
@@ -189,50 +189,50 @@ ATCA_STATUS atcacert_date_get_max_date(atcacert_date_format_t format, atcacert_t
 #if ATCACERT_DATEFMT_ISO_EN
     case DATEFMT_ISO8601_SEP:
         timestamp->tm_year = 9999 - 1900;
-        timestamp->tm_mon  = 12 - 1;
+        timestamp->tm_mon = 12 - 1;
         timestamp->tm_mday = 31;
         timestamp->tm_hour = 23;
-        timestamp->tm_min  = 59;
-        timestamp->tm_sec  = 59;
+        timestamp->tm_min = 59;
+        timestamp->tm_sec = 59;
         break;
 #endif
 #if ATCACERT_DATEFMT_UTC_EN
     case DATEFMT_RFC5280_UTC:
         timestamp->tm_year = 2049 - 1900;
-        timestamp->tm_mon  = 12 - 1;
+        timestamp->tm_mon = 12 - 1;
         timestamp->tm_mday = 31;
         timestamp->tm_hour = 23;
-        timestamp->tm_min  = 59;
-        timestamp->tm_sec  = 59;
+        timestamp->tm_min = 59;
+        timestamp->tm_sec = 59;
         break;
 #endif
 #if ATCACERT_DATEFMT_POSIX_EN
     case DATEFMT_POSIX_UINT32_BE:
         timestamp->tm_year = 2106 - 1900;
-        timestamp->tm_mon  = 2 - 1;
+        timestamp->tm_mon = 2 - 1;
         timestamp->tm_mday = 7;
         timestamp->tm_hour = 6;
-        timestamp->tm_min  = 28;
-        timestamp->tm_sec  = 15;
+        timestamp->tm_min = 28;
+        timestamp->tm_sec = 15;
         break;
 
     case DATEFMT_POSIX_UINT32_LE:
         timestamp->tm_year = 2106 - 1900;
-        timestamp->tm_mon  = 2 - 1;
+        timestamp->tm_mon = 2 - 1;
         timestamp->tm_mday = 7;
         timestamp->tm_hour = 6;
-        timestamp->tm_min  = 28;
-        timestamp->tm_sec  = 15;
+        timestamp->tm_min = 28;
+        timestamp->tm_sec = 15;
         break;
 #endif
 #if ATCACERT_DATEFMT_GEN_EN
     case DATEFMT_RFC5280_GEN:
         timestamp->tm_year = 9999 - 1900;
-        timestamp->tm_mon  = 12 - 1;
+        timestamp->tm_mon = 12 - 1;
         timestamp->tm_mday = 31;
         timestamp->tm_hour = 23;
-        timestamp->tm_min  = 59;
-        timestamp->tm_sec  = 59;
+        timestamp->tm_min = 59;
+        timestamp->tm_sec = 59;
         break;
 #endif
     default:
@@ -283,19 +283,19 @@ static const uint8_t* str_to_uint(const uint8_t* str, int width, uint32_t* num)
     {
         if (*str < (uint8_t)'0' || *str > (uint8_t)'9')
         {
-            return error_ret;  // Character is not a digit
+            return error_ret;   // Character is not a digit
         }
         if (digit >= 10)
         {
             if (*str != (uint8_t)'0')
             {
-                return error_ret;  // Number is larger than the output can handle
+                return error_ret;   // Number is larger than the output can handle
             }
             continue;
         }
         if (digit == 9 && *str > (uint8_t)'4')
         {
-            return error_ret;  // Number is larger than the output can handle
+            return error_ret;   // Number is larger than the output can handle
 
         }
 
@@ -303,7 +303,7 @@ static const uint8_t* str_to_uint(const uint8_t* str, int width, uint32_t* num)
         *num += digit_value * ((uint32_t)*str - (uint32_t)'0');
         if (*num < prev_num)
         {
-            return error_ret;  // Number rolled over, it is larger than the output can handle
+            return error_ret;   // Number rolled over, it is larger than the output can handle
 
         }
 
@@ -342,8 +342,8 @@ static const uint8_t* str_to_int(const uint8_t* str, int width, int* num)
 }
 
 #if ATCACERT_DATEFMT_ISO_EN
-ATCA_STATUS atcacert_date_enc_iso8601_sep(const atcacert_tm_utc_t* timestamp,
-                                          uint8_t                  formatted_date[DATEFMT_ISO8601_SEP_SIZE])
+ATCA_STATUS atcacert_date_enc_iso8601_sep(const atcacert_tm_utc_t*  timestamp,
+                                          uint8_t                   formatted_date[DATEFMT_ISO8601_SEP_SIZE])
 {
     uint8_t* cur_pos = formatted_date;
     int year = 0;
@@ -406,8 +406,8 @@ ATCA_STATUS atcacert_date_enc_iso8601_sep(const atcacert_tm_utc_t* timestamp,
     return ATCACERT_E_SUCCESS;
 }
 
-ATCA_STATUS atcacert_date_dec_iso8601_sep(const uint8_t      formatted_date[DATEFMT_ISO8601_SEP_SIZE],
-                                          atcacert_tm_utc_t* timestamp)
+ATCA_STATUS atcacert_date_dec_iso8601_sep(const uint8_t         formatted_date[DATEFMT_ISO8601_SEP_SIZE],
+                                          atcacert_tm_utc_t*    timestamp)
 {
     const uint8_t* cur_pos = formatted_date;
     const uint8_t* new_pos = NULL;
@@ -422,73 +422,73 @@ ATCA_STATUS atcacert_date_dec_iso8601_sep(const uint8_t      formatted_date[DATE
     new_pos = str_to_int(cur_pos, 4, &timestamp->tm_year);
     if (new_pos == cur_pos)
     {
-        return ATCACERT_E_DECODING_ERROR;  // There was a problem converting the string to a number
+        return ATCACERT_E_DECODING_ERROR;   // There was a problem converting the string to a number
     }
     cur_pos = new_pos;
     timestamp->tm_year -= 1900;
 
     if (*(cur_pos++) != (uint8_t)'-')
     {
-        return ATCACERT_E_DECODING_ERROR;  // Unexpected separator
+        return ATCACERT_E_DECODING_ERROR;   // Unexpected separator
 
     }
     new_pos = str_to_int(cur_pos, 2, &timestamp->tm_mon);
     if (new_pos == cur_pos)
     {
-        return ATCACERT_E_DECODING_ERROR;  // There was a problem converting the string to a number
+        return ATCACERT_E_DECODING_ERROR;   // There was a problem converting the string to a number
     }
     cur_pos = new_pos;
     timestamp->tm_mon -= 1;
 
     if (*(cur_pos++) != (uint8_t)'-')
     {
-        return ATCACERT_E_DECODING_ERROR;  // Unexpected separator
+        return ATCACERT_E_DECODING_ERROR;   // Unexpected separator
 
     }
     new_pos = str_to_int(cur_pos, 2, &timestamp->tm_mday);
     if (new_pos == cur_pos)
     {
-        return ATCACERT_E_DECODING_ERROR;  // There was a problem converting the string to a number
+        return ATCACERT_E_DECODING_ERROR;   // There was a problem converting the string to a number
     }
     cur_pos = new_pos;
 
     if (*(cur_pos++) != (uint8_t)'T')
     {
-        return ATCACERT_E_DECODING_ERROR;  // Unexpected separator
+        return ATCACERT_E_DECODING_ERROR;   // Unexpected separator
     }
     new_pos = str_to_int(cur_pos, 2, &timestamp->tm_hour);
     if (new_pos == cur_pos)
     {
-        return ATCACERT_E_DECODING_ERROR;  // There was a problem converting the string to a number
+        return ATCACERT_E_DECODING_ERROR;   // There was a problem converting the string to a number
     }
     cur_pos = new_pos;
 
     if (*(cur_pos++) != (uint8_t)':')
     {
-        return ATCACERT_E_DECODING_ERROR;  // Unexpected separator
+        return ATCACERT_E_DECODING_ERROR;   // Unexpected separator
     }
     new_pos = str_to_int(cur_pos, 2, &timestamp->tm_min);
     if (new_pos == cur_pos)
     {
-        return ATCACERT_E_DECODING_ERROR;  // There was a problem converting the string to a number
+        return ATCACERT_E_DECODING_ERROR;   // There was a problem converting the string to a number
     }
     cur_pos = new_pos;
 
     if (*(cur_pos++) != (uint8_t)':')
     {
-        return ATCACERT_E_DECODING_ERROR;  // Unexpected separator
+        return ATCACERT_E_DECODING_ERROR;   // Unexpected separator
 
     }
     new_pos = str_to_int(cur_pos, 2, &timestamp->tm_sec);
     if (new_pos == cur_pos)
     {
-        return ATCACERT_E_DECODING_ERROR;  // There was a problem converting the string to a number
+        return ATCACERT_E_DECODING_ERROR;   // There was a problem converting the string to a number
     }
     cur_pos = new_pos;
 
     if (*(cur_pos++) != (uint8_t)'Z')
     {
-        return ATCACERT_E_DECODING_ERROR;  // Unexpected UTC marker
+        return ATCACERT_E_DECODING_ERROR;   // Unexpected UTC marker
 
     }
     return ATCACERT_E_SUCCESS;
@@ -496,8 +496,8 @@ ATCA_STATUS atcacert_date_dec_iso8601_sep(const uint8_t      formatted_date[DATE
 #endif
 
 #if ATCACERT_DATEFMT_UTC_EN
-ATCA_STATUS atcacert_date_enc_rfc5280_utc(const atcacert_tm_utc_t* timestamp,
-                                          uint8_t                  formatted_date[DATEFMT_RFC5280_UTC_SIZE])
+ATCA_STATUS atcacert_date_enc_rfc5280_utc(const atcacert_tm_utc_t*  timestamp,
+                                          uint8_t                   formatted_date[DATEFMT_RFC5280_UTC_SIZE])
 {
     uint8_t* cur_pos = formatted_date;
     int year = 0;
@@ -519,7 +519,7 @@ ATCA_STATUS atcacert_date_enc_rfc5280_utc(const atcacert_tm_utc_t* timestamp,
     }
     else
     {
-        return ATCACERT_E_INVALID_DATE;  // Year out of range for RFC2459 UTC format
+        return ATCACERT_E_INVALID_DATE; // Year out of range for RFC2459 UTC format
     }
     cur_pos = uint_to_str(year, 2, cur_pos);
 
@@ -558,8 +558,8 @@ ATCA_STATUS atcacert_date_enc_rfc5280_utc(const atcacert_tm_utc_t* timestamp,
     return ATCACERT_E_SUCCESS;
 }
 
-ATCA_STATUS atcacert_date_dec_rfc5280_utc(const uint8_t      formatted_date[DATEFMT_RFC5280_UTC_SIZE],
-                                          atcacert_tm_utc_t* timestamp)
+ATCA_STATUS atcacert_date_dec_rfc5280_utc(const uint8_t         formatted_date[DATEFMT_RFC5280_UTC_SIZE],
+                                          atcacert_tm_utc_t*    timestamp)
 {
     const uint8_t* cur_pos = formatted_date;
     const uint8_t* new_pos = NULL;
@@ -574,7 +574,7 @@ ATCA_STATUS atcacert_date_dec_rfc5280_utc(const uint8_t      formatted_date[DATE
     new_pos = str_to_int(cur_pos, 2, &timestamp->tm_year);
     if (new_pos == cur_pos)
     {
-        return ATCACERT_E_DECODING_ERROR;  // There was a problem converting the string to a number
+        return ATCACERT_E_DECODING_ERROR;   // There was a problem converting the string to a number
     }
     cur_pos = new_pos;
     if (timestamp->tm_year < 50)
@@ -590,7 +590,7 @@ ATCA_STATUS atcacert_date_dec_rfc5280_utc(const uint8_t      formatted_date[DATE
     new_pos = str_to_int(cur_pos, 2, &timestamp->tm_mon);
     if (new_pos == cur_pos)
     {
-        return ATCACERT_E_DECODING_ERROR;  // There was a problem converting the string to a number
+        return ATCACERT_E_DECODING_ERROR;   // There was a problem converting the string to a number
     }
     cur_pos = new_pos;
     timestamp->tm_mon -= 1;
@@ -598,34 +598,34 @@ ATCA_STATUS atcacert_date_dec_rfc5280_utc(const uint8_t      formatted_date[DATE
     new_pos = str_to_int(cur_pos, 2, &timestamp->tm_mday);
     if (new_pos == cur_pos)
     {
-        return ATCACERT_E_DECODING_ERROR;  // There was a problem converting the string to a number
+        return ATCACERT_E_DECODING_ERROR;   // There was a problem converting the string to a number
     }
     cur_pos = new_pos;
 
     new_pos = str_to_int(cur_pos, 2, &timestamp->tm_hour);
     if (new_pos == cur_pos)
     {
-        return ATCACERT_E_DECODING_ERROR;  // There was a problem converting the string to a number
+        return ATCACERT_E_DECODING_ERROR;   // There was a problem converting the string to a number
     }
     cur_pos = new_pos;
 
     new_pos = str_to_int(cur_pos, 2, &timestamp->tm_min);
     if (new_pos == cur_pos)
     {
-        return ATCACERT_E_DECODING_ERROR;  // There was a problem converting the string to a number
+        return ATCACERT_E_DECODING_ERROR;   // There was a problem converting the string to a number
     }
     cur_pos = new_pos;
 
     new_pos = str_to_int(cur_pos, 2, &timestamp->tm_sec);
     if (new_pos == cur_pos)
     {
-        return ATCACERT_E_DECODING_ERROR;  // There was a problem converting the string to a number
+        return ATCACERT_E_DECODING_ERROR;   // There was a problem converting the string to a number
     }
     cur_pos = new_pos;
 
     if (*(cur_pos++) != (uint8_t)'Z')
     {
-        return ATCACERT_E_DECODING_ERROR;  // Unexpected UTC marker
+        return ATCACERT_E_DECODING_ERROR;   // Unexpected UTC marker
 
     }
     return ATCACERT_E_SUCCESS;
@@ -633,8 +633,8 @@ ATCA_STATUS atcacert_date_dec_rfc5280_utc(const uint8_t      formatted_date[DATE
 #endif
 
 #if ATCACERT_DATEFMT_GEN_EN
-ATCA_STATUS atcacert_date_enc_rfc5280_gen(const atcacert_tm_utc_t* timestamp,
-                                          uint8_t                  formatted_date[DATEFMT_RFC5280_GEN_SIZE])
+ATCA_STATUS atcacert_date_enc_rfc5280_gen(const atcacert_tm_utc_t*  timestamp,
+                                          uint8_t                   formatted_date[DATEFMT_RFC5280_GEN_SIZE])
 {
     uint8_t* cur_pos = formatted_date;
     int year = 0;
@@ -687,8 +687,8 @@ ATCA_STATUS atcacert_date_enc_rfc5280_gen(const atcacert_tm_utc_t* timestamp,
     return ATCACERT_E_SUCCESS;
 }
 
-ATCA_STATUS atcacert_date_dec_rfc5280_gen(const uint8_t      formatted_date[DATEFMT_RFC5280_GEN_SIZE],
-                                          atcacert_tm_utc_t* timestamp)
+ATCA_STATUS atcacert_date_dec_rfc5280_gen(const uint8_t         formatted_date[DATEFMT_RFC5280_GEN_SIZE],
+                                          atcacert_tm_utc_t*    timestamp)
 {
     const uint8_t* cur_pos = formatted_date;
     const uint8_t* new_pos = NULL;
@@ -703,7 +703,7 @@ ATCA_STATUS atcacert_date_dec_rfc5280_gen(const uint8_t      formatted_date[DATE
     new_pos = str_to_int(cur_pos, 4, &timestamp->tm_year);
     if (new_pos == cur_pos)
     {
-        return ATCACERT_E_DECODING_ERROR;  // There was a problem converting the string to a number
+        return ATCACERT_E_DECODING_ERROR;   // There was a problem converting the string to a number
     }
     cur_pos = new_pos;
     timestamp->tm_year -= 1900;
@@ -711,7 +711,7 @@ ATCA_STATUS atcacert_date_dec_rfc5280_gen(const uint8_t      formatted_date[DATE
     new_pos = str_to_int(cur_pos, 2, &timestamp->tm_mon);
     if (new_pos == cur_pos)
     {
-        return ATCACERT_E_DECODING_ERROR;  // There was a problem converting the string to a number
+        return ATCACERT_E_DECODING_ERROR;   // There was a problem converting the string to a number
     }
     cur_pos = new_pos;
     timestamp->tm_mon -= 1;
@@ -719,34 +719,34 @@ ATCA_STATUS atcacert_date_dec_rfc5280_gen(const uint8_t      formatted_date[DATE
     new_pos = str_to_int(cur_pos, 2, &timestamp->tm_mday);
     if (new_pos == cur_pos)
     {
-        return ATCACERT_E_DECODING_ERROR;  // There was a problem converting the string to a number
+        return ATCACERT_E_DECODING_ERROR;   // There was a problem converting the string to a number
     }
     cur_pos = new_pos;
 
     new_pos = str_to_int(cur_pos, 2, &timestamp->tm_hour);
     if (new_pos == cur_pos)
     {
-        return ATCACERT_E_DECODING_ERROR;  // There was a problem converting the string to a number
+        return ATCACERT_E_DECODING_ERROR;   // There was a problem converting the string to a number
     }
     cur_pos = new_pos;
 
     new_pos = str_to_int(cur_pos, 2, &timestamp->tm_min);
     if (new_pos == cur_pos)
     {
-        return ATCACERT_E_DECODING_ERROR;  // There was a problem converting the string to a number
+        return ATCACERT_E_DECODING_ERROR;   // There was a problem converting the string to a number
     }
     cur_pos = new_pos;
 
     new_pos = str_to_int(cur_pos, 2, &timestamp->tm_sec);
     if (new_pos == cur_pos)
     {
-        return ATCACERT_E_DECODING_ERROR;  // There was a problem converting the string to a number
+        return ATCACERT_E_DECODING_ERROR;   // There was a problem converting the string to a number
     }
     cur_pos = new_pos;
 
     if (*(cur_pos++) != (uint8_t)'Z')
     {
-        return ATCACERT_E_DECODING_ERROR;  // Unexpected UTC marker
+        return ATCACERT_E_DECODING_ERROR;   // Unexpected UTC marker
 
     }
     return ATCACERT_E_SUCCESS;
@@ -1044,8 +1044,8 @@ ATCA_STATUS atcacert_date_enc_posix_be(const atcacert_tm_utc_t* timestamp,
     return ATCACERT_E_SUCCESS;
 }
 
-static ATCA_STATUS atcacert_date_dec_posix_uint32(uint32_t           posix_uint32,
-                                                  atcacert_tm_utc_t* timestamp)
+static ATCA_STATUS atcacert_date_dec_posix_uint32(uint32_t              posix_uint32,
+                                                  atcacert_tm_utc_t*    timestamp)
 {
 //#ifdef WIN32
 //	time_t posix_time = (time_t)posix_uint32;
@@ -1074,8 +1074,8 @@ static ATCA_STATUS atcacert_date_dec_posix_uint32(uint32_t           posix_uint3
     return ATCACERT_E_SUCCESS;
 }
 
-ATCA_STATUS atcacert_date_dec_posix_be(const uint8_t      formatted_date[DATEFMT_POSIX_UINT32_BE_SIZE],
-                                       atcacert_tm_utc_t* timestamp)
+ATCA_STATUS atcacert_date_dec_posix_be(const uint8_t        formatted_date[DATEFMT_POSIX_UINT32_BE_SIZE],
+                                       atcacert_tm_utc_t*   timestamp)
 {
     uint32_t posix_uint32 = 0;
 
@@ -1118,8 +1118,8 @@ ATCA_STATUS atcacert_date_enc_posix_le(const atcacert_tm_utc_t* timestamp,
     return ATCACERT_E_SUCCESS;
 }
 
-ATCA_STATUS atcacert_date_dec_posix_le(const uint8_t      formatted_date[DATEFMT_POSIX_UINT32_LE_SIZE],
-                                       atcacert_tm_utc_t* timestamp)
+ATCA_STATUS atcacert_date_dec_posix_le(const uint8_t        formatted_date[DATEFMT_POSIX_UINT32_LE_SIZE],
+                                       atcacert_tm_utc_t*   timestamp)
 {
     uint32_t posix_uint32 = 0;
 
@@ -1138,17 +1138,43 @@ ATCA_STATUS atcacert_date_dec_posix_le(const uint8_t      formatted_date[DATEFMT
 }
 #endif
 
-#ifdef __COVERITY__
-#pragma coverity compliance block deviate "CERT INT31-C" "Custom integer encoding scheme with documented limitations"
-#endif
 ATCA_STATUS atcacert_date_enc_compcert(const atcacert_tm_utc_t* issue_date,
                                        uint8_t                  expire_years,
                                        uint8_t                  enc_dates[3])
 {
+    ATCA_STATUS ret = ATCACERT_E_BAD_PARAMS;
+
+    if (NULL == enc_dates)
+    {
+        return ret;
+    }
+
+    uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = { 0 };
+
+    ret = atcacert_date_enc_compcert_ext(issue_date, expire_years, comp_cert);
+    if (ret != ATCACERT_E_SUCCESS)
+    {
+        return ret;
+    }
+
+    (void)memcpy(enc_dates, &comp_cert[64], 3);
+
+    return ret;
+}
+
+#ifdef __COVERITY__
+#pragma coverity compliance block deviate "CERT INT31-C" "Custom integer encoding scheme with documented limitations"
+#pragma coverity compliance block deviate "MISRA C-2012 Rule 10.8" "Custom integer encoding scheme with documented limitations"
+#endif
+ATCA_STATUS atcacert_date_enc_compcert_ext(const atcacert_tm_utc_t* issue_date,
+                                           uint8_t                  expire_years,
+                                           uint8_t                  comp_cert[ATCACERT_COMP_CERT_MAX_SIZE])
+{
     /*
-     * Issue and expire dates are compressed/encoded as below
+     * Issue and expire dates are compressed/encoded as below in the
+     * compressed certificate.
      * +---------------+---------------+---------------+
-     * | Byte 1        | Byte 2        | Byte 3        |
+     * | Byte 64       | Byte 65       | Byte 66       |
      * +---------------+---------------+---------------+
      * | | | | | | | | | | | | | | | | | | | | | | | | |
      * | 5 bits  | 4 bits| 5 bits  | 5 bits  | 5 bits  |
@@ -1157,15 +1183,59 @@ ATCA_STATUS atcacert_date_enc_compcert(const atcacert_tm_utc_t* issue_date,
      * +---------+-------+---------+---------+---------+
      *
      * Minutes and seconds are always zero.
+     *
+     * If extended dates are used then the format version must be 1
+     * and the issue year and expire years get a couple extra bits
+     * in the last byte of the compressed certificate.
+     * +-------------------------------------------+
+     * | Byte 71                                   |
+     * +-------------------------------------------+
+     * |       |       |       |       |  |  |  |  |
+     * | 2 bits        | 2 bits        | 4 bits    |
+     * | Year (MSbits) | Expire Years  | Reserved  |
+     * |               | (MSbits)      |           |
+     * +---------------+---------------+-----------+
      */
-    if (issue_date == NULL || enc_dates == NULL)
+    uint8_t format_version = 0u;
+
+    if (issue_date == NULL || comp_cert == NULL)
     {
         return ATCACERT_E_BAD_PARAMS;
     }
 
-    if ((issue_date->tm_year + 1900) < 2000 || (issue_date->tm_year + 1900) > 2031)
+    // Compressed certificate format version is the lower 4 bits of byte 70
+    format_version = comp_cert[70] & (uint8_t)0x0Fu;
+
+    if (format_version == 0u)
     {
-        return ATCACERT_E_INVALID_DATE;
+        // This version handles years from 2000 to 2031
+        if ((issue_date->tm_year + 1900) < 2000 || (issue_date->tm_year + 1900) > 2031)
+        {
+            return ATCACERT_E_INVALID_DATE;
+        }
+        // and expire years from 0 to 31
+        if (expire_years > 31u)
+        {
+            return ATCACERT_E_INVALID_DATE;
+        }
+    }
+    else if (format_version == 1u)
+    {
+        // This version extends years from 2000 to 2127
+        if ((issue_date->tm_year + 1900) < 2000 || (issue_date->tm_year + 1900) > 2127)
+        {
+            return ATCACERT_E_INVALID_DATE;
+        }
+        // and expire years from 0 to 127
+        if (expire_years > 127u)
+        {
+            return ATCACERT_E_INVALID_DATE;
+        }
+    }
+    else
+    {
+        // Unsupported format version
+        return ATCACERT_E_BAD_CERT;
     }
     if (issue_date->tm_mon < 0 || issue_date->tm_mon > 11)
     {
@@ -1179,40 +1249,64 @@ ATCA_STATUS atcacert_date_enc_compcert(const atcacert_tm_utc_t* issue_date,
     {
         return ATCACERT_E_INVALID_DATE;
     }
-    if (expire_years > 31u)
-    {
-        return ATCACERT_E_INVALID_DATE;
-    }
 
-    (void)memset(enc_dates, 0, 3);
+    (void)memset(&comp_cert[64], 0, 3);
 
-    enc_dates[0] = (enc_dates[0] & 0x07u) | (((uint8_t)((uint32_t)issue_date->tm_year + 1900u - 2000u) & 0x1Fu) << 3u);
-    enc_dates[0] = (uint8_t)((enc_dates[0] & 0xF8u) | ((((uint8_t)issue_date->tm_mon + 1u) & 0x0Fu) >> 1u));
-    enc_dates[1] = (uint8_t)((enc_dates[1] & 0x7Fu) | ((((uint8_t)issue_date->tm_mon + 1u) & 0x0Fu) << 7u));
-    enc_dates[1] = (uint8_t)((enc_dates[1] & 0x83u) | (((uint8_t)issue_date->tm_mday & 0x1Fu) << 2u));
-    enc_dates[1] = (uint8_t)((enc_dates[1] & 0xFCu) | (((uint8_t)issue_date->tm_hour & 0x1Fu) >> 3u));
-    enc_dates[2] = (uint8_t)((enc_dates[2] & 0x1Fu) | (((uint8_t)issue_date->tm_hour & 0x1Fu) << 5u));
-    enc_dates[2] = (uint8_t)((enc_dates[2] & 0xE0u) | ((uint8_t)expire_years & 0x1Fu));
+    comp_cert[64] = (uint8_t)((((uint32_t)issue_date->tm_year + 1900u - 2000u) & 0x1Fu) << 3u);
+    comp_cert[64] = (uint8_t)((comp_cert[64] & 0xF8u) | (((uint8_t)((uint32_t)issue_date->tm_mon + 1u) & 0x0Fu) >> 1u));
+    comp_cert[65] = (uint8_t)(((((uint32_t)issue_date->tm_mon + 1u) & 0x0Fu) << 7u) & 0x80u);
+    comp_cert[65] = (uint8_t)((comp_cert[65] & 0x83u) | (uint8_t)((((uint32_t)issue_date->tm_mday & 0x1Fu)) << 2u));
+    comp_cert[65] = (uint8_t)((comp_cert[65] & 0xFCu) | (((uint8_t)((uint32_t)issue_date->tm_hour & 0x1Fu)) >> 3u));
+    comp_cert[66] = (uint8_t)(((((uint32_t)issue_date->tm_hour & 0x1Fu)) << 5u) & 0xE0u);
+    comp_cert[66] = (uint8_t)((comp_cert[66] & 0xE0u) | ((uint8_t)expire_years & 0x1Fu));
+
+    comp_cert[71] = comp_cert[71] & 0x0Fu;                                                                                  // Clear the upper 4 bits for extended dates
+    comp_cert[71] = (uint8_t)((comp_cert[71] | (uint8_t)((((uint32_t)issue_date->tm_year + 1900u - 2000u) & 0x60u) << 1u)) & 0xFFu);  // Set upper 2 bits of issue date
+    comp_cert[71] = (uint8_t)((comp_cert[71] | ((uint8_t)((expire_years & 0x60u) >> 1u))) & 0xFFu);                           // Set upper 2 bits of expire years
 
     return ATCACERT_E_SUCCESS;
 }
-#ifdef __COVERITY__
-#pragma coverity compliance end_block "CERT INT31-C"
 
-#pragma coverity compliance block deviate "MISRA C-2012 Rule 10.8" "Custom integer encoding scheme with documented limitations"
-#endif
-ATCA_STATUS atcacert_date_dec_compcert(const uint8_t          enc_dates[3],
-                                       atcacert_date_format_t expire_date_format,
-                                       atcacert_tm_utc_t*     issue_date,
-                                       atcacert_tm_utc_t*     expire_date)
+
+ATCA_STATUS atcacert_date_dec_compcert(const uint8_t            enc_dates[3],
+                                       atcacert_date_format_t   expire_date_format,
+                                       atcacert_tm_utc_t*       issue_date,
+                                       atcacert_tm_utc_t*       expire_date)
+{
+    ATCA_STATUS ret = ATCACERT_E_BAD_PARAMS;
+
+    uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = { 0 };
+
+    if (NULL == enc_dates)
+    {
+        return ret;
+    }
+
+    (void)memcpy(&comp_cert[64], enc_dates, 3);
+
+    ret = atcacert_date_dec_compcert_ext(comp_cert, expire_date_format, issue_date, expire_date);
+    if (ret != ATCACERT_E_SUCCESS)
+    {
+        return ret;
+    }
+
+    return ret;
+}
+
+ATCA_STATUS atcacert_date_dec_compcert_ext(const uint8_t            comp_cert[ATCACERT_COMP_CERT_MAX_SIZE],
+                                           atcacert_date_format_t   expire_date_format,
+                                           atcacert_tm_utc_t*       issue_date,
+                                           atcacert_tm_utc_t*       expire_date
+                                           )
 {
     ATCA_STATUS ret = ATCACERT_E_SUCCESS;
     uint8_t expire_years = 0;
 
     /*
-     * Issue and expire dates are compressed/encoded as below
+     * Issue and expire dates are compressed/encoded as below in the
+     * compressed certificate.
      * +---------------+---------------+---------------+
-     * | Byte 1        | Byte 2        | Byte 3        |
+     * | Byte 64       | Byte 65       | Byte 66       |
      * +---------------+---------------+---------------+
      * | | | | | | | | | | | | | | | | | | | | | | | | |
      * | 5 bits  | 4 bits| 5 bits  | 5 bits  | 5 bits  |
@@ -1221,9 +1315,21 @@ ATCA_STATUS atcacert_date_dec_compcert(const uint8_t          enc_dates[3],
      * +---------+-------+---------+---------+---------+
      *
      * Minutes and seconds are always zero.
+     *
+     * If extended dates are used then the format version must be 1
+     * and the issue year and expire years get a couple extra bits
+     * in the last byte of the compressed certificate.
+     * +-------------------------------------------+
+     * | Byte 71                                   |
+     * +-------------------------------------------+
+     * |       |       |       |       |  |  |  |  |
+     * | 2 bits        | 2 bits        | 4 bits    |
+     * | Year (MSbits) | Expire Years  | Reserved  |
+     * |               | (MSbits)      |           |
+     * +---------------+---------------+-----------+
      */
 
-    if (enc_dates == NULL || issue_date == NULL || expire_date == NULL ||
+    if (comp_cert == NULL || issue_date == NULL || expire_date == NULL ||
         expire_date_format >= sizeof(ATCACERT_DATE_FORMAT_SIZES) / sizeof(ATCACERT_DATE_FORMAT_SIZES[0]))
     {
         return ATCACERT_E_BAD_PARAMS;
@@ -1232,17 +1338,37 @@ ATCA_STATUS atcacert_date_dec_compcert(const uint8_t          enc_dates[3],
     (void)memset(issue_date, 0, sizeof(*issue_date));
     (void)memset(expire_date, 0, sizeof(*expire_date));
 
-    issue_date->tm_year = (int)(enc_dates[0] >> 3u) + 2000 - 1900;
-    issue_date->tm_mon  = (int)(((enc_dates[0] & (uint8_t)0x07) << 1u) | ((enc_dates[1] & (uint8_t)0x80) >> 7u)) - 1;
-    issue_date->tm_mday = (int)((enc_dates[1] & (uint8_t)0x7C) >> 2u);
-    issue_date->tm_hour = (int)(((enc_dates[1] & (uint8_t)0x03) << 3u) | ((enc_dates[2] & (uint8_t)0xE0) >> 5u));
+    // Compressed certificate format version is the lower 4 bits of byte 70
+    uint8_t format_version = comp_cert[70] & (uint8_t)0x0Fu;
 
-    expire_years = (enc_dates[2] & (uint8_t)0x1F);
+    if (format_version == 1u)
+    {
+        /*
+           =================================================================
+           Issue year byte obtained from 64[7:3] and byte 71[7:6], (note:100u = 2000 - 1900)
+           =================================================================
+         */
+        issue_date->tm_year = (int)((uint8_t)((((uint8_t)(((((((comp_cert[71] & (uint8_t)0xc0) >> 1u) & 0x60u) | ((comp_cert[64] >> 3u) & 0x1Fu)) & 0xFFu) + 100u) & 0xFFu)) & 0xFFu)));
+        /*
+           =================================================================
+           Extended expiry years from 71[5:4] is copied to expire_years [6:5]
+           =================================================================
+         */
+        expire_years = (comp_cert[66] & (uint8_t)0x1F) | ((comp_cert[71] & (uint8_t)0x30u) << 1);
+    }
+    else
+    {   
+        issue_date->tm_year = (int)((uint8_t)((((comp_cert[64] & (uint8_t)0xF8u) >> 3u)) + 100u));
+        expire_years = (comp_cert[66] & (uint8_t)0x1F);
+    }
+    issue_date->tm_mon  = (int)(uint8_t)(((((comp_cert[64] & (uint8_t)0x07) << 1u) | ((comp_cert[65] & (uint8_t)0x80) >> 7u)) - 1u) & 0x0Fu);
+    issue_date->tm_mday = (int)((uint8_t)((comp_cert[65] & (uint8_t)0x7C) >> 2u));
+    issue_date->tm_hour = (int)((uint8_t)(((comp_cert[65] & (uint8_t)0x03) << 3u) | ((comp_cert[66] & (uint8_t)0xE0) >> 5u)));
 
     if (expire_years != 0u)
     {
         expire_date->tm_year = issue_date->tm_year + (int)expire_years;
-        expire_date->tm_mon  = issue_date->tm_mon;
+        expire_date->tm_mon = issue_date->tm_mon;
         expire_date->tm_mday = issue_date->tm_mday;
         expire_date->tm_hour = issue_date->tm_hour;
     }
@@ -1256,8 +1382,66 @@ ATCA_STATUS atcacert_date_dec_compcert(const uint8_t          enc_dates[3],
         }
     }
 
-    return ATCACERT_E_SUCCESS;
+    return ret;
 }
 #ifdef __COVERITY__
+#pragma coverity compliance end_block "CERT INT31-C"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.8"
 #endif
+
+int atcacert_date_cmp(const atcacert_tm_utc_t* timestamp1, const atcacert_tm_utc_t* timestamp2)
+{
+    if (timestamp1 == NULL || timestamp2 == NULL)
+    {
+        return ATCACERT_E_BAD_PARAMS;
+    }
+    if (timestamp1->tm_year < timestamp2->tm_year)
+    {
+        return -1;
+    }
+    if (timestamp1->tm_year > timestamp2->tm_year)
+    {
+        return 1;
+    }
+    if (timestamp1->tm_mon < timestamp2->tm_mon)
+    {
+        return -1;
+    }
+    if (timestamp1->tm_mon > timestamp2->tm_mon)
+    {
+        return 1;
+    }
+    if (timestamp1->tm_mday < timestamp2->tm_mday)
+    {
+        return -1;
+    }
+    if (timestamp1->tm_mday > timestamp2->tm_mday)
+    {
+        return 1;
+    }
+    if (timestamp1->tm_hour < timestamp2->tm_hour)
+    {
+        return -1;
+    }
+    if (timestamp1->tm_hour > timestamp2->tm_hour)
+    {
+        return 1;
+    }
+    if (timestamp1->tm_min < timestamp2->tm_min)
+    {
+        return -1;
+    }
+    if (timestamp1->tm_min > timestamp2->tm_min)
+    {
+        return 1;
+    }
+    if (timestamp1->tm_sec < timestamp2->tm_sec)
+    {
+        return -1;
+    }
+    if (timestamp1->tm_sec > timestamp2->tm_sec)
+    {
+        return 1;
+    }
+    return 0;
+}

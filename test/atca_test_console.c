@@ -245,7 +245,7 @@ int read_sernum(int argc, char* argv[])
     return status;
 }
 
-#if defined(ATCA_ECC_SUPPORT) && !defined(DO_NOT_TEST_CERT)
+#ifndef DO_NOT_TEST_CERT
 void RunAllCertDataTests(void);
 int certdata_unit_tests(int argc, char* argv[])
 {
@@ -545,7 +545,7 @@ int run_all_tests(int argc, char* argv[])
     }
 #endif
 
-#if !defined(DO_NOT_TEST_CERT) && defined(ATCA_ECC_SUPPORT)
+#if !defined(DO_NOT_TEST_CERT) && (defined(ATCA_ECC_SUPPORT) || (ATCA_CA2_CERT_SUPPORT))
     if (atIsECCFamily(gCfg->devtype))
     {
         fails += run_test(argc, argv, RunAllCertIOTests);

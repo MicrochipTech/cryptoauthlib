@@ -54,7 +54,7 @@ TEST(atcac_pk, verify_nist)
 
     struct atcac_pk_ctx * pkey_ctx;
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     pkey_ctx = atcac_pk_ctx_new();
     TEST_ASSERT_NOT_NULL(pkey_ctx);
 #else
@@ -98,7 +98,7 @@ TEST(atcac_pk, verify_nist)
         }
     }
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     atcac_pk_ctx_free(pkey_ctx);
 #endif
 }
@@ -131,7 +131,7 @@ TEST(atcac_pk, init_public)
 
     struct atcac_pk_ctx * pkey_ctx;
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     pkey_ctx = atcac_pk_ctx_new();
     TEST_ASSERT_NOT_NULL(pkey_ctx);
 #else
@@ -151,7 +151,7 @@ TEST(atcac_pk, init_public)
     status = atcac_pk_free(pkey_ctx);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     atcac_pk_ctx_free(pkey_ctx);
 #endif
 }
@@ -168,7 +168,7 @@ TEST(atcac_pk, sign_simple)
     size_t sig_size = sizeof(signature);
     ATCA_STATUS status;
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     sign_ctx = atcac_pk_ctx_new();
     TEST_ASSERT_NOT_NULL(sign_ctx);
     verify_ctx = atcac_pk_ctx_new();
@@ -204,7 +204,7 @@ TEST(atcac_pk, sign_simple)
     status = atcac_pk_verify(verify_ctx, digest, sizeof(digest), &signature[sig_size - 64], 64);
     TEST_ASSERT_NOT_EQUAL(ATCA_SUCCESS, status);
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     if (NULL != sign_ctx)
     {
         atcac_pk_free(sign_ctx);
@@ -227,7 +227,7 @@ TEST(atcac_pk, derive_ecdh_p256_nist)
     size_t result_size;
     size_t i;
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     pri_ctx = atcac_pk_ctx_new();
     TEST_ASSERT_NOT_NULL(pri_ctx);
     pub_ctx = atcac_pk_ctx_new();
@@ -261,7 +261,7 @@ TEST(atcac_pk, derive_ecdh_p256_nist)
         TEST_ASSERT_EQUAL_MEMORY(ecdh_p256_test_vectors[i].ZIUT, result, 32);
     }
 
-#if defined(ATCA_BUILD_SHARED_LIBS) || !defined(ATCA_NO_HEAP)
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     atcac_pk_ctx_free(pri_ctx);
     atcac_pk_ctx_free(pub_ctx);
 #endif

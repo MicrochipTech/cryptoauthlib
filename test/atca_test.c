@@ -410,6 +410,48 @@ void atca_test_assert_ta_sboot_preboot_enabled(UNITY_LINE_TYPE from_line)
         }
     }
 }
+
+//The Function checks the digest type used for preboot Secureboot in configuration zone , if it is not set, it skips the test
+void atca_test_assert_ta_sboot_preboot_digest_type_enabled(UNITY_LINE_TYPE from_line, uint8_t mode)
+{
+    if (atcab_is_ta_device(gCfg->devtype))
+    {
+        ATCA_STATUS status;
+        uint8_t check_config_sboot_preboot_digest_type_enable[8];
+        uint16_t config_size = sizeof(check_config_sboot_preboot_digest_type_enable);
+        cal_buffer check_config_sboot_preboot_digest_type_enable_buf = CAL_BUF_INIT(config_size, check_config_sboot_preboot_digest_type_enable);
+
+        // Bytes 32 of the config zone contains the Secure boot config bit
+        status = talib_read_partial_element(atcab_get_device(), TA_HANDLE_CONFIG_MEMORY, 32, &check_config_sboot_preboot_digest_type_enable_buf);
+        UNITY_TEST_ASSERT_EQUAL_INT(ATCA_SUCCESS, status, from_line, NULL);
+
+        if ((check_config_sboot_preboot_digest_type_enable[6] & TA_SECUREBOOT_CONFIG_PREBOOT_DIGEST_MASK) != mode)
+        {
+            TEST_IGNORE_MESSAGE("Ignoring the test, Digest type for Preboot Secureboot is not configured");
+        }
+    }
+}
+
+//The Function checks the digest type used for Secureboot in configuration zone , if it is not set, it skips the test
+void atca_test_assert_ta_sboot_digest_type_enabled(UNITY_LINE_TYPE from_line, uint8_t mode)
+{
+    if (atcab_is_ta_device(gCfg->devtype))
+    {
+        ATCA_STATUS status;
+        uint8_t check_config_sboot_digest_type_enable[8];
+        uint16_t config_size = sizeof(check_config_sboot_digest_type_enable);
+        cal_buffer check_config_sboot_digest_type_enable_buf = CAL_BUF_INIT(config_size, check_config_sboot_digest_type_enable);
+
+        // Bytes 32 of the config zone contains the Secure boot config bit
+        status = talib_read_partial_element(atcab_get_device(), TA_HANDLE_CONFIG_MEMORY, 32, &check_config_sboot_digest_type_enable_buf);
+        UNITY_TEST_ASSERT_EQUAL_INT(ATCA_SUCCESS, status, from_line, NULL);
+
+        if ((check_config_sboot_digest_type_enable[6] & TA_SECUREBOOT_CONFIG_DIGEST_MASK) != mode)
+        {
+            TEST_IGNORE_MESSAGE("Ignoring the test, Digest type for Secureboot is not configured");
+        }
+    }
+}
 #endif
 
 ATCA_STATUS atca_test_config_get_id(uint8_t test_type, uint16_t* handle)

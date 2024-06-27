@@ -108,6 +108,11 @@ TEST_GROUP_RUNNER(atcacert_date_enc_compcert)
     RUN_TEST_CASE(atcacert_date_enc_compcert, good);
     RUN_TEST_CASE(atcacert_date_enc_compcert, min);
     RUN_TEST_CASE(atcacert_date_enc_compcert, max);
+    RUN_TEST_CASE(atcacert_date_enc_compcert, min_ext_issue_year);
+    RUN_TEST_CASE(atcacert_date_enc_compcert, max_ext_issue_year);
+    RUN_TEST_CASE(atcacert_date_enc_compcert, min_ext_expire_years);
+    RUN_TEST_CASE(atcacert_date_enc_compcert, max_ext_expire_years);
+    RUN_TEST_CASE(atcacert_date_enc_compcert, mixed_ext);
     RUN_TEST_CASE(atcacert_date_enc_compcert, bad_year);
     RUN_TEST_CASE(atcacert_date_enc_compcert, bad_month);
     RUN_TEST_CASE(atcacert_date_enc_compcert, bad_day);
@@ -206,6 +211,9 @@ TEST_GROUP_RUNNER(atcacert_date_dec_compcert)
     RUN_TEST_CASE(atcacert_date_dec_compcert, max);
     RUN_TEST_CASE(atcacert_date_dec_compcert, posix_uint32_be);
     RUN_TEST_CASE(atcacert_date_dec_compcert, bad_params);
+    RUN_TEST_CASE(atcacert_date_dec_compcert, expiry_date_extended_gen);
+    RUN_TEST_CASE(atcacert_date_dec_compcert, expiry_date_utc);
+    RUN_TEST_CASE(atcacert_date_dec_compcert, issue_date_extended_gen);
 }
 
 TEST_GROUP_RUNNER(atcacert_date_dec)

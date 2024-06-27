@@ -34,6 +34,7 @@
 #include "pkcs11_util.h"
 #include "cryptoauthlib.h"
 #include "pkcs11_slot.h"
+#include "pkcs11_key.h"
 
 #if ATCA_CA_SUPPORT
 #include "atcacert/atcacert_der.h"
@@ -50,9 +51,9 @@
  *       pMechanism is a valid pointer
  */
 static CK_RV pkcs11_signature_check_key(
-    pkcs11_object_ptr pKey,       /**< [in] Key object */
-    CK_MECHANISM_PTR  pMechanism, /**< [in] Mechanism parameters from C_SignInit */
-    CK_BBOOL          verify      /**< [in] true if verify is being performed */
+    pkcs11_object_ptr   pKey,       /**< [in] Key object */
+    CK_MECHANISM_PTR    pMechanism, /**< [in] Mechanism parameters from C_SignInit */
+    CK_BBOOL            verify      /**< [in] true if verify is being performed */
     )
 {
     CK_RV rv = CKR_MECHANISM_INVALID;
@@ -87,20 +88,36 @@ static CK_RV pkcs11_signature_check_key(
 }
 
 /** \brief Get the sign of expected size of a signature based on the private key
- *
  * Assumptions:
  *       pKey is a valid pointer
  *
  * \return signature length in bytes
  */
 static CK_ULONG pkcs11_signature_get_len(
-    pkcs11_object_ptr pKey /**< [in] Key object */
+    ATCADeviceType dev_type, /**<[in] Device type */
+    pkcs11_object_ptr pKey   /**< [in] Key object */
     )
-{
-    /** \todo Support other key types (RSA, P384, etc) */
-    ((void)pKey);
-
-    return ATCA_ECCP256_SIG_SIZE;
+{   
+    CK_ULONG ulSiglen = 0u;
+    if (NULL != pKey)
+    {   
+        if (atcab_is_ca_device(dev_type))
+        {
+            ulSiglen = ATCA_ECCP256_SIG_SIZE;
+        }
+        else if (atcab_is_ta_device(dev_type))
+        {
+#if ATCA_TA_SUPPORT
+            uint8_t key_type = ((pKey->handle_info.element_CKA & TA_HANDLE_INFO_KEY_TYPE_MASK) >> TA_HANDLE_INFO_KEY_TYPE_SHIFT);
+            ulSiglen = (CK_ULONG)ec_key_data_table[key_type].sig_sz;
+#endif
+        }
+        else
+        {
+            /* do nothing */
+        }
+    }
+    return ulSiglen;
 }
 
 /** \brief Check the parameters for a sign operation
@@ -109,9 +126,9 @@ static CK_ULONG pkcs11_signature_get_len(
  *       pulSignatureLen is a valid pointer
  */
 static CK_RV pkcs11_signature_check_params(
-    CK_BYTE_PTR  pSignature,      /**< [in] signature buffer - only checked if it non-null */
-    CK_ULONG_PTR pulSignatureLen, /**< [in/out] input: size of pSignature, output: required signature size */
-    CK_ULONG     ulSignatureLen   /**< [in] Required signature length */
+    CK_BYTE_PTR     pSignature,         /**< [in] signature buffer - only checked if it non-null */
+    CK_ULONG_PTR    pulSignatureLen,    /**< [in/out] input: size of pSignature, output: required signature size */
+    CK_ULONG        ulSignatureLen      /**< [in] Required signature length */
     )
 {
     CK_RV rv = CKR_OK;
@@ -185,21 +202,21 @@ CK_RV pkcs11_signature_sign_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pM
  * \brief Sign the data in a single pass operation
  */
 CK_RV pkcs11_signature_sign(
-    CK_SESSION_HANDLE hSession,
-    CK_BYTE_PTR       pData,
-    CK_ULONG          ulDataLen,
-    CK_BYTE_PTR       pSignature,
-    CK_ULONG_PTR      pulSignatureLen)
+    CK_SESSION_HANDLE   hSession,
+    CK_BYTE_PTR         pData,
+    CK_ULONG            ulDataLen,
+    CK_BYTE_PTR         pSignature,
+    CK_ULONG_PTR        pulSignatureLen)
 {
     pkcs11_lib_ctx_ptr pLibCtx = NULL;
-    pkcs11_session_ctx_ptr pSession;
-    pkcs11_object_ptr pKey;
-    CK_RV rv;
+    pkcs11_session_ctx_ptr pSession = NULL;
+    pkcs11_object_ptr pKey = NULL;
+    CK_RV rv = CKR_ARGUMENTS_BAD;
 
     /* Check parameters */
     if (NULL == pData || NULL == pulSignatureLen)
     {
-        return CKR_ARGUMENTS_BAD;
+        return rv;
     }
 
     if (0u == ulDataLen)
@@ -226,27 +243,60 @@ CK_RV pkcs11_signature_sign(
     }
 
     if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
-    {
+    {   
+        ATCADeviceType dev_type = atcab_get_device_type_ext(pSession->slot->device_ctx);
+
         switch (pSession->active_mech)
         {
+        //Key type is symmetric
         case CKM_SHA256_HMAC:
             if (CKR_OK == (rv = pkcs11_signature_check_params(pSignature, pulSignatureLen, ATCA_SHA256_DIGEST_SIZE)))
             {
                 if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
                 {
-                    rv = pkcs11_util_convert_rv(atcab_sha_hmac_ext(pSession->slot->device_ctx, pData, ulDataLen, pKey->slot, pSignature, SHA_MODE_TARGET_OUT_ONLY));
+                    rv =
+                        pkcs11_util_convert_rv(atcab_sha_hmac_ext(pSession->slot->device_ctx, pData, ulDataLen, pKey->slot, pSignature,
+                                                                  SHA_MODE_TARGET_OUT_ONLY));
 
                     (void)pkcs11_unlock_device(pLibCtx);
                 }
             }
             break;
         case CKM_ECDSA:
-            if (CKR_OK == (rv = pkcs11_signature_check_params(pSignature, pulSignatureLen, pkcs11_signature_get_len(pKey))))
-            {
-                if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
+            if (CKR_OK == (rv = pkcs11_signature_check_params(pSignature, pulSignatureLen, pkcs11_signature_get_len(dev_type, pKey))))
+            {   
+                if (atcab_is_ca_device(dev_type))
                 {
-                    rv = pkcs11_util_convert_rv(atcab_sign_ext(pSession->slot->device_ctx, pKey->slot, pData, pSignature));
-                    (void)pkcs11_unlock_device(pLibCtx);
+                    if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
+                    {
+
+#if ATCA_CA_SUPPORT
+                        rv = pkcs11_util_convert_rv(atcab_sign_ext(pSession->slot->device_ctx, pKey->slot, pData, pSignature));
+#endif              
+                        (void)pkcs11_unlock_device(pLibCtx);
+                    }
+                }
+                else if (atcab_is_ta_device(dev_type))
+                {   
+                    if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
+                    {
+#if ATCA_TA_SUPPORT     
+                        uint8_t key_type = ((pKey->handle_info.element_CKA & TA_HANDLE_INFO_KEY_TYPE_MASK) >> TA_HANDLE_INFO_KEY_TYPE_SHIFT);
+                        cal_buffer msg_buf = CAL_BUF_INIT(ulDataLen, pData);
+                        cal_buffer sign_buf = CAL_BUF_INIT(*pulSignatureLen, pSignature);
+                        //EC CURVE type depend on minium message size constraints for signing external messages in TA devices
+                        if (ulDataLen >= ec_key_data_table[key_type].min_msg_sz)
+                        {
+                            rv = pkcs11_util_convert_rv(talib_sign_external(pSession->slot->device_ctx, key_type, pKey->slot, TA_HANDLE_INPUT_BUFFER, &msg_buf,
+                                                                           &sign_buf));
+                        }
+#endif              
+                        (void)pkcs11_unlock_device(pLibCtx);
+                    }
+                }
+                else
+                {
+                    /* do nothing */
                 }
             }
             break;
@@ -351,11 +401,16 @@ CK_RV pkcs11_signature_verify_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR 
 CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pSignature, CK_ULONG ulSignatureLen)
 {
     pkcs11_lib_ctx_ptr pLibCtx = NULL;
-    pkcs11_session_ctx_ptr pSession;
-    pkcs11_object_ptr pKey;
-    CK_BBOOL is_private;
-    CK_RV rv;
-    ATCA_STATUS status = ATCA_GEN_FAIL;
+    pkcs11_session_ctx_ptr pSession = NULL;
+    pkcs11_object_ptr pKey = NULL;
+    CK_BBOOL is_private = FALSE;
+
+    /*
+        A successful call to C_Verify should return either the value CKR_OK (indicating that the supplied signature is valid) or CKR_SIGNATURE_INVALID (indicating that the supplied signature is invalid).
+        If the signature can be seen to be invalid purely on the basis of its length, then CKR_SIGNATURE_LEN_RANGE should be returned.
+        In any of these cases, the active signing operation is terminated.
+     */
+    CK_RV rv = CKR_ARGUMENTS_BAD;
     bool verified = FALSE;
 
     rv = pkcs11_init_check(&pLibCtx, FALSE);
@@ -379,8 +434,10 @@ CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_
     /* Check parameters */
     if (NULL == pData || NULL == pSignature)
     {
-        return CKR_ARGUMENTS_BAD;
+        return rv;
     }
+
+    const pkcs11_ecc_key_info_t *ec_key_data = pkcs11_get_object_key_type(pSession->slot->device_ctx, pKey);
 
     if (CKR_OK != (rv = pkcs11_lock_context(pLibCtx)))
     {
@@ -409,7 +466,8 @@ CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_
 
         if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
         {
-            if (ATCA_SUCCESS == (status = atcab_sha_hmac_ext(pSession->slot->device_ctx, pData, ulDataLen, pKey->slot, buf, SHA_MODE_TARGET_OUT_ONLY)))
+            if (CKR_OK ==
+                (rv = pkcs11_util_convert_rv(atcab_sha_hmac_ext(pSession->slot->device_ctx, pData, ulDataLen, pKey->slot, buf, SHA_MODE_TARGET_OUT_ONLY))))
             {
                 if (0 == memcmp(pSignature, buf, ATCA_SHA256_DIGEST_SIZE))
                 {
@@ -422,15 +480,20 @@ CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_
     }
     break;
     case CKM_ECDSA:
+        if (NULL == ec_key_data)
+        {
+            return CKR_ARGUMENTS_BAD;
+        }
+        
         /* Checking data length */
-        if (ulDataLen != ATCA_SHA256_DIGEST_SIZE)
+        if (ulDataLen < ec_key_data->min_msg_sz)
         {
             (void)pkcs11_unlock_context(pLibCtx);
             return CKR_DATA_LEN_RANGE;
         }
 
         /* Checking Signature length */
-        if (ulSignatureLen != ATCA_ECCP256_SIG_SIZE)
+        if (ulSignatureLen < ec_key_data->sig_sz)
         {
             (void)pkcs11_unlock_context(pLibCtx);
             return CKR_SIGNATURE_LEN_RANGE;
@@ -440,42 +503,87 @@ CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_
         {
             if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
             {
+
+                ATCADeviceType dev_type = atcab_get_device_type_ext(pSession->slot->device_ctx);
+
+                /* Device can't verify against a private key so ask the device for
+                   the public key first then perform an external verify */
+                uint8_t pub_key[PKCS11_MAX_ECC_PB_KEY_SIZE];
                 if (is_private)
                 {
-                    /* Device can't verify against a private key so ask the device for
-                        the public key first then perform an external verify */
-                    uint8_t pub_key[ATCA_ECCP256_PUBKEY_SIZE];
-
-                    if (ATCA_SUCCESS == (status = atcab_get_pubkey_ext(pSession->slot->device_ctx, pKey->slot, pub_key)))
+                    if (atcab_is_ca_device(dev_type))
                     {
-                        status = atcab_verify_extern_ext(pSession->slot->device_ctx, pData, pSignature, pub_key, &verified);
+#if ATCA_CA_SUPPORT
+                        if (CKR_OK == (rv = pkcs11_util_convert_rv(atcab_get_pubkey_ext(pSession->slot->device_ctx, pKey->slot, pub_key))))
+                        {
+                            rv = pkcs11_util_convert_rv(atcab_verify_extern_ext(pSession->slot->device_ctx, pData, pSignature, pub_key, &verified));
+                        }
+#endif
+                    }
+                    else if (atcab_is_ta_device(dev_type))
+                    {
+#if ATCA_TA_SUPPORT
+                        cal_buffer ec_pubkey_buf = CAL_BUF_INIT(ec_key_data->pubkey_sz, pub_key);
+                        if (CKR_OK == (rv = pkcs11_ta_get_pubkey(pKey, &ec_pubkey_buf, pSession)))
+                        {
+                            uint8_t key_type = ((pKey->handle_info.element_CKA & TA_HANDLE_INFO_KEY_TYPE_MASK) >> TA_HANDLE_INFO_KEY_TYPE_SHIFT);
+                            cal_buffer sign_buf = CAL_BUF_INIT(ulSignatureLen, pSignature);
+                            cal_buffer pbkey_buf = CAL_BUF_INIT(ec_key_data->pubkey_sz, pub_key);
+                            cal_buffer msg_buf = CAL_BUF_INIT(ulDataLen, pData);
+#if TALIB_VERIFY_EXTERN_EN
+                            rv = pkcs11_util_convert_rv(talib_verify_extern(pSession->slot->device_ctx, key_type, TA_HANDLE_INPUT_BUFFER, &pbkey_buf, &sign_buf,
+                                                                           &msg_buf, &verified));
+#endif
+                        }
+#endif
+                    }
+                    else
+                    {
+                        /* do nothing */
                     }
                 }
                 else
                 {
                     /* Assume Public Key has been stored properly and verify against
                         whatever is stored */
-                    status = atcab_verify_stored_ext(pSession->slot->device_ctx, pData, pSignature, pKey->slot, &verified);
-                }
+                    if (atcab_is_ca_device(dev_type))
+                    {
+#if ATCA_CA_SUPPORT
+                        rv = pkcs11_util_convert_rv(atcab_verify_stored_ext(pSession->slot->device_ctx, pData, pSignature, pKey->slot, &verified));
+#endif
+                    }
+                    else if (atcab_is_ta_device(dev_type))
+                    {
+#if ATCA_TA_SUPPORT
+                        uint8_t key_type = ((pKey->handle_info.element_CKA & TA_HANDLE_INFO_KEY_TYPE_MASK) >> TA_HANDLE_INFO_KEY_TYPE_SHIFT);
+                        cal_buffer sign_buf = CAL_BUF_INIT(ulSignatureLen, pSignature);
+                        cal_buffer msg_buf = CAL_BUF_INIT(ulDataLen, pData);
+#if TALIB_VERIFY_STORED_EN
+                        rv = pkcs11_util_convert_rv(talib_verify_stored(pSession->slot->device_ctx, key_type, TA_HANDLE_INPUT_BUFFER, pKey->slot, &sign_buf,
+                                                                       &msg_buf, &verified));
+#endif
+#endif
+                    }
+                    else
+                    {
+                        /* do nothing */
+                    }
 
+                }
                 (void)pkcs11_unlock_device(pLibCtx);
             }
         }
         break;
     default:
-        status = ATCA_GEN_FAIL;
         break;
     }
+
     pSession->active_mech = CKM_VENDOR_DEFINED;
     (void)pkcs11_unlock_context(pLibCtx);
 
-    if (ATCA_SUCCESS == status)
+    if ((CKR_OK != rv || TRUE != verified))
     {
-        rv = verified ? CKR_OK : CKR_SIGNATURE_INVALID;
-    }
-    else
-    {
-        rv = CKR_DEVICE_ERROR;
+        rv = CKR_SIGNATURE_INVALID;
     }
 
     return rv;

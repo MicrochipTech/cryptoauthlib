@@ -88,6 +88,7 @@ typedef uint8_t atcacert_date_format_t;
 #define DATEFMT_RFC5280_GEN_SIZE     (15)
 #define DATEFMT_MAX_SIZE             DATEFMT_ISO8601_SEP_SIZE
 #define ATCACERT_DATE_FORMAT_SIZES_COUNT 5
+#define ATCACERT_COMP_CERT_MAX_SIZE      72u
 
 extern const size_t ATCACERT_DATE_FORMAT_SIZES[ATCACERT_DATE_FORMAT_SIZES_COUNT];
 
@@ -138,6 +139,23 @@ ATCA_STATUS atcacert_date_enc_compcert(const atcacert_tm_utc_t * issue_date,
                                        uint8_t                   enc_dates[3]);
 
 /**
+ * \brief Encode the issue and expire dates in the format used by the compressed certificate.
+ * 
+ * Supports extended dates if the format version field is set appropriately (currently 1).
+ *
+ * \param[in]  issue_date    Issue date to encode. Note that minutes and seconds will be ignored.
+ * \param[in]  expire_years  Expire date is expressed as a number of years past the issue date.
+ *                           0 should be used if there is no expire date.
+ * \param[in,out] comp_cert  Compressed certificate (72 bytes) where the encoded dates will be
+ *                           set. Format version must be set appropriately.
+ *
+ * \return 0 on success
+ */
+ATCA_STATUS atcacert_date_enc_compcert_ext(const atcacert_tm_utc_t* issue_date,
+                                           uint8_t                  expire_years,
+                                           uint8_t                  comp_cert[ATCACERT_COMP_CERT_MAX_SIZE]);
+
+/**
  * \brief Decode the issue and expire dates from the format used by the compressed certificate.
  *
  * \param[in]  enc_dates           Encoded date from the compressed certificate. 3 bytes.
@@ -155,6 +173,25 @@ ATCA_STATUS atcacert_date_dec_compcert(const uint8_t          enc_dates[3],
                                        atcacert_tm_utc_t*     issue_date,
                                        atcacert_tm_utc_t*     expire_date);
 
+/**
+ * \brief Decode the issue and expire dates from the format used by the compressed certificate.
+ *
+ *  Supports extended dates if the format version field is 1
+ * 
+ * \param[in,out] comp_cert        Compressed certificate (72 bytes) where the encoded dates will be
+ *                                 set. Format version (In comp_cert byte 70([3:0]) must be set to 1 to use extended dates.
+ * \param[in]  expire_date_format  Expire date format. Only used to determine max date when no
+ *                                 expiration date is specified by the encoded date.
+ * \param[out] issue_date          Decoded issue date is returned here.
+ * \param[out] expire_date         Decoded expire date is returned here. If there is no
+ *                                 expiration date, the expire date will be set to a maximum
+ *                                 value for the given expire_date_format.
+ * \return 0 on success
+ */
+ATCA_STATUS atcacert_date_dec_compcert_ext(const uint8_t          comp_cert[ATCACERT_COMP_CERT_MAX_SIZE],
+                                           atcacert_date_format_t expire_date_format,
+                                           atcacert_tm_utc_t*     issue_date,
+                                           atcacert_tm_utc_t*     expire_date);
 /**
  * \brief Convert the asn1 tag for the supported time formats into the local time format
  *
@@ -206,6 +243,19 @@ ATCA_STATUS atcacert_date_dec_posix_le(const uint8_t      formatted_date[DATEFMT
                                        atcacert_tm_utc_t* timestamp);
 #define atcacert_date_dec_posix_uint32_le       atcacert_date_dec_posix_le
 
+/** \brief Compare two dates.
+ * 
+ * Dates are not checked for validity before comparing.
+ * 
+ * \param[in] timestamp1  First date to compare.
+ * \param[in] timestamp2  Second date to compare.
+ * 
+ * \return  -1 if timestamp1 is before timestamp2,
+            0 if they are equal,
+            1 if they are timestamp1 is after timestamp2.
+ *          ATCACERT_E_BAD_PARAMS if either input is NULL.
+ */
+int atcacert_date_cmp(const atcacert_tm_utc_t* timestamp1, const atcacert_tm_utc_t* timestamp2);
 
 /** @} */
 #ifdef __cplusplus

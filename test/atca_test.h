@@ -80,7 +80,7 @@ typedef struct
 
 #define TEST_CONDITION(group, name)             bool TEST_ ## group ## _ ## name ## _cond(void)
 
-#if !defined(ATCA_ECC_SUPPORT) && !defined(DO_NOT_TEST_CERT)
+#if !defined(ATCA_ECC_SUPPORT) && !(ATCA_CA2_CERT_SUPPORT) && !defined(DO_NOT_TEST_CERT)
 #define DO_NOT_TEST_CERT
 #endif
 
@@ -156,6 +156,8 @@ void atca_test_assert_aes_enabled(UNITY_LINE_TYPE from_line);
 #if ATCA_TA_SUPPORT
 void atca_test_assert_ta_sboot_enabled(UNITY_LINE_TYPE from_line, uint8_t mode);
 void atca_test_assert_ta_sboot_preboot_enabled(UNITY_LINE_TYPE from_line);
+void atca_test_assert_ta_sboot_preboot_digest_type_enabled(UNITY_LINE_TYPE from_line, uint8_t mode);
+void atca_test_assert_ta_sboot_digest_type_enabled(UNITY_LINE_TYPE from_line, uint8_t mode);
 #endif
 
 #define unit_test_assert_config_is_locked()     atca_test_assert_config_is_locked(__LINE__)
@@ -172,23 +174,29 @@ void atca_test_assert_ta_sboot_preboot_enabled(UNITY_LINE_TYPE from_line);
 #define check_config_aes_enable()               atca_test_assert_aes_enabled(__LINE__)
 #define check_config_ta_sboot_enable(mode)      atca_test_assert_ta_sboot_enabled(__LINE__, mode)
 #define check_config_ta_sboot_preboot_enable()  atca_test_assert_ta_sboot_preboot_enabled(__LINE__)
+#define check_config_ta_sboot_preboot_digest_type_enable(mode) atca_test_assert_ta_sboot_preboot_digest_type_enabled(__LINE__, mode)
+#define check_config_ta_sboot_digest_type_enable(mode) atca_test_assert_ta_sboot_digest_type_enabled(__LINE__, mode)
 
 
-#define TEST_TYPE_ECC_SIGN          (1)
-#define TEST_TYPE_ECC_VERIFY        (2)
-#define TEST_TYPE_ECC_GENKEY        (3)
-#define TEST_TYPE_AES               (4)
-#define TEST_TYPE_DATA              (5)
-#define TEST_TYPE_HMAC              (6)
-#define TEST_TYPE_ECDH              (7)
-#define TEST_TYPE_AUTH_HMAC         (8)
-#define TEST_TYPE_AUTH_CMAC         (9)
-#define TEST_TYPE_AUTH_GCM          (10)
-#define TEST_TYPE_ECC_ROOT_KEY      (11)
-#define TEST_TYPE_ECC_ROOTED25519_KEY (12)
-#define TEST_TYPE_ECC_ROOTRSA2K_KEY   (13)
-#define TEST_TYPE_TEMPLATE_DATA       (14)
-#define TEST_TYPE_CRL_KEY_SIGN        (15)
+#define TEST_TYPE_ECC_SIGN               (1)
+#define TEST_TYPE_ECC_VERIFY             (2)
+#define TEST_TYPE_ECC_GENKEY             (3)
+#define TEST_TYPE_AES                    (4)
+#define TEST_TYPE_DATA                   (5)
+#define TEST_TYPE_HMAC                   (6)
+#define TEST_TYPE_ECDH                   (7)
+#define TEST_TYPE_AUTH_HMAC              (8)
+#define TEST_TYPE_AUTH_CMAC              (9)
+#define TEST_TYPE_AUTH_GCM               (10)
+#define TEST_TYPE_ECC_ROOT_KEY           (11)
+#define TEST_TYPE_ECC_ROOTED25519_KEY    (12)
+#define TEST_TYPE_ECC_ROOTRSA2K_KEY      (13)
+#define TEST_TYPE_TEMPLATE_DATA          (14)
+#define TEST_TYPE_CRL_KEY_SIGN           (15)
+#define TEST_TYPE_ECC_ROOT_KEY_P384      (16)
+#define TEST_TYPE_ECC_ROOT_KEY_P521      (17)
+#define TEST_TYPE_ECC_ROOT_KEY_ED25519   (18)
+#define TEST_TYPE_RSA3072_CERT           (19)
 
 typedef struct
 {
