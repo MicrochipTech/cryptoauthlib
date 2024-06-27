@@ -1,16 +1,16 @@
 var a00281 =
 [
-    [ "ATCACERT_E_BAD_CERT", "a01443.html#ga822ee0620c8d2d12ff971b9b35f9f5cd", null ],
-    [ "ATCACERT_E_BAD_PARAMS", "a01443.html#ga47509d283523ab1892fb8746d6f4e37d", null ],
-    [ "ATCACERT_E_BUFFER_TOO_SMALL", "a01443.html#ga7a2e774fc8b12c4045dea335a86afca6", null ],
-    [ "ATCACERT_E_DECODING_ERROR", "a01443.html#gaea155533fdd352d6602d3e2fc717930f", null ],
-    [ "ATCACERT_E_ELEM_MISSING", "a01443.html#ga8e3e7c64650c92364bbac17f6a75474a", null ],
-    [ "ATCACERT_E_ELEM_OUT_OF_BOUNDS", "a01443.html#ga62604c78d688530173e203b02df180fa", null ],
-    [ "ATCACERT_E_ERROR", "a01443.html#ga048a6bb9781dbbc402409a172f976f74", null ],
-    [ "ATCACERT_E_INVALID_DATE", "a01443.html#gaafd66d6744314225ead24b3901bd6372", null ],
-    [ "ATCACERT_E_INVALID_TRANSFORM", "a01443.html#ga2396e500bd36c2316a1a6e13e3117958", null ],
-    [ "ATCACERT_E_SUCCESS", "a01443.html#ga7bd1ad830360fc8b988f855da6d0d5ba", null ],
-    [ "ATCACERT_E_UNEXPECTED_ELEM_SIZE", "a01443.html#ga5a7cb98e18ad338f2eaf6594acb67c32", null ],
-    [ "ATCACERT_E_UNIMPLEMENTED", "a01443.html#ga4b6db1523875a2b1453ef5e16989ecd4", null ],
-    [ "ATCACERT_E_VERIFY_FAILED", "a01443.html#gae1da5e02cd9b4ee7b8617d7bce0a5b5d", null ]
+    [ "atcacert_create_csr", "a01443.html#ga9b103dcc50fefcb19514285da7fbe296", null ],
+    [ "atcacert_create_csr_pem", "a01443.html#ga1e4f207e7180d504c5dd369cd20fef21", null ],
+    [ "atcacert_get_response", "a01443.html#ga9a9769b84557ca2c47fa4442daa9a111", null ],
+    [ "atcacert_read_cert", "a01443.html#gafd202f259b53d72b0a382f33e99f9065", null ],
+    [ "atcacert_read_cert_ext", "a01443.html#ga906f310b9518c8f41431b047602cd651", null ],
+    [ "atcacert_read_cert_size", "a01443.html#ga143bf9b419fc7a090cb9876436735616", null ],
+    [ "atcacert_read_cert_size_ext", "a01443.html#ga5ce46e6e2ed2703edd506e3613c65d0b", null ],
+    [ "atcacert_read_device_loc", "a01443.html#ga7eb1ce78d2efb60aa56b929577fa88d2", null ],
+    [ "atcacert_read_device_loc_ext", "a01443.html#ga9d69be730c8bd7863588c43ebe58b225", null ],
+    [ "atcacert_read_subj_key_id", "a01443.html#ga7f12776448f02a8c9862c4af64537017", null ],
+    [ "atcacert_read_subj_key_id_ext", "a01443.html#gacb6ecab7acc06102caee5419a01bd803", null ],
+    [ "atcacert_write_cert", "a01443.html#gafa00725d50c68cfd2e0072bf563491a0", null ],
+    [ "atcacert_write_cert_ext", "a01443.html#ga25a3291ce46841ca52346b42dc416485", null ]
 ];

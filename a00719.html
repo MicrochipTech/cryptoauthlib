@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_find.c File Reference</title>
+<title>CryptoAuthLib: pkcs11_init.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,48 +99,67 @@ $(document).ready(function(){initNavTree('a00719.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">pkcs11_find.c File Reference</div></div>
+  <div class="headertitle"><div class="title">pkcs11_init.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Library Object Find/Searching.  
+<p>PKCS11 Library Init/Deinit.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00515.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00302.html">atcacert/atcacert_def.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00248.html">atca_device.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00515.html">hal/atca_hal.h</a>&quot;</code><br />
 <code>#include &quot;pkcs11_config.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00704.html">pkcs11_debug.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00734.html">pkcs11_init.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00761.html">pkcs11_os.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00779.html">pkcs11_slot.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00767.html">pkcs11_session.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00722.html">pkcs11_find.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00791.html">pkcs11_util.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00692.html">pkcs11_cert.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00692.html">pkcs11_debug.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00722.html">pkcs11_init.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00749.html">pkcs11_os.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00767.html">pkcs11_slot.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00743.html">pkcs11_object.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00755.html">pkcs11_session.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00506.html">cryptoauthlib.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga6fd109c0919489909cc4073866d1c466"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_find_init</b> (CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)</td></tr>
-<tr class="separator:ga6fd109c0919489909cc4073866d1c466"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5dbe038da3069861b8de9f77d0c06de1"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_find_continue</b> (CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE_PTR phObject, CK_ULONG ulMaxObjectCount, CK_ULONG_PTR pulObjectCount)</td></tr>
-<tr class="separator:ga5dbe038da3069861b8de9f77d0c06de1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacc5c7a788f0c4eafd4f0c1da2aaf0d60"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_find_finish</b> (CK_SESSION_HANDLE hSession)</td></tr>
-<tr class="separator:gacc5c7a788f0c4eafd4f0c1da2aaf0d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0e2b3b381504c39a017a4232a35b672d"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_find_get_attribute</b> (CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)</td></tr>
-<tr class="separator:ga0e2b3b381504c39a017a4232a35b672d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae0e3060e6ae0dfc17a35881c223d8123"><td class="memItemLeft" align="right" valign="top">
+pkcs11_lib_ctx_ptr&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_get_context</b> (void)</td></tr>
+<tr class="memdesc:gae0e3060e6ae0dfc17a35881c223d8123"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the current library context. <br /></td></tr>
+<tr class="separator:gae0e3060e6ae0dfc17a35881c223d8123"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0e755fd7df13be2aa1f706de5b0f24b"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_lock_context</b> (pkcs11_lib_ctx_ptr pContext)</td></tr>
+<tr class="separator:gaf0e755fd7df13be2aa1f706de5b0f24b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga750f93d0a3c67f5d0e28c9c50ad990a8"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_unlock_context</b> (pkcs11_lib_ctx_ptr pContext)</td></tr>
+<tr class="separator:ga750f93d0a3c67f5d0e28c9c50ad990a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadf3a79f4ea26d3e492f8d585840fc9a5"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_lock_device</b> (pkcs11_lib_ctx_ptr pContext)</td></tr>
+<tr class="separator:gadf3a79f4ea26d3e492f8d585840fc9a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5756b6d47cc529daa5b69f5b0095b2a9"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_unlock_device</b> (pkcs11_lib_ctx_ptr pContext)</td></tr>
+<tr class="separator:ga5756b6d47cc529daa5b69f5b0095b2a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga16c1e13cae1f13ba7a475362b7d2c81b"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_lock_both</b> (pkcs11_lib_ctx_ptr pContext)</td></tr>
+<tr class="separator:ga16c1e13cae1f13ba7a475362b7d2c81b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7dcbe78a3a902690719934c64d150994"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_unlock_both</b> (pkcs11_lib_ctx_ptr pContext)</td></tr>
+<tr class="separator:ga7dcbe78a3a902690719934c64d150994"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadd899ffeae0146c08b249e3f551e21f8"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_init_check</b> (pkcs11_lib_ctx_ptr *ppContext, CK_BBOOL lock)</td></tr>
+<tr class="memdesc:gadd899ffeae0146c08b249e3f551e21f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the library is initialized properly. <br /></td></tr>
+<tr class="separator:gadd899ffeae0146c08b249e3f551e21f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaab9ef494fdc21911e700f2b9d62547ec"><td class="memItemLeft" align="right" valign="top">CK_RV&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#gaab9ef494fdc21911e700f2b9d62547ec">pkcs11_init</a> (<a class="el" href="a01916.html">CK_C_INITIALIZE_ARGS</a> const *pInitArgs)</td></tr>
+<tr class="memdesc:gaab9ef494fdc21911e700f2b9d62547ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the PKCS11 API Library for Cryptoauthlib.  <br /></td></tr>
+<tr class="separator:gaab9ef494fdc21911e700f2b9d62547ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabff89fd0af2e75ee2db858f9fe934ac4"><td class="memItemLeft" align="right" valign="top">CK_RV&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#gabff89fd0af2e75ee2db858f9fe934ac4">pkcs11_deinit</a> (CK_VOID_PTR pReserved)</td></tr>
+<tr class="separator:gabff89fd0af2e75ee2db858f9fe934ac4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Library Object Find/Searching. </p>
+<div class="textblock"><p>PKCS11 Library Init/Deinit. </p>
+<p>Copyright (c) 2017 Microchip Technology Inc. All rights reserved.</p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00719.html">pkcs11_find.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00719.html">pkcs11_init.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

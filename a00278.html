@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_version.h File Reference</title>
+<title>CryptoAuthLib: atcacert_client.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,38 +98,47 @@ $(document).ready(function(){initNavTree('a00278.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
-  <div class="headertitle"><div class="title">atca_version.h File Reference</div></div>
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">atcacert_client.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Microchip CryptoAuth Library Version.  
+<p>Client side cert i/o methods. These declarations deal with the client-side, the node being authenticated, of the authentication process. It is assumed the client has an ECC CryptoAuthentication device (e.g. ATECC508A) and the certificates are stored on that device.  
 <a href="#details">More...</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:aceddbd0ae1c41554eb2f0fabc0a2dc0c"><td class="memItemLeft" align="right" valign="top"><a id="aceddbd0ae1c41554eb2f0fabc0a2dc0c" name="aceddbd0ae1c41554eb2f0fabc0a2dc0c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_LIBRARY_VERSION_DATE</b>&#160;&#160;&#160;&quot;20240626&quot;</td></tr>
-<tr class="separator:aceddbd0ae1c41554eb2f0fabc0a2dc0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4634f4de0131c8eee8f064dc3e9064b"><td class="memItemLeft" align="right" valign="top"><a id="ab4634f4de0131c8eee8f064dc3e9064b" name="ab4634f4de0131c8eee8f064dc3e9064b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_LIBRARY_VERSION_MAJOR</b>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:ab4634f4de0131c8eee8f064dc3e9064b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ec591139c9e733853063ea898bac376"><td class="memItemLeft" align="right" valign="top"><a id="a0ec591139c9e733853063ea898bac376" name="a0ec591139c9e733853063ea898bac376"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_LIBRARY_VERSION_MINOR</b>&#160;&#160;&#160;7</td></tr>
-<tr class="separator:a0ec591139c9e733853063ea898bac376"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78849ac2eed512d15a0b22ca781f83e8"><td class="memItemLeft" align="right" valign="top"><a id="a78849ac2eed512d15a0b22ca781f83e8" name="a78849ac2eed512d15a0b22ca781f83e8"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_LIBRARY_VERSION_BUILD</b>&#160;&#160;&#160;5</td></tr>
-<tr class="separator:a78849ac2eed512d15a0b22ca781f83e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><code>#include &lt;limits.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00281.html">atcacert_client.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00299.html">atcacert_der.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00317.html">atcacert_pem.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00506.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;calib/calib_basic.h&quot;</code><br />
+<code>#include &quot;talib/talib_basic.h&quot;</code><br />
+<code>#include &quot;talib/talib_internal.h&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga906f310b9518c8f41431b047602cd651"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga906f310b9518c8f41431b047602cd651">atcacert_read_cert_ext</a> (<a class="el" href="a01508.html">ATCADevice</a> device, const <a class="el" href="a01443.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t ca_public_key[64], uint8_t *cert, size_t *cert_size)</td></tr>
+<tr class="memdesc:ga906f310b9518c8f41431b047602cd651"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the certificate specified by the certificate definition from the ATECC508A device.  <br /></td></tr>
+<tr class="separator:ga906f310b9518c8f41431b047602cd651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd202f259b53d72b0a382f33e99f9065"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#gafd202f259b53d72b0a382f33e99f9065">atcacert_read_cert</a> (const <a class="el" href="a01443.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t ca_public_key[64], uint8_t *cert, size_t *cert_size)</td></tr>
+<tr class="memdesc:gafd202f259b53d72b0a382f33e99f9065"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the certificate specified by the certificate definition from the ATECC508A device.  <br /></td></tr>
+<tr class="separator:gafd202f259b53d72b0a382f33e99f9065"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5ce46e6e2ed2703edd506e3613c65d0b"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga5ce46e6e2ed2703edd506e3613c65d0b">atcacert_read_cert_size_ext</a> (<a class="el" href="a01508.html">ATCADevice</a> device, const <a class="el" href="a01443.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, size_t *cert_size)</td></tr>
+<tr class="memdesc:ga5ce46e6e2ed2703edd506e3613c65d0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the actual certificate size in bytes for a given cert def. Certificate can be variable size, so this gives the absolute buffer size when reading the certificates.  <br /></td></tr>
+<tr class="separator:ga5ce46e6e2ed2703edd506e3613c65d0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga143bf9b419fc7a090cb9876436735616"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga143bf9b419fc7a090cb9876436735616">atcacert_read_cert_size</a> (const <a class="el" href="a01443.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, size_t *cert_size)</td></tr>
+<tr class="memdesc:ga143bf9b419fc7a090cb9876436735616"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the actual certificate size in bytes for a given cert def. Certificate can be variable size, so this gives the absolute buffer size when reading the certificates.  <br /></td></tr>
+<tr class="separator:ga143bf9b419fc7a090cb9876436735616"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Microchip CryptoAuth Library Version. </p>
+<div class="textblock"><p>Client side cert i/o methods. These declarations deal with the client-side, the node being authenticated, of the authentication process. It is assumed the client has an ECC CryptoAuthentication device (e.g. ATECC508A) and the certificates are stored on that device. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00278.html">atca_version.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00278.html">atcacert_client.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

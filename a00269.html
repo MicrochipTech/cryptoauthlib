@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_platform.h File Reference</title>
+<title>CryptoAuthLib: atca_version.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,45 +98,38 @@ $(document).ready(function(){initNavTree('a00269.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">atca_platform.h File Reference</div></div>
+<a href="#define-members">Macros</a>  </div>
+  <div class="headertitle"><div class="title">atca_version.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Configure the platform interfaces for cryptoauthlib.  
+<p>Microchip CryptoAuth Library Version.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;string.h&gt;</code><br />
-</div><table class="memberdecls">
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a4f60d6c21f0543b2187329461cffd466"><td class="memItemLeft" align="right" valign="top"><a id="a4f60d6c21f0543b2187329461cffd466" name="a4f60d6c21f0543b2187329461cffd466"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>hal_memset_s</b>&#160;&#160;&#160;<a class="el" href="a00257.html#ac37b319dabc5b9492a422f6d3d4e118b">atcab_memset_s</a></td></tr>
-<tr class="separator:a4f60d6c21f0543b2187329461cffd466"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gafa879f6b0c834e42325fff42d2087b84"><td class="memItemLeft" align="right" valign="top">
-void *&#160;</td><td class="memItemRight" valign="bottom"><b>hal_malloc</b> (size_t size)</td></tr>
-<tr class="separator:gafa879f6b0c834e42325fff42d2087b84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa6d47ddbfd92184e624c55bf69328e0"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>hal_free</b> (void *ptr)</td></tr>
-<tr class="separator:gafa6d47ddbfd92184e624c55bf69328e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21594322838322aac744aaf655d77ec8"><td class="memItemLeft" align="right" valign="top"><a id="a21594322838322aac744aaf655d77ec8" name="a21594322838322aac744aaf655d77ec8"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>lib_strcasestr</b> (const char *haystack, const char *needle)</td></tr>
-<tr class="memdesc:a21594322838322aac744aaf655d77ec8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search for a substring in a case insenstive format. <br /></td></tr>
-<tr class="separator:a21594322838322aac744aaf655d77ec8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aceddbd0ae1c41554eb2f0fabc0a2dc0c"><td class="memItemLeft" align="right" valign="top"><a id="aceddbd0ae1c41554eb2f0fabc0a2dc0c" name="aceddbd0ae1c41554eb2f0fabc0a2dc0c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_LIBRARY_VERSION_DATE</b>&#160;&#160;&#160;&quot;20240626&quot;</td></tr>
+<tr class="separator:aceddbd0ae1c41554eb2f0fabc0a2dc0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4634f4de0131c8eee8f064dc3e9064b"><td class="memItemLeft" align="right" valign="top"><a id="ab4634f4de0131c8eee8f064dc3e9064b" name="ab4634f4de0131c8eee8f064dc3e9064b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_LIBRARY_VERSION_MAJOR</b>&#160;&#160;&#160;3</td></tr>
+<tr class="separator:ab4634f4de0131c8eee8f064dc3e9064b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ec591139c9e733853063ea898bac376"><td class="memItemLeft" align="right" valign="top"><a id="a0ec591139c9e733853063ea898bac376" name="a0ec591139c9e733853063ea898bac376"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_LIBRARY_VERSION_MINOR</b>&#160;&#160;&#160;7</td></tr>
+<tr class="separator:a0ec591139c9e733853063ea898bac376"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78849ac2eed512d15a0b22ca781f83e8"><td class="memItemLeft" align="right" valign="top"><a id="a78849ac2eed512d15a0b22ca781f83e8" name="a78849ac2eed512d15a0b22ca781f83e8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_LIBRARY_VERSION_BUILD</b>&#160;&#160;&#160;5</td></tr>
+<tr class="separator:a78849ac2eed512d15a0b22ca781f83e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Configure the platform interfaces for cryptoauthlib. </p>
+<div class="textblock"><p>Microchip CryptoAuth Library Version. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00269.html">atca_platform.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00269.html">atca_version.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

@@ -1,6 +1,6 @@
 var a00614 =
 [
-    [ "atca_delay_10us", "a01446.html#ga19891182689551cc3a88603135959351", null ],
-    [ "atca_delay_ms", "a01446.html#ga0544f36422b5e9a8890fb9c90fc5eb55", null ],
-    [ "atca_delay_us", "a01446.html#ga7598dfcd6dcac882836544d48356d02f", null ]
+    [ "kit_id_from_devtype", "a01446.html#ga554072f32204a0eb8d7b8c7931e43343", null ],
+    [ "kit_interface", "a01446.html#ga33fe33933fb59dde6e6fb8975da6c12d", null ],
+    [ "kit_interface_from_kittype", "a01446.html#ga31075898964b61f4877ba882477b71c3", null ]
 ];

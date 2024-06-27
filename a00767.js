@@ -1,10 +1,8 @@
 var a00767 =
 [
-    [ "pkcs11_session_mech_ctx_s", "a01860.html", null ],
-    [ "pkcs11_session_ctx_s", "a01872.html", null ],
-    [ "pkcs11_session_ctx", "a00767.html#a9d8980ea83d2e8eb2a9f45210ba5c54d", null ],
-    [ "pkcs11_session_check", "a01450.html#ga7eb04614661e0cedf6cb926787f5ff9b", null ],
-    [ "pkcs11_session_closeall", "a01450.html#ga43525e77f9049b545fa09129cacf9c9a", null ],
-    [ "pkcs11_session_get_info", "a01450.html#ga236a002e179ed36a0b81399a3e11fcb8", null ],
-    [ "pkcs11_session_login", "a01450.html#ga4d70fd7e9799d0428c308a3e1ed146df", null ]
+    [ "pkcs11_slot_ctx_s", "a01876.html", "a01876" ],
+    [ "pkcs11_slot_ctx", "a00767.html#a1813685567d78b9f762d2f1eec531616", null ],
+    [ "pkcs11_slot_get_context", "a01450.html#ga987853011908614aba0db7c5933b0a20", null ],
+    [ "pkcs11_slot_get_info", "a01450.html#ga3bba79e03141bfb7a9ec76c273db63d2", null ],
+    [ "pkcs11_slot_init", "a01450.html#ga418414364e88d0673b4f6c90cd62ebed", null ]
 ];

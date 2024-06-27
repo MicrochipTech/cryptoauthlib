@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: sha1_routines.c File Reference</title>
+<title>CryptoAuthLib: sha2_routines.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,25 +97,56 @@ $(document).ready(function(){initNavTree('a00503.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">sha1_routines.c File Reference</div></div>
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">sha2_routines.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Software implementation of the SHA1 algorithm.  
+<p>Software implementation of the SHA256 algorithm.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00506.html">sha1_routines.h</a>&quot;</code><br />
-<code>#include &lt;string.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00233.html">atca_compiler.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00515.html">cryptoauthlib.h</a>&quot;</code><br />
-</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Software implementation of the SHA1 algorithm. </p>
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01644.html">sw_sha256_ctx</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a81efbc0fc101b06a914f7ff9e2fbc0e9"><td class="memItemLeft" align="right" valign="top"><a id="a81efbc0fc101b06a914f7ff9e2fbc0e9" name="a81efbc0fc101b06a914f7ff9e2fbc0e9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA256_DIGEST_SIZE</b>&#160;&#160;&#160;(32)</td></tr>
+<tr class="separator:a81efbc0fc101b06a914f7ff9e2fbc0e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c1fe69ad43d4ca74b84303a0ed64f2f"><td class="memItemLeft" align="right" valign="top"><a id="a9c1fe69ad43d4ca74b84303a0ed64f2f" name="a9c1fe69ad43d4ca74b84303a0ed64f2f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA256_BLOCK_SIZE</b>&#160;&#160;&#160;(64)</td></tr>
+<tr class="separator:a9c1fe69ad43d4ca74b84303a0ed64f2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:acfb7028e6f10d29c548cbecdbfa53ac8"><td class="memItemLeft" align="right" valign="top"><a id="acfb7028e6f10d29c548cbecdbfa53ac8" name="acfb7028e6f10d29c548cbecdbfa53ac8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>sw_sha256_init</b> (<a class="el" href="a01644.html">sw_sha256_ctx</a> *ctx)</td></tr>
+<tr class="separator:acfb7028e6f10d29c548cbecdbfa53ac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f5d8ad85631d77bfdb10dfb728bfbce"><td class="memItemLeft" align="right" valign="top"><a id="a7f5d8ad85631d77bfdb10dfb728bfbce" name="a7f5d8ad85631d77bfdb10dfb728bfbce"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>sw_sha256_update</b> (<a class="el" href="a01644.html">sw_sha256_ctx</a> *ctx, const uint8_t *message, uint32_t len)</td></tr>
+<tr class="separator:a7f5d8ad85631d77bfdb10dfb728bfbce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a594b8b10c408cb1103da9c09b1367a51"><td class="memItemLeft" align="right" valign="top"><a id="a594b8b10c408cb1103da9c09b1367a51" name="a594b8b10c408cb1103da9c09b1367a51"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>sw_sha256_final</b> (<a class="el" href="a01644.html">sw_sha256_ctx</a> *ctx, uint8_t digest[(32)])</td></tr>
+<tr class="separator:a594b8b10c408cb1103da9c09b1367a51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90a76445beb1a0eadea22bb7e3c8ad60"><td class="memItemLeft" align="right" valign="top"><a id="a90a76445beb1a0eadea22bb7e3c8ad60" name="a90a76445beb1a0eadea22bb7e3c8ad60"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>sw_sha256</b> (const uint8_t *message, unsigned int len, uint8_t digest[(32)])</td></tr>
+<tr class="separator:a90a76445beb1a0eadea22bb7e3c8ad60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Software implementation of the SHA256 algorithm. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="dir_39966be8f8e069f6fa92c98611834f6b.html">hashes</a></li><li class="navelem"><a class="el" href="a00503.html">sha1_routines.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="dir_39966be8f8e069f6fa92c98611834f6b.html">hashes</a></li><li class="navelem"><a class="el" href="a00503.html">sha2_routines.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

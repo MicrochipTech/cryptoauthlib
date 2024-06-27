@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_signature.c File Reference</title>
+<title>CryptoAuthLib: pkcs11_token.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,69 +98,60 @@ $(document).ready(function(){initNavTree('a00770.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">pkcs11_signature.c File Reference</div></div>
+  <div class="headertitle"><div class="title">pkcs11_token.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Library Sign/Verify Handling.  
+<p>PKCS11 Library Token Management &amp; Context.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;pkcs11_config.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00704.html">pkcs11_debug.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00734.html">pkcs11_init.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00773.html">pkcs11_signature.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00755.html">pkcs11_object.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00767.html">pkcs11_session.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00791.html">pkcs11_util.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00515.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00779.html">pkcs11_slot.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00740.html">pkcs11_key.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00308.html">atcacert/atcacert_der.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00722.html">pkcs11_init.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00755.html">pkcs11_session.h</a>&quot;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ab112a8a280ac5ad6e11b5fe2cc0be0a0"><td class="memItemLeft" align="right" valign="top"><a id="ab112a8a280ac5ad6e11b5fe2cc0be0a0" name="ab112a8a280ac5ad6e11b5fe2cc0be0a0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SERIAL_NUM_SIZE</b>&#160;&#160;&#160;(9)</td></tr>
+<tr class="separator:ab112a8a280ac5ad6e11b5fe2cc0be0a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga742c35812a444a87e35150e2332be0c2"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_signature_sign_init</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey)</td></tr>
-<tr class="memdesc:ga742c35812a444a87e35150e2332be0c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a signing operation using the specified key and mechanism. <br /></td></tr>
-<tr class="separator:ga742c35812a444a87e35150e2332be0c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4641a3dd4da46f801565310f3784a41e"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_signature_sign</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pSignature, CK_ULONG_PTR pulSignatureLen)</td></tr>
-<tr class="memdesc:ga4641a3dd4da46f801565310f3784a41e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sign the data in a single pass operation. <br /></td></tr>
-<tr class="separator:ga4641a3dd4da46f801565310f3784a41e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9c471f7e2ca3330cf6d2fa70e12db38a"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_signature_sign_continue</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen)</td></tr>
-<tr class="memdesc:ga9c471f7e2ca3330cf6d2fa70e12db38a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues a multiple-part signature operation. <br /></td></tr>
-<tr class="separator:ga9c471f7e2ca3330cf6d2fa70e12db38a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadb52d31f30bb8f6a66d1851ba0052dc7"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_signature_sign_finish</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSignature, CK_ULONG_PTR pulSignatureLen)</td></tr>
-<tr class="memdesc:gadb52d31f30bb8f6a66d1851ba0052dc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part signature operation. <br /></td></tr>
-<tr class="separator:gadb52d31f30bb8f6a66d1851ba0052dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga852f9badf3176a60bfb874fb5d118791"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_signature_verify_init</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey)</td></tr>
-<tr class="memdesc:ga852f9badf3176a60bfb874fb5d118791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a verification operation using the specified key and mechanism. <br /></td></tr>
-<tr class="separator:ga852f9badf3176a60bfb874fb5d118791"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga27b3652fb8a87f7f40fff10c63316b35"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_signature_verify</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pSignature, CK_ULONG ulSignatureLen)</td></tr>
-<tr class="memdesc:ga27b3652fb8a87f7f40fff10c63316b35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies a signature on single-part data. <br /></td></tr>
-<tr class="separator:ga27b3652fb8a87f7f40fff10c63316b35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab735278cab8e184d682b4ed8b12dbb1b"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_signature_verify_continue</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen)</td></tr>
-<tr class="memdesc:gab735278cab8e184d682b4ed8b12dbb1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues a multiple-part verification operation. <br /></td></tr>
-<tr class="separator:gab735278cab8e184d682b4ed8b12dbb1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2aac39ede2b43021b63ed6bc7f3f20da"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_signature_verify_finish</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSignature, CK_ULONG ulSignatureLen)</td></tr>
-<tr class="memdesc:ga2aac39ede2b43021b63ed6bc7f3f20da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part verification operation. <br /></td></tr>
-<tr class="separator:ga2aac39ede2b43021b63ed6bc7f3f20da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7e207adf2d26c1d6ea64f7c60252bf45"><td class="memItemLeft" align="right" valign="top">CK_RV&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga7e207adf2d26c1d6ea64f7c60252bf45">pkcs11_token_init</a> (CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen, CK_UTF8CHAR_PTR pLabel)</td></tr>
+<tr class="separator:ga7e207adf2d26c1d6ea64f7c60252bf45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2ef67d42f228e64ff0f155049ab08f39"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_get_access_type</b> (CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, <a class="el" href="a01872.html">pkcs11_session_ctx_ptr</a> pSession)</td></tr>
+<tr class="separator:ga2ef67d42f228e64ff0f155049ab08f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1fc2c1ef0c75903d41b324bdba988189"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_get_writable</b> (CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, <a class="el" href="a01872.html">pkcs11_session_ctx_ptr</a> pSession)</td></tr>
+<tr class="separator:ga1fc2c1ef0c75903d41b324bdba988189"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa62dd8ad822daf227624dc13b535e139"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_get_storage</b> (CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, <a class="el" href="a01872.html">pkcs11_session_ctx_ptr</a> pSession)</td></tr>
+<tr class="separator:gaa62dd8ad822daf227624dc13b535e139"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7bf2fea766cab4645fe615661bcf0db9"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_get_info</b> (CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)</td></tr>
+<tr class="memdesc:ga7bf2fea766cab4645fe615661bcf0db9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains information about a particular token. <br /></td></tr>
+<tr class="separator:ga7bf2fea766cab4645fe615661bcf0db9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb7fb69591f0539b9c2b686be0adddab"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_convert_pin_to_key</b> (const CK_UTF8CHAR_PTR pPin, const CK_ULONG ulPinLen, const CK_UTF8CHAR_PTR pSalt, const CK_ULONG ulSaltLen, CK_BYTE_PTR pKey, CK_ULONG ulKeyLen, pkcs11_slot_ctx_ptr slot_ctx)</td></tr>
+<tr class="separator:gabb7fb69591f0539b9c2b686be0adddab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf4c0c6a2d12d879308f2d42cc61ef401"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_random</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pRandomData, CK_ULONG ulRandomLen)</td></tr>
+<tr class="memdesc:gaf4c0c6a2d12d879308f2d42cc61ef401"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the specified amount of random data. <br /></td></tr>
+<tr class="separator:gaf4c0c6a2d12d879308f2d42cc61ef401"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga75272ae3120c6d9fc42862ac8b52da17"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_set_pin</b> (CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pOldPin, CK_ULONG ulOldLen, CK_UTF8CHAR_PTR pNewPin, CK_ULONG ulNewLen)</td></tr>
+<tr class="separator:ga75272ae3120c6d9fc42862ac8b52da17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Library Sign/Verify Handling. </p>
+<div class="textblock"><p>PKCS11 Library Token Management &amp; Context. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00770.html">pkcs11_signature.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00770.html">pkcs11_token.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

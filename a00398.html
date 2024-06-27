@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_info.c File Reference</title>
+<title>CryptoAuthLib: calib_mac.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,47 +97,24 @@ $(document).ready(function(){initNavTree('a00398.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">calib_info.c File Reference</div></div>
+  <div class="headertitle"><div class="title">calib_mac.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for Info command.  
+<p>CryptoAuthLib Basic API methods for MAC command.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00515.html">cryptoauthlib.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gabc7aff4f1707fbe0a05cf416955f43b0"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01444.html#gabc7aff4f1707fbe0a05cf416955f43b0">calib_info_base</a> (<a class="el" href="a01508.html">ATCADevice</a> device, uint8_t mode, uint16_t param2, uint8_t *out_data)</td></tr>
-<tr class="memdesc:gabc7aff4f1707fbe0a05cf416955f43b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues an Info command, which return internal device information and can control GPIO and the persistent latch.  <br /></td></tr>
-<tr class="separator:gabc7aff4f1707fbe0a05cf416955f43b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga132cfbb5c581c5cc5adf5350d4161966"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01444.html#ga132cfbb5c581c5cc5adf5350d4161966">calib_info</a> (<a class="el" href="a01508.html">ATCADevice</a> device, uint8_t *revision)</td></tr>
-<tr class="memdesc:ga132cfbb5c581c5cc5adf5350d4161966"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the Info command to get the device revision (DevRev).  <br /></td></tr>
-<tr class="separator:ga132cfbb5c581c5cc5adf5350d4161966"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga39e3e31e7573d3d73f4b757db7704cce"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01444.html#ga39e3e31e7573d3d73f4b757db7704cce">calib_info_privkey_valid</a> (<a class="el" href="a01508.html">ATCADevice</a> device, uint16_t key_id, uint8_t *is_valid)</td></tr>
-<tr class="memdesc:ga39e3e31e7573d3d73f4b757db7704cce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use Info command to check ECC Private key stored in key slot is valid or not.  <br /></td></tr>
-<tr class="separator:ga39e3e31e7573d3d73f4b757db7704cce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacd82ed053319a63bbe06755632e377bc"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01444.html#gacd82ed053319a63bbe06755632e377bc">calib_info_lock_status</a> (<a class="el" href="a01508.html">ATCADevice</a> device, uint16_t param2, uint8_t *is_locked)</td></tr>
-<tr class="memdesc:gacd82ed053319a63bbe06755632e377bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use Info command to ECC204,TA010 config/data zone lock status.  <br /></td></tr>
-<tr class="separator:gacd82ed053319a63bbe06755632e377bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac33e6d38d506b4e71618063d1b4a7499"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01444.html#gac33e6d38d506b4e71618063d1b4a7499">calib_info_chip_status</a> (<a class="el" href="a01508.html">ATCADevice</a> device, uint8_t *chip_status)</td></tr>
-<tr class="memdesc:gac33e6d38d506b4e71618063d1b4a7499"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use Info command to get ECC204,TA010,SHA10x chip status.  <br /></td></tr>
-<tr class="separator:gac33e6d38d506b4e71618063d1b4a7499"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for Info command. </p>
-<p>Info command returns a variety of static and dynamic information about the device and its state. Also is used to control the GPIO pin and the persistent latch.</p>
-<dl class="section note"><dt>Note</dt><dd>The ATSHA204A refers to this command as DevRev instead of Info, however, the OpCode and operation is the same.</dd>
-<dd>
-List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A &amp; ATECC608A/B. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00506.html">cryptoauthlib.h</a>&quot;</code><br />
+</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for MAC command. </p>
+<p>The MAC command computes a SHA-256 digest of a key stored in the device, a challenge, and other information on the device. The output of this command is the digest of this message.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, and ATECC608A/B. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_fe677a742bdf73affcb7505b38a59233.html">calib</a></li><li class="navelem"><a class="el" href="a00398.html">calib_info.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_fe677a742bdf73affcb7505b38a59233.html">calib</a></li><li class="navelem"><a class="el" href="a00398.html">calib_mac.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

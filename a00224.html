@@ -107,9 +107,9 @@ $(document).ready(function(){initNavTree('a00224.html',''); initResizable(); });
 
 <p>CryptoAuthLib Basic API methods - a simple crypto authentication API. These methods manage a global ATCADevice object behind the scenes. They also manage the wake/idle state transitions so callers don't need to.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00515.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00494.html">crypto/atca_crypto_sw_sha2.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00455.html">crypto/atca_crypto_hw_aes.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00506.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00485.html">crypto/atca_crypto_sw_sha2.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00446.html">crypto/atca_crypto_hw_aes.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
@@ -117,7 +117,7 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_get_addr</b>(...)&#160;&#160;&#160;<a class="el" href="a01444.html#gae51a67781e9e4618e669db1c999e6ec2">calib_get_addr</a>(__VA_ARGS__)</td></tr>
 <tr class="separator:ga55663492574ac6d6b6cb5ad39c632031"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadf7f8ac7b0159edf31a623dbaac0ae97"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>atca_execute_command</b>(...)&#160;&#160;&#160;<a class="el" href="a00380.html#a19fc558e09f03a2f8f5ee89b1e396b2e">calib_execute_command</a>(__VA_ARGS__)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>atca_execute_command</b>(...)&#160;&#160;&#160;<a class="el" href="a00371.html#a19fc558e09f03a2f8f5ee89b1e396b2e">calib_execute_command</a>(__VA_ARGS__)</td></tr>
 <tr class="separator:gadf7f8ac7b0159edf31a623dbaac0ae97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3d37a5da1c43d44e49c4e6614d133c7e"><td class="memItemLeft" align="right" valign="top">
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA_CONTEXT_MAX_SIZE</b>&#160;&#160;&#160;(109)</td></tr>
@@ -557,7 +557,7 @@ ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_read_byt
 <tr class="memitem:ga9393b545b2fa1fdd539672a0428a30ab"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#ga9393b545b2fa1fdd539672a0428a30ab">atcab_verify_invalidate</a> (uint16_t key_id, const uint8_t *signature, const uint8_t *other_data, bool *is_verified)</td></tr>
 <tr class="memdesc:ga9393b545b2fa1fdd539672a0428a30ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Verify command in Invalidate mode which invalidates a previously validated public key stored in a slot.  <br /></td></tr>
 <tr class="separator:ga9393b545b2fa1fdd539672a0428a30ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabf2b29b4d3ae926b63c403d084380dbe"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#gabf2b29b4d3ae926b63c403d084380dbe">atcab_write</a> (uint8_t zone, uint16_t <a class="el" href="a00266.html#af3f726014b044194def151079f1f2d89">address</a>, const uint8_t *value, const uint8_t *mac)</td></tr>
+<tr class="memitem:gabf2b29b4d3ae926b63c403d084380dbe"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#gabf2b29b4d3ae926b63c403d084380dbe">atcab_write</a> (uint8_t zone, uint16_t <a class="el" href="a00257.html#af3f726014b044194def151079f1f2d89">address</a>, const uint8_t *value, const uint8_t *mac)</td></tr>
 <tr class="memdesc:gabf2b29b4d3ae926b63c403d084380dbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the Write command, which writes either one four byte word or a 32-byte block to one of the EEPROM zones on the device. Depending upon the value of the WriteConfig byte for this slot, the data may be required to be encrypted by the system prior to being sent to the device. This command cannot be used to write slots configured as ECC private keys.  <br /></td></tr>
 <tr class="separator:gabf2b29b4d3ae926b63c403d084380dbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1f5a6bbcf4f840803635fb8951b3a7e2"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#ga1f5a6bbcf4f840803635fb8951b3a7e2">atcab_write_zone</a> (uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, const uint8_t *data, uint8_t len)</td></tr>

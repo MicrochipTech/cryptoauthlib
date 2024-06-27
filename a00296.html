@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_date.h File Reference</title>
+<title>CryptoAuthLib: atcacert_der.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,170 +97,24 @@ $(document).ready(function(){initNavTree('a00296.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
-  <div class="headertitle"><div class="title">atcacert_date.h File Reference</div></div>
+  <div class="headertitle"><div class="title">atcacert_der.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Declarations for date handling with regard to certificates.  
+<p>functions required to work with DER encoded data related to X.509 certificates.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00281.html">atcacert.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01588.html">atcacert_tm_utc_s</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga6e58a9d673118d8075bb4cb4c85ec0cb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga6e58a9d673118d8075bb4cb4c85ec0cb">DATEFMT_ISO8601_SEP</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:ga6e58a9d673118d8075bb4cb4c85ec0cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">ISO8601 full date YYYY-MM-DDThh:mm:ssZ.  <br /></td></tr>
-<tr class="separator:ga6e58a9d673118d8075bb4cb4c85ec0cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0043de3aea86035e05798afc16d516d0"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DATEFMT_RFC5280_UTC</b>&#160;&#160;&#160;(1U)</td></tr>
-<tr class="memdesc:ga0043de3aea86035e05798afc16d516d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">RFC 5280 (X.509) 4.1.2.5.1 UTCTime format YYMMDDhhmmssZ. <br /></td></tr>
-<tr class="separator:ga0043de3aea86035e05798afc16d516d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga35593316a537ec58d4a214243be9c862"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DATEFMT_POSIX_UINT32_BE</b>&#160;&#160;&#160;(2U)</td></tr>
-<tr class="memdesc:ga35593316a537ec58d4a214243be9c862"><td class="mdescLeft">&#160;</td><td class="mdescRight">POSIX (aka UNIX) date format. Seconds since Jan 1, 1970. 32 bit unsigned integer, big endian. <br /></td></tr>
-<tr class="separator:ga35593316a537ec58d4a214243be9c862"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad97a813a37feaac6770f66846ad4bf27"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DATEFMT_POSIX_UINT32_LE</b>&#160;&#160;&#160;(3U)</td></tr>
-<tr class="memdesc:gad97a813a37feaac6770f66846ad4bf27"><td class="mdescLeft">&#160;</td><td class="mdescRight">POSIX (aka UNIX) date format. Seconds since Jan 1, 1970. 32 bit unsigned integer, little endian. <br /></td></tr>
-<tr class="separator:gad97a813a37feaac6770f66846ad4bf27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9b2731e0538062863fdd2816e60787b6"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DATEFMT_RFC5280_GEN</b>&#160;&#160;&#160;(4U)</td></tr>
-<tr class="memdesc:ga9b2731e0538062863fdd2816e60787b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">RFC 5280 (X.509) 4.1.2.5.2 GeneralizedTime format YYYYMMDDhhmmssZ. <br /></td></tr>
-<tr class="separator:ga9b2731e0538062863fdd2816e60787b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8a091c3861e34b58aedfcc750e45ace5"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DATEFMT_INVALID</b>&#160;&#160;&#160;(0xFFU)</td></tr>
-<tr class="separator:ga8a091c3861e34b58aedfcc750e45ace5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4cd9a96f5434fa3bc256878031d63846"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DATEFMT_ISO8601_SEP_SIZE</b>&#160;&#160;&#160;(20)</td></tr>
-<tr class="separator:ga4cd9a96f5434fa3bc256878031d63846"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga420f3d438f3f8f7c140512910e54d09a"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DATEFMT_RFC5280_UTC_SIZE</b>&#160;&#160;&#160;(13)</td></tr>
-<tr class="separator:ga420f3d438f3f8f7c140512910e54d09a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafe13e835d79405f28daa3449f732ebcd"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DATEFMT_POSIX_UINT32_BE_SIZE</b>&#160;&#160;&#160;(4)</td></tr>
-<tr class="separator:gafe13e835d79405f28daa3449f732ebcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa7c545ab9944dc7261d689680e2b00f4"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DATEFMT_POSIX_UINT32_LE_SIZE</b>&#160;&#160;&#160;(4)</td></tr>
-<tr class="separator:gaa7c545ab9944dc7261d689680e2b00f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae058e0e8944f408fa251bc4f4136d79c"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DATEFMT_RFC5280_GEN_SIZE</b>&#160;&#160;&#160;(15)</td></tr>
-<tr class="separator:gae058e0e8944f408fa251bc4f4136d79c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae920fb7b153cf98e0d10365ec1d364de"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DATEFMT_MAX_SIZE</b>&#160;&#160;&#160;DATEFMT_ISO8601_SEP_SIZE</td></tr>
-<tr class="separator:gae920fb7b153cf98e0d10365ec1d364de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga82737078e820e6d6beeca7466841e43d"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_DATE_FORMAT_SIZES_COUNT</b>&#160;&#160;&#160;5</td></tr>
-<tr class="separator:ga82737078e820e6d6beeca7466841e43d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga62ce8ae05e2077fe3a8cc01741d927a8"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_COMP_CERT_MAX_SIZE</b>&#160;&#160;&#160;72u</td></tr>
-<tr class="separator:ga62ce8ae05e2077fe3a8cc01741d927a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1e50cadc7492dde69dc6faff34552e8d"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>atcacert_date_enc_posix_uint32_be</b>&#160;&#160;&#160;atcacert_date_enc_posix_be</td></tr>
-<tr class="separator:ga1e50cadc7492dde69dc6faff34552e8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadf75d5a7a5200fe121105623823a4a2f"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>atcacert_date_dec_posix_uint32_be</b>&#160;&#160;&#160;atcacert_date_dec_posix_be</td></tr>
-<tr class="separator:gadf75d5a7a5200fe121105623823a4a2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3ef01d8a6320ecbd36e1125f750848cb"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>atcacert_date_enc_posix_uint32_le</b>&#160;&#160;&#160;atcacert_date_enc_posix_le</td></tr>
-<tr class="separator:ga3ef01d8a6320ecbd36e1125f750848cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4d19d361b262ba8e62e24f7db0ee6297"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>atcacert_date_dec_posix_uint32_le</b>&#160;&#160;&#160;atcacert_date_dec_posix_le</td></tr>
-<tr class="separator:ga4d19d361b262ba8e62e24f7db0ee6297"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga4a59e158244def2c79227aa244bd59c2"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a01588.html">atcacert_tm_utc_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a></td></tr>
-<tr class="separator:ga4a59e158244def2c79227aa244bd59c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5839c985add2fc72ea2eecf9d39bca1a"><td class="memItemLeft" align="right" valign="top">
-typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>atcacert_date_format_t</b></td></tr>
-<tr class="separator:ga5839c985add2fc72ea2eecf9d39bca1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga33f676825335d37da36aee1c93463829"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga33f676825335d37da36aee1c93463829">atcacert_date_enc</a> (atcacert_date_format_t format, const <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp, uint8_t *formatted_date, size_t *formatted_date_size)</td></tr>
-<tr class="memdesc:ga33f676825335d37da36aee1c93463829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format a timestamp according to the format type.  <br /></td></tr>
-<tr class="separator:ga33f676825335d37da36aee1c93463829"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6a6ba4b1c683a72bd3bd34badbed7461"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga6a6ba4b1c683a72bd3bd34badbed7461">atcacert_date_dec</a> (atcacert_date_format_t format, const uint8_t *formatted_date, size_t formatted_date_size, <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp)</td></tr>
-<tr class="memdesc:ga6a6ba4b1c683a72bd3bd34badbed7461"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse a formatted timestamp according to the specified format.  <br /></td></tr>
-<tr class="separator:ga6a6ba4b1c683a72bd3bd34badbed7461"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaef5c4497cd5a21ae7952658aa9dc7a62"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#gaef5c4497cd5a21ae7952658aa9dc7a62">atcacert_date_enc_compcert</a> (const <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *issue_date, uint8_t expire_years, uint8_t enc_dates[3])</td></tr>
-<tr class="memdesc:gaef5c4497cd5a21ae7952658aa9dc7a62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode the issue and expire dates in the format used by the compressed certificate.  <br /></td></tr>
-<tr class="separator:gaef5c4497cd5a21ae7952658aa9dc7a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga949c368ba13b78caee11d2abe60de755"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga949c368ba13b78caee11d2abe60de755">atcacert_date_enc_compcert_ext</a> (const <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *issue_date, uint8_t expire_years, uint8_t comp_cert[72u])</td></tr>
-<tr class="memdesc:ga949c368ba13b78caee11d2abe60de755"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode the issue and expire dates in the format used by the compressed certificate.  <br /></td></tr>
-<tr class="separator:ga949c368ba13b78caee11d2abe60de755"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaab6bdf548ca56cec54441114a3152767"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#gaab6bdf548ca56cec54441114a3152767">atcacert_date_dec_compcert</a> (const uint8_t enc_dates[3], atcacert_date_format_t expire_date_format, <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *issue_date, <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *expire_date)</td></tr>
-<tr class="memdesc:gaab6bdf548ca56cec54441114a3152767"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode the issue and expire dates from the format used by the compressed certificate.  <br /></td></tr>
-<tr class="separator:gaab6bdf548ca56cec54441114a3152767"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5d9b9329445d9ac59e306531b9bc65f2"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga5d9b9329445d9ac59e306531b9bc65f2">atcacert_date_dec_compcert_ext</a> (const uint8_t comp_cert[72u], atcacert_date_format_t expire_date_format, <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *issue_date, <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *expire_date)</td></tr>
-<tr class="memdesc:ga5d9b9329445d9ac59e306531b9bc65f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode the issue and expire dates from the format used by the compressed certificate.  <br /></td></tr>
-<tr class="separator:ga5d9b9329445d9ac59e306531b9bc65f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga208c468285600790ebcdba55a4ccf3a8"><td class="memItemLeft" align="right" valign="top">atcacert_date_format_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga208c468285600790ebcdba55a4ccf3a8">atcacert_date_from_asn1_tag</a> (const uint8_t tag)</td></tr>
-<tr class="memdesc:ga208c468285600790ebcdba55a4ccf3a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert the asn1 tag for the supported time formats into the local time format.  <br /></td></tr>
-<tr class="separator:ga208c468285600790ebcdba55a4ccf3a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga82a0f236afa03da347abbee1db588cb3"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga82a0f236afa03da347abbee1db588cb3">atcacert_date_get_max_date</a> (atcacert_date_format_t format, <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp)</td></tr>
-<tr class="memdesc:ga82a0f236afa03da347abbee1db588cb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the maximum date available for the given format.  <br /></td></tr>
-<tr class="separator:ga82a0f236afa03da347abbee1db588cb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga19a728f4435850b85df9d918cb28ab82"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcacert_date_enc_iso8601_sep</b> (const <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp, uint8_t formatted_date[(20)])</td></tr>
-<tr class="separator:ga19a728f4435850b85df9d918cb28ab82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga799d1b9a615d6b7646227ab9eee2bcc9"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcacert_date_dec_iso8601_sep</b> (const uint8_t formatted_date[(20)], <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp)</td></tr>
-<tr class="separator:ga799d1b9a615d6b7646227ab9eee2bcc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0f8970c8c8c3721f75686e5ff3b40932"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcacert_date_enc_rfc5280_utc</b> (const <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp, uint8_t formatted_date[(13)])</td></tr>
-<tr class="separator:ga0f8970c8c8c3721f75686e5ff3b40932"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaefca4500f67ff1bcb090ea43d22fc84e"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcacert_date_dec_rfc5280_utc</b> (const uint8_t formatted_date[(13)], <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp)</td></tr>
-<tr class="separator:gaefca4500f67ff1bcb090ea43d22fc84e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga67bf5c232a3b6f96484bc5a700335963"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcacert_date_enc_rfc5280_gen</b> (const <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp, uint8_t formatted_date[(15)])</td></tr>
-<tr class="separator:ga67bf5c232a3b6f96484bc5a700335963"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga93e48d31bd56ebe5585dd39deddc1682"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcacert_date_dec_rfc5280_gen</b> (const uint8_t formatted_date[(15)], <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp)</td></tr>
-<tr class="separator:ga93e48d31bd56ebe5585dd39deddc1682"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf9151b74c23cb3472c484350ff87b750"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcacert_date_enc_posix_be</b> (const <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp, uint8_t formatted_date[(4)])</td></tr>
-<tr class="separator:gaf9151b74c23cb3472c484350ff87b750"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab3d927ec7e3032731cb7d5b01ed9779f"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcacert_date_dec_posix_be</b> (const uint8_t formatted_date[(4)], <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp)</td></tr>
-<tr class="separator:gab3d927ec7e3032731cb7d5b01ed9779f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5f682b87a1f2939c1cec4f2f5a364cbe"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcacert_date_enc_posix_le</b> (const <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp, uint8_t formatted_date[(4)])</td></tr>
-<tr class="separator:ga5f682b87a1f2939c1cec4f2f5a364cbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga57be3b9f67a44de8df4ac2794a1ca204"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcacert_date_dec_posix_le</b> (const uint8_t formatted_date[(4)], <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp)</td></tr>
-<tr class="separator:ga57be3b9f67a44de8df4ac2794a1ca204"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6609f17be8ee9ba67f9c50a3790b9486"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga6609f17be8ee9ba67f9c50a3790b9486">atcacert_date_cmp</a> (const <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp1, const <a class="el" href="a01443.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp2)</td></tr>
-<tr class="memdesc:ga6609f17be8ee9ba67f9c50a3790b9486"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare two dates.  <br /></td></tr>
-<tr class="separator:ga6609f17be8ee9ba67f9c50a3790b9486"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:ga66f248d2f10fc94689c6f1f92fdae5b4"><td class="memItemLeft" align="right" valign="top">
-const size_t&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_DATE_FORMAT_SIZES</b> [5]</td></tr>
-<tr class="separator:ga66f248d2f10fc94689c6f1f92fdae5b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Declarations for date handling with regard to certificates. </p>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00506.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00299.html">atcacert_der.h</a>&quot;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>functions required to work with DER encoded data related to X.509 certificates. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00296.html">atcacert_date.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00296.html">atcacert_der.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

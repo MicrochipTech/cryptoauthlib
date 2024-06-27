@@ -1,7 +1,7 @@
 var a00752 =
 [
-    [ "pkcs11_object_create", "a01450.html#ga5cdd6e87496f480f42c44430250794bb", null ],
-    [ "pkcs11_object_destroy", "a01450.html#ga34dbd233b6ac0bf1d2aa2be541d66b25", null ],
-    [ "pkcs11_object_is_private", "a01450.html#gad3eaa8d90b81d65f8e585c81c701f893", null ],
-    [ "pkcs11_object_monotonic_attributes", "a01450.html#ga230747fbe3b7a13dfda75980844c3e9d", null ]
+    [ "pkcs11_session_check", "a01450.html#ga7eb04614661e0cedf6cb926787f5ff9b", null ],
+    [ "pkcs11_session_closeall", "a01450.html#ga43525e77f9049b545fa09129cacf9c9a", null ],
+    [ "pkcs11_session_get_info", "a01450.html#ga236a002e179ed36a0b81399a3e11fcb8", null ],
+    [ "pkcs11_session_login", "a01450.html#ga4d70fd7e9799d0428c308a3e1ed146df", null ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_status.h File Reference</title>
+<title>CryptoAuthLib: atcacert.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,661 +98,66 @@ $(document).ready(function(){initNavTree('a00272.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
-  <div class="headertitle"><div class="title">atca_status.h File Reference</div></div>
+<a href="#define-members">Macros</a>  </div>
+  <div class="headertitle"><div class="title">atcacert.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Microchip Crypto Auth status codes.  
+<p>Declarations common to all atcacert code.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &quot;atca_config.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00233.html">atca_compiler.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00275.html">atcacert_check_config.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00263.html">atca_status.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ab132d69c7f94de708ffef02b6dc69d27"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ab132d69c7f94de708ffef02b6dc69d27">ATCA_SUCCESS</a>&#160;&#160;&#160;(0)</td></tr>
-<tr class="separator:ab132d69c7f94de708ffef02b6dc69d27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7fed35661d63acf8538d26f1533cdd28"><td class="memItemLeft" align="right" valign="top"><a id="a7fed35661d63acf8538d26f1533cdd28" name="a7fed35661d63acf8538d26f1533cdd28"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CONFIG_ZONE_LOCKED</b>&#160;&#160;&#160;(0x01)</td></tr>
-<tr class="separator:a7fed35661d63acf8538d26f1533cdd28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed6236fd7ef29eaca525b7854b1bd52b"><td class="memItemLeft" align="right" valign="top"><a id="aed6236fd7ef29eaca525b7854b1bd52b" name="aed6236fd7ef29eaca525b7854b1bd52b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_DATA_ZONE_LOCKED</b>&#160;&#160;&#160;(0x02)</td></tr>
-<tr class="separator:aed6236fd7ef29eaca525b7854b1bd52b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a796b7e7bc096ae19c65b701d87b8718f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a796b7e7bc096ae19c65b701d87b8718f">ATCA_WAKE_FAILED</a>&#160;&#160;&#160;(-48)</td></tr>
-<tr class="separator:a796b7e7bc096ae19c65b701d87b8718f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe80ac4fce5d1f8edd75a218362779ec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#afe80ac4fce5d1f8edd75a218362779ec">ATCA_CHECKMAC_VERIFY_FAILED</a>&#160;&#160;&#160;(-47)</td></tr>
-<tr class="separator:afe80ac4fce5d1f8edd75a218362779ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54b00d87ad3367d281df208661352063"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a54b00d87ad3367d281df208661352063">ATCA_PARSE_ERROR</a>&#160;&#160;&#160;(-46)</td></tr>
-<tr class="separator:a54b00d87ad3367d281df208661352063"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9198f13b90df739a1ca20f101beccfbb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a9198f13b90df739a1ca20f101beccfbb">ATCA_STATUS_CRC</a>&#160;&#160;&#160;(-44)</td></tr>
-<tr class="separator:a9198f13b90df739a1ca20f101beccfbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a884d88ac0c809d0801ca4dbe24dac986"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a884d88ac0c809d0801ca4dbe24dac986">ATCA_STATUS_UNKNOWN</a>&#160;&#160;&#160;(-43)</td></tr>
-<tr class="separator:a884d88ac0c809d0801ca4dbe24dac986"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad878d8797ca33784da8e968cbf17a722"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ad878d8797ca33784da8e968cbf17a722">ATCA_STATUS_ECC</a>&#160;&#160;&#160;(-42)</td></tr>
-<tr class="separator:ad878d8797ca33784da8e968cbf17a722"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3319805e96477b7b89da0f4a69ef1a83"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a3319805e96477b7b89da0f4a69ef1a83">ATCA_STATUS_SELFTEST_ERROR</a>&#160;&#160;&#160;(-41)</td></tr>
-<tr class="separator:a3319805e96477b7b89da0f4a69ef1a83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a962730477dba3c48a84629c23a0e4a13"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a962730477dba3c48a84629c23a0e4a13">ATCA_FUNC_FAIL</a>&#160;&#160;&#160;(-32)</td></tr>
-<tr class="separator:a962730477dba3c48a84629c23a0e4a13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1cd2b6470db000dd151f2a092f41edf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#aa1cd2b6470db000dd151f2a092f41edf">ATCA_GEN_FAIL</a>&#160;&#160;&#160;(-31)</td></tr>
-<tr class="separator:aa1cd2b6470db000dd151f2a092f41edf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22c74ba87b45d105867f93c97b6dbe04"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a22c74ba87b45d105867f93c97b6dbe04">ATCA_BAD_PARAM</a>&#160;&#160;&#160;(-30)</td></tr>
-<tr class="separator:a22c74ba87b45d105867f93c97b6dbe04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fd83db4807d846db39ffe92925dc939"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a9fd83db4807d846db39ffe92925dc939">ATCA_INVALID_ID</a>&#160;&#160;&#160;(-29)</td></tr>
-<tr class="separator:a9fd83db4807d846db39ffe92925dc939"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90fced83678233feeb83da9e73579484"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a90fced83678233feeb83da9e73579484">ATCA_INVALID_SIZE</a>&#160;&#160;&#160;(-28)</td></tr>
-<tr class="separator:a90fced83678233feeb83da9e73579484"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef8e0056fbad0bd33fcb2213b2f3ae49"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#aef8e0056fbad0bd33fcb2213b2f3ae49">ATCA_RX_CRC_ERROR</a>&#160;&#160;&#160;(-27)</td></tr>
-<tr class="separator:aef8e0056fbad0bd33fcb2213b2f3ae49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8aa6f2e22841fba09b78262c9ce7a728"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a8aa6f2e22841fba09b78262c9ce7a728">ATCA_RX_FAIL</a>&#160;&#160;&#160;(-26)</td></tr>
-<tr class="separator:a8aa6f2e22841fba09b78262c9ce7a728"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a0c600725ed81640f2e39c88c864e1c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a6a0c600725ed81640f2e39c88c864e1c">ATCA_RX_NO_RESPONSE</a>&#160;&#160;&#160;(-25)</td></tr>
-<tr class="separator:a6a0c600725ed81640f2e39c88c864e1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c467c51b23ea961e1aabd6e98644d47"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a6c467c51b23ea961e1aabd6e98644d47">ATCA_RESYNC_WITH_WAKEUP</a>&#160;&#160;&#160;(-24)</td></tr>
-<tr class="separator:a6c467c51b23ea961e1aabd6e98644d47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2fefd4147dcde6662dc2bae6adb61237"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a2fefd4147dcde6662dc2bae6adb61237">ATCA_PARITY_ERROR</a>&#160;&#160;&#160;(-23)</td></tr>
-<tr class="separator:a2fefd4147dcde6662dc2bae6adb61237"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b4c194a6a86ffadc703b841280778c3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a7b4c194a6a86ffadc703b841280778c3">ATCA_TX_TIMEOUT</a>&#160;&#160;&#160;(-22)</td></tr>
-<tr class="separator:a7b4c194a6a86ffadc703b841280778c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5bbd989a822d35a59c9eb6258bf26fc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ab5bbd989a822d35a59c9eb6258bf26fc">ATCA_RX_TIMEOUT</a>&#160;&#160;&#160;(-21)</td></tr>
-<tr class="separator:ab5bbd989a822d35a59c9eb6258bf26fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4cd022abf0e71d3605a9fc18e8a1ea6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ad4cd022abf0e71d3605a9fc18e8a1ea6">ATCA_TOO_MANY_COMM_RETRIES</a>&#160;&#160;&#160;(-20)</td></tr>
-<tr class="separator:ad4cd022abf0e71d3605a9fc18e8a1ea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1a2ea3166875b26f91e82767d6e3e1a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ab1a2ea3166875b26f91e82767d6e3e1a">ATCA_SMALL_BUFFER</a>&#160;&#160;&#160;(-19)</td></tr>
-<tr class="separator:ab1a2ea3166875b26f91e82767d6e3e1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9dd0fe8e48163ddf047629aeb8820e6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ae9dd0fe8e48163ddf047629aeb8820e6">ATCA_COMM_FAIL</a>&#160;&#160;&#160;(-16)</td></tr>
-<tr class="separator:ae9dd0fe8e48163ddf047629aeb8820e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc6b7767c53326f3520ec83ac02df679"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#afc6b7767c53326f3520ec83ac02df679">ATCA_TIMEOUT</a>&#160;&#160;&#160;(-15)</td></tr>
-<tr class="separator:afc6b7767c53326f3520ec83ac02df679"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d393762ff34c052e12509e79d54415f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a3d393762ff34c052e12509e79d54415f">ATCA_BAD_OPCODE</a>&#160;&#160;&#160;(-14)</td></tr>
-<tr class="separator:a3d393762ff34c052e12509e79d54415f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb58269e38e4025d4e6620c4d1202ee4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#afb58269e38e4025d4e6620c4d1202ee4">ATCA_WAKE_SUCCESS</a>&#160;&#160;&#160;(-13)</td></tr>
-<tr class="separator:afb58269e38e4025d4e6620c4d1202ee4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a889853cfab2a19aa22c00d0d19c87bcc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a889853cfab2a19aa22c00d0d19c87bcc">ATCA_EXECUTION_ERROR</a>&#160;&#160;&#160;(-12)</td></tr>
-<tr class="separator:a889853cfab2a19aa22c00d0d19c87bcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad80a997b8786774af268692c936f90d9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ad80a997b8786774af268692c936f90d9">ATCA_UNIMPLEMENTED</a>&#160;&#160;&#160;(-11)</td></tr>
-<tr class="separator:ad80a997b8786774af268692c936f90d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb19bd83c35f7194c30e913a3d4b4137"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#abb19bd83c35f7194c30e913a3d4b4137">ATCA_ASSERT_FAILURE</a>&#160;&#160;&#160;(-10)</td></tr>
-<tr class="separator:abb19bd83c35f7194c30e913a3d4b4137"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a149bb02116700288df316d5ab391f5d3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a149bb02116700288df316d5ab391f5d3">ATCA_TX_FAIL</a>&#160;&#160;&#160;(-9)</td></tr>
-<tr class="separator:a149bb02116700288df316d5ab391f5d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c3366f0cbffb0ecdaa06a3581bcf9d3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a7c3366f0cbffb0ecdaa06a3581bcf9d3">ATCA_NOT_LOCKED</a>&#160;&#160;&#160;(-8)</td></tr>
-<tr class="separator:a7c3366f0cbffb0ecdaa06a3581bcf9d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a652c8fbaca046330679929610433b987"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a652c8fbaca046330679929610433b987">ATCA_NO_DEVICES</a>&#160;&#160;&#160;(-7)</td></tr>
-<tr class="separator:a652c8fbaca046330679929610433b987"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2fb44bc6d1bd34f7b22e9d05e8e638a5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a2fb44bc6d1bd34f7b22e9d05e8e638a5">ATCA_HEALTH_TEST_ERROR</a>&#160;&#160;&#160;(-6)</td></tr>
-<tr class="separator:a2fb44bc6d1bd34f7b22e9d05e8e638a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa17bd20787fa8dcde44983f25c00d80b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#aa17bd20787fa8dcde44983f25c00d80b">ATCA_ALLOC_FAILURE</a>&#160;&#160;&#160;(-5)</td></tr>
-<tr class="separator:aa17bd20787fa8dcde44983f25c00d80b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4dbc1891be5e77d93690554e7bb2aa8d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#a4dbc1891be5e77d93690554e7bb2aa8d">ATCA_USE_FLAGS_CONSUMED</a>&#160;&#160;&#160;(-4)</td></tr>
-<tr class="separator:a4dbc1891be5e77d93690554e7bb2aa8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace96e4c864044972f87aef44e8d106ec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ace96e4c864044972f87aef44e8d106ec">ATCA_NOT_INITIALIZED</a>&#160;&#160;&#160;(-3)</td></tr>
-<tr class="separator:ace96e4c864044972f87aef44e8d106ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42137e921dec18d18737aaf68196191f"><td class="memItemLeft" align="right" valign="top"><a id="a42137e921dec18d18737aaf68196191f" name="a42137e921dec18d18737aaf68196191f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_STATUS_AUTH_BIT</b>&#160;&#160;&#160;0x40u</td></tr>
-<tr class="separator:a42137e921dec18d18737aaf68196191f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c4d469f88e56f78af64c1f76b47e8ea"><td class="memItemLeft" align="right" valign="top"><a id="a2c4d469f88e56f78af64c1f76b47e8ea" name="a2c4d469f88e56f78af64c1f76b47e8ea"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_STATUS_AUTH_BIT_COMPLEMENT</b>&#160;&#160;&#160;~(ATCA_STATUS_AUTH_BIT &amp; 0xffu)</td></tr>
-<tr class="separator:a2c4d469f88e56f78af64c1f76b47e8ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a8175d0abb09acd3bc9d1484fcba961cb"><td class="memItemLeft" align="right" valign="top"><a id="a8175d0abb09acd3bc9d1484fcba961cb" name="a8175d0abb09acd3bc9d1484fcba961cb"></a>
-typedef int&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_STATUS</b></td></tr>
-<tr class="separator:a8175d0abb09acd3bc9d1484fcba961cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa93f0eb578d23995850d61f7d61c55c1"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FALSE</b>&#160;&#160;&#160;(0)</td></tr>
+<tr class="separator:gaa93f0eb578d23995850d61f7d61c55c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa8cecfc5c5c054d2875c03e77b7be15d"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRUE</b>&#160;&#160;&#160;(1)</td></tr>
+<tr class="separator:gaa8cecfc5c5c054d2875c03e77b7be15d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7bd1ad830360fc8b988f855da6d0d5ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga7bd1ad830360fc8b988f855da6d0d5ba">ATCACERT_E_SUCCESS</a>&#160;&#160;&#160;<a class="el" href="a00263.html#ab132d69c7f94de708ffef02b6dc69d27">ATCA_SUCCESS</a></td></tr>
+<tr class="separator:ga7bd1ad830360fc8b988f855da6d0d5ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga048a6bb9781dbbc402409a172f976f74"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga048a6bb9781dbbc402409a172f976f74">ATCACERT_E_ERROR</a>&#160;&#160;&#160;<a class="el" href="a00263.html#aa1cd2b6470db000dd151f2a092f41edf">ATCA_GEN_FAIL</a></td></tr>
+<tr class="separator:ga048a6bb9781dbbc402409a172f976f74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47509d283523ab1892fb8746d6f4e37d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga47509d283523ab1892fb8746d6f4e37d">ATCACERT_E_BAD_PARAMS</a>&#160;&#160;&#160;<a class="el" href="a00263.html#a22c74ba87b45d105867f93c97b6dbe04">ATCA_BAD_PARAM</a></td></tr>
+<tr class="separator:ga47509d283523ab1892fb8746d6f4e37d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a2e774fc8b12c4045dea335a86afca6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga7a2e774fc8b12c4045dea335a86afca6">ATCACERT_E_BUFFER_TOO_SMALL</a>&#160;&#160;&#160;<a class="el" href="a00263.html#ab1a2ea3166875b26f91e82767d6e3e1a">ATCA_SMALL_BUFFER</a></td></tr>
+<tr class="separator:ga7a2e774fc8b12c4045dea335a86afca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b6db1523875a2b1453ef5e16989ecd4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga4b6db1523875a2b1453ef5e16989ecd4">ATCACERT_E_UNIMPLEMENTED</a>&#160;&#160;&#160;<a class="el" href="a00263.html#ad80a997b8786774af268692c936f90d9">ATCA_UNIMPLEMENTED</a></td></tr>
+<tr class="separator:ga4b6db1523875a2b1453ef5e16989ecd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaea155533fdd352d6602d3e2fc717930f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#gaea155533fdd352d6602d3e2fc717930f">ATCACERT_E_DECODING_ERROR</a>&#160;&#160;&#160;4</td></tr>
+<tr class="separator:gaea155533fdd352d6602d3e2fc717930f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaafd66d6744314225ead24b3901bd6372"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#gaafd66d6744314225ead24b3901bd6372">ATCACERT_E_INVALID_DATE</a>&#160;&#160;&#160;5</td></tr>
+<tr class="separator:gaafd66d6744314225ead24b3901bd6372"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a7cb98e18ad338f2eaf6594acb67c32"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga5a7cb98e18ad338f2eaf6594acb67c32">ATCACERT_E_UNEXPECTED_ELEM_SIZE</a>&#160;&#160;&#160;7</td></tr>
+<tr class="separator:ga5a7cb98e18ad338f2eaf6594acb67c32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8e3e7c64650c92364bbac17f6a75474a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga8e3e7c64650c92364bbac17f6a75474a">ATCACERT_E_ELEM_MISSING</a>&#160;&#160;&#160;8</td></tr>
+<tr class="separator:ga8e3e7c64650c92364bbac17f6a75474a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga62604c78d688530173e203b02df180fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga62604c78d688530173e203b02df180fa">ATCACERT_E_ELEM_OUT_OF_BOUNDS</a>&#160;&#160;&#160;9</td></tr>
+<tr class="separator:ga62604c78d688530173e203b02df180fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga822ee0620c8d2d12ff971b9b35f9f5cd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga822ee0620c8d2d12ff971b9b35f9f5cd">ATCACERT_E_BAD_CERT</a>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:ga822ee0620c8d2d12ff971b9b35f9f5cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga01010ef58d52a05292f6a70ff3d53ce8"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_E_WRONG_CERT_DEF</b>&#160;&#160;&#160;11</td></tr>
+<tr class="separator:ga01010ef58d52a05292f6a70ff3d53ce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae1da5e02cd9b4ee7b8617d7bce0a5b5d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#gae1da5e02cd9b4ee7b8617d7bce0a5b5d">ATCACERT_E_VERIFY_FAILED</a>&#160;&#160;&#160;12</td></tr>
+<tr class="separator:gae1da5e02cd9b4ee7b8617d7bce0a5b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2396e500bd36c2316a1a6e13e3117958"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga2396e500bd36c2316a1a6e13e3117958">ATCACERT_E_INVALID_TRANSFORM</a>&#160;&#160;&#160;13</td></tr>
+<tr class="separator:ga2396e500bd36c2316a1a6e13e3117958"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Microchip Crypto Auth status codes. </p>
+<div class="textblock"><p>Declarations common to all atcacert code. </p>
+<p>These are common definitions used by all the atcacert code.</p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="aa17bd20787fa8dcde44983f25c00d80b" name="aa17bd20787fa8dcde44983f25c00d80b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa17bd20787fa8dcde44983f25c00d80b">&#9670;&#160;</a></span>ATCA_ALLOC_FAILURE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_ALLOC_FAILURE&#160;&#160;&#160;(-5)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xFB): Couldn't allocate required memory </p>
-
-</div>
-</div>
-<a id="abb19bd83c35f7194c30e913a3d4b4137" name="abb19bd83c35f7194c30e913a3d4b4137"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb19bd83c35f7194c30e913a3d4b4137">&#9670;&#160;</a></span>ATCA_ASSERT_FAILURE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_ASSERT_FAILURE&#160;&#160;&#160;(-10)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xF6): Code failed run-time consistency check </p>
-
-</div>
-</div>
-<a id="a3d393762ff34c052e12509e79d54415f" name="a3d393762ff34c052e12509e79d54415f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d393762ff34c052e12509e79d54415f">&#9670;&#160;</a></span>ATCA_BAD_OPCODE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_BAD_OPCODE&#160;&#160;&#160;(-14)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xF2): opcode is not supported by the device </p>
-
-</div>
-</div>
-<a id="a22c74ba87b45d105867f93c97b6dbe04" name="a22c74ba87b45d105867f93c97b6dbe04"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22c74ba87b45d105867f93c97b6dbe04">&#9670;&#160;</a></span>ATCA_BAD_PARAM</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_BAD_PARAM&#160;&#160;&#160;(-30)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xE2): bad argument (out of range, null pointer, etc.) </p>
-
-</div>
-</div>
-<a id="afe80ac4fce5d1f8edd75a218362779ec" name="afe80ac4fce5d1f8edd75a218362779ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe80ac4fce5d1f8edd75a218362779ec">&#9670;&#160;</a></span>ATCA_CHECKMAC_VERIFY_FAILED</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_CHECKMAC_VERIFY_FAILED&#160;&#160;&#160;(-47)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xD1): response status byte indicates CheckMac failure(status byte = 0x01) </p>
-
-</div>
-</div>
-<a id="ae9dd0fe8e48163ddf047629aeb8820e6" name="ae9dd0fe8e48163ddf047629aeb8820e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae9dd0fe8e48163ddf047629aeb8820e6">&#9670;&#160;</a></span>ATCA_COMM_FAIL</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_COMM_FAIL&#160;&#160;&#160;(-16)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xF0): Communication with device failed. Same as in hardware dependent modules. </p>
-
-</div>
-</div>
-<a id="a889853cfab2a19aa22c00d0d19c87bcc" name="a889853cfab2a19aa22c00d0d19c87bcc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a889853cfab2a19aa22c00d0d19c87bcc">&#9670;&#160;</a></span>ATCA_EXECUTION_ERROR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_EXECUTION_ERROR&#160;&#160;&#160;(-12)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xF4): chip was in a state where it could not execute the command, response status byte indicates command execution error (status byte = 0x0F) </p>
-
-</div>
-</div>
-<a id="a962730477dba3c48a84629c23a0e4a13" name="a962730477dba3c48a84629c23a0e4a13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a962730477dba3c48a84629c23a0e4a13">&#9670;&#160;</a></span>ATCA_FUNC_FAIL</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_FUNC_FAIL&#160;&#160;&#160;(-32)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xE0): Function could not execute due to incorrect condition / state. </p>
-
-</div>
-</div>
-<a id="aa1cd2b6470db000dd151f2a092f41edf" name="aa1cd2b6470db000dd151f2a092f41edf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1cd2b6470db000dd151f2a092f41edf">&#9670;&#160;</a></span>ATCA_GEN_FAIL</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_GEN_FAIL&#160;&#160;&#160;(-31)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xE1): unspecified error </p>
-
-</div>
-</div>
-<a id="a2fb44bc6d1bd34f7b22e9d05e8e638a5" name="a2fb44bc6d1bd34f7b22e9d05e8e638a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2fb44bc6d1bd34f7b22e9d05e8e638a5">&#9670;&#160;</a></span>ATCA_HEALTH_TEST_ERROR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_HEALTH_TEST_ERROR&#160;&#160;&#160;(-6)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xFA): random number generator health test error </p>
-
-</div>
-</div>
-<a id="a9fd83db4807d846db39ffe92925dc939" name="a9fd83db4807d846db39ffe92925dc939"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9fd83db4807d846db39ffe92925dc939">&#9670;&#160;</a></span>ATCA_INVALID_ID</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_INVALID_ID&#160;&#160;&#160;(-29)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xE3: invalid device id, id not set </p>
-
-</div>
-</div>
-<a id="a90fced83678233feeb83da9e73579484" name="a90fced83678233feeb83da9e73579484"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90fced83678233feeb83da9e73579484">&#9670;&#160;</a></span>ATCA_INVALID_SIZE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_INVALID_SIZE&#160;&#160;&#160;(-28)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xE4): Count value is out of range or greater than buffer size. </p>
-
-</div>
-</div>
-<a id="a652c8fbaca046330679929610433b987" name="a652c8fbaca046330679929610433b987"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a652c8fbaca046330679929610433b987">&#9670;&#160;</a></span>ATCA_NO_DEVICES</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_NO_DEVICES&#160;&#160;&#160;(-7)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xF9): For protocols that support device discovery (kit protocol), no devices were found </p>
-
-</div>
-</div>
-<a id="ace96e4c864044972f87aef44e8d106ec" name="ace96e4c864044972f87aef44e8d106ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace96e4c864044972f87aef44e8d106ec">&#9670;&#160;</a></span>ATCA_NOT_INITIALIZED</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_NOT_INITIALIZED&#160;&#160;&#160;(-3)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xFD): The library has not been initialized so the command could not be executed </p>
-
-</div>
-</div>
-<a id="a7c3366f0cbffb0ecdaa06a3581bcf9d3" name="a7c3366f0cbffb0ecdaa06a3581bcf9d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7c3366f0cbffb0ecdaa06a3581bcf9d3">&#9670;&#160;</a></span>ATCA_NOT_LOCKED</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_NOT_LOCKED&#160;&#160;&#160;(-8)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xF8): required zone was not locked </p>
-
-</div>
-</div>
-<a id="a2fefd4147dcde6662dc2bae6adb61237" name="a2fefd4147dcde6662dc2bae6adb61237"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2fefd4147dcde6662dc2bae6adb61237">&#9670;&#160;</a></span>ATCA_PARITY_ERROR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_PARITY_ERROR&#160;&#160;&#160;(-23)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xE9): for protocols needing parity </p>
-
-</div>
-</div>
-<a id="a54b00d87ad3367d281df208661352063" name="a54b00d87ad3367d281df208661352063"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a54b00d87ad3367d281df208661352063">&#9670;&#160;</a></span>ATCA_PARSE_ERROR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_PARSE_ERROR&#160;&#160;&#160;(-46)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xD2): response status byte indicates parsing error(status byte = 0x03) </p>
-
-</div>
-</div>
-<a id="a6c467c51b23ea961e1aabd6e98644d47" name="a6c467c51b23ea961e1aabd6e98644d47"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c467c51b23ea961e1aabd6e98644d47">&#9670;&#160;</a></span>ATCA_RESYNC_WITH_WAKEUP</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_RESYNC_WITH_WAKEUP&#160;&#160;&#160;(-24)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xE8): Re-synchronization succeeded, but only after generating a Wake-up </p>
-
-</div>
-</div>
-<a id="aef8e0056fbad0bd33fcb2213b2f3ae49" name="aef8e0056fbad0bd33fcb2213b2f3ae49"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef8e0056fbad0bd33fcb2213b2f3ae49">&#9670;&#160;</a></span>ATCA_RX_CRC_ERROR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_RX_CRC_ERROR&#160;&#160;&#160;(-27)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xE5): CRC error in data received from device </p>
-
-</div>
-</div>
-<a id="a8aa6f2e22841fba09b78262c9ce7a728" name="a8aa6f2e22841fba09b78262c9ce7a728"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8aa6f2e22841fba09b78262c9ce7a728">&#9670;&#160;</a></span>ATCA_RX_FAIL</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_RX_FAIL&#160;&#160;&#160;(-26)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xE6): Timed out while waiting for response. Number of bytes received is &gt; 0. </p>
-
-</div>
-</div>
-<a id="a6a0c600725ed81640f2e39c88c864e1c" name="a6a0c600725ed81640f2e39c88c864e1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6a0c600725ed81640f2e39c88c864e1c">&#9670;&#160;</a></span>ATCA_RX_NO_RESPONSE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_RX_NO_RESPONSE&#160;&#160;&#160;(-25)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xE7): Not an error while the Command layer is polling for a command response. </p>
-
-</div>
-</div>
-<a id="ab5bbd989a822d35a59c9eb6258bf26fc" name="ab5bbd989a822d35a59c9eb6258bf26fc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5bbd989a822d35a59c9eb6258bf26fc">&#9670;&#160;</a></span>ATCA_RX_TIMEOUT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_RX_TIMEOUT&#160;&#160;&#160;(-21)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xEB): for Microchip PHY protocol, timeout on receipt waiting for master </p>
-
-</div>
-</div>
-<a id="ab1a2ea3166875b26f91e82767d6e3e1a" name="ab1a2ea3166875b26f91e82767d6e3e1a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab1a2ea3166875b26f91e82767d6e3e1a">&#9670;&#160;</a></span>ATCA_SMALL_BUFFER</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_SMALL_BUFFER&#160;&#160;&#160;(-19)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xED): Supplied buffer is too small for data required </p>
-
-</div>
-</div>
-<a id="a9198f13b90df739a1ca20f101beccfbb" name="a9198f13b90df739a1ca20f101beccfbb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9198f13b90df739a1ca20f101beccfbb">&#9670;&#160;</a></span>ATCA_STATUS_CRC</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_STATUS_CRC&#160;&#160;&#160;(-44)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xD4): response status byte indicates DEVICE did not receive data properly(status byte = 0xFF) </p>
-
-</div>
-</div>
-<a id="ad878d8797ca33784da8e968cbf17a722" name="ad878d8797ca33784da8e968cbf17a722"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad878d8797ca33784da8e968cbf17a722">&#9670;&#160;</a></span>ATCA_STATUS_ECC</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_STATUS_ECC&#160;&#160;&#160;(-42)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xD6): response status byte is ECC fault(status byte = 0x05) </p>
-
-</div>
-</div>
-<a id="a3319805e96477b7b89da0f4a69ef1a83" name="a3319805e96477b7b89da0f4a69ef1a83"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3319805e96477b7b89da0f4a69ef1a83">&#9670;&#160;</a></span>ATCA_STATUS_SELFTEST_ERROR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_STATUS_SELFTEST_ERROR&#160;&#160;&#160;(-41)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xD7): response status byte is Self Test Error, chip in failure mode (status byte = 0x07) </p>
-
-</div>
-</div>
-<a id="a884d88ac0c809d0801ca4dbe24dac986" name="a884d88ac0c809d0801ca4dbe24dac986"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a884d88ac0c809d0801ca4dbe24dac986">&#9670;&#160;</a></span>ATCA_STATUS_UNKNOWN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_STATUS_UNKNOWN&#160;&#160;&#160;(-43)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xD5): response status byte is unknown </p>
-
-</div>
-</div>
-<a id="ab132d69c7f94de708ffef02b6dc69d27" name="ab132d69c7f94de708ffef02b6dc69d27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab132d69c7f94de708ffef02b6dc69d27">&#9670;&#160;</a></span>ATCA_SUCCESS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_SUCCESS&#160;&#160;&#160;(0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0x00): Function Successful </p>
-
-</div>
-</div>
-<a id="afc6b7767c53326f3520ec83ac02df679" name="afc6b7767c53326f3520ec83ac02df679"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afc6b7767c53326f3520ec83ac02df679">&#9670;&#160;</a></span>ATCA_TIMEOUT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_TIMEOUT&#160;&#160;&#160;(-15)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xF1): Timed out while waiting for response. Number of bytes received is 0. </p>
-
-</div>
-</div>
-<a id="ad4cd022abf0e71d3605a9fc18e8a1ea6" name="ad4cd022abf0e71d3605a9fc18e8a1ea6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad4cd022abf0e71d3605a9fc18e8a1ea6">&#9670;&#160;</a></span>ATCA_TOO_MANY_COMM_RETRIES</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_TOO_MANY_COMM_RETRIES&#160;&#160;&#160;(-20)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xEC): Device did not respond too many times during a transmission. Could indicate no device present. </p>
-
-</div>
-</div>
-<a id="a149bb02116700288df316d5ab391f5d3" name="a149bb02116700288df316d5ab391f5d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a149bb02116700288df316d5ab391f5d3">&#9670;&#160;</a></span>ATCA_TX_FAIL</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_TX_FAIL&#160;&#160;&#160;(-9)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xF7): Failed to write </p>
-
-</div>
-</div>
-<a id="a7b4c194a6a86ffadc703b841280778c3" name="a7b4c194a6a86ffadc703b841280778c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b4c194a6a86ffadc703b841280778c3">&#9670;&#160;</a></span>ATCA_TX_TIMEOUT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_TX_TIMEOUT&#160;&#160;&#160;(-22)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xEA): for Microchip PHY protocol, timeout on transmission waiting for master </p>
-
-</div>
-</div>
-<a id="ad80a997b8786774af268692c936f90d9" name="ad80a997b8786774af268692c936f90d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad80a997b8786774af268692c936f90d9">&#9670;&#160;</a></span>ATCA_UNIMPLEMENTED</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_UNIMPLEMENTED&#160;&#160;&#160;(-11)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xF5): Function or some element of it hasn't been implemented yet </p>
-
-</div>
-</div>
-<a id="a4dbc1891be5e77d93690554e7bb2aa8d" name="a4dbc1891be5e77d93690554e7bb2aa8d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4dbc1891be5e77d93690554e7bb2aa8d">&#9670;&#160;</a></span>ATCA_USE_FLAGS_CONSUMED</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_USE_FLAGS_CONSUMED&#160;&#160;&#160;(-4)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xFC): Use flags on the device indicates its consumed fully </p>
-
-</div>
-</div>
-<a id="a796b7e7bc096ae19c65b701d87b8718f" name="a796b7e7bc096ae19c65b701d87b8718f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a796b7e7bc096ae19c65b701d87b8718f">&#9670;&#160;</a></span>ATCA_WAKE_FAILED</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_WAKE_FAILED&#160;&#160;&#160;(-48)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xD0): response status byte indicates CheckMac failure(status byte = 0x01) </p>
-
-</div>
-</div>
-<a id="afb58269e38e4025d4e6620c4d1202ee4" name="afb58269e38e4025d4e6620c4d1202ee4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb58269e38e4025d4e6620c4d1202ee4">&#9670;&#160;</a></span>ATCA_WAKE_SUCCESS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_WAKE_SUCCESS&#160;&#160;&#160;(-13)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>STATUS (0xF3): received proper wake token </p>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00272.html">atca_status.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00272.html">atcacert.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

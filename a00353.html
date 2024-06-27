@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_checkmac.c File Reference</title>
+<title>CryptoAuthLib: calib_config_check.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,24 +97,419 @@ $(document).ready(function(){initNavTree('a00353.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">calib_checkmac.c File Reference</div></div>
+  <div class="summary">
+<a href="#define-members">Macros</a>  </div>
+  <div class="headertitle"><div class="title">calib_config_check.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for CheckMAC command.  
+<p>Consistency checks for configuration options.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00515.html">cryptoauthlib.h</a>&quot;</code><br />
-</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for CheckMAC command. </p>
-<p>The CheckMac command calculates a MAC response that would have been generated on a different CryptoAuthentication device and then compares the result with input value.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, and ATECC608A/B. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+<div class="textblock"><code>#include &quot;<a class="el" href="a00800.html">atca_config_check.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00491.html">crypto/crypto_sw_config_check.h</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a09629e8acb811c628422f53fc20fb815"><td class="memItemLeft" align="right" valign="top"><a id="a09629e8acb811c628422f53fc20fb815" name="a09629e8acb811c628422f53fc20fb815"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_SHA204_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:a09629e8acb811c628422f53fc20fb815"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd291c08b0a086bab4e6c48d37b31b18"><td class="memItemLeft" align="right" valign="top"><a id="acd291c08b0a086bab4e6c48d37b31b18" name="acd291c08b0a086bab4e6c48d37b31b18"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_SHA206_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:acd291c08b0a086bab4e6c48d37b31b18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0324b4134cd18a710dfa2cb3d8f6fc0f"><td class="memItemLeft" align="right" valign="top"><a id="a0324b4134cd18a710dfa2cb3d8f6fc0f" name="a0324b4134cd18a710dfa2cb3d8f6fc0f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_ECC108_EN</b>&#160;&#160;&#160;DEFAULT_DISABLED</td></tr>
+<tr class="separator:a0324b4134cd18a710dfa2cb3d8f6fc0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fac268ebfff96e6e94ec52306b6da55"><td class="memItemLeft" align="right" valign="top"><a id="a0fac268ebfff96e6e94ec52306b6da55" name="a0fac268ebfff96e6e94ec52306b6da55"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_ECC508_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:a0fac268ebfff96e6e94ec52306b6da55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4d1e0c67150e7ff0fb1741c36dc332b"><td class="memItemLeft" align="right" valign="top"><a id="af4d1e0c67150e7ff0fb1741c36dc332b" name="af4d1e0c67150e7ff0fb1741c36dc332b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_ECC608_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:af4d1e0c67150e7ff0fb1741c36dc332b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa96cd7a06b8de85977febe67b570a52a"><td class="memItemLeft" align="right" valign="top"><a id="aa96cd7a06b8de85977febe67b570a52a" name="aa96cd7a06b8de85977febe67b570a52a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_ECC204_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:aa96cd7a06b8de85977febe67b570a52a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9c9a06e6022ef2646b890522e8f326f"><td class="memItemLeft" align="right" valign="top"><a id="aa9c9a06e6022ef2646b890522e8f326f" name="aa9c9a06e6022ef2646b890522e8f326f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_TA010_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:aa9c9a06e6022ef2646b890522e8f326f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22706c364e2303944d0a257fbef84634"><td class="memItemLeft" align="right" valign="top"><a id="a22706c364e2303944d0a257fbef84634" name="a22706c364e2303944d0a257fbef84634"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_SHA104_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:a22706c364e2303944d0a257fbef84634"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d1d1499922e441c635a2dff2b841d0a"><td class="memItemLeft" align="right" valign="top"><a id="a2d1d1499922e441c635a2dff2b841d0a" name="a2d1d1499922e441c635a2dff2b841d0a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_SHA105_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:a2d1d1499922e441c635a2dff2b841d0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a767595812a59155e588bdf7d2d5a96b0"><td class="memItemLeft" align="right" valign="top"><a id="a767595812a59155e588bdf7d2d5a96b0" name="a767595812a59155e588bdf7d2d5a96b0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_FULL_FEATURE</b>&#160;&#160;&#160;(CALIB_SHA204_EN || CALIB_ECC108_EN || CALIB_ECC508_EN || CALIB_ECC608_EN)</td></tr>
+<tr class="separator:a767595812a59155e588bdf7d2d5a96b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b65b1552796123a87b5c349d80d0ec2"><td class="memItemLeft" align="right" valign="top"><a id="a7b65b1552796123a87b5c349d80d0ec2" name="a7b65b1552796123a87b5c349d80d0ec2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_ECC_SUPPORT</b>&#160;&#160;&#160;(CALIB_ECC108_EN || CALIB_ECC508_EN || CALIB_ECC608_EN || CALIB_ECC204_EN || CALIB_TA010_EN)</td></tr>
+<tr class="separator:a7b65b1552796123a87b5c349d80d0ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd99f3bb1c7b391b8ea21e2044a16372"><td class="memItemLeft" align="right" valign="top"><a id="afd99f3bb1c7b391b8ea21e2044a16372" name="afd99f3bb1c7b391b8ea21e2044a16372"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_CA2_SUPPORT</b>&#160;&#160;&#160;(CALIB_ECC204_EN || CALIB_TA010_EN || CALIB_SHA104_EN || CALIB_SHA105_EN)</td></tr>
+<tr class="separator:afd99f3bb1c7b391b8ea21e2044a16372"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa41a2c82c4948a2f5e1d84176a764434"><td class="memItemLeft" align="right" valign="top"><a id="aa41a2c82c4948a2f5e1d84176a764434" name="aa41a2c82c4948a2f5e1d84176a764434"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_CA2_CERT_SUPPORT</b>&#160;&#160;&#160;(CALIB_ECC204_EN || CALIB_TA010_EN)</td></tr>
+<tr class="separator:aa41a2c82c4948a2f5e1d84176a764434"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3216357f1efff46f2642315411d6862b"><td class="memItemLeft" align="right" valign="top"><a id="a3216357f1efff46f2642315411d6862b" name="a3216357f1efff46f2642315411d6862b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_SHA206_ONLY</b>&#160;&#160;&#160;(CALIB_SHA206_EN &amp;&amp; !(CALIB_FULL_FEATURE || ATCA_CA2_SUPPORT))</td></tr>
+<tr class="separator:a3216357f1efff46f2642315411d6862b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace459bb8646649387cf9840535b43d38"><td class="memItemLeft" align="right" valign="top"><a id="ace459bb8646649387cf9840535b43d38" name="ace459bb8646649387cf9840535b43d38"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DEFAULT_CA_MAX_PACKET_SIZE</b>&#160;&#160;&#160;(198u)</td></tr>
+<tr class="separator:ace459bb8646649387cf9840535b43d38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac53a04fe1cb1aa1acb5f200f9019462c"><td class="memItemLeft" align="right" valign="top"><a id="ac53a04fe1cb1aa1acb5f200f9019462c" name="ac53a04fe1cb1aa1acb5f200f9019462c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CA_MAX_PACKET_SIZE</b>&#160;&#160;&#160;(DEFAULT_CA_MAX_PACKET_SIZE)</td></tr>
+<tr class="separator:ac53a04fe1cb1aa1acb5f200f9019462c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f82667e44bdbceecae73857e89cb7a9"><td class="memItemLeft" align="right" valign="top"><a id="a0f82667e44bdbceecae73857e89cb7a9" name="a0f82667e44bdbceecae73857e89cb7a9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_AES_EN</b>&#160;&#160;&#160;(ATCAB_AES_EN &amp;&amp; CALIB_ECC608_EN)</td></tr>
+<tr class="separator:a0f82667e44bdbceecae73857e89cb7a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b76c2eef8b766106a44c43c38b9c295"><td class="memItemLeft" align="right" valign="top"><a id="a5b76c2eef8b766106a44c43c38b9c295" name="a5b76c2eef8b766106a44c43c38b9c295"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_AES_GCM_EN</b>&#160;&#160;&#160;(ATCAB_AES_GCM_EN &amp;&amp; CALIB_AES_EN &amp;&amp; CALIB_ECC608_EN)</td></tr>
+<tr class="separator:a5b76c2eef8b766106a44c43c38b9c295"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd384d97a88b1fd0fda11c1583163c7a"><td class="memItemLeft" align="right" valign="top"><a id="acd384d97a88b1fd0fda11c1583163c7a" name="acd384d97a88b1fd0fda11c1583163c7a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_CHECKMAC_EN</b>&#160;&#160;&#160;(ATCAB_CHECKMAC_EN &amp;&amp; (CALIB_FULL_FEATURE || CALIB_SHA105_EN))</td></tr>
+<tr class="separator:acd384d97a88b1fd0fda11c1583163c7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd18600dca8d959d12669e74794a756b"><td class="memItemLeft" align="right" valign="top"><a id="afd18600dca8d959d12669e74794a756b" name="afd18600dca8d959d12669e74794a756b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_COUNTER_EN</b>&#160;&#160;&#160;(ATCAB_COUNTER_EN &amp;&amp; (CALIB_ECC_SUPPORT || CALIB_SHA104_EN || CALIB_SHA105_EN))</td></tr>
+<tr class="separator:afd18600dca8d959d12669e74794a756b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe939d02676276bfc631447a7fe7ff5c"><td class="memItemLeft" align="right" valign="top"><a id="abe939d02676276bfc631447a7fe7ff5c" name="abe939d02676276bfc631447a7fe7ff5c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_DELETE_EN</b>&#160;&#160;&#160;(DEFAULT_DISABLED)</td></tr>
+<tr class="separator:abe939d02676276bfc631447a7fe7ff5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2a033343ac069978bc7de09664af16a"><td class="memItemLeft" align="right" valign="top"><a id="af2a033343ac069978bc7de09664af16a" name="af2a033343ac069978bc7de09664af16a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_DERIVEKEY_EN</b>&#160;&#160;&#160;(ATCAB_DERIVEKEY_EN &amp;&amp; (CALIB_FULL_FEATURE || CALIB_SHA206_EN))</td></tr>
+<tr class="separator:af2a033343ac069978bc7de09664af16a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12802b93bf486c5a728cb8303f5b94a8"><td class="memItemLeft" align="right" valign="top"><a id="a12802b93bf486c5a728cb8303f5b94a8" name="a12802b93bf486c5a728cb8303f5b94a8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_ECDH_EN</b>&#160;&#160;&#160;(ATCAB_ECDH_EN &amp;&amp; (CALIB_ECC508_EN || CALIB_ECC608_EN))</td></tr>
+<tr class="separator:a12802b93bf486c5a728cb8303f5b94a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefac406f2f09909e4b7a477bfb003b1b"><td class="memItemLeft" align="right" valign="top"><a id="aefac406f2f09909e4b7a477bfb003b1b" name="aefac406f2f09909e4b7a477bfb003b1b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_ECDH_ENC_EN</b>&#160;&#160;&#160;(ATCAB_ECDH_ENC_EN &amp;&amp; (CALIB_ECC508_EN || CALIB_ECC608_EN))</td></tr>
+<tr class="separator:aefac406f2f09909e4b7a477bfb003b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ff9b83b68cff9caedc1eb3d088848c2"><td class="memItemLeft" align="right" valign="top"><a id="a1ff9b83b68cff9caedc1eb3d088848c2" name="a1ff9b83b68cff9caedc1eb3d088848c2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_GENDIG_EN</b>&#160;&#160;&#160;(ATCAB_GENDIG_EN &amp;&amp; (CALIB_FULL_FEATURE || CALIB_SHA105_EN))</td></tr>
+<tr class="separator:a1ff9b83b68cff9caedc1eb3d088848c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5482138a7ba00d9f86997e7e8e695bda"><td class="memItemLeft" align="right" valign="top"><a id="a5482138a7ba00d9f86997e7e8e695bda" name="a5482138a7ba00d9f86997e7e8e695bda"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_GENDIVKEY_EN</b>&#160;&#160;&#160;(ATCAB_GENDIG_EN &amp;&amp; CALIB_SHA105_EN)</td></tr>
+<tr class="separator:a5482138a7ba00d9f86997e7e8e695bda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a698a8768aff323892ac314f7a04656ab"><td class="memItemLeft" align="right" valign="top"><a id="a698a8768aff323892ac314f7a04656ab" name="a698a8768aff323892ac314f7a04656ab"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_GENKEY_EN</b>&#160;&#160;&#160;(ATCAB_GENKEY_EN &amp;&amp; CALIB_ECC_SUPPORT)</td></tr>
+<tr class="separator:a698a8768aff323892ac314f7a04656ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92e9bea11d0c25d8c59fc6a9ff527fe5"><td class="memItemLeft" align="right" valign="top"><a id="a92e9bea11d0c25d8c59fc6a9ff527fe5" name="a92e9bea11d0c25d8c59fc6a9ff527fe5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_GENKEY_MAC_EN</b>&#160;&#160;&#160;(ATCAB_GENKEY_MAC_EN &amp;&amp; CALIB_ECC_SUPPORT)</td></tr>
+<tr class="separator:a92e9bea11d0c25d8c59fc6a9ff527fe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a270803a21fa4b2ed51419f15f33f95a9"><td class="memItemLeft" align="right" valign="top"><a id="a270803a21fa4b2ed51419f15f33f95a9" name="a270803a21fa4b2ed51419f15f33f95a9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_HMAC_EN</b>&#160;&#160;&#160;(ATCAB_HMAC_EN &amp;&amp; (CALIB_SHA204_EN || CALIB_ECC108_EN || CALIB_ECC508_EN))</td></tr>
+<tr class="separator:a270803a21fa4b2ed51419f15f33f95a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af19794adbeec8b57eb7cbef1f9e21c91"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00353.html#af19794adbeec8b57eb7cbef1f9e21c91">CALIB_INFO_LATCH_EN</a>&#160;&#160;&#160;ATCAB_INFO_LATCH_EN</td></tr>
+<tr class="separator:af19794adbeec8b57eb7cbef1f9e21c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b92738c2b8ec2799cc5077b9a9c79ce"><td class="memItemLeft" align="right" valign="top"><a id="a4b92738c2b8ec2799cc5077b9a9c79ce" name="a4b92738c2b8ec2799cc5077b9a9c79ce"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_KDF_EN</b>&#160;&#160;&#160;(ATCAB_KDF_EN &amp;&amp; CALIB_ECC608_EN)</td></tr>
+<tr class="separator:a4b92738c2b8ec2799cc5077b9a9c79ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3801cb49b78666a9cfa602fa74b22da9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00353.html#a3801cb49b78666a9cfa602fa74b22da9">CALIB_LOCK_EN</a>&#160;&#160;&#160;(ATCAB_LOCK_EN &amp;&amp; CALIB_FULL_FEATURE)</td></tr>
+<tr class="separator:a3801cb49b78666a9cfa602fa74b22da9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a611611e20ca91cad7e9897847b9b355a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00353.html#a611611e20ca91cad7e9897847b9b355a">CALIB_LOCK_CA2_EN</a>&#160;&#160;&#160;(ATCAB_LOCK_EN &amp;&amp; ATCA_CA2_SUPPORT)</td></tr>
+<tr class="separator:a611611e20ca91cad7e9897847b9b355a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f58e74973bbee6ab1e11a882f63d739"><td class="memItemLeft" align="right" valign="top"><a id="a6f58e74973bbee6ab1e11a882f63d739" name="a6f58e74973bbee6ab1e11a882f63d739"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_MAC_EN</b>&#160;&#160;&#160;(ATCAB_MAC_EN &amp;&amp; (CALIB_FULL_FEATURE || CALIB_SHA206_EN || CALIB_SHA104_EN))</td></tr>
+<tr class="separator:a6f58e74973bbee6ab1e11a882f63d739"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeeb3f44f3f4c51369cb010b6d5f2c169"><td class="memItemLeft" align="right" valign="top"><a id="aeeb3f44f3f4c51369cb010b6d5f2c169" name="aeeb3f44f3f4c51369cb010b6d5f2c169"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_NONCE_EN</b>&#160;&#160;&#160;(ATCAB_NONCE_EN &amp;&amp; (CALIB_FULL_FEATURE || CALIB_CA2_SUPPORT))</td></tr>
+<tr class="separator:aeeb3f44f3f4c51369cb010b6d5f2c169"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad080673c7fcbe6d2125c75cf61b85dde"><td class="memItemLeft" align="right" valign="top"><a id="ad080673c7fcbe6d2125c75cf61b85dde" name="ad080673c7fcbe6d2125c75cf61b85dde"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_PRIVWRITE_EN</b>&#160;&#160;&#160;(ATCAB_PRIVWRITE_EN &amp;&amp; (CALIB_ECC108_EN || CALIB_ECC508_EN || CALIB_ECC608_EN))</td></tr>
+<tr class="separator:ad080673c7fcbe6d2125c75cf61b85dde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1577de8ff3b82385448390b9c26a60f"><td class="memItemLeft" align="right" valign="top"><a id="ab1577de8ff3b82385448390b9c26a60f" name="ab1577de8ff3b82385448390b9c26a60f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_RANDOM_EN</b>&#160;&#160;&#160;(ATCAB_RANDOM_EN &amp;&amp; CALIB_FULL_FEATURE)</td></tr>
+<tr class="separator:ab1577de8ff3b82385448390b9c26a60f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67ed014df4e1bbbea873ede0e9700e29"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00353.html#a67ed014df4e1bbbea873ede0e9700e29">CALIB_READ_EN</a>&#160;&#160;&#160;(ATCAB_READ_EN &amp;&amp; (CALIB_FULL_FEATURE || CALIB_SHA206_EN))</td></tr>
+<tr class="separator:a67ed014df4e1bbbea873ede0e9700e29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac415456fddbaf0c6714dcf1faf698e63"><td class="memItemLeft" align="right" valign="top"><a id="ac415456fddbaf0c6714dcf1faf698e63" name="ac415456fddbaf0c6714dcf1faf698e63"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_READ_CA2_EN</b>&#160;&#160;&#160;(ATCAB_READ_EN &amp;&amp; CALIB_CA2_SUPPORT)</td></tr>
+<tr class="separator:ac415456fddbaf0c6714dcf1faf698e63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0ed3c0694d781fd4d7d753a05935cc2"><td class="memItemLeft" align="right" valign="top"><a id="ad0ed3c0694d781fd4d7d753a05935cc2" name="ad0ed3c0694d781fd4d7d753a05935cc2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_READ_ENC_EN</b>&#160;&#160;&#160;(ATCAB_READ_ENC_EN &amp;&amp; CALIB_FULL_FEATURE)</td></tr>
+<tr class="separator:ad0ed3c0694d781fd4d7d753a05935cc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56a8412ba97cdf56f0977ae5379e1dc9"><td class="memItemLeft" align="right" valign="top"><a id="a56a8412ba97cdf56f0977ae5379e1dc9" name="a56a8412ba97cdf56f0977ae5379e1dc9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_SECUREBOOT_EN</b>&#160;&#160;&#160;(ATCAB_SECUREBOOT_EN &amp;&amp; CALIB_ECC608_EN)</td></tr>
+<tr class="separator:a56a8412ba97cdf56f0977ae5379e1dc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aceb03fa0139f8fc1c7c385f02a1717de"><td class="memItemLeft" align="right" valign="top"><a id="aceb03fa0139f8fc1c7c385f02a1717de" name="aceb03fa0139f8fc1c7c385f02a1717de"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_SECUREBOOT_MAC_EN</b>&#160;&#160;&#160;(ATCAB_SECUREBOOT_MAC_EN &amp;&amp; CALIB_ECC608_EN)</td></tr>
+<tr class="separator:aceb03fa0139f8fc1c7c385f02a1717de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af47207cfdbdbf7bb6dcfdbecb5d51bca"><td class="memItemLeft" align="right" valign="top"><a id="af47207cfdbdbf7bb6dcfdbecb5d51bca" name="af47207cfdbdbf7bb6dcfdbecb5d51bca"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_SELFTEST_EN</b>&#160;&#160;&#160;(ATCAB_SELFTEST_EN &amp;&amp; (CALIB_ECC608_EN || CALIB_CA2_SUPPORT))</td></tr>
+<tr class="separator:af47207cfdbdbf7bb6dcfdbecb5d51bca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a467882792e9ea53b4e596d1be05997a6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00353.html#a467882792e9ea53b4e596d1be05997a6">CALIB_SHA_EN</a>&#160;&#160;&#160;(ATCAB_SHA_EN &amp;&amp; (CALIB_FULL_FEATURE || CALIB_CA2_SUPPORT))</td></tr>
+<tr class="separator:a467882792e9ea53b4e596d1be05997a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab13bbafe02599813084788482536728f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00353.html#ab13bbafe02599813084788482536728f">CALIB_SHA_HMAC_EN</a>&#160;&#160;&#160;(ATCAB_SHA_HMAC_EN &amp;&amp; CALIB_ECC_SUPPORT)</td></tr>
+<tr class="separator:ab13bbafe02599813084788482536728f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84c51bc36228a8fadd8654bfaae5d58c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00353.html#a84c51bc36228a8fadd8654bfaae5d58c">CALIB_SHA_CONTEXT_EN</a>&#160;&#160;&#160;(ATCAB_SHA_CONTEXT_EN &amp;&amp; CALIB_ECC608_EN)</td></tr>
+<tr class="separator:a84c51bc36228a8fadd8654bfaae5d58c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9802710200f050b0e9414bd88cdd8c0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00353.html#a9802710200f050b0e9414bd88cdd8c0d">CALIB_SIGN_EN</a>&#160;&#160;&#160;(ATCAB_SIGN_EN &amp;&amp; (CALIB_ECC108_EN || CALIB_ECC508_EN || CALIB_ECC608_EN))</td></tr>
+<tr class="separator:a9802710200f050b0e9414bd88cdd8c0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac629bf5f0b5d6c64c5393cadd7b7479c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00353.html#ac629bf5f0b5d6c64c5393cadd7b7479c">CALIB_SIGN_CA2_EN</a>&#160;&#160;&#160;(ATCAB_SIGN_EN &amp;&amp; (CALIB_ECC204_EN || CALIB_TA010_EN))</td></tr>
+<tr class="separator:ac629bf5f0b5d6c64c5393cadd7b7479c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7029b44c8bf90b40bcb36e0e34c2d80"><td class="memItemLeft" align="right" valign="top"><a id="ac7029b44c8bf90b40bcb36e0e34c2d80" name="ac7029b44c8bf90b40bcb36e0e34c2d80"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_SIGN_INTERNAL_EN</b>&#160;&#160;&#160;(ATCAB_SIGN_INTERNAL_EN &amp;&amp; <a class="el" href="a00353.html#a9802710200f050b0e9414bd88cdd8c0d">CALIB_SIGN_EN</a>)</td></tr>
+<tr class="separator:ac7029b44c8bf90b40bcb36e0e34c2d80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab46a8196f24bde7c86ac5e3affdc8ff8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00353.html#ab46a8196f24bde7c86ac5e3affdc8ff8">CALIB_UPDATEEXTRA_EN</a>&#160;&#160;&#160;(ATCAB_UPDATEEXTRA_EN &amp;&amp; CALIB_FULL_FEATURE)</td></tr>
+<tr class="separator:ab46a8196f24bde7c86ac5e3affdc8ff8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a671b3421327a5c885b0c3e6e1e64afe7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00353.html#a671b3421327a5c885b0c3e6e1e64afe7">CALIB_VERIFY_EN</a>&#160;&#160;&#160;(ATCAB_VERIFY_EN &amp;&amp; (CALIB_ECC108_EN || CALIB_ECC508_EN || CALIB_ECC608_EN))</td></tr>
+<tr class="separator:a671b3421327a5c885b0c3e6e1e64afe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac419953cd10efa4bef6e4efdc9c6cbe9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00353.html#ac419953cd10efa4bef6e4efdc9c6cbe9">CALIB_VERIFY_MAC_EN</a>&#160;&#160;&#160;(<a class="el" href="a00800.html#a5d69a9273e615d799841edc21bd72dc0">ATCAB_VERIFY_MAC_EN</a> &amp;&amp; CALIB_ECC608_EN)</td></tr>
+<tr class="separator:ac419953cd10efa4bef6e4efdc9c6cbe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1dbba98417d51367f0c125ae11e1b78d"><td class="memItemLeft" align="right" valign="top"><a id="a1dbba98417d51367f0c125ae11e1b78d" name="a1dbba98417d51367f0c125ae11e1b78d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_VERIFY_EXTERN_EN</b>&#160;&#160;&#160;(ATCAB_VERIFY_EXTERN_EN &amp;&amp; <a class="el" href="a00353.html#a671b3421327a5c885b0c3e6e1e64afe7">CALIB_VERIFY_EN</a>)</td></tr>
+<tr class="separator:a1dbba98417d51367f0c125ae11e1b78d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae841eeabdfbe04dd3241f6fde1a57954"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00353.html#ae841eeabdfbe04dd3241f6fde1a57954">CALIB_VERIFY_STORED_EN</a>&#160;&#160;&#160;(ATCAB_VERIFY_STORED_EN &amp;&amp; <a class="el" href="a00353.html#a671b3421327a5c885b0c3e6e1e64afe7">CALIB_VERIFY_EN</a>)</td></tr>
+<tr class="separator:ae841eeabdfbe04dd3241f6fde1a57954"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98f14e3c12eaf44cfb785ec316a5235c"><td class="memItemLeft" align="right" valign="top"><a id="a98f14e3c12eaf44cfb785ec316a5235c" name="a98f14e3c12eaf44cfb785ec316a5235c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_VERIFY_VALIDATE_EN</b>&#160;&#160;&#160;(ATCAB_VERIFY_VALIDATE_EN &amp;&amp; <a class="el" href="a00353.html#a671b3421327a5c885b0c3e6e1e64afe7">CALIB_VERIFY_EN</a>)</td></tr>
+<tr class="separator:a98f14e3c12eaf44cfb785ec316a5235c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1cc0a4284b9777143e17e04b55c94f7"><td class="memItemLeft" align="right" valign="top"><a id="ac1cc0a4284b9777143e17e04b55c94f7" name="ac1cc0a4284b9777143e17e04b55c94f7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_WRITE_EN</b>&#160;&#160;&#160;(ATCAB_WRITE_EN &amp;&amp; (CALIB_FULL_FEATURE || CALIB_SHA206_EN))</td></tr>
+<tr class="separator:ac1cc0a4284b9777143e17e04b55c94f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64cbcf66a79f024ae3cce06d1f6731f9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00353.html#a64cbcf66a79f024ae3cce06d1f6731f9">CALIB_WRITE_ENC_EN</a>&#160;&#160;&#160;(ATCAB_WRITE_ENC_EN &amp;&amp; CALIB_FULL_FEATURE)</td></tr>
+<tr class="separator:a64cbcf66a79f024ae3cce06d1f6731f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a546197a12f58b2c7ed1da0cdbae3221b"><td class="memItemLeft" align="right" valign="top"><a id="a546197a12f58b2c7ed1da0cdbae3221b" name="a546197a12f58b2c7ed1da0cdbae3221b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_WRITE_CA2_EN</b>&#160;&#160;&#160;(ATCAB_WRITE_EN &amp;&amp; CALIB_CA2_SUPPORT)</td></tr>
+<tr class="separator:a546197a12f58b2c7ed1da0cdbae3221b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Consistency checks for configuration options. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2021 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="af19794adbeec8b57eb7cbef1f9e21c91" name="af19794adbeec8b57eb7cbef1f9e21c91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af19794adbeec8b57eb7cbef1f9e21c91">&#9670;&#160;</a></span>CALIB_INFO_LATCH_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CALIB_INFO_LATCH_EN&#160;&#160;&#160;ATCAB_INFO_LATCH_EN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Supported API's: calib_info_get_latch calib_info_set_latch</p>
+<p>ECC204 specific api: calib_info_lock_status </p>
+
+</div>
+</div>
+<a id="a611611e20ca91cad7e9897847b9b355a" name="a611611e20ca91cad7e9897847b9b355a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a611611e20ca91cad7e9897847b9b355a">&#9670;&#160;</a></span>CALIB_LOCK_CA2_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CALIB_LOCK_CA2_EN&#160;&#160;&#160;(ATCAB_LOCK_EN &amp;&amp; ATCA_CA2_SUPPORT)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable CALIB_LOCK_CA2_EN which enables the lock command for the ecc204 and ta010 devices</p>
+<p>Supported API's: calib_lock </p>
+
+</div>
+</div>
+<a id="a3801cb49b78666a9cfa602fa74b22da9" name="a3801cb49b78666a9cfa602fa74b22da9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3801cb49b78666a9cfa602fa74b22da9">&#9670;&#160;</a></span>CALIB_LOCK_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CALIB_LOCK_EN&#160;&#160;&#160;(ATCAB_LOCK_EN &amp;&amp; CALIB_FULL_FEATURE)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable CALIB_LOCK_EN to enable the lock commands for the classic cryptoauth parts</p>
+<p>Supported API's: calib_lock </p>
+
+</div>
+</div>
+<a id="a67ed014df4e1bbbea873ede0e9700e29" name="a67ed014df4e1bbbea873ede0e9700e29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67ed014df4e1bbbea873ede0e9700e29">&#9670;&#160;</a></span>CALIB_READ_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CALIB_READ_EN&#160;&#160;&#160;(ATCAB_READ_EN &amp;&amp; (CALIB_FULL_FEATURE || CALIB_SHA206_EN))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable CALIB_READ_EN which enables the read commands</p>
+<p>Supported API's: calib_read_zone </p>
+
+</div>
+</div>
+<a id="a84c51bc36228a8fadd8654bfaae5d58c" name="a84c51bc36228a8fadd8654bfaae5d58c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84c51bc36228a8fadd8654bfaae5d58c">&#9670;&#160;</a></span>CALIB_SHA_CONTEXT_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CALIB_SHA_CONTEXT_EN&#160;&#160;&#160;(ATCAB_SHA_CONTEXT_EN &amp;&amp; CALIB_ECC608_EN)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Requires: CALIB_SHA_BASE</p>
+<p>Use the SHA command to compute an HMAC/SHA-256 operation</p>
+<p>Supported API's: calib_sha_read_context </p>
+
+</div>
+</div>
+<a id="a467882792e9ea53b4e596d1be05997a6" name="a467882792e9ea53b4e596d1be05997a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a467882792e9ea53b4e596d1be05997a6">&#9670;&#160;</a></span>CALIB_SHA_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CALIB_SHA_EN&#160;&#160;&#160;(ATCAB_SHA_EN &amp;&amp; (CALIB_FULL_FEATURE || CALIB_CA2_SUPPORT))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable CALIB_SHA_EN to compute a SHA-256 or HMAC/SHA-256 digest for general purpose use by the host system</p>
+<p>Supported API's: calib_sha_base </p>
+
+</div>
+</div>
+<a id="ab13bbafe02599813084788482536728f" name="ab13bbafe02599813084788482536728f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab13bbafe02599813084788482536728f">&#9670;&#160;</a></span>CALIB_SHA_HMAC_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CALIB_SHA_HMAC_EN&#160;&#160;&#160;(ATCAB_SHA_HMAC_EN &amp;&amp; CALIB_ECC_SUPPORT)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Requires: CALIB_SHA_HMAC CALIB_SHA_BASE</p>
+<p>Use the SHA command to compute an HMAC/SHA-256 operation</p>
+<p>Supported API's: calib_sha_hmac,calib_sha_hmac_init, calib_sha_hmac_update, calib_sha_hmac_finish </p>
+
+</div>
+</div>
+<a id="ac629bf5f0b5d6c64c5393cadd7b7479c" name="ac629bf5f0b5d6c64c5393cadd7b7479c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac629bf5f0b5d6c64c5393cadd7b7479c">&#9670;&#160;</a></span>CALIB_SIGN_CA2_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CALIB_SIGN_CA2_EN&#160;&#160;&#160;(ATCAB_SIGN_EN &amp;&amp; (CALIB_ECC204_EN || CALIB_TA010_EN))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable CALIB_SIGN_CA2_EN to generate a signature using the ECDSA algorithm</p>
+<p>Supported API's: calib_sign_base </p>
+
+</div>
+</div>
+<a id="a9802710200f050b0e9414bd88cdd8c0d" name="a9802710200f050b0e9414bd88cdd8c0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9802710200f050b0e9414bd88cdd8c0d">&#9670;&#160;</a></span>CALIB_SIGN_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CALIB_SIGN_EN&#160;&#160;&#160;(ATCAB_SIGN_EN &amp;&amp; (CALIB_ECC108_EN || CALIB_ECC508_EN || CALIB_ECC608_EN))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable CALIB_SIGN_EN to generate a signature using the ECDSA algorithm</p>
+<p>Supported API's: calib_sign </p>
+
+</div>
+</div>
+<a id="ab46a8196f24bde7c86ac5e3affdc8ff8" name="ab46a8196f24bde7c86ac5e3affdc8ff8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab46a8196f24bde7c86ac5e3affdc8ff8">&#9670;&#160;</a></span>CALIB_UPDATEEXTRA_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CALIB_UPDATEEXTRA_EN&#160;&#160;&#160;(ATCAB_UPDATEEXTRA_EN &amp;&amp; CALIB_FULL_FEATURE)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable CALIB_UPDATEEXTRA_EN to update the values of the two extra bytes within the configuration zone (bytes 84 and 85)</p>
+<p>Supported API's: calib_updateextra </p>
+
+</div>
+</div>
+<a id="a671b3421327a5c885b0c3e6e1e64afe7" name="a671b3421327a5c885b0c3e6e1e64afe7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a671b3421327a5c885b0c3e6e1e64afe7">&#9670;&#160;</a></span>CALIB_VERIFY_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CALIB_VERIFY_EN&#160;&#160;&#160;(ATCAB_VERIFY_EN &amp;&amp; (CALIB_ECC108_EN || CALIB_ECC508_EN || CALIB_ECC608_EN))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable CALIB_VERIFY_EN which takes an ECDSA [R,S] signature and verifies that it is correctly generated from a given message and public key. In all cases, the signature is an input to the command</p>
+<p>Supported API's: calib_verify </p>
+
+</div>
+</div>
+<a id="ac419953cd10efa4bef6e4efdc9c6cbe9" name="ac419953cd10efa4bef6e4efdc9c6cbe9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac419953cd10efa4bef6e4efdc9c6cbe9">&#9670;&#160;</a></span>CALIB_VERIFY_MAC_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CALIB_VERIFY_MAC_EN&#160;&#160;&#160;(<a class="el" href="a00800.html#a5d69a9273e615d799841edc21bd72dc0">ATCAB_VERIFY_MAC_EN</a> &amp;&amp; CALIB_ECC608_EN)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Requires: CALIB_NONCE_MODE_ENCODING CALIB_NONCE_BASE ATCAH_VERIFY_MAC ATCAC_SW_SHA2_256 CALIB_VERIFY</p>
+<p>Executes verification command with verification MAC for the External or Stored Verify modes</p>
+<p>Supported API's: calib_verify_extern_stored_mac, calib_verify_extern_mac, calib_verify_stored_mac </p>
+
+</div>
+</div>
+<a id="ae841eeabdfbe04dd3241f6fde1a57954" name="ae841eeabdfbe04dd3241f6fde1a57954"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae841eeabdfbe04dd3241f6fde1a57954">&#9670;&#160;</a></span>CALIB_VERIFY_STORED_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CALIB_VERIFY_STORED_EN&#160;&#160;&#160;(ATCAB_VERIFY_STORED_EN &amp;&amp; <a class="el" href="a00353.html#a671b3421327a5c885b0c3e6e1e64afe7">CALIB_VERIFY_EN</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Requires: CALIB_NONCE_MODE_ENCODING CALIB_NONCE_BASE CALIB_VERIFY</p>
+<p>Verifies a signature (ECDSA verify operation) with a public key stored in the device</p>
+<p>Supported API's: calib_verify_stored </p>
+
+</div>
+</div>
+<a id="a64cbcf66a79f024ae3cce06d1f6731f9" name="a64cbcf66a79f024ae3cce06d1f6731f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64cbcf66a79f024ae3cce06d1f6731f9">&#9670;&#160;</a></span>CALIB_WRITE_ENC_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CALIB_WRITE_ENC_EN&#160;&#160;&#160;(ATCAB_WRITE_ENC_EN &amp;&amp; CALIB_FULL_FEATURE)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Requires: CALIB_NONCE_MODE_ENCODING CALIB_NONCE_BASE CALIB_READ_ZONE CALIB_GENDIG ATCAH_GENDIG ATCAH_WRITE_AUTH_MAC ATCAH_NONCE ATCAC_SW_SHA2_256 CALIB_WRITE ATCAH_GEN_SESSION_KEY</p>
+<p>Performs an encrypted write of a 32 byte block into given slot</p>
+<p>Supported API's: calib_write_enc </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_fe677a742bdf73affcb7505b38a59233.html">calib</a></li><li class="navelem"><a class="el" href="a00353.html">calib_checkmac.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_fe677a742bdf73affcb7505b38a59233.html">calib</a></li><li class="navelem"><a class="el" href="a00353.html">calib_config_check.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

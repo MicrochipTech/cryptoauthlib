@@ -1,6 +1,10 @@
 var a00623 =
 [
-    [ "kit_id_from_devtype", "a01446.html#ga554072f32204a0eb8d7b8c7931e43343", null ],
-    [ "kit_interface", "a01446.html#ga33fe33933fb59dde6e6fb8975da6c12d", null ],
-    [ "kit_interface_from_kittype", "a01446.html#ga31075898964b61f4877ba882477b71c3", null ]
+    [ "swi_uart_deinit", "a01446.html#ga0b1aad3936bf003686d8db7fa2be5132", null ],
+    [ "swi_uart_discover_buses", "a01446.html#gad640b598d581ee7c8a4c804bee602906", null ],
+    [ "swi_uart_init", "a01446.html#ga003b63648f1a5f9eba274760559688f2", null ],
+    [ "swi_uart_mode", "a01446.html#gacc2a96c86ce4c07249b81bc6a7eb2e41", null ],
+    [ "swi_uart_receive_byte", "a01446.html#ga93f3dab17c14f71641ca970998ede823", null ],
+    [ "swi_uart_send_byte", "a01446.html#ga4a4d491006d9683d67838963706ac9c1", null ],
+    [ "swi_uart_setbaud", "a01446.html#gaba296f70baf68b768d6c4bb9cf7ba67d", null ]
 ];

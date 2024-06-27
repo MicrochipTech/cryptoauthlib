@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_timer_start.c File Reference</title>
+<title>CryptoAuthLib: hal_uc3_i2c_asf.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,30 +98,46 @@ $(document).ready(function(){initNavTree('a00602.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">hal_timer_start.c File Reference</div></div>
+  <div class="headertitle"><div class="title">hal_uc3_i2c_asf.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for SAMD21 I2C over START drivers.  
+<p>ATCA Hardware abstraction layer for SAMV71 I2C over ASF drivers.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;hal_delay.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00524.html">atca_hal.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;asf.h&gt;</code><br />
+<code>#include &quot;twi.h&quot;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01660.html">atcaI2Cmaster</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">this is the hal_data for ATCA HAL for ASF SERCOM  <a href="a01660.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaf89a7a4080a47aa10a5504291db285bf"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MAX_I2C_BUSES</b>&#160;&#160;&#160;3</td></tr>
+<tr class="separator:gaf89a7a4080a47aa10a5504291db285bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga06b19a932aea9cf3a5165fefacb24f7b"><td class="memItemLeft" align="right" valign="top">
+typedef struct <a class="el" href="a01660.html">atcaI2Cmaster</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAI2CMaster_t</b></td></tr>
+<tr class="memdesc:ga06b19a932aea9cf3a5165fefacb24f7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">this is the hal_data for ATCA HAL for ASF SERCOM <br /></td></tr>
+<tr class="separator:ga06b19a932aea9cf3a5165fefacb24f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga7598dfcd6dcac882836544d48356d02f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga7598dfcd6dcac882836544d48356d02f">atca_delay_us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga7598dfcd6dcac882836544d48356d02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of microseconds.  <br /></td></tr>
-<tr class="separator:ga7598dfcd6dcac882836544d48356d02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga19891182689551cc3a88603135959351"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga19891182689551cc3a88603135959351">atca_delay_10us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga19891182689551cc3a88603135959351"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of tens of microseconds.  <br /></td></tr>
-<tr class="separator:ga19891182689551cc3a88603135959351"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0544f36422b5e9a8890fb9c90fc5eb55"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga0544f36422b5e9a8890fb9c90fc5eb55">atca_delay_ms</a> (uint32_t ms)</td></tr>
-<tr class="memdesc:ga0544f36422b5e9a8890fb9c90fc5eb55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API for legacy implementations.  <br /></td></tr>
-<tr class="separator:ga0544f36422b5e9a8890fb9c90fc5eb55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc420e4b166a1b339d1a2687e0f12cb1"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#gadc420e4b166a1b339d1a2687e0f12cb1">change_i2c_speed</a> (<a class="el" href="a01584.html">ATCAIface</a> iface, uint32_t speed)</td></tr>
+<tr class="memdesc:gadc420e4b166a1b339d1a2687e0f12cb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">method to change the bus speec of I2C  <br /></td></tr>
+<tr class="separator:gadc420e4b166a1b339d1a2687e0f12cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for SAMD21 I2C over START drivers. </p>
+<div class="textblock"><p>ATCA Hardware abstraction layer for SAMV71 I2C over ASF drivers. </p>
 <p>Prerequisite: add SERCOM I2C Master Polled support to application in Atmel Studio</p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
@@ -129,7 +145,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00602.html">hal_timer_start.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00602.html">hal_uc3_i2c_asf.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

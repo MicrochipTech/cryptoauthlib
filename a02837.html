@@ -139,7 +139,7 @@ Supported devices</h1>
 <h1><a class="anchor" id="autotoc_md34"></a>
 Using cryptoauthlib python module</h1>
 <p>The following is a 'C' code made using cryptoauthlib 'C' library.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="a00515.html">cryptoauthlib.h</a>&quot;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="a00506.html">cryptoauthlib.h</a>&quot;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> main()</div>
 <div class="line">{</div>
@@ -148,28 +148,28 @@ Using cryptoauthlib python module</h1>
 <div class="line">    uint8_t randomnum[32];</div>
 <div class="line"> </div>
 <div class="line">    status = <a class="code hl_function" href="a01439.html#gacdc4fa3d2f2f6d197af8c10ab1f288b8">atcab_init</a>(cfg_ateccx08a_kitcdc_default);</div>
-<div class="line">    <span class="keywordflow">if</span> (status != <a class="code hl_define" href="a00272.html#ab132d69c7f94de708ffef02b6dc69d27">ATCA_SUCCESS</a>)</div>
+<div class="line">    <span class="keywordflow">if</span> (status != <a class="code hl_define" href="a00263.html#ab132d69c7f94de708ffef02b6dc69d27">ATCA_SUCCESS</a>)</div>
 <div class="line">    {</div>
 <div class="line">        printf(<span class="stringliteral">&quot;Error&quot;</span>);</div>
 <div class="line">        exit();</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    status = <a class="code hl_function" href="a01439.html#ga6e19ecd60be4c74665d9ec142e460771">atcab_info</a>(revision);</div>
-<div class="line">    <span class="keywordflow">if</span> (status != <a class="code hl_define" href="a00272.html#ab132d69c7f94de708ffef02b6dc69d27">ATCA_SUCCESS</a>)</div>
+<div class="line">    <span class="keywordflow">if</span> (status != <a class="code hl_define" href="a00263.html#ab132d69c7f94de708ffef02b6dc69d27">ATCA_SUCCESS</a>)</div>
 <div class="line">    {</div>
 <div class="line">        printf(<span class="stringliteral">&quot;Error&quot;</span>);</div>
 <div class="line">        exit();</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    status = <a class="code hl_function" href="a01439.html#ga4fa442396dfbb89e59dfca837b565cec">atcab_random</a>(randomnum);</div>
-<div class="line">    <span class="keywordflow">if</span> (status != <a class="code hl_define" href="a00272.html#ab132d69c7f94de708ffef02b6dc69d27">ATCA_SUCCESS</a>)</div>
+<div class="line">    <span class="keywordflow">if</span> (status != <a class="code hl_define" href="a00263.html#ab132d69c7f94de708ffef02b6dc69d27">ATCA_SUCCESS</a>)</div>
 <div class="line">    {</div>
 <div class="line">        printf(<span class="stringliteral">&quot;Error&quot;</span>);</div>
 <div class="line">        exit();</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-<div class="ttc" id="aa00272_html_ab132d69c7f94de708ffef02b6dc69d27"><div class="ttname"><a href="a00272.html#ab132d69c7f94de708ffef02b6dc69d27">ATCA_SUCCESS</a></div><div class="ttdeci">#define ATCA_SUCCESS</div><div class="ttdef"><b>Definition:</b> atca_status.h:44</div></div>
-<div class="ttc" id="aa00515_html"><div class="ttname"><a href="a00515.html">cryptoauthlib.h</a></div><div class="ttdoc">Single aggregation point for all CryptoAuthLib header files.</div></div>
+<div class="ttc" id="aa00263_html_ab132d69c7f94de708ffef02b6dc69d27"><div class="ttname"><a href="a00263.html#ab132d69c7f94de708ffef02b6dc69d27">ATCA_SUCCESS</a></div><div class="ttdeci">#define ATCA_SUCCESS</div><div class="ttdef"><b>Definition:</b> atca_status.h:44</div></div>
+<div class="ttc" id="aa00506_html"><div class="ttname"><a href="a00506.html">cryptoauthlib.h</a></div><div class="ttdoc">Single aggregation point for all CryptoAuthLib header files.</div></div>
 <div class="ttc" id="aa01439_html_ga4fa442396dfbb89e59dfca837b565cec"><div class="ttname"><a href="a01439.html#ga4fa442396dfbb89e59dfca837b565cec">atcab_random</a></div><div class="ttdeci">ATCA_STATUS atcab_random(uint8_t *rand_out)</div><div class="ttdoc">Executes Random command, which generates a 32 byte random number from the device.</div><div class="ttdef"><b>Definition:</b> atca_basic.c:2453</div></div>
 <div class="ttc" id="aa01439_html_ga6e19ecd60be4c74665d9ec142e460771"><div class="ttname"><a href="a01439.html#ga6e19ecd60be4c74665d9ec142e460771">atcab_info</a></div><div class="ttdeci">ATCA_STATUS atcab_info(uint8_t *revision)</div><div class="ttdoc">Use the Info command to get the device revision (DevRev).</div><div class="ttdef"><b>Definition:</b> atca_basic.c:1693</div></div>
 <div class="ttc" id="aa01439_html_gacdc4fa3d2f2f6d197af8c10ab1f288b8"><div class="ttname"><a href="a01439.html#gacdc4fa3d2f2f6d197af8c10ab1f288b8">atcab_init</a></div><div class="ttdeci">ATCA_STATUS atcab_init(ATCAIfaceCfg *cfg)</div><div class="ttdoc">Creates a global ATCADevice object used by Basic API.</div><div class="ttdef"><b>Definition:</b> atca_basic.c:133</div></div>

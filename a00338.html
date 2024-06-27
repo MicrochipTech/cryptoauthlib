@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_aes.c File Reference</title>
+<title>CryptoAuthLib: calib_basic.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,24 +97,52 @@ $(document).ready(function(){initNavTree('a00338.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">calib_aes.c File Reference</div></div>
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">calib_basic.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for AES command.  
+<p>CryptoAuthLib Basic API methods. These methods provide a simpler way to access the core crypto methods.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00515.html">cryptoauthlib.h</a>&quot;</code><br />
-</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for AES command. </p>
-<p>The AES command supports 128-bit AES encryption or decryption of small messages or data packets in ECB mode. Also can perform GFM (Galois Field Multiply) calculation in support of AES-GCM.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC608A/B. Refer to device edatasheet for full details.</dd></dl>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00506.html">cryptoauthlib.h</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga884790e08be94431e1fbe92bf6106e06"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01444.html#ga884790e08be94431e1fbe92bf6106e06">calib_wakeup_i2c</a> (<a class="el" href="a01508.html">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:ga884790e08be94431e1fbe92bf6106e06"><td class="mdescLeft">&#160;</td><td class="mdescRight">basic API methods are all prefixed with atcab_ (CryptoAuthLib Basic) the fundamental premise of the basic API is it is based on a single interface instance and that instance is global, so all basic API commands assume that one global device is the one to operate on.  <br /></td></tr>
+<tr class="separator:ga884790e08be94431e1fbe92bf6106e06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafbc037d57a4cc4fec6a2f291736170cb"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01444.html#gafbc037d57a4cc4fec6a2f291736170cb">calib_wakeup</a> (<a class="el" href="a01508.html">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:gafbc037d57a4cc4fec6a2f291736170cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">wakeup the CryptoAuth device  <br /></td></tr>
+<tr class="separator:gafbc037d57a4cc4fec6a2f291736170cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59750d83d93368b2944f57bb38bf4d1f"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01444.html#ga59750d83d93368b2944f57bb38bf4d1f">calib_idle</a> (<a class="el" href="a01508.html">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:ga59750d83d93368b2944f57bb38bf4d1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">idle the CryptoAuth device  <br /></td></tr>
+<tr class="separator:ga59750d83d93368b2944f57bb38bf4d1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad26b70951a0da6d80fb98027faae7a1f"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01444.html#gad26b70951a0da6d80fb98027faae7a1f">calib_sleep</a> (<a class="el" href="a01508.html">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:gad26b70951a0da6d80fb98027faae7a1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">invoke sleep on the CryptoAuth device  <br /></td></tr>
+<tr class="separator:gad26b70951a0da6d80fb98027faae7a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab6791f8eef4fb94c44d84f69fa8d7927"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01444.html#gab6791f8eef4fb94c44d84f69fa8d7927">calib_exit</a> (<a class="el" href="a01508.html">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:gab6791f8eef4fb94c44d84f69fa8d7927"><td class="mdescLeft">&#160;</td><td class="mdescRight">common cleanup code which idles the device after any operation  <br /></td></tr>
+<tr class="separator:gab6791f8eef4fb94c44d84f69fa8d7927"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae51a67781e9e4618e669db1c999e6ec2"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01444.html#gae51a67781e9e4618e669db1c999e6ec2">calib_get_addr</a> (uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t *addr)</td></tr>
+<tr class="memdesc:gae51a67781e9e4618e669db1c999e6ec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the address given the zone, slot, block, and offset.  <br /></td></tr>
+<tr class="separator:gae51a67781e9e4618e669db1c999e6ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c140a1696f5585d61426cdd4ed9c8dd"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01444.html#ga7c140a1696f5585d61426cdd4ed9c8dd">calib_ca2_get_addr</a> (uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t *addr)</td></tr>
+<tr class="memdesc:ga7c140a1696f5585d61426cdd4ed9c8dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the address given the zone, slot, block, and offset for the device.  <br /></td></tr>
+<tr class="separator:ga7c140a1696f5585d61426cdd4ed9c8dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga023735b1c0b10e70832d9a957bc99ae3"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01444.html#ga023735b1c0b10e70832d9a957bc99ae3">calib_get_zone_size</a> (<a class="el" href="a01508.html">ATCADevice</a> device, uint8_t zone, uint16_t slot, size_t *size)</td></tr>
+<tr class="memdesc:ga023735b1c0b10e70832d9a957bc99ae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the specified zone in bytes.  <br /></td></tr>
+<tr class="separator:ga023735b1c0b10e70832d9a957bc99ae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>CryptoAuthLib Basic API methods. These methods provide a simpler way to access the core crypto methods. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_fe677a742bdf73affcb7505b38a59233.html">calib</a></li><li class="navelem"><a class="el" href="a00338.html">calib_aes.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_fe677a742bdf73affcb7505b38a59233.html">calib</a></li><li class="navelem"><a class="el" href="a00338.html">calib_basic.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

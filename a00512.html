@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: sha2_routines.h File Reference</title>
+<title>CryptoAuthLib: atca_hal.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -101,52 +101,48 @@ $(document).ready(function(){initNavTree('a00512.html',''); initResizable(); });
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">sha2_routines.h File Reference</div></div>
+  <div class="headertitle"><div class="title">atca_hal.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Software implementation of the SHA256 algorithm.  
+<p>low-level HAL - methods used to setup indirection to physical layer interface. this level does the dirty work of abstracting the higher level ATCAIFace methods from the low-level physical interfaces. Its main goal is to keep low-level details from bleeding into the logical interface implemetation.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00506.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00515.html">atca_hal.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01644.html">sw_sha256_ctx</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01648.html">atca_hal_list_entry_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure that holds the hal/phy maping for different interface types.  <a href="a01648.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a81efbc0fc101b06a914f7ff9e2fbc0e9"><td class="memItemLeft" align="right" valign="top"><a id="a81efbc0fc101b06a914f7ff9e2fbc0e9" name="a81efbc0fc101b06a914f7ff9e2fbc0e9"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA256_DIGEST_SIZE</b>&#160;&#160;&#160;(32)</td></tr>
-<tr class="separator:a81efbc0fc101b06a914f7ff9e2fbc0e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c1fe69ad43d4ca74b84303a0ed64f2f"><td class="memItemLeft" align="right" valign="top"><a id="a9c1fe69ad43d4ca74b84303a0ed64f2f" name="a9c1fe69ad43d4ca74b84303a0ed64f2f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA256_BLOCK_SIZE</b>&#160;&#160;&#160;(64)</td></tr>
-<tr class="separator:a9c1fe69ad43d4ca74b84303a0ed64f2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:acfb7028e6f10d29c548cbecdbfa53ac8"><td class="memItemLeft" align="right" valign="top"><a id="acfb7028e6f10d29c548cbecdbfa53ac8" name="acfb7028e6f10d29c548cbecdbfa53ac8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>sw_sha256_init</b> (<a class="el" href="a01644.html">sw_sha256_ctx</a> *ctx)</td></tr>
-<tr class="separator:acfb7028e6f10d29c548cbecdbfa53ac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f5d8ad85631d77bfdb10dfb728bfbce"><td class="memItemLeft" align="right" valign="top"><a id="a7f5d8ad85631d77bfdb10dfb728bfbce" name="a7f5d8ad85631d77bfdb10dfb728bfbce"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>sw_sha256_update</b> (<a class="el" href="a01644.html">sw_sha256_ctx</a> *ctx, const uint8_t *message, uint32_t len)</td></tr>
-<tr class="separator:a7f5d8ad85631d77bfdb10dfb728bfbce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a594b8b10c408cb1103da9c09b1367a51"><td class="memItemLeft" align="right" valign="top"><a id="a594b8b10c408cb1103da9c09b1367a51" name="a594b8b10c408cb1103da9c09b1367a51"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>sw_sha256_final</b> (<a class="el" href="a01644.html">sw_sha256_ctx</a> *ctx, uint8_t digest[(32)])</td></tr>
-<tr class="separator:a594b8b10c408cb1103da9c09b1367a51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90a76445beb1a0eadea22bb7e3c8ad60"><td class="memItemLeft" align="right" valign="top"><a id="a90a76445beb1a0eadea22bb7e3c8ad60" name="a90a76445beb1a0eadea22bb7e3c8ad60"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>sw_sha256</b> (const uint8_t *message, unsigned int len, uint8_t digest[(32)])</td></tr>
-<tr class="separator:a90a76445beb1a0eadea22bb7e3c8ad60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga43e975cd670652e6ae76f390b2e82218"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga43e975cd670652e6ae76f390b2e82218">hal_iface_register_hal</a> (<a class="el" href="a01442.html#gac7f674d4a0afb12d2f3c9c5e98cb1089">ATCAIfaceType</a> iface_type, <a class="el" href="a01580.html">ATCAHAL_t</a> *hal, <a class="el" href="a01580.html">ATCAHAL_t</a> **old_hal, <a class="el" href="a01580.html">ATCAHAL_t</a> *phy, <a class="el" href="a01580.html">ATCAHAL_t</a> **old_phy)</td></tr>
+<tr class="memdesc:ga43e975cd670652e6ae76f390b2e82218"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register/Replace a HAL with a.  <br /></td></tr>
+<tr class="separator:ga43e975cd670652e6ae76f390b2e82218"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga24d379ed97e2c8ce205abf096707bf99"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga24d379ed97e2c8ce205abf096707bf99">hal_iface_init</a> (<a class="el" href="a01516.html">ATCAIfaceCfg</a> *cfg, <a class="el" href="a01580.html">ATCAHAL_t</a> **hal, <a class="el" href="a01580.html">ATCAHAL_t</a> **phy)</td></tr>
+<tr class="memdesc:ga24d379ed97e2c8ce205abf096707bf99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard HAL API for ATCA to initialize a physical interface.  <br /></td></tr>
+<tr class="separator:ga24d379ed97e2c8ce205abf096707bf99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacadf30e249834f38397a8569c7b798c2"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#gacadf30e249834f38397a8569c7b798c2">hal_iface_release</a> (<a class="el" href="a01442.html#gac7f674d4a0afb12d2f3c9c5e98cb1089">ATCAIfaceType</a> iface_type, void *hal_data)</td></tr>
+<tr class="memdesc:gacadf30e249834f38397a8569c7b798c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">releases a physical interface, HAL knows how to interpret hal_data  <br /></td></tr>
+<tr class="separator:gacadf30e249834f38397a8569c7b798c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6ce92f1d10000eb6618fc74c2ca92d76"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga6ce92f1d10000eb6618fc74c2ca92d76">hal_check_wake</a> (const uint8_t *response, int response_size)</td></tr>
+<tr class="memdesc:ga6ce92f1d10000eb6618fc74c2ca92d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility function for hal_wake to check the reply.  <br /></td></tr>
+<tr class="separator:ga6ce92f1d10000eb6618fc74c2ca92d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac5acbcb3cee22506992d838cd8a3e8ae"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#gac5acbcb3cee22506992d838cd8a3e8ae">hal_is_command_word</a> (uint8_t word_address)</td></tr>
+<tr class="memdesc:gac5acbcb3cee22506992d838cd8a3e8ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility function for hal_wake to check the reply.  <br /></td></tr>
+<tr class="separator:gac5acbcb3cee22506992d838cd8a3e8ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Software implementation of the SHA256 algorithm. </p>
+<div class="textblock"><p>low-level HAL - methods used to setup indirection to physical layer interface. this level does the dirty work of abstracting the higher level ATCAIFace methods from the low-level physical interfaces. Its main goal is to keep low-level details from bleeding into the logical interface implemetation. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="dir_39966be8f8e069f6fa92c98611834f6b.html">hashes</a></li><li class="navelem"><a class="el" href="a00512.html">sha2_routines.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00512.html">atca_hal.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

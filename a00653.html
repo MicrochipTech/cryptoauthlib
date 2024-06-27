@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_jwt.h File Reference</title>
+<title>CryptoAuthLib: atca_mbedtls_interface.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,22 +97,144 @@ $(document).ready(function(){initNavTree('a00653.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">atca_jwt.h File Reference</div></div>
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
+  <div class="headertitle"><div class="title">atca_mbedtls_interface.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Utilities to create and verify a JSON Web Token (JWT)  
+<p>Configuration Check for MbedTLS Integration Support.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00515.html">cryptoauthlib.h</a>&quot;</code><br />
-</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Utilities to create and verify a JSON Web Token (JWT) </p>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00800.html">atca_config_check.h</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01780.html">atcac_x509_ctx</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a8e3c7ddf3a16cbdcc42060cdee2d884e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a8e3c7ddf3a16cbdcc42060cdee2d884e">ATCAC_SHA1_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a8e3c7ddf3a16cbdcc42060cdee2d884e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99dab792a5983a089fe816abc57bad25"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a99dab792a5983a089fe816abc57bad25">ATCAC_SHA256_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a99dab792a5983a089fe816abc57bad25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace0d6e503c0db5222207053a7c537103"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#ace0d6e503c0db5222207053a7c537103">ATCAC_AES_CMAC_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:ace0d6e503c0db5222207053a7c537103"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cf377cd3579f3ba898ec2391835cfd5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a2cf377cd3579f3ba898ec2391835cfd5">ATCAC_AES_GCM_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a2cf377cd3579f3ba898ec2391835cfd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0b5716ff6baea028959764dc6d88e96"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#ae0b5716ff6baea028959764dc6d88e96">ATCAC_PKEY_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:ae0b5716ff6baea028959764dc6d88e96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82cc4e898685eda93b47e741e5b44137"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a82cc4e898685eda93b47e741e5b44137">HOSTLIB_CERT_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a82cc4e898685eda93b47e741e5b44137"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a983b554cf13830ea92c7132de1470173"><td class="memItemLeft" align="right" valign="top"><a id="a983b554cf13830ea92c7132de1470173" name="a983b554cf13830ea92c7132de1470173"></a>
+typedef struct <a class="el" href="a01780.html">atcac_x509_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_ctx_t</b></td></tr>
+<tr class="separator:a983b554cf13830ea92c7132de1470173"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Configuration Check for MbedTLS Integration Support. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ace0d6e503c0db5222207053a7c537103" name="ace0d6e503c0db5222207053a7c537103"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace0d6e503c0db5222207053a7c537103">&#9670;&#160;</a></span>ATCAC_AES_CMAC_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAC_AES_CMAC_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicates if this module is a provider of an AES-CMAC implementation </p>
+
+</div>
+</div>
+<a id="a2cf377cd3579f3ba898ec2391835cfd5" name="a2cf377cd3579f3ba898ec2391835cfd5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cf377cd3579f3ba898ec2391835cfd5">&#9670;&#160;</a></span>ATCAC_AES_GCM_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAC_AES_GCM_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicates if this module is a provider of an AES-GCM implementation </p>
+
+</div>
+</div>
+<a id="ae0b5716ff6baea028959764dc6d88e96" name="ae0b5716ff6baea028959764dc6d88e96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0b5716ff6baea028959764dc6d88e96">&#9670;&#160;</a></span>ATCAC_PKEY_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAC_PKEY_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicates if this module is a provider of a generic asymmetric cryptography implementation </p>
+
+</div>
+</div>
+<a id="a8e3c7ddf3a16cbdcc42060cdee2d884e" name="a8e3c7ddf3a16cbdcc42060cdee2d884e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e3c7ddf3a16cbdcc42060cdee2d884e">&#9670;&#160;</a></span>ATCAC_SHA1_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAC_SHA1_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicates if this module is a provider of a SHA1 implementation </p>
+
+</div>
+</div>
+<a id="a99dab792a5983a089fe816abc57bad25" name="a99dab792a5983a089fe816abc57bad25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99dab792a5983a089fe816abc57bad25">&#9670;&#160;</a></span>ATCAC_SHA256_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAC_SHA256_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicates if this module is a provider of a SHA256 implementation </p>
+
+</div>
+</div>
+<a id="a82cc4e898685eda93b47e741e5b44137" name="a82cc4e898685eda93b47e741e5b44137"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82cc4e898685eda93b47e741e5b44137">&#9670;&#160;</a></span>HOSTLIB_CERT_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HOSTLIB_CERT_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicates if this module is a provider of x509 certificate handling </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_0f8c318486f9c8f97febe2dc0542d496.html">jwt</a></li><li class="navelem"><a class="el" href="a00653.html">atca_jwt.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_c4875bffc6c901e8f9ea57d13c10be7a.html">mbedtls</a></li><li class="navelem"><a class="el" href="a00653.html">atca_mbedtls_interface.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

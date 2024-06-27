@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_execution.c File Reference</title>
+<title>CryptoAuthLib: calib_genkey.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,118 +97,24 @@ $(document).ready(function(){initNavTree('a00380.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">calib_execution.c File Reference</div></div>
+  <div class="headertitle"><div class="title">calib_genkey.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Implements an execution handler that executes a given command on a device and returns the results.  
+<p>CryptoAuthLib Basic API methods for GenKey command.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00515.html">cryptoauthlib.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:aa08ad4e89a8218e9598abbd36c11d07a"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00380.html#aa08ad4e89a8218e9598abbd36c11d07a">calib_get_execution_time</a> (uint8_t opcode, <a class="el" href="a01508.html">ATCADevice</a> device)</td></tr>
-<tr class="memdesc:aa08ad4e89a8218e9598abbd36c11d07a"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the typical execution time for the given command  <br /></td></tr>
-<tr class="separator:aa08ad4e89a8218e9598abbd36c11d07a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36ecabdebc9a8bf0df577e11297fe4b4"><td class="memItemLeft" align="right" valign="top"><a id="a36ecabdebc9a8bf0df577e11297fe4b4" name="a36ecabdebc9a8bf0df577e11297fe4b4"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>calib_execute_send</b> (<a class="el" href="a01508.html">ATCADevice</a> device, uint8_t word_address, uint8_t *txdata, uint16_t txlength)</td></tr>
-<tr class="separator:a36ecabdebc9a8bf0df577e11297fe4b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a345bde60ef4556a595cdad71141c4afe"><td class="memItemLeft" align="right" valign="top"><a id="a345bde60ef4556a595cdad71141c4afe" name="a345bde60ef4556a595cdad71141c4afe"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>calib_execute_receive</b> (<a class="el" href="a01508.html">ATCADevice</a> device, uint8_t device_address, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
-<tr class="separator:a345bde60ef4556a595cdad71141c4afe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19fc558e09f03a2f8f5ee89b1e396b2e"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00380.html#a19fc558e09f03a2f8f5ee89b1e396b2e">calib_execute_command</a> (<a class="el" href="a01620.html">ATCAPacket</a> *packet, <a class="el" href="a01508.html">ATCADevice</a> device)</td></tr>
-<tr class="memdesc:a19fc558e09f03a2f8f5ee89b1e396b2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wakes up device, sends the packet, waits for command completion, receives response, and puts the device into the idle state.  <br /></td></tr>
-<tr class="separator:a19fc558e09f03a2f8f5ee89b1e396b2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Implements an execution handler that executes a given command on a device and returns the results. </p>
-<p>This implementation wraps Polling and No polling (simple wait) schemes into a single method and use it across the library. Polling is used by default, however, by defining the ATCA_NO_POLL symbol the code will instead wait an estimated max execution time before requesting the result.</p>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00506.html">cryptoauthlib.h</a>&quot;</code><br />
+</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>CryptoAuthLib Basic API methods for GenKey command. </p>
+<p>The GenKey command is used for creating ECC private keys, generating ECC public keys, and for digest calculations involving public keys.</p>
+<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC108A, ATECC508A, ATECC608A/B. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="a19fc558e09f03a2f8f5ee89b1e396b2e" name="a19fc558e09f03a2f8f5ee89b1e396b2e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19fc558e09f03a2f8f5ee89b1e396b2e">&#9670;&#160;</a></span>calib_execute_command()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">ATCA_STATUS calib_execute_command </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01620.html">ATCAPacket</a> *&#160;</td>
-          <td class="paramname"><em>packet</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01508.html">ATCADevice</a>&#160;</td>
-          <td class="paramname"><em>device</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Wakes up device, sends the packet, waits for command completion, receives response, and puts the device into the idle state. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">packet</td><td>As input, the packet to be sent. As output, the data buffer in the packet structure will contain the response. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>CryptoAuthentication device to send the command to.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
-
-</div>
-</div>
-<a id="aa08ad4e89a8218e9598abbd36c11d07a" name="aa08ad4e89a8218e9598abbd36c11d07a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa08ad4e89a8218e9598abbd36c11d07a">&#9670;&#160;</a></span>calib_get_execution_time()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">ATCA_STATUS calib_get_execution_time </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>opcode</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01508.html">ATCADevice</a>&#160;</td>
-          <td class="paramname"><em>device</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>return the typical execution time for the given command </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">opcode</td><td>Opcode value of the command </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">ca_cmd</td><td>Command object for which the execution times are associated </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS </dd></dl>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_fe677a742bdf73affcb7505b38a59233.html">calib</a></li><li class="navelem"><a class="el" href="a00380.html">calib_execution.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_fe677a742bdf73affcb7505b38a59233.html">calib</a></li><li class="navelem"><a class="el" href="a00380.html">calib_genkey.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

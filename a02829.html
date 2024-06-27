@@ -132,7 +132,7 @@ $(document).ready(function(){initNavTree('a02829.html',''); initResizable(); });
 <h1><a class="anchor" id="autotoc_md13"></a>
 Implementation Considerations</h1>
 <ul>
-<li>Need to perform SHA256 calculations on the host. CryptoAuthLib provides a software implementation in <a class="el" href="a00491.html" title="Wrapper API for software SHA 256 routines.">lib/crypto/atca_crypto_sw_sha2.c</a></li>
+<li>Need to perform SHA256 calculations on the host. CryptoAuthLib provides a software implementation in <a class="el" href="a00482.html" title="Wrapper API for software SHA 256 routines.">lib/crypto/atca_crypto_sw_sha2.c</a></li>
 <li>When using the wire protection features:<ul>
 <li>The host needs to be able to generate a nonce (number used once). This is the NumIn parameter to the Nonce command that is sent before the SecureBoot command. The ATECC608 can not be used to generate NumIn, but it should come from a good random or non-repeating source in the host.</li>
 <li>If the host has any protected internal memory, it should be used to store its copy of the IO protection key.</li>

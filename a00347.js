@@ -1,11 +1,11 @@
 var a00347 =
 [
-    [ "calib_ca2_get_addr", "a01444.html#ga7c140a1696f5585d61426cdd4ed9c8dd", null ],
-    [ "calib_exit", "a01444.html#gab6791f8eef4fb94c44d84f69fa8d7927", null ],
-    [ "calib_get_addr", "a01444.html#gae51a67781e9e4618e669db1c999e6ec2", null ],
-    [ "calib_get_zone_size", "a01444.html#ga023735b1c0b10e70832d9a957bc99ae3", null ],
-    [ "calib_idle", "a01444.html#ga59750d83d93368b2944f57bb38bf4d1f", null ],
-    [ "calib_sleep", "a01444.html#gad26b70951a0da6d80fb98027faae7a1f", null ],
-    [ "calib_wakeup", "a01444.html#gafbc037d57a4cc4fec6a2f291736170cb", null ],
-    [ "calib_wakeup_i2c", "a01444.html#ga884790e08be94431e1fbe92bf6106e06", null ]
+    [ "atCalcCrc", "a00347.html#aff659b1042abf6e1376e38ccb4a20f3e", null ],
+    [ "atCheckCrc", "a00347.html#a7723a58d1781b3ba54e8f45d5729b33a", null ],
+    [ "atCRC", "a00347.html#a53ded4ed630b6ef4d292056c2e6b34f6", null ],
+    [ "atInfo", "a00347.html#a640d3cfd0f5b41f50cea0b987094d8a1", null ],
+    [ "atIsECCFamily", "a00347.html#ae82dca54cc3fd1cc2f1671e98d64df07", null ],
+    [ "atIsSHAFamily", "a00347.html#aae5866a78d2f0464b04eee9ef1f97030", null ],
+    [ "atPause", "a00347.html#afaf2ec3ff6b7feba0ca50a9b4f8d3ad8", null ],
+    [ "isATCAError", "a00347.html#ae41108996848638519849163e51cd10a", null ]
 ];
