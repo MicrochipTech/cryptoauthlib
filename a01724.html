@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_verify_in_out Struct Reference</title>
+<title>CryptoAuthLib: atca_hmac_in_out Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,42 +99,54 @@ $(document).ready(function(){initNavTree('a01724.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atca_verify_in_out Struct Reference<div class="ingroups"><a class="el" href="a01411.html">Host side crypto methods (atcah_)</a></div></div></div>
+  <div class="headertitle"><div class="title">atca_hmac_in_out Struct Reference<div class="ingroups"><a class="el" href="a01447.html">Host side crypto methods (atcah_)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Input/output parameters for function atcah_verify().  
+<p>Input/output parameters for function atca_hmac().  
  <a href="a01724.html#details">More...</a></p>
 
 <p><code>#include &lt;lib/host/atca_host.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:gadf3470738c60dbe57b33fb1e6005f40e"><td class="memItemLeft" align="right" valign="top">
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>curve_type</b></td></tr>
-<tr class="memdesc:gadf3470738c60dbe57b33fb1e6005f40e"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Curve type used in Verify command (Param2). <br /></td></tr>
-<tr class="separator:gadf3470738c60dbe57b33fb1e6005f40e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad2e0f0dbb511520e5d79bdb4ab649c22"><td class="memItemLeft" align="right" valign="top">
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>signature</b></td></tr>
-<tr class="memdesc:gad2e0f0dbb511520e5d79bdb4ab649c22"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to ECDSA signature to be verified <br /></td></tr>
-<tr class="separator:gad2e0f0dbb511520e5d79bdb4ab649c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf61f82fe19690b80bf370b295c58920b"><td class="memItemLeft" align="right" valign="top">
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>public_key</b></td></tr>
-<tr class="memdesc:gaf61f82fe19690b80bf370b295c58920b"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to the public key to be used for verification <br /></td></tr>
-<tr class="separator:gaf61f82fe19690b80bf370b295c58920b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4409850783c991d3b429ee78e67c9813"><td class="memItemLeft" align="right" valign="top">
-struct <a class="el" href="a01656.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>temp_key</b></td></tr>
-<tr class="memdesc:ga4409850783c991d3b429ee78e67c9813"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in,out] Pointer to TempKey structure. <br /></td></tr>
-<tr class="separator:ga4409850783c991d3b429ee78e67c9813"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1616d5efe59851d97fed27b47923c786"><td class="memItemLeft" align="right" valign="top">
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
+<tr class="memdesc:ga1616d5efe59851d97fed27b47923c786"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Mode parameter used in HMAC command (Param1). <br /></td></tr>
+<tr class="separator:ga1616d5efe59851d97fed27b47923c786"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga10f04328eda5cffcea79652ac3509c2d"><td class="memItemLeft" align="right" valign="top">
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>key_id</b></td></tr>
+<tr class="memdesc:ga10f04328eda5cffcea79652ac3509c2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] KeyID parameter used in HMAC command (Param2). <br /></td></tr>
+<tr class="separator:ga10f04328eda5cffcea79652ac3509c2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab6fe3f8a17d3a68f63c9c537cadd0fd0"><td class="memItemLeft" align="right" valign="top">
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>key</b></td></tr>
+<tr class="memdesc:gab6fe3f8a17d3a68f63c9c537cadd0fd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 32-byte key used to generate HMAC digest. <br /></td></tr>
+<tr class="separator:gab6fe3f8a17d3a68f63c9c537cadd0fd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad38386d9ec6afcdcd39eab98e2a4a1c"><td class="memItemLeft" align="right" valign="top">
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>otp</b></td></tr>
+<tr class="memdesc:gaad38386d9ec6afcdcd39eab98e2a4a1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 11-byte OTP, optionally included in HMAC digest, depending on mode. <br /></td></tr>
+<tr class="separator:gaad38386d9ec6afcdcd39eab98e2a4a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0d7fe9a16cad1ba38c7daca4295823b"><td class="memItemLeft" align="right" valign="top">
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>sn</b></td></tr>
+<tr class="memdesc:gaf0d7fe9a16cad1ba38c7daca4295823b"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 9-byte SN, optionally included in HMAC digest, depending on mode. <br /></td></tr>
+<tr class="separator:gaf0d7fe9a16cad1ba38c7daca4295823b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf6675faad5f7a43ca3fbec2108f57cd"><td class="memItemLeft" align="right" valign="top">
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>response</b></td></tr>
+<tr class="memdesc:gacf6675faad5f7a43ca3fbec2108f57cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">[out] Pointer to 32-byte SHA-256 HMAC digest. <br /></td></tr>
+<tr class="separator:gacf6675faad5f7a43ca3fbec2108f57cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7507880718dc536d6122f0401073b8c8"><td class="memItemLeft" align="right" valign="top">
+struct <a class="el" href="a01692.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>temp_key</b></td></tr>
+<tr class="memdesc:ga7507880718dc536d6122f0401073b8c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in,out] Pointer to TempKey structure. <br /></td></tr>
+<tr class="separator:ga7507880718dc536d6122f0401073b8c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input/output parameters for function atcah_verify(). </p>
+<div class="textblock"><p>Input/output parameters for function atca_hmac(). </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01724.html">atca_verify_in_out</a></li>
+    <li class="navelem"><a class="el" href="a01724.html">atca_hmac_in_out</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

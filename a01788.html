@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_cert_cache_s Struct Reference</title>
+<title>CryptoAuthLib: atcac_sha2_256_ctx Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,37 +99,25 @@ $(document).ready(function(){initNavTree('a01788.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">pkcs11_cert_cache_s Struct Reference<div class="ingroups"><a class="el" href="a01414.html">Attributes (pkcs11_attrib_)</a></div></div></div>
+  <div class="headertitle"><div class="title">atcac_sha2_256_ctx Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a04fa1eacbd9c51bbbd4908f3199df923"><td class="memItemLeft" align="right" valign="top"><a id="a04fa1eacbd9c51bbbd4908f3199df923" name="a04fa1eacbd9c51bbbd4908f3199df923"></a>
-<a class="el" href="a01864.html">CK_ATTRIBUTE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>cert_x509_parse</b></td></tr>
-<tr class="separator:a04fa1eacbd9c51bbbd4908f3199df923"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80313b3b9461f285dc9a649df20b6c99"><td class="memItemLeft" align="right" valign="top"><a id="a80313b3b9461f285dc9a649df20b6c99" name="a80313b3b9461f285dc9a649df20b6c99"></a>
-<a class="el" href="a01836.html">pkcs11_session_ctx_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><b>pSession_cert</b></td></tr>
-<tr class="separator:a80313b3b9461f285dc9a649df20b6c99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafaff0d4f403d8a7545b0f3120d0e2bb"><td class="memItemLeft" align="right" valign="top"><a id="aafaff0d4f403d8a7545b0f3120d0e2bb" name="aafaff0d4f403d8a7545b0f3120d0e2bb"></a>
-pkcs11_object_ptr&#160;</td><td class="memItemRight" valign="bottom"><b>pObject_cert</b></td></tr>
-<tr class="separator:aafaff0d4f403d8a7545b0f3120d0e2bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aecc42b39a9e48fea949760886137aa43"><td class="memItemLeft" align="right" valign="top"><a id="aecc42b39a9e48fea949760886137aa43" name="aecc42b39a9e48fea949760886137aa43"></a>
-<a class="el" href="a01407.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>pSession_cert_def</b></td></tr>
-<tr class="separator:aecc42b39a9e48fea949760886137aa43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8fe49e1de2c7e32387133d2140432261"><td class="memItemLeft" align="right" valign="top"><a id="a8fe49e1de2c7e32387133d2140432261" name="a8fe49e1de2c7e32387133d2140432261"></a>
-CK_BBOOL&#160;</td><td class="memItemRight" valign="bottom"><b>in_use</b></td></tr>
-<tr class="separator:a8fe49e1de2c7e32387133d2140432261"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d57614a4e112d642eea589186a2fdd6"><td class="memItemLeft" align="right" valign="top"><a id="a3d57614a4e112d642eea589186a2fdd6" name="a3d57614a4e112d642eea589186a2fdd6"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><b>pCert_parsed</b></td></tr>
-<tr class="separator:a3d57614a4e112d642eea589186a2fdd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af63476e256bb4c58bbed6cfe3028e3a6"><td class="memItemLeft" align="right" valign="top"><a id="af63476e256bb4c58bbed6cfe3028e3a6" name="af63476e256bb4c58bbed6cfe3028e3a6"></a>
+mbedtls_md_context_t&#160;</td><td class="memItemRight" valign="bottom"><b>mctx</b></td></tr>
+<tr class="separator:af63476e256bb4c58bbed6cfe3028e3a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf8b24afab07d417234405605199cfe3"><td class="memItemLeft" align="right" valign="top"><a id="abf8b24afab07d417234405605199cfe3" name="abf8b24afab07d417234405605199cfe3"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>ptr</b></td></tr>
+<tr class="separator:abf8b24afab07d417234405605199cfe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01788.html">pkcs11_cert_cache_s</a></li>
+    <li class="navelem"><a class="el" href="a01788.html">atcac_sha2_256_ctx</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

@@ -1,9 +1,16 @@
 var a00290 =
 [
-    [ "atcacert_date_dec", "a01407.html#ga6a6ba4b1c683a72bd3bd34badbed7461", null ],
-    [ "atcacert_date_dec_compcert", "a01407.html#gaab6bdf548ca56cec54441114a3152767", null ],
-    [ "atcacert_date_enc", "a01407.html#ga33f676825335d37da36aee1c93463829", null ],
-    [ "atcacert_date_enc_compcert", "a01407.html#gaef5c4497cd5a21ae7952658aa9dc7a62", null ],
-    [ "atcacert_date_from_asn1_tag", "a01407.html#ga208c468285600790ebcdba55a4ccf3a8", null ],
-    [ "atcacert_date_get_max_date", "a01407.html#ga82a0f236afa03da347abbee1db588cb3", null ]
+    [ "atcacert_create_csr", "a01443.html#ga9b103dcc50fefcb19514285da7fbe296", null ],
+    [ "atcacert_create_csr_pem", "a01443.html#ga1e4f207e7180d504c5dd369cd20fef21", null ],
+    [ "atcacert_get_response", "a01443.html#ga9a9769b84557ca2c47fa4442daa9a111", null ],
+    [ "atcacert_read_cert", "a01443.html#gafd202f259b53d72b0a382f33e99f9065", null ],
+    [ "atcacert_read_cert_ext", "a01443.html#ga906f310b9518c8f41431b047602cd651", null ],
+    [ "atcacert_read_cert_size", "a01443.html#ga143bf9b419fc7a090cb9876436735616", null ],
+    [ "atcacert_read_cert_size_ext", "a01443.html#ga5ce46e6e2ed2703edd506e3613c65d0b", null ],
+    [ "atcacert_read_device_loc", "a01443.html#ga7eb1ce78d2efb60aa56b929577fa88d2", null ],
+    [ "atcacert_read_device_loc_ext", "a01443.html#ga9d69be730c8bd7863588c43ebe58b225", null ],
+    [ "atcacert_read_subj_key_id", "a01443.html#ga7f12776448f02a8c9862c4af64537017", null ],
+    [ "atcacert_read_subj_key_id_ext", "a01443.html#gacb6ecab7acc06102caee5419a01bd803", null ],
+    [ "atcacert_write_cert", "a01443.html#gafa00725d50c68cfd2e0072bf563491a0", null ],
+    [ "atcacert_write_cert_ext", "a01443.html#ga25a3291ce46841ca52346b42dc416485", null ]
 ];

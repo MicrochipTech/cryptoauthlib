@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_gpio_harmony.c File Reference</title>
+<title>CryptoAuthLib: hal_freertos.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,229 +98,58 @@ $(document).ready(function(){initNavTree('a00542.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">hal_gpio_harmony.c File Reference</div></div>
+  <div class="headertitle"><div class="title">hal_freertos.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for GPIO.  
+<p>FreeRTOS Hardware/OS Abstration Layer.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00521.html">atca_hal.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00524.html">atca_hal.h</a>&quot;</code><br />
+<code>#include &quot;FreeRTOS.h&quot;</code><br />
+<code>#include &quot;semphr.h&quot;</code><br />
+<code>#include &quot;task.h&quot;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:acf61a669d2246c92200734be17bd5488"><td class="memItemLeft" align="right" valign="top"><a id="acf61a669d2246c92200734be17bd5488" name="acf61a669d2246c92200734be17bd5488"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_MUTEX_TIMEOUT</b>&#160;&#160;&#160;portMAX_DELAY</td></tr>
+<tr class="separator:acf61a669d2246c92200734be17bd5488"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a5159dcc0de9cf18a0a46d390fcde3d59"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00542.html#a5159dcc0de9cf18a0a46d390fcde3d59">hal_gpio_init</a> (<a class="el" href="a01548.html">ATCAIface</a> iface, <a class="el" href="a01480.html">ATCAIfaceCfg</a> *cfg)</td></tr>
-<tr class="memdesc:a5159dcc0de9cf18a0a46d390fcde3d59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a gpio interface using given config.  <br /></td></tr>
-<tr class="separator:a5159dcc0de9cf18a0a46d390fcde3d59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a680903ede9921710475c23f3e0f5c56c"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00542.html#a680903ede9921710475c23f3e0f5c56c">hal_gpio_post_init</a> (<a class="el" href="a01548.html">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:a680903ede9921710475c23f3e0f5c56c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Post Init for gpio hal.  <br /></td></tr>
-<tr class="separator:a680903ede9921710475c23f3e0f5c56c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0509181ebe5c1f3311cacc800796469b"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00542.html#a0509181ebe5c1f3311cacc800796469b">hal_gpio_send</a> (<a class="el" href="a01548.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *pin_state, int unused_param)</td></tr>
-<tr class="memdesc:a0509181ebe5c1f3311cacc800796469b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the state of the pin.  <br /></td></tr>
-<tr class="separator:a0509181ebe5c1f3311cacc800796469b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4ec5194f4ed97053e725b4f5d3b6db4"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00542.html#ac4ec5194f4ed97053e725b4f5d3b6db4">hal_gpio_receive</a> (<a class="el" href="a01548.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *pin_state, uint16_t *unused_param)</td></tr>
-<tr class="memdesc:ac4ec5194f4ed97053e725b4f5d3b6db4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the state of the pin.  <br /></td></tr>
-<tr class="separator:ac4ec5194f4ed97053e725b4f5d3b6db4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a977bd8e2ab872bbb9569a8978d094330"><td class="memItemLeft" align="right" valign="top"><a id="a977bd8e2ab872bbb9569a8978d094330" name="a977bd8e2ab872bbb9569a8978d094330"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_gpio_control</b> (<a class="el" href="a01548.html">ATCAIface</a> iface, uint8_t option, void *param, size_t paramlen)</td></tr>
-<tr class="separator:a977bd8e2ab872bbb9569a8978d094330"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34a8c0ab6cfceb80c15080b571c0b3f7"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00542.html#a34a8c0ab6cfceb80c15080b571c0b3f7">hal_gpio_release</a> (void *hal_data)</td></tr>
-<tr class="memdesc:a34a8c0ab6cfceb80c15080b571c0b3f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release and clean up the HAL.  <br /></td></tr>
-<tr class="separator:a34a8c0ab6cfceb80c15080b571c0b3f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa879f6b0c834e42325fff42d2087b84"><td class="memItemLeft" align="right" valign="top">
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>hal_malloc</b> (size_t size)</td></tr>
+<tr class="separator:gafa879f6b0c834e42325fff42d2087b84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa6d47ddbfd92184e624c55bf69328e0"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>hal_free</b> (void *ptr)</td></tr>
+<tr class="separator:gafa6d47ddbfd92184e624c55bf69328e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb8b202e3e6d66c96262b1ad4126ff6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#gacb8b202e3e6d66c96262b1ad4126ff6a">hal_rtos_delay_ms</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:gacb8b202e3e6d66c96262b1ad4126ff6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of milliseconds.  <br /></td></tr>
+<tr class="separator:gacb8b202e3e6d66c96262b1ad4126ff6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad9da28968a527ce51a2b081461d4cfe"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#gaad9da28968a527ce51a2b081461d4cfe">hal_create_mutex</a> (void **ppMutex, const char *pName)</td></tr>
+<tr class="memdesc:gaad9da28968a527ce51a2b081461d4cfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional hal interfaces.  <br /></td></tr>
+<tr class="separator:gaad9da28968a527ce51a2b081461d4cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_destroy_mutex</b> (void *pMutex)</td></tr>
+<tr class="separator:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_lock_mutex</b> (void *pMutex)</td></tr>
+<tr class="separator:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31fd8170a49623686543f6247b883bd1"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_unlock_mutex</b> (void *pMutex)</td></tr>
+<tr class="separator:ga31fd8170a49623686543f6247b883bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for GPIO. </p>
+<div class="textblock"><p>FreeRTOS Hardware/OS Abstration Layer. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="a5159dcc0de9cf18a0a46d390fcde3d59" name="a5159dcc0de9cf18a0a46d390fcde3d59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5159dcc0de9cf18a0a46d390fcde3d59">&#9670;&#160;</a></span>hal_gpio_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">ATCA_STATUS hal_gpio_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01548.html">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>iface</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01480.html">ATCAIfaceCfg</a> *&#160;</td>
-          <td class="paramname"><em>cfg</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Initialize a gpio interface using given config. </p>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
-
-</div>
-</div>
-<a id="a680903ede9921710475c23f3e0f5c56c" name="a680903ede9921710475c23f3e0f5c56c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a680903ede9921710475c23f3e0f5c56c">&#9670;&#160;</a></span>hal_gpio_post_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">ATCA_STATUS hal_gpio_post_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01548.html">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>iface</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Post Init for gpio hal. </p>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS </dd></dl>
-
-</div>
-</div>
-<a id="ac4ec5194f4ed97053e725b4f5d3b6db4" name="ac4ec5194f4ed97053e725b4f5d3b6db4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4ec5194f4ed97053e725b4f5d3b6db4">&#9670;&#160;</a></span>hal_gpio_receive()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">ATCA_STATUS hal_gpio_receive </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01548.html">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>iface</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>word_address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>pin_state</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>unused_param</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Read the state of the pin. </p>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">iface</td><td>Interface context</td></tr>
-    <tr><td class="paramname">word_address</td><td>Unused parameter</td></tr>
-    <tr><td class="paramname">pin_state</td><td>Pin state to output</td></tr>
-    <tr><td class="paramname">unused_param</td><td>Unused parameter </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a34a8c0ab6cfceb80c15080b571c0b3f7" name="a34a8c0ab6cfceb80c15080b571c0b3f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34a8c0ab6cfceb80c15080b571c0b3f7">&#9670;&#160;</a></span>hal_gpio_release()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">ATCA_STATUS hal_gpio_release </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>hal_data</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Release and clean up the HAL. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">hal_data</td><td>opaque pointer to hal data structure - known only to the HAL implementation</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS </dd></dl>
-
-</div>
-</div>
-<a id="a0509181ebe5c1f3311cacc800796469b" name="a0509181ebe5c1f3311cacc800796469b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0509181ebe5c1f3311cacc800796469b">&#9670;&#160;</a></span>hal_gpio_send()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">ATCA_STATUS hal_gpio_send </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01548.html">ATCAIface</a>&#160;</td>
-          <td class="paramname"><em>iface</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>word_address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>pin_state</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>unused_param</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set the state of the pin. </p>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS </dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">iface</td><td>Interface context</td></tr>
-    <tr><td class="paramname">word_address</td><td>Unused parameter</td></tr>
-    <tr><td class="paramname">pin_state</td><td>Pin state to output</td></tr>
-    <tr><td class="paramname">unused_param</td><td>Unused parameter </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00542.html">hal_gpio_harmony.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00542.html">hal_freertos.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

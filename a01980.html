@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: CK_TLS_PRF_PARAMS Struct Reference</title>
+<title>CryptoAuthLib: CK_AES_CBC_ENCRYPT_DATA_PARAMS Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,37 +99,28 @@ $(document).ready(function(){initNavTree('a01980.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">CK_TLS_PRF_PARAMS Struct Reference</div></div>
+  <div class="headertitle"><div class="title">CK_AES_CBC_ENCRYPT_DATA_PARAMS Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aa012b8b8d63420d7f362aea1fa01ab8e"><td class="memItemLeft" align="right" valign="top"><a id="aa012b8b8d63420d7f362aea1fa01ab8e" name="aa012b8b8d63420d7f362aea1fa01ab8e"></a>
-CK_BYTE_PTR&#160;</td><td class="memItemRight" valign="bottom"><b>pSeed</b></td></tr>
-<tr class="separator:aa012b8b8d63420d7f362aea1fa01ab8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae15be52f15063f44a1aaa60dd342171"><td class="memItemLeft" align="right" valign="top"><a id="aae15be52f15063f44a1aaa60dd342171" name="aae15be52f15063f44a1aaa60dd342171"></a>
-CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>ulSeedLen</b></td></tr>
-<tr class="separator:aae15be52f15063f44a1aaa60dd342171"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2cc7fd882acaa3a6bdb6154de8a111f"><td class="memItemLeft" align="right" valign="top"><a id="ad2cc7fd882acaa3a6bdb6154de8a111f" name="ad2cc7fd882acaa3a6bdb6154de8a111f"></a>
-CK_BYTE_PTR&#160;</td><td class="memItemRight" valign="bottom"><b>pLabel</b></td></tr>
-<tr class="separator:ad2cc7fd882acaa3a6bdb6154de8a111f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab34e2fdf546644631b1d029ba636c5cd"><td class="memItemLeft" align="right" valign="top"><a id="ab34e2fdf546644631b1d029ba636c5cd" name="ab34e2fdf546644631b1d029ba636c5cd"></a>
-CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>ulLabelLen</b></td></tr>
-<tr class="separator:ab34e2fdf546644631b1d029ba636c5cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2149f3e8e3b28dc29ed3c7a1a3d9696c"><td class="memItemLeft" align="right" valign="top"><a id="a2149f3e8e3b28dc29ed3c7a1a3d9696c" name="a2149f3e8e3b28dc29ed3c7a1a3d9696c"></a>
-CK_BYTE_PTR&#160;</td><td class="memItemRight" valign="bottom"><b>pOutput</b></td></tr>
-<tr class="separator:a2149f3e8e3b28dc29ed3c7a1a3d9696c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac52ea2c9eac0b87c96eba125e814058b"><td class="memItemLeft" align="right" valign="top"><a id="ac52ea2c9eac0b87c96eba125e814058b" name="ac52ea2c9eac0b87c96eba125e814058b"></a>
-CK_ULONG_PTR&#160;</td><td class="memItemRight" valign="bottom"><b>pulOutputLen</b></td></tr>
-<tr class="separator:ac52ea2c9eac0b87c96eba125e814058b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78a7a1afad5347f031b78ef05d45d9f0"><td class="memItemLeft" align="right" valign="top"><a id="a78a7a1afad5347f031b78ef05d45d9f0" name="a78a7a1afad5347f031b78ef05d45d9f0"></a>
+CK_BYTE&#160;</td><td class="memItemRight" valign="bottom"><b>iv</b> [16]</td></tr>
+<tr class="separator:a78a7a1afad5347f031b78ef05d45d9f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a620cb164c9631f252741d77f9cd56b1e"><td class="memItemLeft" align="right" valign="top"><a id="a620cb164c9631f252741d77f9cd56b1e" name="a620cb164c9631f252741d77f9cd56b1e"></a>
+CK_BYTE_PTR&#160;</td><td class="memItemRight" valign="bottom"><b>pData</b></td></tr>
+<tr class="separator:a620cb164c9631f252741d77f9cd56b1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0126d4f85f76160280fbe734e50a63f0"><td class="memItemLeft" align="right" valign="top"><a id="a0126d4f85f76160280fbe734e50a63f0" name="a0126d4f85f76160280fbe734e50a63f0"></a>
+CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>length</b></td></tr>
+<tr class="separator:a0126d4f85f76160280fbe734e50a63f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01980.html">CK_TLS_PRF_PARAMS</a></li>
+    <li class="navelem"><a class="el" href="a01980.html">CK_AES_CBC_ENCRYPT_DATA_PARAMS</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

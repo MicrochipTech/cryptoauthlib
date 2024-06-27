@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcac_x509_ctx Struct Reference</title>
+<title>CryptoAuthLib: atca_derive_key_mac_in_out Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,22 +99,46 @@ $(document).ready(function(){initNavTree('a01744.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atcac_x509_ctx Struct Reference</div></div>
+  <div class="headertitle"><div class="title">atca_derive_key_mac_in_out Struct Reference<div class="ingroups"><a class="el" href="a01447.html">Host side crypto methods (atcah_)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Input/output parameters for function atcah_derive_key_mac().  
+ <a href="a01744.html#details">More...</a></p>
+
+<p><code>#include &lt;lib/host/atca_host.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a9bcc4c4c92402b43034476170adcbbbd"><td class="memItemLeft" align="right" valign="top"><a id="a9bcc4c4c92402b43034476170adcbbbd" name="a9bcc4c4c92402b43034476170adcbbbd"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><b>ptr</b></td></tr>
-<tr class="separator:a9bcc4c4c92402b43034476170adcbbbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae33f3603840fd0bb8ada551ff168ea58"><td class="memItemLeft" align="right" valign="top"><a id="ae33f3603840fd0bb8ada551ff168ea58" name="ae33f3603840fd0bb8ada551ff168ea58"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
+<tr class="memdesc:ae33f3603840fd0bb8ada551ff168ea58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mode (param 1) of the derive key command. <br /></td></tr>
+<tr class="separator:ae33f3603840fd0bb8ada551ff168ea58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2a2e2e1126d1c022be6a84af7f5e4e3"><td class="memItemLeft" align="right" valign="top"><a id="ad2a2e2e1126d1c022be6a84af7f5e4e3" name="ad2a2e2e1126d1c022be6a84af7f5e4e3"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>target_key_id</b></td></tr>
+<tr class="memdesc:ad2a2e2e1126d1c022be6a84af7f5e4e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key ID (param 2) of the target slot to run the command on. <br /></td></tr>
+<tr class="separator:ad2a2e2e1126d1c022be6a84af7f5e4e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb90e80a488f568c4a193c1fe851c5d4"><td class="memItemLeft" align="right" valign="top"><a id="aeb90e80a488f568c4a193c1fe851c5d4" name="aeb90e80a488f568c4a193c1fe851c5d4"></a>
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>sn</b></td></tr>
+<tr class="memdesc:aeb90e80a488f568c4a193c1fe851c5d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though. <br /></td></tr>
+<tr class="separator:aeb90e80a488f568c4a193c1fe851c5d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb88b64064f725ca81245f2afe6f57f5"><td class="memItemLeft" align="right" valign="top"><a id="acb88b64064f725ca81245f2afe6f57f5" name="acb88b64064f725ca81245f2afe6f57f5"></a>
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>parent_key</b></td></tr>
+<tr class="memdesc:acb88b64064f725ca81245f2afe6f57f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parent key to be used in the derive key calculation (32 bytes). <br /></td></tr>
+<tr class="separator:acb88b64064f725ca81245f2afe6f57f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0576f1886490bbb3656b420f5bb65e65"><td class="memItemLeft" align="right" valign="top"><a id="a0576f1886490bbb3656b420f5bb65e65" name="a0576f1886490bbb3656b420f5bb65e65"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>mac</b></td></tr>
+<tr class="memdesc:a0576f1886490bbb3656b420f5bb65e65"><td class="mdescLeft">&#160;</td><td class="mdescRight">DeriveKey MAC will be returned here. <br /></td></tr>
+<tr class="separator:a0576f1886490bbb3656b420f5bb65e65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Input/output parameters for function atcah_derive_key_mac(). </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01744.html">atcac_x509_ctx</a></li>
+    <li class="navelem"><a class="el" href="a01744.html">atca_derive_key_mac_in_out</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

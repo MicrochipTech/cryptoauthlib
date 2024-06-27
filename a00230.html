@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_compiler.h File Reference</title>
+<title>CryptoAuthLib: atca_cfgs.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,59 +97,22 @@ $(document).ready(function(){initNavTree('a00230.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#define-members">Macros</a>  </div>
-  <div class="headertitle"><div class="title">atca_compiler.h File Reference</div></div>
+  <div class="headertitle"><div class="title">atca_cfgs.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLiub is meant to be portable across architectures, even non-Microchip architectures and compiler environments. This file is for isolating compiler specific macros.  
+<p>a set of default configurations for various ATCA devices and interfaces  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a19e63228967ce8a061f9f0d227dc6830"><td class="memItemLeft" align="right" valign="top"><a id="a19e63228967ce8a061f9f0d227dc6830" name="a19e63228967ce8a061f9f0d227dc6830"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHARED_LIB_EXPORT</b></td></tr>
-<tr class="separator:a19e63228967ce8a061f9f0d227dc6830"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c406311bad62403b4ba379576214108"><td class="memItemLeft" align="right" valign="top"><a id="a3c406311bad62403b4ba379576214108" name="a3c406311bad62403b4ba379576214108"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_DLL</b>&#160;&#160;&#160;extern</td></tr>
-<tr class="separator:a3c406311bad62403b4ba379576214108"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae081a49acc1fca72a8245249dfded8ef"><td class="memItemLeft" align="right" valign="top"><a id="ae081a49acc1fca72a8245249dfded8ef" name="ae081a49acc1fca72a8245249dfded8ef"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_PACKED</b></td></tr>
-<tr class="separator:ae081a49acc1fca72a8245249dfded8ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e61b3a07893501c121343edf3bfcbd8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00230.html#a6e61b3a07893501c121343edf3bfcbd8">UNUSED_VAR</a>(x)</td></tr>
-<tr class="separator:a6e61b3a07893501c121343edf3bfcbd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLiub is meant to be portable across architectures, even non-Microchip architectures and compiler environments. This file is for isolating compiler specific macros. </p>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00266.html">atca_iface.h</a>&quot;</code><br />
+</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>a set of default configurations for various ATCA devices and interfaces </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a6e61b3a07893501c121343edf3bfcbd8" name="a6e61b3a07893501c121343edf3bfcbd8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e61b3a07893501c121343edf3bfcbd8">&#9670;&#160;</a></span>UNUSED_VAR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define UNUSED_VAR</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">x</td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Enables removal of compiler warning due to unused variables </p>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00230.html">atca_compiler.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00230.html">atca_cfgs.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_derive_key_mac_in_out Struct Reference</title>
+<title>CryptoAuthLib: atca_verify_mac Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,46 +99,55 @@ $(document).ready(function(){initNavTree('a01708.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atca_derive_key_mac_in_out Struct Reference<div class="ingroups"><a class="el" href="a01411.html">Host side crypto methods (atcah_)</a></div></div></div>
+  <div class="headertitle"><div class="title">atca_verify_mac Struct Reference<div class="ingroups"><a class="el" href="a01447.html">Host side crypto methods (atcah_)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Input/output parameters for function atcah_derive_key_mac().  
- <a href="a01708.html#details">More...</a></p>
-
-<p><code>#include &lt;lib/host/atca_host.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ae33f3603840fd0bb8ada551ff168ea58"><td class="memItemLeft" align="right" valign="top"><a id="ae33f3603840fd0bb8ada551ff168ea58" name="ae33f3603840fd0bb8ada551ff168ea58"></a>
+<tr class="memitem:ac90559108804dc16ac1ac91a0212bff9"><td class="memItemLeft" align="right" valign="top"><a id="ac90559108804dc16ac1ac91a0212bff9" name="ac90559108804dc16ac1ac91a0212bff9"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
-<tr class="memdesc:ae33f3603840fd0bb8ada551ff168ea58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mode (param 1) of the derive key command. <br /></td></tr>
-<tr class="separator:ae33f3603840fd0bb8ada551ff168ea58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2a2e2e1126d1c022be6a84af7f5e4e3"><td class="memItemLeft" align="right" valign="top"><a id="ad2a2e2e1126d1c022be6a84af7f5e4e3" name="ad2a2e2e1126d1c022be6a84af7f5e4e3"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>target_key_id</b></td></tr>
-<tr class="memdesc:ad2a2e2e1126d1c022be6a84af7f5e4e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key ID (param 2) of the target slot to run the command on. <br /></td></tr>
-<tr class="separator:ad2a2e2e1126d1c022be6a84af7f5e4e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb90e80a488f568c4a193c1fe851c5d4"><td class="memItemLeft" align="right" valign="top"><a id="aeb90e80a488f568c4a193c1fe851c5d4" name="aeb90e80a488f568c4a193c1fe851c5d4"></a>
+<tr class="memdesc:ac90559108804dc16ac1ac91a0212bff9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mode (Param1) parameter used in Verify command. <br /></td></tr>
+<tr class="separator:ac90559108804dc16ac1ac91a0212bff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4c4854451abd367cf8a13aad5f6372b"><td class="memItemLeft" align="right" valign="top"><a id="ad4c4854451abd367cf8a13aad5f6372b" name="ad4c4854451abd367cf8a13aad5f6372b"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>key_id</b></td></tr>
+<tr class="memdesc:ad4c4854451abd367cf8a13aad5f6372b"><td class="mdescLeft">&#160;</td><td class="mdescRight">KeyID (Param2) used in Verify command. <br /></td></tr>
+<tr class="separator:ad4c4854451abd367cf8a13aad5f6372b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad94d1c8d1635e597bd70823a207dc727"><td class="memItemLeft" align="right" valign="top"><a id="ad94d1c8d1635e597bd70823a207dc727" name="ad94d1c8d1635e597bd70823a207dc727"></a>
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>signature</b></td></tr>
+<tr class="memdesc:ad94d1c8d1635e597bd70823a207dc727"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signature used in Verify command (64 bytes). <br /></td></tr>
+<tr class="separator:ad94d1c8d1635e597bd70823a207dc727"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad89fec1f50b8e8ffc890d3683c4b5afe"><td class="memItemLeft" align="right" valign="top"><a id="ad89fec1f50b8e8ffc890d3683c4b5afe" name="ad89fec1f50b8e8ffc890d3683c4b5afe"></a>
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>other_data</b></td></tr>
+<tr class="memdesc:ad89fec1f50b8e8ffc890d3683c4b5afe"><td class="mdescLeft">&#160;</td><td class="mdescRight">OtherData used in Verify command (19 bytes). <br /></td></tr>
+<tr class="separator:ad89fec1f50b8e8ffc890d3683c4b5afe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb0498448f486070d33e121ade525c64"><td class="memItemLeft" align="right" valign="top"><a id="acb0498448f486070d33e121ade525c64" name="acb0498448f486070d33e121ade525c64"></a>
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>msg_dig_buf</b></td></tr>
+<tr class="memdesc:acb0498448f486070d33e121ade525c64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message digest buffer (64 bytes). <br /></td></tr>
+<tr class="separator:acb0498448f486070d33e121ade525c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93cba5300302d50e26f70457f84df0da"><td class="memItemLeft" align="right" valign="top"><a id="a93cba5300302d50e26f70457f84df0da" name="a93cba5300302d50e26f70457f84df0da"></a>
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>io_key</b></td></tr>
+<tr class="memdesc:a93cba5300302d50e26f70457f84df0da"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO protection key value (32 bytes). <br /></td></tr>
+<tr class="separator:a93cba5300302d50e26f70457f84df0da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e63ccd727b87d022ed0eedc0446410f"><td class="memItemLeft" align="right" valign="top"><a id="a5e63ccd727b87d022ed0eedc0446410f" name="a5e63ccd727b87d022ed0eedc0446410f"></a>
 const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>sn</b></td></tr>
-<tr class="memdesc:aeb90e80a488f568c4a193c1fe851c5d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though. <br /></td></tr>
-<tr class="separator:aeb90e80a488f568c4a193c1fe851c5d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb88b64064f725ca81245f2afe6f57f5"><td class="memItemLeft" align="right" valign="top"><a id="acb88b64064f725ca81245f2afe6f57f5" name="acb88b64064f725ca81245f2afe6f57f5"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>parent_key</b></td></tr>
-<tr class="memdesc:acb88b64064f725ca81245f2afe6f57f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parent key to be used in the derive key calculation (32 bytes). <br /></td></tr>
-<tr class="separator:acb88b64064f725ca81245f2afe6f57f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0576f1886490bbb3656b420f5bb65e65"><td class="memItemLeft" align="right" valign="top"><a id="a0576f1886490bbb3656b420f5bb65e65" name="a0576f1886490bbb3656b420f5bb65e65"></a>
+<tr class="memdesc:a5e63ccd727b87d022ed0eedc0446410f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial number (9 bytes). <br /></td></tr>
+<tr class="separator:a5e63ccd727b87d022ed0eedc0446410f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9231df54b2f77c5061bdfbcea927a5e"><td class="memItemLeft" align="right" valign="top"><a id="ac9231df54b2f77c5061bdfbcea927a5e" name="ac9231df54b2f77c5061bdfbcea927a5e"></a>
+const <a class="el" href="a01447.html#ga2eb5b7f0471f9f14bd78c63104fb4cfe">atca_temp_key_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>temp_key</b></td></tr>
+<tr class="memdesc:ac9231df54b2f77c5061bdfbcea927a5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">TempKey. <br /></td></tr>
+<tr class="separator:ac9231df54b2f77c5061bdfbcea927a5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc99cd20d6193df126ae2b32b42f7546"><td class="memItemLeft" align="right" valign="top"><a id="afc99cd20d6193df126ae2b32b42f7546" name="afc99cd20d6193df126ae2b32b42f7546"></a>
 uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>mac</b></td></tr>
-<tr class="memdesc:a0576f1886490bbb3656b420f5bb65e65"><td class="mdescLeft">&#160;</td><td class="mdescRight">DeriveKey MAC will be returned here. <br /></td></tr>
-<tr class="separator:a0576f1886490bbb3656b420f5bb65e65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:afc99cd20d6193df126ae2b32b42f7546"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculated verification MAC is returned here (32 bytes). <br /></td></tr>
+<tr class="separator:afc99cd20d6193df126ae2b32b42f7546"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input/output parameters for function atcah_derive_key_mac(). </p>
-</div></div><!-- contents -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01708.html">atca_derive_key_mac_in_out</a></li>
+    <li class="navelem"><a class="el" href="a01708.html">atca_verify_mac</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

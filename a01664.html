@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_nonce_in_out Struct Reference</title>
+<title>CryptoAuthLib: i2c_start_instance Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,46 +99,25 @@ $(document).ready(function(){initNavTree('a01664.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atca_nonce_in_out Struct Reference<div class="ingroups"><a class="el" href="a01411.html">Host side crypto methods (atcah_)</a></div></div></div>
+  <div class="headertitle"><div class="title">i2c_start_instance Struct Reference<div class="ingroups"><a class="el" href="a01446.html">Hardware abstraction layer (hal_)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Input/output parameters for function atca_nonce().  
- <a href="a01664.html#details">More...</a></p>
-
-<p><code>#include &lt;lib/host/atca_host.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:gabaedd7126cc73449d73843ef3b8958c0"><td class="memItemLeft" align="right" valign="top">
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
-<tr class="memdesc:gabaedd7126cc73449d73843ef3b8958c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Mode parameter used in Nonce command (Param1). <br /></td></tr>
-<tr class="separator:gabaedd7126cc73449d73843ef3b8958c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaee2c8a03b0aa78ab07b64253f2c48b22"><td class="memItemLeft" align="right" valign="top">
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>zero</b></td></tr>
-<tr class="memdesc:gaee2c8a03b0aa78ab07b64253f2c48b22"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Zero parameter used in Nonce command (Param2). <br /></td></tr>
-<tr class="separator:gaee2c8a03b0aa78ab07b64253f2c48b22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7627ba268edc51f4e185e956bd215496"><td class="memItemLeft" align="right" valign="top">
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>num_in</b></td></tr>
-<tr class="memdesc:ga7627ba268edc51f4e185e956bd215496"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 20-byte NumIn data used in Nonce command. <br /></td></tr>
-<tr class="separator:ga7627ba268edc51f4e185e956bd215496"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc3dc30e978bcf18656aedb6dd4a62f2"><td class="memItemLeft" align="right" valign="top">
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>rand_out</b></td></tr>
-<tr class="memdesc:gadc3dc30e978bcf18656aedb6dd4a62f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 32-byte RandOut data from Nonce command. <br /></td></tr>
-<tr class="separator:gadc3dc30e978bcf18656aedb6dd4a62f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf89317aa1f759fc58f67158abd314d1b"><td class="memItemLeft" align="right" valign="top">
-struct <a class="el" href="a01656.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>temp_key</b></td></tr>
-<tr class="memdesc:gaf89317aa1f759fc58f67158abd314d1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in,out] Pointer to TempKey structure. <br /></td></tr>
-<tr class="separator:gaf89317aa1f759fc58f67158abd314d1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6af845fc47ee0fbc7986a22193f0b92e"><td class="memItemLeft" align="right" valign="top"><a id="a6af845fc47ee0fbc7986a22193f0b92e" name="a6af845fc47ee0fbc7986a22193f0b92e"></a>
+struct i2c_m_sync_desc *&#160;</td><td class="memItemRight" valign="bottom"><b>i2c_descriptor</b></td></tr>
+<tr class="separator:a6af845fc47ee0fbc7986a22193f0b92e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42c346041854fc0a75a6a8f50e955cdd"><td class="memItemLeft" align="right" valign="top"><a id="a42c346041854fc0a75a6a8f50e955cdd" name="a42c346041854fc0a75a6a8f50e955cdd"></a>
+start_change_baudrate&#160;</td><td class="memItemRight" valign="bottom"><b>change_baudrate</b></td></tr>
+<tr class="separator:a42c346041854fc0a75a6a8f50e955cdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input/output parameters for function atca_nonce(). </p>
-</div></div><!-- contents -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01664.html">atca_nonce_in_out</a></li>
+    <li class="navelem"><a class="el" href="a01664.html">i2c_start_instance</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

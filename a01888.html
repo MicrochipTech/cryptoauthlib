@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: CK_RSA_PKCS_PSS_PARAMS Struct Reference</title>
+<title>CryptoAuthLib: CK_SLOT_INFO Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,28 +99,34 @@ $(document).ready(function(){initNavTree('a01888.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">CK_RSA_PKCS_PSS_PARAMS Struct Reference</div></div>
+  <div class="headertitle"><div class="title">CK_SLOT_INFO Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aa4db3297a22a4148dbb5d96f33d10845"><td class="memItemLeft" align="right" valign="top"><a id="aa4db3297a22a4148dbb5d96f33d10845" name="aa4db3297a22a4148dbb5d96f33d10845"></a>
-CK_MECHANISM_TYPE&#160;</td><td class="memItemRight" valign="bottom"><b>hashAlg</b></td></tr>
-<tr class="separator:aa4db3297a22a4148dbb5d96f33d10845"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61dc8196e9a08bb24683c6d4836fdd75"><td class="memItemLeft" align="right" valign="top"><a id="a61dc8196e9a08bb24683c6d4836fdd75" name="a61dc8196e9a08bb24683c6d4836fdd75"></a>
-CK_RSA_PKCS_MGF_TYPE&#160;</td><td class="memItemRight" valign="bottom"><b>mgf</b></td></tr>
-<tr class="separator:a61dc8196e9a08bb24683c6d4836fdd75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04aaadbd6be8a61d43ea4a15b6c562ed"><td class="memItemLeft" align="right" valign="top"><a id="a04aaadbd6be8a61d43ea4a15b6c562ed" name="a04aaadbd6be8a61d43ea4a15b6c562ed"></a>
-CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>sLen</b></td></tr>
-<tr class="separator:a04aaadbd6be8a61d43ea4a15b6c562ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54a968ef99d631f025b426d32fe13648"><td class="memItemLeft" align="right" valign="top"><a id="a54a968ef99d631f025b426d32fe13648" name="a54a968ef99d631f025b426d32fe13648"></a>
+CK_UTF8CHAR&#160;</td><td class="memItemRight" valign="bottom"><b>slotDescription</b> [64]</td></tr>
+<tr class="separator:a54a968ef99d631f025b426d32fe13648"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab76f9ea77a8903171f203519550b89c8"><td class="memItemLeft" align="right" valign="top"><a id="ab76f9ea77a8903171f203519550b89c8" name="ab76f9ea77a8903171f203519550b89c8"></a>
+CK_UTF8CHAR&#160;</td><td class="memItemRight" valign="bottom"><b>manufacturerID</b> [32]</td></tr>
+<tr class="separator:ab76f9ea77a8903171f203519550b89c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21bfc612263b8eb1d1773695872fc181"><td class="memItemLeft" align="right" valign="top"><a id="a21bfc612263b8eb1d1773695872fc181" name="a21bfc612263b8eb1d1773695872fc181"></a>
+CK_FLAGS&#160;</td><td class="memItemRight" valign="bottom"><b>flags</b></td></tr>
+<tr class="separator:a21bfc612263b8eb1d1773695872fc181"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad99fb4180cd096d7ba0b9592b19445a"><td class="memItemLeft" align="right" valign="top"><a id="aad99fb4180cd096d7ba0b9592b19445a" name="aad99fb4180cd096d7ba0b9592b19445a"></a>
+<a class="el" href="a01880.html">CK_VERSION</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hardwareVersion</b></td></tr>
+<tr class="separator:aad99fb4180cd096d7ba0b9592b19445a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32f9a9f097841afa2064c0b1a00b77fd"><td class="memItemLeft" align="right" valign="top"><a id="a32f9a9f097841afa2064c0b1a00b77fd" name="a32f9a9f097841afa2064c0b1a00b77fd"></a>
+<a class="el" href="a01880.html">CK_VERSION</a>&#160;</td><td class="memItemRight" valign="bottom"><b>firmwareVersion</b></td></tr>
+<tr class="separator:a32f9a9f097841afa2064c0b1a00b77fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01888.html">CK_RSA_PKCS_PSS_PARAMS</a></li>
+    <li class="navelem"><a class="el" href="a01888.html">CK_SLOT_INFO</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

@@ -1,5 +1,6 @@
 var a01696 =
 [
-    [ "sn", "a01696.html#ab2ca3ae12be534d58e22bb68d6042ea3", null ],
-    [ "temp_key", "a01696.html#a8406e4a6d09e2f6b8e3bfc12579d8653", null ]
+    [ "otp", "a01447.html#gaf07ffae9f842764c321a060ead038ac2", null ],
+    [ "p_temp", "a01447.html#ga80ad9effe2957aaa0e604b175fcdbc63", null ],
+    [ "sn", "a01447.html#ga46b121ddb13c417e4d65a3fc2f6c365b", null ]
 ];

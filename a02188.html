@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: cryptoauthlib.atcacert.atcacert_tm_utc_t Class Reference</title>
+<title>CryptoAuthLib: cryptoauthlib.atcacert.atcacert_transform_t Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,68 +98,87 @@ $(document).ready(function(){initNavTree('a02188.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-static-attribs">Static Protected Attributes</a>  </div>
-  <div class="headertitle"><div class="title">cryptoauthlib.atcacert.atcacert_tm_utc_t Class Reference</div></div>
+<a href="#pub-static-attribs">Static Public Attributes</a>  </div>
+  <div class="headertitle"><div class="title">cryptoauthlib.atcacert.atcacert_transform_t Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="dynheader">
-Inheritance diagram for cryptoauthlib.atcacert.atcacert_tm_utc_t:</div>
+Inheritance diagram for cryptoauthlib.atcacert.atcacert_transform_t:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="a02188.png" alt=""/>
- </div></div>
+  <img src="a02188.png" usemap="#cryptoauthlib.atcacert.atcacert_5Ftransform_5Ft_map" alt=""/>
+  <map id="cryptoauthlib.atcacert.atcacert_5Ftransform_5Ft_map" name="cryptoauthlib.atcacert.atcacert_5Ftransform_5Ft_map">
+<area href="a02228.html" alt="cryptoauthlib.atcaenum.AtcaEnum" shape="rect" coords="0,56,255,80"/>
+  </map>
+</div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a56a1257c232e0af199ad18b8801f6117"><td class="memItemLeft" align="right" valign="top"><a id="a56a1257c232e0af199ad18b8801f6117" name="a56a1257c232e0af199ad18b8801f6117"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, *args, **kwargs)</td></tr>
-<tr class="separator:a56a1257c232e0af199ad18b8801f6117"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a6149a9d7439f96b8cc6155104a375fa9"><td class="memItemLeft" align="right" valign="top"><a id="a6149a9d7439f96b8cc6155104a375fa9" name="a6149a9d7439f96b8cc6155104a375fa9"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>TF_NONE</b> = 0x00</td></tr>
+<tr class="separator:a6149a9d7439f96b8cc6155104a375fa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cdc9dc1dd651467a048665fb7c4c4c3"><td class="memItemLeft" align="right" valign="top"><a id="a7cdc9dc1dd651467a048665fb7c4c4c3" name="a7cdc9dc1dd651467a048665fb7c4c4c3"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>TF_REVERSE</b> = 0x01</td></tr>
+<tr class="separator:a7cdc9dc1dd651467a048665fb7c4c4c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f0e401a671903bea5c8187d6d7eca9e"><td class="memItemLeft" align="right" valign="top"><a id="a4f0e401a671903bea5c8187d6d7eca9e" name="a4f0e401a671903bea5c8187d6d7eca9e"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>TF_BIN2HEX_UC</b> = 0x02</td></tr>
+<tr class="separator:a4f0e401a671903bea5c8187d6d7eca9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9c0449100543d7a3c5eed3c7d3ab987"><td class="memItemLeft" align="right" valign="top"><a id="ac9c0449100543d7a3c5eed3c7d3ab987" name="ac9c0449100543d7a3c5eed3c7d3ab987"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>TF_BIN2HEX_LC</b> = 0x03</td></tr>
+<tr class="separator:ac9c0449100543d7a3c5eed3c7d3ab987"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdab09b616c745bfbec56b2f2b539297"><td class="memItemLeft" align="right" valign="top"><a id="abdab09b616c745bfbec56b2f2b539297" name="abdab09b616c745bfbec56b2f2b539297"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>TF_HEX2BIN_UC</b> = 0x04</td></tr>
+<tr class="separator:abdab09b616c745bfbec56b2f2b539297"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8106a108d9bd368ec5f19907d4053b18"><td class="memItemLeft" align="right" valign="top"><a id="a8106a108d9bd368ec5f19907d4053b18" name="a8106a108d9bd368ec5f19907d4053b18"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>TF_HEX2BIN_LC</b> = 0x05</td></tr>
+<tr class="separator:a8106a108d9bd368ec5f19907d4053b18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44898fdb69a358d0110c88a4a8696d5f"><td class="memItemLeft" align="right" valign="top"><a id="a44898fdb69a358d0110c88a4a8696d5f" name="a44898fdb69a358d0110c88a4a8696d5f"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>TF_BIN2HEX_SPACE_UC</b> = 0x06</td></tr>
+<tr class="separator:a44898fdb69a358d0110c88a4a8696d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a368b54216ff3f3c7562ed3197cb23bfb"><td class="memItemLeft" align="right" valign="top"><a id="a368b54216ff3f3c7562ed3197cb23bfb" name="a368b54216ff3f3c7562ed3197cb23bfb"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>TF_BIN2HEX_SPACE_LC</b> = 0x07</td></tr>
+<tr class="separator:a368b54216ff3f3c7562ed3197cb23bfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06ca9eecf309ec53fe05ad7aa3a4863d"><td class="memItemLeft" align="right" valign="top"><a id="a06ca9eecf309ec53fe05ad7aa3a4863d" name="a06ca9eecf309ec53fe05ad7aa3a4863d"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>TF_HEX2BIN_SPACE_UC</b> = 0x08</td></tr>
+<tr class="separator:a06ca9eecf309ec53fe05ad7aa3a4863d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8ff8f38c5a59bd11840c591fe6a39b5"><td class="memItemLeft" align="right" valign="top"><a id="ae8ff8f38c5a59bd11840c591fe6a39b5" name="ae8ff8f38c5a59bd11840c591fe6a39b5"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>TF_HEX2BIN_SPACE_LC</b> = 0x09</td></tr>
+<tr class="separator:ae8ff8f38c5a59bd11840c591fe6a39b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-attribs" name="pro-static-attribs"></a>
-Static Protected Attributes</h2></td></tr>
-<tr class="memitem:aa2aa89a388e10d9e4466daa7330da640"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02188.html#aa2aa89a388e10d9e4466daa7330da640">_fields_</a></td></tr>
-<tr class="separator:aa2aa89a388e10d9e4466daa7330da640"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_methods_a02228"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a02228')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a02228.html">cryptoauthlib.atcaenum.AtcaEnum</a></td></tr>
+<tr class="memitem:a0810bfa942246a8a2da2081965377933 inherit pub_methods_a02228"><td class="memItemLeft" align="right" valign="top"><a id="a0810bfa942246a8a2da2081965377933" name="a0810bfa942246a8a2da2081965377933"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>__str__</b> (self)</td></tr>
+<tr class="separator:a0810bfa942246a8a2da2081965377933 inherit pub_methods_a02228"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefdd68c1202aab2b2a5e042cecb25be8 inherit pub_methods_a02228"><td class="memItemLeft" align="right" valign="top"><a id="aefdd68c1202aab2b2a5e042cecb25be8" name="aefdd68c1202aab2b2a5e042cecb25be8"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>__eq__</b> (self, other)</td></tr>
+<tr class="separator:aefdd68c1202aab2b2a5e042cecb25be8 inherit pub_methods_a02228"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0f0d4e11a9c7bc2867ef685cdfc4676 inherit pub_methods_a02228"><td class="memItemLeft" align="right" valign="top"><a id="af0f0d4e11a9c7bc2867ef685cdfc4676" name="af0f0d4e11a9c7bc2867ef685cdfc4676"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>__ne__</b> (self, other)</td></tr>
+<tr class="separator:af0f0d4e11a9c7bc2867ef685cdfc4676 inherit pub_methods_a02228"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90dd68892631e4fbc8b313e68dca300a inherit pub_methods_a02228"><td class="memItemLeft" align="right" valign="top"><a id="a90dd68892631e4fbc8b313e68dca300a" name="a90dd68892631e4fbc8b313e68dca300a"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>__int__</b> (self)</td></tr>
+<tr class="separator:a90dd68892631e4fbc8b313e68dca300a inherit pub_methods_a02228"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a719acc8e938b59c199b535e6069c9a78 inherit pub_methods_a02228"><td class="memItemLeft" align="right" valign="top"><a id="a719acc8e938b59c199b535e6069c9a78" name="a719acc8e938b59c199b535e6069c9a78"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>__hash__</b> (self)</td></tr>
+<tr class="separator:a719acc8e938b59c199b535e6069c9a78 inherit pub_methods_a02228"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_attribs_a02228"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_a02228')"><img src="closed.png" alt="-"/>&#160;Data Fields inherited from <a class="el" href="a02228.html">cryptoauthlib.atcaenum.AtcaEnum</a></td></tr>
+<tr class="memitem:a3d157c29e3336ccb0e363f3298f26ec7 inherit pub_attribs_a02228"><td class="memItemLeft" align="right" valign="top"><a id="a3d157c29e3336ccb0e363f3298f26ec7" name="a3d157c29e3336ccb0e363f3298f26ec7"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>name</b></td></tr>
+<tr class="separator:a3d157c29e3336ccb0e363f3298f26ec7 inherit pub_attribs_a02228"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0140ef8bdd9dc5b3f49ea9abe4c8745d inherit pub_attribs_a02228"><td class="memItemLeft" align="right" valign="top"><a id="a0140ef8bdd9dc5b3f49ea9abe4c8745d" name="a0140ef8bdd9dc5b3f49ea9abe4c8745d"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>value</b></td></tr>
+<tr class="separator:a0140ef8bdd9dc5b3f49ea9abe4c8745d inherit pub_attribs_a02228"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><pre class="fragment">CTypes mirror of atcacert_tm_utc_t from atcacert_date.h which mimics the posix time structure
-</pre> </div><h2 class="groupheader">Field Documentation</h2>
-<a id="aa2aa89a388e10d9e4466daa7330da640" name="aa2aa89a388e10d9e4466daa7330da640"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa2aa89a388e10d9e4466daa7330da640">&#9670;&#160;</a></span>_fields_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">list cryptoauthlib.atcacert.atcacert_tm_utc_t._fields_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=  [</div>
-<div class="line">        (<span class="stringliteral">&#39;tm_sec&#39;</span>, c_int),   <span class="comment"># 0 to 59</span></div>
-<div class="line">        (<span class="stringliteral">&#39;tm_min&#39;</span>, c_int),   <span class="comment"># 0 to 59</span></div>
-<div class="line">        (<span class="stringliteral">&#39;tm_hour&#39;</span>, c_int),  <span class="comment"># 0 to 23</span></div>
-<div class="line">        (<span class="stringliteral">&#39;tm_mday&#39;</span>, c_int),  <span class="comment"># 1 to 31</span></div>
-<div class="line">        (<span class="stringliteral">&#39;tm_mon&#39;</span>, c_int),   <span class="comment"># 0 to 11</span></div>
-<div class="line">        (<span class="stringliteral">&#39;tm_year&#39;</span>, c_int),  <span class="comment"># years since 1900</span></div>
-<div class="line">    ]</div>
-</div><!-- fragment -->
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><pre class="fragment">Transforms for converting the device data.
+</pre> </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01415.html">cryptoauthlib</a></li><li class="navelem"><a class="el" href="a01417.html">atcacert</a></li><li class="navelem"><a class="el" href="a02188.html">atcacert_tm_utc_t</a></li>
+    <li class="navelem"><a class="el" href="a01451.html">cryptoauthlib</a></li><li class="navelem"><a class="el" href="a01453.html">atcacert</a></li><li class="navelem"><a class="el" href="a02188.html">atcacert_transform_t</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

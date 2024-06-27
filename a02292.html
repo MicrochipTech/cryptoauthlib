@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: cryptoauthlib.exceptions.CheckmacVerifyFailedError Class Reference</title>
+<title>CryptoAuthLib: cryptoauthlib.device.KeyConfig Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,25 +97,66 @@ $(document).ready(function(){initNavTree('a02292.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">cryptoauthlib.exceptions.CheckmacVerifyFailedError Class Reference</div></div>
+  <div class="summary">
+<a href="#pro-static-attribs">Static Protected Attributes</a>  </div>
+  <div class="headertitle"><div class="title">cryptoauthlib.device.KeyConfig Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="dynheader">
-Inheritance diagram for cryptoauthlib.exceptions.CheckmacVerifyFailedError:</div>
+Inheritance diagram for cryptoauthlib.device.KeyConfig:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="a02292.png" usemap="#cryptoauthlib.exceptions.CheckmacVerifyFailedError_map" alt=""/>
-  <map id="cryptoauthlib.exceptions.CheckmacVerifyFailedError_map" name="cryptoauthlib.exceptions.CheckmacVerifyFailedError_map">
-<area href="a02272.html" alt="cryptoauthlib.exceptions.CryptoError" shape="rect" coords="0,56,312,80"/>
-  </map>
-</div></div>
+  <img src="a02292.png" alt=""/>
+ </div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-attribs" name="pro-static-attribs"></a>
+Static Protected Attributes</h2></td></tr>
+<tr class="memitem:a238f378a7df8911e566f2aba72454879"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02292.html#a238f378a7df8911e566f2aba72454879">_fields_</a></td></tr>
+<tr class="separator:a238f378a7df8911e566f2aba72454879"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6dca2fe7fc414b58cfbd2a545add3504"><td class="memItemLeft" align="right" valign="top"><a id="a6dca2fe7fc414b58cfbd2a545add3504" name="a6dca2fe7fc414b58cfbd2a545add3504"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>_pack_</b> = 1</td></tr>
+<tr class="separator:a6dca2fe7fc414b58cfbd2a545add3504"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><pre class="fragment">response status byte indicates CheckMac failure (status byte = 0x01)</pre> </div></div><!-- contents -->
+<div class="textblock"><pre class="fragment">KeyConfig Field Definition </pre> </div><h2 class="groupheader">Field Documentation</h2>
+<a id="a238f378a7df8911e566f2aba72454879" name="a238f378a7df8911e566f2aba72454879"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a238f378a7df8911e566f2aba72454879">&#9670;&#160;</a></span>_fields_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">list cryptoauthlib.device.KeyConfig._fields_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=  [(<span class="stringliteral">&#39;Private&#39;</span>, c_uint16, 1),</div>
+<div class="line">                (<span class="stringliteral">&#39;PubInfo&#39;</span>, c_uint16, 1),</div>
+<div class="line">                (<span class="stringliteral">&#39;KeyType&#39;</span>, c_uint16, 3),</div>
+<div class="line">                (<span class="stringliteral">&#39;Lockable&#39;</span>, c_uint16, 1),</div>
+<div class="line">                (<span class="stringliteral">&#39;ReqRandom&#39;</span>, c_uint16, 1),</div>
+<div class="line">                (<span class="stringliteral">&#39;ReqAuth&#39;</span>, c_uint16, 1),</div>
+<div class="line">                (<span class="stringliteral">&#39;AuthKey&#39;</span>, c_uint16, 4),</div>
+<div class="line">                (<span class="stringliteral">&#39;PersistentDisable&#39;</span>, c_uint16, 1),</div>
+<div class="line">                (<span class="stringliteral">&#39;RFU&#39;</span>, c_uint16, 1),</div>
+<div class="line">                (<span class="stringliteral">&#39;X509id&#39;</span>, c_uint16, 2)]</div>
+</div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01415.html">cryptoauthlib</a></li><li class="navelem"><a class="el" href="a01421.html">exceptions</a></li><li class="navelem"><a class="el" href="a02292.html">CheckmacVerifyFailedError</a></li>
+    <li class="navelem"><a class="el" href="a01451.html">cryptoauthlib</a></li><li class="navelem"><a class="el" href="a01456.html">device</a></li><li class="navelem"><a class="el" href="a02292.html">KeyConfig</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

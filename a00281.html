@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_check_config.h File Reference</title>
+<title>CryptoAuthLib: atcacert.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,54 +99,65 @@ $(document).ready(function(){initNavTree('a00281.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
-  <div class="headertitle"><div class="title">atcacert_check_config.h File Reference</div></div>
+  <div class="headertitle"><div class="title">atcacert.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Configuration check and defaults for the atcacert module.  
+<p>Declarations common to all atcacert code.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00512.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00476.html">crypto/atca_crypto_sw.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00284.html">atcacert_check_config.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00272.html">atca_status.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a82cc4e898685eda93b47e741e5b44137"><td class="memItemLeft" align="right" valign="top"><a id="a82cc4e898685eda93b47e741e5b44137" name="a82cc4e898685eda93b47e741e5b44137"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>HOSTLIB_CERT_EN</b>&#160;&#160;&#160;DEFAULT_DISABLED</td></tr>
-<tr class="separator:a82cc4e898685eda93b47e741e5b44137"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee352c0f4fcaec099e6ac354c4663c56"><td class="memItemLeft" align="right" valign="top"><a id="aee352c0f4fcaec099e6ac354c4663c56" name="aee352c0f4fcaec099e6ac354c4663c56"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_INTEGRATION_EN</b>&#160;&#160;&#160;HOSTLIB_CERT_EN</td></tr>
-<tr class="separator:aee352c0f4fcaec099e6ac354c4663c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4fd7b076f959ac1e785a3c36d298495b"><td class="memItemLeft" align="right" valign="top"><a id="a4fd7b076f959ac1e785a3c36d298495b" name="a4fd7b076f959ac1e785a3c36d298495b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_COMPCERT_EN</b>&#160;&#160;&#160;CALIB_ECC_SUPPORT</td></tr>
-<tr class="separator:a4fd7b076f959ac1e785a3c36d298495b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2894900773b25424610b3d4441802fad"><td class="memItemLeft" align="right" valign="top"><a id="a2894900773b25424610b3d4441802fad" name="a2894900773b25424610b3d4441802fad"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_HW_CHALLENGE_EN</b>&#160;&#160;&#160;(ATCAB_RANDOM_EN &amp;&amp; (ATCA_ECC_SUPPORT || ATCA_TA_SUPPORT))</td></tr>
-<tr class="separator:a2894900773b25424610b3d4441802fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af247eb22827965004abb8b3b8aed35f1"><td class="memItemLeft" align="right" valign="top"><a id="af247eb22827965004abb8b3b8aed35f1" name="af247eb22827965004abb8b3b8aed35f1"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_HW_VERIFY_EN</b>&#160;&#160;&#160;(ATCAB_VERIFY_EXTERN_EN &amp;&amp; (ATCA_ECC_SUPPORT || ATCA_TA_SUPPORT))</td></tr>
-<tr class="separator:af247eb22827965004abb8b3b8aed35f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4f6e00c9f67ccad2783628a6fe7e7af"><td class="memItemLeft" align="right" valign="top"><a id="ab4f6e00c9f67ccad2783628a6fe7e7af" name="ab4f6e00c9f67ccad2783628a6fe7e7af"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_DATEFMT_ISO_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
-<tr class="separator:ab4f6e00c9f67ccad2783628a6fe7e7af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e59ca45591de8524a95a45705269682"><td class="memItemLeft" align="right" valign="top"><a id="a2e59ca45591de8524a95a45705269682" name="a2e59ca45591de8524a95a45705269682"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_DATEFMT_UTC_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
-<tr class="separator:a2e59ca45591de8524a95a45705269682"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a7f452650c0f0659fe3ca21b3e2863b"><td class="memItemLeft" align="right" valign="top"><a id="a8a7f452650c0f0659fe3ca21b3e2863b" name="a8a7f452650c0f0659fe3ca21b3e2863b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_DATEFMT_POSIX_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
-<tr class="separator:a8a7f452650c0f0659fe3ca21b3e2863b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96e7eaed048b2ecf32a4d6b9623f8b4e"><td class="memItemLeft" align="right" valign="top"><a id="a96e7eaed048b2ecf32a4d6b9623f8b4e" name="a96e7eaed048b2ecf32a4d6b9623f8b4e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_DATEFMT_GEN_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
-<tr class="separator:a96e7eaed048b2ecf32a4d6b9623f8b4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa93f0eb578d23995850d61f7d61c55c1"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FALSE</b>&#160;&#160;&#160;(0)</td></tr>
+<tr class="separator:gaa93f0eb578d23995850d61f7d61c55c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa8cecfc5c5c054d2875c03e77b7be15d"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRUE</b>&#160;&#160;&#160;(1)</td></tr>
+<tr class="separator:gaa8cecfc5c5c054d2875c03e77b7be15d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7bd1ad830360fc8b988f855da6d0d5ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga7bd1ad830360fc8b988f855da6d0d5ba">ATCACERT_E_SUCCESS</a>&#160;&#160;&#160;<a class="el" href="a00272.html#ab132d69c7f94de708ffef02b6dc69d27">ATCA_SUCCESS</a></td></tr>
+<tr class="separator:ga7bd1ad830360fc8b988f855da6d0d5ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga048a6bb9781dbbc402409a172f976f74"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga048a6bb9781dbbc402409a172f976f74">ATCACERT_E_ERROR</a>&#160;&#160;&#160;<a class="el" href="a00272.html#aa1cd2b6470db000dd151f2a092f41edf">ATCA_GEN_FAIL</a></td></tr>
+<tr class="separator:ga048a6bb9781dbbc402409a172f976f74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47509d283523ab1892fb8746d6f4e37d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga47509d283523ab1892fb8746d6f4e37d">ATCACERT_E_BAD_PARAMS</a>&#160;&#160;&#160;<a class="el" href="a00272.html#a22c74ba87b45d105867f93c97b6dbe04">ATCA_BAD_PARAM</a></td></tr>
+<tr class="separator:ga47509d283523ab1892fb8746d6f4e37d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a2e774fc8b12c4045dea335a86afca6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga7a2e774fc8b12c4045dea335a86afca6">ATCACERT_E_BUFFER_TOO_SMALL</a>&#160;&#160;&#160;<a class="el" href="a00272.html#ab1a2ea3166875b26f91e82767d6e3e1a">ATCA_SMALL_BUFFER</a></td></tr>
+<tr class="separator:ga7a2e774fc8b12c4045dea335a86afca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b6db1523875a2b1453ef5e16989ecd4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga4b6db1523875a2b1453ef5e16989ecd4">ATCACERT_E_UNIMPLEMENTED</a>&#160;&#160;&#160;<a class="el" href="a00272.html#ad80a997b8786774af268692c936f90d9">ATCA_UNIMPLEMENTED</a></td></tr>
+<tr class="separator:ga4b6db1523875a2b1453ef5e16989ecd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaea155533fdd352d6602d3e2fc717930f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#gaea155533fdd352d6602d3e2fc717930f">ATCACERT_E_DECODING_ERROR</a>&#160;&#160;&#160;4</td></tr>
+<tr class="separator:gaea155533fdd352d6602d3e2fc717930f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaafd66d6744314225ead24b3901bd6372"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#gaafd66d6744314225ead24b3901bd6372">ATCACERT_E_INVALID_DATE</a>&#160;&#160;&#160;5</td></tr>
+<tr class="separator:gaafd66d6744314225ead24b3901bd6372"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a7cb98e18ad338f2eaf6594acb67c32"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga5a7cb98e18ad338f2eaf6594acb67c32">ATCACERT_E_UNEXPECTED_ELEM_SIZE</a>&#160;&#160;&#160;7</td></tr>
+<tr class="separator:ga5a7cb98e18ad338f2eaf6594acb67c32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8e3e7c64650c92364bbac17f6a75474a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga8e3e7c64650c92364bbac17f6a75474a">ATCACERT_E_ELEM_MISSING</a>&#160;&#160;&#160;8</td></tr>
+<tr class="separator:ga8e3e7c64650c92364bbac17f6a75474a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga62604c78d688530173e203b02df180fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga62604c78d688530173e203b02df180fa">ATCACERT_E_ELEM_OUT_OF_BOUNDS</a>&#160;&#160;&#160;9</td></tr>
+<tr class="separator:ga62604c78d688530173e203b02df180fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga822ee0620c8d2d12ff971b9b35f9f5cd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga822ee0620c8d2d12ff971b9b35f9f5cd">ATCACERT_E_BAD_CERT</a>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:ga822ee0620c8d2d12ff971b9b35f9f5cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga01010ef58d52a05292f6a70ff3d53ce8"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_E_WRONG_CERT_DEF</b>&#160;&#160;&#160;11</td></tr>
+<tr class="separator:ga01010ef58d52a05292f6a70ff3d53ce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae1da5e02cd9b4ee7b8617d7bce0a5b5d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#gae1da5e02cd9b4ee7b8617d7bce0a5b5d">ATCACERT_E_VERIFY_FAILED</a>&#160;&#160;&#160;12</td></tr>
+<tr class="separator:gae1da5e02cd9b4ee7b8617d7bce0a5b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2396e500bd36c2316a1a6e13e3117958"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01443.html#ga2396e500bd36c2316a1a6e13e3117958">ATCACERT_E_INVALID_TRANSFORM</a>&#160;&#160;&#160;13</td></tr>
+<tr class="separator:ga2396e500bd36c2316a1a6e13e3117958"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Configuration check and defaults for the atcacert module. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2022 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+<div class="textblock"><p>Declarations common to all atcacert code. </p>
+<p>These are common definitions used by all the atcacert code.</p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00281.html">atcacert_check_config.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00281.html">atcacert.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

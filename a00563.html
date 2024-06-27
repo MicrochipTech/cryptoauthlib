@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_linux_i2c_userspace.c File Reference</title>
+<title>CryptoAuthLib: hal_linux.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,71 +98,58 @@ $(document).ready(function(){initNavTree('a00563.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">hal_linux_i2c_userspace.c File Reference</div></div>
+  <div class="headertitle"><div class="title">hal_linux.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for Linux using I2C.  
+<p>Timer Utility Functions for Linux.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;<a class="el" href="a00512.html">cryptoauthlib.h</a>&gt;</code><br />
-<code>#include &lt;linux/i2c-dev.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;unistd.h&gt;</code><br />
-<code>#include &lt;sys/ioctl.h&gt;</code><br />
 <code>#include &lt;sys/types.h&gt;</code><br />
 <code>#include &lt;sys/stat.h&gt;</code><br />
 <code>#include &lt;fcntl.h&gt;</code><br />
 <code>#include &lt;errno.h&gt;</code><br />
-<code>#include &lt;string.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;limits.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00521.html">atca_hal.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00524.html">atca_hal.h</a>&quot;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01632.html">atca_i2c_host_s</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga66c5ee62a634720fc2ae3070689c9ccb"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01632.html">atca_i2c_host_s</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_i2c_host_t</b></td></tr>
-<tr class="separator:ga66c5ee62a634720fc2ae3070689c9ccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga17df8d983df73e2e8f62f1236f157909"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01410.html#ga17df8d983df73e2e8f62f1236f157909">hal_i2c_init</a> (<a class="el" href="a01548.html">ATCAIface</a> iface, <a class="el" href="a01480.html">ATCAIfaceCfg</a> *cfg)</td></tr>
-<tr class="memdesc:ga17df8d983df73e2e8f62f1236f157909"><td class="mdescLeft">&#160;</td><td class="mdescRight">hal_i2c_init manages requests to initialize a physical interface. it manages use counts so when an interface has released the physical layer, it will disable the interface for some other use. You can have multiple ATCAIFace instances using the same bus, and you can have multiple ATCAIFace instances on multiple i2c buses, so hal_i2c_init manages these things and ATCAIFace is abstracted from the physical details.  <br /></td></tr>
-<tr class="separator:ga17df8d983df73e2e8f62f1236f157909"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafbe53519362f18c2688d10da6f7c618f"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01410.html#gafbe53519362f18c2688d10da6f7c618f">hal_i2c_post_init</a> (<a class="el" href="a01548.html">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:gafbe53519362f18c2688d10da6f7c618f"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of I2C post init.  <br /></td></tr>
-<tr class="separator:gafbe53519362f18c2688d10da6f7c618f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacc9a889e19d2f1a475a39391565b66dd"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01410.html#gacc9a889e19d2f1a475a39391565b66dd">hal_i2c_send</a> (<a class="el" href="a01548.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
-<tr class="memdesc:gacc9a889e19d2f1a475a39391565b66dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of I2C send over START.  <br /></td></tr>
-<tr class="separator:gacc9a889e19d2f1a475a39391565b66dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac1baf65047dc3efe1f14f1b79b62c04f"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01410.html#gac1baf65047dc3efe1f14f1b79b62c04f">hal_i2c_receive</a> (<a class="el" href="a01548.html">ATCAIface</a> iface, uint8_t <a class="el" href="a00263.html#af3f726014b044194def151079f1f2d89">address</a>, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
-<tr class="memdesc:gac1baf65047dc3efe1f14f1b79b62c04f"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of I2C receive function for START I2C.  <br /></td></tr>
-<tr class="separator:gac1baf65047dc3efe1f14f1b79b62c04f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4f82572f05b8587d98bc38601453863e"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01410.html#ga4f82572f05b8587d98bc38601453863e">hal_i2c_control</a> (<a class="el" href="a01548.html">ATCAIface</a> iface, uint8_t option, void *param, size_t paramlen)</td></tr>
-<tr class="memdesc:ga4f82572f05b8587d98bc38601453863e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform control operations for the kit protocol.  <br /></td></tr>
-<tr class="separator:ga4f82572f05b8587d98bc38601453863e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac382cc4431d2d1c721c21a453ba36c22"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01410.html#gac382cc4431d2d1c721c21a453ba36c22">hal_i2c_release</a> (void *hal_data)</td></tr>
-<tr class="memdesc:gac382cc4431d2d1c721c21a453ba36c22"><td class="mdescLeft">&#160;</td><td class="mdescRight">manages reference count on given bus and releases resource if no more refences exist  <br /></td></tr>
-<tr class="separator:gac382cc4431d2d1c721c21a453ba36c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7e9019810ba5ab81b256282392cd5079"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga7e9019810ba5ab81b256282392cd5079">hal_delay_us</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga7e9019810ba5ab81b256282392cd5079"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of microseconds.  <br /></td></tr>
+<tr class="separator:ga7e9019810ba5ab81b256282392cd5079"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#gadc23b8130e72a445f76c68d62e8c95c5">hal_delay_ms</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:gadc23b8130e72a445f76c68d62e8c95c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API implemented at the HAL level.  <br /></td></tr>
+<tr class="separator:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad9da28968a527ce51a2b081461d4cfe"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#gaad9da28968a527ce51a2b081461d4cfe">hal_create_mutex</a> (void **ppMutex, const char *pName)</td></tr>
+<tr class="memdesc:gaad9da28968a527ce51a2b081461d4cfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional hal interfaces.  <br /></td></tr>
+<tr class="separator:gaad9da28968a527ce51a2b081461d4cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_destroy_mutex</b> (void *pMutex)</td></tr>
+<tr class="separator:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_lock_mutex</b> (void *pMutex)</td></tr>
+<tr class="separator:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31fd8170a49623686543f6247b883bd1"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_unlock_mutex</b> (void *pMutex)</td></tr>
+<tr class="separator:ga31fd8170a49623686543f6247b883bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae31246ac870409a3d694c240c6c3498a"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_check_pid</b> (hal_pid_t pid)</td></tr>
+<tr class="memdesc:gae31246ac870409a3d694c240c6c3498a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the pid exists in the system. <br /></td></tr>
+<tr class="separator:gae31246ac870409a3d694c240c6c3498a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for Linux using I2C. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+<div class="textblock"><p>Timer Utility Functions for Linux. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00563.html">hal_linux_i2c_userspace.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00563.html">hal_linux.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

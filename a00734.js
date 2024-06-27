@@ -1,6 +1,12 @@
 var a00734 =
 [
-    [ "pkcs11_key_private_attributes", "a01414.html#ga40d8e67ef0fae7bdc2dca013ad8410aa", null ],
-    [ "pkcs11_key_public_attributes", "a01414.html#gadf3e8d1e6b01d9fe85f54c9478d8d215", null ],
-    [ "pkcs11_key_secret_attributes", "a01414.html#ga6ef03269a32699359d90901cc84954f3", null ]
+    [ "pkcs11_dev_ctx", "a01828.html", null ],
+    [ "pkcs11_dev_res", "a01832.html", null ],
+    [ "pkcs11_dev_state", "a01836.html", "a01836" ],
+    [ "pkcs11_lib_ctx_s", "a01840.html", "a01840" ],
+    [ "pkcs11_lib_ctx", "a00734.html#a829124de0deebf29734cd6390a232292", null ],
+    [ "pkcs11_deinit", "a01450.html#gabff89fd0af2e75ee2db858f9fe934ac4", null ],
+    [ "pkcs11_get_context", "a01450.html#gae0e3060e6ae0dfc17a35881c223d8123", null ],
+    [ "pkcs11_init", "a01450.html#gaab9ef494fdc21911e700f2b9d62547ec", null ],
+    [ "pkcs11_init_check", "a01450.html#gadd899ffeae0146c08b249e3f551e21f8", null ]
 ];

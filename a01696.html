@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_diversified_key_in_out Struct Reference</title>
+<title>CryptoAuthLib: atca_include_data_in_out Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,43 +99,41 @@ $(document).ready(function(){initNavTree('a01696.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atca_diversified_key_in_out Struct Reference<div class="ingroups"><a class="el" href="a01411.html">Host side crypto methods (atcah_)</a></div></div></div>
+  <div class="headertitle"><div class="title">atca_include_data_in_out Struct Reference<div class="ingroups"><a class="el" href="a01447.html">Host side crypto methods (atcah_)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Input/output parameters for function atcah_gendivkey().  
+<p>Input / output parameters for function atca_include_data().  
  <a href="a01696.html#details">More...</a></p>
 
 <p><code>#include &lt;lib/host/atca_host.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aeb12c17165e6f9492d84a2a7d526e438"><td class="memItemLeft" align="right" valign="top"><a id="aeb12c17165e6f9492d84a2a7d526e438" name="aeb12c17165e6f9492d84a2a7d526e438"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>parent_key</b></td></tr>
-<tr class="separator:aeb12c17165e6f9492d84a2a7d526e438"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4f580de09e8cb3c880daeea9114ba8b"><td class="memItemLeft" align="right" valign="top"><a id="aa4f580de09e8cb3c880daeea9114ba8b" name="aa4f580de09e8cb3c880daeea9114ba8b"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>other_data</b></td></tr>
-<tr class="separator:aa4f580de09e8cb3c880daeea9114ba8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2ca3ae12be534d58e22bb68d6042ea3"><td class="memItemLeft" align="right" valign="top"><a id="ab2ca3ae12be534d58e22bb68d6042ea3" name="ab2ca3ae12be534d58e22bb68d6042ea3"></a>
+<tr class="memitem:ga80ad9effe2957aaa0e604b175fcdbc63"><td class="memItemLeft" align="right" valign="top">
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>p_temp</b></td></tr>
+<tr class="memdesc:ga80ad9effe2957aaa0e604b175fcdbc63"><td class="mdescLeft">&#160;</td><td class="mdescRight">[out] pointer to output buffer <br /></td></tr>
+<tr class="separator:ga80ad9effe2957aaa0e604b175fcdbc63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf07ffae9f842764c321a060ead038ac2"><td class="memItemLeft" align="right" valign="top">
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>otp</b></td></tr>
+<tr class="memdesc:gaf07ffae9f842764c321a060ead038ac2"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] pointer to one-time-programming data <br /></td></tr>
+<tr class="separator:gaf07ffae9f842764c321a060ead038ac2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga46b121ddb13c417e4d65a3fc2f6c365b"><td class="memItemLeft" align="right" valign="top">
 const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>sn</b></td></tr>
-<tr class="memdesc:ab2ca3ae12be534d58e22bb68d6042ea3"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though. <br /></td></tr>
-<tr class="separator:ab2ca3ae12be534d58e22bb68d6042ea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cf3c4fbcb4905f6b8a828b1b59853fc"><td class="memItemLeft" align="right" valign="top"><a id="a4cf3c4fbcb4905f6b8a828b1b59853fc" name="a4cf3c4fbcb4905f6b8a828b1b59853fc"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>input_data</b></td></tr>
-<tr class="separator:a4cf3c4fbcb4905f6b8a828b1b59853fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8406e4a6d09e2f6b8e3bfc12579d8653"><td class="memItemLeft" align="right" valign="top"><a id="a8406e4a6d09e2f6b8e3bfc12579d8653" name="a8406e4a6d09e2f6b8e3bfc12579d8653"></a>
-struct <a class="el" href="a01656.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>temp_key</b></td></tr>
-<tr class="memdesc:a8406e4a6d09e2f6b8e3bfc12579d8653"><td class="mdescLeft">&#160;</td><td class="mdescRight">[inout] Current state of TempKey <br /></td></tr>
-<tr class="separator:a8406e4a6d09e2f6b8e3bfc12579d8653"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga46b121ddb13c417e4d65a3fc2f6c365b"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] pointer to serial number data <br /></td></tr>
+<tr class="separator:ga46b121ddb13c417e4d65a3fc2f6c365b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a964415d34da8a44eff2a74c607a45ce0"><td class="memItemLeft" align="right" valign="top"><a id="a964415d34da8a44eff2a74c607a45ce0" name="a964415d34da8a44eff2a74c607a45ce0"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
+<tr class="separator:a964415d34da8a44eff2a74c607a45ce0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input/output parameters for function atcah_gendivkey(). </p>
+<div class="textblock"><p>Input / output parameters for function atca_include_data(). </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01696.html">atca_diversified_key_in_out</a></li>
+    <li class="navelem"><a class="el" href="a01696.html">atca_include_data_in_out</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

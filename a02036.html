@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: CK_AES_CTR_PARAMS Struct Reference</title>
+<title>CryptoAuthLib: CK_WTLS_KEY_MAT_PARAMS Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,25 +99,43 @@ $(document).ready(function(){initNavTree('a02036.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">CK_AES_CTR_PARAMS Struct Reference</div></div>
+  <div class="headertitle"><div class="title">CK_WTLS_KEY_MAT_PARAMS Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a54e9e91f82b31a9cbe343adaa31e3a3a"><td class="memItemLeft" align="right" valign="top"><a id="a54e9e91f82b31a9cbe343adaa31e3a3a" name="a54e9e91f82b31a9cbe343adaa31e3a3a"></a>
-CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>ulCounterBits</b></td></tr>
-<tr class="separator:a54e9e91f82b31a9cbe343adaa31e3a3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac56cd88bc06e232dd34f41843c7f8498"><td class="memItemLeft" align="right" valign="top"><a id="ac56cd88bc06e232dd34f41843c7f8498" name="ac56cd88bc06e232dd34f41843c7f8498"></a>
-CK_BYTE&#160;</td><td class="memItemRight" valign="bottom"><b>cb</b> [16]</td></tr>
-<tr class="separator:ac56cd88bc06e232dd34f41843c7f8498"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea2b231b8552ac86c6dc0434b0502e2b"><td class="memItemLeft" align="right" valign="top"><a id="aea2b231b8552ac86c6dc0434b0502e2b" name="aea2b231b8552ac86c6dc0434b0502e2b"></a>
+CK_MECHANISM_TYPE&#160;</td><td class="memItemRight" valign="bottom"><b>DigestMechanism</b></td></tr>
+<tr class="separator:aea2b231b8552ac86c6dc0434b0502e2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4891256daf5ff764421a7b967b525b9"><td class="memItemLeft" align="right" valign="top"><a id="aa4891256daf5ff764421a7b967b525b9" name="aa4891256daf5ff764421a7b967b525b9"></a>
+CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>ulMacSizeInBits</b></td></tr>
+<tr class="separator:aa4891256daf5ff764421a7b967b525b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fd499c0edb2cd4fd1877301e554ffd7"><td class="memItemLeft" align="right" valign="top"><a id="a1fd499c0edb2cd4fd1877301e554ffd7" name="a1fd499c0edb2cd4fd1877301e554ffd7"></a>
+CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>ulKeySizeInBits</b></td></tr>
+<tr class="separator:a1fd499c0edb2cd4fd1877301e554ffd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37e7d3d8619b180e6b0e6442006b2f43"><td class="memItemLeft" align="right" valign="top"><a id="a37e7d3d8619b180e6b0e6442006b2f43" name="a37e7d3d8619b180e6b0e6442006b2f43"></a>
+CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>ulIVSizeInBits</b></td></tr>
+<tr class="separator:a37e7d3d8619b180e6b0e6442006b2f43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0827a5a42d3e3679898636dee382c59"><td class="memItemLeft" align="right" valign="top"><a id="aa0827a5a42d3e3679898636dee382c59" name="aa0827a5a42d3e3679898636dee382c59"></a>
+CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>ulSequenceNumber</b></td></tr>
+<tr class="separator:aa0827a5a42d3e3679898636dee382c59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acac1b1ee6edf25ca628f6e1c31cd90ca"><td class="memItemLeft" align="right" valign="top"><a id="acac1b1ee6edf25ca628f6e1c31cd90ca" name="acac1b1ee6edf25ca628f6e1c31cd90ca"></a>
+CK_BBOOL&#160;</td><td class="memItemRight" valign="bottom"><b>bIsExport</b></td></tr>
+<tr class="separator:acac1b1ee6edf25ca628f6e1c31cd90ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac73d57990771b7c66499385866a15641"><td class="memItemLeft" align="right" valign="top"><a id="ac73d57990771b7c66499385866a15641" name="ac73d57990771b7c66499385866a15641"></a>
+<a class="el" href="a02020.html">CK_WTLS_RANDOM_DATA</a>&#160;</td><td class="memItemRight" valign="bottom"><b>RandomInfo</b></td></tr>
+<tr class="separator:ac73d57990771b7c66499385866a15641"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ce311c67e150c9a9ada167e8492db94"><td class="memItemLeft" align="right" valign="top"><a id="a2ce311c67e150c9a9ada167e8492db94" name="a2ce311c67e150c9a9ada167e8492db94"></a>
+CK_WTLS_KEY_MAT_OUT_PTR&#160;</td><td class="memItemRight" valign="bottom"><b>pReturnedKeyMaterial</b></td></tr>
+<tr class="separator:a2ce311c67e150c9a9ada167e8492db94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02036.html">CK_AES_CTR_PARAMS</a></li>
+    <li class="navelem"><a class="el" href="a02036.html">CK_WTLS_KEY_MAT_PARAMS</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcaI2Cmaster Struct Reference</title>
+<title>CryptoAuthLib: atsha204a_config_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,44 +99,73 @@ $(document).ready(function(){initNavTree('a01624.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atcaI2Cmaster Struct Reference<div class="ingroups"><a class="el" href="a01410.html">Hardware abstraction layer (hal_)</a></div></div></div>
+  <div class="headertitle"><div class="title">atsha204a_config_s Struct Reference<div class="ingroups"><a class="el" href="a01444.html">Basic Crypto API methods for CryptoAuth Devices (calib_)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>this is the hal_data for ATCA HAL for ASF SERCOM  
- <a href="a01624.html#details">More...</a></p>
-
-<p><code>#include &lt;lib/hal/hal_uc3_i2c_asf.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a692c5669fc6f6ffa256e93aa495fefd4"><td class="memItemLeft" align="right" valign="top"><a id="a692c5669fc6f6ffa256e93aa495fefd4" name="a692c5669fc6f6ffa256e93aa495fefd4"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
-<tr class="separator:a692c5669fc6f6ffa256e93aa495fefd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57b9de077c9cdfa4a6edf3bd83447769"><td class="memItemLeft" align="right" valign="top"><a id="a57b9de077c9cdfa4a6edf3bd83447769" name="a57b9de077c9cdfa4a6edf3bd83447769"></a>
-i2c_config_t&#160;</td><td class="memItemRight" valign="bottom"><b>conf</b></td></tr>
-<tr class="separator:a57b9de077c9cdfa4a6edf3bd83447769"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d2c1b9a68f365d01f6b0be9dad7dc6a"><td class="memItemLeft" align="right" valign="top"><a id="a1d2c1b9a68f365d01f6b0be9dad7dc6a" name="a1d2c1b9a68f365d01f6b0be9dad7dc6a"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>ref_ct</b></td></tr>
-<tr class="separator:a1d2c1b9a68f365d01f6b0be9dad7dc6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f357fab31485a55f93eeef31b730c4f"><td class="memItemLeft" align="right" valign="top"><a id="a2f357fab31485a55f93eeef31b730c4f" name="a2f357fab31485a55f93eeef31b730c4f"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>twi_id</b></td></tr>
-<tr class="separator:a2f357fab31485a55f93eeef31b730c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d3d9c7382b93a45858a1b327a38fc35"><td class="memItemLeft" align="right" valign="top"><a id="a8d3d9c7382b93a45858a1b327a38fc35" name="a8d3d9c7382b93a45858a1b327a38fc35"></a>
-avr32_twi_t *&#160;</td><td class="memItemRight" valign="bottom"><b>twi_master_instance</b></td></tr>
-<tr class="separator:a8d3d9c7382b93a45858a1b327a38fc35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94c2633397e4a8895e2592fba8cfb2b0"><td class="memItemLeft" align="right" valign="top"><a id="a94c2633397e4a8895e2592fba8cfb2b0" name="a94c2633397e4a8895e2592fba8cfb2b0"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>bus_index</b></td></tr>
-<tr class="separator:a94c2633397e4a8895e2592fba8cfb2b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af34f9f75835f6dcf6641e4f268fe98f1"><td class="memItemLeft" align="right" valign="top"><a id="af34f9f75835f6dcf6641e4f268fe98f1" name="af34f9f75835f6dcf6641e4f268fe98f1"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>SN03</b></td></tr>
+<tr class="separator:af34f9f75835f6dcf6641e4f268fe98f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae69bd3d4aaab72a56a8a42c89811d54"><td class="memItemLeft" align="right" valign="top"><a id="aae69bd3d4aaab72a56a8a42c89811d54" name="aae69bd3d4aaab72a56a8a42c89811d54"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>RevNum</b></td></tr>
+<tr class="separator:aae69bd3d4aaab72a56a8a42c89811d54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4b0d99a45a6c906e959e84e5f1f5bbf"><td class="memItemLeft" align="right" valign="top"><a id="af4b0d99a45a6c906e959e84e5f1f5bbf" name="af4b0d99a45a6c906e959e84e5f1f5bbf"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>SN47</b></td></tr>
+<tr class="separator:af4b0d99a45a6c906e959e84e5f1f5bbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa38b600b09917dc24b110aeba17670ea"><td class="memItemLeft" align="right" valign="top"><a id="aa38b600b09917dc24b110aeba17670ea" name="aa38b600b09917dc24b110aeba17670ea"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>SN8</b></td></tr>
+<tr class="separator:aa38b600b09917dc24b110aeba17670ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af859458bd93affa2322c42c7db9941da"><td class="memItemLeft" align="right" valign="top"><a id="af859458bd93affa2322c42c7db9941da" name="af859458bd93affa2322c42c7db9941da"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>Reserved0</b></td></tr>
+<tr class="separator:af859458bd93affa2322c42c7db9941da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3213c8b58ce5245d32ebfd83ad11e36"><td class="memItemLeft" align="right" valign="top"><a id="aa3213c8b58ce5245d32ebfd83ad11e36" name="aa3213c8b58ce5245d32ebfd83ad11e36"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>I2C_Enable</b></td></tr>
+<tr class="separator:aa3213c8b58ce5245d32ebfd83ad11e36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87b9a5b2690cbecd1d0a2f4a6b9e7326"><td class="memItemLeft" align="right" valign="top"><a id="a87b9a5b2690cbecd1d0a2f4a6b9e7326" name="a87b9a5b2690cbecd1d0a2f4a6b9e7326"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>Reserved1</b></td></tr>
+<tr class="separator:a87b9a5b2690cbecd1d0a2f4a6b9e7326"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e9397317473b0b46f8d920952160fa5"><td class="memItemLeft" align="right" valign="top"><a id="a3e9397317473b0b46f8d920952160fa5" name="a3e9397317473b0b46f8d920952160fa5"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>I2C_Address</b></td></tr>
+<tr class="separator:a3e9397317473b0b46f8d920952160fa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6afccea841a83970702a588afe2e8541"><td class="memItemLeft" align="right" valign="top"><a id="a6afccea841a83970702a588afe2e8541" name="a6afccea841a83970702a588afe2e8541"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>Reserved2</b></td></tr>
+<tr class="separator:a6afccea841a83970702a588afe2e8541"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07f896f0c65bebd04edc01111c6ab7a3"><td class="memItemLeft" align="right" valign="top"><a id="a07f896f0c65bebd04edc01111c6ab7a3" name="a07f896f0c65bebd04edc01111c6ab7a3"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>OTPmode</b></td></tr>
+<tr class="separator:a07f896f0c65bebd04edc01111c6ab7a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a787647942d394ebc617c088208176f5f"><td class="memItemLeft" align="right" valign="top"><a id="a787647942d394ebc617c088208176f5f" name="a787647942d394ebc617c088208176f5f"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>ChipMode</b></td></tr>
+<tr class="separator:a787647942d394ebc617c088208176f5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58baf3dc2c781db3b512cdf1796e79cd"><td class="memItemLeft" align="right" valign="top"><a id="a58baf3dc2c781db3b512cdf1796e79cd" name="a58baf3dc2c781db3b512cdf1796e79cd"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>SlotConfig</b> [16]</td></tr>
+<tr class="separator:a58baf3dc2c781db3b512cdf1796e79cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af13f218c6a1ab6134646c50a3af1315e"><td class="memItemLeft" align="right" valign="top"><a id="af13f218c6a1ab6134646c50a3af1315e" name="af13f218c6a1ab6134646c50a3af1315e"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>Counter</b> [8]</td></tr>
+<tr class="separator:af13f218c6a1ab6134646c50a3af1315e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d7f5e3d12086b1eaa39dfc6b90cbe7f"><td class="memItemLeft" align="right" valign="top"><a id="a0d7f5e3d12086b1eaa39dfc6b90cbe7f" name="a0d7f5e3d12086b1eaa39dfc6b90cbe7f"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>LastKeyUse</b> [16]</td></tr>
+<tr class="separator:a0d7f5e3d12086b1eaa39dfc6b90cbe7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab36d5190f50e0766a3db44685a2dadd0"><td class="memItemLeft" align="right" valign="top"><a id="ab36d5190f50e0766a3db44685a2dadd0" name="ab36d5190f50e0766a3db44685a2dadd0"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>UserExtra</b></td></tr>
+<tr class="separator:ab36d5190f50e0766a3db44685a2dadd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5457e154049e7ccd481b4930722d8b9"><td class="memItemLeft" align="right" valign="top"><a id="ae5457e154049e7ccd481b4930722d8b9" name="ae5457e154049e7ccd481b4930722d8b9"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>Selector</b></td></tr>
+<tr class="separator:ae5457e154049e7ccd481b4930722d8b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a337ea5beefc8b7cc4b264acc97f3a479"><td class="memItemLeft" align="right" valign="top"><a id="a337ea5beefc8b7cc4b264acc97f3a479" name="a337ea5beefc8b7cc4b264acc97f3a479"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>LockValue</b></td></tr>
+<tr class="separator:a337ea5beefc8b7cc4b264acc97f3a479"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d72612d748ba27dfa0056b25af15c85"><td class="memItemLeft" align="right" valign="top"><a id="a1d72612d748ba27dfa0056b25af15c85" name="a1d72612d748ba27dfa0056b25af15c85"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>LockConfig</b></td></tr>
+<tr class="separator:a1d72612d748ba27dfa0056b25af15c85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>this is the hal_data for ATCA HAL for ASF SERCOM </p>
-</div></div><!-- contents -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01624.html">atcaI2Cmaster</a></li>
+    <li class="navelem"><a class="el" href="a01624.html">atsha204a_config_s</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

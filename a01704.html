@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_derive_key_in_out Struct Reference</title>
+<title>CryptoAuthLib: atca_io_decrypt_in_out Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,50 +99,35 @@ $(document).ready(function(){initNavTree('a01704.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atca_derive_key_in_out Struct Reference<div class="ingroups"><a class="el" href="a01411.html">Host side crypto methods (atcah_)</a></div></div></div>
+  <div class="headertitle"><div class="title">atca_io_decrypt_in_out Struct Reference<div class="ingroups"><a class="el" href="a01447.html">Host side crypto methods (atcah_)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Input/output parameters for function atcah_derive_key().  
- <a href="a01704.html#details">More...</a></p>
-
-<p><code>#include &lt;lib/host/atca_host.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a81da1f6ee5cdd6f3270f68b4df7ee8d9"><td class="memItemLeft" align="right" valign="top"><a id="a81da1f6ee5cdd6f3270f68b4df7ee8d9" name="a81da1f6ee5cdd6f3270f68b4df7ee8d9"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
-<tr class="memdesc:a81da1f6ee5cdd6f3270f68b4df7ee8d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mode (param 1) of the derive key command. <br /></td></tr>
-<tr class="separator:a81da1f6ee5cdd6f3270f68b4df7ee8d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b623ae9fa4501c996e4c54842eaa548"><td class="memItemLeft" align="right" valign="top"><a id="a5b623ae9fa4501c996e4c54842eaa548" name="a5b623ae9fa4501c996e4c54842eaa548"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>target_key_id</b></td></tr>
-<tr class="memdesc:a5b623ae9fa4501c996e4c54842eaa548"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key ID (param 2) of the target slot to run the command on. <br /></td></tr>
-<tr class="separator:a5b623ae9fa4501c996e4c54842eaa548"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e321ea27e36c985abacf4510619c9f0"><td class="memItemLeft" align="right" valign="top"><a id="a0e321ea27e36c985abacf4510619c9f0" name="a0e321ea27e36c985abacf4510619c9f0"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>sn</b></td></tr>
-<tr class="memdesc:a0e321ea27e36c985abacf4510619c9f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though. <br /></td></tr>
-<tr class="separator:a0e321ea27e36c985abacf4510619c9f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9e30a4f9006923af0d6668768598737"><td class="memItemLeft" align="right" valign="top"><a id="ad9e30a4f9006923af0d6668768598737" name="ad9e30a4f9006923af0d6668768598737"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>parent_key</b></td></tr>
-<tr class="memdesc:ad9e30a4f9006923af0d6668768598737"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parent key to be used in the derive key calculation (32 bytes). <br /></td></tr>
-<tr class="separator:ad9e30a4f9006923af0d6668768598737"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2c05475b504237c0ae9db5d48cbb0fc"><td class="memItemLeft" align="right" valign="top"><a id="aa2c05475b504237c0ae9db5d48cbb0fc" name="aa2c05475b504237c0ae9db5d48cbb0fc"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>target_key</b></td></tr>
-<tr class="memdesc:aa2c05475b504237c0ae9db5d48cbb0fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Derived key will be returned here (32 bytes). <br /></td></tr>
-<tr class="separator:aa2c05475b504237c0ae9db5d48cbb0fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a4a8993461b0675edcb2d162ec8823b"><td class="memItemLeft" align="right" valign="top"><a id="a1a4a8993461b0675edcb2d162ec8823b" name="a1a4a8993461b0675edcb2d162ec8823b"></a>
-struct <a class="el" href="a01656.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>temp_key</b></td></tr>
-<tr class="memdesc:a1a4a8993461b0675edcb2d162ec8823b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current state of TempKey. <br /></td></tr>
-<tr class="separator:a1a4a8993461b0675edcb2d162ec8823b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6d2797ec2cdef70aa51438e96e2a301"><td class="memItemLeft" align="right" valign="top"><a id="aa6d2797ec2cdef70aa51438e96e2a301" name="aa6d2797ec2cdef70aa51438e96e2a301"></a>
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>io_key</b></td></tr>
+<tr class="memdesc:aa6d2797ec2cdef70aa51438e96e2a301"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO protection key (32 bytes). <br /></td></tr>
+<tr class="separator:aa6d2797ec2cdef70aa51438e96e2a301"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a597e62aa42a9971b98a5d76c7f1baef5"><td class="memItemLeft" align="right" valign="top"><a id="a597e62aa42a9971b98a5d76c7f1baef5" name="a597e62aa42a9971b98a5d76c7f1baef5"></a>
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>out_nonce</b></td></tr>
+<tr class="memdesc:a597e62aa42a9971b98a5d76c7f1baef5"><td class="mdescLeft">&#160;</td><td class="mdescRight">OutNonce returned from command (32 bytes). <br /></td></tr>
+<tr class="separator:a597e62aa42a9971b98a5d76c7f1baef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab910eb48d182d8f191da149339fd6c51"><td class="memItemLeft" align="right" valign="top"><a id="ab910eb48d182d8f191da149339fd6c51" name="ab910eb48d182d8f191da149339fd6c51"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>data</b></td></tr>
+<tr class="memdesc:ab910eb48d182d8f191da149339fd6c51"><td class="mdescLeft">&#160;</td><td class="mdescRight">As input, encrypted data. As output, decrypted data. <br /></td></tr>
+<tr class="separator:ab910eb48d182d8f191da149339fd6c51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d7f86d28ad089ae4401043c117be844"><td class="memItemLeft" align="right" valign="top"><a id="a1d7f86d28ad089ae4401043c117be844" name="a1d7f86d28ad089ae4401043c117be844"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>data_size</b></td></tr>
+<tr class="memdesc:a1d7f86d28ad089ae4401043c117be844"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of data in bytes (32 or 64). <br /></td></tr>
+<tr class="separator:a1d7f86d28ad089ae4401043c117be844"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input/output parameters for function atcah_derive_key(). </p>
-</div></div><!-- contents -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01704.html">atca_derive_key_in_out</a></li>
+    <li class="navelem"><a class="el" href="a01704.html">atca_io_decrypt_in_out</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

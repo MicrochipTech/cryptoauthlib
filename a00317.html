@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_host_sw.h File Reference</title>
+<title>CryptoAuthLib: atcacert_host_sw.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,39 +97,24 @@ $(document).ready(function(){initNavTree('a00317.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">atcacert_host_sw.h File Reference</div></div>
+  <div class="headertitle"><div class="title">atcacert_host_sw.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Host side methods using software implementations. host-side, the one authenticating a client, of the authentication process. Crypto functions are performed using a software library.  
+<p>host side methods using software implementations  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00299.html">atcacert_def.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga5bad45c1fda32b7a57275af23ab0f626"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01407.html#ga5bad45c1fda32b7a57275af23ab0f626">atcacert_verify_cert_sw</a> (const <a class="el" href="a01407.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, const uint8_t ca_public_key[64])</td></tr>
-<tr class="memdesc:ga5bad45c1fda32b7a57275af23ab0f626"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a certificate against its certificate authority's public key using software crypto functions.The function is currently not implemented.  <br /></td></tr>
-<tr class="separator:ga5bad45c1fda32b7a57275af23ab0f626"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga883a0c84474150e6b123dfab15a8c929"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01407.html#ga883a0c84474150e6b123dfab15a8c929">atcacert_gen_challenge_sw</a> (uint8_t challenge[32])</td></tr>
-<tr class="memdesc:ga883a0c84474150e6b123dfab15a8c929"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a random challenge to be sent to the client using a software PRNG.The function is currently not implemented.  <br /></td></tr>
-<tr class="separator:ga883a0c84474150e6b123dfab15a8c929"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab67e7a4c5899ef5402ff44f3f91d20b5"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01407.html#gab67e7a4c5899ef5402ff44f3f91d20b5">atcacert_verify_response_sw</a> (const uint8_t device_public_key[64], const uint8_t challenge[32], const uint8_t response[64])</td></tr>
-<tr class="memdesc:gab67e7a4c5899ef5402ff44f3f91d20b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a client's response to a challenge using software crypto functions.The function is currently not implemented.  <br /></td></tr>
-<tr class="separator:gab67e7a4c5899ef5402ff44f3f91d20b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Host side methods using software implementations. host-side, the one authenticating a client, of the authentication process. Crypto functions are performed using a software library. </p>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00320.html">atcacert_host_sw.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00479.html">crypto/atca_crypto_sw.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00335.html">cal_internal.h</a>&quot;</code><br />
+</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>host side methods using software implementations </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00317.html">atcacert_host_sw.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00317.html">atcacert_host_sw.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

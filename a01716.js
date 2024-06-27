@@ -1,13 +1,10 @@
 var a01716 =
 [
-    [ "client_chal", "a01716.html#ac4f5b60a59fa29d78c720c2be434c5c3", null ],
-    [ "client_resp", "a01716.html#a4daaa0bccc92503ccc31eaed78eb7409", null ],
-    [ "key_id", "a01716.html#a11807b6f83083ad17c66640c77c78973", null ],
-    [ "mode", "a01716.html#a0619aaead2b82313d761804f40c24926", null ],
-    [ "other_data", "a01716.html#af2d1c007ab43e8556a917efc5bcee9c8", null ],
-    [ "otp", "a01716.html#ac97a41612246b0527ed1a242bbe28a99", null ],
-    [ "slot_key", "a01716.html#aad7093cf772d6e337b3c09af9cea92ac", null ],
-    [ "sn", "a01716.html#a26f951076270f2389044a69b30c86d74", null ],
-    [ "target_key", "a01716.html#ae00a5116b4b55fb2bc6546ca3156522e", null ],
-    [ "temp_key", "a01716.html#a605e9f150203a43a550e68e940233245", null ]
+    [ "digest", "a01716.html#ad3a988f3c029fff3805a8a9dd4caaaa5", null ],
+    [ "hashed_key", "a01716.html#a9ebeb5a66a80189ae8e7bb2ea97701c9", null ],
+    [ "mac", "a01716.html#aeb4c9a28028bd625ac3650b39392cf07", null ],
+    [ "mode", "a01716.html#a2c6c43889156357aee27b3b09657ebd2", null ],
+    [ "param2", "a01716.html#ac94f545daf7381aeb770fb42b467d338", null ],
+    [ "secure_boot_config", "a01716.html#a28771c8ed4754eabcb50649d753ee956", null ],
+    [ "signature", "a01716.html#acafb471d7cc7a71d613503760930d9f5", null ]
 ];

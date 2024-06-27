@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: CK_RSA_AES_KEY_WRAP_PARAMS Struct Reference</title>
+<title>CryptoAuthLib: CK_GCM_PARAMS Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,25 +99,37 @@ $(document).ready(function(){initNavTree('a02076.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">CK_RSA_AES_KEY_WRAP_PARAMS Struct Reference</div></div>
+  <div class="headertitle"><div class="title">CK_GCM_PARAMS Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a9d445bef9432d7eaa0b38de0ba66a3d4"><td class="memItemLeft" align="right" valign="top"><a id="a9d445bef9432d7eaa0b38de0ba66a3d4" name="a9d445bef9432d7eaa0b38de0ba66a3d4"></a>
-CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>ulAESKeyBits</b></td></tr>
-<tr class="separator:a9d445bef9432d7eaa0b38de0ba66a3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6319224494833f7120b3e003b888a435"><td class="memItemLeft" align="right" valign="top"><a id="a6319224494833f7120b3e003b888a435" name="a6319224494833f7120b3e003b888a435"></a>
-CK_RSA_PKCS_OAEP_PARAMS_PTR&#160;</td><td class="memItemRight" valign="bottom"><b>pOAEPParams</b></td></tr>
-<tr class="separator:a6319224494833f7120b3e003b888a435"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ae117e4b42765507cd93983023c03e7"><td class="memItemLeft" align="right" valign="top"><a id="a2ae117e4b42765507cd93983023c03e7" name="a2ae117e4b42765507cd93983023c03e7"></a>
+CK_BYTE_PTR&#160;</td><td class="memItemRight" valign="bottom"><b>pIv</b></td></tr>
+<tr class="separator:a2ae117e4b42765507cd93983023c03e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a57c78c922886cc6d7260ab0acb61fe"><td class="memItemLeft" align="right" valign="top"><a id="a0a57c78c922886cc6d7260ab0acb61fe" name="a0a57c78c922886cc6d7260ab0acb61fe"></a>
+CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>ulIvLen</b></td></tr>
+<tr class="separator:a0a57c78c922886cc6d7260ab0acb61fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a352dfd3bba0f63669a6ed6b5db76d1bc"><td class="memItemLeft" align="right" valign="top"><a id="a352dfd3bba0f63669a6ed6b5db76d1bc" name="a352dfd3bba0f63669a6ed6b5db76d1bc"></a>
+CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>ulIvBits</b></td></tr>
+<tr class="separator:a352dfd3bba0f63669a6ed6b5db76d1bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61180a497f53ae8e4b3a26004480fa42"><td class="memItemLeft" align="right" valign="top"><a id="a61180a497f53ae8e4b3a26004480fa42" name="a61180a497f53ae8e4b3a26004480fa42"></a>
+CK_BYTE_PTR&#160;</td><td class="memItemRight" valign="bottom"><b>pAAD</b></td></tr>
+<tr class="separator:a61180a497f53ae8e4b3a26004480fa42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89208fe03593cd0accfd1473667b02a3"><td class="memItemLeft" align="right" valign="top"><a id="a89208fe03593cd0accfd1473667b02a3" name="a89208fe03593cd0accfd1473667b02a3"></a>
+CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>ulAADLen</b></td></tr>
+<tr class="separator:a89208fe03593cd0accfd1473667b02a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7009f51a60119f22340ca063291528c"><td class="memItemLeft" align="right" valign="top"><a id="ae7009f51a60119f22340ca063291528c" name="ae7009f51a60119f22340ca063291528c"></a>
+CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>ulTagBits</b></td></tr>
+<tr class="separator:ae7009f51a60119f22340ca063291528c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02076.html">CK_RSA_AES_KEY_WRAP_PARAMS</a></li>
+    <li class="navelem"><a class="el" href="a02076.html">CK_GCM_PARAMS</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

@@ -1,8 +1,12 @@
 var a01708 =
 [
-    [ "mac", "a01708.html#a0576f1886490bbb3656b420f5bb65e65", null ],
-    [ "mode", "a01708.html#ae33f3603840fd0bb8ada551ff168ea58", null ],
-    [ "parent_key", "a01708.html#acb88b64064f725ca81245f2afe6f57f5", null ],
-    [ "sn", "a01708.html#aeb90e80a488f568c4a193c1fe851c5d4", null ],
-    [ "target_key_id", "a01708.html#ad2a2e2e1126d1c022be6a84af7f5e4e3", null ]
+    [ "io_key", "a01708.html#a93cba5300302d50e26f70457f84df0da", null ],
+    [ "key_id", "a01708.html#ad4c4854451abd367cf8a13aad5f6372b", null ],
+    [ "mac", "a01708.html#afc99cd20d6193df126ae2b32b42f7546", null ],
+    [ "mode", "a01708.html#ac90559108804dc16ac1ac91a0212bff9", null ],
+    [ "msg_dig_buf", "a01708.html#acb0498448f486070d33e121ade525c64", null ],
+    [ "other_data", "a01708.html#ad89fec1f50b8e8ffc890d3683c4b5afe", null ],
+    [ "signature", "a01708.html#ad94d1c8d1635e597bd70823a207dc727", null ],
+    [ "sn", "a01708.html#a5e63ccd727b87d022ed0eedc0446410f", null ],
+    [ "temp_key", "a01708.html#ac9231df54b2f77c5061bdfbcea927a5e", null ]
 ];

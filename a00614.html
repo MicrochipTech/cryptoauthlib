@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_windows.c File Reference</title>
+<title>CryptoAuthLib: hal_uc3_timer_asf.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,50 +99,38 @@ $(document).ready(function(){initNavTree('a00614.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">hal_windows.c File Reference</div></div>
+  <div class="headertitle"><div class="title">hal_uc3_timer_asf.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for windows timer functions.  
+<p>ATCA Hardware abstraction layer for SAM4S I2C over ASF drivers.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00521.html">atca_hal.h</a>&quot;</code><br />
-<code>#include &lt;windows.h&gt;</code><br />
-<code>#include &lt;math.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;asf.h&gt;</code><br />
+<code>#include &lt;delay.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00524.html">atca_hal.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga7e9019810ba5ab81b256282392cd5079"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01410.html#ga7e9019810ba5ab81b256282392cd5079">hal_delay_us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga7e9019810ba5ab81b256282392cd5079"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of microseconds.  <br /></td></tr>
-<tr class="separator:ga7e9019810ba5ab81b256282392cd5079"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01410.html#gadc23b8130e72a445f76c68d62e8c95c5">hal_delay_ms</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:gadc23b8130e72a445f76c68d62e8c95c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API implemented at the HAL level.  <br /></td></tr>
-<tr class="separator:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaad9da28968a527ce51a2b081461d4cfe"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01410.html#gaad9da28968a527ce51a2b081461d4cfe">hal_create_mutex</a> (void **ppMutex, const char *pName)</td></tr>
-<tr class="memdesc:gaad9da28968a527ce51a2b081461d4cfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional hal interfaces.  <br /></td></tr>
-<tr class="separator:gaad9da28968a527ce51a2b081461d4cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_destroy_mutex</b> (void *pMutex)</td></tr>
-<tr class="separator:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_lock_mutex</b> (void *pMutex)</td></tr>
-<tr class="separator:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31fd8170a49623686543f6247b883bd1"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_unlock_mutex</b> (void *pMutex)</td></tr>
-<tr class="separator:ga31fd8170a49623686543f6247b883bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae31246ac870409a3d694c240c6c3498a"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_check_pid</b> (hal_pid_t pid)</td></tr>
-<tr class="memdesc:gae31246ac870409a3d694c240c6c3498a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the pid exists in the system. <br /></td></tr>
-<tr class="separator:gae31246ac870409a3d694c240c6c3498a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7598dfcd6dcac882836544d48356d02f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga7598dfcd6dcac882836544d48356d02f">atca_delay_us</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga7598dfcd6dcac882836544d48356d02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of microseconds.  <br /></td></tr>
+<tr class="separator:ga7598dfcd6dcac882836544d48356d02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga19891182689551cc3a88603135959351"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga19891182689551cc3a88603135959351">atca_delay_10us</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga19891182689551cc3a88603135959351"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of tens of microseconds.  <br /></td></tr>
+<tr class="separator:ga19891182689551cc3a88603135959351"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0544f36422b5e9a8890fb9c90fc5eb55"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga0544f36422b5e9a8890fb9c90fc5eb55">atca_delay_ms</a> (uint32_t ms)</td></tr>
+<tr class="memdesc:ga0544f36422b5e9a8890fb9c90fc5eb55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API for legacy implementations.  <br /></td></tr>
+<tr class="separator:ga0544f36422b5e9a8890fb9c90fc5eb55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for windows timer functions. </p>
+<div class="textblock"><p>ATCA Hardware abstraction layer for SAM4S I2C over ASF drivers. </p>
+<p>Prerequisite: add "Delay routines (service)" module to application in Atmel Studio</p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00614.html">hal_windows.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00614.html">hal_uc3_timer_asf.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

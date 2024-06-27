@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcac_hmac_ctx Struct Reference</title>
+<title>CryptoAuthLib: atca_resp_mac_in_out Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,25 +99,47 @@ $(document).ready(function(){initNavTree('a01756.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atcac_hmac_ctx Struct Reference</div></div>
+  <div class="headertitle"><div class="title">atca_resp_mac_in_out Struct Reference<div class="ingroups"><a class="el" href="a01447.html">Host side crypto methods (atcah_)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Input/Output parameters for calculating the output response mac in SHA105 device. Used with the atcah_gen_output_resp_mac() function.  
+ <a href="a01756.html#details">More...</a></p>
+
+<p><code>#include &lt;lib/host/atca_host.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a025f55d5cfed560db0d7a0ea60ae7695"><td class="memItemLeft" align="right" valign="top"><a id="a025f55d5cfed560db0d7a0ea60ae7695" name="a025f55d5cfed560db0d7a0ea60ae7695"></a>
-mbedtls_md_context_t *&#160;</td><td class="memItemRight" valign="bottom"><b>mctx</b></td></tr>
-<tr class="separator:a025f55d5cfed560db0d7a0ea60ae7695"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52d823f09b2b73702a1914020fc94766"><td class="memItemLeft" align="right" valign="top"><a id="a52d823f09b2b73702a1914020fc94766" name="a52d823f09b2b73702a1914020fc94766"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><b>ptr</b></td></tr>
-<tr class="separator:a52d823f09b2b73702a1914020fc94766"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a317ceaa73a9bc95cafbaa0ab86c62fc8"><td class="memItemLeft" align="right" valign="top"><a id="a317ceaa73a9bc95cafbaa0ab86c62fc8" name="a317ceaa73a9bc95cafbaa0ab86c62fc8"></a>
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>slot_key</b></td></tr>
+<tr class="separator:a317ceaa73a9bc95cafbaa0ab86c62fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a328f05bd942a0f304473e0126f9525d8"><td class="memItemLeft" align="right" valign="top"><a id="a328f05bd942a0f304473e0126f9525d8" name="a328f05bd942a0f304473e0126f9525d8"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
+<tr class="separator:a328f05bd942a0f304473e0126f9525d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d1eca78f3870cbec9c830d74ad4536d"><td class="memItemLeft" align="right" valign="top"><a id="a3d1eca78f3870cbec9c830d74ad4536d" name="a3d1eca78f3870cbec9c830d74ad4536d"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>key_id</b></td></tr>
+<tr class="separator:a3d1eca78f3870cbec9c830d74ad4536d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36b4438f32b96731229df8336b2b8a67"><td class="memItemLeft" align="right" valign="top"><a id="a36b4438f32b96731229df8336b2b8a67" name="a36b4438f32b96731229df8336b2b8a67"></a>
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>sn</b></td></tr>
+<tr class="separator:a36b4438f32b96731229df8336b2b8a67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8127e6c11da4f9c702668d50bf159ecb"><td class="memItemLeft" align="right" valign="top"><a id="a8127e6c11da4f9c702668d50bf159ecb" name="a8127e6c11da4f9c702668d50bf159ecb"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>client_resp</b></td></tr>
+<tr class="separator:a8127e6c11da4f9c702668d50bf159ecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cf5bdf36aada7e230260eb6be218f0e"><td class="memItemLeft" align="right" valign="top"><a id="a1cf5bdf36aada7e230260eb6be218f0e" name="a1cf5bdf36aada7e230260eb6be218f0e"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>checkmac_result</b></td></tr>
+<tr class="separator:a1cf5bdf36aada7e230260eb6be218f0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f4ebddaf628e3487cd9d96609f7c754"><td class="memItemLeft" align="right" valign="top"><a id="a3f4ebddaf628e3487cd9d96609f7c754" name="a3f4ebddaf628e3487cd9d96609f7c754"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>mac_output</b></td></tr>
+<tr class="separator:a3f4ebddaf628e3487cd9d96609f7c754"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Input/Output parameters for calculating the output response mac in SHA105 device. Used with the atcah_gen_output_resp_mac() function. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01756.html">atcac_hmac_ctx</a></li>
+    <li class="navelem"><a class="el" href="a01756.html">atca_resp_mac_in_out</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

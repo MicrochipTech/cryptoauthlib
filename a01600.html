@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: device_execution_time_t Struct Reference</title>
+<title>CryptoAuthLib: atcacert_cert_element_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,32 +99,39 @@ $(document).ready(function(){initNavTree('a01600.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">device_execution_time_t Struct Reference</div></div>
+  <div class="headertitle"><div class="title">atcacert_cert_element_s Struct Reference<div class="ingroups"><a class="el" href="a01443.html">Certificate manipulation methods (atcacert_)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure to hold the device execution time and the opcode for the corresponding command.  
- <a href="a01600.html#details">More...</a></p>
-
-<p><code>#include &lt;lib/calib/calib_execution.h&gt;</code></p>
+<p><code>#include &lt;lib/atcacert/atcacert_def.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a5bf83f8ef79c1abca586676ee8d99177"><td class="memItemLeft" align="right" valign="top"><a id="a5bf83f8ef79c1abca586676ee8d99177" name="a5bf83f8ef79c1abca586676ee8d99177"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>opcode</b></td></tr>
-<tr class="separator:a5bf83f8ef79c1abca586676ee8d99177"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ed0eb59d9b9ac1fea011dce28fedc98"><td class="memItemLeft" align="right" valign="top"><a id="a8ed0eb59d9b9ac1fea011dce28fedc98" name="a8ed0eb59d9b9ac1fea011dce28fedc98"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>execution_time_msec</b></td></tr>
-<tr class="separator:a8ed0eb59d9b9ac1fea011dce28fedc98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a437f85f49d7a943a0e9f06353a2b6875"><td class="memItemLeft" align="right" valign="top"><a id="a437f85f49d7a943a0e9f06353a2b6875" name="a437f85f49d7a943a0e9f06353a2b6875"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>id</b> [25]</td></tr>
+<tr class="memdesc:a437f85f49d7a943a0e9f06353a2b6875"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID identifying this element. <br /></td></tr>
+<tr class="separator:a437f85f49d7a943a0e9f06353a2b6875"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaac07ecbeef8734077fec8ea17a7e015"><td class="memItemLeft" align="right" valign="top"><a id="aaac07ecbeef8734077fec8ea17a7e015" name="aaac07ecbeef8734077fec8ea17a7e015"></a>
+<a class="el" href="a01443.html#ga5973a9cc26357822a232433f57741777">atcacert_device_loc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>device_loc</b></td></tr>
+<tr class="memdesc:aaac07ecbeef8734077fec8ea17a7e015"><td class="mdescLeft">&#160;</td><td class="mdescRight">Location in the device for the element. <br /></td></tr>
+<tr class="separator:aaac07ecbeef8734077fec8ea17a7e015"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a6584538d9ba2e8304e2c103d4501a5"><td class="memItemLeft" align="right" valign="top"><a id="a6a6584538d9ba2e8304e2c103d4501a5" name="a6a6584538d9ba2e8304e2c103d4501a5"></a>
+<a class="el" href="a01443.html#gad473c89ee9a934029ff87e86fc1c570d">atcacert_cert_loc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>cert_loc</b></td></tr>
+<tr class="memdesc:a6a6584538d9ba2e8304e2c103d4501a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Location in the certificate template for the element. <br /></td></tr>
+<tr class="separator:a6a6584538d9ba2e8304e2c103d4501a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e4d5bbf62b7cbe49b6d222d6e124833"><td class="memItemLeft" align="right" valign="top"><a id="a1e4d5bbf62b7cbe49b6d222d6e124833" name="a1e4d5bbf62b7cbe49b6d222d6e124833"></a>
+<a class="el" href="a01443.html#ga249c2793a533c5487b5b7b935683a78f">atcacert_transform_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>transforms</b> [2]</td></tr>
+<tr class="memdesc:a1e4d5bbf62b7cbe49b6d222d6e124833"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of transforms from device to cert for this element. <br /></td></tr>
+<tr class="separator:a1e4d5bbf62b7cbe49b6d222d6e124833"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure to hold the device execution time and the opcode for the corresponding command. </p>
+<div class="textblock"><p>Defines a generic dynamic element for a certificate including the device and template locations. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01600.html">device_execution_time_t</a></li>
+    <li class="navelem"><a class="el" href="a01600.html">atcacert_cert_element_s</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

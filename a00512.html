@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: cryptoauthlib.h File Reference</title>
+<title>CryptoAuthLib: sha2_routines.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,206 +98,55 @@ $(document).ready(function(){initNavTree('a00512.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
-  <div class="headertitle"><div class="title">cryptoauthlib.h File Reference</div></div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">sha2_routines.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Single aggregation point for all CryptoAuthLib header files.  
+<p>Software implementation of the SHA256 algorithm.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;string.h&gt;</code><br />
-<code>#include &lt;stdarg.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00236.html">atca_config_check.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00230.html">atca_compiler.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00275.html">atca_version.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00266.html">atca_platform.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00269.html">atca_status.h</a>&quot;</code><br />
-<code>#include &quot;atca_debug.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00329.html">cal_buffer.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00263.html">atca_iface.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00248.html">atca_device.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00257.html">atca_helpers.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00521.html">hal/atca_hal.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00227.html">atca_cfgs.h</a>&quot;</code><br />
-<code>#include &quot;calib/calib_basic.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00356.html">calib/calib_command.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00341.html">calib/calib_aes_gcm.h</a>&quot;</code><br />
-<code>#include &quot;talib/talib_status.h&quot;</code><br />
-<code>#include &quot;talib/talib_basic.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00221.html">atca_basic.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01644.html">sw_sha256_ctx</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a85e0a506bd6fdae6ce32d5df3a48ac1c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00512.html#a85e0a506bd6fdae6ce32d5df3a48ac1c">ATCA_SHA256_BLOCK_SIZE</a>&#160;&#160;&#160;(64u)</td></tr>
-<tr class="separator:a85e0a506bd6fdae6ce32d5df3a48ac1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b683697977ad3af9a2c7d8fd6bfe8c8"><td class="memItemLeft" align="right" valign="top"><a id="a4b683697977ad3af9a2c7d8fd6bfe8c8" name="a4b683697977ad3af9a2c7d8fd6bfe8c8"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SHA256_DIGEST_SIZE</b>&#160;&#160;&#160;(32u)</td></tr>
-<tr class="separator:a4b683697977ad3af9a2c7d8fd6bfe8c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86b8549bdcfb0e67e6b2c23529e375d5"><td class="memItemLeft" align="right" valign="top"><a id="a86b8549bdcfb0e67e6b2c23529e375d5" name="a86b8549bdcfb0e67e6b2c23529e375d5"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SHA384_BLOCK_SIZE</b>&#160;&#160;&#160;(128u)</td></tr>
-<tr class="separator:a86b8549bdcfb0e67e6b2c23529e375d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c6d23fbc4023a23c074c6054cd1cc73"><td class="memItemLeft" align="right" valign="top"><a id="a0c6d23fbc4023a23c074c6054cd1cc73" name="a0c6d23fbc4023a23c074c6054cd1cc73"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SHA384_DIGEST_SIZE</b>&#160;&#160;&#160;(48u)</td></tr>
-<tr class="separator:a0c6d23fbc4023a23c074c6054cd1cc73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc7d81acbf3f4c0507ccf6fac00d4051"><td class="memItemLeft" align="right" valign="top"><a id="abc7d81acbf3f4c0507ccf6fac00d4051" name="abc7d81acbf3f4c0507ccf6fac00d4051"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SHA512_BLOCK_SIZE</b>&#160;&#160;&#160;(128u)</td></tr>
-<tr class="separator:abc7d81acbf3f4c0507ccf6fac00d4051"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67e5fa9eb6bff62b92b780c400b495c9"><td class="memItemLeft" align="right" valign="top"><a id="a67e5fa9eb6bff62b92b780c400b495c9" name="a67e5fa9eb6bff62b92b780c400b495c9"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SHA512_DIGEST_SIZE</b>&#160;&#160;&#160;(64u)</td></tr>
-<tr class="separator:a67e5fa9eb6bff62b92b780c400b495c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71e52612e6d56f7412a113fcc4fb57d4"><td class="memItemLeft" align="right" valign="top"><a id="a71e52612e6d56f7412a113fcc4fb57d4" name="a71e52612e6d56f7412a113fcc4fb57d4"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_AES128_BLOCK_SIZE</b>&#160;&#160;&#160;(16u)</td></tr>
-<tr class="separator:a71e52612e6d56f7412a113fcc4fb57d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad018c90564df3a461b8edcef27000f91"><td class="memItemLeft" align="right" valign="top"><a id="ad018c90564df3a461b8edcef27000f91" name="ad018c90564df3a461b8edcef27000f91"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_AES128_KEY_SIZE</b>&#160;&#160;&#160;(16)</td></tr>
-<tr class="separator:ad018c90564df3a461b8edcef27000f91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2a933bd3aad5ff8face1fc060b3a7a6"><td class="memItemLeft" align="right" valign="top"><a id="ae2a933bd3aad5ff8face1fc060b3a7a6" name="ae2a933bd3aad5ff8face1fc060b3a7a6"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_AES256_BLOCK_SIZE</b>&#160;&#160;&#160;(16u)</td></tr>
-<tr class="separator:ae2a933bd3aad5ff8face1fc060b3a7a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63242c4d94c61e6666def42b93f87dd8"><td class="memItemLeft" align="right" valign="top"><a id="a63242c4d94c61e6666def42b93f87dd8" name="a63242c4d94c61e6666def42b93f87dd8"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_AES256_KEY_SIZE</b>&#160;&#160;&#160;(32u)</td></tr>
-<tr class="separator:a63242c4d94c61e6666def42b93f87dd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a653e182874070e52d504892ad69d08a2"><td class="memItemLeft" align="right" valign="top"><a id="a653e182874070e52d504892ad69d08a2" name="a653e182874070e52d504892ad69d08a2"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_ECCP256_KEY_SIZE</b>&#160;&#160;&#160;(32)</td></tr>
-<tr class="separator:a653e182874070e52d504892ad69d08a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace31254e4882c34fd124218474a1b794"><td class="memItemLeft" align="right" valign="top"><a id="ace31254e4882c34fd124218474a1b794" name="ace31254e4882c34fd124218474a1b794"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_ECCP256_PUBKEY_SIZE</b>&#160;&#160;&#160;(64u)</td></tr>
-<tr class="separator:ace31254e4882c34fd124218474a1b794"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d420e6a05f2de7d8b55883de34328d6"><td class="memItemLeft" align="right" valign="top"><a id="a0d420e6a05f2de7d8b55883de34328d6" name="a0d420e6a05f2de7d8b55883de34328d6"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_ECCP256_SIG_SIZE</b>&#160;&#160;&#160;(64u)</td></tr>
-<tr class="separator:a0d420e6a05f2de7d8b55883de34328d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae0b95c580b10f2f45138c7125c986be"><td class="memItemLeft" align="right" valign="top"><a id="aae0b95c580b10f2f45138c7125c986be" name="aae0b95c580b10f2f45138c7125c986be"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_ECC_UNCOMPRESSED_TYPE</b>&#160;&#160;&#160;((uint8_t)0x04)</td></tr>
-<tr class="separator:aae0b95c580b10f2f45138c7125c986be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add3796a1d4de55604283aef5a70f7945"><td class="memItemLeft" align="right" valign="top"><a id="add3796a1d4de55604283aef5a70f7945" name="add3796a1d4de55604283aef5a70f7945"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_ZONE_CONFIG</b>&#160;&#160;&#160;((uint8_t)0x00)</td></tr>
-<tr class="separator:add3796a1d4de55604283aef5a70f7945"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a547efc6fa3cb0501b2e53f80023dff7e"><td class="memItemLeft" align="right" valign="top"><a id="a547efc6fa3cb0501b2e53f80023dff7e" name="a547efc6fa3cb0501b2e53f80023dff7e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_ZONE_OTP</b>&#160;&#160;&#160;((uint8_t)0x01)</td></tr>
-<tr class="separator:a547efc6fa3cb0501b2e53f80023dff7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c65b241280290fae9fd4faa9d7a292b"><td class="memItemLeft" align="right" valign="top"><a id="a4c65b241280290fae9fd4faa9d7a292b" name="a4c65b241280290fae9fd4faa9d7a292b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_ZONE_DATA</b>&#160;&#160;&#160;((uint8_t)0x02)</td></tr>
-<tr class="separator:a4c65b241280290fae9fd4faa9d7a292b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2a0ec9d10aedc9c068bc4f657e1ba97"><td class="memItemLeft" align="right" valign="top"><a id="ae2a0ec9d10aedc9c068bc4f657e1ba97" name="ae2a0ec9d10aedc9c068bc4f657e1ba97"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DEVICE_PRODUCT_ID_LOCATION</b>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:ae2a0ec9d10aedc9c068bc4f657e1ba97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e5c922f7fa14de0f7319e6b646dcb73"><td class="memItemLeft" align="right" valign="top"><a id="a8e5c922f7fa14de0f7319e6b646dcb73" name="a8e5c922f7fa14de0f7319e6b646dcb73"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DEVICE_IDENTIFIER_LOCATION</b>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:a8e5c922f7fa14de0f7319e6b646dcb73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec22031622a9466725b390fbc21e5a3f"><td class="memItemLeft" align="right" valign="top"><a id="aec22031622a9466725b390fbc21e5a3f" name="aec22031622a9466725b390fbc21e5a3f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DEVICE_PART_LOCATION</b>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:aec22031622a9466725b390fbc21e5a3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f303357c3e50ab21b204472f6850429"><td class="memItemLeft" align="right" valign="top"><a id="a2f303357c3e50ab21b204472f6850429" name="a2f303357c3e50ab21b204472f6850429"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DEVICE_REVISION_LOCATION</b>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:a2f303357c3e50ab21b204472f6850429"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afea44ad81efb0bf96c342f7a62a62d82"><td class="memItemLeft" align="right" valign="top"><a id="afea44ad81efb0bf96c342f7a62a62d82" name="afea44ad81efb0bf96c342f7a62a62d82"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_ZONE_CA2_DATA</b>&#160;&#160;&#160;((uint8_t)0x00)</td></tr>
-<tr class="separator:afea44ad81efb0bf96c342f7a62a62d82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ed37c5bcb098eaa49e049ac83f9b7c0"><td class="memItemLeft" align="right" valign="top"><a id="a7ed37c5bcb098eaa49e049ac83f9b7c0" name="a7ed37c5bcb098eaa49e049ac83f9b7c0"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_ZONE_CA2_CONFIG</b>&#160;&#160;&#160;((uint8_t)0x01)</td></tr>
-<tr class="separator:a7ed37c5bcb098eaa49e049ac83f9b7c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af92a753ebbf0bea98d3350d7b029364f"><td class="memItemLeft" align="right" valign="top"><a id="af92a753ebbf0bea98d3350d7b029364f" name="af92a753ebbf0bea98d3350d7b029364f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_ECC204_DEVICE_ID</b>&#160;&#160;&#160;((uint8_t)0x5A)</td></tr>
-<tr class="separator:af92a753ebbf0bea98d3350d7b029364f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09424267198b419a1685ee5df920c7ca"><td class="memItemLeft" align="right" valign="top"><a id="a09424267198b419a1685ee5df920c7ca" name="a09424267198b419a1685ee5df920c7ca"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_TA010_DEVICE_ID</b>&#160;&#160;&#160;((uint8_t)0x6A)</td></tr>
-<tr class="separator:a09424267198b419a1685ee5df920c7ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef4d09f0508c087502cb6d72ed059fbe"><td class="memItemLeft" align="right" valign="top"><a id="aef4d09f0508c087502cb6d72ed059fbe" name="aef4d09f0508c087502cb6d72ed059fbe"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SHA104_DEVICE_ID</b>&#160;&#160;&#160;((uint8_t)0x35)</td></tr>
-<tr class="separator:aef4d09f0508c087502cb6d72ed059fbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2bff86c0264fb48938407439036ed6f8"><td class="memItemLeft" align="right" valign="top"><a id="a2bff86c0264fb48938407439036ed6f8" name="a2bff86c0264fb48938407439036ed6f8"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SHA105_DEVICE_ID</b>&#160;&#160;&#160;((uint8_t)0x3B)</td></tr>
-<tr class="separator:a2bff86c0264fb48938407439036ed6f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a850ec56b408fccccaea5826d452c3a64"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00512.html#a850ec56b408fccccaea5826d452c3a64">SHA_MODE_TARGET_TEMPKEY</a>&#160;&#160;&#160;((uint8_t)0x00)</td></tr>
-<tr class="separator:a850ec56b408fccccaea5826d452c3a64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae559b402c678cc51f8252b927b8781e5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00512.html#ae559b402c678cc51f8252b927b8781e5">SHA_MODE_TARGET_MSGDIGBUF</a>&#160;&#160;&#160;((uint8_t)0x40)</td></tr>
-<tr class="separator:ae559b402c678cc51f8252b927b8781e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0df4b9151bb3d807bc1c532036c6d88"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00512.html#ae0df4b9151bb3d807bc1c532036c6d88">SHA_MODE_TARGET_OUT_ONLY</a>&#160;&#160;&#160;((uint8_t)0xC0)</td></tr>
-<tr class="separator:ae0df4b9151bb3d807bc1c532036c6d88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a1c717bd7199cd60fe3f088b236d86f"><td class="memItemLeft" align="right" valign="top"><a id="a8a1c717bd7199cd60fe3f088b236d86f" name="a8a1c717bd7199cd60fe3f088b236d86f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_STRINGIFY</b>(x)&#160;&#160;&#160;#x</td></tr>
-<tr class="separator:a8a1c717bd7199cd60fe3f088b236d86f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac067271c1e02986c59cd444644c117ba"><td class="memItemLeft" align="right" valign="top"><a id="ac067271c1e02986c59cd444644c117ba" name="ac067271c1e02986c59cd444644c117ba"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_TOSTRING</b>(x)&#160;&#160;&#160;ATCA_STRINGIFY(x)</td></tr>
-<tr class="separator:ac067271c1e02986c59cd444644c117ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0831fc28e099b0f18c3a3c23a7d41df1"><td class="memItemLeft" align="right" valign="top"><a id="a0831fc28e099b0f18c3a3c23a7d41df1" name="a0831fc28e099b0f18c3a3c23a7d41df1"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_TRACE</b>(s,  m)&#160;&#160;&#160;atca_trace(s)</td></tr>
-<tr class="separator:a0831fc28e099b0f18c3a3c23a7d41df1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81efbc0fc101b06a914f7ff9e2fbc0e9"><td class="memItemLeft" align="right" valign="top"><a id="a81efbc0fc101b06a914f7ff9e2fbc0e9" name="a81efbc0fc101b06a914f7ff9e2fbc0e9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA256_DIGEST_SIZE</b>&#160;&#160;&#160;(32)</td></tr>
+<tr class="separator:a81efbc0fc101b06a914f7ff9e2fbc0e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c1fe69ad43d4ca74b84303a0ed64f2f"><td class="memItemLeft" align="right" valign="top"><a id="a9c1fe69ad43d4ca74b84303a0ed64f2f" name="a9c1fe69ad43d4ca74b84303a0ed64f2f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA256_BLOCK_SIZE</b>&#160;&#160;&#160;(64)</td></tr>
+<tr class="separator:a9c1fe69ad43d4ca74b84303a0ed64f2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:acfb7028e6f10d29c548cbecdbfa53ac8"><td class="memItemLeft" align="right" valign="top"><a id="acfb7028e6f10d29c548cbecdbfa53ac8" name="acfb7028e6f10d29c548cbecdbfa53ac8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>sw_sha256_init</b> (<a class="el" href="a01644.html">sw_sha256_ctx</a> *ctx)</td></tr>
+<tr class="separator:acfb7028e6f10d29c548cbecdbfa53ac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f5d8ad85631d77bfdb10dfb728bfbce"><td class="memItemLeft" align="right" valign="top"><a id="a7f5d8ad85631d77bfdb10dfb728bfbce" name="a7f5d8ad85631d77bfdb10dfb728bfbce"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>sw_sha256_update</b> (<a class="el" href="a01644.html">sw_sha256_ctx</a> *ctx, const uint8_t *message, uint32_t len)</td></tr>
+<tr class="separator:a7f5d8ad85631d77bfdb10dfb728bfbce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a594b8b10c408cb1103da9c09b1367a51"><td class="memItemLeft" align="right" valign="top"><a id="a594b8b10c408cb1103da9c09b1367a51" name="a594b8b10c408cb1103da9c09b1367a51"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>sw_sha256_final</b> (<a class="el" href="a01644.html">sw_sha256_ctx</a> *ctx, uint8_t digest[(32)])</td></tr>
+<tr class="separator:a594b8b10c408cb1103da9c09b1367a51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90a76445beb1a0eadea22bb7e3c8ad60"><td class="memItemLeft" align="right" valign="top"><a id="a90a76445beb1a0eadea22bb7e3c8ad60" name="a90a76445beb1a0eadea22bb7e3c8ad60"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>sw_sha256</b> (const uint8_t *message, unsigned int len, uint8_t digest[(32)])</td></tr>
+<tr class="separator:a90a76445beb1a0eadea22bb7e3c8ad60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Single aggregation point for all CryptoAuthLib header files. </p>
+<div class="textblock"><p>Software implementation of the SHA256 algorithm. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a85e0a506bd6fdae6ce32d5df3a48ac1c" name="a85e0a506bd6fdae6ce32d5df3a48ac1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85e0a506bd6fdae6ce32d5df3a48ac1c">&#9670;&#160;</a></span>ATCA_SHA256_BLOCK_SIZE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_SHA256_BLOCK_SIZE&#160;&#160;&#160;(64u)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Library Configuration File - All build attributes should be included in atca_config.h </p>
-
-</div>
-</div>
-<a id="ae559b402c678cc51f8252b927b8781e5" name="ae559b402c678cc51f8252b927b8781e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae559b402c678cc51f8252b927b8781e5">&#9670;&#160;</a></span>SHA_MODE_TARGET_MSGDIGBUF</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SHA_MODE_TARGET_MSGDIGBUF&#160;&#160;&#160;((uint8_t)0x40)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Place resulting digest both in Output buffer and Message Digest Buffer </p>
-
-</div>
-</div>
-<a id="ae0df4b9151bb3d807bc1c532036c6d88" name="ae0df4b9151bb3d807bc1c532036c6d88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae0df4b9151bb3d807bc1c532036c6d88">&#9670;&#160;</a></span>SHA_MODE_TARGET_OUT_ONLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SHA_MODE_TARGET_OUT_ONLY&#160;&#160;&#160;((uint8_t)0xC0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Place resulting digest both in Output buffer ONLY </p>
-
-</div>
-</div>
-<a id="a850ec56b408fccccaea5826d452c3a64" name="a850ec56b408fccccaea5826d452c3a64"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a850ec56b408fccccaea5826d452c3a64">&#9670;&#160;</a></span>SHA_MODE_TARGET_TEMPKEY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SHA_MODE_TARGET_TEMPKEY&#160;&#160;&#160;((uint8_t)0x00)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Place resulting digest both in Output buffer and TempKey </p>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00512.html">cryptoauthlib.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="dir_39966be8f8e069f6fa92c98611834f6b.html">hashes</a></li><li class="navelem"><a class="el" href="a00512.html">sha2_routines.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

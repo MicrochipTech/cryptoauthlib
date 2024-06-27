@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -105,8 +105,8 @@ $(document).ready(function(){initNavTree('a00131.html',''); initResizable(); });
 
 <p>Provides api interfaces for accessing WPC certificates from device.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00512.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00299.html">atcacert/atcacert_def.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00515.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00302.html">atcacert/atcacert_def.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -117,22 +117,22 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>wpccert_get_slots_
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>wpccert_get_slot_count</b> (void)</td></tr>
 <tr class="separator:a4a2814127e728fb2889812aca4340715"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0401005ccb1eed8c4a68c2718b856e05"><td class="memItemLeft" align="right" valign="top"><a id="a0401005ccb1eed8c4a68c2718b856e05" name="a0401005ccb1eed8c4a68c2718b856e05"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>wpccert_get_slot_info</b> (uint16_t *dig_handle, const <a class="el" href="a01407.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> **def, uint8_t slot)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>wpccert_get_slot_info</b> (uint16_t *dig_handle, const <a class="el" href="a01443.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> **def, uint8_t slot)</td></tr>
 <tr class="separator:a0401005ccb1eed8c4a68c2718b856e05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76a6ac477f6341e80284c76c38b532ff"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00131.html#a76a6ac477f6341e80284c76c38b532ff">wpccert_read_cert</a> (<a class="el" href="a01472.html">ATCADevice</a> device, const <a class="el" href="a01407.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, uint8_t *cert, size_t *cert_size)</td></tr>
+<tr class="memitem:a76a6ac477f6341e80284c76c38b532ff"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00131.html#a76a6ac477f6341e80284c76c38b532ff">wpccert_read_cert</a> (<a class="el" href="a01508.html">ATCADevice</a> device, const <a class="el" href="a01443.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, uint8_t *cert, size_t *cert_size)</td></tr>
 <tr class="memdesc:a76a6ac477f6341e80284c76c38b532ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">WPC API -.  <br /></td></tr>
 <tr class="separator:a76a6ac477f6341e80284c76c38b532ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac67c41378021bba5a7511e7311b93a7b"><td class="memItemLeft" align="right" valign="top"><a id="ac67c41378021bba5a7511e7311b93a7b" name="ac67c41378021bba5a7511e7311b93a7b"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>wpccert_write_cert</b> (<a class="el" href="a01472.html">ATCADevice</a> device, const <a class="el" href="a01407.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>wpccert_write_cert</b> (<a class="el" href="a01508.html">ATCADevice</a> device, const <a class="el" href="a01443.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size)</td></tr>
 <tr class="separator:ac67c41378021bba5a7511e7311b93a7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad78028a43642e3edc42eae9941fa6315"><td class="memItemLeft" align="right" valign="top"><a id="ad78028a43642e3edc42eae9941fa6315" name="ad78028a43642e3edc42eae9941fa6315"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>wpccert_read_pdu_cert</b> (<a class="el" href="a01472.html">ATCADevice</a> device, uint8_t *cert, size_t *cert_size, uint8_t slot)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>wpccert_read_pdu_cert</b> (<a class="el" href="a01508.html">ATCADevice</a> device, uint8_t *cert, size_t *cert_size, uint8_t slot)</td></tr>
 <tr class="separator:ad78028a43642e3edc42eae9941fa6315"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d37502a45846eb04ff3a0824242a99d"><td class="memItemLeft" align="right" valign="top"><a id="a9d37502a45846eb04ff3a0824242a99d" name="a9d37502a45846eb04ff3a0824242a99d"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>wpccert_read_mfg_cert</b> (<a class="el" href="a01472.html">ATCADevice</a> device, uint8_t *cert, size_t *cert_size, uint8_t slot)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>wpccert_read_mfg_cert</b> (<a class="el" href="a01508.html">ATCADevice</a> device, uint8_t *cert, size_t *cert_size, uint8_t slot)</td></tr>
 <tr class="separator:a9d37502a45846eb04ff3a0824242a99d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5d7bc0bc2c394678c59780585534e8d"><td class="memItemLeft" align="right" valign="top"><a id="ad5d7bc0bc2c394678c59780585534e8d" name="ad5d7bc0bc2c394678c59780585534e8d"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>wpccert_public_key</b> (const <a class="el" href="a01407.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, uint8_t *public_key, uint8_t *cert)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>wpccert_public_key</b> (const <a class="el" href="a01443.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, uint8_t *public_key, uint8_t *cert)</td></tr>
 <tr class="separator:ad5d7bc0bc2c394678c59780585534e8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -148,13 +148,13 @@ ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>wpccert_public
         <tr>
           <td class="memname">ATCA_STATUS wpccert_read_cert </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a01472.html">ATCADevice</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a01508.html">ATCADevice</a>&#160;</td>
           <td class="paramname"><em>device</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a01407.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a01443.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *&#160;</td>
           <td class="paramname"><em>cert_def</em>, </td>
         </tr>
         <tr>

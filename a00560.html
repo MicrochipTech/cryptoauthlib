@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_linux.c File Reference</title>
+<title>CryptoAuthLib: hal_kit_bridge.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,58 +98,54 @@ $(document).ready(function(){initNavTree('a00560.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">hal_linux.c File Reference</div></div>
+  <div class="headertitle"><div class="title">hal_kit_bridge.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Timer Utility Functions for Linux.  
+<p>Kit Bridging HAL for cryptoauthlib. This is not intended to be a zero copy driver. It should work with any interface that confirms to a few basic requirements: a) will accept an arbitrary number of bytes and packetize it if necessary for transmission, b) will block for the duration of the transmit.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;string.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &lt;unistd.h&gt;</code><br />
-<code>#include &lt;sys/types.h&gt;</code><br />
-<code>#include &lt;sys/stat.h&gt;</code><br />
-<code>#include &lt;fcntl.h&gt;</code><br />
-<code>#include &lt;errno.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00521.html">atca_hal.h</a>&quot;</code><br />
-</div><table class="memberdecls">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:aa96163f305712a56649b07eabd26f54c"><td class="memItemLeft" align="right" valign="top"><a id="aa96163f305712a56649b07eabd26f54c" name="aa96163f305712a56649b07eabd26f54c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BRIDGE_PROTOCOL_VERSION</b>&#160;&#160;&#160;(2)</td></tr>
+<tr class="separator:aa96163f305712a56649b07eabd26f54c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75036e62d451235c7cc2adb90ca52a8f"><td class="memItemLeft" align="right" valign="top"><a id="a75036e62d451235c7cc2adb90ca52a8f" name="a75036e62d451235c7cc2adb90ca52a8f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_KIT_COMMAND_SEND</b>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:a75036e62d451235c7cc2adb90ca52a8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abac189c960c7cca89e3485bf02049c0f"><td class="memItemLeft" align="right" valign="top"><a id="abac189c960c7cca89e3485bf02049c0f" name="abac189c960c7cca89e3485bf02049c0f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_KIT_COMMAND_RECV</b>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:abac189c960c7cca89e3485bf02049c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac885b1da63767551154f2fff4b27a037"><td class="memItemLeft" align="right" valign="top"><a id="ac885b1da63767551154f2fff4b27a037" name="ac885b1da63767551154f2fff4b27a037"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_KIT_COMMAND_WAKE</b>&#160;&#160;&#160;0x03</td></tr>
+<tr class="separator:ac885b1da63767551154f2fff4b27a037"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa84bdf1185a8f8c533db37fe133032eb"><td class="memItemLeft" align="right" valign="top"><a id="aa84bdf1185a8f8c533db37fe133032eb" name="aa84bdf1185a8f8c533db37fe133032eb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_KIT_COMMAND_IDLE</b>&#160;&#160;&#160;0x04</td></tr>
+<tr class="separator:aa84bdf1185a8f8c533db37fe133032eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2afbe27f481ffa1bb18156882b7e642"><td class="memItemLeft" align="right" valign="top"><a id="ab2afbe27f481ffa1bb18156882b7e642" name="ab2afbe27f481ffa1bb18156882b7e642"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_KIT_COMMAND_SLEEP</b>&#160;&#160;&#160;0x05</td></tr>
+<tr class="separator:ab2afbe27f481ffa1bb18156882b7e642"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab89624779173549815c9fe24de017c44"><td class="memItemLeft" align="right" valign="top"><a id="ab89624779173549815c9fe24de017c44" name="ab89624779173549815c9fe24de017c44"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_KIT_HEADER_LEN</b>&#160;&#160;&#160;(3)</td></tr>
+<tr class="separator:ab89624779173549815c9fe24de017c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga7e9019810ba5ab81b256282392cd5079"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01410.html#ga7e9019810ba5ab81b256282392cd5079">hal_delay_us</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:ga7e9019810ba5ab81b256282392cd5079"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of microseconds.  <br /></td></tr>
-<tr class="separator:ga7e9019810ba5ab81b256282392cd5079"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01410.html#gadc23b8130e72a445f76c68d62e8c95c5">hal_delay_ms</a> (uint32_t delay)</td></tr>
-<tr class="memdesc:gadc23b8130e72a445f76c68d62e8c95c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API implemented at the HAL level.  <br /></td></tr>
-<tr class="separator:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaad9da28968a527ce51a2b081461d4cfe"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01410.html#gaad9da28968a527ce51a2b081461d4cfe">hal_create_mutex</a> (void **ppMutex, const char *pName)</td></tr>
-<tr class="memdesc:gaad9da28968a527ce51a2b081461d4cfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional hal interfaces.  <br /></td></tr>
-<tr class="separator:gaad9da28968a527ce51a2b081461d4cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_destroy_mutex</b> (void *pMutex)</td></tr>
-<tr class="separator:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_lock_mutex</b> (void *pMutex)</td></tr>
-<tr class="separator:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31fd8170a49623686543f6247b883bd1"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_unlock_mutex</b> (void *pMutex)</td></tr>
-<tr class="separator:ga31fd8170a49623686543f6247b883bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae31246ac870409a3d694c240c6c3498a"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_check_pid</b> (hal_pid_t pid)</td></tr>
-<tr class="memdesc:gae31246ac870409a3d694c240c6c3498a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the pid exists in the system. <br /></td></tr>
-<tr class="separator:gae31246ac870409a3d694c240c6c3498a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f5bce4e9ee06a3b564052b2bd202c29"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga3f5bce4e9ee06a3b564052b2bd202c29">hal_kit_attach_phy</a> (<a class="el" href="a01516.html">ATCAIfaceCfg</a> *cfg, <a class="el" href="a01652.html">atca_hal_kit_phy_t</a> *phy)</td></tr>
+<tr class="memdesc:ga3f5bce4e9ee06a3b564052b2bd202c29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function that connects a physical layer context structure that will be used by the kit protocol bridge.  <br /></td></tr>
+<tr class="separator:ga3f5bce4e9ee06a3b564052b2bd202c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Timer Utility Functions for Linux. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+<div class="textblock"><p>Kit Bridging HAL for cryptoauthlib. This is not intended to be a zero copy driver. It should work with any interface that confirms to a few basic requirements: a) will accept an arbitrary number of bytes and packetize it if necessary for transmission, b) will block for the duration of the transmit. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00560.html">hal_linux.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00560.html">hal_kit_bridge.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

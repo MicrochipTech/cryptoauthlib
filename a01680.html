@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_secureboot_mac_in_out Struct Reference</title>
+<title>CryptoAuthLib: i2c_sam0_instance Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,47 +99,25 @@ $(document).ready(function(){initNavTree('a01680.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atca_secureboot_mac_in_out Struct Reference<div class="ingroups"><a class="el" href="a01411.html">Host side crypto methods (atcah_)</a></div></div></div>
+  <div class="headertitle"><div class="title">i2c_sam0_instance Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a2c6c43889156357aee27b3b09657ebd2"><td class="memItemLeft" align="right" valign="top"><a id="a2c6c43889156357aee27b3b09657ebd2" name="a2c6c43889156357aee27b3b09657ebd2"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
-<tr class="memdesc:a2c6c43889156357aee27b3b09657ebd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">SecureBoot mode (param1) <br /></td></tr>
-<tr class="separator:a2c6c43889156357aee27b3b09657ebd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac94f545daf7381aeb770fb42b467d338"><td class="memItemLeft" align="right" valign="top"><a id="ac94f545daf7381aeb770fb42b467d338" name="ac94f545daf7381aeb770fb42b467d338"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>param2</b></td></tr>
-<tr class="memdesc:ac94f545daf7381aeb770fb42b467d338"><td class="mdescLeft">&#160;</td><td class="mdescRight">SecureBoot param2. <br /></td></tr>
-<tr class="separator:ac94f545daf7381aeb770fb42b467d338"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28771c8ed4754eabcb50649d753ee956"><td class="memItemLeft" align="right" valign="top"><a id="a28771c8ed4754eabcb50649d753ee956" name="a28771c8ed4754eabcb50649d753ee956"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>secure_boot_config</b></td></tr>
-<tr class="memdesc:a28771c8ed4754eabcb50649d753ee956"><td class="mdescLeft">&#160;</td><td class="mdescRight">SecureBootConfig value from configuration zone. <br /></td></tr>
-<tr class="separator:a28771c8ed4754eabcb50649d753ee956"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ebeb5a66a80189ae8e7bb2ea97701c9"><td class="memItemLeft" align="right" valign="top"><a id="a9ebeb5a66a80189ae8e7bb2ea97701c9" name="a9ebeb5a66a80189ae8e7bb2ea97701c9"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>hashed_key</b></td></tr>
-<tr class="memdesc:a9ebeb5a66a80189ae8e7bb2ea97701c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashed key. SHA256(IO Protection Key | TempKey) <br /></td></tr>
-<tr class="separator:a9ebeb5a66a80189ae8e7bb2ea97701c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3a988f3c029fff3805a8a9dd4caaaa5"><td class="memItemLeft" align="right" valign="top"><a id="ad3a988f3c029fff3805a8a9dd4caaaa5" name="ad3a988f3c029fff3805a8a9dd4caaaa5"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>digest</b></td></tr>
-<tr class="memdesc:ad3a988f3c029fff3805a8a9dd4caaaa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Digest (unencrypted) <br /></td></tr>
-<tr class="separator:ad3a988f3c029fff3805a8a9dd4caaaa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acafb471d7cc7a71d613503760930d9f5"><td class="memItemLeft" align="right" valign="top"><a id="acafb471d7cc7a71d613503760930d9f5" name="acafb471d7cc7a71d613503760930d9f5"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>signature</b></td></tr>
-<tr class="memdesc:acafb471d7cc7a71d613503760930d9f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signature (can be NULL if not required) <br /></td></tr>
-<tr class="separator:acafb471d7cc7a71d613503760930d9f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb4c9a28028bd625ac3650b39392cf07"><td class="memItemLeft" align="right" valign="top"><a id="aeb4c9a28028bd625ac3650b39392cf07" name="aeb4c9a28028bd625ac3650b39392cf07"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>mac</b></td></tr>
-<tr class="memdesc:aeb4c9a28028bd625ac3650b39392cf07"><td class="mdescLeft">&#160;</td><td class="mdescRight">MAC is returned here. <br /></td></tr>
-<tr class="separator:aeb4c9a28028bd625ac3650b39392cf07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a646069c95110cc51e0302807ef81d175"><td class="memItemLeft" align="right" valign="top"><a id="a646069c95110cc51e0302807ef81d175" name="a646069c95110cc51e0302807ef81d175"></a>
+struct i2c_master_module *&#160;</td><td class="memItemRight" valign="bottom"><b>i2c_instance</b></td></tr>
+<tr class="separator:a646069c95110cc51e0302807ef81d175"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c84e6fec9c44c01156bd6d0451810d1"><td class="memItemLeft" align="right" valign="top"><a id="a5c84e6fec9c44c01156bd6d0451810d1" name="a5c84e6fec9c44c01156bd6d0451810d1"></a>
+sam0_change_baudrate&#160;</td><td class="memItemRight" valign="bottom"><b>change_baudrate</b></td></tr>
+<tr class="separator:a5c84e6fec9c44c01156bd6d0451810d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01680.html">atca_secureboot_mac_in_out</a></li>
+    <li class="navelem"><a class="el" href="a01680.html">i2c_sam0_instance</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

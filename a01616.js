@@ -1,8 +1,6 @@
 var a01616 =
 [
-    [ "hal_data", "a01616.html#afd90dea53ccfe0a8c15b12e5e1afaa35", null ],
-    [ "packet_alloc", "a01616.html#a72b6c6e17726b3e9db70d78e0c52f02c", null ],
-    [ "packet_free", "a01616.html#a09209305fd48261b835daf6026b7b659", null ],
-    [ "recv", "a01616.html#abb9616bec2cdd4f546884a45953cb054", null ],
-    [ "send", "a01616.html#a36eca94789cf465a9cb13e9a1ad92121", null ]
+    [ "block", "a01616.html#a6d3f030387c74b86ec476d0c99a46c34", null ],
+    [ "block_size", "a01616.html#ae7cf177799e4c934821f6540aa5a33e5", null ],
+    [ "total_msg_size", "a01616.html#aab3e376d6c18921a1ee303e2b703c668", null ]
 ];

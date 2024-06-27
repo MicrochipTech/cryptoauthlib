@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_object_s Struct Reference</title>
+<title>CryptoAuthLib: CK_FUNCTION_LIST Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,109 +99,22 @@ $(document).ready(function(){initNavTree('a01816.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">pkcs11_object_s Struct Reference</div></div>
+  <div class="headertitle"><div class="title">CK_FUNCTION_LIST Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a41cd002dd69540506c5894ace65d323f"><td class="memItemLeft" align="right" valign="top">CK_OBJECT_CLASS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01816.html#a41cd002dd69540506c5894ace65d323f">class_id</a></td></tr>
-<tr class="separator:a41cd002dd69540506c5894ace65d323f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1269e61c8cec31c2e85aa6c3bb4873a"><td class="memItemLeft" align="right" valign="top">CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01816.html#af1269e61c8cec31c2e85aa6c3bb4873a">class_type</a></td></tr>
-<tr class="separator:af1269e61c8cec31c2e85aa6c3bb4873a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbc894d3ed866954b79e43b30031f293"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01784.html">pkcs11_attrib_model</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01816.html#afbc894d3ed866954b79e43b30031f293">attributes</a></td></tr>
-<tr class="separator:afbc894d3ed866954b79e43b30031f293"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad28895cf4063a1d3eaa03a343ae7105b"><td class="memItemLeft" align="right" valign="top">CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01816.html#ad28895cf4063a1d3eaa03a343ae7105b">count</a></td></tr>
-<tr class="separator:ad28895cf4063a1d3eaa03a343ae7105b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7803ecb485fb8f89357ae598ade44051"><td class="memItemLeft" align="right" valign="top"><a id="a7803ecb485fb8f89357ae598ade44051" name="a7803ecb485fb8f89357ae598ade44051"></a>
-CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>size</b></td></tr>
-<tr class="separator:a7803ecb485fb8f89357ae598ade44051"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af639d60d89246bad6c78e0c41e13d8c2"><td class="memItemLeft" align="right" valign="top"><a id="af639d60d89246bad6c78e0c41e13d8c2" name="af639d60d89246bad6c78e0c41e13d8c2"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>slot</b></td></tr>
-<tr class="separator:af639d60d89246bad6c78e0c41e13d8c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5aa33e79440b624b354eb04d624eb27"><td class="memItemLeft" align="right" valign="top"><a id="af5aa33e79440b624b354eb04d624eb27" name="af5aa33e79440b624b354eb04d624eb27"></a>
-CK_FLAGS&#160;</td><td class="memItemRight" valign="bottom"><b>flags</b></td></tr>
-<tr class="separator:af5aa33e79440b624b354eb04d624eb27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d3fe17989ccf6ade209cc849fd89057"><td class="memItemLeft" align="right" valign="top"><a id="a5d3fe17989ccf6ade209cc849fd89057" name="a5d3fe17989ccf6ade209cc849fd89057"></a>
-CK_UTF8CHAR&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> [PKCS11_MAX_LABEL_SIZE+1]</td></tr>
-<tr class="separator:a5d3fe17989ccf6ade209cc849fd89057"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73ed95f9a2405092de51e6587df7dfda"><td class="memItemLeft" align="right" valign="top"><a id="a73ed95f9a2405092de51e6587df7dfda" name="a73ed95f9a2405092de51e6587df7dfda"></a>
-CK_VOID_PTR&#160;</td><td class="memItemRight" valign="bottom"><b>config</b></td></tr>
-<tr class="separator:a73ed95f9a2405092de51e6587df7dfda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac66e6abcd376623c5b89ded46aa17667"><td class="memItemLeft" align="right" valign="top"><a id="ac66e6abcd376623c5b89ded46aa17667" name="ac66e6abcd376623c5b89ded46aa17667"></a>
-CK_VOID_PTR&#160;</td><td class="memItemRight" valign="bottom"><b>data</b></td></tr>
-<tr class="separator:ac66e6abcd376623c5b89ded46aa17667"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a281b969dd8ecc81bb17859c7611d4f"><td class="memItemLeft" align="right" valign="top"><a id="a4a281b969dd8ecc81bb17859c7611d4f" name="a4a281b969dd8ecc81bb17859c7611d4f"></a>
-ta_element_attributes_t&#160;</td><td class="memItemRight" valign="bottom"><b>handle_info</b></td></tr>
-<tr class="separator:a4a281b969dd8ecc81bb17859c7611d4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2588758f026a49100546d9868754a6c8"><td class="memItemLeft" align="right" valign="top"><a id="a2588758f026a49100546d9868754a6c8" name="a2588758f026a49100546d9868754a6c8"></a>
+<a class="el" href="a01880.html">CK_VERSION</a>&#160;</td><td class="memItemRight" valign="bottom"><b>version</b></td></tr>
+<tr class="separator:a2588758f026a49100546d9868754a6c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Field Documentation</h2>
-<a id="afbc894d3ed866954b79e43b30031f293" name="afbc894d3ed866954b79e43b30031f293"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbc894d3ed866954b79e43b30031f293">&#9670;&#160;</a></span>attributes</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01784.html">pkcs11_attrib_model</a> const* pkcs11_object_s::attributes</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>List of attribute models this object possesses </p>
-
-</div>
-</div>
-<a id="a41cd002dd69540506c5894ace65d323f" name="a41cd002dd69540506c5894ace65d323f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a41cd002dd69540506c5894ace65d323f">&#9670;&#160;</a></span>class_id</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">CK_OBJECT_CLASS pkcs11_object_s::class_id</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The Class Identifier </p>
-
-</div>
-</div>
-<a id="af1269e61c8cec31c2e85aa6c3bb4873a" name="af1269e61c8cec31c2e85aa6c3bb4873a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1269e61c8cec31c2e85aa6c3bb4873a">&#9670;&#160;</a></span>class_type</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">CK_ULONG pkcs11_object_s::class_type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The Class Type </p>
-
-</div>
-</div>
-<a id="ad28895cf4063a1d3eaa03a343ae7105b" name="ad28895cf4063a1d3eaa03a343ae7105b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad28895cf4063a1d3eaa03a343ae7105b">&#9670;&#160;</a></span>count</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">CK_ULONG pkcs11_object_s::count</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Count of attribute models </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01816.html">pkcs11_object_s</a></li>
+    <li class="navelem"><a class="el" href="a01816.html">CK_FUNCTION_LIST</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

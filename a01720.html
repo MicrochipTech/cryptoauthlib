@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_resp_mac_in_out Struct Reference</title>
+<title>CryptoAuthLib: atca_mac_in_out Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,47 +99,58 @@ $(document).ready(function(){initNavTree('a01720.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atca_resp_mac_in_out Struct Reference<div class="ingroups"><a class="el" href="a01411.html">Host side crypto methods (atcah_)</a></div></div></div>
+  <div class="headertitle"><div class="title">atca_mac_in_out Struct Reference<div class="ingroups"><a class="el" href="a01447.html">Host side crypto methods (atcah_)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Input/Output parameters for calculating the output response mac in SHA105 device. Used with the atcah_gen_output_resp_mac() function.  
+<p>Input/output parameters for function atca_mac().  
  <a href="a01720.html#details">More...</a></p>
 
 <p><code>#include &lt;lib/host/atca_host.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a317ceaa73a9bc95cafbaa0ab86c62fc8"><td class="memItemLeft" align="right" valign="top"><a id="a317ceaa73a9bc95cafbaa0ab86c62fc8" name="a317ceaa73a9bc95cafbaa0ab86c62fc8"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>slot_key</b></td></tr>
-<tr class="separator:a317ceaa73a9bc95cafbaa0ab86c62fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a328f05bd942a0f304473e0126f9525d8"><td class="memItemLeft" align="right" valign="top"><a id="a328f05bd942a0f304473e0126f9525d8" name="a328f05bd942a0f304473e0126f9525d8"></a>
+<tr class="memitem:ga25187965ed87f828c98e4a20c93166e8"><td class="memItemLeft" align="right" valign="top">
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
-<tr class="separator:a328f05bd942a0f304473e0126f9525d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d1eca78f3870cbec9c830d74ad4536d"><td class="memItemLeft" align="right" valign="top"><a id="a3d1eca78f3870cbec9c830d74ad4536d" name="a3d1eca78f3870cbec9c830d74ad4536d"></a>
+<tr class="memdesc:ga25187965ed87f828c98e4a20c93166e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Mode parameter used in MAC command (Param1). <br /></td></tr>
+<tr class="separator:ga25187965ed87f828c98e4a20c93166e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga326ed9df4c9b966616e0b1a73f1b2796"><td class="memItemLeft" align="right" valign="top">
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>key_id</b></td></tr>
-<tr class="separator:a3d1eca78f3870cbec9c830d74ad4536d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36b4438f32b96731229df8336b2b8a67"><td class="memItemLeft" align="right" valign="top"><a id="a36b4438f32b96731229df8336b2b8a67" name="a36b4438f32b96731229df8336b2b8a67"></a>
+<tr class="memdesc:ga326ed9df4c9b966616e0b1a73f1b2796"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] KeyID parameter used in MAC command (Param2). <br /></td></tr>
+<tr class="separator:ga326ed9df4c9b966616e0b1a73f1b2796"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac4c2db1a307043c7677e76310911d944"><td class="memItemLeft" align="right" valign="top">
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>challenge</b></td></tr>
+<tr class="memdesc:gac4c2db1a307043c7677e76310911d944"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 32-byte Challenge data used in MAC command, depending on mode. <br /></td></tr>
+<tr class="separator:gac4c2db1a307043c7677e76310911d944"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84ee714046fea52fb6b334e37b958c89"><td class="memItemLeft" align="right" valign="top">
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>key</b></td></tr>
+<tr class="memdesc:ga84ee714046fea52fb6b334e37b958c89"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 32-byte key used to generate MAC digest. <br /></td></tr>
+<tr class="separator:ga84ee714046fea52fb6b334e37b958c89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac9d561caddec61e481d241a88d73b653"><td class="memItemLeft" align="right" valign="top">
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>otp</b></td></tr>
+<tr class="memdesc:gac9d561caddec61e481d241a88d73b653"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 11-byte OTP, optionally included in MAC digest, depending on mode. <br /></td></tr>
+<tr class="separator:gac9d561caddec61e481d241a88d73b653"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba323f1307689412ea6cc1e54810edb9"><td class="memItemLeft" align="right" valign="top">
 const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>sn</b></td></tr>
-<tr class="separator:a36b4438f32b96731229df8336b2b8a67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8127e6c11da4f9c702668d50bf159ecb"><td class="memItemLeft" align="right" valign="top"><a id="a8127e6c11da4f9c702668d50bf159ecb" name="a8127e6c11da4f9c702668d50bf159ecb"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>client_resp</b></td></tr>
-<tr class="separator:a8127e6c11da4f9c702668d50bf159ecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1cf5bdf36aada7e230260eb6be218f0e"><td class="memItemLeft" align="right" valign="top"><a id="a1cf5bdf36aada7e230260eb6be218f0e" name="a1cf5bdf36aada7e230260eb6be218f0e"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>checkmac_result</b></td></tr>
-<tr class="separator:a1cf5bdf36aada7e230260eb6be218f0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f4ebddaf628e3487cd9d96609f7c754"><td class="memItemLeft" align="right" valign="top"><a id="a3f4ebddaf628e3487cd9d96609f7c754" name="a3f4ebddaf628e3487cd9d96609f7c754"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>mac_output</b></td></tr>
-<tr class="separator:a3f4ebddaf628e3487cd9d96609f7c754"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gaba323f1307689412ea6cc1e54810edb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 9-byte SN, optionally included in MAC digest, depending on mode. <br /></td></tr>
+<tr class="separator:gaba323f1307689412ea6cc1e54810edb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3237adaae1e30c7ed469405e1ebfb435"><td class="memItemLeft" align="right" valign="top">
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>response</b></td></tr>
+<tr class="memdesc:ga3237adaae1e30c7ed469405e1ebfb435"><td class="mdescLeft">&#160;</td><td class="mdescRight">[out] Pointer to 32-byte SHA-256 digest (MAC). <br /></td></tr>
+<tr class="separator:ga3237adaae1e30c7ed469405e1ebfb435"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7bf1d912d79b62cc598395642d77365f"><td class="memItemLeft" align="right" valign="top">
+struct <a class="el" href="a01692.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>temp_key</b></td></tr>
+<tr class="memdesc:ga7bf1d912d79b62cc598395642d77365f"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in,out] Pointer to TempKey structure. <br /></td></tr>
+<tr class="separator:ga7bf1d912d79b62cc598395642d77365f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input/Output parameters for calculating the output response mac in SHA105 device. Used with the atcah_gen_output_resp_mac() function. </p>
+<div class="textblock"><p>Input/output parameters for function atca_mac(). </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01720.html">atca_resp_mac_in_out</a></li>
+    <li class="navelem"><a class="el" href="a01720.html">atca_mac_in_out</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

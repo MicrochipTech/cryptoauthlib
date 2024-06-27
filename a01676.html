@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_secureboot_enc_in_out Struct Reference</title>
+<title>CryptoAuthLib: atca_uart_host_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,39 +99,31 @@ $(document).ready(function(){initNavTree('a01676.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atca_secureboot_enc_in_out Struct Reference<div class="ingroups"><a class="el" href="a01411.html">Host side crypto methods (atcah_)</a></div></div></div>
+  <div class="headertitle"><div class="title">atca_uart_host_s Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aeb02c7cf4fbaf40307821bc38160ab8d"><td class="memItemLeft" align="right" valign="top"><a id="aeb02c7cf4fbaf40307821bc38160ab8d" name="aeb02c7cf4fbaf40307821bc38160ab8d"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>io_key</b></td></tr>
-<tr class="memdesc:aeb02c7cf4fbaf40307821bc38160ab8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO protection key value (32 bytes) <br /></td></tr>
-<tr class="separator:aeb02c7cf4fbaf40307821bc38160ab8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac57e99b5d0069d7bd733bcf056cc56e1"><td class="memItemLeft" align="right" valign="top"><a id="ac57e99b5d0069d7bd733bcf056cc56e1" name="ac57e99b5d0069d7bd733bcf056cc56e1"></a>
-const struct <a class="el" href="a01656.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>temp_key</b></td></tr>
-<tr class="memdesc:ac57e99b5d0069d7bd733bcf056cc56e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current value of TempKey. <br /></td></tr>
-<tr class="separator:ac57e99b5d0069d7bd733bcf056cc56e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1da30fd41605f42e0b0dd68d75c59bd9"><td class="memItemLeft" align="right" valign="top"><a id="a1da30fd41605f42e0b0dd68d75c59bd9" name="a1da30fd41605f42e0b0dd68d75c59bd9"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>digest</b></td></tr>
-<tr class="memdesc:a1da30fd41605f42e0b0dd68d75c59bd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plaintext digest as input. <br /></td></tr>
-<tr class="separator:a1da30fd41605f42e0b0dd68d75c59bd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd3e2d26c9053f2b5cf1aaf2e8dceb52"><td class="memItemLeft" align="right" valign="top"><a id="acd3e2d26c9053f2b5cf1aaf2e8dceb52" name="acd3e2d26c9053f2b5cf1aaf2e8dceb52"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>hashed_key</b></td></tr>
-<tr class="memdesc:acd3e2d26c9053f2b5cf1aaf2e8dceb52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculated key is returned here (32 bytes) <br /></td></tr>
-<tr class="separator:acd3e2d26c9053f2b5cf1aaf2e8dceb52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac21cf3b5207c0dc25358d6360953380"><td class="memItemLeft" align="right" valign="top"><a id="aac21cf3b5207c0dc25358d6360953380" name="aac21cf3b5207c0dc25358d6360953380"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>digest_enc</b></td></tr>
-<tr class="memdesc:aac21cf3b5207c0dc25358d6360953380"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypted (ciphertext) digest is return here (32 bytes) <br /></td></tr>
-<tr class="separator:aac21cf3b5207c0dc25358d6360953380"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af712affb63d8f83b5bc7e56f0e6e1faa"><td class="memItemLeft" align="right" valign="top"><a id="af712affb63d8f83b5bc7e56f0e6e1faa" name="af712affb63d8f83b5bc7e56f0e6e1faa"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>uart_file</b> [20]</td></tr>
+<tr class="separator:af712affb63d8f83b5bc7e56f0e6e1faa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a795cd432688df934b9da7c5e9aca0b01"><td class="memItemLeft" align="right" valign="top"><a id="a795cd432688df934b9da7c5e9aca0b01" name="a795cd432688df934b9da7c5e9aca0b01"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>fd_uart</b></td></tr>
+<tr class="separator:a795cd432688df934b9da7c5e9aca0b01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f4c9be2ceae748b9b8001a7118af9bb"><td class="memItemLeft" align="right" valign="top"><a id="a4f4c9be2ceae748b9b8001a7118af9bb" name="a4f4c9be2ceae748b9b8001a7118af9bb"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>ref_ct</b></td></tr>
+<tr class="separator:a4f4c9be2ceae748b9b8001a7118af9bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0480a6b3446da345c4ddc7ada0fd4eeb"><td class="memItemLeft" align="right" valign="top"><a id="a0480a6b3446da345c4ddc7ada0fd4eeb" name="a0480a6b3446da345c4ddc7ada0fd4eeb"></a>
+HANDLE&#160;</td><td class="memItemRight" valign="bottom"><b>hSerial</b></td></tr>
+<tr class="separator:a0480a6b3446da345c4ddc7ada0fd4eeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01676.html">atca_secureboot_enc_in_out</a></li>
+    <li class="navelem"><a class="el" href="a01676.html">atca_uart_host_s</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

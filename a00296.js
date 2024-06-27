@@ -1,12 +1,18 @@
 var a00296 =
 [
-    [ "atcacert_calc_expire_years", "a01407.html#ga6961d4584f23cfe79ddec69a91e41e03", null ],
-    [ "atcacert_get_auth_key_id", "a01407.html#ga79182d181cd8041a0e66e18790dff519", null ],
-    [ "atcacert_get_cert_sn", "a01407.html#gad1de933f825653a1a725b46407adb09e", null ],
-    [ "atcacert_get_expire_date", "a01407.html#gaede1f0a4a04cfd720b5fe6a8f56fc466", null ],
-    [ "atcacert_get_issue_date", "a01407.html#ga7305906995afb21b494446d84298533b", null ],
-    [ "atcacert_get_issuer", "a01407.html#gae5e5dfa5db2ac919c093ed4149ff2bc7", null ],
-    [ "atcacert_get_subj_key_id", "a01407.html#ga9544e4c1c1ae365f90253f8a475e164e", null ],
-    [ "atcacert_get_subj_public_key", "a01407.html#gaa530a6a7f90a9a610856701b0220a161", null ],
-    [ "atcacert_get_subject", "a01407.html#ga40feb31278b164a32fe9bf9c2c5a79c0", null ]
+    [ "DATEFMT_ISO8601_SEP", "a01443.html#ga6e58a9d673118d8075bb4cb4c85ec0cb", null ],
+    [ "DATEFMT_POSIX_UINT32_BE", "a01443.html#ga35593316a537ec58d4a214243be9c862", null ],
+    [ "DATEFMT_POSIX_UINT32_LE", "a01443.html#gad97a813a37feaac6770f66846ad4bf27", null ],
+    [ "DATEFMT_RFC5280_GEN", "a01443.html#ga9b2731e0538062863fdd2816e60787b6", null ],
+    [ "DATEFMT_RFC5280_UTC", "a01443.html#ga0043de3aea86035e05798afc16d516d0", null ],
+    [ "atcacert_tm_utc_t", "a01443.html#ga4a59e158244def2c79227aa244bd59c2", null ],
+    [ "atcacert_date_cmp", "a01443.html#ga6609f17be8ee9ba67f9c50a3790b9486", null ],
+    [ "atcacert_date_dec", "a01443.html#ga6a6ba4b1c683a72bd3bd34badbed7461", null ],
+    [ "atcacert_date_dec_compcert", "a01443.html#gaab6bdf548ca56cec54441114a3152767", null ],
+    [ "atcacert_date_dec_compcert_ext", "a01443.html#ga5d9b9329445d9ac59e306531b9bc65f2", null ],
+    [ "atcacert_date_enc", "a01443.html#ga33f676825335d37da36aee1c93463829", null ],
+    [ "atcacert_date_enc_compcert", "a01443.html#gaef5c4497cd5a21ae7952658aa9dc7a62", null ],
+    [ "atcacert_date_enc_compcert_ext", "a01443.html#ga949c368ba13b78caee11d2abe60de755", null ],
+    [ "atcacert_date_from_asn1_tag", "a01443.html#ga208c468285600790ebcdba55a4ccf3a8", null ],
+    [ "atcacert_date_get_max_date", "a01443.html#ga82a0f236afa03da347abbee1db588cb3", null ]
 ];

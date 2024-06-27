@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_sha256_ctx Struct Reference</title>
+<title>CryptoAuthLib: ATCAHAL_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,31 +99,44 @@ $(document).ready(function(){initNavTree('a01580.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atca_sha256_ctx Struct Reference<div class="ingroups"><a class="el" href="a01408.html">Basic Crypto API methods for CryptoAuth Devices (calib_)</a></div></div></div>
+  <div class="headertitle"><div class="title">ATCAHAL_t Struct Reference<div class="ingroups"><a class="el" href="a01442.html">ATCAIface (atca_)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>HAL Driver Structure.  
+ <a href="a01580.html#details">More...</a></p>
+
+<p><code>#include &lt;lib/atca_iface.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aab3e376d6c18921a1ee303e2b703c668"><td class="memItemLeft" align="right" valign="top"><a id="aab3e376d6c18921a1ee303e2b703c668" name="aab3e376d6c18921a1ee303e2b703c668"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>total_msg_size</b></td></tr>
-<tr class="memdesc:aab3e376d6c18921a1ee303e2b703c668"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total number of message bytes processed. <br /></td></tr>
-<tr class="separator:aab3e376d6c18921a1ee303e2b703c668"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7cf177799e4c934821f6540aa5a33e5"><td class="memItemLeft" align="right" valign="top"><a id="ae7cf177799e4c934821f6540aa5a33e5" name="ae7cf177799e4c934821f6540aa5a33e5"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>block_size</b></td></tr>
-<tr class="memdesc:ae7cf177799e4c934821f6540aa5a33e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes in current block. <br /></td></tr>
-<tr class="separator:ae7cf177799e4c934821f6540aa5a33e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d3f030387c74b86ec476d0c99a46c34"><td class="memItemLeft" align="right" valign="top"><a id="a6d3f030387c74b86ec476d0c99a46c34" name="a6d3f030387c74b86ec476d0c99a46c34"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>block</b> [<a class="el" href="a00512.html#a85e0a506bd6fdae6ce32d5df3a48ac1c">ATCA_SHA256_BLOCK_SIZE</a> *2]</td></tr>
-<tr class="memdesc:a6d3f030387c74b86ec476d0c99a46c34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unprocessed message storage. <br /></td></tr>
-<tr class="separator:a6d3f030387c74b86ec476d0c99a46c34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0ec68529226863aedc9b143c118e5db"><td class="memItemLeft" align="right" valign="top"><a id="ab0ec68529226863aedc9b143c118e5db" name="ab0ec68529226863aedc9b143c118e5db"></a>
+ATCA_STATUS(*&#160;</td><td class="memItemRight" valign="bottom"><b>halinit</b> )(<a class="el" href="a01584.html">ATCAIface</a> iface, <a class="el" href="a01516.html">ATCAIfaceCfg</a> *cfg)</td></tr>
+<tr class="separator:ab0ec68529226863aedc9b143c118e5db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a833092fd0a18711ee3d21e0b62bc8ff8"><td class="memItemLeft" align="right" valign="top"><a id="a833092fd0a18711ee3d21e0b62bc8ff8" name="a833092fd0a18711ee3d21e0b62bc8ff8"></a>
+ATCA_STATUS(*&#160;</td><td class="memItemRight" valign="bottom"><b>halpostinit</b> )(<a class="el" href="a01584.html">ATCAIface</a> iface)</td></tr>
+<tr class="separator:a833092fd0a18711ee3d21e0b62bc8ff8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d16f7f18b69fa0ed616184862033658"><td class="memItemLeft" align="right" valign="top"><a id="a8d16f7f18b69fa0ed616184862033658" name="a8d16f7f18b69fa0ed616184862033658"></a>
+ATCA_STATUS(*&#160;</td><td class="memItemRight" valign="bottom"><b>halsend</b> )(<a class="el" href="a01584.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
+<tr class="separator:a8d16f7f18b69fa0ed616184862033658"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3efd7d4862fed3424fe45f2912c5401"><td class="memItemLeft" align="right" valign="top"><a id="ab3efd7d4862fed3424fe45f2912c5401" name="ab3efd7d4862fed3424fe45f2912c5401"></a>
+ATCA_STATUS(*&#160;</td><td class="memItemRight" valign="bottom"><b>halreceive</b> )(<a class="el" href="a01584.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
+<tr class="separator:ab3efd7d4862fed3424fe45f2912c5401"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a162e67300d3291f45ded16514203e7eb"><td class="memItemLeft" align="right" valign="top"><a id="a162e67300d3291f45ded16514203e7eb" name="a162e67300d3291f45ded16514203e7eb"></a>
+ATCA_STATUS(*&#160;</td><td class="memItemRight" valign="bottom"><b>halcontrol</b> )(<a class="el" href="a01584.html">ATCAIface</a> iface, uint8_t option, void *param, size_t paramlen)</td></tr>
+<tr class="separator:a162e67300d3291f45ded16514203e7eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac20a9d25952b9069d8f58ff40285f290"><td class="memItemLeft" align="right" valign="top"><a id="ac20a9d25952b9069d8f58ff40285f290" name="ac20a9d25952b9069d8f58ff40285f290"></a>
+ATCA_STATUS(*&#160;</td><td class="memItemRight" valign="bottom"><b>halrelease</b> )(void *hal_data)</td></tr>
+<tr class="separator:ac20a9d25952b9069d8f58ff40285f290"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>HAL Driver Structure. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01580.html">atca_sha256_ctx</a></li>
+    <li class="navelem"><a class="el" href="a01580.html">ATCAHAL_t</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

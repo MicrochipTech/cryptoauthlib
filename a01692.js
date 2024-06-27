@@ -1,14 +1,11 @@
 var a01692 =
 [
-    [ "counter", "a01692.html#adb6743838ca7d8bd3ad390b7608492ba", null ],
-    [ "is_key_nomac", "a01692.html#a45ea4bd1941244391f04343f993bacf0", null ],
-    [ "key_conf", "a01692.html#a089cd58d7f5518ee9016eb40c281bdfc", null ],
-    [ "key_id", "a01692.html#a8bb5e1f0ea943f4749ebf6faa450288b", null ],
-    [ "other_data", "a01692.html#a3b5c9fd883d9daf4d6a42bbf1aba936d", null ],
-    [ "slot_conf", "a01692.html#a2d5854b66b7bc7246fa718a5d485d3fb", null ],
-    [ "slot_locked", "a01692.html#a787c86043a8c305bd23256248614a3f7", null ],
-    [ "sn", "a01692.html#ad8ca9262cbe607d0c017e12285c3d951", null ],
-    [ "stored_value", "a01692.html#a4f63b5946df323ef66910d4a0cdf2491", null ],
-    [ "temp_key", "a01692.html#aa62f8da7dae46c095c603433ae26fedf", null ],
-    [ "zone", "a01692.html#aa4922c43b6dfecb5e39e286e960cdd88", null ]
+    [ "gen_dig_data", "a01692.html#afde9c1e6769f60992c7fb10280cdd199", null ],
+    [ "gen_key_data", "a01692.html#a82e1988542001c7499700f3e1b191339", null ],
+    [ "is_64", "a01692.html#a0f766111832176ea2c8eda8fbf13743d", null ],
+    [ "key_id", "a01692.html#a70b94559475530db2be60e9d30758098", null ],
+    [ "no_mac_flag", "a01692.html#ae381dabe56bdd77f48a8241050d16d82", null ],
+    [ "source_flag", "a01692.html#abd69b6707bf73ae91675a6a0a250ca40", null ],
+    [ "valid", "a01692.html#aadedd52833b6ce041dfb9e923b448481", null ],
+    [ "value", "a01692.html#abf76b14a42ef4d7f9d57a1d5edc6cf10", null ]
 ];

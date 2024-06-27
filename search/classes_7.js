@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['genericerror_0',['GenericError',['../a02316.html',1,'cryptoauthlib::exceptions']]]
+  ['genericerror_0',['GenericError',['../a02352.html',1,'cryptoauthlib::exceptions']]]
 ];

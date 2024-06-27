@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: CK_SESSION_INFO Struct Reference</title>
+<title>CryptoAuthLib: pkcs11_session_mech_ctx_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,31 +99,54 @@ $(document).ready(function(){initNavTree('a01860.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">CK_SESSION_INFO Struct Reference</div></div>
+  <div class="headertitle"><div class="title">pkcs11_session_mech_ctx_s Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a7d23320809045e8e249f7eaee3be95dc"><td class="memItemLeft" align="right" valign="top"><a id="a7d23320809045e8e249f7eaee3be95dc" name="a7d23320809045e8e249f7eaee3be95dc"></a>
-CK_SLOT_ID&#160;</td><td class="memItemRight" valign="bottom"><b>slotID</b></td></tr>
-<tr class="separator:a7d23320809045e8e249f7eaee3be95dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af81b1726577cff3cb2ea3300d788e9f4"><td class="memItemLeft" align="right" valign="top"><a id="af81b1726577cff3cb2ea3300d788e9f4" name="af81b1726577cff3cb2ea3300d788e9f4"></a>
-CK_STATE&#160;</td><td class="memItemRight" valign="bottom"><b>state</b></td></tr>
-<tr class="separator:af81b1726577cff3cb2ea3300d788e9f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58c14db50c63ab280fa00711755b10d9"><td class="memItemLeft" align="right" valign="top"><a id="a58c14db50c63ab280fa00711755b10d9" name="a58c14db50c63ab280fa00711755b10d9"></a>
-CK_FLAGS&#160;</td><td class="memItemRight" valign="bottom"><b>flags</b></td></tr>
-<tr class="separator:a58c14db50c63ab280fa00711755b10d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aced90615c518173a0e3fffc37c5e119f"><td class="memItemLeft" align="right" valign="top"><a id="aced90615c518173a0e3fffc37c5e119f" name="aced90615c518173a0e3fffc37c5e119f"></a>
-CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>ulDeviceError</b></td></tr>
-<tr class="separator:aced90615c518173a0e3fffc37c5e119f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a231736486674b80b2dd3f44a1099acd7"><td class="memItemLeft" align="right" valign="top"><a id="a231736486674b80b2dd3f44a1099acd7" name="a231736486674b80b2dd3f44a1099acd7"></a>
+<a class="el" href="a01792.html">atcac_hmac_ctx_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hmac</b></td></tr>
+<tr class="separator:a231736486674b80b2dd3f44a1099acd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83c658ebf7015d23298ee7fb33b686b0"><td class="memItemLeft" align="right" valign="top"><a id="a83c658ebf7015d23298ee7fb33b686b0" name="a83c658ebf7015d23298ee7fb33b686b0"></a>
+<a class="el" href="a01788.html">atcac_sha2_256_ctx_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>sha256</b></td></tr>
+<tr class="separator:a83c658ebf7015d23298ee7fb33b686b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabb611d72167a0e3114d02d99a3ef6c3"><td class="memItemLeft" align="right" valign="top"><a id="aabb611d72167a0e3114d02d99a3ef6c3" name="aabb611d72167a0e3114d02d99a3ef6c3"></a>
+atca_aes_cmac_ctx_t&#160;</td><td class="memItemRight" valign="bottom"><b>cmac</b></td></tr>
+<tr class="separator:aabb611d72167a0e3114d02d99a3ef6c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cf5f194c94d88f79f2f7a3146780e0b"><td class="memItemLeft" align="right" valign="top"><a id="a4cf5f194c94d88f79f2f7a3146780e0b" name="a4cf5f194c94d88f79f2f7a3146780e0b"></a>
+atca_aes_cbc_ctx_t&#160;</td><td class="memItemRight" valign="bottom"><b>cbc</b></td></tr>
+<tr class="separator:a4cf5f194c94d88f79f2f7a3146780e0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab12ae7dc214499aa97daac283ec2f0ca"><td class="memItemLeft" ><a id="ab12ae7dc214499aa97daac283ec2f0ca" name="ab12ae7dc214499aa97daac283ec2f0ca"></a>
+struct {</td></tr>
+<tr class="memitem:aca27d1fe531ec640032c28239e0f694b"><td class="memItemLeft" >
+&#160;&#160;&#160;atca_aes_gcm_ctx_t&#160;&#160;&#160;<b>context</b></td></tr>
+<tr class="separator:aca27d1fe531ec640032c28239e0f694b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0a9e13bde63facb11ad1f2181abd19f"><td class="memItemLeft" >
+&#160;&#160;&#160;CK_BYTE&#160;&#160;&#160;<b>tag_len</b></td></tr>
+<tr class="separator:af0a9e13bde63facb11ad1f2181abd19f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab12ae7dc214499aa97daac283ec2f0ca"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>gcm</b></td></tr>
+<tr class="separator:ab12ae7dc214499aa97daac283ec2f0ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c17ecc3a1262219c7eedaf30520da66"><td class="memItemLeft" ><a id="a0c17ecc3a1262219c7eedaf30520da66" name="a0c17ecc3a1262219c7eedaf30520da66"></a>
+struct {</td></tr>
+<tr class="memitem:a2ea7044ca0ddb99d01ca6f9fe61b798f"><td class="memItemLeft" >
+&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<b>iv</b> [TA_AES_GCM_IV_LENGTH]</td></tr>
+<tr class="separator:a2ea7044ca0ddb99d01ca6f9fe61b798f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90e1df85ab46533612b19503f24e494f"><td class="memItemLeft" >
+&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<b>aad</b> [ATCA_AES128_BLOCK_SIZE]</td></tr>
+<tr class="separator:a90e1df85ab46533612b19503f24e494f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0cff355a1dc12cb61629ca2e6d4591a"><td class="memItemLeft" >
+&#160;&#160;&#160;CK_BYTE&#160;&#160;&#160;<b>aad_len</b></td></tr>
+<tr class="separator:ab0cff355a1dc12cb61629ca2e6d4591a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c17ecc3a1262219c7eedaf30520da66"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>gcm_single</b></td></tr>
+<tr class="separator:a0c17ecc3a1262219c7eedaf30520da66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01860.html">CK_SESSION_INFO</a></li>
+    <li class="navelem"><a class="el" href="a01860.html">pkcs11_session_mech_ctx_s</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_debug.c File Reference</title>
+<title>CryptoAuthLib: atca_config_check.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,30 +98,461 @@ $(document).ready(function(){initNavTree('a00239.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">atca_debug.c File Reference</div></div>
+<a href="#define-members">Macros</a>  </div>
+  <div class="headertitle"><div class="title">atca_config_check.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Debug/Trace for CryptoAuthLib calls.  
+<p>Consistency checks for configuration options.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00512.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;atca_config.h&quot;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a60326372db8190ddb9f191fca5bdc38a"><td class="memItemLeft" align="right" valign="top"><a id="a60326372db8190ddb9f191fca5bdc38a" name="a60326372db8190ddb9f191fca5bdc38a"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atca_trace</b> (ATCA_STATUS status)</td></tr>
-<tr class="separator:a60326372db8190ddb9f191fca5bdc38a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a406f04a0b87c5ac4c354f3c74e8a52c5"><td class="memItemLeft" align="right" valign="top"><a id="a406f04a0b87c5ac4c354f3c74e8a52c5" name="a406f04a0b87c5ac4c354f3c74e8a52c5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FEATURE_ENABLED</b>&#160;&#160;&#160;(1)</td></tr>
+<tr class="separator:a406f04a0b87c5ac4c354f3c74e8a52c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab04a5ec00a5d464b36e0e9522699248d"><td class="memItemLeft" align="right" valign="top"><a id="ab04a5ec00a5d464b36e0e9522699248d" name="ab04a5ec00a5d464b36e0e9522699248d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FEATURE_DISABLED</b>&#160;&#160;&#160;(0)</td></tr>
+<tr class="separator:ab04a5ec00a5d464b36e0e9522699248d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf8ded95b0a2e24134fa5eed072bd8db"><td class="memItemLeft" align="right" valign="top"><a id="adf8ded95b0a2e24134fa5eed072bd8db" name="adf8ded95b0a2e24134fa5eed072bd8db"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DEFAULT_ENABLED</b>&#160;&#160;&#160;FEATURE_ENABLED</td></tr>
+<tr class="separator:adf8ded95b0a2e24134fa5eed072bd8db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10e9ebf188213332b505fa27c4fb9101"><td class="memItemLeft" align="right" valign="top"><a id="a10e9ebf188213332b505fa27c4fb9101" name="a10e9ebf188213332b505fa27c4fb9101"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DEFAULT_DISABLED</b>&#160;&#160;&#160;FEATURE_DISABLED</td></tr>
+<tr class="separator:a10e9ebf188213332b505fa27c4fb9101"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe8da91949841c137ea573c327bff267"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html#afe8da91949841c137ea573c327bff267">ATCA_SHA_SUPPORT</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:afe8da91949841c137ea573c327bff267"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42c67508ff6b45d11b1349d8a7ad04d9"><td class="memItemLeft" align="right" valign="top"><a id="a42c67508ff6b45d11b1349d8a7ad04d9" name="a42c67508ff6b45d11b1349d8a7ad04d9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_ECC_SUPPORT</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:a42c67508ff6b45d11b1349d8a7ad04d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bd6ff07c40b25566606b44f0a1a129c"><td class="memItemLeft" align="right" valign="top"><a id="a2bd6ff07c40b25566606b44f0a1a129c" name="a2bd6ff07c40b25566606b44f0a1a129c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CA2_SUPPORT</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:a2bd6ff07c40b25566606b44f0a1a129c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac578037fec9614e0a9528199d471fb21"><td class="memItemLeft" align="right" valign="top"><a id="ac578037fec9614e0a9528199d471fb21" name="ac578037fec9614e0a9528199d471fb21"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CA2_CERT_SUPPORT</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:ac578037fec9614e0a9528199d471fb21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cffff3f4586ac856f67460d33f23770"><td class="memItemLeft" align="right" valign="top"><a id="a2cffff3f4586ac856f67460d33f23770" name="a2cffff3f4586ac856f67460d33f23770"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CA_SUPPORT</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:a2cffff3f4586ac856f67460d33f23770"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b961f59c7f6d305843d67ac21c24501"><td class="memItemLeft" align="right" valign="top"><a id="a3b961f59c7f6d305843d67ac21c24501" name="a3b961f59c7f6d305843d67ac21c24501"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_HOSTLIB_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:a3b961f59c7f6d305843d67ac21c24501"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab97062ef8dcf4e46b403d9c22aeb22c9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html#ab97062ef8dcf4e46b403d9c22aeb22c9">ATCA_USE_ATCAB_FUNCTIONS</a></td></tr>
+<tr class="separator:ab97062ef8dcf4e46b403d9c22aeb22c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae22add16029813997fa4002dab361bad"><td class="memItemLeft" align="right" valign="top"><a id="ae22add16029813997fa4002dab361bad" name="ae22add16029813997fa4002dab361bad"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHECK_PARAMS_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:ae22add16029813997fa4002dab361bad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2593f45dcf42602b3c334dccb9c52395"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html#a2593f45dcf42602b3c334dccb9c52395">ATCA_CHECK_INVALID_MSG</a>(c,  s,  m)&#160;&#160;&#160;if (c) { return ATCA_TRACE(s, m); }</td></tr>
+<tr class="separator:a2593f45dcf42602b3c334dccb9c52395"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b0047e8a3c59e8c545295eafa72f682"><td class="memItemLeft" align="right" valign="top"><a id="a5b0047e8a3c59e8c545295eafa72f682" name="a5b0047e8a3c59e8c545295eafa72f682"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHECK_VALID_MSG</b>(c,  m)&#160;&#160;&#160;if (!ATCA_TRACE(!(c), m))</td></tr>
+<tr class="separator:a5b0047e8a3c59e8c545295eafa72f682"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afecc699c832cd69b20530e8eeb11b036"><td class="memItemLeft" align="right" valign="top"><a id="afecc699c832cd69b20530e8eeb11b036" name="afecc699c832cd69b20530e8eeb11b036"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHECK_INVALID</b>(c,  s)&#160;&#160;&#160;<a class="el" href="a00239.html#a2593f45dcf42602b3c334dccb9c52395">ATCA_CHECK_INVALID_MSG</a>(c, s, &quot;&quot;)</td></tr>
+<tr class="separator:afecc699c832cd69b20530e8eeb11b036"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42ebda94ff387f85c0da102506d799cb"><td class="memItemLeft" align="right" valign="top"><a id="a42ebda94ff387f85c0da102506d799cb" name="a42ebda94ff387f85c0da102506d799cb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHECK_VALID</b>(c)&#160;&#160;&#160;ATCA_CHECK_VALID_MSG(c, &quot;&quot;)</td></tr>
+<tr class="separator:a42ebda94ff387f85c0da102506d799cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ff9c0c2785616e560c43e5312f40c0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html#a4ff9c0c2785616e560c43e5312f40c0d">MULTIPART_BUF_EN</a>&#160;&#160;&#160;(DEFAULT_DISABLED)</td></tr>
+<tr class="separator:a4ff9c0c2785616e560c43e5312f40c0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d181d31956d42db1d25281deca4c7e3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html#a3d181d31956d42db1d25281deca4c7e3">ATCACERT_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a3d181d31956d42db1d25281deca4c7e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9496b6b80b24c0ba332705e443e60730"><td class="memItemLeft" align="right" valign="top"><a id="a9496b6b80b24c0ba332705e443e60730" name="a9496b6b80b24c0ba332705e443e60730"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_HEAP</b></td></tr>
+<tr class="separator:a9496b6b80b24c0ba332705e443e60730"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a987213394bc9a51f05c4a5f1b1de69f8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html#a987213394bc9a51f05c4a5f1b1de69f8">ATCA_UNUSED_VAR_CHECK</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a987213394bc9a51f05c4a5f1b1de69f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31794cf0750795f7cc29b2a8a634e5bd"><td class="memItemLeft" align="right" valign="top"><a id="a31794cf0750795f7cc29b2a8a634e5bd" name="a31794cf0750795f7cc29b2a8a634e5bd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_AES_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a31794cf0750795f7cc29b2a8a634e5bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31c9145169cb4a4e3be509ad04a40b04"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html#a31c9145169cb4a4e3be509ad04a40b04">ATCAB_AES_GFM_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a31c9145169cb4a4e3be509ad04a40b04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa51edc57c0eb2857a064a00e7cf2c62d"><td class="memItemLeft" align="right" valign="top"><a id="aa51edc57c0eb2857a064a00e7cf2c62d" name="aa51edc57c0eb2857a064a00e7cf2c62d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_AES_GCM_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:aa51edc57c0eb2857a064a00e7cf2c62d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab665cc62c9a4731c14ab3fd0e66f81b1"><td class="memItemLeft" align="right" valign="top"><a id="ab665cc62c9a4731c14ab3fd0e66f81b1" name="ab665cc62c9a4731c14ab3fd0e66f81b1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_CHECKMAC_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:ab665cc62c9a4731c14ab3fd0e66f81b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab62b4dd503fbbd6e74f247c8ad6e4f8d"><td class="memItemLeft" align="right" valign="top"><a id="ab62b4dd503fbbd6e74f247c8ad6e4f8d" name="ab62b4dd503fbbd6e74f247c8ad6e4f8d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_COUNTER_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:ab62b4dd503fbbd6e74f247c8ad6e4f8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66f796bf1d071099bf04d1fdee6b8207"><td class="memItemLeft" align="right" valign="top"><a id="a66f796bf1d071099bf04d1fdee6b8207" name="a66f796bf1d071099bf04d1fdee6b8207"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_DERIVEKEY_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a66f796bf1d071099bf04d1fdee6b8207"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f273d8951cb2f34abd1a192a348e454"><td class="memItemLeft" align="right" valign="top"><a id="a1f273d8951cb2f34abd1a192a348e454" name="a1f273d8951cb2f34abd1a192a348e454"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_ECDH_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a1f273d8951cb2f34abd1a192a348e454"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafc509c2ffc25dd7be416d941f49b315"><td class="memItemLeft" align="right" valign="top"><a id="aafc509c2ffc25dd7be416d941f49b315" name="aafc509c2ffc25dd7be416d941f49b315"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_ECDH_ENC_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:aafc509c2ffc25dd7be416d941f49b315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa43fc6133dc2d3e18ea020b6a923aac9"><td class="memItemLeft" align="right" valign="top"><a id="aa43fc6133dc2d3e18ea020b6a923aac9" name="aa43fc6133dc2d3e18ea020b6a923aac9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_GENDIG_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:aa43fc6133dc2d3e18ea020b6a923aac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafef8e4fe664f7da29ca7a32d24b95c4"><td class="memItemLeft" align="right" valign="top"><a id="aafef8e4fe664f7da29ca7a32d24b95c4" name="aafef8e4fe664f7da29ca7a32d24b95c4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_GENKEY_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:aafef8e4fe664f7da29ca7a32d24b95c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85d4ccd2d66f9b2fd10c7a2e408c4737"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html#a85d4ccd2d66f9b2fd10c7a2e408c4737">ATCAB_GENKEY_MAC_EN</a>&#160;&#160;&#160;ATCAB_GENKEY_EN</td></tr>
+<tr class="separator:a85d4ccd2d66f9b2fd10c7a2e408c4737"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3b3f5aa5064168746e4cbcb2a11cb29"><td class="memItemLeft" align="right" valign="top"><a id="ae3b3f5aa5064168746e4cbcb2a11cb29" name="ae3b3f5aa5064168746e4cbcb2a11cb29"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_HMAC_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:ae3b3f5aa5064168746e4cbcb2a11cb29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5965863afba861e5e0e899229da26e83"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html#a5965863afba861e5e0e899229da26e83">ATCAB_INFO_LATCH_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a5965863afba861e5e0e899229da26e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdf45ab57b3866e85f33cb21fc582a88"><td class="memItemLeft" align="right" valign="top"><a id="acdf45ab57b3866e85f33cb21fc582a88" name="acdf45ab57b3866e85f33cb21fc582a88"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_KDF_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:acdf45ab57b3866e85f33cb21fc582a88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04d72197d5a904bf2c5b07674261847e"><td class="memItemLeft" align="right" valign="top"><a id="a04d72197d5a904bf2c5b07674261847e" name="a04d72197d5a904bf2c5b07674261847e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_LOCK_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a04d72197d5a904bf2c5b07674261847e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a70766acbeaf581baeea4edeaa9c1b9"><td class="memItemLeft" align="right" valign="top"><a id="a1a70766acbeaf581baeea4edeaa9c1b9" name="a1a70766acbeaf581baeea4edeaa9c1b9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_MAC_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a1a70766acbeaf581baeea4edeaa9c1b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a186e6b99995ef9a1733683c3500dd8a0"><td class="memItemLeft" align="right" valign="top"><a id="a186e6b99995ef9a1733683c3500dd8a0" name="a186e6b99995ef9a1733683c3500dd8a0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_NONCE_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a186e6b99995ef9a1733683c3500dd8a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd736ec7b0364931945b83bdece622d0"><td class="memItemLeft" align="right" valign="top"><a id="afd736ec7b0364931945b83bdece622d0" name="afd736ec7b0364931945b83bdece622d0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_PRIVWRITE_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:afd736ec7b0364931945b83bdece622d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e0cf5a9dfd0a899e0bf591620e4df85"><td class="memItemLeft" align="right" valign="top"><a id="a8e0cf5a9dfd0a899e0bf591620e4df85" name="a8e0cf5a9dfd0a899e0bf591620e4df85"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_RANDOM_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a8e0cf5a9dfd0a899e0bf591620e4df85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73b6662f2afe1f0cd552f0cb6475a2f3"><td class="memItemLeft" align="right" valign="top"><a id="a73b6662f2afe1f0cd552f0cb6475a2f3" name="a73b6662f2afe1f0cd552f0cb6475a2f3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_READ_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a73b6662f2afe1f0cd552f0cb6475a2f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45fb4916cda2c90be1ee747e920a37d9"><td class="memItemLeft" align="right" valign="top"><a id="a45fb4916cda2c90be1ee747e920a37d9" name="a45fb4916cda2c90be1ee747e920a37d9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_READ_ENC_EN</b>&#160;&#160;&#160;ATCAB_READ_EN</td></tr>
+<tr class="separator:a45fb4916cda2c90be1ee747e920a37d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6403c7554052f636bcb7422890fbcfd7"><td class="memItemLeft" align="right" valign="top"><a id="a6403c7554052f636bcb7422890fbcfd7" name="a6403c7554052f636bcb7422890fbcfd7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_SECUREBOOT_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a6403c7554052f636bcb7422890fbcfd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d7d1190aeb7d32a6d736f2fdfce0e62"><td class="memItemLeft" align="right" valign="top"><a id="a4d7d1190aeb7d32a6d736f2fdfce0e62" name="a4d7d1190aeb7d32a6d736f2fdfce0e62"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_SECUREBOOT_MAC_EN</b>&#160;&#160;&#160;ATCAB_SECUREBOOT_EN</td></tr>
+<tr class="separator:a4d7d1190aeb7d32a6d736f2fdfce0e62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6234f5edd2365f0e5792e5c91815d08"><td class="memItemLeft" align="right" valign="top"><a id="ab6234f5edd2365f0e5792e5c91815d08" name="ab6234f5edd2365f0e5792e5c91815d08"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_SELFTEST_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:ab6234f5edd2365f0e5792e5c91815d08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad720c08a33c9981c8e5c4fd46558b7fd"><td class="memItemLeft" align="right" valign="top"><a id="ad720c08a33c9981c8e5c4fd46558b7fd" name="ad720c08a33c9981c8e5c4fd46558b7fd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_SHA_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:ad720c08a33c9981c8e5c4fd46558b7fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa617e434a0438bc6f95d7265098d9a9f"><td class="memItemLeft" align="right" valign="top"><a id="aa617e434a0438bc6f95d7265098d9a9f" name="aa617e434a0438bc6f95d7265098d9a9f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_SHA_HMAC_EN</b>&#160;&#160;&#160;ATCAB_SHA_EN</td></tr>
+<tr class="separator:aa617e434a0438bc6f95d7265098d9a9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0851ae5d02f8dba92bf36aa535087e4b"><td class="memItemLeft" align="right" valign="top"><a id="a0851ae5d02f8dba92bf36aa535087e4b" name="a0851ae5d02f8dba92bf36aa535087e4b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_SHA_CONTEXT_EN</b>&#160;&#160;&#160;ATCAB_SHA_EN</td></tr>
+<tr class="separator:a0851ae5d02f8dba92bf36aa535087e4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42db4207aaf9df9f63934ee4f11bcbb9"><td class="memItemLeft" align="right" valign="top"><a id="a42db4207aaf9df9f63934ee4f11bcbb9" name="a42db4207aaf9df9f63934ee4f11bcbb9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_SIGN_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a42db4207aaf9df9f63934ee4f11bcbb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf78f96a21f11c2b7bc2824eaa25a34c"><td class="memItemLeft" align="right" valign="top"><a id="adf78f96a21f11c2b7bc2824eaa25a34c" name="adf78f96a21f11c2b7bc2824eaa25a34c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_SIGN_INTERNAL_EN</b>&#160;&#160;&#160;ATCAB_SIGN_EN</td></tr>
+<tr class="separator:adf78f96a21f11c2b7bc2824eaa25a34c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a770d325772cd14caf06b0c48fa459535"><td class="memItemLeft" align="right" valign="top"><a id="a770d325772cd14caf06b0c48fa459535" name="a770d325772cd14caf06b0c48fa459535"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_UPDATEEXTRA_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a770d325772cd14caf06b0c48fa459535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa132549ab47c9617cb6d1f1e77499409"><td class="memItemLeft" align="right" valign="top"><a id="aa132549ab47c9617cb6d1f1e77499409" name="aa132549ab47c9617cb6d1f1e77499409"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_VERIFY_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:aa132549ab47c9617cb6d1f1e77499409"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26bf26b6c1a09775d6c90b144f539083"><td class="memItemLeft" align="right" valign="top"><a id="a26bf26b6c1a09775d6c90b144f539083" name="a26bf26b6c1a09775d6c90b144f539083"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_VERIFY_EXTERN_EN</b>&#160;&#160;&#160;ATCAB_VERIFY_EN</td></tr>
+<tr class="separator:a26bf26b6c1a09775d6c90b144f539083"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d69a9273e615d799841edc21bd72dc0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html#a5d69a9273e615d799841edc21bd72dc0">ATCAB_VERIFY_MAC_EN</a>&#160;&#160;&#160;ATCAB_VERIFY_EN</td></tr>
+<tr class="separator:a5d69a9273e615d799841edc21bd72dc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1ff51f46ec8a394806300b38e2c04e4"><td class="memItemLeft" align="right" valign="top"><a id="ae1ff51f46ec8a394806300b38e2c04e4" name="ae1ff51f46ec8a394806300b38e2c04e4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_VERIFY_STORED_EN</b>&#160;&#160;&#160;ATCAB_VERIFY_EN</td></tr>
+<tr class="separator:ae1ff51f46ec8a394806300b38e2c04e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22f0fa694cc379e5ec859e91180ed051"><td class="memItemLeft" align="right" valign="top"><a id="a22f0fa694cc379e5ec859e91180ed051" name="a22f0fa694cc379e5ec859e91180ed051"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_VERIFY_VALIDATE_EN</b>&#160;&#160;&#160;ATCAB_VERIFY_EN</td></tr>
+<tr class="separator:a22f0fa694cc379e5ec859e91180ed051"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb9e7120857031fdf5f22df3086afab0"><td class="memItemLeft" align="right" valign="top"><a id="abb9e7120857031fdf5f22df3086afab0" name="abb9e7120857031fdf5f22df3086afab0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_WRITE_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:abb9e7120857031fdf5f22df3086afab0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9204dbf809a32f994e60f871e16a88d8"><td class="memItemLeft" align="right" valign="top"><a id="a9204dbf809a32f994e60f871e16a88d8" name="a9204dbf809a32f994e60f871e16a88d8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_WRITE_ENC_EN</b>&#160;&#160;&#160;ATCAB_WRITE_EN</td></tr>
+<tr class="separator:a9204dbf809a32f994e60f871e16a88d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e3c7ddf3a16cbdcc42060cdee2d884e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html#a8e3c7ddf3a16cbdcc42060cdee2d884e">ATCAC_SHA1_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a8e3c7ddf3a16cbdcc42060cdee2d884e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99dab792a5983a089fe816abc57bad25"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html#a99dab792a5983a089fe816abc57bad25">ATCAC_SHA256_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a99dab792a5983a089fe816abc57bad25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82dfe0816dd5dffe339c9e450ec67b67"><td class="memItemLeft" align="right" valign="top"><a id="a82dfe0816dd5dffe339c9e450ec67b67" name="a82dfe0816dd5dffe339c9e450ec67b67"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAC_SHA256_HMAC_EN</b>&#160;&#160;&#160;ATCAC_SHA256_EN</td></tr>
+<tr class="separator:a82dfe0816dd5dffe339c9e450ec67b67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ca74305a9036e142367d29db0915d9e"><td class="memItemLeft" align="right" valign="top"><a id="a9ca74305a9036e142367d29db0915d9e" name="a9ca74305a9036e142367d29db0915d9e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAC_SHA256_HMAC_CTR_EN</b>&#160;&#160;&#160;ATCAC_SHA256_HMAC_EN</td></tr>
+<tr class="separator:a9ca74305a9036e142367d29db0915d9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add878e0ecc6c87b683935f418f403c7e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html#add878e0ecc6c87b683935f418f403c7e">ATCAC_RANDOM_EN</a>&#160;&#160;&#160;ATCA_HOSTLIB_EN</td></tr>
+<tr class="separator:add878e0ecc6c87b683935f418f403c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7eeef6ad76dccb48d8b1741a9254af97"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html#a7eeef6ad76dccb48d8b1741a9254af97">ATCAC_VERIFY_EN</a>&#160;&#160;&#160;ATCA_HOSTLIB_EN</td></tr>
+<tr class="separator:a7eeef6ad76dccb48d8b1741a9254af97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a094297d2dd0a7e2b4606fc37fc797fcd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html#a094297d2dd0a7e2b4606fc37fc797fcd">ATCAC_SIGN_EN</a>&#160;&#160;&#160;ATCA_HOSTLIB_EN</td></tr>
+<tr class="separator:a094297d2dd0a7e2b4606fc37fc797fcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Debug/Trace for CryptoAuthLib calls. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+<div class="textblock"><p>Consistency checks for configuration options. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2021 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a2593f45dcf42602b3c334dccb9c52395" name="a2593f45dcf42602b3c334dccb9c52395"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2593f45dcf42602b3c334dccb9c52395">&#9670;&#160;</a></span>ATCA_CHECK_INVALID_MSG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_CHECK_INVALID_MSG</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">c, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">s, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">m&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;if (c) { return ATCA_TRACE(s, m); }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Emits message and returns the status code when the condition is true </p>
+
+</div>
+</div>
+<a id="afe8da91949841c137ea573c327bff267" name="afe8da91949841c137ea573c327bff267"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe8da91949841c137ea573c327bff267">&#9670;&#160;</a></span>ATCA_SHA_SUPPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_SHA_SUPPORT&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Library Configuration File - All build attributes should be included in atca_config.h </p>
+
+</div>
+</div>
+<a id="a987213394bc9a51f05c4a5f1b1de69f8" name="a987213394bc9a51f05c4a5f1b1de69f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a987213394bc9a51f05c4a5f1b1de69f8">&#9670;&#160;</a></span>ATCA_UNUSED_VAR_CHECK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_UNUSED_VAR_CHECK&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enables removal of compiler warning due to unused variables </p>
+
+</div>
+</div>
+<a id="ab97062ef8dcf4e46b403d9c22aeb22c9" name="ab97062ef8dcf4e46b403d9c22aeb22c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab97062ef8dcf4e46b403d9c22aeb22c9">&#9670;&#160;</a></span>ATCA_USE_ATCAB_FUNCTIONS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_USE_ATCAB_FUNCTIONS</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Does the atcab_ API layer need to be instantiated (adds a layer of abstraction) </p>
+
+</div>
+</div>
+<a id="a31c9145169cb4a4e3be509ad04a40b04" name="a31c9145169cb4a4e3be509ad04a40b04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31c9145169cb4a4e3be509ad04a40b04">&#9670;&#160;</a></span>ATCAB_AES_GFM_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAB_AES_GFM_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable ATCAB_AES_GFM_EN to enabled Galois Field Multiply</p>
+<p>Supported API's: atcab_aes </p>
+
+</div>
+</div>
+<a id="a85d4ccd2d66f9b2fd10c7a2e408c4737" name="a85d4ccd2d66f9b2fd10c7a2e408c4737"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85d4ccd2d66f9b2fd10c7a2e408c4737">&#9670;&#160;</a></span>ATCAB_GENKEY_MAC_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAB_GENKEY_MAC_EN&#160;&#160;&#160;ATCAB_GENKEY_EN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Requires: ATCAB_GENKEY_EN</p>
+<p>Enable ATCAB_GENKEY_MAC_EN which provides for a mac with the genkey command</p>
+<p>Supported API's: atcab_genkey_base </p>
+
+</div>
+</div>
+<a id="a5965863afba861e5e0e899229da26e83" name="a5965863afba861e5e0e899229da26e83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5965863afba861e5e0e899229da26e83">&#9670;&#160;</a></span>ATCAB_INFO_LATCH_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAB_INFO_LATCH_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable ATCAB_INFO_LATCH_EN which enables control of GPIOs and the persistent latch</p>
+<p>Supported API's: atcab_info_base </p>
+
+</div>
+</div>
+<a id="a5d69a9273e615d799841edc21bd72dc0" name="a5d69a9273e615d799841edc21bd72dc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d69a9273e615d799841edc21bd72dc0">&#9670;&#160;</a></span>ATCAB_VERIFY_MAC_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAB_VERIFY_MAC_EN&#160;&#160;&#160;ATCAB_VERIFY_EN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Requires: ATCAB_VERIFY</p>
+<p>Executes verification command with verification MAC for the External or Stored Verify modes</p>
+<p>Supported API's: atcab_verify_extern_mac, atcab_verify_stored_mac </p>
+
+</div>
+</div>
+<a id="add878e0ecc6c87b683935f418f403c7e" name="add878e0ecc6c87b683935f418f403c7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add878e0ecc6c87b683935f418f403c7e">&#9670;&#160;</a></span>ATCAC_RANDOM_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAC_RANDOM_EN&#160;&#160;&#160;ATCA_HOSTLIB_EN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Requires: ATCA_HOSTLIB_EN</p>
+<p>Enable ATCAC_RANDOM_EN get random numbers from the host's implementation - generally assumed to come from the host's cryptographic library or peripheral driver </p>
+
+</div>
+</div>
+<a id="a8e3c7ddf3a16cbdcc42060cdee2d884e" name="a8e3c7ddf3a16cbdcc42060cdee2d884e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e3c7ddf3a16cbdcc42060cdee2d884e">&#9670;&#160;</a></span>ATCAC_SHA1_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAC_SHA1_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable ATCAC_SHA1_EN to enable sha1 host side api</p>
+<p>Supported API's: atcab_write </p>
+
+</div>
+</div>
+<a id="a99dab792a5983a089fe816abc57bad25" name="a99dab792a5983a089fe816abc57bad25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99dab792a5983a089fe816abc57bad25">&#9670;&#160;</a></span>ATCAC_SHA256_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAC_SHA256_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable ATCAC_SHA256_EN to enable sha256 host side api</p>
+<p>Supported API's: atcab_write </p>
+
+</div>
+</div>
+<a id="a094297d2dd0a7e2b4606fc37fc797fcd" name="a094297d2dd0a7e2b4606fc37fc797fcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a094297d2dd0a7e2b4606fc37fc797fcd">&#9670;&#160;</a></span>ATCAC_SIGN_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAC_SIGN_EN&#160;&#160;&#160;ATCA_HOSTLIB_EN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Requires: ATCA_HOSTLIB_EN</p>
+<p>Enable ATCAC_SIGN_EN to use the host's sign functions. Generally assumed to come from the host's cryptographic library or peripheral driver. </p>
+
+</div>
+</div>
+<a id="a7eeef6ad76dccb48d8b1741a9254af97" name="a7eeef6ad76dccb48d8b1741a9254af97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7eeef6ad76dccb48d8b1741a9254af97">&#9670;&#160;</a></span>ATCAC_VERIFY_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAC_VERIFY_EN&#160;&#160;&#160;ATCA_HOSTLIB_EN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Requires: ATCA_HOSTLIB_EN</p>
+<p>Enable ATCAC_VERIFY_EN to use the host's verify functions. Generally assumed to come from the host's cryptographic library or peripheral driver. </p>
+
+</div>
+</div>
+<a id="a3d181d31956d42db1d25281deca4c7e3" name="a3d181d31956d42db1d25281deca4c7e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d181d31956d42db1d25281deca4c7e3">&#9670;&#160;</a></span>ATCACERT_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCACERT_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enables the ATCACERT x509 handling module </p>
+
+</div>
+</div>
+<a id="a4ff9c0c2785616e560c43e5312f40c0d" name="a4ff9c0c2785616e560c43e5312f40c0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ff9c0c2785616e560c43e5312f40c0d">&#9670;&#160;</a></span>MULTIPART_BUF_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MULTIPART_BUF_EN&#160;&#160;&#160;(DEFAULT_DISABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enables multipart buffer handling (generally for small memory model platforms) </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00239.html">atca_debug.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00239.html">atca_config_check.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

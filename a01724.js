@@ -1,7 +1,10 @@
 var a01724 =
 [
-    [ "curve_type", "a01411.html#gadf3470738c60dbe57b33fb1e6005f40e", null ],
-    [ "public_key", "a01411.html#gaf61f82fe19690b80bf370b295c58920b", null ],
-    [ "signature", "a01411.html#gad2e0f0dbb511520e5d79bdb4ab649c22", null ],
-    [ "temp_key", "a01411.html#ga4409850783c991d3b429ee78e67c9813", null ]
+    [ "key", "a01447.html#gab6fe3f8a17d3a68f63c9c537cadd0fd0", null ],
+    [ "key_id", "a01447.html#ga10f04328eda5cffcea79652ac3509c2d", null ],
+    [ "mode", "a01447.html#ga1616d5efe59851d97fed27b47923c786", null ],
+    [ "otp", "a01447.html#gaad38386d9ec6afcdcd39eab98e2a4a1c", null ],
+    [ "response", "a01447.html#gacf6675faad5f7a43ca3fbec2108f57cd", null ],
+    [ "sn", "a01447.html#gaf0d7fe9a16cad1ba38c7daca4295823b", null ],
+    [ "temp_key", "a01447.html#ga7507880718dc536d6122f0401073b8c8", null ]
 ];

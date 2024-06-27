@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_main.c File Reference</title>
+<title>CryptoAuthLib: pkcs11_key.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,313 +98,127 @@ $(document).ready(function(){initNavTree('a00740.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">pkcs11_main.c File Reference</div></div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">pkcs11_key.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Basic library redirects based on the 2.40 specification docs.oasis-open.org/pkcs11/pkcs11-base/v2.40/os/pkcs11-base-v2.40-os.html.  
+<p>PKCS11 Library Object Handling.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;cryptoki.h&quot;</code><br />
-<code>#include &quot;pkcs11_config.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00701.html">pkcs11_debug.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00713.html">pkcs11_encrypt.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00731.html">pkcs11_init.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00725.html">pkcs11_info.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00776.html">pkcs11_slot.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00746.html">pkcs11_mech.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00764.html">pkcs11_session.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00782.html">pkcs11_token.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00719.html">pkcs11_find.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00752.html">pkcs11_object.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00770.html">pkcs11_signature.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00707.html">pkcs11_digest.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00737.html">pkcs11_key.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00755.html">pkcs11_object.h</a>&quot;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01844.html">pkcs11_ecc_key_info_s</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a485b8bce690d86945883022eca9af4bc"><td class="memItemLeft" align="right" valign="top"><a id="a485b8bce690d86945883022eca9af4bc" name="a485b8bce690d86945883022eca9af4bc"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PKCS11_X962_ASN1_HEADER_SZ</b>&#160;&#160;&#160;3u</td></tr>
+<tr class="separator:a485b8bce690d86945883022eca9af4bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5eb3643f716c6a0ea7e89c879e46e95b"><td class="memItemLeft" align="right" valign="top"><a id="a5eb3643f716c6a0ea7e89c879e46e95b" name="a5eb3643f716c6a0ea7e89c879e46e95b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PKCS11_MAX_ECC_ASN1_HDR_SIZE</b>&#160;&#160;&#160;ATCA_ECCP256_ASN1_HDR_SIZE</td></tr>
+<tr class="separator:a5eb3643f716c6a0ea7e89c879e46e95b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f3b804ca5809a13d78e069ab524498d"><td class="memItemLeft" align="right" valign="top"><a id="a9f3b804ca5809a13d78e069ab524498d" name="a9f3b804ca5809a13d78e069ab524498d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PKCS11_MAX_ECC_PB_KEY_SIZE</b>&#160;&#160;&#160;TA_ECC521_PUB_KEY_SIZE</td></tr>
+<tr class="separator:a9f3b804ca5809a13d78e069ab524498d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a782c49756bd4f252d02b9a16c0307275"><td class="memItemLeft" align="right" valign="top"><a id="a782c49756bd4f252d02b9a16c0307275" name="a782c49756bd4f252d02b9a16c0307275"></a>
+typedef struct <a class="el" href="a01844.html">pkcs11_ecc_key_info_s</a>&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_ecc_key_info_t</b></td></tr>
+<tr class="separator:a782c49756bd4f252d02b9a16c0307275"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga2e45ad4ce8c84712c646dddaa99544e3"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_Initialize</b> (CK_VOID_PTR pInitArgs)</td></tr>
-<tr class="memdesc:ga2e45ad4ce8c84712c646dddaa99544e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes Cryptoki library NOTES: If pInitArgs is a non-NULL_PTR is must dereference to a <a class="el" href="a01880.html">CK_C_INITIALIZE_ARGS</a> structure. <br /></td></tr>
-<tr class="separator:ga2e45ad4ce8c84712c646dddaa99544e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga945318df98e940ab331931023133ed3d"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_Finalize</b> (CK_VOID_PTR pReserved)</td></tr>
-<tr class="memdesc:ga945318df98e940ab331931023133ed3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean up miscellaneous Cryptoki-associated resources. <br /></td></tr>
-<tr class="separator:ga945318df98e940ab331931023133ed3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga75bdc5d475cd205914b8227c7f08df4c"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_GetInfo</b> (CK_INFO_PTR pInfo)</td></tr>
-<tr class="memdesc:ga75bdc5d475cd205914b8227c7f08df4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains general information about Cryptoki. <br /></td></tr>
-<tr class="separator:ga75bdc5d475cd205914b8227c7f08df4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab4cf13775c4e92b36156ee92dd52bef5"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_GetFunctionList</b> (CK_FUNCTION_LIST_PTR_PTR ppFunctionList)</td></tr>
-<tr class="memdesc:gab4cf13775c4e92b36156ee92dd52bef5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains entry points of Cryptoki library functions. <br /></td></tr>
-<tr class="separator:gab4cf13775c4e92b36156ee92dd52bef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac6ce96c3f4a3b7f24d9420763df121fc"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_GetSlotList</b> (CK_BBOOL tokenPresent, CK_SLOT_ID_PTR pSlotList, CK_ULONG_PTR pulCount)</td></tr>
-<tr class="memdesc:gac6ce96c3f4a3b7f24d9420763df121fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains a list of slots in the system. <br /></td></tr>
-<tr class="separator:gac6ce96c3f4a3b7f24d9420763df121fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae795a3fd0467a249eeb075f94bfa0adc"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_GetSlotInfo</b> (CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)</td></tr>
-<tr class="memdesc:gae795a3fd0467a249eeb075f94bfa0adc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains information about a particular slot. <br /></td></tr>
-<tr class="separator:gae795a3fd0467a249eeb075f94bfa0adc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac933291718eb6aa218db1c677e07ab02"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_GetTokenInfo</b> (CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)</td></tr>
-<tr class="memdesc:gac933291718eb6aa218db1c677e07ab02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains information about a particular token. <br /></td></tr>
-<tr class="separator:gac933291718eb6aa218db1c677e07ab02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac80659e1b954f9514723fd6d4429dfb6"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_GetMechanismList</b> (CK_SLOT_ID slotID, CK_MECHANISM_TYPE_PTR pMechanismList, CK_ULONG_PTR pulCount)</td></tr>
-<tr class="memdesc:gac80659e1b954f9514723fd6d4429dfb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains a list of mechanisms supported by a token (in a slot) <br /></td></tr>
-<tr class="separator:gac80659e1b954f9514723fd6d4429dfb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabe5aeb6b794d4ca28cb2534fe0a4a159"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_GetMechanismInfo</b> (CK_SLOT_ID slotID, CK_MECHANISM_TYPE type, CK_MECHANISM_INFO_PTR pInfo)</td></tr>
-<tr class="memdesc:gabe5aeb6b794d4ca28cb2534fe0a4a159"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains information about a particular mechanism of a token (in a slot) <br /></td></tr>
-<tr class="separator:gabe5aeb6b794d4ca28cb2534fe0a4a159"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3bac1f2e5a7bc50d4d27fb2360eaadcb"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_InitToken</b> (CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen, CK_UTF8CHAR_PTR pLabel)</td></tr>
-<tr class="memdesc:ga3bac1f2e5a7bc50d4d27fb2360eaadcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a token (in a slot) <br /></td></tr>
-<tr class="separator:ga3bac1f2e5a7bc50d4d27fb2360eaadcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2b726534eedac635b28ccd501c242004"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_InitPIN</b> (CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen)</td></tr>
-<tr class="memdesc:ga2b726534eedac635b28ccd501c242004"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the normal user's PIN. <br /></td></tr>
-<tr class="separator:ga2b726534eedac635b28ccd501c242004"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga386826845e06a84b36522a2bf49ff6c6"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_SetPIN</b> (CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pOldPin, CK_ULONG ulOldLen, CK_UTF8CHAR_PTR pNewPin, CK_ULONG ulNewLen)</td></tr>
-<tr class="memdesc:ga386826845e06a84b36522a2bf49ff6c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the PIN of the current user. <br /></td></tr>
-<tr class="separator:ga386826845e06a84b36522a2bf49ff6c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad28ad989a94c345875dff446ad6c6481"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_OpenSession</b> (CK_SLOT_ID slotID, CK_FLAGS flags, CK_VOID_PTR pApplication, CK_NOTIFY Notify, CK_SESSION_HANDLE_PTR phSession)</td></tr>
-<tr class="memdesc:gad28ad989a94c345875dff446ad6c6481"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a connection between an application and a particular token or sets up an application callback for token insertion. <br /></td></tr>
-<tr class="separator:gad28ad989a94c345875dff446ad6c6481"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae2ce0be368072fa83e0b1f5136b7b753"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_CloseSession</b> (CK_SESSION_HANDLE hSession)</td></tr>
-<tr class="memdesc:gae2ce0be368072fa83e0b1f5136b7b753"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the given session. <br /></td></tr>
-<tr class="separator:gae2ce0be368072fa83e0b1f5136b7b753"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad2ab78c409dfcbc155d673550cb71736"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_CloseAllSessions</b> (CK_SLOT_ID slotID)</td></tr>
-<tr class="memdesc:gad2ab78c409dfcbc155d673550cb71736"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close all open sessions. <br /></td></tr>
-<tr class="separator:gad2ab78c409dfcbc155d673550cb71736"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaffb75a4d4ba623ee01f31877b56b018e"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_GetSessionInfo</b> (CK_SESSION_HANDLE hSession, CK_SESSION_INFO_PTR pInfo)</td></tr>
-<tr class="memdesc:gaffb75a4d4ba623ee01f31877b56b018e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve information about the specified session. <br /></td></tr>
-<tr class="separator:gaffb75a4d4ba623ee01f31877b56b018e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga95dcfc50be7ac2cb3ebf58d958f70dde"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_GetOperationState</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pOperationState, CK_ULONG_PTR pulOperationStateLen)</td></tr>
-<tr class="memdesc:ga95dcfc50be7ac2cb3ebf58d958f70dde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains the cryptographic operations state of a session. <br /></td></tr>
-<tr class="separator:ga95dcfc50be7ac2cb3ebf58d958f70dde"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga66e6598e8f5db01e428a46d58b9865fc"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_SetOperationState</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pOperationState, CK_ULONG ulOperationStateLen, CK_OBJECT_HANDLE hEncryptionKey, CK_OBJECT_HANDLE hAuthenticationKey)</td></tr>
-<tr class="memdesc:ga66e6598e8f5db01e428a46d58b9865fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the cryptographic operations state of a session. <br /></td></tr>
-<tr class="separator:ga66e6598e8f5db01e428a46d58b9865fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaca7aa4ae8d9592f464dc1b545fead02e"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_Login</b> (CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen)</td></tr>
-<tr class="memdesc:gaca7aa4ae8d9592f464dc1b545fead02e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Login on the token in the specified session. <br /></td></tr>
-<tr class="separator:gaca7aa4ae8d9592f464dc1b545fead02e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab7a0a4ff33f2450736d76d453045ad6f"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_Logout</b> (CK_SESSION_HANDLE hSession)</td></tr>
-<tr class="memdesc:gab7a0a4ff33f2450736d76d453045ad6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log out of the token in the specified session. <br /></td></tr>
-<tr class="separator:gab7a0a4ff33f2450736d76d453045ad6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga01b36384bff05a4dc4476c0764cdc248"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_CreateObject</b> (CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_OBJECT_HANDLE_PTR phObject)</td></tr>
-<tr class="memdesc:ga01b36384bff05a4dc4476c0764cdc248"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new object on the token in the specified session using the given attribute template. <br /></td></tr>
-<tr class="separator:ga01b36384bff05a4dc4476c0764cdc248"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga301f7118a227ffedd7f945a9532fc18a"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_CopyObject</b> (CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_OBJECT_HANDLE_PTR phNewObject)</td></tr>
-<tr class="memdesc:ga301f7118a227ffedd7f945a9532fc18a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a copy of the object with the specified handle. <br /></td></tr>
-<tr class="separator:ga301f7118a227ffedd7f945a9532fc18a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1b991b6fd8b20f130f9d87b98e590fdb"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_DestroyObject</b> (CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject)</td></tr>
-<tr class="memdesc:ga1b991b6fd8b20f130f9d87b98e590fdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the specified object. <br /></td></tr>
-<tr class="separator:ga1b991b6fd8b20f130f9d87b98e590fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadd117013f515b1d441889a24a605bd93"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_GetObjectSize</b> (CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ULONG_PTR pulSize)</td></tr>
-<tr class="memdesc:gadd117013f515b1d441889a24a605bd93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains the size of an object in bytes. <br /></td></tr>
-<tr class="separator:gadd117013f515b1d441889a24a605bd93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaad61dc7b2313286bdd049676ef0fd70"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_GetAttributeValue</b> (CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)</td></tr>
-<tr class="memdesc:gaaad61dc7b2313286bdd049676ef0fd70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains an attribute value of an object. <br /></td></tr>
-<tr class="separator:gaaad61dc7b2313286bdd049676ef0fd70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga752412c887c0d900c05b771709ebac83"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_SetAttributeValue</b> (CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)</td></tr>
-<tr class="memdesc:ga752412c887c0d900c05b771709ebac83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change or set the value of the specified attributes on the specified object. <br /></td></tr>
-<tr class="separator:ga752412c887c0d900c05b771709ebac83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf4d4d071deb07e7dcfa489a2a835756d"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_FindObjectsInit</b> (CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)</td></tr>
-<tr class="memdesc:gaf4d4d071deb07e7dcfa489a2a835756d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an object search in the specified session using the specified attribute template as search parameters. <br /></td></tr>
-<tr class="separator:gaf4d4d071deb07e7dcfa489a2a835756d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga42635cbaa2ba78482ae053bea477246a"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_FindObjects</b> (CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE_PTR phObject, CK_ULONG ulMaxObjectCount, CK_ULONG_PTR pulObjectCount)</td></tr>
-<tr class="memdesc:ga42635cbaa2ba78482ae053bea477246a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continue the search for objects in the specified session. <br /></td></tr>
-<tr class="separator:ga42635cbaa2ba78482ae053bea477246a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga46347f830269bfbcbece15951f0c0fa4"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_FindObjectsFinal</b> (CK_SESSION_HANDLE hSession)</td></tr>
-<tr class="memdesc:ga46347f830269bfbcbece15951f0c0fa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes an object search operation (and cleans up) <br /></td></tr>
-<tr class="separator:ga46347f830269bfbcbece15951f0c0fa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga23a9b2dc15a447decd10881dde448890"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_EncryptInit</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey)</td></tr>
-<tr class="memdesc:ga23a9b2dc15a447decd10881dde448890"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an encryption operation using the specified mechanism and session. <br /></td></tr>
-<tr class="separator:ga23a9b2dc15a447decd10881dde448890"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf9aab1c3fcf352af53b0e66652fac39d"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_Encrypt</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pEncryptedData, CK_ULONG_PTR pulEncryptedDataLen)</td></tr>
-<tr class="memdesc:gaf9aab1c3fcf352af53b0e66652fac39d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a single operation encryption operation in the specified session. <br /></td></tr>
-<tr class="separator:gaf9aab1c3fcf352af53b0e66652fac39d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5e13fc136e0b7f79d22a6b735424a815"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_EncryptUpdate</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen, CK_BYTE_PTR pEncryptedPart, CK_ULONG_PTR pulEncryptedPartLen)</td></tr>
-<tr class="memdesc:ga5e13fc136e0b7f79d22a6b735424a815"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues a multiple-part encryption operation. <br /></td></tr>
-<tr class="separator:ga5e13fc136e0b7f79d22a6b735424a815"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab4a336f9cb4920a9ff8585aec5d90a3f"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_EncryptFinal</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pLastEncryptedPart, CK_ULONG_PTR pulLastEncryptedPartLen)</td></tr>
-<tr class="memdesc:gab4a336f9cb4920a9ff8585aec5d90a3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part encryption operation. <br /></td></tr>
-<tr class="separator:gab4a336f9cb4920a9ff8585aec5d90a3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac0bf030d8e5ff01fda7754a5b8b7a8e5"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_DecryptInit</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey)</td></tr>
-<tr class="memdesc:gac0bf030d8e5ff01fda7754a5b8b7a8e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize decryption using the specified object. <br /></td></tr>
-<tr class="separator:gac0bf030d8e5ff01fda7754a5b8b7a8e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad7a0c95a7b810c5534185632b8b58d29"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_Decrypt</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedData, CK_ULONG ulEncryptedDataLen, CK_BYTE_PTR pData, CK_ULONG_PTR pulDataLen)</td></tr>
-<tr class="memdesc:gad7a0c95a7b810c5534185632b8b58d29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a single operation decryption in the given session. <br /></td></tr>
-<tr class="separator:gad7a0c95a7b810c5534185632b8b58d29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa4fb93ab28bedada72364e925b3dacbf"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_DecryptUpdate</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedPart, CK_ULONG ulEncryptedPartLen, CK_BYTE_PTR pPart, CK_ULONG_PTR pulPartLen)</td></tr>
-<tr class="memdesc:gaa4fb93ab28bedada72364e925b3dacbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues a multiple-part decryption operation. <br /></td></tr>
-<tr class="separator:gaa4fb93ab28bedada72364e925b3dacbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab549c4d540cff530f9e4d9bca36e2253"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_DecryptFinal</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pLastPart, CK_ULONG_PTR pulLastPartLen)</td></tr>
-<tr class="memdesc:gab549c4d540cff530f9e4d9bca36e2253"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part decryption operation. <br /></td></tr>
-<tr class="separator:gab549c4d540cff530f9e4d9bca36e2253"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f6bcb9f9be8a7822d9d8f7c44c33403"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_DigestInit</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism)</td></tr>
-<tr class="memdesc:ga3f6bcb9f9be8a7822d9d8f7c44c33403"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a message-digesting operation using the specified mechanism in the specified session. <br /></td></tr>
-<tr class="separator:ga3f6bcb9f9be8a7822d9d8f7c44c33403"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadfc9281add668a5aff9bbc1253655917"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_Digest</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pDigest, CK_ULONG_PTR pulDigestLen)</td></tr>
-<tr class="memdesc:gadfc9281add668a5aff9bbc1253655917"><td class="mdescLeft">&#160;</td><td class="mdescRight">Digest the specified data in a one-pass operation and return the resulting digest. <br /></td></tr>
-<tr class="separator:gadfc9281add668a5aff9bbc1253655917"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a8189a6963fbcfdfe2bebe20a8bf3b6"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_DigestUpdate</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen)</td></tr>
-<tr class="memdesc:ga7a8189a6963fbcfdfe2bebe20a8bf3b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues a multiple-part digesting operation. <br /></td></tr>
-<tr class="separator:ga7a8189a6963fbcfdfe2bebe20a8bf3b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga21a9c4115bc535490416e2850a2a45fd"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_DigestKey</b> (CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey)</td></tr>
-<tr class="memdesc:ga21a9c4115bc535490416e2850a2a45fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update a running digest operation by digesting a secret key with the specified handle. <br /></td></tr>
-<tr class="separator:ga21a9c4115bc535490416e2850a2a45fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1f3dc3758726bb4737db956e4cd71e91"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_DigestFinal</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pDigest, CK_ULONG_PTR pulDigestLen)</td></tr>
-<tr class="memdesc:ga1f3dc3758726bb4737db956e4cd71e91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part digesting operation. <br /></td></tr>
-<tr class="separator:ga1f3dc3758726bb4737db956e4cd71e91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga37d93326915dc9b74f2476238f35037c"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_SignInit</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey)</td></tr>
-<tr class="memdesc:ga37d93326915dc9b74f2476238f35037c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a signing operation using the specified key and mechanism. <br /></td></tr>
-<tr class="separator:ga37d93326915dc9b74f2476238f35037c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5f587605d68a7a56012ac337ddaec5e1"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_Sign</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pSignature, CK_ULONG_PTR pulSignatureLen)</td></tr>
-<tr class="memdesc:ga5f587605d68a7a56012ac337ddaec5e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sign the data in a single pass operation. <br /></td></tr>
-<tr class="separator:ga5f587605d68a7a56012ac337ddaec5e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gada0dd5a3d8ae781df05ea016d2f76d16"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_SignUpdate</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen)</td></tr>
-<tr class="memdesc:gada0dd5a3d8ae781df05ea016d2f76d16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues a multiple-part signature operation. <br /></td></tr>
-<tr class="separator:gada0dd5a3d8ae781df05ea016d2f76d16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2171c591535849faf017fa126e3a9a48"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_SignFinal</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSignature, CK_ULONG_PTR pulSignatureLen)</td></tr>
-<tr class="memdesc:ga2171c591535849faf017fa126e3a9a48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part signature operation. <br /></td></tr>
-<tr class="separator:ga2171c591535849faf017fa126e3a9a48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga97ee219718545f49ee651cbb00712b8c"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_SignRecoverInit</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey)</td></tr>
-<tr class="memdesc:ga97ee219718545f49ee651cbb00712b8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a signature operation, where the data can be recovered from the signature. <br /></td></tr>
-<tr class="separator:ga97ee219718545f49ee651cbb00712b8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga210f4bdbaae1bc2b8e242e1610da4f0f"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_SignRecover</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pSignature, CK_ULONG_PTR pulSignatureLen)</td></tr>
-<tr class="memdesc:ga210f4bdbaae1bc2b8e242e1610da4f0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signs single-part data, where the data can be recovered from the signature. <br /></td></tr>
-<tr class="separator:ga210f4bdbaae1bc2b8e242e1610da4f0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeae51e6092fa8c8a58e022fcd8366c45"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_VerifyInit</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey)</td></tr>
-<tr class="memdesc:gaeae51e6092fa8c8a58e022fcd8366c45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a verification operation using the specified key and mechanism. <br /></td></tr>
-<tr class="separator:gaeae51e6092fa8c8a58e022fcd8366c45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4e5f5ad0a6c7c6083ad3d780cc6d5529"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_Verify</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pSignature, CK_ULONG ulSignatureLen)</td></tr>
-<tr class="memdesc:ga4e5f5ad0a6c7c6083ad3d780cc6d5529"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies a signature on single-part data. <br /></td></tr>
-<tr class="separator:ga4e5f5ad0a6c7c6083ad3d780cc6d5529"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaba9414cf3fc679beaae1baa5425a6e01"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_VerifyUpdate</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen)</td></tr>
-<tr class="memdesc:gaba9414cf3fc679beaae1baa5425a6e01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues a multiple-part verification operation. <br /></td></tr>
-<tr class="separator:gaba9414cf3fc679beaae1baa5425a6e01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf6ecd512fa21851f0bcbc25b90c2b444"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_VerifyFinal</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSignature, CK_ULONG ulSignatureLen)</td></tr>
-<tr class="memdesc:gaf6ecd512fa21851f0bcbc25b90c2b444"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part verification operation. <br /></td></tr>
-<tr class="separator:gaf6ecd512fa21851f0bcbc25b90c2b444"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaefe33200a70026c7e622b01473d78b66"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_VerifyRecoverInit</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey)</td></tr>
-<tr class="memdesc:gaefe33200a70026c7e622b01473d78b66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a verification operation where the data is recovered from the signature. <br /></td></tr>
-<tr class="separator:gaefe33200a70026c7e622b01473d78b66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga82355d41e5303e31cc49df003e9d8c38"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_VerifyRecover</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSignature, CK_ULONG ulSignatureLen, CK_BYTE_PTR pData, CK_ULONG_PTR pulDataLen)</td></tr>
-<tr class="memdesc:ga82355d41e5303e31cc49df003e9d8c38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies a signature on single-part data, where the data is recovered from the signature. <br /></td></tr>
-<tr class="separator:ga82355d41e5303e31cc49df003e9d8c38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f8a5f0509ef9929f90536b6e255e485"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_DigestEncryptUpdate</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen, CK_BYTE_PTR pEncryptedPart, CK_ULONG_PTR pulEncryptedPartLen)</td></tr>
-<tr class="memdesc:ga3f8a5f0509ef9929f90536b6e255e485"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues simultaneous multiple-part digesting and encryption operations. <br /></td></tr>
-<tr class="separator:ga3f8a5f0509ef9929f90536b6e255e485"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga128ba07226b7e45772830f06dfde4b71"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_DecryptDigestUpdate</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedPart, CK_ULONG ulEncryptedPartLen, CK_BYTE_PTR pPart, CK_ULONG_PTR pulPartLen)</td></tr>
-<tr class="memdesc:ga128ba07226b7e45772830f06dfde4b71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues simultaneous multiple-part decryption and digesting operations. <br /></td></tr>
-<tr class="separator:ga128ba07226b7e45772830f06dfde4b71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf63ca32aef7a90f87e94a288de5e82cc"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_SignEncryptUpdate</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen, CK_BYTE_PTR pEncryptedPart, CK_ULONG_PTR pulEncryptedPartLen)</td></tr>
-<tr class="memdesc:gaf63ca32aef7a90f87e94a288de5e82cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues simultaneous multiple-part signature and encryption operations. <br /></td></tr>
-<tr class="separator:gaf63ca32aef7a90f87e94a288de5e82cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1aeef6ac02d5fb7d84c37cbec5ee180c"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_DecryptVerifyUpdate</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedPart, CK_ULONG ulEncryptedPartLen, CK_BYTE_PTR pPart, CK_ULONG_PTR pulPartLen)</td></tr>
-<tr class="memdesc:ga1aeef6ac02d5fb7d84c37cbec5ee180c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues simultaneous multiple-part decryption and verification operations. <br /></td></tr>
-<tr class="separator:ga1aeef6ac02d5fb7d84c37cbec5ee180c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga84673050f913404ec3ae164d4f7a1d9c"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_GenerateKey</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_OBJECT_HANDLE_PTR phKey)</td></tr>
-<tr class="memdesc:ga84673050f913404ec3ae164d4f7a1d9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a secret key using the specified mechanism. <br /></td></tr>
-<tr class="separator:ga84673050f913404ec3ae164d4f7a1d9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga802a061224966a5523beb1ea0a9d9c27"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_GenerateKeyPair</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_ATTRIBUTE_PTR pPublicKeyTemplate, CK_ULONG ulPublicKeyAttributeCount, CK_ATTRIBUTE_PTR pPrivateKeyTemplate, CK_ULONG ulPrivateKeyAttributeCount, CK_OBJECT_HANDLE_PTR phPublicKey, CK_OBJECT_HANDLE_PTR phPrivateKey)</td></tr>
-<tr class="memdesc:ga802a061224966a5523beb1ea0a9d9c27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a public-key/private-key pair using the specified mechanism. <br /></td></tr>
-<tr class="separator:ga802a061224966a5523beb1ea0a9d9c27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf47613fd93688da939cf4c6998f83d77"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_WrapKey</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hWrappingKey, CK_OBJECT_HANDLE hKey, CK_BYTE_PTR pWrappedKey, CK_ULONG_PTR pulWrappedKeyLen)</td></tr>
-<tr class="memdesc:gaf47613fd93688da939cf4c6998f83d77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps (encrypts) the specified key using the specified wrapping key and mechanism. <br /></td></tr>
-<tr class="separator:gaf47613fd93688da939cf4c6998f83d77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafd4a7d6e142179e46453af11d5da3e91"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_UnwrapKey</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hUnwrappingKey, CK_BYTE_PTR pWrappedKey, CK_ULONG ulWrappedKeyLen, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulAttributeCount, CK_OBJECT_HANDLE_PTR phKey)</td></tr>
-<tr class="memdesc:gafd4a7d6e142179e46453af11d5da3e91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unwraps (decrypts) the specified key using the specified unwrapping key. <br /></td></tr>
-<tr class="separator:gafd4a7d6e142179e46453af11d5da3e91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga67ecc1ce8ca0630aebdf3a29e129f531"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_DeriveKey</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hBaseKey, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulAttributeCount, CK_OBJECT_HANDLE_PTR phKey)</td></tr>
-<tr class="memdesc:ga67ecc1ce8ca0630aebdf3a29e129f531"><td class="mdescLeft">&#160;</td><td class="mdescRight">Derive a key from the specified base key. <br /></td></tr>
-<tr class="separator:ga67ecc1ce8ca0630aebdf3a29e129f531"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab26093f478636b5ba04176c2f81f44c4"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_SeedRandom</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSeed, CK_ULONG ulSeedLen)</td></tr>
-<tr class="memdesc:gab26093f478636b5ba04176c2f81f44c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mixes in additional seed material to the random number generator. <br /></td></tr>
-<tr class="separator:gab26093f478636b5ba04176c2f81f44c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga54a883eb1608be800f7fbd204665d50d"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_GenerateRandom</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR RandomData, CK_ULONG ulRandomLen)</td></tr>
-<tr class="memdesc:ga54a883eb1608be800f7fbd204665d50d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the specified amount of random data. <br /></td></tr>
-<tr class="separator:ga54a883eb1608be800f7fbd204665d50d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8c5d2e29d7fbf26f5a916cb3017aebe0"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_GetFunctionStatus</b> (CK_SESSION_HANDLE hSession)</td></tr>
-<tr class="memdesc:ga8c5d2e29d7fbf26f5a916cb3017aebe0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Legacy function - see PKCS#11 v2.40. <br /></td></tr>
-<tr class="separator:ga8c5d2e29d7fbf26f5a916cb3017aebe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac545b1d8eeb82e40f7519cdfc5a3427c"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_CancelFunction</b> (CK_SESSION_HANDLE hSession)</td></tr>
-<tr class="memdesc:gac545b1d8eeb82e40f7519cdfc5a3427c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Legacy function. <br /></td></tr>
-<tr class="separator:gac545b1d8eeb82e40f7519cdfc5a3427c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf76ed663f4f2dd4da2c69a498cd4a1e6"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>C_WaitForSlotEvent</b> (CK_FLAGS flags, CK_SLOT_ID_PTR pSlot, CK_VOID_PTR pRserved)</td></tr>
-<tr class="memdesc:gaf76ed663f4f2dd4da2c69a498cd4a1e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for a slot event (token insertion, removal, etc) on the specified slot to occur. <br /></td></tr>
-<tr class="separator:gaf76ed663f4f2dd4da2c69a498cd4a1e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad24cbfebacbf53920f076dfd8639a969"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_key_write</b> (CK_VOID_PTR pSession, CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, const <a class="el" href="a01844.html">pkcs11_ecc_key_info_t</a> *ec_key_info)</td></tr>
+<tr class="separator:gad24cbfebacbf53920f076dfd8639a969"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae2748ca15b76254a518b28bf3dccb63f"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_key_generate</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_OBJECT_HANDLE_PTR phKey)</td></tr>
+<tr class="separator:gae2748ca15b76254a518b28bf3dccb63f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaac5c7d6ae9b8262fb705083302efd90a"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_key_generate_pair</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_ATTRIBUTE_PTR pPublicKeyTemplate, CK_ULONG ulPublicKeyAttributeCount, CK_ATTRIBUTE_PTR pPrivateKeyTemplate, CK_ULONG ulPrivateKeyAttributeCount, CK_OBJECT_HANDLE_PTR phPublicKey, CK_OBJECT_HANDLE_PTR phPrivateKey)</td></tr>
+<tr class="separator:gaac5c7d6ae9b8262fb705083302efd90a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8ace04a2049a5d7e527558da10e68dcd"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_key_derive</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hBaseKey, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_OBJECT_HANDLE_PTR phKey)</td></tr>
+<tr class="separator:ga8ace04a2049a5d7e527558da10e68dcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7852e24edf669de4a4ccd76010128150"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_key_clear_session_cache</b> (<a class="el" href="a01872.html">pkcs11_session_ctx_ptr</a> session_ctx)</td></tr>
+<tr class="separator:ga7852e24edf669de4a4ccd76010128150"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga22e93204eaa9f9e8b585aab6ba87dc25"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_key_clear_object_cache</b> (pkcs11_object_ptr pObject)</td></tr>
+<tr class="separator:ga22e93204eaa9f9e8b585aab6ba87dc25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba62d03e8a8ad602a3f3300654322c29"><td class="memItemLeft" align="right" valign="top">
+const <a class="el" href="a01844.html">pkcs11_ecc_key_info_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_get_object_key_type</b> (<a class="el" href="a01508.html">ATCADevice</a> device_ctx, pkcs11_object_ptr obj_ptr)</td></tr>
+<tr class="separator:gaba62d03e8a8ad602a3f3300654322c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac269625688f3250b6ca3c82a78b88224"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_ta_get_pubkey</b> (CK_VOID_PTR pObject, <a class="el" href="a01612.html">cal_buffer</a> *key_buffer, <a class="el" href="a01872.html">pkcs11_session_ctx_ptr</a> session_ctx)</td></tr>
+<tr class="separator:gac269625688f3250b6ca3c82a78b88224"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga22a8b3e10bb72776684233392b6fdb0f"><td class="memItemLeft" align="right" valign="top">
+const <a class="el" href="a01844.html">pkcs11_ecc_key_info_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ec_key_data_table</b> [4]</td></tr>
+<tr class="separator:ga22a8b3e10bb72776684233392b6fdb0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadf3e8d1e6b01d9fe85f54c9478d8d215"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01820.html">pkcs11_attrib_model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#gadf3e8d1e6b01d9fe85f54c9478d8d215">pkcs11_key_public_attributes</a> []</td></tr>
+<tr class="separator:gadf3e8d1e6b01d9fe85f54c9478d8d215"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc78586c61388b3756395f0098fa4505"><td class="memItemLeft" align="right" valign="top">
+const CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_key_public_attributes_count</b></td></tr>
+<tr class="separator:gadc78586c61388b3756395f0098fa4505"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga40d8e67ef0fae7bdc2dca013ad8410aa"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01820.html">pkcs11_attrib_model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga40d8e67ef0fae7bdc2dca013ad8410aa">pkcs11_key_private_attributes</a> []</td></tr>
+<tr class="separator:ga40d8e67ef0fae7bdc2dca013ad8410aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf358031996abf87fc21bc259e1e90644"><td class="memItemLeft" align="right" valign="top">
+const CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_key_private_attributes_count</b></td></tr>
+<tr class="separator:gaf358031996abf87fc21bc259e1e90644"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6ef03269a32699359d90901cc84954f3"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01820.html">pkcs11_attrib_model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga6ef03269a32699359d90901cc84954f3">pkcs11_key_secret_attributes</a> []</td></tr>
+<tr class="separator:ga6ef03269a32699359d90901cc84954f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga55a0ac12b2ed4daefadaf3fa94edf78e"><td class="memItemLeft" align="right" valign="top">
+const CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_key_secret_attributes_count</b></td></tr>
+<tr class="separator:ga55a0ac12b2ed4daefadaf3fa94edf78e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf3b4678891994823f2cdd0cb8707ecc"><td class="memItemLeft" align="right" valign="top">CK_BYTE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#gacf3b4678891994823f2cdd0cb8707ecc">pkcs11_ec_pbkey_asn1_hdr_p256</a> []</td></tr>
+<tr class="separator:gacf3b4678891994823f2cdd0cb8707ecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7fd56486be0426ec029cd60072ef62ba"><td class="memItemLeft" align="right" valign="top">CK_BYTE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga7fd56486be0426ec029cd60072ef62ba">pkcs11_x962_asn1_hdr_ec256</a> []</td></tr>
+<tr class="separator:ga7fd56486be0426ec029cd60072ef62ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga62107b151ff753464415cdae0bb7f2c1"><td class="memItemLeft" align="right" valign="top">
+CK_BYTE&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_key_ec_params_p256</b> []</td></tr>
+<tr class="separator:ga62107b151ff753464415cdae0bb7f2c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7711abc98f6c6d6536c2a4d0065e1b4a"><td class="memItemLeft" align="right" valign="top">CK_BYTE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga7711abc98f6c6d6536c2a4d0065e1b4a">pkcs11_ec_pbkey_asn1_hdr_p224</a> []</td></tr>
+<tr class="separator:ga7711abc98f6c6d6536c2a4d0065e1b4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaefbee7a7f8454014a46e969fa9912c3"><td class="memItemLeft" align="right" valign="top">CK_BYTE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#gaaefbee7a7f8454014a46e969fa9912c3">pkcs11_x962_asn1_hdr_ec224</a> []</td></tr>
+<tr class="separator:gaaefbee7a7f8454014a46e969fa9912c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafc8f3eea0a086e618eac7d01534e57c7"><td class="memItemLeft" align="right" valign="top">
+CK_BYTE&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_key_ec_params_p224</b> []</td></tr>
+<tr class="separator:gafc8f3eea0a086e618eac7d01534e57c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadbc903025f5c5ea06b36fba39f30d305"><td class="memItemLeft" align="right" valign="top">CK_BYTE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#gadbc903025f5c5ea06b36fba39f30d305">pkcs11_ec_pbkey_asn1_hdr_p384</a> []</td></tr>
+<tr class="separator:gadbc903025f5c5ea06b36fba39f30d305"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8ad0d2db3944821eb471e1a6e61532dd"><td class="memItemLeft" align="right" valign="top">CK_BYTE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga8ad0d2db3944821eb471e1a6e61532dd">pkcs11_x962_asn1_hdr_ec384</a> []</td></tr>
+<tr class="separator:ga8ad0d2db3944821eb471e1a6e61532dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga358179863831ee5342eb5b6d21e93587"><td class="memItemLeft" align="right" valign="top">
+CK_BYTE&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_key_ec_params_p384</b> []</td></tr>
+<tr class="separator:ga358179863831ee5342eb5b6d21e93587"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga44f7303f7073c7f97c3e31ec5db97769"><td class="memItemLeft" align="right" valign="top">CK_BYTE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga44f7303f7073c7f97c3e31ec5db97769">pkcs11_ec_pbkey_asn1_hdr_p521</a> []</td></tr>
+<tr class="separator:ga44f7303f7073c7f97c3e31ec5db97769"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga70a8c1bb6cec2636b206c588dc6354fd"><td class="memItemLeft" align="right" valign="top">CK_BYTE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga70a8c1bb6cec2636b206c588dc6354fd">pkcs11_x962_asn1_hdr_ec521</a> []</td></tr>
+<tr class="separator:ga70a8c1bb6cec2636b206c588dc6354fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad5b59443ee748eb1b7f925c004abb3ca"><td class="memItemLeft" align="right" valign="top">
+CK_BYTE&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_key_ec_params_p521</b> []</td></tr>
+<tr class="separator:gad5b59443ee748eb1b7f925c004abb3ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Basic library redirects based on the 2.40 specification docs.oasis-open.org/pkcs11/pkcs11-base/v2.40/os/pkcs11-base-v2.40-os.html. </p>
+<div class="textblock"><p>PKCS11 Library Object Handling. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00740.html">pkcs11_main.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00740.html">pkcs11_key.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

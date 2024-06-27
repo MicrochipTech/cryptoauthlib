@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: cryptoauthlib.device.UseLock Class Reference</title>
+<title>CryptoAuthLib: cryptoauthlib.atjwt.HwHmacAlgorithm Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,49 +98,114 @@ $(document).ready(function(){initNavTree('a02236.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#pro-static-attribs">Static Protected Attributes</a>  </div>
-  <div class="headertitle"><div class="title">cryptoauthlib.device.UseLock Class Reference</div></div>
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a>  </div>
+  <div class="headertitle"><div class="title">cryptoauthlib.atjwt.HwHmacAlgorithm Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="dynheader">
-Inheritance diagram for cryptoauthlib.device.UseLock:</div>
+Inheritance diagram for cryptoauthlib.atjwt.HwHmacAlgorithm:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="a02236.png" alt=""/>
  </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-attribs" name="pro-static-attribs"></a>
-Static Protected Attributes</h2></td></tr>
-<tr class="memitem:a604ae6fce3b84fe162d0262fd0b40a20"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02236.html#a604ae6fce3b84fe162d0262fd0b40a20">_fields_</a></td></tr>
-<tr class="separator:a604ae6fce3b84fe162d0262fd0b40a20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06754e09d5a4d655ac5e523ee3dcb32b"><td class="memItemLeft" align="right" valign="top"><a id="a06754e09d5a4d655ac5e523ee3dcb32b" name="a06754e09d5a4d655ac5e523ee3dcb32b"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>_pack_</b> = 1</td></tr>
-<tr class="separator:a06754e09d5a4d655ac5e523ee3dcb32b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:aca34d18f1bdc3c6a377c0c7ae9f96cca"><td class="memItemLeft" align="right" valign="top"><a id="aca34d18f1bdc3c6a377c0c7ae9f96cca" name="aca34d18f1bdc3c6a377c0c7ae9f96cca"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, hash_alg, slot, iface_cfg)</td></tr>
+<tr class="separator:aca34d18f1bdc3c6a377c0c7ae9f96cca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21a92b8d373a29b54b11448fdb7b2ce4"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02236.html#a21a92b8d373a29b54b11448fdb7b2ce4">sign</a> (self, msg, _)</td></tr>
+<tr class="separator:a21a92b8d373a29b54b11448fdb7b2ce4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a732d6227271912ac665bc7f27a1012ce"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02236.html#a732d6227271912ac665bc7f27a1012ce">verify</a> (self, msg, key, sig)</td></tr>
+<tr class="separator:a732d6227271912ac665bc7f27a1012ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a63eddec47b48f638110fa790fa7b511f"><td class="memItemLeft" align="right" valign="top"><a id="a63eddec47b48f638110fa790fa7b511f" name="a63eddec47b48f638110fa790fa7b511f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>_cfg</b></td></tr>
+<tr class="separator:a63eddec47b48f638110fa790fa7b511f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48840ba09c4b8072d50fb3de1590b6c6"><td class="memItemLeft" align="right" valign="top"><a id="a48840ba09c4b8072d50fb3de1590b6c6" name="a48840ba09c4b8072d50fb3de1590b6c6"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>_slot</b></td></tr>
+<tr class="separator:a48840ba09c4b8072d50fb3de1590b6c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><pre class="fragment">UseLock Field Definition </pre> </div><h2 class="groupheader">Field Documentation</h2>
-<a id="a604ae6fce3b84fe162d0262fd0b40a20" name="a604ae6fce3b84fe162d0262fd0b40a20"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a604ae6fce3b84fe162d0262fd0b40a20">&#9670;&#160;</a></span>_fields_</h2>
+<div class="textblock"><pre class="fragment">Extended Algorithm with hardware based HMAC support
+</pre> </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a21a92b8d373a29b54b11448fdb7b2ce4" name="a21a92b8d373a29b54b11448fdb7b2ce4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21a92b8d373a29b54b11448fdb7b2ce4">&#9670;&#160;</a></span>sign()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">list cryptoauthlib.device.UseLock._fields_</td>
+          <td class="memname">def cryptoauthlib.atjwt.HwHmacAlgorithm.sign </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=  [(<span class="stringliteral">&#39;UseLockEnable&#39;</span>, c_uint8, 4),</div>
-<div class="line">                (<span class="stringliteral">&#39;UseLockKey&#39;</span>, c_uint8, 4)]</div>
-</div><!-- fragment -->
+<pre class="fragment">Return a signature of the JWT with hardware SHA256 HMAC and stored key
+</pre> 
+</div>
+</div>
+<a id="a732d6227271912ac665bc7f27a1012ce" name="a732d6227271912ac665bc7f27a1012ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a732d6227271912ac665bc7f27a1012ce">&#9670;&#160;</a></span>verify()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def cryptoauthlib.atjwt.HwHmacAlgorithm.verify </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>sig</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Verify a signature using the software HMAC module
+</pre> 
 </div>
 </div>
 </div><!-- contents -->
@@ -148,7 +213,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>_pack_</b> = 1</td></t
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01415.html">cryptoauthlib</a></li><li class="navelem"><a class="el" href="a01420.html">device</a></li><li class="navelem"><a class="el" href="a02236.html">UseLock</a></li>
+    <li class="navelem"><a class="el" href="a01451.html">cryptoauthlib</a></li><li class="navelem"><a class="el" href="a01455.html">atjwt</a></li><li class="navelem"><a class="el" href="a02236.html">HwHmacAlgorithm</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

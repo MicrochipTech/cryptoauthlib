@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_session_ctx_s Struct Reference</title>
+<title>CryptoAuthLib: pkcs11_dev_state Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,59 +99,58 @@ $(document).ready(function(){initNavTree('a01836.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">pkcs11_session_ctx_s Struct Reference</div></div>
+  <div class="headertitle"><div class="title">pkcs11_dev_state Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;lib/pkcs11/pkcs11_session.h&gt;</code></p>
+<p><code>#include &lt;lib/pkcs11/pkcs11_init.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a2ceffda82ded1cbc2c800702f6389303"><td class="memItemLeft" align="right" valign="top"><a id="a2ceffda82ded1cbc2c800702f6389303" name="a2ceffda82ded1cbc2c800702f6389303"></a>
-CK_BBOOL&#160;</td><td class="memItemRight" valign="bottom"><b>initialized</b></td></tr>
-<tr class="separator:a2ceffda82ded1cbc2c800702f6389303"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2ef29bbf9e9faaecf2c888109f3b8c4"><td class="memItemLeft" align="right" valign="top"><a id="af2ef29bbf9e9faaecf2c888109f3b8c4" name="af2ef29bbf9e9faaecf2c888109f3b8c4"></a>
-pkcs11_slot_ctx_ptr&#160;</td><td class="memItemRight" valign="bottom"><b>slot</b></td></tr>
-<tr class="separator:af2ef29bbf9e9faaecf2c888109f3b8c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74ff8fefa1c16fe641fd4f37ec28a359"><td class="memItemLeft" align="right" valign="top"><a id="a74ff8fefa1c16fe641fd4f37ec28a359" name="a74ff8fefa1c16fe641fd4f37ec28a359"></a>
-CK_SESSION_HANDLE&#160;</td><td class="memItemRight" valign="bottom"><b>handle</b></td></tr>
-<tr class="separator:a74ff8fefa1c16fe641fd4f37ec28a359"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a383aeee1412f6e53dfdc1f130daebc07"><td class="memItemLeft" align="right" valign="top"><a id="a383aeee1412f6e53dfdc1f130daebc07" name="a383aeee1412f6e53dfdc1f130daebc07"></a>
-CK_STATE&#160;</td><td class="memItemRight" valign="bottom"><b>state</b></td></tr>
-<tr class="separator:a383aeee1412f6e53dfdc1f130daebc07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42863208cf19c7934fc80582e141391c"><td class="memItemLeft" align="right" valign="top"><a id="a42863208cf19c7934fc80582e141391c" name="a42863208cf19c7934fc80582e141391c"></a>
-CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>error</b></td></tr>
-<tr class="separator:a42863208cf19c7934fc80582e141391c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abea44f48f742ae05f798ab05224852c9"><td class="memItemLeft" align="right" valign="top"><a id="abea44f48f742ae05f798ab05224852c9" name="abea44f48f742ae05f798ab05224852c9"></a>
-CK_ATTRIBUTE_PTR&#160;</td><td class="memItemRight" valign="bottom"><b>attrib_list</b></td></tr>
-<tr class="separator:abea44f48f742ae05f798ab05224852c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad20392d8bfbd156b4a1ef17f12c4e222"><td class="memItemLeft" align="right" valign="top"><a id="ad20392d8bfbd156b4a1ef17f12c4e222" name="ad20392d8bfbd156b4a1ef17f12c4e222"></a>
-CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>attrib_count</b></td></tr>
-<tr class="separator:ad20392d8bfbd156b4a1ef17f12c4e222"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a7762974e3a281199017d78958f372f"><td class="memItemLeft" align="right" valign="top"><a id="a6a7762974e3a281199017d78958f372f" name="a6a7762974e3a281199017d78958f372f"></a>
-CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>object_index</b></td></tr>
-<tr class="separator:a6a7762974e3a281199017d78958f372f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0080581eb2cfc643aae18260ac8f01df"><td class="memItemLeft" align="right" valign="top"><a id="a0080581eb2cfc643aae18260ac8f01df" name="a0080581eb2cfc643aae18260ac8f01df"></a>
-CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>object_count</b></td></tr>
-<tr class="separator:a0080581eb2cfc643aae18260ac8f01df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a92cedb23ca9feb4639627a8b6ec548"><td class="memItemLeft" align="right" valign="top"><a id="a6a92cedb23ca9feb4639627a8b6ec548" name="a6a92cedb23ca9feb4639627a8b6ec548"></a>
-CK_OBJECT_HANDLE&#160;</td><td class="memItemRight" valign="bottom"><b>active_object</b></td></tr>
-<tr class="separator:a6a92cedb23ca9feb4639627a8b6ec548"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adef58d2c55debef2e616640d7682b632"><td class="memItemLeft" align="right" valign="top"><a id="adef58d2c55debef2e616640d7682b632" name="adef58d2c55debef2e616640d7682b632"></a>
-CK_MECHANISM_TYPE&#160;</td><td class="memItemRight" valign="bottom"><b>active_mech</b></td></tr>
-<tr class="separator:adef58d2c55debef2e616640d7682b632"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf306a5257954962d0211a37ad24d615"><td class="memItemLeft" align="right" valign="top"><a id="aaf306a5257954962d0211a37ad24d615" name="aaf306a5257954962d0211a37ad24d615"></a>
-<a class="el" href="a01824.html">pkcs11_session_mech_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><b>active_mech_data</b></td></tr>
-<tr class="separator:aaf306a5257954962d0211a37ad24d615"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3f47ede65a8383c94edb8ac013cb08c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01446.html#ga73601b3bcebddd5e814e47b9a9c5f2a6">hal_mutex_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01836.html#ab3f47ede65a8383c94edb8ac013cb08c">dev_lock</a></td></tr>
+<tr class="separator:ab3f47ede65a8383c94edb8ac013cb08c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa10b79b793bf8499c396e5108ed5830c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01832.html">pkcs11_dev_res</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01836.html#aa10b79b793bf8499c396e5108ed5830c">resources</a> [PKCS11_MAX_SLOTS_ALLOWED]</td></tr>
+<tr class="separator:aa10b79b793bf8499c396e5108ed5830c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Session Context </p>
-</div></div><!-- contents -->
+<div class="textblock"><p>Device state tracker structure </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a id="ab3f47ede65a8383c94edb8ac013cb08c" name="ab3f47ede65a8383c94edb8ac013cb08c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3f47ede65a8383c94edb8ac013cb08c">&#9670;&#160;</a></span>dev_lock</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01446.html#ga73601b3bcebddd5e814e47b9a9c5f2a6">hal_mutex_t</a> pkcs11_dev_state::dev_lock</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Lock to protect concurent access to the device </p>
+
+</div>
+</div>
+<a id="aa10b79b793bf8499c396e5108ed5830c" name="aa10b79b793bf8499c396e5108ed5830c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa10b79b793bf8499c396e5108ed5830c">&#9670;&#160;</a></span>resources</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01832.html">pkcs11_dev_res</a> pkcs11_dev_state::resources[PKCS11_MAX_SLOTS_ALLOWED]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Track the usage of device resources </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01836.html">pkcs11_session_ctx_s</a></li>
+    <li class="navelem"><a class="el" href="a01836.html">pkcs11_dev_state</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

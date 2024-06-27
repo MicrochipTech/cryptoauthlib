@@ -1,14 +1,11 @@
 var a00497 =
 [
-    [ "ATCA_CRYPTO_SHA1_EN", "a00497.html#a2e5e1b4f8da8d151569d6ff0133b43ec", null ],
-    [ "ATCA_CRYPTO_SHA2_HMAC_CTR_EN", "a00497.html#a5a3020c4884811361247f771da67b9a5", null ],
-    [ "ATCA_CRYPTO_SHA2_HMAC_EN", "a00497.html#a18071ade62f5d4b39e444ca87548e31e", null ],
-    [ "ATCAB_PBKDF2_SHA256_EN", "a00497.html#aa46ae7101b70ba482359edccca83f414", null ],
-    [ "ATCAC_AES_GCM_EN", "a00497.html#a2cf377cd3579f3ba898ec2391835cfd5", null ],
-    [ "ATCAC_PBKDF2_SHA256_EN", "a00497.html#a6d2fa2e22a151bea100d7c7ee84dbe7f", null ],
-    [ "ATCAC_RANDOM_EN", "a00497.html#add878e0ecc6c87b683935f418f403c7e", null ],
-    [ "ATCAC_SHA1_EN", "a00497.html#a8e3c7ddf3a16cbdcc42060cdee2d884e", null ],
-    [ "ATCAC_SHA256_EN", "a00497.html#a99dab792a5983a089fe816abc57bad25", null ],
-    [ "ATCAC_SIGN_EN", "a00497.html#a094297d2dd0a7e2b4606fc37fc797fcd", null ],
-    [ "ATCAC_VERIFY_EN", "a00497.html#a7eeef6ad76dccb48d8b1741a9254af97", null ]
+    [ "ATCAB_AES_CBC_DECRYPT_EN", "a00497.html#a23ae19deaff29f2796c4981962ca9b55", null ],
+    [ "ATCAB_AES_CBC_ENCRYPT_EN", "a00497.html#ac2eb887016e59054e626341175577669", null ],
+    [ "ATCAB_AES_CBCMAC_EN", "a00497.html#a1996786ea061102926ef0ba52a510bfd", null ],
+    [ "ATCAB_AES_CCM_EN", "a00497.html#ae638244ab3ba72e50b974f763e2abc42", null ],
+    [ "ATCAB_AES_CTR_EN", "a00497.html#a6569901e92e84b0b448794f8a89d1d9e", null ],
+    [ "ATCAB_AES_CTR_RAND_IV_EN", "a00497.html#a6bc2ac5d33ff89c89ddb1b53a0e021dd", null ],
+    [ "ATCAB_AES_EXTRAS_EN", "a00497.html#a28cb83338bbbc858be983299cede3ba9", null ],
+    [ "ATCAB_AES_UPDATE_EN", "a00497.html#af273e717452d3e5295d20197b4615ed0", null ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_verify_mac Struct Reference</title>
+<title>CryptoAuthLib: atca_spi_host_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,55 +99,25 @@ $(document).ready(function(){initNavTree('a01672.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atca_verify_mac Struct Reference<div class="ingroups"><a class="el" href="a01411.html">Host side crypto methods (atcah_)</a></div></div></div>
+  <div class="headertitle"><div class="title">atca_spi_host_s Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac90559108804dc16ac1ac91a0212bff9"><td class="memItemLeft" align="right" valign="top"><a id="ac90559108804dc16ac1ac91a0212bff9" name="ac90559108804dc16ac1ac91a0212bff9"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
-<tr class="memdesc:ac90559108804dc16ac1ac91a0212bff9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mode (Param1) parameter used in Verify command. <br /></td></tr>
-<tr class="separator:ac90559108804dc16ac1ac91a0212bff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4c4854451abd367cf8a13aad5f6372b"><td class="memItemLeft" align="right" valign="top"><a id="ad4c4854451abd367cf8a13aad5f6372b" name="ad4c4854451abd367cf8a13aad5f6372b"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>key_id</b></td></tr>
-<tr class="memdesc:ad4c4854451abd367cf8a13aad5f6372b"><td class="mdescLeft">&#160;</td><td class="mdescRight">KeyID (Param2) used in Verify command. <br /></td></tr>
-<tr class="separator:ad4c4854451abd367cf8a13aad5f6372b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad94d1c8d1635e597bd70823a207dc727"><td class="memItemLeft" align="right" valign="top"><a id="ad94d1c8d1635e597bd70823a207dc727" name="ad94d1c8d1635e597bd70823a207dc727"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>signature</b></td></tr>
-<tr class="memdesc:ad94d1c8d1635e597bd70823a207dc727"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signature used in Verify command (64 bytes). <br /></td></tr>
-<tr class="separator:ad94d1c8d1635e597bd70823a207dc727"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad89fec1f50b8e8ffc890d3683c4b5afe"><td class="memItemLeft" align="right" valign="top"><a id="ad89fec1f50b8e8ffc890d3683c4b5afe" name="ad89fec1f50b8e8ffc890d3683c4b5afe"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>other_data</b></td></tr>
-<tr class="memdesc:ad89fec1f50b8e8ffc890d3683c4b5afe"><td class="mdescLeft">&#160;</td><td class="mdescRight">OtherData used in Verify command (19 bytes). <br /></td></tr>
-<tr class="separator:ad89fec1f50b8e8ffc890d3683c4b5afe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb0498448f486070d33e121ade525c64"><td class="memItemLeft" align="right" valign="top"><a id="acb0498448f486070d33e121ade525c64" name="acb0498448f486070d33e121ade525c64"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>msg_dig_buf</b></td></tr>
-<tr class="memdesc:acb0498448f486070d33e121ade525c64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message digest buffer (64 bytes). <br /></td></tr>
-<tr class="separator:acb0498448f486070d33e121ade525c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93cba5300302d50e26f70457f84df0da"><td class="memItemLeft" align="right" valign="top"><a id="a93cba5300302d50e26f70457f84df0da" name="a93cba5300302d50e26f70457f84df0da"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>io_key</b></td></tr>
-<tr class="memdesc:a93cba5300302d50e26f70457f84df0da"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO protection key value (32 bytes). <br /></td></tr>
-<tr class="separator:a93cba5300302d50e26f70457f84df0da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e63ccd727b87d022ed0eedc0446410f"><td class="memItemLeft" align="right" valign="top"><a id="a5e63ccd727b87d022ed0eedc0446410f" name="a5e63ccd727b87d022ed0eedc0446410f"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>sn</b></td></tr>
-<tr class="memdesc:a5e63ccd727b87d022ed0eedc0446410f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial number (9 bytes). <br /></td></tr>
-<tr class="separator:a5e63ccd727b87d022ed0eedc0446410f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9231df54b2f77c5061bdfbcea927a5e"><td class="memItemLeft" align="right" valign="top"><a id="ac9231df54b2f77c5061bdfbcea927a5e" name="ac9231df54b2f77c5061bdfbcea927a5e"></a>
-const <a class="el" href="a01411.html#ga2eb5b7f0471f9f14bd78c63104fb4cfe">atca_temp_key_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>temp_key</b></td></tr>
-<tr class="memdesc:ac9231df54b2f77c5061bdfbcea927a5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">TempKey. <br /></td></tr>
-<tr class="separator:ac9231df54b2f77c5061bdfbcea927a5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc99cd20d6193df126ae2b32b42f7546"><td class="memItemLeft" align="right" valign="top"><a id="afc99cd20d6193df126ae2b32b42f7546" name="afc99cd20d6193df126ae2b32b42f7546"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>mac</b></td></tr>
-<tr class="memdesc:afc99cd20d6193df126ae2b32b42f7546"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculated verification MAC is returned here (32 bytes). <br /></td></tr>
-<tr class="separator:afc99cd20d6193df126ae2b32b42f7546"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ff867136833c37496f3355d5b6946a6"><td class="memItemLeft" align="right" valign="top"><a id="a5ff867136833c37496f3355d5b6946a6" name="a5ff867136833c37496f3355d5b6946a6"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>spi_file</b> [20]</td></tr>
+<tr class="separator:a5ff867136833c37496f3355d5b6946a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a406fd0777f249e59bf1bdd9b36a5b586"><td class="memItemLeft" align="right" valign="top"><a id="a406fd0777f249e59bf1bdd9b36a5b586" name="a406fd0777f249e59bf1bdd9b36a5b586"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>f_spi</b></td></tr>
+<tr class="separator:a406fd0777f249e59bf1bdd9b36a5b586"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01672.html">atca_verify_mac</a></li>
+    <li class="navelem"><a class="el" href="a01672.html">atca_spi_host_s</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcac_pk_ctx Struct Reference</title>
+<title>CryptoAuthLib: atca_sign_internal_in_out Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,25 +99,78 @@ $(document).ready(function(){initNavTree('a01768.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atcac_pk_ctx Struct Reference</div></div>
+  <div class="headertitle"><div class="title">atca_sign_internal_in_out Struct Reference<div class="ingroups"><a class="el" href="a01447.html">Host side crypto methods (atcah_)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Input/output parameters for calculating the message and digest used by the Sign(internal) command. Used with the atcah_sign_internal_msg() function.  
+ <a href="a01768.html#details">More...</a></p>
+
+<p><code>#include &lt;lib/host/atca_host.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a8ab4a5cd9073b51e3b6fa22e125340f2"><td class="memItemLeft" align="right" valign="top"><a id="a8ab4a5cd9073b51e3b6fa22e125340f2" name="a8ab4a5cd9073b51e3b6fa22e125340f2"></a>
-mbedtls_pk_context&#160;</td><td class="memItemRight" valign="bottom"><b>mctx</b></td></tr>
-<tr class="separator:a8ab4a5cd9073b51e3b6fa22e125340f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a380f8401e6672fc0d5d2826c0cbf46b2"><td class="memItemLeft" align="right" valign="top"><a id="a380f8401e6672fc0d5d2826c0cbf46b2" name="a380f8401e6672fc0d5d2826c0cbf46b2"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><b>ptr</b></td></tr>
-<tr class="separator:a380f8401e6672fc0d5d2826c0cbf46b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2145615f3148fb8a428657fa8020aad1"><td class="memItemLeft" align="right" valign="top"><a id="a2145615f3148fb8a428657fa8020aad1" name="a2145615f3148fb8a428657fa8020aad1"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
+<tr class="memdesc:a2145615f3148fb8a428657fa8020aad1"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Sign Mode <br /></td></tr>
+<tr class="separator:a2145615f3148fb8a428657fa8020aad1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a426f70e97a2f191f021227175699185c"><td class="memItemLeft" align="right" valign="top"><a id="a426f70e97a2f191f021227175699185c" name="a426f70e97a2f191f021227175699185c"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>key_id</b></td></tr>
+<tr class="memdesc:a426f70e97a2f191f021227175699185c"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Sign KeyID <br /></td></tr>
+<tr class="separator:a426f70e97a2f191f021227175699185c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d4bcfad9f46cf09e3fc2e2d5e67c154"><td class="memItemLeft" align="right" valign="top"><a id="a2d4bcfad9f46cf09e3fc2e2d5e67c154" name="a2d4bcfad9f46cf09e3fc2e2d5e67c154"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>slot_config</b></td></tr>
+<tr class="memdesc:a2d4bcfad9f46cf09e3fc2e2d5e67c154"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] SlotConfig[TempKeyFlags.keyId] <br /></td></tr>
+<tr class="separator:a2d4bcfad9f46cf09e3fc2e2d5e67c154"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a534292cebeb2a65e3198e30061b2c35b"><td class="memItemLeft" align="right" valign="top"><a id="a534292cebeb2a65e3198e30061b2c35b" name="a534292cebeb2a65e3198e30061b2c35b"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>key_config</b></td></tr>
+<tr class="memdesc:a534292cebeb2a65e3198e30061b2c35b"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] KeyConfig[TempKeyFlags.keyId] <br /></td></tr>
+<tr class="separator:a534292cebeb2a65e3198e30061b2c35b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d03aca0b8dd153e5b939a684f7c2955"><td class="memItemLeft" align="right" valign="top"><a id="a4d03aca0b8dd153e5b939a684f7c2955" name="a4d03aca0b8dd153e5b939a684f7c2955"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>use_flag</b></td></tr>
+<tr class="memdesc:a4d03aca0b8dd153e5b939a684f7c2955"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] UseFlag[TempKeyFlags.keyId], 0x00 for slots 8 and above and for ATECC508A <br /></td></tr>
+<tr class="separator:a4d03aca0b8dd153e5b939a684f7c2955"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd69516235ce1a7bee9c04146beb93d8"><td class="memItemLeft" align="right" valign="top"><a id="afd69516235ce1a7bee9c04146beb93d8" name="afd69516235ce1a7bee9c04146beb93d8"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>update_count</b></td></tr>
+<tr class="memdesc:afd69516235ce1a7bee9c04146beb93d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] UpdateCount[TempKeyFlags.keyId], 0x00 for slots 8 and above and for ATECC508A <br /></td></tr>
+<tr class="separator:afd69516235ce1a7bee9c04146beb93d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d994ea91e9234808e6f0320897ab434"><td class="memItemLeft" align="right" valign="top"><a id="a1d994ea91e9234808e6f0320897ab434" name="a1d994ea91e9234808e6f0320897ab434"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_slot_locked</b></td></tr>
+<tr class="memdesc:a1d994ea91e9234808e6f0320897ab434"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Is TempKeyFlags.keyId slot locked. <br /></td></tr>
+<tr class="separator:a1d994ea91e9234808e6f0320897ab434"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64fcd7cc6f939f51fa2a0dfa9156d4d7"><td class="memItemLeft" align="right" valign="top"><a id="a64fcd7cc6f939f51fa2a0dfa9156d4d7" name="a64fcd7cc6f939f51fa2a0dfa9156d4d7"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>for_invalidate</b></td></tr>
+<tr class="memdesc:a64fcd7cc6f939f51fa2a0dfa9156d4d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Set to true if this will be used for the Verify(Invalidate) command. <br /></td></tr>
+<tr class="separator:a64fcd7cc6f939f51fa2a0dfa9156d4d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a374985826f0c1b5c6aa52370f9871841"><td class="memItemLeft" align="right" valign="top"><a id="a374985826f0c1b5c6aa52370f9871841" name="a374985826f0c1b5c6aa52370f9871841"></a>
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>sn</b></td></tr>
+<tr class="memdesc:a374985826f0c1b5c6aa52370f9871841"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Device serial number SN[0:8] (9 bytes) <br /></td></tr>
+<tr class="separator:a374985826f0c1b5c6aa52370f9871841"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8c982fdcb8edc1ff6b1e838fab281ac"><td class="memItemLeft" align="right" valign="top"><a id="af8c982fdcb8edc1ff6b1e838fab281ac" name="af8c982fdcb8edc1ff6b1e838fab281ac"></a>
+const struct <a class="el" href="a01692.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>temp_key</b></td></tr>
+<tr class="memdesc:af8c982fdcb8edc1ff6b1e838fab281ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] The current state of TempKey. <br /></td></tr>
+<tr class="separator:af8c982fdcb8edc1ff6b1e838fab281ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5649ccf733b2512db9917036a102fb14"><td class="memItemLeft" align="right" valign="top"><a id="a5649ccf733b2512db9917036a102fb14" name="a5649ccf733b2512db9917036a102fb14"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>message</b></td></tr>
+<tr class="memdesc:a5649ccf733b2512db9917036a102fb14"><td class="mdescLeft">&#160;</td><td class="mdescRight">[out] Full 55 byte message the Sign(internal) command will build. Can be NULL if not required. <br /></td></tr>
+<tr class="separator:a5649ccf733b2512db9917036a102fb14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a0f2ee83e6825f92e259ee104fbb67d"><td class="memItemLeft" align="right" valign="top"><a id="a2a0f2ee83e6825f92e259ee104fbb67d" name="a2a0f2ee83e6825f92e259ee104fbb67d"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>verify_other_data</b></td></tr>
+<tr class="memdesc:a2a0f2ee83e6825f92e259ee104fbb67d"><td class="mdescLeft">&#160;</td><td class="mdescRight">[out] The 19 byte OtherData bytes to be used with the Verify(In/Validate) command. Can be NULL if not required. <br /></td></tr>
+<tr class="separator:a2a0f2ee83e6825f92e259ee104fbb67d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1765e3454849c67fa19a307f724cb8e3"><td class="memItemLeft" align="right" valign="top"><a id="a1765e3454849c67fa19a307f724cb8e3" name="a1765e3454849c67fa19a307f724cb8e3"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>digest</b></td></tr>
+<tr class="memdesc:a1765e3454849c67fa19a307f724cb8e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">[out] SHA256 digest of the full 55 byte message. Can be NULL if not required. <br /></td></tr>
+<tr class="separator:a1765e3454849c67fa19a307f724cb8e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Input/output parameters for calculating the message and digest used by the Sign(internal) command. Used with the atcah_sign_internal_msg() function. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01768.html">atcac_pk_ctx</a></li>
+    <li class="navelem"><a class="el" href="a01768.html">atca_sign_internal_in_out</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

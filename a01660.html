@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_include_data_in_out Struct Reference</title>
+<title>CryptoAuthLib: atcaI2Cmaster Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,41 +99,44 @@ $(document).ready(function(){initNavTree('a01660.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atca_include_data_in_out Struct Reference<div class="ingroups"><a class="el" href="a01411.html">Host side crypto methods (atcah_)</a></div></div></div>
+  <div class="headertitle"><div class="title">atcaI2Cmaster Struct Reference<div class="ingroups"><a class="el" href="a01446.html">Hardware abstraction layer (hal_)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Input / output parameters for function atca_include_data().  
+<p>this is the hal_data for ATCA HAL for ASF SERCOM  
  <a href="a01660.html#details">More...</a></p>
 
-<p><code>#include &lt;lib/host/atca_host.h&gt;</code></p>
+<p><code>#include &lt;lib/hal/hal_uc3_i2c_asf.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ga80ad9effe2957aaa0e604b175fcdbc63"><td class="memItemLeft" align="right" valign="top">
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>p_temp</b></td></tr>
-<tr class="memdesc:ga80ad9effe2957aaa0e604b175fcdbc63"><td class="mdescLeft">&#160;</td><td class="mdescRight">[out] pointer to output buffer <br /></td></tr>
-<tr class="separator:ga80ad9effe2957aaa0e604b175fcdbc63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf07ffae9f842764c321a060ead038ac2"><td class="memItemLeft" align="right" valign="top">
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>otp</b></td></tr>
-<tr class="memdesc:gaf07ffae9f842764c321a060ead038ac2"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] pointer to one-time-programming data <br /></td></tr>
-<tr class="separator:gaf07ffae9f842764c321a060ead038ac2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga46b121ddb13c417e4d65a3fc2f6c365b"><td class="memItemLeft" align="right" valign="top">
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>sn</b></td></tr>
-<tr class="memdesc:ga46b121ddb13c417e4d65a3fc2f6c365b"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] pointer to serial number data <br /></td></tr>
-<tr class="separator:ga46b121ddb13c417e4d65a3fc2f6c365b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a964415d34da8a44eff2a74c607a45ce0"><td class="memItemLeft" align="right" valign="top"><a id="a964415d34da8a44eff2a74c607a45ce0" name="a964415d34da8a44eff2a74c607a45ce0"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
-<tr class="separator:a964415d34da8a44eff2a74c607a45ce0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a692c5669fc6f6ffa256e93aa495fefd4"><td class="memItemLeft" align="right" valign="top"><a id="a692c5669fc6f6ffa256e93aa495fefd4" name="a692c5669fc6f6ffa256e93aa495fefd4"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
+<tr class="separator:a692c5669fc6f6ffa256e93aa495fefd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57b9de077c9cdfa4a6edf3bd83447769"><td class="memItemLeft" align="right" valign="top"><a id="a57b9de077c9cdfa4a6edf3bd83447769" name="a57b9de077c9cdfa4a6edf3bd83447769"></a>
+i2c_config_t&#160;</td><td class="memItemRight" valign="bottom"><b>conf</b></td></tr>
+<tr class="separator:a57b9de077c9cdfa4a6edf3bd83447769"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d2c1b9a68f365d01f6b0be9dad7dc6a"><td class="memItemLeft" align="right" valign="top"><a id="a1d2c1b9a68f365d01f6b0be9dad7dc6a" name="a1d2c1b9a68f365d01f6b0be9dad7dc6a"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>ref_ct</b></td></tr>
+<tr class="separator:a1d2c1b9a68f365d01f6b0be9dad7dc6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f357fab31485a55f93eeef31b730c4f"><td class="memItemLeft" align="right" valign="top"><a id="a2f357fab31485a55f93eeef31b730c4f" name="a2f357fab31485a55f93eeef31b730c4f"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>twi_id</b></td></tr>
+<tr class="separator:a2f357fab31485a55f93eeef31b730c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d3d9c7382b93a45858a1b327a38fc35"><td class="memItemLeft" align="right" valign="top"><a id="a8d3d9c7382b93a45858a1b327a38fc35" name="a8d3d9c7382b93a45858a1b327a38fc35"></a>
+avr32_twi_t *&#160;</td><td class="memItemRight" valign="bottom"><b>twi_master_instance</b></td></tr>
+<tr class="separator:a8d3d9c7382b93a45858a1b327a38fc35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94c2633397e4a8895e2592fba8cfb2b0"><td class="memItemLeft" align="right" valign="top"><a id="a94c2633397e4a8895e2592fba8cfb2b0" name="a94c2633397e4a8895e2592fba8cfb2b0"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>bus_index</b></td></tr>
+<tr class="separator:a94c2633397e4a8895e2592fba8cfb2b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input / output parameters for function atca_include_data(). </p>
+<div class="textblock"><p>this is the hal_data for ATCA HAL for ASF SERCOM </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01660.html">atca_include_data_in_out</a></li>
+    <li class="navelem"><a class="el" href="a01660.html">atcaI2Cmaster</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

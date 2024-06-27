@@ -1,12 +1,9 @@
 var a00596 =
 [
-    [ "hal_swi_control", "a01410.html#gad6ba20fd0d0d393f0cbf03ea9cb63346", null ],
-    [ "hal_swi_idle", "a01410.html#ga618291172976da96c4f02dc9200c845c", null ],
-    [ "hal_swi_init", "a01410.html#gae3e41d9b466fb912625402db629b1a62", null ],
-    [ "hal_swi_post_init", "a01410.html#ga9186e5235979216330ae580290872c77", null ],
-    [ "hal_swi_receive", "a01410.html#ga159bdf9c24e429d54800da1eb1c21058", null ],
-    [ "hal_swi_release", "a01410.html#ga196dbc62546b39ac3e556a0f7f6b7132", null ],
-    [ "hal_swi_send", "a01410.html#ga9df4dbd666a87efe49578842e53ad91e", null ],
-    [ "hal_swi_sleep", "a01410.html#ga252e365a30f2583dae8a8eac073a9f53", null ],
-    [ "hal_swi_wake", "a01410.html#gafc428980ec95e37eee94813db229fe70", null ]
+    [ "ATCA_SWI_WAKE_WORD_ADDR", "a00596.html#a35e9d98d207f17ebac66dc86e29a6464", null ],
+    [ "BIT_DELAY_1H", "a00596.html#a1ce4882b7d053eafcec22cd84fb5727d", null ],
+    [ "BIT_DELAY_1L", "a00596.html#ad884cf7d66d88b38180369a791a9824b", null ],
+    [ "BIT_DELAY_5", "a00596.html#a2ced4699fc4ab5162dbb9453edecb32e", null ],
+    [ "BIT_DELAY_7", "a00596.html#abd0d20a34060650b8a2895c17f842f44", null ],
+    [ "RX_TX_DELAY", "a00596.html#a60ba93807a2c0ea2ce1432245f3f7da0", null ]
 ];

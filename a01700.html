@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_write_mac_in_out Struct Reference</title>
+<title>CryptoAuthLib: atca_nonce_in_out Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.4</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,54 +99,46 @@ $(document).ready(function(){initNavTree('a01700.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atca_write_mac_in_out Struct Reference<div class="ingroups"><a class="el" href="a01411.html">Host side crypto methods (atcah_)</a></div></div></div>
+  <div class="headertitle"><div class="title">atca_nonce_in_out Struct Reference<div class="ingroups"><a class="el" href="a01447.html">Host side crypto methods (atcah_)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Input/output parameters for function atcah_write_auth_mac() and atcah_privwrite_auth_mac().  
+<p>Input/output parameters for function atca_nonce().  
  <a href="a01700.html#details">More...</a></p>
 
 <p><code>#include &lt;lib/host/atca_host.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:adf4e9d92c10469c78810f2881a95843b"><td class="memItemLeft" align="right" valign="top"><a id="adf4e9d92c10469c78810f2881a95843b" name="adf4e9d92c10469c78810f2881a95843b"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>zone</b></td></tr>
-<tr class="memdesc:adf4e9d92c10469c78810f2881a95843b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zone/Param1 for the Write or PrivWrite command. <br /></td></tr>
-<tr class="separator:adf4e9d92c10469c78810f2881a95843b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a213cc14f2d1c67be382cb8918aca4362"><td class="memItemLeft" align="right" valign="top"><a id="a213cc14f2d1c67be382cb8918aca4362" name="a213cc14f2d1c67be382cb8918aca4362"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>key_id</b></td></tr>
-<tr class="memdesc:a213cc14f2d1c67be382cb8918aca4362"><td class="mdescLeft">&#160;</td><td class="mdescRight">KeyID/Param2 for the Write or PrivWrite command. <br /></td></tr>
-<tr class="separator:a213cc14f2d1c67be382cb8918aca4362"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c43368d48a41123da5f69356b6f29f5"><td class="memItemLeft" align="right" valign="top"><a id="a2c43368d48a41123da5f69356b6f29f5" name="a2c43368d48a41123da5f69356b6f29f5"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>sn</b></td></tr>
-<tr class="memdesc:a2c43368d48a41123da5f69356b6f29f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though. <br /></td></tr>
-<tr class="separator:a2c43368d48a41123da5f69356b6f29f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a423e1db9e86ff369d49d78d8f5ea2525"><td class="memItemLeft" align="right" valign="top"><a id="a423e1db9e86ff369d49d78d8f5ea2525" name="a423e1db9e86ff369d49d78d8f5ea2525"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>input_data</b></td></tr>
-<tr class="memdesc:a423e1db9e86ff369d49d78d8f5ea2525"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data to be encrypted. 32 bytes for Write command, 36 bytes for PrivWrite command. <br /></td></tr>
-<tr class="separator:a423e1db9e86ff369d49d78d8f5ea2525"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38f7761577529e0bbf52cd0b8c17658b"><td class="memItemLeft" align="right" valign="top"><a id="a38f7761577529e0bbf52cd0b8c17658b" name="a38f7761577529e0bbf52cd0b8c17658b"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>encrypted_data</b></td></tr>
-<tr class="memdesc:a38f7761577529e0bbf52cd0b8c17658b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypted version of input_data will be returned here. 32 bytes for Write command, 36 bytes for PrivWrite command. <br /></td></tr>
-<tr class="separator:a38f7761577529e0bbf52cd0b8c17658b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa57ce590925c0efe017af1d4457d479"><td class="memItemLeft" align="right" valign="top"><a id="aaa57ce590925c0efe017af1d4457d479" name="aaa57ce590925c0efe017af1d4457d479"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>auth_mac</b></td></tr>
-<tr class="memdesc:aaa57ce590925c0efe017af1d4457d479"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write MAC will be returned here. 32 bytes. <br /></td></tr>
-<tr class="separator:aaa57ce590925c0efe017af1d4457d479"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8786d124038d3516d98f2456f19985cf"><td class="memItemLeft" align="right" valign="top"><a id="a8786d124038d3516d98f2456f19985cf" name="a8786d124038d3516d98f2456f19985cf"></a>
-struct <a class="el" href="a01656.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>temp_key</b></td></tr>
-<tr class="memdesc:a8786d124038d3516d98f2456f19985cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current state of TempKey. <br /></td></tr>
-<tr class="separator:a8786d124038d3516d98f2456f19985cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabaedd7126cc73449d73843ef3b8958c0"><td class="memItemLeft" align="right" valign="top">
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
+<tr class="memdesc:gabaedd7126cc73449d73843ef3b8958c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Mode parameter used in Nonce command (Param1). <br /></td></tr>
+<tr class="separator:gabaedd7126cc73449d73843ef3b8958c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaee2c8a03b0aa78ab07b64253f2c48b22"><td class="memItemLeft" align="right" valign="top">
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>zero</b></td></tr>
+<tr class="memdesc:gaee2c8a03b0aa78ab07b64253f2c48b22"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Zero parameter used in Nonce command (Param2). <br /></td></tr>
+<tr class="separator:gaee2c8a03b0aa78ab07b64253f2c48b22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7627ba268edc51f4e185e956bd215496"><td class="memItemLeft" align="right" valign="top">
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>num_in</b></td></tr>
+<tr class="memdesc:ga7627ba268edc51f4e185e956bd215496"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 20-byte NumIn data used in Nonce command. <br /></td></tr>
+<tr class="separator:ga7627ba268edc51f4e185e956bd215496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc3dc30e978bcf18656aedb6dd4a62f2"><td class="memItemLeft" align="right" valign="top">
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>rand_out</b></td></tr>
+<tr class="memdesc:gadc3dc30e978bcf18656aedb6dd4a62f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 32-byte RandOut data from Nonce command. <br /></td></tr>
+<tr class="separator:gadc3dc30e978bcf18656aedb6dd4a62f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf89317aa1f759fc58f67158abd314d1b"><td class="memItemLeft" align="right" valign="top">
+struct <a class="el" href="a01692.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>temp_key</b></td></tr>
+<tr class="memdesc:gaf89317aa1f759fc58f67158abd314d1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in,out] Pointer to TempKey structure. <br /></td></tr>
+<tr class="separator:gaf89317aa1f759fc58f67158abd314d1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input/output parameters for function atcah_write_auth_mac() and atcah_privwrite_auth_mac(). </p>
+<div class="textblock"><p>Input/output parameters for function atca_nonce(). </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01700.html">atca_write_mac_in_out</a></li>
+    <li class="navelem"><a class="el" href="a01700.html">atca_nonce_in_out</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>
