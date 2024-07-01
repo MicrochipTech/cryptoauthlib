@@ -282,6 +282,7 @@ add_subdirectory(talib)
 endif()
 
 set_property(TARGET cryptoauth PROPERTY C_STANDARD 99)
+set_target_properties(cryptoauth PROPERTIES VERSION ${VERSION} SOVERSION ${VERSION_MAJOR})
 
 if(HAS_MALLOC)
 set(ATCA_PLATFORM_MALLOC malloc CACHE STRING "" FORCE)
