@@ -103,15 +103,15 @@ jobs:
         if: startsWith(github.repository, 'MicrochipTech')
         uses: pypa/gh-action-pypi-publish@release/v1.5
         with:
-          user: ${{ secrets.pypi_username }}
-          password: ${{ secrets.pypi_password }}
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
           skip_existing: true
 
       - name: Test Release
         if: ${{ !startsWith(github.repository, 'MicrochipTech') }}
         uses: pypa/gh-action-pypi-publish@release/v1.5
         with:
-          user: ${{ secrets.pypi_username }}
-          password: ${{ secrets.pypi_password }}
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
           repository_url: https://test.pypi.org/legacy/
           skip_existing: true
