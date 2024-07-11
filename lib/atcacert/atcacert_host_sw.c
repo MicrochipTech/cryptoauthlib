@@ -107,7 +107,7 @@ ATCA_STATUS atcacert_verify_response_sw(const uint8_t device_public_key[64],
     }
 
     /* Perform the verification */
-    ret = atcac_pk_verify(&pkey_ctx, challenge, 32, response, 32);
+    ret = atcac_pk_verify(&pkey_ctx, challenge, 32, response, 64);
 
     /* Make sure to free the key before testing the result of the verify */
     (void)atcac_pk_free(&pkey_ctx);
