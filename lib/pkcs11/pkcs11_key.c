@@ -1884,9 +1884,18 @@ static CK_RV pkcs11_key_derive_ca(pkcs11_session_ctx_ptr pSession, pkcs11_object
             }
             else
             {
-        #if ATCA_TA_SUPPORT
-                status = talib_ecdh_compat(pSession->slot->device_ctx, pBaseKey->slot, &pEcdhParameters->pPublicData[1], (uint8_t*)pSecretKey->data);
-        #endif
+#if ATCA_TA_SUPPORT
+                rv = pkcs11_lock_both(pLibCtx);
+                if (CKR_OK == rv)
+                {
+                    status = talib_ecdh_compat(pSession->slot->device_ctx, pBaseKey->slot, &pEcdhParameters->pPublicData[1], (uint8_t*)pSecretKey->data);
+                    (void)pkcs11_unlock_both(pLibCtx);
+                }
+                else
+                {
+                    status = ATCA_GEN_FAIL;
+                }
+#endif
             }
             rv = pkcs11_util_convert_rv(status);
         }
