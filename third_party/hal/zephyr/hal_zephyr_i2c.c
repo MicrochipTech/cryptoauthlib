@@ -111,19 +111,36 @@ ATCA_STATUS hal_i2c_post_init(ATCAIface iface)
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
-ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t address, uint8_t *txdata, int txlength)
+ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength)
 {
     struct device * zdev = (struct device *)atgetifacehaldat(iface);
-
-    if (!zdev || (0 == txlength) || (NULL == txdata))
+    if (!zdev)
     {
         return ATCA_BAD_PARAM;
     }
-    if (i2c_write(zdev, txdata, txlength, (address >> 0x1)))
+    ATCAIfaceCfg *cfg = atgetifacecfg(iface);
+    if (!cfg)
+    {
+        return ATCA_BAD_PARAM;
+    }
+
+    uint8_t device_address = 0xFFu;
+#ifdef ATCA_ENABLE_DEPRECATED
+    device_address = ATCA_IFACECFG_VALUE(cfg, atcai2c.slave_address);
+#else
+    device_address = ATCA_IFACECFG_VALUE(cfg, atcai2c.address);
+#endif
+
+    if ((0 == txlength) || (NULL == txdata))
+    {
+        return ATCA_BAD_PARAM;
+    }
+
+    if (i2c_write(zdev, txdata, txlength, (device_address >> 0x1)))
     {
         return ATCA_TX_FAIL;
     }
-     
+
     return ATCA_SUCCESS;
 }
 
