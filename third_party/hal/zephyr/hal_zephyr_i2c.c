@@ -131,9 +131,9 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata,
     device_address = ATCA_IFACECFG_VALUE(cfg, atcai2c.address);
 #endif
 
-    if ((0 == txlength) || (NULL == txdata))
-    {
-        return ATCA_BAD_PARAM;
+    if ((0 == txlength) || (NULL == txdata)) {
+        txdata = &word_address;
+        txlength = 1;
     }
 
     if (i2c_write(zdev, txdata, txlength, (device_address >> 0x1)))
