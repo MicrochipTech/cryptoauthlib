@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_der.c File Reference</title>
+<title>CryptoAuthLib: atcacert_def.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,24 +97,62 @@ $(document).ready(function(){initNavTree('a00296.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">atcacert_der.c File Reference</div></div>
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">atcacert_def.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>functions required to work with DER encoded data related to X.509 certificates.  
+<p>Main certificate definition implementation.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00506.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00299.html">atcacert_der.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00299.html">atcacert_def.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00482.html">crypto/atca_crypto_sw.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00494.html">crypto/atca_crypto_sw_sha1.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00500.html">crypto/atca_crypto_sw_sha2.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00305.html">atcacert_der.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00293.html">atcacert_date.h</a>&quot;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
-</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>functions required to work with DER encoded data related to X.509 certificates. </p>
+<code>#include &quot;<a class="el" href="a00260.html">atca_helpers.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00329.html">cal_buffer.h</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga40feb31278b164a32fe9bf9c2c5a79c0"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga40feb31278b164a32fe9bf9c2c5a79c0">atcacert_get_subject</a> (const <a class="el" href="a01470.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, <a class="el" href="a01635.html">cal_buffer</a> *cert_subj_buf)</td></tr>
+<tr class="memdesc:ga40feb31278b164a32fe9bf9c2c5a79c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the subject name from a certificate.  <br /></td></tr>
+<tr class="separator:ga40feb31278b164a32fe9bf9c2c5a79c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga263eee4dfc30ce4442bfa97f95bd5c30"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga263eee4dfc30ce4442bfa97f95bd5c30">atcacert_get_subj_public_key</a> (const <a class="el" href="a01470.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, <a class="el" href="a01635.html">cal_buffer</a> *subj_public_key)</td></tr>
+<tr class="memdesc:ga263eee4dfc30ce4442bfa97f95bd5c30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the subject public key from a certificate.  <br /></td></tr>
+<tr class="separator:ga263eee4dfc30ce4442bfa97f95bd5c30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9544e4c1c1ae365f90253f8a475e164e"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga9544e4c1c1ae365f90253f8a475e164e">atcacert_get_subj_key_id</a> (const <a class="el" href="a01470.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, uint8_t subj_key_id[20])</td></tr>
+<tr class="memdesc:ga9544e4c1c1ae365f90253f8a475e164e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the subject key ID from a certificate.  <br /></td></tr>
+<tr class="separator:ga9544e4c1c1ae365f90253f8a475e164e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae5e5dfa5db2ac919c093ed4149ff2bc7"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#gae5e5dfa5db2ac919c093ed4149ff2bc7">atcacert_get_issuer</a> (const <a class="el" href="a01470.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, uint8_t cert_issuer[128])</td></tr>
+<tr class="memdesc:gae5e5dfa5db2ac919c093ed4149ff2bc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the issuer name of a certificate.  <br /></td></tr>
+<tr class="separator:gae5e5dfa5db2ac919c093ed4149ff2bc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7305906995afb21b494446d84298533b"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga7305906995afb21b494446d84298533b">atcacert_get_issue_date</a> (const <a class="el" href="a01470.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, <a class="el" href="a01470.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp)</td></tr>
+<tr class="memdesc:ga7305906995afb21b494446d84298533b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the issue date from a certificate. Will be parsed according to the date format specified in the certificate definition.  <br /></td></tr>
+<tr class="separator:ga7305906995afb21b494446d84298533b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaede1f0a4a04cfd720b5fe6a8f56fc466"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#gaede1f0a4a04cfd720b5fe6a8f56fc466">atcacert_get_expire_date</a> (const <a class="el" href="a01470.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, <a class="el" href="a01470.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp)</td></tr>
+<tr class="memdesc:gaede1f0a4a04cfd720b5fe6a8f56fc466"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the expire date from a certificate. Will be parsed according to the date format specified in the certificate definition.  <br /></td></tr>
+<tr class="separator:gaede1f0a4a04cfd720b5fe6a8f56fc466"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1de933f825653a1a725b46407adb09e"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#gad1de933f825653a1a725b46407adb09e">atcacert_get_cert_sn</a> (const <a class="el" href="a01470.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, uint8_t *cert_sn, size_t *cert_sn_size)</td></tr>
+<tr class="memdesc:gad1de933f825653a1a725b46407adb09e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the certificate serial number from a certificate.  <br /></td></tr>
+<tr class="separator:gad1de933f825653a1a725b46407adb09e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga79182d181cd8041a0e66e18790dff519"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga79182d181cd8041a0e66e18790dff519">atcacert_get_auth_key_id</a> (const <a class="el" href="a01470.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, uint8_t auth_key_id[20])</td></tr>
+<tr class="memdesc:ga79182d181cd8041a0e66e18790dff519"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the authority key ID from a certificate.  <br /></td></tr>
+<tr class="separator:ga79182d181cd8041a0e66e18790dff519"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6961d4584f23cfe79ddec69a91e41e03"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga6961d4584f23cfe79ddec69a91e41e03">atcacert_calc_expire_years</a> (const <a class="el" href="a01470.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, int issue_tm_year, uint8_t *expire_years)</td></tr>
+<tr class="separator:ga6961d4584f23cfe79ddec69a91e41e03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Main certificate definition implementation. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00296.html">atcacert_der.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00296.html">atcacert_def.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

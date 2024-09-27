@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: crypto_sw_config_check.h File Reference</title>
+<title>CryptoAuthLib: atca_crypto_sw_sha1.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,239 +97,25 @@ $(document).ready(function(){initNavTree('a00491.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#define-members">Macros</a>  </div>
-  <div class="headertitle"><div class="title">crypto_sw_config_check.h File Reference</div></div>
+  <div class="headertitle"><div class="title">atca_crypto_sw_sha1.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Consistency checks for configuration options.  
+<p>Wrapper API for SHA 1 routines.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00800.html">atca_config_check.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a8e3c7ddf3a16cbdcc42060cdee2d884e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00491.html#a8e3c7ddf3a16cbdcc42060cdee2d884e">ATCAC_SHA1_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a8e3c7ddf3a16cbdcc42060cdee2d884e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99dab792a5983a089fe816abc57bad25"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00491.html#a99dab792a5983a089fe816abc57bad25">ATCAC_SHA256_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a99dab792a5983a089fe816abc57bad25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82dfe0816dd5dffe339c9e450ec67b67"><td class="memItemLeft" align="right" valign="top"><a id="a82dfe0816dd5dffe339c9e450ec67b67" name="a82dfe0816dd5dffe339c9e450ec67b67"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAC_SHA256_HMAC_EN</b>&#160;&#160;&#160;ATCAC_SHA256_EN</td></tr>
-<tr class="separator:a82dfe0816dd5dffe339c9e450ec67b67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ca74305a9036e142367d29db0915d9e"><td class="memItemLeft" align="right" valign="top"><a id="a9ca74305a9036e142367d29db0915d9e" name="a9ca74305a9036e142367d29db0915d9e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAC_SHA256_HMAC_CTR_EN</b>&#160;&#160;&#160;ATCAC_SHA256_HMAC_EN</td></tr>
-<tr class="separator:a9ca74305a9036e142367d29db0915d9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add878e0ecc6c87b683935f418f403c7e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00491.html#add878e0ecc6c87b683935f418f403c7e">ATCAC_RANDOM_EN</a>&#160;&#160;&#160;ATCA_HOSTLIB_EN</td></tr>
-<tr class="separator:add878e0ecc6c87b683935f418f403c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7eeef6ad76dccb48d8b1741a9254af97"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00491.html#a7eeef6ad76dccb48d8b1741a9254af97">ATCAC_VERIFY_EN</a>&#160;&#160;&#160;ATCA_HOSTLIB_EN</td></tr>
-<tr class="separator:a7eeef6ad76dccb48d8b1741a9254af97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a094297d2dd0a7e2b4606fc37fc797fcd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00491.html#a094297d2dd0a7e2b4606fc37fc797fcd">ATCAC_SIGN_EN</a>&#160;&#160;&#160;ATCA_HOSTLIB_EN</td></tr>
-<tr class="separator:a094297d2dd0a7e2b4606fc37fc797fcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e5e1b4f8da8d151569d6ff0133b43ec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00491.html#a2e5e1b4f8da8d151569d6ff0133b43ec">ATCA_CRYPTO_SHA1_EN</a>&#160;&#160;&#160;(ATCAC_SHA1_EN &amp;&amp; !ATCA_HOSTLIB_EN)</td></tr>
-<tr class="separator:a2e5e1b4f8da8d151569d6ff0133b43ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff63a86885856fcc093664f27af75f27"><td class="memItemLeft" align="right" valign="top"><a id="aff63a86885856fcc093664f27af75f27" name="aff63a86885856fcc093664f27af75f27"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CRYPTO_SHA2_EN</b>&#160;&#160;&#160;(ATCAC_SHA256_EN &amp;&amp; !ATCA_HOSTLIB_EN)</td></tr>
-<tr class="separator:aff63a86885856fcc093664f27af75f27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18071ade62f5d4b39e444ca87548e31e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00491.html#a18071ade62f5d4b39e444ca87548e31e">ATCA_CRYPTO_SHA2_HMAC_EN</a>&#160;&#160;&#160;(ATCAC_SHA256_HMAC_EN &amp;&amp; !ATCA_HOSTLIB_EN)</td></tr>
-<tr class="separator:a18071ade62f5d4b39e444ca87548e31e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a3020c4884811361247f771da67b9a5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00491.html#a5a3020c4884811361247f771da67b9a5">ATCA_CRYPTO_SHA2_HMAC_CTR_EN</a>&#160;&#160;&#160;ATCAC_SHA256_HMAC_CTR_EN</td></tr>
-<tr class="separator:a5a3020c4884811361247f771da67b9a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d2fa2e22a151bea100d7c7ee84dbe7f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00491.html#a6d2fa2e22a151bea100d7c7ee84dbe7f">ATCAC_PBKDF2_SHA256_EN</a>&#160;&#160;&#160;ATCAC_SHA256_HMAC_EN</td></tr>
-<tr class="separator:a6d2fa2e22a151bea100d7c7ee84dbe7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa46ae7101b70ba482359edccca83f414"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00491.html#aa46ae7101b70ba482359edccca83f414">ATCAB_PBKDF2_SHA256_EN</a>&#160;&#160;&#160;(<a class="el" href="a00353.html#ab13bbafe02599813084788482536728f">CALIB_SHA_HMAC_EN</a> || TALIB_SHA_HMAC_EN)</td></tr>
-<tr class="separator:aa46ae7101b70ba482359edccca83f414"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2cf377cd3579f3ba898ec2391835cfd5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00491.html#a2cf377cd3579f3ba898ec2391835cfd5">ATCAC_AES_GCM_EN</a>&#160;&#160;&#160;(ATCA_HOSTLIB_EN)</td></tr>
-<tr class="separator:a2cf377cd3579f3ba898ec2391835cfd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Consistency checks for configuration options. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2021 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a2e5e1b4f8da8d151569d6ff0133b43ec" name="a2e5e1b4f8da8d151569d6ff0133b43ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e5e1b4f8da8d151569d6ff0133b43ec">&#9670;&#160;</a></span>ATCA_CRYPTO_SHA1_EN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_CRYPTO_SHA1_EN&#160;&#160;&#160;(ATCAC_SHA1_EN &amp;&amp; !ATCA_HOSTLIB_EN)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Enable ATCAC_SHA1_EN to enable sha1 host side api</p>
-<p>Supported API's: atcab_write </p>
-
-</div>
-</div>
-<a id="a5a3020c4884811361247f771da67b9a5" name="a5a3020c4884811361247f771da67b9a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5a3020c4884811361247f771da67b9a5">&#9670;&#160;</a></span>ATCA_CRYPTO_SHA2_HMAC_CTR_EN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_CRYPTO_SHA2_HMAC_CTR_EN&#160;&#160;&#160;ATCAC_SHA256_HMAC_CTR_EN</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAC_SHA256_HMAC_EN</p>
-<p>Enable ATCAC_SHA256_HMAC_COUNTER to implement SHA256 HMAC-Counter per NIST SP 800-108 used for KDF like operations</p>
-<p>Supported API's: atcac_sha256_hmac_counter </p>
-
-</div>
-</div>
-<a id="a18071ade62f5d4b39e444ca87548e31e" name="a18071ade62f5d4b39e444ca87548e31e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a18071ade62f5d4b39e444ca87548e31e">&#9670;&#160;</a></span>ATCA_CRYPTO_SHA2_HMAC_EN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCA_CRYPTO_SHA2_HMAC_EN&#160;&#160;&#160;(ATCAC_SHA256_HMAC_EN &amp;&amp; !ATCA_HOSTLIB_EN)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAC_SHA256_EN</p>
-<p>Enable ATCAC_SHA256_HMAC to initialize context for performing HMAC (sha256) in software</p>
-<p>Supported API's: atcac_sha256_hmac_init, atcac_sha256_hmac_update, atcac_sha256_hmac_finish </p>
-
-</div>
-</div>
-<a id="aa46ae7101b70ba482359edccca83f414" name="aa46ae7101b70ba482359edccca83f414"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa46ae7101b70ba482359edccca83f414">&#9670;&#160;</a></span>ATCAB_PBKDF2_SHA256_EN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAB_PBKDF2_SHA256_EN&#160;&#160;&#160;(<a class="el" href="a00353.html#ab13bbafe02599813084788482536728f">CALIB_SHA_HMAC_EN</a> || TALIB_SHA_HMAC_EN)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: CALIB_SHA_HMAC_EN</p>
-<p>Enable ATCAB_PBKDF2_SHA256_EN to calculate a PBKDF2 password hash using a stored key inside a device. The key length is determined by the device being used. ECCx08: 32 bytes, TA100: 16-64 bytes</p>
-<p>Supported API's: atcab_pbkdf2_256, atcab_pbkdf2_256_ext </p>
-
-</div>
-</div>
-<a id="a2cf377cd3579f3ba898ec2391835cfd5" name="a2cf377cd3579f3ba898ec2391835cfd5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2cf377cd3579f3ba898ec2391835cfd5">&#9670;&#160;</a></span>ATCAC_AES_GCM_EN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAC_AES_GCM_EN&#160;&#160;&#160;(ATCA_HOSTLIB_EN)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates if this module is a provider of an AES-GCM implementation </p>
-
-</div>
-</div>
-<a id="a6d2fa2e22a151bea100d7c7ee84dbe7f" name="a6d2fa2e22a151bea100d7c7ee84dbe7f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6d2fa2e22a151bea100d7c7ee84dbe7f">&#9670;&#160;</a></span>ATCAC_PBKDF2_SHA256_EN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAC_PBKDF2_SHA256_EN&#160;&#160;&#160;ATCAC_SHA256_HMAC_EN</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAC_SHA256_EN ATCAC_SHA256_HMAC_EN</p>
-<p>Enable ATCAC_PBKDF2_SHA256_EN to calculate a PBKDF2 hash of a given password and salt</p>
-<p>Supported API's: atcac_pbkdf2_256 </p>
-
-</div>
-</div>
-<a id="add878e0ecc6c87b683935f418f403c7e" name="add878e0ecc6c87b683935f418f403c7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#add878e0ecc6c87b683935f418f403c7e">&#9670;&#160;</a></span>ATCAC_RANDOM_EN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAC_RANDOM_EN&#160;&#160;&#160;ATCA_HOSTLIB_EN</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCA_HOSTLIB_EN</p>
-<p>Enable ATCAC_RANDOM_EN get random numbers from the host's implementation - generally assumed to come from the host's cryptographic library or peripheral driver </p>
-
-</div>
-</div>
-<a id="a8e3c7ddf3a16cbdcc42060cdee2d884e" name="a8e3c7ddf3a16cbdcc42060cdee2d884e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e3c7ddf3a16cbdcc42060cdee2d884e">&#9670;&#160;</a></span>ATCAC_SHA1_EN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAC_SHA1_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Enable ATCAC_SHA1_EN to enable sha1 host side api</p>
-<p>Supported API's: atcab_write </p>
-
-</div>
-</div>
-<a id="a99dab792a5983a089fe816abc57bad25" name="a99dab792a5983a089fe816abc57bad25"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99dab792a5983a089fe816abc57bad25">&#9670;&#160;</a></span>ATCAC_SHA256_EN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAC_SHA256_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Enable ATCAC_SHA256_EN to enable sha256 host side api</p>
-<p>Supported API's: atcab_write </p>
-
-</div>
-</div>
-<a id="a094297d2dd0a7e2b4606fc37fc797fcd" name="a094297d2dd0a7e2b4606fc37fc797fcd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a094297d2dd0a7e2b4606fc37fc797fcd">&#9670;&#160;</a></span>ATCAC_SIGN_EN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAC_SIGN_EN&#160;&#160;&#160;ATCA_HOSTLIB_EN</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCA_HOSTLIB_EN</p>
-<p>Enable ATCAC_SIGN_EN to use the host's sign functions. Generally assumed to come from the host's cryptographic library or peripheral driver. </p>
-
-</div>
-</div>
-<a id="a7eeef6ad76dccb48d8b1741a9254af97" name="a7eeef6ad76dccb48d8b1741a9254af97"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7eeef6ad76dccb48d8b1741a9254af97">&#9670;&#160;</a></span>ATCAC_VERIFY_EN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAC_VERIFY_EN&#160;&#160;&#160;ATCA_HOSTLIB_EN</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCA_HOSTLIB_EN</p>
-<p>Enable ATCAC_VERIFY_EN to use the host's verify functions. Generally assumed to come from the host's cryptographic library or peripheral driver. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><code>#include &quot;<a class="el" href="a00494.html">atca_crypto_sw_sha1.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00512.html">hashes/sha1_routines.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00521.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00332.html">cal_internal.h</a>&quot;</code><br />
+</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Wrapper API for SHA 1 routines. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="a00491.html">crypto_sw_config_check.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="a00491.html">atca_crypto_sw_sha1.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

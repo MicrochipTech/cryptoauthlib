@@ -1,9 +1,6 @@
 var a00317 =
 [
-    [ "atcacert_decode_pem", "a00317.html#a32d4e4f417e88b56b9adc5b7c521d545", null ],
-    [ "atcacert_decode_pem_cert", "a00317.html#a5ee7c8e3893e67ae0a622bddc443bcbd", null ],
-    [ "atcacert_decode_pem_csr", "a00317.html#adfccc0bc91b144dffab3aba96126800f", null ],
-    [ "atcacert_encode_pem", "a00317.html#a65ca7cd1f2358ad40ae4c8c13f6d817c", null ],
-    [ "atcacert_encode_pem_cert", "a00317.html#a206c4857a73ccfc7898131b61d43ba67", null ],
-    [ "atcacert_encode_pem_csr", "a00317.html#ad3b6773201632141bbc95ca6d43271f9", null ]
+    [ "atcacert_gen_challenge_sw", "a01470.html#ga883a0c84474150e6b123dfab15a8c929", null ],
+    [ "atcacert_verify_cert_sw", "a01470.html#ga5bad45c1fda32b7a57275af23ab0f626", null ],
+    [ "atcacert_verify_response_sw", "a01470.html#gab67e7a4c5899ef5402ff44f3f91d20b5", null ]
 ];

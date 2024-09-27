@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_info.c File Reference</title>
+<title>CryptoAuthLib: pkcs11_digest.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,48 +98,43 @@ $(document).ready(function(){initNavTree('a00713.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
-  <div class="headertitle"><div class="title">pkcs11_info.c File Reference</div></div>
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">pkcs11_digest.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Library Information Functions.  
+<p>PKCS11 Library Digest (SHA256) Handling.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00506.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;pkcs11_config.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00722.html">pkcs11_init.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00767.html">pkcs11_slot.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00755.html">pkcs11_session.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00776.html">pkcs11_util.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00716.html">pkcs11_info.h</a>&quot;</code><br />
-<code>#include &lt;stdio.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;cryptoki.h&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaae56826104269ca730066136fb3eb995"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_get_lib_info</b> (CK_INFO_PTR pInfo)</td></tr>
-<tr class="memdesc:gaae56826104269ca730066136fb3eb995"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains general information about Cryptoki. <br /></td></tr>
-<tr class="separator:gaae56826104269ca730066136fb3eb995"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:ga8ac50a3d8a0c4f1ddf04cdf02c757030"><td class="memItemLeft" align="right" valign="top">
-const char&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_lib_manufacturer_id</b> [] = &quot;Microchip Technology Inc&quot;</td></tr>
-<tr class="separator:ga8ac50a3d8a0c4f1ddf04cdf02c757030"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47daad4918afdf7ec808a5a57a4bce9d"><td class="memItemLeft" align="right" valign="top">
-const char&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_lib_description</b> [] = &quot;Cryptoauthlib PKCS11 Interface&quot;</td></tr>
-<tr class="separator:ga47daad4918afdf7ec808a5a57a4bce9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a903aed9c7d096dced1233a11539c781d"><td class="memItemLeft" align="right" valign="top"><a id="a903aed9c7d096dced1233a11539c781d" name="a903aed9c7d096dced1233a11539c781d"></a>
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_digest_init</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism)</td></tr>
+<tr class="memdesc:a903aed9c7d096dced1233a11539c781d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a message-digesting operation using the specified mechanism in the specified session. <br /></td></tr>
+<tr class="separator:a903aed9c7d096dced1233a11539c781d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81936ce8429c7a97bc42921589c1522e"><td class="memItemLeft" align="right" valign="top"><a id="a81936ce8429c7a97bc42921589c1522e" name="a81936ce8429c7a97bc42921589c1522e"></a>
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_digest</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pDigest, CK_ULONG_PTR pulDigestLen)</td></tr>
+<tr class="memdesc:a81936ce8429c7a97bc42921589c1522e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Digest the specified data in a one-pass operation and return the resulting digest. <br /></td></tr>
+<tr class="separator:a81936ce8429c7a97bc42921589c1522e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87a4b63b1a4ced5e40a1cc0bbc88599d"><td class="memItemLeft" align="right" valign="top"><a id="a87a4b63b1a4ced5e40a1cc0bbc88599d" name="a87a4b63b1a4ced5e40a1cc0bbc88599d"></a>
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_digest_update</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen)</td></tr>
+<tr class="memdesc:a87a4b63b1a4ced5e40a1cc0bbc88599d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues a multiple-part digesting operation. <br /></td></tr>
+<tr class="separator:a87a4b63b1a4ced5e40a1cc0bbc88599d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd1c9ccc6899b550d241f007fd023d6b"><td class="memItemLeft" align="right" valign="top"><a id="abd1c9ccc6899b550d241f007fd023d6b" name="abd1c9ccc6899b550d241f007fd023d6b"></a>
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_digest_final</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pDigest, CK_ULONG_PTR pulDigestLen)</td></tr>
+<tr class="memdesc:abd1c9ccc6899b550d241f007fd023d6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part digesting operation. <br /></td></tr>
+<tr class="separator:abd1c9ccc6899b550d241f007fd023d6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Library Information Functions. </p>
+<div class="textblock"><p>PKCS11 Library Digest (SHA256) Handling. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00713.html">pkcs11_info.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00713.html">pkcs11_digest.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

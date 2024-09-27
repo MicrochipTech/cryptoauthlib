@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_token.h File Reference</title>
+<title>CryptoAuthLib: pkcs11_session.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,60 +98,99 @@ $(document).ready(function(){initNavTree('a00770.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">pkcs11_token.h File Reference</div></div>
+  <div class="headertitle"><div class="title">pkcs11_session.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Library Token Management &amp; Context.  
+<p>PKCS11 Library Session Management &amp; Context.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00722.html">pkcs11_init.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00755.html">pkcs11_session.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;cryptoki.h&quot;</code><br />
+<code>#include &quot;pkcs11_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00332.html">cal_internal.h</a>&quot;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ab112a8a280ac5ad6e11b5fe2cc0be0a0"><td class="memItemLeft" align="right" valign="top"><a id="ab112a8a280ac5ad6e11b5fe2cc0be0a0" name="ab112a8a280ac5ad6e11b5fe2cc0be0a0"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SERIAL_NUM_SIZE</b>&#160;&#160;&#160;(9)</td></tr>
-<tr class="separator:ab112a8a280ac5ad6e11b5fe2cc0be0a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01895.html">pkcs11_session_mech_ctx_s</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01907.html">pkcs11_session_ctx_s</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a43e3e1294469dae57747d5da27598ec5"><td class="memItemLeft" align="right" valign="top"><a id="a43e3e1294469dae57747d5da27598ec5" name="a43e3e1294469dae57747d5da27598ec5"></a>
+typedef struct <a class="el" href="a01895.html">pkcs11_session_mech_ctx_s</a>&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_session_mech_ctx</b></td></tr>
+<tr class="separator:a43e3e1294469dae57747d5da27598ec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab26c7083cf6d3132b8f60471a779092d"><td class="memItemLeft" align="right" valign="top"><a id="ab26c7083cf6d3132b8f60471a779092d" name="ab26c7083cf6d3132b8f60471a779092d"></a>
+typedef struct <a class="el" href="a01895.html">pkcs11_session_mech_ctx_s</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_session_mech_ctx_ptr</b></td></tr>
+<tr class="separator:ab26c7083cf6d3132b8f60471a779092d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d8980ea83d2e8eb2a9f45210ba5c54d"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a01907.html">pkcs11_session_ctx_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00770.html#a9d8980ea83d2e8eb2a9f45210ba5c54d">pkcs11_session_ctx</a></td></tr>
+<tr class="separator:a9d8980ea83d2e8eb2a9f45210ba5c54d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a638f7371b28239b01b1df289137dd077"><td class="memItemLeft" align="right" valign="top"><a id="a638f7371b28239b01b1df289137dd077" name="a638f7371b28239b01b1df289137dd077"></a>
+typedef struct <a class="el" href="a01907.html">pkcs11_session_ctx_s</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_session_ctx_ptr</b></td></tr>
+<tr class="separator:a638f7371b28239b01b1df289137dd077"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga7e207adf2d26c1d6ea64f7c60252bf45"><td class="memItemLeft" align="right" valign="top">CK_RV&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#ga7e207adf2d26c1d6ea64f7c60252bf45">pkcs11_token_init</a> (CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen, CK_UTF8CHAR_PTR pLabel)</td></tr>
-<tr class="separator:ga7e207adf2d26c1d6ea64f7c60252bf45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2ef67d42f228e64ff0f155049ab08f39"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_get_access_type</b> (CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, <a class="el" href="a01872.html">pkcs11_session_ctx_ptr</a> pSession)</td></tr>
-<tr class="separator:ga2ef67d42f228e64ff0f155049ab08f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1fc2c1ef0c75903d41b324bdba988189"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_get_writable</b> (CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, <a class="el" href="a01872.html">pkcs11_session_ctx_ptr</a> pSession)</td></tr>
-<tr class="separator:ga1fc2c1ef0c75903d41b324bdba988189"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa62dd8ad822daf227624dc13b535e139"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_get_storage</b> (CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, <a class="el" href="a01872.html">pkcs11_session_ctx_ptr</a> pSession)</td></tr>
-<tr class="separator:gaa62dd8ad822daf227624dc13b535e139"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7bf2fea766cab4645fe615661bcf0db9"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_get_info</b> (CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)</td></tr>
-<tr class="memdesc:ga7bf2fea766cab4645fe615661bcf0db9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains information about a particular token. <br /></td></tr>
-<tr class="separator:ga7bf2fea766cab4645fe615661bcf0db9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabb7fb69591f0539b9c2b686be0adddab"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_convert_pin_to_key</b> (const CK_UTF8CHAR_PTR pPin, const CK_ULONG ulPinLen, const CK_UTF8CHAR_PTR pSalt, const CK_ULONG ulSaltLen, CK_BYTE_PTR pKey, CK_ULONG ulKeyLen, pkcs11_slot_ctx_ptr slot_ctx)</td></tr>
-<tr class="separator:gabb7fb69591f0539b9c2b686be0adddab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf4c0c6a2d12d879308f2d42cc61ef401"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_random</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pRandomData, CK_ULONG ulRandomLen)</td></tr>
-<tr class="memdesc:gaf4c0c6a2d12d879308f2d42cc61ef401"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the specified amount of random data. <br /></td></tr>
-<tr class="separator:gaf4c0c6a2d12d879308f2d42cc61ef401"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga75272ae3120c6d9fc42862ac8b52da17"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_set_pin</b> (CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pOldPin, CK_ULONG ulOldLen, CK_UTF8CHAR_PTR pNewPin, CK_ULONG ulNewLen)</td></tr>
-<tr class="separator:ga75272ae3120c6d9fc42862ac8b52da17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga33b843d3e0cb28b80d38056f18fe9519"><td class="memItemLeft" align="right" valign="top">
+<a class="el" href="a01907.html">pkcs11_session_ctx_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_get_session_context</b> (CK_SESSION_HANDLE hSession)</td></tr>
+<tr class="separator:ga33b843d3e0cb28b80d38056f18fe9519"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7eb04614661e0cedf6cb926787f5ff9b"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_session_check</b> (<a class="el" href="a01907.html">pkcs11_session_ctx_ptr</a> *pSession, CK_SESSION_HANDLE hSession)</td></tr>
+<tr class="memdesc:ga7eb04614661e0cedf6cb926787f5ff9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the session is initialized properly. <br /></td></tr>
+<tr class="separator:ga7eb04614661e0cedf6cb926787f5ff9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga236a002e179ed36a0b81399a3e11fcb8"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_session_get_info</b> (CK_SESSION_HANDLE hSession, CK_SESSION_INFO_PTR pInfo)</td></tr>
+<tr class="memdesc:ga236a002e179ed36a0b81399a3e11fcb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains information about a particular session. <br /></td></tr>
+<tr class="separator:ga236a002e179ed36a0b81399a3e11fcb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad015e297476bdc4df61870f8d1209ddb"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_session_open</b> (CK_SLOT_ID slotID, CK_FLAGS flags, CK_VOID_PTR pApplication, CK_NOTIFY notify, CK_SESSION_HANDLE_PTR phSession)</td></tr>
+<tr class="separator:gad015e297476bdc4df61870f8d1209ddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac082a1a5af11c561af58d333414f4a27"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_session_close</b> (CK_SESSION_HANDLE hSession)</td></tr>
+<tr class="separator:gac082a1a5af11c561af58d333414f4a27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga43525e77f9049b545fa09129cacf9c9a"><td class="memItemLeft" align="right" valign="top">CK_RV&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01477.html#ga43525e77f9049b545fa09129cacf9c9a">pkcs11_session_closeall</a> (CK_SLOT_ID slotID)</td></tr>
+<tr class="memdesc:ga43525e77f9049b545fa09129cacf9c9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close all sessions for a given slot - not actually all open sessions.  <br /></td></tr>
+<tr class="separator:ga43525e77f9049b545fa09129cacf9c9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4d70fd7e9799d0428c308a3e1ed146df"><td class="memItemLeft" align="right" valign="top">CK_RV&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01477.html#ga4d70fd7e9799d0428c308a3e1ed146df">pkcs11_session_login</a> (CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen)</td></tr>
+<tr class="separator:ga4d70fd7e9799d0428c308a3e1ed146df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafefc70d16edaf998a521daf6b8aed3e6"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_session_logout</b> (CK_SESSION_HANDLE hSession)</td></tr>
+<tr class="separator:gafefc70d16edaf998a521daf6b8aed3e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabeabde58cd8e5774b0e17380e4dc012f"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_reserve_resource</b> (pkcs11_lib_ctx_ptr pContext, <a class="el" href="a01907.html">pkcs11_session_ctx_ptr</a> pSession, uint8_t resource)</td></tr>
+<tr class="separator:gabeabde58cd8e5774b0e17380e4dc012f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab28340a9d1ceba07fe538990a227d58e"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_release_resource</b> (pkcs11_lib_ctx_ptr pContext, <a class="el" href="a01907.html">pkcs11_session_ctx_ptr</a> pSession, uint8_t resource)</td></tr>
+<tr class="separator:gab28340a9d1ceba07fe538990a227d58e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Library Token Management &amp; Context. </p>
+<div class="textblock"><p>PKCS11 Library Session Management &amp; Context. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="a9d8980ea83d2e8eb2a9f45210ba5c54d" name="a9d8980ea83d2e8eb2a9f45210ba5c54d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d8980ea83d2e8eb2a9f45210ba5c54d">&#9670;&#160;</a></span>pkcs11_session_ctx</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a01907.html">pkcs11_session_ctx_s</a> <a class="el" href="a00770.html#a9d8980ea83d2e8eb2a9f45210ba5c54d">pkcs11_session_ctx</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Session Context </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00770.html">pkcs11_token.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00770.html">pkcs11_session.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

@@ -1,8 +1,7 @@
 var a00389 =
 [
-    [ "calib_info", "a01444.html#ga132cfbb5c581c5cc5adf5350d4161966", null ],
-    [ "calib_info_base", "a01444.html#gabc7aff4f1707fbe0a05cf416955f43b0", null ],
-    [ "calib_info_chip_status", "a01444.html#gac33e6d38d506b4e71618063d1b4a7499", null ],
-    [ "calib_info_lock_status", "a01444.html#gacd82ed053319a63bbe06755632e377bc", null ],
-    [ "calib_info_privkey_valid", "a01444.html#ga39e3e31e7573d3d73f4b757db7704cce", null ]
+    [ "calib_ca2_is_config_locked", "a01471.html#gad7d44a63b0871068bc30abb0faed78f9", null ],
+    [ "calib_ca2_is_data_locked", "a01471.html#ga801b481ac3ff13401fc2a45817d05db4", null ],
+    [ "calib_ca2_is_locked", "a01471.html#ga55738f97714ea089a988e1853d8d6224", null ],
+    [ "calib_get_devicetype", "a01471.html#ga00e2fc1d5b517b275066c31be0be2304", null ]
 ];

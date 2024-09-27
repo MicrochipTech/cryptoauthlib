@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -101,7 +101,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="mainpage"></a></p>
-<h1><a class="anchor" id="autotoc_md50"></a>
+<h1><a class="anchor" id="autotoc_md51"></a>
 Introduction</h1>
 <p>This library implements the APIs required to communicate with Microchip Security device. The family of devices supported currently are:</p>
 <table class="markdownTable">
@@ -138,12 +138,12 @@ Introduction</h1>
 <li><a href="https://www.microchip.com/en-us/development-tool/EV74C12A">TA010 mikroBUS evaluation board</a></li>
 </ul>
 <p>For most development, using socketed top-boards is preferable until your configuration is well tested, then you can commit it to a CryptoAuth Xplained Pro Extension, for example. Keep in mind that once you lock a device, it will not be changeable.</p>
-<h1><a class="anchor" id="autotoc_md51"></a>
+<h1><a class="anchor" id="autotoc_md52"></a>
 Examples</h1>
 <ul>
 <li>Install the <a href="https://www.microchip.com/en-us/products/security/trust-platform">Trust Platform Design Suite</a> to access Use Case examples for the different Security Solutions (ATECC608, SHA104/105, ECC204, TA010, TA100…)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md52"></a>
+<h1><a class="anchor" id="autotoc_md53"></a>
 Configuration</h1>
 <p>In order to properly configured the library there must be a header file in your project named <code>atca_config.h</code> at minimum this needs to contain defines for the hal and device types being used. Most integrations have an configuration mechanism for generating this file. See the <a href="lib/atca_config.h.in">atca_config.h.in</a> template which is configured by CMake for Linux, MacOS, &amp; Windows projects.</p>
 <p>An example of the configuration:</p>
@@ -172,14 +172,14 @@ Configuration</h1>
 <li>ATCA_NO_HEAP can be used to remove the use of malloc/free from the main library. This can be helpful for smaller MCUs that don't have a heap implemented. If just using the basic API, then there shouldn't be any code changes required. The lower-level API will no longer use the new/delete functions and the init/release functions should be used directly.</li>
 </ul>
 <p>Some specific options are available in the fully documented configuration files <code>lib/calib/calib_config.h</code>, <code>atca_configuration.h</code>, <code>lib/crypto/crypto_config.h</code>, <code>lib/host/atca_host_config.h</code> which is also the place where features can be selected. We provide some configurations focused on specific use cases and the checks are enabled by default.</p>
-<h1><a class="anchor" id="autotoc_md53"></a>
-Release notes</h1>
-<p>See <a class="el" href="a02839.html">Release Notes</a></p>
 <h1><a class="anchor" id="autotoc_md54"></a>
-Host Device Support</h1>
-<p>CryptoAuthLib will run on a variety of platforms from small micro-controllers to desktop host systems. See <a class="el" href="a01446.html">hal readme</a></p>
-<p>Porting requires a time delay function of millisecond resolution (hal_delay_ms) which can be implemented via loop, timer, or rtos sleep/wait and a communication interface.</p>
+Release notes</h1>
+<p>See <a class="el" href="a02875.html">Release Notes</a></p>
 <h1><a class="anchor" id="autotoc_md55"></a>
+Host Device Support</h1>
+<p>CryptoAuthLib will run on a variety of platforms from small micro-controllers to desktop host systems. See <a class="el" href="a01473.html">hal readme</a></p>
+<p>Porting requires a time delay function of millisecond resolution (hal_delay_ms) which can be implemented via loop, timer, or rtos sleep/wait and a communication interface.</p>
+<h1><a class="anchor" id="autotoc_md56"></a>
 CryptoAuthLib Architecture</h1>
 <p>Cryptoauthlib API documentation is at <a href="https://microchiptech.github.io/cryptoauthlib/">https://microchiptech.github.io/cryptoauthlib/</a></p>
 <p>The library is structured to support portability to:</p><ul>
@@ -188,12 +188,12 @@ CryptoAuthLib Architecture</h1>
 <li>multiple chip communication protocols (I2C, SPI, and SWI)</li>
 </ul>
 <p>All platform dependencies are contained within the HAL (hardware abstraction layer).</p>
-<h1><a class="anchor" id="autotoc_md56"></a>
+<h1><a class="anchor" id="autotoc_md57"></a>
 Directory Structure</h1>
 <div class="fragment"><div class="line">lib - primary library source code</div>
 <div class="line">lib/atcacert - certificate data and i/o methods</div>
 <div class="line">lib/calib - the Basic Cryptoauth API</div>
-<div class="line">lib/crypto - Software crypto implementations external crypto libraries support (primarily SHA1 and SHA256)</div>
+<div class="line">lib/crypto - Software crypto implementations external crypto libraries support (primarily SHA1 and SHA2)</div>
 <div class="line">lib/hal - hardware abstraction layer code for supporting specific platforms</div>
 <div class="line">lib/host - support functions for common host-side calculations</div>
 <div class="line">lib/jwt - json web token functions</div>
@@ -203,14 +203,14 @@ Directory Structure</h1>
 <div class="line">into a project, so it is up to the developer to include or not as needed.  Test</div>
 <div class="line">code adds significant bulk to an application - it&#39;s not intended to be included</div>
 <div class="line">in production code.</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md57"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md58"></a>
 Tests</h1>
 <p>There is a set of integration tests found in the test directory which will at least partially demonstrate the use of the objects. Some tests may depend upon a certain device being configured in a certain way and may not work for all devices or specific configurations of the device. See test readme</p>
-<h1><a class="anchor" id="autotoc_md58"></a>
+<h1><a class="anchor" id="autotoc_md59"></a>
 Using CryptoAuthLib (Microchip CryptoAuth Library)</h1>
 <p>The best place to start is with the <a href="https://www.microchip.com/design-centers/security-ics/trust-platform">Microchip Trust Platform</a></p>
 <p>Also application examples are included as part of the Harmony 3 framework and can be copied from the Harmony Content Manager or found with the Harmony 3 Framework <a href="https://github.com/Microchip-MPLAB-Harmony/cryptoauthlib_apps">Cryptoauthlib_apps</a></p>
-<h2><a class="anchor" id="autotoc_md59"></a>
+<h2><a class="anchor" id="autotoc_md60"></a>
 Incorporating CryptoAuthLib in a Linux project using USB HID devices</h2>
 <p>The Linux HID HAL files use the Linux udev development software package.</p>
 <p>To install the udev development package under Ubuntu Linux, please type the following command at the terminal window:</p>

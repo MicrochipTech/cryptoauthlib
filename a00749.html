@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_os.h File Reference</title>
+<title>CryptoAuthLib: pkcs11_mech.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,56 +98,64 @@ $(document).ready(function(){initNavTree('a00749.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">pkcs11_os.h File Reference</div></div>
+  <div class="headertitle"><div class="title">pkcs11_mech.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Library Operating System Abstraction.  
+<p>PKCS11 Library Mechanism Handling.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;cryptoki.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00506.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;pkcs11_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00707.html">pkcs11_debug.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00737.html">pkcs11_init.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00752.html">pkcs11_mech.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00782.html">pkcs11_slot.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00521.html">cryptoauthlib.h</a>&quot;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01883.html">pcks11_mech_table_e</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:add8754c49398ab1c3a26a581188e074c"><td class="memItemLeft" align="right" valign="top"><a id="add8754c49398ab1c3a26a581188e074c" name="add8754c49398ab1c3a26a581188e074c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_os_malloc</b>&#160;&#160;&#160;hal_malloc</td></tr>
-<tr class="separator:add8754c49398ab1c3a26a581188e074c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6dc4b364c3d11f22e08cc67adbcd70c6"><td class="memItemLeft" align="right" valign="top"><a id="a6dc4b364c3d11f22e08cc67adbcd70c6" name="a6dc4b364c3d11f22e08cc67adbcd70c6"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_os_free</b>&#160;&#160;&#160;hal_free</td></tr>
-<tr class="separator:a6dc4b364c3d11f22e08cc67adbcd70c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga148b7615f20d8432f0e5ac4e6683aa7d"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PCKS11_MECH_ECC508_EC_CAPABILITY</b>&#160;&#160;&#160;(CKF_EC_F_P | CKF_EC_NAMEDCURVE | CKF_EC_UNCOMPRESS)</td></tr>
+<tr class="separator:ga148b7615f20d8432f0e5ac4e6683aa7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga178ac9759ade77839a52329537e3784b"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TABLE_SIZE</b>(x)&#160;&#160;&#160;sizeof(x) / sizeof(x[0])</td></tr>
+<tr class="separator:ga178ac9759ade77839a52329537e3784b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gae3a5574c29fcc146b00597549201b7a3"><td class="memItemLeft" align="right" valign="top">
+typedef struct <a class="el" href="a01883.html">pcks11_mech_table_e</a>&#160;</td><td class="memItemRight" valign="bottom"><b>pcks11_mech_table_e</b></td></tr>
+<tr class="separator:gae3a5574c29fcc146b00597549201b7a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0af32f4886455ef9bf537a3dee738bf1"><td class="memItemLeft" align="right" valign="top">
+typedef struct <a class="el" href="a01883.html">pcks11_mech_table_e</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>pcks11_mech_table_ptr</b></td></tr>
+<tr class="separator:ga0af32f4886455ef9bf537a3dee738bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaf5f1c5e6c5bf8d91f2090ee4bbe20362"><td class="memItemLeft" align="right" valign="top">CK_RV&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html#gaf5f1c5e6c5bf8d91f2090ee4bbe20362">pkcs11_os_create_mutex</a> (CK_VOID_PTR_PTR ppMutex)</td></tr>
-<tr class="memdesc:gaf5f1c5e6c5bf8d91f2090ee4bbe20362"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application callback for creating a mutex object.  <br /></td></tr>
-<tr class="separator:gaf5f1c5e6c5bf8d91f2090ee4bbe20362"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0b79ce15416271adde1bb832f6faa16b"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_os_destroy_mutex</b> (CK_VOID_PTR pMutex)</td></tr>
-<tr class="separator:ga0b79ce15416271adde1bb832f6faa16b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae27d029f16c6710a0a168e1d1057a4e3"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_os_lock_mutex</b> (CK_VOID_PTR pMutex)</td></tr>
-<tr class="separator:gae27d029f16c6710a0a168e1d1057a4e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6f868fabdbf3e115a72e1d126e5356b5"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_os_unlock_mutex</b> (CK_VOID_PTR pMutex)</td></tr>
-<tr class="separator:ga6f868fabdbf3e115a72e1d126e5356b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9d5ae4513ffadc540674ab077e309372"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_os_alloc_shared_ctx</b> (void **ppShared, size_t size)</td></tr>
-<tr class="separator:ga9d5ae4513ffadc540674ab077e309372"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1b23526fd890b2c8c1ded32ebdf90e59"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_os_free_shared_ctx</b> (void *pShared, size_t size)</td></tr>
-<tr class="separator:ga1b23526fd890b2c8c1ded32ebdf90e59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9678c431b8d5479e53417b109b32c20f"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_mech_get_list</b> (CK_SLOT_ID slotID, CK_MECHANISM_TYPE_PTR pMechanismList, CK_ULONG_PTR pulCount)</td></tr>
+<tr class="separator:ga9678c431b8d5479e53417b109b32c20f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac66d133f84b945f9c26727ee9f7a7d57"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs_mech_get_info</b> (CK_SLOT_ID slotID, CK_MECHANISM_TYPE type, CK_MECHANISM_INFO_PTR pInfo)</td></tr>
+<tr class="separator:gac66d133f84b945f9c26727ee9f7a7d57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Library Operating System Abstraction. </p>
+<div class="textblock"><p>PKCS11 Library Mechanism Handling. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00749.html">pkcs11_os.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00749.html">pkcs11_mech.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

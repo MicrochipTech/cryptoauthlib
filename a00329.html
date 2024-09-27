@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_aes.c File Reference</title>
+<title>CryptoAuthLib: cal_buffer.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,24 +97,293 @@ $(document).ready(function(){initNavTree('a00329.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">calib_aes.c File Reference</div></div>
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a>  </div>
+  <div class="headertitle"><div class="title">cal_buffer.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for AES command.  
+<p>Cryptoauthlib buffer management system.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00506.html">cryptoauthlib.h</a>&quot;</code><br />
-</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for AES command. </p>
-<p>The AES command supports 128-bit AES encryption or decryption of small messages or data packets in ECB mode. Also can perform GFM (Galois Field Multiply) calculation in support of AES-GCM.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATECC608A/B. Refer to device edatasheet for full details.</dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00815.html">atca_config_check.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00269.html">atca_status.h</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01635.html">cal_buffer_s</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e139a33e92fb5869dfa454abb07adc8"><td class="memItemLeft" align="right" valign="top"><a id="a1e139a33e92fb5869dfa454abb07adc8" name="a1e139a33e92fb5869dfa454abb07adc8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAL_BUF_INIT</b>(s,  b)&#160;&#160;&#160;{ (size_t)(s), (uint8_t*)(b) }</td></tr>
+<tr class="separator:a1e139a33e92fb5869dfa454abb07adc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae99bfdf18e2cec9c215fda74a70bb5b"><td class="memItemLeft" align="right" valign="top"><a id="aae99bfdf18e2cec9c215fda74a70bb5b" name="aae99bfdf18e2cec9c215fda74a70bb5b"></a>
+typedef struct <a class="el" href="a01635.html">cal_buffer_s</a>&#160;</td><td class="memItemRight" valign="bottom"><b>cal_buffer</b></td></tr>
+<tr class="separator:aae99bfdf18e2cec9c215fda74a70bb5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a872604647c17a0c8b240269ba29a64d5"><td class="memItemLeft" align="right" valign="top"><a id="a872604647c17a0c8b240269ba29a64d5" name="a872604647c17a0c8b240269ba29a64d5"></a>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>cal_buf_read_byte</b> (<a class="el" href="a01635.html">cal_buffer</a> *cab, size_t offset, uint8_t *value)</td></tr>
+<tr class="separator:a872604647c17a0c8b240269ba29a64d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecb72ba4a291a9f37decc65225184bb1"><td class="memItemLeft" align="right" valign="top"><a id="aecb72ba4a291a9f37decc65225184bb1" name="aecb72ba4a291a9f37decc65225184bb1"></a>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>cal_buf_write_byte</b> (<a class="el" href="a01635.html">cal_buffer</a> *cab, size_t offset, uint8_t value)</td></tr>
+<tr class="separator:aecb72ba4a291a9f37decc65225184bb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc0d724d5fc815cc98dea12aa5bb15d0"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#acc0d724d5fc815cc98dea12aa5bb15d0">cal_buf_read_bytes</a> (<a class="el" href="a01635.html">cal_buffer</a> *cab, size_t offset, void *dest, size_t length)</td></tr>
+<tr class="memdesc:acc0d724d5fc815cc98dea12aa5bb15d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read bytes from a cal_buffer or cal_buffer linked list.  <br /></td></tr>
+<tr class="separator:acc0d724d5fc815cc98dea12aa5bb15d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0890ecff5c568d7ee2d631bd3877fcc6"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#a0890ecff5c568d7ee2d631bd3877fcc6">cal_buf_write_bytes</a> (<a class="el" href="a01635.html">cal_buffer</a> *cab, size_t offset, const void *source, size_t length)</td></tr>
+<tr class="memdesc:a0890ecff5c568d7ee2d631bd3877fcc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write bytes into a single cal_buffer structure or cal_buffer linked list.  <br /></td></tr>
+<tr class="separator:a0890ecff5c568d7ee2d631bd3877fcc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a546b07423022359a8b27fcbeadfdd93d"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#a546b07423022359a8b27fcbeadfdd93d">cal_buf_read_number</a> (<a class="el" href="a01635.html">cal_buffer</a> *cab, size_t offset, void *dest, size_t num_size, bool buf_big_endian)</td></tr>
+<tr class="memdesc:a546b07423022359a8b27fcbeadfdd93d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a number from a cal_buffer or cal_buffer linked list This function does not reinterpet the number and signedness is only preserved if the destination is the same size as the representation in the buffer.  <br /></td></tr>
+<tr class="separator:a546b07423022359a8b27fcbeadfdd93d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8a1f17b5af51c3539246d03282206a2"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#af8a1f17b5af51c3539246d03282206a2">cal_buf_write_number</a> (<a class="el" href="a01635.html">cal_buffer</a> *cab, size_t offset, const void *source, size_t num_size, bool buf_big_endian)</td></tr>
+<tr class="memdesc:af8a1f17b5af51c3539246d03282206a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a number into a cal_buffer or cal_buffer linked list This function does not reinterpet the number and signedness is only preserved if the destination is the same size as the source.  <br /></td></tr>
+<tr class="separator:af8a1f17b5af51c3539246d03282206a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a7ce9dbf56a09f9c376f10a9e854421"><td class="memItemLeft" align="right" valign="top"><a id="a7a7ce9dbf56a09f9c376f10a9e854421" name="a7a7ce9dbf56a09f9c376f10a9e854421"></a>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>cal_buf_copy</b> (<a class="el" href="a01635.html">cal_buffer</a> *dst, size_t dst_offset, <a class="el" href="a01635.html">cal_buffer</a> *src, size_t src_offset, size_t length)</td></tr>
+<tr class="separator:a7a7ce9dbf56a09f9c376f10a9e854421"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfa25beb1ff19d0c0299bfbe73f8b4e2"><td class="memItemLeft" align="right" valign="top"><a id="adfa25beb1ff19d0c0299bfbe73f8b4e2" name="adfa25beb1ff19d0c0299bfbe73f8b4e2"></a>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>cal_buf_set</b> (<a class="el" href="a01635.html">cal_buffer</a> *dst, size_t dst_offset, uint8_t value, size_t length)</td></tr>
+<tr class="separator:adfa25beb1ff19d0c0299bfbe73f8b4e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e07cd837bdac4ce89200c3e464e5124"><td class="memItemLeft" align="right" valign="top"><a id="a2e07cd837bdac4ce89200c3e464e5124" name="a2e07cd837bdac4ce89200c3e464e5124"></a>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>cal_buf_set_used</b> (<a class="el" href="a01635.html">cal_buffer</a> *buf, size_t used)</td></tr>
+<tr class="separator:a2e07cd837bdac4ce89200c3e464e5124"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04d04ca939346bc77cd2244f5eb5babd"><td class="memItemLeft" align="right" valign="top"><a id="a04d04ca939346bc77cd2244f5eb5babd" name="a04d04ca939346bc77cd2244f5eb5babd"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>cal_buf_get_used</b> (<a class="el" href="a01635.html">cal_buffer</a> *buf)</td></tr>
+<tr class="separator:a04d04ca939346bc77cd2244f5eb5babd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a923fdd71f9a98e47040d26acb74a0202"><td class="memItemLeft" align="right" valign="top"><a id="a923fdd71f9a98e47040d26acb74a0202" name="a923fdd71f9a98e47040d26acb74a0202"></a>
+<a class="el" href="a01635.html">cal_buffer</a>&#160;</td><td class="memItemRight" valign="bottom"><b>cal_buf_init_const_ptr</b> (size_t len, const uint8_t *message)</td></tr>
+<tr class="memdesc:a923fdd71f9a98e47040d26acb74a0202"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a cal buffer with constant pointer Returns the initialized cal buffer. <br /></td></tr>
+<tr class="separator:a923fdd71f9a98e47040d26acb74a0202"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Cryptoauthlib buffer management system. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2023 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="acc0d724d5fc815cc98dea12aa5bb15d0" name="acc0d724d5fc815cc98dea12aa5bb15d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc0d724d5fc815cc98dea12aa5bb15d0">&#9670;&#160;</a></span>cal_buf_read_bytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS cal_buf_read_bytes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01635.html">cal_buffer</a> *&#160;</td>
+          <td class="paramname"><em>cab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read bytes from a cal_buffer or cal_buffer linked list. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">cab</td><td>Pointer to a buffer structure or the head of a buffer structure linked list</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Offset to start the read from</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dest</td><td>Pointer to a destination buffer</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Length of the read - assumes dest has sufficent memory to accept the bytes being read </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a546b07423022359a8b27fcbeadfdd93d" name="a546b07423022359a8b27fcbeadfdd93d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a546b07423022359a8b27fcbeadfdd93d">&#9670;&#160;</a></span>cal_buf_read_number()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS cal_buf_read_number </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01635.html">cal_buffer</a> *&#160;</td>
+          <td class="paramname"><em>cab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>num_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>buf_big_endian</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read a number from a cal_buffer or cal_buffer linked list This function does not reinterpet the number and signedness is only preserved if the destination is the same size as the representation in the buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">cab</td><td>Pointer to a buffer structure or the head of a buffer structure linked list</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Offset to start the read from</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dest</td><td>Pointer to a destination number</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">num_size</td><td>Size of the number in bytes</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buf_big_endian</td><td>Specifies the expected endianness representation within the buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0890ecff5c568d7ee2d631bd3877fcc6" name="a0890ecff5c568d7ee2d631bd3877fcc6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0890ecff5c568d7ee2d631bd3877fcc6">&#9670;&#160;</a></span>cal_buf_write_bytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS cal_buf_write_bytes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01635.html">cal_buffer</a> *&#160;</td>
+          <td class="paramname"><em>cab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write bytes into a single cal_buffer structure or cal_buffer linked list. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">cab</td><td>Pointer to a buffer structure or the head of a buffer structure linked list</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Target offset to start the write at</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">source</td><td>Pointer to a source buffer</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Length of the write - assumes source is sufficently large to support this operation </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af8a1f17b5af51c3539246d03282206a2" name="af8a1f17b5af51c3539246d03282206a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8a1f17b5af51c3539246d03282206a2">&#9670;&#160;</a></span>cal_buf_write_number()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS cal_buf_write_number </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01635.html">cal_buffer</a> *&#160;</td>
+          <td class="paramname"><em>cab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>num_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>buf_big_endian</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write a number into a cal_buffer or cal_buffer linked list This function does not reinterpet the number and signedness is only preserved if the destination is the same size as the source. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">cab</td><td>Pointer to a buffer structure or the head of a buffer structure linked list</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Offset to start the write at</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">source</td><td>Pointer to a number to be written</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">num_size</td><td>Size of the number in bytes</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buf_big_endian</td><td>Specifies the expected endianness representation within the buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_fe677a742bdf73affcb7505b38a59233.html">calib</a></li><li class="navelem"><a class="el" href="a00329.html">calib_aes.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00329.html">cal_buffer.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

@@ -1,7 +1,5 @@
 var a00719 =
 [
-    [ "pkcs11_deinit", "a01450.html#gabff89fd0af2e75ee2db858f9fe934ac4", null ],
-    [ "pkcs11_get_context", "a01450.html#gae0e3060e6ae0dfc17a35881c223d8123", null ],
-    [ "pkcs11_init", "a01450.html#gaab9ef494fdc21911e700f2b9d62547ec", null ],
-    [ "pkcs11_init_check", "a01450.html#gadd899ffeae0146c08b249e3f551e21f8", null ]
+    [ "pkcs11_decrypt_final", "a01477.html#ga045a35287c46a29da2ad13e700087e0d", null ],
+    [ "pkcs11_encrypt_final", "a01477.html#gaae94f85980031bec34148341efd537e3", null ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_signature.h File Reference</title>
+<title>CryptoAuthLib: pkcs11_os.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,58 +99,46 @@ $(document).ready(function(){initNavTree('a00761.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">pkcs11_signature.h File Reference</div></div>
+  <div class="headertitle"><div class="title">pkcs11_os.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Library Sign/Verify Handling.  
+<p>PKCS11 Library Operating System Abstraction Functions.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;cryptoki.h&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00764.html">pkcs11_os.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00791.html">pkcs11_util.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00737.html">pkcs11_init.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga742c35812a444a87e35150e2332be0c2"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_signature_sign_init</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey)</td></tr>
-<tr class="memdesc:ga742c35812a444a87e35150e2332be0c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a signing operation using the specified key and mechanism. <br /></td></tr>
-<tr class="separator:ga742c35812a444a87e35150e2332be0c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4641a3dd4da46f801565310f3784a41e"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_signature_sign</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pSignature, CK_ULONG_PTR pulSignatureLen)</td></tr>
-<tr class="memdesc:ga4641a3dd4da46f801565310f3784a41e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sign the data in a single pass operation. <br /></td></tr>
-<tr class="separator:ga4641a3dd4da46f801565310f3784a41e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9c471f7e2ca3330cf6d2fa70e12db38a"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_signature_sign_continue</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen)</td></tr>
-<tr class="memdesc:ga9c471f7e2ca3330cf6d2fa70e12db38a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues a multiple-part signature operation. <br /></td></tr>
-<tr class="separator:ga9c471f7e2ca3330cf6d2fa70e12db38a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadb52d31f30bb8f6a66d1851ba0052dc7"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_signature_sign_finish</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSignature, CK_ULONG_PTR pulSignatureLen)</td></tr>
-<tr class="memdesc:gadb52d31f30bb8f6a66d1851ba0052dc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part signature operation. <br /></td></tr>
-<tr class="separator:gadb52d31f30bb8f6a66d1851ba0052dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga852f9badf3176a60bfb874fb5d118791"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_signature_verify_init</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey)</td></tr>
-<tr class="memdesc:ga852f9badf3176a60bfb874fb5d118791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a verification operation using the specified key and mechanism. <br /></td></tr>
-<tr class="separator:ga852f9badf3176a60bfb874fb5d118791"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga27b3652fb8a87f7f40fff10c63316b35"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_signature_verify</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pSignature, CK_ULONG ulSignatureLen)</td></tr>
-<tr class="memdesc:ga27b3652fb8a87f7f40fff10c63316b35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies a signature on single-part data. <br /></td></tr>
-<tr class="separator:ga27b3652fb8a87f7f40fff10c63316b35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab735278cab8e184d682b4ed8b12dbb1b"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_signature_verify_continue</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen)</td></tr>
-<tr class="memdesc:gab735278cab8e184d682b4ed8b12dbb1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continues a multiple-part verification operation. <br /></td></tr>
-<tr class="separator:gab735278cab8e184d682b4ed8b12dbb1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2aac39ede2b43021b63ed6bc7f3f20da"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_signature_verify_finish</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSignature, CK_ULONG ulSignatureLen)</td></tr>
-<tr class="memdesc:ga2aac39ede2b43021b63ed6bc7f3f20da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part verification operation. <br /></td></tr>
-<tr class="separator:ga2aac39ede2b43021b63ed6bc7f3f20da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf5f1c5e6c5bf8d91f2090ee4bbe20362"><td class="memItemLeft" align="right" valign="top">CK_RV&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01477.html#gaf5f1c5e6c5bf8d91f2090ee4bbe20362">pkcs11_os_create_mutex</a> (CK_VOID_PTR_PTR ppMutex)</td></tr>
+<tr class="memdesc:gaf5f1c5e6c5bf8d91f2090ee4bbe20362"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application callback for creating a mutex object.  <br /></td></tr>
+<tr class="separator:gaf5f1c5e6c5bf8d91f2090ee4bbe20362"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b79ce15416271adde1bb832f6faa16b"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_os_destroy_mutex</b> (CK_VOID_PTR pMutex)</td></tr>
+<tr class="separator:ga0b79ce15416271adde1bb832f6faa16b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae27d029f16c6710a0a168e1d1057a4e3"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_os_lock_mutex</b> (CK_VOID_PTR pMutex)</td></tr>
+<tr class="separator:gae27d029f16c6710a0a168e1d1057a4e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f868fabdbf3e115a72e1d126e5356b5"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_os_unlock_mutex</b> (CK_VOID_PTR pMutex)</td></tr>
+<tr class="separator:ga6f868fabdbf3e115a72e1d126e5356b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d5ae4513ffadc540674ab077e309372"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_os_alloc_shared_ctx</b> (void **ppShared, size_t size)</td></tr>
+<tr class="separator:ga9d5ae4513ffadc540674ab077e309372"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1b23526fd890b2c8c1ded32ebdf90e59"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_os_free_shared_ctx</b> (void *pShared, size_t size)</td></tr>
+<tr class="separator:ga1b23526fd890b2c8c1ded32ebdf90e59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Library Sign/Verify Handling. </p>
+<div class="textblock"><p>PKCS11 Library Operating System Abstraction Functions. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00761.html">pkcs11_signature.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00761.html">pkcs11_os.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

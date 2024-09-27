@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: swi_uart_samd21_asf.c File Reference</title>
+<title>CryptoAuthLib: hal_uc3_i2c_asf.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,59 +98,54 @@ $(document).ready(function(){initNavTree('a00617.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
-  <div class="headertitle"><div class="title">swi_uart_samd21_asf.c File Reference</div></div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">hal_uc3_i2c_asf.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATXMEGA's ATCA Hardware abstraction layer for SWI interface over UART drivers.  
+<p>ATCA Hardware abstraction layer for SAMV71 I2C over ASF drivers.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00620.html">swi_uart_samd21_asf.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00254.html">atca_helpers.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;asf.h&gt;</code><br />
+<code>#include &quot;twi.h&quot;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01679.html">atcaI2Cmaster</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">this is the hal_data for ATCA HAL for ASF SERCOM  <a href="a01679.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaf89a7a4080a47aa10a5504291db285bf"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MAX_I2C_BUSES</b>&#160;&#160;&#160;3</td></tr>
+<tr class="separator:gaf89a7a4080a47aa10a5504291db285bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga06b19a932aea9cf3a5165fefacb24f7b"><td class="memItemLeft" align="right" valign="top">
+typedef struct <a class="el" href="a01679.html">atcaI2Cmaster</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAI2CMaster_t</b></td></tr>
+<tr class="memdesc:ga06b19a932aea9cf3a5165fefacb24f7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">this is the hal_data for ATCA HAL for ASF SERCOM <br /></td></tr>
+<tr class="separator:ga06b19a932aea9cf3a5165fefacb24f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga003b63648f1a5f9eba274760559688f2"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga003b63648f1a5f9eba274760559688f2">swi_uart_init</a> (<a class="el" href="a01446.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance)</td></tr>
-<tr class="memdesc:ga003b63648f1a5f9eba274760559688f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of SWI UART init.  <br /></td></tr>
-<tr class="separator:ga003b63648f1a5f9eba274760559688f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0b1aad3936bf003686d8db7fa2be5132"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga0b1aad3936bf003686d8db7fa2be5132">swi_uart_deinit</a> (<a class="el" href="a01446.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance)</td></tr>
-<tr class="memdesc:ga0b1aad3936bf003686d8db7fa2be5132"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of SWI UART deinit.  <br /></td></tr>
-<tr class="separator:ga0b1aad3936bf003686d8db7fa2be5132"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#gaba296f70baf68b768d6c4bb9cf7ba67d">swi_uart_setbaud</a> (<a class="el" href="a01446.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance, uint32_t baudrate)</td></tr>
-<tr class="memdesc:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="mdescLeft">&#160;</td><td class="mdescRight">implementation of SWI UART change baudrate.  <br /></td></tr>
-<tr class="separator:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#gacc2a96c86ce4c07249b81bc6a7eb2e41">swi_uart_mode</a> (<a class="el" href="a01446.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance, uint8_t mode)</td></tr>
-<tr class="memdesc:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="mdescLeft">&#160;</td><td class="mdescRight">implementation of SWI UART change mode.  <br /></td></tr>
-<tr class="separator:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad640b598d581ee7c8a4c804bee602906"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#gad640b598d581ee7c8a4c804bee602906">swi_uart_discover_buses</a> (int swi_uart_buses[], int max_buses)</td></tr>
-<tr class="memdesc:gad640b598d581ee7c8a4c804bee602906"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover UART buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge  <br /></td></tr>
-<tr class="separator:gad640b598d581ee7c8a4c804bee602906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4a4d491006d9683d67838963706ac9c1"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga4a4d491006d9683d67838963706ac9c1">swi_uart_send_byte</a> (<a class="el" href="a01446.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance, uint8_t data)</td></tr>
-<tr class="memdesc:ga4a4d491006d9683d67838963706ac9c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI UART send byte over ASF. This function send one byte over UART.  <br /></td></tr>
-<tr class="separator:ga4a4d491006d9683d67838963706ac9c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga93f3dab17c14f71641ca970998ede823"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga93f3dab17c14f71641ca970998ede823">swi_uart_receive_byte</a> (<a class="el" href="a01446.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance, uint8_t *data)</td></tr>
-<tr class="memdesc:ga93f3dab17c14f71641ca970998ede823"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI UART receive bytes over ASF. This function receive one byte over UART.  <br /></td></tr>
-<tr class="separator:ga93f3dab17c14f71641ca970998ede823"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:gaab85cb460831e8b7e4d3a5315b31c596"><td class="memItemLeft" align="right" valign="top">
-struct port_config&#160;</td><td class="memItemRight" valign="bottom"><b>pin_conf</b></td></tr>
-<tr class="separator:gaab85cb460831e8b7e4d3a5315b31c596"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc420e4b166a1b339d1a2687e0f12cb1"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01473.html#gadc420e4b166a1b339d1a2687e0f12cb1">change_i2c_speed</a> (<a class="el" href="a01607.html">ATCAIface</a> iface, uint32_t speed)</td></tr>
+<tr class="memdesc:gadc420e4b166a1b339d1a2687e0f12cb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">method to change the bus speec of I2C  <br /></td></tr>
+<tr class="separator:gadc420e4b166a1b339d1a2687e0f12cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATXMEGA's ATCA Hardware abstraction layer for SWI interface over UART drivers. </p>
-<p>Prerequisite: add UART Polled support to application in Atmel Studio</p>
+<div class="textblock"><p>ATCA Hardware abstraction layer for SAMV71 I2C over ASF drivers. </p>
+<p>Prerequisite: add SERCOM I2C Master Polled support to application in Atmel Studio</p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00617.html">swi_uart_samd21_asf.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00617.html">hal_uc3_i2c_asf.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

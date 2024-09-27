@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_slot.c File Reference</title>
+<title>CryptoAuthLib: pkcs11_os.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,64 +98,56 @@ $(document).ready(function(){initNavTree('a00764.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">pkcs11_slot.c File Reference</div></div>
+  <div class="headertitle"><div class="title">pkcs11_os.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Library Slot Handling.  
+<p>PKCS11 Library Operating System Abstraction.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00506.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;pkcs11_config.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00692.html">pkcs11_debug.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00722.html">pkcs11_init.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00767.html">pkcs11_slot.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00716.html">pkcs11_info.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00776.html">pkcs11_util.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00743.html">pkcs11_object.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00749.html">pkcs11_os.h</a>&quot;</code><br />
-<code>#include &lt;stdio.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;cryptoki.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00521.html">cryptoauthlib.h</a>&quot;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:add8754c49398ab1c3a26a581188e074c"><td class="memItemLeft" align="right" valign="top"><a id="add8754c49398ab1c3a26a581188e074c" name="add8754c49398ab1c3a26a581188e074c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_os_malloc</b>&#160;&#160;&#160;hal_malloc</td></tr>
+<tr class="separator:add8754c49398ab1c3a26a581188e074c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6dc4b364c3d11f22e08cc67adbcd70c6"><td class="memItemLeft" align="right" valign="top"><a id="a6dc4b364c3d11f22e08cc67adbcd70c6" name="a6dc4b364c3d11f22e08cc67adbcd70c6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_os_free</b>&#160;&#160;&#160;hal_free</td></tr>
+<tr class="separator:a6dc4b364c3d11f22e08cc67adbcd70c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga987853011908614aba0db7c5933b0a20"><td class="memItemLeft" align="right" valign="top">
-pkcs11_slot_ctx_ptr&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_slot_get_context</b> (pkcs11_lib_ctx_ptr lib_ctx, CK_SLOT_ID slotID)</td></tr>
-<tr class="memdesc:ga987853011908614aba0db7c5933b0a20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the current slot context. <br /></td></tr>
-<tr class="separator:ga987853011908614aba0db7c5933b0a20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0e5bb8716b795c28ccab5598c548a1fd"><td class="memItemLeft" align="right" valign="top">
-pkcs11_slot_ctx_ptr&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_slot_get_new_context</b> (pkcs11_lib_ctx_ptr lib_ctx)</td></tr>
-<tr class="separator:ga0e5bb8716b795c28ccab5598c548a1fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8bdf7c43e464ac6214411d11d82ac317"><td class="memItemLeft" align="right" valign="top">
-CK_VOID_PTR&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_slot_initslots</b> (CK_ULONG pulCount)</td></tr>
-<tr class="separator:ga8bdf7c43e464ac6214411d11d82ac317"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga548feea839a2f2cdf46a49ca30657740"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_slot_deinitslots</b> (pkcs11_lib_ctx_ptr lib_ctx)</td></tr>
-<tr class="separator:ga548feea839a2f2cdf46a49ca30657740"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga29fdbbe0188137ec327678742a3aea01"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_slot_config</b> (CK_SLOT_ID slotID)</td></tr>
-<tr class="separator:ga29fdbbe0188137ec327678742a3aea01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga418414364e88d0673b4f6c90cd62ebed"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_slot_init</b> (CK_SLOT_ID slotID)</td></tr>
-<tr class="memdesc:ga418414364e88d0673b4f6c90cd62ebed"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is an internal function that initializes a pkcs11 slot - it must already have the locks in place before being called. <br /></td></tr>
-<tr class="separator:ga418414364e88d0673b4f6c90cd62ebed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0b1860dd97a6c0afd3056ac6bd10d38d"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_slot_get_list</b> (CK_BBOOL tokenPresent, CK_SLOT_ID_PTR pSlotList, CK_ULONG_PTR pulCount)</td></tr>
-<tr class="separator:ga0b1860dd97a6c0afd3056ac6bd10d38d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3bba79e03141bfb7a9ec76c273db63d2"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_slot_get_info</b> (CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)</td></tr>
-<tr class="memdesc:ga3bba79e03141bfb7a9ec76c273db63d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains information about a particular slot. <br /></td></tr>
-<tr class="separator:ga3bba79e03141bfb7a9ec76c273db63d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf5f1c5e6c5bf8d91f2090ee4bbe20362"><td class="memItemLeft" align="right" valign="top">CK_RV&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01477.html#gaf5f1c5e6c5bf8d91f2090ee4bbe20362">pkcs11_os_create_mutex</a> (CK_VOID_PTR_PTR ppMutex)</td></tr>
+<tr class="memdesc:gaf5f1c5e6c5bf8d91f2090ee4bbe20362"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application callback for creating a mutex object.  <br /></td></tr>
+<tr class="separator:gaf5f1c5e6c5bf8d91f2090ee4bbe20362"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b79ce15416271adde1bb832f6faa16b"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_os_destroy_mutex</b> (CK_VOID_PTR pMutex)</td></tr>
+<tr class="separator:ga0b79ce15416271adde1bb832f6faa16b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae27d029f16c6710a0a168e1d1057a4e3"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_os_lock_mutex</b> (CK_VOID_PTR pMutex)</td></tr>
+<tr class="separator:gae27d029f16c6710a0a168e1d1057a4e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f868fabdbf3e115a72e1d126e5356b5"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_os_unlock_mutex</b> (CK_VOID_PTR pMutex)</td></tr>
+<tr class="separator:ga6f868fabdbf3e115a72e1d126e5356b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d5ae4513ffadc540674ab077e309372"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_os_alloc_shared_ctx</b> (void **ppShared, size_t size)</td></tr>
+<tr class="separator:ga9d5ae4513ffadc540674ab077e309372"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1b23526fd890b2c8c1ded32ebdf90e59"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_os_free_shared_ctx</b> (void *pShared, size_t size)</td></tr>
+<tr class="separator:ga1b23526fd890b2c8c1ded32ebdf90e59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Library Slot Handling. </p>
-<p>The nomenclature here can lead to some confusion - the pkcs11 slot is not the same as a device slot. So for example each slot defined here is a specific device (most systems would have only one). The "slots" as defined by the device specification would be enumerated seperately as related to specific supported mechanisms as cryptographic "objects".</p>
+<div class="textblock"><p>PKCS11 Library Operating System Abstraction. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00764.html">pkcs11_slot.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00764.html">pkcs11_os.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

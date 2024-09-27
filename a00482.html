@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_crypto_sw_sha2.c File Reference</title>
+<title>CryptoAuthLib: atca_crypto_sw.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,24 +97,52 @@ $(document).ready(function(){initNavTree('a00482.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">atca_crypto_sw_sha2.c File Reference</div></div>
+  <div class="summary">
+<a href="#define-members">Macros</a>  </div>
+  <div class="headertitle"><div class="title">atca_crypto_sw.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Wrapper API for software SHA 256 routines.  
+<p>Common defines for CryptoAuthLib software crypto wrappers.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00506.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00485.html">atca_crypto_sw_sha2.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00326.html">cal_internal.h</a>&quot;</code><br />
-</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Wrapper API for software SHA 256 routines. </p>
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00506.html">crypto/crypto_sw_config_check.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00269.html">atca_status.h</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:adb94a0991eb670ff1bf90253dfea0bfa"><td class="memItemLeft" align="right" valign="top"><a id="adb94a0991eb670ff1bf90253dfea0bfa" name="adb94a0991eb670ff1bf90253dfea0bfa"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SHA1_DIGEST_SIZE</b>&#160;&#160;&#160;(20U)</td></tr>
+<tr class="separator:adb94a0991eb670ff1bf90253dfea0bfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86364f6d07b86740f3170d9d1ca60641"><td class="memItemLeft" align="right" valign="top"><a id="a86364f6d07b86740f3170d9d1ca60641" name="a86364f6d07b86740f3170d9d1ca60641"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SHA2_256_DIGEST_SIZE</b>&#160;&#160;&#160;(32U)</td></tr>
+<tr class="separator:a86364f6d07b86740f3170d9d1ca60641"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c4ce6cbfabda05b03f992165ea96431"><td class="memItemLeft" align="right" valign="top"><a id="a4c4ce6cbfabda05b03f992165ea96431" name="a4c4ce6cbfabda05b03f992165ea96431"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SHA2_256_BLOCK_SIZE</b>&#160;&#160;&#160;(64U)</td></tr>
+<tr class="separator:a4c4ce6cbfabda05b03f992165ea96431"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a977b124131a3f27f2abab314108596cd"><td class="memItemLeft" align="right" valign="top"><a id="a977b124131a3f27f2abab314108596cd" name="a977b124131a3f27f2abab314108596cd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SHA2_384_DIGEST_SIZE</b>&#160;&#160;&#160;(48U)</td></tr>
+<tr class="separator:a977b124131a3f27f2abab314108596cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7df1800a08b93723cff4887124bc5b96"><td class="memItemLeft" align="right" valign="top"><a id="a7df1800a08b93723cff4887124bc5b96" name="a7df1800a08b93723cff4887124bc5b96"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SHA2_384_BLOCK_SIZE</b>&#160;&#160;&#160;(128U)</td></tr>
+<tr class="separator:a7df1800a08b93723cff4887124bc5b96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a648da8b78a639be69fb7b92fa33dbc93"><td class="memItemLeft" align="right" valign="top"><a id="a648da8b78a639be69fb7b92fa33dbc93" name="a648da8b78a639be69fb7b92fa33dbc93"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SHA2_512_DIGEST_SIZE</b>&#160;&#160;&#160;(64U)</td></tr>
+<tr class="separator:a648da8b78a639be69fb7b92fa33dbc93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e16b55b078ceda38edabaf1629fbda6"><td class="memItemLeft" align="right" valign="top"><a id="a8e16b55b078ceda38edabaf1629fbda6" name="a8e16b55b078ceda38edabaf1629fbda6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SHA2_512_BLOCK_SIZE</b>&#160;&#160;&#160;(128U)</td></tr>
+<tr class="separator:a8e16b55b078ceda38edabaf1629fbda6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Common defines for CryptoAuthLib software crypto wrappers. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="a00482.html">atca_crypto_sw_sha2.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="a00482.html">atca_crypto_sw.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

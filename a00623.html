@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: swi_uart_start.c File Reference</title>
+<title>CryptoAuthLib: hal_windows.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,55 +98,51 @@ $(document).ready(function(){initNavTree('a00623.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">swi_uart_start.c File Reference</div></div>
+  <div class="headertitle"><div class="title">hal_windows.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &lt;peripheral_clk_config.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00626.html">swi_uart_start.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00254.html">atca_helpers.h</a>&quot;</code><br />
+
+<p>ATCA Hardware abstraction layer for windows timer functions.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00530.html">atca_hal.h</a>&quot;</code><br />
+<code>#include &lt;windows.h&gt;</code><br />
+<code>#include &lt;math.h&gt;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ad462f78bb4839d01e6066bdac14a6680"><td class="memItemLeft" align="right" valign="top"><a id="ad462f78bb4839d01e6066bdac14a6680" name="ad462f78bb4839d01e6066bdac14a6680"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>USART_BAUD_RATE</b>(baud,  sercom_freq)&#160;&#160;&#160;(65536 - ((65536 * 16.0F * baud) / sercom_freq))</td></tr>
-<tr class="separator:ad462f78bb4839d01e6066bdac14a6680"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga003b63648f1a5f9eba274760559688f2"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga003b63648f1a5f9eba274760559688f2">swi_uart_init</a> (<a class="el" href="a01446.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance)</td></tr>
-<tr class="memdesc:ga003b63648f1a5f9eba274760559688f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of SWI UART init.  <br /></td></tr>
-<tr class="separator:ga003b63648f1a5f9eba274760559688f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0b1aad3936bf003686d8db7fa2be5132"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga0b1aad3936bf003686d8db7fa2be5132">swi_uart_deinit</a> (<a class="el" href="a01446.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance)</td></tr>
-<tr class="memdesc:ga0b1aad3936bf003686d8db7fa2be5132"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of SWI UART deinit.  <br /></td></tr>
-<tr class="separator:ga0b1aad3936bf003686d8db7fa2be5132"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#gaba296f70baf68b768d6c4bb9cf7ba67d">swi_uart_setbaud</a> (<a class="el" href="a01446.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance, uint32_t baudrate)</td></tr>
-<tr class="memdesc:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="mdescLeft">&#160;</td><td class="mdescRight">implementation of SWI UART change baudrate.  <br /></td></tr>
-<tr class="separator:gaba296f70baf68b768d6c4bb9cf7ba67d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#gacc2a96c86ce4c07249b81bc6a7eb2e41">swi_uart_mode</a> (<a class="el" href="a01446.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance, uint8_t mode)</td></tr>
-<tr class="memdesc:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="mdescLeft">&#160;</td><td class="mdescRight">implementation of SWI UART change mode.  <br /></td></tr>
-<tr class="separator:gacc2a96c86ce4c07249b81bc6a7eb2e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad640b598d581ee7c8a4c804bee602906"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#gad640b598d581ee7c8a4c804bee602906">swi_uart_discover_buses</a> (int swi_uart_buses[], int max_buses)</td></tr>
-<tr class="memdesc:gad640b598d581ee7c8a4c804bee602906"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover UART buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge  <br /></td></tr>
-<tr class="separator:gad640b598d581ee7c8a4c804bee602906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4a4d491006d9683d67838963706ac9c1"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga4a4d491006d9683d67838963706ac9c1">swi_uart_send_byte</a> (<a class="el" href="a01446.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance, uint8_t data)</td></tr>
-<tr class="memdesc:ga4a4d491006d9683d67838963706ac9c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI UART send byte over ASF. This function send one byte over UART.  <br /></td></tr>
-<tr class="separator:ga4a4d491006d9683d67838963706ac9c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga93f3dab17c14f71641ca970998ede823"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html#ga93f3dab17c14f71641ca970998ede823">swi_uart_receive_byte</a> (<a class="el" href="a01446.html#ga626ead73d3ae1cc2ed09d5fa509f80ff">ATCASWIMaster_t</a> *instance, uint8_t *data)</td></tr>
-<tr class="memdesc:ga93f3dab17c14f71641ca970998ede823"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI UART receive bytes over ASF. This function receive one byte over UART.  <br /></td></tr>
-<tr class="separator:ga93f3dab17c14f71641ca970998ede823"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7e9019810ba5ab81b256282392cd5079"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01473.html#ga7e9019810ba5ab81b256282392cd5079">hal_delay_us</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga7e9019810ba5ab81b256282392cd5079"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of microseconds.  <br /></td></tr>
+<tr class="separator:ga7e9019810ba5ab81b256282392cd5079"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01473.html#gadc23b8130e72a445f76c68d62e8c95c5">hal_delay_ms</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:gadc23b8130e72a445f76c68d62e8c95c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API implemented at the HAL level.  <br /></td></tr>
+<tr class="separator:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad9da28968a527ce51a2b081461d4cfe"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01473.html#gaad9da28968a527ce51a2b081461d4cfe">hal_create_mutex</a> (void **ppMutex, const char *pName)</td></tr>
+<tr class="memdesc:gaad9da28968a527ce51a2b081461d4cfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional hal interfaces.  <br /></td></tr>
+<tr class="separator:gaad9da28968a527ce51a2b081461d4cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_destroy_mutex</b> (void *pMutex)</td></tr>
+<tr class="separator:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_lock_mutex</b> (void *pMutex)</td></tr>
+<tr class="separator:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31fd8170a49623686543f6247b883bd1"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_unlock_mutex</b> (void *pMutex)</td></tr>
+<tr class="separator:ga31fd8170a49623686543f6247b883bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae31246ac870409a3d694c240c6c3498a"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_check_pid</b> (hal_pid_t pid)</td></tr>
+<tr class="memdesc:gae31246ac870409a3d694c240c6c3498a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the pid exists in the system. <br /></td></tr>
+<tr class="separator:gae31246ac870409a3d694c240c6c3498a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+<div class="textblock"><p>ATCA Hardware abstraction layer for windows timer functions. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00623.html">swi_uart_start.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00623.html">hal_windows.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

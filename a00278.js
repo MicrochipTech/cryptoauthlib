@@ -1,7 +1,16 @@
 var a00278 =
 [
-    [ "atcacert_read_cert", "a01443.html#gafd202f259b53d72b0a382f33e99f9065", null ],
-    [ "atcacert_read_cert_ext", "a01443.html#ga906f310b9518c8f41431b047602cd651", null ],
-    [ "atcacert_read_cert_size", "a01443.html#ga143bf9b419fc7a090cb9876436735616", null ],
-    [ "atcacert_read_cert_size_ext", "a01443.html#ga5ce46e6e2ed2703edd506e3613c65d0b", null ]
+    [ "ATCACERT_E_BAD_CERT", "a01470.html#ga822ee0620c8d2d12ff971b9b35f9f5cd", null ],
+    [ "ATCACERT_E_BAD_PARAMS", "a01470.html#ga47509d283523ab1892fb8746d6f4e37d", null ],
+    [ "ATCACERT_E_BUFFER_TOO_SMALL", "a01470.html#ga7a2e774fc8b12c4045dea335a86afca6", null ],
+    [ "ATCACERT_E_DECODING_ERROR", "a01470.html#gaea155533fdd352d6602d3e2fc717930f", null ],
+    [ "ATCACERT_E_ELEM_MISSING", "a01470.html#ga8e3e7c64650c92364bbac17f6a75474a", null ],
+    [ "ATCACERT_E_ELEM_OUT_OF_BOUNDS", "a01470.html#ga62604c78d688530173e203b02df180fa", null ],
+    [ "ATCACERT_E_ERROR", "a01470.html#ga048a6bb9781dbbc402409a172f976f74", null ],
+    [ "ATCACERT_E_INVALID_DATE", "a01470.html#gaafd66d6744314225ead24b3901bd6372", null ],
+    [ "ATCACERT_E_INVALID_TRANSFORM", "a01470.html#ga2396e500bd36c2316a1a6e13e3117958", null ],
+    [ "ATCACERT_E_SUCCESS", "a01470.html#ga7bd1ad830360fc8b988f855da6d0d5ba", null ],
+    [ "ATCACERT_E_UNEXPECTED_ELEM_SIZE", "a01470.html#ga5a7cb98e18ad338f2eaf6594acb67c32", null ],
+    [ "ATCACERT_E_UNIMPLEMENTED", "a01470.html#ga4b6db1523875a2b1453ef5e16989ecd4", null ],
+    [ "ATCACERT_E_VERIFY_FAILED", "a01470.html#gae1da5e02cd9b4ee7b8617d7bce0a5b5d", null ]
 ];

@@ -1,6 +1,14 @@
 var a00614 =
 [
-    [ "kit_id_from_devtype", "a01446.html#ga554072f32204a0eb8d7b8c7931e43343", null ],
-    [ "kit_interface", "a01446.html#ga33fe33933fb59dde6e6fb8975da6c12d", null ],
-    [ "kit_interface_from_kittype", "a01446.html#ga31075898964b61f4877ba882477b71c3", null ]
+    [ "change_i2c_speed", "a01473.html#gadc420e4b166a1b339d1a2687e0f12cb1", null ],
+    [ "hal_i2c_discover_buses", "a01473.html#ga05700385437884cc7b28c38d33e84f8c", null ],
+    [ "hal_i2c_discover_devices", "a01473.html#gac7644e62498a596c09952ee3b28017b9", null ],
+    [ "hal_i2c_idle", "a01473.html#ga9317303ada721ff3f97e7aad69437a30", null ],
+    [ "hal_i2c_init", "a01473.html#ga09e7f465a040fbd19ea136269571de3c", null ],
+    [ "hal_i2c_post_init", "a01473.html#gafbe53519362f18c2688d10da6f7c618f", null ],
+    [ "hal_i2c_receive", "a01473.html#gac1baf65047dc3efe1f14f1b79b62c04f", null ],
+    [ "hal_i2c_release", "a01473.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
+    [ "hal_i2c_send", "a01473.html#gacc9a889e19d2f1a475a39391565b66dd", null ],
+    [ "hal_i2c_sleep", "a01473.html#ga3f89bae6a625d5f37abdcc99408def27", null ],
+    [ "hal_i2c_wake", "a01473.html#gad4df1b6755e2d5b5d9e810371e45ca8c", null ]
 ];

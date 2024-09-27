@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_helpers.h File Reference</title>
+<title>CryptoAuthLib: atca_device.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.5</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,106 +97,72 @@ $(document).ready(function(){initNavTree('a00254.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">atca_helpers.h File Reference</div></div>
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">atca_device.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Helpers to support the CryptoAuthLib Basic API methods.  
+<p>Microchip Crypto Auth device object.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00506.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00263.html">atca_iface.h</a>&quot;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01531.html">atca_device</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a01531.html" title="atca_device is the C object backing ATCADevice. See the atca_device.h file for details on the ATCADev...">atca_device</a> is the C object backing ATCADevice. See the <a class="el" href="a00254.html" title="Microchip Crypto Auth device object.">atca_device.h</a> file for details on the ATCADevice methods  <a href="a01531.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gada27ffa70c78964d3b38abd11c5f4f22"><td class="memItemLeft" align="right" valign="top">
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><b>ctx_cb</b>) (void *ctx)</td></tr>
+<tr class="memdesc:gada27ffa70c78964d3b38abd11c5f4f22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function to clean up the session context. <br /></td></tr>
+<tr class="separator:gada27ffa70c78964d3b38abd11c5f4f22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa94f7bb4af0a3d6735225cc85d92cb50"><td class="memItemLeft" align="right" valign="top">
+typedef struct <a class="el" href="a01531.html">atca_device</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>ATCADevice</b></td></tr>
+<tr class="separator:gaa94f7bb4af0a3d6735225cc85d92cb50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga765308123cf522f5ec8b528bf4ea1243"><td class="memItemLeft" align="right" valign="top"><a id="ga765308123cf522f5ec8b528bf4ea1243" name="ga765308123cf522f5ec8b528bf4ea1243"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01468.html#ga765308123cf522f5ec8b528bf4ea1243">ATCADeviceState</a> { <b>ATCA_DEVICE_STATE_UNKNOWN</b> = 0
+, <b>ATCA_DEVICE_STATE_SLEEP</b>
+, <b>ATCA_DEVICE_STATE_IDLE</b>
+, <b>ATCA_DEVICE_STATE_ACTIVE</b>
+ }</td></tr>
+<tr class="memdesc:ga765308123cf522f5ec8b528bf4ea1243"><td class="mdescLeft">&#160;</td><td class="mdescRight">ATCADeviceState says about device state. <br /></td></tr>
+<tr class="separator:ga765308123cf522f5ec8b528bf4ea1243"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
-<tr class="memitem:gae31a9fd8e9deca79aa5fef0292fe5272"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#gae31a9fd8e9deca79aa5fef0292fe5272">atcab_bin2hex</a> (const uint8_t *bin, size_t bin_size, char *hex, size_t *hex_size)</td></tr>
-<tr class="memdesc:gae31a9fd8e9deca79aa5fef0292fe5272"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a binary buffer to a hex string for easy reading.  <br /></td></tr>
-<tr class="separator:gae31a9fd8e9deca79aa5fef0292fe5272"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga40b70cfab865fa4fd9a5e7a29ca59d38"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#ga40b70cfab865fa4fd9a5e7a29ca59d38">atcab_bin2hex_</a> (const uint8_t *bin, size_t bin_size, char *hex, size_t *hex_size, bool is_pretty, bool is_space, bool is_upper)</td></tr>
-<tr class="memdesc:ga40b70cfab865fa4fd9a5e7a29ca59d38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that converts a binary buffer to a hex string suitable for easy reading.  <br /></td></tr>
-<tr class="separator:ga40b70cfab865fa4fd9a5e7a29ca59d38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga481179181349c801c16fc1ab698f2f24"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#ga481179181349c801c16fc1ab698f2f24">atcab_hex2bin</a> (const char *ascii_hex, size_t ascii_hex_len, uint8_t *binary, size_t *bin_len)</td></tr>
-<tr class="memdesc:ga481179181349c801c16fc1ab698f2f24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that converts a hex string to binary buffer.  <br /></td></tr>
-<tr class="separator:ga481179181349c801c16fc1ab698f2f24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4ef30ca351b13623043917b5ed86cbb8"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_hex2bin_</b> (const char *hex, size_t hex_size, uint8_t *bin, size_t *bin_size, bool is_space)</td></tr>
-<tr class="separator:ga4ef30ca351b13623043917b5ed86cbb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad017ae33af5a7ea062cea7d54de675a8"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#gad017ae33af5a7ea062cea7d54de675a8">packHex</a> (const char *ascii_hex, size_t ascii_hex_len, char *packed_hex, size_t *packed_len)</td></tr>
-<tr class="memdesc:gad017ae33af5a7ea062cea7d54de675a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove spaces from a ASCII hex string.  <br /></td></tr>
-<tr class="separator:gad017ae33af5a7ea062cea7d54de675a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a929bf65cbc777bab7e533a2755cfad"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#ga7a929bf65cbc777bab7e533a2755cfad">isDigit</a> (char c)</td></tr>
-<tr class="memdesc:ga7a929bf65cbc777bab7e533a2755cfad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks to see if a character is an ASCII representation of a digit ((c ge '0') and (c le '9'))  <br /></td></tr>
-<tr class="separator:ga7a929bf65cbc777bab7e533a2755cfad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga04fefe2ff5a7d2e937b2634acd22982a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#ga04fefe2ff5a7d2e937b2634acd22982a">isBlankSpace</a> (char c)</td></tr>
-<tr class="memdesc:ga04fefe2ff5a7d2e937b2634acd22982a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks to see if a character is blank space.  <br /></td></tr>
-<tr class="separator:ga04fefe2ff5a7d2e937b2634acd22982a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga592c23e94097ad5e212beb6390aa88c6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#ga592c23e94097ad5e212beb6390aa88c6">isAlpha</a> (char c)</td></tr>
-<tr class="memdesc:ga592c23e94097ad5e212beb6390aa88c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks to see if a character is an ASCII representation of hex ((c &gt;= 'A') and (c &lt;= 'F')) || ((c &gt;= 'a') and (c &lt;= 'f'))  <br /></td></tr>
-<tr class="separator:ga592c23e94097ad5e212beb6390aa88c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga78abefc293c0a04d8ef649c94c8a1057"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#ga78abefc293c0a04d8ef649c94c8a1057">isHexAlpha</a> (char c)</td></tr>
-<tr class="memdesc:ga78abefc293c0a04d8ef649c94c8a1057"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks to see if a character is an ASCII representation of hex ((c &gt;= 'A') and (c &lt;= 'F')) || ((c &gt;= 'a') and (c &lt;= 'f'))  <br /></td></tr>
-<tr class="separator:ga78abefc293c0a04d8ef649c94c8a1057"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab7ca9ee391118aafe6f3cf7df4fa5de3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#gab7ca9ee391118aafe6f3cf7df4fa5de3">isHex</a> (char c)</td></tr>
-<tr class="memdesc:gab7ca9ee391118aafe6f3cf7df4fa5de3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this character is a valid hex character or if this is blankspace (The character can be included in a valid hexstring).  <br /></td></tr>
-<tr class="separator:gab7ca9ee391118aafe6f3cf7df4fa5de3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga39003da4dc8a0b8999f1325c2f96f641"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#ga39003da4dc8a0b8999f1325c2f96f641">isHexDigit</a> (char c)</td></tr>
-<tr class="memdesc:ga39003da4dc8a0b8999f1325c2f96f641"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this character is a valid hex character.  <br /></td></tr>
-<tr class="separator:ga39003da4dc8a0b8999f1325c2f96f641"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac873a37c53fdd922d5b36efd737e3ec3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#gac873a37c53fdd922d5b36efd737e3ec3">isBase64</a> (char c, const uint8_t *rules)</td></tr>
-<tr class="memdesc:gac873a37c53fdd922d5b36efd737e3ec3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this character is a valid base 64 character or if this is space (A character can be included in a valid base 64 string).  <br /></td></tr>
-<tr class="separator:gac873a37c53fdd922d5b36efd737e3ec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad10d15454308230fbef54bdd43001ed2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#gad10d15454308230fbef54bdd43001ed2">isBase64Digit</a> (char c, const uint8_t *rules)</td></tr>
-<tr class="memdesc:gad10d15454308230fbef54bdd43001ed2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this character is a valid base 64 character.  <br /></td></tr>
-<tr class="separator:gad10d15454308230fbef54bdd43001ed2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga63df1707f387c7d8cd9b5cc630585451"><td class="memItemLeft" align="right" valign="top">
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_b64rules_default</b> (void)</td></tr>
-<tr class="separator:ga63df1707f387c7d8cd9b5cc630585451"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2788ca7af14f8ddf1de38b6c3b295fc7"><td class="memItemLeft" align="right" valign="top">
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_b64rules_mime</b> (void)</td></tr>
-<tr class="separator:ga2788ca7af14f8ddf1de38b6c3b295fc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabf3840c83fd2df68907173f95bdece7e"><td class="memItemLeft" align="right" valign="top">
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_b64rules_urlsafe</b> (void)</td></tr>
-<tr class="separator:gabf3840c83fd2df68907173f95bdece7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga55ba8a1787f69d44d6e40db041fbd786"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#ga55ba8a1787f69d44d6e40db041fbd786">atcab_base64decode_</a> (const char *encoded, size_t encoded_size, uint8_t *data, size_t *data_size, const uint8_t *rules)</td></tr>
-<tr class="memdesc:ga55ba8a1787f69d44d6e40db041fbd786"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode base64 string to data with ruleset option.  <br /></td></tr>
-<tr class="separator:ga55ba8a1787f69d44d6e40db041fbd786"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3aa141525a1141f1a290e2a996da0c9c"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#ga3aa141525a1141f1a290e2a996da0c9c">atcab_base64encode</a> (const uint8_t *byte_array, size_t array_len, char *encoded, size_t *encoded_len)</td></tr>
-<tr class="memdesc:ga3aa141525a1141f1a290e2a996da0c9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode data as base64 string.  <br /></td></tr>
-<tr class="separator:ga3aa141525a1141f1a290e2a996da0c9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeeff0177acf29e6e7b134a14d7119d69"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#gaeeff0177acf29e6e7b134a14d7119d69">atcab_base64encode_</a> (const uint8_t *data, size_t data_size, char *encoded, size_t *encoded_size, const uint8_t *rules)</td></tr>
-<tr class="memdesc:gaeeff0177acf29e6e7b134a14d7119d69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode data as base64 string with ruleset option.  <br /></td></tr>
-<tr class="separator:gaeeff0177acf29e6e7b134a14d7119d69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6073c5a05e0ad2e738f460e727014553"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#ga6073c5a05e0ad2e738f460e727014553">atcab_base64decode</a> (const char *encoded, size_t encoded_len, uint8_t *byte_array, size_t *array_len)</td></tr>
-<tr class="memdesc:ga6073c5a05e0ad2e738f460e727014553"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode base64 string to data.  <br /></td></tr>
-<tr class="separator:ga6073c5a05e0ad2e738f460e727014553"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7371f490659b6fd68739d2b1fee50696"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01439.html#ga7371f490659b6fd68739d2b1fee50696">atcab_reversal</a> (const uint8_t *bin, size_t bin_size, uint8_t *dest, size_t *dest_size)</td></tr>
-<tr class="memdesc:ga7371f490659b6fd68739d2b1fee50696"><td class="mdescLeft">&#160;</td><td class="mdescRight">To reverse the input data.  <br /></td></tr>
-<tr class="separator:ga7371f490659b6fd68739d2b1fee50696"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac37b319dabc5b9492a422f6d3d4e118b"><td class="memItemLeft" align="right" valign="top">
-int&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_memset_s</b> (void *dest, size_t destsz, int ch, size_t count)</td></tr>
-<tr class="memdesc:gac37b319dabc5b9492a422f6d3d4e118b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Guaranteed to perform memory writes regardless of optimization level. Matches memset_s signature. <br /></td></tr>
-<tr class="separator:gac37b319dabc5b9492a422f6d3d4e118b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga72f385a8eafc464a05acfa54561fed63"><td class="memItemLeft" align="right" valign="top">
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_pointer_delta</b> (const void *start, const void *end)</td></tr>
-<tr class="memdesc:ga72f385a8eafc464a05acfa54561fed63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to calculate the number of bytes between two pointers. <br /></td></tr>
-<tr class="separator:ga72f385a8eafc464a05acfa54561fed63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga13a4675d782c861977b653e3c2b354ba"><td class="memItemLeft" align="right" valign="top">
-char&#160;</td><td class="memItemRight" valign="bottom"><b>lib_toupper</b> (char c)</td></tr>
-<tr class="memdesc:ga13a4675d782c861977b653e3c2b354ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a character to uppercase. <br /></td></tr>
-<tr class="separator:ga13a4675d782c861977b653e3c2b354ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gada3308b30b1b1e40abb806dbc5476648"><td class="memItemLeft" align="right" valign="top">
-char&#160;</td><td class="memItemRight" valign="bottom"><b>lib_tolower</b> (char c)</td></tr>
-<tr class="memdesc:gada3308b30b1b1e40abb806dbc5476648"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a character to lowercase. <br /></td></tr>
-<tr class="separator:gada3308b30b1b1e40abb806dbc5476648"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8eec7f2190d1f9bda6684f5d2177db15"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01468.html#ga8eec7f2190d1f9bda6684f5d2177db15">initATCADevice</a> (<a class="el" href="a01539.html">ATCAIfaceCfg</a> *cfg, <a class="el" href="a01531.html">ATCADevice</a> ca_dev)</td></tr>
+<tr class="memdesc:ga8eec7f2190d1f9bda6684f5d2177db15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializer for an Microchip CryptoAuth device.  <br /></td></tr>
+<tr class="separator:ga8eec7f2190d1f9bda6684f5d2177db15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad5e12e12d3030e28d75164286df9e5e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01531.html">ATCADevice</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01468.html#gad5e12e12d3030e28d75164286df9e5e9">newATCADevice</a> (<a class="el" href="a01539.html">ATCAIfaceCfg</a> *cfg)</td></tr>
+<tr class="memdesc:gad5e12e12d3030e28d75164286df9e5e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor for a Microchip CryptoAuth device  <br /></td></tr>
+<tr class="separator:gad5e12e12d3030e28d75164286df9e5e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab729e6c838c0a247d4f226fb92492d96"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01468.html#gab729e6c838c0a247d4f226fb92492d96">releaseATCADevice</a> (<a class="el" href="a01531.html">ATCADevice</a> ca_dev)</td></tr>
+<tr class="memdesc:gab729e6c838c0a247d4f226fb92492d96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release any resources associated with the device.  <br /></td></tr>
+<tr class="separator:gab729e6c838c0a247d4f226fb92492d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac087cf04cd5bd6ff2e026d89bfbf5e12"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01468.html#gac087cf04cd5bd6ff2e026d89bfbf5e12">deleteATCADevice</a> (<a class="el" href="a01531.html">ATCADevice</a> *ca_dev)</td></tr>
+<tr class="memdesc:gac087cf04cd5bd6ff2e026d89bfbf5e12"><td class="mdescLeft">&#160;</td><td class="mdescRight">destructor for a device NULLs reference after object is freed  <br /></td></tr>
+<tr class="separator:gac087cf04cd5bd6ff2e026d89bfbf5e12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f98e29cffa06446fc91b329703606af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01607.html">ATCAIface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01468.html#ga3f98e29cffa06446fc91b329703606af">atGetIFace</a> (<a class="el" href="a01531.html">ATCADevice</a> dev)</td></tr>
+<tr class="memdesc:ga3f98e29cffa06446fc91b329703606af"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns a reference to the ATCAIface interface object for the device  <br /></td></tr>
+<tr class="separator:ga3f98e29cffa06446fc91b329703606af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Helpers to support the CryptoAuthLib Basic API methods. </p>
+<div class="textblock"><p>Microchip Crypto Auth device object. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00254.html">atca_helpers.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00254.html">atca_device.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

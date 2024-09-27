@@ -1,10 +1,10 @@
 var a00563 =
 [
-    [ "atca_uart_host_s", "a01676.html", null ],
-    [ "hal_uart_control", "a00563.html#a41ed83bbc8e0fd3abea7beb513fbdb96", null ],
-    [ "hal_uart_init", "a00563.html#afb6d836af248aed1afe715ae2f2f7c2b", null ],
-    [ "hal_uart_post_init", "a00563.html#a1c5f894db539ea5cb0d5ae0fa38449d7", null ],
-    [ "hal_uart_receive", "a00563.html#a1a0256b61c3579519f8cc6d6157bc126", null ],
-    [ "hal_uart_release", "a00563.html#a1e0c17bf7342c21ca69d066eefa1f1eb", null ],
-    [ "hal_uart_send", "a00563.html#aae0b332270c1e8df223b430d8e8ddbbc", null ]
+    [ "hal_kit_attach_phy", "a01473.html#ga3f5bce4e9ee06a3b564052b2bd202c29", null ],
+    [ "hal_kit_control", "a01473.html#ga56a9e080fb9055109778010912be08ba", null ],
+    [ "hal_kit_init", "a01473.html#ga4d01381c1a907ba56368a9313d0b65cb", null ],
+    [ "hal_kit_post_init", "a01473.html#ga7baebf1b0431d0670517d3788d63b111", null ],
+    [ "hal_kit_receive", "a01473.html#ga239b2412c8c0d45c2097a4fa06c9aa53", null ],
+    [ "hal_kit_release", "a01473.html#gafb063a58f6e3b087cf08fce5c66ee422", null ],
+    [ "hal_kit_send", "a01473.html#ga18817a4a7ab5958453eca414e28834ba", null ]
 ];

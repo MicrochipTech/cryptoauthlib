@@ -1,4 +1,6 @@
 var a00803 =
 [
-    [ "ATSHA204A", "a01441.html#ga054acfe7d4dd4064f9d27a9ea7fc2337", null ]
+    [ "pkcs11_token_get_info", "a01477.html#ga7bf2fea766cab4645fe615661bcf0db9", null ],
+    [ "pkcs11_token_init", "a01477.html#ga7e207adf2d26c1d6ea64f7c60252bf45", null ],
+    [ "pkcs11_token_random", "a01477.html#gaf4c0c6a2d12d879308f2d42cc61ef401", null ]
 ];
