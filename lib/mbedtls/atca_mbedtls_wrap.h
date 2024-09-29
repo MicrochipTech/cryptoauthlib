@@ -63,10 +63,26 @@ typedef struct atcac_sha1_ctx
     mbedtls_md_context_t mctx;
 } atcac_sha1_ctx_t;
 
+#if ATCAC_SHA256_EN
 typedef struct atcac_sha2_256_ctx
 {
     mbedtls_md_context_t mctx;
 } atcac_sha2_256_ctx_t;
+#endif
+
+#if ATCAC_SHA384_EN
+typedef struct atcac_sha2_384_ctx
+{
+    mbedtls_md_context_t mctx;
+} atcac_sha2_384_ctx_t;
+#endif
+
+#if ATCAC_SHA512_EN
+typedef struct atcac_sha2_512_ctx
+{
+    mbedtls_md_context_t mctx;
+} atcac_sha2_512_ctx_t;
+#endif
 
 typedef struct atcac_hmac_ctx
 {

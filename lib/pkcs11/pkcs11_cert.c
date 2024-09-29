@@ -62,12 +62,13 @@ static pkcs11_cert_cache pkcs11_cert_cache_list[PKCS11_MAX_CERTS_CACHED];
 
 
 #if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
-static void pkcs11_cert_check_trust_data(pkcs11_object_ptr pObject, pkcs11_session_ctx_ptr pSession)
+static CK_RV pkcs11_cert_check_trust_data(pkcs11_object_ptr pObject, pkcs11_session_ctx_ptr pSession)
 {
+    CK_RV rv = CKR_ARGUMENTS_BAD;
     if ((PKCS11_OBJECT_FLAG_TRUST_TYPE == (PKCS11_OBJECT_FLAG_TRUST_TYPE & pObject->flags)) && (NULL == pObject->data) && (NULL != pSession))
     {
         const atcacert_def_t * cert_def = NULL;
-        (void)tng_get_device_cert_def_ext(pSession->slot->device_ctx, &cert_def);
+        rv = pkcs11_util_convert_rv(tng_get_device_cert_def_ext(pSession->slot->device_ctx, &cert_def));
 
         if (NULL != cert_def)
         {
@@ -85,6 +86,7 @@ static void pkcs11_cert_check_trust_data(pkcs11_object_ptr pObject, pkcs11_sessi
             }
         }
     }
+    return rv;
 }
 #endif
 
@@ -310,13 +312,16 @@ static CK_RV pkcs11_cert_get_encoded(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttr
 
     if (NULL != obj_ptr && NULL != psession)
     {
-#if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
-        pkcs11_cert_check_trust_data(obj_ptr, psession);
-        if (CKR_OK != (rv = pkcs11_cert_load(obj_ptr, pAttribute, psession->slot->device_ctx)))
+        if (PKCS11_OBJECT_FLAG_TRUST_TYPE == (PKCS11_OBJECT_FLAG_TRUST_TYPE & obj_ptr->flags))
         {
-            return rv;
+#if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
+            rv = pkcs11_cert_check_trust_data(obj_ptr, psession);
+            if (CKR_OK == rv)
+            {
+                return pkcs11_cert_load(obj_ptr, pAttribute, psession->slot->device_ctx);
+            }
+#endif
         }
-#else
         #if defined(ATCA_HEAP) && (FEATURE_ENABLED == ATCACERT_INTEGRATION_EN)
         rv = pkcs11_cert_load_cache(psession, obj_ptr);
         if (CKR_OK == rv)
@@ -328,16 +333,14 @@ static CK_RV pkcs11_cert_get_encoded(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttr
                     (pkcs11_cert_cache_list[i].pObject_cert == pObject))
                 {
                     return pkcs11_attrib_fill(pAttribute, pkcs11_cert_cache_list[i].cert_x509_parse.pValue,
-                                              pkcs11_cert_cache_list[i].cert_x509_parse.ulValueLen);
+                                            pkcs11_cert_cache_list[i].cert_x509_parse.ulValueLen);
                 }
             }
         }
         #else
         return pkcs11_cert_load(obj_ptr, pAttribute, psession->slot->device_ctx);
-        #endif
-#endif
+        #endif      
     }
-
     return rv;
 }
 
@@ -348,9 +351,12 @@ static CK_RV pkcs11_cert_get_type_ca(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR
 
     if (NULL != pObject)
     {
+        if (PKCS11_OBJECT_FLAG_TRUST_TYPE == (PKCS11_OBJECT_FLAG_TRUST_TYPE & pObject->flags))
+        {
 #if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
-        pkcs11_cert_check_trust_data(pObject, psession);
+            (void)pkcs11_cert_check_trust_data(pObject, psession);
 #endif
+        }
 
         if (NULL != pObject->data)
         {
@@ -405,11 +411,16 @@ static CK_RV pkcs11_cert_get_subject(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttr
 
     if (NULL != obj_ptr && NULL != psession)
     {
+        if (PKCS11_OBJECT_FLAG_TRUST_TYPE == (PKCS11_OBJECT_FLAG_TRUST_TYPE & obj_ptr->flags))
+        {
 #if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
-        pkcs11_cert_check_trust_data(obj_ptr, psession);
+            (void)pkcs11_cert_check_trust_data(obj_ptr, psession);
 #endif
-
-        rv = pkcs11_cert_load_cache(psession, obj_ptr);
+        }
+        else
+        {
+            rv = pkcs11_cert_load_cache(psession, obj_ptr);
+        }
 
         if (NULL != obj_ptr->data)
         {
@@ -559,11 +570,16 @@ static CK_RV pkcs11_cert_get_subject_key_id(CK_VOID_PTR pObject, CK_ATTRIBUTE_PT
 
     if (NULL != obj_ptr)
     {
+        if (PKCS11_OBJECT_FLAG_TRUST_TYPE == (PKCS11_OBJECT_FLAG_TRUST_TYPE & obj_ptr->flags))
+        {
 #if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
-        pkcs11_cert_check_trust_data(obj_ptr, psession);
+            (void)pkcs11_cert_check_trust_data(obj_ptr, psession);
 #endif
-
-        read_cache = pkcs11_cert_load_cache(psession, obj_ptr);
+        }
+        else
+        {
+            read_cache = pkcs11_cert_load_cache(psession, obj_ptr);
+        }
 
         if (NULL != obj_ptr->data)
         {
@@ -660,11 +676,16 @@ static CK_RV pkcs11_cert_get_authority_key_id(CK_VOID_PTR pObject, CK_ATTRIBUTE_
 
     if (NULL != obj_ptr)
     {
+        if (PKCS11_OBJECT_FLAG_TRUST_TYPE == (PKCS11_OBJECT_FLAG_TRUST_TYPE & obj_ptr->flags))
+        {
 #if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
-        pkcs11_cert_check_trust_data(obj_ptr, psession);
+            (void)pkcs11_cert_check_trust_data(obj_ptr, psession);
 #endif
-
-        (void)pkcs11_cert_load_cache(psession, obj_ptr);
+        }
+        else
+        {
+            (void)pkcs11_cert_load_cache(psession, obj_ptr);
+        }
 
         if (NULL != obj_ptr->data)
         {
@@ -817,21 +838,33 @@ static CK_RV pkcs11_cert_get_subj_key(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAtt
     if (NULL != obj_ptr)
     {
         CK_RV read_cache = CKR_GENERAL_ERROR;
+        if (PKCS11_OBJECT_FLAG_TRUST_TYPE == (PKCS11_OBJECT_FLAG_TRUST_TYPE & obj_ptr->flags))
+        {
 #if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
-        pkcs11_cert_check_trust_data(obj_ptr, psession);
+            (void)pkcs11_cert_check_trust_data(obj_ptr, psession);
 #endif
-        read_cache = pkcs11_cert_load_cache(psession, obj_ptr);
+        }
+        else
+        {
+            read_cache = pkcs11_cert_load_cache(psession, obj_ptr);
+        }
         if (NULL != obj_ptr->data)
         {
             atcacert_def_t * cert_cfg = (atcacert_def_t*)obj_ptr->data;
 
             if (CKR_OK == read_cache)
             {
-                uint8_t subj_public_key[64] = { 0 };
+#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
+                uint8_t subj_public_key[PKCS11_MAX_ECC_RSA_PB_KEY_SIZE] = { 0 };
+#else
+                uint8_t subj_public_key[PKCS11_MAX_ECC_PB_KEY_SIZE] = { 0 };
+#endif
 
-                if (ATCA_SUCCESS == (atcacert_get_subj_public_key(cert_def, NULL, 0, &subj_public_key)))
+                cal_buffer subj_pubkey = CAL_BUF_INIT(sizeof(subj_public_key), subj_public_key);
+
+                if (ATCA_SUCCESS == (atcacert_get_subj_public_key(cert_cfg, NULL, 0, &subj_pubkey)))
                 {
-                    rv = pkcs11_attrib_fill(pAttribute, subj_public_key, (CK_ULONG)sizeof(subj_public_key));
+                    rv = pkcs11_attrib_fill(pAttribute, subj_public_key, (CK_ULONG)subj_pubkey.len);
                 }
                 else
                 {

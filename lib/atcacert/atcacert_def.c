@@ -144,6 +144,9 @@ ATCA_STATUS atcacert_get_device_locs(ATCADevice             device,
     ATCA_STATUS ret = 0;
     size_t i;
     size_t cfg_rd_size = ATCA_BLOCK_SIZE;
+#ifdef ATCA_CA2_SUPPORT
+    bool is_ca2_devcie = atcab_is_ca2_device(atcab_get_device_type_ext(device));
+#endif
 
     if (cert_def == NULL || device_locs == NULL || device_locs_count == NULL)
     {
@@ -188,14 +191,23 @@ ATCA_STATUS atcacert_get_device_locs(ATCADevice             device,
         return ATCACERT_E_BAD_CERT; // Cert def is in an invalid state
 
     }
+
     for (i = 0; i < cert_def->cert_elements_count; i++)
     {
+        size_t tmp_block_size = block_size;
+#ifdef ATCA_CA2_SUPPORT
+        if((true == is_ca2_devcie)
+                && (DEVZONE_CONFIG == cert_def->cert_elements[i].device_loc.zone))
+        {
+            tmp_block_size = ATCA_CA2_CONFIG_SLOT_SIZE;
+        }
+#endif
         ret = atcacert_merge_device_loc(
             device_locs,
             device_locs_count,
             device_locs_max_count,
             &cert_def->cert_elements[i].device_loc,
-            block_size);
+            tmp_block_size);
         if (ret != ATCACERT_E_SUCCESS)
         {
             return ret;
@@ -217,12 +229,13 @@ ATCA_STATUS atcacert_get_device_locs(ATCADevice             device,
             .count      = 13
         };
 
-        if (true == (atcab_is_ca2_device(atcab_get_device_type_ext(device))))
+#ifdef ATCA_CA2_SUPPORT
+        if (true == is_ca2_devcie)
         {
             //! Set Ca2 device config zone size
             cfg_rd_size = ATCA_CA2_CONFIG_SLOT_SIZE;
         }
-
+#endif
         ret = atcacert_merge_device_loc(
             device_locs,
             device_locs_count,
@@ -568,6 +581,7 @@ ATCA_STATUS atcacert_cert_build_finish(atcacert_build_state_t* build_state)
         uint8_t sn[32] = { 0 };
         size_t sn_size = build_state->cert_def->std_cert_elements[STDCERT_CERT_SN].count;
         uint8_t public_key[64] = { 0 };
+        cal_buffer pubkey = CAL_BUF_INIT(sizeof(public_key), public_key);
 
         if (sizeof(sn) < sn_size)
         {
@@ -580,7 +594,7 @@ ATCA_STATUS atcacert_cert_build_finish(atcacert_build_state_t* build_state)
             build_state->cert_def,
             build_state->cert,
             *build_state->cert_size,
-            public_key);
+            &pubkey);
         if (ret != ATCACERT_E_SUCCESS)
         {
             return ret;
@@ -658,6 +672,7 @@ ATCA_STATUS atcacert_get_device_data(const atcacert_def_t*          cert_def,
     unsigned int i = 0u;
     uint8_t temp_buf[256] = { 0 };  // Must be at least 72 bytes
     size_t temp_buf_size = sizeof(temp_buf);
+    cal_buffer buffer = CAL_BUF_INIT(ATCA_ECCP256_PUBKEY_SIZE, temp_buf);
 
     if (cert_def == NULL || cert == NULL || device_loc == NULL || device_data == NULL)
     {
@@ -678,7 +693,7 @@ ATCA_STATUS atcacert_get_device_data(const atcacert_def_t*          cert_def,
     // Subject public key
     if (atcacert_is_device_loc_overlap(&cert_def->public_key_dev_loc, device_loc))
     {
-        ret = atcacert_get_subj_public_key(cert_def, cert, cert_size, temp_buf);
+        ret = atcacert_get_subj_public_key(cert_def, cert, cert_size, &buffer);
         if (ret != ATCACERT_E_SUCCESS)
         {
             return ret;
@@ -810,20 +825,19 @@ ATCA_STATUS atcacert_get_subject(const atcacert_def_t*  cert_def,
 ATCA_STATUS atcacert_get_subj_public_key(const atcacert_def_t*  cert_def,
                                          const uint8_t*         cert,
                                          size_t                 cert_size,
-                                         uint8_t                subj_public_key[64])
+                                         cal_buffer*            subj_public_key)
 {
     ATCA_STATUS status = ATCACERT_E_BAD_PARAMS;
 
     UNUSED_VAR(cert);
     UNUSED_VAR(cert_size);
 
-    if (NULL != cert_def && NULL != subj_public_key)
+    if (NULL != cert_def && NULL != subj_public_key && NULL != subj_public_key->buf)
     {
 #if ATCACERT_INTEGRATION_EN
         if (CERTTYPE_X509_FULL_STORED == cert_def->type)
         {
-            cal_buffer pk_buf = CAL_BUF_INIT(64U, subj_public_key);
-            status = (NULL != cert_def->parsed) ? atcac_get_subj_public_key(*cert_def->parsed, &pk_buf) : ATCACERT_E_ERROR;
+            status = (NULL != cert_def->parsed) ? atcac_get_subj_public_key(*cert_def->parsed, subj_public_key) : ATCACERT_E_ERROR;
         }
         else
 #endif
@@ -832,7 +846,7 @@ ATCA_STATUS atcacert_get_subj_public_key(const atcacert_def_t*  cert_def,
             if (NULL != cert)
             {
                 //For ECC608, always EC256 supported, hence pubkey size is max 64
-                status = atcacert_get_cert_element(cert_def, &cert_def->std_cert_elements[STDCERT_PUBLIC_KEY], cert, cert_size, subj_public_key, 64);
+                status = atcacert_get_cert_element(cert_def, &cert_def->std_cert_elements[STDCERT_PUBLIC_KEY], cert, cert_size, subj_public_key->buf, subj_public_key->len);
             }
 #endif
         }
@@ -1438,6 +1452,7 @@ ATCA_STATUS atcacert_gen_cert_sn(const atcacert_def_t*  cert_def,
     uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = { 0 };
     atcacert_tm_utc_t issue_date;
     uint8_t expire_years;
+    cal_buffer pubkey = CAL_BUF_INIT(sizeof(public_key), public_key);
 
     if (cert_def == NULL || cert == NULL)
     {
@@ -1484,7 +1499,7 @@ ATCA_STATUS atcacert_gen_cert_sn(const atcacert_def_t*  cert_def,
         sn_size = cert_def->std_cert_elements[STDCERT_CERT_SN].count;
 
         // Get public key
-        ret = atcacert_get_subj_public_key(cert_def, cert, cert_size, public_key);
+        ret = atcacert_get_subj_public_key(cert_def, cert, cert_size, &pubkey);
         if (ret != ATCACERT_E_SUCCESS)
         {
             break;

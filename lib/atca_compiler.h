@@ -47,6 +47,7 @@
 #define ATCA_UINT32_BE_TO_HOST(x)  ((((x) & 0x000000FFUL) << 24U) | (((x) & 0x0000FF00UL) << 8U) | (((x) & 0x00FF0000UL) >> 8U) | (((x) & 0xFF000000UL) >> 24U))
 #define ATCA_UINT64_HOST_TO_BE(x)  ((uint64_t)ATCA_UINT32_HOST_TO_BE((uint32_t)(x)) << 32 + (uint64_t)ATCA_UINT32_HOST_TO_BE((uint32_t)((x) >> 32)))
 #define ATCA_UINT64_BE_TO_HOST(x)  ((uint64_t)ATCA_UINT32_BE_TO_HOST((uint32_t)(x)) << 32 + (uint64_t)ATCA_UINT32_BE_TO_HOST((uint32_t)((x) >> 32)))
+#define ATCA_UINT64_HOST_TO_LE(x)  (x)
 #define SHARED_LIB_EXPORT
 #define SHARED_LIB_IMPORT       extern
 
@@ -64,6 +65,7 @@
 #define ATCA_UINT32_BE_TO_HOST(x)  (x)
 #define ATCA_UINT64_HOST_TO_BE(x)  (x)
 #define ATCA_UINT64_BE_TO_HOST(x)  (x)
+#define ATCA_UINT64_HOST_TO_LE(x)  __builtin_bswap64(x)
 #define ATCA_PLATFORM_BE
 #else
 #define ATCA_UINT16_HOST_TO_LE(x)  (x)
@@ -75,6 +77,7 @@
 #define ATCA_UINT32_BE_TO_HOST(x)  __builtin_bswap32(x)
 #define ATCA_UINT64_HOST_TO_BE(x)  __builtin_bswap64(x)
 #define ATCA_UINT64_BE_TO_HOST(x)  __builtin_bswap64(x)
+#define ATCA_UINT64_HOST_TO_LE(x)  (x)
 #endif
 
 #ifdef WIN32
@@ -100,6 +103,7 @@
 #define ATCA_UINT32_BE_TO_HOST(x)  (x)
 #define ATCA_UINT64_HOST_TO_BE(x)  (x)
 #define ATCA_UINT64_BE_TO_HOST(x)  (x)
+#define ATCA_UINT64_HOST_TO_LE(x)  __builtin_bswap64(x)
 #define ATCA_NO_PRAGMA_PACK
 #define ATCA_PLATFORM_BE
 #elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
@@ -112,6 +116,7 @@
 #define ATCA_UINT32_BE_TO_HOST(x)  (x)
 #define ATCA_UINT64_HOST_TO_BE(x)  (x)
 #define ATCA_UINT64_BE_TO_HOST(x)  (x)
+#define ATCA_UINT64_HOST_TO_LE(x)  __builtin_bswap64(x)
 #define ATCA_PLATFORM_BE
 #else
 #define ATCA_UINT16_HOST_TO_BE(x)  __builtin_bswap16(x)
@@ -123,6 +128,7 @@
 #define ATCA_UINT32_BE_TO_HOST(x)  __builtin_bswap32(x)
 #define ATCA_UINT64_HOST_TO_BE(x)  __builtin_bswap64(x)
 #define ATCA_UINT64_BE_TO_HOST(x)  __builtin_bswap64(x)
+#define ATCA_UINT64_HOST_TO_LE(x)  (x)
 #endif
 
 #ifdef WIN32
@@ -160,6 +166,7 @@
 #define ATCA_UINT32_BE_TO_HOST(x)  _byteswap_ulong(x)
 #define ATCA_UINT64_HOST_TO_BE(x)  _byteswap_uint64(x)
 #define ATCA_UINT64_BE_TO_HOST(x)  _byteswap_uint64(x)
+#define ATCA_UINT64_HOST_TO_LE(x)  (x)
 /* coverity[cert_dcl37_c_violation:SUPPRESS]*/
 /* coverity[misra_c_2012_rule_21_1_violation:SUPPRESS]*/
 /* coverity[misra_c_2012_rule_21_2_violation:SUPPRESS]*/
@@ -184,6 +191,7 @@
 #define ATCA_UINT32_BE_TO_HOST(x)  (x)
 #define ATCA_UINT64_HOST_TO_BE(x)  (x)
 #define ATCA_UINT64_BE_TO_HOST(x)  (x)
+#define ATCA_UINT64_HOST_TO_LE(x)  (((uint64_t)__rev((uint32_t)x) << 32) | (uint64_t)__rev((uint32_t)(x >> 32)))
 #define ATCA_PLATFORM_BE
 #else
 #define ATCA_UINT16_HOST_TO_LE(x)  (x)
@@ -193,6 +201,7 @@
 #define ATCA_UINT32_BE_TO_HOST(x)  __rev(x)
 #define ATCA_UINT64_HOST_TO_BE(x)  (((uint64_t)__rev((uint32_t)x) << 32) | (uint64_t)__rev((uint32_t)(x >> 32)))
 #define ATCA_UINT64_BE_TO_HOST(x)  (((uint64_t)__rev((uint32_t)x) << 32) | (uint64_t)__rev((uint32_t)(x >> 32)))
+#define ATCA_UINT64_HOST_TO_LE(x)  (x)
 #endif
 
 #define SHARED_LIB_EXPORT
@@ -211,6 +220,7 @@
 #define ATCA_UINT32_BE_TO_HOST(x)  (x)
 #define ATCA_UINT64_HOST_TO_BE(x)  (x)
 #define ATCA_UINT64_BE_TO_HOST(x)  (x)
+#define ATCA_UINT64_HOST_TO_LE(x)  (((uint64_t)__REV((uint32_t)x) << 32) | (uint64_t)__REV((uint32_t)(x >> 32)))
 #define ATCA_PLATFORM_BE
 #else
 #define ATCA_UINT16_HOST_TO_LE(x)  (x)
@@ -220,6 +230,7 @@
 #define ATCA_UINT32_BE_TO_HOST(x)  __REV(x)
 #define ATCA_UINT64_HOST_TO_BE(x)  (((uint64_t)__REV((uint32_t)x) << 32) | (uint64_t)__REV((uint32_t)(x >> 32)))
 #define ATCA_UINT64_BE_TO_HOST(x)  (((uint64_t)__REV((uint32_t)x) << 32) | (uint64_t)__REV((uint32_t)(x >> 32)))
+#define ATCA_UINT64_HOST_TO_LE(x)  (x)
 #endif
 
 #define SHARED_LIB_EXPORT

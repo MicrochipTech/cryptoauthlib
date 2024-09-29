@@ -281,7 +281,11 @@ static ATCA_STATUS kit_host_ca_talk(ascii_kit_host_context_t* ctx, int argc, cha
 
     if (ctx && argc && response && rlen)
     {
+#ifdef __XC8        
+        static ATCAPacket packet;
+#else
         ATCAPacket packet;
+#endif                
         size_t plen = sizeof(packet) - 2;
 
         atcab_hex2bin(argv[0], strlen(argv[0]), (uint8_t*)&packet.txsize, &plen);
@@ -293,6 +297,9 @@ static ATCA_STATUS kit_host_ca_talk(ascii_kit_host_context_t* ctx, int argc, cha
         {
             *rlen = kit_host_format_response(response, *rlen, status, NULL, 0);
         }
+#ifdef __XC8          
+        (void)memset(&packet, 0, sizeof(ATCAPacket));
+#endif        
     }
     return status;
 }

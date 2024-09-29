@@ -69,9 +69,12 @@
 #define ATCA_KEY_TYPE_ECCP256               (0u)
 #define ATCA_ECCP256_KEY_SIZE               (32u)
 #define ATCA_ECCP256_PUBKEY_SIZE            (64u)
+#define ATCA_ECCP256_PVTKEY_SIZE            (32u)
 #define ATCA_ECCP256_SIG_SIZE               (64u)
 #define ATCA_ECCP256_OID_SIZE               (10u)
 #define ATCA_ECCP256_ASN1_HDR_SIZE          (27u)
+#define ATCA_MAX_ECC_RSA_PB_KEY_SIZE        (512u)
+#define ATCA_RSA4K_ASN1_HDR_SIZE            (33u)
 
 #define ATCA_ECC_UNCOMPRESSED_TYPE          ((uint8_t)0x04)
 #define ATCA_ECC_UNCOMPRESSED_TYPE_OFFSET   (1u)
@@ -106,11 +109,16 @@
 #include "calib/calib_basic.h"
 #include "calib/calib_command.h"
 #include "calib/calib_aes_gcm.h"
+#include "calib/calib_packet.h"
 #endif
 
 #if ATCA_TA_SUPPORT
+#ifndef LIBRARY_USAGE_EN
 #include "talib/talib_status.h"
 #include "talib/talib_basic.h"
+#else
+#include "ta_app.h"
+#endif
 #endif
 
 /* Common Library Functions */

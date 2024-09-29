@@ -1,9 +1,13 @@
 /**
  * \file
+ * \brief Defines packet allocation functions
  *
- * \brief  Microchip CryptoAuth Library Version
+ * The APIs are used for allocating packets in heap or bss according to 
+ * atcab heap availability. Corresponding memory free is done
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * This supports the ATECC device family.
+ *
+ * \copyright (c) 2024 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -26,13 +30,24 @@
  * THIS SOFTWARE.
  */
 
-#ifndef ATCA_VERSION_H
-#define ATCA_VERSION_H
 
-// Version format yyyymmdd
-#define ATCA_LIBRARY_VERSION_DATE   "20240926"
-#define ATCA_LIBRARY_VERSION_MAJOR  3
-#define ATCA_LIBRARY_VERSION_MINOR  7
-#define ATCA_LIBRARY_VERSION_BUILD  6
+#ifndef CALIB_PACKET_H
+#define CALIB_PACKET_H
 
-#endif /* ATCA_VERSION_H */
+#include "calib_command.h"
+#include "atca_device.h"
+#include "atca_config.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+ATCAPacket* calib_packet_alloc(void);
+
+void calib_packet_free(ATCAPacket* packet);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* CALIB_PACKET_H */

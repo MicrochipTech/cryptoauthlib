@@ -183,6 +183,7 @@ TEST(tng_atcacert_client, tng_atcacert_signer_public_key_no_cert)
     size_t cert_size = 0;
     uint8_t public_key[ATCA_ECCP256_PUBKEY_SIZE];
     uint8_t cert_public_key[ATCA_ECCP256_PUBKEY_SIZE];
+    cal_buffer cert_pubkey = CAL_BUF_INIT(sizeof(cert_public_key), cert_public_key);
 
     ret = tng_atcacert_max_signer_cert_size(&cert_size);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
@@ -197,7 +198,7 @@ TEST(tng_atcacert_client, tng_atcacert_signer_public_key_no_cert)
         &g_tngtls_cert_def_1_signer,
         cert,
         cert_size,
-        cert_public_key);
+        &cert_pubkey);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
     ret = tng_atcacert_signer_public_key(public_key, NULL);
@@ -212,6 +213,7 @@ TEST(tng_atcacert_client, tng_atcacert_signer_public_key_cert)
     size_t cert_size = 0;
     uint8_t public_key[ATCA_ECCP256_PUBKEY_SIZE];
     uint8_t cert_public_key[ATCA_ECCP256_PUBKEY_SIZE];
+    cal_buffer cert_pubkey = CAL_BUF_INIT(sizeof(cert_public_key), cert_public_key);
 
     ret = tng_atcacert_max_signer_cert_size(&cert_size);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
@@ -226,7 +228,7 @@ TEST(tng_atcacert_client, tng_atcacert_signer_public_key_cert)
         &g_tngtls_cert_def_1_signer,
         cert,
         cert_size,
-        cert_public_key);
+        &cert_pubkey);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
     ret = tng_atcacert_signer_public_key(public_key, cert);
@@ -480,6 +482,7 @@ TEST(tng_atcacert_client, tng_atcacert_device_public_key_no_cert)
     const atcacert_def_t* cert_def = NULL;
     uint8_t public_key[ATCA_ECCP256_PUBKEY_SIZE];
     uint8_t cert_public_key[ATCA_ECCP256_PUBKEY_SIZE];
+    cal_buffer cert_pubkey = CAL_BUF_INIT(sizeof(cert_public_key), cert_public_key);
 
     ret = tng_atcacert_max_device_cert_size(&cert_size);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
@@ -494,7 +497,7 @@ TEST(tng_atcacert_client, tng_atcacert_device_public_key_no_cert)
         cert_def,
         cert,
         cert_size,
-        cert_public_key);
+        &cert_pubkey);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
     ret = tng_atcacert_device_public_key(public_key, NULL);
@@ -510,6 +513,7 @@ TEST(tng_atcacert_client, tng_atcacert_device_public_key_cert)
     const atcacert_def_t* cert_def = NULL;
     uint8_t public_key[ATCA_ECCP256_PUBKEY_SIZE];
     uint8_t cert_public_key[ATCA_ECCP256_PUBKEY_SIZE];
+    cal_buffer cert_pubkey = CAL_BUF_INIT(sizeof(cert_public_key), cert_public_key);
 
     ret = tng_atcacert_max_device_cert_size(&cert_size);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
@@ -524,7 +528,7 @@ TEST(tng_atcacert_client, tng_atcacert_device_public_key_cert)
         cert_def,
         cert,
         cert_size,
-        cert_public_key);
+        &cert_pubkey);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
     ret = tng_atcacert_device_public_key(public_key, cert);

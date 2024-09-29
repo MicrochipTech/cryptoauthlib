@@ -1,6 +1,23 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.7.6 (09/26/2026)
+
+### New Features
+  - In PKCS11 module, added support for RSA key types, certificates and algorithms
+  - Added SHA384 and SHA512 support for host side software crypto (lib/crypto/) operations
+  - Modified WPC application to support ECC204 and TA010 devices
+  - See [talib/CHANGES.md] for details on talib module changes
+
+### Fixes
+  - Shared library build (libcryptoauth.so) sets ABI version number (libcryptoauth.so.x)
+  - Fixed atcacert_read_cert() API failure when certificate elements read from config zone 
+    for ECC204 and TA010 devices
+  - Resolved kit protocol compilation failure for PIC18 device (XC8) builds
+  - PKCS11 layer fixes/updates
+    - Fixed C_DestroyObject failure when deleting a key pair
+    - Fixed C_DeriveKey API usage sequence
+
 ## Release v3.7.5 (06/26/2024)
 
 ### New Features

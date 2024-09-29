@@ -4,7 +4,7 @@ package:
   type: "application"
   status: "production"
   required: true
-  version: "v3.7.5"
+  version: "v3.7.6"
 
   dependencies:
     - name: "csp"

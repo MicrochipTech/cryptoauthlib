@@ -29,24 +29,24 @@
 #include "atca_crypto_sw_sha2.h"
 #include "cal_internal.h"
 
+#ifdef __COVERITY__
+#pragma coverity compliance block \
+    (deviate "CERT EXP39-C" "Type casting of pointer is required for using sha_routines") \
+    (deviate "MISRA C-2012 Rule 11.3" "Type casting of pointer is required for using sha_routines")
+#endif
+
 #if ATCA_CRYPTO_SHA2_EN
 #include "hashes/sha2_routines.h"
+#endif
 
+#if ATCA_CRYPTO_SHA256_EN
 /** \brief initializes the SHA256 software
  * \param[in] ctx  ptr to context data structure
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-
 ATCA_STATUS atcac_sw_sha2_256_init(struct atcac_sha2_256_ctx* ctx)
 {
-    if (sizeof(sw_sha256_ctx) > sizeof(atcac_sha2_256_ctx_t))
-    {
-        // atcac_sha2_256_ctx_t isn't large enough for this implementation
-        return ATCA_ASSERT_FAILURE;
-    }
-    sw_sha256_init((sw_sha256_ctx*)ctx);
-
-    return ATCA_SUCCESS;
+    return sw_sha256_init((sw_sha256_ctx*)ctx);
 }
 
 /** \brief updates the running hash with the next block of data, called iteratively for the entire
@@ -54,30 +54,94 @@ ATCA_STATUS atcac_sw_sha2_256_init(struct atcac_sha2_256_ctx* ctx)
     \param[in] ctx        ptr to SHA context data structure
     \param[in] data       ptr to next block of data to hash
     \param[in] data_size  size amount of data to hash in the given block, in bytes
-    \return ATCA_SUCCESS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-
 ATCA_STATUS atcac_sw_sha2_256_update(struct atcac_sha2_256_ctx* ctx, const uint8_t* data, size_t data_size)
 {
-    sw_sha256_update((sw_sha256_ctx*)ctx, data, (uint32_t)data_size);
-
-    return ATCA_SUCCESS;
+    return sw_sha256_update((sw_sha256_ctx*)ctx, data, (uint32_t)(data_size & UINT32_MAX));
 }
 
 /** \brief completes the final SHA256 calculation and returns the final digest/hash
  * \param[in]  ctx     ptr to context data structure
  * \param[out] digest  receives the computed digest of the SHA 256
- * \return ATCA_SUCCESS
+ * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
 ATCA_STATUS atcac_sw_sha2_256_finish(struct atcac_sha2_256_ctx* ctx, uint8_t digest[ATCA_SHA2_256_DIGEST_SIZE])
 {
-    sw_sha256_final((sw_sha256_ctx*)ctx, digest);
+    return sw_sha256_final((sw_sha256_ctx*)ctx, digest);
+}
+#endif
 
-    return ATCA_SUCCESS;
+#if ATCA_CRYPTO_SHA384_EN
+/** \brief initializes the SHA384 software
+ * \param[in] ctx  ptr to context data structure
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_384_init(struct atcac_sha2_384_ctx* ctx)
+{
+    return sw_sha384_init((sw_sha512_ctx*)ctx);
 }
 
+/** \brief updates the running hash with the next block of data, called iteratively for the entire
+    stream of data to be hashed using the SHA384 software
+    \param[in] ctx        ptr to SHA context data structure
+    \param[in] data       ptr to next block of data to hash
+    \param[in] data_size  size amount of data to hash in the given block, in bytes
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_384_update(struct atcac_sha2_384_ctx* ctx, const uint8_t* data, size_t data_size)
+{
+    return sw_sha384_update((sw_sha512_ctx*)ctx, data, (uint32_t)(data_size & UINT32_MAX));
+}
+
+/** \brief completes the final SHA384 calculation and returns the final digest/hash
+ * \param[in]  ctx     ptr to context data structure
+ * \param[out] digest  receives the computed digest of the SHA 384
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_384_finish(struct atcac_sha2_384_ctx* ctx, uint8_t digest[ATCA_SHA2_384_DIGEST_SIZE])
+{
+    return sw_sha384_final((sw_sha512_ctx*)ctx, digest);
+}
+#endif
+
+#if ATCA_CRYPTO_SHA512_EN
+/** \brief initializes the SHA512 software
+ * \param[in] ctx  ptr to context data structure
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_512_init(struct atcac_sha2_512_ctx* ctx)
+{
+    return sw_sha512_init((sw_sha512_ctx*)ctx);
+}
+
+/** \brief updates the running hash with the next block of data, called iteratively for the entire
+    stream of data to be hashed using the SHA512 software
+    \param[in] ctx        ptr to SHA context data structure
+    \param[in] data       ptr to next block of data to hash
+    \param[in] data_size  size amount of data to hash in the given block, in bytes
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_512_update(struct atcac_sha2_512_ctx* ctx, const uint8_t* data, size_t data_size)
+{
+    return sw_sha512_update((sw_sha512_ctx*)ctx, data, (uint32_t)(data_size & UINT32_MAX));
+}
+
+/** \brief completes the final SHA512 calculation and returns the final digest/hash
+ * \param[in]  ctx     ptr to context data structure
+ * \param[out] digest  receives the computed digest of the SHA 512
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_512_finish(struct atcac_sha2_512_ctx* ctx, uint8_t digest[ATCA_SHA2_512_DIGEST_SIZE])
+{
+    return sw_sha512_final((sw_sha512_ctx*)ctx, digest);
+}
+#endif
+
 #if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
+
+#if ATCA_CRYPTO_SHA256_EN
 struct atcac_sha2_256_ctx * atcac_sha256_ctx_new(void)
 {
     return (struct atcac_sha2_256_ctx*)hal_malloc(sizeof(atcac_sha2_256_ctx_t));
@@ -88,7 +152,28 @@ void atcac_sha256_ctx_free(struct atcac_sha2_256_ctx * ctx)
 }
 #endif
 
-#endif /* ATCA_CRYPTO_SHA2_EN */
+#if ATCA_CRYPTO_SHA384_EN
+struct atcac_sha2_384_ctx * atcac_sha384_ctx_new(void)
+{
+    return (struct atcac_sha2_384_ctx*)hal_malloc(sizeof(atcac_sha2_384_ctx_t));
+}
+void atcac_sha384_ctx_free(struct atcac_sha2_384_ctx * ctx)
+{
+    hal_free(ctx);
+}
+#endif
+
+#if ATCA_CRYPTO_SHA512_EN
+struct atcac_sha2_512_ctx * atcac_sha512_ctx_new(void)
+{
+    return (struct atcac_sha2_512_ctx*)hal_malloc(sizeof(atcac_sha2_512_ctx_t));
+}
+void atcac_sha512_ctx_free(struct atcac_sha2_512_ctx * ctx)
+{
+    hal_free(ctx);
+}
+#endif /* ATCA_CRYPTO_SHA512_EN*/
+#endif /* ATCA_BUILD_SHARED_LIBS || ATCA_HEAP */
 
 #if ATCAC_SHA256_EN
 /** \brief single call convenience function which computes Hash of given data using SHA256 software
@@ -119,6 +204,67 @@ ATCA_STATUS atcac_sw_sha2_256(const uint8_t* data, size_t data_size, uint8_t dig
     return ret;
 }
 #endif /* ATCAC_SHA256_EN */
+
+
+#if ATCAC_SHA384_EN
+/** \brief single call convenience function which computes Hash of given data using SHA384 software
+ * \param[in]  data       pointer to stream of data to hash
+ * \param[in]  data_size  size of data stream to hash
+ * \param[out] digest     result
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_384(const uint8_t* data, size_t data_size, uint8_t digest[ATCA_SHA2_384_DIGEST_SIZE])
+{
+    ATCA_STATUS ret;
+    atcac_sha2_384_ctx_t ctx;
+
+    ret = atcac_sw_sha2_384_init(&ctx);
+    if (ret != ATCA_SUCCESS)
+    {
+        return ret;
+    }
+
+    ret = atcac_sw_sha2_384_update(&ctx, data, data_size);
+    if (ret != ATCA_SUCCESS)
+    {
+        return ret;
+    }
+
+    ret = atcac_sw_sha2_384_finish(&ctx, digest);
+
+    return ret;
+}
+#endif /* ATCAC_SHA384_EN*/
+
+#if ATCAC_SHA512_EN
+/** \brief single call convenience function which computes Hash of given data using SHA512 software
+ * \param[in]  data       pointer to stream of data to hash
+ * \param[in]  data_size  size of data stream to hash
+ * \param[out] digest     result
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_512(const uint8_t* data, size_t data_size, uint8_t digest[ATCA_SHA2_512_DIGEST_SIZE])
+{
+    ATCA_STATUS ret;
+    atcac_sha2_512_ctx_t ctx;
+
+    ret = atcac_sw_sha2_512_init(&ctx);
+    if (ret != ATCA_SUCCESS)
+    {
+        return ret;
+    }
+
+    ret = atcac_sw_sha2_512_update(&ctx, data, data_size);
+    if (ret != ATCA_SUCCESS)
+    {
+        return ret;
+    }
+
+    ret = atcac_sw_sha2_512_finish(&ctx, digest);
+
+    return ret;
+}
+#endif /* ATCAC_SHA512_EN*/
 
 #if ATCA_CRYPTO_SHA2_HMAC_EN
 /** \brief Initialize context for performing HMAC (sha256) in software.

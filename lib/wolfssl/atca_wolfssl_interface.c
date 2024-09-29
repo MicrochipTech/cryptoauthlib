@@ -343,6 +343,7 @@ ATCA_STATUS atcac_sw_sha1_finish(
     return status;
 }
 
+#if ATCAC_SHA256_EN
 /** \brief Initialize context for performing SHA256 hash in software.
  *
  * \return ATCA_SUCCESS on success, otherwise an error code.
@@ -391,6 +392,109 @@ ATCA_STATUS atcac_sw_sha2_256_finish(
 
     return status;
 }
+#endif /* ATCAC_SHA256_EN */
+
+#if ATCAC_SHA384_EN
+/** \brief Initialize context for performing SHA384 hash in software.
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_384_init(
+    struct atcac_sha2_384_ctx* ctx  /**< [in] pointer to a hash context */
+)
+{
+    wc_Sha384* temp_ptr = &ctx->sha;
+    ATCA_STATUS status = (0 == wc_InitSha384(temp_ptr)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+
+    return status;
+}
+
+/** \brief Add data to a SHA384 hash.
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_384_update(
+    struct atcac_sha2_384_ctx* ctx,        /**< [in] pointer to a hash context */
+    const uint8_t*             data,       /**< [in] input data buffer */
+    size_t                     data_size   /**< [in] input data length */
+)
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    if (data_size <= UINT32_MAX)
+    {
+        wc_Sha384* temp_ptr = &ctx->sha;
+        status = (0 == wc_Sha384Update(temp_ptr, data, (word32)data_size)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+    }
+    return status;
+}
+
+/** \brief Complete the SHA384 hash in software and return the digest.
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_384_finish(
+    struct atcac_sha2_384_ctx* ctx,                                /**< [in] pointer to a hash context */
+    uint8_t                    digest[ATCA_SHA2_384_DIGEST_SIZE]   /**< [out] output buffer (48 bytes) */
+)
+{
+    wc_Sha384* temp_ptr = &ctx->sha;
+    ATCA_STATUS status = (0 == wc_Sha384Final(temp_ptr, digest)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+
+    return status;
+}
+#endif /* ATCAC_SHA384_EN */
+
+#if ATCAC_SHA512_EN
+/** \brief Initialize context for performing SHA512 hash in software.
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_512_init(
+    struct atcac_sha2_512_ctx* ctx  /**< [in] pointer to a hash context */
+)
+{
+    wc_Sha512* temp_ptr = &ctx->sha;
+    ATCA_STATUS status = (0 == wc_InitSha512(temp_ptr)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+
+    return status;
+}
+
+/** \brief Add data to a SHA512 hash.
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_512_update(
+    struct atcac_sha2_512_ctx* ctx,        /**< [in] pointer to a hash context */
+    const uint8_t*             data,       /**< [in] input data buffer */
+    size_t                     data_size   /**< [in] input data length */
+)
+{
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+
+    if (data_size <= UINT32_MAX)
+    {
+        wc_Sha512* temp_ptr = &ctx->sha;
+        status = (0 == wc_Sha512Update(temp_ptr, data, (word32)data_size)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+    }
+    return status;
+}
+
+/** \brief Complete the SHA512 hash in software and return the digest.
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_512_finish(
+    struct atcac_sha2_512_ctx* ctx,                                /**< [in] pointer to a hash context */
+    uint8_t                    digest[ATCA_SHA2_512_DIGEST_SIZE]   /**< [out] output buffer (64 bytes) */
+)
+{
+    wc_Sha512* temp_ptr = &ctx->sha;
+    ATCA_STATUS status = (0 == wc_Sha512Final(temp_ptr, digest)) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+
+    return status;
+}
+#endif /* ATCAC_SHA512_EN */
 
 /** \brief Initialize context for performing CMAC in software.
  *
@@ -947,35 +1051,72 @@ ATCA_STATUS atcac_get_subj_public_key(const struct atcac_x509_ctx* cert, cal_buf
 
         if (NULL != (key = wolfSSL_X509_get_pubkey(get_wssl_cert_from_atcac_ctx(cert))))
         {
-            ecc_key pubKeyEcc;
-            (void)memset(&pubKeyEcc, 0, sizeof(ecc_key));
-            word32 idx = 0;
-            if (0 == wc_ecc_init(&pubKeyEcc))
+            if (EVP_PKEY_EC == key->type)
             {
-                int pkey_sz = key->pkey_sz; // Cast to signed int
-
-                if (pkey_sz >= 0)
+                ecc_key pubKeyEcc;
+                (void)memset(&pubKeyEcc, 0, sizeof(ecc_key));
+                word32 idx = 0;
+                if (0 == wc_ecc_init(&pubKeyEcc))
                 {
-                    if (0 == wc_EccPublicKeyDecode((byte*)key->pkey.ptr, &idx, &pubKeyEcc, (word32)key->pkey_sz))
+                    int pkey_sz = key->pkey_sz; // Cast to signed int
+
+                    if (pkey_sz >= 0)
                     {
-                        /* coverity[misra_c_2012_rule_9_1_violation:SUPPRESS] wc_ecc_init is called to initialize pubKeyEcc */
-                        if (NULL != pubKeyEcc.dp)
+                        if (0 == wc_EccPublicKeyDecode((byte*)key->pkey.ptr, &idx, &pubKeyEcc, (word32)key->pkey_sz))
                         {
-                            word32 xlen = (word32)pubKeyEcc.dp->size;
-                            word32 ylen = (word32)pubKeyEcc.dp->size;
-                            if (0 == wc_ecc_export_public_raw(&pubKeyEcc, (byte*)subj_public_key->buf, &xlen,
-                                                              (byte*)&subj_public_key->buf[pubKeyEcc.dp->size], &ylen))
+                            /* coverity[misra_c_2012_rule_9_1_violation:SUPPRESS] wc_ecc_init is called to initialize pubKeyEcc */
+                            if (NULL != pubKeyEcc.dp)
                             {
-                                status = ATCA_SUCCESS;
+                                word32 xlen = (word32)pubKeyEcc.dp->size;
+                                word32 ylen = (word32)pubKeyEcc.dp->size;
+                                if (0 == wc_ecc_export_public_raw(&pubKeyEcc, (byte*)subj_public_key->buf, &xlen,
+                                                                  (byte*)&subj_public_key->buf[pubKeyEcc.dp->size], &ylen))
+                                {
+                                    subj_public_key->len = (word64)(xlen) + (word64)(ylen);
+                                    status = ATCA_SUCCESS;
+                                }
                             }
                         }
                     }
                 }
+                wolfSSL_EVP_PKEY_free(key);
+                if (0 != wc_ecc_free(&pubKeyEcc))
+                {
+                    status = ATCA_BAD_PARAM;
+                }
             }
-            wolfSSL_EVP_PKEY_free(key);
-            if (0 != wc_ecc_free(&pubKeyEcc))
+            else
             {
-                status = ATCA_BAD_PARAM;
+                RsaKey rsaKey;
+                (void)memset(&rsaKey, 0, sizeof(RsaKey));
+                word32 idx = 0;
+
+                if (0 == wc_InitRsaKey(&rsaKey, NULL))
+                {
+                    int pkey_sz = key->pkey_sz; // Cast to signed int
+
+                    if (pkey_sz >= 0)
+                    {
+                        if (0 == wc_RsaPublicKeyDecode((byte*)key->pkey.ptr, &idx, &rsaKey, (word32)key->pkey_sz))
+                        {
+                            int nlen = mp_unsigned_bin_size(&rsaKey.n);
+                            // Check buffer size before storing public key 
+                            if ((nlen > 0) && ((unsigned long)nlen <= subj_public_key->len))
+                            {
+                                if (0 == mp_to_unsigned_bin(&rsaKey.n, (byte*)subj_public_key->buf))
+                                {
+                                    subj_public_key->len = (word64)nlen;
+                                    status = ATCA_SUCCESS;
+                                }
+                            }
+                        }
+                    }
+                    wolfSSL_EVP_PKEY_free(key);
+                    if (0 != wc_FreeRsaKey(&rsaKey))
+                    {
+                        status = ATCA_BAD_PARAM;
+                    }
+                }
             }
         }
     }
@@ -1091,6 +1232,11 @@ ATCA_STATUS atcac_get_auth_key_id(const struct atcac_x509_ctx* cert, cal_buffer*
             {
                 status = ATCA_SUCCESS;
             }
+            else
+            {
+                /* No data is available */
+                status = cal_buf_set_used(auth_key_id, 0U);
+            }
         }
     }
     return status;
@@ -1110,10 +1256,26 @@ struct atcac_sha1_ctx * atcac_sha1_ctx_new(void)
     return (struct atcac_sha1_ctx*)hal_malloc(sizeof(atcac_sha1_ctx_t));
 }
 
+#if ATCAC_SHA256_EN
 struct atcac_sha2_256_ctx * atcac_sha256_ctx_new(void)
 {
     return (struct atcac_sha2_256_ctx*)hal_malloc(sizeof(atcac_sha2_256_ctx_t));
 }
+#endif
+
+#if ATCAC_SHA384_EN
+struct atcac_sha2_384_ctx * atcac_sha384_ctx_new(void)
+{
+    return (struct atcac_sha2_384_ctx*)hal_malloc(sizeof(atcac_sha2_384_ctx_t));
+}
+#endif
+
+#if ATCAC_SHA512_EN
+struct atcac_sha2_512_ctx * atcac_sha512_ctx_new(void)
+{
+    return (struct atcac_sha2_512_ctx*)hal_malloc(sizeof(atcac_sha2_512_ctx_t));
+}
+#endif
 
 struct atcac_hmac_ctx * atcac_hmac_ctx_new(void)
 {
@@ -1140,10 +1302,26 @@ void atcac_sha1_ctx_free(struct atcac_sha1_ctx * ctx)
     hal_free(ctx);
 }
 
+#if ATCAC_SHA256_EN
 void atcac_sha256_ctx_free(struct atcac_sha2_256_ctx * ctx)
 {
     hal_free(ctx);
 }
+#endif
+
+#if ATCAC_SHA384_EN
+void atcac_sha384_ctx_free(struct atcac_sha2_384_ctx * ctx)
+{
+    hal_free(ctx);
+}
+#endif
+
+#if ATCAC_SHA512_EN
+void atcac_sha512_ctx_free(struct atcac_sha2_512_ctx * ctx)
+{
+    hal_free(ctx);
+}
+#endif
 
 void atcac_hmac_ctx_free(struct atcac_hmac_ctx * ctx)
 {

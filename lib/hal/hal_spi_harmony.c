@@ -37,8 +37,11 @@
 #include "atca_hal.h"
 #include "atca_device.h"
 #include "definitions.h"
+
+#ifndef LIBRARY_USAGE_EN
 #include "talib/talib_defines.h"
 #include "talib/talib_fce.h"
+#endif
 
 /** \defgroup hal_ Hardware abstraction layer (hal_)
  *

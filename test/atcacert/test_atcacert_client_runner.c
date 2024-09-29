@@ -84,6 +84,9 @@ TEST_GROUP_RUNNER(atcacert_client_ca2)
     RUN_TEST_CASE(atcacert_client_ca2, atcacert_read_cert_small_buf);
     RUN_TEST_CASE(atcacert_client_ca2, atcacert_read_cert_bad_params);
     RUN_TEST_CASE(atcacert_client_ca2, atcacert_get_response_bad_params);
+    RUN_TEST_CASE(atcacert_client_ca2, cert_element_init);
+    RUN_TEST_CASE(atcacert_client_ca2, cert_element_atcacert_read_cert_signer);
+    RUN_TEST_CASE(atcacert_client_ca2, cert_element_atcacert_read_cert_device);
 }
 #endif
 #endif

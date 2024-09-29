@@ -74,6 +74,7 @@ int tng_atcacert_read_device_cert(uint8_t* cert, size_t* cert_size, const uint8_
     int ret;
     const atcacert_def_t* cert_def = NULL;
     uint8_t ca_public_key[72];
+    cal_buffer ca_pubkey = CAL_BUF_INIT(ATCA_ECCP256_PUBKEY_SIZE, ca_public_key);
 
     ret = tng_get_device_cert_def(&cert_def);
     if (ret != ATCA_SUCCESS)
@@ -88,7 +89,7 @@ int tng_atcacert_read_device_cert(uint8_t* cert, size_t* cert_size, const uint8_
             cert_def->ca_cert_def,
             signer_cert,
             cert_def->ca_cert_def->cert_template_size,  // Cert size doesn't need to be accurate
-            ca_public_key);
+            &ca_pubkey);
         if (ret != ATCACERT_E_SUCCESS)
         {
             return ret;
@@ -179,6 +180,7 @@ int tng_atcacert_signer_public_key(uint8_t* public_key, uint8_t* cert)
     int ret;
     const atcacert_def_t* cert_def = NULL;
     uint8_t raw_public_key[72];
+    cal_buffer pubkey = CAL_BUF_INIT(ATCA_ECCP256_PUBKEY_SIZE, public_key);
 
     if (public_key == NULL)
     {
@@ -192,7 +194,7 @@ int tng_atcacert_signer_public_key(uint8_t* public_key, uint8_t* cert)
             &g_tngtls_cert_def_1_signer,
             cert,
             g_tngtls_cert_def_1_signer.cert_template_size,  // cert size doesn't need to be accurate
-            public_key);
+            &pubkey);
     }
     else
     {

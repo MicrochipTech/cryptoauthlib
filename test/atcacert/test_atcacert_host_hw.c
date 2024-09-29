@@ -144,13 +144,14 @@ TEST(atcacert_host_hw, atcacert_verify_cert_hw)
 {
     int ret = 0;
     uint8_t signer_public_key[64];
+    cal_buffer signer_pubkey = CAL_BUF_INIT(sizeof(signer_public_key), signer_public_key);
 
     // Validate signer cert against its certificate authority (CA) public key
     ret = atcacert_verify_cert_hw(&g_test_cert_def_1_signer,  g_signer_cert, sizeof(g_signer_cert), g_test_signer_1_ca_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     // Get the signer's public key from its certificate
-    ret = atcacert_get_subj_public_key(&g_test_cert_def_1_signer, g_signer_cert, sizeof(g_signer_cert), signer_public_key);
+    ret = atcacert_get_subj_public_key(&g_test_cert_def_1_signer, g_signer_cert, sizeof(g_signer_cert), &signer_pubkey);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     // Validate the device cert against its certificate authority (CA) which is the signer

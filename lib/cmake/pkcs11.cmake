@@ -13,6 +13,7 @@ option(PKCS11_TOKEN_INIT_SUPPORT        "Enable device initialization using pkcs
 option(PKCS11_MONOTONIC_ENABLE          "Map device counters to the pkcs11 montotonic counter class" OFF)
 option(PKCS11_AUTO_ID_ENABLE            "Generate CKA_ID values based on standards" ON)
 option(PKCS11_AUTH_TERMINATE_BEFORE_LOGIN    "Enable auth terminate before c_login" OFF)
+option(PKCS11_RSA_SUPPORT_ENABLE        "Enable RSA support" OFF)
 
 set(PKCS11_MAX_SLOTS_ALLOWED    1   CACHE STRING "Maximum number of slots allowed in the system")
 set(PKCS11_MAX_SESSIONS_ALLOWED 10  CACHE STRING "Maximum number of total sessions allowed in the system")

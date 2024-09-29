@@ -44,12 +44,12 @@
 ATCA_STATUS initATCAIface(ATCAIfaceCfg *cfg, ATCAIface ca_iface)
 {
     ATCA_STATUS status;
-
+#if ATCA_CHECK_PARAMS_EN
     if (cfg == NULL || ca_iface == NULL)
     {
         return ATCA_BAD_PARAM;
     }
-
+#endif
     ca_iface->mIfaceCFG = cfg;
 
     status = ATCA_TRACE(atinit(ca_iface), "atinit");
@@ -167,10 +167,12 @@ ATCA_STATUS atinit(ATCAIface ca_iface)
  */
 ATCA_STATUS atsend(ATCAIface ca_iface, uint8_t word_address, uint8_t *txdata, int txlength)
 {
+#if ATCA_CHECK_PARAMS_EN
     if (NULL == ca_iface)
     {
         return ATCA_BAD_PARAM;
     }
+#endif
 
     if ((NULL != ca_iface->hal) && (NULL != ca_iface->hal->halsend))
     {
@@ -193,10 +195,12 @@ ATCA_STATUS atsend(ATCAIface ca_iface, uint8_t word_address, uint8_t *txdata, in
  */
 ATCA_STATUS atreceive(ATCAIface ca_iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)
 {
+#if ATCA_CHECK_PARAMS_EN
     if (NULL == ca_iface)
     {
         return ATCA_BAD_PARAM;
     }
+#endif
 
     if ((NULL != ca_iface->hal) && (NULL != ca_iface->hal->halreceive))
     {
@@ -218,11 +222,12 @@ ATCA_STATUS atreceive(ATCAIface ca_iface, uint8_t word_address, uint8_t *rxdata,
  */
 ATCA_STATUS atcontrol(ATCAIface ca_iface, uint8_t option, void* param, size_t paramlen)
 {
+#if ATCA_CHECK_PARAMS_EN
     if (NULL == ca_iface)
     {
         return ATCA_BAD_PARAM;
     }
-
+#endif
 
     if ((NULL != ca_iface->hal) && (NULL != ca_iface->hal->halcontrol))
     {
@@ -244,11 +249,12 @@ ATCA_STATUS atcontrol(ATCAIface ca_iface, uint8_t option, void* param, size_t pa
  */
 ATCA_STATUS atwake(ATCAIface ca_iface)
 {
+#if ATCA_CHECK_PARAMS_EN
     if (NULL == ca_iface)
     {
         return ATCA_BAD_PARAM;
     }
-
+#endif
 
     if ((NULL != ca_iface->hal) && (NULL != ca_iface->hal->halcontrol))
     {
@@ -280,10 +286,12 @@ ATCA_STATUS atwake(ATCAIface ca_iface)
  */
 ATCA_STATUS atidle(ATCAIface ca_iface)
 {
+#if ATCA_CHECK_PARAMS_EN
     if (NULL == ca_iface)
     {
         return ATCA_BAD_PARAM;
     }
+#endif
 
     if ((NULL != ca_iface->hal) && (NULL != ca_iface->hal->halcontrol))
     {
@@ -306,10 +314,12 @@ ATCA_STATUS atidle(ATCAIface ca_iface)
  */
 ATCA_STATUS atsleep(ATCAIface ca_iface)
 {
+#if ATCA_CHECK_PARAMS_EN
     if (NULL == ca_iface)
     {
         return ATCA_BAD_PARAM;
     }
+#endif
 
     if ((NULL != ca_iface->hal) && (NULL != ca_iface->hal->halcontrol))
     {
@@ -482,6 +492,7 @@ ATCA_STATUS ifacecfg_set_address(
     ATCAKitType    kitiface /**< [in] Optional parameter to set the kit iface type */
     )
 {
+    (void)kitiface;
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
     if (NULL != cfg)
@@ -564,6 +575,7 @@ ATCA_STATUS releaseATCAIface(ATCAIface ca_iface)
         {
             ca_iface->hal_data = NULL;
         }
+#ifdef ATCA_HAL_CUSTOM
         if (ATCA_CUSTOM_IFACE == ca_iface->mIfaceCFG->iface_type)
         {
 #ifdef ATCA_HEAP
@@ -571,6 +583,7 @@ ATCA_STATUS releaseATCAIface(ATCAIface ca_iface)
 #endif
             ca_iface->hal = NULL;
         }
+#endif
     }
     return status;
 }

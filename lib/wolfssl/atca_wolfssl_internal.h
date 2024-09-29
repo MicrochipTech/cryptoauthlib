@@ -80,6 +80,16 @@ typedef struct atcac_sha2_256_ctx
     wc_Sha256 sha;
 } atcac_sha2_256_ctx_t;
 
+typedef struct atcac_sha2_384_ctx
+{
+    wc_Sha384 sha;
+} atcac_sha2_384_ctx_t;
+
+typedef struct atcac_sha2_512_ctx
+{
+    wc_Sha512 sha;
+} atcac_sha2_512_ctx_t;
+
 typedef struct atcac_aes_cmac_ctx
 {
     Cmac cmac;

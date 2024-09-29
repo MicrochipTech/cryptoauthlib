@@ -127,9 +127,19 @@ SIZE_OF_API_S(atcac_sha1_ctx)
 SIZE_OF_API_T(atcac_sha1_ctx_t)
 #endif
 
-#if ATCAC_SHA256_EN || ATCA_CRYPTO_SHA2_EN
+#if ATCAC_SHA256_EN || ATCA_CRYPTO_SHA256_EN
 SIZE_OF_API_S(atcac_sha2_256_ctx)
 SIZE_OF_API_T(atcac_sha2_256_ctx_t)
+#endif
+
+#if ATCAC_SHA384_EN || ATCA_CRYPTO_SHA384_EN
+SIZE_OF_API_S(atcac_sha2_384_ctx)
+SIZE_OF_API_T(atcac_sha2_384_ctx_t)
+#endif
+
+#if ATCAC_SHA512_EN || ATCA_CRYPTO_SHA512_EN
+SIZE_OF_API_S(atcac_sha2_512_ctx)
+SIZE_OF_API_T(atcac_sha2_512_ctx_t)
 #endif
 
 #if ATCAC_SHA256_HMAC_EN || ATCA_CRYPTO_SHA2_HMAC_EN

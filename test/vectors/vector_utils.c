@@ -58,7 +58,7 @@ static void hex_to_data(const char* hex_str, uint8_t* data, size_t data_size)
     }
 }
 
-static char line[16384];
+static char line[25608];
 
 ATCA_STATUS read_rsp_match_value(FILE* file, const char* name, const char* match)
 {

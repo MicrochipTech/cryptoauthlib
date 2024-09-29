@@ -41,6 +41,10 @@ extern "C" {
 #define ATCA_SHA1_DIGEST_SIZE       (20U)
 #define ATCA_SHA2_256_DIGEST_SIZE   (32U)
 #define ATCA_SHA2_256_BLOCK_SIZE    (64U)
+#define ATCA_SHA2_384_DIGEST_SIZE   (48U)
+#define ATCA_SHA2_384_BLOCK_SIZE    (128U)
+#define ATCA_SHA2_512_DIGEST_SIZE   (64U)
+#define ATCA_SHA2_512_BLOCK_SIZE    (128U)
 
 #if ATCA_HOSTLIB_EN
 ATCA_STATUS atcac_sw_random(uint8_t* data, size_t data_size);
@@ -67,8 +71,8 @@ ATCA_STATUS atcac_sw_sha1_finish(struct atcac_sha1_ctx* ctx, uint8_t digest[ATCA
 #endif /* ATCAC_SHA1_EN || ATCA_CRYPTO_SHA1_EN */
 
 
-#if ATCAC_SHA256_EN || ATCA_CRYPTO_SHA2_EN
-#if ATCA_CRYPTO_SHA2_EN
+#if ATCAC_SHA256_EN || ATCA_CRYPTO_SHA256_EN
+#if ATCA_CRYPTO_SHA256_EN
 typedef struct atcac_sha2_256_ctx
 {
     uint32_t pad[48];
@@ -85,8 +89,47 @@ void atcac_sha256_ctx_free(struct atcac_sha2_256_ctx * ctx);
 ATCA_STATUS atcac_sw_sha2_256_init(struct atcac_sha2_256_ctx* ctx);
 ATCA_STATUS atcac_sw_sha2_256_update(struct atcac_sha2_256_ctx* ctx, const uint8_t* data, size_t data_size);
 ATCA_STATUS atcac_sw_sha2_256_finish(struct atcac_sha2_256_ctx* ctx, uint8_t digest[ATCA_SHA2_256_DIGEST_SIZE]);
-#endif /* ATCAC_SHA256_EN || ATCA_CRYPTO_SHA2_EN */
+#endif /* ATCAC_SHA256_EN || ATCA_CRYPTO_SHA256_EN */
 
+#if ATCAC_SHA384_EN || ATCA_CRYPTO_SHA384_EN
+#if ATCA_CRYPTO_SHA384_EN
+typedef struct atcac_sha2_384_ctx
+{
+    uint64_t pad[48];
+} atcac_sha2_384_ctx_t;
+#else
+struct atcac_sha2_384_ctx;
+#endif
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
+struct atcac_sha2_384_ctx * atcac_sha384_ctx_new(void);
+void atcac_sha384_ctx_free(struct atcac_sha2_384_ctx * ctx);
+#endif
+
+ATCA_STATUS atcac_sw_sha2_384_init(struct atcac_sha2_384_ctx* ctx);
+ATCA_STATUS atcac_sw_sha2_384_update(struct atcac_sha2_384_ctx* ctx, const uint8_t* data, size_t data_size);
+ATCA_STATUS atcac_sw_sha2_384_finish(struct atcac_sha2_384_ctx* ctx, uint8_t digest[ATCA_SHA2_384_DIGEST_SIZE]);
+#endif /* ATCAC_SHA384_EN || ATCA_CRYPTO_SHA384_EN */
+
+#if ATCAC_SHA512_EN || ATCA_CRYPTO_SHA512_EN
+#if ATCA_CRYPTO_SHA512_EN
+typedef struct atcac_sha2_512_ctx
+{
+    uint64_t pad[48];
+} atcac_sha2_512_ctx_t;
+#else
+struct atcac_sha2_512_ctx;
+#endif
+
+#if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
+struct atcac_sha2_512_ctx * atcac_sha512_ctx_new(void);
+void atcac_sha512_ctx_free(struct atcac_sha2_512_ctx * ctx);
+#endif
+
+ATCA_STATUS atcac_sw_sha2_512_init(struct atcac_sha2_512_ctx* ctx);
+ATCA_STATUS atcac_sw_sha2_512_update(struct atcac_sha2_512_ctx* ctx, const uint8_t* data, size_t data_size);
+ATCA_STATUS atcac_sw_sha2_512_finish(struct atcac_sha2_512_ctx* ctx, uint8_t digest[ATCA_SHA2_512_DIGEST_SIZE]);
+#endif /* ATCAC_SHA512_EN || ATCA_CRYPTO_SHA512_EN */
 
 #if ATCAC_SHA256_HMAC_EN || ATCA_CRYPTO_SHA2_HMAC_EN
 #if ATCA_CRYPTO_SHA2_HMAC_EN
@@ -112,8 +155,17 @@ ATCA_STATUS atcac_sha256_hmac_finish(struct atcac_hmac_ctx* ctx, uint8_t* digest
 #endif /* ATCAC_SHA256_HMAC_EN || ATCA_CRYPTO_SHA2_HMAC_EN */
 
 
-#if ATCAC_AES_CMAC_EN
+#if ATCAC_AES_CMAC_EN || ATCA_CRYPTO_AES_CMAC_EN
+#if ATCA_CRYPTO_AES_CMAC_EN
+/* Dummy structure for memory reservation */
+typedef struct atcac_aes_cmac_ctx 
+{
+    void* ctx_ptr;
+}atcac_aes_cmac_ctx_t;
+#else
 struct atcac_aes_cmac_ctx;
+#endif
+
 #if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
 struct atcac_aes_cmac_ctx * atcac_aes_cmac_ctx_new(void);
 void atcac_aes_cmac_ctx_free(struct atcac_aes_cmac_ctx * ctx);
@@ -122,11 +174,20 @@ void atcac_aes_cmac_ctx_free(struct atcac_aes_cmac_ctx * ctx);
 ATCA_STATUS atcac_aes_cmac_init(struct atcac_aes_cmac_ctx* ctx, const uint8_t* key, const uint8_t key_len);
 ATCA_STATUS atcac_aes_cmac_update(struct atcac_aes_cmac_ctx* ctx, const uint8_t* data, const size_t data_size);
 ATCA_STATUS atcac_aes_cmac_finish(struct atcac_aes_cmac_ctx* ctx, uint8_t* cmac, size_t* cmac_size);
-#endif /* ATCAC_AES_CMAC_EN */
+#endif /* ATCAC_AES_CMAC_EN || ATCA_CRYPTO_AES_CMAC_EN */
 
 
-#if ATCAC_AES_GCM_EN
+#if ATCAC_AES_GCM_EN || ATCA_CRYPTO_AES_GCM_EN
+#if ATCA_CRYPTO_AES_GCM_EN
+/* Dummy structure for memory reservation */
+typedef struct atcac_aes_gcm_ctx 
+{
+    void* ctx_ptr;
+}atcac_aes_gcm_ctx_t;
+#else
 struct atcac_aes_gcm_ctx;
+#endif
+
 #if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
 struct atcac_aes_gcm_ctx * atcac_aes_gcm_ctx_new(void);
 void atcac_aes_gcm_ctx_free(struct atcac_aes_gcm_ctx * ctx);
@@ -152,7 +213,7 @@ ATCA_STATUS atcac_aes_gcm_decrypt_update(struct atcac_aes_gcm_ctx* ctx, const ui
 ATCA_STATUS atcac_aes_gcm_decrypt_finish(struct atcac_aes_gcm_ctx* ctx, const uint8_t* tag, size_t tag_len,
                                          bool* is_verified);
 
-#endif /* ATCAC_AES_GCM_EN */
+#endif /* ATCAC_AES_GCM_EN || ATCA_CRYPTO_AES_GCM_EN */
 
 #if ATCAC_PKEY_EN
 struct atcac_pk_ctx;

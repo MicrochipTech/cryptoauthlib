@@ -167,7 +167,7 @@ CK_RV pkcs11_trust_load_objects(pkcs11_slot_ctx_ptr pSlot)
 
     if (NULL == pSlot)
     {
-        rv = CKR_ARGUMENTS_BAD;
+        return CKR_ARGUMENTS_BAD;
     }
 
     if (CKR_OK == rv)

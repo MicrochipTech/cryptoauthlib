@@ -56,10 +56,29 @@
  *
  * Enable ATCAC_SHA256_EN to enable sha256 host side api
  *
- * Supported API's: atcab_write
  **/
 #ifndef ATCAC_SHA256_EN
-#define ATCAC_SHA256_EN                     (DEFAULT_ENABLED)
+#define ATCAC_SHA256_EN                     (FEATURE_ENABLED)
+#endif
+
+/** \def ATCAC_SHA384_EN
+ *
+ * Enable ATCAC_SHA384_EN to enable sha384 host side api
+ *
+ * Disabled by default. Enable ATCAC_SHA512_EN to use SHA384
+ **/
+#ifndef ATCAC_SHA384_EN
+#define ATCAC_SHA384_EN                     (FEATURE_DISABLED)
+#endif
+
+/** \def ATCAC_SHA512_EN
+ *
+ * Enable ATCAC_SHA512_EN to enable sha512 host side api
+ *
+ * Disabled by default. Use FEATURE_ENABLED to enable this feature
+ **/
+#ifndef ATCAC_SHA512_EN
+#define ATCAC_SHA512_EN                     (FEATURE_DISABLED)
 #endif
 
 /** \def ATCAC_SHA256_HMAC
@@ -135,14 +154,40 @@
 #define ATCA_CRYPTO_SHA1_EN                 (ATCAC_SHA1_EN && !ATCA_HOSTLIB_EN)
 #endif
 
-/** \def ATCAC_SHA256_EN
+/** \def ATCA_CRYPTO_SHA256_EN
  *
- * Enable ATCAC_SHA256_EN to enable sha256 host side api
+ * Enable ATCA_CRYPTO_SHA256_EN to enable SHA2 host side api
  *
- * Supported API's: atcab_write
+ **/
+#ifndef ATCA_CRYPTO_SHA256_EN
+#define ATCA_CRYPTO_SHA256_EN                 ((ATCAC_SHA256_EN) && !ATCA_HOSTLIB_EN)
+#endif
+
+/** \def ATCA_CRYPTO_SHA384_EN
+ *
+ * Enable ATCA_CRYPTO_SHA384_EN to enable SHA384 host side api
+ *
+ **/
+#ifndef ATCA_CRYPTO_SHA384_EN
+#define ATCA_CRYPTO_SHA384_EN                 ((ATCAC_SHA384_EN) && !ATCA_HOSTLIB_EN)
+#endif
+
+/** \def ATCA_CRYPTO_SHA512_EN
+ *
+ * Enable ATCA_CRYPTO_SHA512_EN to enable SHA2512 host side api
+ *
+ **/
+#ifndef ATCA_CRYPTO_SHA512_EN
+#define ATCA_CRYPTO_SHA512_EN                 ((ATCAC_SHA512_EN) && !ATCA_HOSTLIB_EN)
+#endif
+
+/** \def ATCA_CRYPTO_SHA2_EN
+ *
+ * Enable ATCAC_SHA2_EN to enable sha2 host side api
+ *
  **/
 #ifndef ATCA_CRYPTO_SHA2_EN
-#define ATCA_CRYPTO_SHA2_EN                 (ATCAC_SHA256_EN && !ATCA_HOSTLIB_EN)
+#define ATCA_CRYPTO_SHA2_EN                 (ATCA_CRYPTO_SHA256_EN || ATCA_CRYPTO_SHA384_EN || ATCA_CRYPTO_SHA512_EN)
 #endif
 
 /** \def ATCA_CRYPTO_SHA2_HMAC_EN
@@ -204,5 +249,26 @@
 #ifndef ATCAC_AES_GCM_EN
 #define ATCAC_AES_GCM_EN                    (ATCA_HOSTLIB_EN)
 #endif /* ATCAC_AES_GCM_EN */
+
+/** \def ATCA_CRYPTO_AES_GCM_EN
+ * Enable ATCA_CRYPTO_AES_GCM_EN to enable AES GCM host side api
+ */
+#ifndef ATCA_CRYPTO_AES_GCM_EN
+#define ATCA_CRYPTO_AES_GCM_EN              (!ATCA_HOSTLIB_EN)
+#endif /* ATCA_CRYPTO_AES_GCM_EN */
+
+/** \def ATCAC_AES_CMAC_EN
+ * Indicates if this module is a provider of an AES-CMAC implementation
+ */
+#ifndef ATCAC_AES_CMAC_EN
+#define ATCAC_AES_CMAC_EN                    (ATCA_HOSTLIB_EN)
+#endif /* ATCAC_AES_CMAC_EN */
+
+/** \def ATCA_CRYPTO_AES_CMAC_EN
+ * Enable ATCA_CRYPTO_AES_CMAC_EN to enable AES CMAC host side api
+ */
+#ifndef ATCA_CRYPTO_AES_CMAC_EN
+#define ATCA_CRYPTO_AES_CMAC_EN             (!ATCA_HOSTLIB_EN)
+#endif /* ATCA_CRYPTO_AES_CMAC_EN */
 
 #endif /* CRYPTO_CONFIG_CHECK_H */

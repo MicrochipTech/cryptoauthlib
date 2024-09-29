@@ -86,6 +86,7 @@ static const char * pkcs11_token_device(ATCADeviceType dev_type, uint8_t info[4]
 
     if (atcab_is_ca_device(dev_type))
     {
+#if ATCA_CA_SUPPORT
         switch (info[DEVICE_PART_LOCATION])
         {
         case 0x00:
@@ -111,10 +112,12 @@ static const char * pkcs11_token_device(ATCADeviceType dev_type, uint8_t info[4]
             rv = "unknown";
             break;
         }
+#endif
     }
 
     if (atcab_is_ta_device(dev_type))
     {
+#if ATCA_TA_SUPPORT
         if(0x01u == info[DEVICE_PRODUCT_ID_LOCATION])
         {
             rv = "TA101";
@@ -123,6 +126,7 @@ static const char * pkcs11_token_device(ATCADeviceType dev_type, uint8_t info[4]
         {
             rv = "TA100";
         }
+#endif
     }
 
     return rv;
@@ -166,6 +170,7 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
 
     if (atcab_is_ca_device(pSlotCtx->interface_config.devtype))
     {
+#if ATCA_CA_SUPPORT
         if (ATCA_SUCCESS == rv)
         {
             /* Get the device type */
@@ -188,6 +193,7 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
             rv = CKR_TOKEN_NOT_RECOGNIZED;
             break;
         }
+#endif
     }
 
     /* Program the configuration zone */
@@ -227,6 +233,7 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
 
         if (atcab_is_ca_device(pSlotCtx->interface_config.devtype))
         {
+#if ATCA_CA_SUPPORT
             /* Generate New Keys */
             for (int i = 0; (i < 16) && (ATCA_SUCCESS == rv); i++)
             {
@@ -235,6 +242,7 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
                     rv = atcab_genkey_ext(pSlotCtx->device_ctx, i, NULL);
                 }
             }
+#endif
         }
         else
         {
@@ -272,11 +280,13 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
             {
                 if (atcab_is_ca_device(pSlotCtx->interface_config.devtype))
                 {
+#if ATCA_CA_SUPPORT
                     /* Write the default pin */
                     if (CKR_OK == rv)
                     {
                         rv = atcab_write_zone_ext(pSlotCtx->device_ctx, ATCA_ZONE_DATA, pSlotCtx->so_pin_handle, 0, 0, buf, buflen);
                     }
+#endif
                 }
             }
         }

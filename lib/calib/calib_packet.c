@@ -1,9 +1,14 @@
 /**
  * \file
+ * \brief CryptoAuthLib API for packet allocation.
  *
- * \brief  Microchip CryptoAuth Library Version
+ * The APIs are used for allocating packets in heap or bss according to
+ * atcab heap availability. Corresponding memory free is done
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \note List of devices that support this command - ATSHA204A, ATECC108A,
+ *       ATECC508A, ATECC608A/B
+ *
+ * \copyright (c) 2024 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -26,13 +31,44 @@
  * THIS SOFTWARE.
  */
 
-#ifndef ATCA_VERSION_H
-#define ATCA_VERSION_H
+#include "cryptoauthlib.h"
+#include "calib_packet.h"
 
-// Version format yyyymmdd
-#define ATCA_LIBRARY_VERSION_DATE   "20240926"
-#define ATCA_LIBRARY_VERSION_MAJOR  3
-#define ATCA_LIBRARY_VERSION_MINOR  7
-#define ATCA_LIBRARY_VERSION_BUILD  6
+#ifdef ATCA_NO_HEAP
+ATCAPacket* calib_packet_alloc(void)
+{
+    static ATCAPacket packet;   // Static variable, allocated in BSS segment
 
-#endif /* ATCA_VERSION_H */
+    return &packet;
+}
+#else
+ATCAPacket* calib_packet_alloc(void)
+{
+    ATCAPacket* packet = (ATCAPacket*)hal_malloc(sizeof(ATCAPacket));   // Allocate memory on the heap
+
+    if (NULL == packet)
+    {
+        // Handle memory allocation failure
+        return NULL;
+    }
+    return packet;
+}
+#endif
+
+#ifdef ATCA_NO_HEAP
+void calib_packet_free(ATCAPacket* packet)
+{
+    if (NULL != packet)
+    {
+        (void)memset(packet, 0x00, sizeof(ATCAPacket));
+    }
+}
+#else
+void calib_packet_free(ATCAPacket* packet)
+{
+    if (NULL != packet)
+    {
+        hal_free(packet);
+    }
+}
+#endif

@@ -26,6 +26,7 @@ set(WOLFSSL_LIB_SRC ${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/aes.c
                 ${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/rsa.c
                 ${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/sha.c
                 ${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/sha256.c
+				${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/sha512.c
 				${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/sp_int.c
                 ${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/tfm.c
                 ${CMAKE_BINARY_DIR}/downloaded/wolfssl/wolfcrypt/src/wc_encrypt.c

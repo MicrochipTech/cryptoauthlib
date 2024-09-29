@@ -1,6 +1,6 @@
 /**
  * \file
- * \brief Software implementation of the SHA256 algorithm.
+ * \brief Software implementation of the SHA256, SHA384 and SHA512 algorithm.
  *
  * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
  *
@@ -31,17 +31,34 @@
 #include <stdint.h>
 
 #ifndef SHA256_DIGEST_SIZE
-#define SHA256_DIGEST_SIZE (32)
+#define SHA256_DIGEST_SIZE (32U)
+#endif
+
+#ifndef SHA512_DIGEST_SIZE
+#define SHA512_DIGEST_SIZE (64U)
+#endif
+
+#ifndef SHA384_DIGEST_SIZE
+#define SHA384_DIGEST_SIZE (48U)
 #endif
 
 #ifndef SHA256_BLOCK_SIZE
-#define SHA256_BLOCK_SIZE  (64)
+#define SHA256_BLOCK_SIZE  (64U)
+#endif
+
+#ifndef SHA384_BLOCK_SIZE
+#define SHA384_BLOCK_SIZE  (128U)
+#endif
+
+#ifndef SHA512_BLOCK_SIZE
+#define SHA512_BLOCK_SIZE  (128U)
 #endif
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#if ATCA_CRYPTO_SHA256_EN
 typedef struct
 {
     uint32_t total_msg_size;                //!< Total number of message bytes processed
@@ -49,14 +66,41 @@ typedef struct
     uint8_t  block[SHA256_BLOCK_SIZE * 2];  //!< Unprocessed message storage
     uint32_t hash[8];                       //!< Hash state
 } sw_sha256_ctx;
+#endif
 
-void sw_sha256_init(sw_sha256_ctx* ctx);
+#if ATCA_CRYPTO_SHA512_EN
+typedef struct
+{
+    uint32_t total_msg_size;                //!< Total number of message bytes processed
+    uint32_t block_size;                    //!< Number of bytes in current block
+    uint8_t  block[SHA512_BLOCK_SIZE * 2];  //!< Unprocessed message storage
+    uint64_t hash[8];                       //!< Hash state
+} sw_sha512_ctx;
+#endif
 
-void sw_sha256_update(sw_sha256_ctx* ctx, const uint8_t* message, uint32_t len);
+#if ATCA_CRYPTO_SHA256_EN
+// SHA256
+ATCA_STATUS sw_sha256_init(sw_sha256_ctx* ctx);
+ATCA_STATUS sw_sha256_update(sw_sha256_ctx* ctx, const uint8_t* msg, uint32_t msg_size);
+ATCA_STATUS sw_sha256_final(sw_sha256_ctx* ctx, uint8_t digest[SHA256_DIGEST_SIZE]);
+ATCA_STATUS sw_sha256(const uint8_t * message, unsigned int len, uint8_t digest[SHA256_DIGEST_SIZE]);
+#endif
 
-void sw_sha256_final(sw_sha256_ctx * ctx, uint8_t digest[SHA256_DIGEST_SIZE]);
+#if ATCA_CRYPTO_SHA384_EN
+// SHA384
+ATCA_STATUS sw_sha384_init(sw_sha512_ctx* ctx);
+ATCA_STATUS sw_sha384_update(sw_sha512_ctx* ctx, const uint8_t* msg, uint32_t msg_size);
+ATCA_STATUS sw_sha384_final(sw_sha512_ctx * ctx, uint8_t digest[SHA384_DIGEST_SIZE]);
+ATCA_STATUS sw_sha384(const uint8_t * message, unsigned int len, uint8_t digest[SHA384_DIGEST_SIZE]);
+#endif
 
-void sw_sha256(const uint8_t * message, unsigned int len, uint8_t digest[SHA256_DIGEST_SIZE]);
+#if ATCA_CRYPTO_SHA512_EN
+//sha512
+ATCA_STATUS sw_sha512_init(sw_sha512_ctx* ctx);
+ATCA_STATUS sw_sha512_update(sw_sha512_ctx* ctx, const uint8_t* msg, uint32_t msg_size);
+ATCA_STATUS sw_sha512_final(sw_sha512_ctx * ctx, uint8_t digest[SHA512_DIGEST_SIZE]);
+ATCA_STATUS sw_sha512(const uint8_t * message, unsigned int len, uint8_t digest[SHA512_DIGEST_SIZE]);
+#endif
 
 #ifdef __cplusplus
 }

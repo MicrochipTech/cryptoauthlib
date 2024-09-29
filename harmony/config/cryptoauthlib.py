@@ -33,9 +33,9 @@ calPlibTracker = {}
 calHalTracker = {}
 
 _HAL_FILES = ["atca_hal.c", "atca_hal.h"]
-_CORE_PATHS = ['crypto/**/*', 'crypto/*', 'jwt/*', '*']
-_CA_PATHS = ['atcacert/*', 'calib/*', 'host/*']
-_TA_PATHS = ['atcacert/*', 'talib/*']
+_CORE_PATHS = ['atcacert/*', 'crypto/**/*', 'crypto/*', 'jwt/*', '*']
+_CA_PATHS = ['calib/*', 'host/*']
+_TA_PATHS = ['talib/*']
 _SHA206_PATHS = ['api_206a/*']
 _EXCL_FILES = ['atca_utils_sizes.c']
 _WOLFCRYPTO_FILES = ['wolfssl/*']
@@ -776,11 +776,27 @@ def instantiateComponent(calComponent):
     calCryptoSwSha1EnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_sw_sha"])
 
     # Crypto SW SHA256
-    calCryptoSwSha2EnabledSymbol = calComponent.createBooleanSymbol("cal_sw_sha2", calSwShaEnabledSymbol)
+    calCryptoSwSha2EnabledSymbol = calComponent.createBooleanSymbol("cal_sw_sha256", calSwShaEnabledSymbol)
     calCryptoSwSha2EnabledSymbol.setLabel("Support Crypto Sw SHA256?")
     calCryptoSwSha2EnabledSymbol.setDescription("Enable support for Software SHA256")
     calCryptoSwSha2EnabledSymbol.setVisible(True)
     calCryptoSwSha2EnabledSymbol.setDefaultValue(True)
+    calCryptoSwSha2EnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_sw_sha"])
+
+    # Crypto SW SHA384
+    calCryptoSwSha2EnabledSymbol = calComponent.createBooleanSymbol("cal_sw_sha384", calSwShaEnabledSymbol)
+    calCryptoSwSha2EnabledSymbol.setLabel("Support Crypto Sw SHA384?")
+    calCryptoSwSha2EnabledSymbol.setDescription("Enable support for Software SHA384")
+    calCryptoSwSha2EnabledSymbol.setVisible(True)
+    calCryptoSwSha2EnabledSymbol.setDefaultValue(False)
+    calCryptoSwSha2EnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_sw_sha"])
+
+    # Crypto SW SHA512
+    calCryptoSwSha2EnabledSymbol = calComponent.createBooleanSymbol("cal_sw_sha512", calSwShaEnabledSymbol)
+    calCryptoSwSha2EnabledSymbol.setLabel("Support Crypto Sw SHA512?")
+    calCryptoSwSha2EnabledSymbol.setDescription("Enable support for Software SHA512")
+    calCryptoSwSha2EnabledSymbol.setVisible(True)
+    calCryptoSwSha2EnabledSymbol.setDefaultValue(False)
     calCryptoSwSha2EnabledSymbol.setDependencies(handleParentSymbolChange, ["cal_sw_sha"])
 
     # Crypto SW SHA256 Hmac

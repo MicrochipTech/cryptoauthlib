@@ -74,6 +74,9 @@ selected plus however additional slots one would like */
 #cmakedefine ATCA_TFLEX_SUPPORT
 #cmakedefine ATCA_TNG_LEGACY_SUPPORT
 
+/** Define WPC to be supported. */
+#cmakedefine ATCA_WPC_SUPPORT
+
 /** Define Software Crypto Library to Use - if none are defined use the
     cryptoauthlib version where applicable */
 #cmakedefine ATCA_MBEDTLS

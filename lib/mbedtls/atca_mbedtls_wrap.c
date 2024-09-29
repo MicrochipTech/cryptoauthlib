@@ -32,7 +32,8 @@
 #ifdef __COVERITY__
 #pragma coverity compliance block \
     (deviate "CERT EXP40-C" "The third party mbedtls api converts const to non constant which is out of scope of CAL") \
-    (deviate "MISRA C-2012 Rule 11.8" "Third party library (mbedtls) implementation which require const to non constant")
+    (deviate "MISRA C-2012 Rule 11.8" "Third party library (mbedtls) implementation which require const to non constant")\
+    (deviate "MISRA C-2012 Rule 11.3" "Third party library (mbedtls) implementation requires pointer type casting")
 #endif
 
 #ifdef ATCA_MBEDTLS
@@ -78,10 +79,26 @@ struct atcac_sha1_ctx* atcac_sha1_ctx_new(void)
     return (struct atcac_sha1_ctx*)hal_malloc(sizeof(atcac_sha1_ctx_t));
 }
 
+#if ATCAC_SHA256_EN
 struct atcac_sha2_256_ctx* atcac_sha256_ctx_new(void)
 {
     return (struct atcac_sha2_256_ctx*)hal_malloc(sizeof(atcac_sha2_256_ctx_t));
 }
+#endif
+
+#if ATCAC_SHA384_EN
+struct atcac_sha2_384_ctx* atcac_sha384_ctx_new(void)
+{
+    return (struct atcac_sha2_384_ctx*)hal_malloc(sizeof(atcac_sha2_384_ctx_t));
+}
+#endif
+
+#if ATCAC_SHA512_EN
+struct atcac_sha2_512_ctx* atcac_sha512_ctx_new(void)
+{
+    return (struct atcac_sha2_512_ctx*)hal_malloc(sizeof(atcac_sha2_512_ctx_t));
+}
+#endif
 
 struct atcac_hmac_ctx* atcac_hmac_ctx_new(void)
 {
@@ -118,10 +135,26 @@ void atcac_sha1_ctx_free(struct atcac_sha1_ctx* ctx)
     hal_free(ctx);
 }
 
+#if ATCAC_SHA256_EN
 void atcac_sha256_ctx_free(struct atcac_sha2_256_ctx* ctx)
 {
     hal_free(ctx);
 }
+#endif
+
+#if ATCAC_SHA384_EN
+void atcac_sha384_ctx_free(struct atcac_sha2_384_ctx* ctx)
+{
+    hal_free(ctx);
+}
+#endif
+
+#if ATCAC_SHA512_EN
+void atcac_sha512_ctx_free(struct atcac_sha2_512_ctx* ctx)
+{
+    hal_free(ctx);
+}
+#endif
 
 void atcac_hmac_ctx_free(struct atcac_hmac_ctx* ctx)
 {
@@ -475,6 +508,7 @@ ATCA_STATUS atcac_sw_sha1_finish(
     return atca_mbedtls_md_finish((mbedtls_md_context_t*)tmp_ptr, digest, NULL);
 }
 
+#if ATCAC_SHA256_EN
 /** \brief Initialize context for performing SHA256 hash in software.
  *
  * \return ATCA_SUCCESS on success, otherwise an error code.
@@ -516,6 +550,95 @@ ATCA_STATUS atcac_sw_sha2_256_finish(
 
     return atca_mbedtls_md_finish((mbedtls_md_context_t*)tmp_ptr, digest, NULL);
 }
+#endif /* ATCAC_SHA256_EN */
+
+#if ATCAC_SHA384_EN
+/** \brief Initialize context for performing SHA384 hash in software.
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_384_init(
+    struct atcac_sha2_384_ctx* ctx  /**< [in] pointer to a hash context */
+    )
+{
+    void* tmp_ptr = ctx;
+
+    return atca_mbedtls_md_init((mbedtls_md_context_t*)tmp_ptr, mbedtls_md_info_from_type(MBEDTLS_MD_SHA384));
+}
+
+/** \brief Add data to a SHA384 hash.
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_384_update(
+    struct atcac_sha2_384_ctx* ctx,         /**< [in] pointer to a hash context */
+    const uint8_t*             data,        /**< [in] input data buffer */
+    size_t                     data_size    /**< [in] input data length */
+    )
+{
+    void* tmp_ptr = ctx;
+
+    return atca_mbedtls_md_update((mbedtls_md_context_t*)tmp_ptr, data, data_size);
+}
+
+/** \brief Complete the SHA384 hash in software and return the digest.
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_384_finish(
+    struct atcac_sha2_384_ctx* ctx,                              /**< [in] pointer to a hash context */
+    uint8_t                    digest[ATCA_SHA2_384_DIGEST_SIZE] /**< [out] output buffer (48 bytes) */
+    )
+{
+    void* tmp_ptr = ctx;
+
+    return atca_mbedtls_md_finish((mbedtls_md_context_t*)tmp_ptr, digest, NULL);
+}
+#endif /* ATCAC_SHA384_EN */
+
+#if ATCAC_SHA512_EN
+/** \brief Initialize context for performing SHA512 hash in software.
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_512_init(
+    struct atcac_sha2_512_ctx* ctx  /**< [in] pointer to a hash context */
+    )
+{
+    void* tmp_ptr = ctx;
+
+    return atca_mbedtls_md_init((mbedtls_md_context_t*)tmp_ptr, mbedtls_md_info_from_type(MBEDTLS_MD_SHA512));
+}
+
+/** \brief Add data to a SHA512 hash.
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_512_update(
+    struct atcac_sha2_512_ctx* ctx,         /**< [in] pointer to a hash context */
+    const uint8_t*             data,        /**< [in] input data buffer */
+    size_t                     data_size    /**< [in] input data length */
+    )
+{
+    void* tmp_ptr = ctx;
+
+    return atca_mbedtls_md_update((mbedtls_md_context_t*)tmp_ptr, data, data_size);
+}
+
+/** \brief Complete the SHA512 hash in software and return the digest.
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcac_sw_sha2_512_finish(
+    struct atcac_sha2_512_ctx* ctx,                              /**< [in] pointer to a hash context */
+    uint8_t                    digest[ATCA_SHA2_512_DIGEST_SIZE] /**< [out] output buffer (64 bytes) */
+    )
+{
+    void* tmp_ptr = ctx;
+
+    return atca_mbedtls_md_finish((mbedtls_md_context_t*)tmp_ptr, digest, NULL);
+}
+#endif /* ATCAC_SHA512_EN*/
 
 /** \brief Initialize context for performing CMAC in software.
  *
@@ -1405,42 +1528,72 @@ ATCA_STATUS atcac_get_subj_public_key(const struct atcac_x509_ctx* cert, cal_buf
         const void* tmp_ptr = cert;
         const mbedtls_x509_crt* x509_cert = (const mbedtls_x509_crt*)(tmp_ptr);
         const mbedtls_pk_context *pk = (const mbedtls_pk_context *)&x509_cert->pk;
-        if (mbedtls_pk_get_type(pk) != MBEDTLS_PK_ECKEY)
-        {
-            return status;
-        }
-        // Extract the Qx and Qy values of the public key
-        const mbedtls_ecp_keypair* ec = mbedtls_pk_ec(*pk);
-        if (NULL == ec)
-        {
-            return status;
-        }
 
-        // Calculate the expected buffer length for both Qx and Qy
-        size_t expected_len = mbedtls_mpi_size(&ec->Q.X) + mbedtls_mpi_size(&ec->Q.Y);
-
-        // Check if subj_public_key buffer is large enough
-        if (subj_public_key->len < expected_len)
+        if (MBEDTLS_PK_ECKEY == mbedtls_pk_get_type(pk))
         {
-            return status;  // Error: Buffer too small
-        }
+            // Extract the Qx and Qy values of the EC public key
+            const mbedtls_ecp_keypair* ec = mbedtls_pk_ec(*pk);
+            if (NULL == ec)
+            {
+                return status;
+            }
 
-        // Write the binary representation of Qx into the buffer
-        size_t bytes_written = 0;
-        int ret = mbedtls_mpi_write_binary(&ec->Q.X, subj_public_key->buf, mbedtls_mpi_size(&ec->Q.X));
-        if (ret != 0)
-        {
-            return status;  // Error: writing Qx to buffer failed
-        }
-        bytes_written += mbedtls_mpi_size(&ec->Q.X);
+            // Calculate the expected buffer length for both Qx and Qy
+            size_t expected_len = mbedtls_mpi_size(&ec->Q.X) + mbedtls_mpi_size(&ec->Q.Y);
 
-        // Write the binary representation of Qy into the buffer
-        ret = mbedtls_mpi_write_binary(&ec->Q.Y, subj_public_key->buf + bytes_written, mbedtls_mpi_size(&ec->Q.Y));
-        if (ret != 0)
-        {
-            return status;  // Error: writing Qy to buffer failed
+            // Check if subj_public_key buffer is large enough
+            if (subj_public_key->len < expected_len)
+            {
+                return status;  // Error: Buffer too small
+            }
+
+            // Write the binary representation of Qx into the buffer
+            size_t bytes_written = 0;
+            int ret = mbedtls_mpi_write_binary(&ec->Q.X, subj_public_key->buf, mbedtls_mpi_size(&ec->Q.X));
+            if (ret != 0)
+            {
+                return status;  // Error: writing Qx to buffer failed
+            }
+            bytes_written += mbedtls_mpi_size(&ec->Q.X);
+
+            // Write the binary representation of Qy into the buffer
+            ret = mbedtls_mpi_write_binary(&ec->Q.Y, subj_public_key->buf + bytes_written, mbedtls_mpi_size(&ec->Q.Y));
+            if (ret != 0)
+            {
+                return status;  // Error: writing Qy to buffer failed
+            }
+
+            subj_public_key->len = expected_len;
+            status = ATCA_SUCCESS;
         }
-        status = ATCA_SUCCESS;
+        else
+        {
+            // Extract the RSA public key
+            const mbedtls_rsa_context* rsa = mbedtls_pk_rsa(*pk);
+            if (NULL == rsa)
+            {
+                return status;
+            }
+
+            // Calculate the expected buffer length for the modulus (N)
+            size_t expected_len = mbedtls_mpi_size(&rsa->N);
+
+            // Check if subj_public_key buffer is large enough
+            if (subj_public_key->len < expected_len)
+            {
+                return status;  // Error: Buffer too small
+            }
+
+            // Write the binary representation of the modulus (N) into the buffer
+            int ret = mbedtls_mpi_write_binary(&rsa->N, subj_public_key->buf, mbedtls_mpi_size(&rsa->N));
+            if (ret != 0)
+            {
+                return status; // Error: writing modulus N to buffer failed
+            }
+
+            subj_public_key->len = expected_len;
+            status = ATCA_SUCCESS;
+        }
     }
     return status;
 }
@@ -1636,6 +1789,7 @@ ATCA_STATUS atcac_get_cert_sn(const struct atcac_x509_ctx* cert, cal_buffer* cer
 ATCA_STATUS atcac_get_auth_key_id(const struct atcac_x509_ctx* cert, cal_buffer* auth_key_id)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
+    bool akid_found = false;
 
     if (NULL != cert && NULL != auth_key_id)
     {
@@ -1681,6 +1835,7 @@ ATCA_STATUS atcac_get_auth_key_id(const struct atcac_x509_ctx* cert, cal_buffer*
                     {
                         status = cal_buf_set_used(auth_key_id, auth_key_id->len);
                     }
+                    akid_found = true; 
                     break;
                 }
                 next = next->next;
@@ -1690,6 +1845,12 @@ ATCA_STATUS atcac_get_auth_key_id(const struct atcac_x509_ctx* cert, cal_buffer*
         if (NULL != extns)
         {
             mbedtls_asn1_sequence_free(extns);
+        }
+
+        if (false == akid_found)
+        {
+            /* No data is available */
+            status = cal_buf_set_used(auth_key_id, 0U);
         }
 #endif
     }

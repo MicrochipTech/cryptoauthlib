@@ -56,6 +56,63 @@ typedef struct pkcs11_conf_filedata_s
 
 typedef struct pkcs11_conf_filedata_s *pkcs11_conf_filedata_ptr;
 
+#if ATCA_TA_SUPPORT
+void pkcs11_config_set_key_size(pkcs11_object_ptr pObject)
+{
+    CK_BYTE key_type = ((pObject->handle_info.element_CKA & TA_HANDLE_INFO_KEY_TYPE_MASK) >> TA_HANDLE_INFO_KEY_TYPE_SHIFT);
+    CK_ULONG private_key_size = 0u;
+    CK_ULONG public_key_size = 0u;
+
+    switch (key_type)
+    {
+        case TA_KEY_TYPE_ECCP224:
+            pObject->class_type = CKK_EC;
+            private_key_size = TA_ECC224_PVT_KEY_SIZE;
+            public_key_size = TA_ECC224_PUB_KEY_SIZE;
+            break;
+        case TA_KEY_TYPE_ECCP384:
+            pObject->class_type = CKK_EC;
+            private_key_size = TA_ECC384_PVT_KEY_SIZE;
+            public_key_size = TA_ECC384_PUB_KEY_SIZE;
+            break;
+        case TA_KEY_TYPE_ECCP521:
+            pObject->class_type = CKK_EC;
+            private_key_size = TA_ECC521_PVT_KEY_SIZE;
+            public_key_size = TA_ECC521_PUB_KEY_SIZE;
+            break;
+#if PKCS11_RSA_SUPPORT_ENABLE
+        case TA_KEY_TYPE_RSA1024:
+            pObject->class_type = CKK_RSA;
+            private_key_size = TA_RSAENC_PVT_KEY_SIZE1024;
+            public_key_size = TA_RSAENC_PUB_KEY_SIZE1024;
+            break;
+        case TA_KEY_TYPE_RSA2048:
+            pObject->class_type = CKK_RSA;
+            private_key_size = TA_RSAENC_PVT_KEY_SIZE2048;
+            public_key_size = TA_RSAENC_PUB_KEY_SIZE2048;
+            break;
+        case TA_KEY_TYPE_RSA3072:
+            pObject->class_type = CKK_RSA;
+            private_key_size = TA_RSAENC_PVT_KEY_SIZE3072;
+            public_key_size = TA_RSAENC_PUB_KEY_SIZE3072;
+            break;
+        case TA_KEY_TYPE_RSA4096:
+            pObject->class_type = CKK_RSA;
+            private_key_size = TA_RSAENC_PVT_KEY_SIZE4096;
+            public_key_size = TA_RSAENC_PUB_KEY_SIZE4096;
+            break;
+#endif
+        default:
+            pObject->class_type = CKK_EC;
+            private_key_size = TA_ECC256_PVT_KEY_SIZE;
+            public_key_size = TA_ECC256_PUB_KEY_SIZE;
+            break;
+    }
+
+    pObject->size = (CKO_PRIVATE_KEY == pObject->class_id) ? (private_key_size) : (public_key_size);
+}
+#endif
+
 void pkcs11_config_init_private(pkcs11_object_ptr pObject, const char * label, size_t len)
 {
     if (len >= (size_t)PKCS11_MAX_LABEL_SIZE)
@@ -65,14 +122,22 @@ void pkcs11_config_init_private(pkcs11_object_ptr pObject, const char * label, s
     (void)memcpy((char*)pObject->name, label, len);
     pObject->name[len] = (CK_UTF8CHAR)'\0';
     pObject->class_id = CKO_PRIVATE_KEY;
-    pObject->class_type = CKK_EC;
     pObject->attributes = pkcs11_key_private_attributes;
     pObject->count = pkcs11_key_private_attributes_count;
-    pObject->flags = PKCS11_OBJECT_FLAG_KEY_CACHE;
+    pObject->flags |= PKCS11_OBJECT_FLAG_KEY_CACHE;
 #if ATCA_CA_SUPPORT
     pObject->data = NULL;
 #endif
-    pObject->size = 16;
+    pObject->class_type = CKK_EC;
+    pObject->size = ATCA_ECCP256_PVTKEY_SIZE;
+
+#if ATCA_TA_SUPPORT
+    // Update the class type and size based on the keytype
+    if (0u != pObject->handle_info.element_CKA)
+    {
+        (void)pkcs11_config_set_key_size(pObject);
+    }
+#endif
 }
 
 void pkcs11_config_init_public(pkcs11_object_ptr pObject, const char * label, size_t len)
@@ -84,14 +149,22 @@ void pkcs11_config_init_public(pkcs11_object_ptr pObject, const char * label, si
     (void)memcpy((char*)pObject->name, label, len);
     pObject->name[len] = (CK_UTF8CHAR)'\0';
     pObject->class_id = CKO_PUBLIC_KEY;
-    pObject->class_type = CKK_EC;
     pObject->attributes = pkcs11_key_public_attributes;
     pObject->count = pkcs11_key_public_attributes_count;
-    pObject->flags = PKCS11_OBJECT_FLAG_KEY_CACHE;
+    pObject->flags |= PKCS11_OBJECT_FLAG_KEY_CACHE;
 #if ATCA_CA_SUPPORT
     pObject->data = NULL;
 #endif
-    pObject->size = 64;
+    pObject->class_type = CKK_EC;
+    pObject->size = ATCA_ECCP256_PVTKEY_SIZE;
+
+#if ATCA_TA_SUPPORT
+    // Update the class type and size based on the keytype
+    if (0u != pObject->handle_info.element_CKA)
+    {
+        (void)pkcs11_config_set_key_size(pObject);
+    }
+#endif
 }
 
 void pkcs11_config_init_secret(pkcs11_object_ptr pObject, const char * label, size_t len, size_t keylen)
@@ -124,7 +197,6 @@ void pkcs11_config_init_cert(pkcs11_object_ptr pObject, const char * label, size
     (void)memcpy((char*)pObject->name, label, len);
     pObject->name[len] = (CK_UTF8CHAR)'\0';
     pObject->class_id = CKO_CERTIFICATE;
-    pObject->class_type = 0;
     pObject->attributes = pkcs11_cert_x509public_attributes;
     pObject->count = pkcs11_cert_x509public_attributes_count;
 #if ATCA_CA_SUPPORT
@@ -589,7 +661,7 @@ static CK_RV pkcs11_config_parse_freeslots(pkcs11_slot_ctx_ptr slot_ctx, char* c
             return CKR_GENERAL_ERROR;
         }
 
-        if (slot > 0 && slot < 16)
+        if (slot >= 0 && slot < 16)
         {
             slot_ctx->flags |= ((CK_FLAGS)1U << (uint16_t)slot);
         }
@@ -943,7 +1015,7 @@ CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, p
     }
     else
     {
-#if ATCA_TA_SUPPORT
+#if ATCA_TA_SUPPORT && TALIB_CREATE_SHARED_DATA_EN
         ATCA_STATUS status = talib_create_element(pSlot->device_ctx, &pObject->handle_info, &handle);
         rv = pkcs11_util_convert_rv(status);
 #endif
@@ -983,8 +1055,10 @@ CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, p
         int ret = 0x00;
         if (atcab_is_ca_device(pSlot->interface_config.devtype))
         {
+#if ATCA_CA_SUPPORT
             ret = snprintf(filename, sizeof(filename), "%s%lu.%u.conf", pLibCtx->config_path,
                            pSlot->slot_id, pObject->slot);
+#endif
         }
         else
         {
@@ -1014,16 +1088,27 @@ CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, p
 CK_RV pkcs11_config_remove_object(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject)
 {
     char filename[200];
-    int ret = snprintf(filename, sizeof(filename), "%s%lu.%u.conf", pLibCtx->config_path,
+    int ret = 0x00;
+    if (atcab_is_ca_device(pSlot->interface_config.devtype))
+    {
+        ret = snprintf(filename, sizeof(filename), "%s%lu.%u.conf", pLibCtx->config_path,
                        pSlot->slot_id, pObject->slot);
+    }
+    else
+    {
+        ret = snprintf(filename, sizeof(filename), "%s%lu.%04x.conf", pLibCtx->config_path,
+                       pSlot->slot_id, pObject->slot);
+    }
 
     if (ret > 0 && ret < (int)sizeof(filename))
     {
         (void)remove(filename);
         if (atcab_is_ca_device(pSlot->interface_config.devtype))
         {
+#if ATCA_CA_SUPPORT
             /* coverity[cert_int34_c_violation] shift will not affect precision since slot max can be only till 15 */
             pSlot->flags |= ((CK_FLAGS)1 << pObject->slot);
+#endif
         }
     }
 

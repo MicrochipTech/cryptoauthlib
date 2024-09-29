@@ -447,7 +447,7 @@ CK_RV pkcs11_deinit(CK_VOID_PTR pReserved)
     {
         if (CKR_OK == pkcs11_lock_device(lib_ctx))
         {
-#if ATCA_TA_SUPPORT
+#if (ATCA_TA_SUPPORT && TALIB_AUTH_EN)
 
             /* Terminate auth session*/
             pkcs11_slot_ctx_ptr pslot_ctx = (pkcs11_slot_ctx_ptr)lib_ctx->slots;

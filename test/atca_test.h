@@ -92,7 +92,7 @@ typedef struct
 #include "host/atca_host.h"
 #endif
 
-#if ATCA_TA_SUPPORT
+#if ATCA_TA_SUPPORT && !defined(LIBRARY_USAGE_EN)
 #include "api_talib/test_talib.h"
 #endif
 
@@ -153,11 +153,14 @@ void atca_test_assert_data_is_unlocked(UNITY_LINE_TYPE from_line);
 void atca_test_assert_data_is_locked(UNITY_LINE_TYPE from_line);
 void atca_test_assert_random_buffer(UNITY_LINE_TYPE from_line, uint8_t * buf, size_t buflen);
 void atca_test_assert_aes_enabled(UNITY_LINE_TYPE from_line);
-#if ATCA_TA_SUPPORT
+#if ATCA_TA_SUPPORT && !defined(LIBRARY_USAGE_EN)
 void atca_test_assert_ta_sboot_enabled(UNITY_LINE_TYPE from_line, uint8_t mode);
 void atca_test_assert_ta_sboot_preboot_enabled(UNITY_LINE_TYPE from_line);
 void atca_test_assert_ta_sboot_preboot_digest_type_enabled(UNITY_LINE_TYPE from_line, uint8_t mode);
 void atca_test_assert_ta_sboot_digest_type_enabled(UNITY_LINE_TYPE from_line, uint8_t mode);
+#endif
+#if ATCA_TA_SUPPORT
+void atca_test_assert_ta_check_handle_validity(UNITY_LINE_TYPE from_line, uint16_t handle);
 #endif
 
 #define unit_test_assert_config_is_locked()     atca_test_assert_config_is_locked(__LINE__)
@@ -176,7 +179,7 @@ void atca_test_assert_ta_sboot_digest_type_enabled(UNITY_LINE_TYPE from_line, ui
 #define check_config_ta_sboot_preboot_enable()  atca_test_assert_ta_sboot_preboot_enabled(__LINE__)
 #define check_config_ta_sboot_preboot_digest_type_enable(mode) atca_test_assert_ta_sboot_preboot_digest_type_enabled(__LINE__, mode)
 #define check_config_ta_sboot_digest_type_enable(mode) atca_test_assert_ta_sboot_digest_type_enabled(__LINE__, mode)
-
+#define check_tatflex_handle_validity(handle)        atca_test_assert_ta_check_handle_validity(__LINE__, handle)
 
 #define TEST_TYPE_ECC_SIGN               (1)
 #define TEST_TYPE_ECC_VERIFY             (2)
@@ -197,6 +200,11 @@ void atca_test_assert_ta_sboot_digest_type_enabled(UNITY_LINE_TYPE from_line, ui
 #define TEST_TYPE_ECC_ROOT_KEY_P521      (17)
 #define TEST_TYPE_ECC_ROOT_KEY_ED25519   (18)
 #define TEST_TYPE_RSA3072_CERT           (19)
+#define TEST_TYPE_RSA2048_SIGN           (20)
+#define TEST_TYPE_AUTH_HANDLE            (21)
+#define TEST_TYPE_CERT_DATA              (22)
+#define TEST_TYPE_SUBJKEY_HANDLE         (23)
+#define TEST_TYPE_PVT_KEY_HANDLE         (24)
 
 typedef struct
 {

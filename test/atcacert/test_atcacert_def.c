@@ -466,8 +466,9 @@ TEST(atcacert_get_subj_public_key, good)
         0x01, 0x51, 0xD1, 0x3A, 0x6F, 0x01, 0x23, 0xD6, 0x70, 0xB5, 0xE5, 0x0C, 0xE0, 0xFF, 0x49, 0x31
     };
     uint8_t public_key[64];
+    cal_buffer pubkey = CAL_BUF_INIT(sizeof(public_key), public_key);
 
-    ret = atcacert_get_subj_public_key(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, public_key);
+    ret = atcacert_get_subj_public_key(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, &pubkey);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(public_key_ref, public_key, sizeof(public_key));
 }
@@ -476,14 +477,15 @@ TEST(atcacert_get_subj_public_key, bad_params)
 {
     int ret = 0;
     uint8_t public_key[64];
+    cal_buffer pubkey = CAL_BUF_INIT(sizeof(public_key), public_key);
 
-    ret = atcacert_get_subj_public_key(NULL, g_cert_def_cert_template, g_cert_def.cert_template_size, public_key);
+    ret = atcacert_get_subj_public_key(NULL, g_cert_def_cert_template, g_cert_def.cert_template_size, &pubkey);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_get_subj_public_key(&g_cert_def, NULL, g_cert_def.cert_template_size, public_key);
+    ret = atcacert_get_subj_public_key(&g_cert_def, NULL, g_cert_def.cert_template_size, &pubkey);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_get_subj_public_key(NULL, NULL, g_cert_def.cert_template_size, public_key);
+    ret = atcacert_get_subj_public_key(NULL, NULL, g_cert_def.cert_template_size, &pubkey);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
     ret = atcacert_get_subj_public_key(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, NULL);

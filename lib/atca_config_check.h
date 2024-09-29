@@ -36,7 +36,9 @@
 
 /** Library Configuration File - All build attributes should be included in
     atca_config.h */
+#ifndef LIBRARY_BUILD_EN
 #include "atca_config.h"
+#endif
 
 /* Configuration Macros to detect device classes */
 #if defined(ATCA_ATSHA204A_SUPPORT) || defined(ATCA_ATSHA206A_SUPPORT) || defined(ATCA_SHA104_SUPPORT) || defined(ATCA_SHA105_SUPPORT)
@@ -110,7 +112,7 @@
 /* Continues when the condition is true - emits message if the condition is false */
 #define ATCA_CHECK_VALID_MSG(c, m)          if (!ATCA_TRACE(!(c), m))
 #else
-#define ATCA_CHECK_INVALID_MSG(c, s, m)
+#define ATCA_CHECK_INVALID_MSG(c, s, m)     
 #define ATCA_CHECK_VALID_MSG(c, m)          if (1)
 #endif
 
@@ -133,7 +135,7 @@
 
 #ifndef ATCA_NO_HEAP
 #define ATCA_HEAP
-#endif 
+#endif
 
 /** \def ATCA_UNUSED_VAR_CHECK
  * Enables removal of compiler warning due to unused variables
@@ -696,10 +698,29 @@
  *
  * Enable ATCAC_SHA256_EN to enable sha256 host side api
  *
- * Supported API's: atcab_write
  **/
 #ifndef ATCAC_SHA256_EN
-#define ATCAC_SHA256_EN                     (DEFAULT_ENABLED)
+#define ATCAC_SHA256_EN                     (FEATURE_ENABLED)
+#endif
+
+/** \def ATCAC_SHA384_EN
+ *
+ * Enable ATCAC_SHA384_EN to enable sha384 host side api
+ *
+ * Disabled by default. Enable ATCAC_SHA512_EN to use SHA384
+ **/
+#ifndef ATCAC_SHA384_EN
+#define ATCAC_SHA384_EN                     (FEATURE_DISABLED)
+#endif
+
+/** \def ATCAC_SHA512_EN
+ *
+ * Enable ATCAC_SHA512_EN to enable sha512 host side api
+ *
+ * Disabled by default. Use FEATURE_ENABLED to enable this feature
+ **/
+#ifndef ATCAC_SHA512_EN
+#define ATCAC_SHA512_EN                     (FEATURE_DISABLED)
 #endif
 
 /** \def ATCAC_SHA256_HMAC

@@ -62,6 +62,11 @@
 #define PKCS11_USE_STATIC_CONFIG        1
 #endif
 
+/** Enable RSA Support in PKCS11 */
+#ifndef PKCS11_RSA_SUPPORT_ENABLE
+#define PKCS11_RSA_SUPPORT_ENABLE       0
+#endif
+
 /** Maximum number of slots allowed in the system - if static memory this will
    always be the number of slots */
 #ifndef PKCS11_MAX_SLOTS_ALLOWED
@@ -179,5 +184,9 @@ void pkcs11_config_init_private(pkcs11_object_ptr pObject, const char * label, s
 void pkcs11_config_init_public(pkcs11_object_ptr pObject, const char * label, size_t len);
 void pkcs11_config_init_cert(pkcs11_object_ptr pObject, const char * label, size_t len);
 void pkcs11_config_init_secret(pkcs11_object_ptr pObject, const char* label, size_t len, size_t keylen);
+
+#if ATCA_TA_SUPPORT
+void pkcs11_config_set_key_size(pkcs11_object_ptr pObject);
+#endif
 
 #endif /* PKCS11_CONFIG_H_ */

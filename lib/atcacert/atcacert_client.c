@@ -38,7 +38,7 @@
 #include "calib/calib_basic.h"
 #endif
 
-#if ATCA_TA_SUPPORT
+#if ATCA_TA_SUPPORT && !defined(LIBRARY_USAGE_EN)
 #include "talib/talib_basic.h"
 #include "talib/talib_internal.h"
 #endif

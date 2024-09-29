@@ -316,7 +316,7 @@
 <#if cal_hw_aes == false>
         <#lt>#define ATCAB_AES_EXTRAS_EN                (FEATURE_DISABLED)
 <#else>
-        <#lt>#define ATCAB_AES_EXTRAS_EN                (CALIB_AES_EN || TALIB_AES_EN)
+        <#lt>#define ATCAB_AES_EXTRAS_EN                (ATCAB_AES_EN)
 
         <#if cal_crypto_aes_cbc_encrypt == false>
             <#lt>#define ATCAB_AES_CBC_ENCRYPT_EN       (FEATURE_DISABLED)
@@ -374,10 +374,22 @@
         <#lt>#define ATCAC_SHA1_EN                      (FEATURE_ENABLED)
 </#if>
 
-<#if cal_sw_sha2 == false>
+<#if cal_sw_sha256 == false>
         <#lt>#define ATCAC_SHA256_EN                    (FEATURE_DISABLED)
 <#else>
         <#lt>#define ATCAC_SHA256_EN                    (FEATURE_ENABLED)
+</#if>
+
+<#if cal_sw_sha384 == false>
+        <#lt>#define ATCAC_SHA384_EN                    (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAC_SHA384_EN                    (FEATURE_ENABLED)
+</#if>
+
+<#if cal_sw_sha512 == false>
+        <#lt>#define ATCAC_SHA512_EN                    (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCAC_SHA512_EN                    (FEATURE_ENABLED)
 </#if>
 
 <#if cal_sw_sha2_hmac == false>

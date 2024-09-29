@@ -311,6 +311,12 @@ static pcks11_mech_table_e pkcs11_mech_list_ta[] = {
     //CKM_AES_CFB1,
     //CKM_AES_KEY_WRAP,
     //CKM_AES_KEY_WRAP_PAD,
+#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
+    { CKM_RSA_PKCS_KEY_PAIR_GEN,                                                                                 { 1024, 4096, CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR                                  } },
+    { CKM_RSA_PKCS,                                                                                              { 1024, 4096, CKF_HW | CKF_SIGN     | CKF_VERIFY                                             } },
+    { CKM_RSA_PKCS_PSS,                                                                                          { 1024, 4096, CKF_HW | CKF_SIGN     | CKF_VERIFY                                             } },
+    { CKM_RSA_PKCS_OAEP,                                                                                         { 1024, 4096, CKF_HW | CKF_ENCRYPT  | CKF_DECRYPT                                            } },
+#endif
 };
 #endif
 

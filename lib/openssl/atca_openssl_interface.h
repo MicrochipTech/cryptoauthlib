@@ -47,8 +47,26 @@ extern "C" {
  * Indicates if this module is a provider of a SHA256 implementation
  */
 #ifndef ATCAC_SHA256_EN
-#define ATCAC_SHA256_EN                      (DEFAULT_ENABLED)
+#define ATCAC_SHA256_EN                      (FEATURE_ENABLED)
 #endif /* ATCAC_SHA256_EN */
+
+/** \def ATCAC_SHA384_EN
+ * Indicates if this module is a provider of a SHA384 implementation
+ *
+ * Disabled by default. Use FEATURE_ENABLED to use SHA384
+ */
+#ifndef ATCAC_SHA384_EN
+#define ATCAC_SHA384_EN                      (FEATURE_DISABLED)
+#endif /* ATCAC_SHA384_EN */
+
+/** \def ATCAC_SHA512_EN
+ * Indicates if this module is a provider of a SHA512 implementation
+ *
+ * Disabled by default. Use FEATURE_ENABLED to use SHA512
+ */
+#ifndef ATCAC_SHA512_EN
+#define ATCAC_SHA512_EN                      (FEATURE_DISABLED)
+#endif /* ATCAC_SHA512_EN */
 
 /** \def ATCAC_AES_CMAC_EN
  * Indicates if this module is a provider of an AES-CMAC implementation
@@ -94,6 +112,16 @@ typedef struct atcac_sha2_256_ctx
 {
     void* ptr;
 } atcac_sha2_256_ctx_t;
+
+typedef struct atcac_sha2_384_ctx
+{
+    void* ptr;
+} atcac_sha2_384_ctx_t;
+
+typedef struct atcac_sha2_512_ctx
+{
+    void* ptr;
+} atcac_sha2_512_ctx_t;
 
 typedef struct atcac_aes_cmac_ctx
 {

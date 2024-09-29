@@ -383,15 +383,14 @@ ATCA_STATUS atcacert_set_subj_public_key(const atcacert_def_t*  cert_def,
  * \param[in]  cert_def         Certificate definition for the certificate.
  * \param[in]  cert             Certificate to get element from.
  * \param[in]  cert_size        Size of the certificate (cert) in bytes.
- * \param[out] subj_public_key  Subject public key is returned in this buffer. Formatted at X and Y
- *                              integers concatenated together. 64 bytes.
+ * \param[out] subj_public_key  Subject public key is returned in the buffer pointed by subj_public_key
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_get_subj_public_key(const atcacert_def_t * cert_def,
                                          const uint8_t *        cert,
                                          size_t                 cert_size,
-                                         uint8_t                subj_public_key[64]);
+                                         cal_buffer*            subj_public_key);
 
 
 /**

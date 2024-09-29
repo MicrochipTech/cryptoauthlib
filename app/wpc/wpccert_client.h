@@ -39,8 +39,9 @@ extern "C"
 uint8_t wpccert_get_slots_populated(void);
 uint8_t wpccert_get_slot_count(void);
 
-ATCA_STATUS wpccert_get_slot_info(uint16_t * dig_handle, const atcacert_def_t** def, uint8_t slot);
-
+ATCA_STATUS wpccert_get_slot_info(uint16_t * dig_handle, const atcacert_def_t** def, uint8_t** mfg, \
+                                    uint8_t* root_dgst, uint8_t slot);
+ATCA_STATUS wpccert_read_cert_size(ATCADevice device, const atcacert_def_t* cert_def, size_t* cert_size);
 ATCA_STATUS wpccert_read_cert(ATCADevice device, const atcacert_def_t *cert_def, uint8_t *cert, size_t *cert_size);
 
 ATCA_STATUS wpccert_write_cert(ATCADevice device, const atcacert_def_t* cert_def, const uint8_t* cert, size_t cert_size);

@@ -38,6 +38,16 @@
 extern "C" {
 #endif
 
+#define IS_ADD_SAFE_UINT16_T(a,b)       (((UINT16_MAX - (a)) >= (b)) ? true : false)
+#define IS_ADD_SAFE_UINT32_T(a,b)       (((UINT32_MAX - (a)) >= (b)) ? true : false)
+#define IS_ADD_SAFE_UINT64_T(a,b)       (((UINT64_MAX - (a)) >= (b)) ? true : false)
+#define IS_ADD_SAFE_SIZE_T(a,b)         (((SIZE_MAX   - (a)) >= (b)) ? true : false)
+
+#define IS_MUL_SAFE_UINT16_T(a,b)       ((((a)  <= UINT16_MAX / (b))) ? true : false)
+#define IS_MUL_SAFE_UINT32_T(a,b)       ((((a)  <= UINT32_MAX / (b))) ? true : false)
+#define IS_MUL_SAFE_UINT64_T(a,b)       ((((a)  <= UINT64_MAX / (b))) ? true : false)
+#define IS_MUL_SAFE_SIZE_T(a,b)         ((((a)  <= SIZE_MAX   / (b))) ? true : false)
+
 ATCA_STATUS atcab_bin2hex(const uint8_t* bin, size_t bin_size, char* hex, size_t* hex_size);
 ATCA_STATUS atcab_bin2hex_(const uint8_t* bin, size_t bin_size, char* hex, size_t* hex_size, bool is_pretty, bool is_space, bool is_upper);
 ATCA_STATUS atcab_hex2bin(const char* ascii_hex, size_t ascii_hex_len, uint8_t* binary, size_t* bin_len);

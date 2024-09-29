@@ -551,7 +551,7 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
             }
         }
 
-#if ATCA_TA_SUPPORT && ATCA_HOSTLIB_EN
+#if (ATCA_TA_SUPPORT && ATCA_HOSTLIB_EN && TALIB_AUTH_EN)
         ATCA_STATUS status;
         if (CKR_OK == rv && atcab_is_ta_device(atcab_get_device_type_ext(session_ctx->slot->device_ctx)))
         {
@@ -625,7 +625,7 @@ CK_RV pkcs11_session_logout(CK_SESSION_HANDLE hSession)
         return CKR_SESSION_CLOSED;
     }
 
-#if ATCA_TA_SUPPORT
+#if (ATCA_TA_SUPPORT && TALIB_AUTH_EN)
     if (session_ctx->slot->logged_in && atcab_is_ta_device(atcab_get_device_type_ext(session_ctx->slot->device_ctx)))
     {
         if (CKR_OK == (rv = pkcs11_lock_both(lib_ctx)))

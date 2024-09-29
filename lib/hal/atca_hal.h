@@ -30,7 +30,10 @@
 #define ATCA_HAL_H_
 
 #include <stdlib.h>
+
+#ifndef LIBRARY_BUILD_EN
 #include "atca_config.h"
+#endif
 
 #include "atca_status.h"
 #include "atca_iface.h"

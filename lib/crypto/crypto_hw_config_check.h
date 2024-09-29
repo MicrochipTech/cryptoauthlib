@@ -34,7 +34,7 @@
 #include "calib/calib_config_check.h"
 #endif
 
-#if ATCA_TA_SUPPORT
+#if ATCA_TA_SUPPORT && !defined(LIBRARY_USAGE_EN)
 #include "talib/talib_config_check.h"
 #endif
 

@@ -52,6 +52,14 @@
 
 #define NO_PWDBASED
 
+#define WOLFSSL_SHA384
+
+#define WOLFSSL_SHA512
+
+#define WOLFSSL_NOSHA512_224
+
+#define WOLFSSL_NOSHA512_256
+
 #ifdef __cplusplus
     }   /* extern "C" */
 #endif

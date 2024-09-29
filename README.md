@@ -131,7 +131,7 @@ Directory Structure
 lib - primary library source code
 lib/atcacert - certificate data and i/o methods
 lib/calib - the Basic Cryptoauth API
-lib/crypto - Software crypto implementations external crypto libraries support (primarily SHA1 and SHA256)
+lib/crypto - Software crypto implementations external crypto libraries support (primarily SHA1 and SHA2)
 lib/hal - hardware abstraction layer code for supporting specific platforms
 lib/host - support functions for common host-side calculations
 lib/jwt - json web token functions

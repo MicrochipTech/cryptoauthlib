@@ -141,8 +141,10 @@ TEST(hal, ta_single_and_multi_part_write_read)
         status = talib_handle_init_data(&attr_data_handle, write_element_size);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
+#if TALIB_CREATE_SHARED_DATA_EN
         status = talib_create_element(atcab_get_device(), &attr_data_handle, &data_handle);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+#endif
 
         //Reset data buffers... Read buffer with 0's and Write buffer with random data
         memset(read_data_buf.buf, 0x0, read_data_buf.len);
@@ -157,8 +159,10 @@ TEST(hal, ta_single_and_multi_part_write_read)
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
         TEST_ASSERT_EQUAL_MEMORY(write_data_buf.buf, read_data_buf.buf, write_element_size);
 
+#if TALIB_DELETE_EN
         status = talib_delete_handle(atcab_get_device(), (uint32_t)data_handle);
         TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+#endif
     }
 }
 #endif

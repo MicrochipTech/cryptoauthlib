@@ -35,7 +35,9 @@ TEST_GROUP(wpc_apis);
 TEST_SETUP(wpc_apis)
 {
     atcab_init(gCfg);
+#if !ATCA_CA2_SUPPORT
     test_assert_data_is_locked();
+#endif
 }
 
 TEST_TEAR_DOWN(wpc_apis)
@@ -76,7 +78,7 @@ TEST(wpc_apis, wpc_get_digests_request_response)
 TEST(wpc_apis, wpc_get_certificate_request_response)
 {
     int ret;
-    uint8_t request[2];
+    uint8_t request[4];
     uint8_t response[1024];
     uint8_t buffer[512];
     uint16_t buflen;
@@ -130,12 +132,17 @@ TEST(wpc_apis, wpc_challenge_request_response)
     /* Verify the challenge response */
 }
 
+bool test_wpc_api_cond(void)
+{
+    return (ATECC608 == atca_test_get_device_type() || atcab_is_ca2_device(atca_test_get_device_type()));
+}
+
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info wpc_apis_unit_test_info[] =
 {
-    { REGISTER_TEST_CASE(wpc_apis, wpc_get_digests_request_response),     DEVICE_MASK(ATECC608)},
-    { REGISTER_TEST_CASE(wpc_apis, wpc_get_certificate_request_response), DEVICE_MASK(ATECC608)},
-    { REGISTER_TEST_CASE(wpc_apis, wpc_challenge_request_response),       DEVICE_MASK(ATECC608)},
+    { REGISTER_TEST_CASE(wpc_apis, wpc_get_digests_request_response),     test_wpc_api_cond},
+    { REGISTER_TEST_CASE(wpc_apis, wpc_get_certificate_request_response), test_wpc_api_cond},
+    { REGISTER_TEST_CASE(wpc_apis, wpc_challenge_request_response),       test_wpc_api_cond},
     { (fp_test_case)NULL,                                                  (uint8_t)0 },
 };
 // *INDENT-ON*

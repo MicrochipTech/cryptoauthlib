@@ -2,7 +2,10 @@
 #define ATCA_DEBUG_H
 
 #include "atca_status.h"
+
+#ifndef LIBRARY_BUILD_EN
 #include "atca_config.h"
+#endif
 
 
 ATCA_STATUS atca_trace(ATCA_STATUS status);

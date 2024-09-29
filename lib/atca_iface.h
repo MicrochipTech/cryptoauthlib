@@ -43,10 +43,12 @@ extern "C" {
 #include <stdint.h>
 #include <stddef.h>
 
-#include "atca_config.h"
 #include "atca_devtypes.h"
 #include "atca_status.h"
 
+#ifndef LIBRARY_BUILD_EN
+#include "atca_config.h"
+#endif
 
 #ifdef ATCA_STRICT_C99
 #define ATCA_IFACECFG_NAME(x)  (x)
