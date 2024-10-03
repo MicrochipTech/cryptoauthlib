@@ -48,11 +48,11 @@
 ATCA_STATUS atcac_sw_random(uint8_t* data, size_t data_size)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
-    RNG rng;
+    WC_RNG rng;
 
     if (0 == wc_InitRng(&rng))
     {
-        if (UINT32_MAX <= data_size)
+        if (data_size <= UINT32_MAX)
         {
             if (0 == wc_RNG_GenerateBlock(&rng, data, (word32)data_size))
             {
@@ -1100,7 +1100,7 @@ ATCA_STATUS atcac_get_subj_public_key(const struct atcac_x509_ctx* cert, cal_buf
                         if (0 == wc_RsaPublicKeyDecode((byte*)key->pkey.ptr, &idx, &rsaKey, (word32)key->pkey_sz))
                         {
                             int nlen = mp_unsigned_bin_size(&rsaKey.n);
-                            // Check buffer size before storing public key 
+                            // Check buffer size before storing public key
                             if ((nlen > 0) && ((unsigned long)nlen <= subj_public_key->len))
                             {
                                 if (0 == mp_to_unsigned_bin(&rsaKey.n, (byte*)subj_public_key->buf))
