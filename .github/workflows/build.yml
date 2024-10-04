@@ -51,7 +51,7 @@ jobs:
           CIBW_TEST_SKIP: "*-macosx_arm64 *-macosx_universal2:arm64"
           CMAKE_OSX_ARCHITECTURES: "arm64;x86_64"
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           path: wheelhouse/*.whl
 
@@ -84,7 +84,7 @@ jobs:
         env:
           TAG_NAME: ${{ steps.build_names.outputs.TAG_NAME }}
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           path: python/dist/*.tar.gz
 
@@ -101,7 +101,7 @@ jobs:
 
       - name: Production Release
         if: startsWith(github.repository, 'MicrochipTech')
-        uses: pypa/gh-action-pypi-publish@release/v1.5
+        uses: pypa/gh-action-pypi-publish@release/v1.10.3
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
@@ -109,7 +109,7 @@ jobs:
 
       - name: Test Release
         if: ${{ !startsWith(github.repository, 'MicrochipTech') }}
-        uses: pypa/gh-action-pypi-publish@release/v1.5
+        uses: pypa/gh-action-pypi-publish@release/v1.10.3
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
