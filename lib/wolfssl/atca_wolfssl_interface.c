@@ -52,7 +52,7 @@ ATCA_STATUS atcac_sw_random(uint8_t* data, size_t data_size)
 
     if (0 == wc_InitRng(&rng))
     {
-        if (UINT32_MAX <= data_size)
+        if (UINT32_MAX >= data_size)
         {
             if (0 == wc_RNG_GenerateBlock(&rng, data, (word32)data_size))
             {
