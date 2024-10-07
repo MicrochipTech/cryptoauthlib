@@ -37,7 +37,7 @@ jobs:
           cp -r ../app/tng app
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.17.0
+        uses: pypa/cibuildwheel@v2.21.2
         with:
           package-dir: python 
         env:
@@ -65,7 +65,7 @@ jobs:
       - uses: actions/setup-python@v5
         name: Install Python
         with:
-          python-version: '3.7'
+          python-version: '3.x'
 
       - name: Describe Tag & Branch Name
         id: build_names
@@ -81,7 +81,7 @@ jobs:
           cp -r ../third_party .
           mkdir app
           cp -r ../app/tng app
-          python setup.py sdist
+          python -m build
         env:
           TAG_NAME: ${{ steps.build_names.outputs.TAG_NAME }}
 
