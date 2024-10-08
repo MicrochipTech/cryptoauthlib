@@ -80,18 +80,20 @@ jobs:
             echo "skip_build=true" >> $GITHUB_ENV  # Set an environment variable to control flow
           fi
 
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install setuptools wheel  # Install setuptools and wheel
+
       - name: Install USB dependencies
         run: sudo apt-get update && sudo apt-get install -y libusb-1.0-0-dev libudev-dev
-
-      - name: Install string library build dependencies
-        run: sudo apt-get install build-essential libc-dev libbsd-dev
 
       - name: Build sdist
         if: env.skip_build != 'true'
         run: |
-          echo $TAG_NAME
+          echo ${{ env.TAG_NAME }}
           cd python
-          echo $TAG_NAME >VERSION
+          echo ${{ env.TAG_NAME }} >VERSION
           cp -r ../lib .
           cp -r ../third_party .
           mkdir app
