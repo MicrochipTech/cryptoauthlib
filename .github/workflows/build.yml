@@ -32,6 +32,7 @@ jobs:
           cd python
           cp ../release_notes.md .
           cp -r ../lib .
+          cp -r ../lib/cmake .
           cp -r ../third_party .
           mkdir app
           cp -r ../app/tng app
@@ -83,6 +84,9 @@ jobs:
       - name: Install USB dependencies
         run: sudo apt-get update && sudo apt-get install -y libusb-1.0-0-dev libudev-dev
 
+      - name: Install string library build dependencies
+        run: sudo apt-get install build-essential libc-dev libbsd-dev
+
       - name: Build sdist
         if: env.skip_build != 'true'
         run: |
@@ -90,6 +94,7 @@ jobs:
           cd python
           echo $TAG_NAME >VERSION
           cp -r ../lib .
+          cp -r ../lib/cmake .
           cp -r ../third_party .
           mkdir app
           cp -r ../app/tng app
