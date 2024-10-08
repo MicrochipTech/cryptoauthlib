@@ -70,15 +70,18 @@ jobs:
       - name: Describe Tag & Branch Name
         id: build_names
         run: |
-          # Only set TAG_NAME if the event is a tag push
-          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
-            echo TAG_NAME=${GITHUB_REF#refs/tags/} >> $GITHUB_OUTPUT
-          else
+          echo TAG_NAME=${GITHUB_REF#refs/tags/} >> $GITHUB_OUTPUT
+
+      - name: Check if event is a tag push
+        id: check_tag
+        run: |
+          if [[ "${GITHUB_REF}" != refs/tags/* ]]; then
             echo "This event is not a tag push. Skipping sdist build."
-            exit 1  # Exit if not a tag
+            echo "skip_build=true" >> $GITHUB_ENV  # Set an environment variable to control flow
           fi
 
       - name: Build sdist
+        if: env.skip_build != 'true'
         run: |
           echo $TAG_NAME
           cd python
@@ -94,6 +97,7 @@ jobs:
           TAG_NAME: ${{ steps.build_names.outputs.TAG_NAME }}
 
       - uses: actions/upload-artifact@v4
+        if: env.skip_build != 'true'
         with:
           path: python/dist/*.tar.gz
           overwrite: true
