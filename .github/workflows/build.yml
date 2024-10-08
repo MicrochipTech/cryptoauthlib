@@ -32,7 +32,6 @@ jobs:
           cd python
           cp ../release_notes.md .
           cp -r ../lib .
-          cp -r ../lib/cmake .
           cp -r ../third_party .
           mkdir app
           cp -r ../app/tng app
@@ -94,13 +93,10 @@ jobs:
           cd python
           echo $TAG_NAME >VERSION
           cp -r ../lib .
-          cp -r ../lib/cmake .
           cp -r ../third_party .
           mkdir app
           cp -r ../app/tng app
-          python -m pip install --upgrade pip
-          python -m pip install build
-          python -m build
+          python setup.py sdist
         env:
           TAG_NAME: ${{ steps.build_names.outputs.TAG_NAME }}
 
