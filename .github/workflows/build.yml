@@ -67,6 +67,12 @@ jobs:
         with:
           python-version: '3.x'
 
+      # Install build tools (setuptools, wheel, and build)
+      - name: Install build tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install setuptools wheel build
+
       - name: Describe Tag & Branch Name
         id: build_names
         run: |
