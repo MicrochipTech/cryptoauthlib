@@ -80,6 +80,9 @@ jobs:
             echo "skip_build=true" >> $GITHUB_ENV  # Set an environment variable to control flow
           fi
 
+      - name: Install USB dependencies
+        run: sudo apt-get update && sudo apt-get install -y libusb-1.0-0-dev libudev-dev
+
       - name: Build sdist
         if: env.skip_build != 'true'
         run: |
