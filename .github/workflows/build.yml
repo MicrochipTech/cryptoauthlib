@@ -70,7 +70,13 @@ jobs:
       - name: Describe Tag & Branch Name
         id: build_names
         run: |
-          echo TAG_NAME=${GITHUB_REF#refs/tags/} >> $GITHUB_OUTPUT
+          # Only set TAG_NAME if the event is a tag push
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            echo TAG_NAME=${GITHUB_REF#refs/tags/} >> $GITHUB_OUTPUT
+          else
+            echo "This event is not a tag push. Skipping sdist build."
+            exit 1  # Exit if not a tag
+          fi
 
       - name: Build sdist
         run: |
@@ -82,7 +88,7 @@ jobs:
           mkdir app
           cp -r ../app/tng app
           python -m pip install --upgrade pip
-          pip install build
+          python -m pip install build
           python -m build
         env:
           TAG_NAME: ${{ steps.build_names.outputs.TAG_NAME }}
