@@ -1,5 +1,6 @@
 recursive-include lib *.c *.h atca_config.h.in CMakeLists.txt 90-cryptohid.rules
 recursive-include third_party *.c *.h
 recursive-include app *.c *.h
+recursive-include lib/cmake *.cmake
 include cryptoauthlib/cryptoauth.json
 include MANIFEST.in setup.py setup.cfg README.md release_notes.md VERSION LICENSE.txt
