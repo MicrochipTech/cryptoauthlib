@@ -50,6 +50,9 @@ int mbedtls_ecdh_gen_public(mbedtls_ecp_group *grp, mbedtls_mpi *d, mbedtls_ecp_
                             int (*f_rng)(void *, unsigned char *, size_t),
                             void *p_rng)
 {
+    UNUSED(f_rng);
+    UNUSED(p_rng);
+
     int ret = 0;
     uint8_t public_key[ATCA_PUB_KEY_SIZE];
     uint8_t temp = 1;
@@ -103,6 +106,8 @@ int mbedtls_ecdh_compute_shared(mbedtls_ecp_group *grp, mbedtls_mpi *z,
                                 int (*f_rng)(void *, unsigned char *, size_t),
                                 void *p_rng)
 {
+    UNUSED(f_rng);
+    UNUSED(p_rng);
 
     int ret = 0;
     uint8_t public_key[ATCA_PUB_KEY_SIZE];
