@@ -103,6 +103,7 @@ pkcs11_slot_ctx_ptr pkcs11_slot_get_new_context(pkcs11_lib_ctx_ptr lib_ctx)
 CK_VOID_PTR pkcs11_slot_initslots(CK_ULONG pulCount)
 {
 #ifdef ATCA_NO_HEAP
+	UNUSED(pulCount);
     int i;
     for (i = 0; i < PKCS11_MAX_SLOTS_ALLOWED; i++)
     {

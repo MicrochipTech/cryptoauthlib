@@ -2234,7 +2234,7 @@ static uint8_t pkcs11_key_used(uint8_t * key, size_t keylen)
 {
     if (key)
     {
-        for (int i = 0; i < keylen; i++)
+        for (uint8_t i = 0; i < keylen; i++)
         {
             if (key[i])
             {
